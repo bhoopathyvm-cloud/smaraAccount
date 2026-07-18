@@ -45,13 +45,13 @@
 
 ## 6. Views
 
-- [ ] 6.1 `RegisterView` — list of entries with running balance, direction shown via icon/sign only (no color), per `smara-design-system.md`
-- [ ] 6.2 `RecordTransactionView` — amount/direction/category/date form; category picker excludes archived categories
-- [ ] 6.3 `SummaryView` — date range picker + income/expense totals
-- [ ] 6.4 Category management screen (rename/add/archive), destructive "Archive" action styled per the design system's destructive-button pattern
-- [ ] 6.5 Apply `flutter-build-responsive-layout` for phone vs. desktop layouts
-- [ ] 6.6 Add widget previews for new screens via `flutter-add-widget-preview`
-- [ ] 6.7 Wire `go_router` routes for register / record transaction / summary / category management
+- [x] 6.1 `RegisterView` — list of entries with running balance, direction shown via icon/sign only (no color), per `smara-design-system.md`
+- [x] 6.2 `RecordTransactionView` — amount/direction/category/date form; category picker excludes archived categories
+- [x] 6.3 `SummaryView` — date range picker + income/expense totals
+- [x] 6.4 Category management screen (rename/add/archive), destructive "Archive" action styled per the design system's destructive-button pattern
+- [x] 6.5 Apply `flutter-build-responsive-layout` for phone vs. desktop layouts (`AppShell`: `NavigationRail` >600px, `BottomNavigationBar` otherwise)
+- [x] 6.6 Add widget previews for new screens via `flutter-add-widget-preview` (`RegisterRowTile`)
+- [x] 6.7 Wire `go_router` routes for register / record transaction / summary / category management
 
 ## 7. Testing
 
