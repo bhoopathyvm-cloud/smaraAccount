@@ -21,19 +21,19 @@
 
 ## 3. Domain Models
 
-- [x] 3.1 Define `Account` domain model (id, name, type, archived) with `dart-use-primary-constructors` style
+- [x] 3.1 Define `Account` domain model (id, name, type, archived) - standard `const` constructor, not `dart-use-primary-constructors` (reverted; see `smara-tech-guidelines.md`'s Domain Models section for why)
 - [x] 3.2 Define `TransactionDirection` enum (`in`, `out`) using `dart-use-pattern-matching` for any branching logic
 - [x] 3.3 Define `JournalEntry` and `Posting` domain models
 
 ## 4. Ledger Repository
 
-- [ ] 4.1 Implement `watchEntries()` — reactive stream of the register, ordered by transaction date
-- [ ] 4.2 Implement `watchCategories({includeArchived})` — for pickers (active only) vs. historical views (all)
-- [ ] 4.3 Implement `recordTransaction(amountMinor, direction, categoryId, transactionDate)` — validates `amountMinor > 0` (throws `UnbalancedEntryException` and writes nothing if not), derives the two postings, stamps `recorded_at` automatically via `DateTime.now()`, writes entry + postings in one Drift transaction
-- [ ] 4.4 Implement `reverseEntry(entryId)` — inserts a new entry with swapped posting amounts, `reverses_entry_id` set, as an independent action with no required follow-up
-- [ ] 4.5 Implement `addCategory(name, type)`, `renameCategory(id, newName)`, `archiveCategory(id)`
-- [ ] 4.6 Implement `watchSummary(dateRange)` — total income and total expense for the range
-- [ ] 4.7 Confirm no `updateEntry`/`deleteEntry` method exists anywhere on the Repository's public API (immutability enforced by omission, per Golden Rule #7)
+- [x] 4.1 Implement `watchEntries()` — reactive stream of the register, ordered by transaction date
+- [x] 4.2 Implement `watchCategories({includeArchived})` — for pickers (active only) vs. historical views (all)
+- [x] 4.3 Implement `recordTransaction(amountMinor, direction, categoryId, transactionDate)` — validates `amountMinor > 0` (throws `InvalidTransactionAmountException` and writes nothing if not), derives the two postings, stamps `recorded_at` automatically via `DateTime.now()`, writes entry + postings in one Drift transaction
+- [x] 4.4 Implement `reverseEntry(entryId)` — inserts a new entry with swapped posting amounts, `reverses_entry_id` set, as an independent action with no required follow-up (dated today, not backdated to the original - see doc comment)
+- [x] 4.5 Implement `addCategory(name, type)`, `renameCategory(id, newName)`, `archiveCategory(id)`
+- [x] 4.6 Implement `watchSummary(dateRange)` — total income and total expense for the range
+- [x] 4.7 Confirm no `updateEntry`/`deleteEntry` method exists anywhere on the Repository's public API (immutability enforced by omission, per Golden Rule #7)
 
 ## 5. ViewModels
 
@@ -55,7 +55,7 @@
 
 ## 7. Testing
 
-- [ ] 7.1 Unit tests (`dart-add-unit-test`) for every Repository method: money-in postings, money-out postings, zero/negative amount rejected, reversal linkage, archive filtering, summary totals
+- [x] 7.1 Unit tests (`dart-add-unit-test`) for every Repository method: money-in postings, money-out postings, zero/negative amount rejected, reversal linkage, archive filtering, summary totals (`test/data/repositories/ledger_repository_test.dart`, written and passing during task group 4)
 - [ ] 7.2 Unit tests for every ViewModel public method, mocking the Repository (`dart-generate-test-mocks`)
 - [ ] 7.3 Widget tests (`flutter-add-widget-test`): archived category absent from picker, running balance renders per row, direction shown without color
 - [ ] 7.4 Integration tests (`flutter-add-integration-test`): record money in → register/balance update; reverse a posted entry → original stays, new entry appears; archive a category → hidden from picker, visible in history

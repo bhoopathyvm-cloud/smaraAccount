@@ -9,14 +9,6 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
-# Primary constructors are experimental on the pinned SDK (^3.12.2; stable
-# by default from 3.13). smara-tech-guidelines.md's dart-use-primary-
-# constructors convention requires this until the SDK constraint moves past
-# 3.13.
-analyzer:
-  enable-experiment:
-    - primary-constructors
-
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

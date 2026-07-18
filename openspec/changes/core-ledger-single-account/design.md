@@ -69,9 +69,12 @@ transfers between accounts are added, which is known to be coming next.
 `recordTransaction`'s user-facing `amountMinor` parameter (a positive
 magnitude; direction is a separate field) is validated to be greater than
 zero before any posting is derived or written. A zero or negative value
-throws `UnbalancedEntryException` (per `smara-tech-guidelines.md`'s error
-handling pattern) and no `journal_entries`/`postings` rows are written.
-This is Repository-level validation, not a `CHECK` constraint on
+throws `InvalidTransactionAmountException` (a domain exception per
+`smara-tech-guidelines.md`'s error handling pattern - named for what it
+actually checks, since the postings the system derives are always
+balanced by construction; this validates the user-supplied input, not
+debit/credit balance) and no `journal_entries`/`postings` rows are
+written. This is Repository-level validation, not a `CHECK` constraint on
 `postings.amount_minor`, because that column stores the signed per-posting
 value (`+amount`/`-amount`) — the positivity rule applies to the
 user-supplied magnitude before the sign is derived, not to the stored

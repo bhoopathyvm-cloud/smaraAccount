@@ -7,6 +7,10 @@ import 'journal_entries_table.dart';
 /// Every journal entry has exactly two postings whose [amountMinor] values
 /// sum to zero (design.md: "Signed-amount postings instead of explicit
 /// debit/credit columns"). Postings are immutable along with their entry.
+///
+/// Named PostingRow (not the Drift default "Posting") to stay distinct
+/// from domain/models/posting.dart's Posting.
+@DataClassName('PostingRow')
 class Postings extends Table {
   TextColumn get id => text().clientDefault(() => const Uuid().v4())();
 

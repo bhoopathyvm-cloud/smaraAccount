@@ -3,7 +3,8 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
+class $AccountsTable extends Accounts
+    with TableInfo<$AccountsTable, AccountRow> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -68,7 +69,7 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
   static const String $name = 'accounts';
   @override
   VerificationContext validateIntegrity(
-    Insertable<Account> instance, {
+    Insertable<AccountRow> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -102,9 +103,9 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Account map(Map<String, dynamic> data, {String? tablePrefix}) {
+  AccountRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Account(
+    return AccountRow(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -139,13 +140,13 @@ class $AccountsTable extends Accounts with TableInfo<$AccountsTable, Account> {
       const EnumNameConverter<AccountType>(AccountType.values);
 }
 
-class Account extends DataClass implements Insertable<Account> {
+class AccountRow extends DataClass implements Insertable<AccountRow> {
   final String id;
   final String name;
   final AccountType type;
   final DateTime? archivedAt;
   final DateTime createdAt;
-  const Account({
+  const AccountRow({
     required this.id,
     required this.name,
     required this.type,
@@ -179,12 +180,12 @@ class Account extends DataClass implements Insertable<Account> {
     );
   }
 
-  factory Account.fromJson(
+  factory AccountRow.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Account(
+    return AccountRow(
       id: serializer.fromJson<String>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       type: $AccountsTable.$convertertype.fromJson(
@@ -208,21 +209,21 @@ class Account extends DataClass implements Insertable<Account> {
     };
   }
 
-  Account copyWith({
+  AccountRow copyWith({
     String? id,
     String? name,
     AccountType? type,
     Value<DateTime?> archivedAt = const Value.absent(),
     DateTime? createdAt,
-  }) => Account(
+  }) => AccountRow(
     id: id ?? this.id,
     name: name ?? this.name,
     type: type ?? this.type,
     archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
     createdAt: createdAt ?? this.createdAt,
   );
-  Account copyWithCompanion(AccountsCompanion data) {
-    return Account(
+  AccountRow copyWithCompanion(AccountsCompanion data) {
+    return AccountRow(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       type: data.type.present ? data.type.value : this.type,
@@ -235,7 +236,7 @@ class Account extends DataClass implements Insertable<Account> {
 
   @override
   String toString() {
-    return (StringBuffer('Account(')
+    return (StringBuffer('AccountRow(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('type: $type, ')
@@ -250,7 +251,7 @@ class Account extends DataClass implements Insertable<Account> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Account &&
+      (other is AccountRow &&
           other.id == this.id &&
           other.name == this.name &&
           other.type == this.type &&
@@ -258,7 +259,7 @@ class Account extends DataClass implements Insertable<Account> {
           other.createdAt == this.createdAt);
 }
 
-class AccountsCompanion extends UpdateCompanion<Account> {
+class AccountsCompanion extends UpdateCompanion<AccountRow> {
   final Value<String> id;
   final Value<String> name;
   final Value<AccountType> type;
@@ -282,7 +283,7 @@ class AccountsCompanion extends UpdateCompanion<Account> {
     this.rowid = const Value.absent(),
   }) : name = Value(name),
        type = Value(type);
-  static Insertable<Account> custom({
+  static Insertable<AccountRow> custom({
     Expression<String>? id,
     Expression<String>? name,
     Expression<String>? type,
@@ -359,7 +360,7 @@ class AccountsCompanion extends UpdateCompanion<Account> {
 }
 
 class $JournalEntriesTable extends JournalEntries
-    with TableInfo<$JournalEntriesTable, JournalEntry> {
+    with TableInfo<$JournalEntriesTable, JournalEntryRow> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -449,7 +450,7 @@ class $JournalEntriesTable extends JournalEntries
   static const String $name = 'journal_entries';
   @override
   VerificationContext validateIntegrity(
-    Insertable<JournalEntry> instance, {
+    Insertable<JournalEntryRow> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -506,9 +507,9 @@ class $JournalEntriesTable extends JournalEntries
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  JournalEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
+  JournalEntryRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return JournalEntry(
+    return JournalEntryRow(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -542,7 +543,7 @@ class $JournalEntriesTable extends JournalEntries
   }
 }
 
-class JournalEntry extends DataClass implements Insertable<JournalEntry> {
+class JournalEntryRow extends DataClass implements Insertable<JournalEntryRow> {
   final String id;
 
   /// User-supplied, date only (no time-of-day) - stored as an ISO-8601
@@ -555,7 +556,7 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
   final String? description;
   final String? reversesEntryId;
   final DateTime createdAt;
-  const JournalEntry({
+  const JournalEntryRow({
     required this.id,
     required this.transactionDate,
     required this.recordedAt,
@@ -594,12 +595,12 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
     );
   }
 
-  factory JournalEntry.fromJson(
+  factory JournalEntryRow.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return JournalEntry(
+    return JournalEntryRow(
       id: serializer.fromJson<String>(json['id']),
       transactionDate: serializer.fromJson<String>(json['transactionDate']),
       recordedAt: serializer.fromJson<DateTime>(json['recordedAt']),
@@ -621,14 +622,14 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
     };
   }
 
-  JournalEntry copyWith({
+  JournalEntryRow copyWith({
     String? id,
     String? transactionDate,
     DateTime? recordedAt,
     Value<String?> description = const Value.absent(),
     Value<String?> reversesEntryId = const Value.absent(),
     DateTime? createdAt,
-  }) => JournalEntry(
+  }) => JournalEntryRow(
     id: id ?? this.id,
     transactionDate: transactionDate ?? this.transactionDate,
     recordedAt: recordedAt ?? this.recordedAt,
@@ -638,8 +639,8 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
         : this.reversesEntryId,
     createdAt: createdAt ?? this.createdAt,
   );
-  JournalEntry copyWithCompanion(JournalEntriesCompanion data) {
-    return JournalEntry(
+  JournalEntryRow copyWithCompanion(JournalEntriesCompanion data) {
+    return JournalEntryRow(
       id: data.id.present ? data.id.value : this.id,
       transactionDate: data.transactionDate.present
           ? data.transactionDate.value
@@ -659,7 +660,7 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
 
   @override
   String toString() {
-    return (StringBuffer('JournalEntry(')
+    return (StringBuffer('JournalEntryRow(')
           ..write('id: $id, ')
           ..write('transactionDate: $transactionDate, ')
           ..write('recordedAt: $recordedAt, ')
@@ -682,7 +683,7 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is JournalEntry &&
+      (other is JournalEntryRow &&
           other.id == this.id &&
           other.transactionDate == this.transactionDate &&
           other.recordedAt == this.recordedAt &&
@@ -691,7 +692,7 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
           other.createdAt == this.createdAt);
 }
 
-class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
+class JournalEntriesCompanion extends UpdateCompanion<JournalEntryRow> {
   final Value<String> id;
   final Value<String> transactionDate;
   final Value<DateTime> recordedAt;
@@ -718,7 +719,7 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
     this.rowid = const Value.absent(),
   }) : transactionDate = Value(transactionDate),
        recordedAt = Value(recordedAt);
-  static Insertable<JournalEntry> custom({
+  static Insertable<JournalEntryRow> custom({
     Expression<String>? id,
     Expression<String>? transactionDate,
     Expression<DateTime>? recordedAt,
@@ -800,7 +801,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
   }
 }
 
-class $PostingsTable extends Postings with TableInfo<$PostingsTable, Posting> {
+class $PostingsTable extends Postings
+    with TableInfo<$PostingsTable, PostingRow> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -880,7 +882,7 @@ class $PostingsTable extends Postings with TableInfo<$PostingsTable, Posting> {
   static const String $name = 'postings';
   @override
   VerificationContext validateIntegrity(
-    Insertable<Posting> instance, {
+    Insertable<PostingRow> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -929,9 +931,9 @@ class $PostingsTable extends Postings with TableInfo<$PostingsTable, Posting> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Posting map(Map<String, dynamic> data, {String? tablePrefix}) {
+  PostingRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Posting(
+    return PostingRow(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -961,7 +963,7 @@ class $PostingsTable extends Postings with TableInfo<$PostingsTable, Posting> {
   }
 }
 
-class Posting extends DataClass implements Insertable<Posting> {
+class PostingRow extends DataClass implements Insertable<PostingRow> {
   final String id;
   final String entryId;
   final String accountId;
@@ -971,7 +973,7 @@ class Posting extends DataClass implements Insertable<Posting> {
   /// money out is the reverse.
   final int amountMinor;
   final int lineNumber;
-  const Posting({
+  const PostingRow({
     required this.id,
     required this.entryId,
     required this.accountId,
@@ -999,12 +1001,12 @@ class Posting extends DataClass implements Insertable<Posting> {
     );
   }
 
-  factory Posting.fromJson(
+  factory PostingRow.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Posting(
+    return PostingRow(
       id: serializer.fromJson<String>(json['id']),
       entryId: serializer.fromJson<String>(json['entryId']),
       accountId: serializer.fromJson<String>(json['accountId']),
@@ -1024,21 +1026,21 @@ class Posting extends DataClass implements Insertable<Posting> {
     };
   }
 
-  Posting copyWith({
+  PostingRow copyWith({
     String? id,
     String? entryId,
     String? accountId,
     int? amountMinor,
     int? lineNumber,
-  }) => Posting(
+  }) => PostingRow(
     id: id ?? this.id,
     entryId: entryId ?? this.entryId,
     accountId: accountId ?? this.accountId,
     amountMinor: amountMinor ?? this.amountMinor,
     lineNumber: lineNumber ?? this.lineNumber,
   );
-  Posting copyWithCompanion(PostingsCompanion data) {
-    return Posting(
+  PostingRow copyWithCompanion(PostingsCompanion data) {
+    return PostingRow(
       id: data.id.present ? data.id.value : this.id,
       entryId: data.entryId.present ? data.entryId.value : this.entryId,
       accountId: data.accountId.present ? data.accountId.value : this.accountId,
@@ -1053,7 +1055,7 @@ class Posting extends DataClass implements Insertable<Posting> {
 
   @override
   String toString() {
-    return (StringBuffer('Posting(')
+    return (StringBuffer('PostingRow(')
           ..write('id: $id, ')
           ..write('entryId: $entryId, ')
           ..write('accountId: $accountId, ')
@@ -1069,7 +1071,7 @@ class Posting extends DataClass implements Insertable<Posting> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Posting &&
+      (other is PostingRow &&
           other.id == this.id &&
           other.entryId == this.entryId &&
           other.accountId == this.accountId &&
@@ -1077,7 +1079,7 @@ class Posting extends DataClass implements Insertable<Posting> {
           other.lineNumber == this.lineNumber);
 }
 
-class PostingsCompanion extends UpdateCompanion<Posting> {
+class PostingsCompanion extends UpdateCompanion<PostingRow> {
   final Value<String> id;
   final Value<String> entryId;
   final Value<String> accountId;
@@ -1103,7 +1105,7 @@ class PostingsCompanion extends UpdateCompanion<Posting> {
        accountId = Value(accountId),
        amountMinor = Value(amountMinor),
        lineNumber = Value(lineNumber);
-  static Insertable<Posting> custom({
+  static Insertable<PostingRow> custom({
     Expression<String>? id,
     Expression<String>? entryId,
     Expression<String>? accountId,
@@ -1214,12 +1216,11 @@ typedef $$AccountsTableUpdateCompanionBuilder =
     });
 
 final class $$AccountsTableReferences
-    extends BaseReferences<_$AppDatabase, $AccountsTable, Account> {
+    extends BaseReferences<_$AppDatabase, $AccountsTable, AccountRow> {
   $$AccountsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static MultiTypedResultKey<$PostingsTable, List<Posting>> _postingsRefsTable(
-    _$AppDatabase db,
-  ) => MultiTypedResultKey.fromTable(
+  static MultiTypedResultKey<$PostingsTable, List<PostingRow>>
+  _postingsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.postings,
     aliasName: 'accounts__id__postings__account_id',
   );
@@ -1390,14 +1391,14 @@ class $$AccountsTableTableManager
         RootTableManager<
           _$AppDatabase,
           $AccountsTable,
-          Account,
+          AccountRow,
           $$AccountsTableFilterComposer,
           $$AccountsTableOrderingComposer,
           $$AccountsTableAnnotationComposer,
           $$AccountsTableCreateCompanionBuilder,
           $$AccountsTableUpdateCompanionBuilder,
-          (Account, $$AccountsTableReferences),
-          Account,
+          (AccountRow, $$AccountsTableReferences),
+          AccountRow,
           PrefetchHooks Function({bool postingsRefs})
         > {
   $$AccountsTableTableManager(_$AppDatabase db, $AccountsTable table)
@@ -1459,7 +1460,11 @@ class $$AccountsTableTableManager
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (postingsRefs)
-                    await $_getPrefetchedData<Account, $AccountsTable, Posting>(
+                    await $_getPrefetchedData<
+                      AccountRow,
+                      $AccountsTable,
+                      PostingRow
+                    >(
                       currentTable: table,
                       referencedTable: $$AccountsTableReferences
                           ._postingsRefsTable(db),
@@ -1481,14 +1486,14 @@ typedef $$AccountsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $AccountsTable,
-      Account,
+      AccountRow,
       $$AccountsTableFilterComposer,
       $$AccountsTableOrderingComposer,
       $$AccountsTableAnnotationComposer,
       $$AccountsTableCreateCompanionBuilder,
       $$AccountsTableUpdateCompanionBuilder,
-      (Account, $$AccountsTableReferences),
-      Account,
+      (AccountRow, $$AccountsTableReferences),
+      AccountRow,
       PrefetchHooks Function({bool postingsRefs})
     >;
 typedef $$JournalEntriesTableCreateCompanionBuilder =
@@ -1513,7 +1518,8 @@ typedef $$JournalEntriesTableUpdateCompanionBuilder =
     });
 
 final class $$JournalEntriesTableReferences
-    extends BaseReferences<_$AppDatabase, $JournalEntriesTable, JournalEntry> {
+    extends
+        BaseReferences<_$AppDatabase, $JournalEntriesTable, JournalEntryRow> {
   $$JournalEntriesTableReferences(
     super.$_db,
     super.$_table,
@@ -1538,9 +1544,8 @@ final class $$JournalEntriesTableReferences
     );
   }
 
-  static MultiTypedResultKey<$PostingsTable, List<Posting>> _postingsRefsTable(
-    _$AppDatabase db,
-  ) => MultiTypedResultKey.fromTable(
+  static MultiTypedResultKey<$PostingsTable, List<PostingRow>>
+  _postingsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.postings,
     aliasName: 'journal_entries__id__postings__entry_id',
   );
@@ -1783,14 +1788,14 @@ class $$JournalEntriesTableTableManager
         RootTableManager<
           _$AppDatabase,
           $JournalEntriesTable,
-          JournalEntry,
+          JournalEntryRow,
           $$JournalEntriesTableFilterComposer,
           $$JournalEntriesTableOrderingComposer,
           $$JournalEntriesTableAnnotationComposer,
           $$JournalEntriesTableCreateCompanionBuilder,
           $$JournalEntriesTableUpdateCompanionBuilder,
-          (JournalEntry, $$JournalEntriesTableReferences),
-          JournalEntry,
+          (JournalEntryRow, $$JournalEntriesTableReferences),
+          JournalEntryRow,
           PrefetchHooks Function({bool reversesEntryId, bool postingsRefs})
         > {
   $$JournalEntriesTableTableManager(
@@ -1893,9 +1898,9 @@ class $$JournalEntriesTableTableManager
                     return [
                       if (postingsRefs)
                         await $_getPrefetchedData<
-                          JournalEntry,
+                          JournalEntryRow,
                           $JournalEntriesTable,
-                          Posting
+                          PostingRow
                         >(
                           currentTable: table,
                           referencedTable: $$JournalEntriesTableReferences
@@ -1924,14 +1929,14 @@ typedef $$JournalEntriesTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $JournalEntriesTable,
-      JournalEntry,
+      JournalEntryRow,
       $$JournalEntriesTableFilterComposer,
       $$JournalEntriesTableOrderingComposer,
       $$JournalEntriesTableAnnotationComposer,
       $$JournalEntriesTableCreateCompanionBuilder,
       $$JournalEntriesTableUpdateCompanionBuilder,
-      (JournalEntry, $$JournalEntriesTableReferences),
-      JournalEntry,
+      (JournalEntryRow, $$JournalEntriesTableReferences),
+      JournalEntryRow,
       PrefetchHooks Function({bool reversesEntryId, bool postingsRefs})
     >;
 typedef $$PostingsTableCreateCompanionBuilder =
@@ -1954,7 +1959,7 @@ typedef $$PostingsTableUpdateCompanionBuilder =
     });
 
 final class $$PostingsTableReferences
-    extends BaseReferences<_$AppDatabase, $PostingsTable, Posting> {
+    extends BaseReferences<_$AppDatabase, $PostingsTable, PostingRow> {
   $$PostingsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $JournalEntriesTable _entryIdTable(_$AppDatabase db) =>
@@ -2208,14 +2213,14 @@ class $$PostingsTableTableManager
         RootTableManager<
           _$AppDatabase,
           $PostingsTable,
-          Posting,
+          PostingRow,
           $$PostingsTableFilterComposer,
           $$PostingsTableOrderingComposer,
           $$PostingsTableAnnotationComposer,
           $$PostingsTableCreateCompanionBuilder,
           $$PostingsTableUpdateCompanionBuilder,
-          (Posting, $$PostingsTableReferences),
-          Posting,
+          (PostingRow, $$PostingsTableReferences),
+          PostingRow,
           PrefetchHooks Function({bool entryId, bool accountId})
         > {
   $$PostingsTableTableManager(_$AppDatabase db, $PostingsTable table)
@@ -2331,14 +2336,14 @@ typedef $$PostingsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $PostingsTable,
-      Posting,
+      PostingRow,
       $$PostingsTableFilterComposer,
       $$PostingsTableOrderingComposer,
       $$PostingsTableAnnotationComposer,
       $$PostingsTableCreateCompanionBuilder,
       $$PostingsTableUpdateCompanionBuilder,
-      (Posting, $$PostingsTableReferences),
-      Posting,
+      (PostingRow, $$PostingsTableReferences),
+      PostingRow,
       PrefetchHooks Function({bool entryId, bool accountId})
     >;
 
