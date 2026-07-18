@@ -1,6 +1,6 @@
 {
-    "name": "smara_accounting",
-    "short_name": "smara_accounting",
+    "name": "Smara Accounting",
+    "short_name": "Smara Accounting",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

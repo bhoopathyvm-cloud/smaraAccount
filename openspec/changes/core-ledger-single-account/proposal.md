@@ -1,6 +1,6 @@
 ## Why
 
-The project needs a working accounting core before any device sync, multi-account, or business-feature work begins. Earlier exploration (see `Specs/IntialThoughts.md`) jumped straight to sync protocols, hub architecture, and tech-stack choices before the basic bookkeeping requirement was ever pinned down. This change scopes the smallest complete slice: a single user, on a single device, recording double-entry transactions against one financial account — no networking, no multi-account, no business features.
+The project needs a working accounting core before any device sync, multi-account, or business-feature work begins. Earlier exploration jumped straight to sync protocols, hub architecture, and tech-stack choices before the basic bookkeeping requirement was ever pinned down. This change scopes the smallest complete slice: a single user, on a single device, recording double-entry transactions against one financial account — no networking, no multi-account, no business features.
 
 ## What Changes
 
