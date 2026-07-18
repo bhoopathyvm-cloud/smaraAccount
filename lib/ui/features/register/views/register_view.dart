@@ -27,6 +27,7 @@ class RegisterView extends StatelessWidget {
         foregroundColor: AppColors.cardBackground,
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'register-fab',
         onPressed: onAddTransaction,
         backgroundColor: AppColors.primary,
         child: const Icon(TablerIcons.plus, color: AppColors.cardBackground),

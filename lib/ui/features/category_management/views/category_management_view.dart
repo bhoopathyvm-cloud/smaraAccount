@@ -107,6 +107,7 @@ class CategoryManagementView extends StatelessWidget {
         foregroundColor: AppColors.cardBackground,
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'categories-fab',
         onPressed: () => _showAddDialog(context),
         backgroundColor: AppColors.primary,
         child: const Icon(TablerIcons.plus, color: AppColors.cardBackground),
@@ -141,17 +142,19 @@ class CategoryManagementView extends StatelessWidget {
                               onPressed: () =>
                                   _showRenameDialog(context, category),
                             ),
-                            OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: AppColors.signal,
-                                side: const BorderSide(
-                                  color: AppColors.signal,
-                                  width: 1.5,
+                            IntrinsicWidth(
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: AppColors.signal,
+                                  side: const BorderSide(
+                                    color: AppColors.signal,
+                                    width: 1.5,
+                                  ),
                                 ),
+                                onPressed: () =>
+                                    viewModel.archiveCategory(category.id),
+                                child: const Text('Archive'),
                               ),
-                              onPressed: () =>
-                                  viewModel.archiveCategory(category.id),
-                              child: const Text('Archive'),
                             ),
                           ],
                         ),
