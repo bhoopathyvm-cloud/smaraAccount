@@ -3,16 +3,19 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:smara_accounting/data/repositories/ledger_repository.dart'
-    as _i2;
-import 'package:smara_accounting/domain/models/account.dart' as _i5;
-import 'package:smara_accounting/domain/models/journal_entry.dart' as _i4;
-import 'package:smara_accounting/domain/models/summary.dart' as _i7;
+    as _i4;
+import 'package:smara_accounting/domain/crypto/signing_key_service.dart' as _i2;
+import 'package:smara_accounting/domain/models/account.dart' as _i7;
+import 'package:smara_accounting/domain/models/integrity_event.dart' as _i10;
+import 'package:smara_accounting/domain/models/journal_entry.dart' as _i6;
+import 'package:smara_accounting/domain/models/signing_identity.dart' as _i3;
+import 'package:smara_accounting/domain/models/summary.dart' as _i9;
 import 'package:smara_accounting/domain/models/transaction_direction.dart'
-    as _i6;
+    as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -29,37 +32,187 @@ import 'package:smara_accounting/domain/models/transaction_direction.dart'
 // ignore_for_file: subtype_of_sealed_class
 // ignore_for_file: invalid_use_of_internal_member
 
+class _FakeGeneratedIdentity_0 extends _i1.SmartFake
+    implements _i2.GeneratedIdentity {
+  _FakeGeneratedIdentity_0(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
+class _FakeSigningIdentity_1 extends _i1.SmartFake
+    implements _i3.SigningIdentity {
+  _FakeSigningIdentity_1(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
+class _FakeChainVerificationResult_2 extends _i1.SmartFake
+    implements _i4.ChainVerificationResult {
+  _FakeChainVerificationResult_2(Object parent, Invocation parentInvocation)
+    : super(parent, parentInvocation);
+}
+
 /// A class which mocks [LedgerRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockLedgerRepository extends _i1.Mock implements _i2.LedgerRepository {
+class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
   @override
-  _i3.Stream<List<_i4.JournalEntry>> watchEntries() =>
+  _i5.Future<_i3.SigningIdentity?> currentIdentity() =>
       (super.noSuchMethod(
-            Invocation.method(#watchEntries, []),
-            returnValue: _i3.Stream<List<_i4.JournalEntry>>.empty(),
-            returnValueForMissingStub:
-                _i3.Stream<List<_i4.JournalEntry>>.empty(),
+            Invocation.method(#currentIdentity, []),
+            returnValue: _i5.Future<_i3.SigningIdentity?>.value(),
+            returnValueForMissingStub: _i5.Future<_i3.SigningIdentity?>.value(),
           )
-          as _i3.Stream<List<_i4.JournalEntry>>);
+          as _i5.Future<_i3.SigningIdentity?>);
 
   @override
-  _i3.Stream<List<_i5.Account>> watchCategories({
+  _i5.Future<bool> hasMatchingStoredKey(_i3.SigningIdentity? identity) =>
+      (super.noSuchMethod(
+            Invocation.method(#hasMatchingStoredKey, [identity]),
+            returnValue: _i5.Future<bool>.value(false),
+            returnValueForMissingStub: _i5.Future<bool>.value(false),
+          )
+          as _i5.Future<bool>);
+
+  @override
+  _i5.Future<_i2.GeneratedIdentity> generateFirstIdentity() =>
+      (super.noSuchMethod(
+            Invocation.method(#generateFirstIdentity, []),
+            returnValue: _i5.Future<_i2.GeneratedIdentity>.value(
+              _FakeGeneratedIdentity_0(
+                this,
+                Invocation.method(#generateFirstIdentity, []),
+              ),
+            ),
+            returnValueForMissingStub: _i5.Future<_i2.GeneratedIdentity>.value(
+              _FakeGeneratedIdentity_0(
+                this,
+                Invocation.method(#generateFirstIdentity, []),
+              ),
+            ),
+          )
+          as _i5.Future<_i2.GeneratedIdentity>);
+
+  @override
+  _i5.Future<_i3.SigningIdentity> confirmFirstIdentity(
+    _i2.GeneratedIdentity? generated,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#confirmFirstIdentity, [generated]),
+            returnValue: _i5.Future<_i3.SigningIdentity>.value(
+              _FakeSigningIdentity_1(
+                this,
+                Invocation.method(#confirmFirstIdentity, [generated]),
+              ),
+            ),
+            returnValueForMissingStub: _i5.Future<_i3.SigningIdentity>.value(
+              _FakeSigningIdentity_1(
+                this,
+                Invocation.method(#confirmFirstIdentity, [generated]),
+              ),
+            ),
+          )
+          as _i5.Future<_i3.SigningIdentity>);
+
+  @override
+  _i5.Future<_i3.SigningIdentity> restoreIdentity({
+    List<String>? recoveryPhraseWords,
+    String? keystoreFileContents,
+    String? keystorePassphrase,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#restoreIdentity, [], {
+              #recoveryPhraseWords: recoveryPhraseWords,
+              #keystoreFileContents: keystoreFileContents,
+              #keystorePassphrase: keystorePassphrase,
+            }),
+            returnValue: _i5.Future<_i3.SigningIdentity>.value(
+              _FakeSigningIdentity_1(
+                this,
+                Invocation.method(#restoreIdentity, [], {
+                  #recoveryPhraseWords: recoveryPhraseWords,
+                  #keystoreFileContents: keystoreFileContents,
+                  #keystorePassphrase: keystorePassphrase,
+                }),
+              ),
+            ),
+            returnValueForMissingStub: _i5.Future<_i3.SigningIdentity>.value(
+              _FakeSigningIdentity_1(
+                this,
+                Invocation.method(#restoreIdentity, [], {
+                  #recoveryPhraseWords: recoveryPhraseWords,
+                  #keystoreFileContents: keystoreFileContents,
+                  #keystorePassphrase: keystorePassphrase,
+                }),
+              ),
+            ),
+          )
+          as _i5.Future<_i3.SigningIdentity>);
+
+  @override
+  _i5.Future<_i2.GeneratedIdentity> migrateToNewIdentityAfterKeyLoss() =>
+      (super.noSuchMethod(
+            Invocation.method(#migrateToNewIdentityAfterKeyLoss, []),
+            returnValue: _i5.Future<_i2.GeneratedIdentity>.value(
+              _FakeGeneratedIdentity_0(
+                this,
+                Invocation.method(#migrateToNewIdentityAfterKeyLoss, []),
+              ),
+            ),
+            returnValueForMissingStub: _i5.Future<_i2.GeneratedIdentity>.value(
+              _FakeGeneratedIdentity_0(
+                this,
+                Invocation.method(#migrateToNewIdentityAfterKeyLoss, []),
+              ),
+            ),
+          )
+          as _i5.Future<_i2.GeneratedIdentity>);
+
+  @override
+  _i5.Future<_i4.ChainVerificationResult> verifyChain() =>
+      (super.noSuchMethod(
+            Invocation.method(#verifyChain, []),
+            returnValue: _i5.Future<_i4.ChainVerificationResult>.value(
+              _FakeChainVerificationResult_2(
+                this,
+                Invocation.method(#verifyChain, []),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i5.Future<_i4.ChainVerificationResult>.value(
+                  _FakeChainVerificationResult_2(
+                    this,
+                    Invocation.method(#verifyChain, []),
+                  ),
+                ),
+          )
+          as _i5.Future<_i4.ChainVerificationResult>);
+
+  @override
+  _i5.Stream<List<_i6.JournalEntry>> watchEntries() =>
+      (super.noSuchMethod(
+            Invocation.method(#watchEntries, []),
+            returnValue: _i5.Stream<List<_i6.JournalEntry>>.empty(),
+            returnValueForMissingStub:
+                _i5.Stream<List<_i6.JournalEntry>>.empty(),
+          )
+          as _i5.Stream<List<_i6.JournalEntry>>);
+
+  @override
+  _i5.Stream<List<_i7.Account>> watchCategories({
     bool? includeArchived = false,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#watchCategories, [], {
               #includeArchived: includeArchived,
             }),
-            returnValue: _i3.Stream<List<_i5.Account>>.empty(),
-            returnValueForMissingStub: _i3.Stream<List<_i5.Account>>.empty(),
+            returnValue: _i5.Stream<List<_i7.Account>>.empty(),
+            returnValueForMissingStub: _i5.Stream<List<_i7.Account>>.empty(),
           )
-          as _i3.Stream<List<_i5.Account>>);
+          as _i5.Stream<List<_i7.Account>>);
 
   @override
-  _i3.Future<void> recordTransaction({
+  _i5.Future<void> recordTransaction({
     required int? amountMinor,
-    required _i6.TransactionDirection? direction,
+    required _i8.TransactionDirection? direction,
     required String? categoryId,
     required DateTime? transactionDate,
     String? description,
@@ -72,34 +225,34 @@ class MockLedgerRepository extends _i1.Mock implements _i2.LedgerRepository {
               #transactionDate: transactionDate,
               #description: description,
             }),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i5.Future<void>);
 
   @override
-  _i3.Future<void> reverseEntry(String? entryId) =>
+  _i5.Future<void> reverseEntry(String? entryId) =>
       (super.noSuchMethod(
             Invocation.method(#reverseEntry, [entryId]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i5.Future<void>);
 
   @override
-  _i3.Future<void> addCategory({
+  _i5.Future<void> addCategory({
     required String? name,
-    required _i5.AccountType? type,
+    required _i7.AccountType? type,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#addCategory, [], {#name: name, #type: type}),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i5.Future<void>);
 
   @override
-  _i3.Future<void> renameCategory({
+  _i5.Future<void> renameCategory({
     required String? id,
     required String? newName,
   }) =>
@@ -108,29 +261,39 @@ class MockLedgerRepository extends _i1.Mock implements _i2.LedgerRepository {
               #id: id,
               #newName: newName,
             }),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i5.Future<void>);
 
   @override
-  _i3.Future<void> archiveCategory(String? id) =>
+  _i5.Future<void> archiveCategory(String? id) =>
       (super.noSuchMethod(
             Invocation.method(#archiveCategory, [id]),
-            returnValue: _i3.Future<void>.value(),
-            returnValueForMissingStub: _i3.Future<void>.value(),
+            returnValue: _i5.Future<void>.value(),
+            returnValueForMissingStub: _i5.Future<void>.value(),
           )
-          as _i3.Future<void>);
+          as _i5.Future<void>);
 
   @override
-  _i3.Stream<_i7.LedgerSummary> watchSummary({
+  _i5.Stream<_i9.LedgerSummary> watchSummary({
     required DateTime? start,
     required DateTime? end,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#watchSummary, [], {#start: start, #end: end}),
-            returnValue: _i3.Stream<_i7.LedgerSummary>.empty(),
-            returnValueForMissingStub: _i3.Stream<_i7.LedgerSummary>.empty(),
+            returnValue: _i5.Stream<_i9.LedgerSummary>.empty(),
+            returnValueForMissingStub: _i5.Stream<_i9.LedgerSummary>.empty(),
           )
-          as _i3.Stream<_i7.LedgerSummary>);
+          as _i5.Stream<_i9.LedgerSummary>);
+
+  @override
+  _i5.Stream<List<_i10.IntegrityEvent>> watchIntegrityEvents() =>
+      (super.noSuchMethod(
+            Invocation.method(#watchIntegrityEvents, []),
+            returnValue: _i5.Stream<List<_i10.IntegrityEvent>>.empty(),
+            returnValueForMissingStub:
+                _i5.Stream<List<_i10.IntegrityEvent>>.empty(),
+          )
+          as _i5.Stream<List<_i10.IntegrityEvent>>);
 }

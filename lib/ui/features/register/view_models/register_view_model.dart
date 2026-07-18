@@ -57,7 +57,9 @@ class RegisterViewModel extends ChangeNotifier {
         orElse: () => entry.postings.last,
       );
 
-      runningBalance += assetPosting.amountMinor;
+      if (entry.isVerified && !entry.isSupersededByMigration) {
+        runningBalance += assetPosting.amountMinor;
+      }
       rows.add(
         RegisterRow(
           entryId: entry.id,
@@ -70,6 +72,8 @@ class RegisterViewModel extends ChangeNotifier {
           description: entry.description,
           runningBalanceMinor: runningBalance,
           isReversal: entry.reversesEntryId != null,
+          isVerified: entry.isVerified,
+          breakReason: entry.breakReason,
         ),
       );
     }
