@@ -37,11 +37,11 @@
 
 ## 5. ViewModels
 
-- [ ] 5.1 `RegisterViewModel` — exposes entries + running balance, calls `watchEntries()`
-- [ ] 5.2 `RecordTransactionViewModel` — form state (amount, direction, category, date), calls `recordTransaction`
-- [ ] 5.3 `CategoryManagementViewModel` — rename/add/archive actions
-- [ ] 5.4 `SummaryViewModel` — date range selection, calls `watchSummary`
-- [ ] 5.5 Wire domain exceptions (e.g. invalid amount) to an `errorMessage`-style getter on each ViewModel, per `smara-tech-guidelines.md` error handling rules
+- [x] 5.1 `RegisterViewModel` — exposes entries + running balance, calls `watchEntries()`
+- [x] 5.2 `RecordTransactionViewModel` — form state (amount, direction, category, date), calls `recordTransaction`
+- [x] 5.3 `CategoryManagementViewModel` — rename/add/archive actions
+- [x] 5.4 `SummaryViewModel` — date range selection, calls `watchSummary`
+- [x] 5.5 Wire domain exceptions (e.g. invalid amount) to an `errorMessage`-style getter on each ViewModel, per `smara-tech-guidelines.md` error handling rules
 
 ## 6. Views
 

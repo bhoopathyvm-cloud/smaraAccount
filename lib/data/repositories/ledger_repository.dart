@@ -244,7 +244,7 @@ class LedgerRepository {
   /// (inclusive), based on transaction date. Both totals are positive
   /// magnitudes; a reversed entry's postings net out automatically since
   /// they carry opposite signs to the original.
-  Stream<Summary> watchSummary({
+  Stream<LedgerSummary> watchSummary({
     required DateTime start,
     required DateTime end,
   }) {
@@ -281,7 +281,7 @@ class LedgerRepository {
             break;
         }
       }
-      return Summary(
+      return LedgerSummary(
         totalIncomeMinor: totalIncomeMinor,
         totalExpenseMinor: totalExpenseMinor,
       );
