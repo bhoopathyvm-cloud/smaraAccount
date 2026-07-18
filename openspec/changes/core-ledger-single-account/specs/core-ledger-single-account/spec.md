@@ -45,6 +45,13 @@ The user SHALL record a transaction by providing a transaction date, an amount, 
 - **WHEN** the user is choosing a category while recording a new transaction
 - **THEN** archived categories do not appear in the selection
 
+### Requirement: Transaction Amount Validation
+The system SHALL require every transaction amount to be a positive, non-zero value. A zero or negative amount SHALL be rejected before any journal entry is posted.
+
+#### Scenario: Zero or negative amount is rejected
+- **WHEN** the user attempts to record a transaction with an amount of zero or a negative value
+- **THEN** the system rejects the transaction and no journal entry is posted
+
 ### Requirement: Transaction Date and Recorded Timestamp
 Every journal entry SHALL carry two distinct points in time: a transaction date supplied by the user (when the transaction occurred), and a recorded-at timestamp captured automatically by the system at the moment of posting (when it was entered). The user SHALL NOT be able to set or edit the recorded-at timestamp.
 
