@@ -186,8 +186,16 @@ class LedgerRepository {
 
 ### Domain Models
 
-- Immutable data classes. Prefer the `dart-use-primary-constructors` style
-  for concise, immutable models.
+- Immutable data classes using standard `const Foo({required this.x, ...})`
+  constructors. Primary constructors (`dart-use-primary-constructors`) were
+  tried first but reverted: on this project's pinned SDK (`^3.12.2`,
+  stable only from 3.13) they're experimental and require
+  `--enable-experiment=primary-constructors` passed separately to every
+  tool that isn't the analyzer/IDE - `dart format`, `dart test`/
+  `flutter test`, and (untested but expected) `flutter run`/`build` -
+  since none of them read `analysis_options.yaml`'s experiment flag.
+  Revisit once the SDK constraint moves past 3.13 and the feature is
+  stable by default.
 - Use `dart-use-pattern-matching` (switch expressions / sealed classes) for
   closed sets like `TransactionDirection` (`in` / `out`) instead of string
   comparisons or nested `if`/`else` chains.

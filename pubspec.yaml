@@ -40,6 +40,9 @@ dependencies:
   path_provider: ^2.1.6
   path: ^1.9.1
   flutter_secure_storage: ^10.3.1
+  uuid: ^4.6.0
+  drift_flutter: ^0.3.1
+  tabler_icons_plus: ^3.44.0
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +56,11 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   drift_dev: ^2.34.0
   build_runner: ^2.15.1
+  test: ^1.31.0
+  mockito: ^5.6.4
+  coverage: ^1.15.1
+  integration_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
