@@ -4,8 +4,11 @@
 
 set -e
 
+# --enable-experiment is required here even though analysis_options.yaml
+# already enables primary-constructors for the analyzer: `dart format`
+# doesn't read analysis_options.yaml, only its own CLI flag.
 echo "Running dart format --output=none --set-exit-if-changed ..."
-dart format --output=none --set-exit-if-changed .
+dart format --enable-experiment=primary-constructors --output=none --set-exit-if-changed .
 
 echo "Running flutter analyze ..."
 flutter analyze

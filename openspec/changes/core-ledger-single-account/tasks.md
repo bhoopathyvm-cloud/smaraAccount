@@ -21,9 +21,9 @@
 
 ## 3. Domain Models
 
-- [ ] 3.1 Define `Account` domain model (id, name, type, archived) with `dart-use-primary-constructors` style
-- [ ] 3.2 Define `TransactionDirection` enum (`in`, `out`) using `dart-use-pattern-matching` for any branching logic
-- [ ] 3.3 Define `JournalEntry` and `Posting` domain models
+- [x] 3.1 Define `Account` domain model (id, name, type, archived) with `dart-use-primary-constructors` style
+- [x] 3.2 Define `TransactionDirection` enum (`in`, `out`) using `dart-use-pattern-matching` for any branching logic
+- [x] 3.3 Define `JournalEntry` and `Posting` domain models
 
 ## 4. Ledger Repository
 
