@@ -1,4 +1,4 @@
-> Note: this change is implementable and testable on its own, but per
+h> Note: this change is implementable and testable on its own, but per
 > `ledger-integrity-signing/design.md`'s Migration Plan, do not cut a public
 > release until that change's signing layer also lands — the two are meant
 > to ship together, even though they're specified as separate changes.
@@ -58,11 +58,11 @@
 - [x] 7.1 Unit tests (`dart-add-unit-test`) for every Repository method: money-in postings, money-out postings, zero/negative amount rejected, reversal linkage, archive filtering, summary totals (`test/data/repositories/ledger_repository_test.dart`, written and passing during task group 4)
 - [x] 7.2 Unit tests for every ViewModel public method, mocking the Repository (`dart-generate-test-mocks`)
 - [x] 7.3 Widget tests (`flutter-add-widget-test`): archived category absent from picker, running balance renders per row, direction shown without color
-- [ ] 7.4 Integration tests (`flutter-add-integration-test`): record money in → register/balance update; reverse a posted entry → original stays, new entry appears; archive a category → hidden from picker, visible in history
-- [ ] 7.5 Generate coverage report (`dart-collect-coverage`)
+- [x] 7.4 Integration tests (`flutter-add-integration-test`): record money in → register/balance update; reverse a posted entry → original stays, new entry appears; archive a category → hidden from picker, visible in history
+- [x] 7.5 Generate coverage report (`dart-collect-coverage`)
 
 ## 8. Quality Gates
 
-- [ ] 8.1 `dart analyze` clean, `dart fix --apply` run
-- [ ] 8.2 Verify every scenario in `specs/core-ledger-single-account/spec.md` has a corresponding passing test
-- [ ] 8.3 Run through the Definition of Done checklist in `smara-tech-guidelines.md`
+- [x] 8.1 `dart analyze` clean, `dart fix --apply` run
+- [x] 8.2 Verify every scenario in `specs/core-ledger-single-account/spec.md` has a corresponding passing test
+- [x] 8.3 Run through the Definition of Done checklist in `smara-tech-guidelines.md`

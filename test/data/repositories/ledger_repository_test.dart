@@ -103,6 +103,33 @@ void main() {
         throwsA(isA<InvalidTransactionAmountException>()),
       );
     });
+
+    test('stores the user-supplied transaction date as given and stamps '
+        'recordedAt to the current time, independent of that date', () async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      final backdatedDate = DateTime(2020, 3, 1);
+      final before = DateTime.now();
+
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        transactionDate: backdatedDate,
+      );
+
+      final after = DateTime.now();
+      final entry = (await repository.watchEntries().first).single;
+
+      expect(entry.transactionDate, equals(backdatedDate));
+      expect(
+        entry.recordedAt.isAfter(before.subtract(const Duration(seconds: 1))),
+        isTrue,
+      );
+      expect(
+        entry.recordedAt.isBefore(after.add(const Duration(seconds: 1))),
+        isTrue,
+      );
+    });
   });
 
   group('reverseEntry', () {
@@ -155,6 +182,24 @@ void main() {
             .watchCategories(includeArchived: true)
             .first;
         expect(all.any((a) => a.id == incomeId), isTrue);
+      },
+    );
+
+    test(
+      'addCategory makes the new category available for selection',
+      () async {
+        await repository.addCategory(
+          name: 'Freelance',
+          type: AccountType.income,
+        );
+
+        final categories = await repository.watchCategories().first;
+        expect(
+          categories.any(
+            (a) => a.name == 'Freelance' && a.type == AccountType.income,
+          ),
+          isTrue,
+        );
       },
     );
 
