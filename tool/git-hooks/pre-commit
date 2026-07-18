@@ -1,0 +1,11 @@
+#!/bin/sh
+# dart format / dart analyze gate, per smara-tech-guidelines.md's Build Quality Gates.
+# Installed via: git config core.hooksPath tool/git-hooks
+
+set -e
+
+echo "Running dart format --output=none --set-exit-if-changed ..."
+dart format --output=none --set-exit-if-changed .
+
+echo "Running flutter analyze ..."
+flutter analyze

@@ -5,11 +5,11 @@
 
 ## 1. Project Setup
 
-- [ ] 1.1 Create the Flutter project (`flutter create`) targeting macOS, iOS, Android, Windows
-- [ ] 1.2 Add dependencies: `drift`, `sqlite3_flutter_libs`, `provider`, `go_router`, `uuid`
-- [ ] 1.3 Add dev dependencies: `drift_dev`, `build_runner`, `test`, `mockito`, `coverage`
-- [ ] 1.4 Set up `lib/` per `smara-architecture.md`'s project structure (`data/`, `domain/`, `ui/core/`, `ui/features/`)
-- [ ] 1.5 Configure `dart analyze` / `dart format` as pre-commit checks per `smara-tech-guidelines.md`
+- [x] 1.1 Create the Flutter project (`flutter create`) targeting macOS, iOS, Android, Windows
+- [x] 1.2 Add dependencies: `drift`, `drift_flutter`, `provider`, `go_router`, `uuid` (`drift_flutter` supersedes the originally-planned `sqlite3_flutter_libs`, which pub.dev confirms is EOL/no-op as of 0.6.0 in favor of `drift_flutter`'s `driftDatabase()` cross-platform connection helper — verified at implementation time)
+- [x] 1.3 Add dev dependencies: `drift_dev`, `build_runner`, `test`, `mockito`, `coverage`
+- [x] 1.4 Set up `lib/` per `smara-architecture.md`'s project structure (`data/`, `domain/`, `ui/core/`, `ui/features/`)
+- [x] 1.5 Configure `dart analyze` / `dart format` as pre-commit checks per `smara-tech-guidelines.md` (`tool/git-hooks/pre-commit`, installed via `git config core.hooksPath tool/git-hooks`)
 
 ## 2. Drift Schema
 
