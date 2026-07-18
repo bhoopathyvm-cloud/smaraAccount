@@ -148,4 +148,29 @@ void main() {
       expect(registerViewModel.rows.single.categoryName, equals('Salary'));
     },
   );
+
+  testWidgets(
+    'category management screen renders the archive action without a layout error',
+    (tester) async {
+      await tester.pumpWidget(buildApp());
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.tap(find.text('Categories'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(tester.takeException(), isNull);
+      expect(find.text('Archive'), findsWidgets);
+
+      // Both branches stay mounted under StatefulShellRoute.indexedStack,
+      // so switching tabs is what previously triggered a Hero tag
+      // collision between the two screens' FloatingActionButtons.
+      await tester.tap(find.text('Register'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(tester.takeException(), isNull);
+    },
+  );
 }
