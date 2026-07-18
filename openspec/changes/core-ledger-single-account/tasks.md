@@ -13,11 +13,11 @@
 
 ## 2. Drift Schema
 
-- [ ] 2.1 Define `accounts` table (id, name, type, archived_at, created_at) per `design.md`
-- [ ] 2.2 Define `journal_entries` table (id, transaction_date, recorded_at, description, reverses_entry_id, created_at)
-- [ ] 2.3 Define `postings` table (id, entry_id, account_id, amount_minor, line_number)
-- [ ] 2.4 Implement `onCreate`: seed the single asset account + the starter Income/Expense category set per `design.md`'s "Starter category set" (Income: Salary, Other Income; Expense: Groceries, Rent/Mortgage, Utilities, Transport, Other Expense)
-- [ ] 2.5 Run `build_runner` to generate Drift code; verify generated code compiles
+- [x] 2.1 Define `accounts` table (id, name, type, archived_at, created_at) per `design.md`
+- [x] 2.2 Define `journal_entries` table (id, transaction_date, recorded_at, description, reverses_entry_id, created_at)
+- [x] 2.3 Define `postings` table (id, entry_id, account_id, amount_minor, line_number)
+- [x] 2.4 Implement `onCreate`: seed the single asset account + the starter Income/Expense category set per `design.md`'s "Starter category set" (Income: Salary, Other Income; Expense: Groceries, Rent/Mortgage, Utilities, Transport, Other Expense)
+- [x] 2.5 Run `build_runner` to generate Drift code; verify generated code compiles
 
 ## 3. Domain Models
 
