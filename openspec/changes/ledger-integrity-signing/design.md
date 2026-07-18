@@ -38,7 +38,9 @@ journal_entries  (existing table from core-ledger-single-account, extended)
   ...existing columns (id, transaction_date, recorded_at, description,
       reverses_entry_id, created_at)...
   device_chain_sequence   INTEGER NOT NULL UNIQUE  -- gapless, ascending
-  previous_entry_hash     BLOB NULL                -- null only for the genesis entry
+  previous_entry_hash     BLOB NOT NULL            -- 32 zero bytes for the genesis
+                                                    -- entry (a well-defined constant,
+                                                    -- never null — see spec.md)
   entry_hash              BLOB NOT NULL
   signed_by_identity_id   TEXT NOT NULL REFERENCES signing_identities(identity_id)
   signature               BLOB NOT NULL

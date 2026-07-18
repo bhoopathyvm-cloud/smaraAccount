@@ -64,6 +64,19 @@ introduce a parallel concept. Alternative considered: a separate
 need to be merged back into a unified chart-of-accounts table as soon as
 transfers between accounts are added, which is known to be coming next.
 
+### Amount validation happens before postings are derived
+
+`recordTransaction`'s user-facing `amountMinor` parameter (a positive
+magnitude; direction is a separate field) is validated to be greater than
+zero before any posting is derived or written. A zero or negative value
+throws `UnbalancedEntryException` (per `smara-tech-guidelines.md`'s error
+handling pattern) and no `journal_entries`/`postings` rows are written.
+This is Repository-level validation, not a `CHECK` constraint on
+`postings.amount_minor`, because that column stores the signed per-posting
+value (`+amount`/`-amount`) — the positivity rule applies to the
+user-supplied magnitude before the sign is derived, not to the stored
+column itself.
+
 ### Signed-amount postings instead of explicit debit/credit columns
 
 Each entry has exactly two postings whose `amount_minor` values sum to

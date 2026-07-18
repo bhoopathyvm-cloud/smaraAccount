@@ -29,7 +29,7 @@
 
 - [ ] 4.1 Implement `watchEntries()` — reactive stream of the register, ordered by transaction date
 - [ ] 4.2 Implement `watchCategories({includeArchived})` — for pickers (active only) vs. historical views (all)
-- [ ] 4.3 Implement `recordTransaction(amountMinor, direction, categoryId, transactionDate)` — derives the two postings, stamps `recorded_at` automatically via `DateTime.now()`, writes entry + postings in one Drift transaction
+- [ ] 4.3 Implement `recordTransaction(amountMinor, direction, categoryId, transactionDate)` — validates `amountMinor > 0` (throws `UnbalancedEntryException` and writes nothing if not), derives the two postings, stamps `recorded_at` automatically via `DateTime.now()`, writes entry + postings in one Drift transaction
 - [ ] 4.4 Implement `reverseEntry(entryId)` — inserts a new entry with swapped posting amounts, `reverses_entry_id` set, as an independent action with no required follow-up
 - [ ] 4.5 Implement `addCategory(name, type)`, `renameCategory(id, newName)`, `archiveCategory(id)`
 - [ ] 4.6 Implement `watchSummary(dateRange)` — total income and total expense for the range
@@ -55,7 +55,7 @@
 
 ## 7. Testing
 
-- [ ] 7.1 Unit tests (`dart-add-unit-test`) for every Repository method: money-in postings, money-out postings, reversal linkage, archive filtering, summary totals
+- [ ] 7.1 Unit tests (`dart-add-unit-test`) for every Repository method: money-in postings, money-out postings, zero/negative amount rejected, reversal linkage, archive filtering, summary totals
 - [ ] 7.2 Unit tests for every ViewModel public method, mocking the Repository (`dart-generate-test-mocks`)
 - [ ] 7.3 Widget tests (`flutter-add-widget-test`): archived category absent from picker, running balance renders per row, direction shown without color
 - [ ] 7.4 Integration tests (`flutter-add-integration-test`): record money in → register/balance update; reverse a posted entry → original stays, new entry appears; archive a category → hidden from picker, visible in history
