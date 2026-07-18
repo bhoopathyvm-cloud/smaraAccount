@@ -113,6 +113,29 @@ model here is single-device, single-user, no adversarial multi-party trust
 yet. That hardening becomes relevant once the LAN-sync change introduces
 multiple devices reading each other's data; revisit there.
 
+### Starter category set
+
+The exact starter categories seeded by `onCreate` (Starter Chart of
+Accounts requirement):
+
+```
+Income
+  - Salary
+  - Other Income
+
+Expense
+  - Groceries
+  - Rent/Mortgage
+  - Utilities
+  - Transport
+  - Other Expense
+```
+
+A small, generic set chosen to cover common cases without overwhelming
+first use; all are renameable, extendable, and archivable per the
+Category Management requirement, so this is a starting point, not a
+fixed taxonomy.
+
 ### Archived categories
 
 `archived_at` is set (not deleted) when a category is archived. The
