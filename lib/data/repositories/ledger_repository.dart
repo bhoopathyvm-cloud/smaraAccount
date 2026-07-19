@@ -355,7 +355,17 @@ class LedgerRepository {
             )
             .toList();
 
-        if (!_bytesEqual(entry.previousEntryHash, expectedPreviousHash)) {
+        // A migration-created entry (migratedFromEntryId set) deliberately
+        // starts a fresh hash-chain root under its new identity - it does
+        // not, and cannot, chain onto the unrecoverable old identity's
+        // last hash (migrateToNewIdentityAfterKeyLoss docs why). Without
+        // this, every post-migration entry would wrongly read as a chain
+        // break purely because device_chain_sequence keeps incrementing
+        // across the migration boundary while the hash chain resets.
+        final requiredPreviousHash = entry.migratedFromEntryId != null
+            ? Uint8List.fromList(genesisPreviousEntryHash)
+            : expectedPreviousHash;
+        if (!_bytesEqual(entry.previousEntryHash, requiredPreviousHash)) {
           breakEntryId = entry.id;
           breakReason = VerificationBreakReason.chainLinkBroken;
           results[entry.id] = (isVerified: false, reason: breakReason);

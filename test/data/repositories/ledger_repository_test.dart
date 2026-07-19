@@ -657,5 +657,45 @@ void main() {
         expect(summary.totalIncomeMinor, equals(1000));
       },
     );
+
+    test(
+      'a startup verifyChain after migration does not flag the migrated entry as a chain break',
+      () async {
+        // Regression test: the migrated entry's previous_entry_hash is a
+        // fresh genesis (a new identity cannot chain onto the
+        // unrecoverable old identity's hash), while device_chain_sequence
+        // keeps incrementing across the boundary. verifyChain() must
+        // recognize a migratedFromEntryId-marked entry as a legitimate new
+        // chain root, not a broken link - this exact scenario is what the
+        // real app runs into via app_router.dart's redirect immediately
+        // after a migration completes.
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        await repository.migrateToNewIdentityAfterKeyLoss();
+        final result = await repository.verifyChain();
+
+        expect(result.isFullyVerified, isTrue);
+
+        final entries = await repository.watchEntries().first;
+        final migrated = entries.firstWhere(
+          (e) => e.migratedFromEntryId != null,
+        );
+        expect(migrated.isVerified, isTrue);
+
+        final summary = await repository
+            .watchSummary(
+              start: DateTime(2020, 1, 1),
+              end: DateTime(2030, 12, 31),
+            )
+            .first;
+        expect(summary.totalIncomeMinor, equals(1000));
+      },
+    );
   });
 }
