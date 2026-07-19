@@ -51,23 +51,13 @@ class AppDatabase extends _$AppDatabase {
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (Migrator m) async {
+      // Schema only - no data. Starter accounts are seeded by
+      // LedgerRepository.confirmFirstIdentity, not here: spec
+      // ("Device Signing Identity") requires the signing identity to
+      // exist before any starter account or journal entry does, so
+      // seeding can't happen unconditionally at database-file creation
+      // time, before onboarding has run.
       await m.createAll();
-      await into(accounts).insert(
-        AccountsCompanion.insert(
-          name: financialAccountName,
-          type: AccountType.asset,
-        ),
-      );
-      for (final name in starterIncomeCategories) {
-        await into(accounts).insert(
-          AccountsCompanion.insert(name: name, type: AccountType.income),
-        );
-      }
-      for (final name in starterExpenseCategories) {
-        await into(accounts).insert(
-          AccountsCompanion.insert(name: name, type: AccountType.expense),
-        );
-      }
     },
     onUpgrade: (Migrator m, int from, int to) async {
       if (from < 2) {

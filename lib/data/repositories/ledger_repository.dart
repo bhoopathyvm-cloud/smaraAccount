@@ -74,9 +74,14 @@ class LedgerRepository {
     return _signingKeyService.generateNewIdentity();
   }
 
-  /// Persists [generated] as this device's signing identity and seeds the
-  /// chain state. Call only after the user has confirmed the recovery
-  /// phrase.
+  /// Persists [generated] as this device's signing identity, seeds the
+  /// chain state, and seeds the starter financial account/categories.
+  /// Call only after the user has confirmed the recovery phrase.
+  ///
+  /// Starter accounts are seeded here rather than at database creation
+  /// (core-ledger-single-account's original approach) because spec
+  /// ("Device Signing Identity") requires the signing identity to exist
+  /// before any starter account or journal entry does.
   Future<SigningIdentity> confirmFirstIdentity(
     GeneratedIdentity generated,
   ) async {
@@ -97,6 +102,28 @@ class LedgerRepository {
               nextDeviceChainSequence: 0,
             ),
           );
+      await _db
+          .into(_db.accounts)
+          .insert(
+            AccountsCompanion.insert(
+              name: financialAccountName,
+              type: AccountType.asset,
+            ),
+          );
+      for (final name in starterIncomeCategories) {
+        await _db
+            .into(_db.accounts)
+            .insert(
+              AccountsCompanion.insert(name: name, type: AccountType.income),
+            );
+      }
+      for (final name in starterExpenseCategories) {
+        await _db
+            .into(_db.accounts)
+            .insert(
+              AccountsCompanion.insert(name: name, type: AccountType.expense),
+            );
+      }
     });
     return _toDomainIdentity(row);
   }

@@ -40,15 +40,44 @@ void main() {
     return categories.firstWhere((a) => a.type == type).id;
   }
 
-  group('onCreate seeding', () {
-    test('seeds the single asset account and starter categories', () async {
-      final categories = await repository.watchCategories().first;
-      expect(
-        categories.map((a) => a.name),
-        containsAll(starterIncomeCategories + starterExpenseCategories),
-      );
-      expect(categories.every((a) => a.type != AccountType.asset), isTrue);
-    });
+  group('starter account seeding', () {
+    test(
+      'confirmFirstIdentity seeds the single asset account and starter categories',
+      () async {
+        final categories = await repository.watchCategories().first;
+        expect(
+          categories.map((a) => a.name),
+          containsAll(starterIncomeCategories + starterExpenseCategories),
+        );
+        expect(categories.every((a) => a.type != AccountType.asset), isTrue);
+      },
+    );
+
+    test(
+      'no starter accounts exist until confirmFirstIdentity runs - spec: identity must exist first',
+      () async {
+        final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(freshDb.close);
+        final freshRepository = LedgerRepository(
+          database: freshDb,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        expect(await freshRepository.watchCategories().first, isEmpty);
+
+        final generated = await freshRepository.generateFirstIdentity();
+        expect(await freshRepository.watchCategories().first, isEmpty);
+
+        await freshRepository.confirmFirstIdentity(generated);
+        final categories = await freshRepository.watchCategories().first;
+        expect(
+          categories.map((a) => a.name),
+          containsAll(starterIncomeCategories + starterExpenseCategories),
+        );
+      },
+    );
   });
 
   group('signing identity lifecycle', () {
@@ -62,16 +91,15 @@ void main() {
       );
       addTearDown(freshDb.close);
 
-      final categories = await freshRepository.watchCategories().first;
-      final incomeId = categories
-          .firstWhere((a) => a.type == AccountType.income)
-          .id;
-
+      // No identity confirmed yet, so no starter accounts exist either
+      // (spec: identity must exist before any account or entry does) -
+      // categoryId is an arbitrary placeholder; recordTransaction must
+      // reject this before it ever gets far enough to resolve it.
       expect(
         () => freshRepository.recordTransaction(
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
-          categoryId: incomeId,
+          categoryId: 'placeholder-category-id',
           transactionDate: DateTime(2026, 1, 15),
         ),
         throwsStateError,
@@ -135,6 +163,44 @@ void main() {
 
         final restored = await reinstalledRepository.restoreIdentity(
           recoveryPhraseWords: generated.phrase.words,
+        );
+
+        expect(restored.identityId, equals(originalIdentity.identityId));
+        expect(
+          await reinstalledRepository.hasMatchingStoredKey(restored),
+          isTrue,
+        );
+      },
+    );
+
+    test(
+      'restoreIdentity on a reinstalled device with the keystore file matches the original identity',
+      () async {
+        final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(freshDb.close);
+        final firstInstallRepository = LedgerRepository(
+          database: freshDb,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await firstInstallRepository.generateFirstIdentity();
+        final originalIdentity = await firstInstallRepository
+            .confirmFirstIdentity(generated);
+        final keystoreFile = await firstInstallRepository.exportKeystoreFile(
+          passphrase: 'hunter2-hunter2',
+        );
+
+        final reinstalledRepository = LedgerRepository(
+          database: freshDb,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        final restored = await reinstalledRepository.restoreIdentity(
+          keystoreFileContents: keystoreFile,
+          keystorePassphrase: 'hunter2-hunter2',
         );
 
         expect(restored.identityId, equals(originalIdentity.identityId));
@@ -337,6 +403,40 @@ void main() {
         );
       },
     );
+
+    test(
+      'the reversal is chained and signed using the same mechanism as an ordinary transaction',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final original = (await repository.watchEntries().first).single;
+
+        await repository.reverseEntry(original.id);
+
+        final entries = await repository.watchEntries().first;
+        final reversal = entries.firstWhere((e) => e.id != original.id);
+
+        expect(
+          reversal.deviceChainSequence,
+          equals(original.deviceChainSequence + 1),
+        );
+        expect(
+          reversal.signedByIdentityId,
+          equals(original.signedByIdentityId),
+        );
+        expect(reversal.signature, isNotEmpty);
+        expect(reversal.entryHash, isNotEmpty);
+        expect(reversal.isVerified, isTrue);
+
+        final result = await repository.verifyChain();
+        expect(result.isFullyVerified, isTrue);
+      },
+    );
   });
 
   group('category management', () {
@@ -537,6 +637,51 @@ void main() {
 
         final afterVerification = await repository.watchEntries().first;
         expect(afterVerification.every((e) => !e.isVerified), isTrue);
+      },
+    );
+
+    test(
+      'tampering a later entry does not affect any entry before it',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        for (var i = 0; i < 3; i++) {
+          await repository.recordTransaction(
+            amountMinor: 1000,
+            direction: TransactionDirection.moneyIn,
+            categoryId: incomeId,
+            transactionDate: DateTime(2026, 1, 15 + i),
+          );
+        }
+        final entries = await repository.watchEntries().first;
+        final middleEntry = entries.firstWhere(
+          (e) => e.deviceChainSequence == 1,
+        );
+        final firstEntry = entries.firstWhere(
+          (e) => e.deviceChainSequence == 0,
+        );
+
+        await (db.update(
+          db.journalEntries,
+        )..where((e) => e.id.equals(middleEntry.id))).write(
+          JournalEntriesCompanion(
+            description: Value('tampered outside the app'),
+          ),
+        );
+
+        final result = await repository.verifyChain();
+        expect(result.breakEntryId, equals(middleEntry.id));
+
+        final afterVerification = await repository.watchEntries().first;
+        expect(
+          afterVerification.firstWhere((e) => e.id == firstEntry.id).isVerified,
+          isTrue,
+        );
+        expect(
+          afterVerification
+              .firstWhere((e) => e.id == middleEntry.id)
+              .isVerified,
+          isFalse,
+        );
       },
     );
 
