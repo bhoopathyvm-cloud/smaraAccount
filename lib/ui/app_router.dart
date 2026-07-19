@@ -5,6 +5,8 @@ import '../data/repositories/ledger_repository.dart';
 import 'core/app_shell.dart';
 import 'features/category_management/view_models/category_management_view_model.dart';
 import 'features/category_management/views/category_management_view.dart';
+import 'features/migration/view_models/key_loss_migration_view_model.dart';
+import 'features/migration/views/key_loss_migration_view.dart';
 import 'features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'features/onboarding/views/keystore_export_view.dart';
 import 'features/onboarding/views/recovery_phrase_confirm_view.dart';
@@ -24,6 +26,8 @@ const _onboardingPaths = {
   '/onboarding/confirm',
 };
 const _restorePath = '/restore';
+const _migrationPath = '/restore/migrate';
+const _restoreRelatedPaths = {_restorePath, _migrationPath};
 
 /// Gates every navigation on the device signing identity's state (spec:
 /// "Device Signing Identity", "Mandatory Recovery Phrase Acknowledgment",
@@ -44,7 +48,9 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
       final isOnboardingRoute = _onboardingPaths.contains(
         state.matchedLocation,
       );
-      final isRestoreRoute = state.matchedLocation == _restorePath;
+      final isRestoreRoute = _restoreRelatedPaths.contains(
+        state.matchedLocation,
+      );
 
       final identity = await ledgerRepository.currentIdentity();
       if (identity == null) {
@@ -95,6 +101,16 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
         builder: (context, state) => RestoreIdentityView(
           viewModel: context.read<RestoreIdentityViewModel>(),
           onRestored: () => context.go('/register'),
+          onNoRecoveryMaterial: () => context.push(_migrationPath),
+        ),
+      ),
+      GoRoute(
+        path: _migrationPath,
+        builder: (context, state) => KeyLossMigrationView(
+          viewModel: KeyLossMigrationViewModel(
+            ledgerRepository: ledgerRepository,
+          ),
+          onMigrated: () => context.go('/register'),
         ),
       ),
       GoRoute(

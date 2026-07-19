@@ -75,7 +75,7 @@ this workaround.
 
 ## 8. True Key-Loss Migration
 
-- [ ] 8.1 Build the explicit confirmation flow ("I confirm the current ledger is valid") with plain-language wording that this does not retroactively prove pre-migration integrity — UI only; `LedgerRepository.migrateToNewIdentityAfterKeyLoss` assumes this has already happened before it's called
+- [x] 8.1 Build the explicit confirmation flow ("I confirm the current ledger is valid") with plain-language wording that this does not retroactively prove pre-migration integrity — `KeyLossMigrationView`/`KeyLossMigrationViewModel`; shows every current entry for review, requires the checkbox before the button enables, states the "does not retroactively prove" wording explicitly. Reached via a "I don't have my recovery phrase or keystore file" link on `RestoreIdentityView` (`/restore/migrate`)
 - [x] 8.2 Generate a new signing identity with `supersedes_identity_id` set
 - [x] 8.3 Re-create every existing entry as a new, signed entry with identical transaction content and `migrated_from_entry_id` set
 - [x] 8.4 Exclude legacy (superseded) entries from active balance/summary calculations while keeping them visible as historical records — `JournalEntry.isSupersededByMigration`, excluded in `watchSummary` and the register's running balance
@@ -83,14 +83,14 @@ this workaround.
 
 ## 9. Recoverable Reinstall Flow
 
-- [x] 9.1 On setup with an existing database file detected, offer "Restore from recovery phrase/keystore" before offering the migration flow — `RestoreIdentityView`, routed to automatically by `app_router.dart` when an identity exists but no matching key is stored. (The true-key-loss migration flow itself - section 8.1's confirmation UI - still doesn't exist, so there's no "before offering X" choice screen yet; restore is simply the only path offered today.)
+- [x] 9.1 On setup with an existing database file detected, offer "Restore from recovery phrase/keystore" before offering the migration flow — `RestoreIdentityView` is what `app_router.dart` routes to automatically when an identity exists but no matching key is stored; it links to the migration flow (`/restore/migrate`) only via an explicit "I don't have my recovery phrase or keystore file" secondary action, never offered first
 - [x] 9.2 On successful import/match, resume normal startup verification — confirm no entry is re-signed or altered in this path — `restoreIdentity` re-derives and matches only, never writes/re-signs; covered by test
 
 ## 10. Testing
 
 - [x] 10.1 Unit tests (`dart-add-unit-test`): hash determinism, signature acceptance/rejection, chain-linkage break detection, quarantine exclusion logic, migration re-signing preserves original content — `test/domain/crypto/*`, `test/data/repositories/ledger_repository_test.dart`
 - [x] 10.2 Unit test: tampering with a stored entry (direct DB row edit in test) is detected on next verification pass — `verifyChain` group
-- [ ] 10.3 Widget tests (`flutter-add-widget-test`): recovery-phrase screen blocks progress until confirmed; quarantined entry renders with error treatment; migration confirmation dialog shows required wording — quarantined-entry render test done (`register_view_test.dart`); `RecoveryPhraseSetupViewModel`/`RestoreIdentityViewModel` have full unit test coverage (`test/ui/features/onboarding`, `test/ui/features/restore`), but no `WidgetTester`-level test yet drives the actual onboarding/restore Views; migration confirmation dialog still doesn't exist (8.1)
+- [ ] 10.3 Widget tests (`flutter-add-widget-test`): recovery-phrase screen blocks progress until confirmed; quarantined entry renders with error treatment; migration confirmation dialog shows required wording — quarantined-entry render test done (`register_view_test.dart`); `RecoveryPhraseSetupViewModel`/`RestoreIdentityViewModel`/`KeyLossMigrationViewModel` all have full unit test coverage (`test/ui/features/onboarding`, `test/ui/features/restore`, `test/ui/features/migration`), but no `WidgetTester`-level test yet drives the actual onboarding/restore/migration Views themselves
 - [ ] 10.4 Integration tests (`flutter-add-integration-test`): full tamper-detection flow (mutate a row, restart, confirm break + quarantine + re-anchor); reinstall-with-recovery-phrase flow; true-key-loss migration flow end to end — onboarding UI now exists to drive these through `integration_test`, but none are written yet
 - [ ] 10.5 Generate coverage report (`dart-collect-coverage`) — defer until the above land, so the report reflects the finished change
 

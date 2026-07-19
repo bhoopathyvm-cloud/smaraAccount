@@ -15,10 +15,16 @@ class RestoreIdentityView extends StatefulWidget {
     super.key,
     required this.viewModel,
     required this.onRestored,
+    required this.onNoRecoveryMaterial,
   });
 
   final RestoreIdentityViewModel viewModel;
   final VoidCallback onRestored;
+
+  /// Spec: "True Key-Loss Migration" - the disaster-recovery escape
+  /// hatch for when neither the recovery phrase nor the keystore file is
+  /// available.
+  final VoidCallback onNoRecoveryMaterial;
 
   @override
   State<RestoreIdentityView> createState() => _RestoreIdentityViewState();
@@ -125,6 +131,13 @@ class _RestoreIdentityViewState extends State<RestoreIdentityView> {
                 ElevatedButton(
                   onPressed: widget.viewModel.isSubmitting ? null : _submit,
                   child: const Text('Restore'),
+                ),
+                const SizedBox(height: AppSpacing.large),
+                TextButton(
+                  onPressed: widget.onNoRecoveryMaterial,
+                  child: const Text(
+                    'I don\'t have my recovery phrase or keystore file',
+                  ),
                 ),
               ],
             ),
