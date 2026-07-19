@@ -151,6 +151,16 @@ accounts' seed data from `core-ledger-single-account`. This is a real
 sequencing dependency between the two changes' `onCreate`/first-run logic,
 not just a conceptual one.
 
+As implemented: `AppDatabase.onCreate` creates schema only, no data.
+`LedgerRepository.confirmFirstIdentity` inserts the signing identity row
+*and* seeds the financial account + starter categories, in the same
+transaction, only after the user has confirmed the recovery phrase.
+core-ledger-single-account's original design (seeding accounts directly
+in `onCreate`) was implemented first and violated this ordering until
+caught during this change's spec-conformance audit - noted here so the
+dependency direction (accounts wait on identity, not the reverse) is
+explicit for anyone touching either change's bootstrap logic again.
+
 ## Risks / Trade-offs
 
 - **`entry_verification_cache` recomputed fully on every startup** →

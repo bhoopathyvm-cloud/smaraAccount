@@ -43,7 +43,8 @@ dependencies:
   uuid: ^4.6.0
   drift_flutter: ^0.3.1
   tabler_icons_plus: ^3.44.0
-
+  cryptography: ^2.9.0
+  bip39_mnemonic: ^4.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -61,6 +62,7 @@ dev_dependencies:
   coverage: ^1.15.1
   integration_test:
     sdk: flutter
+  sqlite3: ^3.5.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

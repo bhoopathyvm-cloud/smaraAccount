@@ -6,7 +6,9 @@ import 'data/repositories/ledger_repository.dart';
 import 'ui/app_router.dart';
 import 'ui/core/app_theme.dart';
 import 'ui/features/category_management/view_models/category_management_view_model.dart';
+import 'ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'ui/features/register/view_models/register_view_model.dart';
+import 'ui/features/restore/view_models/restore_identity_view_model.dart';
 import 'ui/features/summary/view_models/summary_view_model.dart';
 
 void main() {
@@ -51,6 +53,25 @@ class SmaraAccountingApp extends StatelessWidget {
           update: (_, repository, previous) =>
               previous ??
               CategoryManagementViewModel(ledgerRepository: repository),
+        ),
+        ChangeNotifierProxyProvider<
+          LedgerRepository,
+          RecoveryPhraseSetupViewModel
+        >(
+          create: (context) => RecoveryPhraseSetupViewModel(
+            ledgerRepository: context.read<LedgerRepository>(),
+          ),
+          update: (_, repository, previous) =>
+              previous ??
+              RecoveryPhraseSetupViewModel(ledgerRepository: repository),
+        ),
+        ChangeNotifierProxyProvider<LedgerRepository, RestoreIdentityViewModel>(
+          create: (context) => RestoreIdentityViewModel(
+            ledgerRepository: context.read<LedgerRepository>(),
+          ),
+          update: (_, repository, previous) =>
+              previous ??
+              RestoreIdentityViewModel(ledgerRepository: repository),
         ),
       ],
       child: Builder(

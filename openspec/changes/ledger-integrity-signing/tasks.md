@@ -5,80 +5,94 @@
 
 ## 1. Dependencies
 
-- [ ] 1.1 Add a crypto package providing Ed25519 sign/verify and SHA-256 (e.g. `cryptography`)
-- [ ] 1.2 Add `flutter_secure_storage` for private-key storage (Keychain/Keystore/DPAPI)
-- [ ] 1.3 Add a BIP-39-style mnemonic package (or vendor a wordlist) for recovery-phrase generation/derivation
+- [x] 1.1 Add a crypto package providing Ed25519 sign/verify and SHA-256 (e.g. `cryptography`)
+- [x] 1.2 Add `flutter_secure_storage` for private-key storage (Keychain/Keystore/DPAPI) — already present from `core-ledger-single-account`
+- [x] 1.3 Add a BIP-39-style mnemonic package (or vendor a wordlist) for recovery-phrase generation/derivation — used `bip39_mnemonic` (actively maintained, published 2025-08-18) instead of `bip39` (unmaintained since 2021, fails Golden Rule #8)
 
 ## 2. Drift Schema Extensions
 
-- [ ] 2.1 Extend `journal_entries` with `device_chain_sequence`, `previous_entry_hash`, `entry_hash`, `signed_by_identity_id`, `signature`, `migrated_from_entry_id` per `design.md`
-- [ ] 2.2 Add `signing_identities` table (public key only — never the private key)
-- [ ] 2.3 Add `entry_verification_cache` table (derived, rebuildable)
-- [ ] 2.4 Add `ledger_chain_state` singleton table (derived, rebuildable)
-- [ ] 2.5 Add `integrity_events` append-only table
-- [ ] 2.6 Run `build_runner`; verify generated code compiles
+- [x] 2.1 Extend `journal_entries` with `device_chain_sequence`, `previous_entry_hash`, `entry_hash`, `signed_by_identity_id`, `signature`, `migrated_from_entry_id` per `design.md`
+- [x] 2.2 Add `signing_identities` table (public key only — never the private key)
+- [x] 2.3 Add `entry_verification_cache` table (derived, rebuildable)
+- [x] 2.4 Add `ledger_chain_state` singleton table (derived, rebuildable)
+- [x] 2.5 Add `integrity_events` append-only table
+- [x] 2.6 Run `build_runner`; verify generated code compiles — schemaVersion bumped 1→2 with a real `onUpgrade`, guarded to reject upgrading a database with existing `journal_entries` rows (none has ever shipped per design.md's Migration Plan)
 
 ## 3. Signing Identity Lifecycle
 
-- [ ] 3.1 Generate Ed25519 key pair on first launch, before any `journal_entries` row (including seeded starter accounts) is created
-- [ ] 3.2 Store the private key exclusively in secure storage; write the public key to `signing_identities`
-- [ ] 3.3 Implement recovery-phrase generation that deterministically derives the same key pair
-- [ ] 3.4 Implement encrypted keystore file export (passphrase-protected) as an alternative/additional backup format
-- [ ] 3.5 Implement import: recovery phrase or keystore file → re-derive key pair → compare against an existing `signing_identities.public_key` to confirm a match
+- [x] 3.1 Generate Ed25519 key pair on first launch, before any `journal_entries` row (including seeded starter accounts) is created — `LedgerRepository.generateFirstIdentity`/`confirmFirstIdentity`; `recordTransaction`/`reverseEntry` throw `StateError` with no confirmed identity; `app_router.dart`'s redirect now enforces onboarding before any other route is reachable. **Fixed during the 11.2 spec audit**: starter accounts were originally seeded in `AppDatabase.onCreate` (core-ledger-single-account's original approach), meaning they existed before any identity did - contradicting this exact requirement. `onCreate` now only creates schema; `confirmFirstIdentity` seeds the financial account + starter categories, in the same transaction as the identity row, only after the recovery phrase is confirmed.
+- [x] 3.2 Store the private key exclusively in secure storage; write the public key to `signing_identities` — `SigningKeyService` (secure storage) + `LedgerRepository.confirmFirstIdentity` (DB)
+- [x] 3.3 Implement recovery-phrase generation that deterministically derives the same key pair — `RecoveryPhrase` (`bip39_mnemonic`) + `Ed25519Signing.keyPairFromSeed`
+- [x] 3.4 Implement encrypted keystore file export (passphrase-protected) as an alternative/additional backup format — `KeystoreFile` (PBKDF2-HMAC-SHA256 + AES-256-GCM)
+- [x] 3.5 Implement import: recovery phrase or keystore file → re-derive key pair → compare against an existing `signing_identities.public_key` to confirm a match — `LedgerRepository.restoreIdentity`
 
 ## 4. Onboarding UI
 
-- [ ] 4.1 Recovery-phrase display screen with explicit consequences messaging (loss of device + phrase = unrecoverable chain)
-- [ ] 4.2 Require confirmation (e.g. re-enter a subset of words) before the ledger becomes usable
-- [ ] 4.3 Optional keystore file export screen
-- [ ] 4.4 "Restore from recovery phrase / keystore file" entry point for reinstall/new-device setup
+- [x] 4.1 Recovery-phrase display screen with explicit consequences messaging (loss of device + phrase = unrecoverable chain) — `RecoveryPhraseView`
+- [x] 4.2 Require confirmation (e.g. re-enter a subset of words) before the ledger becomes usable — `RecoveryPhraseConfirmView`, asks back 3 fixed word indices; `LedgerRepository.confirmFirstIdentity` only runs after a correct match
+- [x] 4.3 Optional keystore file export screen — `KeystoreExportView`; writes to the app's Documents directory via `path_provider`, Skip always available
+- [x] 4.4 "Restore from recovery phrase / keystore file" entry point for reinstall/new-device setup — `RestoreIdentityView`
+
+`app_router.dart`'s `redirect` now gates every route on identity state:
+no identity → onboarding; identity exists but no matching stored key →
+restore; otherwise → `verifyChain()` once per session, then through.
+`main.dart` provides the two new ViewModels
+(`RecoveryPhraseSetupViewModel`, `RestoreIdentityViewModel`).
+
+**Real-device fix found while testing this on macOS**: `flutter_secure_storage`'s
+`SecItemAdd` hung indefinitely under the default `kSecUseDataProtectionKeychain`
+- it requires real Apple Developer code signing + a matching
+`keychain-access-groups` entitlement, not available for local/ad-hoc
+signed runs. Fixed via `MacOsOptions(usesDataProtectionKeychain: false)`
+in `FlutterSecureKeyStorage` (legacy file-based Keychain API instead).
+Also had to disable App Sandbox in both `.entitlements` files - adding
+`keychain-access-groups` without real signing broke the build outright.
+Flagged in both files' comments to revisit before any App Store
+submission, where sandboxing is required and real signing would replace
+this workaround.
 
 ## 5. Canonical Hashing and Signing
 
-- [ ] 5.1 Implement canonical serialization of entry content (fields + ordered postings) per the `entry_hash` formula in `design.md`
-- [ ] 5.2 Implement genesis handling (well-defined constant previous hash for the first entry, not an arbitrary null)
-- [ ] 5.3 Extend `LedgerRepository.recordTransaction` and `reverseEntry` (from `core-ledger-single-account`) to compute `entry_hash`, sign it with the current identity, assign `device_chain_sequence`, and update `ledger_chain_state`
+- [x] 5.1 Implement canonical serialization of entry content (fields + ordered postings) per the `entry_hash` formula in `design.md` — `canonicalEntryBytes`
+- [x] 5.2 Implement genesis handling (well-defined constant previous hash for the first entry, not an arbitrary null) — `genesisPreviousEntryHash`
+- [x] 5.3 Extend `LedgerRepository.recordTransaction` and `reverseEntry` (from `core-ledger-single-account`) to compute `entry_hash`, sign it with the current identity, assign `device_chain_sequence`, and update `ledger_chain_state` — shared `_appendSignedEntry`
 
 ## 6. Startup Verification
 
-- [ ] 6.1 Implement a verification pass: recompute each entry's hash, verify its signature against `signed_by_identity_id`, confirm `previous_entry_hash` matches the prior entry's actual hash
-- [ ] 6.2 Rebuild `entry_verification_cache` from the verification pass
-- [ ] 6.3 Identify the first failing entry as the break point; mark it and everything chained after it as unverified
-- [ ] 6.4 On a newly detected break, write a `CHAIN_BREAK_DETECTED` row to `integrity_events`
-- [ ] 6.5 Run verification on every app startup
+- [x] 6.1 Implement a verification pass: recompute each entry's hash, verify its signature against `signed_by_identity_id`, confirm `previous_entry_hash` matches the prior entry's actual hash — `LedgerRepository.verifyChain`
+- [x] 6.2 Rebuild `entry_verification_cache` from the verification pass
+- [x] 6.3 Identify the first failing entry as the break point; mark it and everything chained after it as unverified
+- [x] 6.4 On a newly detected break, write a `CHAIN_BREAK_DETECTED` row to `integrity_events`
+- [x] 6.5 Run verification on every app startup — `app_router.dart`'s redirect calls `verifyChain()` once per app session before any route past identity-check is reachable
 
 ## 7. Quarantine and Re-anchoring
 
-- [ ] 7.1 Update balance/summary queries to exclude any entry marked unverified in `entry_verification_cache`
-- [ ] 7.2 Update register display to show quarantined entries with the design system's error treatment (red left-border + lock icon), never hidden
-- [ ] 7.3 Update `ledger_chain_state.trusted_tip_*` to the last verified entry before a break
-- [ ] 7.4 Update `recordTransaction`/`reverseEntry` to chain new entries onto `ledger_chain_state.trusted_tip_*`, not onto the raw last-inserted row
-- [ ] 7.5 Write a `CHAIN_REANCHORED` row to `integrity_events` when the first post-break entry is recorded
+- [x] 7.1 Update balance/summary queries to exclude any entry marked unverified in `entry_verification_cache` — `watchSummary`, `RegisterViewModel._recompute`
+- [x] 7.2 Update register display to show quarantined entries with the design system's error treatment (red left-border + lock icon), never hidden — `RegisterRowTile`
+- [x] 7.3 Update `ledger_chain_state.trusted_tip_*` to the last verified entry before a break — `verifyChain`
+- [x] 7.4 Update `recordTransaction`/`reverseEntry` to chain new entries onto `ledger_chain_state.trusted_tip_*`, not onto the raw last-inserted row — `_appendSignedEntry`
+- [x] 7.5 Write a `CHAIN_REANCHORED` row to `integrity_events` when the first post-break entry is recorded — `_appendSignedEntry`'s `isReanchor` check
 
 ## 8. True Key-Loss Migration
 
-- [ ] 8.1 Build the explicit confirmation flow ("I confirm the current ledger is valid") with plain-language wording that this does not retroactively prove pre-migration integrity
-- [ ] 8.2 Generate a new signing identity with `supersedes_identity_id` set
-- [ ] 8.3 Re-create every existing entry as a new, signed entry with identical transaction content and `migrated_from_entry_id` set
-- [ ] 8.4 Exclude legacy (superseded) entries from active balance/summary calculations while keeping them visible as historical records
-- [ ] 8.5 Write a `KEY_MIGRATION_CONFIRMED` row to `integrity_events`
+- [x] 8.1 Build the explicit confirmation flow ("I confirm the current ledger is valid") with plain-language wording that this does not retroactively prove pre-migration integrity — `KeyLossMigrationView`/`KeyLossMigrationViewModel`; shows every current entry for review, requires the checkbox before the button enables, states the "does not retroactively prove" wording explicitly. Reached via a "I don't have my recovery phrase or keystore file" link on `RestoreIdentityView` (`/restore/migrate`)
+- [x] 8.2 Generate a new signing identity with `supersedes_identity_id` set
+- [x] 8.3 Re-create every existing entry as a new, signed entry with identical transaction content and `migrated_from_entry_id` set
+- [x] 8.4 Exclude legacy (superseded) entries from active balance/summary calculations while keeping them visible as historical records — `JournalEntry.isSupersededByMigration`, excluded in `watchSummary` and the register's running balance
+- [x] 8.5 Write a `KEY_MIGRATION_CONFIRMED` row to `integrity_events`
 
 ## 9. Recoverable Reinstall Flow
 
-- [ ] 9.1 On setup with an existing database file detected, offer "Restore from recovery phrase/keystore" before offering the migration flow
-- [ ] 9.2 On successful import/match, resume normal startup verification — confirm no entry is re-signed or altered in this path
+- [x] 9.1 On setup with an existing database file detected, offer "Restore from recovery phrase/keystore" before offering the migration flow — `RestoreIdentityView` is what `app_router.dart` routes to automatically when an identity exists but no matching key is stored; it links to the migration flow (`/restore/migrate`) only via an explicit "I don't have my recovery phrase or keystore file" secondary action, never offered first
+- [x] 9.2 On successful import/match, resume normal startup verification — confirm no entry is re-signed or altered in this path — `restoreIdentity` re-derives and matches only, never writes/re-signs; covered by test
 
 ## 10. Testing
 
-- [ ] 10.1 Unit tests (`dart-add-unit-test`): hash determinism, signature acceptance/rejection, chain-linkage break detection, quarantine exclusion logic, migration re-signing preserves original content
-- [ ] 10.2 Unit test: tampering with a stored entry (direct DB row edit in test) is detected on next verification pass
-- [ ] 10.3 Widget tests (`flutter-add-widget-test`): recovery-phrase screen blocks progress until confirmed; quarantined entry renders with error treatment; migration confirmation dialog shows required wording
-- [ ] 10.4 Integration tests (`flutter-add-integration-test`): full tamper-detection flow (mutate a row, restart, confirm break + quarantine + re-anchor); reinstall-with-recovery-phrase flow; true-key-loss migration flow end to end
-- [ ] 10.5 Generate coverage report (`dart-collect-coverage`)
-
-## 11. Quality Gates
-
-- [ ] 11.1 `dart analyze` clean, `dart fix --apply` run
-- [ ] 11.2 Verify every scenario in `specs/ledger-integrity-signing/spec.md` has a corresponding passing test
-- [ ] 11.3 Confirm the private key never appears in any log output, database row, or serialized state (manual/code-searched check)
-- [ ] 11.4 Run through the Definition of Done checklist in `smara-tech-guidelines.md`
+- [x] 10.1 Unit tests (`dart-add-unit-test`): hash determinism, signature acceptance/rejection, chain-linkage break detection, quarantine exclusion logic, migration re-signing preserves original content — `test/domain/crypto/*`, `test/data/repositories/ledger_repository_test.dart`
+- [x] 10.2 Unit test: tampering with a stored entry (direct DB row edit in test) is detected on next verification pass — `verifyChain` group
+- [x] 10.3 Widget tests (`flutter-add-widget-test`): recovery-phrase screen blocks progress until confirmed; quarantined entry renders with error treatment; migration confirmation dialog shows required wording — `test/ui/features/{onboarding,restore,migration}/views/*` drive the real Views with `WidgetTester` (mocked Repository); quarantined-entry render test in `register_view_test.dart`
+- [x] 10.4 Integration tests (`flutter-add-integration-test`): full tamper-detection flow (mutate a row, restart, confirm break + quarantine + re-anchor); reinstall-with-recovery-phrase flow; true-key-loss migration flow end to end — all three added to `integration_test/app_test.dart`, driving the real widget tree including onboarding/restore/migration UI. Writing these surfaced a real bug in `verifyChain()`: it treated `device_chain_sequence` as one continuous hash chain, so every post-migration entry read as a chain break (the migrated entry's `previous_entry_hash` is a fresh genesis, not a continuation of the old identity's last hash). Fixed by treating any `migratedFromEntryId`-marked entry as a legitimate new chain root; regression-tested in `ledger_repository_test.dart`.
+- [x] 10.5 Generate coverage report (`dart-collect-coverage`) — `flutter test --coverage` → `coverage/lcov.info` (gitignored, local artifact). New-code coverage is strong: `ledger_repository.dart` 97.8% (442/452), all `domain/crypto/*` files 89-100%, every new View/ViewModel 90-100%. Overall repo figure (43.6%) is dragged down by generated Drift boilerplate (`app_database.g.dart`, ~2700 lines) and declarative table-schema files, which is expected and not a meaningful signal - guidelines set no fixed threshold, just "track the trend."
+- [x] 11.2 Verify every scenario in `specs/ledger-integrity-signing/spec.md` has a corresponding passing test — audited all 16 scenarios across 9 requirements against the test suite. Found and closed three real gaps: (1) "Device Signing Identity"'s first-launch scenario was actually violated by implementation ordering - fixed, see 3.1; (2) "Reversal is also chained and signed" had no test actually checking the reversal's hash/signature/chain fields, only its postings - added; (3) "Importing a valid recovery phrase..." only had repository-level coverage for the phrase path, not the keystore-file path - added. Also added a "no earlier entry is affected" test for the break-point scenario, previously only implicitly true.
+- [x] 11.3 Confirm the private key never appears in any log output, database row, or serialized state (manual/code-searched check) — `grep`ed for `privateKeySeed`/`private_key`/`print(`/`debugPrint(` outside `SigningKeyService`/secure-storage/tests; only ever passed to `Ed25519Signing`/`SecureKeyStorage`, never logged or written to a Drift column
+- [x] 11.4 Run through the Definition of Done checklist in `smara-tech-guidelines.md` — all items pass: `dart analyze` clean, `dart fix --apply` finds nothing, every enum-worthy closed set uses an enum, 3-color rule respected in all new UI (checked via grep for raw `Color(`/`Colors.` literals - none), Material default touch targets throughout, no UPDATE/DELETE against `journal_entries`/`postings` anywhere in `lib/` (checked directly), one dead exception class (`SigningIdentityMissingException`, never thrown) found and removed. Also closed a gap the checklist doesn't explicitly list but the guidelines' own Drift Migration Rule #5 requires: the `onUpgrade` (schemaVersion 1→2) path had zero test coverage - added `test/data/database/app_database_migration_test.dart` covering both a clean upgrade and the existing-rows guard, against a hand-built v1 schema.

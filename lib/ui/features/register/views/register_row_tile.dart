@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
+import '../../../../domain/models/journal_entry.dart'
+    show VerificationBreakReason;
 import '../../../../domain/models/transaction_direction.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
@@ -24,6 +26,7 @@ class RegisterRowTile extends StatelessWidget {
     final amountText =
         '${isMoneyIn ? '+' : '−'}${formatAmountMinor(row.amountMinor)}';
     final isNegativeBalance = row.runningBalanceMinor < 0;
+    final isQuarantined = !row.isVerified;
 
     return Card(
       margin: const EdgeInsets.symmetric(
@@ -34,7 +37,9 @@ class RegisterRowTile extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(
             left: BorderSide(
-              color: isNegativeBalance ? AppColors.signal : Colors.transparent,
+              color: isQuarantined || isNegativeBalance
+                  ? AppColors.signal
+                  : Colors.transparent,
               width: 3,
             ),
           ),
@@ -63,8 +68,23 @@ class RegisterRowTile extends StatelessWidget {
                           color: AppColors.textMuted,
                         ),
                       ],
+                      if (isQuarantined) ...[
+                        const SizedBox(width: AppSpacing.small),
+                        Icon(
+                          TablerIcons.lock,
+                          size: 14,
+                          color: AppColors.signal,
+                        ),
+                      ],
                     ],
                   ),
+                  if (isQuarantined)
+                    Text(
+                      'Unverified - excluded from totals',
+                      style: AppTypography.metadata.copyWith(
+                        color: AppColors.signal,
+                      ),
+                    ),
                   Text(
                     '${row.transactionDate.year}-${row.transactionDate.month.toString().padLeft(2, '0')}-${row.transactionDate.day.toString().padLeft(2, '0')}'
                     '${row.description != null ? ' · ${row.description}' : ''}',
@@ -104,6 +124,8 @@ Widget registerRowMoneyInPreview() {
         description: 'January pay',
         runningBalanceMinor: 250000,
         isReversal: false,
+        isVerified: true,
+        breakReason: null,
       ),
     ),
   );
@@ -123,6 +145,29 @@ Widget registerRowNegativeBalancePreview() {
         description: null,
         runningBalanceMinor: -50000,
         isReversal: false,
+        isVerified: true,
+        breakReason: null,
+      ),
+    ),
+  );
+}
+
+@Preview(name: 'Register row - quarantined')
+Widget registerRowQuarantinedPreview() {
+  return Directionality(
+    textDirection: TextDirection.ltr,
+    child: RegisterRowTile(
+      row: RegisterRow(
+        entryId: '3',
+        categoryName: 'Groceries',
+        direction: TransactionDirection.moneyOut,
+        amountMinor: 4500,
+        transactionDate: DateTime(2026, 1, 17),
+        description: null,
+        runningBalanceMinor: -50000,
+        isReversal: false,
+        isVerified: false,
+        breakReason: VerificationBreakReason.hashMismatch,
       ),
     ),
   );

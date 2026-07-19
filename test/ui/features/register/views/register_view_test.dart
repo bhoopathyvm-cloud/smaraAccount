@@ -6,6 +6,7 @@ import 'package:smara_accounting/domain/models/journal_entry.dart';
 import 'package:smara_accounting/domain/models/posting.dart';
 import 'package:smara_accounting/ui/features/register/view_models/register_view_model.dart';
 import 'package:smara_accounting/ui/features/register/views/register_view.dart';
+import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../mocks.mocks.dart';
 
@@ -57,6 +58,14 @@ void main() {
           lineNumber: 2,
         ),
       ],
+      deviceChainSequence: 0,
+      entryHash: const [],
+      signedByIdentityId: 'identity-1',
+      signature: const [],
+      migratedFromEntryId: null,
+      isVerified: true,
+      breakReason: null,
+      isSupersededByMigration: false,
     );
   }
 
@@ -103,4 +112,58 @@ void main() {
     expect(amountText.style?.color, isNot(equals(Colors.green)));
     expect(amountText.style?.color, isNot(equals(Colors.red)));
   });
+
+  testWidgets(
+    'a quarantined entry renders with the error treatment, never hidden',
+    (tester) async {
+      final quarantined = JournalEntry(
+        id: 'entry-1',
+        transactionDate: DateTime(2026, 1, 15),
+        recordedAt: DateTime(2026, 1, 15),
+        description: null,
+        reversesEntryId: null,
+        postings: [
+          Posting(
+            id: 'p1',
+            entryId: 'entry-1',
+            accountId: 'asset-1',
+            amountMinor: 1000,
+            lineNumber: 1,
+          ),
+          Posting(
+            id: 'p2',
+            entryId: 'entry-1',
+            accountId: 'income-1',
+            amountMinor: -1000,
+            lineNumber: 2,
+          ),
+        ],
+        deviceChainSequence: 0,
+        entryHash: const [],
+        signedByIdentityId: 'identity-1',
+        signature: const [],
+        migratedFromEntryId: null,
+        isVerified: false,
+        breakReason: VerificationBreakReason.hashMismatch,
+        isSupersededByMigration: false,
+      );
+      when(
+        repository.watchEntries(),
+      ).thenAnswer((_) => Stream.value([quarantined]));
+
+      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: RegisterView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      // Still visible for review (never hidden) ...
+      expect(find.text('Salary'), findsOneWidget);
+      // ... but flagged, and excluded from the running balance.
+      expect(find.byIcon(TablerIcons.lock), findsOneWidget);
+      expect(find.text('0.00'), findsOneWidget);
+    },
+  );
 }

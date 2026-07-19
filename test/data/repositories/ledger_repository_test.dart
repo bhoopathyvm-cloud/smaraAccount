@@ -1,18 +1,34 @@
+import 'package:drift/drift.dart' hide isNull;
 import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
+import 'package:smara_accounting/domain/models/integrity_event.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:test/test.dart';
 
+import '../../domain/crypto/in_memory_secure_key_storage.dart';
+
 void main() {
   late AppDatabase db;
+  late SigningKeyService signingKeyService;
   late LedgerRepository repository;
 
-  setUp(() {
+  setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
-    repository = LedgerRepository(database: db);
+    signingKeyService = SigningKeyService(
+      secureStorage: InMemorySecureKeyStorage(),
+    );
+    repository = LedgerRepository(
+      database: db,
+      signingKeyService: signingKeyService,
+    );
+    // Every test starts past onboarding - identity lifecycle itself is
+    // covered by its own group below, using a fresh Repository/service.
+    final generated = await repository.generateFirstIdentity();
+    await repository.confirmFirstIdentity(generated);
   });
 
   tearDown(() async {
@@ -24,15 +40,196 @@ void main() {
     return categories.firstWhere((a) => a.type == type).id;
   }
 
-  group('onCreate seeding', () {
-    test('seeds the single asset account and starter categories', () async {
-      final categories = await repository.watchCategories().first;
-      expect(
-        categories.map((a) => a.name),
-        containsAll(starterIncomeCategories + starterExpenseCategories),
+  group('starter account seeding', () {
+    test(
+      'confirmFirstIdentity seeds the single asset account and starter categories',
+      () async {
+        final categories = await repository.watchCategories().first;
+        expect(
+          categories.map((a) => a.name),
+          containsAll(starterIncomeCategories + starterExpenseCategories),
+        );
+        expect(categories.every((a) => a.type != AccountType.asset), isTrue);
+      },
+    );
+
+    test(
+      'no starter accounts exist until confirmFirstIdentity runs - spec: identity must exist first',
+      () async {
+        final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(freshDb.close);
+        final freshRepository = LedgerRepository(
+          database: freshDb,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        expect(await freshRepository.watchCategories().first, isEmpty);
+
+        final generated = await freshRepository.generateFirstIdentity();
+        expect(await freshRepository.watchCategories().first, isEmpty);
+
+        await freshRepository.confirmFirstIdentity(generated);
+        final categories = await freshRepository.watchCategories().first;
+        expect(
+          categories.map((a) => a.name),
+          containsAll(starterIncomeCategories + starterExpenseCategories),
+        );
+      },
+    );
+  });
+
+  group('signing identity lifecycle', () {
+    test('recordTransaction throws before an identity is confirmed', () async {
+      final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+      final freshRepository = LedgerRepository(
+        database: freshDb,
+        signingKeyService: SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        ),
       );
-      expect(categories.every((a) => a.type != AccountType.asset), isTrue);
+      addTearDown(freshDb.close);
+
+      // No identity confirmed yet, so no starter accounts exist either
+      // (spec: identity must exist before any account or entry does) -
+      // categoryId is an arbitrary placeholder; recordTransaction must
+      // reject this before it ever gets far enough to resolve it.
+      expect(
+        () => freshRepository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: 'placeholder-category-id',
+          transactionDate: DateTime(2026, 1, 15),
+        ),
+        throwsStateError,
+      );
     });
+
+    test('currentIdentity is null until confirmFirstIdentity runs', () async {
+      final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+      final freshRepository = LedgerRepository(
+        database: freshDb,
+        signingKeyService: SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        ),
+      );
+      addTearDown(freshDb.close);
+
+      expect(await freshRepository.currentIdentity(), isNull);
+
+      final generated = await freshRepository.generateFirstIdentity();
+      expect(await freshRepository.currentIdentity(), isNull);
+
+      final confirmed = await freshRepository.confirmFirstIdentity(generated);
+      expect(
+        (await freshRepository.currentIdentity())!.identityId,
+        equals(confirmed.identityId),
+      );
+    });
+
+    test('hasMatchingStoredKey is true right after confirmation', () async {
+      final identity = (await repository.currentIdentity())!;
+      expect(await repository.hasMatchingStoredKey(identity), isTrue);
+    });
+
+    test(
+      'restoreIdentity on a reinstalled device with the recovery phrase matches the original identity',
+      () async {
+        // Simulate a device that already has a confirmed identity and a
+        // database file with history - capture the phrase the way
+        // onboarding would have shown it to the user.
+        final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(freshDb.close);
+        final firstInstallRepository = LedgerRepository(
+          database: freshDb,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await firstInstallRepository.generateFirstIdentity();
+        final originalIdentity = await firstInstallRepository
+            .confirmFirstIdentity(generated);
+
+        // Reinstall: same database file, fresh secure storage (a new
+        // SigningKeyService with empty InMemorySecureKeyStorage), same
+        // Repository pointed at the same underlying db.
+        final reinstalledRepository = LedgerRepository(
+          database: freshDb,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        final restored = await reinstalledRepository.restoreIdentity(
+          recoveryPhraseWords: generated.phrase.words,
+        );
+
+        expect(restored.identityId, equals(originalIdentity.identityId));
+        expect(
+          await reinstalledRepository.hasMatchingStoredKey(restored),
+          isTrue,
+        );
+      },
+    );
+
+    test(
+      'restoreIdentity on a reinstalled device with the keystore file matches the original identity',
+      () async {
+        final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(freshDb.close);
+        final firstInstallRepository = LedgerRepository(
+          database: freshDb,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await firstInstallRepository.generateFirstIdentity();
+        final originalIdentity = await firstInstallRepository
+            .confirmFirstIdentity(generated);
+        final keystoreFile = await firstInstallRepository.exportKeystoreFile(
+          passphrase: 'hunter2-hunter2',
+        );
+
+        final reinstalledRepository = LedgerRepository(
+          database: freshDb,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        final restored = await reinstalledRepository.restoreIdentity(
+          keystoreFileContents: keystoreFile,
+          keystorePassphrase: 'hunter2-hunter2',
+        );
+
+        expect(restored.identityId, equals(originalIdentity.identityId));
+        expect(
+          await reinstalledRepository.hasMatchingStoredKey(restored),
+          isTrue,
+        );
+      },
+    );
+
+    test(
+      'restoreIdentity throws when the phrase does not belong to this database',
+      () async {
+        final identity = (await repository.currentIdentity())!;
+        final unrelated = await repository.generateFirstIdentity();
+
+        expect(
+          () => repository.restoreIdentity(
+            recoveryPhraseWords: unrelated.phrase.words,
+          ),
+          throwsA(isA<SigningIdentityMismatchException>()),
+        );
+        // Sanity: the original identity is still on record, untouched.
+        expect(
+          (await repository.currentIdentity())!.identityId,
+          equals(identity.identityId),
+        );
+      },
+    );
   });
 
   group('recordTransaction', () {
@@ -130,6 +327,46 @@ void main() {
         isTrue,
       );
     });
+
+    test(
+      'the first entry chains onto the genesis hash and is immediately verified',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        final entry = (await repository.watchEntries().first).single;
+        expect(entry.deviceChainSequence, equals(0));
+        expect(entry.isVerified, isTrue);
+        expect(entry.breakReason, isNull);
+      },
+    );
+
+    test('a second entry chains onto the first entry\'s hash', () async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      await repository.recordTransaction(
+        amountMinor: 500,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        transactionDate: DateTime(2026, 1, 16),
+      );
+
+      final entries = await repository.watchEntries().first;
+      final sorted = [
+        ...entries,
+      ]..sort((a, b) => a.deviceChainSequence.compareTo(b.deviceChainSequence));
+      expect(sorted.map((e) => e.deviceChainSequence), equals([0, 1]));
+    });
   });
 
   group('reverseEntry', () {
@@ -164,6 +401,40 @@ void main() {
           reversal.postings.map((p) => p.amountMinor).toSet(),
           equals({-1000, 1000}),
         );
+      },
+    );
+
+    test(
+      'the reversal is chained and signed using the same mechanism as an ordinary transaction',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final original = (await repository.watchEntries().first).single;
+
+        await repository.reverseEntry(original.id);
+
+        final entries = await repository.watchEntries().first;
+        final reversal = entries.firstWhere((e) => e.id != original.id);
+
+        expect(
+          reversal.deviceChainSequence,
+          equals(original.deviceChainSequence + 1),
+        );
+        expect(
+          reversal.signedByIdentityId,
+          equals(original.signedByIdentityId),
+        );
+        expect(reversal.signature, isNotEmpty);
+        expect(reversal.entryHash, isNotEmpty);
+        expect(reversal.isVerified, isTrue);
+
+        final result = await repository.verifyChain();
+        expect(result.isFullyVerified, isTrue);
       },
     );
   });
@@ -275,5 +546,301 @@ void main() {
 
       expect(summary.totalIncomeMinor, equals(0));
     });
+
+    test('excludes a quarantined (unverified) entry from totals', () async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        transactionDate: DateTime(2026, 1, 10),
+      );
+      final entry = (await repository.watchEntries().first).single;
+
+      // Directly tamper with the stored row, bypassing the Repository -
+      // simulating an edit made outside the application.
+      await (db.update(
+        db.journalEntries,
+      )..where((e) => e.id.equals(entry.id))).write(
+        JournalEntriesCompanion(description: Value('tampered outside the app')),
+      );
+      await repository.verifyChain();
+
+      final summary = await repository
+          .watchSummary(
+            start: DateTime(2020, 1, 1),
+            end: DateTime(2030, 12, 31),
+          )
+          .first;
+      expect(summary.totalIncomeMinor, equals(0));
+    });
+  });
+
+  group('verifyChain', () {
+    test('an intact chain reports no break', () async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      await repository.recordTransaction(
+        amountMinor: 500,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        transactionDate: DateTime(2026, 1, 16),
+      );
+
+      final result = await repository.verifyChain();
+
+      expect(result.isFullyVerified, isTrue);
+      expect(result.totalEntries, equals(2));
+    });
+
+    test(
+      'detects a tampered entry and quarantines it plus everything after it',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        await repository.recordTransaction(
+          amountMinor: 500,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 16),
+        );
+        final entries = await repository.watchEntries().first;
+        final firstEntry = entries.firstWhere(
+          (e) => e.deviceChainSequence == 0,
+        );
+
+        // Tamper directly with the stored row - not through the Repository
+        // (which has no update path), exactly mimicking direct SQLite file
+        // access outside the app.
+        await (db.update(
+          db.journalEntries,
+        )..where((e) => e.id.equals(firstEntry.id))).write(
+          JournalEntriesCompanion(
+            description: Value('tampered outside the app'),
+          ),
+        );
+
+        final result = await repository.verifyChain();
+
+        expect(result.isFullyVerified, isFalse);
+        expect(result.breakEntryId, equals(firstEntry.id));
+
+        final afterVerification = await repository.watchEntries().first;
+        expect(afterVerification.every((e) => !e.isVerified), isTrue);
+      },
+    );
+
+    test(
+      'tampering a later entry does not affect any entry before it',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        for (var i = 0; i < 3; i++) {
+          await repository.recordTransaction(
+            amountMinor: 1000,
+            direction: TransactionDirection.moneyIn,
+            categoryId: incomeId,
+            transactionDate: DateTime(2026, 1, 15 + i),
+          );
+        }
+        final entries = await repository.watchEntries().first;
+        final middleEntry = entries.firstWhere(
+          (e) => e.deviceChainSequence == 1,
+        );
+        final firstEntry = entries.firstWhere(
+          (e) => e.deviceChainSequence == 0,
+        );
+
+        await (db.update(
+          db.journalEntries,
+        )..where((e) => e.id.equals(middleEntry.id))).write(
+          JournalEntriesCompanion(
+            description: Value('tampered outside the app'),
+          ),
+        );
+
+        final result = await repository.verifyChain();
+        expect(result.breakEntryId, equals(middleEntry.id));
+
+        final afterVerification = await repository.watchEntries().first;
+        expect(
+          afterVerification.firstWhere((e) => e.id == firstEntry.id).isVerified,
+          isTrue,
+        );
+        expect(
+          afterVerification
+              .firstWhere((e) => e.id == middleEntry.id)
+              .isVerified,
+          isFalse,
+        );
+      },
+    );
+
+    test(
+      'a new transaction after a break re-anchors and records the event',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final entries = await repository.watchEntries().first;
+        final firstEntry = entries.single;
+        await (db.update(
+          db.journalEntries,
+        )..where((e) => e.id.equals(firstEntry.id))).write(
+          JournalEntriesCompanion(
+            description: Value('tampered outside the app'),
+          ),
+        );
+        await repository.verifyChain();
+
+        await repository.recordTransaction(
+          amountMinor: 200,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 17),
+        );
+
+        final newEntry = (await repository.watchEntries().first).firstWhere(
+          (e) => e.id != firstEntry.id,
+        );
+        expect(newEntry.isVerified, isTrue);
+
+        final events = await repository.watchIntegrityEvents().first;
+        expect(
+          events.any(
+            (e) => e.eventType == IntegrityEventType.chainBreakDetected,
+          ),
+          isTrue,
+        );
+        expect(
+          events.any((e) => e.eventType == IntegrityEventType.chainReanchored),
+          isTrue,
+        );
+      },
+    );
+  });
+
+  group('migrateToNewIdentityAfterKeyLoss', () {
+    test(
+      're-signs every active entry under a new identity, preserving content',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final legacy = (await repository.watchEntries().first).single;
+        final oldIdentity = (await repository.currentIdentity())!;
+
+        await repository.migrateToNewIdentityAfterKeyLoss();
+
+        final newIdentity = (await repository.currentIdentity())!;
+        expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
+        expect(
+          newIdentity.supersedesIdentityId,
+          equals(oldIdentity.identityId),
+        );
+
+        final entries = await repository.watchEntries().first;
+        expect(entries, hasLength(2));
+        final migrated = entries.firstWhere(
+          (e) => e.migratedFromEntryId == legacy.id,
+        );
+        expect(
+          migrated.postings.map((p) => p.amountMinor).toSet(),
+          equals(legacy.postings.map((p) => p.amountMinor).toSet()),
+        );
+        expect(migrated.signedByIdentityId, equals(newIdentity.identityId));
+        // device_chain_sequence is UNIQUE across the whole table (design.md)
+        // and never scoped per identity, so migration continues the counter
+        // rather than restarting at 0 - it must differ from the legacy
+        // entry's own sequence number, which stays exactly as posted.
+        expect(
+          migrated.deviceChainSequence,
+          isNot(equals(legacy.deviceChainSequence)),
+        );
+      },
+    );
+
+    test(
+      'legacy entries are excluded from the post-migration summary',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        await repository.migrateToNewIdentityAfterKeyLoss();
+
+        final summary = await repository
+            .watchSummary(
+              start: DateTime(2020, 1, 1),
+              end: DateTime(2030, 12, 31),
+            )
+            .first;
+        // Both the legacy and the migrated entry post +1000/-1000 for
+        // income - if the legacy one weren't excluded, this would double
+        // count to 2000.
+        expect(summary.totalIncomeMinor, equals(1000));
+      },
+    );
+
+    test(
+      'a startup verifyChain after migration does not flag the migrated entry as a chain break',
+      () async {
+        // Regression test: the migrated entry's previous_entry_hash is a
+        // fresh genesis (a new identity cannot chain onto the
+        // unrecoverable old identity's hash), while device_chain_sequence
+        // keeps incrementing across the boundary. verifyChain() must
+        // recognize a migratedFromEntryId-marked entry as a legitimate new
+        // chain root, not a broken link - this exact scenario is what the
+        // real app runs into via app_router.dart's redirect immediately
+        // after a migration completes.
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        await repository.migrateToNewIdentityAfterKeyLoss();
+        final result = await repository.verifyChain();
+
+        expect(result.isFullyVerified, isTrue);
+
+        final entries = await repository.watchEntries().first;
+        final migrated = entries.firstWhere(
+          (e) => e.migratedFromEntryId != null,
+        );
+        expect(migrated.isVerified, isTrue);
+
+        final summary = await repository
+            .watchSummary(
+              start: DateTime(2020, 1, 1),
+              end: DateTime(2030, 12, 31),
+            )
+            .first;
+        expect(summary.totalIncomeMinor, equals(1000));
+      },
+    );
   });
 }
