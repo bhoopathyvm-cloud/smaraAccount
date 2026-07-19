@@ -27,7 +27,7 @@
 - [ ] 3.5 Tests: opening balance for asset and liability; reject zero/negative opening balance when supplied; equity account never appears in financial-account picker or home overview
 - [ ] 3.6 Tests: home overview group totals and net position (A − L); archived account still contributes to totals
 - [ ] 3.7 Tests: quarantined or migration-superseded entry excluded from per-account balance, group totals, and net position, while remaining visible in that account's register
-- [ ] 3.8 Tests: archiving or deleting a system group is rejected; renaming a system group updates the name; reassigning an account moves its balance contribution between group totals; empty groups are omitted from home overview sections
+- [ ] 3.8 Tests: archiving or deleting a system group is rejected; renaming a system group updates the name; reassigning an account moves its balance contribution between group totals; reassigning to a mismatched-kind group is rejected; empty groups are omitted from home overview sections
 
 ## 4. UI: account management and recording flows
 

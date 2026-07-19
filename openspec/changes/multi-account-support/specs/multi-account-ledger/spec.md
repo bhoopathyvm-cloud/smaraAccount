@@ -33,6 +33,10 @@ The system SHALL provide account groups that classify financial accounts for ove
 - **THEN** the account appears under the new group on the home overview
 - **AND** its balance is included in the new group’s total instead of the previous group’s total
 
+#### Scenario: Reassignment to a mismatched-kind group is rejected
+- **WHEN** the user attempts to reassign a financial account to a group whose kind does not match the account’s type (e.g. an asset account to a liability group)
+- **THEN** the system rejects the reassignment and the account remains in its original group
+
 #### Scenario: Rename a system account group
 - **WHEN** the user renames a system account group
 - **THEN** the new name is used on the home overview and in account-group pickers

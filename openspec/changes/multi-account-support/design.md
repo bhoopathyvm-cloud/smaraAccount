@@ -158,7 +158,7 @@ No journal rewrite required for the happy path (balances unchanged).
 
 ### 7. Integrity-signing interaction
 
-Any new write (`recordTransfer`, opening-balance entry, future account-related posts) MUST use the existing chain tip + sign path. Archiving/renaming financial accounts and renaming groups are metadata updates (not journal mutations) and do not create chain entries — same as category rename/archive today.
+Any new write (`recordTransfer`, opening-balance entry, future account-related posts) MUST use the existing chain tip + sign path. Archiving/renaming financial accounts, reassigning a financial account's group, and renaming groups are metadata updates (not journal mutations) and do not create chain entries — same as category rename/archive today. Reassignment only ever changes which group total an account's *existing* balance contributes to going forward; it does not touch any posted entry, and MUST be rejected if the destination group's kind doesn't match the account's type (same allowlist rule as creation — see the "Financial account requires a group" requirement).
 
 ### 8. Investment accounts explicitly reserved
 
