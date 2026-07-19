@@ -24,6 +24,17 @@ The system SHALL provide account groups that classify financial accounts for ove
 - **WHEN** the user creates or edits a financial account
 - **THEN** the system requires selection of an account group whose kind matches the account type (asset accounts in asset groups, liability accounts in liability groups)
 
+### Requirement: System Account Groups Cannot Be Deleted
+The four seeded system account groups SHALL NOT be permanently deleted. A system account group MAY be archived once it has no active financial accounts assigned to it; the system SHALL prevent archiving a system account group that still has at least one active financial account.
+
+#### Scenario: System group with no active accounts can be archived
+- **WHEN** the user archives a system account group that currently has zero active financial accounts
+- **THEN** the group is archived and no longer offered when assigning a group to a financial account
+
+#### Scenario: System group with active accounts cannot be archived
+- **WHEN** the user attempts to archive a system account group that still has at least one active financial account
+- **THEN** the system rejects the action and the group remains active
+
 ### Requirement: Rename and Archive Financial Accounts
 The user SHALL be able to rename a financial account and archive a financial account that is no longer needed. Financial accounts SHALL NOT be permanently deleted. Archiving SHALL remove the account from pickers for new transactions and transfers while keeping historical entries and balances visible in read-only views.
 
@@ -79,6 +90,11 @@ The system SHALL compute a current balance for each financial account from its p
 - **WHEN** the user views a financial account’s current balance
 - **THEN** the balance equals the account’s balance as of its latest posting (or zero if there are no postings)
 
+#### Scenario: Quarantined and superseded postings are excluded from balance
+- **WHEN** an entry affecting a financial account has been marked unverifiable following a detected chain break, or has been superseded by a true-key-loss migration
+- **THEN** that entry's postings are excluded from the account's current balance and from its register's running balance, the same way they are excluded from the income/expense summary
+- **AND** the entry itself remains visible in the account's register for review, never hidden
+
 ### Requirement: Opening Balance on Account Creation
 When creating a financial account, the user SHALL be able to supply an optional opening balance. If supplied, the system SHALL post a balanced opening entry so the account’s current balance equals that amount without recording it as user income or expense.
 
@@ -86,6 +102,10 @@ When creating a financial account, the user SHALL be able to supply an optional 
 - **WHEN** the user creates a financial account with a non-zero opening balance
 - **THEN** the account’s current balance equals that opening balance
 - **AND** income and expense summaries are unchanged by the opening entry
+
+#### Scenario: The system offset account is never user-selectable
+- **WHEN** the user is choosing a financial account for a transaction, a transfer, or account management, or viewing the home overview
+- **THEN** the internal system account used to balance opening-balance entries does not appear in any of those selections or displays
 
 ### Requirement: Existing Single Account Migrates
 When upgrading a database that has exactly one financial asset account from the single-account era, the system SHALL keep that account’s identity and postings, assign it to the Cash & cash equivalents group, and SHALL NOT require the user to re-enter historical transactions.

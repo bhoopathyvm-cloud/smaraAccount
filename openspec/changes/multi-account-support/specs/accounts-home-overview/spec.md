@@ -28,11 +28,15 @@ The home overview SHALL show a total for each account group that has at least on
 - **THEN** the home overview does not present that group as a primary populated section (it may be omitted or shown empty without a misleading non-zero total)
 
 ### Requirement: Overall Net Position
-The home overview SHALL show an overall net position equal to total included asset balances minus total included liability balances.
+The home overview SHALL show an overall net position equal to total included asset balances minus total included liability balances. Balances used for group totals and net position SHALL exclude any entry excluded from a financial account's own balance under the `multi-account-ledger` capability's quarantine/supersession rules.
 
 #### Scenario: Net position calculation
 - **WHEN** the user has asset accounts totaling A and liability accounts totaling L (amounts owed), all included in net worth
 - **THEN** the home overview shows net position as A − L
+
+#### Scenario: A chain break does not silently distort net position
+- **WHEN** a financial account has an entry excluded from its balance due to a detected chain break or a true-key-loss migration
+- **THEN** that entry's amount is excluded from that account's contribution to its group total and to the overall net position, consistent with the account's own displayed balance
 
 ### Requirement: Navigate From Home to Account Register
 From the home overview, the user SHALL be able to open the register for a selected financial account.
