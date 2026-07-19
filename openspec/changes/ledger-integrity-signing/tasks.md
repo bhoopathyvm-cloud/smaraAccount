@@ -20,7 +20,7 @@
 
 ## 3. Signing Identity Lifecycle
 
-- [x] 3.1 Generate Ed25519 key pair on first launch, before any `journal_entries` row (including seeded starter accounts) is created — `LedgerRepository.generateFirstIdentity`/`confirmFirstIdentity`; `recordTransaction`/`reverseEntry` throw `StateError` with no confirmed identity. Not yet wired into `main.dart`'s actual startup sequence — see note under section 4.
+- [x] 3.1 Generate Ed25519 key pair on first launch, before any `journal_entries` row (including seeded starter accounts) is created — `LedgerRepository.generateFirstIdentity`/`confirmFirstIdentity`; `recordTransaction`/`reverseEntry` throw `StateError` with no confirmed identity; `app_router.dart`'s redirect now enforces onboarding before any other route is reachable
 - [x] 3.2 Store the private key exclusively in secure storage; write the public key to `signing_identities` — `SigningKeyService` (secure storage) + `LedgerRepository.confirmFirstIdentity` (DB)
 - [x] 3.3 Implement recovery-phrase generation that deterministically derives the same key pair — `RecoveryPhrase` (`bip39_mnemonic`) + `Ed25519Signing.keyPairFromSeed`
 - [x] 3.4 Implement encrypted keystore file export (passphrase-protected) as an alternative/additional backup format — `KeystoreFile` (PBKDF2-HMAC-SHA256 + AES-256-GCM)
@@ -28,17 +28,28 @@
 
 ## 4. Onboarding UI
 
-- [ ] 4.1 Recovery-phrase display screen with explicit consequences messaging (loss of device + phrase = unrecoverable chain)
-- [ ] 4.2 Require confirmation (e.g. re-enter a subset of words) before the ledger becomes usable
-- [ ] 4.3 Optional keystore file export screen
-- [ ] 4.4 "Restore from recovery phrase / keystore file" entry point for reinstall/new-device setup
+- [x] 4.1 Recovery-phrase display screen with explicit consequences messaging (loss of device + phrase = unrecoverable chain) — `RecoveryPhraseView`
+- [x] 4.2 Require confirmation (e.g. re-enter a subset of words) before the ledger becomes usable — `RecoveryPhraseConfirmView`, asks back 3 fixed word indices; `LedgerRepository.confirmFirstIdentity` only runs after a correct match
+- [x] 4.3 Optional keystore file export screen — `KeystoreExportView`; writes to the app's Documents directory via `path_provider`, Skip always available
+- [x] 4.4 "Restore from recovery phrase / keystore file" entry point for reinstall/new-device setup — `RestoreIdentityView`
 
-> Not started. `main.dart`/`app_router.dart` also still need the actual
-> bootstrap wiring: check `currentIdentity()`/`hasMatchingStoredKey()` at
-> startup, route to onboarding or restore when needed, and call
-> `verifyChain()` before the register is reachable. All Repository-level
-> pieces this UI needs (generate/confirm/restore/export) exist and are
-> tested; this section is pure UI + router wiring.
+`app_router.dart`'s `redirect` now gates every route on identity state:
+no identity → onboarding; identity exists but no matching stored key →
+restore; otherwise → `verifyChain()` once per session, then through.
+`main.dart` provides the two new ViewModels
+(`RecoveryPhraseSetupViewModel`, `RestoreIdentityViewModel`).
+
+**Real-device fix found while testing this on macOS**: `flutter_secure_storage`'s
+`SecItemAdd` hung indefinitely under the default `kSecUseDataProtectionKeychain`
+- it requires real Apple Developer code signing + a matching
+`keychain-access-groups` entitlement, not available for local/ad-hoc
+signed runs. Fixed via `MacOsOptions(usesDataProtectionKeychain: false)`
+in `FlutterSecureKeyStorage` (legacy file-based Keychain API instead).
+Also had to disable App Sandbox in both `.entitlements` files - adding
+`keychain-access-groups` without real signing broke the build outright.
+Flagged in both files' comments to revisit before any App Store
+submission, where sandboxing is required and real signing would replace
+this workaround.
 
 ## 5. Canonical Hashing and Signing
 
@@ -52,7 +63,7 @@
 - [x] 6.2 Rebuild `entry_verification_cache` from the verification pass
 - [x] 6.3 Identify the first failing entry as the break point; mark it and everything chained after it as unverified
 - [x] 6.4 On a newly detected break, write a `CHAIN_BREAK_DETECTED` row to `integrity_events`
-- [ ] 6.5 Run verification on every app startup — `verifyChain()` exists and is tested, but nothing calls it from `main.dart` yet (same gap noted under section 4)
+- [x] 6.5 Run verification on every app startup — `app_router.dart`'s redirect calls `verifyChain()` once per app session before any route past identity-check is reachable
 
 ## 7. Quarantine and Re-anchoring
 
@@ -72,15 +83,15 @@
 
 ## 9. Recoverable Reinstall Flow
 
-- [ ] 9.1 On setup with an existing database file detected, offer "Restore from recovery phrase/keystore" before offering the migration flow — UI only
+- [x] 9.1 On setup with an existing database file detected, offer "Restore from recovery phrase/keystore" before offering the migration flow — `RestoreIdentityView`, routed to automatically by `app_router.dart` when an identity exists but no matching key is stored. (The true-key-loss migration flow itself - section 8.1's confirmation UI - still doesn't exist, so there's no "before offering X" choice screen yet; restore is simply the only path offered today.)
 - [x] 9.2 On successful import/match, resume normal startup verification — confirm no entry is re-signed or altered in this path — `restoreIdentity` re-derives and matches only, never writes/re-signs; covered by test
 
 ## 10. Testing
 
 - [x] 10.1 Unit tests (`dart-add-unit-test`): hash determinism, signature acceptance/rejection, chain-linkage break detection, quarantine exclusion logic, migration re-signing preserves original content — `test/domain/crypto/*`, `test/data/repositories/ledger_repository_test.dart`
 - [x] 10.2 Unit test: tampering with a stored entry (direct DB row edit in test) is detected on next verification pass — `verifyChain` group
-- [ ] 10.3 Widget tests (`flutter-add-widget-test`): recovery-phrase screen blocks progress until confirmed; quarantined entry renders with error treatment; migration confirmation dialog shows required wording — quarantined-entry render test done (`register_view_test.dart`); the other two need section 4/8.1's screens to exist first
-- [ ] 10.4 Integration tests (`flutter-add-integration-test`): full tamper-detection flow (mutate a row, restart, confirm break + quarantine + re-anchor); reinstall-with-recovery-phrase flow; true-key-loss migration flow end to end — blocked on section 4 wiring (no onboarding UI yet to drive through `integration_test`)
+- [ ] 10.3 Widget tests (`flutter-add-widget-test`): recovery-phrase screen blocks progress until confirmed; quarantined entry renders with error treatment; migration confirmation dialog shows required wording — quarantined-entry render test done (`register_view_test.dart`); `RecoveryPhraseSetupViewModel`/`RestoreIdentityViewModel` have full unit test coverage (`test/ui/features/onboarding`, `test/ui/features/restore`), but no `WidgetTester`-level test yet drives the actual onboarding/restore Views; migration confirmation dialog still doesn't exist (8.1)
+- [ ] 10.4 Integration tests (`flutter-add-integration-test`): full tamper-detection flow (mutate a row, restart, confirm break + quarantine + re-anchor); reinstall-with-recovery-phrase flow; true-key-loss migration flow end to end — onboarding UI now exists to drive these through `integration_test`, but none are written yet
 - [ ] 10.5 Generate coverage report (`dart-collect-coverage`) — defer until the above land, so the report reflects the finished change
 
 ## 11. Quality Gates

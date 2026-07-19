@@ -955,6 +955,14 @@ class LedgerRepository {
           .toList(),
     );
   }
+
+  /// Encrypted keystore file export of the device's current signing key
+  /// (spec: "Optional keystore file export"). Passthrough to
+  /// [SigningKeyService] - the only place private key bytes are ever
+  /// touched.
+  Future<String> exportKeystoreFile({required String passphrase}) {
+    return _signingKeyService.exportKeystoreFile(passphrase: passphrase);
+  }
 }
 
 /// Result of one [LedgerRepository.verifyChain] pass.

@@ -6,6 +6,7 @@
 import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i11;
 import 'package:smara_accounting/data/repositories/ledger_repository.dart'
     as _i4;
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart' as _i2;
@@ -296,4 +297,29 @@ class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
                 _i5.Stream<List<_i10.IntegrityEvent>>.empty(),
           )
           as _i5.Stream<List<_i10.IntegrityEvent>>);
+
+  @override
+  _i5.Future<String> exportKeystoreFile({required String? passphrase}) =>
+      (super.noSuchMethod(
+            Invocation.method(#exportKeystoreFile, [], {
+              #passphrase: passphrase,
+            }),
+            returnValue: _i5.Future<String>.value(
+              _i11.dummyValue<String>(
+                this,
+                Invocation.method(#exportKeystoreFile, [], {
+                  #passphrase: passphrase,
+                }),
+              ),
+            ),
+            returnValueForMissingStub: _i5.Future<String>.value(
+              _i11.dummyValue<String>(
+                this,
+                Invocation.method(#exportKeystoreFile, [], {
+                  #passphrase: passphrase,
+                }),
+              ),
+            ),
+          )
+          as _i5.Future<String>);
 }

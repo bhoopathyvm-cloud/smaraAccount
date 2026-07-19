@@ -11,8 +11,21 @@ abstract class SecureKeyStorage {
 
 /// Production implementation, backed by OS secure storage
 /// (Keychain/Keystore/DPAPI).
+///
+/// macOS: `usesDataProtectionKeychain: false` opts out of
+/// `kSecUseDataProtectionKeychain`, which otherwise makes `SecItemAdd`
+/// hang indefinitely (never erroring, never returning) unless the app is
+/// signed under a real Apple Developer Team ID with a matching
+/// `keychain-access-groups` entitlement - not available for local/ad-hoc
+/// signed runs. This falls back to the legacy file-based Keychain API,
+/// which works under ad-hoc signing. Revisit once real code signing is
+/// set up (see the entitlements files' comments).
 class FlutterSecureKeyStorage implements SecureKeyStorage {
-  const FlutterSecureKeyStorage([this._storage = const FlutterSecureStorage()]);
+  const FlutterSecureKeyStorage([
+    this._storage = const FlutterSecureStorage(
+      mOptions: MacOsOptions(usesDataProtectionKeychain: false),
+    ),
+  ]);
 
   final FlutterSecureStorage _storage;
 
