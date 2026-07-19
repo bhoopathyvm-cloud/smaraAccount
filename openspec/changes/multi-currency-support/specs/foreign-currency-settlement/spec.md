@@ -38,18 +38,22 @@ When the exact amount in the destination or account currency is known at the tim
 - **THEN** the system posts a single complete entry affecting the category and the financial account
 - **AND** no pending transfer is created
 
+#### Scenario: A non-positive amount in either currency is rejected
+- **WHEN** the user records a known-rate cross-currency transfer or transaction with a zero or negative amount in either currency
+- **THEN** the system rejects the entry and nothing is posted
+
 ### Requirement: Settle a Pending Transfer or Transaction
-The user SHALL be able to settle a pending transfer or foreign-currency transaction by specifying which account actually received funds and the real settled amount. If the settled amount is less than the original provisional amount, the system SHALL post the shortfall as a fee or loss entry against a user-selected expense category, so that the Transfers-in-transit position opened by the provisional entry is always fully closed.
+The user SHALL be able to settle a pending transfer or foreign-currency transaction by specifying which account actually received funds and the real settled amount. Settling to the original destination account posts the received amount in the destination currency and closes the pending transfer on its own, with no shortfall comparison — the destination-currency amount was never a promised figure to compare against. Settling back to the original source account posts the returned amount in the same currency as the provisional entry; if that amount is less than the provisional amount, the system SHALL post the shortfall as a fee or loss entry against a user-selected expense category. Either way, the Transfers-in-transit position opened by the provisional entry is always left fully closed. For a pending item of kind foreign-currency transaction, the account that receives the settled amount SHALL always be the transaction's own financial account, using the same-currency shortfall comparison — there is no alternate destination to choose.
 
 #### Scenario: Full settlement to the original destination
-- **WHEN** the user settles a pending transfer by confirming the original destination account and the full expected amount
-- **THEN** the system posts a balanced settlement entry crediting the destination account and debiting the Transfers-in-transit account
-- **AND** the pending transfer's status becomes settled
+- **WHEN** the user settles a pending transfer by confirming the original destination account and the amount that arrived there
+- **THEN** the system posts a balanced settlement entry crediting the destination account and debiting the Transfers-in-transit account, in the destination currency
+- **AND** the pending transfer's status becomes settled with no shortfall or fee entry
 
 #### Scenario: Settlement returns less than the original amount
 - **WHEN** the user settles a pending transfer by specifying that funds returned to the original source account for less than the amount originally sent
 - **THEN** the system posts a balanced settlement entry crediting the source account for the returned amount
-- **AND** posts a second balanced entry debiting a user-selected expense category for the shortfall, crediting the Transfers-in-transit account
+- **AND** posts a second balanced entry debiting a user-selected expense category for the shortfall, crediting the Transfers-in-transit account, both in the source currency
 - **AND** the pending transfer's status becomes settled
 
 #### Scenario: Settlement with a total loss
@@ -59,4 +63,43 @@ The user SHALL be able to settle a pending transfer or foreign-currency transact
 
 #### Scenario: Settlement always closes the provisional position
 - **WHEN** a pending transfer is settled by any of the above scenarios
-- **THEN** the settlement and any fee entry together account for exactly the amount opened by the provisional entry, leaving no unresolved balance for that transfer in the Transfers-in-transit account
+- **THEN** the pending transfer's status becomes settled and it no longer requires any further entry, regardless of whether the settlement and provisional amounts share a currency
+
+#### Scenario: A foreign-currency transaction always settles to its own account
+- **WHEN** the user settles a pending item of kind foreign-currency transaction
+- **THEN** the settled amount posts against the transaction's own financial account, using the same-currency shortfall comparison as settling a transfer back to its source, regardless of any other account the user might otherwise be able to name for a transfer
+
+#### Scenario: A fee category is rejected when settling to the destination
+- **WHEN** the user supplies a fee category while settling to the original destination account
+- **THEN** the system rejects the settlement, since no shortfall comparison applies to a destination-currency settlement
+
+#### Scenario: Negative settled amount is rejected
+- **WHEN** the user attempts to settle a pending transfer with a negative settled amount
+- **THEN** the system rejects the settlement and no entry is posted
+
+#### Scenario: Settling an already-settled pending transfer is rejected
+- **WHEN** the user attempts to settle a pending transfer whose status is already settled
+- **THEN** the system rejects the settlement and no additional entry is posted
+
+#### Scenario: Fee category must be an active expense category
+- **WHEN** the user attempts to settle a pending transfer with a shortfall using a category that is not an active Expense-type category
+- **THEN** the system rejects the settlement and no entry is posted
+
+#### Scenario: A settlement to the source account cannot exceed the provisional amount
+- **WHEN** the user attempts to settle a pending transfer back to its source account with an amount greater than the original provisional amount
+- **THEN** the system rejects the settlement, and the user is expected to settle for the provisional amount and record any extra as an ordinary income transaction afterward
+
+#### Scenario: An archived account can still receive a settlement
+- **WHEN** the user settles a pending transfer whose source or destination account has since been archived
+- **THEN** the settlement posts normally, since settling is not a new recording action gated on the account being active
+
+### Requirement: A Provisional Entry Cannot Be Reversed Directly While Pending
+A provisional entry SHALL NOT be reversed through the general journal-entry reversal action while its pending transfer's status is still pending, regardless of whether that pending transfer is a transfer or a foreign-currency transaction. Reversing it out is instead achieved by settling the pending transfer back to its own source account for the full provisional amount, with no fee. Once a pending transfer is settled, its provisional entry MAY be reversed normally like any other posted entry.
+
+#### Scenario: Direct reversal of a pending provisional entry is rejected
+- **WHEN** the user attempts to reverse an entry that is still the open provisional leg of a pending transfer
+- **THEN** the system rejects the reversal and directs the user to settle the pending transfer instead
+
+#### Scenario: Reversal works normally after settlement
+- **WHEN** the user reverses a provisional entry whose pending transfer has already been settled
+- **THEN** the system posts a normal reversal entry, the same as for any other posted entry
