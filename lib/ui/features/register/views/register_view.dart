@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../core/app_colors.dart';
+import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../view_models/register_view_model.dart';
 import 'register_row_tile.dart';
@@ -38,24 +39,53 @@ class RegisterView extends StatelessWidget {
           if (viewModel.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (viewModel.rows.isEmpty) {
-            return Center(
-              child: Text(
-                'No transactions yet',
-                style: AppTypography.body.copyWith(color: AppColors.textMuted),
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(AppSpacing.large),
+                child: DropdownButtonFormField<String>(
+                  initialValue: viewModel.selectedAccountId,
+                  decoration: const InputDecoration(labelText: 'Account'),
+                  items: [
+                    for (final account in viewModel.accounts)
+                      DropdownMenuItem(
+                        value: account.id,
+                        child: Text(
+                          account.archived
+                              ? '${account.name} (archived)'
+                              : account.name,
+                        ),
+                      ),
+                  ],
+                  onChanged: (accountId) {
+                    if (accountId != null) viewModel.selectAccount(accountId);
+                  },
+                ),
               ),
-            );
-          }
-          return ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            itemCount: viewModel.rows.length,
-            itemBuilder: (context, index) {
-              final row = viewModel.rows[index];
-              return RegisterRowTile(
-                row: row,
-                onReverse: () => viewModel.reverseEntry(row.entryId),
-              );
-            },
+              Expanded(
+                child: viewModel.rows.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No transactions yet',
+                          style: AppTypography.body.copyWith(
+                            color: AppColors.textMuted,
+                          ),
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        itemCount: viewModel.rows.length,
+                        itemBuilder: (context, index) {
+                          final row = viewModel.rows[index];
+                          return RegisterRowTile(
+                            row: row,
+                            onReverse: () =>
+                                viewModel.reverseEntry(row.entryId),
+                          );
+                        },
+                      ),
+              ),
+            ],
           );
         },
       ),

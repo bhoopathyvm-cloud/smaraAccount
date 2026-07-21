@@ -1,18 +1,35 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../domain/models/account.dart';
 import '../../../../domain/models/transaction_direction.dart';
 
 /// Form state for recording a transaction (amount, direction, category,
-/// date). Calls `recordTransaction`; domain exceptions surface as
-/// [errorMessage], never reaching the View as a raw exception
-/// (smara-tech-guidelines.md's error handling rules).
+/// financial account, date).
 class RecordTransactionViewModel extends ChangeNotifier {
-  RecordTransactionViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository;
+  RecordTransactionViewModel({
+    required LedgerRepository ledgerRepository,
+    String? initialFinancialAccountId,
+  }) : _ledgerRepository = ledgerRepository {
+    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+      accounts,
+    ) {
+      _financialAccounts = accounts;
+      if (_financialAccountId == null && accounts.isNotEmpty) {
+        _financialAccountId = initialFinancialAccountId ?? accounts.first.id;
+      }
+      notifyListeners();
+    });
+  }
 
   final LedgerRepository _ledgerRepository;
+  late final StreamSubscription<List<Account>> _accountsSubscription;
+
+  List<Account> _financialAccounts = const [];
+  List<Account> get financialAccounts => _financialAccounts;
 
   int? _amountMinor;
   int? get amountMinor => _amountMinor;
@@ -32,6 +49,13 @@ class RecordTransactionViewModel extends ChangeNotifier {
   String? get categoryId => _categoryId;
   void setCategoryId(String? value) {
     _categoryId = value;
+    notifyListeners();
+  }
+
+  String? _financialAccountId;
+  String? get financialAccountId => _financialAccountId;
+  void setFinancialAccountId(String? value) {
+    _financialAccountId = value;
     notifyListeners();
   }
 
@@ -55,13 +79,14 @@ class RecordTransactionViewModel extends ChangeNotifier {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  /// Returns true on success. On failure, [errorMessage] is set and the
-  /// form state is left untouched so the user can correct it.
   Future<bool> submit() async {
     final categoryId = _categoryId;
     final amountMinor = _amountMinor;
-    if (categoryId == null || amountMinor == null) {
-      _errorMessage = 'Amount and category are required.';
+    final financialAccountId = _financialAccountId;
+    if (categoryId == null ||
+        amountMinor == null ||
+        financialAccountId == null) {
+      _errorMessage = 'Amount, account, and category are required.';
       notifyListeners();
       return false;
     }
@@ -75,6 +100,7 @@ class RecordTransactionViewModel extends ChangeNotifier {
         amountMinor: amountMinor,
         direction: _direction,
         categoryId: categoryId,
+        financialAccountId: financialAccountId,
         transactionDate: _transactionDate,
         description: _description,
       );
@@ -86,6 +112,17 @@ class RecordTransactionViewModel extends ChangeNotifier {
       _errorMessage = e.message;
       notifyListeners();
       return false;
+    } on AccountGroupException catch (e) {
+      _isSubmitting = false;
+      _errorMessage = e.message;
+      notifyListeners();
+      return false;
     }
+  }
+
+  @override
+  void dispose() {
+    _accountsSubscription.cancel();
+    super.dispose();
   }
 }

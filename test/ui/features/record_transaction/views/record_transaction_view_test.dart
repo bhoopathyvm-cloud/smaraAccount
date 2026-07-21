@@ -46,7 +46,9 @@ void main() {
     );
     await tester.pump();
 
-    await tester.tap(find.byType(DropdownButtonFormField<String>));
+    // Two dropdowns now exist (Account, then Category) - the category
+    // picker is the last one.
+    await tester.tap(find.byType(DropdownButtonFormField<String>).last);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 

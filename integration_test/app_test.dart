@@ -116,10 +116,12 @@ void main() {
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
+      final accounts = await repository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: accounts.first.id,
         transactionDate: DateTime.now(),
       );
 
@@ -145,10 +147,12 @@ void main() {
     (tester) async {
       final categories = await repository.watchCategories().first;
       final salary = categories.firstWhere((a) => a.name == 'Salary');
+      final accounts = await repository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 500,
         direction: TransactionDirection.moneyIn,
         categoryId: salary.id,
+        financialAccountId: accounts.first.id,
         transactionDate: DateTime.now(),
       );
       await repository.archiveCategory(salary.id);
@@ -196,10 +200,12 @@ void main() {
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
+      final accounts = await repository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: accounts.first.id,
         transactionDate: DateTime(2026, 1, 15),
       );
       final tampered = (await repository.watchEntries().first).single;
@@ -226,6 +232,7 @@ void main() {
         amountMinor: 500,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: accounts.first.id,
         transactionDate: DateTime(2026, 1, 16),
       );
       final newEntry = (await repository.watchEntries().first).firstWhere(
@@ -331,10 +338,14 @@ void main() {
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
+      final accounts = await firstInstallRepository
+          .watchFinancialAccounts()
+          .first;
       await firstInstallRepository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: accounts.first.id,
         transactionDate: DateTime(2026, 1, 15),
       );
       final originalEntry =
@@ -372,10 +383,12 @@ void main() {
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
+      final accounts = await repository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: accounts.first.id,
         transactionDate: DateTime(2026, 1, 15),
       );
       final legacy = (await repository.watchEntries().first).single;

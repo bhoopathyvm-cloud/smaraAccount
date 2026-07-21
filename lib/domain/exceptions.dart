@@ -21,3 +21,39 @@ class SigningIdentityMismatchException implements Exception {
   @override
   String toString() => message;
 }
+
+class InvalidTransferException implements Exception {
+  InvalidTransferException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
+class InvalidOpeningBalanceException implements Exception {
+  InvalidOpeningBalanceException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
+class AccountGroupException implements Exception {
+  AccountGroupException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
+class LastActiveAccountException implements Exception {
+  LastActiveAccountException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}

@@ -28,11 +28,23 @@ void main() {
     archived: false,
   );
 
+  const asset = Account(
+    id: 'asset-1',
+    name: 'Cash & Bank',
+    type: AccountType.asset,
+    archived: false,
+  );
+
   setUp(() {
     repository = MockLedgerRepository();
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer((_) => Stream.value([salary]));
+    when(
+      repository.watchFinancialAccounts(
+        includeArchived: anyNamed('includeArchived'),
+      ),
+    ).thenAnswer((_) => Stream.value([asset]));
   });
 
   JournalEntry entryWithAssetAmount(int assetAmountMinor) {
@@ -73,7 +85,7 @@ void main() {
     tester,
   ) async {
     when(
-      repository.watchEntries(),
+      repository.watchEntriesForAccount(any),
     ).thenAnswer((_) => Stream.value([entryWithAssetAmount(250000)]));
 
     final viewModel = RegisterViewModel(ledgerRepository: repository);
@@ -95,7 +107,7 @@ void main() {
     tester,
   ) async {
     when(
-      repository.watchEntries(),
+      repository.watchEntriesForAccount(any),
     ).thenAnswer((_) => Stream.value([entryWithAssetAmount(1000)]));
 
     final viewModel = RegisterViewModel(ledgerRepository: repository);
@@ -148,7 +160,7 @@ void main() {
         isSupersededByMigration: false,
       );
       when(
-        repository.watchEntries(),
+        repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value([quarantined]));
 
       final viewModel = RegisterViewModel(ledgerRepository: repository);

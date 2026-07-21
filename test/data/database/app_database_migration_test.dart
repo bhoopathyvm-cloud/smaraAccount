@@ -68,10 +68,12 @@ void main() {
         final incomeId = categories
             .firstWhere((a) => a.type.name == 'income')
             .id;
+        final accounts = await repository.watchFinancialAccounts().first;
         await repository.recordTransaction(
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: accounts.first.id,
           transactionDate: DateTime(2026, 1, 15),
         );
 

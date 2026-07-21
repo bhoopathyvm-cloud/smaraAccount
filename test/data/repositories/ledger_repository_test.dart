@@ -35,6 +35,11 @@ void main() {
     await db.close();
   });
 
+  Future<String> firstFinancialAccountId() async {
+    final accounts = await repository.watchFinancialAccounts().first;
+    return accounts.first.id;
+  }
+
   Future<String> firstCategoryId(AccountType type) async {
     final categories = await repository.watchCategories().first;
     return categories.firstWhere((a) => a.type == type).id;
@@ -94,15 +99,19 @@ void main() {
       // No identity confirmed yet, so no starter accounts exist either
       // (spec: identity must exist before any account or entry does) -
       // categoryId is an arbitrary placeholder; recordTransaction must
-      // reject this before it ever gets far enough to resolve it.
+      // reject this before it ever gets far enough to resolve it. The
+      // account lookup now throws a domain exception (AccountGroupException)
+      // rather than letting Drift's raw getSingleOrNull-then-null-check
+      // surface as a StateError.
       expect(
         () => freshRepository.recordTransaction(
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: 'placeholder-category-id',
+          financialAccountId: 'no-account',
           transactionDate: DateTime(2026, 1, 15),
         ),
-        throwsStateError,
+        throwsA(isA<AccountGroupException>()),
       );
     });
 
@@ -240,6 +249,7 @@ void main() {
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: DateTime(2026, 1, 15),
       );
 
@@ -264,6 +274,7 @@ void main() {
         amountMinor: 500,
         direction: TransactionDirection.moneyOut,
         categoryId: expenseId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: DateTime(2026, 1, 15),
       );
 
@@ -276,11 +287,13 @@ void main() {
 
     test('rejects a zero amount', () async {
       final incomeId = await firstCategoryId(AccountType.income);
+      final financialAccountId = await firstFinancialAccountId();
       expect(
         () => repository.recordTransaction(
           amountMinor: 0,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: financialAccountId,
           transactionDate: DateTime(2026, 1, 15),
         ),
         throwsA(isA<InvalidTransactionAmountException>()),
@@ -290,11 +303,13 @@ void main() {
 
     test('rejects a negative amount', () async {
       final incomeId = await firstCategoryId(AccountType.income);
+      final financialAccountId = await firstFinancialAccountId();
       expect(
         () => repository.recordTransaction(
           amountMinor: -100,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: financialAccountId,
           transactionDate: DateTime(2026, 1, 15),
         ),
         throwsA(isA<InvalidTransactionAmountException>()),
@@ -311,6 +326,7 @@ void main() {
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: backdatedDate,
       );
 
@@ -336,6 +352,7 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 15),
         );
 
@@ -352,12 +369,14 @@ void main() {
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: DateTime(2026, 1, 15),
       );
       await repository.recordTransaction(
         amountMinor: 500,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: DateTime(2026, 1, 16),
       );
 
@@ -378,6 +397,7 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 15),
         );
         final original = (await repository.watchEntries().first).single;
@@ -412,6 +432,7 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 15),
         );
         final original = (await repository.watchEntries().first).single;
@@ -500,12 +521,14 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 10),
         );
         await repository.recordTransaction(
           amountMinor: 300,
           direction: TransactionDirection.moneyOut,
           categoryId: expenseId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 12),
         );
         final toReverse = (await repository.watchEntries().first).firstWhere(
@@ -537,6 +560,7 @@ void main() {
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: DateTime(2026, 2, 1),
       );
 
@@ -553,6 +577,7 @@ void main() {
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: DateTime(2026, 1, 10),
       );
       final entry = (await repository.watchEntries().first).single;
@@ -583,12 +608,14 @@ void main() {
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: DateTime(2026, 1, 15),
       );
       await repository.recordTransaction(
         amountMinor: 500,
         direction: TransactionDirection.moneyIn,
         categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
         transactionDate: DateTime(2026, 1, 16),
       );
 
@@ -606,12 +633,14 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 15),
         );
         await repository.recordTransaction(
           amountMinor: 500,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 16),
         );
         final entries = await repository.watchEntries().first;
@@ -649,6 +678,7 @@ void main() {
             amountMinor: 1000,
             direction: TransactionDirection.moneyIn,
             categoryId: incomeId,
+            financialAccountId: await firstFinancialAccountId(),
             transactionDate: DateTime(2026, 1, 15 + i),
           );
         }
@@ -693,6 +723,7 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 15),
         );
         final entries = await repository.watchEntries().first;
@@ -710,6 +741,7 @@ void main() {
           amountMinor: 200,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 17),
         );
 
@@ -742,6 +774,7 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 15),
         );
         final legacy = (await repository.watchEntries().first).single;
@@ -785,6 +818,7 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 15),
         );
 
@@ -819,6 +853,7 @@ void main() {
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
           transactionDate: DateTime(2026, 1, 15),
         );
 

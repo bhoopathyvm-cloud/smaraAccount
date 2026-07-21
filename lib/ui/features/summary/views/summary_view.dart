@@ -43,6 +43,25 @@ class SummaryView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                DropdownButtonFormField<String>(
+                  initialValue: viewModel.financialAccountId ?? '',
+                  decoration: const InputDecoration(labelText: 'Account'),
+                  items: [
+                    const DropdownMenuItem(
+                      value: '',
+                      child: Text('All accounts'),
+                    ),
+                    for (final account in viewModel.financialAccounts)
+                      DropdownMenuItem(
+                        value: account.id,
+                        child: Text(account.name),
+                      ),
+                  ],
+                  onChanged: (accountId) => viewModel.setFinancialAccountId(
+                    accountId == null || accountId.isEmpty ? null : accountId,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.large),
                 OutlinedButton(
                   onPressed: () => _pickRange(context),
                   child: Text(

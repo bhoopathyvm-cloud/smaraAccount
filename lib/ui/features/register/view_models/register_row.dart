@@ -2,10 +2,12 @@ import '../../../../domain/models/journal_entry.dart'
     show VerificationBreakReason;
 import '../../../../domain/models/transaction_direction.dart';
 
-/// A display-ready projection of one register row: the journal entry's
-/// asset-side posting tells us direction/amount (its sign is always
-/// correct for that entry, including after a reversal); the category-side
-/// posting tells us which category to show.
+/// A display-ready projection of one register row: [direction]/[amountMinor]
+/// reflect the viewed account's *display* balance delta (see
+/// `LedgerRepository.displayBalanceDeltaFor` - asset and liability accounts
+/// invert the raw posting sign), so they always agree with
+/// [runningBalanceMinor]; the counterpart posting tells us the category or
+/// counterparty account to show.
 class RegisterRow {
   const RegisterRow({
     required this.entryId,
