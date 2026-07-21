@@ -49,4 +49,4 @@
 - [x] 6.1 Widget tests for Home overview grouping, net position, and archived indication
 - [x] 6.2 Widget or integration test: create second account, transfer (including payment to a liability), verify balances on Home and register counterpart labels
 - [x] 6.3 Run `dart analyze` and fix issues introduced by this change
-- [ ] 6.4 Manual smoke: migrate existing DB, confirm legacy account under Cash & cash equivalents with correct balance
+- [x] 6.4 Manual smoke: migrate existing DB, confirm legacy account under Cash & cash equivalents with correct balance
