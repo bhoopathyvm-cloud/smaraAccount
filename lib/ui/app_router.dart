@@ -1,10 +1,15 @@
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/repositories/ledger_repository.dart';
 import 'core/app_shell.dart';
+import 'features/account_management/view_models/account_management_view_model.dart';
+import 'features/account_management/views/account_management_view.dart';
 import 'features/category_management/view_models/category_management_view_model.dart';
 import 'features/category_management/views/category_management_view.dart';
+import 'features/home/view_models/home_view_model.dart';
+import 'features/home/views/home_view.dart';
 import 'features/migration/view_models/key_loss_migration_view_model.dart';
 import 'features/migration/views/key_loss_migration_view.dart';
 import 'features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
@@ -19,6 +24,8 @@ import 'features/restore/view_models/restore_identity_view_model.dart';
 import 'features/restore/views/restore_identity_view.dart';
 import 'features/summary/view_models/summary_view_model.dart';
 import 'features/summary/views/summary_view.dart';
+import 'features/transfer/view_models/transfer_view_model.dart';
+import 'features/transfer/views/transfer_view.dart';
 
 const _onboardingPaths = {
   '/onboarding/recovery-phrase',
@@ -43,7 +50,7 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
   var hasVerifiedThisSession = false;
 
   return GoRouter(
-    initialLocation: '/register',
+    initialLocation: '/home',
     redirect: (context, state) async {
       final isOnboardingRoute = _onboardingPaths.contains(
         state.matchedLocation,
@@ -70,7 +77,7 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
       }
 
       if (isOnboardingRoute || isRestoreRoute) {
-        return '/register';
+        return '/home';
       }
       return null;
     },
@@ -93,14 +100,14 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
         path: '/onboarding/confirm',
         builder: (context, state) => RecoveryPhraseConfirmView(
           viewModel: context.read<RecoveryPhraseSetupViewModel>(),
-          onConfirmed: () => context.go('/register'),
+          onConfirmed: () => context.go('/home'),
         ),
       ),
       GoRoute(
         path: _restorePath,
         builder: (context, state) => RestoreIdentityView(
           viewModel: context.read<RestoreIdentityViewModel>(),
-          onRestored: () => context.go('/register'),
+          onRestored: () => context.go('/home'),
           onNoRecoveryMaterial: () => context.push(_migrationPath),
         ),
       ),
@@ -110,7 +117,7 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
           viewModel: KeyLossMigrationViewModel(
             ledgerRepository: ledgerRepository,
           ),
-          onMigrated: () => context.go('/register'),
+          onMigrated: () => context.go('/home'),
         ),
       ),
       GoRoute(
@@ -118,8 +125,16 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
         builder: (context, state) => RecordTransactionView(
           viewModel: RecordTransactionViewModel(
             ledgerRepository: ledgerRepository,
+            initialFinancialAccountId: state.uri.queryParameters['accountId'],
           ),
           ledgerRepository: ledgerRepository,
+          onSaved: () => context.pop(),
+        ),
+      ),
+      GoRoute(
+        path: '/transfer',
+        builder: (context, state) => TransferView(
+          viewModel: TransferViewModel(ledgerRepository: ledgerRepository),
           onSaved: () => context.pop(),
         ),
       ),
@@ -130,12 +145,20 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/register',
-                builder: (context, state) => RegisterView(
-                  viewModel: context.read<RegisterViewModel>(),
-                  onAddTransaction: () => context.push('/record-transaction'),
+                path: '/home',
+                builder: (context, state) => HomeView(
+                  viewModel: context.read<HomeViewModel>(),
+                  onAccountTap: (accountId) => context.go(
+                    '/register?accountId=${Uri.encodeQueryComponent(accountId)}',
+                  ),
                 ),
               ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/register', builder: _buildRegister),
+              GoRoute(path: '/register/:accountId', builder: _buildRegister),
             ],
           ),
           StatefulShellBranch(
@@ -144,6 +167,17 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
                 path: '/summary',
                 builder: (context, state) =>
                     SummaryView(viewModel: context.read<SummaryViewModel>()),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/accounts',
+                builder: (context, state) => AccountManagementView(
+                  viewModel: context.read<AccountManagementViewModel>(),
+                  onTransfer: () => context.push('/transfer'),
+                ),
               ),
             ],
           ),
@@ -160,5 +194,33 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
         ],
       ),
     ],
+  );
+}
+
+RegisterView _buildRegister(BuildContext context, GoRouterState state) {
+  final viewModel = context.read<RegisterViewModel>();
+  final accountId =
+      state.pathParameters['accountId'] ??
+      state.uri.queryParameters['accountId'];
+  // selectAccount() calls notifyListeners(), which can hit "setState()
+  // called during build" if RegisterView's ListenableBuilder is already
+  // mounted (e.g. tapping a different account on Home while the Register
+  // tab is already showing another one) - this builder runs as part of
+  // go_router's own build, so the mutation must be deferred to just after
+  // the current frame instead of applied synchronously here.
+  if (accountId != null) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewModel.selectAccount(accountId);
+    });
+  }
+  return RegisterView(
+    viewModel: viewModel,
+    onAddTransaction: () {
+      final selectedAccountId = viewModel.selectedAccountId;
+      final location = selectedAccountId == null
+          ? '/record-transaction'
+          : '/record-transaction?accountId=${Uri.encodeQueryComponent(selectedAccountId)}';
+      context.push(location);
+    },
   );
 }

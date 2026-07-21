@@ -45,6 +45,7 @@ void main() {
           amountMinor: anyNamed('amountMinor'),
           direction: anyNamed('direction'),
           categoryId: anyNamed('categoryId'),
+          financialAccountId: anyNamed('financialAccountId'),
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
         ),
@@ -55,11 +56,13 @@ void main() {
   test('submit calls recordTransaction and returns true on success', () async {
     viewModel.setAmountMinor(1000);
     viewModel.setCategoryId('cat-1');
+    viewModel.setFinancialAccountId('account-1');
     when(
       repository.recordTransaction(
         amountMinor: anyNamed('amountMinor'),
         direction: anyNamed('direction'),
         categoryId: anyNamed('categoryId'),
+        financialAccountId: anyNamed('financialAccountId'),
         transactionDate: anyNamed('transactionDate'),
         description: anyNamed('description'),
       ),
@@ -77,11 +80,13 @@ void main() {
     () async {
       viewModel.setAmountMinor(0);
       viewModel.setCategoryId('cat-1');
+      viewModel.setFinancialAccountId('account-1');
       when(
         repository.recordTransaction(
           amountMinor: anyNamed('amountMinor'),
           direction: anyNamed('direction'),
           categoryId: anyNamed('categoryId'),
+          financialAccountId: anyNamed('financialAccountId'),
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
         ),

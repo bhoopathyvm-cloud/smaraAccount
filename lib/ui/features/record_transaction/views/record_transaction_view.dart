@@ -90,6 +90,19 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                   },
                 ),
                 const SizedBox(height: AppSpacing.large),
+                DropdownButtonFormField<String>(
+                  initialValue: widget.viewModel.financialAccountId,
+                  decoration: const InputDecoration(labelText: 'Account'),
+                  items: [
+                    for (final account in widget.viewModel.financialAccounts)
+                      DropdownMenuItem(
+                        value: account.id,
+                        child: Text(account.name),
+                      ),
+                  ],
+                  onChanged: widget.viewModel.setFinancialAccountId,
+                ),
+                const SizedBox(height: AppSpacing.large),
                 TextField(
                   controller: _amountController,
                   keyboardType: const TextInputType.numberWithOptions(

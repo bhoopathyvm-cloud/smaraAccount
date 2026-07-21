@@ -5,6 +5,8 @@ import '../../domain/crypto/entry_canonical_hash.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
 import '../../domain/models/account.dart';
+import '../../domain/models/account_group.dart';
+import '../../domain/models/home_overview.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/journal_entry.dart';
 import '../../domain/models/posting.dart';
@@ -12,6 +14,8 @@ import '../../domain/models/signing_identity.dart';
 import '../../domain/models/summary.dart';
 import '../../domain/models/transaction_direction.dart';
 import '../database/app_database.dart';
+import '../database/tables/account_groups_table.dart';
+import '../database/tables/accounts_table.dart';
 import '../database/tables/ledger_chain_state_table.dart';
 
 /// The only layer that talks to Drift. Exposes domain models, never
@@ -102,12 +106,14 @@ class LedgerRepository {
               nextDeviceChainSequence: 0,
             ),
           );
+      await _seedSystemGroupsAndEquity();
       await _db
           .into(_db.accounts)
           .insert(
             AccountsCompanion.insert(
               name: financialAccountName,
               type: AccountType.asset,
+              groupId: const Value(groupCashEquivalentsId),
             ),
           );
       for (final name in starterIncomeCategories) {
@@ -126,6 +132,57 @@ class LedgerRepository {
       }
     });
     return _toDomainIdentity(row);
+  }
+
+  Future<void> _seedSystemGroupsAndEquity() async {
+    final seeds = <(String id, String name, AccountGroupKind kind, int order)>[
+      (
+        groupCashEquivalentsId,
+        'Cash & cash equivalents',
+        AccountGroupKind.assetGroup,
+        0,
+      ),
+      (
+        groupPensionRetirementId,
+        'Pension & retirement',
+        AccountGroupKind.assetGroup,
+        1,
+      ),
+      (
+        groupCreditShortTermId,
+        'Credit & short-term debt',
+        AccountGroupKind.liabilityGroup,
+        2,
+      ),
+      (
+        groupLoansMortgagesId,
+        'Loans & mortgages',
+        AccountGroupKind.liabilityGroup,
+        3,
+      ),
+    ];
+    for (final (id, name, kind, order) in seeds) {
+      await _db
+          .into(_db.accountGroups)
+          .insertOnConflictUpdate(
+            AccountGroupsCompanion.insert(
+              id: id,
+              name: name,
+              kind: kind,
+              sortOrder: order,
+              isSystem: true,
+            ),
+          );
+    }
+    await _db
+        .into(_db.accounts)
+        .insertOnConflictUpdate(
+          AccountsCompanion.insert(
+            id: const Value(openingBalanceEquityAccountId),
+            name: openingBalanceEquityAccountName,
+            type: AccountType.equity,
+          ),
+        );
   }
 
   /// Re-derives key material from a recovery phrase or keystore file and,
@@ -603,16 +660,44 @@ class LedgerRepository {
   }
 
   /// Categories for pickers ([includeArchived] false, the default) or
-  /// historical views ([includeArchived] true - never filters on
-  /// archived_at). Never includes the single financial (asset) account.
+  /// historical views ([includeArchived] true). Allowlist: income/expense
+  /// only — never liability/equity/asset.
   Stream<List<Account>> watchCategories({bool includeArchived = false}) {
     final query = _db.select(_db.accounts)
-      ..where((a) => a.type.equalsValue(AccountType.asset).not())
+      ..where(
+        (a) =>
+            a.type.equalsValue(AccountType.income) |
+            a.type.equalsValue(AccountType.expense),
+      )
       ..orderBy([(a) => OrderingTerm.asc(a.name)]);
     if (!includeArchived) {
       query.where((a) => a.archivedAt.isNull());
     }
     return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
+  }
+
+  /// Active financial accounts only (`asset` / `liability` allowlist).
+  Stream<List<Account>> watchFinancialAccounts({bool includeArchived = false}) {
+    final query = _db.select(_db.accounts)
+      ..where(
+        (a) =>
+            a.type.equalsValue(AccountType.asset) |
+            a.type.equalsValue(AccountType.liability),
+      )
+      ..orderBy([
+        (a) => OrderingTerm.asc(a.sortOrder),
+        (a) => OrderingTerm.asc(a.name),
+      ]);
+    if (!includeArchived) {
+      query.where((a) => a.archivedAt.isNull());
+    }
+    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
+  }
+
+  Stream<List<AccountGroup>> watchAccountGroups() {
+    final query = _db.select(_db.accountGroups)
+      ..orderBy([(g) => OrderingTerm.asc(g.sortOrder)]);
+    return query.watch().map((rows) => rows.map(_toDomainGroup).toList());
   }
 
   Account _toDomainAccount(AccountRow row) {
@@ -621,23 +706,242 @@ class LedgerRepository {
       name: row.name,
       type: row.type,
       archived: row.archivedAt != null,
+      groupId: row.groupId,
+      sortOrder: row.sortOrder,
     );
   }
 
-  Future<AccountRow> _financialAccount() {
-    return (_db.select(
+  AccountGroup _toDomainGroup(AccountGroupRow row) {
+    return AccountGroup(
+      id: row.id,
+      name: row.name,
+      kind: row.kind,
+      sortOrder: row.sortOrder,
+      isSystem: row.isSystem,
+    );
+  }
+
+  /// Used by [recordTransaction], [recordTransfer], and
+  /// [archiveFinancialAccount] - throws [AccountGroupException] (not
+  /// [InvalidTransferException], which is reserved for transfer-specific
+  /// validation like same-account/non-positive-amount) so every caller's
+  /// existing catch clause for "not a valid financial account" applies
+  /// uniformly.
+  Future<AccountRow> _requireActiveFinancialAccount(String id) async {
+    final row = await (_db.select(
       _db.accounts,
-    )..where((a) => a.type.equalsValue(AccountType.asset))).getSingle();
+    )..where((a) => a.id.equals(id))).getSingleOrNull();
+    if (row == null ||
+        (row.type != AccountType.asset && row.type != AccountType.liability)) {
+      throw AccountGroupException('Account $id is not a financial account.');
+    }
+    if (row.archivedAt != null) {
+      throw AccountGroupException('Account $id is archived.');
+    }
+    return row;
+  }
+
+  /// Creates a financial account. [openingBalanceMinor] if supplied must be
+  /// positive; for liabilities it means amount owed.
+  Future<Account> createFinancialAccount({
+    required String name,
+    required AccountType type,
+    required String groupId,
+    int? openingBalanceMinor,
+  }) async {
+    if (type != AccountType.asset && type != AccountType.liability) {
+      throw ArgumentError.value(type, 'type', 'must be asset or liability');
+    }
+    if (openingBalanceMinor != null && openingBalanceMinor <= 0) {
+      throw InvalidOpeningBalanceException(
+        'Opening balance must be positive and non-zero when supplied, '
+        'got $openingBalanceMinor.',
+      );
+    }
+    final group = await (_db.select(
+      _db.accountGroups,
+    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
+    if (group == null) {
+      throw AccountGroupException('Account group $groupId not found.');
+    }
+    final expectedKind = type == AccountType.asset
+        ? AccountGroupKind.assetGroup
+        : AccountGroupKind.liabilityGroup;
+    if (group.kind != expectedKind) {
+      throw AccountGroupException(
+        'Account type $type does not match group kind ${group.kind}.',
+      );
+    }
+
+    late AccountRow created;
+    await _db.transaction(() async {
+      created = await _db
+          .into(_db.accounts)
+          .insertReturning(
+            AccountsCompanion.insert(
+              name: name,
+              type: type,
+              groupId: Value(groupId),
+            ),
+          );
+    });
+
+    if (openingBalanceMinor != null) {
+      await _postOpeningBalance(
+        account: created,
+        openingBalanceMinor: openingBalanceMinor,
+      );
+    }
+    return _toDomainAccount(created);
+  }
+
+  Future<void> _postOpeningBalance({
+    required AccountRow account,
+    required int openingBalanceMinor,
+  }) async {
+    // Option A: asset +O / equity −O; liability −O / equity +O.
+    final (financialAmount, equityAmount) = account.type == AccountType.asset
+        ? (openingBalanceMinor, -openingBalanceMinor)
+        : (-openingBalanceMinor, openingBalanceMinor);
+
+    await _appendSignedEntry(
+      transactionDate: _dateOnly(DateTime.now()),
+      description: 'Opening balance',
+      reversesEntryId: null,
+      postings: [
+        (accountId: account.id, amountMinor: financialAmount, lineNumber: 1),
+        (
+          accountId: openingBalanceEquityAccountId,
+          amountMinor: equityAmount,
+          lineNumber: 2,
+        ),
+      ],
+    );
+  }
+
+  Future<void> renameFinancialAccount({
+    required String id,
+    required String newName,
+  }) async {
+    final row = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(id))).getSingleOrNull();
+    if (row == null ||
+        (row.type != AccountType.asset && row.type != AccountType.liability)) {
+      throw AccountGroupException('Account $id is not a financial account.');
+    }
+    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+      AccountsCompanion(name: Value(newName)),
+    );
+  }
+
+  Future<void> reassignFinancialAccountGroup({
+    required String id,
+    required String groupId,
+  }) async {
+    final account = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(id))).getSingleOrNull();
+    if (account == null ||
+        (account.type != AccountType.asset &&
+            account.type != AccountType.liability)) {
+      throw AccountGroupException('Account $id is not a financial account.');
+    }
+    final group = await (_db.select(
+      _db.accountGroups,
+    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
+    if (group == null) {
+      throw AccountGroupException('Account group $groupId not found.');
+    }
+    final expectedKind = account.type == AccountType.asset
+        ? AccountGroupKind.assetGroup
+        : AccountGroupKind.liabilityGroup;
+    if (group.kind != expectedKind) {
+      throw AccountGroupException(
+        'Account type ${account.type} does not match group kind ${group.kind}.',
+      );
+    }
+    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+      AccountsCompanion(groupId: Value(groupId)),
+    );
+  }
+
+  Future<void> archiveFinancialAccount(String id) async {
+    await _requireActiveFinancialAccount(id);
+    final activeCount =
+        await (_db.select(_db.accounts)..where(
+              (a) =>
+                  (a.type.equalsValue(AccountType.asset) |
+                      a.type.equalsValue(AccountType.liability)) &
+                  a.archivedAt.isNull(),
+            ))
+            .get();
+    if (activeCount.length <= 1) {
+      throw LastActiveAccountException(
+        'Cannot archive the last active financial account.',
+      );
+    }
+    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
+      AccountsCompanion(archivedAt: Value(DateTime.now())),
+    );
+  }
+
+  Future<void> renameAccountGroup({
+    required String id,
+    required String newName,
+  }) async {
+    final group = await (_db.select(
+      _db.accountGroups,
+    )..where((g) => g.id.equals(id))).getSingleOrNull();
+    if (group == null) {
+      throw AccountGroupException('Account group $id not found.');
+    }
+    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
+      AccountGroupsCompanion(name: Value(newName)),
+    );
+  }
+
+  /// Account groups cannot be archived in this version - all four groups
+  /// are system rows (design.md Decision 1: "no user-created custom
+  /// groups in this change"), and "System Account Groups Are Permanent
+  /// and Renameable" requires they SHALL NOT be archived. There is no
+  /// separate "custom group" case to distinguish yet; when this change
+  /// adds custom groups, this method is where that distinction would be
+  /// introduced, not before.
+  Future<void> archiveAccountGroup(String id) async {
+    final group = await (_db.select(
+      _db.accountGroups,
+    )..where((g) => g.id.equals(id))).getSingleOrNull();
+    if (group == null) {
+      throw AccountGroupException('Account group $id not found.');
+    }
+    throw AccountGroupException('Account groups cannot be archived.');
+  }
+
+  /// See [archiveAccountGroup] - same reasoning, "SHALL NOT be
+  /// permanently deleted".
+  Future<void> deleteAccountGroup(String id) async {
+    final group = await (_db.select(
+      _db.accountGroups,
+    )..where((g) => g.id.equals(id))).getSingleOrNull();
+    if (group == null) {
+      throw AccountGroupException('Account group $id not found.');
+    }
+    throw AccountGroupException('Account groups cannot be deleted.');
   }
 
   /// Validates `amountMinor > 0`, derives the two postings, stamps
   /// recorded_at automatically via DateTime.now() (never user-supplied),
   /// hashes/chains/signs the entry (ledger-integrity-signing), and writes
   /// everything in one Drift transaction.
+  ///
+  /// Option A sign table: money in → financial `+amount`; money out →
+  /// financial `−amount` (same for asset and liability).
   Future<void> recordTransaction({
     required int amountMinor,
     required TransactionDirection direction,
     required String categoryId,
+    required String financialAccountId,
     required DateTime transactionDate,
     String? description,
   }) async {
@@ -647,8 +951,8 @@ class LedgerRepository {
       );
     }
 
-    final financialAccount = await _financialAccount();
-    final (assetAmount, categoryAmount) = switch (direction) {
+    await _requireActiveFinancialAccount(financialAccountId);
+    final (financialAmount, categoryAmount) = switch (direction) {
       TransactionDirection.moneyIn => (amountMinor, -amountMinor),
       TransactionDirection.moneyOut => (-amountMinor, amountMinor),
     };
@@ -659,11 +963,42 @@ class LedgerRepository {
       reversesEntryId: null,
       postings: [
         (
-          accountId: financialAccount.id,
-          amountMinor: assetAmount,
+          accountId: financialAccountId,
+          amountMinor: financialAmount,
           lineNumber: 1,
         ),
         (accountId: categoryId, amountMinor: categoryAmount, lineNumber: 2),
+      ],
+    );
+  }
+
+  Future<void> recordTransfer({
+    required String fromAccountId,
+    required String toAccountId,
+    required int amountMinor,
+    required DateTime transactionDate,
+    String? description,
+  }) async {
+    if (amountMinor <= 0) {
+      throw InvalidTransferException(
+        'Transfer amount must be positive and non-zero, got $amountMinor.',
+      );
+    }
+    if (fromAccountId == toAccountId) {
+      throw InvalidTransferException(
+        'Source and destination accounts must be distinct.',
+      );
+    }
+    await _requireActiveFinancialAccount(fromAccountId);
+    await _requireActiveFinancialAccount(toAccountId);
+
+    await _appendSignedEntry(
+      transactionDate: _dateOnly(transactionDate),
+      description: description,
+      reversesEntryId: null,
+      postings: [
+        (accountId: fromAccountId, amountMinor: -amountMinor, lineNumber: 1),
+        (accountId: toAccountId, amountMinor: amountMinor, lineNumber: 2),
       ],
     );
   }
@@ -872,14 +1207,12 @@ class LedgerRepository {
         );
   }
 
-  /// [type] must be [AccountType.income] or [AccountType.expense] - the
-  /// single financial account is seeded once at onCreate and never
-  /// created through this method.
+  /// [type] must be [AccountType.income] or [AccountType.expense].
   Future<void> addCategory({
     required String name,
     required AccountType type,
   }) async {
-    if (type == AccountType.asset) {
+    if (type != AccountType.income && type != AccountType.expense) {
       throw ArgumentError.value(type, 'type', 'must be income or expense');
     }
     await _db
@@ -902,15 +1235,134 @@ class LedgerRepository {
     );
   }
 
+  /// Reactive stream of entries that post to [financialAccountId], ordered
+  /// chronologically. Includes verification status; running balance should
+  /// be computed by the ViewModel using [displayBalanceDeltaFor].
+  Stream<List<JournalEntry>> watchEntriesForAccount(String financialAccountId) {
+    return watchEntries().map(
+      (entries) => entries
+          .where(
+            (e) => e.postings.any((p) => p.accountId == financialAccountId),
+          )
+          .toList(),
+    );
+  }
+
+  /// Display-balance contribution of one posting on a financial account.
+  /// Asset: raw amount. Liability owed: negated amount (Option A).
+  static int displayBalanceDeltaFor({
+    required AccountType accountType,
+    required int postingAmountMinor,
+  }) {
+    return switch (accountType) {
+      AccountType.asset => postingAmountMinor,
+      AccountType.liability => -postingAmountMinor,
+      AccountType.equity || AccountType.income || AccountType.expense => 0,
+    };
+  }
+
+  /// Current display balance for a financial account (quarantine/supersession
+  /// exclusions applied).
+  Future<int> displayBalanceMinor(String financialAccountId) async {
+    final account = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(financialAccountId))).getSingle();
+    final entries = await watchEntriesForAccount(financialAccountId).first;
+    var balance = 0;
+    for (final entry in entries) {
+      if (!entry.isVerified || entry.isSupersededByMigration) continue;
+      for (final posting in entry.postings) {
+        if (posting.accountId != financialAccountId) continue;
+        balance += displayBalanceDeltaFor(
+          accountType: account.type,
+          postingAmountMinor: posting.amountMinor,
+        );
+      }
+    }
+    return balance;
+  }
+
+  Stream<HomeOverview> watchHomeOverview() {
+    return watchEntries().asyncMap((_) => _buildHomeOverview());
+  }
+
+  Future<HomeOverview> _buildHomeOverview() async {
+    final groups = await watchAccountGroups().first;
+    final accounts = await watchFinancialAccounts(includeArchived: true).first;
+    final entries = await watchEntries().first;
+
+    final rawSumByAccount = <String, int>{};
+    for (final entry in entries) {
+      if (!entry.isVerified || entry.isSupersededByMigration) continue;
+      for (final posting in entry.postings) {
+        rawSumByAccount[posting.accountId] =
+            (rawSumByAccount[posting.accountId] ?? 0) + posting.amountMinor;
+      }
+    }
+
+    int displayFor(Account account) {
+      final raw = rawSumByAccount[account.id] ?? 0;
+      return displayBalanceDeltaFor(
+        accountType: account.type,
+        postingAmountMinor: raw,
+      );
+    }
+
+    var totalAssets = 0;
+    var totalLiabilities = 0;
+    final sections = <AccountGroupSection>[];
+
+    for (final group in groups) {
+      final members = accounts.where((a) => a.groupId == group.id).toList()
+        ..sort((a, b) {
+          final byOrder = a.sortOrder.compareTo(b.sortOrder);
+          return byOrder != 0 ? byOrder : a.name.compareTo(b.name);
+        });
+      if (members.isEmpty) continue;
+
+      final balances = <AccountBalance>[];
+      var groupTotal = 0;
+      for (final account in members) {
+        final display = displayFor(account);
+        balances.add(
+          AccountBalance(account: account, displayBalanceMinor: display),
+        );
+        groupTotal += display;
+        if (account.type == AccountType.asset) {
+          totalAssets += display;
+        } else if (account.type == AccountType.liability) {
+          totalLiabilities += display;
+        }
+      }
+      sections.add(
+        AccountGroupSection(
+          group: group,
+          accounts: balances,
+          totalDisplayBalanceMinor: groupTotal,
+        ),
+      );
+    }
+
+    return HomeOverview(
+      sections: sections,
+      netPositionMinor: totalAssets - totalLiabilities,
+      totalAssetsMinor: totalAssets,
+      totalLiabilitiesMinor: totalLiabilities,
+    );
+  }
+
   /// Total income and total expense posted within [start]..[end]
   /// (inclusive), based on transaction date. Both totals are positive
   /// magnitudes; a reversed entry's postings net out automatically since
   /// they carry opposite signs to the original. Postings belonging to a
   /// quarantined (unverified) entry are excluded (spec: "Quarantine of
-  /// Entries After a Break").
+  /// Entries After a Break"). Transfers and opening balances are excluded
+  /// because only income/expense account types accumulate. Optional
+  /// [financialAccountId] filters to entries that affect that account.
   Stream<LedgerSummary> watchSummary({
     required DateTime start,
     required DateTime end,
+    String? financialAccountId,
   }) {
     final startDate = _dateOnly(start);
     final endDate = _dateOnly(end);
@@ -934,22 +1386,30 @@ class LedgerRepository {
               _db.journalEntries.transactionDate.isSmallerOrEqualValue(endDate),
         );
 
-    return query.watch().map((rows) {
-      // An entry superseded by a later true-key-loss migration (spec:
-      // "Legacy entries remain visible but excluded from active
-      // balances") - both the legacy and its replacement always share
-      // the same transactionDate, so both are guaranteed present in this
-      // same date-filtered result set.
+    return query.watch().asyncMap((rows) async {
       final supersededEntryIds = <String>{
         for (final row in rows)
           ?row.readTable(_db.journalEntries).migratedFromEntryId,
       };
+
+      Set<String>? entryIdsTouchingAccount;
+      if (financialAccountId != null) {
+        entryIdsTouchingAccount = {
+          for (final row in rows)
+            if (row.readTable(_db.postings).accountId == financialAccountId)
+              row.readTable(_db.journalEntries).id,
+        };
+      }
 
       var totalIncomeMinor = 0;
       var totalExpenseMinor = 0;
       for (final row in rows) {
         final entry = row.readTable(_db.journalEntries);
         if (supersededEntryIds.contains(entry.id)) continue;
+        if (entryIdsTouchingAccount != null &&
+            !entryIdsTouchingAccount.contains(entry.id)) {
+          continue;
+        }
 
         final verification = row.readTableOrNull(_db.entryVerificationCache);
         if (verification != null && !verification.isVerified) continue;
@@ -962,6 +1422,8 @@ class LedgerRepository {
           case AccountType.expense:
             totalExpenseMinor += posting.amountMinor;
           case AccountType.asset:
+          case AccountType.liability:
+          case AccountType.equity:
             break;
         }
       }

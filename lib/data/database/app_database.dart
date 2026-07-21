@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:uuid/uuid.dart';
 
+import 'tables/account_groups_table.dart';
 import 'tables/accounts_table.dart';
 import 'tables/entry_verification_cache_table.dart';
 import 'tables/integrity_events_table.dart';
@@ -12,9 +13,7 @@ import 'tables/signing_identities_table.dart';
 
 part 'app_database.g.dart';
 
-/// The single financial account seeded on first launch. Never archivable -
-/// archiving is only offered for income/expense rows (Category Management
-/// requirement).
+/// The single financial account seeded on first launch.
 const financialAccountName = 'Cash & Bank';
 
 /// Starter category set (design.md: "Starter category set"). All are
@@ -31,6 +30,7 @@ const starterExpenseCategories = [
 
 @DriftDatabase(
   tables: [
+    AccountGroups,
     Accounts,
     JournalEntries,
     Postings,
@@ -46,17 +46,15 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (Migrator m) async {
-      // Schema only - no data. Starter accounts are seeded by
+      // Schema only - no data. Starter groups/accounts are seeded by
       // LedgerRepository.confirmFirstIdentity, not here: spec
       // ("Device Signing Identity") requires the signing identity to
-      // exist before any starter account or journal entry does, so
-      // seeding can't happen unconditionally at database-file creation
-      // time, before onboarding has run.
+      // exist before any starter account or journal entry does.
       await m.createAll();
     },
     onUpgrade: (Migrator m, int from, int to) async {
@@ -79,11 +77,6 @@ class AppDatabase extends _$AppDatabase {
           );
         }
 
-        // ADD COLUMN with NOT NULL requires a DEFAULT in SQLite. These
-        // one-off column definitions carry a default purely to satisfy
-        // that DDL rule on an empty table - the real column definitions
-        // above (used for onCreate and all application code) have no
-        // default, matching design.md exactly.
         await m.addColumn(
           journalEntries,
           GeneratedColumn<int>(
@@ -139,6 +132,61 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(entryVerificationCache);
         await m.createTable(ledgerChainState);
         await m.createTable(integrityEvents);
+      }
+
+      if (from < 3) {
+        // multi-account-support: account_groups + group_id/sort_order on
+        // accounts. Safe with existing journal_entries — metadata only,
+        // no re-hash of history. No reject-if-rows guard needed.
+        await m.createTable(accountGroups);
+        await m.addColumn(accounts, accounts.groupId);
+        await m.addColumn(
+          accounts,
+          GeneratedColumn<int>(
+            'sort_order',
+            'accounts',
+            false,
+            type: DriftSqlType.int,
+            defaultValue: const Constant(0),
+          ),
+        );
+
+        // Drift's default (non-text) DateTime columns store unix seconds,
+        // not milliseconds - binding milliseconds directly here would
+        // corrupt created_at for these rows by a factor of 1000 the next
+        // time Drift reads it back (DateTime.fromMillisecondsSinceEpoch
+        // applied to an already-too-large value).
+        final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+        await customStatement(
+          'INSERT INTO account_groups (id, name, kind, sort_order, is_system, created_at) VALUES '
+          "(?, 'Cash & cash equivalents', 'assetGroup', 0, 1, ?), "
+          "(?, 'Pension & retirement', 'assetGroup', 1, 1, ?), "
+          "(?, 'Credit & short-term debt', 'liabilityGroup', 2, 1, ?), "
+          "(?, 'Loans & mortgages', 'liabilityGroup', 3, 1, ?)",
+          [
+            groupCashEquivalentsId,
+            now,
+            groupPensionRetirementId,
+            now,
+            groupCreditShortTermId,
+            now,
+            groupLoansMortgagesId,
+            now,
+          ],
+        );
+
+        await customStatement(
+          'INSERT INTO accounts (id, name, type, group_id, sort_order, archived_at, created_at) '
+          "VALUES (?, ?, 'equity', NULL, 0, NULL, ?)",
+          [openingBalanceEquityAccountId, openingBalanceEquityAccountName, now],
+        );
+
+        // Backfill the existing sole asset financial account into Cash &
+        // cash equivalents. Categories stay group_id NULL.
+        await customStatement(
+          "UPDATE accounts SET group_id = ? WHERE type = 'asset'",
+          [groupCashEquivalentsId],
+        );
       }
     },
   );

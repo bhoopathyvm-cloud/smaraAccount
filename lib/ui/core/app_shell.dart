@@ -7,8 +7,10 @@ import 'app_colors.dart';
 const _largeScreenMinWidth = 600.0;
 
 const _destinations = [
+  (icon: TablerIcons.home, label: 'Home', path: '/home'),
   (icon: TablerIcons.receipt, label: 'Register', path: '/register'),
   (icon: TablerIcons.chartBar, label: 'Summary', path: '/summary'),
+  (icon: TablerIcons.wallet, label: 'Accounts', path: '/accounts'),
   (icon: TablerIcons.tag, label: 'Categories', path: '/categories'),
 ];
 

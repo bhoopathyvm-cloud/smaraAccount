@@ -18,8 +18,20 @@ void main() {
     archived: false,
   );
 
+  const asset = Account(
+    id: 'asset-1',
+    name: 'Cash & Bank',
+    type: AccountType.asset,
+    archived: false,
+  );
+
   setUp(() {
     repository = MockLedgerRepository();
+    when(
+      repository.watchFinancialAccounts(
+        includeArchived: anyNamed('includeArchived'),
+      ),
+    ).thenAnswer((_) => Stream.value([asset]));
   });
 
   JournalEntry testEntry({
@@ -50,7 +62,7 @@ void main() {
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer((_) => Stream.value([income]));
-    when(repository.watchEntries()).thenAnswer(
+    when(repository.watchEntriesForAccount(any)).thenAnswer(
       (_) => Stream.value([
         testEntry(
           id: 'e1',
@@ -116,7 +128,7 @@ void main() {
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([income]));
-      when(repository.watchEntries()).thenAnswer(
+      when(repository.watchEntriesForAccount(any)).thenAnswer(
         (_) => Stream.value([
           testEntry(
             id: 'e1',
@@ -178,7 +190,9 @@ void main() {
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer((_) => Stream.value([income]));
-    when(repository.watchEntries()).thenAnswer((_) => Stream.value(const []));
+    when(
+      repository.watchEntriesForAccount(any),
+    ).thenAnswer((_) => Stream.value(const []));
     when(repository.reverseEntry(any)).thenAnswer((_) async {});
 
     final viewModel = RegisterViewModel(ledgerRepository: repository);

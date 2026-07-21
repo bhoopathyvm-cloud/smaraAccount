@@ -3,6 +3,420 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
+class $AccountGroupsTable extends AccountGroups
+    with TableInfo<$AccountGroupsTable, AccountGroupRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AccountGroupsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<AccountGroupKind, String> kind =
+      GeneratedColumn<String>(
+        'kind',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<AccountGroupKind>($AccountGroupsTable.$converterkind);
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSystemMeta = const VerificationMeta(
+    'isSystem',
+  );
+  @override
+  late final GeneratedColumn<bool> isSystem = GeneratedColumn<bool>(
+    'is_system',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_system" IN (0, 1))',
+    ),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    kind,
+    sortOrder,
+    isSystem,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'account_groups';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AccountGroupRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sortOrderMeta);
+    }
+    if (data.containsKey('is_system')) {
+      context.handle(
+        _isSystemMeta,
+        isSystem.isAcceptableOrUnknown(data['is_system']!, _isSystemMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_isSystemMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  AccountGroupRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AccountGroupRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      kind: $AccountGroupsTable.$converterkind.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}kind'],
+        )!,
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      isSystem: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_system'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $AccountGroupsTable createAlias(String alias) {
+    return $AccountGroupsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<AccountGroupKind, String, String> $converterkind =
+      const EnumNameConverter<AccountGroupKind>(AccountGroupKind.values);
+}
+
+class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
+  final String id;
+  final String name;
+  final AccountGroupKind kind;
+  final int sortOrder;
+  final bool isSystem;
+  final DateTime createdAt;
+  const AccountGroupRow({
+    required this.id,
+    required this.name,
+    required this.kind,
+    required this.sortOrder,
+    required this.isSystem,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    {
+      map['kind'] = Variable<String>(
+        $AccountGroupsTable.$converterkind.toSql(kind),
+      );
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['is_system'] = Variable<bool>(isSystem);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  AccountGroupsCompanion toCompanion(bool nullToAbsent) {
+    return AccountGroupsCompanion(
+      id: Value(id),
+      name: Value(name),
+      kind: Value(kind),
+      sortOrder: Value(sortOrder),
+      isSystem: Value(isSystem),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory AccountGroupRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AccountGroupRow(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      kind: $AccountGroupsTable.$converterkind.fromJson(
+        serializer.fromJson<String>(json['kind']),
+      ),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      isSystem: serializer.fromJson<bool>(json['isSystem']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'kind': serializer.toJson<String>(
+        $AccountGroupsTable.$converterkind.toJson(kind),
+      ),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'isSystem': serializer.toJson<bool>(isSystem),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  AccountGroupRow copyWith({
+    String? id,
+    String? name,
+    AccountGroupKind? kind,
+    int? sortOrder,
+    bool? isSystem,
+    DateTime? createdAt,
+  }) => AccountGroupRow(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    kind: kind ?? this.kind,
+    sortOrder: sortOrder ?? this.sortOrder,
+    isSystem: isSystem ?? this.isSystem,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  AccountGroupRow copyWithCompanion(AccountGroupsCompanion data) {
+    return AccountGroupRow(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      isSystem: data.isSystem.present ? data.isSystem.value : this.isSystem,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AccountGroupRow(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('kind: $kind, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isSystem: $isSystem, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, kind, sortOrder, isSystem, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AccountGroupRow &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.kind == this.kind &&
+          other.sortOrder == this.sortOrder &&
+          other.isSystem == this.isSystem &&
+          other.createdAt == this.createdAt);
+}
+
+class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<AccountGroupKind> kind;
+  final Value<int> sortOrder;
+  final Value<bool> isSystem;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const AccountGroupsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.isSystem = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  AccountGroupsCompanion.insert({
+    required String id,
+    required String name,
+    required AccountGroupKind kind,
+    required int sortOrder,
+    required bool isSystem,
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       kind = Value(kind),
+       sortOrder = Value(sortOrder),
+       isSystem = Value(isSystem);
+  static Insertable<AccountGroupRow> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? kind,
+    Expression<int>? sortOrder,
+    Expression<bool>? isSystem,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (kind != null) 'kind': kind,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (isSystem != null) 'is_system': isSystem,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  AccountGroupsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<AccountGroupKind>? kind,
+    Value<int>? sortOrder,
+    Value<bool>? isSystem,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return AccountGroupsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      kind: kind ?? this.kind,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isSystem: isSystem ?? this.isSystem,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(
+        $AccountGroupsTable.$converterkind.toSql(kind.value),
+      );
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (isSystem.present) {
+      map['is_system'] = Variable<bool>(isSystem.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AccountGroupsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('kind: $kind, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('isSystem: $isSystem, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $AccountsTable extends Accounts
     with TableInfo<$AccountsTable, AccountRow> {
   @override
@@ -37,6 +451,29 @@ class $AccountsTable extends Accounts
         type: DriftSqlType.string,
         requiredDuringInsert: true,
       ).withConverter<AccountType>($AccountsTable.$convertertype);
+  static const VerificationMeta _groupIdMeta = const VerificationMeta(
+    'groupId',
+  );
+  @override
+  late final GeneratedColumn<String> groupId = GeneratedColumn<String>(
+    'group_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
   static const VerificationMeta _archivedAtMeta = const VerificationMeta(
     'archivedAt',
   );
@@ -61,7 +498,15 @@ class $AccountsTable extends Accounts
     defaultValue: currentDateAndTime,
   );
   @override
-  List<GeneratedColumn> get $columns => [id, name, type, archivedAt, createdAt];
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    type,
+    groupId,
+    sortOrder,
+    archivedAt,
+    createdAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -84,6 +529,18 @@ class $AccountsTable extends Accounts
       );
     } else if (isInserting) {
       context.missing(_nameMeta);
+    }
+    if (data.containsKey('group_id')) {
+      context.handle(
+        _groupIdMeta,
+        groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
     }
     if (data.containsKey('archived_at')) {
       context.handle(
@@ -120,6 +577,14 @@ class $AccountsTable extends Accounts
           data['${effectivePrefix}type'],
         )!,
       ),
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_id'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
       archivedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}archived_at'],
@@ -144,12 +609,18 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
   final String id;
   final String name;
   final AccountType type;
+
+  /// Required for asset/liability; NULL for income/expense/equity.
+  final String? groupId;
+  final int sortOrder;
   final DateTime? archivedAt;
   final DateTime createdAt;
   const AccountRow({
     required this.id,
     required this.name,
     required this.type,
+    this.groupId,
+    required this.sortOrder,
     this.archivedAt,
     required this.createdAt,
   });
@@ -161,6 +632,10 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
     {
       map['type'] = Variable<String>($AccountsTable.$convertertype.toSql(type));
     }
+    if (!nullToAbsent || groupId != null) {
+      map['group_id'] = Variable<String>(groupId);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
     if (!nullToAbsent || archivedAt != null) {
       map['archived_at'] = Variable<DateTime>(archivedAt);
     }
@@ -173,6 +648,10 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
       id: Value(id),
       name: Value(name),
       type: Value(type),
+      groupId: groupId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupId),
+      sortOrder: Value(sortOrder),
       archivedAt: archivedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(archivedAt),
@@ -191,6 +670,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
       type: $AccountsTable.$convertertype.fromJson(
         serializer.fromJson<String>(json['type']),
       ),
+      groupId: serializer.fromJson<String?>(json['groupId']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
       archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
@@ -204,6 +685,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
       'type': serializer.toJson<String>(
         $AccountsTable.$convertertype.toJson(type),
       ),
+      'groupId': serializer.toJson<String?>(groupId),
+      'sortOrder': serializer.toJson<int>(sortOrder),
       'archivedAt': serializer.toJson<DateTime?>(archivedAt),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
@@ -213,12 +696,16 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
     String? id,
     String? name,
     AccountType? type,
+    Value<String?> groupId = const Value.absent(),
+    int? sortOrder,
     Value<DateTime?> archivedAt = const Value.absent(),
     DateTime? createdAt,
   }) => AccountRow(
     id: id ?? this.id,
     name: name ?? this.name,
     type: type ?? this.type,
+    groupId: groupId.present ? groupId.value : this.groupId,
+    sortOrder: sortOrder ?? this.sortOrder,
     archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
     createdAt: createdAt ?? this.createdAt,
   );
@@ -227,6 +714,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       type: data.type.present ? data.type.value : this.type,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
       archivedAt: data.archivedAt.present
           ? data.archivedAt.value
           : this.archivedAt,
@@ -240,6 +729,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('type: $type, ')
+          ..write('groupId: $groupId, ')
+          ..write('sortOrder: $sortOrder, ')
           ..write('archivedAt: $archivedAt, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -247,7 +738,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
   }
 
   @override
-  int get hashCode => Object.hash(id, name, type, archivedAt, createdAt);
+  int get hashCode =>
+      Object.hash(id, name, type, groupId, sortOrder, archivedAt, createdAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -255,6 +747,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
           other.id == this.id &&
           other.name == this.name &&
           other.type == this.type &&
+          other.groupId == this.groupId &&
+          other.sortOrder == this.sortOrder &&
           other.archivedAt == this.archivedAt &&
           other.createdAt == this.createdAt);
 }
@@ -263,6 +757,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
   final Value<String> id;
   final Value<String> name;
   final Value<AccountType> type;
+  final Value<String?> groupId;
+  final Value<int> sortOrder;
   final Value<DateTime?> archivedAt;
   final Value<DateTime> createdAt;
   final Value<int> rowid;
@@ -270,6 +766,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.type = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.sortOrder = const Value.absent(),
     this.archivedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -278,6 +776,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     this.id = const Value.absent(),
     required String name,
     required AccountType type,
+    this.groupId = const Value.absent(),
+    this.sortOrder = const Value.absent(),
     this.archivedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -287,6 +787,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     Expression<String>? id,
     Expression<String>? name,
     Expression<String>? type,
+    Expression<String>? groupId,
+    Expression<int>? sortOrder,
     Expression<DateTime>? archivedAt,
     Expression<DateTime>? createdAt,
     Expression<int>? rowid,
@@ -295,6 +797,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (type != null) 'type': type,
+      if (groupId != null) 'group_id': groupId,
+      if (sortOrder != null) 'sort_order': sortOrder,
       if (archivedAt != null) 'archived_at': archivedAt,
       if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
@@ -305,6 +809,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     Value<String>? id,
     Value<String>? name,
     Value<AccountType>? type,
+    Value<String?>? groupId,
+    Value<int>? sortOrder,
     Value<DateTime?>? archivedAt,
     Value<DateTime>? createdAt,
     Value<int>? rowid,
@@ -313,6 +819,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
       id: id ?? this.id,
       name: name ?? this.name,
       type: type ?? this.type,
+      groupId: groupId ?? this.groupId,
+      sortOrder: sortOrder ?? this.sortOrder,
       archivedAt: archivedAt ?? this.archivedAt,
       createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
@@ -333,6 +841,12 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
         $AccountsTable.$convertertype.toSql(type.value),
       );
     }
+    if (groupId.present) {
+      map['group_id'] = Variable<String>(groupId.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
     if (archivedAt.present) {
       map['archived_at'] = Variable<DateTime>(archivedAt.value);
     }
@@ -351,6 +865,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('type: $type, ')
+          ..write('groupId: $groupId, ')
+          ..write('sortOrder: $sortOrder, ')
           ..write('archivedAt: $archivedAt, ')
           ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
@@ -3084,6 +3600,7 @@ class IntegrityEventsCompanion extends UpdateCompanion<IntegrityEventRow> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
+  late final $AccountGroupsTable accountGroups = $AccountGroupsTable(this);
   late final $AccountsTable accounts = $AccountsTable(this);
   late final $SigningIdentitiesTable signingIdentities =
       $SigningIdentitiesTable(this);
@@ -3102,6 +3619,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
+    accountGroups,
     accounts,
     signingIdentities,
     journalEntries,
@@ -3112,11 +3630,233 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   ];
 }
 
+typedef $$AccountGroupsTableCreateCompanionBuilder =
+    AccountGroupsCompanion Function({
+      required String id,
+      required String name,
+      required AccountGroupKind kind,
+      required int sortOrder,
+      required bool isSystem,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$AccountGroupsTableUpdateCompanionBuilder =
+    AccountGroupsCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<AccountGroupKind> kind,
+      Value<int> sortOrder,
+      Value<bool> isSystem,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$AccountGroupsTableFilterComposer
+    extends Composer<_$AppDatabase, $AccountGroupsTable> {
+  $$AccountGroupsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<AccountGroupKind, AccountGroupKind, String>
+  get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSystem => $composableBuilder(
+    column: $table.isSystem,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AccountGroupsTableOrderingComposer
+    extends Composer<_$AppDatabase, $AccountGroupsTable> {
+  $$AccountGroupsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSystem => $composableBuilder(
+    column: $table.isSystem,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AccountGroupsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $AccountGroupsTable> {
+  $$AccountGroupsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<AccountGroupKind, String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSystem =>
+      $composableBuilder(column: $table.isSystem, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$AccountGroupsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $AccountGroupsTable,
+          AccountGroupRow,
+          $$AccountGroupsTableFilterComposer,
+          $$AccountGroupsTableOrderingComposer,
+          $$AccountGroupsTableAnnotationComposer,
+          $$AccountGroupsTableCreateCompanionBuilder,
+          $$AccountGroupsTableUpdateCompanionBuilder,
+          (
+            AccountGroupRow,
+            BaseReferences<_$AppDatabase, $AccountGroupsTable, AccountGroupRow>,
+          ),
+          AccountGroupRow,
+          PrefetchHooks Function()
+        > {
+  $$AccountGroupsTableTableManager(_$AppDatabase db, $AccountGroupsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AccountGroupsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AccountGroupsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AccountGroupsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<AccountGroupKind> kind = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<bool> isSystem = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AccountGroupsCompanion(
+                id: id,
+                name: name,
+                kind: kind,
+                sortOrder: sortOrder,
+                isSystem: isSystem,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                required AccountGroupKind kind,
+                required int sortOrder,
+                required bool isSystem,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AccountGroupsCompanion.insert(
+                id: id,
+                name: name,
+                kind: kind,
+                sortOrder: sortOrder,
+                isSystem: isSystem,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AccountGroupsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $AccountGroupsTable,
+      AccountGroupRow,
+      $$AccountGroupsTableFilterComposer,
+      $$AccountGroupsTableOrderingComposer,
+      $$AccountGroupsTableAnnotationComposer,
+      $$AccountGroupsTableCreateCompanionBuilder,
+      $$AccountGroupsTableUpdateCompanionBuilder,
+      (
+        AccountGroupRow,
+        BaseReferences<_$AppDatabase, $AccountGroupsTable, AccountGroupRow>,
+      ),
+      AccountGroupRow,
+      PrefetchHooks Function()
+    >;
 typedef $$AccountsTableCreateCompanionBuilder =
     AccountsCompanion Function({
       Value<String> id,
       required String name,
       required AccountType type,
+      Value<String?> groupId,
+      Value<int> sortOrder,
       Value<DateTime?> archivedAt,
       Value<DateTime> createdAt,
       Value<int> rowid,
@@ -3126,6 +3866,8 @@ typedef $$AccountsTableUpdateCompanionBuilder =
       Value<String> id,
       Value<String> name,
       Value<AccountType> type,
+      Value<String?> groupId,
+      Value<int> sortOrder,
       Value<DateTime?> archivedAt,
       Value<DateTime> createdAt,
       Value<int> rowid,
@@ -3178,6 +3920,16 @@ class $$AccountsTableFilterComposer
         column: $table.type,
         builder: (column) => ColumnWithTypeConverterFilters(column),
       );
+
+  ColumnFilters<String> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<DateTime> get archivedAt => $composableBuilder(
     column: $table.archivedAt,
@@ -3239,6 +3991,16 @@ class $$AccountsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
     column: $table.archivedAt,
     builder: (column) => ColumnOrderings(column),
@@ -3267,6 +4029,12 @@ class $$AccountsTableAnnotationComposer
 
   GeneratedColumnWithTypeConverter<AccountType, String> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<String> get groupId =>
+      $composableBuilder(column: $table.groupId, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
 
   GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
     column: $table.archivedAt,
@@ -3333,6 +4101,8 @@ class $$AccountsTableTableManager
                 Value<String> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<AccountType> type = const Value.absent(),
+                Value<String?> groupId = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
                 Value<DateTime?> archivedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -3340,6 +4110,8 @@ class $$AccountsTableTableManager
                 id: id,
                 name: name,
                 type: type,
+                groupId: groupId,
+                sortOrder: sortOrder,
                 archivedAt: archivedAt,
                 createdAt: createdAt,
                 rowid: rowid,
@@ -3349,6 +4121,8 @@ class $$AccountsTableTableManager
                 Value<String> id = const Value.absent(),
                 required String name,
                 required AccountType type,
+                Value<String?> groupId = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
                 Value<DateTime?> archivedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -3356,6 +4130,8 @@ class $$AccountsTableTableManager
                 id: id,
                 name: name,
                 type: type,
+                groupId: groupId,
+                sortOrder: sortOrder,
                 archivedAt: archivedAt,
                 createdAt: createdAt,
                 rowid: rowid,
@@ -6509,6 +7285,8 @@ typedef $$IntegrityEventsTableProcessedTableManager =
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
+  $$AccountGroupsTableTableManager get accountGroups =>
+      $$AccountGroupsTableTableManager(_db, _db.accountGroups);
   $$AccountsTableTableManager get accounts =>
       $$AccountsTableTableManager(_db, _db.accounts);
   $$SigningIdentitiesTableTableManager get signingIdentities =>
