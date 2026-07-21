@@ -901,7 +901,13 @@ class LedgerRepository {
     );
   }
 
-  /// System groups cannot be archived or deleted.
+  /// Account groups cannot be archived in this version - all four groups
+  /// are system rows (design.md Decision 1: "no user-created custom
+  /// groups in this change"), and "System Account Groups Are Permanent
+  /// and Renameable" requires they SHALL NOT be archived. There is no
+  /// separate "custom group" case to distinguish yet; when this change
+  /// adds custom groups, this method is where that distinction would be
+  /// introduced, not before.
   Future<void> archiveAccountGroup(String id) async {
     final group = await (_db.select(
       _db.accountGroups,
@@ -909,14 +915,11 @@ class LedgerRepository {
     if (group == null) {
       throw AccountGroupException('Account group $id not found.');
     }
-    if (group.isSystem) {
-      throw AccountGroupException('System account groups cannot be archived.');
-    }
-    throw AccountGroupException(
-      'Custom account groups are not supported in this version.',
-    );
+    throw AccountGroupException('Account groups cannot be archived.');
   }
 
+  /// See [archiveAccountGroup] - same reasoning, "SHALL NOT be
+  /// permanently deleted".
   Future<void> deleteAccountGroup(String id) async {
     final group = await (_db.select(
       _db.accountGroups,
@@ -924,11 +927,7 @@ class LedgerRepository {
     if (group == null) {
       throw AccountGroupException('Account group $id not found.');
     }
-    throw AccountGroupException(
-      group.isSystem
-          ? 'System account groups cannot be deleted.'
-          : 'Custom account groups are not supported in this version.',
-    );
+    throw AccountGroupException('Account groups cannot be deleted.');
   }
 
   /// Validates `amountMinor > 0`, derives the two postings, stamps

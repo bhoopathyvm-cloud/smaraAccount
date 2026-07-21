@@ -202,7 +202,17 @@ RegisterView _buildRegister(BuildContext context, GoRouterState state) {
   final accountId =
       state.pathParameters['accountId'] ??
       state.uri.queryParameters['accountId'];
-  if (accountId != null) viewModel.selectAccount(accountId);
+  // selectAccount() calls notifyListeners(), which can hit "setState()
+  // called during build" if RegisterView's ListenableBuilder is already
+  // mounted (e.g. tapping a different account on Home while the Register
+  // tab is already showing another one) - this builder runs as part of
+  // go_router's own build, so the mutation must be deferred to just after
+  // the current frame instead of applied synchronously here.
+  if (accountId != null) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewModel.selectAccount(accountId);
+    });
+  }
   return RegisterView(
     viewModel: viewModel,
     onAddTransaction: () {

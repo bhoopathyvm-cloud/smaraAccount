@@ -6,13 +6,16 @@ import 'package:integration_test/integration_test.dart';
 import 'package:provider/provider.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
+import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/integrity_event.dart';
 import 'package:smara_accounting/ui/app_router.dart';
 import 'package:smara_accounting/ui/core/app_theme.dart';
+import 'package:smara_accounting/ui/features/account_management/view_models/account_management_view_model.dart';
 import 'package:smara_accounting/ui/features/category_management/view_models/category_management_view_model.dart';
+import 'package:smara_accounting/ui/features/home/view_models/home_view_model.dart';
 import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_confirm_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
@@ -87,6 +90,12 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
+    // The app now lands on Home by default; the add-transaction FAB
+    // lives on the Register tab.
+    await tester.tap(find.text('Register'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
     await tester.tap(find.byIcon(TablerIcons.plus));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
@@ -94,7 +103,9 @@ void main() {
     await tester.enterText(find.byType(TextField).first, '25');
     await tester.pump();
 
-    await tester.tap(find.byType(DropdownButtonFormField<String>));
+    // Two dropdowns now exist (Account, then Category) - the category
+    // picker is the last one.
+    await tester.tap(find.byType(DropdownButtonFormField<String>).last);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
     await tester.tap(find.text('Salary').last);
@@ -226,6 +237,12 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
+      // The app lands on Home by default; the quarantine indicator is
+      // rendered on the Register tab's rows.
+      await tester.tap(find.text('Register'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
       expect(find.byIcon(TablerIcons.lock), findsOneWidget);
 
       await repository.recordTransaction(
@@ -324,15 +341,15 @@ void main() {
       await tester.tap(confirmButton);
       // Confirming triggers confirmFirstIdentity + verifyChain, then the
       // redirect's own currentIdentity/hasMatchingStoredKey/verifyChain
-      // chain before /register finally builds - wait for a widget that
-      // only exists there.
-      await pumpUntilFound(tester, find.byIcon(TablerIcons.plus));
+      // chain before /home finally builds - wait for a widget that only
+      // exists there.
+      await pumpUntilFound(tester, find.text('NET POSITION'));
       expect(
         find.textContaining('doesn\'t match'),
         findsNothing,
         reason: 'confirmation words were rejected',
       );
-      expect(find.byIcon(TablerIcons.plus), findsOneWidget);
+      expect(find.text('NET POSITION'), findsOneWidget);
 
       final categories = await firstInstallRepository.watchCategories().first;
       final incomeId = categories
@@ -365,8 +382,8 @@ void main() {
 
       await tester.enterText(find.byType(TextField).first, words.join(' '));
       await tester.tap(find.text('Restore'));
-      await pumpUntilFound(tester, find.byIcon(TablerIcons.plus));
-      expect(find.byIcon(TablerIcons.plus), findsOneWidget);
+      await pumpUntilFound(tester, find.text('NET POSITION'));
+      expect(find.text('NET POSITION'), findsOneWidget);
 
       final entries = await reinstalledRepository.watchEntries().first;
       expect(entries, hasLength(1));
@@ -426,9 +443,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
       await tester.tap(migrateButton);
       // Migration re-signs every entry (async crypto per entry) before the
-      // redirect chain runs again for /register.
-      await pumpUntilFound(tester, find.byIcon(TablerIcons.plus));
-      expect(find.byIcon(TablerIcons.plus), findsOneWidget);
+      // redirect chain runs again for /home.
+      await pumpUntilFound(tester, find.text('NET POSITION'));
+      expect(find.text('NET POSITION'), findsOneWidget);
 
       final newIdentity = (await postLossRepository.currentIdentity())!;
       expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
@@ -463,6 +480,51 @@ void main() {
       );
     },
   );
+
+  testWidgets(
+    'navigating from Home to a different account while Register is already showing one does not throw',
+    (tester) async {
+      // Regression for a setState()-during-build hazard: app_router.dart's
+      // Register route builder used to call RegisterViewModel.selectAccount
+      // (which calls notifyListeners()) synchronously inside go_router's
+      // own builder - fine on first navigation, but if Register's
+      // ListenableBuilder is already mounted (as it is here, thanks to
+      // StatefulShellRoute keeping every branch alive) and the user taps a
+      // different account, that becomes a rebuild-during-build.
+      await repository.createFinancialAccount(
+        name: 'Savings',
+        type: AccountType.asset,
+        groupId: groupCashEquivalentsId,
+      );
+
+      await tester.pumpWidget(buildApp());
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.tap(find.text('Cash & Bank'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(tester.takeException(), isNull);
+      expect(
+        find.widgetWithText(DropdownButtonFormField<String>, 'Cash & Bank'),
+        findsOneWidget,
+      );
+
+      await tester.tap(find.text('Home'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.tap(find.text('Savings'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(tester.takeException(), isNull);
+      expect(
+        find.widgetWithText(DropdownButtonFormField<String>, 'Savings'),
+        findsOneWidget,
+      );
+    },
+  );
 }
 
 Widget buildAppFor(LedgerRepository repository) {
@@ -485,6 +547,12 @@ Widget buildAppFor(LedgerRepository repository) {
       ),
       ChangeNotifierProvider(
         create: (_) => RestoreIdentityViewModel(ledgerRepository: repository),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => HomeViewModel(ledgerRepository: repository),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => AccountManagementViewModel(ledgerRepository: repository),
       ),
     ],
     child: Builder(
