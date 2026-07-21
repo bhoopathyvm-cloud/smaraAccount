@@ -14,11 +14,12 @@ The system SHALL provide a small starter set of Income and Expense categories on
 - **THEN** a small default set of Income and Expense categories exists and is available for use without any setup step
 
 ### Requirement: Single Financial Account
-The system SHALL maintain exactly one financial account (e.g. a bank or cash account) that all transactions are recorded against. Support for additional financial accounts is out of scope for this capability.
+The system SHALL support one or more financial accounts (asset or liability) that transactions and transfers are recorded against. The historical constraint of exactly one financial account no longer applies; multi-account behavior is defined by the `multi-account-ledger` capability.
 
-#### Scenario: One account exists
-- **WHEN** the application is set up
-- **THEN** exactly one financial account exists and all transactions are recorded against it
+#### Scenario: Multiple accounts may exist
+- **WHEN** the application is set up or the user creates additional financial accounts
+- **THEN** one or more financial accounts may exist
+- **AND** each income or expense transaction is recorded against a user-selected financial account
 
 ### Requirement: Category Management
 The user SHALL be able to rename a category, add a new category, and archive a category that is no longer needed. Categories SHALL NOT be permanently deleted.
@@ -37,15 +38,15 @@ The user SHALL be able to rename a category, add a new category, and archive a c
 - **AND** the category and any entries that reference it remain fully visible in read-only views (register, summary)
 
 ### Requirement: Record a Transaction
-The user SHALL record a transaction by providing a transaction date, an amount, a direction (money in or money out), and a category. The system SHALL derive a balanced double-entry journal entry from these inputs; the user SHALL NOT be required to select debit and credit accounts directly.
+The user SHALL record a transaction by providing a transaction date, an amount, a direction (money in or money out), a category, and a financial account. The system SHALL derive a balanced double-entry journal entry from these inputs; the user SHALL NOT be required to select debit and credit accounts directly.
 
 #### Scenario: Record money in
-- **WHEN** the user records a transaction as money in, with an amount, a transaction date, and an Income category
-- **THEN** the system posts a balanced journal entry crediting the selected Income category and debiting the financial account
+- **WHEN** the user records a transaction as money in, with an amount, a transaction date, an Income category, and a financial account
+- **THEN** the system posts a balanced journal entry affecting the selected Income category and the selected financial account
 
 #### Scenario: Record money out
-- **WHEN** the user records a transaction as money out, with an amount, a transaction date, and an Expense category
-- **THEN** the system posts a balanced journal entry debiting the selected Expense category and crediting the financial account
+- **WHEN** the user records a transaction as money out, with an amount, a transaction date, an Expense category, and a financial account
+- **THEN** the system posts a balanced journal entry affecting the selected Expense category and the selected financial account
 
 #### Scenario: Archived category is not offered
 - **WHEN** the user is choosing a category while recording a new transaction
@@ -87,16 +88,21 @@ The user SHALL be able to reverse a posted entry as a single, independent, ordin
 - **THEN** the system posts it as an ordinary new transaction, with no special linkage required to the reversal
 
 ### Requirement: Transaction Register
-The system SHALL provide a chronological register of all posted journal entries for the financial account, showing a running balance.
+The system SHALL provide a chronological register of posted journal entries for a selected financial account, showing a running balance for that account.
 
 #### Scenario: Register shows running balance
-- **WHEN** the user opens the register
-- **THEN** posted entries are listed in chronological order by transaction date
-- **AND** each entry shows the account balance as of that entry
+- **WHEN** the user opens the register for a financial account
+- **THEN** posted entries that affect that account are listed in chronological order by transaction date
+- **AND** each entry shows that account’s balance as of that entry
 
 ### Requirement: Income vs. Expense Summary
-The system SHALL provide a summary of total income and total expense for a date range selected by the user.
+The system SHALL provide a summary of total income and total expense for a date range selected by the user. Transfer entries and opening-balance entries SHALL NOT be included in those totals. The summary SHALL support an optional filter by financial account; when no filter is set, totals SHALL include all financial accounts.
 
 #### Scenario: Summary for a selected range
 - **WHEN** the user selects a start and end date for the summary
 - **THEN** the system shows the total income and total expense posted within that range, based on transaction date
+- **AND** transfers and opening-balance entries are excluded from those totals
+
+#### Scenario: Summary filtered by account
+- **WHEN** the user selects a financial account filter for the summary
+- **THEN** the income and expense totals include only entries that affect that financial account within the date range
