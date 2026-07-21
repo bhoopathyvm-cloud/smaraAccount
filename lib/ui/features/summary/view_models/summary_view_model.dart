@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../domain/models/account.dart';
 import '../../../../domain/models/summary.dart';
 
 /// Date range selection for the Income vs. Expense Summary requirement.
@@ -12,11 +13,29 @@ class SummaryViewModel extends ChangeNotifier {
     : _ledgerRepository = ledgerRepository,
       _start = _startOfMonth(DateTime.now()),
       _end = DateTime.now() {
+    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+      accounts,
+    ) {
+      _financialAccounts = accounts;
+      if (_financialAccountId != null &&
+          !accounts.any((account) => account.id == _financialAccountId)) {
+        _financialAccountId = null;
+        _subscribe();
+      }
+      notifyListeners();
+    });
     _subscribe();
   }
 
   final LedgerRepository _ledgerRepository;
   StreamSubscription<LedgerSummary>? _subscription;
+  late final StreamSubscription<List<Account>> _accountsSubscription;
+
+  List<Account> _financialAccounts = const [];
+  List<Account> get financialAccounts => _financialAccounts;
+
+  String? _financialAccountId;
+  String? get financialAccountId => _financialAccountId;
 
   DateTime _start;
   DateTime get start => _start;
@@ -37,19 +56,32 @@ class SummaryViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setFinancialAccountId(String? accountId) {
+    if (_financialAccountId == accountId) return;
+    _financialAccountId = accountId;
+    _subscribe();
+    notifyListeners();
+  }
+
   void _subscribe() {
     _subscription?.cancel();
-    _subscription = _ledgerRepository
-        .watchSummary(start: _start, end: _end)
-        .listen((summary) {
-          _summary = summary;
-          notifyListeners();
-        });
+    final stream = _financialAccountId == null
+        ? _ledgerRepository.watchSummary(start: _start, end: _end)
+        : _ledgerRepository.watchSummary(
+            start: _start,
+            end: _end,
+            financialAccountId: _financialAccountId,
+          );
+    _subscription = stream.listen((summary) {
+      _summary = summary;
+      notifyListeners();
+    });
   }
 
   @override
   void dispose() {
     _subscription?.cancel();
+    _accountsSubscription.cancel();
     super.dispose();
   }
 }

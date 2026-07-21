@@ -32,12 +32,12 @@ The system SHALL provide a chronological register of posted journal entries for 
 - **AND** each entry shows that account’s balance as of that entry
 
 ### Requirement: Income vs. Expense Summary
-The system SHALL provide a summary of total income and total expense for a date range selected by the user. Transfer entries that do not involve Income or Expense categories SHALL NOT be included in those totals. The summary SHALL support an optional filter by financial account; when no filter is set, totals SHALL include all financial accounts.
+The system SHALL provide a summary of total income and total expense for a date range selected by the user. Transfer entries and opening-balance entries SHALL NOT be included in those totals. The summary SHALL support an optional filter by financial account; when no filter is set, totals SHALL include all financial accounts.
 
 #### Scenario: Summary for a selected range
 - **WHEN** the user selects a start and end date for the summary
 - **THEN** the system shows the total income and total expense posted within that range, based on transaction date
-- **AND** transfers are excluded from those totals
+- **AND** transfers and opening-balance entries are excluded from those totals
 
 #### Scenario: Summary filtered by account
 - **WHEN** the user selects a financial account filter for the summary

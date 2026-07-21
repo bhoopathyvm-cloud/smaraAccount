@@ -2,72 +2,131 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../../data/database/tables/accounts_table.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/journal_entry.dart';
 import '../../../../domain/models/transaction_direction.dart';
 import 'register_row.dart';
 
-/// All UI state and orchestration lives here. Extends ChangeNotifier.
-/// Never touches Drift directly - only calls Repository methods. Rebuilds
-/// automatically as the Repository's reactive streams emit; no manual
-/// refresh is ever needed (smara-architecture.md's Data Flow).
+/// Account-scoped register: counterpart labels for category / transfer /
+/// opening balance; running display balance for the viewed account.
 class RegisterViewModel extends ChangeNotifier {
-  RegisterViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository {
-    _entriesSubscription = _ledgerRepository.watchEntries().listen(_onEntries);
-    _categoriesSubscription = _ledgerRepository
-        .watchCategories(includeArchived: true)
-        .listen(_onCategories);
+  RegisterViewModel({
+    required LedgerRepository ledgerRepository,
+    String? initialAccountId,
+  }) : _ledgerRepository = ledgerRepository {
+    _accountsSubscription = _ledgerRepository
+        .watchFinancialAccounts(includeArchived: true)
+        .listen(_onAccounts);
+    if (initialAccountId != null) {
+      _selectedAccountId = initialAccountId;
+      _resubscribeEntries();
+    }
   }
 
   final LedgerRepository _ledgerRepository;
-  late final StreamSubscription<List<JournalEntry>> _entriesSubscription;
-  late final StreamSubscription<List<Account>> _categoriesSubscription;
+  late final StreamSubscription<List<Account>> _accountsSubscription;
+  StreamSubscription<List<JournalEntry>>? _entriesSubscription;
 
-  List<JournalEntry> _entries = const [];
+  List<Account> _accounts = const [];
+  Map<String, Account> _accountsById = const {};
   Map<String, Account> _categoriesById = const {};
+
+  String? _selectedAccountId;
+  String? get selectedAccountId => _selectedAccountId;
 
   List<RegisterRow> _rows = const [];
   List<RegisterRow> get rows => _rows;
 
-  bool get isLoading => _categoriesById.isEmpty && _entries.isEmpty;
+  List<Account> get accounts => _accounts;
 
-  void _onEntries(List<JournalEntry> entries) {
-    _entries = entries;
-    _recompute();
+  bool get isLoading => _accounts.isEmpty;
+
+  void selectAccount(String accountId) {
+    if (_selectedAccountId == accountId) return;
+    _selectedAccountId = accountId;
+    _resubscribeEntries();
+    notifyListeners();
   }
 
-  void _onCategories(List<Account> categories) {
-    _categoriesById = {for (final c in categories) c.id: c};
-    _recompute();
+  void _onAccounts(List<Account> accounts) {
+    _accounts = accounts;
+    _accountsById = {for (final a in accounts) a.id: a};
+    if (_selectedAccountId == null && accounts.isNotEmpty) {
+      final active = accounts.where((a) => !a.archived).toList();
+      _selectedAccountId = (active.isNotEmpty ? active : accounts).first.id;
+      _resubscribeEntries();
+    }
+    _ledgerRepository.watchCategories(includeArchived: true).first.then((cats) {
+      _categoriesById = {for (final c in cats) c.id: c};
+      _recompute(_lastEntries);
+    });
+    notifyListeners();
   }
 
-  void _recompute() {
+  List<JournalEntry> _lastEntries = const [];
+
+  void _resubscribeEntries() {
+    _entriesSubscription?.cancel();
+    final id = _selectedAccountId;
+    if (id == null) return;
+    _entriesSubscription = _ledgerRepository.watchEntriesForAccount(id).listen((
+      entries,
+    ) {
+      _lastEntries = entries;
+      _recompute(entries);
+    });
+  }
+
+  void _recompute(List<JournalEntry> entries) {
+    final accountId = _selectedAccountId;
+    if (accountId == null) {
+      _rows = const [];
+      notifyListeners();
+      return;
+    }
+    final account = _accountsById[accountId];
+    if (account == null) {
+      _rows = const [];
+      notifyListeners();
+      return;
+    }
+
     var runningBalance = 0;
     final rows = <RegisterRow>[];
-    for (final entry in _entries) {
-      if (entry.postings.length != 2) continue;
-      final categoryPosting = entry.postings.firstWhere(
-        (p) => _categoriesById.containsKey(p.accountId),
-        orElse: () => entry.postings.first,
+    for (final entry in entries) {
+      final ownPosting = entry.postings.firstWhere(
+        (p) => p.accountId == accountId,
       );
-      final assetPosting = entry.postings.firstWhere(
-        (p) => p.accountId != categoryPosting.accountId,
-        orElse: () => entry.postings.last,
+      final other = entry.postings.firstWhere(
+        (p) => p.accountId != accountId,
+        orElse: () => ownPosting,
+      );
+
+      final counterpartName = _counterpartLabel(other.accountId);
+      final delta = LedgerRepository.displayBalanceDeltaFor(
+        accountType: account.type,
+        postingAmountMinor: ownPosting.amountMinor,
       );
 
       if (entry.isVerified && !entry.isSupersededByMigration) {
-        runningBalance += assetPosting.amountMinor;
+        runningBalance += delta;
       }
+
       rows.add(
         RegisterRow(
           entryId: entry.id,
-          categoryName: _categoriesById[categoryPosting.accountId]?.name ?? '',
-          direction: assetPosting.amountMinor >= 0
+          categoryName: counterpartName,
+          // Sign relative to the viewed account's *display* balance, not
+          // the raw posting - for a liability, those are inverted (Option
+          // A: a purchase posts -amount raw but increases what's owed),
+          // and the row must agree with the running balance shown right
+          // next to it.
+          direction: delta >= 0
               ? TransactionDirection.moneyIn
               : TransactionDirection.moneyOut,
-          amountMinor: assetPosting.amountMinor.abs(),
+          amountMinor: delta.abs(),
           transactionDate: entry.transactionDate,
           description: entry.description,
           runningBalanceMinor: runningBalance,
@@ -81,13 +140,24 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String _counterpartLabel(String accountId) {
+    if (accountId == openingBalanceEquityAccountId) {
+      return 'Opening balance';
+    }
+    final category = _categoriesById[accountId];
+    if (category != null) return category.name;
+    final other = _accountsById[accountId];
+    if (other != null) return 'Transfer: ${other.name}';
+    return 'Transfer';
+  }
+
   Future<void> reverseEntry(String entryId) =>
       _ledgerRepository.reverseEntry(entryId);
 
   @override
   void dispose() {
-    _entriesSubscription.cancel();
-    _categoriesSubscription.cancel();
+    _accountsSubscription.cancel();
+    _entriesSubscription?.cancel();
     super.dispose();
   }
 }
