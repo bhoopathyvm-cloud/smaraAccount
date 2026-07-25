@@ -1,0 +1,25 @@
+## Why
+
+Major European languages requested for Smara — German, French, Spanish, Italian, Portuguese, Hungarian, and Romanian — broaden reach beyond India. v1 translations are AI-generated from the English ARB.
+
+## What Changes
+
+- Add AI-translated ARBs for `de`, `fr`, `es`, `it`, `pt`, `hu`, `ro`.
+- Register those locales in `supportedLocales` and the language picker.
+- Spot-check layout for long German strings on primary actions.
+- Depends on `i18n-foundation`.
+
+## Capabilities
+
+### New Capabilities
+- `locales-european`: German, French, Spanish, Italian, Portuguese, Hungarian, and Romanian as supported AI-draft UI locales.
+
+### Modified Capabilities
+- (none archived yet)
+
+## Impact
+
+- Seven new ARB files; locale registration.
+- Latin-script fonts already covered by foundation.
+- Single `pt` locale for v1 (not separate `pt_BR` / `pt_PT`).
+- AI-draft quality; English fallback for gaps.
