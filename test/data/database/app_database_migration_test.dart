@@ -112,7 +112,290 @@ sqlite3.Database _openV2Database() {
   return db;
 }
 
+/// Builds a database file matching multi-account-support's shipped
+/// schemaVersion 3 - before multi-currency-support added
+/// `account_groups.currency`, `pending_transfers`, or the Transfers-in-transit
+/// clearing account - so onUpgrade(3, 4) can be exercised for real, per the
+/// same Drift Migration Rule #5 discipline as [_openV1Database] and
+/// [_openV2Database].
+sqlite3.Database _openV3Database() {
+  final db = sqlite3.sqlite3.openInMemory();
+  db.execute('''
+    CREATE TABLE account_groups (
+      id TEXT NOT NULL PRIMARY KEY,
+      name TEXT NOT NULL,
+      kind TEXT NOT NULL,
+      sort_order INTEGER NOT NULL DEFAULT 0,
+      is_system INTEGER NOT NULL DEFAULT 0,
+      created_at INTEGER NOT NULL DEFAULT 0
+    );
+    CREATE TABLE accounts (
+      id TEXT NOT NULL PRIMARY KEY,
+      name TEXT NOT NULL,
+      type TEXT NOT NULL,
+      group_id TEXT NULL REFERENCES account_groups(id),
+      sort_order INTEGER NOT NULL DEFAULT 0,
+      archived_at INTEGER NULL,
+      created_at INTEGER NOT NULL DEFAULT 0
+    );
+    CREATE TABLE signing_identities (
+      identity_id TEXT NOT NULL PRIMARY KEY,
+      public_key BLOB NOT NULL,
+      created_at INTEGER NOT NULL DEFAULT 0,
+      supersedes_identity_id TEXT NULL REFERENCES signing_identities(identity_id),
+      superseded_at INTEGER NULL
+    );
+    CREATE TABLE journal_entries (
+      id TEXT NOT NULL PRIMARY KEY,
+      transaction_date TEXT NOT NULL,
+      recorded_at INTEGER NOT NULL,
+      description TEXT NULL,
+      reverses_entry_id TEXT NULL REFERENCES journal_entries(id),
+      created_at INTEGER NOT NULL DEFAULT 0,
+      device_chain_sequence INTEGER NOT NULL UNIQUE,
+      previous_entry_hash BLOB NOT NULL,
+      entry_hash BLOB NOT NULL,
+      signed_by_identity_id TEXT NOT NULL REFERENCES signing_identities(identity_id),
+      signature BLOB NOT NULL,
+      migrated_from_entry_id TEXT NULL REFERENCES journal_entries(id)
+    );
+    CREATE TABLE postings (
+      id TEXT NOT NULL PRIMARY KEY,
+      entry_id TEXT NOT NULL REFERENCES journal_entries(id),
+      account_id TEXT NOT NULL REFERENCES accounts(id),
+      amount_minor INTEGER NOT NULL,
+      line_number INTEGER NOT NULL
+    );
+    CREATE TABLE entry_verification_cache (
+      entry_id TEXT NOT NULL PRIMARY KEY REFERENCES journal_entries(id),
+      is_verified INTEGER NOT NULL,
+      break_reason TEXT NULL,
+      checked_at INTEGER NOT NULL
+    );
+    CREATE TABLE ledger_chain_state (
+      id TEXT NOT NULL PRIMARY KEY,
+      trusted_tip_entry_id TEXT NULL REFERENCES journal_entries(id),
+      trusted_tip_hash BLOB NULL,
+      next_device_chain_sequence INTEGER NOT NULL
+    );
+    CREATE TABLE integrity_events (
+      event_id TEXT NOT NULL PRIMARY KEY,
+      event_type TEXT NOT NULL,
+      occurred_at INTEGER NOT NULL DEFAULT 0,
+      related_entry_id TEXT NULL REFERENCES journal_entries(id),
+      related_identity_id TEXT NULL REFERENCES signing_identities(identity_id),
+      detail TEXT NULL
+    );
+    INSERT INTO account_groups (id, name, kind, sort_order, is_system, created_at) VALUES
+      ('$groupCashEquivalentsId', 'Cash & cash equivalents', 'assetGroup', 0, 1, 0),
+      ('$groupPensionRetirementId', 'Pension & retirement', 'assetGroup', 1, 1, 0),
+      ('$groupCreditShortTermId', 'Credit & short-term debt', 'liabilityGroup', 2, 1, 0),
+      ('$groupLoansMortgagesId', 'Loans & mortgages', 'liabilityGroup', 3, 1, 0);
+    INSERT INTO accounts (id, name, type, group_id, sort_order, archived_at, created_at)
+      VALUES ('$openingBalanceEquityAccountId', '$openingBalanceEquityAccountName', 'equity', NULL, 0, NULL, 0);
+    PRAGMA user_version = 3;
+  ''');
+  return db;
+}
+
+/// Builds a database file matching multi-currency-support's shipped
+/// schemaVersion 4 - before custom-account-groups added
+/// `account_groups.archived_at` - so onUpgrade(4, 5) can be exercised for
+/// real, per the same Drift Migration Rule #5 discipline as the other
+/// `_openVxDatabase` builders. Built by taking [_openV3Database] and
+/// hand-applying the same schemaVersion-4 migration SQL the real
+/// `onUpgrade` block runs (`account_groups.currency`, `pending_transfers`,
+/// the Transfers-in-transit clearing account) - that upgrade path is
+/// already covered by its own tests below, so this is just test setup,
+/// not a second copy of migration logic under test.
+sqlite3.Database _openV4Database() {
+  final db = _openV3Database();
+  db.execute('''
+    ALTER TABLE account_groups ADD COLUMN currency TEXT NULL;
+    UPDATE account_groups SET currency = 'USD';
+    CREATE TABLE pending_transfers (
+      id TEXT NOT NULL PRIMARY KEY,
+      kind TEXT NOT NULL,
+      source_account_id TEXT NOT NULL REFERENCES accounts(id),
+      category_id TEXT NULL REFERENCES accounts(id),
+      destination_account_id TEXT NULL REFERENCES accounts(id),
+      currency TEXT NOT NULL,
+      provisional_entry_id TEXT NOT NULL REFERENCES journal_entries(id),
+      status TEXT NOT NULL,
+      settlement_entry_id TEXT NULL REFERENCES journal_entries(id),
+      fee_entry_id TEXT NULL REFERENCES journal_entries(id),
+      initiated_at INTEGER NOT NULL,
+      settled_at INTEGER NULL
+    );
+    INSERT INTO accounts (id, name, type, group_id, sort_order, archived_at, created_at)
+      VALUES ('$transfersInTransitAccountId', '$transfersInTransitAccountName', 'clearing', NULL, 0, NULL, 0);
+    PRAGMA user_version = 4;
+  ''');
+  return db;
+}
+
 void main() {
+  group('onUpgrade from schemaVersion 4', () {
+    test(
+      'existing account_groups rows land with archived_at = NULL (not archived)',
+      () async {
+        final v4 = _openV4Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v4));
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        final groups = await repository.watchAccountGroups().first;
+        expect(groups, isNotEmpty);
+        expect(groups.every((g) => !g.archived), isTrue);
+      },
+    );
+
+    test(
+      'a group created after the upgrade can be archived normally',
+      () async {
+        final v4 = _openV4Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v4));
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        final created = await repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: 'USD',
+        );
+        await repository.archiveAccountGroup(created.id);
+
+        final groups = await repository
+            .watchAccountGroups(includeArchived: true)
+            .first;
+        expect(groups.firstWhere((g) => g.id == created.id).archived, isTrue);
+      },
+    );
+  });
+
+  group('onCreate (fresh install)', () {
+    test(
+      'every seeded group lands not-archived and a new group gets a client-generated id',
+      () async {
+        final db = AppDatabase.forTesting(NativeDatabase.memory());
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await repository.generateFirstIdentity();
+        await repository.confirmFirstIdentity(generated, currency: 'USD');
+
+        final groups = await repository.watchAccountGroups().first;
+        expect(groups, isNotEmpty);
+        expect(groups.every((g) => !g.archived), isTrue);
+
+        final created = await repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: 'USD',
+        );
+        expect(created.id, isNotEmpty);
+      },
+    );
+  });
+
+  group('onUpgrade from schemaVersion 3', () {
+    test(
+      'existing account_groups rows land with currency = NULL, signalling the currency-backfill prompt',
+      () async {
+        final v3 = _openV3Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v3));
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        final groups = await db.select(db.accountGroups).get();
+        expect(groups, isNotEmpty);
+        expect(groups.every((g) => g.currency == null), isTrue);
+        expect(await repository.needsCurrencyBackfill(), isTrue);
+      },
+    );
+
+    test(
+      'seeds the Transfers-in-transit clearing account, never in the financial-account picker',
+      () async {
+        final v3 = _openV3Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v3));
+        addTearDown(db.close);
+
+        final clearing = await (db.select(
+          db.accounts,
+        )..where((a) => a.id.equals(transfersInTransitAccountId))).getSingle();
+        expect(clearing.type, equals(AccountType.clearing));
+        expect(clearing.groupId, isNull);
+
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final financialAccounts = await repository
+            .watchFinancialAccounts(includeArchived: true)
+            .first;
+        expect(
+          financialAccounts.any((a) => a.id == transfersInTransitAccountId),
+          isFalse,
+        );
+      },
+    );
+
+    test(
+      'backfillGroupCurrencies sets every null-currency group to the chosen currency',
+      () async {
+        final v3 = _openV3Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v3));
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        expect(await repository.needsCurrencyBackfill(), isTrue);
+        await repository.backfillGroupCurrencies('EUR');
+        expect(await repository.needsCurrencyBackfill(), isFalse);
+
+        final groups = await db.select(db.accountGroups).get();
+        expect(groups.every((g) => g.currency == 'EUR'), isTrue);
+      },
+    );
+
+    test(
+      'the pending_transfers table exists and is usable after the upgrade',
+      () async {
+        final v3 = _openV3Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v3));
+        addTearDown(db.close);
+
+        expect(await db.select(db.pendingTransfers).get(), isEmpty);
+      },
+    );
+  });
+
   group('onUpgrade from schemaVersion 2', () {
     test(
       'seeds the four system groups and the equity account with sane timestamps',
@@ -223,7 +506,7 @@ void main() {
         expect(await repository.watchCategories().first, isEmpty);
 
         final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated);
+        await repository.confirmFirstIdentity(generated, currency: 'USD');
 
         final categories = await repository.watchCategories().first;
         final incomeId = categories

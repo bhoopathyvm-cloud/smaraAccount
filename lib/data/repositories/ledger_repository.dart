@@ -9,6 +9,7 @@ import '../../domain/models/account_group.dart';
 import '../../domain/models/home_overview.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/journal_entry.dart';
+import '../../domain/models/pending_transfer.dart';
 import '../../domain/models/posting.dart';
 import '../../domain/models/signing_identity.dart';
 import '../../domain/models/summary.dart';
@@ -86,9 +87,16 @@ class LedgerRepository {
   /// (core-ledger-single-account's original approach) because spec
   /// ("Device Signing Identity") requires the signing identity to exist
   /// before any starter account or journal entry does.
+  ///
+  /// [currency] (ISO 4217, e.g. 'USD') is chosen by the user during a
+  /// dedicated onboarding step before this runs (multi-currency-support
+  /// design.md addendum) and applied to all four starter groups - a fresh
+  /// install never has a group with a null currency, unlike a database
+  /// migrated from schemaVersion 3 (see [needsCurrencyBackfill]).
   Future<SigningIdentity> confirmFirstIdentity(
-    GeneratedIdentity generated,
-  ) async {
+    GeneratedIdentity generated, {
+    required String currency,
+  }) async {
     late IdentityRow row;
     await _db.transaction(() async {
       row = await _db
@@ -106,7 +114,7 @@ class LedgerRepository {
               nextDeviceChainSequence: 0,
             ),
           );
-      await _seedSystemGroupsAndEquity();
+      await _seedSystemGroupsEquityAndClearing(currency: currency);
       await _db
           .into(_db.accounts)
           .insert(
@@ -134,7 +142,9 @@ class LedgerRepository {
     return _toDomainIdentity(row);
   }
 
-  Future<void> _seedSystemGroupsAndEquity() async {
+  Future<void> _seedSystemGroupsEquityAndClearing({
+    required String currency,
+  }) async {
     final seeds = <(String id, String name, AccountGroupKind kind, int order)>[
       (
         groupCashEquivalentsId,
@@ -166,11 +176,12 @@ class LedgerRepository {
           .into(_db.accountGroups)
           .insertOnConflictUpdate(
             AccountGroupsCompanion.insert(
-              id: id,
+              id: Value(id),
               name: name,
               kind: kind,
               sortOrder: order,
               isSystem: true,
+              currency: Value(currency),
             ),
           );
     }
@@ -183,6 +194,38 @@ class LedgerRepository {
             type: AccountType.equity,
           ),
         );
+    await _db
+        .into(_db.accounts)
+        .insertOnConflictUpdate(
+          AccountsCompanion.insert(
+            id: const Value(transfersInTransitAccountId),
+            name: transfersInTransitAccountName,
+            type: AccountType.clearing,
+          ),
+        );
+  }
+
+  /// Whether any `account_groups` row still has no currency - the signal
+  /// for a database migrated from schemaVersion 3 that needs the one-time
+  /// currency-backfill prompt before the app is otherwise usable
+  /// (multi-currency-support design.md Migration Plan step 3). Always
+  /// false for a fresh schemaVersion-4 install, since
+  /// [confirmFirstIdentity] seeds every group with a currency already.
+  Future<bool> needsCurrencyBackfill() async {
+    final row =
+        await (_db.select(_db.accountGroups)
+              ..where((g) => g.currency.isNull())
+              ..limit(1))
+            .getSingleOrNull();
+    return row != null;
+  }
+
+  /// Applies [currency] to every account group that doesn't have one yet.
+  /// A one-time action for a database migrated from schemaVersion 3 - see
+  /// [needsCurrencyBackfill].
+  Future<void> backfillGroupCurrencies(String currency) async {
+    await (_db.update(_db.accountGroups)..where((g) => g.currency.isNull()))
+        .write(AccountGroupsCompanion(currency: Value(currency)));
   }
 
   /// Re-derives key material from a recovery phrase or keystore file and,
@@ -694,9 +737,18 @@ class LedgerRepository {
     return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
   }
 
-  Stream<List<AccountGroup>> watchAccountGroups() {
+  /// Account-group pickers ([includeArchived] false, the default) or
+  /// callers resolving an existing account's own group, which may since
+  /// have been archived ([includeArchived] true) - mirrors
+  /// [watchFinancialAccounts]'s convention.
+  Stream<List<AccountGroup>> watchAccountGroups({
+    bool includeArchived = false,
+  }) {
     final query = _db.select(_db.accountGroups)
       ..orderBy([(g) => OrderingTerm.asc(g.sortOrder)]);
+    if (!includeArchived) {
+      query.where((g) => g.archivedAt.isNull());
+    }
     return query.watch().map((rows) => rows.map(_toDomainGroup).toList());
   }
 
@@ -718,6 +770,8 @@ class LedgerRepository {
       kind: row.kind,
       sortOrder: row.sortOrder,
       isSystem: row.isSystem,
+      currency: row.currency,
+      archived: row.archivedAt != null,
     );
   }
 
@@ -739,6 +793,30 @@ class LedgerRepository {
       throw AccountGroupException('Account $id is archived.');
     }
     return row;
+  }
+
+  /// The ISO 4217 currency of [accountRow]'s group - never null in
+  /// practice for a reachable financial account (the currency-backfill
+  /// gate runs before any account-creation UI, and group assignment is
+  /// mandatory), but defensively rejected rather than silently treating a
+  /// backfill-pending group as some default currency.
+  Future<String> _groupCurrencyFor(AccountRow accountRow) async {
+    final groupId = accountRow.groupId;
+    if (groupId == null) {
+      throw AccountGroupException(
+        'Account ${accountRow.id} has no group assigned.',
+      );
+    }
+    final group = await (_db.select(
+      _db.accountGroups,
+    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
+    final currency = group?.currency;
+    if (currency == null) {
+      throw AccountGroupException(
+        'Account group $groupId has no currency set yet.',
+      );
+    }
+    return currency;
   }
 
   /// Creates a financial account. [openingBalanceMinor] if supplied must be
@@ -770,6 +848,15 @@ class LedgerRepository {
     if (group.kind != expectedKind) {
       throw AccountGroupException(
         'Account type $type does not match group kind ${group.kind}.',
+      );
+    }
+    // Defensive: the app-level currency-backfill gate (needsCurrencyBackfill)
+    // should always run before any account-creation UI is reachable, so
+    // this should never actually trigger - but a null currency here would
+    // otherwise propagate silently into every downstream currency label.
+    if (group.currency == null) {
+      throw AccountGroupException(
+        'Account group $groupId has no currency set yet.',
       );
     }
 
@@ -861,9 +948,56 @@ class LedgerRepository {
         'Account type ${account.type} does not match group kind ${group.kind}.',
       );
     }
+    // multi-currency-support: reassigning across currencies would silently
+    // reinterpret the account's entire historical balance in a new
+    // currency - rejected regardless of whether the account has any
+    // postings yet (design.md Decision 1).
+    if (account.groupId != null) {
+      final currentGroup = await (_db.select(
+        _db.accountGroups,
+      )..where((g) => g.id.equals(account.groupId!))).getSingleOrNull();
+      if (currentGroup != null && currentGroup.currency != group.currency) {
+        throw AccountGroupException(
+          'Cannot reassign to a group with a different currency '
+          '(${currentGroup.currency} -> ${group.currency}).',
+        );
+      }
+    }
     await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
       AccountsCompanion(groupId: Value(groupId)),
     );
+  }
+
+  /// Changes an account group's currency. Rejected while the group has at
+  /// least one active financial account, since that would retroactively
+  /// reinterpret its members' historical balances (multi-currency-support
+  /// design.md Open Questions).
+  Future<void> changeAccountGroupCurrency({
+    required String groupId,
+    required String currency,
+  }) async {
+    final group = await (_db.select(
+      _db.accountGroups,
+    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
+    if (group == null) {
+      throw AccountGroupException('Account group $groupId not found.');
+    }
+    final activeMembers =
+        await (_db.select(_db.accounts)..where(
+              (a) =>
+                  a.groupId.equals(groupId) &
+                  (a.type.equalsValue(AccountType.asset) |
+                      a.type.equalsValue(AccountType.liability)) &
+                  a.archivedAt.isNull(),
+            ))
+            .get();
+    if (activeMembers.isNotEmpty) {
+      throw AccountGroupException(
+        'Cannot change currency while the group has active financial accounts.',
+      );
+    }
+    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(groupId)))
+        .write(AccountGroupsCompanion(currency: Value(currency)));
   }
 
   Future<void> archiveFinancialAccount(String id) async {
@@ -901,13 +1035,49 @@ class LedgerRepository {
     );
   }
 
-  /// Account groups cannot be archived in this version - all four groups
-  /// are system rows (design.md Decision 1: "no user-created custom
-  /// groups in this change"), and "System Account Groups Are Permanent
-  /// and Renameable" requires they SHALL NOT be archived. There is no
-  /// separate "custom group" case to distinguish yet; when this change
-  /// adds custom groups, this method is where that distinction would be
-  /// introduced, not before.
+  /// Creates a user-created account group (custom-account-groups
+  /// design.md Decision 5). [currency] must be non-blank - the first
+  /// repository-level currency check in this codebase, since every other
+  /// currency value today only ever reaches the Repository after a UI
+  /// screen's own regex already validated it. `sortOrder` is always `(max
+  /// existing sortOrder) + 1`, so a new group sorts after every existing
+  /// one.
+  Future<AccountGroup> createAccountGroup({
+    required String name,
+    required AccountGroupKind kind,
+    required String currency,
+  }) async {
+    if (currency.trim().isEmpty) {
+      throw AccountGroupException('Currency is required to create a group.');
+    }
+    final existing = await _db.select(_db.accountGroups).get();
+    final nextSortOrder =
+        existing.fold<int>(
+          -1,
+          (max, g) => g.sortOrder > max ? g.sortOrder : max,
+        ) +
+        1;
+    final created = await _db
+        .into(_db.accountGroups)
+        .insertReturning(
+          AccountGroupsCompanion.insert(
+            name: name,
+            kind: kind,
+            sortOrder: nextSortOrder,
+            isSystem: false,
+            currency: Value(currency),
+          ),
+        );
+    return _toDomainGroup(created);
+  }
+
+  /// Archives a user-created account group once it has zero active member
+  /// financial accounts (custom-account-groups design.md Decision 3). A
+  /// system group ([AccountGroupRow.isSystem]) is rejected outright,
+  /// before even checking membership - "System Account Groups Are
+  /// Permanent and Renameable" requires they SHALL NOT be archived.
+  /// Archiving is not idempotent, mirroring [archiveFinancialAccount]'s
+  /// existing "must currently be active" precondition.
   Future<void> archiveAccountGroup(String id) async {
     final group = await (_db.select(
       _db.accountGroups,
@@ -915,11 +1085,34 @@ class LedgerRepository {
     if (group == null) {
       throw AccountGroupException('Account group $id not found.');
     }
-    throw AccountGroupException('Account groups cannot be archived.');
+    if (group.isSystem) {
+      throw AccountGroupException('System account groups cannot be archived.');
+    }
+    if (group.archivedAt != null) {
+      throw AccountGroupException('Account group $id is already archived.');
+    }
+    final activeMembers =
+        await (_db.select(_db.accounts)..where(
+              (a) =>
+                  a.groupId.equals(id) &
+                  (a.type.equalsValue(AccountType.asset) |
+                      a.type.equalsValue(AccountType.liability)) &
+                  a.archivedAt.isNull(),
+            ))
+            .get();
+    if (activeMembers.isNotEmpty) {
+      throw AccountGroupException(
+        'Cannot archive a group with active financial accounts.',
+      );
+    }
+    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
+      AccountGroupsCompanion(archivedAt: Value(DateTime.now())),
+    );
   }
 
-  /// See [archiveAccountGroup] - same reasoning, "SHALL NOT be
-  /// permanently deleted".
+  /// No account group - system or user-created, archived or not - can be
+  /// permanently deleted (custom-account-groups design.md Non-Goals):
+  /// archiving via [archiveAccountGroup] is the only lifecycle action.
   Future<void> deleteAccountGroup(String id) async {
     final group = await (_db.select(
       _db.accountGroups,
@@ -937,6 +1130,19 @@ class LedgerRepository {
   ///
   /// Option A sign table: money in → financial `+amount`; money out →
   /// financial `−amount` (same for asset and liability).
+  ///
+  /// If [nativeCurrency] differs from the financial account's group
+  /// currency, this is a foreign-currency transaction
+  /// (multi-currency-support design.md Decisions 6-7): the category leg
+  /// always posts [amountMinor] immediately in [nativeCurrency] (it's
+  /// already certain). If [accountCurrencyAmountMinor] is supplied (the
+  /// rate/fee was known upfront), a single complete entry posts both legs
+  /// now. If it's null, the account leg posts provisionally against the
+  /// Transfers-in-transit account instead, pending a later
+  /// [settlePendingTransfer] call once the real charged amount is known.
+  /// When [nativeCurrency] is null or matches the account's own currency,
+  /// this is an ordinary same-currency transaction and
+  /// [accountCurrencyAmountMinor] must not be supplied.
   Future<void> recordTransaction({
     required int amountMinor,
     required TransactionDirection direction,
@@ -944,6 +1150,8 @@ class LedgerRepository {
     required String financialAccountId,
     required DateTime transactionDate,
     String? description,
+    String? nativeCurrency,
+    int? accountCurrencyAmountMinor,
   }) async {
     if (amountMinor <= 0) {
       throw InvalidTransactionAmountException(
@@ -951,33 +1159,100 @@ class LedgerRepository {
       );
     }
 
-    await _requireActiveFinancialAccount(financialAccountId);
-    final (financialAmount, categoryAmount) = switch (direction) {
-      TransactionDirection.moneyIn => (amountMinor, -amountMinor),
-      TransactionDirection.moneyOut => (-amountMinor, amountMinor),
+    final account = await _requireActiveFinancialAccount(financialAccountId);
+    final accountCurrency = await _groupCurrencyFor(account);
+    final isForeignCurrency =
+        nativeCurrency != null && nativeCurrency != accountCurrency;
+
+    if (!isForeignCurrency && accountCurrencyAmountMinor != null) {
+      throw InvalidTransactionAmountException(
+        'accountCurrencyAmountMinor must not be supplied for a '
+        'same-currency transaction.',
+      );
+    }
+
+    final (categorySign, clearingOrFinancialSign) = switch (direction) {
+      TransactionDirection.moneyIn => (-1, 1),
+      TransactionDirection.moneyOut => (1, -1),
     };
 
-    await _appendSignedEntry(
-      transactionDate: _dateOnly(transactionDate),
+    if (!isForeignCurrency) {
+      await _appendSignedEntry(
+        transactionDate: _dateOnly(transactionDate),
+        description: description,
+        reversesEntryId: null,
+        postings: [
+          (
+            accountId: financialAccountId,
+            amountMinor: clearingOrFinancialSign * amountMinor,
+            lineNumber: 1,
+          ),
+          (
+            accountId: categoryId,
+            amountMinor: categorySign * amountMinor,
+            lineNumber: 2,
+          ),
+        ],
+      );
+      return;
+    }
+
+    if (accountCurrencyAmountMinor != null) {
+      if (accountCurrencyAmountMinor <= 0) {
+        throw InvalidTransactionAmountException(
+          'Account-currency amount must be positive and non-zero, '
+          'got $accountCurrencyAmountMinor.',
+        );
+      }
+      await _appendSignedEntry(
+        transactionDate: _dateOnly(transactionDate),
+        description: description,
+        reversesEntryId: null,
+        postings: [
+          (
+            accountId: financialAccountId,
+            amountMinor: clearingOrFinancialSign * accountCurrencyAmountMinor,
+            lineNumber: 1,
+          ),
+          (
+            accountId: categoryId,
+            amountMinor: categorySign * amountMinor,
+            lineNumber: 2,
+          ),
+        ],
+      );
+      return;
+    }
+
+    await _postProvisionalEntry(
+      kind: PendingTransferKind.foreignTransaction,
+      sourceAccountId: financialAccountId,
+      currency: nativeCurrency,
+      categoryId: categoryId,
+      clearingAmountMinor: clearingOrFinancialSign * amountMinor,
+      otherLeg: (
+        accountId: categoryId,
+        amountMinor: categorySign * amountMinor,
+      ),
+      transactionDate: transactionDate,
       description: description,
-      reversesEntryId: null,
-      postings: [
-        (
-          accountId: financialAccountId,
-          amountMinor: financialAmount,
-          lineNumber: 1,
-        ),
-        (accountId: categoryId, amountMinor: categoryAmount, lineNumber: 2),
-      ],
     );
   }
 
+  /// Same-currency transfer (unchanged single-entry behavior) when both
+  /// accounts' groups share a currency. Otherwise a cross-currency
+  /// transfer (multi-currency-support design.md Decisions 4/6): if
+  /// [destinationAmountMinor] is supplied (the rate was known upfront), a
+  /// single complete entry posts both currencies now; if it's null, the
+  /// source leg posts provisionally against the Transfers-in-transit
+  /// account, pending a later [settlePendingTransfer] call.
   Future<void> recordTransfer({
     required String fromAccountId,
     required String toAccountId,
     required int amountMinor,
     required DateTime transactionDate,
     String? description,
+    int? destinationAmountMinor,
   }) async {
     if (amountMinor <= 0) {
       throw InvalidTransferException(
@@ -989,18 +1264,115 @@ class LedgerRepository {
         'Source and destination accounts must be distinct.',
       );
     }
-    await _requireActiveFinancialAccount(fromAccountId);
-    await _requireActiveFinancialAccount(toAccountId);
+    final fromAccount = await _requireActiveFinancialAccount(fromAccountId);
+    final toAccount = await _requireActiveFinancialAccount(toAccountId);
+    final fromCurrency = await _groupCurrencyFor(fromAccount);
+    final toCurrency = await _groupCurrencyFor(toAccount);
+    final isCrossCurrency = fromCurrency != toCurrency;
 
-    await _appendSignedEntry(
-      transactionDate: _dateOnly(transactionDate),
+    if (!isCrossCurrency) {
+      if (destinationAmountMinor != null) {
+        throw InvalidTransferException(
+          'destinationAmountMinor must not be supplied for a '
+          'same-currency transfer.',
+        );
+      }
+      await _appendSignedEntry(
+        transactionDate: _dateOnly(transactionDate),
+        description: description,
+        reversesEntryId: null,
+        postings: [
+          (accountId: fromAccountId, amountMinor: -amountMinor, lineNumber: 1),
+          (accountId: toAccountId, amountMinor: amountMinor, lineNumber: 2),
+        ],
+      );
+      return;
+    }
+
+    if (destinationAmountMinor != null) {
+      if (destinationAmountMinor <= 0) {
+        throw InvalidTransferException(
+          'Destination amount must be positive and non-zero, '
+          'got $destinationAmountMinor.',
+        );
+      }
+      await _appendSignedEntry(
+        transactionDate: _dateOnly(transactionDate),
+        description: description,
+        reversesEntryId: null,
+        postings: [
+          (accountId: fromAccountId, amountMinor: -amountMinor, lineNumber: 1),
+          (
+            accountId: toAccountId,
+            amountMinor: destinationAmountMinor,
+            lineNumber: 2,
+          ),
+        ],
+      );
+      return;
+    }
+
+    await _postProvisionalEntry(
+      kind: PendingTransferKind.transfer,
+      sourceAccountId: fromAccountId,
+      currency: fromCurrency,
+      destinationAccountId: toAccountId,
+      clearingAmountMinor: amountMinor,
+      otherLeg: (accountId: fromAccountId, amountMinor: -amountMinor),
+      transactionDate: transactionDate,
       description: description,
-      reversesEntryId: null,
-      postings: [
-        (accountId: fromAccountId, amountMinor: -amountMinor, lineNumber: 1),
-        (accountId: toAccountId, amountMinor: amountMinor, lineNumber: 2),
-      ],
     );
+  }
+
+  /// Posts the provisional entry (the known leg + the Transfers-in-transit
+  /// leg) and the matching `pending_transfers` row atomically - Drift
+  /// nests the inner [_appendSignedEntry] transaction inside this one, so
+  /// either both writes land or neither does (multi-currency-support
+  /// design.md Decision 4).
+  Future<void> _postProvisionalEntry({
+    required PendingTransferKind kind,
+    required String sourceAccountId,
+    required String currency,
+    String? categoryId,
+    String? destinationAccountId,
+    required int clearingAmountMinor,
+    required ({String accountId, int amountMinor}) otherLeg,
+    required DateTime transactionDate,
+    String? description,
+  }) async {
+    await _db.transaction(() async {
+      final entryId = await _appendSignedEntry(
+        transactionDate: _dateOnly(transactionDate),
+        description: description,
+        reversesEntryId: null,
+        postings: [
+          (
+            accountId: transfersInTransitAccountId,
+            amountMinor: clearingAmountMinor,
+            lineNumber: 1,
+          ),
+          (
+            accountId: otherLeg.accountId,
+            amountMinor: otherLeg.amountMinor,
+            lineNumber: 2,
+          ),
+        ],
+      );
+      await _db
+          .into(_db.pendingTransfers)
+          .insert(
+            PendingTransfersCompanion.insert(
+              kind: kind,
+              sourceAccountId: sourceAccountId,
+              currency: currency,
+              categoryId: Value(categoryId),
+              destinationAccountId: Value(destinationAccountId),
+              provisionalEntryId: entryId,
+              status: PendingTransferStatus.pending,
+              initiatedAt: DateTime.now(),
+            ),
+          );
+    });
   }
 
   /// Inserts a new entry with swapped posting amounts, referencing
@@ -1011,7 +1383,27 @@ class LedgerRepository {
   /// actually performed), never backdated to the original entry's date -
   /// an auditable ledger should reflect when a correction really
   /// happened, not disguise it as having occurred earlier.
+  ///
+  /// Rejected if [entryId] is still the open provisional leg of an
+  /// unsettled pending transfer (multi-currency-support design.md
+  /// Decision 4) - settle it instead, which achieves the same economic
+  /// outcome without leaving `pending_transfers` pointing at a reversed
+  /// entry while still reporting status pending.
   Future<void> reverseEntry(String entryId) async {
+    final stillPending =
+        await (_db.select(_db.pendingTransfers)..where(
+              (p) =>
+                  p.provisionalEntryId.equals(entryId) &
+                  p.status.equalsValue(PendingTransferStatus.pending),
+            ))
+            .getSingleOrNull();
+    if (stillPending != null) {
+      throw PendingTransferException(
+        'Cannot reverse a provisional entry while its pending transfer is '
+        'still unsettled. Settle it instead.',
+      );
+    }
+
     final original = await (_db.select(
       _db.journalEntries,
     )..where((e) => e.id.equals(entryId))).getSingle();
@@ -1033,6 +1425,226 @@ class LedgerRepository {
     );
   }
 
+  // ---------------------------------------------------------------------
+  // Pending transfers / foreign-currency settlement (multi-currency-support).
+  // ---------------------------------------------------------------------
+
+  /// One row per unsettled pending transfer or foreign-currency
+  /// transaction, ordered by initiation time - the Home overview's
+  /// "Pending transfers" section (design.md Decision 4).
+  Stream<List<PendingTransfer>> watchPendingTransfers() {
+    final query = _db.select(_db.pendingTransfers)
+      ..where((p) => p.status.equalsValue(PendingTransferStatus.pending))
+      ..orderBy([(p) => OrderingTerm.asc(p.initiatedAt)]);
+    return query.watch().map(
+      (rows) => rows.map(_toDomainPendingTransfer).toList(),
+    );
+  }
+
+  PendingTransfer _toDomainPendingTransfer(PendingTransferRow row) {
+    return PendingTransfer(
+      id: row.id,
+      kind: row.kind,
+      sourceAccountId: row.sourceAccountId,
+      currency: row.currency,
+      categoryId: row.categoryId,
+      destinationAccountId: row.destinationAccountId,
+      provisionalEntryId: row.provisionalEntryId,
+      status: row.status,
+      settlementEntryId: row.settlementEntryId,
+      feeEntryId: row.feeEntryId,
+      initiatedAt: row.initiatedAt,
+      settledAt: row.settledAt,
+    );
+  }
+
+  Future<void> _requireActiveExpenseCategory(String id) async {
+    final row = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(id))).getSingleOrNull();
+    if (row == null || row.type != AccountType.expense) {
+      throw PendingTransferException('$id is not an active Expense category.');
+    }
+    if (row.archivedAt != null) {
+      throw PendingTransferException('$id is not an active Expense category.');
+    }
+  }
+
+  /// Settles a pending transfer or foreign-currency transaction
+  /// (multi-currency-support design.md Decision 5).
+  ///
+  /// For `kind = transfer`, [settledToAccountId] must be the pending
+  /// transfer's own source or destination account. Settling to the
+  /// **source** (the transfer bounced/returned) compares [settledAmountMinor]
+  /// to the provisional amount - both in the source currency - and posts
+  /// any shortfall as a fee/loss entry against [feeCategoryId]. Settling
+  /// to the **destination** (normal delivery) posts [settledAmountMinor]
+  /// alone in the destination currency, with no shortfall comparison
+  /// (there is nothing in that currency to compare it against) and
+  /// [feeCategoryId] must not be supplied.
+  ///
+  /// For `kind = foreignTransaction`, [settledToAccountId] is ignored -
+  /// settlement always resolves to the pending transfer's own
+  /// `sourceAccountId` (the financial account the transaction was against)
+  /// - and always follows the no-shortfall path, the same as settling a
+  /// transfer to its destination: the provisional entry's clearing leg was
+  /// posted in the transaction's native currency, while settlement is in
+  /// the account's own currency, so there is no shared-currency figure to
+  /// compare a shortfall against (corrected during apply - an earlier pass
+  /// of this design wrongly described this as shortfall-comparable).
+  Future<void> settlePendingTransfer({
+    required String pendingTransferId,
+    required String settledToAccountId,
+    required int settledAmountMinor,
+    String? feeCategoryId,
+  }) async {
+    if (settledAmountMinor < 0) {
+      throw PendingTransferException(
+        'Settled amount must not be negative, got $settledAmountMinor.',
+      );
+    }
+
+    final pending = await (_db.select(
+      _db.pendingTransfers,
+    )..where((p) => p.id.equals(pendingTransferId))).getSingleOrNull();
+    if (pending == null) {
+      throw PendingTransferException(
+        'Pending transfer $pendingTransferId not found.',
+      );
+    }
+    if (pending.status == PendingTransferStatus.settled) {
+      throw PendingTransferException(
+        'Pending transfer $pendingTransferId is already settled.',
+      );
+    }
+
+    final resolvedTarget =
+        pending.kind == PendingTransferKind.foreignTransaction
+        ? pending.sourceAccountId
+        : settledToAccountId;
+    if (pending.kind == PendingTransferKind.transfer &&
+        resolvedTarget != pending.sourceAccountId &&
+        resolvedTarget != pending.destinationAccountId) {
+      throw PendingTransferException(
+        'settledToAccountId must be the pending transfer\'s own source or '
+        'destination account.',
+      );
+    }
+
+    // Shortfall comparison only applies to a transfer settling back to its
+    // own source - never a transfer settling to its destination, and never
+    // a foreignTransaction (see method doc for why).
+    final isShortfallComparable =
+        pending.kind == PendingTransferKind.transfer &&
+        resolvedTarget == pending.sourceAccountId;
+
+    if (!isShortfallComparable && feeCategoryId != null) {
+      throw PendingTransferException(
+        'feeCategoryId is only applicable when settling a transfer back to '
+        'its own source account.',
+      );
+    }
+    // The destination-delivery / foreignTransaction path has no fee
+    // mechanism to close a shortfall with - a settlement of exactly zero
+    // would post no entry at all (guarded below) and permanently leave the
+    // Transfers-in-transit position for this item unclosed even though
+    // status flips to settled. A genuine total loss is a shortfall-path
+    // concept (settle back to the source for 0, which the fee entry
+    // covers in full) - reject zero here instead of silently no-opping.
+    if (!isShortfallComparable && settledAmountMinor == 0) {
+      throw PendingTransferException(
+        'Settled amount must be positive when settling to the destination '
+        'or a foreign-currency transaction - use the source-account path '
+        'for a total loss.',
+      );
+    }
+
+    final provisionalPostings = await (_db.select(
+      _db.postings,
+    )..where((p) => p.entryId.equals(pending.provisionalEntryId))).get();
+    final clearingPosting = provisionalPostings.firstWhere(
+      (p) => p.accountId == transfersInTransitAccountId,
+    );
+    final clearingPhase1Sign = clearingPosting.amountMinor < 0 ? -1 : 1;
+    final provisionalAmountAbs = clearingPosting.amountMinor.abs();
+
+    if (isShortfallComparable && settledAmountMinor > provisionalAmountAbs) {
+      throw PendingTransferException(
+        'Settled amount ($settledAmountMinor) cannot exceed the provisional '
+        'amount ($provisionalAmountAbs) when settling back to the source '
+        'account.',
+      );
+    }
+
+    final shortfall = isShortfallComparable
+        ? provisionalAmountAbs - settledAmountMinor
+        : 0;
+    if (shortfall > 0 && feeCategoryId == null) {
+      throw PendingTransferException(
+        'feeCategoryId is required when the settled amount is less than '
+        'the provisional amount.',
+      );
+    }
+    if (feeCategoryId != null) {
+      await _requireActiveExpenseCategory(feeCategoryId);
+    }
+
+    await _db.transaction(() async {
+      String? settlementEntryId;
+      if (settledAmountMinor > 0) {
+        settlementEntryId = await _appendSignedEntry(
+          transactionDate: _dateOnly(DateTime.now()),
+          description: 'Settlement',
+          reversesEntryId: null,
+          postings: [
+            (
+              accountId: resolvedTarget,
+              amountMinor: clearingPhase1Sign * settledAmountMinor,
+              lineNumber: 1,
+            ),
+            (
+              accountId: transfersInTransitAccountId,
+              amountMinor: -clearingPhase1Sign * settledAmountMinor,
+              lineNumber: 2,
+            ),
+          ],
+        );
+      }
+
+      String? feeEntryId;
+      if (shortfall > 0) {
+        feeEntryId = await _appendSignedEntry(
+          transactionDate: _dateOnly(DateTime.now()),
+          description: 'Transfer fee / shortfall',
+          reversesEntryId: null,
+          postings: [
+            (
+              accountId: feeCategoryId!,
+              amountMinor: clearingPhase1Sign * shortfall,
+              lineNumber: 1,
+            ),
+            (
+              accountId: transfersInTransitAccountId,
+              amountMinor: -clearingPhase1Sign * shortfall,
+              lineNumber: 2,
+            ),
+          ],
+        );
+      }
+
+      await (_db.update(
+        _db.pendingTransfers,
+      )..where((p) => p.id.equals(pendingTransferId))).write(
+        PendingTransfersCompanion(
+          status: const Value(PendingTransferStatus.settled),
+          settlementEntryId: Value(settlementEntryId),
+          feeEntryId: Value(feeEntryId),
+          settledAt: Value(DateTime.now()),
+        ),
+      );
+    });
+  }
+
   /// Shared by [recordTransaction] and [reverseEntry]: computes the
   /// canonical hash, signs it, chains onto the current trusted tip, and
   /// writes the entry + postings + an immediate "verified" cache row in
@@ -1040,8 +1652,8 @@ class LedgerRepository {
   /// physically last-inserted entry (a chain break was detected and not
   /// yet re-anchored by new activity), this is the re-anchor moment and a
   /// `CHAIN_REANCHORED` integrity event is recorded (spec: "Re-anchoring
-  /// After a Break").
-  Future<void> _appendSignedEntry({
+  /// After a Break"). Returns the new entry's id.
+  Future<String> _appendSignedEntry({
     required String transactionDate,
     String? description,
     String? reversesEntryId,
@@ -1056,7 +1668,7 @@ class LedgerRepository {
       );
     }
 
-    await _db.transaction(() async {
+    return _db.transaction(() async {
       final chainState = await _chainState();
       final priorLastEntry =
           await (_db.select(_db.journalEntries)
@@ -1154,6 +1766,8 @@ class LedgerRepository {
         trustedTipHash: entryHash,
         nextDeviceChainSequence: sequence + 1,
       );
+
+      return id;
     });
   }
 
@@ -1257,7 +1871,10 @@ class LedgerRepository {
     return switch (accountType) {
       AccountType.asset => postingAmountMinor,
       AccountType.liability => -postingAmountMinor,
-      AccountType.equity || AccountType.income || AccountType.expense => 0,
+      AccountType.equity ||
+      AccountType.clearing ||
+      AccountType.income ||
+      AccountType.expense => 0,
     };
   }
 
@@ -1287,9 +1904,12 @@ class LedgerRepository {
   }
 
   Future<HomeOverview> _buildHomeOverview() async {
-    final groups = await watchAccountGroups().first;
+    final groups = await watchAccountGroups(includeArchived: true).first;
     final accounts = await watchFinancialAccounts(includeArchived: true).first;
     final entries = await watchEntries().first;
+    final pendingRows = await (_db.select(
+      _db.pendingTransfers,
+    )..where((p) => p.status.equalsValue(PendingTransferStatus.pending))).get();
 
     final rawSumByAccount = <String, int>{};
     for (final entry in entries) {
@@ -1308,8 +1928,8 @@ class LedgerRepository {
       );
     }
 
-    var totalAssets = 0;
-    var totalLiabilities = 0;
+    final assetsByCurrency = <String, int>{};
+    final liabilitiesByCurrency = <String, int>{};
     final sections = <AccountGroupSection>[];
 
     for (final group in groups) {
@@ -1320,6 +1940,7 @@ class LedgerRepository {
         });
       if (members.isEmpty) continue;
 
+      final currency = group.currency;
       final balances = <AccountBalance>[];
       var groupTotal = 0;
       for (final account in members) {
@@ -1328,10 +1949,14 @@ class LedgerRepository {
           AccountBalance(account: account, displayBalanceMinor: display),
         );
         groupTotal += display;
-        if (account.type == AccountType.asset) {
-          totalAssets += display;
-        } else if (account.type == AccountType.liability) {
-          totalLiabilities += display;
+        if (currency != null) {
+          if (account.type == AccountType.asset) {
+            assetsByCurrency[currency] =
+                (assetsByCurrency[currency] ?? 0) + display;
+          } else if (account.type == AccountType.liability) {
+            liabilitiesByCurrency[currency] =
+                (liabilitiesByCurrency[currency] ?? 0) + display;
+          }
         }
       }
       sections.add(
@@ -1343,11 +1968,74 @@ class LedgerRepository {
       );
     }
 
+    // Pending transfers: shown as their own line items, and their
+    // provisional amount counts toward their source currency's net
+    // position while unsettled - unless the provisional entry itself is
+    // quarantined or migration-superseded, in which case it's excluded
+    // from the totals but still listed for review (multi-currency-support
+    // design.md Decision 2 / spec "A quarantined or superseded provisional
+    // entry does not distort net worth").
+    final entryById = {for (final e in entries) e.id: e};
+    final allAccountRows = await _db.select(_db.accounts).get();
+    final nameById = {for (final a in allAccountRows) a.id: a.name};
+    final pendingSummaries = <PendingTransferSummary>[];
+
+    for (final row in pendingRows) {
+      final provisionalEntry = entryById[row.provisionalEntryId];
+      if (provisionalEntry == null) continue;
+      final clearingPosting = provisionalEntry.postings.firstWhere(
+        (p) => p.accountId == transfersInTransitAccountId,
+        orElse: () => provisionalEntry.postings.first,
+      );
+      final amountAbs = clearingPosting.amountMinor.abs();
+      // The currency the clearing leg was actually posted in - the source
+      // account's own currency for a transfer, but the transaction's
+      // *native* currency for a foreignTransaction, which can differ from
+      // the financial account's own group currency (never re-derive this
+      // from the source account's group - that mislabels a
+      // foreignTransaction's amount with the wrong currency).
+      final currency = row.currency;
+      final destinationLabel =
+          nameById[row.destinationAccountId] ?? nameById[row.categoryId];
+
+      pendingSummaries.add(
+        PendingTransferSummary(
+          pendingTransfer: _toDomainPendingTransfer(row),
+          sourceAccountName:
+              nameById[row.sourceAccountId] ?? row.sourceAccountId,
+          destinationLabel: destinationLabel,
+          currency: currency,
+          amountMinor: amountAbs,
+        ),
+      );
+
+      final isExcluded =
+          !provisionalEntry.isVerified ||
+          provisionalEntry.isSupersededByMigration;
+      if (!isExcluded) {
+        assetsByCurrency[currency] =
+            (assetsByCurrency[currency] ?? 0) + amountAbs;
+      }
+    }
+
+    final currencies = {
+      ...assetsByCurrency.keys,
+      ...liabilitiesByCurrency.keys,
+    }.toList()..sort();
+    final netPositions = currencies
+        .map(
+          (currency) => CurrencyNetPosition(
+            currency: currency,
+            totalAssetsMinor: assetsByCurrency[currency] ?? 0,
+            totalLiabilitiesMinor: liabilitiesByCurrency[currency] ?? 0,
+          ),
+        )
+        .toList();
+
     return HomeOverview(
       sections: sections,
-      netPositionMinor: totalAssets - totalLiabilities,
-      totalAssetsMinor: totalAssets,
-      totalLiabilitiesMinor: totalLiabilities,
+      netPositionsByCurrency: netPositions,
+      pendingTransfers: pendingSummaries,
     );
   }
 
@@ -1424,6 +2112,7 @@ class LedgerRepository {
           case AccountType.asset:
           case AccountType.liability:
           case AccountType.equity:
+          case AccountType.clearing:
             break;
         }
       }

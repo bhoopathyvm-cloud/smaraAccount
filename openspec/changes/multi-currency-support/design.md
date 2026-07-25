@@ -66,6 +66,7 @@ pending_transfers
   source_account_id       TEXT NOT NULL REFERENCES accounts(id)
   category_id             TEXT NULL REFERENCES accounts(id)   -- set only when kind = foreignTransaction
   destination_account_id  TEXT NULL REFERENCES accounts(id)   -- planned destination; set only when kind = transfer
+  currency                TEXT NOT NULL  -- the clearing leg's actual currency; see note below
   provisional_entry_id    TEXT NOT NULL REFERENCES journal_entries(id)
   status                  TEXT NOT NULL  -- PendingTransferStatus { pending, settled } via textEnum<T>()
   settlement_entry_id     TEXT NULL REFERENCES journal_entries(id)
@@ -73,6 +74,8 @@ pending_transfers
   initiated_at            INTEGER NOT NULL
   settled_at              INTEGER NULL
 ```
+
+**`currency` addendum (bug found and fixed during apply, task 4.3):** an earlier pass of this document assumed the Home overview and Settle screen could always derive a pending item's display currency from `source_account_id`'s own group currency. That's correct for `kind = transfer` (the provisional entry's clearing leg is genuinely in the source account's own currency), but wrong for `kind = foreignTransaction` — its clearing leg is posted in the transaction's *native* currency (Decision 7), which is the whole reason the item is provisional and can differ from the account's own currency. Re-deriving "currency" from the account's group therefore mislabeled a `foreignTransaction`'s pending amount with the wrong currency code. Fixed by snapshotting the clearing leg's actual currency directly on the row at creation time instead of re-deriving it later from a value (the account's currency) that was never the right source of truth for this kind.
 
 `category_id` and `destination_account_id` are conditionally required based on `kind` (SQLite has no portable CHECK for "exactly one of these two is set based on a sibling column" that's worth fighting for here); the Repository, not a SQL constraint, enforces that exactly the right one is populated for each `kind` when constructing the row — consistent with how this codebase already leans on Repository-level invariant enforcement over SQL-level constraints elsewhere (e.g. the settlement-closes-the-position invariant in Decision 5).
 
@@ -99,7 +102,9 @@ Either way, the Repository enforces, as an invariant, that the settlement (and f
 
 **Why not a separate `cancelPendingTransfer`?** A bounced transfer is structurally identical to a settlement — the money just lands back at the source account instead of the planned destination, for less than it left. Two methods would duplicate the same closing-invariant logic. `status` stays `pending | settled`; "delivered" vs. "returned" is a display-only distinction derived by comparing `settledToAccountId` to the original destination, not a separate state.
 
-**`settledToAccountId` only offers a real choice for `kind = transfer`.** A transfer has two candidate accounts (the planned destination, or the source if it bounced). A `foreignTransaction` pending item has no equivalent "somewhere else it could have landed" — the card/account charged is fixed at record time, and settlement only ever finalizes the *amount* charged to that same `source_account_id`, using the same-currency shortfall/fee comparison described above (never the destination-delivery path, since a transaction has no destination). For `kind = foreignTransaction`, the Repository resolves `settledToAccountId` to `source_account_id` itself rather than accepting it as a caller-supplied parameter.
+**`settledToAccountId` only offers a real choice for `kind = transfer`.** A transfer has two candidate accounts (the planned destination, or the source if it bounced). A `foreignTransaction` pending item has no equivalent "somewhere else it could have landed" — the card/account charged is fixed at record time, and settlement only ever finalizes the *amount* charged to that same `source_account_id`. For `kind = foreignTransaction`, the Repository resolves `settledToAccountId` to `source_account_id` itself rather than accepting it as a caller-supplied parameter.
+
+**Correction (caught during apply): a `foreignTransaction` settlement follows the destination-delivery path, not the shortfall-comparable one.** An earlier pass of this document said `foreignTransaction` uses "the same-currency shortfall comparison" — that's wrong. The provisional entry's clearing leg for a `foreignTransaction` is in the transaction's *native* currency (Decision 7); the settlement is always in the financial account's *own* currency. Those are almost never the same currency, so there is nothing to compare a shortfall against — the whole reason the shortfall comparison is valid for a transfer settling back to its source is that both figures share the source currency. A `foreignTransaction` settlement therefore behaves exactly like settling a transfer to its *destination*: post whatever amount the statement shows, in the account's currency, and that alone closes the position. `feeCategoryId` is rejected if supplied, for the same reason it's rejected on the destination-delivery path. The distinguishing test for "does the shortfall comparison apply" is not "is `settledToAccountId` the source account" — it's "is `kind = transfer` AND settling back to its own source" specifically; a `foreignTransaction` is never shortfall-comparable, even though it always resolves to its own `source_account_id`.
 
 **Settlement input validation the Repository must enforce, beyond the happy path above:**
 - `settledAmountMinor` MUST NOT be negative (zero is valid — total loss, only meaningful on the source-account path).
@@ -131,6 +136,8 @@ The provisional entry's transaction date — not the later settlement date — i
 - **[Trade-off] No seeded default fee category** → Acceptable for v1; revisit if user friction shows up in practice.
 - **[Trade-off] Manual settlement only, no FX data source ever** → Matches the user's explicit philosophy; the cost is the user must type the real settled amount every time rather than the app estimating it.
 
+**Addendum (resolved during apply): fresh-install currency selection.** This design never specified how a *fresh* install picks its first currency — only the upgrade-path backfill was covered, and `account_groups.currency` seeding happens inside `confirmFirstIdentity`, before any screen exists to ask. Resolved by adding a new onboarding step (a currency picker) between the recovery-phrase confirmation and the identity actually being committed: the recovery-phrase confirm screen now only validates the confirmation words and hands off to a new currency-selection screen, whose continue action calls the identity commit with the chosen currency threaded through to `confirmFirstIdentity` and `account_groups` seeding. This mirrors the upgrade path's single-currency-for-all-groups approach exactly, so both paths share one mental model.
+
 ## Migration Plan
 
 1. Hard dependency: ship only after `multi-account-support` archives — `account_groups` must exist first.
@@ -138,6 +145,8 @@ The provisional entry's transaction date — not the later settlement date — i
 3. Existing `account_groups` rows (created under `multi-account-support`, pre-dating this change) need a currency backfilled on upgrade. Proposed default: prompt the user once during the upgrade flow for a single currency applied to all existing groups (a real installation up to this point is presumably already single-currency) rather than guessing or requiring a per-group prompt — see Open Questions.
 4. No journal rewrite required — existing entries are untouched; only newly-created cross-currency entries use the relaxed construction rule.
 5. Rollback: forward-only schema, same discipline as prior changes (`ledger-integrity-signing`, `multi-account-support`).
+
+**Addendum (bug found and fixed during apply, task 3.14):** a database skipping straight from schemaVersion < 3 to 4 in one `onUpgrade` call crashed with a duplicate-column error. The `from < 3` step's `m.createTable(accountGroups)` builds the table from its *current* Dart definition - already including `currency`, since Drift generates a table's columns from the live class, not a versioned snapshot - so the `from < 4` step's unconditional `m.addColumn(accountGroups, accountGroups.currency)` tried to add a column that already existed. Fixed by only running that `addColumn` when `from >= 3` (i.e. `account_groups` already existed before this migration call ran). Caught by a new hand-built-schemaVersion-3 fixture test exercising the real migration code, not just newly written assertions.
 
 ## Open Questions
 

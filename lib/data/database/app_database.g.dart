@@ -16,7 +16,8 @@ class $AccountGroupsTable extends AccountGroups
     aliasedName,
     false,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
@@ -61,6 +62,28 @@ class $AccountGroupsTable extends AccountGroups
       'CHECK ("is_system" IN (0, 1))',
     ),
   );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _archivedAtMeta = const VerificationMeta(
+    'archivedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> archivedAt = GeneratedColumn<DateTime>(
+    'archived_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -80,6 +103,8 @@ class $AccountGroupsTable extends AccountGroups
     kind,
     sortOrder,
     isSystem,
+    currency,
+    archivedAt,
     createdAt,
   ];
   @override
@@ -96,8 +121,6 @@ class $AccountGroupsTable extends AccountGroups
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('name')) {
       context.handle(
@@ -122,6 +145,18 @@ class $AccountGroupsTable extends AccountGroups
       );
     } else if (isInserting) {
       context.missing(_isSystemMeta);
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    }
+    if (data.containsKey('archived_at')) {
+      context.handle(
+        _archivedAtMeta,
+        archivedAt.isAcceptableOrUnknown(data['archived_at']!, _archivedAtMeta),
+      );
     }
     if (data.containsKey('created_at')) {
       context.handle(
@@ -160,6 +195,14 @@ class $AccountGroupsTable extends AccountGroups
         DriftSqlType.bool,
         data['${effectivePrefix}is_system'],
       )!,
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      ),
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}archived_at'],
+      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -177,11 +220,29 @@ class $AccountGroupsTable extends AccountGroups
 }
 
 class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
+  /// A user-created group has no well-known constant id, so it needs a
+  /// client-generated default, matching `Accounts.id`'s existing
+  /// convention - the four system-group seeds are unaffected since they
+  /// always pass an explicit id, which overrides this default.
   final String id;
   final String name;
   final AccountGroupKind kind;
   final int sortOrder;
   final bool isSystem;
+
+  /// ISO 4217 code (e.g. 'USD', 'EUR') - a group is single-currency
+  /// (multi-currency-support design.md Decision 1). Nullable only to
+  /// represent the transient post-upgrade state for a database migrated
+  /// from schemaVersion 3, before the user has supplied the one-time
+  /// currency-backfill value; every group created through the Repository
+  /// (fresh install or backfill) always has this set.
+  final String? currency;
+
+  /// Set only for a user-created group the user has archived (soft flag,
+  /// matching `accounts.archived_at`'s shape) - never set for one of the
+  /// four system groups, which are permanent and un-archivable
+  /// (custom-account-groups design.md Decision 2).
+  final DateTime? archivedAt;
   final DateTime createdAt;
   const AccountGroupRow({
     required this.id,
@@ -189,6 +250,8 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
     required this.kind,
     required this.sortOrder,
     required this.isSystem,
+    this.currency,
+    this.archivedAt,
     required this.createdAt,
   });
   @override
@@ -203,6 +266,12 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
     }
     map['sort_order'] = Variable<int>(sortOrder);
     map['is_system'] = Variable<bool>(isSystem);
+    if (!nullToAbsent || currency != null) {
+      map['currency'] = Variable<String>(currency);
+    }
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<DateTime>(archivedAt);
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -214,6 +283,12 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
       kind: Value(kind),
       sortOrder: Value(sortOrder),
       isSystem: Value(isSystem),
+      currency: currency == null && nullToAbsent
+          ? const Value.absent()
+          : Value(currency),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
       createdAt: Value(createdAt),
     );
   }
@@ -231,6 +306,8 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
       ),
       sortOrder: serializer.fromJson<int>(json['sortOrder']),
       isSystem: serializer.fromJson<bool>(json['isSystem']),
+      currency: serializer.fromJson<String?>(json['currency']),
+      archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -245,6 +322,8 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
       ),
       'sortOrder': serializer.toJson<int>(sortOrder),
       'isSystem': serializer.toJson<bool>(isSystem),
+      'currency': serializer.toJson<String?>(currency),
+      'archivedAt': serializer.toJson<DateTime?>(archivedAt),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -255,6 +334,8 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
     AccountGroupKind? kind,
     int? sortOrder,
     bool? isSystem,
+    Value<String?> currency = const Value.absent(),
+    Value<DateTime?> archivedAt = const Value.absent(),
     DateTime? createdAt,
   }) => AccountGroupRow(
     id: id ?? this.id,
@@ -262,6 +343,8 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
     kind: kind ?? this.kind,
     sortOrder: sortOrder ?? this.sortOrder,
     isSystem: isSystem ?? this.isSystem,
+    currency: currency.present ? currency.value : this.currency,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
     createdAt: createdAt ?? this.createdAt,
   );
   AccountGroupRow copyWithCompanion(AccountGroupsCompanion data) {
@@ -271,6 +354,10 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
       kind: data.kind.present ? data.kind.value : this.kind,
       sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
       isSystem: data.isSystem.present ? data.isSystem.value : this.isSystem,
+      currency: data.currency.present ? data.currency.value : this.currency,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -283,14 +370,24 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
           ..write('kind: $kind, ')
           ..write('sortOrder: $sortOrder, ')
           ..write('isSystem: $isSystem, ')
+          ..write('currency: $currency, ')
+          ..write('archivedAt: $archivedAt, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, kind, sortOrder, isSystem, createdAt);
+  int get hashCode => Object.hash(
+    id,
+    name,
+    kind,
+    sortOrder,
+    isSystem,
+    currency,
+    archivedAt,
+    createdAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -300,6 +397,8 @@ class AccountGroupRow extends DataClass implements Insertable<AccountGroupRow> {
           other.kind == this.kind &&
           other.sortOrder == this.sortOrder &&
           other.isSystem == this.isSystem &&
+          other.currency == this.currency &&
+          other.archivedAt == this.archivedAt &&
           other.createdAt == this.createdAt);
 }
 
@@ -309,6 +408,8 @@ class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
   final Value<AccountGroupKind> kind;
   final Value<int> sortOrder;
   final Value<bool> isSystem;
+  final Value<String?> currency;
+  final Value<DateTime?> archivedAt;
   final Value<DateTime> createdAt;
   final Value<int> rowid;
   const AccountGroupsCompanion({
@@ -317,19 +418,22 @@ class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
     this.kind = const Value.absent(),
     this.sortOrder = const Value.absent(),
     this.isSystem = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.archivedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   AccountGroupsCompanion.insert({
-    required String id,
+    this.id = const Value.absent(),
     required String name,
     required AccountGroupKind kind,
     required int sortOrder,
     required bool isSystem,
+    this.currency = const Value.absent(),
+    this.archivedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : id = Value(id),
-       name = Value(name),
+  }) : name = Value(name),
        kind = Value(kind),
        sortOrder = Value(sortOrder),
        isSystem = Value(isSystem);
@@ -339,6 +443,8 @@ class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
     Expression<String>? kind,
     Expression<int>? sortOrder,
     Expression<bool>? isSystem,
+    Expression<String>? currency,
+    Expression<DateTime>? archivedAt,
     Expression<DateTime>? createdAt,
     Expression<int>? rowid,
   }) {
@@ -348,6 +454,8 @@ class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
       if (kind != null) 'kind': kind,
       if (sortOrder != null) 'sort_order': sortOrder,
       if (isSystem != null) 'is_system': isSystem,
+      if (currency != null) 'currency': currency,
+      if (archivedAt != null) 'archived_at': archivedAt,
       if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
     });
@@ -359,6 +467,8 @@ class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
     Value<AccountGroupKind>? kind,
     Value<int>? sortOrder,
     Value<bool>? isSystem,
+    Value<String?>? currency,
+    Value<DateTime?>? archivedAt,
     Value<DateTime>? createdAt,
     Value<int>? rowid,
   }) {
@@ -368,6 +478,8 @@ class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
       kind: kind ?? this.kind,
       sortOrder: sortOrder ?? this.sortOrder,
       isSystem: isSystem ?? this.isSystem,
+      currency: currency ?? this.currency,
+      archivedAt: archivedAt ?? this.archivedAt,
       createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
     );
@@ -393,6 +505,12 @@ class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
     if (isSystem.present) {
       map['is_system'] = Variable<bool>(isSystem.value);
     }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<DateTime>(archivedAt.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -410,6 +528,8 @@ class AccountGroupsCompanion extends UpdateCompanion<AccountGroupRow> {
           ..write('kind: $kind, ')
           ..write('sortOrder: $sortOrder, ')
           ..write('isSystem: $isSystem, ')
+          ..write('currency: $currency, ')
+          ..write('archivedAt: $archivedAt, ')
           ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -3597,6 +3717,809 @@ class IntegrityEventsCompanion extends UpdateCompanion<IntegrityEventRow> {
   }
 }
 
+class $PendingTransfersTable extends PendingTransfers
+    with TableInfo<$PendingTransfersTable, PendingTransferRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PendingTransfersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<PendingTransferKind, String>
+  kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  ).withConverter<PendingTransferKind>($PendingTransfersTable.$converterkind);
+  static const VerificationMeta _sourceAccountIdMeta = const VerificationMeta(
+    'sourceAccountId',
+  );
+  @override
+  late final GeneratedColumn<String> sourceAccountId = GeneratedColumn<String>(
+    'source_account_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES accounts (id)',
+    ),
+  );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<String> categoryId = GeneratedColumn<String>(
+    'category_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES accounts (id)',
+    ),
+  );
+  static const VerificationMeta _destinationAccountIdMeta =
+      const VerificationMeta('destinationAccountId');
+  @override
+  late final GeneratedColumn<String> destinationAccountId =
+      GeneratedColumn<String>(
+        'destination_account_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES accounts (id)',
+        ),
+      );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _provisionalEntryIdMeta =
+      const VerificationMeta('provisionalEntryId');
+  @override
+  late final GeneratedColumn<String> provisionalEntryId =
+      GeneratedColumn<String>(
+        'provisional_entry_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES journal_entries (id)',
+        ),
+      );
+  @override
+  late final GeneratedColumnWithTypeConverter<PendingTransferStatus, String>
+  status =
+      GeneratedColumn<String>(
+        'status',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<PendingTransferStatus>(
+        $PendingTransfersTable.$converterstatus,
+      );
+  static const VerificationMeta _settlementEntryIdMeta = const VerificationMeta(
+    'settlementEntryId',
+  );
+  @override
+  late final GeneratedColumn<String> settlementEntryId =
+      GeneratedColumn<String>(
+        'settlement_entry_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES journal_entries (id)',
+        ),
+      );
+  static const VerificationMeta _feeEntryIdMeta = const VerificationMeta(
+    'feeEntryId',
+  );
+  @override
+  late final GeneratedColumn<String> feeEntryId = GeneratedColumn<String>(
+    'fee_entry_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES journal_entries (id)',
+    ),
+  );
+  static const VerificationMeta _initiatedAtMeta = const VerificationMeta(
+    'initiatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> initiatedAt = GeneratedColumn<DateTime>(
+    'initiated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _settledAtMeta = const VerificationMeta(
+    'settledAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> settledAt = GeneratedColumn<DateTime>(
+    'settled_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    kind,
+    sourceAccountId,
+    categoryId,
+    destinationAccountId,
+    currency,
+    provisionalEntryId,
+    status,
+    settlementEntryId,
+    feeEntryId,
+    initiatedAt,
+    settledAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pending_transfers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PendingTransferRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('source_account_id')) {
+      context.handle(
+        _sourceAccountIdMeta,
+        sourceAccountId.isAcceptableOrUnknown(
+          data['source_account_id']!,
+          _sourceAccountIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_sourceAccountIdMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    }
+    if (data.containsKey('destination_account_id')) {
+      context.handle(
+        _destinationAccountIdMeta,
+        destinationAccountId.isAcceptableOrUnknown(
+          data['destination_account_id']!,
+          _destinationAccountIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_currencyMeta);
+    }
+    if (data.containsKey('provisional_entry_id')) {
+      context.handle(
+        _provisionalEntryIdMeta,
+        provisionalEntryId.isAcceptableOrUnknown(
+          data['provisional_entry_id']!,
+          _provisionalEntryIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_provisionalEntryIdMeta);
+    }
+    if (data.containsKey('settlement_entry_id')) {
+      context.handle(
+        _settlementEntryIdMeta,
+        settlementEntryId.isAcceptableOrUnknown(
+          data['settlement_entry_id']!,
+          _settlementEntryIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('fee_entry_id')) {
+      context.handle(
+        _feeEntryIdMeta,
+        feeEntryId.isAcceptableOrUnknown(
+          data['fee_entry_id']!,
+          _feeEntryIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('initiated_at')) {
+      context.handle(
+        _initiatedAtMeta,
+        initiatedAt.isAcceptableOrUnknown(
+          data['initiated_at']!,
+          _initiatedAtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_initiatedAtMeta);
+    }
+    if (data.containsKey('settled_at')) {
+      context.handle(
+        _settledAtMeta,
+        settledAt.isAcceptableOrUnknown(data['settled_at']!, _settledAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PendingTransferRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PendingTransferRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      kind: $PendingTransfersTable.$converterkind.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}kind'],
+        )!,
+      ),
+      sourceAccountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source_account_id'],
+      )!,
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_id'],
+      ),
+      destinationAccountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}destination_account_id'],
+      ),
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      )!,
+      provisionalEntryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}provisional_entry_id'],
+      )!,
+      status: $PendingTransfersTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      settlementEntryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}settlement_entry_id'],
+      ),
+      feeEntryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fee_entry_id'],
+      ),
+      initiatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}initiated_at'],
+      )!,
+      settledAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}settled_at'],
+      ),
+    );
+  }
+
+  @override
+  $PendingTransfersTable createAlias(String alias) {
+    return $PendingTransfersTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<PendingTransferKind, String, String>
+  $converterkind = const EnumNameConverter<PendingTransferKind>(
+    PendingTransferKind.values,
+  );
+  static JsonTypeConverter2<PendingTransferStatus, String, String>
+  $converterstatus = const EnumNameConverter<PendingTransferStatus>(
+    PendingTransferStatus.values,
+  );
+}
+
+class PendingTransferRow extends DataClass
+    implements Insertable<PendingTransferRow> {
+  final String id;
+  final PendingTransferKind kind;
+  final String sourceAccountId;
+
+  /// Set only when [kind] is [PendingTransferKind.foreignTransaction].
+  final String? categoryId;
+
+  /// Planned destination; set only when [kind] is
+  /// [PendingTransferKind.transfer] - a foreign-currency transaction has no
+  /// natural "to" account the way a transfer does.
+  final String? destinationAccountId;
+
+  /// The currency the provisional entry's clearing leg was actually posted
+  /// in - the source account's own group currency for a `transfer`, or the
+  /// transaction's native currency for a `foreignTransaction` (which can
+  /// differ from the financial account's own currency - the whole reason
+  /// this pending item exists). Snapshotted at creation time since neither
+  /// value is otherwise recoverable later (categories aren't group-scoped
+  /// and carry no currency of their own).
+  final String currency;
+  final String provisionalEntryId;
+  final PendingTransferStatus status;
+  final String? settlementEntryId;
+  final String? feeEntryId;
+  final DateTime initiatedAt;
+  final DateTime? settledAt;
+  const PendingTransferRow({
+    required this.id,
+    required this.kind,
+    required this.sourceAccountId,
+    this.categoryId,
+    this.destinationAccountId,
+    required this.currency,
+    required this.provisionalEntryId,
+    required this.status,
+    this.settlementEntryId,
+    this.feeEntryId,
+    required this.initiatedAt,
+    this.settledAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    {
+      map['kind'] = Variable<String>(
+        $PendingTransfersTable.$converterkind.toSql(kind),
+      );
+    }
+    map['source_account_id'] = Variable<String>(sourceAccountId);
+    if (!nullToAbsent || categoryId != null) {
+      map['category_id'] = Variable<String>(categoryId);
+    }
+    if (!nullToAbsent || destinationAccountId != null) {
+      map['destination_account_id'] = Variable<String>(destinationAccountId);
+    }
+    map['currency'] = Variable<String>(currency);
+    map['provisional_entry_id'] = Variable<String>(provisionalEntryId);
+    {
+      map['status'] = Variable<String>(
+        $PendingTransfersTable.$converterstatus.toSql(status),
+      );
+    }
+    if (!nullToAbsent || settlementEntryId != null) {
+      map['settlement_entry_id'] = Variable<String>(settlementEntryId);
+    }
+    if (!nullToAbsent || feeEntryId != null) {
+      map['fee_entry_id'] = Variable<String>(feeEntryId);
+    }
+    map['initiated_at'] = Variable<DateTime>(initiatedAt);
+    if (!nullToAbsent || settledAt != null) {
+      map['settled_at'] = Variable<DateTime>(settledAt);
+    }
+    return map;
+  }
+
+  PendingTransfersCompanion toCompanion(bool nullToAbsent) {
+    return PendingTransfersCompanion(
+      id: Value(id),
+      kind: Value(kind),
+      sourceAccountId: Value(sourceAccountId),
+      categoryId: categoryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(categoryId),
+      destinationAccountId: destinationAccountId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(destinationAccountId),
+      currency: Value(currency),
+      provisionalEntryId: Value(provisionalEntryId),
+      status: Value(status),
+      settlementEntryId: settlementEntryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(settlementEntryId),
+      feeEntryId: feeEntryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(feeEntryId),
+      initiatedAt: Value(initiatedAt),
+      settledAt: settledAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(settledAt),
+    );
+  }
+
+  factory PendingTransferRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PendingTransferRow(
+      id: serializer.fromJson<String>(json['id']),
+      kind: $PendingTransfersTable.$converterkind.fromJson(
+        serializer.fromJson<String>(json['kind']),
+      ),
+      sourceAccountId: serializer.fromJson<String>(json['sourceAccountId']),
+      categoryId: serializer.fromJson<String?>(json['categoryId']),
+      destinationAccountId: serializer.fromJson<String?>(
+        json['destinationAccountId'],
+      ),
+      currency: serializer.fromJson<String>(json['currency']),
+      provisionalEntryId: serializer.fromJson<String>(
+        json['provisionalEntryId'],
+      ),
+      status: $PendingTransfersTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      settlementEntryId: serializer.fromJson<String?>(
+        json['settlementEntryId'],
+      ),
+      feeEntryId: serializer.fromJson<String?>(json['feeEntryId']),
+      initiatedAt: serializer.fromJson<DateTime>(json['initiatedAt']),
+      settledAt: serializer.fromJson<DateTime?>(json['settledAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'kind': serializer.toJson<String>(
+        $PendingTransfersTable.$converterkind.toJson(kind),
+      ),
+      'sourceAccountId': serializer.toJson<String>(sourceAccountId),
+      'categoryId': serializer.toJson<String?>(categoryId),
+      'destinationAccountId': serializer.toJson<String?>(destinationAccountId),
+      'currency': serializer.toJson<String>(currency),
+      'provisionalEntryId': serializer.toJson<String>(provisionalEntryId),
+      'status': serializer.toJson<String>(
+        $PendingTransfersTable.$converterstatus.toJson(status),
+      ),
+      'settlementEntryId': serializer.toJson<String?>(settlementEntryId),
+      'feeEntryId': serializer.toJson<String?>(feeEntryId),
+      'initiatedAt': serializer.toJson<DateTime>(initiatedAt),
+      'settledAt': serializer.toJson<DateTime?>(settledAt),
+    };
+  }
+
+  PendingTransferRow copyWith({
+    String? id,
+    PendingTransferKind? kind,
+    String? sourceAccountId,
+    Value<String?> categoryId = const Value.absent(),
+    Value<String?> destinationAccountId = const Value.absent(),
+    String? currency,
+    String? provisionalEntryId,
+    PendingTransferStatus? status,
+    Value<String?> settlementEntryId = const Value.absent(),
+    Value<String?> feeEntryId = const Value.absent(),
+    DateTime? initiatedAt,
+    Value<DateTime?> settledAt = const Value.absent(),
+  }) => PendingTransferRow(
+    id: id ?? this.id,
+    kind: kind ?? this.kind,
+    sourceAccountId: sourceAccountId ?? this.sourceAccountId,
+    categoryId: categoryId.present ? categoryId.value : this.categoryId,
+    destinationAccountId: destinationAccountId.present
+        ? destinationAccountId.value
+        : this.destinationAccountId,
+    currency: currency ?? this.currency,
+    provisionalEntryId: provisionalEntryId ?? this.provisionalEntryId,
+    status: status ?? this.status,
+    settlementEntryId: settlementEntryId.present
+        ? settlementEntryId.value
+        : this.settlementEntryId,
+    feeEntryId: feeEntryId.present ? feeEntryId.value : this.feeEntryId,
+    initiatedAt: initiatedAt ?? this.initiatedAt,
+    settledAt: settledAt.present ? settledAt.value : this.settledAt,
+  );
+  PendingTransferRow copyWithCompanion(PendingTransfersCompanion data) {
+    return PendingTransferRow(
+      id: data.id.present ? data.id.value : this.id,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      sourceAccountId: data.sourceAccountId.present
+          ? data.sourceAccountId.value
+          : this.sourceAccountId,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      destinationAccountId: data.destinationAccountId.present
+          ? data.destinationAccountId.value
+          : this.destinationAccountId,
+      currency: data.currency.present ? data.currency.value : this.currency,
+      provisionalEntryId: data.provisionalEntryId.present
+          ? data.provisionalEntryId.value
+          : this.provisionalEntryId,
+      status: data.status.present ? data.status.value : this.status,
+      settlementEntryId: data.settlementEntryId.present
+          ? data.settlementEntryId.value
+          : this.settlementEntryId,
+      feeEntryId: data.feeEntryId.present
+          ? data.feeEntryId.value
+          : this.feeEntryId,
+      initiatedAt: data.initiatedAt.present
+          ? data.initiatedAt.value
+          : this.initiatedAt,
+      settledAt: data.settledAt.present ? data.settledAt.value : this.settledAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingTransferRow(')
+          ..write('id: $id, ')
+          ..write('kind: $kind, ')
+          ..write('sourceAccountId: $sourceAccountId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('destinationAccountId: $destinationAccountId, ')
+          ..write('currency: $currency, ')
+          ..write('provisionalEntryId: $provisionalEntryId, ')
+          ..write('status: $status, ')
+          ..write('settlementEntryId: $settlementEntryId, ')
+          ..write('feeEntryId: $feeEntryId, ')
+          ..write('initiatedAt: $initiatedAt, ')
+          ..write('settledAt: $settledAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    kind,
+    sourceAccountId,
+    categoryId,
+    destinationAccountId,
+    currency,
+    provisionalEntryId,
+    status,
+    settlementEntryId,
+    feeEntryId,
+    initiatedAt,
+    settledAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PendingTransferRow &&
+          other.id == this.id &&
+          other.kind == this.kind &&
+          other.sourceAccountId == this.sourceAccountId &&
+          other.categoryId == this.categoryId &&
+          other.destinationAccountId == this.destinationAccountId &&
+          other.currency == this.currency &&
+          other.provisionalEntryId == this.provisionalEntryId &&
+          other.status == this.status &&
+          other.settlementEntryId == this.settlementEntryId &&
+          other.feeEntryId == this.feeEntryId &&
+          other.initiatedAt == this.initiatedAt &&
+          other.settledAt == this.settledAt);
+}
+
+class PendingTransfersCompanion extends UpdateCompanion<PendingTransferRow> {
+  final Value<String> id;
+  final Value<PendingTransferKind> kind;
+  final Value<String> sourceAccountId;
+  final Value<String?> categoryId;
+  final Value<String?> destinationAccountId;
+  final Value<String> currency;
+  final Value<String> provisionalEntryId;
+  final Value<PendingTransferStatus> status;
+  final Value<String?> settlementEntryId;
+  final Value<String?> feeEntryId;
+  final Value<DateTime> initiatedAt;
+  final Value<DateTime?> settledAt;
+  final Value<int> rowid;
+  const PendingTransfersCompanion({
+    this.id = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.sourceAccountId = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.destinationAccountId = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.provisionalEntryId = const Value.absent(),
+    this.status = const Value.absent(),
+    this.settlementEntryId = const Value.absent(),
+    this.feeEntryId = const Value.absent(),
+    this.initiatedAt = const Value.absent(),
+    this.settledAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PendingTransfersCompanion.insert({
+    this.id = const Value.absent(),
+    required PendingTransferKind kind,
+    required String sourceAccountId,
+    this.categoryId = const Value.absent(),
+    this.destinationAccountId = const Value.absent(),
+    required String currency,
+    required String provisionalEntryId,
+    required PendingTransferStatus status,
+    this.settlementEntryId = const Value.absent(),
+    this.feeEntryId = const Value.absent(),
+    required DateTime initiatedAt,
+    this.settledAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : kind = Value(kind),
+       sourceAccountId = Value(sourceAccountId),
+       currency = Value(currency),
+       provisionalEntryId = Value(provisionalEntryId),
+       status = Value(status),
+       initiatedAt = Value(initiatedAt);
+  static Insertable<PendingTransferRow> custom({
+    Expression<String>? id,
+    Expression<String>? kind,
+    Expression<String>? sourceAccountId,
+    Expression<String>? categoryId,
+    Expression<String>? destinationAccountId,
+    Expression<String>? currency,
+    Expression<String>? provisionalEntryId,
+    Expression<String>? status,
+    Expression<String>? settlementEntryId,
+    Expression<String>? feeEntryId,
+    Expression<DateTime>? initiatedAt,
+    Expression<DateTime>? settledAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (kind != null) 'kind': kind,
+      if (sourceAccountId != null) 'source_account_id': sourceAccountId,
+      if (categoryId != null) 'category_id': categoryId,
+      if (destinationAccountId != null)
+        'destination_account_id': destinationAccountId,
+      if (currency != null) 'currency': currency,
+      if (provisionalEntryId != null)
+        'provisional_entry_id': provisionalEntryId,
+      if (status != null) 'status': status,
+      if (settlementEntryId != null) 'settlement_entry_id': settlementEntryId,
+      if (feeEntryId != null) 'fee_entry_id': feeEntryId,
+      if (initiatedAt != null) 'initiated_at': initiatedAt,
+      if (settledAt != null) 'settled_at': settledAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PendingTransfersCompanion copyWith({
+    Value<String>? id,
+    Value<PendingTransferKind>? kind,
+    Value<String>? sourceAccountId,
+    Value<String?>? categoryId,
+    Value<String?>? destinationAccountId,
+    Value<String>? currency,
+    Value<String>? provisionalEntryId,
+    Value<PendingTransferStatus>? status,
+    Value<String?>? settlementEntryId,
+    Value<String?>? feeEntryId,
+    Value<DateTime>? initiatedAt,
+    Value<DateTime?>? settledAt,
+    Value<int>? rowid,
+  }) {
+    return PendingTransfersCompanion(
+      id: id ?? this.id,
+      kind: kind ?? this.kind,
+      sourceAccountId: sourceAccountId ?? this.sourceAccountId,
+      categoryId: categoryId ?? this.categoryId,
+      destinationAccountId: destinationAccountId ?? this.destinationAccountId,
+      currency: currency ?? this.currency,
+      provisionalEntryId: provisionalEntryId ?? this.provisionalEntryId,
+      status: status ?? this.status,
+      settlementEntryId: settlementEntryId ?? this.settlementEntryId,
+      feeEntryId: feeEntryId ?? this.feeEntryId,
+      initiatedAt: initiatedAt ?? this.initiatedAt,
+      settledAt: settledAt ?? this.settledAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(
+        $PendingTransfersTable.$converterkind.toSql(kind.value),
+      );
+    }
+    if (sourceAccountId.present) {
+      map['source_account_id'] = Variable<String>(sourceAccountId.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<String>(categoryId.value);
+    }
+    if (destinationAccountId.present) {
+      map['destination_account_id'] = Variable<String>(
+        destinationAccountId.value,
+      );
+    }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
+    if (provisionalEntryId.present) {
+      map['provisional_entry_id'] = Variable<String>(provisionalEntryId.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $PendingTransfersTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (settlementEntryId.present) {
+      map['settlement_entry_id'] = Variable<String>(settlementEntryId.value);
+    }
+    if (feeEntryId.present) {
+      map['fee_entry_id'] = Variable<String>(feeEntryId.value);
+    }
+    if (initiatedAt.present) {
+      map['initiated_at'] = Variable<DateTime>(initiatedAt.value);
+    }
+    if (settledAt.present) {
+      map['settled_at'] = Variable<DateTime>(settledAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingTransfersCompanion(')
+          ..write('id: $id, ')
+          ..write('kind: $kind, ')
+          ..write('sourceAccountId: $sourceAccountId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('destinationAccountId: $destinationAccountId, ')
+          ..write('currency: $currency, ')
+          ..write('provisionalEntryId: $provisionalEntryId, ')
+          ..write('status: $status, ')
+          ..write('settlementEntryId: $settlementEntryId, ')
+          ..write('feeEntryId: $feeEntryId, ')
+          ..write('initiatedAt: $initiatedAt, ')
+          ..write('settledAt: $settledAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3614,6 +4537,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $IntegrityEventsTable integrityEvents = $IntegrityEventsTable(
     this,
   );
+  late final $PendingTransfersTable pendingTransfers = $PendingTransfersTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3627,16 +4553,19 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     entryVerificationCache,
     ledgerChainState,
     integrityEvents,
+    pendingTransfers,
   ];
 }
 
 typedef $$AccountGroupsTableCreateCompanionBuilder =
     AccountGroupsCompanion Function({
-      required String id,
+      Value<String> id,
       required String name,
       required AccountGroupKind kind,
       required int sortOrder,
       required bool isSystem,
+      Value<String?> currency,
+      Value<DateTime?> archivedAt,
       Value<DateTime> createdAt,
       Value<int> rowid,
     });
@@ -3647,6 +4576,8 @@ typedef $$AccountGroupsTableUpdateCompanionBuilder =
       Value<AccountGroupKind> kind,
       Value<int> sortOrder,
       Value<bool> isSystem,
+      Value<String?> currency,
+      Value<DateTime?> archivedAt,
       Value<DateTime> createdAt,
       Value<int> rowid,
     });
@@ -3683,6 +4614,16 @@ class $$AccountGroupsTableFilterComposer
 
   ColumnFilters<bool> get isSystem => $composableBuilder(
     column: $table.isSystem,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3726,6 +4667,16 @@ class $$AccountGroupsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -3755,6 +4706,14 @@ class $$AccountGroupsTableAnnotationComposer
 
   GeneratedColumn<bool> get isSystem =>
       $composableBuilder(column: $table.isSystem, builder: (column) => column);
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
+    column: $table.archivedAt,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -3796,6 +4755,8 @@ class $$AccountGroupsTableTableManager
                 Value<AccountGroupKind> kind = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
                 Value<bool> isSystem = const Value.absent(),
+                Value<String?> currency = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => AccountGroupsCompanion(
@@ -3804,16 +4765,20 @@ class $$AccountGroupsTableTableManager
                 kind: kind,
                 sortOrder: sortOrder,
                 isSystem: isSystem,
+                currency: currency,
+                archivedAt: archivedAt,
                 createdAt: createdAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                required String id,
+                Value<String> id = const Value.absent(),
                 required String name,
                 required AccountGroupKind kind,
                 required int sortOrder,
                 required bool isSystem,
+                Value<String?> currency = const Value.absent(),
+                Value<DateTime?> archivedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => AccountGroupsCompanion.insert(
@@ -3822,6 +4787,8 @@ class $$AccountGroupsTableTableManager
                 kind: kind,
                 sortOrder: sortOrder,
                 isSystem: isSystem,
+                currency: currency,
+                archivedAt: archivedAt,
                 createdAt: createdAt,
                 rowid: rowid,
               ),
@@ -7281,6 +8248,951 @@ typedef $$IntegrityEventsTableProcessedTableManager =
       IntegrityEventRow,
       PrefetchHooks Function({bool relatedEntryId, bool relatedIdentityId})
     >;
+typedef $$PendingTransfersTableCreateCompanionBuilder =
+    PendingTransfersCompanion Function({
+      Value<String> id,
+      required PendingTransferKind kind,
+      required String sourceAccountId,
+      Value<String?> categoryId,
+      Value<String?> destinationAccountId,
+      required String currency,
+      required String provisionalEntryId,
+      required PendingTransferStatus status,
+      Value<String?> settlementEntryId,
+      Value<String?> feeEntryId,
+      required DateTime initiatedAt,
+      Value<DateTime?> settledAt,
+      Value<int> rowid,
+    });
+typedef $$PendingTransfersTableUpdateCompanionBuilder =
+    PendingTransfersCompanion Function({
+      Value<String> id,
+      Value<PendingTransferKind> kind,
+      Value<String> sourceAccountId,
+      Value<String?> categoryId,
+      Value<String?> destinationAccountId,
+      Value<String> currency,
+      Value<String> provisionalEntryId,
+      Value<PendingTransferStatus> status,
+      Value<String?> settlementEntryId,
+      Value<String?> feeEntryId,
+      Value<DateTime> initiatedAt,
+      Value<DateTime?> settledAt,
+      Value<int> rowid,
+    });
+
+final class $$PendingTransfersTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $PendingTransfersTable,
+          PendingTransferRow
+        > {
+  $$PendingTransfersTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $AccountsTable _sourceAccountIdTable(_$AppDatabase db) => db.accounts
+      .createAlias('pending_transfers__source_account_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get sourceAccountId {
+    final $_column = $_itemColumn<String>('source_account_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_sourceAccountIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $AccountsTable _categoryIdTable(_$AppDatabase db) =>
+      db.accounts.createAlias('pending_transfers__category_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager? get categoryId {
+    final $_column = $_itemColumn<String>('category_id');
+    if ($_column == null) return null;
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $AccountsTable _destinationAccountIdTable(_$AppDatabase db) => db
+      .accounts
+      .createAlias('pending_transfers__destination_account_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager? get destinationAccountId {
+    final $_column = $_itemColumn<String>('destination_account_id');
+    if ($_column == null) return null;
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(
+      _destinationAccountIdTable($_db),
+    );
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $JournalEntriesTable _provisionalEntryIdTable(_$AppDatabase db) =>
+      db.journalEntries.createAlias(
+        'pending_transfers__provisional_entry_id__journal_entries__id',
+      );
+
+  $$JournalEntriesTableProcessedTableManager get provisionalEntryId {
+    final $_column = $_itemColumn<String>('provisional_entry_id')!;
+
+    final manager = $$JournalEntriesTableTableManager(
+      $_db,
+      $_db.journalEntries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_provisionalEntryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $JournalEntriesTable _settlementEntryIdTable(_$AppDatabase db) =>
+      db.journalEntries.createAlias(
+        'pending_transfers__settlement_entry_id__journal_entries__id',
+      );
+
+  $$JournalEntriesTableProcessedTableManager? get settlementEntryId {
+    final $_column = $_itemColumn<String>('settlement_entry_id');
+    if ($_column == null) return null;
+    final manager = $$JournalEntriesTableTableManager(
+      $_db,
+      $_db.journalEntries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_settlementEntryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $JournalEntriesTable _feeEntryIdTable(_$AppDatabase db) => db
+      .journalEntries
+      .createAlias('pending_transfers__fee_entry_id__journal_entries__id');
+
+  $$JournalEntriesTableProcessedTableManager? get feeEntryId {
+    final $_column = $_itemColumn<String>('fee_entry_id');
+    if ($_column == null) return null;
+    final manager = $$JournalEntriesTableTableManager(
+      $_db,
+      $_db.journalEntries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_feeEntryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PendingTransfersTableFilterComposer
+    extends Composer<_$AppDatabase, $PendingTransfersTable> {
+  $$PendingTransfersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    PendingTransferKind,
+    PendingTransferKind,
+    String
+  >
+  get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    PendingTransferStatus,
+    PendingTransferStatus,
+    String
+  >
+  get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<DateTime> get initiatedAt => $composableBuilder(
+    column: $table.initiatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get settledAt => $composableBuilder(
+    column: $table.settledAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AccountsTableFilterComposer get sourceAccountId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sourceAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableFilterComposer get categoryId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableFilterComposer get destinationAccountId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.destinationAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableFilterComposer get provisionalEntryId {
+    final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.provisionalEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableFilterComposer get settlementEntryId {
+    final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.settlementEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableFilterComposer get feeEntryId {
+    final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.feeEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PendingTransfersTableOrderingComposer
+    extends Composer<_$AppDatabase, $PendingTransfersTable> {
+  $$PendingTransfersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get initiatedAt => $composableBuilder(
+    column: $table.initiatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get settledAt => $composableBuilder(
+    column: $table.settledAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$AccountsTableOrderingComposer get sourceAccountId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sourceAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableOrderingComposer get categoryId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableOrderingComposer get destinationAccountId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.destinationAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableOrderingComposer get provisionalEntryId {
+    final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.provisionalEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableOrderingComposer get settlementEntryId {
+    final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.settlementEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableOrderingComposer get feeEntryId {
+    final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.feeEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PendingTransfersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PendingTransfersTable> {
+  $$PendingTransfersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PendingTransferKind, String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PendingTransferStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get initiatedAt => $composableBuilder(
+    column: $table.initiatedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get settledAt =>
+      $composableBuilder(column: $table.settledAt, builder: (column) => column);
+
+  $$AccountsTableAnnotationComposer get sourceAccountId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sourceAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableAnnotationComposer get categoryId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableAnnotationComposer get destinationAccountId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.destinationAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableAnnotationComposer get provisionalEntryId {
+    final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.provisionalEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableAnnotationComposer get settlementEntryId {
+    final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.settlementEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableAnnotationComposer get feeEntryId {
+    final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.feeEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PendingTransfersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PendingTransfersTable,
+          PendingTransferRow,
+          $$PendingTransfersTableFilterComposer,
+          $$PendingTransfersTableOrderingComposer,
+          $$PendingTransfersTableAnnotationComposer,
+          $$PendingTransfersTableCreateCompanionBuilder,
+          $$PendingTransfersTableUpdateCompanionBuilder,
+          (PendingTransferRow, $$PendingTransfersTableReferences),
+          PendingTransferRow,
+          PrefetchHooks Function({
+            bool sourceAccountId,
+            bool categoryId,
+            bool destinationAccountId,
+            bool provisionalEntryId,
+            bool settlementEntryId,
+            bool feeEntryId,
+          })
+        > {
+  $$PendingTransfersTableTableManager(
+    _$AppDatabase db,
+    $PendingTransfersTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PendingTransfersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PendingTransfersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PendingTransfersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<PendingTransferKind> kind = const Value.absent(),
+                Value<String> sourceAccountId = const Value.absent(),
+                Value<String?> categoryId = const Value.absent(),
+                Value<String?> destinationAccountId = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                Value<String> provisionalEntryId = const Value.absent(),
+                Value<PendingTransferStatus> status = const Value.absent(),
+                Value<String?> settlementEntryId = const Value.absent(),
+                Value<String?> feeEntryId = const Value.absent(),
+                Value<DateTime> initiatedAt = const Value.absent(),
+                Value<DateTime?> settledAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PendingTransfersCompanion(
+                id: id,
+                kind: kind,
+                sourceAccountId: sourceAccountId,
+                categoryId: categoryId,
+                destinationAccountId: destinationAccountId,
+                currency: currency,
+                provisionalEntryId: provisionalEntryId,
+                status: status,
+                settlementEntryId: settlementEntryId,
+                feeEntryId: feeEntryId,
+                initiatedAt: initiatedAt,
+                settledAt: settledAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required PendingTransferKind kind,
+                required String sourceAccountId,
+                Value<String?> categoryId = const Value.absent(),
+                Value<String?> destinationAccountId = const Value.absent(),
+                required String currency,
+                required String provisionalEntryId,
+                required PendingTransferStatus status,
+                Value<String?> settlementEntryId = const Value.absent(),
+                Value<String?> feeEntryId = const Value.absent(),
+                required DateTime initiatedAt,
+                Value<DateTime?> settledAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PendingTransfersCompanion.insert(
+                id: id,
+                kind: kind,
+                sourceAccountId: sourceAccountId,
+                categoryId: categoryId,
+                destinationAccountId: destinationAccountId,
+                currency: currency,
+                provisionalEntryId: provisionalEntryId,
+                status: status,
+                settlementEntryId: settlementEntryId,
+                feeEntryId: feeEntryId,
+                initiatedAt: initiatedAt,
+                settledAt: settledAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$PendingTransfersTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                sourceAccountId = false,
+                categoryId = false,
+                destinationAccountId = false,
+                provisionalEntryId = false,
+                settlementEntryId = false,
+                feeEntryId = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (sourceAccountId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.sourceAccountId,
+                                    referencedTable:
+                                        $$PendingTransfersTableReferences
+                                            ._sourceAccountIdTable(db),
+                                    referencedColumn:
+                                        $$PendingTransfersTableReferences
+                                            ._sourceAccountIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (categoryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.categoryId,
+                                    referencedTable:
+                                        $$PendingTransfersTableReferences
+                                            ._categoryIdTable(db),
+                                    referencedColumn:
+                                        $$PendingTransfersTableReferences
+                                            ._categoryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (destinationAccountId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.destinationAccountId,
+                                    referencedTable:
+                                        $$PendingTransfersTableReferences
+                                            ._destinationAccountIdTable(db),
+                                    referencedColumn:
+                                        $$PendingTransfersTableReferences
+                                            ._destinationAccountIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (provisionalEntryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.provisionalEntryId,
+                                    referencedTable:
+                                        $$PendingTransfersTableReferences
+                                            ._provisionalEntryIdTable(db),
+                                    referencedColumn:
+                                        $$PendingTransfersTableReferences
+                                            ._provisionalEntryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (settlementEntryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.settlementEntryId,
+                                    referencedTable:
+                                        $$PendingTransfersTableReferences
+                                            ._settlementEntryIdTable(db),
+                                    referencedColumn:
+                                        $$PendingTransfersTableReferences
+                                            ._settlementEntryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (feeEntryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.feeEntryId,
+                                    referencedTable:
+                                        $$PendingTransfersTableReferences
+                                            ._feeEntryIdTable(db),
+                                    referencedColumn:
+                                        $$PendingTransfersTableReferences
+                                            ._feeEntryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$PendingTransfersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PendingTransfersTable,
+      PendingTransferRow,
+      $$PendingTransfersTableFilterComposer,
+      $$PendingTransfersTableOrderingComposer,
+      $$PendingTransfersTableAnnotationComposer,
+      $$PendingTransfersTableCreateCompanionBuilder,
+      $$PendingTransfersTableUpdateCompanionBuilder,
+      (PendingTransferRow, $$PendingTransfersTableReferences),
+      PendingTransferRow,
+      PrefetchHooks Function({
+        bool sourceAccountId,
+        bool categoryId,
+        bool destinationAccountId,
+        bool provisionalEntryId,
+        bool settlementEntryId,
+        bool feeEntryId,
+      })
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -7304,4 +9216,6 @@ class $AppDatabaseManager {
       $$LedgerChainStateTableTableManager(_db, _db.ledgerChainState);
   $$IntegrityEventsTableTableManager get integrityEvents =>
       $$IntegrityEventsTableTableManager(_db, _db.integrityEvents);
+  $$PendingTransfersTableTableManager get pendingTransfers =>
+      $$PendingTransfersTableTableManager(_db, _db.pendingTransfers);
 }

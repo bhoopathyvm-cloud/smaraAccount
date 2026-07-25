@@ -13,10 +13,12 @@ class HomeView extends StatelessWidget {
     super.key,
     required this.viewModel,
     required this.onAccountTap,
+    this.onSettlePendingTransfer,
   });
 
   final HomeViewModel viewModel;
   final ValueChanged<String> onAccountTap;
+  final ValueChanged<String>? onSettlePendingTransfer;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,14 @@ class HomeView extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.large),
             children: [
-              _NetPosition(overview: overview),
+              _NetPositions(overview: overview),
+              if (overview.pendingTransfers.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.xLarge),
+                _PendingTransfers(
+                  pendingTransfers: overview.pendingTransfers,
+                  onTap: onSettlePendingTransfer,
+                ),
+              ],
               const SizedBox(height: AppSpacing.xLarge),
               for (final section in overview.sections)
                 _GroupSection(section: section, onAccountTap: onAccountTap),
@@ -51,8 +60,8 @@ class HomeView extends StatelessWidget {
   }
 }
 
-class _NetPosition extends StatelessWidget {
-  const _NetPosition({required this.overview});
+class _NetPositions extends StatelessWidget {
+  const _NetPositions({required this.overview});
 
   final HomeOverview overview;
 
@@ -65,22 +74,86 @@ class _NetPosition extends StatelessWidget {
         children: [
           Text('NET POSITION', style: AppTypography.sectionLabel),
           const SizedBox(height: AppSpacing.base),
-          Text(
-            formatAmountMinor(overview.netPositionMinor),
-            style: AppTypography.balance.copyWith(
-              color: overview.netPositionMinor < 0
-                  ? AppColors.signal
-                  : AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.medium),
-          Text(
-            'Assets ${formatAmountMinor(overview.totalAssetsMinor)}  •  '
-            'Liabilities ${formatAmountMinor(overview.totalLiabilitiesMinor)}',
-            style: AppTypography.metadata,
-          ),
+          if (overview.netPositionsByCurrency.isEmpty)
+            Text('0.00', style: AppTypography.balance)
+          else
+            for (final position in overview.netPositionsByCurrency)
+              Padding(
+                padding: const EdgeInsets.only(bottom: AppSpacing.small),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${formatAmountMinor(position.netPositionMinor)} '
+                      '${position.currency}',
+                      style: AppTypography.balance.copyWith(
+                        color: position.netPositionMinor < 0
+                            ? AppColors.signal
+                            : AppColors.textPrimary,
+                      ),
+                    ),
+                    Text(
+                      'Assets ${formatAmountMinor(position.totalAssetsMinor)} '
+                      '${position.currency}  •  Liabilities '
+                      '${formatAmountMinor(position.totalLiabilitiesMinor)} '
+                      '${position.currency}',
+                      style: AppTypography.metadata,
+                    ),
+                  ],
+                ),
+              ),
         ],
       ),
+    );
+  }
+}
+
+class _PendingTransfers extends StatelessWidget {
+  const _PendingTransfers({required this.pendingTransfers, this.onTap});
+
+  final List<PendingTransferSummary> pendingTransfers;
+  final ValueChanged<String>? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.large,
+            vertical: AppSpacing.base,
+          ),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text('PENDING TRANSFERS', style: AppTypography.sectionLabel),
+          ),
+        ),
+        const Divider(height: 1),
+        for (final pending in pendingTransfers)
+          ListTile(
+            leading: const Icon(
+              TablerIcons.clockHour4,
+              color: AppColors.textSecondary,
+            ),
+            title: Text(
+              pending.destinationLabel == null
+                  ? pending.sourceAccountName
+                  : '${pending.sourceAccountName} → ${pending.destinationLabel}',
+              style: AppTypography.cardTitle,
+            ),
+            subtitle: Text(
+              'Awaiting settlement',
+              style: AppTypography.metadata,
+            ),
+            trailing: Text(
+              '${formatAmountMinor(pending.amountMinor)} ${pending.currency}',
+              style: AppTypography.body,
+            ),
+            onTap: onTap == null
+                ? null
+                : () => onTap!(pending.pendingTransfer.id),
+          ),
+      ],
     );
   }
 }
@@ -93,6 +166,7 @@ class _GroupSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currency = section.group.currency;
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.xLarge),
       child: Column(
@@ -111,7 +185,8 @@ class _GroupSection extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  formatAmountMinor(section.totalDisplayBalanceMinor),
+                  '${formatAmountMinor(section.totalDisplayBalanceMinor)} '
+                  '${currency ?? '?'}',
                   style: AppTypography.cardTitle,
                 ),
               ],
@@ -136,7 +211,8 @@ class _GroupSection extends StatelessWidget {
                   ? Text('Archived', style: AppTypography.metadata)
                   : null,
               trailing: Text(
-                formatAmountMinor(balance.displayBalanceMinor),
+                '${formatAmountMinor(balance.displayBalanceMinor)} '
+                '${currency ?? '?'}',
                 style: AppTypography.body,
               ),
               onTap: () => onAccountTap(balance.account.id),

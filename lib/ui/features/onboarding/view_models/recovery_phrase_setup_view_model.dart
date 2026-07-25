@@ -59,10 +59,14 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
   }
 
   /// Validates the words at [confirmationWordIndices] against
-  /// [enteredWords] (same indices), then commits the identity. Returns
-  /// true on success; on mismatch, sets [errorMessage] and leaves
-  /// everything else untouched so the user can retry.
-  Future<bool> confirm(Map<int, String> enteredWords) async {
+  /// [enteredWords] (same indices). Returns true on success; on mismatch,
+  /// sets [errorMessage] and leaves everything else untouched so the user
+  /// can retry. Does *not* commit the identity yet - the ledger stays
+  /// unusable until [finishOnboarding] runs, once the user has also chosen
+  /// a currency (multi-currency-support design.md addendum: a fresh
+  /// install needs a currency for its starter account groups before
+  /// [finishOnboarding] can seed them).
+  bool confirm(Map<int, String> enteredWords) {
     final generated = _generated;
     if (generated == null) return false;
 
@@ -75,12 +79,23 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
         return false;
       }
     }
+    _errorMessage = null;
+    notifyListeners();
+    return true;
+  }
+
+  /// Commits the signing identity with the starter account groups seeded
+  /// in [currency], then verifies the chain. Call only after [confirm] has
+  /// already returned true.
+  Future<bool> finishOnboarding(String currency) async {
+    final generated = _generated;
+    if (generated == null) return false;
 
     _isSubmitting = true;
     _errorMessage = null;
     notifyListeners();
 
-    await _ledgerRepository.confirmFirstIdentity(generated);
+    await _ledgerRepository.confirmFirstIdentity(generated, currency: currency);
     await _ledgerRepository.verifyChain();
 
     _isSubmitting = false;

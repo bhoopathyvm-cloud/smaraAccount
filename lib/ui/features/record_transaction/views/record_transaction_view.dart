@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/models/account.dart';
@@ -28,11 +29,15 @@ class RecordTransactionView extends StatefulWidget {
 
 class _RecordTransactionViewState extends State<RecordTransactionView> {
   final _amountController = TextEditingController();
+  final _currencyController = TextEditingController();
+  final _accountCurrencyAmountController = TextEditingController();
   final _descriptionController = TextEditingController();
 
   @override
   void dispose() {
     _amountController.dispose();
+    _currencyController.dispose();
+    _accountCurrencyAmountController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -108,9 +113,61 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
-                  decoration: const InputDecoration(labelText: 'Amount'),
+                  decoration: InputDecoration(
+                    labelText: 'Amount',
+                    suffixText:
+                        widget.viewModel.nativeCurrency ??
+                        widget.viewModel.accountCurrency,
+                  ),
                   onChanged: _syncAmount,
                 ),
+                const SizedBox(height: AppSpacing.large),
+                TextField(
+                  controller: _currencyController,
+                  textCapitalization: TextCapitalization.characters,
+                  maxLength: 3,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                    TextInputFormatter.withFunction(
+                      (oldValue, newValue) =>
+                          newValue.copyWith(text: newValue.text.toUpperCase()),
+                    ),
+                  ],
+                  decoration: InputDecoration(
+                    labelText: 'Transaction currency (optional)',
+                    helperText: widget.viewModel.accountCurrency == null
+                        ? null
+                        : 'Leave blank if this was in '
+                              '${widget.viewModel.accountCurrency}, the '
+                              "account's own currency.",
+                    helperMaxLines: 2,
+                    counterText: '',
+                  ),
+                  onChanged: widget.viewModel.setNativeCurrency,
+                ),
+                if (widget.viewModel.isForeignCurrency) ...[
+                  const SizedBox(height: AppSpacing.large),
+                  TextField(
+                    controller: _accountCurrencyAmountController,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Account-currency amount (optional)',
+                      helperText:
+                          'Leave blank if the exchange rate isn\'t known '
+                          'yet - it will post provisional until settled.',
+                      helperMaxLines: 2,
+                      suffixText: widget.viewModel.accountCurrency,
+                    ),
+                    onChanged: (text) {
+                      final parsed = double.tryParse(text);
+                      widget.viewModel.setAccountCurrencyAmountMinor(
+                        parsed == null ? null : (parsed * 100).round(),
+                      );
+                    },
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.large),
                 StreamBuilder<List<Account>>(
                   stream: widget.ledgerRepository.watchCategories(),

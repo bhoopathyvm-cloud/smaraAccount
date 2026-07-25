@@ -8,6 +8,7 @@ import 'tables/entry_verification_cache_table.dart';
 import 'tables/integrity_events_table.dart';
 import 'tables/journal_entries_table.dart';
 import 'tables/ledger_chain_state_table.dart';
+import 'tables/pending_transfers_table.dart';
 import 'tables/postings_table.dart';
 import 'tables/signing_identities_table.dart';
 
@@ -38,6 +39,7 @@ const starterExpenseCategories = [
     EntryVerificationCache,
     LedgerChainState,
     IntegrityEvents,
+    PendingTransfers,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -46,7 +48,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -187,6 +189,56 @@ class AppDatabase extends _$AppDatabase {
           "UPDATE accounts SET group_id = ? WHERE type = 'asset'",
           [groupCashEquivalentsId],
         );
+      }
+
+      if (from < 4) {
+        // multi-currency-support: account_groups.currency + the
+        // Transfers-in-transit system account + pending_transfers.
+        // currency is added nullable - existing account_groups rows land
+        // as NULL here, which is exactly the "needs the one-time currency
+        // backfill prompt" signal the app-level flow checks for
+        // (LedgerRepository.groupsNeedingCurrencyBackfill). A fresh
+        // schemaVersion-4 onCreate install never hits this path at all:
+        // confirmFirstIdentity always seeds groups with a currency
+        // already chosen during onboarding.
+        //
+        // A database skipping straight from schemaVersion < 3 to 4 hits
+        // the `from < 3` branch above first in this same migration call,
+        // which runs `m.createTable(accountGroups)` against the *current*
+        // table definition - already including `currency`, since Drift
+        // always generates a table's columns from its live class, not a
+        // versioned snapshot. Adding the column again here would be a
+        // duplicate-column error, so it's only needed for a database that
+        // already had `account_groups` before this migration ran.
+        if (from >= 3) {
+          await m.addColumn(accountGroups, accountGroups.currency);
+        }
+        await m.createTable(pendingTransfers);
+
+        final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+        await customStatement(
+          'INSERT INTO accounts (id, name, type, group_id, sort_order, archived_at, created_at) '
+          "VALUES (?, ?, 'clearing', NULL, 0, NULL, ?)",
+          [transfersInTransitAccountId, transfersInTransitAccountName, now],
+        );
+      }
+
+      if (from < 5) {
+        // custom-account-groups: account_groups.archived_at. Added
+        // nullable - every existing group (system or otherwise) lands as
+        // NULL, i.e. not archived, which is correct for all of them; no
+        // backfill needed. account_groups.id's new client-side UUID
+        // default has no DDL impact.
+        //
+        // Same duplicate-column pitfall as `currency` above: a database
+        // skipping straight from schemaVersion < 3 to 5 already gets
+        // archived_at for free from the `from < 3` branch's
+        // `m.createTable(accountGroups)` (always built from the *current*
+        // table definition), so this only runs for a database that
+        // already had `account_groups` before this migration call.
+        if (from >= 3) {
+          await m.addColumn(accountGroups, accountGroups.archivedAt);
+        }
       }
     },
   );
