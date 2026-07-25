@@ -5,11 +5,13 @@ import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../view_models/recovery_phrase_setup_view_model.dart';
 
-/// Final onboarding step: the user re-enters a subset of the recovery
-/// phrase's words to prove possession before the ledger becomes usable
-/// (spec: "the user must confirm possession of the phrase (e.g.
+/// Penultimate onboarding step: the user re-enters a subset of the
+/// recovery phrase's words to prove possession before the ledger becomes
+/// usable (spec: "the user must confirm possession of the phrase (e.g.
 /// re-entering part of it) before recording their first transaction").
-/// Only on success does this commit the signing identity to the database.
+/// Only validates the words - the signing identity isn't committed until
+/// the user also picks a currency on the next screen (see
+/// [RecoveryPhraseSetupViewModel.finishOnboarding]).
 class RecoveryPhraseConfirmView extends StatefulWidget {
   const RecoveryPhraseConfirmView({
     super.key,
@@ -39,11 +41,11 @@ class _RecoveryPhraseConfirmViewState extends State<RecoveryPhraseConfirmView> {
     super.dispose();
   }
 
-  Future<void> _submit() async {
+  void _submit() {
     final entered = {
       for (final entry in _controllers.entries) entry.key: entry.value.text,
     };
-    final success = await widget.viewModel.confirm(entered);
+    final success = widget.viewModel.confirm(entered);
     if (success) widget.onConfirmed();
   }
 

@@ -56,6 +56,22 @@ Future<void> pumpUntilFound(
   await tester.pump(const Duration(milliseconds: 50));
 }
 
+// The macOS desktop test target's default surface size is small enough
+// that AppShell's bottom navigation bar renders at a screen position
+// tester.tap()'s hit-testing doesn't agree with (a "derived an Offset that
+// would not hit test" warning followed by the tap silently not landing) -
+// this reproduces even on pre-existing, currency-unrelated tests. Forcing
+// a phone-sized, 1x-density surface (matching what the app is actually
+// designed and manually tested against) makes tap() coordinates agree
+// with the rendered layout again.
+Future<void> pumpApp(WidgetTester tester, Widget app) async {
+  tester.view.physicalSize = const Size(400, 900);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+  await tester.pumpWidget(app);
+}
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -74,7 +90,7 @@ void main() {
     // before /register (or any other main route) is reachable - these
     // tests exercise the ledger, not onboarding, so start past it.
     final generated = await repository.generateFirstIdentity();
-    await repository.confirmFirstIdentity(generated);
+    await repository.confirmFirstIdentity(generated, currency: 'USD');
   });
 
   tearDown(() async {
@@ -86,7 +102,7 @@ void main() {
   testWidgets('record money in updates the register and running balance', (
     tester,
   ) async {
-    await tester.pumpWidget(buildApp());
+    await pumpApp(tester, buildApp());
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
@@ -182,7 +198,7 @@ void main() {
   testWidgets(
     'category management screen renders the archive action without a layout error',
     (tester) async {
-      await tester.pumpWidget(buildApp());
+      await pumpApp(tester, buildApp());
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
 
@@ -233,7 +249,7 @@ void main() {
       // "Restart": a fresh widget tree (fresh ViewModels, fresh
       // GoRouter/redirect closure), same underlying database - matching
       // how the real app's database file persists across restarts.
-      await tester.pumpWidget(buildApp());
+      await pumpApp(tester, buildApp());
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
@@ -279,6 +295,157 @@ void main() {
   );
 
   testWidgets(
+    'full cross-currency transfer lifecycle: provisional, pending on Home, then settled',
+    (tester) async {
+      final incomeId = (await repository.watchCategories().first)
+          .firstWhere((a) => a.type == AccountType.income)
+          .id;
+      final checkingId =
+          (await repository.watchFinancialAccounts().first).first.id;
+      await repository.recordTransaction(
+        amountMinor: 100000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: checkingId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      await repository.changeAccountGroupCurrency(
+        groupId: groupPensionRetirementId,
+        currency: 'EUR',
+      );
+      await repository.createFinancialAccount(
+        name: 'Euro Savings',
+        type: AccountType.asset,
+        groupId: groupPensionRetirementId,
+      );
+
+      await pumpApp(tester, buildApp());
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.tap(find.text('Accounts'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      // Only two accounts exist (Cash & Bank, Euro Savings), so
+      // TransferViewModel's defaults already pick them as from/to - no
+      // dropdown interaction needed to get a cross-currency pair.
+      expect(find.text('Destination amount (optional)'), findsOneWidget);
+      await tester.enterText(find.byType(TextField).first, '100.00');
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      // Back on Home (Transfer pops to its caller); the pending item shows.
+      await tester.tap(find.text('Home'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      expect(find.text('PENDING TRANSFERS'), findsOneWidget);
+      final pendingBefore =
+          (await repository.watchPendingTransfers().first).single;
+      expect(pendingBefore.currency, equals('USD'));
+
+      await tester.tap(find.textContaining('→').first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      expect(find.text('Settle transfer'), findsOneWidget);
+      await tester.enterText(find.byType(TextField).first, '92.00');
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Settle'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(await repository.watchPendingTransfers().first, isEmpty);
+      final euroAccounts = await repository.watchFinancialAccounts().first;
+      final euroId = euroAccounts
+          .firstWhere((a) => a.name == 'Euro Savings')
+          .id;
+      expect(await repository.displayBalanceMinor(euroId), equals(9200));
+      // 100000 income - 10000 transferred out (debited immediately by the
+      // provisional entry, well before settlement touches the destination).
+      expect(await repository.displayBalanceMinor(checkingId), equals(90000));
+    },
+  );
+
+  testWidgets('bounced transfer settled back to source with a retained fee', (
+    tester,
+  ) async {
+    final incomeId = (await repository.watchCategories().first)
+        .firstWhere((a) => a.type == AccountType.income)
+        .id;
+    final checkingId =
+        (await repository.watchFinancialAccounts().first).first.id;
+    await repository.recordTransaction(
+      amountMinor: 100000,
+      direction: TransactionDirection.moneyIn,
+      categoryId: incomeId,
+      financialAccountId: checkingId,
+      transactionDate: DateTime(2026, 1, 15),
+    );
+    await repository.changeAccountGroupCurrency(
+      groupId: groupPensionRetirementId,
+      currency: 'EUR',
+    );
+    await repository.createFinancialAccount(
+      name: 'Euro Savings',
+      type: AccountType.asset,
+      groupId: groupPensionRetirementId,
+    );
+    await repository.recordTransfer(
+      fromAccountId: checkingId,
+      toAccountId: (await repository.watchFinancialAccounts().first)
+          .firstWhere((a) => a.name == 'Euro Savings')
+          .id,
+      amountMinor: 10000,
+      transactionDate: DateTime(2026, 1, 15),
+    );
+
+    await pumpApp(tester, buildApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+
+    expect(find.text('PENDING TRANSFERS'), findsOneWidget);
+    await tester.tap(find.textContaining('→').first);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
+
+    await tester.tap(find.textContaining('Returned to'));
+    await tester.pump();
+    await tester.enterText(find.byType(TextField).first, '90.00');
+    await tester.pump();
+
+    expect(find.textContaining('Shortfall'), findsOneWidget);
+    await tester.tap(
+      find.widgetWithText(
+        DropdownButtonFormField<String>,
+        'Fee / loss category',
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
+    await tester.tap(find.text('Other Expense').last);
+    await tester.pump();
+
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Settle'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(await repository.watchPendingTransfers().first, isEmpty);
+    // 100000 income - 10000 debited by the provisional transfer + 9000
+    // returned by settlement = 99000 net (the other 1000 became the fee
+    // below, never returning to checking).
+    expect(await repository.displayBalanceMinor(checkingId), equals(99000));
+    final summary = await repository
+        .watchSummary(start: DateTime(2020, 1, 1), end: DateTime(2030, 12, 31))
+        .first;
+    expect(summary.totalExpenseMinor, equals(1000));
+  });
+
+  testWidgets(
     'reinstall with the recovery phrase restores the identity without re-signing',
     (tester) async {
       final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
@@ -293,7 +460,7 @@ void main() {
       // First launch: walk the real onboarding UI. The continue button
       // only renders once the ViewModel's async key generation has
       // actually finished, unlike the bare presence of RecoveryPhraseView.
-      await tester.pumpWidget(buildAppFor(firstInstallRepository));
+      await pumpApp(tester, buildAppFor(firstInstallRepository));
       final continueButton = find.text('I\'ve saved my recovery phrase');
       await pumpUntilFound(tester, continueButton);
       expect(continueButton, findsOneWidget);
@@ -339,16 +506,26 @@ void main() {
       await tester.ensureVisible(confirmButton);
       await tester.pump(const Duration(milliseconds: 300));
       await tester.tap(confirmButton);
-      // Confirming triggers confirmFirstIdentity + verifyChain, then the
-      // redirect's own currentIdentity/hasMatchingStoredKey/verifyChain
-      // chain before /home finally builds - wait for a widget that only
-      // exists there.
-      await pumpUntilFound(tester, find.text('NET POSITION'));
+      // Confirming the recovery phrase only validates it now - it no
+      // longer commits the identity directly. That happens one step
+      // later, once a currency is chosen (multi-currency-support
+      // design.md addendum), so the next screen is the currency picker.
+      await pumpUntilFound(tester, find.text('Choose your currency'));
       expect(
         find.textContaining('doesn\'t match'),
         findsNothing,
         reason: 'confirmation words were rejected',
       );
+
+      final finishSetupButton = find.text('Finish setup');
+      await tester.ensureVisible(finishSetupButton);
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.tap(finishSetupButton);
+      // Finishing triggers confirmFirstIdentity + verifyChain, then the
+      // redirect's own currentIdentity/hasMatchingStoredKey/verifyChain
+      // chain before /home finally builds - wait for a widget that only
+      // exists there.
+      await pumpUntilFound(tester, find.text('NET POSITION'));
       expect(find.text('NET POSITION'), findsOneWidget);
 
       final categories = await firstInstallRepository.watchCategories().first;
@@ -376,7 +553,7 @@ void main() {
           secureStorage: InMemorySecureKeyStorage(),
         ),
       );
-      await tester.pumpWidget(buildAppFor(reinstalledRepository));
+      await pumpApp(tester, buildAppFor(reinstalledRepository));
       await pumpUntilFound(tester, find.text('Restore signing key'));
       expect(find.text('Restore signing key'), findsOneWidget);
 
@@ -419,7 +596,7 @@ void main() {
           secureStorage: InMemorySecureKeyStorage(),
         ),
       );
-      await tester.pumpWidget(buildAppFor(postLossRepository));
+      await pumpApp(tester, buildAppFor(postLossRepository));
       await pumpUntilFound(tester, find.text('Restore signing key'));
       expect(find.text('Restore signing key'), findsOneWidget);
 
@@ -497,7 +674,7 @@ void main() {
         groupId: groupCashEquivalentsId,
       );
 
-      await tester.pumpWidget(buildApp());
+      await pumpApp(tester, buildApp());
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
 
@@ -523,6 +700,112 @@ void main() {
         find.widgetWithText(DropdownButtonFormField<String>, 'Savings'),
         findsOneWidget,
       );
+    },
+  );
+
+  testWidgets(
+    'user-created group archive lifecycle: blocked while active, allowed once empty, historical account still resolves it',
+    (tester) async {
+      // Setup goes through the Repository directly (not the "Create group"
+      // dialog) - several other tests in this file do the same for
+      // account/group setup (e.g. "Euro Savings" above); this test's focus
+      // is the archive lifecycle and its effect on pickers, not the create
+      // dialog itself.
+      final group = await repository.createAccountGroup(
+        name: 'Business',
+        kind: AccountGroupKind.assetGroup,
+        currency: 'USD',
+      );
+      await repository.createFinancialAccount(
+        name: 'Business Checking',
+        type: AccountType.asset,
+        groupId: group.id,
+      );
+
+      await pumpApp(tester, buildApp());
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.tap(find.text('Accounts'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.text('Business'), findsOneWidget);
+      expect(find.text('Business Checking'), findsOneWidget);
+
+      // PopupMenuButton's default icon is platform-adaptive (more_horiz on
+      // macOS, more_vert elsewhere), so byIcon is unreliable here; its
+      // default tooltip ("Show menu", from MaterialLocalizations) is
+      // stable across platforms. Render order at this point: [0] Cash &
+      // Bank's own account popup, [1] the Business group's own popup, [2]
+      // Business Checking's account popup (groups render before their
+      // member accounts).
+      final popups = find.byTooltip('Show menu');
+
+      // Archiving the group while it still has an active account is
+      // rejected.
+      await tester.tap(popups.at(1));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.text('Archive'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      expect(
+        find.text('Cannot archive a group with active financial accounts.'),
+        findsOneWidget,
+      );
+
+      // Archive the account (via Repository - the account's own archive
+      // flow is already covered elsewhere), then the group archives
+      // successfully through the UI.
+      final businessAccounts = await repository
+          .watchFinancialAccounts(includeArchived: true)
+          .first;
+      final businessAccountId = businessAccounts
+          .firstWhere((a) => a.name == 'Business Checking')
+          .id;
+      await repository.archiveFinancialAccount(businessAccountId);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      // Business Checking is now archived (no popup of its own), so only
+      // two popups remain: Cash & Bank's, then the Business group's.
+      await tester.tap(popups.last);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.text('Archive'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      // The group and its historical account both stay visible, labeled
+      // as archived.
+      expect(find.text('Business'), findsOneWidget);
+      expect(find.text('Business Checking'), findsOneWidget);
+
+      // But the archived group no longer offers itself as a reassignment
+      // target: opening Cash & Bank's "Reassign group" picker (its is now
+      // the only remaining popup) shows exactly one "Business" text on
+      // screen (the archived group's own section header) - if it were
+      // still offered, a second one would appear inside the open dropdown
+      // menu.
+      await tester.tap(popups.first);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.text('Reassign group'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.byType(DropdownButtonFormField<String>));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      expect(find.text('Business'), findsOneWidget);
     },
   );
 }

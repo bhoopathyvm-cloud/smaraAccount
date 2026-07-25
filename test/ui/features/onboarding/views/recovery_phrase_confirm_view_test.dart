@@ -4,8 +4,6 @@ import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/crypto/ed25519_signing.dart';
 import 'package:smara_accounting/domain/crypto/recovery_phrase.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
-import 'package:smara_accounting/domain/models/signing_identity.dart';
-import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_confirm_view.dart';
 
@@ -58,50 +56,40 @@ void main() {
 
     expect(confirmed, isFalse);
     expect(find.textContaining('doesn\'t match'), findsOneWidget);
-    verifyNever(repository.confirmFirstIdentity(any));
+    verifyNever(
+      repository.confirmFirstIdentity(any, currency: anyNamed('currency')),
+    );
   });
 
-  testWidgets('confirms and proceeds when all requested words match', (
-    tester,
-  ) async {
-    final identity = SigningIdentity(
-      identityId: 'identity-1',
-      publicKey: generated.keyMaterial.publicKey,
-      createdAt: DateTime.now(),
-      supersedesIdentityId: null,
-      supersededAt: null,
-    );
-    when(
-      repository.confirmFirstIdentity(generated),
-    ).thenAnswer((_) async => identity);
-    when(repository.verifyChain()).thenAnswer(
-      (_) async => const ChainVerificationResult(
-        totalEntries: 0,
-        breakEntryId: null,
-        breakReason: null,
-      ),
-    );
-    var confirmed = false;
+  testWidgets(
+    'proceeds without committing the identity when all requested words match',
+    (tester) async {
+      var confirmed = false;
 
-    await tester.pumpWidget(
-      MaterialApp(
-        home: RecoveryPhraseConfirmView(
-          viewModel: viewModel,
-          onConfirmed: () => confirmed = true,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: RecoveryPhraseConfirmView(
+            viewModel: viewModel,
+            onConfirmed: () => confirmed = true,
+          ),
         ),
-      ),
-    );
+      );
 
-    final correctWords = [
-      for (final i in RecoveryPhraseSetupViewModel.confirmationWordIndices)
-        generated.phrase.words[i],
-    ];
-    await enterWords(tester, correctWords);
-    await tester.tap(find.text('Confirm'));
-    await tester.pump();
-    await tester.pump();
+      final correctWords = [
+        for (final i in RecoveryPhraseSetupViewModel.confirmationWordIndices)
+          generated.phrase.words[i],
+      ];
+      await enterWords(tester, correctWords);
+      await tester.tap(find.text('Confirm'));
+      await tester.pump();
 
-    expect(confirmed, isTrue);
-    verify(repository.confirmFirstIdentity(generated)).called(1);
-  });
+      expect(confirmed, isTrue);
+      // The identity isn't committed here - only finishOnboarding (called
+      // from the next, currency-selection screen) does that.
+      verifyNever(
+        repository.confirmFirstIdentity(any, currency: anyNamed('currency')),
+      );
+      verifyNever(repository.verifyChain());
+    },
+  );
 }

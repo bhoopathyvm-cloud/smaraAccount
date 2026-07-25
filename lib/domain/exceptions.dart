@@ -57,3 +57,17 @@ class LastActiveAccountException implements Exception {
   @override
   String toString() => message;
 }
+
+/// Covers every settlement/pending-transfer business-rule violation
+/// (multi-currency-support design.md Decision 5): negative or
+/// provisional-exceeding settled amount, settling an already-settled
+/// pending transfer, an invalid fee category or settlement target, and
+/// attempting to reverse a still-pending provisional entry directly.
+class PendingTransferException implements Exception {
+  PendingTransferException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}

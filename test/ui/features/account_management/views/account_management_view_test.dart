@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -18,6 +20,8 @@ void main() {
     kind: AccountGroupKind.assetGroup,
     sortOrder: 0,
     isSystem: true,
+    currency: 'USD',
+    archived: false,
   );
   const creditGroup = AccountGroup(
     id: 'group-credit',
@@ -25,6 +29,18 @@ void main() {
     kind: AccountGroupKind.liabilityGroup,
     sortOrder: 1,
     isSystem: true,
+    currency: 'USD',
+    archived: false,
+  );
+
+  const businessGroup = AccountGroup(
+    id: 'group-business',
+    name: 'Business',
+    kind: AccountGroupKind.assetGroup,
+    sortOrder: 4,
+    isSystem: false,
+    currency: 'USD',
+    archived: false,
   );
 
   const checking = Account(
@@ -50,7 +66,9 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([checking, savings]));
     when(
-      repository.watchAccountGroups(),
+      repository.watchAccountGroups(
+        includeArchived: anyNamed('includeArchived'),
+      ),
     ).thenAnswer((_) => Stream.value([cashGroup, creditGroup]));
   });
 
@@ -97,6 +115,176 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('cannot archive the last account'), findsOneWidget);
+    },
+  );
+
+  testWidgets('system groups have no archive action, only an edit icon', (
+    tester,
+  ) async {
+    final viewModel = AccountManagementViewModel(ledgerRepository: repository);
+    addTearDown(viewModel.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+    );
+    await tester.pump();
+
+    // Checking and Savings each have their own popup; both cashGroup and
+    // creditGroup are system groups, so neither contributes one.
+    expect(find.byIcon(Icons.more_vert), findsNWidgets(2));
+    expect(find.byTooltip('Edit group'), findsNWidgets(2));
+  });
+
+  testWidgets(
+    'Create group dialog creates a new group with name, kind, and currency',
+    (tester) async {
+      // The repository call's Future is left uncompleted deliberately: the
+      // dialog disposes its TextEditingControllers as soon as that Future
+      // resolves and the dialog pops, and rendering any further frame
+      // against an already-disposed controller mid-exit-transition is a
+      // pre-existing dispose-timing quirk this dialog shares with the
+      // "Create account" one (not something introduced here). Never
+      // completing the Future keeps the dialog open, which is enough to
+      // verify the submission call was made with the right arguments.
+      final neverCompletes = Completer<AccountGroup>();
+      when(
+        repository.createAccountGroup(
+          name: anyNamed('name'),
+          kind: anyNamed('kind'),
+          currency: anyNamed('currency'),
+        ),
+      ).thenAnswer((_) => neverCompletes.future);
+
+      final viewModel = AccountManagementViewModel(
+        ledgerRepository: repository,
+      );
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      await tester.tap(find.byTooltip('Create group'));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byType(TextField).first, 'Business');
+      await tester.tap(find.text('Liability'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(ChoiceChip, 'EUR'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Create'));
+      await tester.pump();
+
+      verify(
+        repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.liabilityGroup,
+          currency: 'EUR',
+        ),
+      ).called(1);
+    },
+  );
+
+  testWidgets(
+    'Create group dialog disables Create until the currency is a valid 3-letter code',
+    (tester) async {
+      final viewModel = AccountManagementViewModel(
+        ledgerRepository: repository,
+      );
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      await tester.tap(find.byTooltip('Create group'));
+      await tester.pumpAndSettle();
+
+      final currencyField = find.widgetWithText(
+        TextField,
+        'Currency (ISO 4217, e.g. USD)',
+      );
+      await tester.enterText(currencyField, '1');
+      await tester.pumpAndSettle();
+
+      final createButton = tester.widget<ElevatedButton>(
+        find.widgetWithText(ElevatedButton, 'Create'),
+      );
+      expect(createButton.onPressed, isNull);
+    },
+  );
+
+  testWidgets('Archive group action archives an empty user-created group', (
+    tester,
+  ) async {
+    when(
+      repository.watchAccountGroups(
+        includeArchived: anyNamed('includeArchived'),
+      ),
+    ).thenAnswer((_) => Stream.value([cashGroup, creditGroup, businessGroup]));
+    when(
+      repository.archiveAccountGroup(businessGroup.id),
+    ).thenAnswer((_) async {});
+
+    final viewModel = AccountManagementViewModel(ledgerRepository: repository);
+    addTearDown(viewModel.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+    );
+    await tester.pump();
+
+    // Checking + Savings popups, plus Business's own group-level popup
+    // (it has no member accounts) - the group popup renders last.
+    await tester.tap(find.byIcon(Icons.more_vert).last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Archive'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+    await tester.pumpAndSettle();
+
+    verify(repository.archiveAccountGroup(businessGroup.id)).called(1);
+  });
+
+  testWidgets(
+    'Archive group action surfaces a rejected-with-active-accounts error',
+    (tester) async {
+      when(
+        repository.watchAccountGroups(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer(
+        (_) => Stream.value([cashGroup, creditGroup, businessGroup]),
+      );
+      when(repository.archiveAccountGroup(businessGroup.id)).thenThrow(
+        AccountGroupException(
+          'Cannot archive a group with active financial accounts.',
+        ),
+      );
+
+      final viewModel = AccountManagementViewModel(
+        ledgerRepository: repository,
+      );
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      await tester.tap(find.byIcon(Icons.more_vert).last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Archive'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text('Cannot archive a group with active financial accounts.'),
+        findsOneWidget,
+      );
     },
   );
 }

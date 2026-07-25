@@ -17,11 +17,13 @@ class TransferView extends StatefulWidget {
 
 class _TransferViewState extends State<TransferView> {
   final _amountController = TextEditingController();
+  final _destinationAmountController = TextEditingController();
   final _descriptionController = TextEditingController();
 
   @override
   void dispose() {
     _amountController.dispose();
+    _destinationAmountController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -86,7 +88,10 @@ class _TransferViewState extends State<TransferView> {
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
-                  decoration: const InputDecoration(labelText: 'Amount'),
+                  decoration: InputDecoration(
+                    labelText: 'Amount',
+                    suffixText: viewModel.currencyFor(viewModel.fromAccountId),
+                  ),
                   onChanged: (text) {
                     final amount = double.tryParse(text);
                     viewModel.setAmountMinor(
@@ -94,6 +99,30 @@ class _TransferViewState extends State<TransferView> {
                     );
                   },
                 ),
+                if (viewModel.isCrossCurrency) ...[
+                  const SizedBox(height: AppSpacing.large),
+                  TextField(
+                    controller: _destinationAmountController,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Destination amount (optional)',
+                      helperText:
+                          'Leave blank if the exchange rate isn\'t known '
+                          'yet - the transfer will be provisional until '
+                          'settled.',
+                      helperMaxLines: 2,
+                      suffixText: viewModel.currencyFor(viewModel.toAccountId),
+                    ),
+                    onChanged: (text) {
+                      final amount = double.tryParse(text);
+                      viewModel.setDestinationAmountMinor(
+                        amount == null ? null : (amount * 100).round(),
+                      );
+                    },
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.large),
                 OutlinedButton(
                   onPressed: _pickDate,

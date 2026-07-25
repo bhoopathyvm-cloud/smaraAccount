@@ -6,7 +6,9 @@ import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
+import 'package:smara_accounting/domain/models/home_overview.dart';
 import 'package:smara_accounting/domain/models/integrity_event.dart';
+import 'package:smara_accounting/domain/models/pending_transfer.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:test/test.dart';
 
@@ -29,7 +31,7 @@ void main() {
     // Every test starts past onboarding - identity lifecycle itself is
     // covered by its own group below, using a fresh Repository/service.
     final generated = await repository.generateFirstIdentity();
-    await repository.confirmFirstIdentity(generated);
+    await repository.confirmFirstIdentity(generated, currency: 'USD');
   });
 
   tearDown(() async {
@@ -44,6 +46,39 @@ void main() {
   Future<String> firstCategoryId(AccountType type) async {
     final categories = await repository.watchCategories().first;
     return categories.firstWhere((a) => a.type == type).id;
+  }
+
+  // Every starter group lands in USD (setUp's confirmFirstIdentity). These
+  // helpers park a second currency on an otherwise-empty starter group
+  // (groupPensionRetirementId/groupLoansMortgagesId never get the seeded
+  // financial account) so cross-currency scenarios have a real second
+  // account to work with.
+  Future<String> secondCurrencyAssetAccountId({String currency = 'EUR'}) async {
+    await repository.changeAccountGroupCurrency(
+      groupId: groupPensionRetirementId,
+      currency: currency,
+    );
+    final account = await repository.createFinancialAccount(
+      name: 'Euro Savings',
+      type: AccountType.asset,
+      groupId: groupPensionRetirementId,
+    );
+    return account.id;
+  }
+
+  Future<String> secondCurrencyLiabilityAccountId({
+    String currency = 'EUR',
+  }) async {
+    await repository.changeAccountGroupCurrency(
+      groupId: groupLoansMortgagesId,
+      currency: currency,
+    );
+    final account = await repository.createFinancialAccount(
+      name: 'Euro Loan',
+      type: AccountType.liability,
+      groupId: groupLoansMortgagesId,
+    );
+    return account.id;
   }
 
   group('starter account seeding', () {
@@ -76,7 +111,7 @@ void main() {
         final generated = await freshRepository.generateFirstIdentity();
         expect(await freshRepository.watchCategories().first, isEmpty);
 
-        await freshRepository.confirmFirstIdentity(generated);
+        await freshRepository.confirmFirstIdentity(generated, currency: 'USD');
         final categories = await freshRepository.watchCategories().first;
         expect(
           categories.map((a) => a.name),
@@ -131,7 +166,10 @@ void main() {
       final generated = await freshRepository.generateFirstIdentity();
       expect(await freshRepository.currentIdentity(), isNull);
 
-      final confirmed = await freshRepository.confirmFirstIdentity(generated);
+      final confirmed = await freshRepository.confirmFirstIdentity(
+        generated,
+        currency: 'USD',
+      );
       expect(
         (await freshRepository.currentIdentity())!.identityId,
         equals(confirmed.identityId),
@@ -159,7 +197,7 @@ void main() {
         );
         final generated = await firstInstallRepository.generateFirstIdentity();
         final originalIdentity = await firstInstallRepository
-            .confirmFirstIdentity(generated);
+            .confirmFirstIdentity(generated, currency: 'USD');
 
         // Reinstall: same database file, fresh secure storage (a new
         // SigningKeyService with empty InMemorySecureKeyStorage), same
@@ -196,7 +234,7 @@ void main() {
         );
         final generated = await firstInstallRepository.generateFirstIdentity();
         final originalIdentity = await firstInstallRepository
-            .confirmFirstIdentity(generated);
+            .confirmFirstIdentity(generated, currency: 'USD');
         final keystoreFile = await firstInstallRepository.exportKeystoreFile(
           passphrase: 'hunter2-hunter2',
         );
@@ -852,9 +890,11 @@ void main() {
 
       final overview = await repository.watchHomeOverview().first;
 
-      expect(overview.totalAssetsMinor, equals(100000));
-      expect(overview.totalLiabilitiesMinor, equals(20000));
-      expect(overview.netPositionMinor, equals(80000));
+      final usdPosition = overview.netPositionsByCurrency.single;
+      expect(usdPosition.currency, equals('USD'));
+      expect(usdPosition.totalAssetsMinor, equals(100000));
+      expect(usdPosition.totalLiabilitiesMinor, equals(20000));
+      expect(usdPosition.netPositionMinor, equals(80000));
 
       final cashSection = overview.sections.firstWhere(
         (s) => s.group.id == groupCashEquivalentsId,
@@ -883,7 +923,10 @@ void main() {
         await repository.archiveFinancialAccount(second.id);
 
         final overview = await repository.watchHomeOverview().first;
-        expect(overview.totalAssetsMinor, equals(5000));
+        expect(
+          overview.netPositionsByCurrency.single.totalAssetsMinor,
+          equals(5000),
+        );
       },
     );
 
@@ -923,7 +966,10 @@ void main() {
 
         expect(await repository.displayBalanceMinor(checkingId), equals(0));
         final overview = await repository.watchHomeOverview().first;
-        expect(overview.totalAssetsMinor, equals(0));
+        expect(
+          overview.netPositionsByCurrency.single.totalAssetsMinor,
+          equals(0),
+        );
 
         // Still visible in the register for review, never hidden.
         final entries = await repository
@@ -1301,5 +1347,947 @@ void main() {
         expect(summary.totalIncomeMinor, equals(1000));
       },
     );
+  });
+
+  group('currency requirements', () {
+    test(
+      'every starter group has a currency; an account\'s display currency comes from its group',
+      () async {
+        final groups = await repository.watchAccountGroups().first;
+        expect(groups, isNotEmpty);
+        expect(groups.every((g) => g.currency == 'USD'), isTrue);
+      },
+    );
+
+    test(
+      'creating a financial account in a group with no currency is rejected',
+      () async {
+        // Simulate the transient post-upgrade-from-v3 state directly - no
+        // app-level path can normally reach this, since needsCurrencyBackfill
+        // gates every screen first, but the Repository defends anyway.
+        await (db.update(db.accountGroups)
+              ..where((g) => g.id.equals(groupPensionRetirementId)))
+            .write(const AccountGroupsCompanion(currency: Value(null)));
+
+        expect(
+          () => repository.createFinancialAccount(
+            name: 'Savings',
+            type: AccountType.asset,
+            groupId: groupPensionRetirementId,
+          ),
+          throwsA(isA<AccountGroupException>()),
+        );
+      },
+    );
+  });
+
+  group('group currency changes', () {
+    test('rejected while the group has an active financial account', () {
+      expect(
+        () => repository.changeAccountGroupCurrency(
+          groupId: groupCashEquivalentsId,
+          currency: 'EUR',
+        ),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test('allowed when the group has zero active accounts', () async {
+      await repository.changeAccountGroupCurrency(
+        groupId: groupPensionRetirementId,
+        currency: 'EUR',
+      );
+      final groups = await repository.watchAccountGroups().first;
+      expect(
+        groups.firstWhere((g) => g.id == groupPensionRetirementId).currency,
+        equals('EUR'),
+      );
+    });
+  });
+
+  group('createAccountGroup', () {
+    test('creates a non-system group with the next sortOrder', () async {
+      final created = await repository.createAccountGroup(
+        name: 'Business',
+        kind: AccountGroupKind.assetGroup,
+        currency: 'GBP',
+      );
+
+      expect(created.name, equals('Business'));
+      expect(created.kind, equals(AccountGroupKind.assetGroup));
+      expect(created.currency, equals('GBP'));
+      expect(created.isSystem, isFalse);
+      expect(created.archived, isFalse);
+      // The four seeded system groups occupy sortOrder 0-3.
+      expect(created.sortOrder, equals(4));
+
+      final groups = await repository.watchAccountGroups().first;
+      expect(groups.map((g) => g.id), contains(created.id));
+    });
+
+    test('rejects a blank currency', () {
+      expect(
+        () => repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: '   ',
+        ),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+  });
+
+  group('archiveAccountGroup', () {
+    test('rejected for a system group regardless of member accounts', () {
+      expect(
+        () => repository.archiveAccountGroup(groupPensionRetirementId),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test(
+      'rejected for a user-created group with an active member account',
+      () async {
+        final group = await repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: 'USD',
+        );
+        await repository.createFinancialAccount(
+          name: 'Business Checking',
+          type: AccountType.asset,
+          groupId: group.id,
+        );
+
+        expect(
+          () => repository.archiveAccountGroup(group.id),
+          throwsA(isA<AccountGroupException>()),
+        );
+      },
+    );
+
+    test(
+      'succeeds for an empty user-created group and sets archived',
+      () async {
+        final group = await repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: 'USD',
+        );
+
+        await repository.archiveAccountGroup(group.id);
+
+        final groups = await repository
+            .watchAccountGroups(includeArchived: true)
+            .first;
+        expect(groups.firstWhere((g) => g.id == group.id).archived, isTrue);
+      },
+    );
+
+    test('rejected for a group that is already archived', () async {
+      final group = await repository.createAccountGroup(
+        name: 'Business',
+        kind: AccountGroupKind.assetGroup,
+        currency: 'USD',
+      );
+      await repository.archiveAccountGroup(group.id);
+
+      expect(
+        () => repository.archiveAccountGroup(group.id),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test(
+      'a group with only an archived member account can be archived',
+      () async {
+        final group = await repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: 'USD',
+        );
+        // A financial account requires at least one other active account
+        // to remain to be archivable - use the seeded Cash & cash
+        // equivalents account as that "other" account.
+        final account = await repository.createFinancialAccount(
+          name: 'Business Checking',
+          type: AccountType.asset,
+          groupId: group.id,
+        );
+        await repository.archiveFinancialAccount(account.id);
+
+        await repository.archiveAccountGroup(group.id);
+
+        final groups = await repository
+            .watchAccountGroups(includeArchived: true)
+            .first;
+        expect(groups.firstWhere((g) => g.id == group.id).archived, isTrue);
+      },
+    );
+  });
+
+  group('watchAccountGroups includeArchived', () {
+    test(
+      'an archived group is excluded by default but included with includeArchived: true',
+      () async {
+        final group = await repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: 'USD',
+        );
+        await repository.archiveAccountGroup(group.id);
+
+        final defaultGroups = await repository.watchAccountGroups().first;
+        expect(defaultGroups.map((g) => g.id), isNot(contains(group.id)));
+
+        final allGroups = await repository
+            .watchAccountGroups(includeArchived: true)
+            .first;
+        expect(allGroups.map((g) => g.id), contains(group.id));
+      },
+    );
+
+    test(
+      'an account still assigned to an archived group continues to resolve its name and currency',
+      () async {
+        final group = await repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: 'GBP',
+        );
+        final account = await repository.createFinancialAccount(
+          name: 'Business Checking',
+          type: AccountType.asset,
+          groupId: group.id,
+        );
+        await repository.archiveFinancialAccount(account.id);
+        await repository.archiveAccountGroup(group.id);
+
+        final overview = await repository.watchHomeOverview().first;
+        final section = overview.sections.firstWhere(
+          (s) => s.group.id == group.id,
+        );
+        expect(section.group.name, equals('Business'));
+        expect(section.group.currency, equals('GBP'));
+        expect(section.accounts.map((b) => b.account.id), contains(account.id));
+      },
+    );
+  });
+
+  group('deleteAccountGroup', () {
+    test('unconditionally rejects a system group', () {
+      expect(
+        () => repository.deleteAccountGroup(groupCashEquivalentsId),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test(
+      'unconditionally rejects a user-created group, archived or not',
+      () async {
+        final group = await repository.createAccountGroup(
+          name: 'Business',
+          kind: AccountGroupKind.assetGroup,
+          currency: 'USD',
+        );
+        expect(
+          () => repository.deleteAccountGroup(group.id),
+          throwsA(isA<AccountGroupException>()),
+        );
+
+        await repository.archiveAccountGroup(group.id);
+        expect(
+          () => repository.deleteAccountGroup(group.id),
+          throwsA(isA<AccountGroupException>()),
+        );
+      },
+    );
+  });
+
+  group('recordTransfer: same-currency (regression)', () {
+    test('unchanged behavior - single entry, no pending transfer', () async {
+      final checkingId = await firstFinancialAccountId();
+      final card = await repository.createFinancialAccount(
+        name: 'Credit Card',
+        type: AccountType.liability,
+        groupId: groupCreditShortTermId,
+        openingBalanceMinor: 5000,
+      );
+
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: card.id,
+        amountMinor: 1000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+
+      expect(await repository.watchPendingTransfers().first, isEmpty);
+    });
+  });
+
+  group('recordTransfer: known-rate cross-currency', () {
+    test('posts one complete entry, no pending_transfers row', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        destinationAmountMinor: 9200,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+
+      expect(await repository.watchPendingTransfers().first, isEmpty);
+      expect(await repository.displayBalanceMinor(euroId), equals(9200));
+    });
+
+    test(
+      'works for a payment into a different-currency liability account too',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroCardId = await secondCurrencyLiabilityAccountId(
+          currency: 'EUR',
+        );
+
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroCardId,
+          amountMinor: 10000,
+          destinationAmountMinor: 9200,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        expect(await repository.watchPendingTransfers().first, isEmpty);
+        expect(await repository.displayBalanceMinor(euroCardId), equals(-9200));
+      },
+    );
+
+    test('rejects a zero or negative amount in either currency', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+
+      expect(
+        () => repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          destinationAmountMinor: 0,
+          transactionDate: DateTime(2026, 1, 15),
+        ),
+        throwsA(isA<InvalidTransferException>()),
+      );
+    });
+  });
+
+  group('recordTransfer: unknown-rate cross-currency', () {
+    test('posts a provisional entry and creates a pending row', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+
+      final pending = await repository.watchPendingTransfers().first;
+      expect(pending, hasLength(1));
+      expect(pending.single.kind, equals(PendingTransferKind.transfer));
+      expect(pending.single.status, equals(PendingTransferStatus.pending));
+      expect(pending.single.sourceAccountId, equals(checkingId));
+      expect(pending.single.destinationAccountId, equals(euroId));
+      expect(pending.single.currency, equals('USD'));
+    });
+  });
+
+  group('recordTransaction: foreign-currency transaction', () {
+    test(
+      'posts the category leg immediately in its native currency, creates a pending row',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final expenseId = await firstCategoryId(AccountType.expense);
+
+        await repository.recordTransaction(
+          amountMinor: 5000,
+          direction: TransactionDirection.moneyOut,
+          categoryId: expenseId,
+          financialAccountId: checkingId,
+          transactionDate: DateTime(2026, 1, 15),
+          nativeCurrency: 'EUR',
+        );
+
+        final summary = await repository
+            .watchSummary(
+              start: DateTime(2020, 1, 1),
+              end: DateTime(2030, 12, 31),
+            )
+            .first;
+        expect(summary.totalExpenseMinor, equals(5000));
+
+        final pending = await repository.watchPendingTransfers().first;
+        expect(pending, hasLength(1));
+        expect(
+          pending.single.kind,
+          equals(PendingTransferKind.foreignTransaction),
+        );
+        expect(pending.single.sourceAccountId, equals(checkingId));
+        expect(pending.single.categoryId, equals(expenseId));
+        expect(pending.single.currency, equals('EUR'));
+
+        // The account leg hasn't posted yet - only the category leg has,
+        // via the clearing account.
+        expect(await repository.displayBalanceMinor(checkingId), equals(0));
+      },
+    );
+
+    test(
+      'known-rate foreign-currency transaction posts one complete entry, no pending row',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final expenseId = await firstCategoryId(AccountType.expense);
+
+        await repository.recordTransaction(
+          amountMinor: 5000,
+          direction: TransactionDirection.moneyOut,
+          categoryId: expenseId,
+          financialAccountId: checkingId,
+          transactionDate: DateTime(2026, 1, 15),
+          nativeCurrency: 'EUR',
+          accountCurrencyAmountMinor: 5400,
+        );
+
+        expect(await repository.watchPendingTransfers().first, isEmpty);
+        expect(await repository.displayBalanceMinor(checkingId), equals(-5400));
+      },
+    );
+  });
+
+  group('settlePendingTransfer: transfer settling to destination', () {
+    test(
+      'no shortfall comparison, even when numerically less than the provisional amount',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+
+        await repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: euroId,
+          settledAmountMinor: 9200,
+        );
+
+        expect(await repository.displayBalanceMinor(euroId), equals(9200));
+        expect(await repository.watchPendingTransfers().first, isEmpty);
+      },
+    );
+
+    test('a fee category supplied on this path is rejected', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+      final expenseId = await firstCategoryId(AccountType.expense);
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      final pending = (await repository.watchPendingTransfers().first).single;
+
+      expect(
+        () => repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: euroId,
+          settledAmountMinor: 9200,
+          feeCategoryId: expenseId,
+        ),
+        throwsA(isA<PendingTransferException>()),
+      );
+    });
+  });
+
+  group('settlePendingTransfer: transfer settling back to its source', () {
+    test(
+      'less than the provisional amount posts the shortfall as a fee, fully closes the position',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        final expenseId = await firstCategoryId(AccountType.expense);
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+        final before = await repository.displayBalanceMinor(checkingId);
+
+        await repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: checkingId,
+          settledAmountMinor: 9000,
+          feeCategoryId: expenseId,
+        );
+
+        // Settlement (9000) + fee (1000) exactly equal the provisional
+        // amount (10000) - the shortfall invariant.
+        expect(
+          await repository.displayBalanceMinor(checkingId),
+          equals(before + 9000),
+        );
+        final summary = await repository
+            .watchSummary(
+              start: DateTime(2020, 1, 1),
+              end: DateTime(2030, 12, 31),
+            )
+            .first;
+        expect(summary.totalExpenseMinor, equals(1000));
+        expect(await repository.watchPendingTransfers().first, isEmpty);
+      },
+    );
+
+    test(
+      'a zero settlement posts the full original amount as a fee/loss entry',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        final expenseId = await firstCategoryId(AccountType.expense);
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+
+        await repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: checkingId,
+          settledAmountMinor: 0,
+          feeCategoryId: expenseId,
+        );
+
+        final summary = await repository
+            .watchSummary(
+              start: DateTime(2020, 1, 1),
+              end: DateTime(2030, 12, 31),
+            )
+            .first;
+        expect(summary.totalExpenseMinor, equals(10000));
+        expect(await repository.watchPendingTransfers().first, isEmpty);
+      },
+    );
+
+    test('exceeding the provisional amount is rejected', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      final pending = (await repository.watchPendingTransfers().first).single;
+
+      expect(
+        () => repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: checkingId,
+          settledAmountMinor: 10001,
+        ),
+        throwsA(isA<PendingTransferException>()),
+      );
+    });
+
+    test(
+      'settling against an account that has since been archived still succeeds',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        // A third account so archiving euroId doesn't hit the
+        // last-active-account guard.
+        await repository.createFinancialAccount(
+          name: 'Spare',
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+          openingBalanceMinor: 100,
+        );
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+        await repository.archiveFinancialAccount(euroId);
+
+        await repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: euroId,
+          settledAmountMinor: 9200,
+        );
+
+        expect(await repository.displayBalanceMinor(euroId), equals(9200));
+      },
+    );
+  });
+
+  group('settlePendingTransfer: foreignTransaction', () {
+    test(
+      'always resolves to its own source account, no-shortfall path, rejects a fee category',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        final expenseId = await firstCategoryId(AccountType.expense);
+        await repository.recordTransaction(
+          amountMinor: 5000,
+          direction: TransactionDirection.moneyOut,
+          categoryId: expenseId,
+          financialAccountId: checkingId,
+          transactionDate: DateTime(2026, 1, 15),
+          nativeCurrency: 'EUR',
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+
+        // Even supplying a different account as settledToAccountId, the
+        // settlement always resolves to the transaction's own account.
+        await repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: euroId,
+          settledAmountMinor: 5400,
+        );
+
+        expect(await repository.displayBalanceMinor(checkingId), equals(-5400));
+        expect(await repository.displayBalanceMinor(euroId), equals(0));
+      },
+    );
+
+    test('rejects a fee category if supplied', () async {
+      final checkingId = await firstFinancialAccountId();
+      final expenseId = await firstCategoryId(AccountType.expense);
+      await repository.recordTransaction(
+        amountMinor: 5000,
+        direction: TransactionDirection.moneyOut,
+        categoryId: expenseId,
+        financialAccountId: checkingId,
+        transactionDate: DateTime(2026, 1, 15),
+        nativeCurrency: 'EUR',
+      );
+      final pending = (await repository.watchPendingTransfers().first).single;
+
+      expect(
+        () => repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: checkingId,
+          settledAmountMinor: 5400,
+          feeCategoryId: expenseId,
+        ),
+        throwsA(isA<PendingTransferException>()),
+      );
+    });
+  });
+
+  group('settlePendingTransfer: validation', () {
+    test('a negative settled amount is rejected', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      final pending = (await repository.watchPendingTransfers().first).single;
+
+      expect(
+        () => repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: euroId,
+          settledAmountMinor: -1,
+        ),
+        throwsA(isA<PendingTransferException>()),
+      );
+    });
+
+    test('settling an already-settled pending transfer is rejected', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      final pending = (await repository.watchPendingTransfers().first).single;
+      await repository.settlePendingTransfer(
+        pendingTransferId: pending.id,
+        settledToAccountId: euroId,
+        settledAmountMinor: 9200,
+      );
+
+      expect(
+        () => repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: euroId,
+          settledAmountMinor: 100,
+        ),
+        throwsA(isA<PendingTransferException>()),
+      );
+    });
+
+    test(
+      'a fee category that is not an active Expense category is rejected',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+
+        expect(
+          () => repository.settlePendingTransfer(
+            pendingTransferId: pending.id,
+            settledToAccountId: checkingId,
+            settledAmountMinor: 9000,
+            feeCategoryId: incomeId,
+          ),
+          throwsA(isA<PendingTransferException>()),
+        );
+      },
+    );
+  });
+
+  group('Transfers-in-transit exclusion', () {
+    test('never appears in the financial-account picker', () async {
+      final accounts = await repository
+          .watchFinancialAccounts(includeArchived: true)
+          .first;
+      expect(accounts.any((a) => a.id == transfersInTransitAccountId), isFalse);
+    });
+
+    test('never appears in the Home overview\'s sections', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+
+      final overview = await repository.watchHomeOverview().first;
+      final allAccountIds = overview.sections
+          .expand((s) => s.accounts)
+          .map((b) => b.account.id);
+      expect(allAccountIds.contains(transfersInTransitAccountId), isFalse);
+    });
+  });
+
+  group('per-currency net position', () {
+    test('computes independent totals per currency, each labeled', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.recordTransaction(
+        amountMinor: 100000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: checkingId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        destinationAmountMinor: 9200,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+
+      final overview = await repository.watchHomeOverview().first;
+      final usd = overview.netPositionsByCurrency.firstWhere(
+        (p) => p.currency == 'USD',
+      );
+      final eur = overview.netPositionsByCurrency.firstWhere(
+        (p) => p.currency == 'EUR',
+      );
+      expect(usd.totalAssetsMinor, equals(90000));
+      expect(eur.totalAssetsMinor, equals(9200));
+    });
+
+    test(
+      'a pending item\'s provisional amount is counted in its source currency\'s net position',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 50000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          financialAccountId: checkingId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        // The source leg debits checking immediately (money has genuinely
+        // left it), with the same amount held in Transfers-in-transit -
+        // so total USD net worth is unaffected by the transfer still being
+        // provisional; only its location within USD assets shifted.
+        expect(await repository.displayBalanceMinor(checkingId), equals(40000));
+        final overview = await repository.watchHomeOverview().first;
+        final usd = overview.netPositionsByCurrency.firstWhere(
+          (p) => p.currency == 'USD',
+        );
+        expect(usd.totalAssetsMinor, equals(50000));
+        expect(overview.pendingTransfers, hasLength(1));
+        expect(overview.pendingTransfers.single.currency, equals('USD'));
+        expect(overview.pendingTransfers.single.amountMinor, equals(10000));
+      },
+    );
+
+    test(
+      'a quarantined provisional entry is excluded from net worth but still listed as pending',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+
+        await (db.update(
+          db.journalEntries,
+        )..where((e) => e.id.equals(pending.provisionalEntryId))).write(
+          JournalEntriesCompanion(
+            description: Value('tampered outside the app'),
+          ),
+        );
+        await repository.verifyChain();
+
+        final overview = await repository.watchHomeOverview().first;
+        final usd = overview.netPositionsByCurrency.firstWhere(
+          (p) => p.currency == 'USD',
+          orElse: () => const CurrencyNetPosition(
+            currency: 'USD',
+            totalAssetsMinor: 0,
+            totalLiabilitiesMinor: 0,
+          ),
+        );
+        expect(usd.totalAssetsMinor, equals(0));
+        // Still visible for review, per the same "never hidden" rule as
+        // any other quarantined entry.
+        expect(overview.pendingTransfers, hasLength(1));
+      },
+    );
+  });
+
+  group('reassignFinancialAccountGroup: currency constraint', () {
+    test('rejects reassigning to a different-currency group', () async {
+      final checkingId = await firstFinancialAccountId();
+      await repository.changeAccountGroupCurrency(
+        groupId: groupPensionRetirementId,
+        currency: 'EUR',
+      );
+
+      expect(
+        () => repository.reassignFinancialAccountGroup(
+          id: checkingId,
+          groupId: groupPensionRetirementId,
+        ),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test('reassigning within the same currency still works', () async {
+      final checkingId = await firstFinancialAccountId();
+
+      await repository.reassignFinancialAccountGroup(
+        id: checkingId,
+        groupId: groupPensionRetirementId,
+      );
+
+      final accounts = await repository
+          .watchFinancialAccounts(includeArchived: true)
+          .first;
+      expect(
+        accounts.firstWhere((a) => a.id == checkingId).groupId,
+        equals(groupPensionRetirementId),
+      );
+    });
+  });
+
+  group('pending transfer reversal guard', () {
+    test(
+      'directly reversing a still-pending provisional entry is rejected',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+
+        expect(
+          () => repository.reverseEntry(pending.provisionalEntryId),
+          throwsA(isA<PendingTransferException>()),
+        );
+      },
+    );
+
+    test('reversing after settlement succeeds normally', () async {
+      final checkingId = await firstFinancialAccountId();
+      final euroId = await secondCurrencyAssetAccountId();
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.recordTransaction(
+        amountMinor: 50000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: checkingId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      await repository.recordTransfer(
+        fromAccountId: checkingId,
+        toAccountId: euroId,
+        amountMinor: 10000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      final pending = (await repository.watchPendingTransfers().first).single;
+      await repository.settlePendingTransfer(
+        pendingTransferId: pending.id,
+        settledToAccountId: euroId,
+        settledAmountMinor: 9200,
+      );
+      expect(await repository.displayBalanceMinor(checkingId), equals(40000));
+
+      await repository.reverseEntry(pending.provisionalEntryId);
+
+      // The reversal undoes exactly the source leg's original debit,
+      // restoring checking to its pre-transfer balance.
+      expect(await repository.displayBalanceMinor(checkingId), equals(50000));
+    });
   });
 }

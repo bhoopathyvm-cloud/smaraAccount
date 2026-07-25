@@ -56,16 +56,44 @@ void main() {
             i: 'wrong',
         };
 
-        final result = await viewModel.confirm(wrongWords);
+        final result = viewModel.confirm(wrongWords);
 
         expect(result, isFalse);
         expect(viewModel.errorMessage, isNotNull);
-        verifyNever(repository.confirmFirstIdentity(any));
+        verifyNever(
+          repository.confirmFirstIdentity(any, currency: anyNamed('currency')),
+        );
       },
     );
 
     test(
-      'commits the identity and verifies the chain when all words match',
+      'accepts all matching confirmation words without committing anything',
+      () async {
+        when(
+          repository.generateFirstIdentity(),
+        ).thenAnswer((_) async => generated);
+        await viewModel.ensureGenerated();
+
+        final correctWords = {
+          for (final i in RecoveryPhraseSetupViewModel.confirmationWordIndices)
+            i: generated.phrase.words[i],
+        };
+
+        final result = viewModel.confirm(correctWords);
+
+        expect(result, isTrue);
+        expect(viewModel.errorMessage, isNull);
+        verifyNever(
+          repository.confirmFirstIdentity(any, currency: anyNamed('currency')),
+        );
+        verifyNever(repository.verifyChain());
+      },
+    );
+  });
+
+  group('finishOnboarding', () {
+    test(
+      'commits the identity with the chosen currency and verifies the chain',
       () async {
         when(
           repository.generateFirstIdentity(),
@@ -80,7 +108,7 @@ void main() {
           supersededAt: null,
         );
         when(
-          repository.confirmFirstIdentity(generated),
+          repository.confirmFirstIdentity(generated, currency: 'USD'),
         ).thenAnswer((_) async => identity);
         when(repository.verifyChain()).thenAnswer(
           (_) async => const ChainVerificationResult(
@@ -90,16 +118,12 @@ void main() {
           ),
         );
 
-        final correctWords = {
-          for (final i in RecoveryPhraseSetupViewModel.confirmationWordIndices)
-            i: generated.phrase.words[i],
-        };
-
-        final result = await viewModel.confirm(correctWords);
+        final result = await viewModel.finishOnboarding('USD');
 
         expect(result, isTrue);
-        expect(viewModel.errorMessage, isNull);
-        verify(repository.confirmFirstIdentity(generated)).called(1);
+        verify(
+          repository.confirmFirstIdentity(generated, currency: 'USD'),
+        ).called(1);
         verify(repository.verifyChain()).called(1);
       },
     );

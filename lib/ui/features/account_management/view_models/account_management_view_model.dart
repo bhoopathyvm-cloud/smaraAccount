@@ -16,12 +16,12 @@ class AccountManagementViewModel extends ChangeNotifier {
           _accounts = accounts;
           notifyListeners();
         });
-    _groupsSubscription = _ledgerRepository.watchAccountGroups().listen((
-      groups,
-    ) {
-      _groups = groups;
-      notifyListeners();
-    });
+    _groupsSubscription = _ledgerRepository
+        .watchAccountGroups(includeArchived: true)
+        .listen((groups) {
+          _groups = groups;
+          notifyListeners();
+        });
   }
 
   final LedgerRepository _ledgerRepository;
@@ -85,6 +85,36 @@ class AccountManagementViewModel extends ChangeNotifier {
     return _run(
       () => _ledgerRepository.renameAccountGroup(id: id, newName: newName),
     );
+  }
+
+  Future<bool> changeGroupCurrency({
+    required String id,
+    required String currency,
+  }) {
+    return _run(
+      () => _ledgerRepository.changeAccountGroupCurrency(
+        groupId: id,
+        currency: currency,
+      ),
+    );
+  }
+
+  Future<bool> createGroup({
+    required String name,
+    required AccountGroupKind kind,
+    required String currency,
+  }) {
+    return _run(
+      () => _ledgerRepository.createAccountGroup(
+        name: name,
+        kind: kind,
+        currency: currency,
+      ),
+    );
+  }
+
+  Future<bool> archiveGroup(String id) {
+    return _run(() => _ledgerRepository.archiveAccountGroup(id));
   }
 
   Future<bool> _run(Future<void> Function() action) async {
