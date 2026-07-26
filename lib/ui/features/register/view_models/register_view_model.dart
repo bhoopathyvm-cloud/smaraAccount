@@ -139,7 +139,10 @@ class RegisterViewModel extends ChangeNotifier {
         ),
       );
     }
-    _rows = rows;
+    // Balance accumulates oldest-to-newest above (the only order that math
+    // works in); the register itself displays newest first so a new entry
+    // and the current balance are visible without scrolling.
+    _rows = rows.reversed.toList();
     notifyListeners();
   }
 

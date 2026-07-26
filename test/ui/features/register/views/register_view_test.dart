@@ -179,6 +179,89 @@ void main() {
     },
   );
 
+  testWidgets('the most recently posted entry renders above an older one', (
+    tester,
+  ) async {
+    when(repository.watchEntriesForAccount(any)).thenAnswer(
+      (_) => Stream.value([
+        JournalEntry(
+          id: 'entry-older',
+          transactionDate: DateTime(2026, 1, 1),
+          recordedAt: DateTime(2026, 1, 1),
+          description: null,
+          reversesEntryId: null,
+          postings: const [
+            Posting(
+              id: 'p1',
+              entryId: 'entry-older',
+              accountId: 'asset-1',
+              amountMinor: 1000,
+              lineNumber: 1,
+            ),
+            Posting(
+              id: 'p2',
+              entryId: 'entry-older',
+              accountId: 'income-1',
+              amountMinor: -1000,
+              lineNumber: 2,
+            ),
+          ],
+          deviceChainSequence: 0,
+          entryHash: const [],
+          signedByIdentityId: 'identity-1',
+          signature: const [],
+          migratedFromEntryId: null,
+          isVerified: true,
+          breakReason: null,
+          isSupersededByMigration: false,
+        ),
+        JournalEntry(
+          id: 'entry-newer',
+          transactionDate: DateTime(2026, 1, 15),
+          recordedAt: DateTime(2026, 1, 15),
+          description: null,
+          reversesEntryId: null,
+          postings: const [
+            Posting(
+              id: 'p3',
+              entryId: 'entry-newer',
+              accountId: 'asset-1',
+              amountMinor: 500,
+              lineNumber: 1,
+            ),
+            Posting(
+              id: 'p4',
+              entryId: 'entry-newer',
+              accountId: 'income-1',
+              amountMinor: -500,
+              lineNumber: 2,
+            ),
+          ],
+          deviceChainSequence: 0,
+          entryHash: const [],
+          signedByIdentityId: 'identity-1',
+          signature: const [],
+          migratedFromEntryId: null,
+          isVerified: true,
+          breakReason: null,
+          isSupersededByMigration: false,
+        ),
+      ]),
+    );
+
+    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    addTearDown(viewModel.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(home: RegisterView(viewModel: viewModel)),
+    );
+    await tester.pump();
+
+    final newerTop = tester.getTopLeft(find.text('+5.00')).dy;
+    final olderTop = tester.getTopLeft(find.text('+10.00')).dy;
+    expect(newerTop, lessThan(olderTop));
+  });
+
   testWidgets('tapping the Transfer action invokes onTransfer', (tester) async {
     when(
       repository.watchEntriesForAccount(any),
