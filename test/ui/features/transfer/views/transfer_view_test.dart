@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/account_group.dart';
+import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 import 'package:smara_accounting/ui/features/transfer/view_models/transfer_view_model.dart';
 import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 
@@ -11,6 +12,17 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockExchangeRateService exchangeRateService;
+  late MockSettingsRepository settingsRepository;
+
+  TransferViewModel buildViewModel({String? initialFromAccountId}) {
+    return TransferViewModel(
+      ledgerRepository: repository,
+      exchangeRateService: exchangeRateService,
+      settingsRepository: settingsRepository,
+      initialFromAccountId: initialFromAccountId,
+    );
+  }
 
   const checking = Account(
     id: 'asset-1',
@@ -64,6 +76,18 @@ void main() {
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
+    when(
+      repository.watchCategories(),
+    ).thenAnswer((_) => Stream.value(const []));
+
+    exchangeRateService = MockExchangeRateService();
+    settingsRepository = MockSettingsRepository();
+    when(
+      settingsRepository.isReferenceRateLookupEnabled(),
+    ).thenAnswer((_) async => false);
+    when(
+      settingsRepository.selectedProvider(),
+    ).thenAnswer((_) async => ExchangeRateProvider.values.first);
   });
 
   testWidgets('shows a hint and disables submit with fewer than two accounts', (
@@ -75,7 +99,7 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([checking]));
 
-    final viewModel = TransferViewModel(ledgerRepository: repository);
+    final viewModel = buildViewModel();
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -102,7 +126,7 @@ void main() {
       ),
     ).thenAnswer((_) async {});
 
-    final viewModel = TransferViewModel(ledgerRepository: repository);
+    final viewModel = buildViewModel();
     addTearDown(viewModel.dispose);
     var saved = false;
 
@@ -114,6 +138,7 @@ void main() {
     await tester.pump();
 
     await tester.enterText(find.byType(TextField).first, '25.00');
+    await tester.ensureVisible(find.widgetWithText(ElevatedButton, 'Transfer'));
     await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
     await tester.pump();
     await tester.pump();
@@ -143,7 +168,7 @@ void main() {
       ),
     ).thenThrow(InvalidTransferException('accounts must be distinct'));
 
-    final viewModel = TransferViewModel(ledgerRepository: repository);
+    final viewModel = buildViewModel();
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -152,6 +177,7 @@ void main() {
     await tester.pump();
 
     await tester.enterText(find.byType(TextField).first, '10.00');
+    await tester.ensureVisible(find.widgetWithText(ElevatedButton, 'Transfer'));
     await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
     await tester.pump();
     await tester.pump();
@@ -171,7 +197,7 @@ void main() {
     testWidgets(
       'does not show a destination-amount field for a same-currency transfer',
       (tester) async {
-        final viewModel = TransferViewModel(ledgerRepository: repository);
+        final viewModel = buildViewModel();
         addTearDown(viewModel.dispose);
 
         await tester.pumpWidget(
@@ -186,7 +212,7 @@ void main() {
     testWidgets(
       'shows an optional destination-amount field once a different-currency account is chosen',
       (tester) async {
-        final viewModel = TransferViewModel(ledgerRepository: repository);
+        final viewModel = buildViewModel();
         addTearDown(viewModel.dispose);
 
         await tester.pumpWidget(
@@ -219,7 +245,7 @@ void main() {
           ),
         ).thenAnswer((_) async {});
 
-        final viewModel = TransferViewModel(ledgerRepository: repository);
+        final viewModel = buildViewModel();
         addTearDown(viewModel.dispose);
 
         await tester.pumpWidget(
@@ -235,6 +261,9 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.enterText(find.byType(TextField).first, '100.00');
+        await tester.ensureVisible(
+          find.widgetWithText(ElevatedButton, 'Transfer'),
+        );
         await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
         await tester.pump();
         await tester.pump();
@@ -266,7 +295,7 @@ void main() {
           ),
         ).thenAnswer((_) async {});
 
-        final viewModel = TransferViewModel(ledgerRepository: repository);
+        final viewModel = buildViewModel();
         addTearDown(viewModel.dispose);
 
         await tester.pumpWidget(
@@ -283,6 +312,9 @@ void main() {
 
         await tester.enterText(find.byType(TextField).first, '100.00');
         await tester.enterText(find.byType(TextField).at(1), '92.00');
+        await tester.ensureVisible(
+          find.widgetWithText(ElevatedButton, 'Transfer'),
+        );
         await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
         await tester.pump();
         await tester.pump();
@@ -297,6 +329,103 @@ void main() {
             destinationAmountMinor: 9200,
           ),
         ).called(1);
+      },
+    );
+
+    testWidgets('no reference rate row when the lookup setting is disabled', (
+      tester,
+    ) async {
+      // settingsRepository.isReferenceRateLookupEnabled() is stubbed to
+      // false in the top-level setUp.
+      final viewModel = buildViewModel();
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: TransferView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      await tester.tap(
+        find.widgetWithText(DropdownButtonFormField<String>, 'Savings'),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Euro Savings').last);
+      await tester.pumpAndSettle();
+
+      verifyZeroInteractions(exchangeRateService);
+      expect(find.textContaining('Reference rate'), findsNothing);
+    });
+
+    testWidgets(
+      'no reference rate row when lookup is enabled but the service returns null',
+      (tester) async {
+        when(
+          settingsRepository.isReferenceRateLookupEnabled(),
+        ).thenAnswer((_) async => true);
+        when(
+          exchangeRateService.fetchRate(
+            from: anyNamed('from'),
+            to: anyNamed('to'),
+            provider: anyNamed('provider'),
+          ),
+        ).thenAnswer((_) async => null);
+
+        final viewModel = buildViewModel();
+        addTearDown(viewModel.dispose);
+
+        await tester.pumpWidget(
+          MaterialApp(home: TransferView(viewModel: viewModel)),
+        );
+        await tester.pump();
+
+        await tester.tap(
+          find.widgetWithText(DropdownButtonFormField<String>, 'Savings'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Euro Savings').last);
+        await tester.pumpAndSettle();
+
+        expect(find.textContaining('Reference rate'), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'a fetched reference rate is shown but never overwrites the destination-amount field',
+      (tester) async {
+        when(
+          settingsRepository.isReferenceRateLookupEnabled(),
+        ).thenAnswer((_) async => true);
+        when(
+          exchangeRateService.fetchRate(
+            from: anyNamed('from'),
+            to: anyNamed('to'),
+            provider: anyNamed('provider'),
+          ),
+        ).thenAnswer((_) async => 0.9);
+
+        final viewModel = buildViewModel();
+        addTearDown(viewModel.dispose);
+
+        await tester.pumpWidget(
+          MaterialApp(home: TransferView(viewModel: viewModel)),
+        );
+        await tester.pump();
+
+        await tester.tap(
+          find.widgetWithText(DropdownButtonFormField<String>, 'Savings'),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Euro Savings').last);
+        await tester.pumpAndSettle();
+
+        expect(find.textContaining('Reference rate'), findsOneWidget);
+        // Display-only: the fetched rate must never be written into the
+        // destination-amount field itself.
+        expect(viewModel.destinationAmountMinor, isNull);
+        final destinationField = tester.widget<TextField>(
+          find.byType(TextField).at(1),
+        );
+        expect(destinationField.controller?.text, isEmpty);
       },
     );
   });

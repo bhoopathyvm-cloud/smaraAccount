@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/repositories/ledger_repository.dart';
+import '../data/repositories/settings_repository.dart';
 import '../domain/models/home_overview.dart';
 import 'core/app_shell.dart';
 import 'features/account_management/view_models/account_management_view_model.dart';
@@ -26,6 +27,8 @@ import 'features/register/view_models/register_view_model.dart';
 import 'features/register/views/register_view.dart';
 import 'features/restore/view_models/restore_identity_view_model.dart';
 import 'features/restore/views/restore_identity_view.dart';
+import 'features/settings/view_models/settings_view_model.dart';
+import 'features/settings/views/settings_view.dart';
 import 'features/settle_pending_transfer/view_models/settle_pending_transfer_view_model.dart';
 import 'features/settle_pending_transfer/views/settle_pending_transfer_view.dart';
 import 'features/summary/view_models/summary_view_model.dart';
@@ -164,7 +167,10 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
       GoRoute(
         path: '/transfer',
         builder: (context, state) => TransferView(
-          viewModel: TransferViewModel(ledgerRepository: ledgerRepository),
+          viewModel: TransferViewModel(
+            ledgerRepository: ledgerRepository,
+            initialFromAccountId: state.uri.queryParameters['fromAccountId'],
+          ),
           onSaved: () => context.pop(),
         ),
       ),
@@ -172,6 +178,14 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
         path: '/settle-pending-transfer/:pendingTransferId',
         builder: (context, state) =>
             _buildSettlePendingTransfer(context, state, ledgerRepository),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => SettingsView(
+          viewModel: SettingsViewModel(
+            settingsRepository: SettingsRepository(),
+          ),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -190,6 +204,7 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
                     '/settle-pending-transfer/'
                     '${Uri.encodeQueryComponent(pendingTransferId)}',
                   ),
+                  onOpenSettings: () => context.push('/settings'),
                 ),
               ),
             ],
@@ -259,6 +274,13 @@ RegisterView _buildRegister(BuildContext context, GoRouterState state) {
       final location = selectedAccountId == null
           ? '/record-transaction'
           : '/record-transaction?accountId=${Uri.encodeQueryComponent(selectedAccountId)}';
+      context.push(location);
+    },
+    onTransfer: () {
+      final selectedAccountId = viewModel.selectedAccountId;
+      final location = selectedAccountId == null
+          ? '/transfer'
+          : '/transfer?fromAccountId=${Uri.encodeQueryComponent(selectedAccountId)}';
       context.push(location);
     },
   );

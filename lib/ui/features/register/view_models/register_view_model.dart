@@ -43,6 +43,9 @@ class RegisterViewModel extends ChangeNotifier {
 
   bool get isLoading => _accounts.isEmpty;
 
+  bool get isSelectedAccountArchived =>
+      _accountsById[_selectedAccountId]?.archived ?? false;
+
   void selectAccount(String accountId) {
     if (_selectedAccountId == accountId) return;
     _selectedAccountId = accountId;

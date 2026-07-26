@@ -14,11 +14,13 @@ class HomeView extends StatelessWidget {
     required this.viewModel,
     required this.onAccountTap,
     this.onSettlePendingTransfer,
+    this.onOpenSettings,
   });
 
   final HomeViewModel viewModel;
   final ValueChanged<String> onAccountTap;
   final ValueChanged<String>? onSettlePendingTransfer;
+  final VoidCallback? onOpenSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,13 @@ class HomeView extends StatelessWidget {
         title: Text('Home', style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
+        actions: [
+          IconButton(
+            tooltip: 'Settings',
+            onPressed: onOpenSettings,
+            icon: const Icon(TablerIcons.settings),
+          ),
+        ],
       ),
       body: ListenableBuilder(
         listenable: viewModel,

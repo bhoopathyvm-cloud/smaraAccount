@@ -7,11 +7,16 @@ import 'dart:async' as _i7;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i14;
+import 'package:smara_accounting/data/exchange_rate_service.dart' as _i15;
 import 'package:smara_accounting/data/repositories/ledger_repository.dart'
     as _i4;
+import 'package:smara_accounting/data/repositories/settings_repository.dart'
+    as _i17;
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart' as _i2;
 import 'package:smara_accounting/domain/models/account.dart' as _i5;
 import 'package:smara_accounting/domain/models/account_group.dart' as _i6;
+import 'package:smara_accounting/domain/models/exchange_rate_provider.dart'
+    as _i16;
 import 'package:smara_accounting/domain/models/home_overview.dart' as _i11;
 import 'package:smara_accounting/domain/models/integrity_event.dart' as _i13;
 import 'package:smara_accounting/domain/models/journal_entry.dart' as _i8;
@@ -647,4 +652,74 @@ class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
             ),
           )
           as _i7.Future<String>);
+}
+
+/// A class which mocks [ExchangeRateService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockExchangeRateService extends _i1.Mock
+    implements _i15.ExchangeRateService {
+  @override
+  _i7.Future<double?> fetchRate({
+    required String? from,
+    required String? to,
+    required _i16.ExchangeRateProvider? provider,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#fetchRate, [], {
+              #from: from,
+              #to: to,
+              #provider: provider,
+            }),
+            returnValue: _i7.Future<double?>.value(),
+            returnValueForMissingStub: _i7.Future<double?>.value(),
+          )
+          as _i7.Future<double?>);
+}
+
+/// A class which mocks [SettingsRepository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSettingsRepository extends _i1.Mock
+    implements _i17.SettingsRepository {
+  @override
+  _i7.Future<bool> isReferenceRateLookupEnabled() =>
+      (super.noSuchMethod(
+            Invocation.method(#isReferenceRateLookupEnabled, []),
+            returnValue: _i7.Future<bool>.value(false),
+            returnValueForMissingStub: _i7.Future<bool>.value(false),
+          )
+          as _i7.Future<bool>);
+
+  @override
+  _i7.Future<void> setReferenceRateLookupEnabled(bool? value) =>
+      (super.noSuchMethod(
+            Invocation.method(#setReferenceRateLookupEnabled, [value]),
+            returnValue: _i7.Future<void>.value(),
+            returnValueForMissingStub: _i7.Future<void>.value(),
+          )
+          as _i7.Future<void>);
+
+  @override
+  _i7.Future<_i16.ExchangeRateProvider> selectedProvider() =>
+      (super.noSuchMethod(
+            Invocation.method(#selectedProvider, []),
+            returnValue: _i7.Future<_i16.ExchangeRateProvider>.value(
+              _i16.ExchangeRateProvider.frankfurter,
+            ),
+            returnValueForMissingStub:
+                _i7.Future<_i16.ExchangeRateProvider>.value(
+                  _i16.ExchangeRateProvider.frankfurter,
+                ),
+          )
+          as _i7.Future<_i16.ExchangeRateProvider>);
+
+  @override
+  _i7.Future<void> setSelectedProvider(_i16.ExchangeRateProvider? provider) =>
+      (super.noSuchMethod(
+            Invocation.method(#setSelectedProvider, [provider]),
+            returnValue: _i7.Future<void>.value(),
+            returnValueForMissingStub: _i7.Future<void>.value(),
+          )
+          as _i7.Future<void>);
 }

@@ -23,6 +23,7 @@ import 'package:smara_accounting/ui/features/register/view_models/register_view_
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/features/restore/view_models/restore_identity_view_model.dart';
 import 'package:smara_accounting/ui/features/summary/view_models/summary_view_model.dart';
+import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 
 import '../test/domain/crypto/in_memory_secure_key_storage.dart';
 
@@ -654,6 +655,55 @@ void main() {
           (e) => e.eventType == IntegrityEventType.keyMigrationConfirmed,
         ),
         isTrue,
+      );
+    },
+  );
+
+  testWidgets(
+    'tapping Transfer from an account\'s register opens Transfer with that account pre-selected',
+    (tester) async {
+      await repository.createFinancialAccount(
+        name: 'Savings',
+        type: AccountType.asset,
+        groupId: groupCashEquivalentsId,
+      );
+
+      await pumpApp(tester, buildApp());
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.tap(find.text('Register'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      // Select "Savings" as the register's viewed account before opening
+      // Transfer, so the pre-selected source can be distinguished from
+      // whatever TransferViewModel would have defaulted to on its own.
+      await tester.tap(find.byType(DropdownButtonFormField<String>));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.text('Savings').last);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      expect(find.byType(TransferView), findsOneWidget);
+      // StatefulShellRoute.indexedStack keeps the Register screen (and its
+      // own account dropdown, also showing "Savings") mounted underneath
+      // the pushed Transfer screen, so the "From account" match is scoped
+      // to TransferView specifically rather than searched for globally.
+      expect(
+        find.descendant(
+          of: find.byType(TransferView),
+          matching: find.widgetWithText(
+            DropdownButtonFormField<String>,
+            'Savings',
+          ),
+        ),
+        findsOneWidget,
       );
     },
   );

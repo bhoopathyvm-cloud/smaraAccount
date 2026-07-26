@@ -178,4 +178,75 @@ void main() {
       expect(find.text('0.00'), findsOneWidget);
     },
   );
+
+  testWidgets('tapping the Transfer action invokes onTransfer', (tester) async {
+    when(
+      repository.watchEntriesForAccount(any),
+    ).thenAnswer((_) => Stream.value(const []));
+
+    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    addTearDown(viewModel.dispose);
+    var transferTapped = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: RegisterView(
+          viewModel: viewModel,
+          onTransfer: () => transferTapped = true,
+        ),
+      ),
+    );
+    await tester.pump();
+
+    await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
+    await tester.pump();
+
+    expect(transferTapped, isTrue);
+  });
+
+  testWidgets(
+    'the Transfer action is disabled when the selected account is archived',
+    (tester) async {
+      const archivedAsset = Account(
+        id: 'asset-1',
+        name: 'Cash & Bank',
+        type: AccountType.asset,
+        archived: true,
+      );
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([archivedAsset]));
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value(const []));
+
+      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(viewModel.dispose);
+      var transferTapped = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: RegisterView(
+            viewModel: viewModel,
+            onTransfer: () => transferTapped = true,
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final fab = tester.widget<FloatingActionButton>(
+        find.ancestor(
+          of: find.byIcon(TablerIcons.arrowsExchange),
+          matching: find.byType(FloatingActionButton),
+        ),
+      );
+      expect(fab.onPressed, isNull);
+
+      await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
+      await tester.pump();
+      expect(transferTapped, isFalse);
+    },
+  );
 }
