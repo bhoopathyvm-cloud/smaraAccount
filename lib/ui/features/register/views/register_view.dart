@@ -14,10 +14,12 @@ class RegisterView extends StatelessWidget {
     super.key,
     required this.viewModel,
     this.onAddTransaction,
+    this.onTransfer,
   });
 
   final RegisterViewModel viewModel;
   final VoidCallback? onAddTransaction;
+  final VoidCallback? onTransfer;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,34 @@ class RegisterView extends StatelessWidget {
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'register-fab',
-        onPressed: onAddTransaction,
-        backgroundColor: AppColors.primary,
-        child: const Icon(TablerIcons.plus, color: AppColors.cardBackground),
+      floatingActionButton: ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, _) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
+              heroTag: 'register-transfer-fab',
+              onPressed: viewModel.isSelectedAccountArchived
+                  ? null
+                  : onTransfer,
+              backgroundColor: AppColors.primary,
+              child: const Icon(
+                TablerIcons.arrowsExchange,
+                color: AppColors.cardBackground,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.medium),
+            FloatingActionButton(
+              heroTag: 'register-fab',
+              onPressed: onAddTransaction,
+              backgroundColor: AppColors.primary,
+              child: const Icon(
+                TablerIcons.plus,
+                color: AppColors.cardBackground,
+              ),
+            ),
+          ],
+        ),
       ),
       body: ListenableBuilder(
         listenable: viewModel,

@@ -19,12 +19,16 @@ class _TransferViewState extends State<TransferView> {
   final _amountController = TextEditingController();
   final _destinationAmountController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _feeAmountController = TextEditingController();
+  final _feeDescriptionController = TextEditingController();
 
   @override
   void dispose() {
     _amountController.dispose();
     _destinationAmountController.dispose();
     _descriptionController.dispose();
+    _feeAmountController.dispose();
+    _feeDescriptionController.dispose();
     super.dispose();
   }
 
@@ -122,6 +126,30 @@ class _TransferViewState extends State<TransferView> {
                       );
                     },
                   ),
+                  if (viewModel.referenceRate != null) ...[
+                    const SizedBox(height: AppSpacing.small),
+                    Text(
+                      _formatRate(
+                        'Reference rate',
+                        viewModel.currencyFor(viewModel.fromAccountId),
+                        viewModel.currencyFor(viewModel.toAccountId),
+                        viewModel.referenceRate!,
+                      ),
+                      style: AppTypography.metadata,
+                    ),
+                  ],
+                  if (viewModel.impliedRate != null) ...[
+                    const SizedBox(height: AppSpacing.small),
+                    Text(
+                      _formatRate(
+                        'Your rate',
+                        viewModel.currencyFor(viewModel.fromAccountId),
+                        viewModel.currencyFor(viewModel.toAccountId),
+                        viewModel.impliedRate!,
+                      ),
+                      style: AppTypography.metadata,
+                    ),
+                  ],
                 ],
                 const SizedBox(height: AppSpacing.large),
                 OutlinedButton(
@@ -138,6 +166,73 @@ class _TransferViewState extends State<TransferView> {
                   ),
                   onChanged: viewModel.setDescription,
                 ),
+                const SizedBox(height: AppSpacing.xLarge),
+                Text('Fee (optional)', style: AppTypography.sectionLabel),
+                const SizedBox(height: AppSpacing.small),
+                Text(
+                  'An upfront commission charged by your bank or an '
+                  'intermediary for this transfer, posted as its own '
+                  'expense - separate from any shortfall fee you might '
+                  'later record when settling a pending cross-currency '
+                  'transfer.',
+                  style: AppTypography.metadata,
+                ),
+                const SizedBox(height: AppSpacing.medium),
+                TextField(
+                  controller: _feeAmountController,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Fee amount',
+                    suffixText: viewModel.currencyFor(viewModel.fromAccountId),
+                  ),
+                  onChanged: (text) {
+                    final amount = double.tryParse(text);
+                    viewModel.setFeeAmountMinor(
+                      amount == null ? null : (amount * 100).round(),
+                    );
+                  },
+                ),
+                if (viewModel.feeAmountMinor != null) ...[
+                  const SizedBox(height: AppSpacing.large),
+                  DropdownButtonFormField<String>(
+                    initialValue: viewModel.feeCategoryId,
+                    decoration: const InputDecoration(
+                      labelText: 'Fee category',
+                    ),
+                    items: [
+                      for (final category in viewModel.expenseCategories)
+                        DropdownMenuItem(
+                          value: category.id,
+                          child: Text(category.name),
+                        ),
+                    ],
+                    onChanged: viewModel.setFeeCategoryId,
+                  ),
+                  const SizedBox(height: AppSpacing.large),
+                  TextField(
+                    controller: _feeDescriptionController,
+                    decoration: const InputDecoration(
+                      labelText: 'Fee description (optional)',
+                    ),
+                    onChanged: viewModel.setFeeDescription,
+                  ),
+                  CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: viewModel.feeDeductedFromAmount,
+                    onChanged: (value) =>
+                        viewModel.setFeeDeductedFromAmount(value ?? false),
+                    title: const Text('Fee is deducted from the amount above'),
+                    subtitle: const Text(
+                      'On: the amount above is the total debited, and the '
+                      'fee is carved out of it before conversion (e.g. a '
+                      'remittance service). Off: the fee is charged in '
+                      'addition to the full amount (e.g. a bank wire fee).',
+                    ),
+                  ),
+                ],
                 if (viewModel.accounts.length < 2) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
@@ -178,3 +273,11 @@ class _TransferViewState extends State<TransferView> {
 String _formatDate(DateTime date) =>
     '${date.year}-${date.month.toString().padLeft(2, '0')}-'
     '${date.day.toString().padLeft(2, '0')}';
+
+/// e.g. "Reference rate: 1 USD ≈ 0.92 EUR" - display-only, never fed back
+/// into any field.
+String _formatRate(String label, String? from, String? to, double rate) {
+  final fromLabel = from ?? '?';
+  final toLabel = to ?? '?';
+  return '$label: 1 $fromLabel ≈ ${rate.toStringAsFixed(4)} $toLabel';
+}

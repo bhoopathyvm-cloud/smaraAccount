@@ -178,4 +178,158 @@ void main() {
       expect(find.text('0.00'), findsOneWidget);
     },
   );
+
+  testWidgets('the most recently posted entry renders above an older one', (
+    tester,
+  ) async {
+    when(repository.watchEntriesForAccount(any)).thenAnswer(
+      (_) => Stream.value([
+        JournalEntry(
+          id: 'entry-older',
+          transactionDate: DateTime(2026, 1, 1),
+          recordedAt: DateTime(2026, 1, 1),
+          description: null,
+          reversesEntryId: null,
+          postings: const [
+            Posting(
+              id: 'p1',
+              entryId: 'entry-older',
+              accountId: 'asset-1',
+              amountMinor: 1000,
+              lineNumber: 1,
+            ),
+            Posting(
+              id: 'p2',
+              entryId: 'entry-older',
+              accountId: 'income-1',
+              amountMinor: -1000,
+              lineNumber: 2,
+            ),
+          ],
+          deviceChainSequence: 0,
+          entryHash: const [],
+          signedByIdentityId: 'identity-1',
+          signature: const [],
+          migratedFromEntryId: null,
+          isVerified: true,
+          breakReason: null,
+          isSupersededByMigration: false,
+        ),
+        JournalEntry(
+          id: 'entry-newer',
+          transactionDate: DateTime(2026, 1, 15),
+          recordedAt: DateTime(2026, 1, 15),
+          description: null,
+          reversesEntryId: null,
+          postings: const [
+            Posting(
+              id: 'p3',
+              entryId: 'entry-newer',
+              accountId: 'asset-1',
+              amountMinor: 500,
+              lineNumber: 1,
+            ),
+            Posting(
+              id: 'p4',
+              entryId: 'entry-newer',
+              accountId: 'income-1',
+              amountMinor: -500,
+              lineNumber: 2,
+            ),
+          ],
+          deviceChainSequence: 0,
+          entryHash: const [],
+          signedByIdentityId: 'identity-1',
+          signature: const [],
+          migratedFromEntryId: null,
+          isVerified: true,
+          breakReason: null,
+          isSupersededByMigration: false,
+        ),
+      ]),
+    );
+
+    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    addTearDown(viewModel.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(home: RegisterView(viewModel: viewModel)),
+    );
+    await tester.pump();
+
+    final newerTop = tester.getTopLeft(find.text('+5.00')).dy;
+    final olderTop = tester.getTopLeft(find.text('+10.00')).dy;
+    expect(newerTop, lessThan(olderTop));
+  });
+
+  testWidgets('tapping the Transfer action invokes onTransfer', (tester) async {
+    when(
+      repository.watchEntriesForAccount(any),
+    ).thenAnswer((_) => Stream.value(const []));
+
+    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    addTearDown(viewModel.dispose);
+    var transferTapped = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: RegisterView(
+          viewModel: viewModel,
+          onTransfer: () => transferTapped = true,
+        ),
+      ),
+    );
+    await tester.pump();
+
+    await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
+    await tester.pump();
+
+    expect(transferTapped, isTrue);
+  });
+
+  testWidgets(
+    'the Transfer action is disabled when the selected account is archived',
+    (tester) async {
+      const archivedAsset = Account(
+        id: 'asset-1',
+        name: 'Cash & Bank',
+        type: AccountType.asset,
+        archived: true,
+      );
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([archivedAsset]));
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value(const []));
+
+      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(viewModel.dispose);
+      var transferTapped = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: RegisterView(
+            viewModel: viewModel,
+            onTransfer: () => transferTapped = true,
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final fab = tester.widget<FloatingActionButton>(
+        find.ancestor(
+          of: find.byIcon(TablerIcons.arrowsExchange),
+          matching: find.byType(FloatingActionButton),
+        ),
+      );
+      expect(fab.onPressed, isNull);
+
+      await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
+      await tester.pump();
+      expect(transferTapped, isFalse);
+    },
+  );
 }
