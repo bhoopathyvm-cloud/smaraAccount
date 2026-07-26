@@ -79,15 +79,17 @@ jobs:
 
         # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
             # queries: security-extended,security-and-quality
-    - name: Dart/Flutter Package Analyzer (PANA)
-      # You may pin to the exact commit or the version.
-      # uses: flutterings/dart-package-analyzer@bff0f9679d1d54b3a926d623d0a3d5ab91ea64bf
-      uses: flutterings/dart-package-analyzer@v1
+
+    - if: matrix.build-mode == 'autobuild'
+      name: Autobuild
+      uses: github/codeql-action/autobuild@v4
+
+    # Dart/Flutter isn't a CodeQL-supported language - the app's own code is
+    # covered by the separate "Flutter Code Quality" workflow (dart format,
+    # flutter analyze, flutter test) instead. This scans the native
+    # Android/iOS/macOS/Windows platform code Flutter generates (Kotlin,
+    # Swift, C/C++).
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v4
       with:
-        # The version of Flutter to use
-        flutter_version: # optional, default is 3.13.9
-        # The channel of Flutter to use
-        flutter_channel: # optional, default is stable
-        # Path of the package relatively to the root of the repository
-        relativePath: # optional, default is 
-        
+        category: "/language:${{matrix.language}}"
