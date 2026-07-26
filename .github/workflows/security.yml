@@ -1,0 +1,57 @@
+name: Security
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    # Catches newly published vulnerabilities in existing dependencies -
+    # code doesn't have to change for a dependency to become vulnerable.
+    - cron: "30 12 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  # Fails the PR check on any new vulnerability introduced by the diff -
+  # scans pubspec.lock (and any other lockfiles) against the OSV.dev
+  # database. fail-on-vuln defaults to true.
+  osv-scanner-pr:
+    if: github.event_name == 'pull_request'
+    permissions:
+      actions: read
+      security-events: write
+      contents: read
+    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.8"
+
+  # Full dependency-tree scan on every push to main and weekly, so a
+  # vulnerability disclosed after merge is still caught.
+  osv-scanner-scheduled:
+    if: github.event_name != 'pull_request'
+    permissions:
+      actions: read
+      security-events: write
+      contents: read
+    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.3.8"
+
+  # Scans the full commit history (not just the diff) for committed
+  # secrets/keys - relevant here since this app handles a signing key and
+  # recovery phrase, even though neither is ever meant to leave the device.
+  gitleaks:
+    name: Secret scanning
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
