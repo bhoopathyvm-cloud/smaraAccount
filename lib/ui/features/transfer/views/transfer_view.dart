@@ -218,6 +218,20 @@ class _TransferViewState extends State<TransferView> {
                     ),
                     onChanged: viewModel.setFeeDescription,
                   ),
+                  CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: viewModel.feeDeductedFromAmount,
+                    onChanged: (value) =>
+                        viewModel.setFeeDeductedFromAmount(value ?? false),
+                    title: const Text('Fee is deducted from the amount above'),
+                    subtitle: const Text(
+                      'On: the amount above is the total debited, and the '
+                      'fee is carved out of it before conversion (e.g. a '
+                      'remittance service). Off: the fee is charged in '
+                      'addition to the full amount (e.g. a bank wire fee).',
+                    ),
+                  ),
                 ],
                 if (viewModel.accounts.length < 2) ...[
                   const SizedBox(height: AppSpacing.large),

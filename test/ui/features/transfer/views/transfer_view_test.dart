@@ -185,6 +185,41 @@ void main() {
     expect(find.text('accounts must be distinct'), findsOneWidget);
   });
 
+  testWidgets(
+    'the deducted-fee checkbox appears once a fee is entered and toggling it updates the ViewModel',
+    (tester) async {
+      final viewModel = buildViewModel();
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: TransferView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      expect(find.text('Fee is deducted from the amount above'), findsNothing);
+
+      await tester.enterText(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is TextField &&
+              widget.decoration?.labelText == 'Fee amount',
+        ),
+        '1.62',
+      );
+      await tester.pump();
+
+      final checkboxFinder = find.text('Fee is deducted from the amount above');
+      expect(checkboxFinder, findsOneWidget);
+      expect(viewModel.feeDeductedFromAmount, isFalse);
+
+      await tester.ensureVisible(checkboxFinder);
+      await tester.tap(checkboxFinder);
+      await tester.pump();
+
+      expect(viewModel.feeDeductedFromAmount, isTrue);
+    },
+  );
+
   group('cross-currency branching', () {
     setUp(() {
       when(

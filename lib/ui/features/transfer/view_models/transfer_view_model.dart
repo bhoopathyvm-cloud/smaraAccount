@@ -244,6 +244,19 @@ class TransferViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Off (default): the fee posts as an additional debit on top of
+  /// [amountMinor] - unchanged behavior. On: [amountMinor] is treated as
+  /// the total to be debited from the source account, and the transfer
+  /// itself moves `amountMinor - feeAmountMinor` (e.g. sending 100 via a
+  /// remittance service that takes a 1.62 fee out of it before converting
+  /// the remaining 98.38) - design.md Decision 1.
+  bool _feeDeductedFromAmount = false;
+  bool get feeDeductedFromAmount => _feeDeductedFromAmount;
+  void setFeeDeductedFromAmount(bool value) {
+    _feeDeductedFromAmount = value;
+    notifyListeners();
+  }
+
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
@@ -270,6 +283,18 @@ class TransferViewModel extends ChangeNotifier {
       return false;
     }
 
+    var transferAmountMinor = amountMinor;
+    if (hasFee && _feeDeductedFromAmount) {
+      transferAmountMinor = amountMinor - feeAmountMinor;
+      if (transferAmountMinor <= 0) {
+        _errorMessage =
+            'The fee must be less than the amount for a deducted-fee '
+            'transfer.';
+        notifyListeners();
+        return false;
+      }
+    }
+
     _isSubmitting = true;
     _errorMessage = null;
     notifyListeners();
@@ -277,7 +302,7 @@ class TransferViewModel extends ChangeNotifier {
       await _ledgerRepository.recordTransfer(
         fromAccountId: fromAccountId,
         toAccountId: toAccountId,
-        amountMinor: amountMinor,
+        amountMinor: transferAmountMinor,
         transactionDate: _transactionDate,
         description: _description,
         destinationAmountMinor: isCrossCurrency
