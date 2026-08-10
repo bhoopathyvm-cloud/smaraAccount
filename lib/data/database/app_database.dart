@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 import 'tables/account_groups_table.dart';
@@ -245,5 +246,20 @@ class AppDatabase extends _$AppDatabase {
 }
 
 QueryExecutor _openConnection() {
-  return driftDatabase(name: 'smara_accounting');
+  return driftDatabase(
+    name: 'smara_accounting',
+    native: DriftNativeOptions(
+      // The default (getApplicationDocumentsDirectory) resolves to the
+      // real ~/Documents on desktop, which macOS's privacy protection
+      // (TCC) blocks unsigned/ad-hoc dev builds from opening - causing an
+      // unhandled SqliteException(14) during startup routing. Application
+      // Support isn't TCC-protected and is the correct home for a
+      // private local database anyway.
+      databaseDirectory: () async {
+        final dir = await getApplicationSupportDirectory();
+        await dir.create(recursive: true);
+        return dir;
+      },
+    ),
+  );
 }
