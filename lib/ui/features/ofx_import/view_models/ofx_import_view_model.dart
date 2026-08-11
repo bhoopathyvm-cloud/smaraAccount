@@ -75,6 +75,14 @@ class OfxImportViewModel extends ChangeNotifier {
   String? _parseError;
   String? get parseError => _parseError;
 
+  /// Surfaces a failure from the platform file picker itself (e.g. a
+  /// missing OS-level permission) on the same pick-file step as a parse
+  /// error, so a picker failure is never silently invisible to the user.
+  void reportPickFileError(String message) {
+    _parseError = message;
+    notifyListeners();
+  }
+
   int _parsedTransactionCount = 0;
   int get parsedTransactionCount => _parsedTransactionCount;
   int _skippedRowCount = 0;

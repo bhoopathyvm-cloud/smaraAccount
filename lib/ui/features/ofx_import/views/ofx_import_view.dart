@@ -18,15 +18,19 @@ class OfxImportView extends StatelessWidget {
   final VoidCallback? onFinished;
 
   Future<void> _pickFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      withData: true,
-      type: FileType.custom,
-      allowedExtensions: const ['ofx', 'qfx'],
-    );
-    final file = result?.files.single;
-    final bytes = file?.bytes;
-    if (file == null || bytes == null) return;
-    await viewModel.loadFile(name: file.name, bytes: bytes);
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        withData: true,
+        type: FileType.custom,
+        allowedExtensions: const ['ofx', 'qfx'],
+      );
+      final file = result?.files.single;
+      final bytes = file?.bytes;
+      if (file == null || bytes == null) return;
+      await viewModel.loadFile(name: file.name, bytes: bytes);
+    } catch (error) {
+      viewModel.reportPickFileError('Could not open the file picker: $error');
+    }
   }
 
   @override
