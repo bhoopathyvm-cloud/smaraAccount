@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/repositories/ledger_repository.dart';
+import '../data/repositories/ofx_import_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../domain/models/home_overview.dart';
 import 'core/app_shell.dart';
@@ -14,6 +15,8 @@ import 'features/home/view_models/home_view_model.dart';
 import 'features/home/views/home_view.dart';
 import 'features/migration/view_models/key_loss_migration_view_model.dart';
 import 'features/migration/views/key_loss_migration_view.dart';
+import 'features/ofx_import/view_models/ofx_import_view_model.dart';
+import 'features/ofx_import/views/ofx_import_view.dart';
 import 'features/onboarding/view_models/currency_backfill_view_model.dart';
 import 'features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'features/onboarding/views/currency_backfill_view.dart';
@@ -57,7 +60,10 @@ const _currencyBackfillPath = '/currency-backfill';
 ///    key -> restore (recovery phrase / keystore file)
 ///  - identity exists and matches -> run verifyChain() once per app
 ///    session, then the app shell is reachable
-GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
+GoRouter buildAppRouter(
+  LedgerRepository ledgerRepository,
+  OfxImportRepository ofxImportRepository,
+) {
   var hasVerifiedThisSession = false;
 
   return GoRouter(
@@ -175,6 +181,17 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
         ),
       ),
       GoRoute(
+        path: '/import-ofx',
+        builder: (context, state) => OfxImportView(
+          viewModel: OfxImportViewModel(
+            importRepository: ofxImportRepository,
+            ledgerRepository: ledgerRepository,
+            initialFinancialAccountId: state.uri.queryParameters['accountId'],
+          ),
+          onFinished: () => context.pop(),
+        ),
+      ),
+      GoRoute(
         path: '/settle-pending-transfer/:pendingTransferId',
         builder: (context, state) =>
             _buildSettlePendingTransfer(context, state, ledgerRepository),
@@ -231,6 +248,7 @@ GoRouter buildAppRouter(LedgerRepository ledgerRepository) {
                 builder: (context, state) => AccountManagementView(
                   viewModel: context.read<AccountManagementViewModel>(),
                   onTransfer: () => context.push('/transfer'),
+                  onImport: () => context.push('/import-ofx'),
                 ),
               ),
             ],
@@ -281,6 +299,13 @@ RegisterView _buildRegister(BuildContext context, GoRouterState state) {
       final location = selectedAccountId == null
           ? '/transfer'
           : '/transfer?fromAccountId=${Uri.encodeQueryComponent(selectedAccountId)}';
+      context.push(location);
+    },
+    onImport: () {
+      final selectedAccountId = viewModel.selectedAccountId;
+      final location = selectedAccountId == null
+          ? '/import-ofx'
+          : '/import-ofx?accountId=${Uri.encodeQueryComponent(selectedAccountId)}';
       context.push(location);
     },
   );

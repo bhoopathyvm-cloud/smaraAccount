@@ -9,6 +9,7 @@ import 'tables/entry_verification_cache_table.dart';
 import 'tables/integrity_events_table.dart';
 import 'tables/journal_entries_table.dart';
 import 'tables/ledger_chain_state_table.dart';
+import 'tables/ofx_import_records_table.dart';
 import 'tables/pending_transfers_table.dart';
 import 'tables/postings_table.dart';
 import 'tables/signing_identities_table.dart';
@@ -41,6 +42,7 @@ const starterExpenseCategories = [
     LedgerChainState,
     IntegrityEvents,
     PendingTransfers,
+    OfxImportRecords,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -49,7 +51,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -59,6 +61,7 @@ class AppDatabase extends _$AppDatabase {
       // ("Device Signing Identity") requires the signing identity to
       // exist before any starter account or journal entry does.
       await m.createAll();
+      await _createOfxImportRecordsIndexes();
     },
     onUpgrade: (Migrator m, int from, int to) async {
       if (from < 2) {
@@ -241,8 +244,33 @@ class AppDatabase extends _$AppDatabase {
           await m.addColumn(accountGroups, accountGroups.archivedAt);
         }
       }
+
+      if (from < 6) {
+        // ofx-transaction-import: additive ofx_import_records table plus
+        // its lookup indexes. journal_entries itself is untouched - the
+        // signed hash chain is unaffected by this migration (design.md
+        // Decision 2).
+        await m.createTable(ofxImportRecords);
+        await _createOfxImportRecordsIndexes();
+      }
     },
   );
+
+  /// A plain (non-partial) `UNIQUE` index on `(financial_account_id, fitid)`
+  /// is sufficient to only enforce uniqueness for non-null `fitid` values:
+  /// SQLite already treats every `NULL` as distinct from every other `NULL`
+  /// under a `UNIQUE` constraint, so rows using the fallback-match-key path
+  /// (`fitid IS NULL`) never conflict with each other.
+  Future<void> _createOfxImportRecordsIndexes() async {
+    await customStatement(
+      'CREATE UNIQUE INDEX IF NOT EXISTS ofx_import_records_account_fitid_idx '
+      'ON ofx_import_records (financial_account_id, fitid)',
+    );
+    await customStatement(
+      'CREATE INDEX IF NOT EXISTS ofx_import_records_account_fallback_idx '
+      'ON ofx_import_records (financial_account_id, fallback_match_key)',
+    );
+  }
 }
 
 QueryExecutor _openConnection() {

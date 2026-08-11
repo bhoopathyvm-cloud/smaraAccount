@@ -4520,6 +4520,455 @@ class PendingTransfersCompanion extends UpdateCompanion<PendingTransferRow> {
   }
 }
 
+class $OfxImportRecordsTable extends OfxImportRecords
+    with TableInfo<$OfxImportRecordsTable, OfxImportRecordRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $OfxImportRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  static const VerificationMeta _financialAccountIdMeta =
+      const VerificationMeta('financialAccountId');
+  @override
+  late final GeneratedColumn<String> financialAccountId =
+      GeneratedColumn<String>(
+        'financial_account_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES accounts (id)',
+        ),
+      );
+  static const VerificationMeta _fitidMeta = const VerificationMeta('fitid');
+  @override
+  late final GeneratedColumn<String> fitid = GeneratedColumn<String>(
+    'fitid',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _fallbackMatchKeyMeta = const VerificationMeta(
+    'fallbackMatchKey',
+  );
+  @override
+  late final GeneratedColumn<String> fallbackMatchKey = GeneratedColumn<String>(
+    'fallback_match_key',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _journalEntryIdMeta = const VerificationMeta(
+    'journalEntryId',
+  );
+  @override
+  late final GeneratedColumn<String> journalEntryId = GeneratedColumn<String>(
+    'journal_entry_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES journal_entries (id)',
+    ),
+  );
+  static const VerificationMeta _importedAtMeta = const VerificationMeta(
+    'importedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> importedAt = GeneratedColumn<DateTime>(
+    'imported_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    financialAccountId,
+    fitid,
+    fallbackMatchKey,
+    journalEntryId,
+    importedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'ofx_import_records';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<OfxImportRecordRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('financial_account_id')) {
+      context.handle(
+        _financialAccountIdMeta,
+        financialAccountId.isAcceptableOrUnknown(
+          data['financial_account_id']!,
+          _financialAccountIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_financialAccountIdMeta);
+    }
+    if (data.containsKey('fitid')) {
+      context.handle(
+        _fitidMeta,
+        fitid.isAcceptableOrUnknown(data['fitid']!, _fitidMeta),
+      );
+    }
+    if (data.containsKey('fallback_match_key')) {
+      context.handle(
+        _fallbackMatchKeyMeta,
+        fallbackMatchKey.isAcceptableOrUnknown(
+          data['fallback_match_key']!,
+          _fallbackMatchKeyMeta,
+        ),
+      );
+    }
+    if (data.containsKey('journal_entry_id')) {
+      context.handle(
+        _journalEntryIdMeta,
+        journalEntryId.isAcceptableOrUnknown(
+          data['journal_entry_id']!,
+          _journalEntryIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_journalEntryIdMeta);
+    }
+    if (data.containsKey('imported_at')) {
+      context.handle(
+        _importedAtMeta,
+        importedAt.isAcceptableOrUnknown(data['imported_at']!, _importedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_importedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  OfxImportRecordRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return OfxImportRecordRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      financialAccountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}financial_account_id'],
+      )!,
+      fitid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fitid'],
+      ),
+      fallbackMatchKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}fallback_match_key'],
+      ),
+      journalEntryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}journal_entry_id'],
+      )!,
+      importedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}imported_at'],
+      )!,
+    );
+  }
+
+  @override
+  $OfxImportRecordsTable createAlias(String alias) {
+    return $OfxImportRecordsTable(attachedDatabase, alias);
+  }
+}
+
+class OfxImportRecordRow extends DataClass
+    implements Insertable<OfxImportRecordRow> {
+  final String id;
+  final String financialAccountId;
+
+  /// The bank's own stable transaction id, when the source file provided
+  /// one. Authoritative de-duplication key when present.
+  final String? fitid;
+
+  /// Fallback de-duplication key (`transactionDate|amountMinor|memo`) used
+  /// when [fitid] is absent, per design.md Decision 2.
+  final String? fallbackMatchKey;
+  final String journalEntryId;
+  final DateTime importedAt;
+  const OfxImportRecordRow({
+    required this.id,
+    required this.financialAccountId,
+    this.fitid,
+    this.fallbackMatchKey,
+    required this.journalEntryId,
+    required this.importedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['financial_account_id'] = Variable<String>(financialAccountId);
+    if (!nullToAbsent || fitid != null) {
+      map['fitid'] = Variable<String>(fitid);
+    }
+    if (!nullToAbsent || fallbackMatchKey != null) {
+      map['fallback_match_key'] = Variable<String>(fallbackMatchKey);
+    }
+    map['journal_entry_id'] = Variable<String>(journalEntryId);
+    map['imported_at'] = Variable<DateTime>(importedAt);
+    return map;
+  }
+
+  OfxImportRecordsCompanion toCompanion(bool nullToAbsent) {
+    return OfxImportRecordsCompanion(
+      id: Value(id),
+      financialAccountId: Value(financialAccountId),
+      fitid: fitid == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fitid),
+      fallbackMatchKey: fallbackMatchKey == null && nullToAbsent
+          ? const Value.absent()
+          : Value(fallbackMatchKey),
+      journalEntryId: Value(journalEntryId),
+      importedAt: Value(importedAt),
+    );
+  }
+
+  factory OfxImportRecordRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return OfxImportRecordRow(
+      id: serializer.fromJson<String>(json['id']),
+      financialAccountId: serializer.fromJson<String>(
+        json['financialAccountId'],
+      ),
+      fitid: serializer.fromJson<String?>(json['fitid']),
+      fallbackMatchKey: serializer.fromJson<String?>(json['fallbackMatchKey']),
+      journalEntryId: serializer.fromJson<String>(json['journalEntryId']),
+      importedAt: serializer.fromJson<DateTime>(json['importedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'financialAccountId': serializer.toJson<String>(financialAccountId),
+      'fitid': serializer.toJson<String?>(fitid),
+      'fallbackMatchKey': serializer.toJson<String?>(fallbackMatchKey),
+      'journalEntryId': serializer.toJson<String>(journalEntryId),
+      'importedAt': serializer.toJson<DateTime>(importedAt),
+    };
+  }
+
+  OfxImportRecordRow copyWith({
+    String? id,
+    String? financialAccountId,
+    Value<String?> fitid = const Value.absent(),
+    Value<String?> fallbackMatchKey = const Value.absent(),
+    String? journalEntryId,
+    DateTime? importedAt,
+  }) => OfxImportRecordRow(
+    id: id ?? this.id,
+    financialAccountId: financialAccountId ?? this.financialAccountId,
+    fitid: fitid.present ? fitid.value : this.fitid,
+    fallbackMatchKey: fallbackMatchKey.present
+        ? fallbackMatchKey.value
+        : this.fallbackMatchKey,
+    journalEntryId: journalEntryId ?? this.journalEntryId,
+    importedAt: importedAt ?? this.importedAt,
+  );
+  OfxImportRecordRow copyWithCompanion(OfxImportRecordsCompanion data) {
+    return OfxImportRecordRow(
+      id: data.id.present ? data.id.value : this.id,
+      financialAccountId: data.financialAccountId.present
+          ? data.financialAccountId.value
+          : this.financialAccountId,
+      fitid: data.fitid.present ? data.fitid.value : this.fitid,
+      fallbackMatchKey: data.fallbackMatchKey.present
+          ? data.fallbackMatchKey.value
+          : this.fallbackMatchKey,
+      journalEntryId: data.journalEntryId.present
+          ? data.journalEntryId.value
+          : this.journalEntryId,
+      importedAt: data.importedAt.present
+          ? data.importedAt.value
+          : this.importedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OfxImportRecordRow(')
+          ..write('id: $id, ')
+          ..write('financialAccountId: $financialAccountId, ')
+          ..write('fitid: $fitid, ')
+          ..write('fallbackMatchKey: $fallbackMatchKey, ')
+          ..write('journalEntryId: $journalEntryId, ')
+          ..write('importedAt: $importedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    financialAccountId,
+    fitid,
+    fallbackMatchKey,
+    journalEntryId,
+    importedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is OfxImportRecordRow &&
+          other.id == this.id &&
+          other.financialAccountId == this.financialAccountId &&
+          other.fitid == this.fitid &&
+          other.fallbackMatchKey == this.fallbackMatchKey &&
+          other.journalEntryId == this.journalEntryId &&
+          other.importedAt == this.importedAt);
+}
+
+class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
+  final Value<String> id;
+  final Value<String> financialAccountId;
+  final Value<String?> fitid;
+  final Value<String?> fallbackMatchKey;
+  final Value<String> journalEntryId;
+  final Value<DateTime> importedAt;
+  final Value<int> rowid;
+  const OfxImportRecordsCompanion({
+    this.id = const Value.absent(),
+    this.financialAccountId = const Value.absent(),
+    this.fitid = const Value.absent(),
+    this.fallbackMatchKey = const Value.absent(),
+    this.journalEntryId = const Value.absent(),
+    this.importedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  OfxImportRecordsCompanion.insert({
+    this.id = const Value.absent(),
+    required String financialAccountId,
+    this.fitid = const Value.absent(),
+    this.fallbackMatchKey = const Value.absent(),
+    required String journalEntryId,
+    required DateTime importedAt,
+    this.rowid = const Value.absent(),
+  }) : financialAccountId = Value(financialAccountId),
+       journalEntryId = Value(journalEntryId),
+       importedAt = Value(importedAt);
+  static Insertable<OfxImportRecordRow> custom({
+    Expression<String>? id,
+    Expression<String>? financialAccountId,
+    Expression<String>? fitid,
+    Expression<String>? fallbackMatchKey,
+    Expression<String>? journalEntryId,
+    Expression<DateTime>? importedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (financialAccountId != null)
+        'financial_account_id': financialAccountId,
+      if (fitid != null) 'fitid': fitid,
+      if (fallbackMatchKey != null) 'fallback_match_key': fallbackMatchKey,
+      if (journalEntryId != null) 'journal_entry_id': journalEntryId,
+      if (importedAt != null) 'imported_at': importedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  OfxImportRecordsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? financialAccountId,
+    Value<String?>? fitid,
+    Value<String?>? fallbackMatchKey,
+    Value<String>? journalEntryId,
+    Value<DateTime>? importedAt,
+    Value<int>? rowid,
+  }) {
+    return OfxImportRecordsCompanion(
+      id: id ?? this.id,
+      financialAccountId: financialAccountId ?? this.financialAccountId,
+      fitid: fitid ?? this.fitid,
+      fallbackMatchKey: fallbackMatchKey ?? this.fallbackMatchKey,
+      journalEntryId: journalEntryId ?? this.journalEntryId,
+      importedAt: importedAt ?? this.importedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (financialAccountId.present) {
+      map['financial_account_id'] = Variable<String>(financialAccountId.value);
+    }
+    if (fitid.present) {
+      map['fitid'] = Variable<String>(fitid.value);
+    }
+    if (fallbackMatchKey.present) {
+      map['fallback_match_key'] = Variable<String>(fallbackMatchKey.value);
+    }
+    if (journalEntryId.present) {
+      map['journal_entry_id'] = Variable<String>(journalEntryId.value);
+    }
+    if (importedAt.present) {
+      map['imported_at'] = Variable<DateTime>(importedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('OfxImportRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('financialAccountId: $financialAccountId, ')
+          ..write('fitid: $fitid, ')
+          ..write('fallbackMatchKey: $fallbackMatchKey, ')
+          ..write('journalEntryId: $journalEntryId, ')
+          ..write('importedAt: $importedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -4540,6 +4989,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $PendingTransfersTable pendingTransfers = $PendingTransfersTable(
     this,
   );
+  late final $OfxImportRecordsTable ofxImportRecords = $OfxImportRecordsTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -4554,6 +5006,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     ledgerChainState,
     integrityEvents,
     pendingTransfers,
+    ofxImportRecords,
   ];
 }
 
@@ -4861,6 +5314,26 @@ final class $$AccountsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$OfxImportRecordsTable, List<OfxImportRecordRow>>
+  _ofxImportRecordsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.ofxImportRecords,
+    aliasName: 'accounts__id__ofx_import_records__financial_account_id',
+  );
+
+  $$OfxImportRecordsTableProcessedTableManager get ofxImportRecordsRefs {
+    final manager =
+        $$OfxImportRecordsTableTableManager($_db, $_db.ofxImportRecords).filter(
+          (f) => f.financialAccountId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _ofxImportRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$AccountsTableFilterComposer
@@ -4924,6 +5397,31 @@ class $$AccountsTableFilterComposer
           }) => $$PostingsTableFilterComposer(
             $db: $db,
             $table: $db.postings,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> ofxImportRecordsRefs(
+    Expression<bool> Function($$OfxImportRecordsTableFilterComposer f) f,
+  ) {
+    final $$OfxImportRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ofxImportRecords,
+      getReferencedColumn: (t) => t.financialAccountId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OfxImportRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.ofxImportRecords,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -5035,6 +5533,31 @@ class $$AccountsTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> ofxImportRecordsRefs<T extends Object>(
+    Expression<T> Function($$OfxImportRecordsTableAnnotationComposer a) f,
+  ) {
+    final $$OfxImportRecordsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ofxImportRecords,
+      getReferencedColumn: (t) => t.financialAccountId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OfxImportRecordsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.ofxImportRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$AccountsTableTableManager
@@ -5050,7 +5573,7 @@ class $$AccountsTableTableManager
           $$AccountsTableUpdateCompanionBuilder,
           (AccountRow, $$AccountsTableReferences),
           AccountRow,
-          PrefetchHooks Function({bool postingsRefs})
+          PrefetchHooks Function({bool postingsRefs, bool ofxImportRecordsRefs})
         > {
   $$AccountsTableTableManager(_$AppDatabase db, $AccountsTable table)
     : super(
@@ -5111,32 +5634,63 @@ class $$AccountsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({postingsRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (postingsRefs) db.postings],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (postingsRefs)
-                    await $_getPrefetchedData<
-                      AccountRow,
-                      $AccountsTable,
-                      PostingRow
-                    >(
-                      currentTable: table,
-                      referencedTable: $$AccountsTableReferences
-                          ._postingsRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$AccountsTableReferences(db, table, p0).postingsRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.accountId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({postingsRefs = false, ofxImportRecordsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (postingsRefs) db.postings,
+                    if (ofxImportRecordsRefs) db.ofxImportRecords,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (postingsRefs)
+                        await $_getPrefetchedData<
+                          AccountRow,
+                          $AccountsTable,
+                          PostingRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AccountsTableReferences
+                              ._postingsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AccountsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).postingsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.accountId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (ofxImportRecordsRefs)
+                        await $_getPrefetchedData<
+                          AccountRow,
+                          $AccountsTable,
+                          OfxImportRecordRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AccountsTableReferences
+                              ._ofxImportRecordsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AccountsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ofxImportRecordsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.financialAccountId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -5153,7 +5707,7 @@ typedef $$AccountsTableProcessedTableManager =
       $$AccountsTableUpdateCompanionBuilder,
       (AccountRow, $$AccountsTableReferences),
       AccountRow,
-      PrefetchHooks Function({bool postingsRefs})
+      PrefetchHooks Function({bool postingsRefs, bool ofxImportRecordsRefs})
     >;
 typedef $$SigningIdentitiesTableCreateCompanionBuilder =
     SigningIdentitiesCompanion Function({
@@ -5878,6 +6432,26 @@ final class $$JournalEntriesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$OfxImportRecordsTable, List<OfxImportRecordRow>>
+  _ofxImportRecordsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.ofxImportRecords,
+    aliasName: 'journal_entries__id__ofx_import_records__journal_entry_id',
+  );
+
+  $$OfxImportRecordsTableProcessedTableManager get ofxImportRecordsRefs {
+    final manager = $$OfxImportRecordsTableTableManager(
+      $_db,
+      $_db.ofxImportRecords,
+    ).filter((f) => f.journalEntryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _ofxImportRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$JournalEntriesTableFilterComposer
@@ -6095,6 +6669,31 @@ class $$JournalEntriesTableFilterComposer
           }) => $$IntegrityEventsTableFilterComposer(
             $db: $db,
             $table: $db.integrityEvents,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> ofxImportRecordsRefs(
+    Expression<bool> Function($$OfxImportRecordsTableFilterComposer f) f,
+  ) {
+    final $$OfxImportRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ofxImportRecords,
+      getReferencedColumn: (t) => t.journalEntryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OfxImportRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.ofxImportRecords,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -6445,6 +7044,31 @@ class $$JournalEntriesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> ofxImportRecordsRefs<T extends Object>(
+    Expression<T> Function($$OfxImportRecordsTableAnnotationComposer a) f,
+  ) {
+    final $$OfxImportRecordsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.ofxImportRecords,
+      getReferencedColumn: (t) => t.journalEntryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OfxImportRecordsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.ofxImportRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$JournalEntriesTableTableManager
@@ -6468,6 +7092,7 @@ class $$JournalEntriesTableTableManager
             bool entryVerificationCacheRefs,
             bool ledgerChainStateRefs,
             bool integrityEventsRefs,
+            bool ofxImportRecordsRefs,
           })
         > {
   $$JournalEntriesTableTableManager(
@@ -6560,6 +7185,7 @@ class $$JournalEntriesTableTableManager
                 entryVerificationCacheRefs = false,
                 ledgerChainStateRefs = false,
                 integrityEventsRefs = false,
+                ofxImportRecordsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -6568,6 +7194,7 @@ class $$JournalEntriesTableTableManager
                     if (entryVerificationCacheRefs) db.entryVerificationCache,
                     if (ledgerChainStateRefs) db.ledgerChainState,
                     if (integrityEventsRefs) db.integrityEvents,
+                    if (ofxImportRecordsRefs) db.ofxImportRecords,
                   ],
                   addJoins:
                       <
@@ -6719,6 +7346,27 @@ class $$JournalEntriesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (ofxImportRecordsRefs)
+                        await $_getPrefetchedData<
+                          JournalEntryRow,
+                          $JournalEntriesTable,
+                          OfxImportRecordRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$JournalEntriesTableReferences
+                              ._ofxImportRecordsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$JournalEntriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ofxImportRecordsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.journalEntryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -6747,6 +7395,7 @@ typedef $$JournalEntriesTableProcessedTableManager =
         bool entryVerificationCacheRefs,
         bool ledgerChainStateRefs,
         bool integrityEventsRefs,
+        bool ofxImportRecordsRefs,
       })
     >;
 typedef $$PostingsTableCreateCompanionBuilder =
@@ -9193,6 +9842,450 @@ typedef $$PendingTransfersTableProcessedTableManager =
         bool feeEntryId,
       })
     >;
+typedef $$OfxImportRecordsTableCreateCompanionBuilder =
+    OfxImportRecordsCompanion Function({
+      Value<String> id,
+      required String financialAccountId,
+      Value<String?> fitid,
+      Value<String?> fallbackMatchKey,
+      required String journalEntryId,
+      required DateTime importedAt,
+      Value<int> rowid,
+    });
+typedef $$OfxImportRecordsTableUpdateCompanionBuilder =
+    OfxImportRecordsCompanion Function({
+      Value<String> id,
+      Value<String> financialAccountId,
+      Value<String?> fitid,
+      Value<String?> fallbackMatchKey,
+      Value<String> journalEntryId,
+      Value<DateTime> importedAt,
+      Value<int> rowid,
+    });
+
+final class $$OfxImportRecordsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $OfxImportRecordsTable,
+          OfxImportRecordRow
+        > {
+  $$OfxImportRecordsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $AccountsTable _financialAccountIdTable(_$AppDatabase db) => db
+      .accounts
+      .createAlias('ofx_import_records__financial_account_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get financialAccountId {
+    final $_column = $_itemColumn<String>('financial_account_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_financialAccountIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $JournalEntriesTable _journalEntryIdTable(_$AppDatabase db) => db
+      .journalEntries
+      .createAlias('ofx_import_records__journal_entry_id__journal_entries__id');
+
+  $$JournalEntriesTableProcessedTableManager get journalEntryId {
+    final $_column = $_itemColumn<String>('journal_entry_id')!;
+
+    final manager = $$JournalEntriesTableTableManager(
+      $_db,
+      $_db.journalEntries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_journalEntryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$OfxImportRecordsTableFilterComposer
+    extends Composer<_$AppDatabase, $OfxImportRecordsTable> {
+  $$OfxImportRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fitid => $composableBuilder(
+    column: $table.fitid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fallbackMatchKey => $composableBuilder(
+    column: $table.fallbackMatchKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get importedAt => $composableBuilder(
+    column: $table.importedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AccountsTableFilterComposer get financialAccountId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.financialAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableFilterComposer get journalEntryId {
+    final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.journalEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$OfxImportRecordsTableOrderingComposer
+    extends Composer<_$AppDatabase, $OfxImportRecordsTable> {
+  $$OfxImportRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fitid => $composableBuilder(
+    column: $table.fitid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fallbackMatchKey => $composableBuilder(
+    column: $table.fallbackMatchKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get importedAt => $composableBuilder(
+    column: $table.importedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$AccountsTableOrderingComposer get financialAccountId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.financialAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableOrderingComposer get journalEntryId {
+    final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.journalEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$OfxImportRecordsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $OfxImportRecordsTable> {
+  $$OfxImportRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get fitid =>
+      $composableBuilder(column: $table.fitid, builder: (column) => column);
+
+  GeneratedColumn<String> get fallbackMatchKey => $composableBuilder(
+    column: $table.fallbackMatchKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get importedAt => $composableBuilder(
+    column: $table.importedAt,
+    builder: (column) => column,
+  );
+
+  $$AccountsTableAnnotationComposer get financialAccountId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.financialAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableAnnotationComposer get journalEntryId {
+    final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.journalEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$OfxImportRecordsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $OfxImportRecordsTable,
+          OfxImportRecordRow,
+          $$OfxImportRecordsTableFilterComposer,
+          $$OfxImportRecordsTableOrderingComposer,
+          $$OfxImportRecordsTableAnnotationComposer,
+          $$OfxImportRecordsTableCreateCompanionBuilder,
+          $$OfxImportRecordsTableUpdateCompanionBuilder,
+          (OfxImportRecordRow, $$OfxImportRecordsTableReferences),
+          OfxImportRecordRow,
+          PrefetchHooks Function({bool financialAccountId, bool journalEntryId})
+        > {
+  $$OfxImportRecordsTableTableManager(
+    _$AppDatabase db,
+    $OfxImportRecordsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$OfxImportRecordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$OfxImportRecordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$OfxImportRecordsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> financialAccountId = const Value.absent(),
+                Value<String?> fitid = const Value.absent(),
+                Value<String?> fallbackMatchKey = const Value.absent(),
+                Value<String> journalEntryId = const Value.absent(),
+                Value<DateTime> importedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => OfxImportRecordsCompanion(
+                id: id,
+                financialAccountId: financialAccountId,
+                fitid: fitid,
+                fallbackMatchKey: fallbackMatchKey,
+                journalEntryId: journalEntryId,
+                importedAt: importedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String financialAccountId,
+                Value<String?> fitid = const Value.absent(),
+                Value<String?> fallbackMatchKey = const Value.absent(),
+                required String journalEntryId,
+                required DateTime importedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => OfxImportRecordsCompanion.insert(
+                id: id,
+                financialAccountId: financialAccountId,
+                fitid: fitid,
+                fallbackMatchKey: fallbackMatchKey,
+                journalEntryId: journalEntryId,
+                importedAt: importedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$OfxImportRecordsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({financialAccountId = false, journalEntryId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (financialAccountId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.financialAccountId,
+                                    referencedTable:
+                                        $$OfxImportRecordsTableReferences
+                                            ._financialAccountIdTable(db),
+                                    referencedColumn:
+                                        $$OfxImportRecordsTableReferences
+                                            ._financialAccountIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (journalEntryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.journalEntryId,
+                                    referencedTable:
+                                        $$OfxImportRecordsTableReferences
+                                            ._journalEntryIdTable(db),
+                                    referencedColumn:
+                                        $$OfxImportRecordsTableReferences
+                                            ._journalEntryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$OfxImportRecordsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $OfxImportRecordsTable,
+      OfxImportRecordRow,
+      $$OfxImportRecordsTableFilterComposer,
+      $$OfxImportRecordsTableOrderingComposer,
+      $$OfxImportRecordsTableAnnotationComposer,
+      $$OfxImportRecordsTableCreateCompanionBuilder,
+      $$OfxImportRecordsTableUpdateCompanionBuilder,
+      (OfxImportRecordRow, $$OfxImportRecordsTableReferences),
+      OfxImportRecordRow,
+      PrefetchHooks Function({bool financialAccountId, bool journalEntryId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -9218,4 +10311,6 @@ class $AppDatabaseManager {
       $$IntegrityEventsTableTableManager(_db, _db.integrityEvents);
   $$PendingTransfersTableTableManager get pendingTransfers =>
       $$PendingTransfersTableTableManager(_db, _db.pendingTransfers);
+  $$OfxImportRecordsTableTableManager get ofxImportRecords =>
+      $$OfxImportRecordsTableTableManager(_db, _db.ofxImportRecords);
 }
