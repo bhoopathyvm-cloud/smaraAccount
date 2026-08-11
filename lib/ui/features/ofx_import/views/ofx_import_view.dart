@@ -19,14 +19,24 @@ class OfxImportView extends StatelessWidget {
 
   Future<void> _pickFile() async {
     try {
-      final result = await FilePicker.platform.pickFiles(
-        withData: true,
-        type: FileType.custom,
-        allowedExtensions: const ['ofx', 'qfx'],
-      );
+      // Not FileType.custom + allowedExtensions here: .ofx/.qfx aren't
+      // registered macOS UTTypes, so the native allowedContentTypes
+      // filter file_picker builds from them ends up greying those files
+      // out in the dialog instead of narrowing it to them. Allow any
+      // file and validate the extension ourselves once one is picked.
+      final result = await FilePicker.platform.pickFiles(withData: true);
       final file = result?.files.single;
       final bytes = file?.bytes;
       if (file == null || bytes == null) return;
+
+      final extension = file.name.split('.').last.toLowerCase();
+      if (extension != 'ofx' && extension != 'qfx') {
+        viewModel.reportPickFileError(
+          'Please select a .ofx or .qfx file (got "${file.name}").',
+        );
+        return;
+      }
+
       await viewModel.loadFile(name: file.name, bytes: bytes);
     } catch (error) {
       viewModel.reportPickFileError('Could not open the file picker: $error');
