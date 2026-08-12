@@ -1,20 +1,23 @@
-import 'parsed_ofx_transaction.dart';
+import 'parsed_statement_transaction.dart';
 
 /// One previewed row the user has selected and categorized, ready to post.
 /// Deselected, uncategorized, and unparseable rows never become one of
 /// these - they're filtered out before `postAcceptedRows` is called.
-class OfxAcceptedRow {
-  const OfxAcceptedRow({required this.transaction, required this.categoryId});
+class StatementAcceptedRow {
+  const StatementAcceptedRow({
+    required this.transaction,
+    required this.categoryId,
+  });
 
-  final ParsedOfxTransaction transaction;
+  final ParsedStatementTransaction transaction;
   final String categoryId;
 }
 
 /// The outcome of posting one accepted row.
-class OfxPostedRow {
-  const OfxPostedRow({required this.transaction, this.error});
+class StatementPostedRow {
+  const StatementPostedRow({required this.transaction, this.error});
 
-  final ParsedOfxTransaction transaction;
+  final ParsedStatementTransaction transaction;
 
   /// Null on success.
   final String? error;
@@ -26,10 +29,10 @@ class OfxPostedRow {
 /// (ofx-transaction-import design.md Decision 5): posting is sequential
 /// and per-row, so one row's failure never prevents the others from
 /// posting.
-class OfxImportBatchResult {
-  const OfxImportBatchResult({required this.results});
+class StatementImportBatchResult {
+  const StatementImportBatchResult({required this.results});
 
-  final List<OfxPostedRow> results;
+  final List<StatementPostedRow> results;
 
   int get postedCount => results.where((r) => r.succeeded).length;
   int get failedCount => results.where((r) => !r.succeeded).length;

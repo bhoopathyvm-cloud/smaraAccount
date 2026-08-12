@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import 'tables/account_groups_table.dart';
 import 'tables/accounts_table.dart';
+import 'tables/csv_import_profiles_table.dart';
 import 'tables/entry_verification_cache_table.dart';
 import 'tables/integrity_events_table.dart';
 import 'tables/journal_entries_table.dart';
@@ -43,6 +44,7 @@ const starterExpenseCategories = [
     IntegrityEvents,
     PendingTransfers,
     OfxImportRecords,
+    CsvImportProfiles,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -51,7 +53,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -252,6 +254,30 @@ class AppDatabase extends _$AppDatabase {
         // Decision 2).
         await m.createTable(ofxImportRecords);
         await _createOfxImportRecordsIndexes();
+      }
+
+      if (from < 7) {
+        // csv-transaction-import: ofx_import_records.source, so a
+        // duplicate-detection record can note whether it came from an OFX
+        // or CSV import. Nullable and additive - existing rows land as
+        // NULL, understood as "OFX" since CSV import didn't exist before
+        // this migration (design.md Decision 5).
+        //
+        // Same duplicate-column pitfall as `currency`/`archived_at`
+        // above: a database skipping straight from schemaVersion < 6 to 7
+        // already gets `source` for free from the `from < 6` branch's
+        // `m.createTable(ofxImportRecords)` (built from the *current*
+        // table definition), so this only runs for a database that
+        // already had `ofx_import_records` before this migration call.
+        if (from >= 6) {
+          await m.addColumn(ofxImportRecords, ofxImportRecords.source);
+        }
+      }
+
+      if (from < 8) {
+        // csv-transaction-import: additive csv_import_profiles table for
+        // saved column-mapping profiles (design.md Decision 6).
+        await m.createTable(csvImportProfiles);
       }
     },
   );

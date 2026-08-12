@@ -2,22 +2,23 @@ import 'package:xml/xml.dart';
 
 import '../exceptions.dart';
 import '../models/transaction_direction.dart';
+import '../statement_import/parsed_statement_transaction.dart';
 import 'ofx_sgml_normalizer.dart';
-import 'parsed_ofx_transaction.dart';
 
 const _statementTransactionTags = {'stmttrn', 'ccstmttrn'};
 
 /// Parses an OFX 1.x or 2.x document's bank/credit-card statement
-/// transactions (`STMTTRN`/`CCSTMTTRN`) into a normalized [OfxParseResult].
-/// Investment aggregates (`INVSTMTTRN` and its own transaction types) are
-/// never matched by [_statementTransactionTags], so they're silently
-/// excluded rather than requiring separate exclusion logic.
+/// transactions (`STMTTRN`/`CCSTMTTRN`) into a normalized
+/// [StatementParseResult]. Investment aggregates (`INVSTMTTRN` and its own
+/// transaction types) are never matched by [_statementTransactionTags], so
+/// they're silently excluded rather than requiring separate exclusion
+/// logic.
 ///
 /// Throws [OfxParseException] when the file as a whole isn't recognizable
 /// as OFX. An individual transaction row that's missing a required field
-/// is reported as an [OfxSkippedRow] instead, without aborting the rest of
-/// the file.
-OfxParseResult parseOfxDocument(String content) {
+/// is reported as a [StatementSkippedRow] instead, without aborting the
+/// rest of the file.
+StatementParseResult parseOfxDocument(String content) {
   final trimmed = content.trimLeft();
   final isXmlDeclared = trimmed.startsWith('<?xml');
   final xmlSource = isXmlDeclared ? content : normalizeOfxSgml(content);
@@ -40,8 +41,8 @@ OfxParseResult parseOfxDocument(String content) {
 
   final statementCurrency = _findFirstText(root, 'curdef') ?? '';
 
-  final transactions = <ParsedOfxTransaction>[];
-  final skippedRows = <OfxSkippedRow>[];
+  final transactions = <ParsedStatementTransaction>[];
+  final skippedRows = <StatementSkippedRow>[];
 
   for (final element in root.descendantElements) {
     final tagName = element.name.local.toLowerCase();
@@ -57,12 +58,15 @@ OfxParseResult parseOfxDocument(String content) {
       transactions.add(transaction);
     } else if (skipReason != null) {
       skippedRows.add(
-        OfxSkippedRow(rawFragment: element.toXmlString(), reason: skipReason),
+        StatementSkippedRow(
+          rawFragment: element.toXmlString(),
+          reason: skipReason,
+        ),
       );
     }
   }
 
-  return OfxParseResult(
+  return StatementParseResult(
     transactions: transactions,
     skippedRows: skippedRows,
     statementCurrency: statementCurrency.isEmpty ? null : statementCurrency,
@@ -73,7 +77,7 @@ class _ParsedRow {
   const _ParsedRow.ok(this.transaction) : skipReason = null;
   const _ParsedRow.skip(this.skipReason) : transaction = null;
 
-  final ParsedOfxTransaction? transaction;
+  final ParsedStatementTransaction? transaction;
   final String? skipReason;
 }
 
@@ -117,13 +121,13 @@ _ParsedRow _parseTransactionElement(
   final fitid = _childText(element, 'fitid');
 
   return _ParsedRow.ok(
-    ParsedOfxTransaction(
+    ParsedStatementTransaction(
       transactionDate: transactionDate,
       amountMinor: amountMinor.abs(),
       direction: direction,
       description: description.isEmpty ? 'OFX import' : description,
       currency: currency,
-      fitid: (fitid == null || fitid.isEmpty) ? null : fitid,
+      externalReferenceId: (fitid == null || fitid.isEmpty) ? null : fitid,
     ),
   );
 }
