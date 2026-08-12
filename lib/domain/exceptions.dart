@@ -74,10 +74,23 @@ class PendingTransferException implements Exception {
 
 /// Thrown when a selected file cannot be recognized as an OFX document at
 /// all (ofx-transaction-import). Individual unparseable transaction rows
-/// within an otherwise-recognized file are reported as [OfxSkippedRow]s
-/// instead, not by throwing this.
+/// within an otherwise-recognized file are reported as
+/// [StatementSkippedRow]s instead, not by throwing this.
 class OfxParseException implements Exception {
   OfxParseException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
+/// Thrown when a selected file cannot be read as delimited CSV data at all
+/// (csv-transaction-import). An individual row that doesn't fit the
+/// column mapping is reported as a [StatementSkippedRow] instead, not by
+/// throwing this.
+class CsvParseException implements Exception {
+  CsvParseException(this.message);
 
   final String message;
 

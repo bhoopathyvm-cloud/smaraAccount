@@ -9,7 +9,7 @@ import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
-import 'package:smara_accounting/data/repositories/ofx_import_repository.dart';
+import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/integrity_event.dart';
 import 'package:smara_accounting/ui/app_router.dart';
@@ -862,7 +862,7 @@ void main() {
 }
 
 Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
-  final ofxImportRepository = OfxImportRepository(
+  final statementImportRepository = StatementImportRepository(
     database: database,
     ledgerRepository: repository,
   );
@@ -897,7 +897,7 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
       builder: (context) {
         return MaterialApp.router(
           theme: buildAppTheme(),
-          routerConfig: buildAppRouter(repository, ofxImportRepository),
+          routerConfig: buildAppRouter(repository, statementImportRepository),
         );
       },
     ),

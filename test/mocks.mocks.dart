@@ -7,14 +7,18 @@ import 'dart:async' as _i9;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i12;
+import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
+    as _i22;
 import 'package:smara_accounting/data/exchange_rate_service.dart' as _i17;
 import 'package:smara_accounting/data/repositories/ledger_repository.dart'
     as _i4;
-import 'package:smara_accounting/data/repositories/ofx_import_repository.dart'
-    as _i20;
 import 'package:smara_accounting/data/repositories/settings_repository.dart'
     as _i19;
+import 'package:smara_accounting/data/repositories/statement_import_repository.dart'
+    as _i20;
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart' as _i2;
+import 'package:smara_accounting/domain/csv/csv_column_mapping.dart' as _i21;
+import 'package:smara_accounting/domain/csv/csv_import_profile.dart' as _i23;
 import 'package:smara_accounting/domain/models/account.dart' as _i5;
 import 'package:smara_accounting/domain/models/account_group.dart' as _i6;
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart'
@@ -27,8 +31,10 @@ import 'package:smara_accounting/domain/models/signing_identity.dart' as _i3;
 import 'package:smara_accounting/domain/models/summary.dart' as _i15;
 import 'package:smara_accounting/domain/models/transaction_direction.dart'
     as _i11;
-import 'package:smara_accounting/domain/ofx/ofx_import_batch.dart' as _i8;
-import 'package:smara_accounting/domain/ofx/parsed_ofx_transaction.dart' as _i7;
+import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart'
+    as _i7;
+import 'package:smara_accounting/domain/statement_import/statement_import_batch.dart'
+    as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -73,15 +79,15 @@ class _FakeAccountGroup_4 extends _i1.SmartFake implements _i6.AccountGroup {
     : super(parent, parentInvocation);
 }
 
-class _FakeOfxParseResult_5 extends _i1.SmartFake
-    implements _i7.OfxParseResult {
-  _FakeOfxParseResult_5(Object parent, Invocation parentInvocation)
+class _FakeStatementParseResult_5 extends _i1.SmartFake
+    implements _i7.StatementParseResult {
+  _FakeStatementParseResult_5(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
-class _FakeOfxImportBatchResult_6 extends _i1.SmartFake
-    implements _i8.OfxImportBatchResult {
-  _FakeOfxImportBatchResult_6(Object parent, Invocation parentInvocation)
+class _FakeStatementImportBatchResult_6 extends _i1.SmartFake
+    implements _i8.StatementImportBatchResult {
+  _FakeStatementImportBatchResult_6(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -768,25 +774,43 @@ class MockSettingsRepository extends _i1.Mock
           as _i9.Future<void>);
 }
 
-/// A class which mocks [OfxImportRepository].
+/// A class which mocks [StatementImportRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockOfxImportRepository extends _i1.Mock
-    implements _i20.OfxImportRepository {
+class MockStatementImportRepository extends _i1.Mock
+    implements _i20.StatementImportRepository {
   @override
-  _i7.OfxParseResult parseFile(List<int>? bytes) =>
+  _i7.StatementParseResult parseOfxFile(List<int>? bytes) =>
       (super.noSuchMethod(
-            Invocation.method(#parseFile, [bytes]),
-            returnValue: _FakeOfxParseResult_5(
+            Invocation.method(#parseOfxFile, [bytes]),
+            returnValue: _FakeStatementParseResult_5(
               this,
-              Invocation.method(#parseFile, [bytes]),
+              Invocation.method(#parseOfxFile, [bytes]),
             ),
-            returnValueForMissingStub: _FakeOfxParseResult_5(
+            returnValueForMissingStub: _FakeStatementParseResult_5(
               this,
-              Invocation.method(#parseFile, [bytes]),
+              Invocation.method(#parseOfxFile, [bytes]),
             ),
           )
-          as _i7.OfxParseResult);
+          as _i7.StatementParseResult);
+
+  @override
+  _i7.StatementParseResult parseCsvFile(
+    List<int>? bytes,
+    _i21.CsvColumnMapping? mapping,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#parseCsvFile, [bytes, mapping]),
+            returnValue: _FakeStatementParseResult_5(
+              this,
+              Invocation.method(#parseCsvFile, [bytes, mapping]),
+            ),
+            returnValueForMissingStub: _FakeStatementParseResult_5(
+              this,
+              Invocation.method(#parseCsvFile, [bytes, mapping]),
+            ),
+          )
+          as _i7.StatementParseResult);
 
   @override
   _i9.Future<String?> groupCurrencyFor(String? financialAccountId) =>
@@ -800,7 +824,7 @@ class MockOfxImportRepository extends _i1.Mock
   @override
   _i9.Future<Set<int>> findDuplicateIndexes({
     required String? financialAccountId,
-    required List<_i7.ParsedOfxTransaction>? transactions,
+    required List<_i7.ParsedStatementTransaction>? transactions,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#findDuplicateIndexes, [], {
@@ -828,34 +852,98 @@ class MockOfxImportRepository extends _i1.Mock
           as _i9.Future<String?>);
 
   @override
-  _i9.Future<_i8.OfxImportBatchResult> postAcceptedRows({
+  _i9.Future<_i8.StatementImportBatchResult> postAcceptedRows({
     required String? financialAccountId,
-    required List<_i8.OfxAcceptedRow>? rows,
+    required List<_i8.StatementAcceptedRow>? rows,
+    required _i22.ImportSource? source,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#postAcceptedRows, [], {
               #financialAccountId: financialAccountId,
               #rows: rows,
+              #source: source,
             }),
-            returnValue: _i9.Future<_i8.OfxImportBatchResult>.value(
-              _FakeOfxImportBatchResult_6(
+            returnValue: _i9.Future<_i8.StatementImportBatchResult>.value(
+              _FakeStatementImportBatchResult_6(
                 this,
                 Invocation.method(#postAcceptedRows, [], {
                   #financialAccountId: financialAccountId,
                   #rows: rows,
+                  #source: source,
                 }),
               ),
             ),
             returnValueForMissingStub:
-                _i9.Future<_i8.OfxImportBatchResult>.value(
-                  _FakeOfxImportBatchResult_6(
+                _i9.Future<_i8.StatementImportBatchResult>.value(
+                  _FakeStatementImportBatchResult_6(
                     this,
                     Invocation.method(#postAcceptedRows, [], {
                       #financialAccountId: financialAccountId,
                       #rows: rows,
+                      #source: source,
                     }),
                   ),
                 ),
           )
-          as _i9.Future<_i8.OfxImportBatchResult>);
+          as _i9.Future<_i8.StatementImportBatchResult>);
+
+  @override
+  _i9.Future<void> saveProfile({
+    required String? name,
+    required _i21.CsvColumnMapping? mapping,
+    required List<String>? headerRow,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#saveProfile, [], {
+              #name: name,
+              #mapping: mapping,
+              #headerRow: headerRow,
+            }),
+            returnValue: _i9.Future<void>.value(),
+            returnValueForMissingStub: _i9.Future<void>.value(),
+          )
+          as _i9.Future<void>);
+
+  @override
+  _i9.Future<_i23.CsvImportProfile?> findProfileForHeaderRow(
+    List<String>? headerRow,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#findProfileForHeaderRow, [headerRow]),
+            returnValue: _i9.Future<_i23.CsvImportProfile?>.value(),
+            returnValueForMissingStub:
+                _i9.Future<_i23.CsvImportProfile?>.value(),
+          )
+          as _i9.Future<_i23.CsvImportProfile?>);
+
+  @override
+  _i9.Stream<List<_i23.CsvImportProfile>> watchProfiles() =>
+      (super.noSuchMethod(
+            Invocation.method(#watchProfiles, []),
+            returnValue: _i9.Stream<List<_i23.CsvImportProfile>>.empty(),
+            returnValueForMissingStub:
+                _i9.Stream<List<_i23.CsvImportProfile>>.empty(),
+          )
+          as _i9.Stream<List<_i23.CsvImportProfile>>);
+
+  @override
+  _i9.Future<void> renameProfile({
+    required String? id,
+    required String? newName,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#renameProfile, [], {#id: id, #newName: newName}),
+            returnValue: _i9.Future<void>.value(),
+            returnValueForMissingStub: _i9.Future<void>.value(),
+          )
+          as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> deleteProfile(String? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteProfile, [id]),
+            returnValue: _i9.Future<void>.value(),
+            returnValueForMissingStub: _i9.Future<void>.value(),
+          )
+          as _i9.Future<void>);
 }

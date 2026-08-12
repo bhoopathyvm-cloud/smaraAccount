@@ -190,14 +190,14 @@ void main() {
       final debit = result.transactions[0];
       expect(debit.direction, TransactionDirection.moneyOut);
       expect(debit.amountMinor, 4217);
-      expect(debit.fitid, '2026010500001');
+      expect(debit.externalReferenceId, '2026010500001');
       expect(debit.description, 'Coffee Shop');
       expect(debit.transactionDate, DateTime(2026, 1, 5));
 
       final credit = result.transactions[1];
       expect(credit.direction, TransactionDirection.moneyIn);
       expect(credit.amountMinor, 150000);
-      expect(credit.fitid, '2026011000002');
+      expect(credit.externalReferenceId, '2026011000002');
     });
 
     test(
@@ -221,7 +221,7 @@ void main() {
         final result = parseOfxDocument(_mixedInvestmentAndBankFixture);
 
         expect(result.transactions, hasLength(1));
-        expect(result.transactions.single.fitid, 'BANK0001');
+        expect(result.transactions.single.externalReferenceId, 'BANK0001');
         expect(result.skippedRows, isEmpty);
       },
     );
@@ -232,7 +232,7 @@ void main() {
         final result = parseOfxDocument(_malformedRowFixture);
 
         expect(result.transactions, hasLength(1));
-        expect(result.transactions.single.fitid, 'GOOD0001');
+        expect(result.transactions.single.externalReferenceId, 'GOOD0001');
         expect(result.skippedRows, hasLength(1));
         expect(result.skippedRows.single.reason, contains('TRNAMT'));
       },

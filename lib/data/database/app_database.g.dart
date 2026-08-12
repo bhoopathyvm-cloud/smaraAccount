@@ -4596,6 +4596,15 @@ class $OfxImportRecordsTable extends OfxImportRecords
     requiredDuringInsert: true,
   );
   @override
+  late final GeneratedColumnWithTypeConverter<ImportSource?, String> source =
+      GeneratedColumn<String>(
+        'source',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      ).withConverter<ImportSource?>($OfxImportRecordsTable.$convertersourcen);
+  @override
   List<GeneratedColumn> get $columns => [
     id,
     financialAccountId,
@@ -4603,6 +4612,7 @@ class $OfxImportRecordsTable extends OfxImportRecords
     fallbackMatchKey,
     journalEntryId,
     importedAt,
+    source,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -4697,6 +4707,12 @@ class $OfxImportRecordsTable extends OfxImportRecords
         DriftSqlType.dateTime,
         data['${effectivePrefix}imported_at'],
       )!,
+      source: $OfxImportRecordsTable.$convertersourcen.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}source'],
+        ),
+      ),
     );
   }
 
@@ -4704,6 +4720,11 @@ class $OfxImportRecordsTable extends OfxImportRecords
   $OfxImportRecordsTable createAlias(String alias) {
     return $OfxImportRecordsTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<ImportSource, String, String> $convertersource =
+      const EnumNameConverter<ImportSource>(ImportSource.values);
+  static JsonTypeConverter2<ImportSource?, String?, String?> $convertersourcen =
+      JsonTypeConverter2.asNullable($convertersource);
 }
 
 class OfxImportRecordRow extends DataClass
@@ -4711,8 +4732,9 @@ class OfxImportRecordRow extends DataClass
   final String id;
   final String financialAccountId;
 
-  /// The bank's own stable transaction id, when the source file provided
-  /// one. Authoritative de-duplication key when present.
+  /// The source's own stable transaction id, when the source file provided
+  /// one - OFX's `FITID`, or a CSV row's mapped reference-id column.
+  /// Authoritative de-duplication key when present.
   final String? fitid;
 
   /// Fallback de-duplication key (`transactionDate|amountMinor|memo`) used
@@ -4720,6 +4742,10 @@ class OfxImportRecordRow extends DataClass
   final String? fallbackMatchKey;
   final String journalEntryId;
   final DateTime importedAt;
+
+  /// Null for rows written before this column existed - all of which were
+  /// necessarily OFX imports, since CSV import didn't exist yet.
+  final ImportSource? source;
   const OfxImportRecordRow({
     required this.id,
     required this.financialAccountId,
@@ -4727,6 +4753,7 @@ class OfxImportRecordRow extends DataClass
     this.fallbackMatchKey,
     required this.journalEntryId,
     required this.importedAt,
+    this.source,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -4741,6 +4768,11 @@ class OfxImportRecordRow extends DataClass
     }
     map['journal_entry_id'] = Variable<String>(journalEntryId);
     map['imported_at'] = Variable<DateTime>(importedAt);
+    if (!nullToAbsent || source != null) {
+      map['source'] = Variable<String>(
+        $OfxImportRecordsTable.$convertersourcen.toSql(source),
+      );
+    }
     return map;
   }
 
@@ -4756,6 +4788,9 @@ class OfxImportRecordRow extends DataClass
           : Value(fallbackMatchKey),
       journalEntryId: Value(journalEntryId),
       importedAt: Value(importedAt),
+      source: source == null && nullToAbsent
+          ? const Value.absent()
+          : Value(source),
     );
   }
 
@@ -4773,6 +4808,9 @@ class OfxImportRecordRow extends DataClass
       fallbackMatchKey: serializer.fromJson<String?>(json['fallbackMatchKey']),
       journalEntryId: serializer.fromJson<String>(json['journalEntryId']),
       importedAt: serializer.fromJson<DateTime>(json['importedAt']),
+      source: $OfxImportRecordsTable.$convertersourcen.fromJson(
+        serializer.fromJson<String?>(json['source']),
+      ),
     );
   }
   @override
@@ -4785,6 +4823,9 @@ class OfxImportRecordRow extends DataClass
       'fallbackMatchKey': serializer.toJson<String?>(fallbackMatchKey),
       'journalEntryId': serializer.toJson<String>(journalEntryId),
       'importedAt': serializer.toJson<DateTime>(importedAt),
+      'source': serializer.toJson<String?>(
+        $OfxImportRecordsTable.$convertersourcen.toJson(source),
+      ),
     };
   }
 
@@ -4795,6 +4836,7 @@ class OfxImportRecordRow extends DataClass
     Value<String?> fallbackMatchKey = const Value.absent(),
     String? journalEntryId,
     DateTime? importedAt,
+    Value<ImportSource?> source = const Value.absent(),
   }) => OfxImportRecordRow(
     id: id ?? this.id,
     financialAccountId: financialAccountId ?? this.financialAccountId,
@@ -4804,6 +4846,7 @@ class OfxImportRecordRow extends DataClass
         : this.fallbackMatchKey,
     journalEntryId: journalEntryId ?? this.journalEntryId,
     importedAt: importedAt ?? this.importedAt,
+    source: source.present ? source.value : this.source,
   );
   OfxImportRecordRow copyWithCompanion(OfxImportRecordsCompanion data) {
     return OfxImportRecordRow(
@@ -4821,6 +4864,7 @@ class OfxImportRecordRow extends DataClass
       importedAt: data.importedAt.present
           ? data.importedAt.value
           : this.importedAt,
+      source: data.source.present ? data.source.value : this.source,
     );
   }
 
@@ -4832,7 +4876,8 @@ class OfxImportRecordRow extends DataClass
           ..write('fitid: $fitid, ')
           ..write('fallbackMatchKey: $fallbackMatchKey, ')
           ..write('journalEntryId: $journalEntryId, ')
-          ..write('importedAt: $importedAt')
+          ..write('importedAt: $importedAt, ')
+          ..write('source: $source')
           ..write(')'))
         .toString();
   }
@@ -4845,6 +4890,7 @@ class OfxImportRecordRow extends DataClass
     fallbackMatchKey,
     journalEntryId,
     importedAt,
+    source,
   );
   @override
   bool operator ==(Object other) =>
@@ -4855,7 +4901,8 @@ class OfxImportRecordRow extends DataClass
           other.fitid == this.fitid &&
           other.fallbackMatchKey == this.fallbackMatchKey &&
           other.journalEntryId == this.journalEntryId &&
-          other.importedAt == this.importedAt);
+          other.importedAt == this.importedAt &&
+          other.source == this.source);
 }
 
 class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
@@ -4865,6 +4912,7 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
   final Value<String?> fallbackMatchKey;
   final Value<String> journalEntryId;
   final Value<DateTime> importedAt;
+  final Value<ImportSource?> source;
   final Value<int> rowid;
   const OfxImportRecordsCompanion({
     this.id = const Value.absent(),
@@ -4873,6 +4921,7 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
     this.fallbackMatchKey = const Value.absent(),
     this.journalEntryId = const Value.absent(),
     this.importedAt = const Value.absent(),
+    this.source = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   OfxImportRecordsCompanion.insert({
@@ -4882,6 +4931,7 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
     this.fallbackMatchKey = const Value.absent(),
     required String journalEntryId,
     required DateTime importedAt,
+    this.source = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : financialAccountId = Value(financialAccountId),
        journalEntryId = Value(journalEntryId),
@@ -4893,6 +4943,7 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
     Expression<String>? fallbackMatchKey,
     Expression<String>? journalEntryId,
     Expression<DateTime>? importedAt,
+    Expression<String>? source,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -4903,6 +4954,7 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
       if (fallbackMatchKey != null) 'fallback_match_key': fallbackMatchKey,
       if (journalEntryId != null) 'journal_entry_id': journalEntryId,
       if (importedAt != null) 'imported_at': importedAt,
+      if (source != null) 'source': source,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -4914,6 +4966,7 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
     Value<String?>? fallbackMatchKey,
     Value<String>? journalEntryId,
     Value<DateTime>? importedAt,
+    Value<ImportSource?>? source,
     Value<int>? rowid,
   }) {
     return OfxImportRecordsCompanion(
@@ -4923,6 +4976,7 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
       fallbackMatchKey: fallbackMatchKey ?? this.fallbackMatchKey,
       journalEntryId: journalEntryId ?? this.journalEntryId,
       importedAt: importedAt ?? this.importedAt,
+      source: source ?? this.source,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -4948,6 +5002,11 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
     if (importedAt.present) {
       map['imported_at'] = Variable<DateTime>(importedAt.value);
     }
+    if (source.present) {
+      map['source'] = Variable<String>(
+        $OfxImportRecordsTable.$convertersourcen.toSql(source.value),
+      );
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -4963,6 +5022,383 @@ class OfxImportRecordsCompanion extends UpdateCompanion<OfxImportRecordRow> {
           ..write('fallbackMatchKey: $fallbackMatchKey, ')
           ..write('journalEntryId: $journalEntryId, ')
           ..write('importedAt: $importedAt, ')
+          ..write('source: $source, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CsvImportProfilesTable extends CsvImportProfiles
+    with TableInfo<$CsvImportProfilesTable, CsvImportProfileRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CsvImportProfilesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _headerFingerprintMeta = const VerificationMeta(
+    'headerFingerprint',
+  );
+  @override
+  late final GeneratedColumn<String> headerFingerprint =
+      GeneratedColumn<String>(
+        'header_fingerprint',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _columnMappingMeta = const VerificationMeta(
+    'columnMapping',
+  );
+  @override
+  late final GeneratedColumn<String> columnMapping = GeneratedColumn<String>(
+    'column_mapping',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    headerFingerprint,
+    columnMapping,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'csv_import_profiles';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CsvImportProfileRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('header_fingerprint')) {
+      context.handle(
+        _headerFingerprintMeta,
+        headerFingerprint.isAcceptableOrUnknown(
+          data['header_fingerprint']!,
+          _headerFingerprintMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_headerFingerprintMeta);
+    }
+    if (data.containsKey('column_mapping')) {
+      context.handle(
+        _columnMappingMeta,
+        columnMapping.isAcceptableOrUnknown(
+          data['column_mapping']!,
+          _columnMappingMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_columnMappingMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CsvImportProfileRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CsvImportProfileRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      headerFingerprint: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}header_fingerprint'],
+      )!,
+      columnMapping: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}column_mapping'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $CsvImportProfilesTable createAlias(String alias) {
+    return $CsvImportProfilesTable(attachedDatabase, alias);
+  }
+}
+
+class CsvImportProfileRow extends DataClass
+    implements Insertable<CsvImportProfileRow> {
+  final String id;
+  final String name;
+
+  /// JSON-encoded ordered list of normalized header cells - the exact-match
+  /// fingerprint a later file's header row is compared against.
+  final String headerFingerprint;
+
+  /// JSON-encoded `CsvColumnMapping`.
+  final String columnMapping;
+  final DateTime createdAt;
+  const CsvImportProfileRow({
+    required this.id,
+    required this.name,
+    required this.headerFingerprint,
+    required this.columnMapping,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['header_fingerprint'] = Variable<String>(headerFingerprint);
+    map['column_mapping'] = Variable<String>(columnMapping);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  CsvImportProfilesCompanion toCompanion(bool nullToAbsent) {
+    return CsvImportProfilesCompanion(
+      id: Value(id),
+      name: Value(name),
+      headerFingerprint: Value(headerFingerprint),
+      columnMapping: Value(columnMapping),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory CsvImportProfileRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CsvImportProfileRow(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      headerFingerprint: serializer.fromJson<String>(json['headerFingerprint']),
+      columnMapping: serializer.fromJson<String>(json['columnMapping']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'headerFingerprint': serializer.toJson<String>(headerFingerprint),
+      'columnMapping': serializer.toJson<String>(columnMapping),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  CsvImportProfileRow copyWith({
+    String? id,
+    String? name,
+    String? headerFingerprint,
+    String? columnMapping,
+    DateTime? createdAt,
+  }) => CsvImportProfileRow(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    headerFingerprint: headerFingerprint ?? this.headerFingerprint,
+    columnMapping: columnMapping ?? this.columnMapping,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  CsvImportProfileRow copyWithCompanion(CsvImportProfilesCompanion data) {
+    return CsvImportProfileRow(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      headerFingerprint: data.headerFingerprint.present
+          ? data.headerFingerprint.value
+          : this.headerFingerprint,
+      columnMapping: data.columnMapping.present
+          ? data.columnMapping.value
+          : this.columnMapping,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CsvImportProfileRow(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('headerFingerprint: $headerFingerprint, ')
+          ..write('columnMapping: $columnMapping, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, name, headerFingerprint, columnMapping, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CsvImportProfileRow &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.headerFingerprint == this.headerFingerprint &&
+          other.columnMapping == this.columnMapping &&
+          other.createdAt == this.createdAt);
+}
+
+class CsvImportProfilesCompanion extends UpdateCompanion<CsvImportProfileRow> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> headerFingerprint;
+  final Value<String> columnMapping;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const CsvImportProfilesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.headerFingerprint = const Value.absent(),
+    this.columnMapping = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CsvImportProfilesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required String headerFingerprint,
+    required String columnMapping,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name),
+       headerFingerprint = Value(headerFingerprint),
+       columnMapping = Value(columnMapping),
+       createdAt = Value(createdAt);
+  static Insertable<CsvImportProfileRow> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? headerFingerprint,
+    Expression<String>? columnMapping,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (headerFingerprint != null) 'header_fingerprint': headerFingerprint,
+      if (columnMapping != null) 'column_mapping': columnMapping,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CsvImportProfilesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? headerFingerprint,
+    Value<String>? columnMapping,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return CsvImportProfilesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      headerFingerprint: headerFingerprint ?? this.headerFingerprint,
+      columnMapping: columnMapping ?? this.columnMapping,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (headerFingerprint.present) {
+      map['header_fingerprint'] = Variable<String>(headerFingerprint.value);
+    }
+    if (columnMapping.present) {
+      map['column_mapping'] = Variable<String>(columnMapping.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CsvImportProfilesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('headerFingerprint: $headerFingerprint, ')
+          ..write('columnMapping: $columnMapping, ')
+          ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -4992,6 +5428,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $OfxImportRecordsTable ofxImportRecords = $OfxImportRecordsTable(
     this,
   );
+  late final $CsvImportProfilesTable csvImportProfiles =
+      $CsvImportProfilesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5007,6 +5445,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     integrityEvents,
     pendingTransfers,
     ofxImportRecords,
+    csvImportProfiles,
   ];
 }
 
@@ -9850,6 +10289,7 @@ typedef $$OfxImportRecordsTableCreateCompanionBuilder =
       Value<String?> fallbackMatchKey,
       required String journalEntryId,
       required DateTime importedAt,
+      Value<ImportSource?> source,
       Value<int> rowid,
     });
 typedef $$OfxImportRecordsTableUpdateCompanionBuilder =
@@ -9860,6 +10300,7 @@ typedef $$OfxImportRecordsTableUpdateCompanionBuilder =
       Value<String?> fallbackMatchKey,
       Value<String> journalEntryId,
       Value<DateTime> importedAt,
+      Value<ImportSource?> source,
       Value<int> rowid,
     });
 
@@ -9942,6 +10383,12 @@ class $$OfxImportRecordsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnWithTypeConverterFilters<ImportSource?, ImportSource, String>
+  get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
   $$AccountsTableFilterComposer get financialAccountId {
     final $$AccountsTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -10018,6 +10465,11 @@ class $$OfxImportRecordsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$AccountsTableOrderingComposer get financialAccountId {
     final $$AccountsTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -10089,6 +10541,9 @@ class $$OfxImportRecordsTableAnnotationComposer
     column: $table.importedAt,
     builder: (column) => column,
   );
+
+  GeneratedColumnWithTypeConverter<ImportSource?, String> get source =>
+      $composableBuilder(column: $table.source, builder: (column) => column);
 
   $$AccountsTableAnnotationComposer get financialAccountId {
     final $$AccountsTableAnnotationComposer composer = $composerBuilder(
@@ -10173,6 +10628,7 @@ class $$OfxImportRecordsTableTableManager
                 Value<String?> fallbackMatchKey = const Value.absent(),
                 Value<String> journalEntryId = const Value.absent(),
                 Value<DateTime> importedAt = const Value.absent(),
+                Value<ImportSource?> source = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => OfxImportRecordsCompanion(
                 id: id,
@@ -10181,6 +10637,7 @@ class $$OfxImportRecordsTableTableManager
                 fallbackMatchKey: fallbackMatchKey,
                 journalEntryId: journalEntryId,
                 importedAt: importedAt,
+                source: source,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -10191,6 +10648,7 @@ class $$OfxImportRecordsTableTableManager
                 Value<String?> fallbackMatchKey = const Value.absent(),
                 required String journalEntryId,
                 required DateTime importedAt,
+                Value<ImportSource?> source = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => OfxImportRecordsCompanion.insert(
                 id: id,
@@ -10199,6 +10657,7 @@ class $$OfxImportRecordsTableTableManager
                 fallbackMatchKey: fallbackMatchKey,
                 journalEntryId: journalEntryId,
                 importedAt: importedAt,
+                source: source,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -10286,6 +10745,223 @@ typedef $$OfxImportRecordsTableProcessedTableManager =
       OfxImportRecordRow,
       PrefetchHooks Function({bool financialAccountId, bool journalEntryId})
     >;
+typedef $$CsvImportProfilesTableCreateCompanionBuilder =
+    CsvImportProfilesCompanion Function({
+      Value<String> id,
+      required String name,
+      required String headerFingerprint,
+      required String columnMapping,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$CsvImportProfilesTableUpdateCompanionBuilder =
+    CsvImportProfilesCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> headerFingerprint,
+      Value<String> columnMapping,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$CsvImportProfilesTableFilterComposer
+    extends Composer<_$AppDatabase, $CsvImportProfilesTable> {
+  $$CsvImportProfilesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get headerFingerprint => $composableBuilder(
+    column: $table.headerFingerprint,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get columnMapping => $composableBuilder(
+    column: $table.columnMapping,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$CsvImportProfilesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CsvImportProfilesTable> {
+  $$CsvImportProfilesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get headerFingerprint => $composableBuilder(
+    column: $table.headerFingerprint,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get columnMapping => $composableBuilder(
+    column: $table.columnMapping,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CsvImportProfilesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CsvImportProfilesTable> {
+  $$CsvImportProfilesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get headerFingerprint => $composableBuilder(
+    column: $table.headerFingerprint,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get columnMapping => $composableBuilder(
+    column: $table.columnMapping,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$CsvImportProfilesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CsvImportProfilesTable,
+          CsvImportProfileRow,
+          $$CsvImportProfilesTableFilterComposer,
+          $$CsvImportProfilesTableOrderingComposer,
+          $$CsvImportProfilesTableAnnotationComposer,
+          $$CsvImportProfilesTableCreateCompanionBuilder,
+          $$CsvImportProfilesTableUpdateCompanionBuilder,
+          (
+            CsvImportProfileRow,
+            BaseReferences<
+              _$AppDatabase,
+              $CsvImportProfilesTable,
+              CsvImportProfileRow
+            >,
+          ),
+          CsvImportProfileRow,
+          PrefetchHooks Function()
+        > {
+  $$CsvImportProfilesTableTableManager(
+    _$AppDatabase db,
+    $CsvImportProfilesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CsvImportProfilesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CsvImportProfilesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CsvImportProfilesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> headerFingerprint = const Value.absent(),
+                Value<String> columnMapping = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CsvImportProfilesCompanion(
+                id: id,
+                name: name,
+                headerFingerprint: headerFingerprint,
+                columnMapping: columnMapping,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String name,
+                required String headerFingerprint,
+                required String columnMapping,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => CsvImportProfilesCompanion.insert(
+                id: id,
+                name: name,
+                headerFingerprint: headerFingerprint,
+                columnMapping: columnMapping,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$CsvImportProfilesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CsvImportProfilesTable,
+      CsvImportProfileRow,
+      $$CsvImportProfilesTableFilterComposer,
+      $$CsvImportProfilesTableOrderingComposer,
+      $$CsvImportProfilesTableAnnotationComposer,
+      $$CsvImportProfilesTableCreateCompanionBuilder,
+      $$CsvImportProfilesTableUpdateCompanionBuilder,
+      (
+        CsvImportProfileRow,
+        BaseReferences<
+          _$AppDatabase,
+          $CsvImportProfilesTable,
+          CsvImportProfileRow
+        >,
+      ),
+      CsvImportProfileRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -10313,4 +10989,6 @@ class $AppDatabaseManager {
       $$PendingTransfersTableTableManager(_db, _db.pendingTransfers);
   $$OfxImportRecordsTableTableManager get ofxImportRecords =>
       $$OfxImportRecordsTableTableManager(_db, _db.ofxImportRecords);
+  $$CsvImportProfilesTableTableManager get csvImportProfiles =>
+      $$CsvImportProfilesTableTableManager(_db, _db.csvImportProfiles);
 }

@@ -3,6 +3,8 @@ import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
+    show ImportSource;
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
@@ -247,7 +249,169 @@ sqlite3.Database _openV5Database() {
   return db;
 }
 
+/// Built by taking [_openV5Database] and hand-applying the schemaVersion-6
+/// migration SQL (`ofx_import_records` table plus its lookup indexes,
+/// ofx-transaction-import) so onUpgrade(6, 7) can be exercised for real for
+/// the csv-transaction-import migration below.
+sqlite3.Database _openV6Database() {
+  final db = _openV5Database();
+  db.execute('''
+    CREATE TABLE ofx_import_records (
+      id TEXT NOT NULL PRIMARY KEY,
+      financial_account_id TEXT NOT NULL REFERENCES accounts(id),
+      fitid TEXT NULL,
+      fallback_match_key TEXT NULL,
+      journal_entry_id TEXT NOT NULL REFERENCES journal_entries(id),
+      imported_at INTEGER NOT NULL
+    );
+    CREATE UNIQUE INDEX ofx_import_records_account_fitid_idx
+      ON ofx_import_records (financial_account_id, fitid);
+    CREATE INDEX ofx_import_records_account_fallback_idx
+      ON ofx_import_records (financial_account_id, fallback_match_key);
+    PRAGMA user_version = 6;
+  ''');
+  return db;
+}
+
+/// Built by taking [_openV6Database] and hand-applying the schemaVersion-7
+/// migration SQL (`ofx_import_records.source`, csv-transaction-import) so
+/// onUpgrade(7, 8) can be exercised for real for the csv_import_profiles
+/// migration below.
+sqlite3.Database _openV7Database() {
+  final db = _openV6Database();
+  db.execute('''
+    ALTER TABLE ofx_import_records ADD COLUMN source TEXT NULL;
+    PRAGMA user_version = 7;
+  ''');
+  return db;
+}
+
 void main() {
+  group('onUpgrade from schemaVersion 7', () {
+    test(
+      'existing database upgrades cleanly and csv_import_profiles starts empty',
+      () async {
+        final v7 = _openV7Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v7));
+        addTearDown(db.close);
+
+        final rows = await db.select(db.csvImportProfiles).get();
+        expect(rows, isEmpty);
+      },
+    );
+
+    test('a profile can be saved and read back after the upgrade', () async {
+      final v7 = _openV7Database();
+      final db = AppDatabase.forTesting(NativeDatabase.opened(v7));
+      addTearDown(db.close);
+
+      await db
+          .into(db.csvImportProfiles)
+          .insert(
+            CsvImportProfilesCompanion.insert(
+              name: 'My Bank',
+              headerFingerprint: '["date","description","amount"]',
+              columnMapping: '{"currency":"USD"}',
+              createdAt: DateTime.now(),
+            ),
+          );
+
+      final rows = await db.select(db.csvImportProfiles).get();
+      expect(rows, hasLength(1));
+      expect(rows.single.name, 'My Bank');
+    });
+  });
+
+  group('onUpgrade from schemaVersion 6', () {
+    test(
+      'existing ofx_import_records rows land with source = NULL (predates CSV import)',
+      () async {
+        final v6 = _openV6Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v6));
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await repository.generateFirstIdentity();
+        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final account = (await repository.watchFinancialAccounts().first).first;
+        final category = (await repository.watchCategories().first).first;
+        await repository.recordTransaction(
+          amountMinor: 100,
+          direction: TransactionDirection.moneyOut,
+          categoryId: category.id,
+          financialAccountId: account.id,
+          transactionDate: DateTime(2026, 1, 1),
+        );
+        final entryId =
+            (await repository.watchEntriesForAccount(account.id).first)
+                .first
+                .id;
+
+        await db
+            .into(db.ofxImportRecords)
+            .insert(
+              OfxImportRecordsCompanion.insert(
+                financialAccountId: account.id,
+                fitid: const Value('FITID-PRE-MIGRATION'),
+                journalEntryId: entryId,
+                importedAt: DateTime.now(),
+              ),
+            );
+
+        final row = await (db.select(
+          db.ofxImportRecords,
+        )..where((r) => r.fitid.equals('FITID-PRE-MIGRATION'))).getSingle();
+        expect(row.source, isNull);
+      },
+    );
+
+    test('a new row can specify its source', () async {
+      final v6 = _openV6Database();
+      final db = AppDatabase.forTesting(NativeDatabase.opened(v6));
+      addTearDown(db.close);
+      final repository = LedgerRepository(
+        database: db,
+        signingKeyService: SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        ),
+      );
+      final generated = await repository.generateFirstIdentity();
+      await repository.confirmFirstIdentity(generated, currency: 'USD');
+      final account = (await repository.watchFinancialAccounts().first).first;
+      final category = (await repository.watchCategories().first).first;
+      await repository.recordTransaction(
+        amountMinor: 100,
+        direction: TransactionDirection.moneyOut,
+        categoryId: category.id,
+        financialAccountId: account.id,
+        transactionDate: DateTime(2026, 1, 1),
+      );
+      final entryId =
+          (await repository.watchEntriesForAccount(account.id).first).first.id;
+
+      await db
+          .into(db.ofxImportRecords)
+          .insert(
+            OfxImportRecordsCompanion.insert(
+              financialAccountId: account.id,
+              fitid: const Value('FITID-CSV-1'),
+              journalEntryId: entryId,
+              importedAt: DateTime.now(),
+              source: const Value(ImportSource.csv),
+            ),
+          );
+
+      final row = await (db.select(
+        db.ofxImportRecords,
+      )..where((r) => r.fitid.equals('FITID-CSV-1'))).getSingle();
+      expect(row.source, ImportSource.csv);
+    });
+  });
+
   group('onUpgrade from schemaVersion 5', () {
     test(
       'existing database upgrades cleanly and ofx_import_records starts empty',

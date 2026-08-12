@@ -1,17 +1,20 @@
 import 'dart:convert';
 
-import 'package:drift/drift.dart' hide isNull;
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
+    show ImportSource;
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
-import 'package:smara_accounting/data/repositories/ofx_import_repository.dart';
+import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
+import 'package:smara_accounting/domain/csv/csv_column_mapping.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
-import 'package:smara_accounting/domain/ofx/ofx_import_batch.dart';
-import 'package:smara_accounting/domain/ofx/parsed_ofx_transaction.dart';
+import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart';
+import 'package:smara_accounting/domain/statement_import/statement_import_batch.dart';
 import 'package:test/test.dart';
 
 import '../../domain/crypto/in_memory_secure_key_storage.dart';
@@ -19,7 +22,7 @@ import '../../domain/crypto/in_memory_secure_key_storage.dart';
 void main() {
   late AppDatabase db;
   late LedgerRepository ledgerRepository;
-  late OfxImportRepository importRepository;
+  late StatementImportRepository importRepository;
   late String accountId;
   late String otherAccountId;
   late String journalEntryId;
@@ -32,7 +35,7 @@ void main() {
         secureStorage: InMemorySecureKeyStorage(),
       ),
     );
-    importRepository = OfxImportRepository(
+    importRepository = StatementImportRepository(
       database: db,
       ledgerRepository: ledgerRepository,
     );
@@ -87,17 +90,17 @@ void main() {
         );
   }
 
-  ParsedOfxTransaction transaction({
+  ParsedStatementTransaction transaction({
     String? fitid,
     String description = 'Row',
   }) {
-    return ParsedOfxTransaction(
+    return ParsedStatementTransaction(
       transactionDate: DateTime(2026, 1, 5),
       amountMinor: 500,
       direction: TransactionDirection.moneyOut,
       description: description,
       currency: 'USD',
-      fitid: fitid,
+      externalReferenceId: fitid,
     );
   }
 
@@ -161,7 +164,7 @@ void main() {
     );
   });
 
-  group('parseFile', () {
+  group('parseOfxFile', () {
     test('parses a minimal OFX 2.x byte payload', () {
       const fixture = '''
 <?xml version="1.0" encoding="UTF-8"?>
@@ -184,14 +187,14 @@ void main() {
   </BANKMSGSRSV1>
 </OFX>
 ''';
-      final result = importRepository.parseFile(utf8.encode(fixture));
+      final result = importRepository.parseOfxFile(utf8.encode(fixture));
       expect(result.transactions, hasLength(1));
       expect(result.statementCurrency, 'USD');
     });
 
     test('throws OfxParseException for a non-OFX payload', () {
       expect(
-        () => importRepository.parseFile(utf8.encode('not an ofx file')),
+        () => importRepository.parseOfxFile(utf8.encode('not an ofx file')),
         throwsA(isA<OfxParseException>()),
       );
     });
@@ -246,7 +249,10 @@ void main() {
 
         final result = await importRepository.postAcceptedRows(
           financialAccountId: accountId,
-          rows: [OfxAcceptedRow(transaction: row, categoryId: category.id)],
+          rows: [
+            StatementAcceptedRow(transaction: row, categoryId: category.id),
+          ],
+          source: ImportSource.ofx,
         );
 
         expect(result.postedCount, 1);
@@ -264,22 +270,23 @@ void main() {
       'one row failing to post does not block the others, and the failed row is not recorded',
       () async {
         final category = (await ledgerRepository.watchCategories().first).first;
-        final badRow = ParsedOfxTransaction(
+        final badRow = ParsedStatementTransaction(
           transactionDate: DateTime(2026, 1, 6),
           amountMinor: 0,
           direction: TransactionDirection.moneyOut,
           description: 'Bad Row',
           currency: 'USD',
-          fitid: 'BAD-1',
+          externalReferenceId: 'BAD-1',
         );
         final goodRow = transaction(fitid: 'GOOD-1', description: 'Good Row');
 
         final result = await importRepository.postAcceptedRows(
           financialAccountId: accountId,
           rows: [
-            OfxAcceptedRow(transaction: badRow, categoryId: category.id),
-            OfxAcceptedRow(transaction: goodRow, categoryId: category.id),
+            StatementAcceptedRow(transaction: badRow, categoryId: category.id),
+            StatementAcceptedRow(transaction: goodRow, categoryId: category.id),
           ],
+          source: ImportSource.ofx,
         );
 
         expect(result.postedCount, 1);
@@ -310,7 +317,10 @@ void main() {
 
         final result = await importRepository.postAcceptedRows(
           financialAccountId: accountId,
-          rows: [OfxAcceptedRow(transaction: row, categoryId: category.id)],
+          rows: [
+            StatementAcceptedRow(transaction: row, categoryId: category.id),
+          ],
+          source: ImportSource.ofx,
         );
 
         expect(result.postedCount, 1);
@@ -322,18 +332,21 @@ void main() {
       'a foreign-currency row posts through the existing provisional-entry path',
       () async {
         final category = (await ledgerRepository.watchCategories().first).first;
-        final row = ParsedOfxTransaction(
+        final row = ParsedStatementTransaction(
           transactionDate: DateTime(2026, 1, 7),
           amountMinor: 4321,
           direction: TransactionDirection.moneyOut,
           description: 'Foreign currency row',
           currency: 'EUR', // seeded account's group currency is USD
-          fitid: 'FX-1',
+          externalReferenceId: 'FX-1',
         );
 
         final result = await importRepository.postAcceptedRows(
           financialAccountId: accountId,
-          rows: [OfxAcceptedRow(transaction: row, categoryId: category.id)],
+          rows: [
+            StatementAcceptedRow(transaction: row, categoryId: category.id),
+          ],
+          source: ImportSource.ofx,
         );
 
         expect(result.postedCount, 1);
@@ -349,5 +362,78 @@ void main() {
         expect(duplicates, {0});
       },
     );
+  });
+
+  group('CSV import profiles', () {
+    const mapping = CsvColumnMapping(
+      hasHeaderRow: true,
+      dateColumnIndex: 0,
+      datePattern: 'dd/MM/yyyy',
+      descriptionColumnIndexes: [1],
+      amountConvention: CsvAmountConvention.signedColumn,
+      signedAmountColumnIndex: 2,
+      currency: 'USD',
+    );
+    const headerRow = ['Date', 'Description', 'Amount'];
+
+    test(
+      'a saved profile is found by an exact (normalized) header match',
+      () async {
+        await importRepository.saveProfile(
+          name: 'My Bank',
+          mapping: mapping,
+          headerRow: headerRow,
+        );
+
+        final found = await importRepository.findProfileForHeaderRow([
+          ' date ',
+          'DESCRIPTION',
+          'amount',
+        ]);
+
+        expect(found, isNotNull);
+        expect(found!.name, 'My Bank');
+        expect(found.mapping.dateColumnIndex, 0);
+        expect(found.mapping.datePattern, 'dd/MM/yyyy');
+        expect(found.mapping.currency, 'USD');
+      },
+    );
+
+    test('a file with a differing header row does not match', () async {
+      await importRepository.saveProfile(
+        name: 'My Bank',
+        mapping: mapping,
+        headerRow: headerRow,
+      );
+
+      final found = await importRepository.findProfileForHeaderRow([
+        'Date',
+        'Memo',
+        'Amount',
+        'Balance',
+      ]);
+
+      expect(found, isNull);
+    });
+
+    test('rename and delete are reflected in watchProfiles()', () async {
+      await importRepository.saveProfile(
+        name: 'My Bank',
+        mapping: mapping,
+        headerRow: headerRow,
+      );
+      final saved = (await importRepository.watchProfiles().first).single;
+
+      await importRepository.renameProfile(
+        id: saved.id,
+        newName: 'Renamed Bank',
+      );
+      final renamed = (await importRepository.watchProfiles().first).single;
+      expect(renamed.name, 'Renamed Bank');
+
+      await importRepository.deleteProfile(saved.id);
+      final afterDelete = await importRepository.watchProfiles().first;
+      expect(afterDelete, isEmpty);
+    });
   });
 }

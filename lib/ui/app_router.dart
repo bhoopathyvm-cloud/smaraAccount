@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/repositories/ledger_repository.dart';
-import '../data/repositories/ofx_import_repository.dart';
 import '../data/repositories/settings_repository.dart';
+import '../data/repositories/statement_import_repository.dart';
 import '../domain/models/home_overview.dart';
 import 'core/app_shell.dart';
 import 'features/account_management/view_models/account_management_view_model.dart';
@@ -15,8 +15,6 @@ import 'features/home/view_models/home_view_model.dart';
 import 'features/home/views/home_view.dart';
 import 'features/migration/view_models/key_loss_migration_view_model.dart';
 import 'features/migration/views/key_loss_migration_view.dart';
-import 'features/ofx_import/view_models/ofx_import_view_model.dart';
-import 'features/ofx_import/views/ofx_import_view.dart';
 import 'features/onboarding/view_models/currency_backfill_view_model.dart';
 import 'features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'features/onboarding/views/currency_backfill_view.dart';
@@ -34,6 +32,8 @@ import 'features/settings/view_models/settings_view_model.dart';
 import 'features/settings/views/settings_view.dart';
 import 'features/settle_pending_transfer/view_models/settle_pending_transfer_view_model.dart';
 import 'features/settle_pending_transfer/views/settle_pending_transfer_view.dart';
+import 'features/statement_import/view_models/statement_import_view_model.dart';
+import 'features/statement_import/views/statement_import_view.dart';
 import 'features/summary/view_models/summary_view_model.dart';
 import 'features/summary/views/summary_view.dart';
 import 'features/transfer/view_models/transfer_view_model.dart';
@@ -62,7 +62,7 @@ const _currencyBackfillPath = '/currency-backfill';
 ///    session, then the app shell is reachable
 GoRouter buildAppRouter(
   LedgerRepository ledgerRepository,
-  OfxImportRepository ofxImportRepository,
+  StatementImportRepository statementImportRepository,
 ) {
   var hasVerifiedThisSession = false;
 
@@ -181,10 +181,10 @@ GoRouter buildAppRouter(
         ),
       ),
       GoRoute(
-        path: '/import-ofx',
-        builder: (context, state) => OfxImportView(
-          viewModel: OfxImportViewModel(
-            importRepository: ofxImportRepository,
+        path: '/import-statement',
+        builder: (context, state) => StatementImportView(
+          viewModel: StatementImportViewModel(
+            importRepository: statementImportRepository,
             ledgerRepository: ledgerRepository,
             initialFinancialAccountId: state.uri.queryParameters['accountId'],
           ),
@@ -248,7 +248,7 @@ GoRouter buildAppRouter(
                 builder: (context, state) => AccountManagementView(
                   viewModel: context.read<AccountManagementViewModel>(),
                   onTransfer: () => context.push('/transfer'),
-                  onImport: () => context.push('/import-ofx'),
+                  onImport: () => context.push('/import-statement'),
                 ),
               ),
             ],
@@ -304,8 +304,8 @@ RegisterView _buildRegister(BuildContext context, GoRouterState state) {
     onImport: () {
       final selectedAccountId = viewModel.selectedAccountId;
       final location = selectedAccountId == null
-          ? '/import-ofx'
-          : '/import-ofx?accountId=${Uri.encodeQueryComponent(selectedAccountId)}';
+          ? '/import-statement'
+          : '/import-statement?accountId=${Uri.encodeQueryComponent(selectedAccountId)}';
       context.push(location);
     },
   );
