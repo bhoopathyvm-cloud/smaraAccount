@@ -26,6 +26,10 @@ class AccountManagementView extends StatelessWidget {
   final VoidCallback? onTransfer;
   final VoidCallback? onImport;
 
+  // These dialog-local controllers are intentionally never disposed: the
+  // AlertDialog's exit transition keeps its TextFields mounted (and
+  // rebuilding) for a few frames after showDialog's Future resolves, so
+  // disposing immediately after await races that animation and throws.
   Future<void> _showCreateDialog(BuildContext context) async {
     final nameController = TextEditingController();
     final balanceController = TextEditingController();
@@ -138,8 +142,6 @@ class AccountManagementView extends StatelessWidget {
         },
       ),
     );
-    nameController.dispose();
-    balanceController.dispose();
   }
 
   Future<void> _showRenameAccountDialog(
@@ -174,7 +176,6 @@ class AccountManagementView extends StatelessWidget {
         ],
       ),
     );
-    controller.dispose();
   }
 
   Future<void> _showRenameGroupDialog(
@@ -250,8 +251,6 @@ class AccountManagementView extends StatelessWidget {
         ],
       ),
     );
-    controller.dispose();
-    currencyController.dispose();
   }
 
   Future<void> _showCreateGroupDialog(BuildContext context) async {
@@ -352,8 +351,6 @@ class AccountManagementView extends StatelessWidget {
         ),
       ),
     );
-    nameController.dispose();
-    currencyController.dispose();
   }
 
   Future<void> _confirmArchiveGroup(

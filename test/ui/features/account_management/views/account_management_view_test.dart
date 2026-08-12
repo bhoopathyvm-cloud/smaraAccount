@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -136,24 +134,16 @@ void main() {
   });
 
   testWidgets(
-    'Create group dialog creates a new group with name, kind, and currency',
+    'Create group dialog creates a new group with name, kind, and currency, '
+    'and closes cleanly through the exit animation',
     (tester) async {
-      // The repository call's Future is left uncompleted deliberately: the
-      // dialog disposes its TextEditingControllers as soon as that Future
-      // resolves and the dialog pops, and rendering any further frame
-      // against an already-disposed controller mid-exit-transition is a
-      // pre-existing dispose-timing quirk this dialog shares with the
-      // "Create account" one (not something introduced here). Never
-      // completing the Future keeps the dialog open, which is enough to
-      // verify the submission call was made with the right arguments.
-      final neverCompletes = Completer<AccountGroup>();
       when(
         repository.createAccountGroup(
           name: anyNamed('name'),
           kind: anyNamed('kind'),
           currency: anyNamed('currency'),
         ),
-      ).thenAnswer((_) => neverCompletes.future);
+      ).thenAnswer((_) async => businessGroup);
 
       final viewModel = AccountManagementViewModel(
         ledgerRepository: repository,
@@ -174,8 +164,13 @@ void main() {
       await tester.tap(find.widgetWithText(ChoiceChip, 'EUR'));
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(ElevatedButton, 'Create'));
-      await tester.pump();
+      // Regression guard: pumpAndSettle runs every frame of the dialog's
+      // exit transition. If the controllers backing its TextFields were
+      // disposed before that transition finishes, one of those frames
+      // throws "A TextEditingController was used after being disposed."
+      await tester.pumpAndSettle();
 
+      expect(tester.takeException(), isNull);
       verify(
         repository.createAccountGroup(
           name: 'Business',
@@ -183,8 +178,59 @@ void main() {
           currency: 'EUR',
         ),
       ).called(1);
+      expect(find.text('Create group'), findsNothing);
     },
   );
+
+  testWidgets('Create account dialog creates a new account and closes cleanly '
+      'through the exit animation', (tester) async {
+    when(
+      repository.createFinancialAccount(
+        name: anyNamed('name'),
+        type: anyNamed('type'),
+        groupId: anyNamed('groupId'),
+        openingBalanceMinor: anyNamed('openingBalanceMinor'),
+      ),
+    ).thenAnswer(
+      (_) async => const Account(
+        id: 'asset-3',
+        name: 'Brokerage',
+        type: AccountType.asset,
+        archived: false,
+        groupId: 'group-cash',
+      ),
+    );
+
+    final viewModel = AccountManagementViewModel(ledgerRepository: repository);
+    addTearDown(viewModel.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+    );
+    await tester.pump();
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField).first, 'Brokerage');
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Create'));
+    // Regression guard: pumpAndSettle runs every frame of the dialog's
+    // exit transition. If the controllers backing its TextFields were
+    // disposed before that transition finishes, one of those frames
+    // throws "A TextEditingController was used after being disposed."
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    verify(
+      repository.createFinancialAccount(
+        name: 'Brokerage',
+        type: AccountType.asset,
+        groupId: 'group-cash',
+        openingBalanceMinor: null,
+      ),
+    ).called(1);
+    expect(find.text('Create account'), findsNothing);
+  });
 
   testWidgets(
     'Create group dialog disables Create until the currency is a valid 3-letter code',
