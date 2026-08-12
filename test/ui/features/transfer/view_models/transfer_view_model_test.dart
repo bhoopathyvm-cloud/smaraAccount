@@ -513,4 +513,86 @@ void main() {
       );
     },
   );
+
+  group('impliedRate', () {
+    Future<TransferViewModel> buildCrossCurrencyViewModel() async {
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([checking, savings, eurSavings]));
+      when(
+        repository.watchAccountGroups(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
+
+      final viewModel = buildViewModel();
+      await Future<void>.delayed(Duration.zero);
+      viewModel.setFromAccountId('asset-1');
+      viewModel.setToAccountId('asset-3');
+      return viewModel;
+    }
+
+    test(
+      'with no fee, is the destination amount divided by the full amount',
+      () async {
+        final viewModel = await buildCrossCurrencyViewModel();
+        addTearDown(viewModel.dispose);
+
+        viewModel.setAmountMinor(10000);
+        viewModel.setDestinationAmountMinor(9114);
+
+        expect(viewModel.impliedRate, closeTo(0.9114, 1e-9));
+      },
+    );
+
+    test('with a fee that is charged on top of the amount (not deducted), '
+        'is unaffected by the fee', () async {
+      final viewModel = await buildCrossCurrencyViewModel();
+      addTearDown(viewModel.dispose);
+
+      viewModel.setAmountMinor(10000);
+      viewModel.setDestinationAmountMinor(9114);
+      viewModel.setFeeAmountMinor(162);
+      viewModel.setFeeCategoryId('expense-1');
+      // feeDeductedFromAmount left at its default of false.
+
+      expect(viewModel.impliedRate, closeTo(0.9114, 1e-9));
+    });
+
+    test(
+      'with a deducted fee, is the destination amount divided by the '
+      'amount actually converted (amount minus fee), not the full amount',
+      () async {
+        final viewModel = await buildCrossCurrencyViewModel();
+        addTearDown(viewModel.dispose);
+
+        // 100.00 sent, 1.62 fee carved out before conversion, 91.14
+        // received: the user's real rate is 91.14 / 98.38, not 91.14 / 100.
+        viewModel.setAmountMinor(10000);
+        viewModel.setDestinationAmountMinor(9114);
+        viewModel.setFeeAmountMinor(162);
+        viewModel.setFeeCategoryId('expense-1');
+        viewModel.setFeeDeductedFromAmount(true);
+
+        expect(viewModel.impliedRate, closeTo(9114 / 9838, 1e-9));
+        expect(viewModel.impliedRate, isNot(closeTo(0.9114, 1e-9)));
+      },
+    );
+
+    test('with a deducted fee greater than or equal to the amount, is null '
+        'rather than dividing by zero or a negative amount', () async {
+      final viewModel = await buildCrossCurrencyViewModel();
+      addTearDown(viewModel.dispose);
+
+      viewModel.setAmountMinor(10000);
+      viewModel.setDestinationAmountMinor(9114);
+      viewModel.setFeeAmountMinor(10000);
+      viewModel.setFeeCategoryId('expense-1');
+      viewModel.setFeeDeductedFromAmount(true);
+
+      expect(viewModel.impliedRate, isNull);
+    });
+  });
 }
