@@ -265,6 +265,33 @@ void main() {
     );
 
     testWidgets(
+      'selecting a single column via the real dropdown does not throw or '
+      'overflow before the rest of the mapping is complete',
+      (tester) async {
+        await pumpAtCsvStep(tester);
+
+        // Reproduces the reported bug: pick just the date column (via the
+        // actual dropdown, not driving the ViewModel directly) while the
+        // amount convention still defaults to "Signed amount column" and
+        // no amount column is chosen yet. The live preview re-evaluates
+        // on this rebuild; it must not throw the CsvColumnMapping
+        // constructor's amount-column assertion. "Date column" is the
+        // first int-typed dropdown on the screen (the amount-convention
+        // dropdown is CsvAmountConvention-typed, not int).
+        await tester.tap(find.byType(DropdownButtonFormField<int>).first);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Date').last);
+        await tester.pumpAndSettle();
+
+        expect(tester.takeException(), isNull);
+        final continueButton = tester.widget<ElevatedButton>(
+          find.widgetWithText(ElevatedButton, 'Continue'),
+        );
+        expect(continueButton.onPressed, isNull);
+      },
+    );
+
+    testWidgets(
       'a matching profile pre-fills the mapping screen, and confirming it '
       'skips to preview without re-mapping',
       (tester) async {
