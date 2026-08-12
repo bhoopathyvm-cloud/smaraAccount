@@ -234,12 +234,16 @@ class StatementImportViewModel extends ChangeNotifier {
     }
   }
 
+  /// Returns null for an incomplete mapping rather than constructing (and
+  /// having [CsvColumnMapping]'s constructor assert on) one - reuses
+  /// [canConfirmCsvMapping]'s validity check so this can never throw for a
+  /// mapping the user simply hasn't finished yet (e.g. the live preview
+  /// re-evaluates this on every keystroke).
   CsvColumnMapping? _buildCsvMapping() {
+    if (!canConfirmCsvMapping) return null;
     final currency = csvCurrency;
     final dateIndex = csvDateColumnIndex;
-    if (currency == null || currency.isEmpty || dateIndex == null) {
-      return null;
-    }
+    if (currency == null || dateIndex == null) return null;
     return CsvColumnMapping(
       hasHeaderRow: csvHasHeaderRow,
       dateColumnIndex: dateIndex,

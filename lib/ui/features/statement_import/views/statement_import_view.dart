@@ -393,20 +393,28 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
               },
             ),
           const SizedBox(height: AppSpacing.large),
-          SegmentedButton<CsvAmountConvention>(
-            segments: const [
-              ButtonSegment(
+          // A DropdownButtonFormField, not a SegmentedButton: the segment
+          // labels are long enough ("Debit / credit columns") to overflow
+          // a SegmentedButton's fixed-width row on a narrower window,
+          // and a dropdown matches every other field on this screen.
+          DropdownButtonFormField<CsvAmountConvention>(
+            initialValue: viewModel.csvAmountConvention,
+            decoration: const InputDecoration(labelText: 'Amount convention'),
+            items: const [
+              DropdownMenuItem(
                 value: CsvAmountConvention.signedColumn,
-                label: Text('Signed amount'),
+                child: Text('Signed amount column'),
               ),
-              ButtonSegment(
+              DropdownMenuItem(
                 value: CsvAmountConvention.debitCreditColumns,
-                label: Text('Debit / credit columns'),
+                child: Text('Separate debit / credit columns'),
               ),
             ],
-            selected: {viewModel.csvAmountConvention},
-            onSelectionChanged: (selection) =>
-                viewModel.updateCsvMapping(amountConvention: selection.first),
+            onChanged: (value) {
+              if (value != null) {
+                viewModel.updateCsvMapping(amountConvention: value);
+              }
+            },
           ),
           const SizedBox(height: AppSpacing.medium),
           if (viewModel.csvAmountConvention == CsvAmountConvention.signedColumn)
