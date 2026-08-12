@@ -15,11 +15,13 @@ class RegisterView extends StatelessWidget {
     required this.viewModel,
     this.onAddTransaction,
     this.onTransfer,
+    this.onImport,
   });
 
   final RegisterViewModel viewModel;
   final VoidCallback? onAddTransaction;
   final VoidCallback? onTransfer;
+  final VoidCallback? onImport;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,16 @@ class RegisterView extends StatelessWidget {
         builder: (context, _) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            FloatingActionButton(
+              heroTag: 'register-import-fab',
+              onPressed: viewModel.isSelectedAccountArchived ? null : onImport,
+              backgroundColor: AppColors.primary,
+              child: const Icon(
+                TablerIcons.fileImport,
+                color: AppColors.cardBackground,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.medium),
             FloatingActionButton(
               heroTag: 'register-transfer-fab',
               onPressed: viewModel.isSelectedAccountArchived

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'data/database/app_database.dart';
 import 'data/repositories/ledger_repository.dart';
+import 'data/repositories/ofx_import_repository.dart';
 import 'ui/app_router.dart';
 import 'ui/core/app_theme.dart';
 import 'ui/features/account_management/view_models/account_management_view_model.dart';
@@ -30,6 +31,12 @@ class SmaraAccountingApp extends StatelessWidget {
         ),
         ProxyProvider<AppDatabase, LedgerRepository>(
           update: (_, db, _) => LedgerRepository(database: db),
+        ),
+        ProxyProvider2<AppDatabase, LedgerRepository, OfxImportRepository>(
+          update: (_, db, ledgerRepository, _) => OfxImportRepository(
+            database: db,
+            ledgerRepository: ledgerRepository,
+          ),
         ),
         ChangeNotifierProxyProvider<LedgerRepository, RegisterViewModel>(
           create: (context) => RegisterViewModel(
@@ -95,7 +102,10 @@ class SmaraAccountingApp extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          final router = buildAppRouter(context.read<LedgerRepository>());
+          final router = buildAppRouter(
+            context.read<LedgerRepository>(),
+            context.read<OfxImportRepository>(),
+          );
           return MaterialApp.router(
             title: 'Smara Accounting',
             theme: buildAppTheme(),

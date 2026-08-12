@@ -120,7 +120,7 @@ void main() {
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
         ),
-      ).thenAnswer((_) async {});
+      ).thenAnswer((_) async => 'entry-fee');
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
@@ -374,7 +374,7 @@ void main() {
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
         ),
-      ).thenAnswer((_) async {});
+      ).thenAnswer((_) async => 'entry-fee');
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
@@ -445,7 +445,7 @@ void main() {
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
         ),
-      ).thenAnswer((_) async {});
+      ).thenAnswer((_) async => 'entry-fee');
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);

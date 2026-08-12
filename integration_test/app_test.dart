@@ -9,6 +9,7 @@ import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/ofx_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/integrity_event.dart';
 import 'package:smara_accounting/ui/app_router.dart';
@@ -98,7 +99,7 @@ void main() {
     await db.close();
   });
 
-  Widget buildApp() => buildAppFor(repository);
+  Widget buildApp() => buildAppFor(repository, db);
 
   testWidgets('record money in updates the register and running balance', (
     tester,
@@ -461,7 +462,7 @@ void main() {
       // First launch: walk the real onboarding UI. The continue button
       // only renders once the ViewModel's async key generation has
       // actually finished, unlike the bare presence of RecoveryPhraseView.
-      await pumpApp(tester, buildAppFor(firstInstallRepository));
+      await pumpApp(tester, buildAppFor(firstInstallRepository, freshDb));
       final continueButton = find.text('I\'ve saved my recovery phrase');
       await pumpUntilFound(tester, continueButton);
       expect(continueButton, findsOneWidget);
@@ -554,7 +555,7 @@ void main() {
           secureStorage: InMemorySecureKeyStorage(),
         ),
       );
-      await pumpApp(tester, buildAppFor(reinstalledRepository));
+      await pumpApp(tester, buildAppFor(reinstalledRepository, freshDb));
       await pumpUntilFound(tester, find.text('Restore signing key'));
       expect(find.text('Restore signing key'), findsOneWidget);
 
@@ -597,7 +598,7 @@ void main() {
           secureStorage: InMemorySecureKeyStorage(),
         ),
       );
-      await pumpApp(tester, buildAppFor(postLossRepository));
+      await pumpApp(tester, buildAppFor(postLossRepository, db));
       await pumpUntilFound(tester, find.text('Restore signing key'));
       expect(find.text('Restore signing key'), findsOneWidget);
 
@@ -860,7 +861,11 @@ void main() {
   );
 }
 
-Widget buildAppFor(LedgerRepository repository) {
+Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
+  final ofxImportRepository = OfxImportRepository(
+    database: database,
+    ledgerRepository: repository,
+  );
   return MultiProvider(
     providers: [
       Provider<LedgerRepository>.value(value: repository),
@@ -892,7 +897,7 @@ Widget buildAppFor(LedgerRepository repository) {
       builder: (context) {
         return MaterialApp.router(
           theme: buildAppTheme(),
-          routerConfig: buildAppRouter(repository),
+          routerConfig: buildAppRouter(repository, ofxImportRepository),
         );
       },
     ),

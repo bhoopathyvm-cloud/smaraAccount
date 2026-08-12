@@ -15,5 +15,12 @@
 	<true/>
 	<key>com.apple.security.network.server</key>
 	<true/>
+	<!-- Required by file_picker (ofx-transaction-import): its macOS plugin
+	     checks for this entitlement key before opening NSOpenPanel even
+	     though App Sandbox is off above - without it, pickFiles() returns
+	     a FlutterError("ENTITLEMENT_NOT_FOUND") instead of showing the
+	     dialog. -->
+	<key>com.apple.security.files.user-selected.read-only</key>
+	<true/>
 </dict>
 </plist>

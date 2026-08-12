@@ -1143,7 +1143,7 @@ class LedgerRepository {
   /// When [nativeCurrency] is null or matches the account's own currency,
   /// this is an ordinary same-currency transaction and
   /// [accountCurrencyAmountMinor] must not be supplied.
-  Future<void> recordTransaction({
+  Future<String> recordTransaction({
     required int amountMinor,
     required TransactionDirection direction,
     required String categoryId,
@@ -1177,7 +1177,7 @@ class LedgerRepository {
     };
 
     if (!isForeignCurrency) {
-      await _appendSignedEntry(
+      return _appendSignedEntry(
         transactionDate: _dateOnly(transactionDate),
         description: description,
         reversesEntryId: null,
@@ -1194,7 +1194,6 @@ class LedgerRepository {
           ),
         ],
       );
-      return;
     }
 
     if (accountCurrencyAmountMinor != null) {
@@ -1204,7 +1203,7 @@ class LedgerRepository {
           'got $accountCurrencyAmountMinor.',
         );
       }
-      await _appendSignedEntry(
+      return _appendSignedEntry(
         transactionDate: _dateOnly(transactionDate),
         description: description,
         reversesEntryId: null,
@@ -1221,10 +1220,9 @@ class LedgerRepository {
           ),
         ],
       );
-      return;
     }
 
-    await _postProvisionalEntry(
+    return _postProvisionalEntry(
       kind: PendingTransferKind.foreignTransaction,
       sourceAccountId: financialAccountId,
       currency: nativeCurrency,
@@ -1329,7 +1327,7 @@ class LedgerRepository {
   /// nests the inner [_appendSignedEntry] transaction inside this one, so
   /// either both writes land or neither does (multi-currency-support
   /// design.md Decision 4).
-  Future<void> _postProvisionalEntry({
+  Future<String> _postProvisionalEntry({
     required PendingTransferKind kind,
     required String sourceAccountId,
     required String currency,
@@ -1340,7 +1338,7 @@ class LedgerRepository {
     required DateTime transactionDate,
     String? description,
   }) async {
-    await _db.transaction(() async {
+    return _db.transaction(() async {
       final entryId = await _appendSignedEntry(
         transactionDate: _dateOnly(transactionDate),
         description: description,
@@ -1372,6 +1370,7 @@ class LedgerRepository {
               initiatedAt: DateTime.now(),
             ),
           );
+      return entryId;
     });
   }
 

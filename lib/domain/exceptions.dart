@@ -71,3 +71,16 @@ class PendingTransferException implements Exception {
   @override
   String toString() => message;
 }
+
+/// Thrown when a selected file cannot be recognized as an OFX document at
+/// all (ofx-transaction-import). Individual unparseable transaction rows
+/// within an otherwise-recognized file are reported as [OfxSkippedRow]s
+/// instead, not by throwing this.
+class OfxParseException implements Exception {
+  OfxParseException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}

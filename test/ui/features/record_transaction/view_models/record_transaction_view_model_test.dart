@@ -66,7 +66,7 @@ void main() {
         transactionDate: anyNamed('transactionDate'),
         description: anyNamed('description'),
       ),
-    ).thenAnswer((_) async {});
+    ).thenAnswer((_) async => 'entry-1');
 
     final result = await viewModel.submit();
 

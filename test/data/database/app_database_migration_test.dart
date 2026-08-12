@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' hide isNull;
 import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
@@ -234,7 +235,142 @@ sqlite3.Database _openV4Database() {
   return db;
 }
 
+/// Built by taking [_openV4Database] and hand-applying the schemaVersion-5
+/// migration SQL (`account_groups.archived_at`) so onUpgrade(5, 6) can be
+/// exercised for real for the ofx-transaction-import migration below.
+sqlite3.Database _openV5Database() {
+  final db = _openV4Database();
+  db.execute('''
+    ALTER TABLE account_groups ADD COLUMN archived_at INTEGER NULL;
+    PRAGMA user_version = 5;
+  ''');
+  return db;
+}
+
 void main() {
+  group('onUpgrade from schemaVersion 5', () {
+    test(
+      'existing database upgrades cleanly and ofx_import_records starts empty',
+      () async {
+        final v5 = _openV5Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v5));
+        addTearDown(db.close);
+
+        final rows = await db.select(db.ofxImportRecords).get();
+        expect(rows, isEmpty);
+      },
+    );
+
+    test(
+      'a duplicate (financial_account_id, fitid) pair is rejected by the unique index',
+      () async {
+        final v5 = _openV5Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v5));
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await repository.generateFirstIdentity();
+        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final account = (await repository.watchFinancialAccounts().first).first;
+        final category = (await repository.watchCategories().first).first;
+        await repository.recordTransaction(
+          amountMinor: 100,
+          direction: TransactionDirection.moneyOut,
+          categoryId: category.id,
+          financialAccountId: account.id,
+          transactionDate: DateTime(2026, 1, 1),
+        );
+        final entryId =
+            (await repository.watchEntriesForAccount(account.id).first)
+                .first
+                .id;
+
+        await db
+            .into(db.ofxImportRecords)
+            .insert(
+              OfxImportRecordsCompanion.insert(
+                financialAccountId: account.id,
+                fitid: const Value('FITID-1'),
+                journalEntryId: entryId,
+                importedAt: DateTime.now(),
+              ),
+            );
+
+        expect(
+          () => db
+              .into(db.ofxImportRecords)
+              .insert(
+                OfxImportRecordsCompanion.insert(
+                  financialAccountId: account.id,
+                  fitid: const Value('FITID-1'),
+                  journalEntryId: entryId,
+                  importedAt: DateTime.now(),
+                ),
+              ),
+          throwsA(anything),
+        );
+      },
+    );
+
+    test(
+      'two rows with a NULL fitid for the same account do not conflict',
+      () async {
+        final v5 = _openV5Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v5));
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await repository.generateFirstIdentity();
+        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final account = (await repository.watchFinancialAccounts().first).first;
+        final category = (await repository.watchCategories().first).first;
+        await repository.recordTransaction(
+          amountMinor: 100,
+          direction: TransactionDirection.moneyOut,
+          categoryId: category.id,
+          financialAccountId: account.id,
+          transactionDate: DateTime(2026, 1, 1),
+        );
+        final entryId =
+            (await repository.watchEntriesForAccount(account.id).first)
+                .first
+                .id;
+
+        await db
+            .into(db.ofxImportRecords)
+            .insert(
+              OfxImportRecordsCompanion.insert(
+                financialAccountId: account.id,
+                fallbackMatchKey: const Value('2026-01-01|100|moneyOut|Row A'),
+                journalEntryId: entryId,
+                importedAt: DateTime.now(),
+              ),
+            );
+        await db
+            .into(db.ofxImportRecords)
+            .insert(
+              OfxImportRecordsCompanion.insert(
+                financialAccountId: account.id,
+                fallbackMatchKey: const Value('2026-01-02|200|moneyOut|Row B'),
+                journalEntryId: entryId,
+                importedAt: DateTime.now(),
+              ),
+            );
+
+        final rows = await db.select(db.ofxImportRecords).get();
+        expect(rows, hasLength(2));
+      },
+    );
+  });
+
   group('onUpgrade from schemaVersion 4', () {
     test(
       'existing account_groups rows land with archived_at = NULL (not archived)',

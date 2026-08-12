@@ -19,10 +19,12 @@ class AccountManagementView extends StatelessWidget {
     super.key,
     required this.viewModel,
     this.onTransfer,
+    this.onImport,
   });
 
   final AccountManagementViewModel viewModel;
   final VoidCallback? onTransfer;
+  final VoidCallback? onImport;
 
   Future<void> _showCreateDialog(BuildContext context) async {
     final nameController = TextEditingController();
@@ -492,6 +494,11 @@ class AccountManagementView extends StatelessWidget {
             tooltip: 'Transfer',
             onPressed: onTransfer,
             icon: const Icon(TablerIcons.arrowsExchange),
+          ),
+          IconButton(
+            tooltip: 'Import OFX',
+            onPressed: onImport,
+            icon: const Icon(TablerIcons.fileImport),
           ),
         ],
       ),
