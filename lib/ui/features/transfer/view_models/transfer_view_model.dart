@@ -164,6 +164,11 @@ class TransferViewModel extends ChangeNotifier {
   /// for a cross-currency transfer. Uses raw minor units directly: this
   /// app's `formatAmountMinor` treats every currency as two-decimal, so
   /// the minor-unit ratio already equals the major-unit ratio.
+  ///
+  /// When [feeDeductedFromAmount] is set, only `amountMinor - feeAmountMinor`
+  /// is actually converted (mirrors the `transferAmountMinor` computation in
+  /// [submit]) - dividing by the full entered amount here would understate
+  /// the rate the user is actually getting.
   double? get impliedRate {
     final amount = _amountMinor;
     final destination = _destinationAmountMinor;
@@ -173,7 +178,12 @@ class TransferViewModel extends ChangeNotifier {
         destination == null) {
       return null;
     }
-    return destination / amount;
+    final feeAmountMinor = _feeAmountMinor;
+    final convertedAmount = _feeDeductedFromAmount && feeAmountMinor != null
+        ? amount - feeAmountMinor
+        : amount;
+    if (convertedAmount <= 0) return null;
+    return destination / convertedAmount;
   }
 
   int _referenceRateFetchGeneration = 0;
