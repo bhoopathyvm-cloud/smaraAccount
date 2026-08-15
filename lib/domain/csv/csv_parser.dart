@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:csv/csv.dart';
-import 'package:csv/csv_settings_autodetection.dart';
 
 import '../exceptions.dart';
 import '../models/transaction_direction.dart';
@@ -25,12 +24,7 @@ List<List<String>> readCsvRows(List<int> bytes) {
 
   final List<List<dynamic>> rawRows;
   try {
-    rawRows = const CsvToListConverter(
-      shouldParseNumbers: false,
-      csvSettingsDetector: FirstOccurrenceSettingsDetector(
-        eols: ['\r\n', '\n'],
-      ),
-    ).convert(content);
+    rawRows = const CsvDecoder().convert(content);
   } catch (error) {
     throw CsvParseException('Could not read this file as CSV: $error');
   }
