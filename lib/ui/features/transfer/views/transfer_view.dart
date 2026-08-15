@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/models/account.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/entity_picker_field.dart';
+import '../../../core/money_amount_field.dart';
 import '../view_models/transfer_view_model.dart';
 
 class TransferView extends StatefulWidget {
@@ -59,72 +62,46 @@ class _TransferViewState extends State<TransferView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                DropdownButtonFormField<String>(
-                  initialValue: viewModel.fromAccountId,
-                  decoration: const InputDecoration(labelText: 'From account'),
-                  items: [
-                    for (final account in viewModel.accounts)
-                      DropdownMenuItem(
-                        value: account.id,
-                        child: Text(account.name),
-                      ),
-                  ],
+                EntityPickerField<Account>(
+                  labelText: 'From account',
+                  items: viewModel.accounts,
+                  idOf: (account) => account.id,
+                  labelOf: (account) => account.name,
+                  value: viewModel.fromAccountId,
                   onChanged: viewModel.setFromAccountId,
                 ),
                 const SizedBox(height: AppSpacing.large),
-                DropdownButtonFormField<String>(
+                EntityPickerField<Account>(
                   key: ValueKey(viewModel.fromAccountId),
-                  initialValue: viewModel.toAccountId,
-                  decoration: const InputDecoration(labelText: 'To account'),
+                  labelText: 'To account',
                   items: [
                     for (final account in viewModel.accounts)
-                      if (account.id != viewModel.fromAccountId)
-                        DropdownMenuItem(
-                          value: account.id,
-                          child: Text(account.name),
-                        ),
+                      if (account.id != viewModel.fromAccountId) account,
                   ],
+                  idOf: (account) => account.id,
+                  labelOf: (account) => account.name,
+                  value: viewModel.toAccountId,
                   onChanged: viewModel.setToAccountId,
                 ),
                 const SizedBox(height: AppSpacing.large),
-                TextField(
+                MoneyAmountField(
                   controller: _amountController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Amount',
-                    suffixText: viewModel.currencyFor(viewModel.fromAccountId),
-                  ),
-                  onChanged: (text) {
-                    final amount = double.tryParse(text);
-                    viewModel.setAmountMinor(
-                      amount == null ? null : (amount * 100).round(),
-                    );
-                  },
+                  labelText: 'Amount',
+                  suffixText: viewModel.currencyFor(viewModel.fromAccountId),
+                  onChangedMinor: viewModel.setAmountMinor,
                 ),
                 if (viewModel.isCrossCurrency) ...[
                   const SizedBox(height: AppSpacing.large),
-                  TextField(
+                  MoneyAmountField(
                     controller: _destinationAmountController,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: 'Destination amount (optional)',
-                      helperText:
-                          'Leave blank if the exchange rate isn\'t known '
-                          'yet - the transfer will be provisional until '
-                          'settled.',
-                      helperMaxLines: 2,
-                      suffixText: viewModel.currencyFor(viewModel.toAccountId),
-                    ),
-                    onChanged: (text) {
-                      final amount = double.tryParse(text);
-                      viewModel.setDestinationAmountMinor(
-                        amount == null ? null : (amount * 100).round(),
-                      );
-                    },
+                    labelText: 'Destination amount (optional)',
+                    helperText:
+                        'Leave blank if the exchange rate isn\'t known '
+                        'yet - the transfer will be provisional until '
+                        'settled.',
+                    helperMaxLines: 2,
+                    suffixText: viewModel.currencyFor(viewModel.toAccountId),
+                    onChangedMinor: viewModel.setDestinationAmountMinor,
                   ),
                   if (viewModel.referenceRate != null) ...[
                     const SizedBox(height: AppSpacing.small),
@@ -178,36 +155,20 @@ class _TransferViewState extends State<TransferView> {
                   style: AppTypography.metadata,
                 ),
                 const SizedBox(height: AppSpacing.medium),
-                TextField(
+                MoneyAmountField(
                   controller: _feeAmountController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Fee amount',
-                    suffixText: viewModel.currencyFor(viewModel.fromAccountId),
-                  ),
-                  onChanged: (text) {
-                    final amount = double.tryParse(text);
-                    viewModel.setFeeAmountMinor(
-                      amount == null ? null : (amount * 100).round(),
-                    );
-                  },
+                  labelText: 'Fee amount',
+                  suffixText: viewModel.currencyFor(viewModel.fromAccountId),
+                  onChangedMinor: viewModel.setFeeAmountMinor,
                 ),
                 if (viewModel.feeAmountMinor != null) ...[
                   const SizedBox(height: AppSpacing.large),
-                  DropdownButtonFormField<String>(
-                    initialValue: viewModel.feeCategoryId,
-                    decoration: const InputDecoration(
-                      labelText: 'Fee category',
-                    ),
-                    items: [
-                      for (final category in viewModel.expenseCategories)
-                        DropdownMenuItem(
-                          value: category.id,
-                          child: Text(category.name),
-                        ),
-                    ],
+                  EntityPickerField<Account>(
+                    labelText: 'Fee category',
+                    items: viewModel.expenseCategories,
+                    idOf: (category) => category.id,
+                    labelOf: (category) => category.name,
+                    value: viewModel.feeCategoryId,
                     onChanged: viewModel.setFeeCategoryId,
                   ),
                   const SizedBox(height: AppSpacing.large),

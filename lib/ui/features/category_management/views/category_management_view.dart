@@ -5,6 +5,7 @@ import '../../../../domain/models/account.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/destructive_confirmation.dart';
 import '../view_models/category_management_view_model.dart';
 
 /// Rename/add/archive categories. The destructive "Archive" action uses
@@ -144,13 +145,7 @@ class CategoryManagementView extends StatelessWidget {
                             ),
                             IntrinsicWidth(
                               child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: AppColors.signal,
-                                  side: const BorderSide(
-                                    color: AppColors.signal,
-                                    width: 1.5,
-                                  ),
-                                ),
+                                style: destructiveButtonStyle,
                                 onPressed: () =>
                                     viewModel.archiveCategory(category.id),
                                 child: const Text('Archive'),

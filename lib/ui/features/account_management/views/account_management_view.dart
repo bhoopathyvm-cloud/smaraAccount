@@ -7,6 +7,10 @@ import '../../../../domain/models/account_group.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/destructive_confirmation.dart';
+import '../../../core/entity_picker_field.dart';
+import '../../../core/money_amount_field.dart';
+import '../../../core/status_banner.dart';
 import '../view_models/account_management_view_model.dart';
 
 /// A few common ISO 4217 codes shown as quick picks, matching the same
@@ -35,6 +39,7 @@ class AccountManagementView extends StatelessWidget {
     final balanceController = TextEditingController();
     var type = AccountType.asset;
     String? groupId;
+    int? openingBalanceMinor;
 
     await showDialog<void>(
       context: context,
@@ -81,28 +86,20 @@ class AccountManagementView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: AppSpacing.medium),
-                  DropdownButtonFormField<String>(
+                  EntityPickerField<AccountGroup>(
                     key: ValueKey(type),
-                    initialValue: groupId,
-                    decoration: const InputDecoration(labelText: 'Group'),
-                    items: [
-                      for (final group in groups)
-                        DropdownMenuItem(
-                          value: group.id,
-                          child: Text(group.name),
-                        ),
-                    ],
+                    labelText: 'Group',
+                    items: groups,
+                    idOf: (group) => group.id,
+                    labelOf: (group) => group.name,
+                    value: groupId,
                     onChanged: (value) => groupId = value,
                   ),
                   const SizedBox(height: AppSpacing.medium),
-                  TextField(
+                  MoneyAmountField(
                     controller: balanceController,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    decoration: const InputDecoration(
-                      labelText: 'Opening balance (optional)',
-                    ),
+                    labelText: 'Opening balance (optional)',
+                    onChangedMinor: (value) => openingBalanceMinor = value,
                   ),
                 ],
               ),
@@ -118,18 +115,11 @@ class AccountManagementView extends StatelessWidget {
                     : () async {
                         final name = nameController.text.trim();
                         if (name.isEmpty) return;
-                        final balanceText = balanceController.text.trim();
-                        final balance = balanceText.isEmpty
-                            ? null
-                            : double.tryParse(balanceText);
-                        if (balanceText.isNotEmpty && balance == null) return;
                         final created = await viewModel.createAccount(
                           name: name,
                           type: type,
                           groupId: groupId!,
-                          openingBalanceMinor: balance == null
-                              ? null
-                              : (balance * 100).round(),
+                          openingBalanceMinor: openingBalanceMinor,
                         );
                         if (created && dialogContext.mounted) {
                           Navigator.of(dialogContext).pop();
@@ -357,31 +347,14 @@ class AccountManagementView extends StatelessWidget {
     BuildContext context,
     AccountGroup group,
   ) async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await confirmDestructiveAction(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Archive group?'),
-        content: Text(
+      title: 'Archive group?',
+      message:
           '${group.name} will no longer be offered when creating or '
           'reassigning accounts.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel'),
-          ),
-          OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.signal,
-              side: const BorderSide(color: AppColors.signal),
-            ),
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Archive'),
-          ),
-        ],
-      ),
     );
-    if (confirmed == true) await viewModel.archiveGroup(group.id);
+    if (confirmed) await viewModel.archiveGroup(group.id);
   }
 
   Future<void> _showReassignDialog(
@@ -413,13 +386,12 @@ class AccountManagementView extends StatelessWidget {
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: const Text('Reassign group'),
-          content: DropdownButtonFormField<String>(
-            initialValue: groupId,
-            decoration: const InputDecoration(labelText: 'Group'),
-            items: [
-              for (final group in groups)
-                DropdownMenuItem(value: group.id, child: Text(group.name)),
-            ],
+          content: EntityPickerField<AccountGroup>(
+            labelText: 'Group',
+            items: groups,
+            idOf: (group) => group.id,
+            labelOf: (group) => group.name,
+            value: groupId,
             onChanged: (value) => setDialogState(() => groupId = value),
           ),
           actions: [
@@ -448,30 +420,13 @@ class AccountManagementView extends StatelessWidget {
   }
 
   Future<void> _confirmArchive(BuildContext context, Account account) async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await confirmDestructiveAction(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Archive account?'),
-        content: Text(
+      title: 'Archive account?',
+      message:
           '${account.name} will no longer be available for new transactions.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel'),
-          ),
-          OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.signal,
-              side: const BorderSide(color: AppColors.signal),
-            ),
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Archive'),
-          ),
-        ],
-      ),
     );
-    if (confirmed == true) await viewModel.archiveAccount(account.id);
+    if (confirmed) await viewModel.archiveAccount(account.id);
   }
 
   @override
@@ -511,14 +466,9 @@ class AccountManagementView extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 80),
           children: [
             if (viewModel.errorMessage != null)
-              MaterialBanner(
-                content: Text(viewModel.errorMessage!),
-                actions: [
-                  TextButton(
-                    onPressed: viewModel.clearError,
-                    child: const Text('Dismiss'),
-                  ),
-                ],
+              StatusBanner(
+                message: viewModel.errorMessage!,
+                onDismiss: viewModel.clearError,
               ),
             for (final group in viewModel.groups)
               _GroupAccounts(

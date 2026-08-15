@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/models/account.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/entity_picker_field.dart';
 import '../../../core/money_formatter.dart';
 import '../view_models/summary_view_model.dart';
 
@@ -43,20 +45,12 @@ class SummaryView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                DropdownButtonFormField<String>(
-                  initialValue: viewModel.financialAccountId ?? '',
-                  decoration: const InputDecoration(labelText: 'Account'),
-                  items: [
-                    const DropdownMenuItem(
-                      value: '',
-                      child: Text('All accounts'),
-                    ),
-                    for (final account in viewModel.financialAccounts)
-                      DropdownMenuItem(
-                        value: account.id,
-                        child: Text(account.name),
-                      ),
-                  ],
+                EntityPickerField<Account?>(
+                  labelText: 'Account',
+                  items: [null, ...viewModel.financialAccounts],
+                  idOf: (account) => account?.id ?? '',
+                  labelOf: (account) => account?.name ?? 'All accounts',
+                  value: viewModel.financialAccountId ?? '',
                   onChanged: (accountId) => viewModel.setFinancialAccountId(
                     accountId == null || accountId.isEmpty ? null : accountId,
                   ),

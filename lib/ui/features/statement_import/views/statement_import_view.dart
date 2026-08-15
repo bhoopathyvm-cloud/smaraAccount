@@ -9,6 +9,7 @@ import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/money_formatter.dart';
+import '../../../core/status_banner.dart';
 import '../view_models/statement_import_view_model.dart';
 
 /// Views are lean. No business logic, no Repository calls. Listen to the
@@ -532,13 +533,11 @@ class _PreviewStep extends StatelessWidget {
     return Column(
       children: [
         if (viewModel.currencyMismatch)
-          MaterialBanner(
-            content: Text(
-              "This file's currency (${viewModel.statementCurrency}) "
-              "doesn't match the selected account's currency.",
-              style: AppTypography.body.copyWith(color: AppColors.signal),
-            ),
-            actions: const [SizedBox.shrink()],
+          StatusBanner(
+            message:
+                "This file's currency (${viewModel.statementCurrency}) "
+                "doesn't match the selected account's currency.",
+            isError: true,
           ),
         Expanded(
           child: ListView.builder(
