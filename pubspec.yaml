@@ -47,7 +47,7 @@ dependencies:
   tabler_icons_plus: ^3.44.0
   cryptography: ^2.9.0
   bip39_mnemonic: ^4.1.0
-  xml: ^6.5.0
+  xml: ^7.0.1
   file_picker: ^10.3.3
   csv: ^8.0.0
 dev_dependencies:
