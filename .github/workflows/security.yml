@@ -23,7 +23,7 @@ jobs:
       actions: read
       security-events: write
       contents: read
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.3.8"
+    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.5.0"
 
   # Full dependency-tree scan on every push to main and weekly, so a
   # vulnerability disclosed after merge is still caught.
@@ -33,7 +33,7 @@ jobs:
       actions: read
       security-events: write
       contents: read
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.3.8"
+    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.5.0"
 
   # Scans the full commit history (not just the diff) for committed
   # secrets/keys - relevant here since this app handles a signing key and
