@@ -11,6 +11,7 @@ import '../../../../domain/csv/csv_import_profile.dart';
 import '../../../../domain/csv/csv_parser.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/account.dart';
+import '../../../../domain/statement_import/category_rule.dart';
 import '../../../../domain/statement_import/parsed_statement_transaction.dart';
 import '../../../../domain/statement_import/statement_import_batch.dart';
 
@@ -45,6 +46,21 @@ class StatementImportPreviewRow {
   String? categoryId;
 }
 
+/// A set of preview rows sharing the same normalized description
+/// (import-category-rules spec: "Group Preview Rows by Matching
+/// Description"). [rowIndexes] indexes into
+/// [StatementImportViewModel.rows]/`_rows` - never copies row data, so
+/// group membership always reflects the current row list.
+class StatementImportRowGroup {
+  const StatementImportRowGroup({required this.key, required this.rowIndexes});
+
+  /// The group's normalized (trimmed, case-folded) shared description.
+  final String key;
+  final List<int> rowIndexes;
+
+  bool get isSingleRow => rowIndexes.length == 1;
+}
+
 /// Drives the whole statement import flow as one screen with internal
 /// steps (ofx-transaction-import design.md, extended by
 /// csv-transaction-import): choose a source, pick a file, pick the target
@@ -76,6 +92,12 @@ class StatementImportViewModel extends ChangeNotifier {
       _profiles = profiles;
       notifyListeners();
     });
+    _categoryRulesSubscription = _importRepository.watchCategoryRules().listen((
+      rules,
+    ) {
+      _categoryRules = rules;
+      notifyListeners();
+    });
   }
 
   final StatementImportRepository _importRepository;
@@ -84,6 +106,7 @@ class StatementImportViewModel extends ChangeNotifier {
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
   late final StreamSubscription<List<CsvImportProfile>> _profilesSubscription;
+  late final StreamSubscription<List<CategoryRule>> _categoryRulesSubscription;
   bool _isDisposed = false;
 
   List<Account> _accounts = const [];
@@ -94,6 +117,9 @@ class StatementImportViewModel extends ChangeNotifier {
 
   List<CsvImportProfile> _profiles = const [];
   List<CsvImportProfile> get profiles => _profiles;
+
+  List<CategoryRule> _categoryRules = const [];
+  List<CategoryRule> get categoryRules => _categoryRules;
 
   StatementImportStep _step = StatementImportStep.chooseSource;
   StatementImportStep get step => _step;
@@ -426,10 +452,14 @@ class StatementImportViewModel extends ChangeNotifier {
     final rows = <StatementImportPreviewRow>[];
     for (var i = 0; i < _transactions.length; i++) {
       final transaction = _transactions[i];
-      final suggestedCategoryId = await _importRepository.suggestCategoryFor(
-        financialAccountId: accountId,
-        description: transaction.description,
-      );
+      // A saved category rule takes priority over the exact-memo fallback
+      // (import-category-rules design.md Decision: "Rule priority").
+      final suggestedCategoryId =
+          matchCategoryRule(transaction.description, _categoryRules) ??
+          await _importRepository.suggestCategoryFor(
+            financialAccountId: accountId,
+            description: transaction.description,
+          );
       rows.add(
         StatementImportPreviewRow(
           transaction: transaction,
@@ -456,12 +486,73 @@ class StatementImportViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Preview rows grouped by normalized description (trim + case-fold),
+  /// preserving each group's first-seen order (spec: "Group Preview Rows
+  /// by Matching Description"). A row with a description no other row
+  /// shares still gets its own single-row group, so it's bulk-assignable
+  /// through the same action as a multi-row group.
+  List<StatementImportRowGroup> get rowGroups {
+    final order = <String>[];
+    final indexesByKey = <String, List<int>>{};
+    for (var i = 0; i < _rows.length; i++) {
+      final key = normalizeDescription(_rows[i].transaction.description);
+      final indexes = indexesByKey.putIfAbsent(key, () {
+        order.add(key);
+        return [];
+      });
+      indexes.add(i);
+    }
+    return [
+      for (final key in order)
+        StatementImportRowGroup(key: key, rowIndexes: indexesByKey[key]!),
+    ];
+  }
+
+  /// Sets [categoryId] on every row currently in the group identified by
+  /// [groupKey] - not retroactive to rows added afterward, since it only
+  /// touches the rows present in [_rows] at call time (spec: "Assigning a
+  /// category to a group sets it on every row in the group").
+  void setCategoryForGroup(String groupKey, String? categoryId) {
+    for (final row in _rows) {
+      if (normalizeDescription(row.transaction.description) == groupKey) {
+        row.categoryId = categoryId;
+      }
+    }
+    notifyListeners();
+  }
+
   Future<void> renameProfile(String id, String newName) {
     return _importRepository.renameProfile(id: id, newName: newName);
   }
 
   Future<void> deleteProfile(String id) {
     return _importRepository.deleteProfile(id);
+  }
+
+  Future<void> saveCategoryRule({
+    required String keyword,
+    required String categoryId,
+  }) {
+    return _importRepository.saveCategoryRule(
+      keyword: keyword,
+      categoryId: categoryId,
+    );
+  }
+
+  Future<void> updateCategoryRule({
+    required String id,
+    required String keyword,
+    required String categoryId,
+  }) {
+    return _importRepository.updateCategoryRule(
+      id: id,
+      keyword: keyword,
+      categoryId: categoryId,
+    );
+  }
+
+  Future<void> deleteCategoryRule(String id) {
+    return _importRepository.deleteCategoryRule(id);
   }
 
   /// Posts every selected, categorized row. Deselected, uncategorized, and
@@ -504,6 +595,7 @@ class StatementImportViewModel extends ChangeNotifier {
     _accountsSubscription.cancel();
     _categoriesSubscription.cancel();
     _profilesSubscription.cancel();
+    _categoryRulesSubscription.cancel();
     super.dispose();
   }
 }

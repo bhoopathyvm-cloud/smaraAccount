@@ -5,9 +5,12 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import '../../../../domain/csv/csv_column_mapping.dart';
 import '../../../../domain/csv/csv_import_profile.dart';
 import '../../../../domain/models/account.dart';
+import '../../../../domain/statement_import/category_rule.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/destructive_confirmation.dart';
+import '../../../core/entity_picker_field.dart';
 import '../../../core/money_formatter.dart';
 import '../../../core/status_banner.dart';
 import '../view_models/statement_import_view_model.dart';
@@ -61,6 +64,18 @@ class StatementImportView extends StatelessWidget {
         title: Text('Import Statement', style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
+        actions: [
+          IconButton(
+            tooltip: 'Manage category rules',
+            icon: const Icon(TablerIcons.adjustments),
+            onPressed: () => Navigator.of(context).push<void>(
+              MaterialPageRoute(
+                builder: (_) =>
+                    _CategoryRuleManagementView(viewModel: viewModel),
+              ),
+            ),
+          ),
+        ],
       ),
       body: ListenableBuilder(
         listenable: viewModel,
@@ -522,6 +537,92 @@ class _PreviewStep extends StatelessWidget {
 
   final StatementImportViewModel viewModel;
 
+  /// The group's shared category, or null when its rows currently carry
+  /// different categories (e.g. right after per-row overrides) - shown as
+  /// the group picker's blank/unset state rather than guessing one.
+  String? _groupCategoryId(StatementImportRowGroup group) {
+    String? shared;
+    var isFirst = true;
+    for (final index in group.rowIndexes) {
+      final categoryId = viewModel.rows[index].categoryId;
+      if (isFirst) {
+        shared = categoryId;
+        isFirst = false;
+      } else if (categoryId != shared) {
+        return null;
+      }
+    }
+    return shared;
+  }
+
+  Future<void> _assignGroupCategory(
+    BuildContext context,
+    StatementImportRowGroup group,
+    String? categoryId,
+  ) async {
+    viewModel.setCategoryForGroup(group.key, categoryId);
+    if (categoryId == null) return;
+    await _promptSaveAsRule(context, group, categoryId);
+  }
+
+  /// Offers to save the just-made group assignment as a reusable rule
+  /// (spec: "Save a Category Rule From a Group Assignment"). Declining -
+  /// including simply dismissing the dialog - leaves the assignment
+  /// applied to this import only; no rule is created.
+  Future<void> _promptSaveAsRule(
+    BuildContext context,
+    StatementImportRowGroup group,
+    String categoryId,
+  ) async {
+    // Not disposed synchronously after showDialog returns: Navigator.pop()
+    // resolves the awaited Future immediately, but the dialog route's exit
+    // transition keeps rebuilding this TextField for a few more frames -
+    // disposing the controller right away races that animation.
+    final keywordController = TextEditingController(
+      text: group.isSingleRow ? '' : group.key,
+    );
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Save as a rule?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Future imports whose description contains this keyword will '
+              'be categorized the same way automatically.',
+              style: AppTypography.metadata,
+            ),
+            const SizedBox(height: AppSpacing.medium),
+            TextField(
+              controller: keywordController,
+              autofocus: group.isSingleRow,
+              decoration: const InputDecoration(labelText: 'Keyword'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Skip'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final keyword = keywordController.text.trim();
+              if (keyword.isEmpty) return;
+              await viewModel.saveCategoryRule(
+                keyword: keyword,
+                categoryId: categoryId,
+              );
+              if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+            },
+            child: const Text('Save rule'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final expenseCategories = viewModel.categories
@@ -529,6 +630,7 @@ class _PreviewStep extends StatelessWidget {
           (c) => c.type == AccountType.expense || c.type == AccountType.income,
         )
         .toList();
+    final groups = viewModel.rowGroups;
 
     return Column(
       children: [
@@ -542,69 +644,55 @@ class _PreviewStep extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             padding: const EdgeInsets.all(AppSpacing.medium),
-            itemCount: viewModel.rows.length,
-            itemBuilder: (context, index) {
-              final row = viewModel.rows[index];
+            itemCount: groups.length,
+            itemBuilder: (context, groupIndex) {
+              final group = groups[groupIndex];
               return Card(
+                margin: const EdgeInsets.only(bottom: AppSpacing.medium),
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.medium),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Checkbox(
-                        value: row.selected,
-                        onChanged: (_) => viewModel.toggleRowSelected(index),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    row.transaction.description,
-                                    style: AppTypography.cardTitle,
-                                  ),
-                                ),
-                                Text(
-                                  formatAmountMinor(
-                                    row.transaction.amountMinor,
-                                  ),
-                                  style: AppTypography.cardTitle,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              '${row.transaction.transactionDate.year}-'
-                              '${row.transaction.transactionDate.month.toString().padLeft(2, '0')}-'
-                              '${row.transaction.transactionDate.day.toString().padLeft(2, '0')}'
-                              '${row.isDuplicate ? ' - possible duplicate' : ''}',
-                              style: AppTypography.metadata.copyWith(
-                                color: row.isDuplicate
-                                    ? AppColors.signal
-                                    : AppColors.textMuted,
-                              ),
-                            ),
-                            const SizedBox(height: AppSpacing.small),
-                            DropdownButtonFormField<String>(
-                              initialValue: row.categoryId,
-                              decoration: const InputDecoration(
-                                labelText: 'Category',
-                                isDense: true,
-                              ),
-                              items: [
-                                for (final category in expenseCategories)
-                                  DropdownMenuItem(
-                                    value: category.id,
-                                    child: Text(category.name),
-                                  ),
-                              ],
-                              onChanged: (categoryId) =>
-                                  viewModel.setRowCategory(index, categoryId),
-                            ),
-                          ],
+                      if (!group.isSingleRow) ...[
+                        Text(
+                          '${group.rowIndexes.length} rows',
+                          style: AppTypography.sectionLabel,
                         ),
-                      ),
+                        const SizedBox(height: AppSpacing.small),
+                        EntityPickerField<Account>(
+                          labelText: 'Category for all',
+                          items: expenseCategories,
+                          idOf: (category) => category.id,
+                          labelOf: (category) => category.name,
+                          value: _groupCategoryId(group),
+                          onChanged: (categoryId) =>
+                              _assignGroupCategory(context, group, categoryId),
+                        ),
+                        const Divider(height: AppSpacing.xLarge),
+                      ],
+                      for (final index in group.rowIndexes)
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: index == group.rowIndexes.last
+                                ? 0
+                                : AppSpacing.medium,
+                          ),
+                          child: _PreviewRow(
+                            row: viewModel.rows[index],
+                            categories: expenseCategories,
+                            selected: viewModel.rows[index].selected,
+                            onToggleSelected: () =>
+                                viewModel.toggleRowSelected(index),
+                            onCategoryChanged: (categoryId) => group.isSingleRow
+                                ? _assignGroupCategory(
+                                    context,
+                                    group,
+                                    categoryId,
+                                  )
+                                : viewModel.setRowCategory(index, categoryId),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -621,6 +709,72 @@ class _PreviewStep extends StatelessWidget {
             child: Text(
               viewModel.isSubmitting ? 'Importing...' : 'Confirm import',
             ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PreviewRow extends StatelessWidget {
+  const _PreviewRow({
+    required this.row,
+    required this.categories,
+    required this.selected,
+    required this.onToggleSelected,
+    required this.onCategoryChanged,
+  });
+
+  final StatementImportPreviewRow row;
+  final List<Account> categories;
+  final bool selected;
+  final VoidCallback onToggleSelected;
+  final ValueChanged<String?> onCategoryChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(value: selected, onChanged: (_) => onToggleSelected()),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      row.transaction.description,
+                      style: AppTypography.cardTitle,
+                    ),
+                  ),
+                  Text(
+                    formatAmountMinor(row.transaction.amountMinor),
+                    style: AppTypography.cardTitle,
+                  ),
+                ],
+              ),
+              Text(
+                '${row.transaction.transactionDate.year}-'
+                '${row.transaction.transactionDate.month.toString().padLeft(2, '0')}-'
+                '${row.transaction.transactionDate.day.toString().padLeft(2, '0')}'
+                '${row.isDuplicate ? ' - possible duplicate' : ''}',
+                style: AppTypography.metadata.copyWith(
+                  color: row.isDuplicate
+                      ? AppColors.signal
+                      : AppColors.textMuted,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.small),
+              EntityPickerField<Account>(
+                labelText: 'Category',
+                items: categories,
+                idOf: (category) => category.id,
+                labelOf: (category) => category.name,
+                value: row.categoryId,
+                onChanged: onCategoryChanged,
+              ),
+            ],
           ),
         ),
       ],
@@ -678,3 +832,154 @@ class _SummaryStep extends StatelessWidget {
 }
 
 enum _ProfileAction { rename, delete }
+
+/// Lists every saved category rule with edit/delete actions (spec:
+/// "Manage Saved Category Rules"). Reachable from the import flow's app
+/// bar - the same place a user is already thinking about categorization -
+/// rather than a separate settings screen, since rules are created from,
+/// and most relevant during, an import in progress.
+class _CategoryRuleManagementView extends StatelessWidget {
+  const _CategoryRuleManagementView({required this.viewModel});
+
+  final StatementImportViewModel viewModel;
+
+  String _categoryName(String categoryId) {
+    final category = viewModel.categories
+        .where((c) => c.id == categoryId)
+        .cast<Account?>()
+        .firstWhere((c) => c != null, orElse: () => null);
+    return category?.name ?? 'Unknown category';
+  }
+
+  Future<void> _showEditDialog(BuildContext context, CategoryRule rule) async {
+    final keywordController = TextEditingController(text: rule.keyword);
+    var categoryId = rule.categoryId;
+    final expenseCategories = viewModel.categories
+        .where(
+          (c) => c.type == AccountType.expense || c.type == AccountType.income,
+        )
+        .toList();
+
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: const Text('Edit rule'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: keywordController,
+                autofocus: true,
+                decoration: const InputDecoration(labelText: 'Keyword'),
+              ),
+              const SizedBox(height: AppSpacing.medium),
+              EntityPickerField<Account>(
+                labelText: 'Category',
+                items: expenseCategories,
+                idOf: (category) => category.id,
+                labelOf: (category) => category.name,
+                value: categoryId,
+                onChanged: (value) =>
+                    setDialogState(() => categoryId = value ?? categoryId),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final keyword = keywordController.text.trim();
+                if (keyword.isEmpty) return;
+                await viewModel.updateCategoryRule(
+                  id: rule.id,
+                  keyword: keyword,
+                  categoryId: categoryId,
+                );
+                if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmDelete(BuildContext context, CategoryRule rule) async {
+    final confirmed = await confirmDestructiveAction(
+      context: context,
+      title: 'Delete rule?',
+      message:
+          'Imports will no longer be auto-categorized by "${rule.keyword}". '
+          'Transactions already categorized using this rule are unaffected.',
+      confirmLabel: 'Delete',
+    );
+    if (confirmed) await viewModel.deleteCategoryRule(rule.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Category rules', style: AppTypography.headerTitle),
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.cardBackground,
+      ),
+      body: ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, _) {
+          final rules = viewModel.categoryRules;
+          if (rules.isEmpty) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.large),
+                child: Text(
+                  'No saved rules yet. Assign a category to a group of rows '
+                  'during an import and choose "Save rule" to create one.',
+                  style: AppTypography.body,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: rules.length,
+            itemBuilder: (context, index) {
+              final rule = rules[index];
+              return ListTile(
+                title: Text(rule.keyword),
+                subtitle: Text(_categoryName(rule.categoryId)),
+                trailing: PopupMenuButton<_CategoryRuleAction>(
+                  onSelected: (action) {
+                    switch (action) {
+                      case _CategoryRuleAction.edit:
+                        _showEditDialog(context, rule);
+                      case _CategoryRuleAction.delete:
+                        _confirmDelete(context, rule);
+                    }
+                  },
+                  itemBuilder: (context) => const [
+                    PopupMenuItem(
+                      value: _CategoryRuleAction.edit,
+                      child: Text('Edit'),
+                    ),
+                    PopupMenuItem(
+                      value: _CategoryRuleAction.delete,
+                      child: Text('Delete'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+enum _CategoryRuleAction { edit, delete }

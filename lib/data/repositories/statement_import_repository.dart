@@ -7,6 +7,7 @@ import '../../domain/csv/csv_import_profile.dart';
 import '../../domain/csv/csv_parser.dart';
 import '../../domain/models/journal_entry.dart';
 import '../../domain/ofx/ofx_parser.dart';
+import '../../domain/statement_import/category_rule.dart';
 import '../../domain/statement_import/parsed_statement_transaction.dart';
 import '../../domain/statement_import/statement_import_batch.dart';
 import '../database/app_database.dart';
@@ -269,6 +270,58 @@ class StatementImportRepository {
       headerFingerprint: (jsonDecode(row.headerFingerprint) as List)
           .cast<String>(),
       mapping: csvColumnMappingFromJsonString(row.columnMapping),
+      createdAt: row.createdAt,
+    );
+  }
+
+  /// Saves a keyword-to-category rule, applied across every financial
+  /// account (import-category-rules design.md: "Per-account rule scoping"
+  /// is a Non-Goal).
+  Future<void> saveCategoryRule({
+    required String keyword,
+    required String categoryId,
+  }) async {
+    await _db
+        .into(_db.categoryRules)
+        .insert(
+          CategoryRulesCompanion.insert(
+            keyword: keyword,
+            categoryId: categoryId,
+            createdAt: DateTime.now(),
+          ),
+        );
+  }
+
+  Stream<List<CategoryRule>> watchCategoryRules() {
+    final query = _db.select(_db.categoryRules)
+      ..orderBy([(r) => OrderingTerm.asc(r.keyword)]);
+    return query.watch().map(
+      (rows) => rows.map(_toDomainCategoryRule).toList(),
+    );
+  }
+
+  Future<void> updateCategoryRule({
+    required String id,
+    required String keyword,
+    required String categoryId,
+  }) async {
+    await (_db.update(_db.categoryRules)..where((r) => r.id.equals(id))).write(
+      CategoryRulesCompanion(
+        keyword: Value(keyword),
+        categoryId: Value(categoryId),
+      ),
+    );
+  }
+
+  Future<void> deleteCategoryRule(String id) async {
+    await (_db.delete(_db.categoryRules)..where((r) => r.id.equals(id))).go();
+  }
+
+  CategoryRule _toDomainCategoryRule(CategoryRuleRow row) {
+    return CategoryRule(
+      id: row.id,
+      keyword: row.keyword,
+      categoryId: row.categoryId,
       createdAt: row.createdAt,
     );
   }
