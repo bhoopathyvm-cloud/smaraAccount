@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/models/account.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/entity_picker_field.dart';
+import '../../../core/money_amount_field.dart';
 import '../../../core/money_formatter.dart';
 import '../view_models/settle_pending_transfer_view_model.dart';
 
@@ -86,21 +89,11 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                   ),
                   const SizedBox(height: AppSpacing.large),
                 ],
-                TextField(
+                MoneyAmountField(
                   controller: _amountController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Settled amount',
-                    suffixText: viewModel.settledAmountCurrency,
-                  ),
-                  onChanged: (text) {
-                    final amount = double.tryParse(text);
-                    viewModel.setSettledAmountMinor(
-                      amount == null ? null : (amount * 100).round(),
-                    );
-                  },
+                  labelText: 'Settled amount',
+                  suffixText: viewModel.settledAmountCurrency,
+                  onChangedMinor: viewModel.setSettledAmountMinor,
                 ),
                 if (viewModel.isShortfallComparable &&
                     viewModel.shortfallMinor > 0) ...[
@@ -112,18 +105,12 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                     style: AppTypography.body,
                   ),
                   const SizedBox(height: AppSpacing.base),
-                  DropdownButtonFormField<String>(
-                    initialValue: viewModel.feeCategoryId,
-                    decoration: const InputDecoration(
-                      labelText: 'Fee / loss category',
-                    ),
-                    items: [
-                      for (final category in viewModel.expenseCategories)
-                        DropdownMenuItem(
-                          value: category.id,
-                          child: Text(category.name),
-                        ),
-                    ],
+                  EntityPickerField<Account>(
+                    labelText: 'Fee / loss category',
+                    items: viewModel.expenseCategories,
+                    idOf: (category) => category.id,
+                    labelOf: (category) => category.name,
+                    value: viewModel.feeCategoryId,
                     onChanged: viewModel.setFeeCategoryId,
                   ),
                 ],

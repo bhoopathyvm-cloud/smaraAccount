@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
+import '../../../../domain/models/account.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/entity_picker_field.dart';
 import '../view_models/register_view_model.dart';
 import 'register_row_tile.dart';
 
@@ -80,20 +82,14 @@ class RegisterView extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.large),
-                child: DropdownButtonFormField<String>(
-                  initialValue: viewModel.selectedAccountId,
-                  decoration: const InputDecoration(labelText: 'Account'),
-                  items: [
-                    for (final account in viewModel.accounts)
-                      DropdownMenuItem(
-                        value: account.id,
-                        child: Text(
-                          account.archived
-                              ? '${account.name} (archived)'
-                              : account.name,
-                        ),
-                      ),
-                  ],
+                child: EntityPickerField<Account>(
+                  labelText: 'Account',
+                  items: viewModel.accounts,
+                  idOf: (account) => account.id,
+                  labelOf: (account) => account.archived
+                      ? '${account.name} (archived)'
+                      : account.name,
+                  value: viewModel.selectedAccountId,
                   onChanged: (accountId) {
                     if (accountId != null) viewModel.selectAccount(accountId);
                   },

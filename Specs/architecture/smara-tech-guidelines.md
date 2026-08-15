@@ -36,6 +36,13 @@
     change.
     Exception: a documented compatibility window (reason, owner, expiry
     condition, cleanup task in the OpenSpec design.md) — not silence.
+10. Reuse shared UI components before writing a new one.
+    Before implementing a new dialog, input field, picker, or banner,
+    check lib/ui/core/ for an existing shared widget that already covers
+    the same shape (e.g. confirmDestructiveAction, MoneyAmountField,
+    EntityPickerField, StatusBanner) and use or extend it. Same
+    discipline as Golden Rule #8, applied to UI components instead of
+    dependencies.
 ```
 
 ---

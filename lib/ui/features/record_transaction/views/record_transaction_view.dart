@@ -7,6 +7,8 @@ import '../../../../domain/models/transaction_direction.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/entity_picker_field.dart';
+import '../../../core/money_amount_field.dart';
 import '../view_models/record_transaction_view_model.dart';
 
 /// Amount/direction/category/date form. The category picker excludes
@@ -40,13 +42,6 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
     _accountCurrencyAmountController.dispose();
     _descriptionController.dispose();
     super.dispose();
-  }
-
-  void _syncAmount(String text) {
-    final parsed = double.tryParse(text);
-    widget.viewModel.setAmountMinor(
-      parsed == null ? null : (parsed * 100).round(),
-    );
   }
 
   Future<void> _pickDate() async {
@@ -95,31 +90,22 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                   },
                 ),
                 const SizedBox(height: AppSpacing.large),
-                DropdownButtonFormField<String>(
-                  initialValue: widget.viewModel.financialAccountId,
-                  decoration: const InputDecoration(labelText: 'Account'),
-                  items: [
-                    for (final account in widget.viewModel.financialAccounts)
-                      DropdownMenuItem(
-                        value: account.id,
-                        child: Text(account.name),
-                      ),
-                  ],
+                EntityPickerField<Account>(
+                  labelText: 'Account',
+                  items: widget.viewModel.financialAccounts,
+                  idOf: (account) => account.id,
+                  labelOf: (account) => account.name,
+                  value: widget.viewModel.financialAccountId,
                   onChanged: widget.viewModel.setFinancialAccountId,
                 ),
                 const SizedBox(height: AppSpacing.large),
-                TextField(
+                MoneyAmountField(
                   controller: _amountController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Amount',
-                    suffixText:
-                        widget.viewModel.nativeCurrency ??
-                        widget.viewModel.accountCurrency,
-                  ),
-                  onChanged: _syncAmount,
+                  labelText: 'Amount',
+                  suffixText:
+                      widget.viewModel.nativeCurrency ??
+                      widget.viewModel.accountCurrency,
+                  onChangedMinor: widget.viewModel.setAmountMinor,
                 ),
                 const SizedBox(height: AppSpacing.large),
                 TextField(
@@ -147,25 +133,16 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                 ),
                 if (widget.viewModel.isForeignCurrency) ...[
                   const SizedBox(height: AppSpacing.large),
-                  TextField(
+                  MoneyAmountField(
                     controller: _accountCurrencyAmountController,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: 'Account-currency amount (optional)',
-                      helperText:
-                          'Leave blank if the exchange rate isn\'t known '
-                          'yet - it will post provisional until settled.',
-                      helperMaxLines: 2,
-                      suffixText: widget.viewModel.accountCurrency,
-                    ),
-                    onChanged: (text) {
-                      final parsed = double.tryParse(text);
-                      widget.viewModel.setAccountCurrencyAmountMinor(
-                        parsed == null ? null : (parsed * 100).round(),
-                      );
-                    },
+                    labelText: 'Account-currency amount (optional)',
+                    helperText:
+                        'Leave blank if the exchange rate isn\'t known '
+                        'yet - it will post provisional until settled.',
+                    helperMaxLines: 2,
+                    suffixText: widget.viewModel.accountCurrency,
+                    onChangedMinor:
+                        widget.viewModel.setAccountCurrencyAmountMinor,
                   ),
                 ],
                 const SizedBox(height: AppSpacing.large),
@@ -180,17 +157,12 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                     final categories = (snapshot.data ?? const [])
                         .where((a) => a.type == categoryType)
                         .toList();
-                    return DropdownButtonFormField<String>(
-                      initialValue: widget.viewModel.categoryId,
-                      decoration: const InputDecoration(labelText: 'Category'),
-                      items: categories
-                          .map(
-                            (c) => DropdownMenuItem(
-                              value: c.id,
-                              child: Text(c.name),
-                            ),
-                          )
-                          .toList(),
+                    return EntityPickerField<Account>(
+                      labelText: 'Category',
+                      items: categories,
+                      idOf: (category) => category.id,
+                      labelOf: (category) => category.name,
+                      value: widget.viewModel.categoryId,
                       onChanged: widget.viewModel.setCategoryId,
                     );
                   },
