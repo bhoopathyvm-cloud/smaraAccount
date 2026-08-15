@@ -18,13 +18,13 @@ The ledger is deliberately designed so entries cannot be manipulated manually �
 
 This tradeoff is intentional: without a recoverable key, there's no backdoor for editing history, which is what makes the transaction log genuinely immutable rather than immutable-in-name-only.
 
+## Usage
+
+See the [user guide](docs/user-guide.md) for how to use the app — onboarding and your recovery phrase, accounts, categories, transfers, importing bank statements, and more.
+
 ## Contributing
 
-Contributions are welcome, but keep in mind this project follows a spec-first workflow via [OpenSpec](https://github.com/Fission-AI/OpenSpec) — changes are expected to be driven by a spec, not just a patch.
-
-- Changes are proposed and implemented as OpenSpec changes; each one gets its own branch named after the change (e.g. `core-ledger-single-account`).
-- Nothing is committed directly to `main` — open a pull request from your branch/fork instead.
-- No formal support or review SLA is provided. If something doesn't get merged or reviewed promptly, feel free to fork and continue independently.
+Contributions are welcome, but keep in mind this project follows a spec-first workflow via [OpenSpec](https://github.com/Fission-AI/OpenSpec) — changes are expected to be driven by a spec, not just a patch. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full workflow, branching convention, and architecture/engineering guidelines.
 
 ## License
 
