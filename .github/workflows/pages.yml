@@ -1,5 +1,9 @@
 name: Deploy Pages
 
+# Deploy fails with HTTP 404 until GitHub Pages is enabled once:
+# Settings → Pages → Build and deployment → Source = "GitHub Actions".
+# DNS for bhoopathy.com is also manual (see openspec/changes/project-website/tasks.md §4).
+
 on:
   push:
     branches: [main]
