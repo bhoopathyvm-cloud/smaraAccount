@@ -1,0 +1,9 @@
+{
+  "name": "SMARA Account (Flutter)",
+  "user": "ubuntu",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "install": "flutter pub get"
+}
