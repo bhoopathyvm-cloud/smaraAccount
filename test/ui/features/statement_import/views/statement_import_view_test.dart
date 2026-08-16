@@ -216,6 +216,67 @@ void main() {
   );
 
   testWidgets(
+    'register-launched OFX with a skipped row shows the reason on preview '
+    'alongside the good rows (account-select is auto-skipped)',
+    (tester) async {
+      when(importRepository.parseOfxFile(any)).thenReturn(
+        StatementParseResult(
+          transactions: [rowA],
+          skippedRows: const [
+            StatementSkippedRow(
+              rawFragment: '<STMTTRN>...</STMTTRN>',
+              reason: 'Missing transaction amount',
+            ),
+          ],
+          statementCurrency: 'USD',
+        ),
+      );
+      when(importRepository.groupCurrencyFor(any)).thenAnswer((_) async => 'USD');
+      when(
+        importRepository.findDuplicateIndexes(
+          financialAccountId: anyNamed('financialAccountId'),
+          transactions: anyNamed('transactions'),
+        ),
+      ).thenAnswer((_) async => const {});
+      when(
+        importRepository.suggestCategoryFor(
+          financialAccountId: anyNamed('financialAccountId'),
+          description: anyNamed('description'),
+        ),
+      ).thenAnswer((_) async => null);
+
+      final viewModel = StatementImportViewModel(
+        importRepository: importRepository,
+        ledgerRepository: ledgerRepository,
+        initialFinancialAccountId: checking.id,
+      );
+      addTearDown(viewModel.dispose);
+
+      // Mount first so stream subscriptions deliver under the test binder,
+      // then load - mirrors register launch with a pre-selected account.
+      await tester.pumpWidget(
+        MaterialApp(home: StatementImportView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      viewModel.chooseSource(StatementSource.ofx);
+      await tester.pump();
+      await viewModel.loadFile(name: 'statement.ofx', bytes: const [1, 2, 3]);
+      await tester.pump();
+
+      expect(viewModel.step, StatementImportStep.preview);
+      expect(viewModel.skippedRows, hasLength(1));
+      expect(viewModel.rows, hasLength(1));
+
+      expect(find.text('Skipped rows'), findsOneWidget);
+      expect(find.text('Missing transaction amount'), findsOneWidget);
+      expect(find.text('Row A'), findsOneWidget);
+      expect(find.text('Confirm import'), findsOneWidget);
+      expect(find.text('Import into account'), findsNothing);
+    },
+  );
+
+  testWidgets(
     'duplicate rows default unselected, non-duplicate rows default selected',
     (tester) async {
       await pumpAtPreview(tester, duplicateIndexes: {0});
@@ -575,6 +636,47 @@ void main() {
 
         expect(viewModel.step, StatementImportStep.preview);
         expect(find.byType(Checkbox), findsWidgets);
+      },
+    );
+
+    testWidgets(
+      'a CSV file with one bad row shows its reason on preview and still '
+      'offers the good rows',
+      (tester) async {
+        final viewModel = await pumpAtCsvStep(
+          tester,
+          matchedProfile: savedProfile,
+        );
+
+        // Override after pumpAtCsvStep's default empty-skipped stub: CSV
+        // parsing only runs when Continue confirms the mapping.
+        when(importRepository.parseCsvFile(any, any)).thenReturn(
+          StatementParseResult(
+            transactions: [rowA],
+            skippedRows: const [
+              StatementSkippedRow(
+                rawFragment: '01/02/2026,Bad,-not-a-number',
+                reason: 'Could not parse amount',
+              ),
+            ],
+            statementCurrency: 'USD',
+          ),
+        );
+
+        final continueButton = find.widgetWithText(ElevatedButton, 'Continue');
+        await tester.ensureVisible(continueButton);
+        await tester.tap(continueButton);
+        await tester.pumpAndSettle();
+
+        expect(viewModel.step, StatementImportStep.preview);
+        expect(viewModel.skippedRows, hasLength(1));
+        expect(viewModel.skippedRows.single.reason, 'Could not parse amount');
+        expect(viewModel.rows, hasLength(1));
+
+        expect(find.text('Skipped rows'), findsOneWidget);
+        expect(find.text('Could not parse amount'), findsOneWidget);
+        expect(find.text('Row A'), findsOneWidget);
+        expect(find.text('Confirm import'), findsOneWidget);
       },
     );
 

@@ -6,6 +6,7 @@ import '../../../../domain/csv/csv_column_mapping.dart';
 import '../../../../domain/csv/csv_import_profile.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/statement_import/category_rule.dart';
+import '../../../../domain/statement_import/parsed_statement_transaction.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -223,38 +224,9 @@ class _SelectAccountStep extends StatelessWidget {
               if (accountId != null) viewModel.selectAccount(accountId);
             },
           ),
-          if (viewModel.skippedRows.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.large),
-            Text('Skipped rows', style: AppTypography.cardTitle),
-            const SizedBox(height: AppSpacing.small),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 160),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: viewModel.skippedRows.length,
-                itemBuilder: (context, index) {
-                  final skipped = viewModel.skippedRows[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: AppSpacing.small,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(skipped.reason, style: AppTypography.body),
-                        Text(
-                          skipped.rawFragment,
-                          style: AppTypography.metadata,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
+          // OFX parses before this step, so reasons are available here.
+          // CSV parses later (after mapping); its reasons show on preview.
+          _SkippedRowsSection(skippedRows: viewModel.skippedRows),
         ],
       ),
     );
@@ -678,6 +650,12 @@ class _PreviewStep extends StatelessWidget {
         .toList();
     final groups = viewModel.rowGroups;
 
+    // Preview is the first step that always has skip reasons for both
+    // OFX (including register-launched auto-select) and CSV (parsed after
+    // mapping). Listing them here satisfies "before posting" without
+    // blocking Continue / Confirm import.
+    final skippedRows = viewModel.skippedRows;
+
     return Column(
       children: [
         if (viewModel.currencyMismatch)
@@ -686,6 +664,16 @@ class _PreviewStep extends StatelessWidget {
                 "This file's currency (${viewModel.statementCurrency}) "
                 "doesn't match the selected account's currency.",
             isError: true,
+          ),
+        if (skippedRows.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.medium,
+              AppSpacing.medium,
+              AppSpacing.medium,
+              0,
+            ),
+            child: _SkippedRowsSection(skippedRows: skippedRows),
           ),
         Expanded(
           child: ListView.builder(
@@ -755,6 +743,53 @@ class _PreviewStep extends StatelessWidget {
             child: Text(
               viewModel.isSubmitting ? 'Importing...' : 'Confirm import',
             ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Scrollable list of parser skip reasons. Shown on account-select (OFX)
+/// and preview (OFX + CSV) so every import path surfaces them before
+/// posting without blocking the good rows.
+class _SkippedRowsSection extends StatelessWidget {
+  const _SkippedRowsSection({required this.skippedRows});
+
+  final List<StatementSkippedRow> skippedRows;
+
+  @override
+  Widget build(BuildContext context) {
+    if (skippedRows.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: AppSpacing.large),
+        Text('Skipped rows', style: AppTypography.cardTitle),
+        const SizedBox(height: AppSpacing.small),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: 160),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: skippedRows.length,
+            itemBuilder: (context, index) {
+              final skipped = skippedRows[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.small),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(skipped.reason, style: AppTypography.body),
+                    Text(
+                      skipped.rawFragment,
+                      style: AppTypography.metadata,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       ],
