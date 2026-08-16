@@ -15,6 +15,29 @@ it sends only a currency pair to the chosen provider, never ledger
 data. See `Specs/architecture/smara-architecture.md` for the full
 network stance.
 
+## How we scan
+
+| Layer | Tool | What it covers |
+| --- | --- | --- |
+| Dependencies | OSV Scanner (`.github/workflows/security.yml`) | `pubspec.lock`, `requirements.txt`, and other lockfiles |
+| Secrets | gitleaks (same workflow) | Full git history for committed keys/phrases |
+| Dart / Flutter | `flutter analyze` + tests (`.github/workflows/flutter-ci.yml`) | App code under `lib/` and `test/` |
+| Actions YAML | CodeQL advanced setup (`.github/workflows/codeql.yml`) | First-party GitHub Actions workflows only |
+
+CodeQL does **not** support Dart. Default CodeQL setup auto-detects
+C++/Swift/Kotlin/C from Flutter's generated `android/`, `ios/`,
+`linux/`, `macos/`, and `windows/` folders and then warns because those
+are platform stubs, not application code. This repo therefore uses an
+**advanced** CodeQL config scoped to Actions workflows
+(`.github/codeql/codeql-config.yml`).
+
+If the Security tab still shows "CodeQL is reporting warnings" after
+that workflow is on `main`, disable CodeQL **default** setup so only
+advanced setup runs:
+
+Settings → Code security → Code scanning → CodeQL → Disable default
+setup.
+
 ## Supported Versions
 
 This project does not yet have a stable release line with a formal
