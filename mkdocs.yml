@@ -1,0 +1,29 @@
+site_name: SMARA Account
+site_description: A local-first, tamper-evident double-entry ledger.
+site_url: https://bhoopathy.com
+repo_url: https://github.com/bhoopathyvm-cloud/smaraAccount
+docs_dir: pages
+
+nav:
+  - Home: index.md
+  - How it was built: how-it-was-built.md
+  - Architecture: architecture.md
+  - What's built: whats-built.md
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - search.suggest
