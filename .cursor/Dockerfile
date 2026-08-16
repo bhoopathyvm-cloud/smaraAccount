@@ -38,9 +38,11 @@ RUN curl -fsSL -o /tmp/flutter.tar.xz \
 
 USER ubuntu
 
-# Warm the SDK: precache host (Linux) engine artifacts including the
-# headless flutter_tester used by `flutter test`, and disable analytics
-# so setup stays non-interactive.
+# Warm the SDK: disable analytics (keeps setup non-interactive) and
+# precache the host engine artifacts, including the headless
+# flutter_tester that `flutter test` runs on. Scoped to the Linux host so
+# the image stays lean; unused mobile/web/windows artifacts are skipped.
 RUN flutter config --no-analytics \
-    && flutter precache --universal \
+    && flutter precache --universal --no-android --no-ios --no-web \
+        --no-windows --no-macos \
     && flutter --version
