@@ -231,7 +231,9 @@ void main() {
           statementCurrency: 'USD',
         ),
       );
-      when(importRepository.groupCurrencyFor(any)).thenAnswer((_) async => 'USD');
+      when(
+        importRepository.groupCurrencyFor(any),
+      ).thenAnswer((_) async => 'USD');
       when(
         importRepository.findDuplicateIndexes(
           financialAccountId: anyNamed('financialAccountId'),
