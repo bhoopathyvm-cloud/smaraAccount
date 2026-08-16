@@ -1,34 +1,38 @@
 ## 1. Schema and seeds
 
-- [ ] 1.1 Additive migration: `holds_investments` boolean on `accounts` (default false); `instruments` table (id, name, kind enum, ticker, isin, archived_at, created_at); `holdings` table (id, investment_account_id, instrument_id, quantity_scaled, cost_minor, mark_price_minor nullable, updated_at).
-- [ ] 1.2 Seed system group `group_investments` ("Investments", asset, system) on `confirmFirstIdentity` and on upgrade for databases that lack it. Do not rewrite journal rows.
+- [ ] 1.1 Additive migration: `holds_investments` on `accounts`; internal inventory companion id (or type) never user-selectable; `instruments` (name, kind, ticker, isin, archived_at); `holdings` (account_id, instrument_id, quantity_scaled, cost_minor); `instrument_quotes` cache (instrument_id, price_minor, currency, fetched_at).
+- [ ] 1.2 Seed `group_investments` on first identity and on upgrade. Creating an investment account also creates its hidden inventory leg in the same group/currency.
 
-## 2. Domain and repository
+## 2. Cash in/out and account flag
 
-- [ ] 2.1 Domain models: `Instrument`, `Holding`, instrument kind enum. No Drift row types across the repository boundary.
-- [ ] 2.2 `createFinancialAccount` accepts `holdsInvestments` only when type is asset; flag is immutable; liability + flag is rejected.
-- [ ] 2.3 Instrument create / rename / archive (no delete). Archived instruments excluded from acquire pickers.
-- [ ] 2.4 `acquireHolding`: active investment account, active instrument, positive qty and cost, distinct active funding account; post via existing transfer path; update holding in the same DB transaction as the signed entry.
-- [ ] 2.5 `disposeHolding`: qty ≤ held, average cost removed, destination distinct and active; post balanced entry (destination proceeds, investment cost removed, income/expense difference); reduce or remove the holding.
-- [ ] 2.6 `setHoldingMark` / clear mark: write `mark_price_minor` only; never call `_appendSignedEntry`.
+- [ ] 2.1 `createFinancialAccount(holdsInvestments)` only for assets; flag immutable; liability + flag rejected.
+- [ ] 2.2 Transfers involving an investment account move **cash only**; reject cash-out greater than cash.
+- [ ] 2.3 `watchFinancialAccounts` / home / pickers never list the internal inventory companion.
 
-## 3. Repository tests
+## 3. Buy, sell, brokerage
 
-- [ ] 3.1 Create investment vs ordinary asset; flag immutable; liability cannot hold investments.
-- [ ] 3.2 Acquire posts a transfer and increases quantity and cost; non-positive qty/cost rejected; archived investment account rejected.
-- [ ] 3.3 Dispose at a gain and at a loss posts the three-leg (or two-leg equal) entry and reduces the holding; over-dispose rejected.
-- [ ] 3.4 Setting or clearing a mark posts no journal entry and leaves display balance unchanged.
-- [ ] 3.5 Home/net position still uses ledger balance when marks differ from cost.
+- [ ] 3.1 `recordBuy`: qty, unit price, brokerage ≥ 0, expense category required iff brokerage > 0; insufficient cash rejected; posts inventory + cash + optional expense in one signed entry (or cash+inventory plus independent fee entry following transfer-fee failure rules).
+- [ ] 3.2 `recordSell`: qty ≤ held; cash += qty×price − brokerage; inventory reduced at average cost; gain/loss income or expense; brokerage expense when > 0.
+- [ ] 3.3 Zero brokerage posts no fee entry. Archived investment account rejects buy/sell.
 
-## 4. UI
+## 4. Quotes and portfolio value
 
-- [ ] 4.1 Account-create dialog: investment-account toggle for asset type only; use shared widgets.
-- [ ] 4.2 Holdings view on an investment account: list holdings, acquire, dispose, mark; no order ticket or quote button.
-- [ ] 4.3 Instrument management (create/rename/archive) using `EntityPickerField` and `confirmDestructiveAction` where destructive.
-- [ ] 4.4 Home: optional muted secondary marked-value label; do not add it into group total or net position.
+- [ ] 4.1 Predefined free quote provider enum; request ticker/ISIN only; cache prices; no journal write.
+- [ ] 4.2 Refresh while Home or holdings is in the foreground; Settings can disable all quote HTTP.
+- [ ] 4.3 Portfolio value = cash + Σ(qty × last price or cost); missing/stale/disabled labeled; skip live price if quote currency ≠ group currency (use cost).
+- [ ] 4.4 Home group total and net position use portfolio value for investment accounts, labeled as a market estimate; holdings header also shows book (cash + cost).
 
-## 5. Widget / view-model tests and docs
+## 5. Tests
 
-- [ ] 5.1 Widget tests: acquire/dispose/mark on the holdings view; ordinary asset has no holdings affordance.
-- [ ] 5.2 Document investment accounts, acquire/dispose, and that marks are estimates in `docs/user-guide.md`.
-- [ ] 5.3 Run `dart analyze` and the full test suite.
+- [ ] 5.1 Cash in/out; cash-out exceeding cash rejected; inventory unchanged by transfers.
+- [ ] 5.2 Buy with and without brokerage; insufficient cash; inventory and cash math.
+- [ ] 5.3 Sell at gain and loss with brokerage; over-sell rejected; average cost.
+- [ ] 5.4 Quote HTTP includes no quantity/cost/account fields; failed quote does not block buy/sell; disable stops requests.
+- [ ] 5.5 Home net position uses portfolio value; book still visible on the account view.
+
+## 6. UI and docs
+
+- [ ] 6.1 Create-account: investment toggle (asset only). Holdings view: cash, inventory, Buy, Sell, brokerage field (`MoneyAmountField` / `EntityPickerField` / `confirmDestructiveAction` as elsewhere).
+- [ ] 6.2 No order ticket, no broker connect. Instrument management: create/rename/archive.
+- [ ] 6.3 User guide: cash in/out, inventory, buy/sell, brokerage, quotes as estimates, not dealing.
+- [ ] 6.4 `dart analyze` and full test suite.

@@ -8,13 +8,13 @@ The system SHALL seed an Investments system asset group on first use or on migra
 - **THEN** the Investments system asset group exists and is available for assignment
 - **AND** the original four system groups still exist
 
-### Requirement: Asset Accounts May Be Investment Accounts
-When creating an asset financial account, the user SHALL be able to mark it as an investment account. A liability account SHALL NOT be markable as an investment account. The investment-account flag SHALL NOT be changeable after creation.
+### Requirement: Asset Accounts May Be Investment Wrappers
+When creating an asset financial account, the user SHALL be able to mark it as an investment account. That account SHALL then have cash and inventory as defined by `investment-holdings`. A liability account SHALL NOT be markable as an investment account. The investment-account flag SHALL NOT be changeable after creation.
 
-#### Scenario: Create an asset investment account
+#### Scenario: Create an investment account
 - **WHEN** the user creates an asset financial account marked as an investment account, with a name and an account group
-- **THEN** the account is an ordinary asset account for transfers, income, expense, and the home overview
-- **AND** it is eligible to hold positions under the `investment-holdings` capability
+- **THEN** the account accepts cash transfers in and out and buy/sell against its inventory
+- **AND** it is still an asset account for archive, rename, and group membership
 
 #### Scenario: A liability cannot be an investment account
 - **WHEN** the user attempts to mark a liability financial account as an investment account

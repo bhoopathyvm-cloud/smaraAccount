@@ -1,91 +1,90 @@
 ## Purpose
 
-Record investment holdings (instruments, quantities, cost, optional display marks) on investment accounts as a local schedule backed by ordinary signed journal entries — not a dealing desk, broker, or live market.
+Model an investment account as a wrapper with cash, an instrument inventory, and user-recorded buy/sell (price plus brokerage), and show portfolio value from background free-market quotes — not a broker, not order routing.
 
 ## ADDED Requirements
 
-### Requirement: Investment Accounts May Hold Positions
-An asset financial account MAY be marked as an investment account at creation. Only an investment account SHALL be allowed to hold instruments. The investment-account flag SHALL NOT be changeable after creation. A non-investment financial account SHALL reject any attempt to acquire a holding.
+### Requirement: Investment Account Has Cash and Inventory
+A user-facing investment account SHALL present two parts in one wrapper: a **cash** balance that increases when money is transferred in from another of the user's financial accounts and decreases when money is transferred out, and an **inventory** of instruments (quantity held and cost). Only an asset account marked as an investment account at creation SHALL have this shape. The investment-account flag SHALL NOT be changeable after creation. A liability SHALL NOT be an investment account.
 
-#### Scenario: Create an investment account
-- **WHEN** the user creates an asset financial account marked as an investment account
-- **THEN** the account can acquire and dispose holdings
-- **AND** it remains a normal asset account for transfers, income, expense, opening balance, archive, and the home overview
+#### Scenario: Cash in from a user account
+- **WHEN** the user transfers a positive amount from a different active financial account into an investment account
+- **THEN** the investment account's cash increases by that amount
+- **AND** inventory quantities are unchanged
 
-#### Scenario: Ordinary asset cannot hold a position
-- **WHEN** the user attempts to acquire a holding against a financial account that is not marked as an investment account
-- **THEN** the system rejects the acquire and no journal entry is posted
+#### Scenario: Cash out to a user account
+- **WHEN** the user transfers a positive amount from an investment account's cash to a different active financial account
+- **THEN** the investment account's cash decreases by that amount
+- **AND** inventory quantities are unchanged
 
-#### Scenario: Investment flag cannot change after creation
-- **WHEN** the user attempts to turn an existing financial account into an investment account, or to clear the flag on an investment account
-- **THEN** the system rejects the change
+#### Scenario: Cash out cannot exceed cash
+- **WHEN** the user attempts to transfer more than the investment account's current cash to another account
+- **THEN** the system rejects the transfer and no journal entry is posted
 
-### Requirement: User-Defined Instruments
-The user SHALL be able to create an instrument with a name, a kind (equity, fund, bond, or other), and optional ticker and ISIN identifiers. The user SHALL be able to rename an instrument and archive an instrument that is no longer needed. Instruments SHALL NOT be permanently deleted. An archived instrument SHALL NOT be offered for a new acquire, and SHALL remain visible on existing holdings.
+### Requirement: Inventory Is the Holding of Instruments
+The inventory SHALL list each instrument the investment account holds with a positive quantity. Quantity is the number of units held. Cost is the average cost of those units in the account's group currency. An instrument with quantity zero SHALL NOT appear as a current holding. Instruments are user-defined (name, kind, optional ticker, optional ISIN), renameable, archivable, and never permanently deleted.
 
-#### Scenario: Create an instrument
-- **WHEN** the user creates an instrument with a name and a kind
-- **THEN** the instrument is available when acquiring a holding
+#### Scenario: Inventory shows units held
+- **WHEN** the user opens an investment account that holds two instruments
+- **THEN** the inventory lists each instrument with its quantity
+- **AND** does not list instruments with quantity zero
 
-#### Scenario: Archive an instrument
-- **WHEN** the user archives an instrument
-- **THEN** it is no longer offered for a new acquire
-- **AND** existing holdings that reference it remain visible
+#### Scenario: Archived instrument stays on existing holdings
+- **WHEN** the user archives an instrument that is still held
+- **THEN** the holding remains visible in inventory
+- **AND** the instrument is not offered for a new buy
 
-### Requirement: Acquire a Holding
-The user SHALL record an acquire by providing an investment account, an active instrument, a positive quantity, a positive cost in the investment account's group currency, a transaction date, and a distinct active funding financial account. The system SHALL post a same-currency or cross-currency movement of that cost from the funding account to the investment account using the existing transfer rules of `multi-account-ledger` and `foreign-currency-settlement`, and SHALL add or increase a holding lot for that instrument on the investment account. The user SHALL NOT be asked to place an order with a broker.
+### Requirement: Buy Records Price Paid and Brokerage
+The user SHALL record a buy by providing an instrument, a positive quantity, a positive price per unit, a transaction date, and a brokerage amount that is zero or positive. The system SHALL decrease cash by (quantity × price) + brokerage, SHALL increase inventory quantity and cost by quantity and (quantity × price), and SHALL post brokerage as a separate same-currency expense against the investment account's cash when brokerage is positive (an active expense category is then required). The system SHALL NOT place a broker order. A buy SHALL be rejected if cash is insufficient for the total debit, if the investment account is archived, or if brokerage is positive and no active expense category is selected.
 
-#### Scenario: Acquire funded from a cash account
-- **WHEN** the user acquires a positive quantity of an instrument on an investment account, funded from a different active financial account, with a positive cost
-- **THEN** the system posts the cost as a transfer from the funding account to the investment account
-- **AND** the investment account's holding in that instrument increases by the given quantity and cost
+#### Scenario: Buy with brokerage
+- **WHEN** the user buys 10 units at 100.00 with brokerage 5.00, with sufficient cash and an active expense category
+- **THEN** cash decreases by 1005.00
+- **AND** inventory of that instrument increases by 10 units and 1000.00 cost
+- **AND** a separate expense of 5.00 is posted against the chosen category
 
-#### Scenario: Non-positive quantity or cost is rejected
-- **WHEN** the user attempts an acquire with a zero or negative quantity, or a zero or negative cost
-- **THEN** the system rejects the acquire and no journal entry is posted
+#### Scenario: Buy without brokerage
+- **WHEN** the user buys with brokerage of zero
+- **THEN** cash decreases by quantity × price only
+- **AND** no fee expense entry is posted
 
-#### Scenario: Acquire against an archived investment account is rejected
-- **WHEN** the user attempts an acquire on an archived investment account
-- **THEN** the system rejects the acquire and no journal entry is posted
+#### Scenario: Buy with insufficient cash is rejected
+- **WHEN** the user attempts a buy whose (quantity × price) + brokerage exceeds the investment account's cash
+- **THEN** the system rejects the buy and no journal entry is posted
+- **AND** inventory is unchanged
 
-### Requirement: Dispose a Holding
-The user SHALL record a dispose by providing an investment account, an instrument already held there, a positive quantity no greater than the quantity held, proceeds in the investment account's group currency (zero allowed only for a total write-off), a transaction date, a distinct active destination financial account, and — when proceeds differ from the cost removed — an active income category (gain) or expense category (loss). The system SHALL reduce the holding's quantity and cost (average cost), SHALL post a balanced journal entry that moves proceeds to the destination, reduces the investment account by the cost removed, and records any difference as income or expense, and SHALL NOT place a broker order.
+### Requirement: Sell Records Price Received and Brokerage
+The user SHALL record a sell by providing a held instrument, a positive quantity no greater than the quantity held, a positive price per unit, a transaction date, and a brokerage amount that is zero or positive. The system SHALL increase cash by (quantity × price) − brokerage, SHALL reduce inventory quantity and cost using average cost, SHALL post any realized gain or loss as income or expense, and SHALL post brokerage as a separate same-currency expense when brokerage is positive. A sell SHALL be rejected if quantity exceeds holdings, if (quantity × price) is less than brokerage, if the account is archived, or if a required income/expense category is missing. The system SHALL NOT place a broker order.
 
-#### Scenario: Dispose at a gain
-- **WHEN** the user disposes part or all of a holding for proceeds greater than the average cost removed, to a different active financial account, with an active income category
-- **THEN** the destination account is credited the proceeds
-- **AND** the investment account is reduced by the cost removed
-- **AND** the income category is credited the difference
-- **AND** the holding's remaining quantity and cost decrease accordingly
+#### Scenario: Sell at a gain with brokerage
+- **WHEN** the user sells 10 units at 120.00 with brokerage 5.00, average cost 100.00 per unit, with an active income category and an active expense category for brokerage
+- **THEN** cash increases by 1195.00
+- **AND** inventory decreases by 10 units and 1000.00 cost
+- **AND** income of 200.00 is posted
+- **AND** expense of 5.00 is posted for brokerage
 
-#### Scenario: Dispose at a loss
-- **WHEN** the user disposes a holding for proceeds less than the average cost removed, with an active expense category
-- **THEN** the destination account is credited the proceeds
-- **AND** the investment account is reduced by the cost removed
-- **AND** the expense category is debited the difference
+#### Scenario: Selling more than held is rejected
+- **WHEN** the user attempts to sell more units than the inventory quantity
+- **THEN** the system rejects the sell and no journal entry is posted
 
-#### Scenario: Disposing more than held is rejected
-- **WHEN** the user attempts to dispose a quantity greater than the quantity held
-- **THEN** the system rejects the dispose and no journal entry is posted
+### Requirement: Background Market Prices for Portfolio Value
+The system SHALL fetch a latest market price for held instruments that have a ticker or ISIN from a fixed, predefined set of free market-data providers, in the background while the application is in the foreground on home or the holdings view. The request SHALL include the identifiers needed for the quote (ticker and/or ISIN) and SHALL NOT include quantities, costs, account ids, or account names. Portfolio value for an investment account SHALL equal cash plus the sum over inventory of (quantity × last fetched price). When a quote is missing, stale, or the fetch failed, the system SHALL use the last cached price if any, otherwise cost, and SHALL indicate that the figure is not a current market price. Quote fetches SHALL NOT post journal entries. The user SHALL be able to disable quote fetching; when disabled, no market-data request is made.
 
-### Requirement: Display Marks Do Not Post
-The user SHALL be able to enter or clear a last-known price for a holding as a display mark. A mark SHALL NOT create, update, or delete a journal entry or posting. Unrealized gain or loss computed from a mark SHALL be display-only.
+#### Scenario: Portfolio value uses cash plus quoted inventory
+- **WHEN** an investment account has cash 500 and holds 10 units whose last fetched price is 20
+- **THEN** the displayed portfolio value is 700
+- **AND** no journal entry is posted by the quote
 
-#### Scenario: Entering a mark does not change the ledger
-- **WHEN** the user enters a last-known price for a holding
-- **THEN** no journal entry is posted
-- **AND** the investment account's ledger display balance is unchanged
-- **AND** the holdings view may show a marked value and an unrealized difference
+#### Scenario: Quote request does not upload the ledger
+- **WHEN** the system fetches a market price
+- **THEN** the request includes the instrument's ticker and/or ISIN as needed for the quote
+- **AND** the request does not include quantity, cost, account id, or account name
 
-#### Scenario: Clearing a mark
-- **WHEN** the user clears a holding's last-known price
-- **THEN** the holdings view no longer shows a marked value for that holding
-- **AND** no journal entry is posted
+#### Scenario: Failed quote does not block the account
+- **WHEN** a quote fetch fails, times out, or quote fetching is disabled
+- **THEN** the user can still transfer cash, buy, and sell
+- **AND** portfolio value uses cached price or cost, labeled as not current
 
-### Requirement: No Dealing Desk
-The system SHALL NOT place, route, or execute orders with a broker or exchange, SHALL NOT synchronize with a brokerage API, and SHALL NOT fetch live market quotes as part of this capability. Acquire and dispose are user-recorded facts about holdings the user already has or no longer has.
-
-#### Scenario: No broker or quote action is offered
-- **WHEN** the user opens an investment account's holdings view
-- **THEN** the offered actions are acquire, dispose, and optional display mark
-- **AND** there is no buy/sell order ticket and no live quote button
+#### Scenario: Quote fetching can be disabled
+- **WHEN** the user disables market-price fetching
+- **THEN** no market-data network request is made until it is enabled again

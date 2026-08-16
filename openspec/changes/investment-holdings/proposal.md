@@ -1,62 +1,61 @@
 ## Why
 
-The ledger today models cash, debt, and a Pension & retirement *group*,
-but not the thing people actually hold inside a brokerage, ISA, or
-similar wrapper: named instruments with a quantity and a cost. Users who
-want to record "I hold these investments" currently have to fake it as a
-lump-sum asset balance, which hides what they own and cannot support
-later research. This change adds holdings as a schedule on an investment
-account. It is not share dealing: no orders, no broker, no live market
-execution.
+An investment account is not a lump-sum asset and not a dealing desk. It
+is a wrapper with three parts the user already understands: **cash** that
+moves to and from their other accounts, an **inventory** of instruments
+they hold, and **buy/sell** at a real price plus **brokerage**. Inventory
+is an asset whose market value moves; without a current price the
+portfolio figure is fiction. The ledger today has no place for that
+shape — only a Pension & retirement *group* and ordinary cash accounts.
 
 ## What Changes
 
-- Let an asset financial account be marked, at creation, as an
-  **investment account**. That flag is immutable (same rule as asset vs
-  liability). Only investment accounts may hold positions.
-- Seed a fifth system asset group, **Investments**, alongside the existing
-  four. Users may still put an investment account in Pension & retirement
-  or a custom asset group.
-- Let the user define **instruments** (name, optional ticker, optional
-  ISIN, kind) and **acquire / dispose** holdings against an investment
-  account. Acquire and dispose post ordinary signed journal entries
-  (capital in/out, and realized gain or loss on dispose). Quantity and
-  cost live on a holdings schedule tied to those entries.
-- Let the user type an optional **display mark** (last known price) per
-  holding. Marks do not post, do not change the signed ledger, and do not
-  enter home net position. Unrealized gain/loss is display-only.
-- Dividends, fees, contributions, and withdrawals stay ordinary
-  income/expense or transfers against the investment account.
-- Out of scope: order tickets, broker sync, live quotes, corporate
-  actions, fractional-share dealing venues, and any AI/news research
-  (separate change: `investment-research-briefs`).
+- A user-facing **investment account** has two books that stay in one
+  wrapper: a **cash** balance, and an **inventory** of instruments
+  (quantity + cost). Cash in and out is an ordinary transfer with the
+  user's other financial accounts.
+- **Buy** and **sell** are first-class actions, not broker orders. Buy:
+  quantity, price paid, brokerage. Sell: quantity, price received,
+  brokerage. Brokerage is a separate expense, the same idea as a transfer
+  fee. The app does not place, route, or execute orders.
+- Inventory quantity is the holding. **Portfolio value** = cash + Σ(quantity
+  × last fetched market price). That value is what the user sees as "what
+  this account is worth now."
+- **Background quotes** from a fixed set of free market-data services,
+  sending only ticker/ISIN (not quantities, costs, or account names).
+  Failed or stale quotes are labeled; they never rewrite the signed
+  ledger. When no quote exists yet, cost is shown with a not-a-market-price
+  indication.
+- Seed an **Investments** system asset group. Out of scope: broker login,
+  order tickets, corporate actions, and AI research (separate change:
+  `investment-research-enablement` — tap a name, open a browser, no API).
 
 ## Capabilities
 
 ### New Capabilities
 
-- `investment-holdings`: instruments, lots, acquire/dispose, user-entered
-  marks, and the investment-account flag — holdings as a register, not a
-  dealing desk.
+- `investment-holdings`: investment-account wrapper (cash + inventory),
+  buy/sell with brokerage, instruments, and background market prices for
+  portfolio value.
 
 ### Modified Capabilities
 
-- `multi-account-ledger`: seed an Investments system group; allow an
-  asset account to be created as an investment account; keep type and
-  investment-flag immutable after creation.
-- `accounts-home-overview`: an investment account still contributes its
-  *ledger* display balance to group totals and net position; any marked
-  value is a secondary estimate and SHALL NOT be added into net position.
+- `multi-account-ledger`: seed Investments; create an investment-flagged
+  asset account as a cash+inventory wrapper; flag immutable.
+- `accounts-home-overview`: an investment account's headline figure on
+  home is portfolio value (cash + inventory at last quote), labeled as a
+  market estimate; the signed book (cash + inventory at cost) remains
+  available and is what quarantine/supersession still apply to.
 
 ## Impact
 
-- New Drift tables for instruments, holdings/lots, and optional marks
-  (additive schema version).
-- `LedgerRepository` acquire/dispose methods that reuse the existing
-  signed write path; no new ad hoc journal writer.
-- Account-creation UI: investment-account flag; new holdings screen
-  reachable from an investment account's register or the Accounts tab.
-- Home overview: optional secondary marked-value label only; net position
-  math unchanged.
-- Tests for acquire/dispose posting, immutability of the flag, marks not
-  posting, and net-position isolation.
+- Additive schema: investment flag, paired internal inventory account (or
+  equivalent), instruments, holdings, quote cache.
+- Buy/sell repository methods on the signed write path; brokerage as a
+  separate expense entry against the wrapper's cash.
+- Quote service (predefined free providers) + foreground/background
+  refresh while home or holdings is visible.
+- Holdings UI: cash, inventory list, buy, sell, brokerage; tap-to-research
+  is the sibling change.
+- Tests for cash in/out, buy/sell math, brokerage, quote cache, and home
+  portfolio-value display.
