@@ -436,4 +436,56 @@ void main() {
       expect(afterDelete, isEmpty);
     });
   });
+
+  group('category rules', () {
+    test('a saved rule appears in watchCategoryRules()', () async {
+      final category = (await ledgerRepository.watchCategories().first).first;
+
+      await importRepository.saveCategoryRule(
+        keyword: 'AMAZON',
+        categoryId: category.id,
+      );
+
+      final rules = await importRepository.watchCategoryRules().first;
+      expect(rules, hasLength(1));
+      expect(rules.single.keyword, 'AMAZON');
+      expect(rules.single.categoryId, category.id);
+    });
+
+    test('update changes the keyword and category', () async {
+      final categories = await ledgerRepository.watchCategories().first;
+      final originalCategory = categories.first;
+      final newCategory = categories.last;
+      await importRepository.saveCategoryRule(
+        keyword: 'AMAZON',
+        categoryId: originalCategory.id,
+      );
+      final saved = (await importRepository.watchCategoryRules().first).single;
+
+      await importRepository.updateCategoryRule(
+        id: saved.id,
+        keyword: 'AMZN',
+        categoryId: newCategory.id,
+      );
+
+      final updated =
+          (await importRepository.watchCategoryRules().first).single;
+      expect(updated.keyword, 'AMZN');
+      expect(updated.categoryId, newCategory.id);
+    });
+
+    test('delete removes the rule', () async {
+      final category = (await ledgerRepository.watchCategories().first).first;
+      await importRepository.saveCategoryRule(
+        keyword: 'AMAZON',
+        categoryId: category.id,
+      );
+      final saved = (await importRepository.watchCategoryRules().first).single;
+
+      await importRepository.deleteCategoryRule(saved.id);
+
+      final afterDelete = await importRepository.watchCategoryRules().first;
+      expect(afterDelete, isEmpty);
+    });
+  });
 }

@@ -9,6 +9,7 @@ import 'package:smara_accounting/domain/csv/csv_column_mapping.dart';
 import 'package:smara_accounting/domain/csv/csv_import_profile.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
+import 'package:smara_accounting/domain/statement_import/category_rule.dart';
 import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart';
 import 'package:smara_accounting/domain/statement_import/statement_import_batch.dart';
 import 'package:smara_accounting/ui/features/statement_import/view_models/statement_import_view_model.dart';
@@ -33,6 +34,12 @@ void main() {
     type: AccountType.expense,
     archived: false,
   );
+  const transport = Account(
+    id: 'cat-2',
+    name: 'Transport',
+    type: AccountType.expense,
+    archived: false,
+  );
 
   final rowA = ParsedStatementTransaction(
     transactionDate: DateTime(2026, 1, 5),
@@ -50,6 +57,17 @@ void main() {
     currency: 'USD',
     externalReferenceId: 'FIT-B',
   );
+  // Shares rowA's description (a duplicate within the same import) so the
+  // 'Row A' group has two rows - used by the row-grouping/save-as-rule
+  // widget tests.
+  final rowC = ParsedStatementTransaction(
+    transactionDate: DateTime(2026, 1, 7),
+    amountMinor: 3000,
+    direction: TransactionDirection.moneyOut,
+    description: 'Row A',
+    currency: 'USD',
+    externalReferenceId: 'FIT-C',
+  );
 
   setUp(() {
     ledgerRepository = MockLedgerRepository();
@@ -62,9 +80,12 @@ void main() {
     ).thenAnswer((_) => Stream.value([checking]));
     when(
       ledgerRepository.watchCategories(),
-    ).thenAnswer((_) => Stream.value([groceries]));
+    ).thenAnswer((_) => Stream.value([groceries, transport]));
     when(
       importRepository.watchProfiles(),
+    ).thenAnswer((_) => Stream.value(const []));
+    when(
+      importRepository.watchCategoryRules(),
     ).thenAnswer((_) => Stream.value(const []));
   });
 
@@ -99,6 +120,51 @@ void main() {
         description: anyNamed('description'),
       ),
     ).thenAnswer((_) async => null);
+
+    final viewModel = buildViewModel();
+    addTearDown(viewModel.dispose);
+    await viewModel.loadFile(name: 'statement.ofx', bytes: const [1, 2, 3]);
+    await viewModel.selectAccount(checking.id);
+
+    await tester.pumpWidget(
+      MaterialApp(home: StatementImportView(viewModel: viewModel)),
+    );
+    await tester.pump();
+    return viewModel;
+  }
+
+  /// Like [pumpAtPreview], but with [rowA] duplicated as [rowC] so the
+  /// preview has a genuine multi-row group ('Row A') alongside a
+  /// single-row group ('Row B').
+  Future<StatementImportViewModel> pumpAtPreviewWithGroup(
+    WidgetTester tester,
+  ) async {
+    when(importRepository.parseOfxFile(any)).thenReturn(
+      StatementParseResult(
+        transactions: [rowA, rowC, rowB],
+        skippedRows: const [],
+        statementCurrency: 'USD',
+      ),
+    );
+    when(importRepository.groupCurrencyFor(any)).thenAnswer((_) async => 'USD');
+    when(
+      importRepository.findDuplicateIndexes(
+        financialAccountId: anyNamed('financialAccountId'),
+        transactions: anyNamed('transactions'),
+      ),
+    ).thenAnswer((_) async => const {});
+    when(
+      importRepository.suggestCategoryFor(
+        financialAccountId: anyNamed('financialAccountId'),
+        description: anyNamed('description'),
+      ),
+    ).thenAnswer((_) async => null);
+    when(
+      importRepository.saveCategoryRule(
+        keyword: anyNamed('keyword'),
+        categoryId: anyNamed('categoryId'),
+      ),
+    ).thenAnswer((_) async {});
 
     final viewModel = buildViewModel();
     addTearDown(viewModel.dispose);
@@ -178,6 +244,165 @@ void main() {
         source: ImportSource.ofx,
       ),
     ).called(1);
+  });
+
+  group('category rule grouping and bulk assignment', () {
+    testWidgets(
+      'assigning a category to a multi-row group sets it on every row in the group',
+      (tester) async {
+        final viewModel = await pumpAtPreviewWithGroup(tester);
+
+        // The 'Row A' group (2 rows) renders first; its group-level
+        // picker is the first EntityPickerField in the tree.
+        await tester.tap(find.byType(DropdownButtonFormField<String>).first);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Groceries').last);
+        await tester.pumpAndSettle();
+
+        // Dismiss the "Save as a rule?" prompt without saving.
+        await tester.tap(find.text('Skip'));
+        await tester.pumpAndSettle();
+
+        final rowAIndexes = [
+          for (var i = 0; i < viewModel.rows.length; i++)
+            if (viewModel.rows[i].transaction.description == 'Row A') i,
+        ];
+        expect(rowAIndexes, hasLength(2));
+        for (final index in rowAIndexes) {
+          expect(viewModel.rows[index].categoryId, groceries.id);
+        }
+        // The unrelated single-row group is untouched.
+        final rowBIndex = viewModel.rows.indexWhere(
+          (r) => r.transaction.description == 'Row B',
+        );
+        expect(viewModel.rows[rowBIndex].categoryId, isNull);
+      },
+    );
+
+    testWidgets(
+      'saving a multi-row group assignment as a rule pre-fills the keyword '
+      'from the shared description',
+      (tester) async {
+        await pumpAtPreviewWithGroup(tester);
+
+        await tester.tap(find.byType(DropdownButtonFormField<String>).first);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Groceries').last);
+        await tester.pumpAndSettle();
+
+        expect(find.text('Save as a rule?'), findsOneWidget);
+        final keywordField = tester.widget<TextField>(
+          find.widgetWithText(TextField, 'row a'),
+        );
+        expect(keywordField.controller?.text, 'row a');
+
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Save rule'));
+        await tester.pumpAndSettle();
+
+        verify(
+          importRepository.saveCategoryRule(
+            keyword: 'row a',
+            categoryId: groceries.id,
+          ),
+        ).called(1);
+      },
+    );
+
+    testWidgets(
+      'saving a single-row group assignment as a rule requires an explicit keyword',
+      (tester) async {
+        await pumpAtPreviewWithGroup(tester);
+
+        // 'Row B' is a single-row group; its per-row picker is the last
+        // EntityPickerField in the tree (after the 'Row A' group's picker
+        // and its two per-row pickers).
+        await tester.tap(find.byType(DropdownButtonFormField<String>).last);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Groceries').last);
+        await tester.pumpAndSettle();
+
+        expect(find.text('Save as a rule?'), findsOneWidget);
+        final keywordField = tester.widget<TextField>(
+          find.byType(TextField).last,
+        );
+        expect(keywordField.controller?.text, isEmpty);
+
+        // Tapping Save with no keyword typed does nothing - the dialog
+        // stays open rather than silently saving an empty-keyword rule.
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Save rule'));
+        await tester.pumpAndSettle();
+        expect(find.text('Save as a rule?'), findsOneWidget);
+        verifyNever(
+          importRepository.saveCategoryRule(
+            keyword: anyNamed('keyword'),
+            categoryId: anyNamed('categoryId'),
+          ),
+        );
+
+        await tester.enterText(find.byType(TextField).last, 'ROW B KEYWORD');
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Save rule'));
+        await tester.pumpAndSettle();
+
+        verify(
+          importRepository.saveCategoryRule(
+            keyword: 'ROW B KEYWORD',
+            categoryId: groceries.id,
+          ),
+        ).called(1);
+      },
+    );
+  });
+
+  group('category rule management', () {
+    testWidgets('lists every saved rule with its category', (tester) async {
+      when(importRepository.watchCategoryRules()).thenAnswer(
+        (_) => Stream.value([
+          CategoryRule(
+            id: 'rule-1',
+            keyword: 'AMAZON',
+            categoryId: groceries.id,
+            createdAt: DateTime(2026, 1, 1),
+          ),
+        ]),
+      );
+      await pumpAtPreview(tester);
+
+      await tester.tap(find.byTooltip('Manage category rules'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('AMAZON'), findsOneWidget);
+      expect(find.text('Groceries'), findsOneWidget);
+    });
+
+    testWidgets('deleting a rule calls through to the repository', (
+      tester,
+    ) async {
+      when(importRepository.watchCategoryRules()).thenAnswer(
+        (_) => Stream.value([
+          CategoryRule(
+            id: 'rule-1',
+            keyword: 'AMAZON',
+            categoryId: groceries.id,
+            createdAt: DateTime(2026, 1, 1),
+          ),
+        ]),
+      );
+      when(importRepository.deleteCategoryRule(any)).thenAnswer((_) async {});
+      await pumpAtPreview(tester);
+
+      await tester.tap(find.byTooltip('Manage category rules'));
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.byWidgetPredicate((widget) => widget is PopupMenuButton),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Delete'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Delete'));
+      await tester.pumpAndSettle();
+
+      verify(importRepository.deleteCategoryRule('rule-1')).called(1);
+    });
   });
 
   group('CSV import', () {

@@ -31,6 +31,8 @@ import 'package:smara_accounting/domain/models/signing_identity.dart' as _i3;
 import 'package:smara_accounting/domain/models/summary.dart' as _i15;
 import 'package:smara_accounting/domain/models/transaction_direction.dart'
     as _i11;
+import 'package:smara_accounting/domain/statement_import/category_rule.dart'
+    as _i24;
 import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart'
     as _i7;
 import 'package:smara_accounting/domain/statement_import/statement_import_batch.dart'
@@ -942,6 +944,57 @@ class MockStatementImportRepository extends _i1.Mock
   _i9.Future<void> deleteProfile(String? id) =>
       (super.noSuchMethod(
             Invocation.method(#deleteProfile, [id]),
+            returnValue: _i9.Future<void>.value(),
+            returnValueForMissingStub: _i9.Future<void>.value(),
+          )
+          as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> saveCategoryRule({
+    required String? keyword,
+    required String? categoryId,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#saveCategoryRule, [], {
+              #keyword: keyword,
+              #categoryId: categoryId,
+            }),
+            returnValue: _i9.Future<void>.value(),
+            returnValueForMissingStub: _i9.Future<void>.value(),
+          )
+          as _i9.Future<void>);
+
+  @override
+  _i9.Stream<List<_i24.CategoryRule>> watchCategoryRules() =>
+      (super.noSuchMethod(
+            Invocation.method(#watchCategoryRules, []),
+            returnValue: _i9.Stream<List<_i24.CategoryRule>>.empty(),
+            returnValueForMissingStub:
+                _i9.Stream<List<_i24.CategoryRule>>.empty(),
+          )
+          as _i9.Stream<List<_i24.CategoryRule>>);
+
+  @override
+  _i9.Future<void> updateCategoryRule({
+    required String? id,
+    required String? keyword,
+    required String? categoryId,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateCategoryRule, [], {
+              #id: id,
+              #keyword: keyword,
+              #categoryId: categoryId,
+            }),
+            returnValue: _i9.Future<void>.value(),
+            returnValueForMissingStub: _i9.Future<void>.value(),
+          )
+          as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> deleteCategoryRule(String? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteCategoryRule, [id]),
             returnValue: _i9.Future<void>.value(),
             returnValueForMissingStub: _i9.Future<void>.value(),
           )

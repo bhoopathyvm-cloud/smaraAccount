@@ -286,7 +286,60 @@ sqlite3.Database _openV7Database() {
   return db;
 }
 
+/// Built by taking [_openV7Database] and hand-applying the schemaVersion-8
+/// migration SQL (`csv_import_profiles` table, csv-transaction-import) so
+/// onUpgrade(8, 9) can be exercised for real for the category_rules
+/// migration below.
+sqlite3.Database _openV8Database() {
+  final db = _openV7Database();
+  db.execute('''
+    CREATE TABLE csv_import_profiles (
+      id TEXT NOT NULL PRIMARY KEY,
+      name TEXT NOT NULL,
+      header_fingerprint TEXT NOT NULL,
+      column_mapping TEXT NOT NULL,
+      created_at INTEGER NOT NULL
+    );
+    PRAGMA user_version = 8;
+  ''');
+  return db;
+}
+
 void main() {
+  group('onUpgrade from schemaVersion 8', () {
+    test(
+      'existing database upgrades cleanly and category_rules starts empty',
+      () async {
+        final v8 = _openV8Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v8));
+        addTearDown(db.close);
+
+        final rows = await db.select(db.categoryRules).get();
+        expect(rows, isEmpty);
+      },
+    );
+
+    test('a rule can be saved and read back after the upgrade', () async {
+      final v8 = _openV8Database();
+      final db = AppDatabase.forTesting(NativeDatabase.opened(v8));
+      addTearDown(db.close);
+
+      await db
+          .into(db.categoryRules)
+          .insert(
+            CategoryRulesCompanion.insert(
+              keyword: 'AMAZON',
+              categoryId: 'some-category-id',
+              createdAt: DateTime.now(),
+            ),
+          );
+
+      final rows = await db.select(db.categoryRules).get();
+      expect(rows, hasLength(1));
+      expect(rows.single.keyword, 'AMAZON');
+    });
+  });
+
   group('onUpgrade from schemaVersion 7', () {
     test(
       'existing database upgrades cleanly and csv_import_profiles starts empty',

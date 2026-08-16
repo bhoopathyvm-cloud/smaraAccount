@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import 'tables/account_groups_table.dart';
 import 'tables/accounts_table.dart';
+import 'tables/category_rules_table.dart';
 import 'tables/csv_import_profiles_table.dart';
 import 'tables/entry_verification_cache_table.dart';
 import 'tables/integrity_events_table.dart';
@@ -45,6 +46,7 @@ const starterExpenseCategories = [
     PendingTransfers,
     OfxImportRecords,
     CsvImportProfiles,
+    CategoryRules,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -53,7 +55,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -278,6 +280,13 @@ class AppDatabase extends _$AppDatabase {
         // csv-transaction-import: additive csv_import_profiles table for
         // saved column-mapping profiles (design.md Decision 6).
         await m.createTable(csvImportProfiles);
+      }
+
+      if (from < 9) {
+        // import-category-rules: additive category_rules table for saved
+        // keyword-to-category rules (design.md: "Persistence follows the
+        // CsvImportProfiles pattern exactly").
+        await m.createTable(categoryRules);
       }
     },
   );
