@@ -244,11 +244,11 @@ In addition to the default mode where a transfer fee posts as an additional debi
 - **AND** the fee posts as an additional debit, as already specified by the transfer fee requirement
 
 ### Requirement: Per-Account Balance and Register
-The system SHALL compute a current display balance for each financial account from its postings (asset balance = sum of included postings; liability amount owed = negated sum of included postings). The system SHALL provide a chronological register for a selected financial account showing a running display balance for that account. Register rows SHALL correctly represent income/expense entries (category counterpart), transfers (counterparty account counterpart), and opening-balance entries (opening-balance counterpart label). The register SHALL remain fully readable for an archived financial account, including its history and current balance. The register's add-transaction control SHALL be disabled whenever the account currently selected in the register is archived.
+The system SHALL compute a current display balance for each financial account from its postings (asset balance = sum of included postings; liability amount owed = negated sum of included postings). The system SHALL provide a reverse-chronological register for a selected financial account showing a running display balance for that account. The most recently dated entry SHALL be listed first, so that it and the account's current balance are visible without scrolling. Running-balance amounts SHALL still be computed oldest-to-newest so each row's balance is as of that entry. Register rows SHALL correctly represent income/expense entries (category counterpart), transfers (counterparty account counterpart), and opening-balance entries (opening-balance counterpart label). The register SHALL remain fully readable for an archived financial account, including its history and current balance. The register's add-transaction control SHALL be disabled whenever the account currently selected in the register is archived.
 
 #### Scenario: Register is scoped to one account
 - **WHEN** the user opens the register for a specific financial account
-- **THEN** posted entries that affect that account are listed in chronological order by transaction date
+- **THEN** posted entries that affect that account are listed in reverse-chronological order, most recent transaction date first
 - **AND** each row shows the running display balance of that account as of that entry
 
 #### Scenario: Transfer row shows the counterparty account
@@ -276,6 +276,11 @@ The system SHALL compute a current display balance for each financial account fr
 #### Scenario: Add-transaction control disabled for an archived account
 - **WHEN** the user is viewing the register for an archived financial account
 - **THEN** the add-transaction control is disabled and does not open the transaction-entry screen
+
+#### Scenario: A newly recorded entry appears at the top
+- **WHEN** the user records a new entry against the currently viewed account
+- **THEN** the new entry appears as the first (topmost) row in the register
+- **AND** its running balance equals the account's current balance
 
 ### Requirement: Opening Balance on Account Creation
 When creating a financial account, the user SHALL be able to supply an optional opening balance. If an opening balance is supplied, it SHALL be a positive, non-zero amount. For an asset account, that amount SHALL mean funds held. For a liability account, that amount SHALL mean amount owed. The system SHALL post a balanced opening entry against the internal system equity account so the account’s current display balance equals that amount without recording it as user income or expense. Omitting the opening balance SHALL leave the account at zero with no opening entry.

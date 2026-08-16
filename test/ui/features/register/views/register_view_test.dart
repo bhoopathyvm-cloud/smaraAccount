@@ -179,6 +179,67 @@ void main() {
     },
   );
 
+  testWidgets(
+    'a migration-superseded entry renders with a muted historical label, '
+    'never hidden, distinct from the quarantine treatment',
+    (tester) async {
+      final superseded = JournalEntry(
+        id: 'entry-1',
+        transactionDate: DateTime(2026, 1, 15),
+        recordedAt: DateTime(2026, 1, 15),
+        description: null,
+        reversesEntryId: null,
+        postings: [
+          Posting(
+            id: 'p1',
+            entryId: 'entry-1',
+            accountId: 'asset-1',
+            amountMinor: 1000,
+            lineNumber: 1,
+          ),
+          Posting(
+            id: 'p2',
+            entryId: 'entry-1',
+            accountId: 'income-1',
+            amountMinor: -1000,
+            lineNumber: 2,
+          ),
+        ],
+        deviceChainSequence: 0,
+        entryHash: const [],
+        signedByIdentityId: 'identity-1',
+        signature: const [],
+        migratedFromEntryId: null,
+        isVerified: true,
+        breakReason: null,
+        isSupersededByMigration: true,
+      );
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value([superseded]));
+
+      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: RegisterView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      // Still visible for review (never hidden) ...
+      expect(find.text('Salary'), findsOneWidget);
+      // ... labeled distinctly from the quarantine treatment ...
+      expect(
+        find.text('Superseded by migration - excluded from totals'),
+        findsOneWidget,
+      );
+      expect(find.byIcon(TablerIcons.history), findsOneWidget);
+      expect(find.byIcon(TablerIcons.lock), findsNothing);
+      // ... and excluded from the running balance.
+      expect(find.text('0.00'), findsOneWidget);
+    },
+  );
+
   testWidgets('the most recently posted entry renders above an older one', (
     tester,
   ) async {

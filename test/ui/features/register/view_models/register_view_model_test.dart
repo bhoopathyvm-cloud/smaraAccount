@@ -41,6 +41,7 @@ void main() {
     required DateTime transactionDate,
     required List<Posting> postings,
     bool isVerified = true,
+    bool isSupersededByMigration = false,
   }) {
     return JournalEntry(
       id: id,
@@ -56,7 +57,7 @@ void main() {
       migratedFromEntryId: null,
       isVerified: isVerified,
       breakReason: isVerified ? null : VerificationBreakReason.hashMismatch,
-      isSupersededByMigration: false,
+      isSupersededByMigration: isSupersededByMigration,
     );
   }
 
@@ -191,6 +192,71 @@ void main() {
       expect(viewModel.rows[1].runningBalanceMinor, equals(1000));
     },
   );
+
+  test('a migration-superseded entry is shown, labeled, and excluded from the '
+      'running balance', () async {
+    when(
+      repository.watchCategories(includeArchived: anyNamed('includeArchived')),
+    ).thenAnswer((_) => Stream.value([income]));
+    when(repository.watchEntriesForAccount(any)).thenAnswer(
+      (_) => Stream.value([
+        testEntry(
+          id: 'e1',
+          transactionDate: DateTime(2026, 1, 1),
+          postings: const [
+            Posting(
+              id: 'p1',
+              entryId: 'e1',
+              accountId: 'asset-1',
+              amountMinor: 1000,
+              lineNumber: 1,
+            ),
+            Posting(
+              id: 'p2',
+              entryId: 'e1',
+              accountId: 'income-1',
+              amountMinor: -1000,
+              lineNumber: 2,
+            ),
+          ],
+        ),
+        testEntry(
+          id: 'e2',
+          transactionDate: DateTime(2026, 1, 2),
+          isSupersededByMigration: true,
+          postings: const [
+            Posting(
+              id: 'p3',
+              entryId: 'e2',
+              accountId: 'asset-1',
+              amountMinor: 5000,
+              lineNumber: 1,
+            ),
+            Posting(
+              id: 'p4',
+              entryId: 'e2',
+              accountId: 'income-1',
+              amountMinor: -5000,
+              lineNumber: 2,
+            ),
+          ],
+        ),
+      ]),
+    );
+
+    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    addTearDown(viewModel.dispose);
+    await Future<void>.delayed(Duration.zero);
+
+    expect(viewModel.rows, hasLength(2));
+    // e2 (Jan 2, superseded) is the most recent entry, so it's first -
+    // still shown and still verified, but excluded from the balance.
+    expect(viewModel.rows[0].isSupersededByMigration, isTrue);
+    expect(viewModel.rows[0].isVerified, isTrue);
+    expect(viewModel.rows[0].runningBalanceMinor, equals(1000));
+    expect(viewModel.rows[1].isSupersededByMigration, isFalse);
+    expect(viewModel.rows[1].runningBalanceMinor, equals(1000));
+  });
 
   test(
     'a newly recorded entry appears first, with the account\'s current balance',

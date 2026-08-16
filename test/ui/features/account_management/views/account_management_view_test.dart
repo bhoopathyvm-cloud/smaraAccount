@@ -233,6 +233,92 @@ void main() {
   });
 
   testWidgets(
+    'Rename account dialog renames and closes cleanly through the exit '
+    'animation',
+    (tester) async {
+      when(
+        repository.renameFinancialAccount(
+          id: anyNamed('id'),
+          newName: anyNamed('newName'),
+        ),
+      ).thenAnswer((_) async {});
+
+      final viewModel = AccountManagementViewModel(
+        ledgerRepository: repository,
+      );
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      await tester.tap(find.byIcon(Icons.more_vert).first);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Rename'));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byType(TextField).last, 'Main Checking');
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Save'));
+      // Regression guard: pumpAndSettle runs every frame of the dialog's
+      // exit transition. If the controller backing its TextField were
+      // disposed before that transition finishes, one of those frames
+      // throws "A TextEditingController was used after being disposed."
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+      verify(
+        repository.renameFinancialAccount(
+          id: 'asset-1',
+          newName: 'Main Checking',
+        ),
+      ).called(1);
+      expect(find.text('Rename account'), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'Rename (edit) group dialog renames and closes cleanly through the exit '
+    'animation',
+    (tester) async {
+      when(
+        repository.renameAccountGroup(
+          id: anyNamed('id'),
+          newName: anyNamed('newName'),
+        ),
+      ).thenAnswer((_) async {});
+
+      final viewModel = AccountManagementViewModel(
+        ledgerRepository: repository,
+      );
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      await tester.tap(find.byTooltip('Edit group').first);
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byType(TextField).first, 'Everyday Cash');
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Save'));
+      // Same dispose-after-dismissal regression guard as the account
+      // rename dialog above.
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+      verify(
+        repository.renameAccountGroup(
+          id: 'group-cash',
+          newName: 'Everyday Cash',
+        ),
+      ).called(1);
+      expect(find.text('Edit group'), findsNothing);
+    },
+  );
+
+  testWidgets(
     'Create group dialog disables Create until the currency is a valid 3-letter code',
     (tester) async {
       final viewModel = AccountManagementViewModel(

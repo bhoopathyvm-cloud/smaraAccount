@@ -149,8 +149,12 @@ class StatementImportViewModel extends ChangeNotifier {
 
   int _parsedTransactionCount = 0;
   int get parsedTransactionCount => _parsedTransactionCount;
-  int _skippedRowCount = 0;
-  int get skippedRowCount => _skippedRowCount;
+  List<StatementSkippedRow> _skippedRows = const [];
+
+  /// Rows the parser could not turn into a transaction, with the reason
+  /// each was skipped (spec: "Skipped-Row Reasons Are Shown to the User").
+  List<StatementSkippedRow> get skippedRows => List.unmodifiable(_skippedRows);
+  int get skippedRowCount => _skippedRows.length;
   String? _statementCurrency;
 
   String? _selectedAccountId;
@@ -311,7 +315,7 @@ class StatementImportViewModel extends ChangeNotifier {
   /// category. Shown in the post-import summary alongside posted/failed
   /// counts (spec: "Preview and Duplicate Detection Before Posting").
   int get skippedOrExcludedRowCount =>
-      _skippedRowCount +
+      skippedRowCount +
       _rows.where((row) => !(row.selected && row.categoryId != null)).length;
 
   /// Loads [bytes] and, on success, advances to the account-selection
@@ -331,7 +335,7 @@ class StatementImportViewModel extends ChangeNotifier {
           final result = _importRepository.parseOfxFile(bytes);
           _transactions = result.transactions;
           _parsedTransactionCount = result.transactions.length;
-          _skippedRowCount = result.skippedRows.length;
+          _skippedRows = result.skippedRows;
           _statementCurrency = result.statementCurrency;
         case StatementSource.csv:
           _csvBytes = bytes;
@@ -423,7 +427,7 @@ class StatementImportViewModel extends ChangeNotifier {
       final result = _importRepository.parseCsvFile(_csvBytes!, mapping);
       _transactions = result.transactions;
       _parsedTransactionCount = result.transactions.length;
-      _skippedRowCount = result.skippedRows.length;
+      _skippedRows = result.skippedRows;
       _statementCurrency = result.statementCurrency;
     } on CsvParseException catch (error) {
       if (_isDisposed) return;

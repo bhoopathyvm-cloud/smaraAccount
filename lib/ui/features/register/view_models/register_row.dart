@@ -20,6 +20,7 @@ class RegisterRow {
     required this.isReversal,
     required this.isVerified,
     required this.breakReason,
+    required this.isSupersededByMigration,
   });
 
   final String entryId;
@@ -41,4 +42,10 @@ class RegisterRow {
   /// treatment (red left-border + lock icon), never hidden.
   final bool isVerified;
   final VerificationBreakReason? breakReason;
+
+  /// True when this entry was superseded by a true key-loss migration.
+  /// Shown with a muted historical label, distinct from the quarantine
+  /// treatment - the entry is not unverifiable, just no longer current
+  /// (spec: "Migration-Superseded Entries Are Visibly Marked").
+  final bool isSupersededByMigration;
 }

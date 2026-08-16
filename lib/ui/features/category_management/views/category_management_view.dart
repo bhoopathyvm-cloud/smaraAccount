@@ -16,6 +16,17 @@ class CategoryManagementView extends StatelessWidget {
 
   final CategoryManagementViewModel viewModel;
 
+  Future<void> _confirmArchive(BuildContext context, Account category) async {
+    final confirmed = await confirmDestructiveAction(
+      context: context,
+      title: 'Archive category?',
+      message:
+          '${category.name} will no longer be offered when recording new '
+          'transactions.',
+    );
+    if (confirmed) await viewModel.archiveCategory(category.id);
+  }
+
   Future<void> _showAddDialog(BuildContext context) async {
     final nameController = TextEditingController();
     var type = AccountType.expense;
@@ -147,7 +158,7 @@ class CategoryManagementView extends StatelessWidget {
                               child: OutlinedButton(
                                 style: destructiveButtonStyle,
                                 onPressed: () =>
-                                    viewModel.archiveCategory(category.id),
+                                    _confirmArchive(context, category),
                                 child: const Text('Archive'),
                               ),
                             ),

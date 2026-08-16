@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/transaction_direction.dart';
 import '../../../core/app_colors.dart';
@@ -17,12 +16,10 @@ class RecordTransactionView extends StatefulWidget {
   const RecordTransactionView({
     super.key,
     required this.viewModel,
-    required this.ledgerRepository,
     this.onSaved,
   });
 
   final RecordTransactionViewModel viewModel;
-  final LedgerRepository ledgerRepository;
   final VoidCallback? onSaved;
 
   @override
@@ -146,26 +143,13 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                   ),
                 ],
                 const SizedBox(height: AppSpacing.large),
-                StreamBuilder<List<Account>>(
-                  stream: widget.ledgerRepository.watchCategories(),
-                  builder: (context, snapshot) {
-                    final categoryType =
-                        widget.viewModel.direction ==
-                            TransactionDirection.moneyIn
-                        ? AccountType.income
-                        : AccountType.expense;
-                    final categories = (snapshot.data ?? const [])
-                        .where((a) => a.type == categoryType)
-                        .toList();
-                    return EntityPickerField<Account>(
-                      labelText: 'Category',
-                      items: categories,
-                      idOf: (category) => category.id,
-                      labelOf: (category) => category.name,
-                      value: widget.viewModel.categoryId,
-                      onChanged: widget.viewModel.setCategoryId,
-                    );
-                  },
+                EntityPickerField<Account>(
+                  labelText: 'Category',
+                  items: widget.viewModel.categories,
+                  idOf: (category) => category.id,
+                  labelOf: (category) => category.name,
+                  value: widget.viewModel.categoryId,
+                  onChanged: widget.viewModel.setCategoryId,
                 ),
                 const SizedBox(height: AppSpacing.large),
                 OutlinedButton(

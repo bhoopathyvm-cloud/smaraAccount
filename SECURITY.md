@@ -1,17 +1,27 @@
 # Security Policy
 
+SmaraAccounting is a local-first app: all ledger data stays on the
+device, in a local SQLite database. There is no server and no user
+account, so there is nothing to breach on our end. There is no
+telemetry and no analytics.
+
+The device's signing identity (recovery phrase / keystore) is held in
+the OS-level secure keystore (Keychain, Keystore, Credential Manager,
+depending on platform), not in the SQLite database itself.
+
+The one optional network call the app makes is a reference
+exchange-rate lookup (off by default, enabled per-device in Settings);
+it sends only a currency pair to the chosen provider, never ledger
+data. See `Specs/architecture/smara-architecture.md` for the full
+network stance.
+
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+This project does not yet have a stable release line with a formal
+support/EOL policy. Security fixes land on the current `main` branch.
 
 ## Reporting a Vulnerability
 
-please create an issue, i will take it up as soon as possible
+Please open a GitHub issue describing the problem. If the issue
+involves sensitive details you'd rather not post publicly, say so in
+the issue and we'll coordinate a private channel.

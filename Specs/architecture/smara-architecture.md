@@ -86,23 +86,32 @@ requirement, not built speculatively.
 ```text
 lib/
 ├── data/
-│   ├── models/          # Drift table row models / DTOs
 │   ├── repositories/    # Repository implementations (single source of truth)
-│   └── database/        # Drift database class, tables, generated migrations
+│   ├── database/        # Drift database class, tables, generated migrations
+│   └── exchange_rate_service.dart  # Optional reference-rate lookup (see Network below)
 ├── domain/
-│   └── models/          # Clean domain models (Account, Category, JournalEntry, Posting)
+│   ├── models/          # Clean domain models (Account, Category, JournalEntry, Posting)
+│   ├── crypto/           # Device signing identity, chain hashing/verification
+│   ├── ofx/               # OFX statement parsing
+│   ├── csv/               # CSV column mapping and parsing
+│   └── statement_import/  # Shared parsed-transaction model, category-rule matching
 ├── ui/
 │   ├── core/            # Shared widgets, theme (3-color palette), typography
 │   └── features/
+│       ├── onboarding/
+│       ├── restore/
+│       ├── migration/
+│       ├── home/
 │       ├── register/
-│       │   ├── view_models/
-│       │   └── views/
 │       ├── record_transaction/
-│       │   ├── view_models/
-│       │   └── views/
-│       └── summary/
-│           ├── view_models/
-│           └── views/
+│       ├── transfer/
+│       ├── settle_pending_transfer/
+│       ├── account_management/
+│       ├── category_management/
+│       ├── statement_import/
+│       ├── summary/
+│       └── settings/
+│           # each feature follows view_models/ + views/
 └── main.dart
 
 test/            # mirrors lib/ — unit + widget tests
@@ -145,11 +154,17 @@ requirement).
 
 ```text
 DATA RESIDENCY:
-  All data stays on the device. No cloud calls of any kind.
-  No external APIs. No telemetry. No analytics.
+  All ledger data stays on the device. No cloud storage, no telemetry,
+  no analytics.
 
 NETWORK:
-  None in the current phase.
+  Off by default. The one shipped exception is an opt-in reference
+  exchange-rate lookup (Settings > Fetch reference exchange rates):
+  when enabled, it sends only a currency pair to the user's chosen
+  provider - never account ids, amounts, or descriptions - purely to
+  show a comparison figure next to a cross-currency transfer's
+  destination-amount field. It never fills in or validates the amount
+  the user enters, and the app functions fully with it left off.
   Future LAN sync (separate change) will be local-network-only, with
   no relay and no internet-hosted component — carried over as a hard
   constraint from earlier exploration, not re-litigated per change.

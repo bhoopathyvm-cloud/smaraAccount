@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
+import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/features/record_transaction/view_models/record_transaction_view_model.dart';
 
@@ -14,6 +15,42 @@ void main() {
     repository = MockLedgerRepository();
     viewModel = RecordTransactionViewModel(ledgerRepository: repository);
   });
+
+  test(
+    'categories reflects the currently selected direction, active only',
+    () async {
+      final withCategories = MockLedgerRepository();
+      when(withCategories.watchCategories()).thenAnswer(
+        (_) => Stream.value(const [
+          Account(
+            id: 'income-1',
+            name: 'Salary',
+            type: AccountType.income,
+            archived: false,
+          ),
+          Account(
+            id: 'expense-1',
+            name: 'Groceries',
+            type: AccountType.expense,
+            archived: false,
+          ),
+        ]),
+      );
+      final categorizedViewModel = RecordTransactionViewModel(
+        ledgerRepository: withCategories,
+      );
+      addTearDown(categorizedViewModel.dispose);
+      // Stream.value(...) emits asynchronously (via a microtask), not
+      // synchronously on listen - let it deliver before asserting.
+      await Future<void>.delayed(Duration.zero);
+
+      expect(categorizedViewModel.direction, TransactionDirection.moneyIn);
+      expect(categorizedViewModel.categories.map((c) => c.id), ['income-1']);
+
+      categorizedViewModel.setDirection(TransactionDirection.moneyOut);
+      expect(categorizedViewModel.categories.map((c) => c.id), ['expense-1']);
+    },
+  );
 
   test('setters update exposed state', () {
     viewModel.setAmountMinor(500);

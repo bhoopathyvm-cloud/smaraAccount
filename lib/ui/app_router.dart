@@ -166,7 +166,6 @@ GoRouter buildAppRouter(
             ledgerRepository: ledgerRepository,
             initialFinancialAccountId: state.uri.queryParameters['accountId'],
           ),
-          ledgerRepository: ledgerRepository,
           onSaved: () => context.pop(),
         ),
       ),

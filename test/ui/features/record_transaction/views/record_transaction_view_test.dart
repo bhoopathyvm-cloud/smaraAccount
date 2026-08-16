@@ -37,12 +37,7 @@ void main() {
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
-      MaterialApp(
-        home: RecordTransactionView(
-          viewModel: viewModel,
-          ledgerRepository: repository,
-        ),
-      ),
+      MaterialApp(home: RecordTransactionView(viewModel: viewModel)),
     );
     await tester.pump();
 
