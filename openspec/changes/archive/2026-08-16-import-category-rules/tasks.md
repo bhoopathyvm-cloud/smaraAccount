@@ -36,4 +36,4 @@
 
 - [x] 6.1 `flutter analyze` passes with no new warnings
 - [x] 6.2 Full test suite passes (338 tests: 313 pre-existing + 25 new)
-- [ ] 6.3 Manually import a CSV with repeated/varied counterparties on a physical device or simulator, confirm grouping, bulk assignment, rule saving, and that a second import auto-categorizes via the saved rule — not run: no interactive device session in this environment; the widget tests above exercise the same flows end to end, but this is a genuine manual check still worth doing
+- [x] 6.3 Manually import a CSV with repeated/varied counterparties on a physical device or simulator, confirm grouping, bulk assignment, rule saving, and that a second import auto-categorizes via the saved rule — verified by the user on-device
