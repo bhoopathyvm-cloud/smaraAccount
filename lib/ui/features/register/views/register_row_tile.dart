@@ -27,6 +27,7 @@ class RegisterRowTile extends StatelessWidget {
         '${isMoneyIn ? '+' : '−'}${formatAmountMinor(row.amountMinor)}';
     final isNegativeBalance = row.runningBalanceMinor < 0;
     final isQuarantined = !row.isVerified;
+    final isSuperseded = row.isSupersededByMigration;
 
     return Card(
       margin: const EdgeInsets.symmetric(
@@ -76,6 +77,14 @@ class RegisterRowTile extends StatelessWidget {
                           color: AppColors.signal,
                         ),
                       ],
+                      if (isSuperseded) ...[
+                        const SizedBox(width: AppSpacing.small),
+                        Icon(
+                          TablerIcons.history,
+                          size: 14,
+                          color: AppColors.textMuted,
+                        ),
+                      ],
                     ],
                   ),
                   if (isQuarantined)
@@ -83,6 +92,13 @@ class RegisterRowTile extends StatelessWidget {
                       'Unverified - excluded from totals',
                       style: AppTypography.metadata.copyWith(
                         color: AppColors.signal,
+                      ),
+                    ),
+                  if (isSuperseded)
+                    Text(
+                      'Superseded by migration - excluded from totals',
+                      style: AppTypography.metadata.copyWith(
+                        color: AppColors.textMuted,
                       ),
                     ),
                   Text(
@@ -126,6 +142,7 @@ Widget registerRowMoneyInPreview() {
         isReversal: false,
         isVerified: true,
         breakReason: null,
+        isSupersededByMigration: false,
       ),
     ),
   );
@@ -147,6 +164,7 @@ Widget registerRowNegativeBalancePreview() {
         isReversal: false,
         isVerified: true,
         breakReason: null,
+        isSupersededByMigration: false,
       ),
     ),
   );
@@ -168,6 +186,29 @@ Widget registerRowQuarantinedPreview() {
         isReversal: false,
         isVerified: false,
         breakReason: VerificationBreakReason.hashMismatch,
+        isSupersededByMigration: false,
+      ),
+    ),
+  );
+}
+
+@Preview(name: 'Register row - superseded by migration')
+Widget registerRowSupersededPreview() {
+  return Directionality(
+    textDirection: TextDirection.ltr,
+    child: RegisterRowTile(
+      row: RegisterRow(
+        entryId: '4',
+        categoryName: 'Groceries',
+        direction: TransactionDirection.moneyOut,
+        amountMinor: 4500,
+        transactionDate: DateTime(2026, 1, 10),
+        description: null,
+        runningBalanceMinor: -50000,
+        isReversal: false,
+        isVerified: true,
+        breakReason: null,
+        isSupersededByMigration: true,
       ),
     ),
   );

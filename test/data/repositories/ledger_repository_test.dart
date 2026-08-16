@@ -2164,6 +2164,33 @@ void main() {
     );
 
     test(
+      'a settled pending transfer no longer appears in the pending list',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+
+        var overview = await repository.watchHomeOverview().first;
+        expect(overview.pendingTransfers, hasLength(1));
+
+        await repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: euroId,
+          settledAmountMinor: 9200,
+        );
+
+        overview = await repository.watchHomeOverview().first;
+        expect(overview.pendingTransfers, isEmpty);
+      },
+    );
+
+    test(
       'a quarantined provisional entry is excluded from net worth but still listed as pending',
       () async {
         final checkingId = await firstFinancialAccountId();

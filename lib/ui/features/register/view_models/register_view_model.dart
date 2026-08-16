@@ -136,6 +136,7 @@ class RegisterViewModel extends ChangeNotifier {
           isReversal: entry.reversesEntryId != null,
           isVerified: entry.isVerified,
           breakReason: entry.breakReason,
+          isSupersededByMigration: entry.isSupersededByMigration,
         ),
       );
     }

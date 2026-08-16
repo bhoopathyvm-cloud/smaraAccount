@@ -213,17 +213,48 @@ class _SelectAccountStep extends StatelessWidget {
               style: AppTypography.body,
             ),
           const SizedBox(height: AppSpacing.large),
-          DropdownButtonFormField<String>(
-            initialValue: viewModel.selectedAccountId,
-            decoration: const InputDecoration(labelText: 'Import into account'),
-            items: [
-              for (final account in viewModel.accounts)
-                DropdownMenuItem(value: account.id, child: Text(account.name)),
-            ],
+          EntityPickerField<Account>(
+            labelText: 'Import into account',
+            items: viewModel.accounts,
+            idOf: (account) => account.id,
+            labelOf: (account) => account.name,
+            value: viewModel.selectedAccountId,
             onChanged: (accountId) {
               if (accountId != null) viewModel.selectAccount(accountId);
             },
           ),
+          if (viewModel.skippedRows.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.large),
+            Text('Skipped rows', style: AppTypography.cardTitle),
+            const SizedBox(height: AppSpacing.small),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 160),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: viewModel.skippedRows.length,
+                itemBuilder: (context, index) {
+                  final skipped = viewModel.skippedRows[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.small,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(skipped.reason, style: AppTypography.body),
+                        Text(
+                          skipped.rawFragment,
+                          style: AppTypography.metadata,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -293,6 +324,21 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
     );
   }
 
+  Future<void> _confirmDeleteProfile(
+    BuildContext context,
+    CsvImportProfile profile,
+  ) async {
+    final confirmed = await confirmDestructiveAction(
+      context: context,
+      title: 'Delete profile?',
+      message:
+          'The saved column mapping "${profile.name}" will be deleted. '
+          'Statements already imported with it are unaffected.',
+      confirmLabel: 'Delete',
+    );
+    if (confirmed) await widget.viewModel.deleteProfile(profile.id);
+  }
+
   String _columnLabel(int index) {
     final headerRow = widget.viewModel.csvHeaderRow;
     final header = (headerRow != null && index < headerRow.length)
@@ -343,7 +389,7 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
                       case _ProfileAction.rename:
                         _showRenameProfileDialog(context, profile);
                       case _ProfileAction.delete:
-                        viewModel.deleteProfile(profile.id);
+                        _confirmDeleteProfile(context, profile);
                     }
                   },
                   itemBuilder: (context) => const [

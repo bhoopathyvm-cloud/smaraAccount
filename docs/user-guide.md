@@ -176,6 +176,17 @@ previously posted transaction's, but you can always change it. Deselected
 or uncategorized rows are simply skipped, not blocked from posting the
 rest of the batch.
 
+Rows sharing the same description are grouped together on the review
+screen, so you can assign a category to the whole group in one action
+instead of each row individually. From a group, you can also save the
+category choice as a **keyword-to-category rule**: any future imported
+row whose description contains that keyword is pre-categorized
+automatically. A matching saved rule is suggested before the exact-memo
+fallback described above, so once you've saved a rule for a recurring
+payee, it keeps winning even if an older, differently-categorized entry
+also matches by memo. Saved rules can be reviewed, and deleted, from the
+import screen's rule-management view.
+
 ## Register
 
 Each account's Register lists its transactions newest-first, with each

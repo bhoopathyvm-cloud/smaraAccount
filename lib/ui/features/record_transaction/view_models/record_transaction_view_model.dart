@@ -30,16 +30,34 @@ class RecordTransactionViewModel extends ChangeNotifier {
           _groups = groups;
           notifyListeners();
         });
+    _categoriesSubscription = _ledgerRepository.watchCategories().listen((
+      categories,
+    ) {
+      _categories = categories;
+      notifyListeners();
+    });
   }
 
   final LedgerRepository _ledgerRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
+  late final StreamSubscription<List<Account>> _categoriesSubscription;
 
   List<Account> _financialAccounts = const [];
   List<Account> get financialAccounts => _financialAccounts;
 
   List<AccountGroup> _groups = const [];
+
+  List<Account> _categories = const [];
+
+  /// Active categories matching the currently selected transaction
+  /// direction (income for money-in, expense for money-out).
+  List<Account> get categories {
+    final categoryType = _direction == TransactionDirection.moneyIn
+        ? AccountType.income
+        : AccountType.expense;
+    return _categories.where((a) => a.type == categoryType).toList();
+  }
 
   /// The ISO 4217 currency of [accountId]'s group, or null if either
   /// can't be resolved yet.
@@ -187,6 +205,7 @@ class RecordTransactionViewModel extends ChangeNotifier {
   void dispose() {
     _accountsSubscription.cancel();
     _groupsSubscription.cancel();
+    _categoriesSubscription.cancel();
     super.dispose();
   }
 }

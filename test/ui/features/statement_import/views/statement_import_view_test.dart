@@ -179,6 +179,43 @@ void main() {
   }
 
   testWidgets(
+    'a file with one bad row shows its reason and still offers the good rows '
+    'on the account-select step',
+    (tester) async {
+      when(importRepository.parseOfxFile(any)).thenReturn(
+        StatementParseResult(
+          transactions: [rowA],
+          skippedRows: const [
+            StatementSkippedRow(
+              rawFragment: '<STMTTRN>...</STMTTRN>',
+              reason: 'Missing transaction amount',
+            ),
+          ],
+          statementCurrency: 'USD',
+        ),
+      );
+
+      final viewModel = buildViewModel();
+      addTearDown(viewModel.dispose);
+      await viewModel.loadFile(name: 'statement.ofx', bytes: const [1, 2, 3]);
+
+      expect(viewModel.skippedRows, hasLength(1));
+      expect(viewModel.skippedRows.single.reason, 'Missing transaction amount');
+      expect(viewModel.parsedTransactionCount, 1);
+
+      await tester.pumpWidget(
+        MaterialApp(home: StatementImportView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      expect(find.text('1 transactions parsed (1 skipped)'), findsOneWidget);
+      expect(find.text('Skipped rows'), findsOneWidget);
+      expect(find.text('Missing transaction amount'), findsOneWidget);
+      expect(find.text('Import into account'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
     'duplicate rows default unselected, non-duplicate rows default selected',
     (tester) async {
       await pumpAtPreview(tester, duplicateIndexes: {0});
@@ -623,11 +660,33 @@ void main() {
       ).called(1);
     });
 
-    testWidgets('deleting a saved profile calls through to the repository', (
+    testWidgets(
+      'deleting a saved profile confirms then calls through to the repository',
+      (tester) async {
+        when(importRepository.deleteProfile(any)).thenAnswer((_) async {});
+
+        await pumpAtCsvStep(tester, profiles: [savedProfile]);
+
+        await tester.tap(
+          find.byWidgetPredicate((widget) => widget is PopupMenuButton).first,
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Delete'));
+        await tester.pumpAndSettle();
+
+        expect(find.text('Delete profile?'), findsOneWidget);
+        verifyNever(importRepository.deleteProfile(any));
+
+        await tester.tap(find.widgetWithText(OutlinedButton, 'Delete'));
+        await tester.pumpAndSettle();
+
+        verify(importRepository.deleteProfile('profile-1')).called(1);
+      },
+    );
+
+    testWidgets('cancelling the delete confirmation keeps the profile', (
       tester,
     ) async {
-      when(importRepository.deleteProfile(any)).thenAnswer((_) async {});
-
       await pumpAtCsvStep(tester, profiles: [savedProfile]);
 
       await tester.tap(
@@ -636,8 +695,10 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Delete'));
       await tester.pumpAndSettle();
+      await tester.tap(find.text('Cancel'));
+      await tester.pumpAndSettle();
 
-      verify(importRepository.deleteProfile('profile-1')).called(1);
+      verifyNever(importRepository.deleteProfile(any));
     });
   });
 }
