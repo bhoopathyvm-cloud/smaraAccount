@@ -11,3 +11,7 @@ The app SHALL support UI locales Tamil (`ta`), Telugu (`te`), Malayalam (`ml`), 
 #### Scenario: Script renders without tofu for sample screens
 - **WHEN** the user opens Home and Record Transaction in each of `ta`, `te`, `ml`, and `kn`
 - **THEN** localized labels are visible in the expected script (not replacement characters), given the bundled fonts
+
+#### Scenario: Picker lists verified endonyms
+- **WHEN** the user opens the language picker after this pack is shipped
+- **THEN** Tamil, Telugu, Malayalam, and Kannada appear, each labeled with its native-script name (தமிழ், తెలుగు, മലയാളം, ಕನ್ನಡ)

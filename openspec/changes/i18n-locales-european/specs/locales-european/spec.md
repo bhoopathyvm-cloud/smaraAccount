@@ -9,5 +9,5 @@ The app SHALL support UI locales German (`de`), French (`fr`), Spanish (`es`), I
 - **AND** missing keys fall back to English
 
 #### Scenario: Portuguese uses a single locale tag
-- **WHEN** Portuguese is selected
+- **WHEN** Portuguese is selected, or the device locale is `pt_BR` or `pt_PT` and the user is following the device language
 - **THEN** the active locale is `pt` (not a separate regional variant requirement in v1)

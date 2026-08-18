@@ -5,8 +5,8 @@ Western Indian scheduled languages â€” Marathi, Gujarati, Konkani, and Sindhi â€
 ## What Changes
 
 - Add AI-translated ARBs for `mr`, `gu`, `kok`, `sd`.
-- Register those locales in `supportedLocales` and the language picker.
-- Ensure fonts render Devanagari (Marathi/Konkani), Gujarati, and Sindhi scripts (Arabic or Devanagari presentation as chosen for v1 â€” document the chosen script variant in design).
+- Register those locales in `supportedLocales` and the language picker with verified endonyms.
+- Fonts: Devanagari (Marathi/Konkani), Gujarati, and **Arabic-script Sindhi**. Arabic-script Sindhi SHALL use RTL.
 - Depends on `i18n-foundation`.
 
 ## Capabilities
@@ -15,9 +15,10 @@ Western Indian scheduled languages â€” Marathi, Gujarati, Konkani, and Sindhi â€
 - `locales-indian-west`: Marathi, Gujarati, Konkani, and Sindhi as supported AI-draft UI locales.
 
 ### Modified Capabilities
-- (none archived yet)
+- `app-localization`: register these four locales; RTL for `sd`.
 
 ## Impact
 
-- Four new ARB files; locale registration; font coverage for the chosen Sindhi script variant.
+- Four new ARB files; locale registration; font coverage for Arabic-script Sindhi; RTL for Sindhi.
 - AI-draft quality; English fallback for gaps.
+- Devanagari Sindhi is out of v1.

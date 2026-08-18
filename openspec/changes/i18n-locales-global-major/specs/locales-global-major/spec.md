@@ -12,3 +12,11 @@ The app SHALL support UI locales Arabic (`ar`), Russian (`ru`), Indonesian (`id`
 #### Scenario: Cyrillic and Thai locales selectable
 - **WHEN** the user opens the language picker
 - **THEN** Russian, Ukrainian, and Thai are listed and can be activated
+
+#### Scenario: Device Arabic regional locale follows Arabic
+- **WHEN** the user follows the device language and the device locale is `ar_EG` and `ar` is supported
+- **THEN** the app uses Arabic and RTL
+
+#### Scenario: Legacy Android Indonesian tag
+- **WHEN** the user follows the device language and the device locale language code is `in` and `id` is supported
+- **THEN** the app uses Indonesian (`id`)
