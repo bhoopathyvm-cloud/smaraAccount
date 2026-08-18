@@ -20,3 +20,7 @@ The home overview SHALL show an overall net position for each currency present, 
 - **WHEN** the user views an investment account on the home overview
 - **THEN** the headline amount is portfolio value (cash plus inventory at last quote, cache, or cost)
 - **AND** the amount is labeled as a market estimate
+
+#### Scenario: Archived investment account closeout re-triggers when cash goes positive
+- **WHEN** an archived investment account's cash becomes positive again (from a Sell or Dividend after a previous closeout zeroed it)
+- **THEN** the home overview or register shows the closeout-transfer affordance again for the new cash

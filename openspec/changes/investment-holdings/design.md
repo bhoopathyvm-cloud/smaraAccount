@@ -94,6 +94,15 @@ For an investment account's **cash**, no special rule is needed: it archives and
 
 Because Sell and Dividend can both add cash back to an archived account *after* it was already closed out once, **the closeout transfer must be re-offered every time cash goes positive again**, not treated as a lifetime-once affordance — unlike an ordinary archived account, whose balance can never become positive again post-closeout because nothing can post to it at all.
 
+### 13. Instrument creation is inline during the first Buy
+When the user picks an instrument for a buy and the instrument doesn't exist yet, they create it inline (name, kind from the predefined list, optional ticker, optional ISIN) — not from a separate management screen. This mirrors how the app already handles categories (type a name, pick a type). The instrument management screen (create/rename/archive) is a secondary path for housekeeping, not the primary creation flow.
+
+### 14. Sell gain/loss category is determined after price entry
+The sell form asks for the instrument, quantity, and price first. Once the price is entered, the system computes whether the result is a gain or loss and shows the appropriate category picker (income for gain, expense for loss). The user does not need to predict the direction upfront. If the user changes the price and the direction flips, the category picker updates accordingly.
+
+### 15. Buy, sell, and dividend carry an optional description
+Same optional free-text description as ordinary transactions. Useful for notes like "ESPP Jan 2026 match," "sold after Q2 earnings," or "Q3 interim dividend."
+
 ## Risks / Trade-offs
 
 - [Risk] Free quote APIs change or rate-limit. → Mitigation: cache, stale label, disable setting, predefined list we can swap in a code change.
