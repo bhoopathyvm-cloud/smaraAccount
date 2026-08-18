@@ -4,17 +4,18 @@ import 'package:uuid/uuid.dart';
 /// Kind of an [AccountGroups] row — asset rollups vs liability rollups.
 enum AccountGroupKind { assetGroup, liabilityGroup }
 
-/// Stable well-known ids for the four seeded system groups (design.md).
+/// Stable well-known ids for the five seeded system groups (design.md).
 const groupCashEquivalentsId = 'group_cash_equivalents';
 const groupPensionRetirementId = 'group_pension_retirement';
 const groupCreditShortTermId = 'group_credit_short_term';
 const groupLoansMortgagesId = 'group_loans_mortgages';
+const groupInvestmentsId = 'group_investments';
 
 @DataClassName('AccountGroupRow')
 class AccountGroups extends Table {
   /// A user-created group has no well-known constant id, so it needs a
   /// client-generated default, matching `Accounts.id`'s existing
-  /// convention - the four system-group seeds are unaffected since they
+  /// convention - the five system-group seeds are unaffected since they
   /// always pass an explicit id, which overrides this default.
   TextColumn get id => text().clientDefault(() => const Uuid().v4())();
   TextColumn get name => text()();
@@ -32,7 +33,7 @@ class AccountGroups extends Table {
 
   /// Set only for a user-created group the user has archived (soft flag,
   /// matching `accounts.archived_at`'s shape) - never set for one of the
-  /// four system groups, which are permanent and un-archivable
+  /// five system groups, which are permanent and un-archivable
   /// (custom-account-groups design.md Decision 2).
   DateTimeColumn get archivedAt => dateTime().nullable()();
 

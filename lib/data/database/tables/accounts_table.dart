@@ -11,7 +11,19 @@ import 'package:uuid/uuid.dart';
 /// so the existing `type IN (asset, liability)` picker allowlists exclude
 /// it automatically rather than needing to filter it out by id everywhere
 /// (multi-currency-support design.md Decision 3).
-enum AccountType { asset, liability, equity, clearing, income, expense }
+///
+/// Investment inventory companion account: [inventory] (never user-facing),
+/// used to keep holdings on-ledger as an asset without exposing that
+/// internal leg in financial-account pickers.
+enum AccountType {
+  asset,
+  liability,
+  equity,
+  clearing,
+  inventory,
+  income,
+  expense,
+}
 
 /// Stable well-known id for the single Opening Balance Equity system row.
 const openingBalanceEquityAccountId = 'account_opening_balance_equity';
@@ -30,6 +42,10 @@ class Accounts extends Table {
   TextColumn get id => text().clientDefault(() => const Uuid().v4())();
   TextColumn get name => text()();
   TextColumn get type => textEnum<AccountType>()();
+  BoolColumn get holdsInvestments =>
+      boolean().withDefault(const Constant(false))();
+  TextColumn get investmentOwnerAccountId =>
+      text().nullable().references(Accounts, #id)();
 
   /// Required for asset/liability; NULL for income/expense/equity.
   TextColumn get groupId => text().nullable()();

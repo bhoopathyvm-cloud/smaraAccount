@@ -6,7 +6,7 @@
 ## 2. Prompt and open-in-browser
 
 - [ ] 2.1 Build the research prompt from name + optional ticker/ISIN only (news, downside, upside, not advice, no buy/sell).
-- [ ] 2.2 Tapping the instrument name on an inventory row opens the system browser with the favourite tool's query URL, or copies the prompt if offline / no query URL.
+- [ ] 2.2 Tapping the instrument name on an inventory row opens the system browser with the favourite tool's query URL, or copies the prompt if offline / no query URL. This claims the name text as its tap target exclusively — confirm `investment-holdings`' rename/archive instrument actions use a different affordance (menu/edit icon), not a tap on the name.
 - [ ] 2.3 Unit tests: prompt has identifiers and research asks; prompt omits quantity, cost, account name.
 - [ ] 2.4 Widget test: tap name invokes open-URL (mocked) or copy fallback.
 
