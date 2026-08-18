@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/journal_entry.dart';
 import 'package:smara_accounting/domain/models/posting.dart';
@@ -348,5 +349,82 @@ void main() {
     await viewModel.reverseEntry('e1');
 
     verify(repository.reverseEntry('e1')).called(1);
+  });
+
+  test('closeoutSelectedAccount success notifies listeners; failure surfaces '
+      'an error without changing selectedAccountId', () async {
+    const archivedAsset = Account(
+      id: 'asset-1',
+      name: 'Cash & Bank',
+      type: AccountType.asset,
+      archived: true,
+      groupId: 'group-1',
+    );
+    const other = Account(
+      id: 'asset-2',
+      name: 'Savings',
+      type: AccountType.asset,
+      archived: false,
+      groupId: 'group-1',
+    );
+    when(
+      repository.watchFinancialAccounts(
+        includeArchived: anyNamed('includeArchived'),
+      ),
+    ).thenAnswer((_) => Stream.value([archivedAsset, other]));
+    when(
+      repository.watchCategories(includeArchived: anyNamed('includeArchived')),
+    ).thenAnswer((_) => Stream.value([income]));
+    when(
+      repository.watchEntriesForAccount(any),
+    ).thenAnswer((_) => Stream.value(const []));
+    when(
+      repository.recordArchivedAccountCloseoutTransfer(
+        fromAccountId: anyNamed('fromAccountId'),
+        toAccountId: anyNamed('toAccountId'),
+        transactionDate: anyNamed('transactionDate'),
+        description: anyNamed('description'),
+        destinationAmountMinor: anyNamed('destinationAmountMinor'),
+      ),
+    ).thenAnswer((_) async {});
+
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      initialAccountId: archivedAsset.id,
+    );
+    addTearDown(viewModel.dispose);
+    await Future<void>.delayed(Duration.zero);
+    expect(viewModel.selectedAccountId, 'asset-1');
+
+    var notified = 0;
+    viewModel.addListener(() => notified++);
+    final ok = await viewModel.closeoutSelectedAccount(
+      toAccountId: 'asset-2',
+      transactionDate: DateTime(2026, 1, 15),
+    );
+    expect(ok, isTrue);
+    expect(notified, greaterThan(0));
+    expect(viewModel.selectedAccountId, 'asset-1');
+    expect(viewModel.errorMessage, isNull);
+
+    when(
+      repository.recordArchivedAccountCloseoutTransfer(
+        fromAccountId: anyNamed('fromAccountId'),
+        toAccountId: anyNamed('toAccountId'),
+        transactionDate: anyNamed('transactionDate'),
+        description: anyNamed('description'),
+        destinationAmountMinor: anyNamed('destinationAmountMinor'),
+      ),
+    ).thenThrow(AccountGroupException('Account asset-1 is archived.'));
+
+    notified = 0;
+    final failed = await viewModel.closeoutSelectedAccount(
+      toAccountId: 'asset-2',
+      transactionDate: DateTime(2026, 1, 15),
+    );
+    expect(failed, isFalse);
+    expect(viewModel.errorMessage, isNotNull);
+    expect(viewModel.selectedAccountId, 'asset-1');
+    expect(notified, greaterThan(0));
   });
 }

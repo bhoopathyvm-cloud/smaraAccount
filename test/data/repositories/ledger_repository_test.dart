@@ -1702,6 +1702,240 @@ void main() {
     });
   });
 
+  group('recordArchivedAccountCloseoutTransfer', () {
+    test(
+      'posts from an archived account with a positive balance and zeroes the source',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final savings = await repository.createFinancialAccount(
+          name: 'Savings',
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+          openingBalanceMinor: 10000,
+        );
+        await repository.archiveFinancialAccount(savings.id);
+
+        await repository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: savings.id,
+          toAccountId: checkingId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        expect(await repository.displayBalanceMinor(savings.id), equals(0));
+        expect(await repository.displayBalanceMinor(checkingId), equals(10000));
+      },
+    );
+
+    test(
+      'is rejected when the archived account\'s balance is zero or negative',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final zeroAccount = await repository.createFinancialAccount(
+          name: 'Empty',
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+        );
+        await repository.archiveFinancialAccount(zeroAccount.id);
+        expect(
+          () => repository.recordArchivedAccountCloseoutTransfer(
+            fromAccountId: zeroAccount.id,
+            toAccountId: checkingId,
+            transactionDate: DateTime(2026, 1, 15),
+          ),
+          throwsA(isA<AccountGroupException>()),
+        );
+
+        final overdrawn = await repository.createFinancialAccount(
+          name: 'Overdrawn',
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+        );
+        final expenseId = await firstCategoryId(AccountType.expense);
+        await repository.recordTransaction(
+          amountMinor: 100,
+          direction: TransactionDirection.moneyOut,
+          categoryId: expenseId,
+          financialAccountId: overdrawn.id,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        await repository.archiveFinancialAccount(overdrawn.id);
+        expect(
+          () => repository.recordArchivedAccountCloseoutTransfer(
+            fromAccountId: overdrawn.id,
+            toAccountId: checkingId,
+            transactionDate: DateTime(2026, 1, 15),
+          ),
+          throwsA(isA<AccountGroupException>()),
+        );
+      },
+    );
+
+    test('is rejected when the destination is also archived', () async {
+      final checkingId = await firstFinancialAccountId();
+      final savings = await repository.createFinancialAccount(
+        name: 'Savings',
+        type: AccountType.asset,
+        groupId: groupCashEquivalentsId,
+        openingBalanceMinor: 10000,
+      );
+      final other = await repository.createFinancialAccount(
+        name: 'Other',
+        type: AccountType.asset,
+        groupId: groupCashEquivalentsId,
+      );
+      await repository.archiveFinancialAccount(savings.id);
+      await repository.archiveFinancialAccount(other.id);
+
+      expect(
+        () => repository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: savings.id,
+          toAccountId: other.id,
+          transactionDate: DateTime(2026, 1, 15),
+        ),
+        throwsA(isA<AccountGroupException>()),
+      );
+      expect(await repository.displayBalanceMinor(checkingId), equals(0));
+    });
+
+    test('is rejected when fromAccountId equals toAccountId', () async {
+      final savings = await repository.createFinancialAccount(
+        name: 'Savings',
+        type: AccountType.asset,
+        groupId: groupCashEquivalentsId,
+        openingBalanceMinor: 10000,
+      );
+      await repository.archiveFinancialAccount(savings.id);
+
+      expect(
+        () => repository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: savings.id,
+          toAccountId: savings.id,
+          transactionDate: DateTime(2026, 1, 15),
+        ),
+        throwsA(isA<InvalidTransferException>()),
+      );
+    });
+
+    test('a second closeout after a successful first is rejected', () async {
+      final checkingId = await firstFinancialAccountId();
+      final savings = await repository.createFinancialAccount(
+        name: 'Savings',
+        type: AccountType.asset,
+        groupId: groupCashEquivalentsId,
+        openingBalanceMinor: 10000,
+      );
+      await repository.archiveFinancialAccount(savings.id);
+      await repository.recordArchivedAccountCloseoutTransfer(
+        fromAccountId: savings.id,
+        toAccountId: checkingId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+
+      expect(
+        () => repository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: savings.id,
+          toAccountId: checkingId,
+          transactionDate: DateTime(2026, 1, 16),
+        ),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test(
+      'recordTransaction against an archived account is still rejected',
+      () async {
+        final savings = await repository.createFinancialAccount(
+          name: 'Savings',
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+          openingBalanceMinor: 10000,
+        );
+        await repository.archiveFinancialAccount(savings.id);
+        final incomeId = await firstCategoryId(AccountType.income);
+
+        expect(
+          () => repository.recordTransaction(
+            amountMinor: 100,
+            direction: TransactionDirection.moneyIn,
+            categoryId: incomeId,
+            financialAccountId: savings.id,
+            transactionDate: DateTime(2026, 1, 15),
+          ),
+          throwsA(isA<AccountGroupException>()),
+        );
+      },
+    );
+
+    test(
+      'recordTransfer still rejects an archived account as source or destination',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final savings = await repository.createFinancialAccount(
+          name: 'Savings',
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+          openingBalanceMinor: 10000,
+        );
+        await repository.archiveFinancialAccount(savings.id);
+
+        expect(
+          () => repository.recordTransfer(
+            fromAccountId: savings.id,
+            toAccountId: checkingId,
+            amountMinor: 10000,
+            transactionDate: DateTime(2026, 1, 15),
+          ),
+          throwsA(isA<AccountGroupException>()),
+        );
+        expect(
+          () => repository.recordTransfer(
+            fromAccountId: checkingId,
+            toAccountId: savings.id,
+            amountMinor: 100,
+            transactionDate: DateTime(2026, 1, 15),
+          ),
+          throwsA(isA<AccountGroupException>()),
+        );
+      },
+    );
+
+    test(
+      'cross-currency closeout without destinationAmountMinor is rejected; with it, one complete entry and no pending row',
+      () async {
+        final euroId = await secondCurrencyAssetAccountId();
+        final savings = await repository.createFinancialAccount(
+          name: 'Savings',
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+          openingBalanceMinor: 10000,
+        );
+        await repository.archiveFinancialAccount(savings.id);
+
+        expect(
+          () => repository.recordArchivedAccountCloseoutTransfer(
+            fromAccountId: savings.id,
+            toAccountId: euroId,
+            transactionDate: DateTime(2026, 1, 15),
+          ),
+          throwsA(isA<InvalidTransferException>()),
+        );
+        expect(await repository.watchPendingTransfers().first, isEmpty);
+        expect(await repository.displayBalanceMinor(savings.id), equals(10000));
+
+        await repository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: savings.id,
+          toAccountId: euroId,
+          transactionDate: DateTime(2026, 1, 15),
+          destinationAmountMinor: 9200,
+        );
+
+        expect(await repository.displayBalanceMinor(savings.id), equals(0));
+        expect(await repository.displayBalanceMinor(euroId), equals(9200));
+        expect(await repository.watchPendingTransfers().first, isEmpty);
+      },
+    );
+  });
+
   group('recordTransaction: foreign-currency transaction', () {
     test(
       'posts the category leg immediately in its native currency, creates a pending row',
