@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/database/tables/accounts_table.dart';
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/account.dart';
+import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/journal_entry.dart';
 import '../../../../domain/models/transaction_direction.dart';
 import 'register_row.dart';
@@ -19,6 +21,12 @@ class RegisterViewModel extends ChangeNotifier {
     _accountsSubscription = _ledgerRepository
         .watchFinancialAccounts(includeArchived: true)
         .listen(_onAccounts);
+    _groupsSubscription = _ledgerRepository
+        .watchAccountGroups(includeArchived: true)
+        .listen((groups) {
+          _groups = groups;
+          notifyListeners();
+        });
     if (initialAccountId != null) {
       _selectedAccountId = initialAccountId;
       _resubscribeEntries();
@@ -27,11 +35,13 @@ class RegisterViewModel extends ChangeNotifier {
 
   final LedgerRepository _ledgerRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
+  late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
   StreamSubscription<List<JournalEntry>>? _entriesSubscription;
 
   List<Account> _accounts = const [];
   Map<String, Account> _accountsById = const {};
   Map<String, Account> _categoriesById = const {};
+  List<AccountGroup> _groups = const [];
 
   String? _selectedAccountId;
   String? get selectedAccountId => _selectedAccountId;
@@ -45,6 +55,43 @@ class RegisterViewModel extends ChangeNotifier {
 
   bool get isSelectedAccountArchived =>
       _accountsById[_selectedAccountId]?.archived ?? false;
+
+  /// Current display balance of the selected account, from the newest
+  /// register row's running balance (oldest-to-newest accumulation).
+  int get selectedAccountBalanceMinor =>
+      _rows.isEmpty ? 0 : _rows.first.runningBalanceMinor;
+
+  bool get canCloseoutSelectedAccount =>
+      isSelectedAccountArchived && selectedAccountBalanceMinor > 0;
+
+  /// Active financial accounts other than the one currently selected.
+  List<Account> get closeoutDestinationCandidates => _accounts
+      .where((a) => !a.archived && a.id != _selectedAccountId)
+      .toList();
+
+  String? currencyFor(String? accountId) {
+    final account = _accountsById[accountId];
+    if (account?.groupId == null) return null;
+    return _groups
+        .where((g) => g.id == account!.groupId)
+        .cast<AccountGroup?>()
+        .firstWhere((g) => g != null, orElse: () => null)
+        ?.currency;
+  }
+
+  bool isCloseoutCrossCurrency(String? toAccountId) {
+    final from = currencyFor(_selectedAccountId);
+    final to = currencyFor(toAccountId);
+    return from != null && to != null && from != to;
+  }
+
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
+  void clearError() {
+    if (_errorMessage == null) return;
+    _errorMessage = null;
+    notifyListeners();
+  }
 
   void selectAccount(String accountId) {
     if (_selectedAccountId == accountId) return;
@@ -161,9 +208,45 @@ class RegisterViewModel extends ChangeNotifier {
   Future<void> reverseEntry(String entryId) =>
       _ledgerRepository.reverseEntry(entryId);
 
+  /// Posts the selected archived account's full current display balance
+  /// to [toAccountId] (spec: "Closeout Transfer Is Offered From the
+  /// Archived Account Register"). Domain exceptions are stored on
+  /// [errorMessage] without changing [selectedAccountId].
+  Future<bool> closeoutSelectedAccount({
+    required String toAccountId,
+    required DateTime transactionDate,
+    String? description,
+    int? destinationAmountMinor,
+  }) async {
+    final fromAccountId = _selectedAccountId;
+    if (fromAccountId == null) return false;
+    _errorMessage = null;
+    notifyListeners();
+    try {
+      await _ledgerRepository.recordArchivedAccountCloseoutTransfer(
+        fromAccountId: fromAccountId,
+        toAccountId: toAccountId,
+        transactionDate: transactionDate,
+        description: description,
+        destinationAmountMinor: destinationAmountMinor,
+      );
+      notifyListeners();
+      return true;
+    } on AccountGroupException catch (error) {
+      _errorMessage = error.message;
+      notifyListeners();
+      return false;
+    } on InvalidTransferException catch (error) {
+      _errorMessage = error.message;
+      notifyListeners();
+      return false;
+    }
+  }
+
   @override
   void dispose() {
     _accountsSubscription.cancel();
+    _groupsSubscription.cancel();
     _entriesSubscription?.cancel();
     super.dispose();
   }

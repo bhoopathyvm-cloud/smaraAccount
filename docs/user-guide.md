@@ -112,7 +112,14 @@ the groups they belong to.
   retroactively reinterpret historical balances).
 - **Reassign** an account to a different group of the same currency.
 - **Archive** an account or an empty, user-created group — archiving asks
-  for confirmation first, since it can't be undone from the UI.
+  for confirmation first, since it can't be undone from the UI. An
+  archived account stays visible on Home and in its Register (read-only:
+  you can't record a new transaction, start a transfer, or import into
+  it). If it still has a positive balance, the Register offers
+  **Transfer remaining balance** — pick a different, active destination
+  and the app moves the full current balance in one transfer. For a
+  destination in another currency you must enter the destination amount
+  (no pending settlement on an account you're retiring).
 
 Every account and group belongs to exactly one currency; moving money
 between different currencies always goes through a **Transfer** (below),

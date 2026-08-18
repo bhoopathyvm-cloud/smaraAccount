@@ -393,4 +393,145 @@ void main() {
       expect(transferTapped, isFalse);
     },
   );
+
+  testWidgets(
+    'the plus FAB is disabled when the selected account is archived, enabled when active',
+    (tester) async {
+      const archivedAsset = Account(
+        id: 'asset-1',
+        name: 'Cash & Bank',
+        type: AccountType.asset,
+        archived: true,
+      );
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([archivedAsset]));
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value(const []));
+
+      final archivedViewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(archivedViewModel.dispose);
+      var addTapped = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: RegisterView(
+            viewModel: archivedViewModel,
+            onAddTransaction: () => addTapped = true,
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final archivedFab = tester.widget<FloatingActionButton>(
+        find.ancestor(
+          of: find.byIcon(TablerIcons.plus),
+          matching: find.byType(FloatingActionButton),
+        ),
+      );
+      expect(archivedFab.onPressed, isNull);
+      await tester.tap(find.byIcon(TablerIcons.plus));
+      await tester.pump();
+      expect(addTapped, isFalse);
+
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([asset]));
+      final activeViewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(activeViewModel.dispose);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: RegisterView(
+            viewModel: activeViewModel,
+            onAddTransaction: () => addTapped = true,
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final activeFab = tester.widget<FloatingActionButton>(
+        find.ancestor(
+          of: find.byIcon(TablerIcons.plus),
+          matching: find.byType(FloatingActionButton),
+        ),
+      );
+      expect(activeFab.onPressed, isNotNull);
+      await tester.tap(find.byIcon(TablerIcons.plus));
+      await tester.pump();
+      expect(addTapped, isTrue);
+    },
+  );
+
+  testWidgets(
+    'closeout is offered only when the selected account is archived with a '
+    'positive balance',
+    (tester) async {
+      const archivedAsset = Account(
+        id: 'asset-1',
+        name: 'Cash & Bank',
+        type: AccountType.asset,
+        archived: true,
+      );
+      const other = Account(
+        id: 'asset-2',
+        name: 'Savings',
+        type: AccountType.asset,
+        archived: false,
+      );
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([archivedAsset, other]));
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value([entryWithAssetAmount(10000)]));
+
+      final withBalance = RegisterViewModel(
+        ledgerRepository: repository,
+        initialAccountId: archivedAsset.id,
+      );
+      addTearDown(withBalance.dispose);
+      await tester.pumpWidget(
+        MaterialApp(home: RegisterView(viewModel: withBalance)),
+      );
+      await tester.pump();
+      expect(find.text('Transfer remaining balance'), findsOneWidget);
+
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value(const []));
+      final zeroBalance = RegisterViewModel(
+        ledgerRepository: repository,
+        initialAccountId: archivedAsset.id,
+      );
+      addTearDown(zeroBalance.dispose);
+      await tester.pumpWidget(
+        MaterialApp(home: RegisterView(viewModel: zeroBalance)),
+      );
+      await tester.pump();
+      expect(find.text('Transfer remaining balance'), findsNothing);
+
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([asset, other]));
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value([entryWithAssetAmount(10000)]));
+      final active = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(active.dispose);
+      await tester.pumpWidget(
+        MaterialApp(home: RegisterView(viewModel: active)),
+      );
+      await tester.pump();
+      expect(find.text('Transfer remaining balance'), findsNothing);
+    },
+  );
 }
