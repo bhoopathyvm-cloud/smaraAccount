@@ -550,6 +550,27 @@ class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
           as _i9.Future<void>);
 
   @override
+  _i9.Future<void> recordArchivedAccountCloseoutTransfer({
+    required String? fromAccountId,
+    required String? toAccountId,
+    required DateTime? transactionDate,
+    String? description,
+    int? destinationAmountMinor,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#recordArchivedAccountCloseoutTransfer, [], {
+              #fromAccountId: fromAccountId,
+              #toAccountId: toAccountId,
+              #transactionDate: transactionDate,
+              #description: description,
+              #destinationAmountMinor: destinationAmountMinor,
+            }),
+            returnValue: _i9.Future<void>.value(),
+            returnValueForMissingStub: _i9.Future<void>.value(),
+          )
+          as _i9.Future<void>);
+
+  @override
   _i9.Future<void> reverseEntry(String? entryId) =>
       (super.noSuchMethod(
             Invocation.method(#reverseEntry, [entryId]),

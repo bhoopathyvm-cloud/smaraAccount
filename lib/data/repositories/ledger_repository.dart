@@ -795,6 +795,31 @@ class LedgerRepository {
     return row;
   }
 
+  /// Sibling of [_requireActiveFinancialAccount] for the one write that
+  /// *must* start from an archived account: closeout of its remaining
+  /// display balance (spec: "Closeout of an Archived Account with a
+  /// Remaining Balance"). A boolean on the active helper would let any
+  /// caller silently loosen both sides of a transfer.
+  Future<AccountRow> _requireCloseoutEligibleFinancialAccount(String id) async {
+    final row = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(id))).getSingleOrNull();
+    if (row == null ||
+        (row.type != AccountType.asset && row.type != AccountType.liability)) {
+      throw AccountGroupException('Account $id is not a financial account.');
+    }
+    if (row.archivedAt == null) {
+      throw AccountGroupException('Account $id is not archived.');
+    }
+    final balance = await displayBalanceMinor(id);
+    if (balance <= 0) {
+      throw AccountGroupException(
+        'Account $id has no positive display balance to close out.',
+      );
+    }
+    return row;
+  }
+
   /// The ISO 4217 currency of [accountRow]'s group - never null in
   /// practice for a reachable financial account (the currency-backfill
   /// gate runs before any account-creation UI, and group assignment is
@@ -1264,6 +1289,70 @@ class LedgerRepository {
     }
     final fromAccount = await _requireActiveFinancialAccount(fromAccountId);
     final toAccount = await _requireActiveFinancialAccount(toAccountId);
+    await _postTransfer(
+      fromAccount: fromAccount,
+      toAccount: toAccount,
+      amountMinor: amountMinor,
+      transactionDate: transactionDate,
+      description: description,
+      destinationAmountMinor: destinationAmountMinor,
+    );
+  }
+
+  /// One outbound transfer of an archived financial account's full current
+  /// display balance to a different, active account (spec: "Closeout of an
+  /// Archived Account with a Remaining Balance"). The source amount is
+  /// always [displayBalanceMinor] at submit time, never a caller-supplied
+  /// figure. Cross-currency closeout requires [destinationAmountMinor] so
+  /// the posting is a single complete entry — never a pending transfer on
+  /// an account the user is retiring.
+  Future<void> recordArchivedAccountCloseoutTransfer({
+    required String fromAccountId,
+    required String toAccountId,
+    required DateTime transactionDate,
+    String? description,
+    int? destinationAmountMinor,
+  }) async {
+    if (fromAccountId == toAccountId) {
+      throw InvalidTransferException(
+        'Source and destination accounts must be distinct.',
+      );
+    }
+    final fromAccount = await _requireCloseoutEligibleFinancialAccount(
+      fromAccountId,
+    );
+    final toAccount = await _requireActiveFinancialAccount(toAccountId);
+    final amountMinor = await displayBalanceMinor(fromAccountId);
+    final fromCurrency = await _groupCurrencyFor(fromAccount);
+    final toCurrency = await _groupCurrencyFor(toAccount);
+    if (fromCurrency != toCurrency &&
+        (destinationAmountMinor == null || destinationAmountMinor <= 0)) {
+      throw InvalidTransferException(
+        'A cross-currency closeout requires a known destination amount; '
+        'a pending transfer is not allowed on an archived account.',
+      );
+    }
+    await _postTransfer(
+      fromAccount: fromAccount,
+      toAccount: toAccount,
+      amountMinor: amountMinor,
+      transactionDate: transactionDate,
+      description: description,
+      destinationAmountMinor: destinationAmountMinor,
+    );
+  }
+
+  /// Shared posting for [recordTransfer] and
+  /// [recordArchivedAccountCloseoutTransfer]. Callers have already
+  /// resolved and validated both accounts.
+  Future<void> _postTransfer({
+    required AccountRow fromAccount,
+    required AccountRow toAccount,
+    required int amountMinor,
+    required DateTime transactionDate,
+    String? description,
+    int? destinationAmountMinor,
+  }) async {
     final fromCurrency = await _groupCurrencyFor(fromAccount);
     final toCurrency = await _groupCurrencyFor(toAccount);
     final isCrossCurrency = fromCurrency != toCurrency;
@@ -1280,8 +1369,8 @@ class LedgerRepository {
         description: description,
         reversesEntryId: null,
         postings: [
-          (accountId: fromAccountId, amountMinor: -amountMinor, lineNumber: 1),
-          (accountId: toAccountId, amountMinor: amountMinor, lineNumber: 2),
+          (accountId: fromAccount.id, amountMinor: -amountMinor, lineNumber: 1),
+          (accountId: toAccount.id, amountMinor: amountMinor, lineNumber: 2),
         ],
       );
       return;
@@ -1299,9 +1388,9 @@ class LedgerRepository {
         description: description,
         reversesEntryId: null,
         postings: [
-          (accountId: fromAccountId, amountMinor: -amountMinor, lineNumber: 1),
+          (accountId: fromAccount.id, amountMinor: -amountMinor, lineNumber: 1),
           (
-            accountId: toAccountId,
+            accountId: toAccount.id,
             amountMinor: destinationAmountMinor,
             lineNumber: 2,
           ),
@@ -1312,11 +1401,11 @@ class LedgerRepository {
 
     await _postProvisionalEntry(
       kind: PendingTransferKind.transfer,
-      sourceAccountId: fromAccountId,
+      sourceAccountId: fromAccount.id,
       currency: fromCurrency,
-      destinationAccountId: toAccountId,
+      destinationAccountId: toAccount.id,
       clearingAmountMinor: amountMinor,
-      otherLeg: (accountId: fromAccountId, amountMinor: -amountMinor),
+      otherLeg: (accountId: fromAccount.id, amountMinor: -amountMinor),
       transactionDate: transactionDate,
       description: description,
     );
