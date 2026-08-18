@@ -9,6 +9,10 @@ import 'tables/category_rules_table.dart';
 import 'tables/csv_import_profiles_table.dart';
 import 'tables/entry_verification_cache_table.dart';
 import 'tables/integrity_events_table.dart';
+import 'tables/instrument_quotes_table.dart';
+import 'tables/instruments_table.dart';
+import 'tables/investment_lots_table.dart';
+import 'tables/investment_sells_table.dart';
 import 'tables/journal_entries_table.dart';
 import 'tables/ledger_chain_state_table.dart';
 import 'tables/ofx_import_records_table.dart';
@@ -43,6 +47,10 @@ const starterExpenseCategories = [
     EntryVerificationCache,
     LedgerChainState,
     IntegrityEvents,
+    Instruments,
+    InvestmentLots,
+    InvestmentSells,
+    InstrumentQuotes,
     PendingTransfers,
     OfxImportRecords,
     CsvImportProfiles,
@@ -55,7 +63,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 9;
+  int get schemaVersion => 11;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -287,6 +295,33 @@ class AppDatabase extends _$AppDatabase {
         // keyword-to-category rules (design.md: "Persistence follows the
         // CsvImportProfiles pattern exactly").
         await m.createTable(categoryRules);
+      }
+
+      if (from < 10) {
+        // investment-holdings: additive investment-account flag, global
+        // instruments table, per-account lots, quote cache, and the fifth
+        // seeded system group. Existing asset accounts remain ordinary
+        // non-investment accounts by default (design.md Migration Plan).
+        if (from >= 1) {
+          await m.addColumn(accounts, accounts.holdsInvestments);
+          await m.addColumn(accounts, accounts.investmentOwnerAccountId);
+        }
+        await m.createTable(instruments);
+        await m.createTable(investmentLots);
+        await m.createTable(instrumentQuotes);
+
+        final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+        await customStatement(
+          'INSERT INTO account_groups (id, name, kind, sort_order, is_system, created_at) VALUES '
+          "(?, 'Investments', 'assetGroup', 4, 1, ?)",
+          [groupInvestmentsId, now],
+        );
+      }
+
+      if (from < 11) {
+        // investment-holdings: sell rows for date-ordered replay (design.md
+        // Decision 3) — additive alongside investment_lots from schema 10.
+        await m.createTable(investmentSells);
       }
     },
   );
