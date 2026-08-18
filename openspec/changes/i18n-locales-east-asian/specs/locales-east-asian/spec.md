@@ -5,7 +5,7 @@ The app SHALL support UI locales Japanese (`ja`), Simplified Chinese (`zh`), and
 
 #### Scenario: User selects Japanese
 - **WHEN** the user selects Japanese in the language picker
-- **THEN** primary UI chrome and mapped errors resolve from `app_ja.arb`
+- **THEN** home, add spent/received, and error messages the user sees resolve from `app_ja.arb`
 - **AND** missing keys fall back to English
 
 #### Scenario: CJK glyphs render

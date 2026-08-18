@@ -1,6 +1,6 @@
 ## 1. Translations
 
-- [ ] 1.1 Generate AI translations into `app_hi.arb`, `app_ur.arb`, `app_pa.arb`, `app_ne.arb`, `app_sa.arb`, `app_doi.arb`, `app_ks.arb`, `app_mai.arb` (preserve keys, placeholders, `@` metadata; use the foundation glossary)
+- [ ] 1.1 Generate AI translations into `app_hi.arb`, `app_ur.arb`, `app_pa.arb`, `app_ne.arb`, `app_sa.arb`, `app_doi.arb`, `app_ks.arb`, `app_mai.arb` (preserve keys, placeholders, `@` metadata; use the foundation household glossary)
 - [ ] 1.2 Verify key parity with `app_en.arb` for all eight files
 
 ## 2. Registration, fonts, RTL
@@ -11,7 +11,7 @@
 
 ## 3. Verification
 
-- [ ] 3.1 Smoke-test Hindi and Urdu end-to-end (picker → Home → one error path)
+- [ ] 3.1 Smoke-test Hindi and Urdu end-to-end (language list → Home → one error path)
 - [ ] 3.2 Spot-check Punjabi, Nepali, and Kashmiri render without tofu (Kashmiri picker label کٲشُر must be visible)
 - [ ] 3.3 Confirm English fallback for a deliberately omitted key in one locale file during testing
 - [ ] 3.4 Confirm `hi_IN` follow-device resolves to Hindi

@@ -5,7 +5,7 @@ The app SHALL support UI locales Marathi (`mr`), Gujarati (`gu`), Konkani (`kok`
 
 #### Scenario: User selects Marathi
 - **WHEN** the user selects Marathi in the language picker
-- **THEN** primary UI chrome and mapped errors resolve from `app_mr.arb`
+- **THEN** home, add spent/received, and error messages the user sees resolve from `app_mr.arb`
 - **AND** missing keys fall back to English
 
 #### Scenario: Gujarati script visible

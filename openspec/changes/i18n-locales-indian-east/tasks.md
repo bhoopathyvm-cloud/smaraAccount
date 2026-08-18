@@ -1,6 +1,6 @@
 ## 1. Translations
 
-- [ ] 1.1 Generate AI translations into `app_bn.arb`, `app_as.arb`, `app_or.arb`, `app_mni.arb`, `app_brx.arb`, `app_sat.arb` (preserve keys, placeholders, `@` metadata; use the foundation glossary)
+- [ ] 1.1 Generate AI translations into `app_bn.arb`, `app_as.arb`, `app_or.arb`, `app_mni.arb`, `app_brx.arb`, `app_sat.arb` (preserve keys, placeholders, `@` metadata; use the foundation household glossary)
 - [ ] 1.2 Verify key parity with `app_en.arb`
 - [ ] 1.3 Use Meitei Mayek for Manipuri and Ol Chiki for Santali unless a font gap forces a documented fallback
 

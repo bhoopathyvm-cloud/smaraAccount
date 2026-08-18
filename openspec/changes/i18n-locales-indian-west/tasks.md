@@ -1,6 +1,6 @@
 ## 1. Translations
 
-- [ ] 1.1 Generate AI translations into `app_mr.arb`, `app_gu.arb`, `app_kok.arb`, `app_sd.arb` (preserve keys, placeholders, `@` metadata; use the foundation glossary)
+- [ ] 1.1 Generate AI translations into `app_mr.arb`, `app_gu.arb`, `app_kok.arb`, `app_sd.arb` (preserve keys, placeholders, `@` metadata; use the foundation household glossary)
 - [ ] 1.2 Verify key parity with `app_en.arb`
 - [ ] 1.3 Generate Sindhi ARB in Arabic script (سنڌي), not Devanagari
 
@@ -12,7 +12,7 @@
 
 ## 3. Verification
 
-- [ ] 3.1 Smoke-test Marathi and Gujarati on Home and one form
+- [ ] 3.1 Smoke-test Marathi and Gujarati on Home and Add spent
 - [ ] 3.2 Spot-check Konkani and Sindhi rendering (Sindhi picker label سنڌي must be visible and RTL)
 - [ ] 3.3 Confirm English fallback behavior
 - [ ] 3.4 Add Marathi, Gujarati, Konkani, and Sindhi to the user-guide list of available languages

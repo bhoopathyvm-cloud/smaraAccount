@@ -5,7 +5,7 @@ The app SHALL support UI locales Arabic (`ar`), Russian (`ru`), Indonesian (`id`
 
 #### Scenario: User selects Arabic
 - **WHEN** the user selects Arabic in the language picker
-- **THEN** primary UI chrome and mapped errors resolve from `app_ar.arb`
+- **THEN** home, add spent/received, and error messages the user sees resolve from `app_ar.arb`
 - **AND** text direction is RTL
 - **AND** missing keys fall back to English
 

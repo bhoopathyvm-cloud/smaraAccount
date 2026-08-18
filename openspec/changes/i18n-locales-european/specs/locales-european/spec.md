@@ -5,7 +5,7 @@ The app SHALL support UI locales German (`de`), French (`fr`), Spanish (`es`), I
 
 #### Scenario: User selects German
 - **WHEN** the user selects German in the language picker
-- **THEN** primary UI chrome and mapped errors resolve from `app_de.arb`
+- **THEN** home, add spent/received, and error messages the user sees resolve from `app_de.arb`
 - **AND** missing keys fall back to English
 
 #### Scenario: Portuguese uses a single locale tag

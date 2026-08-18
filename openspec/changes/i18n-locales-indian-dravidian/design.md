@@ -4,14 +4,14 @@ Depends on `i18n-foundation`. Adds Tamil (`ta`), Telugu (`te`), Malayalam (`ml`)
 
 ## Goals / Non-Goals
 
-**Goals:** Full ARB parity with English template for these four locales; register in picker with verified endonyms; Indic font rendering; no tofu on Home and Record Transaction.
+**Goals:** Full ARB parity with the household English template for these four locales; register in picker with verified native names; Indic font rendering; no tofu on Home and Add spent.
 
 **Non-Goals:** Human linguistic QA; Crowdin; changing English keys; BIP39 non-English wordlists; regional variants (`ta_IN` vs `ta` — device `ta_IN` resolves to `ta` via foundation).
 
 ## Decisions
 
 ### 1. AI batch translate from `app_en.arb`
-Preserve all keys, placeholders, and `@` metadata. Use the shared accounting glossary from `lib/l10n/TRANSLATION_GLOSSARY.md` (or the path foundation chose).
+Preserve all keys, placeholders, and `@` metadata. Use the household glossary from `lib/l10n/TRANSLATION_GLOSSARY.md` (or the path foundation chose). Translate Spent / Received / Fix / Moved money — do not invent bookkeeping wording.
 
 ### 2. Locale codes
 BCP-47: `ta`, `te`, `ml`, `kn` (no regional variants in v1). Foundation language-code matching maps `ta_IN` → `ta`, etc.

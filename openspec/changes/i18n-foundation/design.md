@@ -5,19 +5,19 @@ Smara Accounting is a Flutter/Drift local-first ledger. All user-visible copy is
 ## Goals / Non-Goals
 
 **Goals:**
-- Every user-facing string reachable through `AppLocalizations` with English as the template (including tooltips, semantics, snackbars, dialogs, empty states, import skip reasons, and Settings labels).
+- Every user-facing string reachable through `AppLocalizations` with everyday household English as the template (including tooltips, spoken labels, snackbars, dialogs, empty states, import skip reasons, and Settings labels).
 - Domain/repository/parser layers never emit user-facing language text; UI maps error codes to l10n.
 - In-app language preference: follow device (default) or pin a supported locale; English fallback; immediate rebuild including `Directionality`.
 - Documented AI draft workflow and glossary so locale packs are mechanical.
 - Font *registry* that will not break when Indic/CJK ARBs arrive; Latin ships here, script files ship with packs.
-- BIP39 mnemonic language remains English.
-- Unchanged system defaults and a closed list of system-generated journal descriptions localize at display time; user-authored text never does.
+- Recovery words stay English (BIP39 wordlist).
+- Unchanged system defaults and a closed list of notes the app wrote localize at display time using household labels; text the user typed never does.
 
 **Non-Goals:**
 - Shipping non-English ARB files in this change (owned by locale-pack changes).
 - Crowdin/Lokalise integration (optional later; not required for AI-draft v1).
 - Professional human translation or linguistic QA.
-- Translating BIP39 wordlists.
+- Translating recovery words into other languages.
 - Over-the-air translation delivery / CDN.
 - Changing ledger schema solely for i18n (seeded names policy is display-layer).
 - Locale-specific number/currency-symbol formatting (explicitly deferred; a later `localized-money-formatting` change may supersede Decision 8).
@@ -56,7 +56,7 @@ Store the preference in existing `SettingsRepository` (`SharedPreferencesAsync`)
 - **Follow device** (default, stored as a sentinel such as null / `system`): resolve from the platform locale.
 - **Pinned locale**: an explicit supported tag (e.g. `en`, `ta`).
 
-The picker MUST offer "Use device language" as a first-class row, distinct from pinning English. Pinning `en` means English even if the device is `hi_IN`.
+The picker MUST offer "Same as the phone" as a first-class row, distinct from choosing English. Choosing `en` means English even if the phone is `hi_IN`.
 
 `MaterialApp.router(locale: …, localeListResolutionCallback: …)` with fallback to `en`. Changing the language SHALL take effect immediately in the running app, including `TextDirection`: the preferred-locale value lives in a small `ChangeNotifier` (or `ValueNotifier<Locale?>`) that the app root listens to.
 
@@ -84,30 +84,62 @@ Language preference applies from the first `MaterialApp` frame, including onboar
 
 ### 4. Seeded system names and system-generated descriptions
 
-Keep English (or stable internal names) in SQLite for:
+Keep stored names as they are in SQLite for:
 
 - system groups and starter categories
-- the seeded starter financial account (`Cash & Bank`)
-- Opening Balance Equity and Transfers in transit (when those names appear in the register)
+- the seeded starter account (`Cash & Bank` in the database; on screen, if unchanged, show a household label such as the main bank account)
+- Opening Balance Equity and Transfers in transit (stored names; on screen, if shown, **Starting amount** and **Money in transit**)
 
-At display time, if the stored name still equals the known system default, show the localized label; if the user renamed it, show the stored string unchanged.
+At display time, if the stored name still equals the known default, show the household localized label; if the user renamed it, show the stored string unchanged.
 
-A **closed list** of repository-authored journal `description` values (`Opening balance`, `Settlement`, `Transfer fee / shortfall`, and any similarly hardcoded system phrase) SHALL be mapped to l10n keys at display time when the stored text still equals that template. User-typed descriptions are shown exactly as stored, in every locale.
+A **closed list** of notes the app wrote (`Opening balance`, `Settlement`, `Transfer fee / shortfall`, and any similar hardcoded phrase) SHALL map at display time to household ARB strings (`Starting amount`, `Money arrived`, `Moving fee` / `Amount that didn't arrive`) when the stored text still equals that template. Notes the user typed are shown exactly as stored, in every language.
 
-Register counterpart labels that currently prefix English (`Opening balance`, `Transfer: {name}`, `Transfer`) SHALL become ARB strings with placeholders (`transferCounterpart(accountName)`), not concatenated English in the ViewModel.
+Register counterpart labels SHALL become ARB strings with placeholders (`Moved to {accountName}`), not concatenated English `"Transfer: "` in the ViewModel.
 
 **Alternative considered:** store l10n keys in DB — rejected for now (complicates migrations and user renames); can revisit later.
 
 ### 5. AI-translated v1 policy (for follow-on packs)
 
 - English ARB is the only human-authored source of truth.
-- Locale packs generate `app_<locale>.arb` via AI using a shared accounting glossary.
+- Locale packs generate `app_<locale>.arb` via AI using the **household** glossary (Decision 5b), not an accounting glossary.
 - Missing keys fall back to English via Flutter's generation-time substitution (Decision 1).
 - Placeholders/`@` metadata must be preserved byte-for-byte from the template, including ICU `plural` / `select` skeletons (Arabic and others need more than English's one/other).
 - Human review is explicitly a future improvement, not a gate for v1 locale packs.
 - After packs ship, **new English keys land in this template first**; a follow-on pack (or a small chore on the same pack) adds translations. Until then the new key shows English in every locale — acceptable.
 
-If `household-language-voice` is still an open change, ARB English MUST follow that household term map (Spent/Received, Fix, …) rather than snapshotting current ledger jargon as the forever template. If that change has already archived, this foundation uses whatever English chrome is then in the app.
+### 5b. User-visible English is everyday household language
+
+The English ARB, error strings, picker labels, unchanged default names, notes the app wrote, import skip reasons, Settings copy, and the translator glossary are written for a person who does not know bookkeeping.
+
+Use the household dictionary (same as `household-language-voice`):
+
+| Internal / today's code | Words the user sees (English ARB) |
+| --- | --- |
+| Money in | Received |
+| Money out | Spent |
+| Record transaction | Add spent / Add received |
+| Transfer | Moved money |
+| Reverse / reversal | Fix |
+| Archive | Hide from new entries |
+| Net position | What you have minus what you owe |
+| Pending transfer / Transfers in transit | Money in transit |
+| Financial account | Account |
+| Opening balance (line note / counterpart) | Starting amount |
+| Opening Balance Equity (if a name is shown) | Starting amount |
+| Settlement | Money arrived |
+| Transfer fee / shortfall | Moving fee / Amount that didn't arrive |
+| `Transfer: {name}` | Moved to {name} / Moved from {name} |
+| Locale / pin a locale | Language / Use this language |
+| Follow device | Same as the phone |
+| Recovery phrase / mnemonic / BIP39 | Recovery words (the words themselves stay English) |
+| ISO 4217 in user-facing sentences | A code like USD or INR |
+| Journal / posting / ledger / debit / credit | Do not use |
+
+Internal code, table names, and stored SQLite strings MAY keep the left column. Translators MUST be given the **right** column, never asked to translate "journal entry" or "reversal" as if those were the product's words.
+
+The generic unknown-error string is everyday English: "Something went wrong." not "Unhandled domain exception."
+
+This is mandatory even if `household-language-voice` has not archived yet — do not freeze current on-screen ledger jargon as the translation template.
 
 ### 6. Fonts
 
@@ -151,9 +183,9 @@ Client-side validation messages follow the same rule: the VM exposes a code or t
 
 Each row shows the **endonym** (native script) as the primary label and a **secondary Latin/English name** (e.g. "தமிழ் — Tamil") so a user who cannot read English still recognizes their language, and a user browsing a long list can still search mentally in English.
 
-When more than one locale is registered (i.e. once any pack lands), the picker SHALL offer a filter/search field matching both the endonym and the English/Latin name. Sort: English/Latin name ascending, with "Use device language" pinned at the top and English (`en`) next.
+When more than one locale is registered (i.e. once any pack lands), the picker SHALL offer a filter/search field matching both the endonym and the English/Latin name. Sort: English/Latin name ascending, with "Same as the phone" at the top and English (`en`) next.
 
-Foundation ships the widget with only `en` + follow-device; search can hide until `supportedLocales.length > 1`.
+Foundation ships the widget with only `en` + same-as-the-phone; search can hide until `supportedLocales.length > 1`.
 
 ### 11. Import skip reasons and Settings provider names
 

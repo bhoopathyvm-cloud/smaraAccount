@@ -5,7 +5,7 @@ The app SHALL support UI locales Bengali (`bn`), Assamese (`as`), Odia (`or`), M
 
 #### Scenario: User selects Bengali
 - **WHEN** the user selects Bengali in the language picker
-- **THEN** primary UI chrome and mapped errors resolve from `app_bn.arb`
+- **THEN** home, add spent/received, and error messages the user sees resolve from `app_bn.arb`
 - **AND** missing keys fall back to English
 
 #### Scenario: All six eastern locales appear in the picker

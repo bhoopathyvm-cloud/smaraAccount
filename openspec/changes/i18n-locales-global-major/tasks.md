@@ -1,13 +1,13 @@
 ## 1. Translations
 
-- [ ] 1.1 Generate AI translations into `app_ar.arb`, `app_ru.arb`, `app_id.arb`, `app_tr.arb`, `app_vi.arb`, `app_th.arb`, `app_ms.arb`, `app_uk.arb`, `app_pl.arb`, `app_nl.arb` (preserve keys, placeholders, `@` metadata; use the foundation glossary)
+- [ ] 1.1 Generate AI translations into `app_ar.arb`, `app_ru.arb`, `app_id.arb`, `app_tr.arb`, `app_vi.arb`, `app_th.arb`, `app_ms.arb`, `app_uk.arb`, `app_pl.arb`, `app_nl.arb` (preserve keys, placeholders, `@` metadata; use the foundation household glossary)
 - [ ] 1.2 Verify key parity with `app_en.arb`
 
 ## 2. Registration, fonts, RTL
 
 - [ ] 2.1 Register all ten locales in `supportedLocales` and the picker's native-name table: العربية, Русский, Bahasa Indonesia, Türkçe, Tiếng Việt, ไทย, Bahasa Melayu, Українська, Polski, Nederlands with English secondary names Arabic, Russian, Indonesian, Turkish, Vietnamese, Thai, Malay, Ukrainian, Polish, Dutch
 - [ ] 2.2 Ensure fonts cover Arabic, Cyrillic, Thai, and Vietnamese via the foundation font registry
-- [ ] 2.3 Verify Arabic RTL on Home, Record Transaction, and Settings/language picker, including after switching language without restart
+- [ ] 2.3 Verify Arabic right-to-left on Home, Add spent, and Settings/language list, including after switching language without restart
 
 ## 3. Verification
 

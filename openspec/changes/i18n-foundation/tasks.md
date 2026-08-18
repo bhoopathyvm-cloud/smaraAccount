@@ -7,15 +7,15 @@
 
 ## 2. Extract English UI and ViewModel copy
 
-- [ ] 2.1 Extract onboarding, restore, migration, and keystore export strings into `app_en.arb` and replace literals (if `household-language-voice` is still open, use that term map for English ARB wording)
-- [ ] 2.2 Extract home, register, summary, and app shell / navigation strings, including tooltips, semantics labels, and register counterpart strings (`Opening balance`, `Transfer: {name}`)
-- [ ] 2.3 Extract record transaction, transfer, and settle-pending-transfer strings
-- [ ] 2.4 Extract account management and category management strings (including dialogs)
+- [ ] 2.1 Extract onboarding, restore, migration, and keystore export strings into `app_en.arb` using the household dictionary (Spent / Received, Fix, Same as the phone, Recovery words) — never freeze Money in/out, Reverse, or journal wording as the English template
+- [ ] 2.2 Extract home, list of lines, summary, and app shell / navigation strings, including tooltips, spoken labels, and counterpart strings (`Starting amount`, `Moved to {name}`)
+- [ ] 2.3 Extract add spent/received, moved-money, and finish-money-in-transit strings
+- [ ] 2.4 Extract account management and category management strings (including dialogs); hide-from-new-entries, not archive, in user-visible copy
 - [ ] 2.5 Extract currency selection / currency backfill strings
-- [ ] 2.6 Add ARB keys for system default group, starter category, starter financial account, Opening Balance Equity, and Transfers in transit display labels used by the unchanged-name localization rule
-- [ ] 2.7 Add ARB keys for the closed list of system-generated journal descriptions and map them at register display time
-- [ ] 2.8 Move `ExchangeRateProvider.displayName` (and any similar enum labels) to ARB keys
-- [ ] 2.9 Map import skip-reason codes to ARB keys on the OFX/CSV preview UI
+- [ ] 2.6 Add ARB keys for unchanged default group, starter category, starter account, Starting amount, and Money in transit display labels
+- [ ] 2.7 Add ARB keys for the closed list of notes the app wrote (`Starting amount`, `Money arrived`, `Moving fee` / `Amount that didn't arrive`) and map them at display time
+- [ ] 2.8 Move `ExchangeRateProvider.displayName` (and any similar enum labels) to ARB keys in everyday words
+- [ ] 2.9 Map import skip-reason codes to ARB keys on the OFX/CSV preview UI (household English)
 
 ## 3. Localized errors
 
@@ -29,19 +29,19 @@
 ## 4. Fonts and recovery phrase
 
 - [ ] 4.1 Wire a theme + font-asset registry for Latin now; document how locale packs register Indic/CJK/Arabic/Ol Chiki files (do not bundle every script in this change). Record font licenses for any bundled files.
-- [ ] 4.2 Verify recovery phrase / BIP39 flows remain English wordlist regardless of UI locale
+- [ ] 4.2 Verify recovery words stay the English word list regardless of the language on screen
 
 ## 5. AI translation workflow document
 
-- [ ] 5.1 Write a glossary of Smara's accounting/ledger terms (e.g. "account", "ledger", "transfer", "archive", "opening balance", "reversal", "posting", "journal entry", "category", "settle") with a short English gloss for each, for AI translators to translate consistently across every locale pack. If household-language-voice has a term map, include those user-facing glosses too.
+- [ ] 5.1 Write a household glossary for translators: Spent, Received, Add spent, Add received, Moved money, Fix, Hide from new entries, What you have minus what you owe, Money in transit, Account, Starting amount, Money arrived, Moving fee, Amount that didn't arrive, Same as the phone, Use this language, Recovery words, Something went wrong. Explicitly list words **not** to use on screen (debit, credit, journal, posting, ledger, reverse, archive, financial account, settlement). Point at `household-language-voice` as the same dictionary.
 - [ ] 5.2 Document the AI-draft workflow itself: prompt structure, "preserve keys/placeholders/`@` metadata (including ICU plural/select skeletons) byte-for-byte" rule, and where to place the glossary and workflow notes (e.g. `lib/l10n/TRANSLATION_GLOSSARY.md` or similar) so every locale-pack change can reference one canonical source
 
 ## 6. Language settings UI
 
-- [ ] 6.1 Add a language picker on Settings listing follow-device plus currently supported locales (English only until packs merge), labeling each locale with endonym + secondary Latin/English name
-- [ ] 6.2 Changing language updates the running app without reinstall (locale change triggers an app-level rebuild, including `TextDirection`)
-- [ ] 6.3 Picker widget supports filter/search by endonym or English name; hide the search field until more than one locale is registered
-- [ ] 6.4 Sort pinned "Use device language" first, then English, then other locales by English/Latin name
+- [ ] 6.1 Add a language list on Settings showing Same as the phone plus currently supported languages (English only until packs merge), each with its own name plus an English name
+- [ ] 6.2 Changing language updates the running app without reinstall (including left-to-right vs right-to-left)
+- [ ] 6.3 The list supports filter/search by native name or English name; hide search until more than one language is registered
+- [ ] 6.4 Sort "Same as the phone" first, then English, then other languages by English name
 
 ## 7. Tests
 
@@ -51,12 +51,13 @@
 - [ ] 7.4 Run analyzer and relevant unit/widget suites; fix breakages from string extraction
 - [ ] 7.5 Widget-test that changing the language in the picker updates already-visible UI text (and direction, when an RTL locale is registered) without an app restart
 - [ ] 7.6 Unit-test that a ViewModel-authored validation message (not repository-thrown) resolves through `AppLocalizations`, not a hardcoded string
-- [ ] 7.7 Regression-test that a ledger amount renders identically (numeric-dot, ISO 4217 code) with a non-English locale active, including digit order under an RTL locale
-- [ ] 7.8 Unit-test locale resolution: `hi_IN` → `hi` when Hindi is supported; `zh_TW` / `zh_Hant` → `en` while only Simplified `zh` is supported; dropped pin → follow-device/English; legacy `in` → `id` when Indonesian is supported
-- [ ] 7.9 Widget-test that an unchanged seeded group name localizes and a renamed one does not
-- [ ] 7.10 Widget-test that a user-typed journal description is unchanged when the UI locale changes
+- [ ] 7.7 Regression-test that money still looks like `1234.56` with a code such as USD when a non-English language is active, including digit order under a right-to-left language
+- [ ] 7.8 Unit-test language matching: `hi_IN` → Hindi when Hindi is supported; `zh_TW` / `zh_Hant` → English while only Simplified `zh` is supported; dropped choice → same-as-the-phone/English; legacy `in` → `id` when Indonesian is supported
+- [ ] 7.9 Widget-test that an unchanged default group name shows the household translation and a renamed one does not
+- [ ] 7.10 Widget-test that a note the user typed is unchanged when the app language changes
+- [ ] 7.11 Widget-test English ARB / on-screen copy uses Spent, Received, Fix, Moved money — not Money in/out, Reverse, or Transfer:
 
 ## 8. Docs
 
-- [ ] 8.1 Update `docs/user-guide.md` Settings section per the user-guide delta (language picker, what is not translated, BIP39, amounts, screen-reader limitation)
+- [ ] 8.1 Update `docs/user-guide.md` Settings in everyday words (same as the phone vs pick a language, what is not translated, recovery words, how money looks, spoken screen reader)
 - [ ] 8.2 Update `Specs/architecture/smara-architecture.md` so it no longer says localization is deferred

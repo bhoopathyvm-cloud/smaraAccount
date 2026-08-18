@@ -10,10 +10,10 @@ Smara Accounting ships English-only UI and English exception messages embedded i
 - Persist an in-app language preference in `SettingsRepository` (SharedPreferences): follow the device locale by default, or pin a supported app locale. Rebuild the UI immediately when it changes, including text direction.
 - Establish a font *hook* (theme + asset registry) capable of rendering Indic and CJK scripts once locale packs land; this change ships Latin-capable fonts and the registry, not every script file.
 - Define the AI-translated v1 workflow: English ARB is canonical; locale packs may ship AI drafts with English fallback for missing keys; human polish is deferred.
-- Keep BIP39 recovery-phrase wordlists English regardless of UI locale.
-- Localize *display* of unchanged system-seeded names (groups, categories, starter financial account, Opening Balance Equity, Transfers in transit) and well-known system-generated journal descriptions; never translate user-authored text.
-- Document the language picker for a large locale list (native name + English/Latin secondary label, search once packs land).
-- Document the dependency order for follow-on changes: Indian and world locale packs apply only after this foundation. If `household-language-voice` is still open, extract ARB English using that household term map rather than freezing ledger jargon as the template.
+- Keep recovery words (the English BIP39 wordlist) regardless of the language on screen.
+- Localize *display* of unchanged system-seeded names (groups, categories, starter account, and the few internal names that appear in the list of lines) and well-known notes the app wrote by itself; never translate text the user typed.
+- English words the user sees SHALL be everyday household language (Spent / Received, Fix, Hide from new entries, Moved money) — not debit/credit/journal/ledger talk. Code and stored names may stay as they are.
+- Document the language picker for a large language list (the language's own name + an English name, search once packs land).
 
 ## Capabilities
 
@@ -22,7 +22,7 @@ Smara Accounting ships English-only UI and English exception messages embedded i
 - `localized-errors`: Stable, language-agnostic error codes from domain/repository/parser layers; UI maps codes (with placeholders) to localized strings, including an unknown-code fallback.
 
 ### Modified Capabilities
-- `user-guide`: document the language setting, what is and is not translated, BIP39 remaining English, and that amounts stay numeric-dot in this change.
+- `user-guide`: document the language setting in everyday words (same as the phone vs pick a language), what is and is not translated, that recovery words stay English, and that amounts still look like `1234.56` with a code such as USD.
 - (Locale packs further modify `app-localization` by adding supported locales.)
 
 ## Impact
@@ -32,7 +32,7 @@ Smara Accounting ships English-only UI and English exception messages embedded i
 - Extends `SettingsRepository` (already SharedPreferences for non-secrets) with the language preference; does **not** use secure storage.
 - Adds dependencies: `flutter_localizations`, `intl`; enables `flutter: generate: true`.
 - Widget/integration tests that `find.text('…')` English must pin locale to `en` or assert via keys/l10n; tests that match exception `toString()` prose must switch to error codes.
-- Seeded ledger names stay English (or stable keys) in SQLite; display translation only for unchanged system defaults — detailed in design. Same for a small set of system-generated journal descriptions (`Opening balance`, `Settlement`, …).
+- Seeded names stay as stored in SQLite; on screen, unchanged defaults show the everyday translated label. Same for a small set of notes the app wrote itself (`Starting amount`, `Money arrived`, …) — never the internal ledger phrasing.
+- Blocks no ledger schema work. Coordinate with `household-language-voice` (this change uses that household dictionary for every English ARB value) and `localized-money-formatting` (this change does *not* change how amounts look; that later change may).
 - Updates `Specs/architecture/smara-architecture.md` (currently says localization is deferred).
-- Blocks no ledger schema work. Coordinate with `household-language-voice` (ARB English wording) and `localized-money-formatting` (this change explicitly does *not* locale-format amounts; that later change may supersede Decision 8).
 - Follow-on changes (language packs) depend on this change shipping first.
