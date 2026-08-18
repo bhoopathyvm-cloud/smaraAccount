@@ -3,7 +3,9 @@ import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/domain/models/instrument.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/home_overview.dart';
@@ -1418,8 +1420,8 @@ void main() {
       expect(created.currency, equals('GBP'));
       expect(created.isSystem, isFalse);
       expect(created.archived, isFalse);
-      // The four seeded system groups occupy sortOrder 0-3.
-      expect(created.sortOrder, equals(4));
+      // The five seeded system groups occupy sortOrder 0-4.
+      expect(created.sortOrder, equals(5));
 
       final groups = await repository.watchAccountGroups().first;
       expect(groups.map((g) => g.id), contains(created.id));
@@ -2578,6 +2580,102 @@ void main() {
       // The reversal undoes exactly the source leg's original debit,
       // restoring checking to its pre-transfer balance.
       expect(await repository.displayBalanceMinor(checkingId), equals(50000));
+    });
+  });
+
+  group('investment holdings', () {
+    Future<String> createInvestmentAccount() async {
+      return (await repository.createFinancialAccount(
+        name: 'Brokerage',
+        type: AccountType.asset,
+        groupId: groupInvestmentsId,
+        holdsInvestments: true,
+      )).id;
+    }
+
+    Future<String> nonInvestmentCashAccountId() async {
+      final accounts = await repository.watchFinancialAccounts().first;
+      return accounts.firstWhere((a) => !a.isInvestmentAccount).id;
+    }
+
+    test('cash-funded buy updates cash and inventory', () async {
+      final accountId = await createInvestmentAccount();
+      await repository.recordTransfer(
+        fromAccountId: await nonInvestmentCashAccountId(),
+        toAccountId: accountId,
+        amountMinor: 100000,
+        transactionDate: DateTime(2026, 1, 1),
+      );
+      final instrument = await repository.createInstrument(
+        name: 'Apple Inc',
+        kind: InstrumentKind.stock,
+      );
+      await repository.recordBuy(
+        accountId: accountId,
+        instrumentId: instrument.id,
+        quantityScaled: 10000,
+        unitPriceMinor: 10000,
+        transactionDate: DateTime(2026, 1, 2),
+        fundingSource: BuyFundingSource.cash,
+      );
+      expect(await repository.displayBalanceMinor(accountId), equals(90000));
+      final holdings = await repository.computeHoldingsForAccount(accountId);
+      expect(holdings.length, equals(1));
+      expect(holdings.first.quantityScaled, equals(10000));
+      expect(holdings.first.totalCostMinor, equals(10000));
+    });
+
+    test('cash-funded buy rejected when cash insufficient', () async {
+      final accountId = await createInvestmentAccount();
+      final instrument = await repository.createInstrument(
+        name: 'Tesla',
+        kind: InstrumentKind.stock,
+      );
+      await expectLater(
+        () => repository.recordBuy(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          quantityScaled: 10000,
+          unitPriceMinor: 10000,
+          transactionDate: DateTime(2026, 1, 2),
+          fundingSource: BuyFundingSource.cash,
+        ),
+        throwsA(isA<InsufficientCashException>()),
+      );
+    });
+
+    test('sell at gain posts proceeds and reduces inventory', () async {
+      final accountId = await createInvestmentAccount();
+      await repository.recordTransfer(
+        fromAccountId: await nonInvestmentCashAccountId(),
+        toAccountId: accountId,
+        amountMinor: 100000,
+        transactionDate: DateTime(2026, 1, 1),
+      );
+      final instrument = await repository.createInstrument(
+        name: 'MSFT',
+        kind: InstrumentKind.stock,
+      );
+      await repository.recordBuy(
+        accountId: accountId,
+        instrumentId: instrument.id,
+        quantityScaled: 10000,
+        unitPriceMinor: 10000,
+        transactionDate: DateTime(2026, 1, 2),
+        fundingSource: BuyFundingSource.cash,
+      );
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.recordSell(
+        accountId: accountId,
+        instrumentId: instrument.id,
+        quantityScaled: 10000,
+        unitPriceMinor: 12000,
+        transactionDate: DateTime(2026, 2, 1),
+        gainIncomeCategoryId: incomeId,
+      );
+      expect(await repository.displayBalanceMinor(accountId), equals(102000));
+      final holdings = await repository.computeHoldingsForAccount(accountId);
+      expect(holdings, isEmpty);
     });
   });
 }

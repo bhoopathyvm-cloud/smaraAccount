@@ -30,7 +30,7 @@ Each enum case has a template such as `https://chatgpt.com/?q={prompt}`. If a ve
 Same research pack as before, minus "run it ourselves": identify issuer, recent news with dates if known, downside risks, upside drivers, facts vs speculation, no buy/sell/hold, not financial advice. Encode for the query string; keep length reasonable (truncate news-ask boilerplate last if a platform has a URL cap).
 
 ### 4. Tap target is the name, not a hidden menu
-The inventory row's instrument name is the research control (with a tooltip/hint the first time). Buy/Sell stay separate buttons so research is not confused with a trade.
+The inventory row's instrument name is the research control (with a tooltip/hint the first time). Buy, Sell, and Dividend stay separate buttons/actions so research is never confused with a trade or an income posting.
 
 ## Risks / Trade-offs
 

@@ -316,6 +316,7 @@ class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
     required _i5.AccountType? type,
     required String? groupId,
     int? openingBalanceMinor,
+    bool? holdsInvestments = false,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#createFinancialAccount, [], {
@@ -323,6 +324,7 @@ class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
               #type: type,
               #groupId: groupId,
               #openingBalanceMinor: openingBalanceMinor,
+              #holdsInvestments: holdsInvestments,
             }),
             returnValue: _i9.Future<_i5.Account>.value(
               _FakeAccount_3(
@@ -332,6 +334,7 @@ class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
                   #type: type,
                   #groupId: groupId,
                   #openingBalanceMinor: openingBalanceMinor,
+                  #holdsInvestments: holdsInvestments,
                 }),
               ),
             ),
@@ -343,6 +346,7 @@ class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
                   #type: type,
                   #groupId: groupId,
                   #openingBalanceMinor: openingBalanceMinor,
+                  #holdsInvestments: holdsInvestments,
                 }),
               ),
             ),

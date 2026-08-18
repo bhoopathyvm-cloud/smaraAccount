@@ -97,3 +97,28 @@ class CsvParseException implements Exception {
   @override
   String toString() => message;
 }
+
+class InvestmentException implements Exception {
+  const InvestmentException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
+class InsufficientCashException extends InvestmentException {
+  const InsufficientCashException(super.message);
+}
+
+class InsufficientQuantityException extends InvestmentException {
+  const InsufficientQuantityException(super.message);
+}
+
+class LockedQuantityException extends InvestmentException {
+  const LockedQuantityException(super.message);
+}
+
+class InvestmentReversalBlockedException extends InvestmentException {
+  const InvestmentReversalBlockedException(super.message);
+}
