@@ -1,0 +1,31 @@
+# CodeQL configuration for SMARA Account (Flutter / Dart).
+#
+# CodeQL has no Dart language support, so it cannot analyze the app under
+# lib/ or test/. Default setup auto-detects C++, Swift, Kotlin, and C from
+# Flutter's generated platform folders (android/, ios/, linux/, macos/,
+# windows/) and then warns because those stubs are not real application
+# code and often fail or barely extract.
+#
+# This config scopes analysis to GitHub Actions workflows — the only
+# CodeQL-supported surface that is first-party and security-relevant here.
+# Dependency and secret scanning stay in .github/workflows/security.yml
+# (OSV + gitleaks); Dart static analysis stays in flutter-ci.yml.
+name: "SMARA Account CodeQL"
+
+paths:
+  - .github/workflows
+
+paths-ignore:
+  - android/**
+  - ios/**
+  - linux/**
+  - macos/**
+  - windows/**
+  - "**/*.dart"
+  - pages/**
+  - docs/**
+  - openspec/**
+  - Specs/**
+
+queries:
+  - uses: security-extended
