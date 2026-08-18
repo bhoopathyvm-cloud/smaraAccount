@@ -751,7 +751,7 @@ void main() {
 
   group('onUpgrade from schemaVersion 2', () {
     test(
-      'seeds the four system groups and the equity account with sane timestamps',
+      'seeds the five system groups and the equity account with sane timestamps',
       () async {
         final v2 = _openV2Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v2));
@@ -765,6 +765,7 @@ void main() {
             groupPensionRetirementId,
             groupCreditShortTermId,
             groupLoansMortgagesId,
+            groupInvestmentsId,
           ]),
         );
         expect(groups.every((g) => g.isSystem), isTrue);

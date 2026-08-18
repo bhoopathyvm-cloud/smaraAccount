@@ -6,6 +6,8 @@ import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
 import '../../domain/models/account.dart';
 import '../../domain/models/account_group.dart';
+import '../../domain/models/instrument.dart';
+import '../../domain/models/instrument_holding.dart';
 import '../../domain/models/home_overview.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/journal_entry.dart';
@@ -17,7 +19,9 @@ import '../../domain/models/transaction_direction.dart';
 import '../database/app_database.dart';
 import '../database/tables/account_groups_table.dart';
 import '../database/tables/accounts_table.dart';
+import '../database/tables/investment_lots_table.dart';
 import '../database/tables/ledger_chain_state_table.dart';
+import 'investment_holdings_logic.dart';
 
 /// The only layer that talks to Drift. Exposes domain models, never
 /// Drift's generated row classes (smara-tech-guidelines.md). Every write
@@ -169,6 +173,12 @@ class LedgerRepository {
         'Loans & mortgages',
         AccountGroupKind.liabilityGroup,
         3,
+      ),
+      (
+        groupInvestmentsId,
+        'Investments',
+        AccountGroupKind.assetGroup,
+        4,
       ),
     ];
     for (final (id, name, kind, order) in seeds) {
@@ -760,6 +770,8 @@ class LedgerRepository {
       archived: row.archivedAt != null,
       groupId: row.groupId,
       sortOrder: row.sortOrder,
+      holdsInvestments: row.holdsInvestments,
+      investmentOwnerAccountId: row.investmentOwnerAccountId,
     );
   }
 
@@ -851,9 +863,15 @@ class LedgerRepository {
     required AccountType type,
     required String groupId,
     int? openingBalanceMinor,
+    bool holdsInvestments = false,
   }) async {
     if (type != AccountType.asset && type != AccountType.liability) {
       throw ArgumentError.value(type, 'type', 'must be asset or liability');
+    }
+    if (holdsInvestments && type != AccountType.asset) {
+      throw AccountGroupException(
+        'Only asset accounts can be marked as investment accounts.',
+      );
     }
     if (openingBalanceMinor != null && openingBalanceMinor <= 0) {
       throw InvalidOpeningBalanceException(
@@ -893,9 +911,21 @@ class LedgerRepository {
             AccountsCompanion.insert(
               name: name,
               type: type,
+              holdsInvestments: Value(holdsInvestments),
               groupId: Value(groupId),
             ),
           );
+      if (holdsInvestments) {
+        await _db.into(_db.accounts).insert(
+          AccountsCompanion.insert(
+            name: '$name Inventory',
+            type: AccountType.inventory,
+            holdsInvestments: const Value(false),
+            investmentOwnerAccountId: Value(created.id),
+            groupId: Value(groupId),
+          ),
+        );
+      }
     });
 
     if (openingBalanceMinor != null) {
@@ -1364,6 +1394,15 @@ class LedgerRepository {
           'same-currency transfer.',
         );
       }
+      if (fromAccount.holdsInvestments) {
+        final cashBalance = await displayBalanceMinor(fromAccount.id);
+        if (amountMinor > cashBalance) {
+          throw InvalidTransferException(
+            'Cannot transfer more than the investment account cash balance '
+            '($cashBalance minor units).',
+          );
+        }
+      }
       await _appendSignedEntry(
         transactionDate: _dateOnly(transactionDate),
         description: description,
@@ -1382,6 +1421,15 @@ class LedgerRepository {
           'Destination amount must be positive and non-zero, '
           'got $destinationAmountMinor.',
         );
+      }
+      if (fromAccount.holdsInvestments) {
+        final cashBalance = await displayBalanceMinor(fromAccount.id);
+        if (amountMinor > cashBalance) {
+          throw InvalidTransferException(
+            'Cannot transfer more than the investment account cash balance '
+            '($cashBalance minor units).',
+          );
+        }
       }
       await _appendSignedEntry(
         transactionDate: _dateOnly(transactionDate),
@@ -1491,6 +1539,8 @@ class LedgerRepository {
         'still unsettled. Settle it instead.',
       );
     }
+
+    await _guardInvestmentBuyReversal(entryId);
 
     final original = await (_db.select(
       _db.journalEntries,
@@ -1733,6 +1783,581 @@ class LedgerRepository {
     });
   }
 
+  // ---------------------------------------------------------------------
+  // Investment holdings (investment-holdings).
+  // ---------------------------------------------------------------------
+
+  Stream<List<Instrument>> watchInstruments({bool includeArchived = false}) {
+    final query = _db.select(_db.instruments)
+      ..orderBy([(i) => OrderingTerm.asc(i.name)]);
+    if (!includeArchived) {
+      query.where((i) => i.archivedAt.isNull());
+    }
+    return query.watch().map(
+      (rows) => rows.map(_toDomainInstrument).toList(),
+    );
+  }
+
+  Instrument _toDomainInstrument(InstrumentRow row) {
+    return Instrument(
+      id: row.id,
+      name: row.name,
+      kind: row.kind,
+      ticker: row.ticker,
+      isin: row.isin,
+      archived: row.archivedAt != null,
+    );
+  }
+
+  Future<Instrument> createInstrument({
+    required String name,
+    required InstrumentKind kind,
+    String? ticker,
+    String? isin,
+  }) async {
+    final created = await _db
+        .into(_db.instruments)
+        .insertReturning(
+          InstrumentsCompanion.insert(
+            name: name,
+            kind: kind,
+            ticker: Value(ticker),
+            isin: Value(isin),
+          ),
+        );
+    return _toDomainInstrument(created);
+  }
+
+  Future<void> renameInstrument({
+    required String id,
+    required String newName,
+  }) async {
+    await (_db.update(_db.instruments)..where((i) => i.id.equals(id))).write(
+      InstrumentsCompanion(name: Value(newName)),
+    );
+  }
+
+  Future<void> archiveInstrument(String id) async {
+    await (_db.update(_db.instruments)..where((i) => i.id.equals(id))).write(
+      InstrumentsCompanion(archivedAt: Value(DateTime.now())),
+    );
+  }
+
+  Stream<List<InstrumentHolding>> watchHoldingsForAccount(String accountId) {
+    return watchInstruments(includeArchived: true).asyncMap((_) async {
+      return await computeHoldingsForAccount(accountId);
+    });
+  }
+
+  Future<List<InstrumentHolding>> computeHoldingsForAccount(
+    String accountId,
+  ) async {
+    final lots = await (_db.select(_db.investmentLots)
+          ..where((l) => l.accountId.equals(accountId)))
+        .get();
+    final instrumentIds = lots.map((l) => l.instrumentId).toSet();
+    if (instrumentIds.isEmpty) return [];
+
+    final instruments = await (_db.select(_db.instruments)
+          ..where((i) => i.id.isIn(instrumentIds)))
+        .get();
+    final instrumentById = {for (final i in instruments) i.id: i};
+
+    final holdings = <InstrumentHolding>[];
+    for (final instrumentId in instrumentIds) {
+      final instrumentRow = instrumentById[instrumentId];
+      if (instrumentRow == null) continue;
+      final events = await _replayEventsFor(
+        accountId: accountId,
+        instrumentId: instrumentId,
+      );
+      final metrics = replayInvestmentHistory(events);
+      if (metrics.quantityScaled <= 0) continue;
+      holdings.add(
+        toInstrumentHolding(
+          instrumentRow: instrumentRow,
+          metrics: metrics,
+        ),
+      );
+    }
+    holdings.sort((a, b) => a.instrument.name.compareTo(b.instrument.name));
+    return holdings;
+  }
+
+  Future<String> recordBuy({
+    required String accountId,
+    required String instrumentId,
+    required int quantityScaled,
+    required int unitPriceMinor,
+    required DateTime transactionDate,
+    required BuyFundingSource fundingSource,
+    String? incomeCategoryId,
+    DateTime? lockedUntil,
+    String? description,
+    int? brokerageMinor,
+    String? brokerageExpenseCategoryId,
+  }) async {
+    if (quantityScaled <= 0 || unitPriceMinor <= 0) {
+      throw const InvestmentException(
+        'Buy quantity and unit price must be positive.',
+      );
+    }
+    await _requireInvestmentCashAccount(accountId);
+    final instrument = await (_db.select(_db.instruments)
+          ..where((i) => i.id.equals(instrumentId)))
+        .getSingleOrNull();
+    if (instrument == null) {
+      throw InvestmentException('Instrument $instrumentId not found.');
+    }
+    if (instrument.archivedAt != null) {
+      throw const InvestmentException(
+        'Cannot buy an archived instrument.',
+      );
+    }
+
+    final totalCostMinor = multiplyScaledQuantityPrice(
+      quantityScaled,
+      unitPriceMinor,
+    );
+    final feeMinor = brokerageMinor;
+    final hasBrokerage = feeMinor != null && feeMinor > 0;
+    if (fundingSource == BuyFundingSource.nonCash && hasBrokerage) {
+      throw const InvestmentException(
+        'Non-cash acquisitions cannot include brokerage.',
+      );
+    }
+    if (hasBrokerage && brokerageExpenseCategoryId == null) {
+      throw const InvestmentException(
+        'An active expense category is required when brokerage is positive.',
+      );
+    }
+    if (hasBrokerage) {
+      await _requireActiveExpenseCategory(brokerageExpenseCategoryId!);
+    }
+    if (fundingSource == BuyFundingSource.nonCash) {
+      if (incomeCategoryId == null) {
+        throw const InvestmentException(
+          'An active income category is required for a non-cash acquisition.',
+        );
+      }
+      await _requireActiveIncomeCategory(incomeCategoryId);
+    } else {
+      final cashBalance = await displayBalanceMinor(accountId);
+      if (totalCostMinor > cashBalance) {
+        throw InsufficientCashException(
+          'Insufficient cash for buy: need $totalCostMinor minor units, '
+          'have $cashBalance.',
+        );
+      }
+    }
+
+    final inventoryAccountId = await _inventoryAccountIdFor(accountId);
+    final lotSource = fundingSource == BuyFundingSource.cash
+        ? LotSource.cashPurchase
+        : LotSource.nonCashAcquisition;
+
+    final entryId = await _db.transaction(() async {
+      final postings = <({String accountId, int amountMinor, int lineNumber})>[
+        (
+          accountId: inventoryAccountId,
+          amountMinor: totalCostMinor,
+          lineNumber: 1,
+        ),
+        if (fundingSource == BuyFundingSource.cash)
+          (
+            accountId: accountId,
+            amountMinor: -totalCostMinor,
+            lineNumber: 2,
+          )
+        else
+          (
+            accountId: incomeCategoryId!,
+            amountMinor: -totalCostMinor,
+            lineNumber: 2,
+          ),
+      ];
+      final id = await _appendSignedEntry(
+        transactionDate: _dateOnly(transactionDate),
+        description: description,
+        reversesEntryId: null,
+        postings: postings,
+      );
+      await _db.into(_db.investmentLots).insert(
+        InvestmentLotsCompanion.insert(
+          accountId: accountId,
+          instrumentId: instrumentId,
+          quantityScaled: quantityScaled,
+          unitCostMinor: unitPriceMinor,
+          source: lotSource,
+          acquiredAt: parseTransactionDate(_dateOnly(transactionDate)),
+          lockedUntil: Value(lockedUntil),
+          journalEntryId: id,
+        ),
+      );
+      return id;
+    });
+
+    if (hasBrokerage) {
+      try {
+        await recordTransaction(
+          amountMinor: feeMinor,
+          direction: TransactionDirection.moneyOut,
+          categoryId: brokerageExpenseCategoryId!,
+          financialAccountId: accountId,
+          transactionDate: transactionDate,
+          description: description == null
+              ? 'Brokerage'
+              : '$description (brokerage)',
+        );
+      } on InvalidTransactionAmountException catch (e) {
+        throw InvestmentException(
+          'Buy posted, but brokerage fee failed: ${e.message}',
+        );
+      } on AccountGroupException catch (e) {
+        throw InvestmentException(
+          'Buy posted, but brokerage fee failed: ${e.message}',
+        );
+      }
+    }
+
+    return entryId;
+  }
+
+  Future<String> recordSell({
+    required String accountId,
+    required String instrumentId,
+    required int quantityScaled,
+    required int unitPriceMinor,
+    required DateTime transactionDate,
+    String? gainIncomeCategoryId,
+    String? lossExpenseCategoryId,
+    String? description,
+    int? brokerageMinor,
+    String? brokerageExpenseCategoryId,
+  }) async {
+    if (quantityScaled <= 0 || unitPriceMinor <= 0) {
+      throw const InvestmentException(
+        'Sell quantity and unit price must be positive.',
+      );
+    }
+    await _requireInvestmentCashAccount(
+      accountId,
+      allowArchived: true,
+    );
+
+    final proceedsMinor = multiplyScaledQuantityPrice(
+      quantityScaled,
+      unitPriceMinor,
+    );
+    final feeMinor = brokerageMinor;
+    final hasBrokerage = feeMinor != null && feeMinor > 0;
+    if (hasBrokerage && proceedsMinor < feeMinor) {
+      throw const InvestmentException(
+        'Sell proceeds must be at least the brokerage amount.',
+      );
+    }
+    if (hasBrokerage && brokerageExpenseCategoryId == null) {
+      throw const InvestmentException(
+        'An active expense category is required when brokerage is positive.',
+      );
+    }
+    if (hasBrokerage) {
+      await _requireActiveExpenseCategory(brokerageExpenseCategoryId!);
+    }
+
+    final events = await _replayEventsFor(
+      accountId: accountId,
+      instrumentId: instrumentId,
+    );
+    final sellDate = parseTransactionDate(_dateOnly(transactionDate));
+    final metricsBeforeSell = replayInvestmentHistory(events, asOf: sellDate);
+    if (quantityScaled > metricsBeforeSell.sellableQuantityScaled) {
+      final locked = metricsBeforeSell.lockedQuantityScaled;
+      if (locked > 0) {
+        throw LockedQuantityException(
+          'Cannot sell $quantityScaled scaled units: only '
+          '${metricsBeforeSell.sellableQuantityScaled} are sellable '
+          '(locked quantity $locked).',
+        );
+      }
+      throw InsufficientQuantityException(
+        'Cannot sell $quantityScaled scaled units: only '
+        '${metricsBeforeSell.sellableQuantityScaled} held.',
+      );
+    }
+
+    final avgCostMinor = metricsBeforeSell.averageCostMinor;
+    final costRemovedMinor = multiplyScaledQuantityPrice(
+      quantityScaled,
+      avgCostMinor,
+    );
+    final gainLossMinor = proceedsMinor - costRemovedMinor;
+
+    if (gainLossMinor > 0) {
+      if (gainIncomeCategoryId == null) {
+        throw const InvestmentException(
+          'An active income category is required for a realized gain.',
+        );
+      }
+      await _requireActiveIncomeCategory(gainIncomeCategoryId);
+    } else if (gainLossMinor < 0) {
+      if (lossExpenseCategoryId == null) {
+        throw const InvestmentException(
+          'An active expense category is required for a realized loss.',
+        );
+      }
+      await _requireActiveExpenseCategory(lossExpenseCategoryId);
+    }
+
+    final inventoryAccountId = await _inventoryAccountIdFor(accountId);
+    final postings =
+        <({String accountId, int amountMinor, int lineNumber})>[
+          (accountId: accountId, amountMinor: proceedsMinor, lineNumber: 1),
+          (
+            accountId: inventoryAccountId,
+            amountMinor: -costRemovedMinor,
+            lineNumber: 2,
+          ),
+        ];
+    if (gainLossMinor > 0) {
+      postings.add(
+        (
+          accountId: gainIncomeCategoryId!,
+          amountMinor: -gainLossMinor,
+          lineNumber: 3,
+        ),
+      );
+    } else if (gainLossMinor < 0) {
+      postings.add(
+        (
+          accountId: lossExpenseCategoryId!,
+          amountMinor: -gainLossMinor,
+          lineNumber: 3,
+        ),
+      );
+    }
+
+    final entryId = await _db.transaction(() async {
+      final id = await _appendSignedEntry(
+        transactionDate: _dateOnly(transactionDate),
+        description: description,
+        reversesEntryId: null,
+        postings: postings,
+      );
+      await _db.into(_db.investmentSells).insert(
+        InvestmentSellsCompanion.insert(
+          accountId: accountId,
+          instrumentId: instrumentId,
+          quantityScaled: quantityScaled,
+          journalEntryId: id,
+        ),
+      );
+      return id;
+    });
+
+    if (hasBrokerage) {
+      try {
+        await recordTransaction(
+          amountMinor: feeMinor,
+          direction: TransactionDirection.moneyOut,
+          categoryId: brokerageExpenseCategoryId!,
+          financialAccountId: accountId,
+          transactionDate: transactionDate,
+          description: description == null
+              ? 'Brokerage'
+              : '$description (brokerage)',
+        );
+      } on InvalidTransactionAmountException catch (e) {
+        throw InvestmentException(
+          'Sell posted, but brokerage fee failed: ${e.message}',
+        );
+      } on AccountGroupException catch (e) {
+        throw InvestmentException(
+          'Sell posted, but brokerage fee failed: ${e.message}',
+        );
+      }
+    }
+
+    return entryId;
+  }
+
+  Future<String> recordDividend({
+    required String accountId,
+    required String instrumentId,
+    required int amountMinor,
+    required DateTime transactionDate,
+    required String incomeCategoryId,
+    String? description,
+  }) async {
+    if (amountMinor <= 0) {
+      throw const InvestmentException('Dividend amount must be positive.');
+    }
+    await _requireInvestmentCashAccount(accountId, allowArchived: true);
+    await _requireActiveIncomeCategory(incomeCategoryId);
+    final instrument = await (_db.select(_db.instruments)
+          ..where((i) => i.id.equals(instrumentId)))
+        .getSingleOrNull();
+    if (instrument == null) {
+      throw InvestmentException('Instrument $instrumentId not found.');
+    }
+
+    return _appendSignedEntry(
+      transactionDate: _dateOnly(transactionDate),
+      description: description,
+      reversesEntryId: null,
+      postings: [
+        (accountId: accountId, amountMinor: amountMinor, lineNumber: 1),
+        (
+          accountId: incomeCategoryId,
+          amountMinor: -amountMinor,
+          lineNumber: 2,
+        ),
+      ],
+    );
+  }
+
+  Future<void> _requireActiveIncomeCategory(String id) async {
+    final row = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(id))).getSingleOrNull();
+    if (row == null || row.type != AccountType.income) {
+      throw InvestmentException('$id is not an active Income category.');
+    }
+    if (row.archivedAt != null) {
+      throw InvestmentException('$id is not an active Income category.');
+    }
+  }
+
+  Future<AccountRow> _requireInvestmentCashAccount(
+    String id, {
+    bool allowArchived = false,
+  }) async {
+    final row = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(id))).getSingleOrNull();
+    if (row == null ||
+        row.type != AccountType.asset ||
+        !row.holdsInvestments) {
+      throw InvestmentException('Account $id is not an investment account.');
+    }
+    if (row.archivedAt != null && !allowArchived) {
+      throw AccountGroupException('Account $id is archived.');
+    }
+    return row;
+  }
+
+  Future<String> _inventoryAccountIdFor(String cashAccountId) async {
+    final row = await (_db.select(_db.accounts)..where(
+          (a) => a.investmentOwnerAccountId.equals(cashAccountId),
+        )).getSingleOrNull();
+    if (row == null) {
+      throw InvestmentException(
+        'No inventory companion for investment account $cashAccountId.',
+      );
+    }
+    return row.id;
+  }
+
+  Future<Set<String>> _reversedOriginalEntryIds() async {
+    final rows = await (_db.select(_db.journalEntries)
+          ..where((e) => e.reversesEntryId.isNotNull()))
+        .get();
+    return rows.map((e) => e.reversesEntryId!).toSet();
+  }
+
+  Future<List<InvestmentReplayEvent>> _replayEventsFor({
+    required String accountId,
+    required String instrumentId,
+  }) async {
+    final reversed = await _reversedOriginalEntryIds();
+    final lots = await (_db.select(_db.investmentLots)..where(
+          (l) =>
+              l.accountId.equals(accountId) &
+              l.instrumentId.equals(instrumentId),
+        )).get();
+    final sells = await (_db.select(_db.investmentSells)..where(
+          (s) =>
+              s.accountId.equals(accountId) &
+              s.instrumentId.equals(instrumentId),
+        )).get();
+
+    final entryIds = {
+      ...lots.map((l) => l.journalEntryId),
+      ...sells.map((s) => s.journalEntryId),
+    };
+    if (entryIds.isEmpty) return [];
+
+    final entries = await (_db.select(_db.journalEntries)
+          ..where((e) => e.id.isIn(entryIds)))
+        .get();
+    final entryById = {for (final e in entries) e.id: e};
+
+    final events = <InvestmentReplayEvent>[];
+    for (final lot in lots) {
+      if (reversed.contains(lot.journalEntryId)) continue;
+      final entry = entryById[lot.journalEntryId];
+      if (entry == null) continue;
+      events.add(
+        InvestmentReplayEvent(
+          kind: InvestmentReplayEventKind.buy,
+          transactionDate: parseTransactionDate(entry.transactionDate),
+          recordedAt: entry.recordedAt,
+          quantityScaled: lot.quantityScaled,
+          unitCostMinor: lot.unitCostMinor,
+          lockedUntil: lot.lockedUntil,
+          journalEntryId: lot.journalEntryId,
+        ),
+      );
+    }
+    for (final sell in sells) {
+      if (reversed.contains(sell.journalEntryId)) continue;
+      final entry = entryById[sell.journalEntryId];
+      if (entry == null) continue;
+      events.add(
+        InvestmentReplayEvent(
+          kind: InvestmentReplayEventKind.sell,
+          transactionDate: parseTransactionDate(entry.transactionDate),
+          recordedAt: entry.recordedAt,
+          quantityScaled: sell.quantityScaled,
+          unitCostMinor: 0,
+          journalEntryId: sell.journalEntryId,
+        ),
+      );
+    }
+    events.sort((a, b) {
+      final byDate = a.transactionDate.compareTo(b.transactionDate);
+      if (byDate != 0) return byDate;
+      return a.recordedAt.compareTo(b.recordedAt);
+    });
+    return events;
+  }
+
+  Future<void> _guardInvestmentBuyReversal(String entryId) async {
+    final lot = await (_db.select(_db.investmentLots)
+          ..where((l) => l.journalEntryId.equals(entryId)))
+        .getSingleOrNull();
+    if (lot == null) return;
+
+    final events = await _replayEventsFor(
+      accountId: lot.accountId,
+      instrumentId: lot.instrumentId,
+    );
+    if (!canReverseBuy(events: events, excludedBuyEntryId: entryId)) {
+      final blockingSells = events
+          .where(
+            (e) =>
+                e.kind == InvestmentReplayEventKind.sell &&
+                e.journalEntryId != entryId,
+          )
+          .map((e) => e.journalEntryId)
+          .toList();
+      throw InvestmentReversalBlockedException(
+        'Cannot reverse this buy: later sell(s) depend on its units. '
+        'Reverse dependent sell(s) first: ${blockingSells.join(", ")}.',
+      );
+    }
+  }
+
   /// Shared by [recordTransaction] and [reverseEntry]: computes the
   /// canonical hash, signs it, chains onto the current trusted tip, and
   /// writes the entry + postings + an immediate "verified" cache row in
@@ -1961,6 +2586,7 @@ class LedgerRepository {
       AccountType.liability => -postingAmountMinor,
       AccountType.equity ||
       AccountType.clearing ||
+      AccountType.inventory ||
       AccountType.income ||
       AccountType.expense => 0,
     };
@@ -2201,6 +2827,7 @@ class LedgerRepository {
           case AccountType.liability:
           case AccountType.equity:
           case AccountType.clearing:
+          case AccountType.inventory:
             break;
         }
       }

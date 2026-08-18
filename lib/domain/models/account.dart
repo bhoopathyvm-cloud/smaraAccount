@@ -12,6 +12,8 @@ class Account {
     required this.archived,
     this.groupId,
     this.sortOrder = 0,
+    this.holdsInvestments = false,
+    this.investmentOwnerAccountId,
   });
 
   final String id;
@@ -20,7 +22,13 @@ class Account {
   final bool archived;
   final String? groupId;
   final int sortOrder;
+  final bool holdsInvestments;
+  final String? investmentOwnerAccountId;
 
   bool get isFinancial =>
       type == AccountType.asset || type == AccountType.liability;
+
+  bool get isInvestmentAccount => isFinancial && holdsInvestments;
+  bool get isInvestmentInventoryAccount =>
+      type == AccountType.inventory && investmentOwnerAccountId != null;
 }
