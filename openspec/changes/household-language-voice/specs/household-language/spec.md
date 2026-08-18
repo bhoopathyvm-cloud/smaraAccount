@@ -1,11 +1,10 @@
-# household-language
 
 ## Purpose
 
 Household-facing vocabulary for SMARA Account: plain language that hides
 double-entry jargon while preserving accurate meaning.
 
-## Requirements
+## ADDED Requirements
 
 ### Requirement: Primary Capture Uses Spent and Received
 The system SHALL label the two transaction directions as **Spent** and

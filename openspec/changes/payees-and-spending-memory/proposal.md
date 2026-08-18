@@ -5,9 +5,14 @@ Users re-pick category every Starbucks; import has rules but typing has no memor
 ## What Changes
 
 - Payee entity: name, default category, optional default account.
-- Autocomplete on description field from payees + import history.
+- Autocomplete on description field from payees + import history, reusing
+  the existing `normalizeDescription` (trim + lowercase) match already
+  used by import category rules — no new normalization logic.
 - Remember last account and category per payee and globally as fallback.
-- Link import keyword rules to payee names where possible.
+- Saving a category rule from an import group assignment offers to also
+  link (or create) a payee with the rule's keyword as its name, so the
+  next manual entry for that payee gets the same category/account
+  defaults the import rule already learned.
 
 ## Capabilities
 

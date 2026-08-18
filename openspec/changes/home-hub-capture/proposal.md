@@ -4,9 +4,12 @@ Home should be the app: one Add button and this-month insight, not five equal ta
 
 ## What Changes
 
-- Home primary FAB or button: Add → Spent / Received / Moved money / Import statement.
-- This month section: category totals for current calendar month vs optional last month.
-- Consolidate register FABs to single Add on register or deep-link from Home.
+- Home primary Add action: Spent / Received / Moved money / Import statement.
+- This month section: category totals for current calendar month.
+- Register's three separate floating action buttons (import, transfer,
+  add) are replaced by one Add action opening the same choice, with the
+  current account pre-selected — a decided consolidation (see design.md),
+  not an optional nice-to-have.
 - Update accounts-home-overview spec.
 
 ## Capabilities

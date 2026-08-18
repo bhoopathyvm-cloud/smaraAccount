@@ -35,17 +35,24 @@ change tracks scope, dependency order, and what stays out of scope.
 
 ### Modified Capabilities
 
-- `user-guide`: each child change updates guide sections when it ships;
-  a final pass in this program may refresh README positioning.
+(none)
+
+Each child change owns its own `user-guide` delta for the feature it
+adds — checked, all eighteen now have one. This umbrella change itself
+adds no feature to document; `README.md` repositioning (tracked in
+tasks.md 1.2) is a separate file `user-guide`'s "every shipped feature"
+requirement doesn't govern.
 
 ## Impact
 
 - No application code in this change — planning artifacts only.
 - Child changes touch UI, repository, schema (where noted), tests, and
   `docs/user-guide.md`.
-- Existing in-flight changes (`archived-account-closeout`,
-  `foreign-transaction-settlement-align`) should merge before Wave 2 UI
-  churn on Home and Register.
+- `archived-account-closeout` and `foreign-transaction-settlement-align`
+  have since merged to `main` — Wave 2 UI churn on Home and Register can
+  proceed against the shipped closeout mechanism (`archiveFinancialAccount`,
+  `recordArchivedAccountCloseoutTransfer`, `canCloseoutSelectedAccount`),
+  not a design still in flight.
 
 ## Child changes (20 features)
 

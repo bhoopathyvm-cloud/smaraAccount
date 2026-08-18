@@ -1,10 +1,9 @@
-# correction-wizard
 
 ## Purpose
 
 Capability for fix this correction wizard.
 
-## Requirements
+## ADDED Requirements
 
 ### Requirement: Fix a Posted Transaction
 The user SHALL correct a posted transaction via a Fix flow that posts a reversal of the original entry and a new entry with the corrected fields. The original entry SHALL remain visible and unchanged.

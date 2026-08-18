@@ -1,11 +1,10 @@
-# household-product-positioning
 
 ## Purpose
 
 Define the household repositioning program: product promise, non-negotiable
 integrity rules, and the mapping from user needs to OpenSpec child changes.
 
-## Requirements
+## ADDED Requirements
 
 ### Requirement: Household Product Promise
 The product SHALL be positioned as local household books: users record
@@ -31,10 +30,7 @@ reference rates as if they were actual settled amounts.
   the original entry in place
 
 ### Requirement: Child Change Coverage
-Each of the twenty household usability improvements identified in the
-repositioning review SHALL be owned by exactly one OpenSpec child change
-listed in the program `proposal.md`, except language localization which
-is owned by `i18n-foundation` and follow-on locale packs.
+Each of the twenty household usability improvements identified in the repositioning review SHALL be owned by exactly one OpenSpec child change listed in the program `proposal.md`, except language localization which is owned by `i18n-foundation` and follow-on locale packs.
 
 #### Scenario: Feature has a named change
 - **WHEN** a contributor implements “search the register”

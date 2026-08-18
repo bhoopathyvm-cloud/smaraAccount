@@ -33,7 +33,13 @@ with `i18n-foundation` so ARB keys encode the right semantics.
 ### Modified Capabilities
 
 - `user-guide`: household voice in guide prose.
-- `shared-ui-components`: tab labels and shared chrome strings policy.
+
+**Not modified**, checked before scoping this: `shared-ui-components`.
+This change updates the *string arguments* passed into existing shared
+widgets (e.g. `confirmDestructiveAction`'s `confirmLabel: 'Archive'`
+becoming `'Hide'` at call sites), not the widgets' own behavior or
+requirements — `shared-ui-components`'s own spec is about which shared
+widget to use, not what label text call sites pass it.
 
 ## Impact
 

@@ -1,10 +1,9 @@
-# ledger-data-export
 
 ## Purpose
 
 Capability for ledger data export.
 
-## Requirements
+## ADDED Requirements
 
 ### Requirement: Ledger Data Export
 The user SHALL export transactions for a selected account and date range to a CSV file. Export SHALL not include private signing keys.
