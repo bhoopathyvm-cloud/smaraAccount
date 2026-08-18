@@ -12,6 +12,7 @@ Smara Accounting ships English-only UI and English exception messages embedded i
 - Define the AI-translated v1 workflow: English ARB is canonical; locale packs may ship AI drafts with English fallback for missing keys; human polish is deferred.
 - Keep BIP39 recovery-phrase wordlists English regardless of UI locale.
 - Document the dependency order for follow-on changes: Indian and world locale packs apply only after this foundation.
+- **Depends on** `household-language-voice` (or land in parallel): English ARB keys SHALL use household terms (Spent, Received, Fix) from the household term map, not legacy ledger jargon.
 
 ## Capabilities
 
