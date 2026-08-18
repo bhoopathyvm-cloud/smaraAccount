@@ -1993,37 +1993,34 @@ void main() {
       );
     });
 
-    test(
-      'a zero settled amount is rejected and posts nothing',
-      () async {
-        final checkingId = await firstFinancialAccountId();
-        final expenseId = await firstCategoryId(AccountType.expense);
-        await repository.recordTransaction(
-          amountMinor: 5000,
-          direction: TransactionDirection.moneyOut,
-          categoryId: expenseId,
-          financialAccountId: checkingId,
-          transactionDate: DateTime(2026, 1, 15),
-          nativeCurrency: 'EUR',
-        );
-        final pending = (await repository.watchPendingTransfers().first).single;
-        final before = await repository.displayBalanceMinor(checkingId);
+    test('a zero settled amount is rejected and posts nothing', () async {
+      final checkingId = await firstFinancialAccountId();
+      final expenseId = await firstCategoryId(AccountType.expense);
+      await repository.recordTransaction(
+        amountMinor: 5000,
+        direction: TransactionDirection.moneyOut,
+        categoryId: expenseId,
+        financialAccountId: checkingId,
+        transactionDate: DateTime(2026, 1, 15),
+        nativeCurrency: 'EUR',
+      );
+      final pending = (await repository.watchPendingTransfers().first).single;
+      final before = await repository.displayBalanceMinor(checkingId);
 
-        expect(
-          () => repository.settlePendingTransfer(
-            pendingTransferId: pending.id,
-            settledToAccountId: checkingId,
-            settledAmountMinor: 0,
-          ),
-          throwsA(isA<PendingTransferException>()),
-        );
-        expect(await repository.displayBalanceMinor(checkingId), equals(before));
-        expect(
-          (await repository.watchPendingTransfers().first).single.id,
-          pending.id,
-        );
-      },
-    );
+      expect(
+        () => repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: checkingId,
+          settledAmountMinor: 0,
+        ),
+        throwsA(isA<PendingTransferException>()),
+      );
+      expect(await repository.displayBalanceMinor(checkingId), equals(before));
+      expect(
+        (await repository.watchPendingTransfers().first).single.id,
+        pending.id,
+      );
+    });
   });
 
   group('settlePendingTransfer: validation', () {
