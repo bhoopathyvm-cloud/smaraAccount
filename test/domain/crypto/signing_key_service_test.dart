@@ -1,3 +1,5 @@
+import 'package:bip39_mnemonic/bip39_mnemonic.dart';
+import 'package:smara_accounting/domain/crypto/recovery_phrase.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:test/test.dart';
 
@@ -54,13 +56,24 @@ void main() {
   group('restoreFromRecoveryPhrase', () {
     test('rejects a phrase with an invalid checksum', () async {
       final generated = await service.generateNewIdentity();
-      final tampered = [...generated.phrase.words];
-      final tmp = tampered[0];
-      tampered[0] = tampered[1];
-      tampered[1] = tmp;
+      final valid = generated.phrase.words;
+      // Last-word replacement until checksum fails. Adjacent-word swaps
+      // can still be valid (~1/256 for 24-word BIP-39 phrases).
+      List<String>? invalid;
+      for (final candidate in valid) {
+        if (candidate == valid.last) continue;
+        final tampered = [...valid.sublist(0, valid.length - 1), candidate];
+        try {
+          RecoveryPhrase.fromWords(tampered);
+        } on MnemonicInvalidChecksumException {
+          invalid = tampered;
+          break;
+        }
+      }
+      expect(invalid, isNotNull);
 
       expect(
-        () => service.restoreFromRecoveryPhrase(tampered),
+        () => service.restoreFromRecoveryPhrase(invalid!),
         throwsException,
       );
     });

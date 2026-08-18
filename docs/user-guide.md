@@ -151,7 +151,10 @@ expense entry against the source account:
 Tap a pending transfer from Home to settle it: choose whether it was
 delivered to the destination or returned to the source, and enter the
 actual settled amount. If it settles for less than expected, you're asked
-to pick a category to cover the shortfall as a fee/loss.
+to pick a category to cover the shortfall as a fee/loss. That
+shortfall/fee applies only when a *transfer* returns to its source — not
+when a transfer is delivered to its destination, and not when settling a
+foreign-currency transaction (enter the amount that was actually charged).
 
 ## Importing bank statements
 

@@ -10,14 +10,15 @@ import '../../../../domain/models/home_overview.dart';
 import '../../../../domain/models/pending_transfer.dart';
 
 /// Form state for settling a pending transfer or foreign-currency
-/// transaction (multi-currency-support design.md Decision 5).
+/// transaction (spec: "Settle a Pending Transfer or Transaction").
 ///
 /// A `transfer` may settle to either its own planned destination account
 /// (normal delivery, no shortfall comparison) or back to its own source
 /// account (bounced/returned - a shortfall below the provisional amount
 /// requires a fee/loss category). A `foreignTransaction` always settles to
-/// its own source account, following the same no-shortfall path as
-/// destination delivery - there's no account picker for it at all.
+/// its own financial account, following the same no-shortfall path as
+/// destination delivery: no shortfall comparison, no fee/loss entry, no
+/// account picker, and a zero settled amount is rejected.
 class SettlePendingTransferViewModel extends ChangeNotifier {
   SettlePendingTransferViewModel({
     required LedgerRepository ledgerRepository,

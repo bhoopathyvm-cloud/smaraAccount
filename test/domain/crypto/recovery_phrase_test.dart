@@ -45,15 +45,23 @@ void main() {
   group('RecoveryPhrase.fromWords', () {
     test('rejects words with an invalid checksum', () {
       final valid = RecoveryPhrase.generate().words;
-      final tampered = [...valid];
-      // Swap two words - overwhelmingly likely to invalidate the checksum
-      // without accidentally producing another valid phrase.
-      final tmp = tampered[0];
-      tampered[0] = tampered[1];
-      tampered[1] = tmp;
-
+      // The last word encodes the BIP-39 checksum. Swapping the first two
+      // words can still land on a valid checksum (~1/256 for 24-word
+      // phrases), so try last-word replacements until checksum fails.
+      List<String>? invalid;
+      for (final candidate in valid) {
+        if (candidate == valid.last) continue;
+        final tampered = [...valid.sublist(0, valid.length - 1), candidate];
+        try {
+          RecoveryPhrase.fromWords(tampered);
+        } on MnemonicInvalidChecksumException {
+          invalid = tampered;
+          break;
+        }
+      }
+      expect(invalid, isNotNull);
       expect(
-        () => RecoveryPhrase.fromWords(tampered),
+        () => RecoveryPhrase.fromWords(invalid!),
         throwsA(isA<MnemonicInvalidChecksumException>()),
       );
     });
