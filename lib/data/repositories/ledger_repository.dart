@@ -1489,8 +1489,8 @@ class LedgerRepository {
   /// transfer to its destination: the provisional entry's clearing leg was
   /// posted in the transaction's native currency, while settlement is in
   /// the account's own currency, so there is no shared-currency figure to
-  /// compare a shortfall against (corrected during apply - an earlier pass
-  /// of this design wrongly described this as shortfall-comparable).
+  /// compare a shortfall against (spec: "Settle a Pending Transfer or
+  /// Transaction"). A fee category and a zero settled amount are rejected.
   Future<void> settlePendingTransfer({
     required String pendingTransferId,
     required String settledToAccountId,
