@@ -74,7 +74,7 @@ class _RestoreIdentityViewState extends State<RestoreIdentityView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'This device has an existing ledger, but no matching signing '
+                  'This device has existing books, but no matching signing '
                   'key. Restore it from your saved recovery phrase or keystore '
                   'file - your data will verify normally, and nothing will be '
                   're-signed or altered.',

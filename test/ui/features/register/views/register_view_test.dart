@@ -349,6 +349,7 @@ void main() {
     await tester.pump();
 
     expect(fixedEntryId, equals('entry-1'));
+    expect(find.text('Fix'), findsOneWidget);
   });
 
   testWidgets(
@@ -421,6 +422,7 @@ void main() {
       );
       final inkWell = tester.widget<InkWell>(rowInkWell);
       expect(inkWell.onTap, isNull);
+      expect(find.text('Fix'), findsNothing);
 
       await tester.tap(rowInkWell);
       await tester.pump();

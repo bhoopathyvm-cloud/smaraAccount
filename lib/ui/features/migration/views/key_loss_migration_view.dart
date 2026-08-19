@@ -51,7 +51,7 @@ class KeyLossMigrationView extends StatelessWidget {
                     'Without your recovery phrase or keystore file, this device\'s '
                     'existing signing key cannot be recovered. Continuing generates '
                     'a brand new key and re-signs every entry below under it, so the '
-                    'ledger can be trusted going forward.\n\n'
+                    'books can be trusted going forward.\n\n'
                     'This does NOT retroactively prove the entries below were never '
                     'tampered with - it only re-establishes trust from this point '
                     'on. The original entries are kept, unchanged, as a read-only '
@@ -121,7 +121,7 @@ class KeyLossMigrationView extends StatelessWidget {
                   value: viewModel.hasConfirmed,
                   onChanged: (value) => viewModel.setConfirmed(value ?? false),
                   title: Text(
-                    'I confirm the current ledger is valid',
+                    'I confirm the current books are valid',
                     style: AppTypography.body,
                   ),
                 ),

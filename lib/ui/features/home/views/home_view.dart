@@ -216,7 +216,10 @@ class _NetPositions extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.base),
           if (overview.netPositionsByCurrency.isEmpty)
-            Text('0.00', style: AppTypography.balance)
+            Text(
+              formatAmountMinor(0, _emptyNetCurrency(overview)),
+              style: AppTypography.balance,
+            )
           else
             for (final position in overview.netPositionsByCurrency)
               Padding(
@@ -234,8 +237,8 @@ class _NetPositions extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Assets ${formatAmountMinor(position.totalAssetsMinor, position.currency)} '
-                      '${position.currency}  •  Liabilities '
+                      'What you have ${formatAmountMinor(position.totalAssetsMinor, position.currency)} '
+                      '${position.currency}  •  What you owe '
                       '${formatAmountMinor(position.totalLiabilitiesMinor, position.currency)} '
                       '${position.currency}',
                       style: AppTypography.metadata,
@@ -247,6 +250,14 @@ class _NetPositions extends StatelessWidget {
       ),
     );
   }
+}
+
+String _emptyNetCurrency(HomeOverview overview) {
+  for (final section in overview.sections) {
+    final currency = section.group.currency;
+    if (currency != null) return currency;
+  }
+  return 'USD';
 }
 
 class _PendingTransfers extends StatelessWidget {
@@ -266,7 +277,7 @@ class _PendingTransfers extends StatelessWidget {
           ),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text('PENDING TRANSFERS', style: AppTypography.sectionLabel),
+            child: Text('MONEY IN TRANSIT', style: AppTypography.sectionLabel),
           ),
         ),
         const Divider(height: 1),

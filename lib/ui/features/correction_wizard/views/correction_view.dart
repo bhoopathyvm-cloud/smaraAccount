@@ -7,6 +7,7 @@ import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
+import '../../../core/money_formatter.dart';
 import '../view_models/correction_view_model.dart';
 
 /// Fix a posted transaction (fix-this-correction-wizard): a form prefilled
@@ -24,15 +25,33 @@ class CorrectionView extends StatefulWidget {
 }
 
 class _CorrectionViewState extends State<CorrectionView> {
-  late final _amountController = TextEditingController(
-    text: (widget.viewModel.amountMinor / 100).toStringAsFixed(2),
-  );
+  late final _amountController = TextEditingController();
   late final _descriptionController = TextEditingController(
     text: widget.viewModel.description ?? '',
   );
+  var _didPrefillAmount = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel.addListener(_prefillAmountIfPossible);
+    _prefillAmountIfPossible();
+  }
+
+  void _prefillAmountIfPossible() {
+    if (_didPrefillAmount) return;
+    final currency = widget.viewModel.currency;
+    if (currency == null) return;
+    _didPrefillAmount = true;
+    _amountController.text = formatAmountMinor(
+      widget.viewModel.amountMinor,
+      currency,
+    );
+  }
 
   @override
   void dispose() {
+    widget.viewModel.removeListener(_prefillAmountIfPossible);
     _amountController.dispose();
     _descriptionController.dispose();
     super.dispose();

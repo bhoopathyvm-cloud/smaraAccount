@@ -736,6 +736,77 @@ void main() {
         expect(result.isFullyVerified, isTrue);
       },
     );
+
+    test('a second reverse of the same original is rejected', () async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: await firstFinancialAccountId(),
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      final original = (await repository.watchEntries().first).single;
+
+      await repository.reverseEntry(original.id);
+      await expectLater(
+        repository.reverseEntry(original.id),
+        throwsA(isA<AlreadyReversedException>()),
+      );
+
+      final entries = await repository.watchEntries().first;
+      expect(entries, hasLength(2));
+    });
+
+    test(
+      'fixPostedTransaction posts a reversal and a replacement together',
+      () async {
+        final accountId = await firstFinancialAccountId();
+        final incomeId = await firstCategoryId(AccountType.income);
+        final expenseId = await firstCategoryId(AccountType.expense);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          financialAccountId: accountId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final original = (await repository.watchEntries().first).single;
+
+        final replacementId = await repository.fixPostedTransaction(
+          entryId: original.id,
+          amountMinor: 2500,
+          direction: TransactionDirection.moneyOut,
+          categoryId: expenseId,
+          financialAccountId: accountId,
+          transactionDate: DateTime(2026, 1, 16),
+          description: 'Corrected',
+        );
+
+        final entries = await repository.watchEntries().first;
+        expect(entries, hasLength(3));
+        expect(
+          entries.where((e) => e.reversesEntryId == original.id),
+          hasLength(1),
+        );
+        final replacement = entries.firstWhere((e) => e.id == replacementId);
+        expect(replacement.description, equals('Corrected'));
+        expect(replacement.reversesEntryId, isNull);
+
+        await expectLater(
+          repository.fixPostedTransaction(
+            entryId: original.id,
+            amountMinor: 100,
+            direction: TransactionDirection.moneyOut,
+            categoryId: expenseId,
+            financialAccountId: accountId,
+            transactionDate: DateTime(2026, 1, 17),
+          ),
+          throwsA(isA<AlreadyReversedException>()),
+        );
+        expect((await repository.watchEntries().first), hasLength(3));
+      },
+    );
   });
 
   group('category management', () {

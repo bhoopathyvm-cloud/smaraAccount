@@ -123,6 +123,13 @@ class RegisterRowTile extends StatelessWidget {
                     formatAmountMinor(row.runningBalanceMinor, row.currency),
                     style: AppTypography.metadata,
                   ),
+                  if (onTap != null)
+                    Text(
+                      'Fix',
+                      style: AppTypography.metadata.copyWith(
+                        color: AppColors.textMuted,
+                      ),
+                    ),
                 ],
               ),
             ],

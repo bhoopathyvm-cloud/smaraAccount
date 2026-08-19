@@ -66,7 +66,7 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                   style: AppTypography.cardTitle,
                 ),
                 Text(
-                  'Tell us what actually arrived so we can settle it.',
+                  'Tell us what actually arrived.',
                   style: AppTypography.metadata,
                 ),
                 const SizedBox(height: AppSpacing.large),
@@ -97,7 +97,7 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                 ],
                 MoneyAmountField(
                   controller: _amountController,
-                  labelText: 'Settled amount',
+                  labelText: 'Amount that arrived',
                   currency: viewModel.settledAmountCurrency ?? summary.currency,
                   suffixText: viewModel.settledAmountCurrency,
                   onChangedMinor: viewModel.setSettledAmountMinor,

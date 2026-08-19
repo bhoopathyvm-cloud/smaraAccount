@@ -159,7 +159,7 @@ class SettingsViewModel extends ChangeNotifier {
       _isRestoring = false;
       _backupErrorMessage =
           'Could not restore this backup - wrong passphrase, or not a '
-          'Smara ledger backup file.';
+          'Smara backup file.';
       notifyListeners();
       return false;
     }

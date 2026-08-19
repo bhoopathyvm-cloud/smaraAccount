@@ -40,7 +40,7 @@ class KeyLossMigrationViewModel extends ChangeNotifier {
   }
 
   /// Only proceeds if [hasConfirmed] is true - the explicit
-  /// "I confirm the current ledger is valid" acknowledgment is a
+  /// "I confirm the current books are valid" acknowledgment is a
   /// precondition this ViewModel itself enforces, not just the View.
   Future<bool> confirmAndMigrate() async {
     if (!_hasConfirmed) return false;

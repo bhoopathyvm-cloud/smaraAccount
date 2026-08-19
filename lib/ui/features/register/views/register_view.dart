@@ -110,7 +110,7 @@ class RegisterView extends StatelessWidget {
                   items: viewModel.accounts,
                   idOf: (account) => account.id,
                   labelOf: (account) => account.archived
-                      ? '${account.name} (archived)'
+                      ? '${account.name} (hidden)'
                       : account.name,
                   value: viewModel.selectedAccountId,
                   onChanged: (accountId) {

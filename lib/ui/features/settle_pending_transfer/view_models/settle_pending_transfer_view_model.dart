@@ -140,7 +140,7 @@ class SettlePendingTransferViewModel extends ChangeNotifier {
   Future<bool> submit() async {
     final settledAmountMinor = _settledAmountMinor;
     if (settledAmountMinor == null) {
-      _errorMessage = 'Settled amount is required.';
+      _errorMessage = 'Amount that arrived is required.';
       notifyListeners();
       return false;
     }

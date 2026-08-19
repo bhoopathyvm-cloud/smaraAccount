@@ -36,18 +36,20 @@ On first launch, the app walks you through this order:
    the starter account groups (Cash & cash equivalents, Credit &
    short-term debt, etc.) created for you, and generates your device's
    signing key automatically in the background.
-2. **Record one entry** — a guided Spent or Received, so you can try the
+2. **Name your main account** — a starter account is created for you;
+   give it a name you recognize, like your bank.
+3. **Record one entry** — a guided Spent or Received, so you can try the
    app before facing the recovery-phrase ritual.
-3. **Your recovery phrase** — the 24 words are generated and shown once.
+4. **Your recovery phrase** — the 24 words are generated and shown once.
    Tap "I've saved my recovery phrase" only once you've actually written
    them down.
-4. **Optional backup file** — enter a passphrase to export an encrypted
+5. **Optional backup file** — enter a passphrase to export an encrypted
    keystore file, or tap "Skip." Neither blocks you from continuing.
-5. **Confirm** — you re-enter part of your phrase to confirm you actually
+6. **Confirm** — you re-enter part of your phrase to confirm you actually
    saved it correctly.
 
-The entry you record in step 2 is a real, permanently signed transaction
-from the moment it posts — not a demo. Steps 3–5 are mandatory and block
+The entry you record in step 3 is a real, permanently signed transaction
+from the moment it posts — not a demo. Steps 4–6 are mandatory and block
 everything else (recording a second entry, leaving the app, even resuming
 after it's closed) until you complete them; if the app is closed partway
 through, it picks back up at the same step next time you open it, showing
@@ -73,7 +75,7 @@ This wizard only ever appears once.
 ## Restoring on a new device or after a reinstall
 
 If you reinstall the app, or move to a new device, and the app detects an
-existing ledger with no matching local signing key, it shows a **Restore
+existing books with no matching local signing key, it shows a **Restore
 signing key** screen instead of onboarding. Choose either:
 
 - **Recovery phrase** — paste all 24 words.
@@ -87,7 +89,7 @@ re-signs or alters any entry.
 
 If you don't have your recovery phrase or keystore file, tap "I don't have
 my recovery phrase or keystore file" on the restore screen. You'll review
-every existing entry and explicitly confirm the ledger looks correct, then
+every existing entry and explicitly confirm the books look correct, then
 the app generates a brand-new key and re-signs everything under it. This
 re-establishes trust **going forward only** — it does not retroactively
 prove earlier entries were never tampered with. The original entries are
@@ -99,12 +101,11 @@ Home is the primary place you both glance at your money and add to it
 (also where the gear icon opens **Settings**). It shows:
 
 - **What you have minus what you owe** — your overall balance per
-  currency (assets minus liabilities), with the assets/liabilities
-  breakdown underneath.
+  currency, with what you have and what you owe underneath.
 - **Due today** — recurring templates (see below) whose day has arrived
   or passed and haven't been recorded yet this month. Tap one to record
   it now — nothing posts on its own.
-- **Pending transfers** — a plain sentence for each one, like "You sent
+- **Money in transit** — a plain sentence for each one, like "You sent
   50.00 USD to Savings — tap when you know what arrived." These are
   cross-currency transfers or purchases whose exact amount wasn't known
   at the time; tap one to say what actually arrived.
@@ -143,12 +144,10 @@ transaction in a foreign currency.
 Once posted, a split shows up in its account's Register as one row
 labeled with its first category plus how many more ("Groceries +1
 more") — the amount shown is always the full transaction, not any one
-category's share. Fixing or reversing a split reverses every category
-line together, in one action; the Fix flow itself is only offered for an
-ordinary, single-category entry, since there's no single category to
-prefill for a split. The Summary screen still totals each category leg
-into its own category correctly, exactly as it would for separate
-transactions.
+category's share. The Fix flow is only offered for an ordinary,
+single-category entry, since there's no single category to prefill for
+a split. The Summary screen still totals each category leg into its own
+category correctly, exactly as it would for separate transactions.
 
 Typing in the description field offers matching **payees** as you type —
 selecting one fills in the description and suggests that payee's default
@@ -253,7 +252,7 @@ description.
 - **Cross-currency**: you can optionally enter the destination amount if
   you know the exchange rate — this posts a single complete entry.
   Leaving it blank posts a *provisional* entry that shows up under Home's
-  "Pending transfers" until you settle it with the actual amount received.
+  "Money in transit" until you confirm what actually arrived.
   If you've enabled reference-rate lookup in Settings, an indicative
   market rate is shown alongside your own implied rate, for comparison
   only — neither ever auto-fills the destination amount.
@@ -341,9 +340,9 @@ saves the rule exactly as it would otherwise.
 
 Each account's Register lists its transactions newest-first, with each
 row showing a direction icon, category, signed amount, and the running
-balance after that entry. Tap an ordinary Spent/Received row to **Fix**
-it: a form opens prefilled with that entry's account, amount, category,
-date, and description, ready to edit. Confirming never edits or deletes
+balance after that entry. An ordinary Spent/Received row that can be
+corrected shows **Fix**; tap it to open a form prefilled with that
+entry's account, amount, category, date, and description, ready to edit. Confirming never edits or deletes
 the original line — it posts a correction next to it instead, so the
 original stays visible and your history is never rewritten. Transfers,
 opening balances, and split entries aren't offered a tap target; they
@@ -410,7 +409,7 @@ period-over-period read on where money went.
   signing identity than the one already set up on this device is
   rejected, since that would combine two different people's books rather
   than restore your own. Right after a successful restore, the app closes
-  so you can reopen it and continue — the restored ledger is immediately
+  so you can reopen it and continue — the restored books are immediately
   readable and fully verified, but recording a new entry still needs the
   matching signing key restored separately, via recovery phrase or
   keystore.

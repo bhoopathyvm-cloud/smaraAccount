@@ -164,6 +164,43 @@ void main() {
     expect(await stillFresh.currentIdentity(), isNull);
   });
 
+  test('restore is rejected when the backup chain does not fully verify, '
+      'and the target file is left untouched', () async {
+    final sourceFile = fileNamed('source.sqlite');
+    final source = await seedRepository(sourceFile);
+    await source.close();
+
+    final tamperDb = AppDatabase.openFile(sourceFile);
+    await tamperDb.customStatement(
+      "UPDATE journal_entries SET entry_hash = "
+      "X'0000000000000000000000000000000000000000000000000000000000000000'",
+    );
+    await tamperDb.close();
+
+    final tampered = await openRepository(sourceFile);
+    final backupContents = await tampered.exportLedgerBackup(
+      passphrase: 'passphrase-a',
+      databaseFile: sourceFile,
+    );
+    await tampered.close();
+
+    final targetFile = fileNamed('target.sqlite');
+    final alreadySetUp = await seedRepository(targetFile);
+    final targetBytesBefore = await targetFile.readAsBytes();
+
+    await expectLater(
+      alreadySetUp.restoreLedgerBackup(
+        fileContents: backupContents,
+        passphrase: 'passphrase-a',
+        targetFile: targetFile,
+      ),
+      throwsA(isA<InvalidLedgerBackupException>()),
+    );
+
+    final targetBytesAfter = await targetFile.readAsBytes();
+    expect(targetBytesAfter, equals(targetBytesBefore));
+  });
+
   test('exportLedgerBackup never includes the private key material', () async {
     final sourceFile = fileNamed('source.sqlite');
     final source = await seedRepository(sourceFile);

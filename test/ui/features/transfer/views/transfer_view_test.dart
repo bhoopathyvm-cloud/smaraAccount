@@ -138,8 +138,10 @@ void main() {
     await tester.pump();
 
     await tester.enterText(find.byType(TextField).first, '25.00');
-    await tester.ensureVisible(find.widgetWithText(ElevatedButton, 'Transfer'));
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
+    await tester.ensureVisible(
+      find.widgetWithText(ElevatedButton, 'Moved money'),
+    );
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Moved money'));
     await tester.pump();
     await tester.pump();
 
@@ -177,8 +179,10 @@ void main() {
     await tester.pump();
 
     await tester.enterText(find.byType(TextField).first, '10.00');
-    await tester.ensureVisible(find.widgetWithText(ElevatedButton, 'Transfer'));
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
+    await tester.ensureVisible(
+      find.widgetWithText(ElevatedButton, 'Moved money'),
+    );
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Moved money'));
     await tester.pump();
     await tester.pump();
 
@@ -297,9 +301,9 @@ void main() {
 
         await tester.enterText(find.byType(TextField).first, '100.00');
         await tester.ensureVisible(
-          find.widgetWithText(ElevatedButton, 'Transfer'),
+          find.widgetWithText(ElevatedButton, 'Moved money'),
         );
-        await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Moved money'));
         await tester.pump();
         await tester.pump();
 
@@ -351,9 +355,9 @@ void main() {
         // period.
         await tester.enterText(find.byType(TextField).at(1), '92,00');
         await tester.ensureVisible(
-          find.widgetWithText(ElevatedButton, 'Transfer'),
+          find.widgetWithText(ElevatedButton, 'Moved money'),
         );
-        await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Moved money'));
         await tester.pump();
         await tester.pump();
 

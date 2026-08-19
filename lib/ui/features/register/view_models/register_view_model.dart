@@ -323,12 +323,16 @@ class RegisterViewModel extends ChangeNotifier {
   /// the opening-balance equity account, or (split-transactions) more
   /// than one category leg, since the Fix form has exactly one category
   /// field to prefill. It must also not already be a reversal,
-  /// quarantined, or superseded (those are corrected or explained some
-  /// other way, not re-fixed).
+  /// quarantined, superseded, or already corrected by a later reversal
+  /// (those are explained some other way, not re-fixed).
   bool isRowFixable(RegisterRow row) {
+    final alreadyCorrected = _lastEntries.any(
+      (entry) => entry.reversesEntryId == row.entryId,
+    );
     return row.counterpartAccountIds.length == 1 &&
         _categoriesById.containsKey(row.counterpartAccountIds.single) &&
         !row.isReversal &&
+        !alreadyCorrected &&
         row.isVerified &&
         !row.isSupersededByMigration;
   }

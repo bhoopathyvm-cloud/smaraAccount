@@ -778,6 +778,57 @@ class MockLedgerRepository extends _i1.Mock implements _i4.LedgerRepository {
           as _i12.Future<void>);
 
   @override
+  _i12.Future<String> fixPostedTransaction({
+    required String? entryId,
+    required int? amountMinor,
+    required _i16.TransactionDirection? direction,
+    required String? categoryId,
+    required String? financialAccountId,
+    required DateTime? transactionDate,
+    String? description,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#fixPostedTransaction, [], {
+              #entryId: entryId,
+              #amountMinor: amountMinor,
+              #direction: direction,
+              #categoryId: categoryId,
+              #financialAccountId: financialAccountId,
+              #transactionDate: transactionDate,
+              #description: description,
+            }),
+            returnValue: _i12.Future<String>.value(
+              _i14.dummyValue<String>(
+                this,
+                Invocation.method(#fixPostedTransaction, [], {
+                  #entryId: entryId,
+                  #amountMinor: amountMinor,
+                  #direction: direction,
+                  #categoryId: categoryId,
+                  #financialAccountId: financialAccountId,
+                  #transactionDate: transactionDate,
+                  #description: description,
+                }),
+              ),
+            ),
+            returnValueForMissingStub: _i12.Future<String>.value(
+              _i14.dummyValue<String>(
+                this,
+                Invocation.method(#fixPostedTransaction, [], {
+                  #entryId: entryId,
+                  #amountMinor: amountMinor,
+                  #direction: direction,
+                  #categoryId: categoryId,
+                  #financialAccountId: financialAccountId,
+                  #transactionDate: transactionDate,
+                  #description: description,
+                }),
+              ),
+            ),
+          )
+          as _i12.Future<String>);
+
+  @override
   _i12.Stream<List<_i17.PendingTransfer>> watchPendingTransfers() =>
       (super.noSuchMethod(
             Invocation.method(#watchPendingTransfers, []),

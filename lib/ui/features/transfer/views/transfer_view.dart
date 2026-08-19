@@ -49,7 +49,7 @@ class _TransferViewState extends State<TransferView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transfer', style: AppTypography.headerTitle),
+        title: Text('Moved money', style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -193,10 +193,11 @@ class _TransferViewState extends State<TransferView> {
                         viewModel.setFeeDeductedFromAmount(value ?? false),
                     title: const Text('Fee is deducted from the amount above'),
                     subtitle: const Text(
-                      'On: the amount above is the total debited, and the '
-                      'fee is carved out of it before conversion (e.g. a '
-                      'remittance service). Off: the fee is charged in '
-                      'addition to the full amount (e.g. a bank wire fee).',
+                      'On: the amount above is the total taken from this '
+                      'account, and the fee is carved out of it before '
+                      'conversion (e.g. a remittance service). Off: the fee '
+                      'is charged in addition to the full amount (e.g. a '
+                      'bank wire fee).',
                     ),
                   ),
                 ],
@@ -226,7 +227,7 @@ class _TransferViewState extends State<TransferView> {
                             widget.onSaved?.call();
                           }
                         },
-                  child: const Text('Transfer'),
+                  child: const Text('Moved money'),
                 ),
               ],
             ),

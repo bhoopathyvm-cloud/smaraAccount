@@ -183,7 +183,7 @@ void main() {
       );
       await tester.pump();
 
-      expect(find.text('PENDING TRANSFERS'), findsOneWidget);
+      expect(find.text('MONEY IN TRANSIT'), findsOneWidget);
       expect(find.text('You sent 50.00 USD to Savings'), findsOneWidget);
       expect(find.text('Tap when you know what arrived'), findsOneWidget);
 

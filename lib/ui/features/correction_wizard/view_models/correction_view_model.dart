@@ -143,11 +143,9 @@ class CorrectionViewModel extends ChangeNotifier {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  /// Posts the fix: a reversal of [entryId], then a new entry with the
-  /// corrected fields. Not atomic across the two calls - if the second
-  /// fails (e.g. an invalid category), the original is already reversed
-  /// and safely visible either way; the user simply records the
-  /// replacement by hand instead of losing anything.
+  /// Posts the fix: a reversal of [entryId] and a new entry with the
+  /// corrected fields, as one repository transaction. The original entry
+  /// is never edited or deleted (Golden Rule #7).
   Future<bool> fix() async {
     final categoryId = _categoryId;
     final financialAccountId = _financialAccountId;
@@ -163,8 +161,8 @@ class CorrectionViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _ledgerRepository.reverseEntry(entryId);
-      await _ledgerRepository.recordTransaction(
+      await _ledgerRepository.fixPostedTransaction(
+        entryId: entryId,
         amountMinor: amountMinor,
         direction: _direction,
         categoryId: categoryId,
@@ -172,19 +170,28 @@ class CorrectionViewModel extends ChangeNotifier {
         transactionDate: _transactionDate,
         description: _description,
       );
-      _isSubmitting = false;
-      notifyListeners();
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _isSubmitting = false;
       _errorMessage = e.message;
-      notifyListeners();
       return false;
     } on AccountGroupException catch (e) {
-      _isSubmitting = false;
       _errorMessage = e.message;
-      notifyListeners();
       return false;
+    } on AlreadyReversedException catch (e) {
+      _errorMessage = e.message;
+      return false;
+    } on PendingTransferException catch (e) {
+      _errorMessage = e.message;
+      return false;
+    } on InvestmentException catch (e) {
+      _errorMessage = e.message;
+      return false;
+    } catch (e) {
+      _errorMessage = 'Could not save this fix.';
+      return false;
+    } finally {
+      _isSubmitting = false;
+      notifyListeners();
     }
   }
 

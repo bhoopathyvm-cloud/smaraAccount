@@ -149,3 +149,15 @@ class LockedQuantityException extends InvestmentException {
 class InvestmentReversalBlockedException extends InvestmentException {
   const InvestmentReversalBlockedException(super.message);
 }
+
+/// Thrown when [LedgerRepository.reverseEntry] (or Fix) is asked to
+/// correct an original that already has a reversal posted. A second
+/// negation would distort balances while leaving the original untouched.
+class AlreadyReversedException implements Exception {
+  AlreadyReversedException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}

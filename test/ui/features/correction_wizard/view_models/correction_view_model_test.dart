@@ -74,14 +74,14 @@ void main() {
   });
 
   test(
-    'fix() reverses the original entry then records the corrected one',
+    'fix() posts reversal and replacement through one repository call',
     () async {
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
 
-      when(repository.reverseEntry('entry-1')).thenAnswer((_) async {});
       when(
-        repository.recordTransaction(
+        repository.fixPostedTransaction(
+          entryId: anyNamed('entryId'),
           amountMinor: anyNamed('amountMinor'),
           direction: anyNamed('direction'),
           categoryId: anyNamed('categoryId'),
@@ -95,9 +95,10 @@ void main() {
       final ok = await viewModel.fix();
 
       expect(ok, isTrue);
-      verify(repository.reverseEntry('entry-1')).called(1);
+      expect(viewModel.isSubmitting, isFalse);
       verify(
-        repository.recordTransaction(
+        repository.fixPostedTransaction(
+          entryId: 'entry-1',
           amountMinor: 5000,
           direction: TransactionDirection.moneyOut,
           categoryId: groceries.id,
@@ -110,14 +111,14 @@ void main() {
   );
 
   test(
-    'fix() surfaces a domain exception from recordTransaction without throwing',
+    'fix() surfaces a domain exception without throwing, and unsticks submit',
     () async {
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
 
-      when(repository.reverseEntry('entry-1')).thenAnswer((_) async {});
       when(
-        repository.recordTransaction(
+        repository.fixPostedTransaction(
+          entryId: anyNamed('entryId'),
           amountMinor: anyNamed('amountMinor'),
           direction: anyNamed('direction'),
           categoryId: anyNamed('categoryId'),
@@ -132,8 +133,36 @@ void main() {
       final ok = await viewModel.fix();
 
       expect(ok, isFalse);
+      expect(viewModel.isSubmitting, isFalse);
       expect(viewModel.errorMessage, equals('Amount must be positive.'));
-      verify(repository.reverseEntry('entry-1')).called(1);
     },
   );
+
+  test('fix() surfaces AlreadyReversedException and unsticks submit', () async {
+    final viewModel = buildViewModel();
+    addTearDown(viewModel.dispose);
+
+    when(
+      repository.fixPostedTransaction(
+        entryId: anyNamed('entryId'),
+        amountMinor: anyNamed('amountMinor'),
+        direction: anyNamed('direction'),
+        categoryId: anyNamed('categoryId'),
+        financialAccountId: anyNamed('financialAccountId'),
+        transactionDate: anyNamed('transactionDate'),
+        description: anyNamed('description'),
+      ),
+    ).thenThrow(
+      AlreadyReversedException('This entry has already been corrected.'),
+    );
+
+    final ok = await viewModel.fix();
+
+    expect(ok, isFalse);
+    expect(viewModel.isSubmitting, isFalse);
+    expect(
+      viewModel.errorMessage,
+      equals('This entry has already been corrected.'),
+    );
+  });
 }

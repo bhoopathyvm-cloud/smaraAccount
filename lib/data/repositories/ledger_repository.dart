@@ -568,7 +568,7 @@ class LedgerRepository {
     );
     await tempFile.writeAsBytes(decryptedBytes);
 
-    SigningIdentity? backupIdentity;
+    late final SigningIdentity backupIdentity;
     try {
       final backupDb = AppDatabase.openFile(tempFile);
       try {
@@ -576,22 +576,31 @@ class LedgerRepository {
           database: backupDb,
           signingKeyService: _signingKeyService,
         );
-        backupIdentity = await backupRepository.currentIdentity();
+        final identity = await backupRepository.currentIdentity();
+        if (identity == null) {
+          throw InvalidLedgerBackupException(
+            'This backup has no signing identity - it is not a valid '
+            'Smara backup.',
+          );
+        }
+        backupIdentity = identity;
+        final verification = await backupRepository.verifyChain();
+        if (!verification.isFullyVerified) {
+          throw InvalidLedgerBackupException(
+            'This backup did not verify as intact books, so it was not '
+            'restored.',
+          );
+        }
       } finally {
         await backupDb.close();
       }
+    } on InvalidLedgerBackupException {
+      await tempFile.delete();
+      rethrow;
     } catch (e) {
       await tempFile.delete();
       throw InvalidLedgerBackupException(
-        'This file could not be opened as a Smara ledger backup: $e',
-      );
-    }
-
-    if (backupIdentity == null) {
-      await tempFile.delete();
-      throw InvalidLedgerBackupException(
-        'This backup has no signing identity - it is not a valid Smara '
-        'ledger backup.',
+        'This file could not be opened as a Smara backup: $e',
       );
     }
 
@@ -1900,6 +1909,16 @@ class LedgerRepository {
 
     await _guardInvestmentBuyReversal(entryId);
 
+    final alreadyReversed = await (_db.select(
+      _db.journalEntries,
+    )..where((e) => e.reversesEntryId.equals(entryId))).get();
+    if (alreadyReversed.isNotEmpty) {
+      throw AlreadyReversedException(
+        'This entry has already been corrected. The original line stays '
+        'as it is.',
+      );
+    }
+
     final original = await (_db.select(
       _db.journalEntries,
     )..where((e) => e.id.equals(entryId))).getSingle();
@@ -1919,6 +1938,32 @@ class LedgerRepository {
           ),
       ],
     );
+  }
+
+  /// One user action, two new signed entries: a reversal of [entryId]
+  /// plus a replacement with the corrected fields. Runs in a single
+  /// Drift transaction so a failed replacement cannot leave a reversed
+  /// original without its substitute (and a retry cannot reverse twice).
+  Future<String> fixPostedTransaction({
+    required String entryId,
+    required int amountMinor,
+    required TransactionDirection direction,
+    required String categoryId,
+    required String financialAccountId,
+    required DateTime transactionDate,
+    String? description,
+  }) {
+    return _db.transaction(() async {
+      await reverseEntry(entryId);
+      return recordTransaction(
+        amountMinor: amountMinor,
+        direction: direction,
+        categoryId: categoryId,
+        financialAccountId: financialAccountId,
+        transactionDate: transactionDate,
+        description: description,
+      );
+    });
   }
 
   // ---------------------------------------------------------------------
@@ -3677,23 +3722,25 @@ class LedgerRepository {
     final template = _toDomainRecurringTemplate(row);
     final now = DateTime.now();
 
-    final entryId = await recordTransaction(
-      amountMinor: template.amountMinor,
-      direction: template.direction,
-      categoryId: template.categoryId,
-      financialAccountId: template.financialAccountId,
-      transactionDate: now,
-      description: template.name,
-    );
+    return _db.transaction(() async {
+      final entryId = await recordTransaction(
+        amountMinor: template.amountMinor,
+        direction: template.direction,
+        categoryId: template.categoryId,
+        financialAccountId: template.financialAccountId,
+        transactionDate: now,
+        description: template.name,
+      );
 
-    await (_db.update(
-      _db.recurringTemplates,
-    )..where((t) => t.id.equals(templateId))).write(
-      RecurringTemplatesCompanion(
-        lastRecordedYearMonth: Value(yearMonthOf(now)),
-      ),
-    );
-    return entryId;
+      await (_db.update(
+        _db.recurringTemplates,
+      )..where((t) => t.id.equals(templateId))).write(
+        RecurringTemplatesCompanion(
+          lastRecordedYearMonth: Value(yearMonthOf(now)),
+        ),
+      );
+      return entryId;
+    });
   }
 
   void _validateRecurringTemplateFields({

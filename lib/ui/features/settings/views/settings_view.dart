@@ -291,7 +291,7 @@ class SettingsView extends StatelessWidget {
                           'smara-backup-'
                           '${DateTime.now().millisecondsSinceEpoch}.smarabackup';
                       await FilePicker.platform.saveFile(
-                        dialogTitle: 'Save ledger backup',
+                        dialogTitle: 'Save backup',
                         fileName: fileName,
                         bytes: Uint8List.fromList(utf8.encode(contents)),
                       );
@@ -401,7 +401,7 @@ class SettingsView extends StatelessWidget {
 
                       final confirmed = await confirmDestructiveAction(
                         context: dialogContext,
-                        title: 'Replace your local ledger?',
+                        title: 'Replace your local books?',
                         message:
                             'Everything currently in this app will be '
                             'replaced by the backup. This cannot be undone.',
@@ -598,9 +598,9 @@ class SettingsView extends StatelessWidget {
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Ledger restored'),
+        title: const Text('Backup restored'),
         content: const Text(
-          'Your ledger has been restored. Close and reopen the app to '
+          'Your books have been restored. Close and reopen the app to '
           "continue — it can't keep going until you do.",
         ),
         actions: [
