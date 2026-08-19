@@ -1,6 +1,6 @@
 ## Context
 
-Depends on `i18n-foundation`. Locales: Bengali (`bn`), Assamese (`as`), Odia (`or`), Manipuri (`mni`), Bodo (`brx`), Santali (`sat`). Completes the 22 Indian scheduled languages with the other Indian packs + foundation English.
+Depends on `i18n-foundation`. Locales: Bengali (`bn`), Assamese (`as`), Odia (`or`), Manipuri (`mni`), Bodo (`brx`), Santali (`sat`). Completes the 22 Indian scheduled languages with the other Indian packs + foundation English (English is not one of the 22).
 
 ## Goals / Non-Goals
 
@@ -11,23 +11,30 @@ Depends on `i18n-foundation`. Locales: Bengali (`bn`), Assamese (`as`), Odia (`o
 ## Decisions
 
 ### 1. Manipuri script
-Prefer Meitei Mayek when a font is available; otherwise Bengali-script Manipuri for v1 AI drafts, documented in tasks notes.
+Meitei Mayek when a font is available (preferred). Endonym: ꯃꯩꯇꯩꯂꯣꯟ — Manipuri (Meiteilon). Fallback: Bengali-script মৈতৈলোন্ only if Meitei Mayek fonts cannot ship; document that fallback in the apply notes.
 
 ### 2. Santali
-Target Ol Chiki (`sat`) when font available; if not, ship ARB anyway and note font follow-up so glyphs may fallback poorly until assets land.
+Ol Chiki. Endonym: ᱥᱟᱱᱛᱟᱲᱤ — Santali. If the font cannot ship, still add the ARB and note the font follow-up (missing glyphs, not missing keys).
 
-### 3. Completing the 22
-Together with dravidian (4), north (8), west (4), east (6) = 22 scheduled languages (English is UI default, not one of the 22).
+### 3. Bodo
+Devanagari. Endonym: बरʼ — Bodo (Boro). LTR.
+
+### 4. Bengali, Assamese, Odia
+বাংলা — Bengali; অসমীয়া — Assamese; ଓଡ଼ିଆ — Odia. Odia locale tag is ISO 639-1 `or`.
+
+### 5. Completing the 22
+Together with dravidian (4), north (8), west (4), east (6) = 22 scheduled languages. Task 3.3 is an integration check: skip or mark blocked until the other Indian packs are on the same branch; do not fail this pack's own apply if they are not merged yet.
 
 ## Risks / Trade-offs
 
 - [Rare-script font gaps] → Ship strings; track font follow-up; English fallback still works for missing keys (not missing glyphs).
 - [Flutter Material gaps] → Same as other packs.
+- [Font packaging size] → Subset or lazy-register Ol Chiki + Meitei Mayek.
 
 ## Migration Plan
 
-Additive after foundation. Prefer merging after or with other Indian packs so the picker shows a complete Indian set.
+Additive after foundation. Prefer merging after or with other Indian packs so the picker shows a complete Indian set, but this pack is independently shippable.
 
 ## Open Questions
 
-- Font packaging size if embedding Ol Chiki + Meitei Mayek — may lazy-load or subset.
+None blocking.

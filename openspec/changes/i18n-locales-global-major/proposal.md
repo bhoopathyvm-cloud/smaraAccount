@@ -5,9 +5,9 @@ Additional major world languages — Arabic, Russian, Indonesian, Turkish, Vietn
 ## What Changes
 
 - Add AI-translated ARBs for `ar`, `ru`, `id`, `tr`, `vi`, `th`, `ms`, `uk`, `pl`, `nl`.
-- Register those locales in `supportedLocales` and the language picker.
+- Register those locales in `supportedLocales` and the language picker with native names.
 - Enable RTL for Arabic; ensure fonts cover Cyrillic, Arabic, Thai, and Vietnamese diacritics.
-- Depends on `i18n-foundation`.
+- Depends on `i18n-foundation`. Device `ar_EG` (etc.) resolves to `ar` via language-code matching.
 
 ## Capabilities
 
@@ -15,7 +15,7 @@ Additional major world languages — Arabic, Russian, Indonesian, Turkish, Vietn
 - `locales-global-major`: Arabic, Russian, Indonesian, Turkish, Vietnamese, Thai, Malay, Ukrainian, Polish, and Dutch as supported AI-draft UI locales.
 
 ### Modified Capabilities
-- (none archived yet)
+- `app-localization`: register these ten locales; RTL for `ar`.
 
 ## Impact
 
