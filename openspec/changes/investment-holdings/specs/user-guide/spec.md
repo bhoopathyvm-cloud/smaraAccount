@@ -1,0 +1,9 @@
+## MODIFIED Requirements
+
+### Requirement: User Guide Covers Every Shipped Feature
+The repository SHALL contain a user guide at `docs/user-guide.md` that documents, in end-user terms, every screen and flow currently reachable in the app: onboarding and the device signing identity (recovery phrase, optional keystore export, confirmation), setting the base currency, restoring the ledger via a saved recovery phrase or keystore file, the home screen, recording a transaction, managing categories, managing accounts and account groups (including multi-currency accounts), investment accounts (cash in/out, buy including a non-cash/employer-match acquisition and an optional lock-until date, sell, dividends, background market quotes as a labeled estimate, unrealized gain/loss, and that archiving allows a repeatable cash closeout while sell and dividend stay available), transferring between accounts (same-currency and cross-currency, upfront fees, deducted-fee mode, pending/settlement), importing bank statements (OFX and CSV, column mapping, saved import profiles, keyword-to-category import rules and group assignment on preview), the register and running balance, the summary screen, and settings (reference exchange rate lookup and provider selection). The guide SHALL NOT describe planned or proposed functionality that has not shipped.
+
+#### Scenario: Investment accounts are documented
+- **WHEN** a user reads the investment-accounts section of the user guide
+- **THEN** it explains cash in/out, buy (including a non-cash acquisition example and lock-until), sell, dividends, that quoted prices are a labeled market estimate not the signed book, and that archiving still allows selling down and closing out cash
+- **AND** it does not describe order placement, broker connectivity, or any dealing capability the app does not have
