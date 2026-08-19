@@ -13,18 +13,21 @@ import '../view_models/register_row.dart';
 
 /// One row in the register. Direction is never color-coded (design
 /// system): icon + sign + label only, rendered in neutral primary text
-/// unless the account would go negative or the entry is quarantined.
+/// unless the account would go negative or the entry is quarantined. A
+/// null [onTap] renders the row without a tap target at all (not just a
+/// disabled one) - fix-this-correction-wizard only offers Fix on ordinary
+/// category transactions, not transfers or opening balances.
 class RegisterRowTile extends StatelessWidget {
-  const RegisterRowTile({super.key, required this.row, this.onReverse});
+  const RegisterRowTile({super.key, required this.row, this.onTap});
 
   final RegisterRow row;
-  final VoidCallback? onReverse;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final isMoneyIn = row.direction == TransactionDirection.moneyIn;
     final amountText =
-        '${isMoneyIn ? '+' : '−'}${formatAmountMinor(row.amountMinor)}';
+        '${isMoneyIn ? '+' : '−'}${formatAmountMinor(row.amountMinor, row.currency)}';
     final isNegativeBalance = row.runningBalanceMinor < 0;
     final isQuarantined = !row.isVerified;
     final isSuperseded = row.isSupersededByMigration;
@@ -34,92 +37,96 @@ class RegisterRowTile extends StatelessWidget {
         horizontal: AppSpacing.large,
         vertical: AppSpacing.small,
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
-              color: isQuarantined || isNegativeBalance
-                  ? AppColors.signal
-                  : Colors.transparent,
-              width: 3,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(
+                color: isQuarantined || isNegativeBalance
+                    ? AppColors.signal
+                    : Colors.transparent,
+                width: 3,
+              ),
             ),
           ),
-        ),
-        padding: const EdgeInsets.all(AppSpacing.large),
-        child: Row(
-          children: [
-            Icon(
-              isMoneyIn ? TablerIcons.arrowDown : TablerIcons.arrowUp,
-              color: AppColors.textPrimary,
-              size: 20,
-            ),
-            const SizedBox(width: AppSpacing.medium),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(row.categoryName, style: AppTypography.cardTitle),
-                      if (row.isReversal) ...[
-                        const SizedBox(width: AppSpacing.small),
-                        Icon(
-                          TablerIcons.cornerUpLeft,
-                          size: 14,
-                          color: AppColors.textMuted,
-                        ),
+          padding: const EdgeInsets.all(AppSpacing.large),
+          child: Row(
+            children: [
+              Icon(
+                isMoneyIn ? TablerIcons.arrowDown : TablerIcons.arrowUp,
+                color: AppColors.textPrimary,
+                size: 20,
+              ),
+              const SizedBox(width: AppSpacing.medium),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(row.categoryName, style: AppTypography.cardTitle),
+                        if (row.isReversal) ...[
+                          const SizedBox(width: AppSpacing.small),
+                          Icon(
+                            TablerIcons.cornerUpLeft,
+                            size: 14,
+                            color: AppColors.textMuted,
+                          ),
+                        ],
+                        if (isQuarantined) ...[
+                          const SizedBox(width: AppSpacing.small),
+                          Icon(
+                            TablerIcons.lock,
+                            size: 14,
+                            color: AppColors.signal,
+                          ),
+                        ],
+                        if (isSuperseded) ...[
+                          const SizedBox(width: AppSpacing.small),
+                          Icon(
+                            TablerIcons.history,
+                            size: 14,
+                            color: AppColors.textMuted,
+                          ),
+                        ],
                       ],
-                      if (isQuarantined) ...[
-                        const SizedBox(width: AppSpacing.small),
-                        Icon(
-                          TablerIcons.lock,
-                          size: 14,
+                    ),
+                    if (isQuarantined)
+                      Text(
+                        'Unverified - excluded from totals',
+                        style: AppTypography.metadata.copyWith(
                           color: AppColors.signal,
                         ),
-                      ],
-                      if (isSuperseded) ...[
-                        const SizedBox(width: AppSpacing.small),
-                        Icon(
-                          TablerIcons.history,
-                          size: 14,
+                      ),
+                    if (isSuperseded)
+                      Text(
+                        'Superseded by migration - excluded from totals',
+                        style: AppTypography.metadata.copyWith(
                           color: AppColors.textMuted,
                         ),
-                      ],
-                    ],
-                  ),
-                  if (isQuarantined)
-                    Text(
-                      'Unverified - excluded from totals',
-                      style: AppTypography.metadata.copyWith(
-                        color: AppColors.signal,
                       ),
-                    ),
-                  if (isSuperseded)
                     Text(
-                      'Superseded by migration - excluded from totals',
-                      style: AppTypography.metadata.copyWith(
-                        color: AppColors.textMuted,
-                      ),
+                      '${row.transactionDate.year}-${row.transactionDate.month.toString().padLeft(2, '0')}-${row.transactionDate.day.toString().padLeft(2, '0')}'
+                      '${row.description != null ? ' · ${row.description}' : ''}',
+                      style: AppTypography.metadata,
                     ),
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(amountText, style: AppTypography.body),
                   Text(
-                    '${row.transactionDate.year}-${row.transactionDate.month.toString().padLeft(2, '0')}-${row.transactionDate.day.toString().padLeft(2, '0')}'
-                    '${row.description != null ? ' · ${row.description}' : ''}',
+                    formatAmountMinor(row.runningBalanceMinor, row.currency),
                     style: AppTypography.metadata,
                   ),
                 ],
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(amountText, style: AppTypography.body),
-                Text(
-                  formatAmountMinor(row.runningBalanceMinor),
-                  style: AppTypography.metadata,
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -134,6 +141,8 @@ Widget registerRowMoneyInPreview() {
       row: RegisterRow(
         entryId: '1',
         categoryName: 'Salary',
+        counterpartAccountIds: const ['category-salary'],
+        currency: 'USD',
         direction: TransactionDirection.moneyIn,
         amountMinor: 250000,
         transactionDate: DateTime(2026, 1, 15),
@@ -156,6 +165,8 @@ Widget registerRowNegativeBalancePreview() {
       row: RegisterRow(
         entryId: '2',
         categoryName: 'Rent/Mortgage',
+        counterpartAccountIds: const ['category-rent'],
+        currency: 'USD',
         direction: TransactionDirection.moneyOut,
         amountMinor: 300000,
         transactionDate: DateTime(2026, 1, 16),
@@ -178,6 +189,8 @@ Widget registerRowQuarantinedPreview() {
       row: RegisterRow(
         entryId: '3',
         categoryName: 'Groceries',
+        counterpartAccountIds: const ['category-groceries'],
+        currency: 'USD',
         direction: TransactionDirection.moneyOut,
         amountMinor: 4500,
         transactionDate: DateTime(2026, 1, 17),
@@ -200,6 +213,8 @@ Widget registerRowSupersededPreview() {
       row: RegisterRow(
         entryId: '4',
         categoryName: 'Groceries',
+        counterpartAccountIds: const ['category-groceries'],
+        currency: 'USD',
         direction: TransactionDirection.moneyOut,
         amountMinor: 4500,
         transactionDate: DateTime(2026, 1, 10),

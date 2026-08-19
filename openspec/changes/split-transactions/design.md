@@ -88,3 +88,33 @@ postings — nothing currently using it, but nothing prevents it either).
 ## Open Questions
 
 None that block apply.
+
+## Filled in during implementation
+
+Design.md's mechanics were accurate; a few concrete choices weren't
+spelled out and are recorded here:
+
+- **No foreign-currency support for v1.** `recordSplitTransaction` always
+  posts in the financial account's own currency - splitting and the
+  foreign-currency/provisional-settlement flow are mutually exclusive in
+  this change (the record screen hides the foreign-currency fields while
+  splitting). Not called out as a Non-Goal in the original draft, but
+  consistent with it: nothing in the proposal asked for a split *and*
+  cross-currency transaction at once.
+- **`recordSplitTransaction` validates against a caller-supplied
+  `totalAmountMinor`, not just the sum of its own lines.** The repository
+  receives both the split lines and the transaction's overall total (the
+  same "Amount" field a non-split entry already has) and rejects a
+  mismatch - defense-in-depth beyond the record screen's own live
+  remainder check, matching this codebase's general pattern of the
+  repository re-validating rather than trusting the ViewModel alone.
+- **`RegisterViewModel.isRowFixable` now also requires exactly one
+  counterpart.** Design.md's Decision 3 covered the row *label*; it didn't
+  say what Fix-eligibility should do for a split. Resolved conservatively:
+  a split entry gets no Fix tap target at all, since the Fix form has one
+  category field to prefill and a split has none that's uniquely correct.
+- **Removing a split line down to one auto-collapses back to the
+  non-split form**, repromoting that line's category into the ordinary
+  `categoryId` field. This is what makes splitting "an in-place expansion
+  ... reversible the same way" (split-transactions spec's own framing)
+  actually true in the implementation, not just the forward direction.

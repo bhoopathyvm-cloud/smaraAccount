@@ -49,6 +49,9 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- app-lock: local_auth's Face ID unlock option (household-product-repositioning). -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>Use Face ID to unlock Smara Account.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

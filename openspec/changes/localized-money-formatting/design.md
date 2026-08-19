@@ -50,6 +50,30 @@ This change makes that an explicit invalid-input state instead.
   tooling; not a niche or unmaintained addition.
 - [Risk] Scope creep. → Mitigation: child change stays focused on
   formatting/parsing, not full localization.
+- [Correction, found during implementation] Decision 1's premise that
+  `NumberFormat.currency(name: currencyCode)` alone carries grouping and
+  decimal-separator conventions "from `intl`'s built-in currency data" is
+  imprecise: `intl` sources grouping/decimal-separator from a *locale*,
+  and only the minor-unit *digit count* (e.g. 0 for JPY) is genuinely
+  keyed by the currency code. Formatting "by currency, not device locale"
+  (Decision 2) therefore needs each currency mapped to one canonical
+  formatting locale - a small, explicit `currency -> locale` table
+  (`lib/ui/core/money_formatter.dart`'s `_currencyLocale`), not the
+  "no table to maintain" framing this decision originally assumed. Kept
+  deliberately small: only currencies whose grouping convention actually
+  differs from a Western-style fallback need an entry (INR's lakhs
+  grouping, JPY, EUR's period-grouping/comma-decimal, and the other
+  onboarding quick-pick currencies); everything else falls back to that
+  Western convention, which is already correct for most ISO 4217
+  currencies.
+- [Bug found and fixed during implementation, pre-existing] Cross-currency
+  transfer's `impliedRate` (`transfer_view_model.dart`) divided raw minor
+  units directly, silently correct only when both currencies shared the
+  same minor-unit digit count (previously always true, since the old
+  formatter always assumed two decimals everywhere). A USD→JPY transfer
+  would have computed a rate wrong by a factor of 100. Fixed to convert
+  each side to its own major units first, via a new
+  `minorUnitDigitsForCurrency` helper.
 
 ## Open Questions
 

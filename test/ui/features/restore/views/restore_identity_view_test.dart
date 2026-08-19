@@ -18,6 +18,7 @@ void main() {
     createdAt: DateTime.now(),
     supersedesIdentityId: null,
     supersededAt: null,
+    acknowledgedAt: DateTime.now(),
   );
   const verified = ChainVerificationResult(
     totalEntries: 0,

@@ -23,6 +23,13 @@ class SigningIdentities extends Table {
 
   DateTimeColumn get supersededAt => dateTime().nullable()();
 
+  /// When the user completed the mandatory recovery-phrase acknowledgment
+  /// for this identity (spec: "Mandatory Recovery Phrase Acknowledgment").
+  /// Null between identity commit and acknowledgment - the window
+  /// `deferred-onboarding-first-entry` introduces so a first-time user can
+  /// record one guided entry before facing the acknowledgment screens.
+  DateTimeColumn get acknowledgedAt => dateTime().nullable()();
+
   @override
   Set<Column> get primaryKey => {identityId};
 }

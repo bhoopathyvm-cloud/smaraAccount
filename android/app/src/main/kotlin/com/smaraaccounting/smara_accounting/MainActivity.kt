@@ -1,5 +1,7 @@
 package com.smaraaccounting.smara_accounting
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity : FlutterActivity()
+// FlutterFragmentActivity, not FlutterActivity: local_auth (app-lock)
+// requires a FragmentActivity host to show Android's biometric prompt.
+class MainActivity : FlutterFragmentActivity()

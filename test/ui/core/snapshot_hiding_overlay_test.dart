@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:smara_accounting/ui/core/snapshot_hiding_overlay.dart';
+
+import '../../mocks.mocks.dart';
+
+void main() {
+  late MockAppLockController controller;
+
+  setUp(() {
+    controller = MockAppLockController();
+  });
+
+  Widget buildOverlay() {
+    return MaterialApp(
+      home: SnapshotHidingOverlay(
+        appLockController: controller,
+        child: const Text('Balance: 1000.00'),
+      ),
+    );
+  }
+
+  testWidgets('shows the child uncovered when not backgrounded', (
+    tester,
+  ) async {
+    when(controller.isBackgrounded).thenReturn(false);
+    when(controller.isSnapshotHidingEnabled).thenReturn(true);
+
+    await tester.pumpWidget(buildOverlay());
+
+    expect(find.text('Balance: 1000.00'), findsOneWidget);
+    expect(find.byIcon(Icons.lock_outline), findsNothing);
+  });
+
+  testWidgets(
+    'covers the child when backgrounded and snapshot hiding is enabled',
+    (tester) async {
+      when(controller.isBackgrounded).thenReturn(true);
+      when(controller.isSnapshotHidingEnabled).thenReturn(true);
+
+      await tester.pumpWidget(buildOverlay());
+
+      expect(find.byIcon(Icons.lock_outline), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'does not cover the child when backgrounded but snapshot hiding is off',
+    (tester) async {
+      when(controller.isBackgrounded).thenReturn(true);
+      when(controller.isSnapshotHidingEnabled).thenReturn(false);
+
+      await tester.pumpWidget(buildOverlay());
+
+      expect(find.byIcon(Icons.lock_outline), findsNothing);
+    },
+  );
+}

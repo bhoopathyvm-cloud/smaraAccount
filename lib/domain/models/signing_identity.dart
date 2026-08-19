@@ -8,6 +8,7 @@ class SigningIdentity {
     required this.createdAt,
     required this.supersedesIdentityId,
     required this.supersededAt,
+    required this.acknowledgedAt,
   });
 
   final String identityId;
@@ -15,4 +16,10 @@ class SigningIdentity {
   final DateTime createdAt;
   final String? supersedesIdentityId;
   final DateTime? supersededAt;
+
+  /// When the mandatory recovery-phrase acknowledgment completed for this
+  /// identity, or null if it's still pending (deferred-onboarding-first-entry:
+  /// the identity is committed before the user reaches the acknowledgment
+  /// screens, so this can be null for a brief, deliberate window).
+  final DateTime? acknowledgedAt;
 }

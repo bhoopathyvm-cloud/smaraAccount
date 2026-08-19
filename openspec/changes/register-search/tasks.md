@@ -1,6 +1,6 @@
 ## Tasks
 
-- [ ] 1.1 Search field on `RegisterView`.
-- [ ] 1.2 Filter logic in `RegisterViewModel`: text match on description/category/amount, combinable with optional date-range and direction filters, applied client-side over already-loaded rows.
-- [ ] 1.3 Clear-search restores the full, unfiltered register.
-- [ ] 1.4 Tests: text match cases; date-range and direction filters individually and combined with text; clearing restores full list.
+- [x] 1.1 Search field on `RegisterView` (`_RegisterSearchBar`, a small `StatefulWidget` owning the `TextEditingController` so cursor position survives the view model's own rebuilds), plus `ChoiceChip`s for "Spent only"/"Received only" and an `ActionChip` opening `showDateRangePicker` for the date range.
+- [x] 1.2 Filter logic in `RegisterViewModel`: `rows` getter narrows the full `_rows` list by text match on description/category/formatted amount, combinable with optional `filterStartDate`/`filterEndDate` and `filterDirection`, applied client-side (design.md Decision 1 held as designed - no new repository query).
+- [x] 1.3 `clearSearchAndFilters()` restores the full, unfiltered register (`_rows` was never mutated by filtering, only the `rows` getter narrows it); switching the selected account also resets any active search/filters, since they were scoped to the previous account's rows.
+- [x] 1.4 Tests: `register_view_model_test.dart` "register-search" group (text match by category and by formatted amount, direction filter, date range combined with text, clearing restores the full list); `register_view_test.dart` widget test typing into the search box and using the clear button.

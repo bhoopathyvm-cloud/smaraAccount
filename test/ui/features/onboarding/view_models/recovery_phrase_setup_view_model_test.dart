@@ -25,6 +25,12 @@ void main() {
   setUp(() {
     repository = MockLedgerRepository();
     viewModel = RecoveryPhraseSetupViewModel(ledgerRepository: repository);
+    // deferred-onboarding-first-entry: ensureGenerated() always checks for
+    // a resumable (crash-interrupted) phrase first. Default to "nothing
+    // pending" so existing true-first-generation tests don't need to know
+    // about this - tests that care about resuming stub it explicitly.
+    when(repository.resumePendingIdentity()).thenAnswer((_) async => null);
+    when(repository.stashPendingPhraseWords(any)).thenAnswer((_) async {});
   });
 
   group('ensureGenerated', () {
@@ -39,12 +45,31 @@ void main() {
       expect(viewModel.isReady, isTrue);
       expect(viewModel.words, equals(generated.phrase.words));
       verify(repository.generateFirstIdentity()).called(1);
+      verify(
+        repository.stashPendingPhraseWords(generated.phrase.words),
+      ).called(1);
     });
+
+    test(
+      'resumes an already-stashed phrase instead of generating a new one',
+      () async {
+        when(
+          repository.resumePendingIdentity(),
+        ).thenAnswer((_) async => generated);
+
+        await viewModel.ensureGenerated();
+
+        expect(viewModel.isReady, isTrue);
+        expect(viewModel.words, equals(generated.phrase.words));
+        verifyNever(repository.generateFirstIdentity());
+        verifyNever(repository.stashPendingPhraseWords(any));
+      },
+    );
   });
 
   group('confirm', () {
     test(
-      'rejects a mismatched confirmation word without committing anything',
+      'rejects a mismatched confirmation word without acknowledging anything',
       () async {
         when(
           repository.generateFirstIdentity(),
@@ -60,14 +85,12 @@ void main() {
 
         expect(result, isFalse);
         expect(viewModel.errorMessage, isNotNull);
-        verifyNever(
-          repository.confirmFirstIdentity(any, currency: anyNamed('currency')),
-        );
+        verifyNever(repository.acknowledgeIdentity());
       },
     );
 
     test(
-      'accepts all matching confirmation words without committing anything',
+      'accepts all matching confirmation words without acknowledging anything',
       () async {
         when(
           repository.generateFirstIdentity(),
@@ -83,22 +106,18 @@ void main() {
 
         expect(result, isTrue);
         expect(viewModel.errorMessage, isNull);
-        verifyNever(
-          repository.confirmFirstIdentity(any, currency: anyNamed('currency')),
-        );
-        verifyNever(repository.verifyChain());
+        verifyNever(repository.acknowledgeIdentity());
       },
     );
   });
 
-  group('finishOnboarding', () {
+  group('commitIdentity', () {
     test(
-      'commits the identity with the chosen currency and verifies the chain',
+      'generates the identity if needed, commits it with the chosen currency, and verifies the chain',
       () async {
         when(
           repository.generateFirstIdentity(),
         ).thenAnswer((_) async => generated);
-        await viewModel.ensureGenerated();
 
         final identity = SigningIdentity(
           identityId: 'identity-1',
@@ -106,6 +125,7 @@ void main() {
           createdAt: DateTime.now(),
           supersedesIdentityId: null,
           supersededAt: null,
+          acknowledgedAt: null,
         );
         when(
           repository.confirmFirstIdentity(generated, currency: 'USD'),
@@ -118,15 +138,26 @@ void main() {
           ),
         );
 
-        final result = await viewModel.finishOnboarding('USD');
+        final result = await viewModel.commitIdentity('USD');
 
         expect(result, isTrue);
+        verify(repository.generateFirstIdentity()).called(1);
         verify(
           repository.confirmFirstIdentity(generated, currency: 'USD'),
         ).called(1);
         verify(repository.verifyChain()).called(1);
       },
     );
+  });
+
+  group('acknowledge', () {
+    test('delegates to the Repository', () async {
+      when(repository.acknowledgeIdentity()).thenAnswer((_) async {});
+
+      await viewModel.acknowledge();
+
+      verify(repository.acknowledgeIdentity()).called(1);
+    });
   });
 
   group('exportKeystoreFile', () {

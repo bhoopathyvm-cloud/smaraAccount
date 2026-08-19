@@ -3,14 +3,21 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/crypto/signing_key_service.dart';
 
-/// Spans all three onboarding screens (recovery-phrase display, optional
-/// keystore export, confirmation) so the same [GeneratedIdentity] - one
-/// freshly generated phrase and its key pair - carries through the whole
-/// flow without regenerating (each generation would produce a different
-/// phrase/key, spec: "Device Signing Identity"). The identity is only
-/// written to the database at the very end, in [confirm] - until then the
-/// ledger stays unusable (spec: "Onboarding blocks until recovery phrase
-/// is acknowledged").
+/// Spans every onboarding screen (currency, recovery-phrase display,
+/// optional keystore export, confirmation) so the same [GeneratedIdentity]
+/// - one freshly generated phrase and its key pair - carries through the
+/// whole flow without regenerating (each generation would produce a
+/// different phrase/key, spec: "Device Signing Identity").
+///
+/// deferred-onboarding-first-entry: the identity is committed to the
+/// database in [commitIdentity], right after the user picks a currency -
+/// before the phrase is ever displayed or confirmed - so a guided first
+/// entry can post between commit and acknowledgment. The mandatory
+/// acknowledgment ritual (display, optional keystore export, confirm)
+/// still fully gates everything else; [acknowledge] is what finally lifts
+/// that gate. [ensureGenerated] transparently resumes from a stashed
+/// phrase (see [resumePendingIdentity]) if the app was killed and
+/// relaunched anywhere in this window, so the words are never lost.
 class RecoveryPhraseSetupViewModel extends ChangeNotifier {
   RecoveryPhraseSetupViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository;
@@ -35,14 +42,26 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
 
   bool get hasGenerationError => _errorMessage != null && _generated == null;
 
-  /// Idempotent - safe to call from every build of the display screen. On
-  /// failure (e.g. OS secure storage rejects the write), sets
-  /// [errorMessage] rather than leaving the caller waiting on a Future
-  /// that already failed silently in the background.
+  /// Idempotent - safe to call from every build of the display screen, and
+  /// from [commitIdentity] before currency selection has even reached that
+  /// screen. First tries to resume a phrase already stashed by an earlier,
+  /// possibly-killed session ([resumePendingIdentity]) so the same words
+  /// are shown again rather than silently generating a different phrase
+  /// out from under an already-committed identity. On failure (e.g. OS
+  /// secure storage rejects the write), sets [errorMessage] rather than
+  /// leaving the caller waiting on a Future that already failed silently
+  /// in the background.
   Future<void> ensureGenerated() async {
     if (_generated != null) return;
     try {
-      _generated = await _ledgerRepository.generateFirstIdentity();
+      final resumed = await _ledgerRepository.resumePendingIdentity();
+      if (resumed != null) {
+        _generated = resumed;
+      } else {
+        final generated = await _ledgerRepository.generateFirstIdentity();
+        await _ledgerRepository.stashPendingPhraseWords(generated.phrase.words);
+        _generated = generated;
+      }
     } catch (e) {
       _errorMessage = 'Could not generate a signing key on this device: $e';
     }
@@ -61,11 +80,10 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
   /// Validates the words at [confirmationWordIndices] against
   /// [enteredWords] (same indices). Returns true on success; on mismatch,
   /// sets [errorMessage] and leaves everything else untouched so the user
-  /// can retry. Does *not* commit the identity yet - the ledger stays
-  /// unusable until [finishOnboarding] runs, once the user has also chosen
-  /// a currency (multi-currency-support design.md addendum: a fresh
-  /// install needs a currency for its starter account groups before
-  /// [finishOnboarding] can seed them).
+  /// can retry. Only validates locally - does not itself acknowledge
+  /// anything; the caller still needs to call [acknowledge] on success
+  /// (deferred-onboarding-first-entry: the identity and starter accounts
+  /// were already committed earlier, in [commitIdentity]).
   bool confirm(Map<int, String> enteredWords) {
     final generated = _generated;
     if (generated == null) return false;
@@ -85,9 +103,12 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
   }
 
   /// Commits the signing identity with the starter account groups seeded
-  /// in [currency], then verifies the chain. Call only after [confirm] has
-  /// already returned true.
-  Future<bool> finishOnboarding(String currency) async {
+  /// in [currency], then verifies the chain. This is the first onboarding
+  /// step now (deferred-onboarding-first-entry) - it generates the
+  /// identity if [ensureGenerated] hasn't already run, and does not wait
+  /// for phrase display or confirmation, which happen later.
+  Future<bool> commitIdentity(String currency) async {
+    await ensureGenerated();
     final generated = _generated;
     if (generated == null) return false;
 
@@ -101,5 +122,11 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
     _isSubmitting = false;
     notifyListeners();
     return true;
+  }
+
+  /// Completes the mandatory recovery-phrase acknowledgment. Call only
+  /// after [confirm] has already returned true.
+  Future<void> acknowledge() {
+    return _ledgerRepository.acknowledgeIdentity();
   }
 }

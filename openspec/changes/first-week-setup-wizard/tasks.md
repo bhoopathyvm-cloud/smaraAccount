@@ -1,8 +1,8 @@
 ## Tasks
 
-- [ ] 1.1 Wizard route(s) after onboarding completes, reachable exactly once on first run.
-- [ ] 1.2 Main-account naming step calls the existing `createFinancialAccount`; optional credit-card and cash-account steps do the same, skippable.
-- [ ] 1.3 Expand the starter category seed list (Food out, Phone, Health added).
-- [ ] 1.4 Verify (no code expected): an empty account group is already omitted from Home — confirm the existing `watchHomeOverview` behavior still holds, don't add new hiding logic.
-- [ ] 1.5 Tests: wizard creates the expected accounts for each combination of answers; skipping optional steps creates only the main account; expanded categories appear in the picker after first launch.
-- [ ] 1.6 User guide: the first-week wizard and expanded starter categories.
+- [x] 1.1 Wizard route(s) after onboarding completes, reachable exactly once on first run - `/onboarding/first-week-setup` in `app_router.dart`, gated on a new `SettingsRepository.isFirstWeekSetupCompleted()` flag (checked right after the currency-backfill gate, same reasoning: nothing to lock or show before this).
+- [x] 1.2 Main-account naming step calls the existing account-creation path; optional credit-card and cash-account steps do the same, skippable - **corrected during implementation** (see design.md): the main-account step actually *renames* the account `confirmFirstIdentity` already seeds, via `renameFinancialAccount`, prefilled with its current name; the optional credit-card (`groupCreditShortTermId`, liability) and cash-account (`groupCashEquivalentsId`, asset) steps do call `createFinancialAccount` as originally designed, since nothing is pre-seeded there.
+- [x] 1.3 Expand the starter category seed list (Food out, Phone, Health added) - `starterExpenseCategories` in `app_database.dart`.
+- [x] 1.4 Verify (no code expected): an empty account group is already omitted from Home — confirmed `watchHomeOverview`'s existing `if (members.isEmpty) continue;` still holds; no change made.
+- [x] 1.5 Tests: `first_week_setup_view_model_test.dart` (prefilled name, blank-name rejection, rename-only when steps skipped, both optional accounts created, a toggled-but-unnamed step creates nothing), `first_week_setup_view_test.dart` (prefill + Finish wiring, toggle reveals the name field), `settings_repository_test.dart` (the completion flag persists).
+- [x] 1.6 User guide: the first-week wizard (new "Setting up your accounts" section) and expanded starter categories (Categories section).

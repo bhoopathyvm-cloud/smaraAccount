@@ -12,8 +12,10 @@ class RegisterRow {
   const RegisterRow({
     required this.entryId,
     required this.categoryName,
+    required this.counterpartAccountIds,
     required this.direction,
     required this.amountMinor,
+    required this.currency,
     required this.transactionDate,
     required this.description,
     required this.runningBalanceMinor,
@@ -24,7 +26,26 @@ class RegisterRow {
   });
 
   final String entryId;
+
+  /// A single category/counterparty name, or (split-transactions) a
+  /// summarized label like "Food +1 more" when the entry has more than
+  /// one category leg.
   final String categoryName;
+
+  /// The viewed account's own currency (localized-money-formatting) -
+  /// every row in one account's register shares it, since an account
+  /// belongs to exactly one currency.
+  final String currency;
+
+  /// Raw account ids of every counterpart posting on this entry (a
+  /// category, another financial account for a transfer, the
+  /// opening-balance equity account, or - split-transactions - more than
+  /// one category) - used by fix-this-correction-wizard to prefill the
+  /// Fix form's category, and to decide whether a row is fixable at all
+  /// (only an ordinary, single-category transaction is; transfers,
+  /// opening balances, and splits are not - `RegisterViewModel.isRowFixable`
+  /// requires exactly one entry here).
+  final List<String> counterpartAccountIds;
   final TransactionDirection direction;
 
   /// Always a positive magnitude; [direction] carries the sign meaning.

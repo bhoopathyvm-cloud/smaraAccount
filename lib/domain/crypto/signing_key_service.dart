@@ -22,6 +22,15 @@ class SigningKeyService {
 
   static const _privateKeySeedStorageKey = 'ledger_signing_private_key_seed';
 
+  /// Holds the plaintext recovery-phrase words between identity commit and
+  /// acknowledgment (deferred-onboarding-first-entry), so a killed/crashed
+  /// app can still show the user the same words on relaunch instead of
+  /// losing them forever. Same OS-protected secure storage already trusted
+  /// for the private key; cleared the moment acknowledgment completes (see
+  /// [clearPendingPhraseWords]) so it never lingers past that window.
+  static const _pendingPhraseWordsStorageKey =
+      'ledger_pending_recovery_phrase_words';
+
   final SecureKeyStorage _secureStorage;
   final Ed25519Signing _signer;
 
@@ -106,6 +115,44 @@ class SigningKeyService {
     required List<int> publicKey,
   }) {
     return _signer.verify(message, signature: signature, publicKey: publicKey);
+  }
+
+  /// Stashes [words] (the just-generated recovery phrase) so they survive
+  /// an app kill between identity commit and acknowledgment. Call only for
+  /// the true-first-launch generation path, never for the true-key-loss
+  /// migration path (which never shows a phrase to re-acknowledge).
+  Future<void> stashPendingPhraseWords(List<String> words) {
+    return _secureStorage.write(_pendingPhraseWordsStorageKey, words.join(' '));
+  }
+
+  /// The words stashed by [stashPendingPhraseWords], if an app kill
+  /// interrupted onboarding before [clearPendingPhraseWords] ran. Null
+  /// means there's nothing pending - either a true first launch, or
+  /// acknowledgment already completed.
+  Future<List<String>?> readPendingPhraseWords() async {
+    final joined = await _secureStorage.read(_pendingPhraseWordsStorageKey);
+    if (joined == null) return null;
+    return joined.split(' ');
+  }
+
+  /// Deletes the stashed phrase words. Call once acknowledgment completes
+  /// (or, for a device that never needed them, this is a harmless no-op).
+  Future<void> clearPendingPhraseWords() {
+    return _secureStorage.delete(_pendingPhraseWordsStorageKey);
+  }
+
+  /// Reconstructs the [GeneratedIdentity] from words stashed by
+  /// [stashPendingPhraseWords], for redisplay after an app kill interrupted
+  /// onboarding between identity commit and acknowledgment. Re-derives the
+  /// same key material deterministically from the phrase - does not
+  /// generate a new phrase or overwrite stored key material. Null if there
+  /// is nothing pending.
+  Future<GeneratedIdentity?> resumePendingIdentity() async {
+    final words = await readPendingPhraseWords();
+    if (words == null) return null;
+    final phrase = RecoveryPhrase.fromWords(words);
+    final keyMaterial = await _signer.keyPairFromSeed(phrase.seed);
+    return GeneratedIdentity(phrase: phrase, keyMaterial: keyMaterial);
   }
 
   Future<List<int>?> _readStoredSeed() async {

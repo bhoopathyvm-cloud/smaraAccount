@@ -63,6 +63,22 @@ void main() {
     currency: 'EUR',
     archived: false,
   );
+  const jpySavings = Account(
+    id: 'asset-4',
+    name: 'Yen Savings',
+    type: AccountType.asset,
+    archived: false,
+    groupId: 'group-jpy',
+  );
+  const jpyGroup = AccountGroup(
+    id: 'group-jpy',
+    name: 'Investments',
+    kind: AccountGroupKind.assetGroup,
+    sortOrder: 4,
+    isSystem: true,
+    currency: 'JPY',
+    archived: false,
+  );
 
   TransferViewModel buildViewModel() {
     return TransferViewModel(
@@ -594,5 +610,91 @@ void main() {
 
       expect(viewModel.impliedRate, isNull);
     });
+
+    test('converts each side to its own major units first, so a pair with '
+        'different minor-unit digit counts (USD, 2 decimals; JPY, 0) still '
+        'computes the true rate, not the raw minor-unit ratio', () async {
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([checking, savings, jpySavings]));
+      when(
+        repository.watchAccountGroups(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([usdGroup, jpyGroup]));
+
+      final viewModel = buildViewModel();
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
+      viewModel.setFromAccountId('asset-1');
+      viewModel.setToAccountId('asset-4');
+
+      // $100.00 sent (10000 minor units, 2 decimals), ¥15,000 received
+      // (15000 minor units, 0 decimals - JPY's minor unit IS its major
+      // unit). True rate: 15000 JPY / 100 USD = 150. The raw minor-unit
+      // ratio (15000 / 10000 = 1.5) would be wrong by a factor of 100.
+      viewModel.setAmountMinor(10000);
+      viewModel.setDestinationAmountMinor(15000);
+
+      expect(viewModel.impliedRate, closeTo(150.0, 1e-9));
+    });
   });
+
+  group(
+    'credit-card-household-flow: initialToAccountId ("Pay card" pre-fill)',
+    () {
+      const visaCard = Account(
+        id: 'liability-1',
+        name: 'Visa',
+        type: AccountType.liability,
+        archived: false,
+        groupId: 'group-usd',
+        isCreditCard: true,
+      );
+
+      test('pre-selects the requested card as the destination', () async {
+        when(
+          repository.watchFinancialAccounts(
+            includeArchived: anyNamed('includeArchived'),
+          ),
+        ).thenAnswer((_) => Stream.value([checking, savings, visaCard]));
+
+        final viewModel = TransferViewModel(
+          ledgerRepository: repository,
+          exchangeRateService: exchangeRateService,
+          settingsRepository: settingsRepository,
+          initialToAccountId: 'liability-1',
+        );
+        addTearDown(viewModel.dispose);
+        await Future<void>.delayed(Duration.zero);
+
+        expect(viewModel.toAccountId, equals('liability-1'));
+        // The source is still whatever the ordinary default logic
+        // picks - "Pay card" only pre-fills the destination.
+        expect(viewModel.fromAccountId, isNot(equals('liability-1')));
+      });
+
+      test('falls back to the ordinary first-other-account default when the '
+          'requested card no longer exists', () async {
+        when(
+          repository.watchFinancialAccounts(
+            includeArchived: anyNamed('includeArchived'),
+          ),
+        ).thenAnswer((_) => Stream.value([checking, savings]));
+
+        final viewModel = TransferViewModel(
+          ledgerRepository: repository,
+          exchangeRateService: exchangeRateService,
+          settingsRepository: settingsRepository,
+          initialToAccountId: 'no-such-account',
+        );
+        addTearDown(viewModel.dispose);
+        await Future<void>.delayed(Duration.zero);
+
+        expect(viewModel.toAccountId, equals('asset-2'));
+      });
+    },
+  );
 }

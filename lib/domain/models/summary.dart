@@ -14,3 +14,24 @@ class LedgerSummary {
   final int totalIncomeMinor;
   final int totalExpenseMinor;
 }
+
+/// One category's total (positive minor-unit magnitude) within a date
+/// range (home-hub-capture: "this calendar month's spent totals grouped
+/// by expense category and received totals by income category").
+class CategoryTotal {
+  const CategoryTotal({
+    required this.categoryId,
+    required this.categoryName,
+    required this.isIncome,
+    required this.totalMinor,
+  });
+
+  final String categoryId;
+  final String categoryName;
+
+  /// True for an income category, false for expense - mirrors
+  /// `TransactionDirection` without importing it here (this is a plain
+  /// aggregation result, not a transaction).
+  final bool isIncome;
+  final int totalMinor;
+}

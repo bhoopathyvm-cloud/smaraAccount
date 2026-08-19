@@ -58,4 +58,18 @@ void main() {
       expect(rate, equals(ExchangeRateProvider.values.first));
     },
   );
+
+  test(
+    'first-week setup defaults to not completed, and persists across instances '
+    'once marked complete',
+    () async {
+      final repository = SettingsRepository();
+
+      expect(await repository.isFirstWeekSetupCompleted(), isFalse);
+
+      await repository.setFirstWeekSetupCompleted(true);
+
+      expect(await SettingsRepository().isFirstWeekSetupCompleted(), isTrue);
+    },
+  );
 }

@@ -58,3 +58,25 @@ category list isn't tied to which accounts the user chose to create.
 ## Open Questions
 
 None that block apply.
+
+## Correction, found during implementation
+
+The Context section's claim "There is no hardcoded starter financial
+account (no 'Cash & Bank' row gets created automatically)... every
+financial account, including the very first one, is user-created and
+user-named during existing onboarding" does not hold against the actual
+code: `LedgerRepository.confirmFirstIdentity` seeds exactly one asset
+account named `financialAccountName` ('Cash & Bank') into
+`groupCashEquivalentsId`, unconditionally, as part of committing the
+signing identity - before this wizard or any onboarding UI the user
+interacts with even runs.
+
+This changes what the wizard's "main account" step actually does:
+instead of *creating* a new financial account (Decision 1's original
+framing), it **renames** that already-seeded account to whatever the
+user types, via the existing `renameFinancialAccount`, prefilled with
+the seeded account's current name so leaving it untouched is harmless.
+The optional credit-card and cash-account steps are unaffected by this
+correction - nothing is seeded in `groupCreditShortTermId`, or a second
+account in `groupCashEquivalentsId`, so those two steps still call
+`createFinancialAccount` for real, exactly as designed.

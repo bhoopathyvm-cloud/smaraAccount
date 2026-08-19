@@ -5,13 +5,13 @@ import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../view_models/recovery_phrase_setup_view_model.dart';
 
-/// Penultimate onboarding step: the user re-enters a subset of the
-/// recovery phrase's words to prove possession before the ledger becomes
-/// usable (spec: "the user must confirm possession of the phrase (e.g.
-/// re-entering part of it) before recording their first transaction").
-/// Only validates the words - the signing identity isn't committed until
-/// the user also picks a currency on the next screen (see
-/// [RecoveryPhraseSetupViewModel.finishOnboarding]).
+/// Final onboarding step: the user re-enters a subset of the recovery
+/// phrase's words to prove possession (spec: "Mandatory Recovery Phrase
+/// Acknowledgment"). deferred-onboarding-first-entry: the identity and the
+/// guided first entry are already committed by this point - confirming
+/// here only completes the acknowledgment
+/// ([RecoveryPhraseSetupViewModel.acknowledge]), which is what finally
+/// lifts the router's block on everything else.
 class RecoveryPhraseConfirmView extends StatefulWidget {
   const RecoveryPhraseConfirmView({
     super.key,
@@ -41,12 +41,15 @@ class _RecoveryPhraseConfirmViewState extends State<RecoveryPhraseConfirmView> {
     super.dispose();
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     final entered = {
       for (final entry in _controllers.entries) entry.key: entry.value.text,
     };
     final success = widget.viewModel.confirm(entered);
-    if (success) widget.onConfirmed();
+    if (success) {
+      await widget.viewModel.acknowledge();
+      widget.onConfirmed();
+    }
   }
 
   @override

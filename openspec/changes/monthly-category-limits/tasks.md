@@ -1,7 +1,7 @@
 ## Tasks
 
-- [ ] 1.1 Schema: optional `monthlyLimitMinor` on Expense categories.
-- [ ] 1.2 Category management screen: set/clear limit; month-to-date spent-vs-limit progress display, calm over-limit indication.
-- [ ] 1.3 If `home-hub-capture`'s category-totals section exists at apply time, add the same progress indication there; if not, skip this task without blocking the rest of the change.
-- [ ] 1.4 Tests: setting/clearing a limit; progress computation for month-to-date spent; over-limit indication does not block posting.
-- [ ] 1.5 User guide: setting a category limit and reading progress.
+- [x] 1.1 Schema: optional `monthlyLimitMinor` on Expense categories - nullable `monthly_limit_minor` column on `accounts` (schemaVersion 14→15, plain `addColumn` since `accounts` has existed since schemaVersion 1 and is never recreated by a later `m.createTable`); `LedgerRepository.setCategoryMonthlyLimit` sets or clears it, rejecting a non-Expense category or a non-positive amount.
+- [x] 1.2 Category management screen: `_showLimitDialog` to set/clear a limit (a target-icon action on each Expense category's row); the new, shared `MonthlyLimitProgress` widget (`lib/ui/core/monthly_limit_progress.dart`) renders month-to-date spent-vs-limit with a calm ("Over limit" text + muted icon, never the design system's red "signal" color) indication.
+- [x] 1.3 `home-hub-capture`'s category-totals section exists (shipped earlier in this same implementation pass) - added the same `MonthlyLimitProgress` indication to `_CategoryTotalRow` in `home_view.dart`, driven by a new `HomeViewModel.monthlyLimitFor` lookup.
+- [x] 1.4 Tests: `ledger_repository_test.dart`'s "setCategoryMonthlyLimit" group (set/clear, Income rejection, non-positive rejection) plus a schemaVersion-14→15 migration test; `category_management_view_model_test.dart`/`_view_test.dart` (progress display, over-limit indication, set-limit dialog, Income categories never offered the action); `home_view_model_test.dart`/`_view_test.dart` (the same progress additively on Home). Over-limit-does-not-block-posting is covered structurally - `setCategoryMonthlyLimit` and `recordTransaction`/`recordSplitTransaction` are entirely independent code paths, nothing in the posting path reads the limit at all.
+- [x] 1.5 User guide: setting/clearing a category limit and reading progress (new "Monthly limits" subsection under Categories), plus a note in the Home section.

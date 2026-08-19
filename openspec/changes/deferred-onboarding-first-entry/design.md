@@ -93,9 +93,31 @@ signing key, optional keystore export, no server escrow) is unchanged.
 
 ## Migration Plan
 
-No schema change — this is UI sequencing only. Existing installs (already
-past onboarding) are unaffected; the redirect guard only applies to a
-session with an unacknowledged identity.
+Implementation note (found necessary while applying this change, not
+anticipated when this design.md was first written): identity existence
+alone can no longer signal "onboarding complete," since the identity is
+now committed to the database before acknowledgment happens — the router
+needs a separate signal for "committed but not yet acknowledged" so it
+still forces the acknowledgment screens rather than treating an
+in-progress first-run session as done. This required one additive schema
+change: `signing_identities.acknowledgedAt` (nullable, schemaVersion 12).
+Every identity that already exists in a database upgrading from an
+earlier schema is backfilled with `acknowledgedAt = createdAt`, since
+under the old flow identity commit and acknowledgment were the same
+moment — an existing user is never sent back through acknowledgment
+screens for a phrase this app never stored and cannot show again.
+Existing installs are otherwise unaffected; the redirect guard only
+applies to a session with an unacknowledged identity.
+
+A second, related gap: the plaintext recovery-phrase words themselves are
+never persisted to the database (by design) and previously lived only in
+the onboarding ViewModel's memory. Under the old flow that was safe to
+lose on a kill, since nothing was committed yet either. Under this
+change, the identity (and the guided first entry) must survive a kill
+between commit and acknowledgment, so the words are now also temporarily
+stashed in the same OS-protected secure storage already trusted for the
+private key (`SigningKeyService.stashPendingPhraseWords`), and cleared
+the moment acknowledgment completes.
 
 ## Open Questions
 

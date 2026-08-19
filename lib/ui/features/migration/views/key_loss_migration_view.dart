@@ -87,9 +87,16 @@ class KeyLossMigrationView extends StatelessWidget {
                                 (assetPosting?.amountMinor ?? 0) >= 0
                                 ? TransactionDirection.moneyIn
                                 : TransactionDirection.moneyOut;
+                            // This review list spans every account (any
+                            // currency) with no join back to account data
+                            // in scope here - a neutral 2-decimal format
+                            // is the same fallback used elsewhere in this
+                            // app for a currency-unknown context, and this
+                            // recovery-flow review list was never meant to
+                            // read like a per-account balance display.
                             final amountText =
                                 '${direction == TransactionDirection.moneyIn ? '+' : '-'}'
-                                '${formatAmountMinor((assetPosting?.amountMinor ?? 0).abs())}';
+                                '${formatAmountMinor((assetPosting?.amountMinor ?? 0).abs(), 'USD')}';
                             return ListTile(
                               dense: true,
                               title: Text(

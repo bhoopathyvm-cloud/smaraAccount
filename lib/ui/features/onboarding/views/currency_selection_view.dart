@@ -12,8 +12,9 @@ import '../view_models/recovery_phrase_setup_view_model.dart';
 /// against a canonical registry).
 const _commonCurrencies = ['USD', 'EUR', 'GBP', 'INR', 'CAD', 'AUD', 'JPY'];
 
-/// Final onboarding step, after the recovery phrase is confirmed: the
-/// currency chosen here seeds all four starter account groups
+/// First onboarding screen (deferred-onboarding-first-entry): the currency
+/// chosen here seeds all four starter account groups and commits the
+/// signing identity, before the user ever sees the recovery phrase
 /// (multi-currency-support design.md addendum - a group's currency can't
 /// change once it has active accounts, so this choice matters before the
 /// starter financial account is created).
@@ -44,7 +45,7 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
 
   Future<void> _submit() async {
     if (!_isValid) return;
-    final success = await widget.viewModel.finishOnboarding(_controller.text);
+    final success = await widget.viewModel.commitIdentity(_controller.text);
     if (success) widget.onFinished();
   }
 
@@ -114,7 +115,7 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
                   onPressed: widget.viewModel.isSubmitting || !_isValid
                       ? null
                       : _submit,
-                  child: const Text('Finish setup'),
+                  child: const Text('Continue'),
                 ),
               ],
             ),

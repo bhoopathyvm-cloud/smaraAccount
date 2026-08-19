@@ -118,7 +118,11 @@ void main() {
       expect(find.text('Delivered to Euro Savings'), findsOneWidget);
       expect(find.text('Returned to Checking'), findsOneWidget);
 
-      await tester.enterText(find.byType(TextField).first, '92.00');
+      // Before either radio is selected, settledAmountCurrency resolves to
+      // the destination account's own currency (Euro Savings, EUR) - a
+      // comma decimal is EUR's own convention (localized-money-formatting),
+      // not a period.
+      await tester.enterText(find.byType(TextField).first, '92,00');
       await tester.tap(find.widgetWithText(ElevatedButton, 'Settle'));
       await tester.pump();
       await tester.pump();
@@ -180,7 +184,7 @@ void main() {
       await tester.enterText(find.byType(TextField).first, '90.00');
       await tester.pump();
 
-      expect(find.textContaining('Shortfall'), findsOneWidget);
+      expect(find.textContaining('less than expected'), findsOneWidget);
       expect(find.text('Fee / loss category'), findsOneWidget);
 
       await tester.tap(

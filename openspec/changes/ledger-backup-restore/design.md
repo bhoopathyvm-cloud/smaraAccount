@@ -84,6 +84,14 @@ resume recording.
 - [Risk] Scope creep toward merge. → Mitigation: replace-only is a
   stated decision here, not an oversight to "fix" later without its own
   design.
+- [Risk, found during implementation] The app wires `AppDatabase` once at
+  startup (`main.dart`'s `Provider<AppDatabase>`), so replacing the file
+  on disk doesn't retarget the live connection every already-constructed
+  ViewModel is holding onto. → Mitigation: `restoreLedgerBackup` closes
+  its own connection before replacing the file and is documented as
+  unusable afterward; the Settings UI shows a "close the app to continue"
+  screen rather than attempting an in-place hot-swap, which would need a
+  much larger DI restructuring than this change's stated scope.
 
 ## Migration Plan
 

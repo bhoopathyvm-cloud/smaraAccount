@@ -84,8 +84,9 @@ void main() {
       await tester.pump();
 
       expect(confirmed, isTrue);
-      // The identity isn't committed here - only finishOnboarding (called
-      // from the next, currency-selection screen) does that.
+      // deferred-onboarding-first-entry: the identity is already committed
+      // by this point (via commitIdentity, from the earlier currency
+      // screen) - confirming here only acknowledges it.
       verifyNever(
         repository.confirmFirstIdentity(any, currency: anyNamed('currency')),
       );

@@ -543,6 +543,21 @@ class StatementImportViewModel extends ChangeNotifier {
     );
   }
 
+  /// payees-and-spending-memory: "Saving a rule offers to link a payee too"
+  /// scenario - links an existing payee matching [keyword] or creates one,
+  /// with [categoryId] as its default. Called only when the user opts in
+  /// from the save-rule dialog; declining leaves the rule exactly as it
+  /// would without this option.
+  Future<void> linkPayeeToRule({
+    required String keyword,
+    required String categoryId,
+  }) {
+    return _ledgerRepository.findOrCreatePayeeByName(
+      name: keyword,
+      defaultCategoryId: categoryId,
+    );
+  }
+
   Future<void> updateCategoryRule({
     required String id,
     required String keyword,

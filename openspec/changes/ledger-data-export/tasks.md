@@ -1,6 +1,6 @@
 ## Tasks
 
-- [ ] 16.1 Export service CSV
-- [ ] 16.2 UI pick range account
-- [ ] 16.3 File saver
-- [ ] 16.4 Tests
+- [x] 16.1 Export service CSV - `LedgerRepository.exportLedgerCsv({financialAccountId, start, end})` builds a `Date,Description,Category,Direction,Amount,Currency,Verified` CSV from the same posting data the Register already computes from (one row per category leg, so a split-transactions entry exports one row per line instead of losing the breakdown); a quarantined entry is still exported (`Verified=No`), never silently dropped, matching the Register's own "still shown, never hidden" treatment. No signing-key material anywhere in the output.
+- [x] 16.2 UI pick range account - the currently-viewed account in Register is the export's account (no separate account picker needed, mirroring how the rest of Register is already account-scoped); an "Export CSV" app bar action opens `showDateRangePicker` for the range.
+- [x] 16.3 File saver - `file_picker`'s `FilePicker.platform.saveFile` (same package/pattern `ledger-backup-restore`'s Settings backup export already uses), suggested filename `<account>-<start>-to-<end>.csv`.
+- [x] 16.4 Tests - `ledger_repository_test.dart`'s `exportLedgerCsv` group (header/row shape, date-range filtering, split-entry per-leg rows, transfer counterparty label, quarantined-entry inclusion, JPY's 0-decimal-digit formatting, non-financial-account rejection, CSV comma-quoting); `register_view_model_test.dart`'s `ledger-data-export` group (delegation, error surfacing); `register_view_test.dart`'s `ledger-data-export` group (the app bar action opens the date range picker).

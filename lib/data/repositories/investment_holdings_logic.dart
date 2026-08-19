@@ -7,10 +7,7 @@ enum BuyFundingSource { cash, nonCash }
 
 /// Internal lot bucket used while replaying acquisition history.
 class InvestmentLotBucket {
-  InvestmentLotBucket({
-    required this.quantityScaled,
-    this.lockedUntil,
-  });
+  InvestmentLotBucket({required this.quantityScaled, this.lockedUntil});
 
   int quantityScaled;
   final DateTime? lockedUntil;
@@ -45,10 +42,7 @@ int multiplyScaledQuantityPrice(int quantityScaled, int priceMinor) {
 
 DateTime parseTransactionDate(String dateOnly) => DateTime.parse(dateOnly);
 
-int lockedQuantityScaledAt(
-  List<InvestmentLotBucket> buckets,
-  DateTime asOf,
-) {
+int lockedQuantityScaledAt(List<InvestmentLotBucket> buckets, DateTime asOf) {
   var locked = 0;
   for (final bucket in buckets) {
     if (bucket.lockedUntil != null && asOf.isBefore(bucket.lockedUntil!)) {

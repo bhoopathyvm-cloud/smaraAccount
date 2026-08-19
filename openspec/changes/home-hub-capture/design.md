@@ -57,3 +57,22 @@ second capture-entry design to maintain.
 ## Open Questions
 
 None for v1.
+
+## Correction, found during implementation
+
+Decision 1's premise ("no new aggregation logic — reuses Summary's
+existing by-category query") did not hold once the actual code was
+read: `LedgerRepository.watchSummary`/`LedgerSummary` only ever
+collapse a date range into two totals (income, expense) — there was no
+existing by-category breakdown to call into. Summary itself doesn't
+break down by category either.
+
+Resolved by adding genuinely new repository surface,
+`LedgerRepository.watchCategoryTotals({required start, required end})`
+returning `List<CategoryTotal>` (`domain/models/summary.dart`), which
+mirrors `watchSummary`'s own join/account-exclusion logic but groups by
+category instead of collapsing to a single total. `HomeViewModel`
+subscribes to it scoped to the current calendar month and exposes
+`thisMonthExpenseTotals`/`thisMonthIncomeTotals` (filtered by
+`isIncome`, sorted descending by `totalMinor`). Everything else in
+Decision 1 (no account filter, current month only) held as designed.

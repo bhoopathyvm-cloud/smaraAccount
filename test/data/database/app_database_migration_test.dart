@@ -1,4 +1,4 @@
-import 'package:drift/drift.dart' hide isNull;
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
@@ -305,7 +305,300 @@ sqlite3.Database _openV8Database() {
   return db;
 }
 
+/// Built by taking [_openV8Database] and hand-applying the schemaVersion-9
+/// through schemaVersion-11 migration SQL (`accounts.holds_investments`,
+/// `accounts.investment_owner_account_id`, `instruments`,
+/// `investment_lots`, `instrument_quotes`, the Investments system group,
+/// `investment_sells`) so onUpgrade(11, 12) can be exercised for real for
+/// the `signing_identities.acknowledged_at` migration below.
+sqlite3.Database _openV11Database() {
+  final db = _openV8Database();
+  db.execute('''
+    CREATE TABLE category_rules (
+      id TEXT NOT NULL PRIMARY KEY,
+      keyword TEXT NOT NULL,
+      category_id TEXT NOT NULL REFERENCES accounts(id),
+      created_at INTEGER NOT NULL
+    );
+    ALTER TABLE accounts ADD COLUMN holds_investments INTEGER NOT NULL DEFAULT 0;
+    ALTER TABLE accounts ADD COLUMN investment_owner_account_id TEXT NULL REFERENCES accounts(id);
+    CREATE TABLE instruments (
+      id TEXT NOT NULL PRIMARY KEY,
+      name TEXT NOT NULL,
+      kind TEXT NOT NULL,
+      ticker TEXT NULL,
+      isin TEXT NULL,
+      archived_at INTEGER NULL,
+      created_at INTEGER NOT NULL DEFAULT 0
+    );
+    CREATE TABLE investment_lots (
+      id TEXT NOT NULL PRIMARY KEY,
+      account_id TEXT NOT NULL REFERENCES accounts(id),
+      instrument_id TEXT NOT NULL REFERENCES instruments(id),
+      quantity_scaled INTEGER NOT NULL,
+      unit_cost_minor INTEGER NOT NULL,
+      source TEXT NOT NULL,
+      acquired_at TEXT NOT NULL,
+      locked_until TEXT NULL,
+      journal_entry_id TEXT NOT NULL REFERENCES journal_entries(id),
+      created_at INTEGER NOT NULL DEFAULT 0
+    );
+    CREATE TABLE instrument_quotes (
+      id TEXT NOT NULL PRIMARY KEY,
+      instrument_id TEXT NOT NULL REFERENCES instruments(id),
+      price_minor INTEGER NOT NULL,
+      currency TEXT NOT NULL,
+      fetched_at TEXT NOT NULL
+    );
+    CREATE TABLE investment_sells (
+      id TEXT NOT NULL PRIMARY KEY,
+      account_id TEXT NOT NULL REFERENCES accounts(id),
+      instrument_id TEXT NOT NULL REFERENCES instruments(id),
+      quantity_scaled INTEGER NOT NULL,
+      journal_entry_id TEXT NOT NULL REFERENCES journal_entries(id),
+      created_at INTEGER NOT NULL DEFAULT 0
+    );
+    INSERT INTO account_groups (id, name, kind, sort_order, is_system, created_at) VALUES
+      ('$groupInvestmentsId', 'Investments', 'assetGroup', 4, 1, 0);
+    PRAGMA user_version = 11;
+  ''');
+  return db;
+}
+
+/// Built by taking [_openV11Database] and hand-applying the schemaVersion-12
+/// migration SQL (`signing_identities.acknowledged_at`, backfilled) so
+/// onUpgrade(12, 13) can be exercised for real for the `payees` table
+/// migration below.
+sqlite3.Database _openV12Database() {
+  final db = _openV11Database();
+  db.execute('''
+    ALTER TABLE signing_identities ADD COLUMN acknowledged_at INTEGER NULL;
+    UPDATE signing_identities SET acknowledged_at = created_at WHERE acknowledged_at IS NULL;
+    PRAGMA user_version = 12;
+  ''');
+  return db;
+}
+
+/// Built by taking [_openV12Database] and hand-applying the schemaVersion-13
+/// migration SQL (`payees` table) so onUpgrade(13, 14) can be exercised for
+/// real for the `recurring_templates` table migration below.
+sqlite3.Database _openV13Database() {
+  final db = _openV12Database();
+  db.execute('''
+    CREATE TABLE payees (
+      id TEXT NOT NULL PRIMARY KEY,
+      name TEXT NOT NULL,
+      default_category_id TEXT NULL,
+      default_financial_account_id TEXT NULL,
+      created_at INTEGER NOT NULL
+    );
+    PRAGMA user_version = 13;
+  ''');
+  return db;
+}
+
+/// Built by taking [_openV13Database] and hand-applying the
+/// schemaVersion-14 migration SQL (`recurring_templates` table) so
+/// onUpgrade(14, 15) can be exercised for real for the
+/// `accounts.monthly_limit_minor` column migration below.
+sqlite3.Database _openV14Database() {
+  final db = _openV13Database();
+  db.execute('''
+    CREATE TABLE recurring_templates (
+      id TEXT NOT NULL PRIMARY KEY,
+      name TEXT NOT NULL,
+      direction TEXT NOT NULL,
+      financial_account_id TEXT NOT NULL,
+      category_id TEXT NOT NULL,
+      amount_minor INTEGER NOT NULL,
+      day_of_month INTEGER NOT NULL,
+      last_recorded_year_month TEXT NULL,
+      created_at INTEGER NOT NULL
+    );
+    PRAGMA user_version = 14;
+  ''');
+  return db;
+}
+
+/// Built by taking [_openV14Database] and hand-applying the
+/// schemaVersion-15 migration SQL (`accounts.monthly_limit_minor`) so
+/// onUpgrade(15, 16) can be exercised for real for the
+/// `accounts.is_credit_card` column migration below.
+sqlite3.Database _openV15Database() {
+  final db = _openV14Database();
+  db.execute('''
+    ALTER TABLE accounts ADD COLUMN monthly_limit_minor INTEGER NULL;
+    PRAGMA user_version = 15;
+  ''');
+  return db;
+}
+
 void main() {
+  group('onUpgrade from schemaVersion 15', () {
+    test('existing database upgrades cleanly and a liability account can be '
+        'flagged as a credit card', () async {
+      final v15 = _openV15Database();
+      final db = AppDatabase.forTesting(NativeDatabase.opened(v15));
+      addTearDown(db.close);
+
+      final repository = LedgerRepository(
+        database: db,
+        signingKeyService: SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        ),
+      );
+      final generated = await repository.generateFirstIdentity();
+      await repository.confirmFirstIdentity(generated, currency: 'USD');
+
+      final account = await repository.createFinancialAccount(
+        name: 'Visa',
+        type: AccountType.liability,
+        groupId: groupCreditShortTermId,
+        isCreditCard: true,
+      );
+      expect(account.isCreditCard, isTrue);
+    });
+  });
+
+  group('onUpgrade from schemaVersion 14', () {
+    test(
+      'existing database upgrades cleanly and monthlyLimitMinor is settable',
+      () async {
+        final v14 = _openV14Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v14));
+        addTearDown(db.close);
+
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await repository.generateFirstIdentity();
+        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final expenseId = (await repository.watchCategories().first)
+            .firstWhere((a) => a.type == AccountType.expense)
+            .id;
+
+        await repository.setCategoryMonthlyLimit(
+          id: expenseId,
+          monthlyLimitMinor: 15000,
+        );
+        final category = (await repository.watchCategories().first).firstWhere(
+          (a) => a.id == expenseId,
+        );
+        expect(category.monthlyLimitMinor, equals(15000));
+      },
+    );
+  });
+
+  group('onUpgrade from schemaVersion 13', () {
+    test(
+      'existing database upgrades cleanly and recurring_templates starts empty',
+      () async {
+        final v13 = _openV13Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v13));
+        addTearDown(db.close);
+
+        final templates = await db.select(db.recurringTemplates).get();
+        expect(templates, isEmpty);
+
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final generated = await repository.generateFirstIdentity();
+        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final accountId =
+            (await repository.watchFinancialAccounts().first).first.id;
+        final expenseId = (await repository.watchCategories().first)
+            .firstWhere((a) => a.type == AccountType.expense)
+            .id;
+
+        final created = await repository.createRecurringTemplate(
+          name: 'Rent',
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: accountId,
+          categoryId: expenseId,
+          amountMinor: 150000,
+          dayOfMonth: 1,
+        );
+        expect(created.name, equals('Rent'));
+      },
+    );
+  });
+
+  group('onUpgrade from schemaVersion 12', () {
+    test(
+      'existing database upgrades cleanly and payees starts empty',
+      () async {
+        final v12 = _openV12Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v12));
+        addTearDown(db.close);
+
+        final payees = await db.select(db.payees).get();
+        expect(payees, isEmpty);
+
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+        final created = await repository.createPayee(name: 'Starbucks');
+        expect(created.name, equals('Starbucks'));
+      },
+    );
+  });
+
+  group('onUpgrade from schemaVersion 11', () {
+    test(
+      'an existing identity is backfilled as already-acknowledged, never sent back through acknowledgment',
+      () async {
+        final v11 = _openV11Database();
+        v11.execute('''
+          INSERT INTO signing_identities (identity_id, public_key, created_at)
+          VALUES ('legacy-identity', X'00', 1700000000);
+        ''');
+
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v11));
+        addTearDown(db.close);
+
+        final identity = await (db.select(
+          db.signingIdentities,
+        )..where((t) => t.identityId.equals('legacy-identity'))).getSingle();
+        expect(identity.acknowledgedAt, isNotNull);
+        expect(
+          identity.acknowledgedAt!.millisecondsSinceEpoch ~/ 1000,
+          equals(1700000000),
+        );
+      },
+    );
+
+    test(
+      'a freshly committed identity after the upgrade starts unacknowledged',
+      () async {
+        final v11 = _openV11Database();
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v11));
+        addTearDown(db.close);
+        final repository = LedgerRepository(
+          database: db,
+          signingKeyService: SigningKeyService(
+            secureStorage: InMemorySecureKeyStorage(),
+          ),
+        );
+
+        final generated = await repository.generateFirstIdentity();
+        await repository.confirmFirstIdentity(generated, currency: 'USD');
+
+        final identity = await repository.currentIdentity();
+        expect(identity!.acknowledgedAt, isNull);
+      },
+    );
+  });
+
   group('onUpgrade from schemaVersion 8', () {
     test(
       'existing database upgrades cleanly and category_rules starts empty',
