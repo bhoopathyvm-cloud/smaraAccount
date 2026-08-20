@@ -5,12 +5,13 @@ import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../view_models/recovery_phrase_setup_view_model.dart';
 
-/// First onboarding screen: generates the device's recovery phrase and
-/// displays it with explicit consequences messaging (spec: "Mandatory
-/// Recovery Phrase Acknowledgment" - "the recovery phrase is displayed
-/// with an explanation of the consequences of losing both the device and
-/// the phrase"). The phrase is not yet committed to the database - see
-/// [RecoveryPhraseSetupViewModel].
+/// Displays the device's recovery phrase with explicit consequences
+/// messaging (spec: "Mandatory Recovery Phrase Acknowledgment" - "the
+/// recovery phrase is displayed with an explanation of the consequences of
+/// losing both the device and the phrase"). deferred-onboarding-first-entry:
+/// by the time this screen shows, the signing identity is already
+/// committed and the user has already recorded one guided entry with it -
+/// see [RecoveryPhraseSetupViewModel].
 class RecoveryPhraseView extends StatefulWidget {
   const RecoveryPhraseView({
     super.key,

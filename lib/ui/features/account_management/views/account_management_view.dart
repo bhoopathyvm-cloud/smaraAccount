@@ -40,6 +40,7 @@ class AccountManagementView extends StatelessWidget {
     var type = AccountType.asset;
     String? groupId;
     int? openingBalanceMinor;
+    var isCreditCard = false;
 
     await showDialog<void>(
       context: context,
@@ -54,6 +55,10 @@ class AccountManagementView extends StatelessWidget {
           if (!groups.any((group) => group.id == groupId)) {
             groupId = groups.isEmpty ? null : groups.first.id;
           }
+          final selectedGroupCurrency = groups
+              .where((group) => group.id == groupId)
+              .map((group) => group.currency)
+              .firstWhere((currency) => currency != null, orElse: () => null);
           return AlertDialog(
             title: const Text('Create account'),
             content: SingleChildScrollView(
@@ -82,9 +87,24 @@ class AccountManagementView extends StatelessWidget {
                       setDialogState(() {
                         type = selection.first;
                         groupId = null;
+                        if (type != AccountType.liability) {
+                          isCreditCard = false;
+                        }
                       });
                     },
                   ),
+                  // credit-card-household-flow: set once at creation,
+                  // never changeable afterward - a Liability-only flag,
+                  // mirroring the holdsInvestments pattern.
+                  if (type == AccountType.liability)
+                    CheckboxListTile(
+                      contentPadding: EdgeInsets.zero,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: const Text('This is a credit card'),
+                      value: isCreditCard,
+                      onChanged: (value) =>
+                          setDialogState(() => isCreditCard = value ?? false),
+                    ),
                   const SizedBox(height: AppSpacing.medium),
                   EntityPickerField<AccountGroup>(
                     key: ValueKey(type),
@@ -99,6 +119,7 @@ class AccountManagementView extends StatelessWidget {
                   MoneyAmountField(
                     controller: balanceController,
                     labelText: 'Opening balance (optional)',
+                    currency: selectedGroupCurrency ?? 'USD',
                     onChangedMinor: (value) => openingBalanceMinor = value,
                   ),
                 ],
@@ -120,6 +141,7 @@ class AccountManagementView extends StatelessWidget {
                           type: type,
                           groupId: groupId!,
                           openingBalanceMinor: openingBalanceMinor,
+                          isCreditCard: isCreditCard,
                         );
                         if (created && dialogContext.mounted) {
                           Navigator.of(dialogContext).pop();
@@ -349,10 +371,11 @@ class AccountManagementView extends StatelessWidget {
   ) async {
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Archive group?',
+      title: 'Hide group from new entries?',
       message:
           '${group.name} will no longer be offered when creating or '
           'reassigning accounts.',
+      confirmLabel: 'Hide',
     );
     if (confirmed) await viewModel.archiveGroup(group.id);
   }
@@ -422,9 +445,10 @@ class AccountManagementView extends StatelessWidget {
   Future<void> _confirmArchive(BuildContext context, Account account) async {
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Archive account?',
+      title: 'Hide account from new entries?',
       message:
           '${account.name} will no longer be available for new transactions.',
+      confirmLabel: 'Hide',
     );
     if (confirmed) await viewModel.archiveAccount(account.id);
   }
@@ -478,12 +502,15 @@ class AccountManagementView extends StatelessWidget {
                     .toList(),
                 onRenameGroup: () => _showRenameGroupDialog(context, group),
                 onArchiveGroup: () => _confirmArchiveGroup(context, group),
+                onUnarchiveGroup: () => viewModel.unarchiveGroup(group.id),
                 onRenameAccount: (account) =>
                     _showRenameAccountDialog(context, account),
                 onReassignAccount: (account) =>
                     _showReassignDialog(context, account),
                 onArchiveAccount: (account) =>
                     _confirmArchive(context, account),
+                onUnarchiveAccount: (account) =>
+                    viewModel.unarchiveAccount(account.id),
               ),
           ],
         ),
@@ -498,18 +525,26 @@ class _GroupAccounts extends StatelessWidget {
     required this.accounts,
     required this.onRenameGroup,
     required this.onArchiveGroup,
+    required this.onUnarchiveGroup,
     required this.onRenameAccount,
     required this.onReassignAccount,
     required this.onArchiveAccount,
+    required this.onUnarchiveAccount,
   });
 
   final AccountGroup group;
   final List<Account> accounts;
   final VoidCallback onRenameGroup;
   final VoidCallback onArchiveGroup;
+
+  /// unarchive-accounts-categories: shown only for a user-created,
+  /// archived group (a system group is never archived in the first
+  /// place, so it never reaches this state).
+  final VoidCallback onUnarchiveGroup;
   final ValueChanged<Account> onRenameAccount;
   final ValueChanged<Account> onReassignAccount;
   final ValueChanged<Account> onArchiveAccount;
+  final ValueChanged<Account> onUnarchiveAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -518,11 +553,14 @@ class _GroupAccounts extends StatelessWidget {
         ListTile(
           title: Text(group.name, style: AppTypography.sectionLabel),
           subtitle: Text(
-            group.archived ? 'Archived' : group.currency ?? 'No currency set',
+            group.archived ? 'Hidden' : group.currency ?? 'No currency set',
             style: AppTypography.metadata,
           ),
           trailing: group.archived
-              ? null
+              ? TextButton(
+                  onPressed: onUnarchiveGroup,
+                  child: const Text('Restore'),
+                )
               : group.isSystem
               ? IconButton(
                   tooltip: 'Edit group',
@@ -545,7 +583,7 @@ class _GroupAccounts extends StatelessWidget {
                     ),
                     PopupMenuItem(
                       value: _GroupAction.archive,
-                      child: Text('Archive'),
+                      child: Text('Hide'),
                     ),
                   ],
                 ),
@@ -569,11 +607,14 @@ class _GroupAccounts extends StatelessWidget {
             ),
             title: Text(account.name, style: AppTypography.cardTitle),
             subtitle: Text(
-              account.archived ? 'Archived' : account.type.name,
+              account.archived ? 'Hidden' : account.type.name,
               style: AppTypography.metadata,
             ),
             trailing: account.archived
-                ? null
+                ? TextButton(
+                    onPressed: () => onUnarchiveAccount(account),
+                    child: const Text('Restore'),
+                  )
                 : PopupMenuButton<_AccountAction>(
                     onSelected: (action) {
                       switch (action) {
@@ -596,7 +637,7 @@ class _GroupAccounts extends StatelessWidget {
                       ),
                       PopupMenuItem(
                         value: _AccountAction.archive,
-                        child: Text('Archive'),
+                        child: Text('Hide'),
                       ),
                     ],
                   ),

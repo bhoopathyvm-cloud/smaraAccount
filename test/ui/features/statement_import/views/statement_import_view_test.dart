@@ -8,6 +8,7 @@ import 'package:smara_accounting/data/database/tables/ofx_import_records_table.d
 import 'package:smara_accounting/domain/csv/csv_column_mapping.dart';
 import 'package:smara_accounting/domain/csv/csv_import_profile.dart';
 import 'package:smara_accounting/domain/models/account.dart';
+import 'package:smara_accounting/domain/models/payee.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/domain/statement_import/category_rule.dart';
 import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart';
@@ -452,6 +453,105 @@ void main() {
       },
     );
   });
+
+  group(
+    'payees-and-spending-memory: link a payee from the save-rule dialog',
+    () {
+      testWidgets(
+        'accepting the pre-checked offer links a payee named after the '
+        'keyword, defaulting to the rule\'s category',
+        (tester) async {
+          await pumpAtPreviewWithGroup(tester);
+
+          await tester.tap(find.byType(DropdownButtonFormField<String>).first);
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('Groceries').last);
+          await tester.pumpAndSettle();
+
+          when(
+            ledgerRepository.findOrCreatePayeeByName(
+              name: anyNamed('name'),
+              defaultCategoryId: anyNamed('defaultCategoryId'),
+            ),
+          ).thenAnswer(
+            (_) async => const Payee(
+              id: 'payee-1',
+              name: 'row a',
+              defaultCategoryId: 'cat-1',
+            ),
+          );
+
+          expect(find.text('Also remember as a payee'), findsOneWidget);
+          await tester.tap(find.widgetWithText(ElevatedButton, 'Save rule'));
+          await tester.pumpAndSettle();
+
+          verify(
+            ledgerRepository.findOrCreatePayeeByName(
+              name: 'row a',
+              defaultCategoryId: groceries.id,
+            ),
+          ).called(1);
+        },
+      );
+
+      testWidgets(
+        'unchecking the offer still saves the rule, but links no payee',
+        (tester) async {
+          await pumpAtPreviewWithGroup(tester);
+
+          await tester.tap(find.byType(DropdownButtonFormField<String>).first);
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('Groceries').last);
+          await tester.pumpAndSettle();
+
+          await tester.tap(find.text('Also remember as a payee'));
+          await tester.pumpAndSettle();
+          await tester.tap(find.widgetWithText(ElevatedButton, 'Save rule'));
+          await tester.pumpAndSettle();
+
+          verify(
+            importRepository.saveCategoryRule(
+              keyword: 'row a',
+              categoryId: groceries.id,
+            ),
+          ).called(1);
+          verifyNever(
+            ledgerRepository.findOrCreatePayeeByName(
+              name: anyNamed('name'),
+              defaultCategoryId: anyNamed('defaultCategoryId'),
+            ),
+          );
+        },
+      );
+
+      testWidgets('skipping the rule entirely links no payee either', (
+        tester,
+      ) async {
+        await pumpAtPreviewWithGroup(tester);
+
+        await tester.tap(find.byType(DropdownButtonFormField<String>).first);
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Groceries').last);
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text('Skip'));
+        await tester.pumpAndSettle();
+
+        verifyNever(
+          importRepository.saveCategoryRule(
+            keyword: anyNamed('keyword'),
+            categoryId: anyNamed('categoryId'),
+          ),
+        );
+        verifyNever(
+          ledgerRepository.findOrCreatePayeeByName(
+            name: anyNamed('name'),
+            defaultCategoryId: anyNamed('defaultCategoryId'),
+          ),
+        );
+      });
+    },
+  );
 
   group('category rule management', () {
     testWidgets('lists every saved rule with its category', (tester) async {

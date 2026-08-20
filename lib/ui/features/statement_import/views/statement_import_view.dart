@@ -526,7 +526,12 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
                 '${row.transactionDate.month.toString().padLeft(2, '0')}-'
                 '${row.transactionDate.day.toString().padLeft(2, '0')}',
               ),
-              trailing: Text(formatAmountMinor(row.amountMinor)),
+              trailing: Text(
+                formatAmountMinor(
+                  row.amountMinor,
+                  viewModel.csvCurrency ?? 'USD',
+                ),
+              ),
             ),
           const SizedBox(height: AppSpacing.large),
           TextField(
@@ -599,44 +604,64 @@ class _PreviewStep extends StatelessWidget {
     final keywordController = TextEditingController(
       text: group.isSingleRow ? '' : group.key,
     );
+    var linkPayee = true;
     await showDialog<void>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Save as a rule?'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Future imports whose description contains this keyword will '
-              'be categorized the same way automatically.',
-              style: AppTypography.metadata,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: const Text('Save as a rule?'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Future imports whose description contains this keyword '
+                'will be categorized the same way automatically.',
+                style: AppTypography.metadata,
+              ),
+              const SizedBox(height: AppSpacing.medium),
+              TextField(
+                controller: keywordController,
+                autofocus: group.isSingleRow,
+                decoration: const InputDecoration(labelText: 'Keyword'),
+              ),
+              // payees-and-spending-memory: "Saving a rule offers to link a
+              // payee too" - opt-in, pre-checked; declining still saves the
+              // rule exactly as it would without this option.
+              CheckboxListTile(
+                contentPadding: EdgeInsets.zero,
+                controlAffinity: ListTileControlAffinity.leading,
+                title: const Text('Also remember as a payee'),
+                value: linkPayee,
+                onChanged: (value) =>
+                    setDialogState(() => linkPayee = value ?? false),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Skip'),
             ),
-            const SizedBox(height: AppSpacing.medium),
-            TextField(
-              controller: keywordController,
-              autofocus: group.isSingleRow,
-              decoration: const InputDecoration(labelText: 'Keyword'),
+            ElevatedButton(
+              onPressed: () async {
+                final keyword = keywordController.text.trim();
+                if (keyword.isEmpty) return;
+                await viewModel.saveCategoryRule(
+                  keyword: keyword,
+                  categoryId: categoryId,
+                );
+                if (linkPayee) {
+                  await viewModel.linkPayeeToRule(
+                    keyword: keyword,
+                    categoryId: categoryId,
+                  );
+                }
+                if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+              },
+              child: const Text('Save rule'),
             ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Skip'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final keyword = keywordController.text.trim();
-              if (keyword.isEmpty) return;
-              await viewModel.saveCategoryRule(
-                keyword: keyword,
-                categoryId: categoryId,
-              );
-              if (dialogContext.mounted) Navigator.of(dialogContext).pop();
-            },
-            child: const Text('Save rule'),
-          ),
-        ],
       ),
     );
   }
@@ -830,7 +855,10 @@ class _PreviewRow extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    formatAmountMinor(row.transaction.amountMinor),
+                    formatAmountMinor(
+                      row.transaction.amountMinor,
+                      row.transaction.currency,
+                    ),
                     style: AppTypography.cardTitle,
                   ),
                 ],

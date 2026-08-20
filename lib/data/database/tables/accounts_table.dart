@@ -50,6 +50,17 @@ class Accounts extends Table {
   /// Required for asset/liability; NULL for income/expense/equity.
   TextColumn get groupId => text().nullable()();
   IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  /// monthly-category-limits: optional, Expense categories only (never
+  /// set for any other [AccountType]) - month-to-date progress display,
+  /// informational only, never enforced against posting.
+  IntColumn get monthlyLimitMinor => integer().nullable()();
+
+  /// credit-card-household-flow: optional, Liability accounts only, set
+  /// at creation and never changed after (mirrors [holdsInvestments]'s
+  /// immutable-flag pattern) - a label and capture-flow default, not a
+  /// new account type or posting shape.
+  BoolColumn get isCreditCard => boolean().withDefault(const Constant(false))();
   DateTimeColumn get archivedAt => dateTime().nullable()();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 

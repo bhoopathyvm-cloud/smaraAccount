@@ -100,7 +100,14 @@ class _SummaryCard extends StatelessWidget {
           children: [
             Text(label, style: AppTypography.sectionLabel),
             const SizedBox(height: AppSpacing.base),
-            Text(formatAmountMinor(amountMinor), style: AppTypography.balance),
+            // Summary totals across accounts with no per-currency split of
+            // its own yet (pre-existing scope gap, not introduced here) -
+            // a neutral format is the same fallback used elsewhere in this
+            // app for a currency-unknown context.
+            Text(
+              formatAmountMinor(amountMinor, 'USD'),
+              style: AppTypography.balance,
+            ),
           ],
         ),
       ),

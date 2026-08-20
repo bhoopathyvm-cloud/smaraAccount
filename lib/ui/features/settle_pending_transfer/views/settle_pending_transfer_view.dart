@@ -38,7 +38,7 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
     final summary = widget.viewModel.summary;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settle transfer', style: AppTypography.headerTitle),
+        title: Text('What arrived?', style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -51,16 +51,22 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // pending-transfers-plain-language: same human-sentence
+                // voice as Home's pending line, hiding FX-settlement
+                // jargon from the copy (design.md Decisions).
                 Text(
                   summary.destinationLabel == null
-                      ? summary.sourceAccountName
-                      : '${summary.sourceAccountName} → '
-                            '${summary.destinationLabel}',
+                      ? 'You sent '
+                            '${formatAmountMinor(summary.amountMinor, summary.currency)} '
+                            '${summary.currency} from '
+                            '${summary.sourceAccountName}'
+                      : 'You sent '
+                            '${formatAmountMinor(summary.amountMinor, summary.currency)} '
+                            '${summary.currency} to ${summary.destinationLabel}',
                   style: AppTypography.cardTitle,
                 ),
                 Text(
-                  'Provisional: ${formatAmountMinor(summary.amountMinor)} '
-                  '${summary.currency}',
+                  'Tell us what actually arrived so we can settle it.',
                   style: AppTypography.metadata,
                 ),
                 const SizedBox(height: AppSpacing.large),
@@ -92,6 +98,7 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                 MoneyAmountField(
                   controller: _amountController,
                   labelText: 'Settled amount',
+                  currency: viewModel.settledAmountCurrency ?? summary.currency,
                   suffixText: viewModel.settledAmountCurrency,
                   onChangedMinor: viewModel.setSettledAmountMinor,
                 ),
@@ -99,9 +106,10 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                     viewModel.shortfallMinor > 0) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    'Shortfall: '
-                    '${formatAmountMinor(viewModel.shortfallMinor)} '
-                    '${summary.currency} - choose a category to cover it.',
+                    'You received '
+                    '${formatAmountMinor(viewModel.shortfallMinor, summary.currency)} '
+                    '${summary.currency} less than expected - choose a '
+                    'category to cover the difference.',
                     style: AppTypography.body,
                   ),
                   const SizedBox(height: AppSpacing.base),

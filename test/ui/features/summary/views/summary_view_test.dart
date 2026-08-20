@@ -33,7 +33,7 @@ void main() {
 
     expect(find.text('Total income'), findsOneWidget);
     expect(find.text('Total expense'), findsOneWidget);
-    expect(find.text('1500.00'), findsOneWidget);
+    expect(find.text('1,500.00'), findsOneWidget);
     expect(find.text('42.50'), findsOneWidget);
   });
 }

@@ -5,6 +5,7 @@ import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/journal_entry.dart';
 import 'package:smara_accounting/domain/models/posting.dart';
 import 'package:smara_accounting/ui/features/register/view_models/register_view_model.dart';
+import 'package:smara_accounting/ui/features/register/views/register_row_tile.dart';
 import 'package:smara_accounting/ui/features/register/views/register_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -97,10 +98,10 @@ void main() {
     await tester.pump();
 
     expect(find.text('Salary'), findsOneWidget);
-    expect(find.text('+2500.00'), findsOneWidget);
+    expect(find.text('+2,500.00'), findsOneWidget);
     // Running balance appears twice: once as the row's trailing balance,
     // once implicitly equal to the amount for a single-entry register.
-    expect(find.text('2500.00'), findsOneWidget);
+    expect(find.text('2,500.00'), findsOneWidget);
   });
 
   testWidgets('direction is shown via icon and sign, not a hardcoded color', (
@@ -323,45 +324,114 @@ void main() {
     expect(newerTop, lessThan(olderTop));
   });
 
-  testWidgets('tapping the Transfer action invokes onTransfer', (tester) async {
+  testWidgets('tapping a fixable row invokes onFixEntry with that row', (
+    tester,
+  ) async {
     when(
       repository.watchEntriesForAccount(any),
-    ).thenAnswer((_) => Stream.value(const []));
+    ).thenAnswer((_) => Stream.value([entryWithAssetAmount(1000)]));
 
     final viewModel = RegisterViewModel(ledgerRepository: repository);
     addTearDown(viewModel.dispose);
-    var transferTapped = false;
+    String? fixedEntryId;
 
     await tester.pumpWidget(
       MaterialApp(
         home: RegisterView(
           viewModel: viewModel,
-          onTransfer: () => transferTapped = true,
+          onFixEntry: (row) => fixedEntryId = row.entryId,
         ),
       ),
     );
     await tester.pump();
 
-    await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
+    await tester.tap(find.text('Salary'));
     await tester.pump();
 
-    expect(transferTapped, isTrue);
+    expect(fixedEntryId, equals('entry-1'));
   });
 
   testWidgets(
-    'the Transfer action is disabled when the selected account is archived',
+    'a transfer row (counterpart is another financial account) has no tap target',
     (tester) async {
-      const archivedAsset = Account(
-        id: 'asset-1',
-        name: 'Cash & Bank',
+      const otherAsset = Account(
+        id: 'asset-2',
+        name: 'Savings',
         type: AccountType.asset,
-        archived: true,
+        archived: false,
       );
       when(
         repository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
-      ).thenAnswer((_) => Stream.value([archivedAsset]));
+      ).thenAnswer((_) => Stream.value([asset, otherAsset]));
+      when(repository.watchEntriesForAccount(any)).thenAnswer(
+        (_) => Stream.value([
+          JournalEntry(
+            id: 'entry-1',
+            transactionDate: DateTime(2026, 1, 15),
+            recordedAt: DateTime(2026, 1, 15),
+            description: null,
+            reversesEntryId: null,
+            postings: const [
+              Posting(
+                id: 'p1',
+                entryId: 'entry-1',
+                accountId: 'asset-1',
+                amountMinor: -1000,
+                lineNumber: 1,
+              ),
+              Posting(
+                id: 'p2',
+                entryId: 'entry-1',
+                accountId: 'asset-2',
+                amountMinor: 1000,
+                lineNumber: 2,
+              ),
+            ],
+            deviceChainSequence: 0,
+            entryHash: const [],
+            signedByIdentityId: 'identity-1',
+            signature: const [],
+            migratedFromEntryId: null,
+            isVerified: true,
+            breakReason: null,
+            isSupersededByMigration: false,
+          ),
+        ]),
+      );
+
+      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(viewModel.dispose);
+      var fixCalled = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: RegisterView(
+            viewModel: viewModel,
+            onFixEntry: (_) => fixCalled = true,
+          ),
+        ),
+      );
+      await tester.pump();
+
+      final rowInkWell = find.descendant(
+        of: find.byType(RegisterRowTile),
+        matching: find.byType(InkWell),
+      );
+      final inkWell = tester.widget<InkWell>(rowInkWell);
+      expect(inkWell.onTap, isNull);
+
+      await tester.tap(rowInkWell);
+      await tester.pump();
+      expect(fixCalled, isFalse);
+    },
+  );
+
+  testWidgets(
+    'the single Add action opens a sheet whose Moved money choice invokes '
+    'onTransfer',
+    (tester) async {
       when(
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value(const []));
@@ -380,22 +450,18 @@ void main() {
       );
       await tester.pump();
 
-      final fab = tester.widget<FloatingActionButton>(
-        find.ancestor(
-          of: find.byIcon(TablerIcons.arrowsExchange),
-          matching: find.byType(FloatingActionButton),
-        ),
-      );
-      expect(fab.onPressed, isNull);
+      await tester.tap(find.widgetWithText(FloatingActionButton, 'Add'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Moved money'));
+      await tester.pumpAndSettle();
 
-      await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
-      await tester.pump();
-      expect(transferTapped, isFalse);
+      expect(transferTapped, isTrue);
     },
   );
 
   testWidgets(
-    'the plus FAB is disabled when the selected account is archived, enabled when active',
+    'the single Add action is disabled when the selected account is archived, '
+    'enabled when active',
     (tester) async {
       const archivedAsset = Account(
         id: 'asset-1',
@@ -414,28 +480,26 @@ void main() {
 
       final archivedViewModel = RegisterViewModel(ledgerRepository: repository);
       addTearDown(archivedViewModel.dispose);
-      var addTapped = false;
+      var spentTapped = false;
 
       await tester.pumpWidget(
         MaterialApp(
           home: RegisterView(
             viewModel: archivedViewModel,
-            onAddTransaction: () => addTapped = true,
+            onSpent: () => spentTapped = true,
           ),
         ),
       );
       await tester.pump();
 
       final archivedFab = tester.widget<FloatingActionButton>(
-        find.ancestor(
-          of: find.byIcon(TablerIcons.plus),
-          matching: find.byType(FloatingActionButton),
-        ),
+        find.widgetWithText(FloatingActionButton, 'Add'),
       );
       expect(archivedFab.onPressed, isNull);
-      await tester.tap(find.byIcon(TablerIcons.plus));
-      await tester.pump();
-      expect(addTapped, isFalse);
+      await tester.tap(find.widgetWithText(FloatingActionButton, 'Add'));
+      await tester.pumpAndSettle();
+      expect(find.text('Spent'), findsNothing);
+      expect(spentTapped, isFalse);
 
       when(
         repository.watchFinancialAccounts(
@@ -448,22 +512,21 @@ void main() {
         MaterialApp(
           home: RegisterView(
             viewModel: activeViewModel,
-            onAddTransaction: () => addTapped = true,
+            onSpent: () => spentTapped = true,
           ),
         ),
       );
       await tester.pump();
 
       final activeFab = tester.widget<FloatingActionButton>(
-        find.ancestor(
-          of: find.byIcon(TablerIcons.plus),
-          matching: find.byType(FloatingActionButton),
-        ),
+        find.widgetWithText(FloatingActionButton, 'Add'),
       );
       expect(activeFab.onPressed, isNotNull);
-      await tester.tap(find.byIcon(TablerIcons.plus));
-      await tester.pump();
-      expect(addTapped, isTrue);
+      await tester.tap(find.widgetWithText(FloatingActionButton, 'Add'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Spent'));
+      await tester.pumpAndSettle();
+      expect(spentTapped, isTrue);
     },
   );
 
@@ -534,4 +597,161 @@ void main() {
       expect(find.text('Transfer remaining balance'), findsNothing);
     },
   );
+
+  testWidgets(
+    'typing in the search box narrows visible rows; the clear button restores '
+    'them',
+    (tester) async {
+      when(repository.watchEntriesForAccount(any)).thenAnswer(
+        (_) => Stream.value([
+          entryWithAssetAmount(1000),
+          JournalEntry(
+            id: 'entry-2',
+            transactionDate: DateTime(2026, 1, 20),
+            recordedAt: DateTime(2026, 1, 20),
+            description: 'Rent',
+            reversesEntryId: null,
+            postings: const [
+              Posting(
+                id: 'p3',
+                entryId: 'entry-2',
+                accountId: 'asset-1',
+                amountMinor: -500,
+                lineNumber: 1,
+              ),
+              Posting(
+                id: 'p4',
+                entryId: 'entry-2',
+                accountId: 'income-1',
+                amountMinor: 500,
+                lineNumber: 2,
+              ),
+            ],
+            deviceChainSequence: 0,
+            entryHash: const [],
+            signedByIdentityId: 'identity-1',
+            signature: const [],
+            migratedFromEntryId: null,
+            isVerified: true,
+            breakReason: null,
+            isSupersededByMigration: false,
+          ),
+        ]),
+      );
+
+      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: RegisterView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      expect(find.byType(RegisterRowTile), findsNWidgets(2));
+
+      await tester.enterText(find.byType(TextField).first, 'rent');
+      await tester.pump();
+
+      expect(find.byType(RegisterRowTile), findsOneWidget);
+      expect(find.textContaining('Rent'), findsOneWidget);
+
+      await tester.tap(find.byTooltip('Clear search and filters'));
+      await tester.pump();
+
+      expect(find.byType(RegisterRowTile), findsNWidgets(2));
+    },
+  );
+
+  group('credit-card-household-flow', () {
+    const visaCard = Account(
+      id: 'liability-1',
+      name: 'Visa',
+      type: AccountType.liability,
+      archived: false,
+      isCreditCard: true,
+    );
+
+    testWidgets(
+      '"Pay card" is offered for an active credit-card account and invokes '
+      'onPayCard',
+      (tester) async {
+        when(
+          repository.watchFinancialAccounts(
+            includeArchived: anyNamed('includeArchived'),
+          ),
+        ).thenAnswer((_) => Stream.value([visaCard]));
+        when(
+          repository.watchEntriesForAccount(any),
+        ).thenAnswer((_) => Stream.value(const []));
+
+        final viewModel = RegisterViewModel(ledgerRepository: repository);
+        addTearDown(viewModel.dispose);
+        var payCardTapped = false;
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: RegisterView(
+              viewModel: viewModel,
+              onPayCard: () => payCardTapped = true,
+            ),
+          ),
+        );
+        await tester.pump();
+
+        expect(find.text('Pay card'), findsOneWidget);
+        await tester.tap(find.text('Pay card'));
+        await tester.pump();
+
+        expect(payCardTapped, isTrue);
+      },
+    );
+
+    testWidgets('no "Pay card" for an ordinary (non-card) account', (
+      tester,
+    ) async {
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value(const []));
+
+      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: RegisterView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      expect(find.text('Pay card'), findsNothing);
+    });
+  });
+
+  group('ledger-data-export', () {
+    testWidgets(
+      'the app bar offers an Export CSV action, which opens a date range picker',
+      (tester) async {
+        when(
+          repository.watchEntriesForAccount(any),
+        ).thenAnswer((_) => Stream.value(const []));
+
+        final viewModel = RegisterViewModel(ledgerRepository: repository);
+        addTearDown(viewModel.dispose);
+
+        await tester.pumpWidget(
+          MaterialApp(home: RegisterView(viewModel: viewModel)),
+        );
+        await tester.pump();
+
+        expect(find.byTooltip('Export CSV'), findsOneWidget);
+
+        await tester.tap(find.byTooltip('Export CSV'));
+        await tester.pumpAndSettle();
+
+        // showDateRangePicker's dialog is now open, without going further
+        // into picking dates and triggering the real file_picker platform
+        // channel (same depth settings_view_test.dart's backup-export
+        // tests use).
+        expect(find.byType(Dialog), findsOneWidget);
+      },
+    );
+  });
 }

@@ -6,6 +6,7 @@ import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/account_group.dart';
 import 'package:smara_accounting/ui/features/account_management/view_models/account_management_view_model.dart';
 import 'package:smara_accounting/ui/features/account_management/views/account_management_view.dart';
+import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../mocks.mocks.dart';
 
@@ -107,9 +108,9 @@ void main() {
 
       await tester.tap(find.byIcon(Icons.more_vert).first);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Archive'));
+      await tester.tap(find.text('Hide'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
       await tester.pumpAndSettle();
 
       expect(find.text('cannot archive the last account'), findsOneWidget);
@@ -372,9 +373,9 @@ void main() {
     // (it has no member accounts) - the group popup renders last.
     await tester.tap(find.byIcon(Icons.more_vert).last);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Archive'));
+    await tester.tap(find.text('Hide'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
     await tester.pumpAndSettle();
 
     verify(repository.archiveAccountGroup(businessGroup.id)).called(1);
@@ -408,9 +409,9 @@ void main() {
 
       await tester.tap(find.byIcon(Icons.more_vert).last);
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Archive'));
+      await tester.tap(find.text('Hide'));
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
       await tester.pumpAndSettle();
 
       expect(
@@ -419,4 +420,198 @@ void main() {
       );
     },
   );
+
+  group('unarchive-accounts-categories', () {
+    const archivedAccount = Account(
+      id: 'asset-3',
+      name: 'Old Checking',
+      type: AccountType.asset,
+      archived: true,
+      groupId: 'group-cash',
+    );
+    const archivedGroup = AccountGroup(
+      id: 'group-business',
+      name: 'Business',
+      kind: AccountGroupKind.assetGroup,
+      sortOrder: 4,
+      isSystem: false,
+      currency: 'USD',
+      archived: true,
+    );
+
+    testWidgets(
+      'an archived account shows Restore instead of the action menu, and '
+      'tapping it calls through',
+      (tester) async {
+        when(
+          repository.watchFinancialAccounts(
+            includeArchived: anyNamed('includeArchived'),
+          ),
+        ).thenAnswer((_) => Stream.value([checking, savings, archivedAccount]));
+        when(
+          repository.unarchiveFinancialAccount('asset-3'),
+        ).thenAnswer((_) async {});
+
+        final viewModel = AccountManagementViewModel(
+          ledgerRepository: repository,
+        );
+        addTearDown(viewModel.dispose);
+
+        await tester.pumpWidget(
+          MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+        );
+        await tester.pump();
+
+        expect(
+          find.descendant(
+            of: find.widgetWithText(ListTile, 'Old Checking'),
+            matching: find.text('Restore'),
+          ),
+          findsOneWidget,
+        );
+
+        await tester.tap(
+          find.descendant(
+            of: find.widgetWithText(ListTile, 'Old Checking'),
+            matching: find.text('Restore'),
+          ),
+        );
+        await tester.pump();
+
+        verify(repository.unarchiveFinancialAccount('asset-3')).called(1);
+      },
+    );
+
+    testWidgets(
+      'an archived user-created group shows Restore, and tapping it calls '
+      'through',
+      (tester) async {
+        when(
+          repository.watchAccountGroups(
+            includeArchived: anyNamed('includeArchived'),
+          ),
+        ).thenAnswer(
+          (_) => Stream.value([cashGroup, creditGroup, archivedGroup]),
+        );
+        when(
+          repository.unarchiveAccountGroup('group-business'),
+        ).thenAnswer((_) async {});
+
+        final viewModel = AccountManagementViewModel(
+          ledgerRepository: repository,
+        );
+        addTearDown(viewModel.dispose);
+
+        await tester.pumpWidget(
+          MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+        );
+        await tester.pump();
+
+        expect(
+          find.descendant(
+            of: find.widgetWithText(ListTile, 'Business'),
+            matching: find.text('Restore'),
+          ),
+          findsOneWidget,
+        );
+
+        await tester.tap(
+          find.descendant(
+            of: find.widgetWithText(ListTile, 'Business'),
+            matching: find.text('Restore'),
+          ),
+        );
+        await tester.pump();
+
+        verify(repository.unarchiveAccountGroup('group-business')).called(1);
+      },
+    );
+  });
+
+  group('credit-card-household-flow', () {
+    testWidgets(
+      'the credit-card checkbox only appears for Liability, and its value '
+      'is passed through on Create',
+      (tester) async {
+        when(
+          repository.createFinancialAccount(
+            name: anyNamed('name'),
+            type: anyNamed('type'),
+            groupId: anyNamed('groupId'),
+            openingBalanceMinor: anyNamed('openingBalanceMinor'),
+            isCreditCard: anyNamed('isCreditCard'),
+          ),
+        ).thenAnswer(
+          (_) async => const Account(
+            id: 'liability-2',
+            name: 'Visa',
+            type: AccountType.liability,
+            archived: false,
+            isCreditCard: true,
+          ),
+        );
+
+        final viewModel = AccountManagementViewModel(
+          ledgerRepository: repository,
+        );
+        addTearDown(viewModel.dispose);
+
+        await tester.pumpWidget(
+          MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+        );
+        await tester.pump();
+
+        await tester.tap(find.byIcon(TablerIcons.plus));
+        await tester.pumpAndSettle();
+
+        expect(find.text('This is a credit card'), findsNothing);
+
+        await tester.tap(find.text('Liability'));
+        await tester.pump();
+
+        expect(find.text('This is a credit card'), findsOneWidget);
+
+        await tester.enterText(find.widgetWithText(TextField, 'Name'), 'Visa');
+        await tester.tap(find.text('This is a credit card'));
+        await tester.pump();
+        await tester.tap(find.widgetWithText(ElevatedButton, 'Create'));
+        await tester.pumpAndSettle();
+
+        verify(
+          repository.createFinancialAccount(
+            name: 'Visa',
+            type: AccountType.liability,
+            groupId: anyNamed('groupId'),
+            openingBalanceMinor: null,
+            isCreditCard: true,
+          ),
+        ).called(1);
+      },
+    );
+
+    testWidgets('switching back to Asset clears the credit-card choice', (
+      tester,
+    ) async {
+      final viewModel = AccountManagementViewModel(
+        ledgerRepository: repository,
+      );
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(home: AccountManagementView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      await tester.tap(find.byIcon(TablerIcons.plus));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Liability'));
+      await tester.pump();
+      await tester.tap(find.text('This is a credit card'));
+      await tester.pump();
+      await tester.tap(find.text('Asset'));
+      await tester.pump();
+
+      expect(find.text('This is a credit card'), findsNothing);
+    });
+  });
 }

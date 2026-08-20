@@ -346,7 +346,10 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.enterText(find.byType(TextField).first, '100.00');
-        await tester.enterText(find.byType(TextField).at(1), '92.00');
+        // The destination account (Euro Savings) is EUR - a comma decimal
+        // is EUR's own convention (localized-money-formatting), not a
+        // period.
+        await tester.enterText(find.byType(TextField).at(1), '92,00');
         await tester.ensureVisible(
           find.widgetWithText(ElevatedButton, 'Transfer'),
         );

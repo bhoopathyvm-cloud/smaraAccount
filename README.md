@@ -1,6 +1,9 @@
 # SMARA Account
 
-Local-first accounting with a tamper-evident ledger. No server, no cloud, no data leaving your device — just Flutter, your devices, and your own LAN.
+Household books on your device: track what you spend and receive like a
+notebook, with a history that can't quietly rewrite itself. No server, no
+cloud, no data leaving your device — just Flutter, your devices, and your
+own LAN.
 
 ## About this project
 

@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../domain/models/transaction_direction.dart';
 import 'tables/account_groups_table.dart';
 import 'tables/accounts_table.dart';
 import 'tables/category_rules_table.dart';
@@ -16,8 +21,10 @@ import 'tables/investment_sells_table.dart';
 import 'tables/journal_entries_table.dart';
 import 'tables/ledger_chain_state_table.dart';
 import 'tables/ofx_import_records_table.dart';
+import 'tables/payees_table.dart';
 import 'tables/pending_transfers_table.dart';
 import 'tables/postings_table.dart';
+import 'tables/recurring_templates_table.dart';
 import 'tables/signing_identities_table.dart';
 
 part 'app_database.g.dart';
@@ -34,6 +41,9 @@ const starterExpenseCategories = [
   'Rent/Mortgage',
   'Utilities',
   'Transport',
+  'Food out',
+  'Phone',
+  'Health',
   'Other Expense',
 ];
 
@@ -55,6 +65,8 @@ const starterExpenseCategories = [
     OfxImportRecords,
     CsvImportProfiles,
     CategoryRules,
+    Payees,
+    RecurringTemplates,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -62,8 +74,24 @@ class AppDatabase extends _$AppDatabase {
 
   AppDatabase.forTesting(super.executor);
 
+  /// Opens [file] directly as an `AppDatabase`, running the same
+  /// migrations as a normal launch would (ledger-backup-restore: used to
+  /// validate a decrypted backup file - a fresh identity read plus a
+  /// migration run is a real sanity check that it's a genuine, openable
+  /// ledger database, not just bytes that happened to decrypt).
+  AppDatabase.openFile(File file) : super(NativeDatabase(file));
+
+  /// The real database file's on-disk location - the single source of
+  /// truth [_openConnection] and ledger-backup-restore's export/restore
+  /// both resolve from, so they can never drift apart.
+  static Future<File> resolveDatabaseFile() async {
+    final dir = await getApplicationSupportDirectory();
+    await dir.create(recursive: true);
+    return File(p.join(dir.path, 'smara_accounting.sqlite'));
+  }
+
   @override
-  int get schemaVersion => 11;
+  int get schemaVersion => 16;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -322,6 +350,71 @@ class AppDatabase extends _$AppDatabase {
         // investment-holdings: sell rows for date-ordered replay (design.md
         // Decision 3) — additive alongside investment_lots from schema 10.
         await m.createTable(investmentSells);
+      }
+
+      if (from < 12) {
+        // deferred-onboarding-first-entry: nullable acknowledgedAt tracks
+        // the mandatory recovery-phrase acknowledgment separately from
+        // identity existence, since onboarding now commits the identity
+        // before the acknowledgment screens run. Every identity that
+        // already exists in a database upgrading from an earlier schema
+        // was, by definition, onboarded under the old flow where identity
+        // commit and acknowledgment were the same moment - backfill
+        // acknowledgedAt from createdAt so an existing user is never sent
+        // back through acknowledgment screens for a phrase this app never
+        // stored and cannot show again.
+        //
+        // A database skipping straight from schemaVersion < 2 to 12 hits
+        // the `from < 2` branch above first in this same migration call,
+        // which runs `m.createTable(signingIdentities)` against the
+        // *current* table definition - already including
+        // `acknowledgedAt`, since Drift always generates a table's
+        // columns from its live class, not a versioned snapshot. Adding
+        // the column again here would be a duplicate-column error (same
+        // reasoning as `accountGroups.currency` in the `from < 4` branch
+        // above), so it's only needed for a database that already had
+        // `signing_identities` before this migration ran.
+        if (from >= 2) {
+          await m.addColumn(
+            signingIdentities,
+            signingIdentities.acknowledgedAt,
+          );
+          await customStatement(
+            'UPDATE signing_identities SET acknowledged_at = created_at '
+            'WHERE acknowledged_at IS NULL',
+          );
+        }
+      }
+
+      if (from < 13) {
+        // payees-and-spending-memory: additive payees table for remembered
+        // payee defaults (design.md Decision 1). No FK/link column on
+        // journal_entries - matching is done at query time by normalized
+        // description, not by a stored relationship.
+        await m.createTable(payees);
+      }
+
+      if (from < 14) {
+        // recurring-templates: additive recurring_templates table.
+        // Recording a due template just calls recordTransaction like a
+        // manual entry - no FK/link column on journal_entries either.
+        await m.createTable(recurringTemplates);
+      }
+
+      if (from < 15) {
+        // monthly-category-limits: nullable monthly_limit_minor on
+        // accounts (Expense categories only). `accounts` has existed
+        // since schemaVersion 1 and is never recreated by a later
+        // `m.createTable` branch, so this is a plain addColumn with no
+        // duplicate-column guard needed (unlike accountGroups.currency).
+        await m.addColumn(accounts, accounts.monthlyLimitMinor);
+      }
+
+      if (from < 16) {
+        // credit-card-household-flow: is_credit_card on accounts
+        // (Liability accounts only), same plain-addColumn reasoning as
+        // monthlyLimitMinor above.
+        await m.addColumn(accounts, accounts.isCreditCard);
       }
     },
   );

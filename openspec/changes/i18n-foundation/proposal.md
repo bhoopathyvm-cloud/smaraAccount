@@ -10,10 +10,9 @@ Smara Accounting ships English-only UI and English exception messages embedded i
 - Persist an in-app language preference in `SettingsRepository` (SharedPreferences): follow the device locale by default, or pin a supported app locale. Rebuild the UI immediately when it changes, including text direction.
 - Establish a font *hook* (theme + asset registry) capable of rendering Indic and CJK scripts once locale packs land; this change ships Latin-capable fonts and the registry, not every script file.
 - Define the AI-translated v1 workflow: English ARB is canonical; locale packs may ship AI drafts with English fallback for missing keys; human polish is deferred.
-- Keep recovery words (the English BIP39 wordlist) regardless of the language on screen.
-- Localize *display* of unchanged system-seeded names (groups, categories, starter account, and the few internal names that appear in the list of lines) and well-known notes the app wrote by itself; never translate text the user typed.
-- English words the user sees SHALL be everyday household language (Spent / Received, Fix, Hide from new entries, Moved money) — not debit/credit/journal/ledger talk. Code and stored names may stay as they are.
-- Document the language picker for a large language list (the language's own name + an English name, search once packs land).
+- Keep BIP39 recovery-phrase wordlists English regardless of UI locale.
+- Document the dependency order for follow-on changes: Indian and world locale packs apply only after this foundation.
+- **Depends on** `household-language-voice` (or land in parallel): English ARB keys SHALL use household terms (Spent, Received, Fix) from the household term map, not legacy ledger jargon.
 
 ## Capabilities
 

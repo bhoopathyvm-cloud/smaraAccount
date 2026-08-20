@@ -11,6 +11,7 @@ import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/home_overview.dart';
 import 'package:smara_accounting/domain/models/integrity_event.dart';
 import 'package:smara_accounting/domain/models/pending_transfer.dart';
+import 'package:smara_accounting/domain/models/recurring_template.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:test/test.dart';
 
@@ -429,6 +430,242 @@ void main() {
     });
   });
 
+  group('recordSplitTransaction', () {
+    Future<List<String>> categoryIds(AccountType type, int count) async {
+      final categories = await repository.watchCategories().first;
+      return categories
+          .where((c) => c.type == type)
+          .take(count)
+          .map((c) => c.id)
+          .toList();
+    }
+
+    test('posts one financial-account leg for the total and one posting per '
+        'split line', () async {
+      final categories = await categoryIds(AccountType.expense, 2);
+      final financialAccountId = await firstFinancialAccountId();
+
+      final entryId = await repository.recordSplitTransaction(
+        totalAmountMinor: 10000,
+        splitLines: [
+          (categoryId: categories[0], amountMinor: 6000),
+          (categoryId: categories[1], amountMinor: 4000),
+        ],
+        direction: TransactionDirection.moneyOut,
+        financialAccountId: financialAccountId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+
+      final entry = (await repository.watchEntries().first).singleWhere(
+        (e) => e.id == entryId,
+      );
+      expect(entry.postings, hasLength(3));
+
+      final financialPosting = entry.postings.firstWhere(
+        (p) => p.accountId == financialAccountId,
+      );
+      expect(financialPosting.amountMinor, equals(-10000));
+
+      final line1 = entry.postings.firstWhere(
+        (p) => p.accountId == categories[0],
+      );
+      expect(line1.amountMinor, equals(6000));
+      final line2 = entry.postings.firstWhere(
+        (p) => p.accountId == categories[1],
+      );
+      expect(line2.amountMinor, equals(4000));
+
+      expect(
+        await repository.displayBalanceMinor(financialAccountId),
+        equals(-10000),
+      );
+    });
+
+    test(
+      'money in splits credit the income categories, debit the asset',
+      () async {
+        final categories = await categoryIds(AccountType.income, 2);
+        final financialAccountId = await firstFinancialAccountId();
+
+        final entryId = await repository.recordSplitTransaction(
+          totalAmountMinor: 5000,
+          splitLines: [
+            (categoryId: categories[0], amountMinor: 3000),
+            (categoryId: categories[1], amountMinor: 2000),
+          ],
+          direction: TransactionDirection.moneyIn,
+          financialAccountId: financialAccountId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        final entry = (await repository.watchEntries().first).singleWhere(
+          (e) => e.id == entryId,
+        );
+        final line1 = entry.postings.firstWhere(
+          (p) => p.accountId == categories[0],
+        );
+        expect(line1.amountMinor, equals(-3000));
+      },
+    );
+
+    test('rejects a single-line split', () async {
+      final categories = await categoryIds(AccountType.expense, 1);
+      final financialAccountId = await firstFinancialAccountId();
+      expect(
+        () => repository.recordSplitTransaction(
+          totalAmountMinor: 1000,
+          splitLines: [(categoryId: categories[0], amountMinor: 1000)],
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: financialAccountId,
+          transactionDate: DateTime(2026, 1, 15),
+        ),
+        throwsA(isA<InvalidTransactionAmountException>()),
+      );
+    });
+
+    test('rejects lines that don\'t sum to the total', () async {
+      final categories = await categoryIds(AccountType.expense, 2);
+      final financialAccountId = await firstFinancialAccountId();
+      expect(
+        () => repository.recordSplitTransaction(
+          totalAmountMinor: 10000,
+          splitLines: [
+            (categoryId: categories[0], amountMinor: 6000),
+            (categoryId: categories[1], amountMinor: 3000),
+          ],
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: financialAccountId,
+          transactionDate: DateTime(2026, 1, 15),
+        ),
+        throwsA(isA<InvalidTransactionAmountException>()),
+      );
+      expect(await repository.watchEntries().first, isEmpty);
+    });
+
+    test('rejects a zero or negative line amount', () async {
+      final categories = await categoryIds(AccountType.expense, 2);
+      final financialAccountId = await firstFinancialAccountId();
+      expect(
+        () => repository.recordSplitTransaction(
+          totalAmountMinor: 6000,
+          splitLines: [
+            (categoryId: categories[0], amountMinor: 6000),
+            (categoryId: categories[1], amountMinor: 0),
+          ],
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: financialAccountId,
+          transactionDate: DateTime(2026, 1, 15),
+        ),
+        throwsA(isA<InvalidTransactionAmountException>()),
+      );
+    });
+
+    test(
+      'rejects a line whose category is the wrong type for the direction',
+      () async {
+        final expenseId = (await categoryIds(AccountType.expense, 1)).single;
+        final incomeId = (await categoryIds(AccountType.income, 1)).single;
+        final financialAccountId = await firstFinancialAccountId();
+        expect(
+          () => repository.recordSplitTransaction(
+            totalAmountMinor: 10000,
+            splitLines: [
+              (categoryId: expenseId, amountMinor: 6000),
+              // Wrong type: an income category on a moneyOut split.
+              (categoryId: incomeId, amountMinor: 4000),
+            ],
+            direction: TransactionDirection.moneyOut,
+            financialAccountId: financialAccountId,
+            transactionDate: DateTime(2026, 1, 15),
+          ),
+          throwsA(isA<InvalidTransactionAmountException>()),
+        );
+        expect(await repository.watchEntries().first, isEmpty);
+      },
+    );
+
+    test('rejects a line with an archived category', () async {
+      final categories = await categoryIds(AccountType.expense, 2);
+      final financialAccountId = await firstFinancialAccountId();
+      await repository.archiveCategory(categories[1]);
+
+      expect(
+        () => repository.recordSplitTransaction(
+          totalAmountMinor: 10000,
+          splitLines: [
+            (categoryId: categories[0], amountMinor: 6000),
+            (categoryId: categories[1], amountMinor: 4000),
+          ],
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: financialAccountId,
+          transactionDate: DateTime(2026, 1, 15),
+        ),
+        throwsA(isA<InvalidTransactionAmountException>()),
+      );
+      expect(await repository.watchEntries().first, isEmpty);
+    });
+
+    test(
+      'reversing a split entry reverses every category leg at once '
+      '(design.md Decision 4: reverseEntry needs no split-specific change)',
+      () async {
+        final categories = await categoryIds(AccountType.expense, 2);
+        final financialAccountId = await firstFinancialAccountId();
+        final entryId = await repository.recordSplitTransaction(
+          totalAmountMinor: 10000,
+          splitLines: [
+            (categoryId: categories[0], amountMinor: 6000),
+            (categoryId: categories[1], amountMinor: 4000),
+          ],
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: financialAccountId,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        await repository.reverseEntry(entryId);
+
+        expect(
+          await repository.displayBalanceMinor(financialAccountId),
+          equals(0),
+        );
+        final entries = await repository.watchEntries().first;
+        final reversal = entries.singleWhere(
+          (e) => e.reversesEntryId == entryId,
+        );
+        expect(reversal.postings, hasLength(3));
+      },
+    );
+
+    test(
+      'Summary totals each split leg into its own category '
+      '(design.md Decision 4: watchSummary needs no split-specific change)',
+      () async {
+        final categories = await categoryIds(AccountType.expense, 2);
+        await repository.recordSplitTransaction(
+          totalAmountMinor: 10000,
+          splitLines: [
+            (categoryId: categories[0], amountMinor: 6000),
+            (categoryId: categories[1], amountMinor: 4000),
+          ],
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: await firstFinancialAccountId(),
+          transactionDate: DateTime(2026, 1, 15),
+        );
+
+        final totals = await repository
+            .watchCategoryTotals(
+              start: DateTime(2026, 1, 1),
+              end: DateTime(2026, 1, 31),
+            )
+            .first;
+        final total1 = totals.singleWhere((t) => t.categoryId == categories[0]);
+        final total2 = totals.singleWhere((t) => t.categoryId == categories[1]);
+        expect(total1.totalMinor, equals(6000));
+        expect(total2.totalMinor, equals(4000));
+      },
+    );
+  });
+
   group('reverseEntry', () {
     test(
       'posts a new entry with swapped amounts, original unchanged',
@@ -549,6 +786,52 @@ void main() {
       final categories = await repository.watchCategories().first;
       expect(categories.firstWhere((a) => a.id == incomeId).name, 'Freelance');
     });
+
+    group('setCategoryMonthlyLimit', () {
+      test('sets and then clears a limit on an Expense category', () async {
+        final expenseId = await firstCategoryId(AccountType.expense);
+
+        await repository.setCategoryMonthlyLimit(
+          id: expenseId,
+          monthlyLimitMinor: 15000,
+        );
+        var category = (await repository.watchCategories().first).firstWhere(
+          (a) => a.id == expenseId,
+        );
+        expect(category.monthlyLimitMinor, equals(15000));
+
+        await repository.setCategoryMonthlyLimit(
+          id: expenseId,
+          monthlyLimitMinor: null,
+        );
+        category = (await repository.watchCategories().first).firstWhere(
+          (a) => a.id == expenseId,
+        );
+        expect(category.monthlyLimitMinor, isNull);
+      });
+
+      test('rejects setting a limit on an Income category', () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        expect(
+          () => repository.setCategoryMonthlyLimit(
+            id: incomeId,
+            monthlyLimitMinor: 15000,
+          ),
+          throwsA(isA<ArgumentError>()),
+        );
+      });
+
+      test('rejects a non-positive limit', () async {
+        final expenseId = await firstCategoryId(AccountType.expense);
+        expect(
+          () => repository.setCategoryMonthlyLimit(
+            id: expenseId,
+            monthlyLimitMinor: 0,
+          ),
+          throwsA(isA<InvalidTransactionAmountException>()),
+        );
+      });
+    });
   });
 
   group('financial account management', () {
@@ -575,6 +858,66 @@ void main() {
 
       expect(account.type, equals(AccountType.liability));
     });
+
+    test('creates a credit-card-flagged liability account', () async {
+      final account = await repository.createFinancialAccount(
+        name: 'Visa',
+        type: AccountType.liability,
+        groupId: groupCreditShortTermId,
+        isCreditCard: true,
+      );
+
+      expect(account.isCreditCard, isTrue);
+      final accounts = await repository.watchFinancialAccounts().first;
+      expect(
+        accounts.firstWhere((a) => a.id == account.id).isCreditCard,
+        isTrue,
+      );
+    });
+
+    test('a liability account defaults to not a credit card', () async {
+      final account = await repository.createFinancialAccount(
+        name: 'Mortgage',
+        type: AccountType.liability,
+        groupId: groupCreditShortTermId,
+      );
+
+      expect(account.isCreditCard, isFalse);
+    });
+
+    test('rejects isCreditCard on an asset account', () async {
+      expect(
+        () => repository.createFinancialAccount(
+          name: 'Checking',
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+          isCreditCard: true,
+        ),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test(
+      'the credit-card flag is immutable - renaming never changes it',
+      () async {
+        final account = await repository.createFinancialAccount(
+          name: 'Visa',
+          type: AccountType.liability,
+          groupId: groupCreditShortTermId,
+          isCreditCard: true,
+        );
+
+        await repository.renameFinancialAccount(
+          id: account.id,
+          newName: 'Visa Platinum',
+        );
+
+        final accounts = await repository.watchFinancialAccounts().first;
+        final renamed = accounts.firstWhere((a) => a.id == account.id);
+        expect(renamed.name, equals('Visa Platinum'));
+        expect(renamed.isCreditCard, isTrue);
+      },
+    );
 
     test('rejects a group-kind mismatch on create', () async {
       expect(
@@ -1073,6 +1416,113 @@ void main() {
     });
   });
 
+  group('watchCategoryTotals', () {
+    Future<String> categoryIdNamed(String name) async {
+      final categories = await repository.watchCategories().first;
+      return categories.firstWhere((a) => a.name == name).id;
+    }
+
+    test('groups by category (not collapsed into one total per direction), '
+        'excludes a category with no activity in range', () async {
+      final groceriesId = await categoryIdNamed('Groceries');
+      final rentId = await categoryIdNamed('Rent/Mortgage');
+      final salaryId = await categoryIdNamed('Salary');
+      final accountId = await firstFinancialAccountId();
+
+      await repository.recordTransaction(
+        amountMinor: 5000,
+        direction: TransactionDirection.moneyOut,
+        categoryId: groceriesId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 5),
+      );
+      await repository.recordTransaction(
+        amountMinor: 3000,
+        direction: TransactionDirection.moneyOut,
+        categoryId: groceriesId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      await repository.recordTransaction(
+        amountMinor: 150000,
+        direction: TransactionDirection.moneyOut,
+        categoryId: rentId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 1),
+      );
+      await repository.recordTransaction(
+        amountMinor: 300000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: salaryId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 1),
+      );
+
+      final totals = await repository
+          .watchCategoryTotals(
+            start: DateTime(2026, 1, 1),
+            end: DateTime(2026, 1, 31),
+          )
+          .first;
+
+      final byName = {for (final t in totals) t.categoryName: t};
+      expect(byName['Groceries']!.totalMinor, equals(8000));
+      expect(byName['Groceries']!.isIncome, isFalse);
+      expect(byName['Rent/Mortgage']!.totalMinor, equals(150000));
+      expect(byName['Salary']!.totalMinor, equals(300000));
+      expect(byName['Salary']!.isIncome, isTrue);
+      // Utilities had no activity in range - absent, not zero.
+      expect(byName.containsKey('Utilities'), isFalse);
+    });
+
+    test('excludes entries outside the date range', () async {
+      final groceriesId = await categoryIdNamed('Groceries');
+      await repository.recordTransaction(
+        amountMinor: 5000,
+        direction: TransactionDirection.moneyOut,
+        categoryId: groceriesId,
+        financialAccountId: await firstFinancialAccountId(),
+        transactionDate: DateTime(2026, 2, 1),
+      );
+
+      final totals = await repository
+          .watchCategoryTotals(
+            start: DateTime(2026, 1, 1),
+            end: DateTime(2026, 1, 31),
+          )
+          .first;
+
+      expect(totals, isEmpty);
+    });
+
+    test('excludes a quarantined (unverified) entry', () async {
+      final groceriesId = await categoryIdNamed('Groceries');
+      await repository.recordTransaction(
+        amountMinor: 5000,
+        direction: TransactionDirection.moneyOut,
+        categoryId: groceriesId,
+        financialAccountId: await firstFinancialAccountId(),
+        transactionDate: DateTime(2026, 1, 10),
+      );
+      final entry = (await repository.watchEntries().first).single;
+      await (db.update(
+        db.journalEntries,
+      )..where((e) => e.id.equals(entry.id))).write(
+        JournalEntriesCompanion(description: Value('tampered outside the app')),
+      );
+      await repository.verifyChain();
+
+      final totals = await repository
+          .watchCategoryTotals(
+            start: DateTime(2026, 1, 1),
+            end: DateTime(2026, 1, 31),
+          )
+          .first;
+
+      expect(totals, isEmpty);
+    });
+  });
+
   group('verifyChain', () {
     test('an intact chain reports no break', () async {
       final incomeId = await firstCategoryId(AccountType.income);
@@ -1526,6 +1976,114 @@ void main() {
         expect(groups.firstWhere((g) => g.id == group.id).archived, isTrue);
       },
     );
+  });
+
+  group('unarchive-accounts-categories', () {
+    test('unarchiveFinancialAccount clears archivedAt', () async {
+      final group = await repository.createAccountGroup(
+        name: 'Business',
+        kind: AccountGroupKind.assetGroup,
+        currency: 'USD',
+      );
+      final account = await repository.createFinancialAccount(
+        name: 'Business Checking',
+        type: AccountType.asset,
+        groupId: group.id,
+      );
+      await repository.archiveFinancialAccount(account.id);
+
+      await repository.unarchiveFinancialAccount(account.id);
+
+      final accounts = await repository
+          .watchFinancialAccounts(includeArchived: true)
+          .first;
+      expect(accounts.firstWhere((a) => a.id == account.id).archived, isFalse);
+    });
+
+    test('unarchiving an account whose group is itself archived unarchives '
+        'both, in the same action', () async {
+      final group = await repository.createAccountGroup(
+        name: 'Business',
+        kind: AccountGroupKind.assetGroup,
+        currency: 'USD',
+      );
+      // A financial account requires at least one other active account
+      // to remain to be archivable - the seeded Cash & cash equivalents
+      // account is that "other" account throughout this test.
+      final account = await repository.createFinancialAccount(
+        name: 'Business Checking',
+        type: AccountType.asset,
+        groupId: group.id,
+      );
+      await repository.archiveFinancialAccount(account.id);
+      // Now that the group has zero active members, it too can be
+      // archived - the only way a group ever reaches this state
+      // (design.md Context).
+      await repository.archiveAccountGroup(group.id);
+
+      await repository.unarchiveFinancialAccount(account.id);
+
+      final accounts = await repository
+          .watchFinancialAccounts(includeArchived: true)
+          .first;
+      expect(accounts.firstWhere((a) => a.id == account.id).archived, isFalse);
+      final groups = await repository
+          .watchAccountGroups(includeArchived: true)
+          .first;
+      expect(groups.firstWhere((g) => g.id == group.id).archived, isFalse);
+    });
+
+    test('unarchiveAccountGroup clears archivedAt but does not touch its '
+        'former (already-archived) member accounts', () async {
+      final group = await repository.createAccountGroup(
+        name: 'Business',
+        kind: AccountGroupKind.assetGroup,
+        currency: 'USD',
+      );
+      final account = await repository.createFinancialAccount(
+        name: 'Business Checking',
+        type: AccountType.asset,
+        groupId: group.id,
+      );
+      await repository.archiveFinancialAccount(account.id);
+      await repository.archiveAccountGroup(group.id);
+
+      await repository.unarchiveAccountGroup(group.id);
+
+      final groups = await repository
+          .watchAccountGroups(includeArchived: true)
+          .first;
+      expect(groups.firstWhere((g) => g.id == group.id).archived, isFalse);
+      final accounts = await repository
+          .watchFinancialAccounts(includeArchived: true)
+          .first;
+      expect(
+        accounts.firstWhere((a) => a.id == account.id).archived,
+        isTrue,
+        reason: 'unarchiving a group is independent of its member accounts',
+      );
+    });
+
+    test('unarchiveAccountGroup rejects a system group', () {
+      expect(
+        () => repository.unarchiveAccountGroup(groupPensionRetirementId),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test('unarchiveCategory clears archivedAt', () async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.archiveCategory(incomeId);
+
+      await repository.unarchiveCategory(incomeId);
+
+      final categories = await repository
+          .watchCategories(includeArchived: true)
+          .first;
+      expect(categories.firstWhere((a) => a.id == incomeId).archived, isFalse);
+      final active = await repository.watchCategories().first;
+      expect(active.any((a) => a.id == incomeId), isTrue);
+    });
   });
 
   group('watchAccountGroups includeArchived', () {
@@ -2676,6 +3234,480 @@ void main() {
       expect(await repository.displayBalanceMinor(accountId), equals(102000));
       final holdings = await repository.computeHoldingsForAccount(accountId);
       expect(holdings, isEmpty);
+    });
+  });
+
+  group('payees', () {
+    test('createPayee, watchPayees, renamePayee, deletePayee', () async {
+      final expenseCategoryId = await firstCategoryId(AccountType.expense);
+      final created = await repository.createPayee(
+        name: 'Starbucks',
+        defaultCategoryId: expenseCategoryId,
+      );
+      expect(created.name, equals('Starbucks'));
+      expect(created.defaultCategoryId, equals(expenseCategoryId));
+
+      var payees = await repository.watchPayees().first;
+      expect(payees.map((p) => p.name), equals(['Starbucks']));
+
+      await repository.renamePayee(id: created.id, newName: 'Starbucks Coffee');
+      payees = await repository.watchPayees().first;
+      expect(payees.single.name, equals('Starbucks Coffee'));
+
+      await repository.deletePayee(created.id);
+      payees = await repository.watchPayees().first;
+      expect(payees, isEmpty);
+    });
+
+    test(
+      'recordPayeeUsage updates the remembered defaults to what was just used',
+      () async {
+        final groceriesId = await firstCategoryId(AccountType.expense);
+        final incomeId = await firstCategoryId(AccountType.income);
+        final accountId = await firstFinancialAccountId();
+        final created = await repository.createPayee(name: 'Landlord');
+
+        await repository.recordPayeeUsage(
+          payeeId: created.id,
+          categoryId: groceriesId,
+          financialAccountId: accountId,
+        );
+        var payee = (await repository.watchPayees().first).single;
+        expect(payee.defaultCategoryId, equals(groceriesId));
+        expect(payee.defaultFinancialAccountId, equals(accountId));
+
+        // A later recording updates the default again, to the newest usage.
+        await repository.recordPayeeUsage(
+          payeeId: created.id,
+          categoryId: incomeId,
+          financialAccountId: accountId,
+        );
+        payee = (await repository.watchPayees().first).single;
+        expect(payee.defaultCategoryId, equals(incomeId));
+      },
+    );
+
+    group('findOrCreatePayeeByName', () {
+      test(
+        'creates a new payee when no normalized-name match exists',
+        () async {
+          final categoryId = await firstCategoryId(AccountType.expense);
+          final payee = await repository.findOrCreatePayeeByName(
+            name: 'Amazon',
+            defaultCategoryId: categoryId,
+          );
+          expect(payee.name, equals('Amazon'));
+          expect(payee.defaultCategoryId, equals(categoryId));
+          final all = await repository.watchPayees().first;
+          expect(all, hasLength(1));
+        },
+      );
+
+      test(
+        'links (and updates the default category of) an existing payee '
+        'matched by normalized name, rather than creating a duplicate',
+        () async {
+          final firstCategoryIdValue = await firstCategoryId(
+            AccountType.expense,
+          );
+          final existing = await repository.createPayee(
+            name: '  amazon  ',
+            defaultCategoryId: firstCategoryIdValue,
+          );
+
+          final incomeId = await firstCategoryId(AccountType.income);
+          final linked = await repository.findOrCreatePayeeByName(
+            name: 'Amazon',
+            defaultCategoryId: incomeId,
+          );
+
+          expect(linked.id, equals(existing.id));
+          final all = await repository.watchPayees().first;
+          expect(all, hasLength(1));
+          expect(all.single.defaultCategoryId, equals(incomeId));
+        },
+      );
+    });
+  });
+
+  group('recurring templates', () {
+    test(
+      'createRecurringTemplate, watchRecurringTemplates, update, delete',
+      () async {
+        final accountId = await firstFinancialAccountId();
+        final expenseId = await firstCategoryId(AccountType.expense);
+        final incomeId = await firstCategoryId(AccountType.income);
+
+        final created = await repository.createRecurringTemplate(
+          name: 'Rent',
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: accountId,
+          categoryId: expenseId,
+          amountMinor: 150000,
+          dayOfMonth: 1,
+        );
+        expect(created.name, equals('Rent'));
+
+        var templates = await repository.watchRecurringTemplates().first;
+        expect(templates, hasLength(1));
+        expect(templates.single.dayOfMonth, equals(1));
+
+        await repository.updateRecurringTemplate(
+          id: created.id,
+          name: 'Rent (updated)',
+          direction: TransactionDirection.moneyIn,
+          financialAccountId: accountId,
+          categoryId: incomeId,
+          amountMinor: 200000,
+          dayOfMonth: 5,
+        );
+        templates = await repository.watchRecurringTemplates().first;
+        expect(templates.single.name, equals('Rent (updated)'));
+        expect(
+          templates.single.direction,
+          equals(TransactionDirection.moneyIn),
+        );
+        expect(templates.single.amountMinor, equals(200000));
+        expect(templates.single.dayOfMonth, equals(5));
+
+        await repository.deleteRecurringTemplate(created.id);
+        templates = await repository.watchRecurringTemplates().first;
+        expect(templates, isEmpty);
+      },
+    );
+
+    test('createRecurringTemplate rejects a non-positive amount', () async {
+      final accountId = await firstFinancialAccountId();
+      final expenseId = await firstCategoryId(AccountType.expense);
+
+      expect(
+        () => repository.createRecurringTemplate(
+          name: 'Rent',
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: accountId,
+          categoryId: expenseId,
+          amountMinor: 0,
+          dayOfMonth: 1,
+        ),
+        throwsA(isA<InvalidTransactionAmountException>()),
+      );
+    });
+
+    test(
+      'createRecurringTemplate rejects a day-of-month outside 1-31',
+      () async {
+        final accountId = await firstFinancialAccountId();
+        final expenseId = await firstCategoryId(AccountType.expense);
+
+        expect(
+          () => repository.createRecurringTemplate(
+            name: 'Rent',
+            direction: TransactionDirection.moneyOut,
+            financialAccountId: accountId,
+            categoryId: expenseId,
+            amountMinor: 1000,
+            dayOfMonth: 32,
+          ),
+          throwsA(isA<ArgumentError>()),
+        );
+      },
+    );
+
+    test(
+      'watchDueRecurringTemplates surfaces a due template with resolved '
+      'names and currency, and excludes one already recorded this month',
+      () async {
+        final accountId = await firstFinancialAccountId();
+        final expenseId = await firstCategoryId(AccountType.expense);
+        final today = DateTime.now();
+
+        final due = await repository.createRecurringTemplate(
+          name: 'Rent',
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: accountId,
+          categoryId: expenseId,
+          amountMinor: 150000,
+          dayOfMonth: today.day,
+        );
+        final notDue = await repository.createRecurringTemplate(
+          name: 'Already paid',
+          direction: TransactionDirection.moneyOut,
+          financialAccountId: accountId,
+          categoryId: expenseId,
+          amountMinor: 5000,
+          dayOfMonth: today.day,
+        );
+        // Mark as already recorded this month via the same path
+        // recordDueTemplate uses, so it's excluded from "due" going
+        // forward this month.
+        await repository.recordDueTemplate(notDue.id);
+
+        final dueList = await repository.watchDueRecurringTemplates().first;
+
+        expect(dueList, hasLength(1));
+        expect(dueList.single.template.id, equals(due.id));
+        expect(dueList.single.currency, equals('USD'));
+        expect(dueList.single.categoryName, isNotEmpty);
+        expect(dueList.single.financialAccountName, isNotEmpty);
+      },
+    );
+
+    test('recordDueTemplate posts a real transaction and removes the template '
+        'from the due list afterward', () async {
+      final accountId = await firstFinancialAccountId();
+      final expenseId = await firstCategoryId(AccountType.expense);
+      final today = DateTime.now();
+      final startingBalance = await repository.displayBalanceMinor(accountId);
+
+      final template = await repository.createRecurringTemplate(
+        name: 'Rent',
+        direction: TransactionDirection.moneyOut,
+        financialAccountId: accountId,
+        categoryId: expenseId,
+        amountMinor: 150000,
+        dayOfMonth: today.day,
+      );
+
+      var dueList = await repository.watchDueRecurringTemplates().first;
+      expect(dueList, hasLength(1));
+
+      final entryId = await repository.recordDueTemplate(template.id);
+      expect(entryId, isNotEmpty);
+
+      expect(
+        await repository.displayBalanceMinor(accountId),
+        equals(startingBalance - 150000),
+      );
+
+      dueList = await repository.watchDueRecurringTemplates().first;
+      expect(dueList, isEmpty);
+
+      final templates = await repository.watchRecurringTemplates().first;
+      expect(
+        templates.single.lastRecordedYearMonth,
+        equals(yearMonthOf(today)),
+      );
+    });
+  });
+
+  group('exportLedgerCsv', () {
+    test(
+      'exports a header plus one row per ordinary transaction, oldest first',
+      () async {
+        final accountId = await firstFinancialAccountId();
+        final incomeId = await firstCategoryId(AccountType.income);
+        final expenseId = await firstCategoryId(AccountType.expense);
+        await repository.recordTransaction(
+          amountMinor: 300000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          financialAccountId: accountId,
+          transactionDate: DateTime(2026, 1, 20),
+          description: 'Paycheck',
+        );
+        await repository.recordTransaction(
+          amountMinor: 5000,
+          direction: TransactionDirection.moneyOut,
+          categoryId: expenseId,
+          financialAccountId: accountId,
+          transactionDate: DateTime(2026, 1, 5),
+          description: 'Groceries run',
+        );
+
+        final csv = await repository.exportLedgerCsv(
+          financialAccountId: accountId,
+          start: DateTime(2026, 1, 1),
+          end: DateTime(2026, 1, 31),
+        );
+
+        final lines = csv.trim().split('\n');
+        expect(
+          lines[0],
+          equals(
+            'Date,Description,Category,Direction,Amount,Currency,Verified',
+          ),
+        );
+        expect(lines, hasLength(3));
+        // Oldest first: the expense (Jan 5) before the income (Jan 20).
+        expect(lines[1], startsWith('2026-01-05,Groceries run,'));
+        expect(lines[1], contains('Spent'));
+        expect(lines[1], contains('50.00'));
+        expect(lines[2], startsWith('2026-01-20,Paycheck,'));
+        expect(lines[2], contains('Received'));
+        expect(lines[2], contains('3000.00'));
+        expect(lines[2], endsWith(',USD,Yes'));
+      },
+    );
+
+    test('excludes transactions outside the requested date range', () async {
+      final accountId = await firstFinancialAccountId();
+      final expenseId = await firstCategoryId(AccountType.expense);
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyOut,
+        categoryId: expenseId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 2, 1),
+      );
+
+      final csv = await repository.exportLedgerCsv(
+        financialAccountId: accountId,
+        start: DateTime(2026, 1, 1),
+        end: DateTime(2026, 1, 31),
+      );
+
+      expect(csv.trim().split('\n'), hasLength(1)); // header only
+    });
+
+    test('a split entry exports one row per category leg', () async {
+      final accountId = await firstFinancialAccountId();
+      final categories = await repository.watchCategories().first;
+      final expenseIds = categories
+          .where((c) => c.type == AccountType.expense)
+          .take(2)
+          .map((c) => c.id)
+          .toList();
+      await repository.recordSplitTransaction(
+        totalAmountMinor: 10000,
+        splitLines: [
+          (categoryId: expenseIds[0], amountMinor: 6000),
+          (categoryId: expenseIds[1], amountMinor: 4000),
+        ],
+        direction: TransactionDirection.moneyOut,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 10),
+      );
+
+      final csv = await repository.exportLedgerCsv(
+        financialAccountId: accountId,
+        start: DateTime(2026, 1, 1),
+        end: DateTime(2026, 1, 31),
+      );
+
+      final lines = csv.trim().split('\n');
+      expect(lines, hasLength(3)); // header + 2 legs
+      expect(lines[1], contains('60.00'));
+      expect(lines[2], contains('40.00'));
+    });
+
+    test('a transfer exports the counterparty account as its label', () async {
+      final fromId = await firstFinancialAccountId();
+      final toAccount = await repository.createFinancialAccount(
+        name: 'Savings',
+        type: AccountType.asset,
+        groupId: groupCashEquivalentsId,
+      );
+      await repository.recordTransfer(
+        fromAccountId: fromId,
+        toAccountId: toAccount.id,
+        amountMinor: 2000,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+
+      final csv = await repository.exportLedgerCsv(
+        financialAccountId: fromId,
+        start: DateTime(2026, 1, 1),
+        end: DateTime(2026, 1, 31),
+      );
+
+      expect(csv, contains('Transfer: Savings'));
+    });
+
+    test('a quarantined entry is still exported, marked Verified=No', () async {
+      final accountId = await firstFinancialAccountId();
+      final incomeId = await firstCategoryId(AccountType.income);
+      final entryId = await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 10),
+      );
+      // Tamper directly with the stored row (mirrors the verifyChain
+      // group's own pattern) - not through the Repository, which has
+      // no update path for a posted entry.
+      await (db.update(
+        db.journalEntries,
+      )..where((e) => e.id.equals(entryId))).write(
+        JournalEntriesCompanion(description: Value('tampered outside the app')),
+      );
+      await repository.verifyChain();
+
+      final csv = await repository.exportLedgerCsv(
+        financialAccountId: accountId,
+        start: DateTime(2026, 1, 1),
+        end: DateTime(2026, 1, 31),
+      );
+
+      final lines = csv.trim().split('\n');
+      expect(lines, hasLength(2));
+      expect(lines[1], endsWith(',No'));
+    });
+
+    test(
+      'JPY (0 decimal digits) formats amounts with no decimal point',
+      () async {
+        await repository.changeAccountGroupCurrency(
+          groupId: groupPensionRetirementId,
+          currency: 'JPY',
+        );
+        final jpyAccount = await repository.createFinancialAccount(
+          name: 'Yen Account',
+          type: AccountType.asset,
+          groupId: groupPensionRetirementId,
+        );
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 5000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          financialAccountId: jpyAccount.id,
+          transactionDate: DateTime(2026, 1, 10),
+        );
+
+        final csv = await repository.exportLedgerCsv(
+          financialAccountId: jpyAccount.id,
+          start: DateTime(2026, 1, 1),
+          end: DateTime(2026, 1, 31),
+        );
+
+        // JPY's minor unit digit count is 0 - the raw minor-unit amount
+        // (5000) IS the major-unit amount, formatted with no decimal point.
+        expect(csv, contains(',5000,JPY,'));
+      },
+    );
+
+    test('rejects an id that is not a financial account', () async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      expect(
+        () => repository.exportLedgerCsv(
+          financialAccountId: incomeId,
+          start: DateTime(2026, 1, 1),
+          end: DateTime(2026, 1, 31),
+        ),
+        throwsA(isA<AccountGroupException>()),
+      );
+    });
+
+    test('a description containing a comma is CSV-quoted', () async {
+      final accountId = await firstFinancialAccountId();
+      final incomeId = await firstCategoryId(AccountType.income);
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 10),
+        description: 'Bonus, Q1',
+      );
+
+      final csv = await repository.exportLedgerCsv(
+        financialAccountId: accountId,
+        start: DateTime(2026, 1, 1),
+        end: DateTime(2026, 1, 31),
+      );
+
+      expect(csv, contains('"Bonus, Q1"'));
     });
   });
 }

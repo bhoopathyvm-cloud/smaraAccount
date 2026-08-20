@@ -9,6 +9,7 @@ import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/journal_entry.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../core/money_formatter.dart';
 import 'register_row.dart';
 
 /// Account-scoped register: counterpart labels for category / transfer /
@@ -47,7 +48,83 @@ class RegisterViewModel extends ChangeNotifier {
   String? get selectedAccountId => _selectedAccountId;
 
   List<RegisterRow> _rows = const [];
-  List<RegisterRow> get rows => _rows;
+
+  /// register-search: a client-side narrowing of [_rows] (design.md
+  /// Decision 1 - no new repository query for v1). [_rows] itself always
+  /// stays the full, unfiltered set so clearing search/filters restores
+  /// everything with no resubscription needed.
+  List<RegisterRow> get rows {
+    if (!hasActiveSearchOrFilters) return _rows;
+    final query = _searchText.trim().toLowerCase();
+    return _rows.where((row) {
+      if (_filterDirection != null && row.direction != _filterDirection) {
+        return false;
+      }
+      if (_filterStartDate != null &&
+          row.transactionDate.isBefore(_filterStartDate!)) {
+        return false;
+      }
+      if (_filterEndDate != null) {
+        final endExclusive = DateTime(
+          _filterEndDate!.year,
+          _filterEndDate!.month,
+          _filterEndDate!.day + 1,
+        );
+        if (!row.transactionDate.isBefore(endExclusive)) return false;
+      }
+      if (query.isEmpty) return true;
+      final description = (row.description ?? '').toLowerCase();
+      final category = row.categoryName.toLowerCase();
+      final amountText = formatAmountMinor(
+        row.amountMinor,
+        row.currency,
+      ).toLowerCase();
+      return description.contains(query) ||
+          category.contains(query) ||
+          amountText.contains(query);
+    }).toList();
+  }
+
+  String _searchText = '';
+  String get searchText => _searchText;
+
+  DateTime? _filterStartDate;
+  DateTime? get filterStartDate => _filterStartDate;
+  DateTime? _filterEndDate;
+  DateTime? get filterEndDate => _filterEndDate;
+
+  TransactionDirection? _filterDirection;
+  TransactionDirection? get filterDirection => _filterDirection;
+
+  bool get hasActiveSearchOrFilters =>
+      _searchText.trim().isNotEmpty ||
+      _filterStartDate != null ||
+      _filterEndDate != null ||
+      _filterDirection != null;
+
+  void setSearchText(String value) {
+    _searchText = value;
+    notifyListeners();
+  }
+
+  void setDateRangeFilter({DateTime? start, DateTime? end}) {
+    _filterStartDate = start;
+    _filterEndDate = end;
+    notifyListeners();
+  }
+
+  void setDirectionFilter(TransactionDirection? direction) {
+    _filterDirection = direction;
+    notifyListeners();
+  }
+
+  void clearSearchAndFilters() {
+    _searchText = '';
+    _filterStartDate = null;
+    _filterEndDate = null;
+    _filterDirection = null;
+    notifyListeners();
+  }
 
   List<Account> get accounts => _accounts;
 
@@ -55,6 +132,12 @@ class RegisterViewModel extends ChangeNotifier {
 
   bool get isSelectedAccountArchived =>
       _accountsById[_selectedAccountId]?.archived ?? false;
+
+  /// credit-card-household-flow: offers a "Pay card" shortcut when true
+  /// and the account is still active (an archived card uses the
+  /// existing closeout flow instead, not "Pay card").
+  bool get isSelectedAccountCreditCard =>
+      _accountsById[_selectedAccountId]?.isCreditCard ?? false;
 
   /// Current display balance of the selected account, from the newest
   /// register row's running balance (oldest-to-newest accumulation).
@@ -96,6 +179,10 @@ class RegisterViewModel extends ChangeNotifier {
   void selectAccount(String accountId) {
     if (_selectedAccountId == accountId) return;
     _selectedAccountId = accountId;
+    _searchText = '';
+    _filterStartDate = null;
+    _filterEndDate = null;
+    _filterDirection = null;
     _resubscribeEntries();
     notifyListeners();
   }
@@ -143,18 +230,27 @@ class RegisterViewModel extends ChangeNotifier {
       return;
     }
 
+    // Null only for a group mid-migration awaiting currency backfill - the
+    // router already forces that prompt before Register is reachable, so
+    // this fallback is a harmless default for a window never actually seen.
+    final rowCurrency = currencyFor(accountId) ?? 'USD';
     var runningBalance = 0;
     final rows = <RegisterRow>[];
     for (final entry in entries) {
       final ownPosting = entry.postings.firstWhere(
         (p) => p.accountId == accountId,
       );
-      final other = entry.postings.firstWhere(
-        (p) => p.accountId != accountId,
-        orElse: () => ownPosting,
-      );
+      // split-transactions: an entry can have more than one non-financial-
+      // account posting (one per category leg) - collect all of them, not
+      // just the first, so a split's row label reflects every category.
+      final others = entry.postings
+          .where((p) => p.accountId != accountId)
+          .toList();
+      final counterpartIds = others.isEmpty
+          ? [ownPosting.accountId]
+          : others.map((p) => p.accountId).toList();
 
-      final counterpartName = _counterpartLabel(other.accountId);
+      final counterpartName = _counterpartLabel(counterpartIds);
       final delta = LedgerRepository.displayBalanceDeltaFor(
         accountType: account.type,
         postingAmountMinor: ownPosting.amountMinor,
@@ -168,6 +264,8 @@ class RegisterViewModel extends ChangeNotifier {
         RegisterRow(
           entryId: entry.id,
           categoryName: counterpartName,
+          counterpartAccountIds: counterpartIds,
+          currency: rowCurrency,
           // Sign relative to the viewed account's *display* balance, not
           // the raw posting - for a liability, those are inverted (Option
           // A: a purchase posts -amount raw but increases what's owed),
@@ -194,7 +292,18 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _counterpartLabel(String accountId) {
+  /// [accountIds] is normally one id; more than one only for a
+  /// split-transactions entry, summarized as "first name +N more" rather
+  /// than silently showing only the first category (design.md Decision 3).
+  String _counterpartLabel(List<String> accountIds) {
+    final names = accountIds.map(_singleCounterpartLabel).toList();
+    if (names.length <= 1) {
+      return names.isEmpty ? 'Transfer' : names.first;
+    }
+    return '${names.first} +${names.length - 1} more';
+  }
+
+  String _singleCounterpartLabel(String accountId) {
     if (accountId == openingBalanceEquityAccountId) {
       return 'Opening balance';
     }
@@ -207,6 +316,22 @@ class RegisterViewModel extends ChangeNotifier {
 
   Future<void> reverseEntry(String entryId) =>
       _ledgerRepository.reverseEntry(entryId);
+
+  /// Whether [row] can go through the Fix flow (fix-this-correction-wizard):
+  /// only an ordinary, currently-verified, single-category transaction -
+  /// its one counterpart must be a category, not a transfer counterparty,
+  /// the opening-balance equity account, or (split-transactions) more
+  /// than one category leg, since the Fix form has exactly one category
+  /// field to prefill. It must also not already be a reversal,
+  /// quarantined, or superseded (those are corrected or explained some
+  /// other way, not re-fixed).
+  bool isRowFixable(RegisterRow row) {
+    return row.counterpartAccountIds.length == 1 &&
+        _categoriesById.containsKey(row.counterpartAccountIds.single) &&
+        !row.isReversal &&
+        row.isVerified &&
+        !row.isSupersededByMigration;
+  }
 
   /// Posts the selected archived account's full current display balance
   /// to [toAccountId] (spec: "Closeout Transfer Is Offered From the
@@ -240,6 +365,33 @@ class RegisterViewModel extends ChangeNotifier {
       _errorMessage = error.message;
       notifyListeners();
       return false;
+    }
+  }
+
+  /// The selected account's transactions between [start] and [end] as a
+  /// CSV string (ledger-data-export spec: "Ledger Data Export"), or null
+  /// with [errorMessage] set on failure. Saving the returned string to a
+  /// file is the caller's responsibility - this ViewModel doesn't touch
+  /// the filesystem.
+  Future<String?> exportCsv({
+    required DateTime start,
+    required DateTime end,
+  }) async {
+    final accountId = _selectedAccountId;
+    if (accountId == null) return null;
+    _errorMessage = null;
+    try {
+      final csv = await _ledgerRepository.exportLedgerCsv(
+        financialAccountId: accountId,
+        start: start,
+        end: end,
+      );
+      notifyListeners();
+      return csv;
+    } on AccountGroupException catch (error) {
+      _errorMessage = error.message;
+      notifyListeners();
+      return null;
     }
   }
 

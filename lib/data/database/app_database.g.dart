@@ -623,6 +623,32 @@ class $AccountsTable extends Accounts
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
+  static const VerificationMeta _monthlyLimitMinorMeta = const VerificationMeta(
+    'monthlyLimitMinor',
+  );
+  @override
+  late final GeneratedColumn<int> monthlyLimitMinor = GeneratedColumn<int>(
+    'monthly_limit_minor',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isCreditCardMeta = const VerificationMeta(
+    'isCreditCard',
+  );
+  @override
+  late final GeneratedColumn<bool> isCreditCard = GeneratedColumn<bool>(
+    'is_credit_card',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_credit_card" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _archivedAtMeta = const VerificationMeta(
     'archivedAt',
   );
@@ -655,6 +681,8 @@ class $AccountsTable extends Accounts
     investmentOwnerAccountId,
     groupId,
     sortOrder,
+    monthlyLimitMinor,
+    isCreditCard,
     archivedAt,
     createdAt,
   ];
@@ -711,6 +739,24 @@ class $AccountsTable extends Accounts
         sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
       );
     }
+    if (data.containsKey('monthly_limit_minor')) {
+      context.handle(
+        _monthlyLimitMinorMeta,
+        monthlyLimitMinor.isAcceptableOrUnknown(
+          data['monthly_limit_minor']!,
+          _monthlyLimitMinorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_credit_card')) {
+      context.handle(
+        _isCreditCardMeta,
+        isCreditCard.isAcceptableOrUnknown(
+          data['is_credit_card']!,
+          _isCreditCardMeta,
+        ),
+      );
+    }
     if (data.containsKey('archived_at')) {
       context.handle(
         _archivedAtMeta,
@@ -762,6 +808,14 @@ class $AccountsTable extends Accounts
         DriftSqlType.int,
         data['${effectivePrefix}sort_order'],
       )!,
+      monthlyLimitMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}monthly_limit_minor'],
+      ),
+      isCreditCard: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_credit_card'],
+      )!,
       archivedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}archived_at'],
@@ -792,6 +846,17 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
   /// Required for asset/liability; NULL for income/expense/equity.
   final String? groupId;
   final int sortOrder;
+
+  /// monthly-category-limits: optional, Expense categories only (never
+  /// set for any other [AccountType]) - month-to-date progress display,
+  /// informational only, never enforced against posting.
+  final int? monthlyLimitMinor;
+
+  /// credit-card-household-flow: optional, Liability accounts only, set
+  /// at creation and never changed after (mirrors [holdsInvestments]'s
+  /// immutable-flag pattern) - a label and capture-flow default, not a
+  /// new account type or posting shape.
+  final bool isCreditCard;
   final DateTime? archivedAt;
   final DateTime createdAt;
   const AccountRow({
@@ -802,6 +867,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
     this.investmentOwnerAccountId,
     this.groupId,
     required this.sortOrder,
+    this.monthlyLimitMinor,
+    required this.isCreditCard,
     this.archivedAt,
     required this.createdAt,
   });
@@ -823,6 +890,10 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
       map['group_id'] = Variable<String>(groupId);
     }
     map['sort_order'] = Variable<int>(sortOrder);
+    if (!nullToAbsent || monthlyLimitMinor != null) {
+      map['monthly_limit_minor'] = Variable<int>(monthlyLimitMinor);
+    }
+    map['is_credit_card'] = Variable<bool>(isCreditCard);
     if (!nullToAbsent || archivedAt != null) {
       map['archived_at'] = Variable<DateTime>(archivedAt);
     }
@@ -843,6 +914,10 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
           ? const Value.absent()
           : Value(groupId),
       sortOrder: Value(sortOrder),
+      monthlyLimitMinor: monthlyLimitMinor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(monthlyLimitMinor),
+      isCreditCard: Value(isCreditCard),
       archivedAt: archivedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(archivedAt),
@@ -867,6 +942,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
       ),
       groupId: serializer.fromJson<String?>(json['groupId']),
       sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      monthlyLimitMinor: serializer.fromJson<int?>(json['monthlyLimitMinor']),
+      isCreditCard: serializer.fromJson<bool>(json['isCreditCard']),
       archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
@@ -886,6 +963,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
       ),
       'groupId': serializer.toJson<String?>(groupId),
       'sortOrder': serializer.toJson<int>(sortOrder),
+      'monthlyLimitMinor': serializer.toJson<int?>(monthlyLimitMinor),
+      'isCreditCard': serializer.toJson<bool>(isCreditCard),
       'archivedAt': serializer.toJson<DateTime?>(archivedAt),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
@@ -899,6 +978,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
     Value<String?> investmentOwnerAccountId = const Value.absent(),
     Value<String?> groupId = const Value.absent(),
     int? sortOrder,
+    Value<int?> monthlyLimitMinor = const Value.absent(),
+    bool? isCreditCard,
     Value<DateTime?> archivedAt = const Value.absent(),
     DateTime? createdAt,
   }) => AccountRow(
@@ -911,6 +992,10 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
         : this.investmentOwnerAccountId,
     groupId: groupId.present ? groupId.value : this.groupId,
     sortOrder: sortOrder ?? this.sortOrder,
+    monthlyLimitMinor: monthlyLimitMinor.present
+        ? monthlyLimitMinor.value
+        : this.monthlyLimitMinor,
+    isCreditCard: isCreditCard ?? this.isCreditCard,
     archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
     createdAt: createdAt ?? this.createdAt,
   );
@@ -927,6 +1012,12 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
           : this.investmentOwnerAccountId,
       groupId: data.groupId.present ? data.groupId.value : this.groupId,
       sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      monthlyLimitMinor: data.monthlyLimitMinor.present
+          ? data.monthlyLimitMinor.value
+          : this.monthlyLimitMinor,
+      isCreditCard: data.isCreditCard.present
+          ? data.isCreditCard.value
+          : this.isCreditCard,
       archivedAt: data.archivedAt.present
           ? data.archivedAt.value
           : this.archivedAt,
@@ -944,6 +1035,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
           ..write('investmentOwnerAccountId: $investmentOwnerAccountId, ')
           ..write('groupId: $groupId, ')
           ..write('sortOrder: $sortOrder, ')
+          ..write('monthlyLimitMinor: $monthlyLimitMinor, ')
+          ..write('isCreditCard: $isCreditCard, ')
           ..write('archivedAt: $archivedAt, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -959,6 +1052,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
     investmentOwnerAccountId,
     groupId,
     sortOrder,
+    monthlyLimitMinor,
+    isCreditCard,
     archivedAt,
     createdAt,
   );
@@ -973,6 +1068,8 @@ class AccountRow extends DataClass implements Insertable<AccountRow> {
           other.investmentOwnerAccountId == this.investmentOwnerAccountId &&
           other.groupId == this.groupId &&
           other.sortOrder == this.sortOrder &&
+          other.monthlyLimitMinor == this.monthlyLimitMinor &&
+          other.isCreditCard == this.isCreditCard &&
           other.archivedAt == this.archivedAt &&
           other.createdAt == this.createdAt);
 }
@@ -985,6 +1082,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
   final Value<String?> investmentOwnerAccountId;
   final Value<String?> groupId;
   final Value<int> sortOrder;
+  final Value<int?> monthlyLimitMinor;
+  final Value<bool> isCreditCard;
   final Value<DateTime?> archivedAt;
   final Value<DateTime> createdAt;
   final Value<int> rowid;
@@ -996,6 +1095,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     this.investmentOwnerAccountId = const Value.absent(),
     this.groupId = const Value.absent(),
     this.sortOrder = const Value.absent(),
+    this.monthlyLimitMinor = const Value.absent(),
+    this.isCreditCard = const Value.absent(),
     this.archivedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1008,6 +1109,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     this.investmentOwnerAccountId = const Value.absent(),
     this.groupId = const Value.absent(),
     this.sortOrder = const Value.absent(),
+    this.monthlyLimitMinor = const Value.absent(),
+    this.isCreditCard = const Value.absent(),
     this.archivedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1021,6 +1124,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     Expression<String>? investmentOwnerAccountId,
     Expression<String>? groupId,
     Expression<int>? sortOrder,
+    Expression<int>? monthlyLimitMinor,
+    Expression<bool>? isCreditCard,
     Expression<DateTime>? archivedAt,
     Expression<DateTime>? createdAt,
     Expression<int>? rowid,
@@ -1034,6 +1139,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
         'investment_owner_account_id': investmentOwnerAccountId,
       if (groupId != null) 'group_id': groupId,
       if (sortOrder != null) 'sort_order': sortOrder,
+      if (monthlyLimitMinor != null) 'monthly_limit_minor': monthlyLimitMinor,
+      if (isCreditCard != null) 'is_credit_card': isCreditCard,
       if (archivedAt != null) 'archived_at': archivedAt,
       if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
@@ -1048,6 +1155,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     Value<String?>? investmentOwnerAccountId,
     Value<String?>? groupId,
     Value<int>? sortOrder,
+    Value<int?>? monthlyLimitMinor,
+    Value<bool>? isCreditCard,
     Value<DateTime?>? archivedAt,
     Value<DateTime>? createdAt,
     Value<int>? rowid,
@@ -1061,6 +1170,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
           investmentOwnerAccountId ?? this.investmentOwnerAccountId,
       groupId: groupId ?? this.groupId,
       sortOrder: sortOrder ?? this.sortOrder,
+      monthlyLimitMinor: monthlyLimitMinor ?? this.monthlyLimitMinor,
+      isCreditCard: isCreditCard ?? this.isCreditCard,
       archivedAt: archivedAt ?? this.archivedAt,
       createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
@@ -1095,6 +1206,12 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
     if (sortOrder.present) {
       map['sort_order'] = Variable<int>(sortOrder.value);
     }
+    if (monthlyLimitMinor.present) {
+      map['monthly_limit_minor'] = Variable<int>(monthlyLimitMinor.value);
+    }
+    if (isCreditCard.present) {
+      map['is_credit_card'] = Variable<bool>(isCreditCard.value);
+    }
     if (archivedAt.present) {
       map['archived_at'] = Variable<DateTime>(archivedAt.value);
     }
@@ -1117,6 +1234,8 @@ class AccountsCompanion extends UpdateCompanion<AccountRow> {
           ..write('investmentOwnerAccountId: $investmentOwnerAccountId, ')
           ..write('groupId: $groupId, ')
           ..write('sortOrder: $sortOrder, ')
+          ..write('monthlyLimitMinor: $monthlyLimitMinor, ')
+          ..write('isCreditCard: $isCreditCard, ')
           ..write('archivedAt: $archivedAt, ')
           ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
@@ -1191,6 +1310,18 @@ class $SigningIdentitiesTable extends SigningIdentities
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _acknowledgedAtMeta = const VerificationMeta(
+    'acknowledgedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> acknowledgedAt =
+      GeneratedColumn<DateTime>(
+        'acknowledged_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     identityId,
@@ -1198,6 +1329,7 @@ class $SigningIdentitiesTable extends SigningIdentities
     createdAt,
     supersedesIdentityId,
     supersededAt,
+    acknowledgedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1249,6 +1381,15 @@ class $SigningIdentitiesTable extends SigningIdentities
         ),
       );
     }
+    if (data.containsKey('acknowledged_at')) {
+      context.handle(
+        _acknowledgedAtMeta,
+        acknowledgedAt.isAcceptableOrUnknown(
+          data['acknowledged_at']!,
+          _acknowledgedAtMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -1278,6 +1419,10 @@ class $SigningIdentitiesTable extends SigningIdentities
         DriftSqlType.dateTime,
         data['${effectivePrefix}superseded_at'],
       ),
+      acknowledgedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}acknowledged_at'],
+      ),
     );
   }
 
@@ -1293,12 +1438,20 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
   final DateTime createdAt;
   final String? supersedesIdentityId;
   final DateTime? supersededAt;
+
+  /// When the user completed the mandatory recovery-phrase acknowledgment
+  /// for this identity (spec: "Mandatory Recovery Phrase Acknowledgment").
+  /// Null between identity commit and acknowledgment - the window
+  /// `deferred-onboarding-first-entry` introduces so a first-time user can
+  /// record one guided entry before facing the acknowledgment screens.
+  final DateTime? acknowledgedAt;
   const IdentityRow({
     required this.identityId,
     required this.publicKey,
     required this.createdAt,
     this.supersedesIdentityId,
     this.supersededAt,
+    this.acknowledgedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1311,6 +1464,9 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
     }
     if (!nullToAbsent || supersededAt != null) {
       map['superseded_at'] = Variable<DateTime>(supersededAt);
+    }
+    if (!nullToAbsent || acknowledgedAt != null) {
+      map['acknowledged_at'] = Variable<DateTime>(acknowledgedAt);
     }
     return map;
   }
@@ -1326,6 +1482,9 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
       supersededAt: supersededAt == null && nullToAbsent
           ? const Value.absent()
           : Value(supersededAt),
+      acknowledgedAt: acknowledgedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(acknowledgedAt),
     );
   }
 
@@ -1342,6 +1501,7 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
         json['supersedesIdentityId'],
       ),
       supersededAt: serializer.fromJson<DateTime?>(json['supersededAt']),
+      acknowledgedAt: serializer.fromJson<DateTime?>(json['acknowledgedAt']),
     );
   }
   @override
@@ -1353,6 +1513,7 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'supersedesIdentityId': serializer.toJson<String?>(supersedesIdentityId),
       'supersededAt': serializer.toJson<DateTime?>(supersededAt),
+      'acknowledgedAt': serializer.toJson<DateTime?>(acknowledgedAt),
     };
   }
 
@@ -1362,6 +1523,7 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
     DateTime? createdAt,
     Value<String?> supersedesIdentityId = const Value.absent(),
     Value<DateTime?> supersededAt = const Value.absent(),
+    Value<DateTime?> acknowledgedAt = const Value.absent(),
   }) => IdentityRow(
     identityId: identityId ?? this.identityId,
     publicKey: publicKey ?? this.publicKey,
@@ -1370,6 +1532,9 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
         ? supersedesIdentityId.value
         : this.supersedesIdentityId,
     supersededAt: supersededAt.present ? supersededAt.value : this.supersededAt,
+    acknowledgedAt: acknowledgedAt.present
+        ? acknowledgedAt.value
+        : this.acknowledgedAt,
   );
   IdentityRow copyWithCompanion(SigningIdentitiesCompanion data) {
     return IdentityRow(
@@ -1384,6 +1549,9 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
       supersededAt: data.supersededAt.present
           ? data.supersededAt.value
           : this.supersededAt,
+      acknowledgedAt: data.acknowledgedAt.present
+          ? data.acknowledgedAt.value
+          : this.acknowledgedAt,
     );
   }
 
@@ -1394,7 +1562,8 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
           ..write('publicKey: $publicKey, ')
           ..write('createdAt: $createdAt, ')
           ..write('supersedesIdentityId: $supersedesIdentityId, ')
-          ..write('supersededAt: $supersededAt')
+          ..write('supersededAt: $supersededAt, ')
+          ..write('acknowledgedAt: $acknowledgedAt')
           ..write(')'))
         .toString();
   }
@@ -1406,6 +1575,7 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
     createdAt,
     supersedesIdentityId,
     supersededAt,
+    acknowledgedAt,
   );
   @override
   bool operator ==(Object other) =>
@@ -1415,7 +1585,8 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
           $driftBlobEquality.equals(other.publicKey, this.publicKey) &&
           other.createdAt == this.createdAt &&
           other.supersedesIdentityId == this.supersedesIdentityId &&
-          other.supersededAt == this.supersededAt);
+          other.supersededAt == this.supersededAt &&
+          other.acknowledgedAt == this.acknowledgedAt);
 }
 
 class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
@@ -1424,6 +1595,7 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
   final Value<DateTime> createdAt;
   final Value<String?> supersedesIdentityId;
   final Value<DateTime?> supersededAt;
+  final Value<DateTime?> acknowledgedAt;
   final Value<int> rowid;
   const SigningIdentitiesCompanion({
     this.identityId = const Value.absent(),
@@ -1431,6 +1603,7 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     this.createdAt = const Value.absent(),
     this.supersedesIdentityId = const Value.absent(),
     this.supersededAt = const Value.absent(),
+    this.acknowledgedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   SigningIdentitiesCompanion.insert({
@@ -1439,6 +1612,7 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     this.createdAt = const Value.absent(),
     this.supersedesIdentityId = const Value.absent(),
     this.supersededAt = const Value.absent(),
+    this.acknowledgedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : publicKey = Value(publicKey);
   static Insertable<IdentityRow> custom({
@@ -1447,6 +1621,7 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     Expression<DateTime>? createdAt,
     Expression<String>? supersedesIdentityId,
     Expression<DateTime>? supersededAt,
+    Expression<DateTime>? acknowledgedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1456,6 +1631,7 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
       if (supersedesIdentityId != null)
         'supersedes_identity_id': supersedesIdentityId,
       if (supersededAt != null) 'superseded_at': supersededAt,
+      if (acknowledgedAt != null) 'acknowledged_at': acknowledgedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1466,6 +1642,7 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     Value<DateTime>? createdAt,
     Value<String?>? supersedesIdentityId,
     Value<DateTime?>? supersededAt,
+    Value<DateTime?>? acknowledgedAt,
     Value<int>? rowid,
   }) {
     return SigningIdentitiesCompanion(
@@ -1474,6 +1651,7 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
       createdAt: createdAt ?? this.createdAt,
       supersedesIdentityId: supersedesIdentityId ?? this.supersedesIdentityId,
       supersededAt: supersededAt ?? this.supersededAt,
+      acknowledgedAt: acknowledgedAt ?? this.acknowledgedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1498,6 +1676,9 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     if (supersededAt.present) {
       map['superseded_at'] = Variable<DateTime>(supersededAt.value);
     }
+    if (acknowledgedAt.present) {
+      map['acknowledged_at'] = Variable<DateTime>(acknowledgedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1512,6 +1693,7 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
           ..write('createdAt: $createdAt, ')
           ..write('supersedesIdentityId: $supersedesIdentityId, ')
           ..write('supersededAt: $supersededAt, ')
+          ..write('acknowledgedAt: $acknowledgedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -7756,6 +7938,1008 @@ class CategoryRulesCompanion extends UpdateCompanion<CategoryRuleRow> {
   }
 }
 
+class $PayeesTable extends Payees with TableInfo<$PayeesTable, PayeeRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PayeesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _defaultCategoryIdMeta = const VerificationMeta(
+    'defaultCategoryId',
+  );
+  @override
+  late final GeneratedColumn<String> defaultCategoryId =
+      GeneratedColumn<String>(
+        'default_category_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _defaultFinancialAccountIdMeta =
+      const VerificationMeta('defaultFinancialAccountId');
+  @override
+  late final GeneratedColumn<String> defaultFinancialAccountId =
+      GeneratedColumn<String>(
+        'default_financial_account_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    defaultCategoryId,
+    defaultFinancialAccountId,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'payees';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PayeeRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('default_category_id')) {
+      context.handle(
+        _defaultCategoryIdMeta,
+        defaultCategoryId.isAcceptableOrUnknown(
+          data['default_category_id']!,
+          _defaultCategoryIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('default_financial_account_id')) {
+      context.handle(
+        _defaultFinancialAccountIdMeta,
+        defaultFinancialAccountId.isAcceptableOrUnknown(
+          data['default_financial_account_id']!,
+          _defaultFinancialAccountIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PayeeRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PayeeRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      defaultCategoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}default_category_id'],
+      ),
+      defaultFinancialAccountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}default_financial_account_id'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $PayeesTable createAlias(String alias) {
+    return $PayeesTable(attachedDatabase, alias);
+  }
+}
+
+class PayeeRow extends DataClass implements Insertable<PayeeRow> {
+  final String id;
+  final String name;
+  final String? defaultCategoryId;
+  final String? defaultFinancialAccountId;
+  final DateTime createdAt;
+  const PayeeRow({
+    required this.id,
+    required this.name,
+    this.defaultCategoryId,
+    this.defaultFinancialAccountId,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || defaultCategoryId != null) {
+      map['default_category_id'] = Variable<String>(defaultCategoryId);
+    }
+    if (!nullToAbsent || defaultFinancialAccountId != null) {
+      map['default_financial_account_id'] = Variable<String>(
+        defaultFinancialAccountId,
+      );
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  PayeesCompanion toCompanion(bool nullToAbsent) {
+    return PayeesCompanion(
+      id: Value(id),
+      name: Value(name),
+      defaultCategoryId: defaultCategoryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(defaultCategoryId),
+      defaultFinancialAccountId:
+          defaultFinancialAccountId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(defaultFinancialAccountId),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory PayeeRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PayeeRow(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      defaultCategoryId: serializer.fromJson<String?>(
+        json['defaultCategoryId'],
+      ),
+      defaultFinancialAccountId: serializer.fromJson<String?>(
+        json['defaultFinancialAccountId'],
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'defaultCategoryId': serializer.toJson<String?>(defaultCategoryId),
+      'defaultFinancialAccountId': serializer.toJson<String?>(
+        defaultFinancialAccountId,
+      ),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  PayeeRow copyWith({
+    String? id,
+    String? name,
+    Value<String?> defaultCategoryId = const Value.absent(),
+    Value<String?> defaultFinancialAccountId = const Value.absent(),
+    DateTime? createdAt,
+  }) => PayeeRow(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    defaultCategoryId: defaultCategoryId.present
+        ? defaultCategoryId.value
+        : this.defaultCategoryId,
+    defaultFinancialAccountId: defaultFinancialAccountId.present
+        ? defaultFinancialAccountId.value
+        : this.defaultFinancialAccountId,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  PayeeRow copyWithCompanion(PayeesCompanion data) {
+    return PayeeRow(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      defaultCategoryId: data.defaultCategoryId.present
+          ? data.defaultCategoryId.value
+          : this.defaultCategoryId,
+      defaultFinancialAccountId: data.defaultFinancialAccountId.present
+          ? data.defaultFinancialAccountId.value
+          : this.defaultFinancialAccountId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PayeeRow(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('defaultCategoryId: $defaultCategoryId, ')
+          ..write('defaultFinancialAccountId: $defaultFinancialAccountId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    defaultCategoryId,
+    defaultFinancialAccountId,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PayeeRow &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.defaultCategoryId == this.defaultCategoryId &&
+          other.defaultFinancialAccountId == this.defaultFinancialAccountId &&
+          other.createdAt == this.createdAt);
+}
+
+class PayeesCompanion extends UpdateCompanion<PayeeRow> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String?> defaultCategoryId;
+  final Value<String?> defaultFinancialAccountId;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const PayeesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.defaultCategoryId = const Value.absent(),
+    this.defaultFinancialAccountId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PayeesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.defaultCategoryId = const Value.absent(),
+    this.defaultFinancialAccountId = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name),
+       createdAt = Value(createdAt);
+  static Insertable<PayeeRow> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? defaultCategoryId,
+    Expression<String>? defaultFinancialAccountId,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (defaultCategoryId != null) 'default_category_id': defaultCategoryId,
+      if (defaultFinancialAccountId != null)
+        'default_financial_account_id': defaultFinancialAccountId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PayeesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String?>? defaultCategoryId,
+    Value<String?>? defaultFinancialAccountId,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return PayeesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      defaultCategoryId: defaultCategoryId ?? this.defaultCategoryId,
+      defaultFinancialAccountId:
+          defaultFinancialAccountId ?? this.defaultFinancialAccountId,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (defaultCategoryId.present) {
+      map['default_category_id'] = Variable<String>(defaultCategoryId.value);
+    }
+    if (defaultFinancialAccountId.present) {
+      map['default_financial_account_id'] = Variable<String>(
+        defaultFinancialAccountId.value,
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PayeesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('defaultCategoryId: $defaultCategoryId, ')
+          ..write('defaultFinancialAccountId: $defaultFinancialAccountId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $RecurringTemplatesTable extends RecurringTemplates
+    with TableInfo<$RecurringTemplatesTable, RecurringTemplateRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RecurringTemplatesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TransactionDirection, String>
+  direction =
+      GeneratedColumn<String>(
+        'direction',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<TransactionDirection>(
+        $RecurringTemplatesTable.$converterdirection,
+      );
+  static const VerificationMeta _financialAccountIdMeta =
+      const VerificationMeta('financialAccountId');
+  @override
+  late final GeneratedColumn<String> financialAccountId =
+      GeneratedColumn<String>(
+        'financial_account_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<String> categoryId = GeneratedColumn<String>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountMinorMeta = const VerificationMeta(
+    'amountMinor',
+  );
+  @override
+  late final GeneratedColumn<int> amountMinor = GeneratedColumn<int>(
+    'amount_minor',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dayOfMonthMeta = const VerificationMeta(
+    'dayOfMonth',
+  );
+  @override
+  late final GeneratedColumn<int> dayOfMonth = GeneratedColumn<int>(
+    'day_of_month',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lastRecordedYearMonthMeta =
+      const VerificationMeta('lastRecordedYearMonth');
+  @override
+  late final GeneratedColumn<String> lastRecordedYearMonth =
+      GeneratedColumn<String>(
+        'last_recorded_year_month',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    direction,
+    financialAccountId,
+    categoryId,
+    amountMinor,
+    dayOfMonth,
+    lastRecordedYearMonth,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'recurring_templates';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RecurringTemplateRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('financial_account_id')) {
+      context.handle(
+        _financialAccountIdMeta,
+        financialAccountId.isAcceptableOrUnknown(
+          data['financial_account_id']!,
+          _financialAccountIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_financialAccountIdMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('amount_minor')) {
+      context.handle(
+        _amountMinorMeta,
+        amountMinor.isAcceptableOrUnknown(
+          data['amount_minor']!,
+          _amountMinorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_amountMinorMeta);
+    }
+    if (data.containsKey('day_of_month')) {
+      context.handle(
+        _dayOfMonthMeta,
+        dayOfMonth.isAcceptableOrUnknown(
+          data['day_of_month']!,
+          _dayOfMonthMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dayOfMonthMeta);
+    }
+    if (data.containsKey('last_recorded_year_month')) {
+      context.handle(
+        _lastRecordedYearMonthMeta,
+        lastRecordedYearMonth.isAcceptableOrUnknown(
+          data['last_recorded_year_month']!,
+          _lastRecordedYearMonthMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RecurringTemplateRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RecurringTemplateRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      direction: $RecurringTemplatesTable.$converterdirection.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}direction'],
+        )!,
+      ),
+      financialAccountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}financial_account_id'],
+      )!,
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_id'],
+      )!,
+      amountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_minor'],
+      )!,
+      dayOfMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}day_of_month'],
+      )!,
+      lastRecordedYearMonth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_recorded_year_month'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $RecurringTemplatesTable createAlias(String alias) {
+    return $RecurringTemplatesTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<TransactionDirection, String, String>
+  $converterdirection = const EnumNameConverter<TransactionDirection>(
+    TransactionDirection.values,
+  );
+}
+
+class RecurringTemplateRow extends DataClass
+    implements Insertable<RecurringTemplateRow> {
+  final String id;
+  final String name;
+  final TransactionDirection direction;
+  final String financialAccountId;
+  final String categoryId;
+  final int amountMinor;
+
+  /// 1-31, clamped to a given month's actual last day when applied (see
+  /// `effectiveDayOfMonth` in the domain model).
+  final int dayOfMonth;
+
+  /// 'YYYY-MM' of the last calendar month this template was recorded in.
+  final String? lastRecordedYearMonth;
+  final DateTime createdAt;
+  const RecurringTemplateRow({
+    required this.id,
+    required this.name,
+    required this.direction,
+    required this.financialAccountId,
+    required this.categoryId,
+    required this.amountMinor,
+    required this.dayOfMonth,
+    this.lastRecordedYearMonth,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    {
+      map['direction'] = Variable<String>(
+        $RecurringTemplatesTable.$converterdirection.toSql(direction),
+      );
+    }
+    map['financial_account_id'] = Variable<String>(financialAccountId);
+    map['category_id'] = Variable<String>(categoryId);
+    map['amount_minor'] = Variable<int>(amountMinor);
+    map['day_of_month'] = Variable<int>(dayOfMonth);
+    if (!nullToAbsent || lastRecordedYearMonth != null) {
+      map['last_recorded_year_month'] = Variable<String>(lastRecordedYearMonth);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  RecurringTemplatesCompanion toCompanion(bool nullToAbsent) {
+    return RecurringTemplatesCompanion(
+      id: Value(id),
+      name: Value(name),
+      direction: Value(direction),
+      financialAccountId: Value(financialAccountId),
+      categoryId: Value(categoryId),
+      amountMinor: Value(amountMinor),
+      dayOfMonth: Value(dayOfMonth),
+      lastRecordedYearMonth: lastRecordedYearMonth == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastRecordedYearMonth),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory RecurringTemplateRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RecurringTemplateRow(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      direction: $RecurringTemplatesTable.$converterdirection.fromJson(
+        serializer.fromJson<String>(json['direction']),
+      ),
+      financialAccountId: serializer.fromJson<String>(
+        json['financialAccountId'],
+      ),
+      categoryId: serializer.fromJson<String>(json['categoryId']),
+      amountMinor: serializer.fromJson<int>(json['amountMinor']),
+      dayOfMonth: serializer.fromJson<int>(json['dayOfMonth']),
+      lastRecordedYearMonth: serializer.fromJson<String?>(
+        json['lastRecordedYearMonth'],
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'direction': serializer.toJson<String>(
+        $RecurringTemplatesTable.$converterdirection.toJson(direction),
+      ),
+      'financialAccountId': serializer.toJson<String>(financialAccountId),
+      'categoryId': serializer.toJson<String>(categoryId),
+      'amountMinor': serializer.toJson<int>(amountMinor),
+      'dayOfMonth': serializer.toJson<int>(dayOfMonth),
+      'lastRecordedYearMonth': serializer.toJson<String?>(
+        lastRecordedYearMonth,
+      ),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  RecurringTemplateRow copyWith({
+    String? id,
+    String? name,
+    TransactionDirection? direction,
+    String? financialAccountId,
+    String? categoryId,
+    int? amountMinor,
+    int? dayOfMonth,
+    Value<String?> lastRecordedYearMonth = const Value.absent(),
+    DateTime? createdAt,
+  }) => RecurringTemplateRow(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    direction: direction ?? this.direction,
+    financialAccountId: financialAccountId ?? this.financialAccountId,
+    categoryId: categoryId ?? this.categoryId,
+    amountMinor: amountMinor ?? this.amountMinor,
+    dayOfMonth: dayOfMonth ?? this.dayOfMonth,
+    lastRecordedYearMonth: lastRecordedYearMonth.present
+        ? lastRecordedYearMonth.value
+        : this.lastRecordedYearMonth,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  RecurringTemplateRow copyWithCompanion(RecurringTemplatesCompanion data) {
+    return RecurringTemplateRow(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      direction: data.direction.present ? data.direction.value : this.direction,
+      financialAccountId: data.financialAccountId.present
+          ? data.financialAccountId.value
+          : this.financialAccountId,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      amountMinor: data.amountMinor.present
+          ? data.amountMinor.value
+          : this.amountMinor,
+      dayOfMonth: data.dayOfMonth.present
+          ? data.dayOfMonth.value
+          : this.dayOfMonth,
+      lastRecordedYearMonth: data.lastRecordedYearMonth.present
+          ? data.lastRecordedYearMonth.value
+          : this.lastRecordedYearMonth,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RecurringTemplateRow(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('direction: $direction, ')
+          ..write('financialAccountId: $financialAccountId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('dayOfMonth: $dayOfMonth, ')
+          ..write('lastRecordedYearMonth: $lastRecordedYearMonth, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    direction,
+    financialAccountId,
+    categoryId,
+    amountMinor,
+    dayOfMonth,
+    lastRecordedYearMonth,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RecurringTemplateRow &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.direction == this.direction &&
+          other.financialAccountId == this.financialAccountId &&
+          other.categoryId == this.categoryId &&
+          other.amountMinor == this.amountMinor &&
+          other.dayOfMonth == this.dayOfMonth &&
+          other.lastRecordedYearMonth == this.lastRecordedYearMonth &&
+          other.createdAt == this.createdAt);
+}
+
+class RecurringTemplatesCompanion
+    extends UpdateCompanion<RecurringTemplateRow> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<TransactionDirection> direction;
+  final Value<String> financialAccountId;
+  final Value<String> categoryId;
+  final Value<int> amountMinor;
+  final Value<int> dayOfMonth;
+  final Value<String?> lastRecordedYearMonth;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const RecurringTemplatesCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.direction = const Value.absent(),
+    this.financialAccountId = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.amountMinor = const Value.absent(),
+    this.dayOfMonth = const Value.absent(),
+    this.lastRecordedYearMonth = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RecurringTemplatesCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    required TransactionDirection direction,
+    required String financialAccountId,
+    required String categoryId,
+    required int amountMinor,
+    required int dayOfMonth,
+    this.lastRecordedYearMonth = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : name = Value(name),
+       direction = Value(direction),
+       financialAccountId = Value(financialAccountId),
+       categoryId = Value(categoryId),
+       amountMinor = Value(amountMinor),
+       dayOfMonth = Value(dayOfMonth),
+       createdAt = Value(createdAt);
+  static Insertable<RecurringTemplateRow> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? direction,
+    Expression<String>? financialAccountId,
+    Expression<String>? categoryId,
+    Expression<int>? amountMinor,
+    Expression<int>? dayOfMonth,
+    Expression<String>? lastRecordedYearMonth,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (direction != null) 'direction': direction,
+      if (financialAccountId != null)
+        'financial_account_id': financialAccountId,
+      if (categoryId != null) 'category_id': categoryId,
+      if (amountMinor != null) 'amount_minor': amountMinor,
+      if (dayOfMonth != null) 'day_of_month': dayOfMonth,
+      if (lastRecordedYearMonth != null)
+        'last_recorded_year_month': lastRecordedYearMonth,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RecurringTemplatesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<TransactionDirection>? direction,
+    Value<String>? financialAccountId,
+    Value<String>? categoryId,
+    Value<int>? amountMinor,
+    Value<int>? dayOfMonth,
+    Value<String?>? lastRecordedYearMonth,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return RecurringTemplatesCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      direction: direction ?? this.direction,
+      financialAccountId: financialAccountId ?? this.financialAccountId,
+      categoryId: categoryId ?? this.categoryId,
+      amountMinor: amountMinor ?? this.amountMinor,
+      dayOfMonth: dayOfMonth ?? this.dayOfMonth,
+      lastRecordedYearMonth:
+          lastRecordedYearMonth ?? this.lastRecordedYearMonth,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (direction.present) {
+      map['direction'] = Variable<String>(
+        $RecurringTemplatesTable.$converterdirection.toSql(direction.value),
+      );
+    }
+    if (financialAccountId.present) {
+      map['financial_account_id'] = Variable<String>(financialAccountId.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<String>(categoryId.value);
+    }
+    if (amountMinor.present) {
+      map['amount_minor'] = Variable<int>(amountMinor.value);
+    }
+    if (dayOfMonth.present) {
+      map['day_of_month'] = Variable<int>(dayOfMonth.value);
+    }
+    if (lastRecordedYearMonth.present) {
+      map['last_recorded_year_month'] = Variable<String>(
+        lastRecordedYearMonth.value,
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RecurringTemplatesCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('direction: $direction, ')
+          ..write('financialAccountId: $financialAccountId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('dayOfMonth: $dayOfMonth, ')
+          ..write('lastRecordedYearMonth: $lastRecordedYearMonth, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -7790,6 +8974,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CsvImportProfilesTable csvImportProfiles =
       $CsvImportProfilesTable(this);
   late final $CategoryRulesTable categoryRules = $CategoryRulesTable(this);
+  late final $PayeesTable payees = $PayeesTable(this);
+  late final $RecurringTemplatesTable recurringTemplates =
+      $RecurringTemplatesTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7811,6 +8998,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     ofxImportRecords,
     csvImportProfiles,
     categoryRules,
+    payees,
+    recurringTemplates,
   ];
 }
 
@@ -8083,6 +9272,8 @@ typedef $$AccountsTableCreateCompanionBuilder =
       Value<String?> investmentOwnerAccountId,
       Value<String?> groupId,
       Value<int> sortOrder,
+      Value<int?> monthlyLimitMinor,
+      Value<bool> isCreditCard,
       Value<DateTime?> archivedAt,
       Value<DateTime> createdAt,
       Value<int> rowid,
@@ -8096,6 +9287,8 @@ typedef $$AccountsTableUpdateCompanionBuilder =
       Value<String?> investmentOwnerAccountId,
       Value<String?> groupId,
       Value<int> sortOrder,
+      Value<int?> monthlyLimitMinor,
+      Value<bool> isCreditCard,
       Value<DateTime?> archivedAt,
       Value<DateTime> createdAt,
       Value<int> rowid,
@@ -8239,6 +9432,16 @@ class $$AccountsTableFilterComposer
 
   ColumnFilters<int> get sortOrder => $composableBuilder(
     column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get monthlyLimitMinor => $composableBuilder(
+    column: $table.monthlyLimitMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isCreditCard => $composableBuilder(
+    column: $table.isCreditCard,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8415,6 +9618,16 @@ class $$AccountsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get monthlyLimitMinor => $composableBuilder(
+    column: $table.monthlyLimitMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isCreditCard => $composableBuilder(
+    column: $table.isCreditCard,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
     column: $table.archivedAt,
     builder: (column) => ColumnOrderings(column),
@@ -8477,6 +9690,16 @@ class $$AccountsTableAnnotationComposer
 
   GeneratedColumn<int> get sortOrder =>
       $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<int> get monthlyLimitMinor => $composableBuilder(
+    column: $table.monthlyLimitMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isCreditCard => $composableBuilder(
+    column: $table.isCreditCard,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
     column: $table.archivedAt,
@@ -8651,6 +9874,8 @@ class $$AccountsTableTableManager
                 Value<String?> investmentOwnerAccountId = const Value.absent(),
                 Value<String?> groupId = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
+                Value<int?> monthlyLimitMinor = const Value.absent(),
+                Value<bool> isCreditCard = const Value.absent(),
                 Value<DateTime?> archivedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -8662,6 +9887,8 @@ class $$AccountsTableTableManager
                 investmentOwnerAccountId: investmentOwnerAccountId,
                 groupId: groupId,
                 sortOrder: sortOrder,
+                monthlyLimitMinor: monthlyLimitMinor,
+                isCreditCard: isCreditCard,
                 archivedAt: archivedAt,
                 createdAt: createdAt,
                 rowid: rowid,
@@ -8675,6 +9902,8 @@ class $$AccountsTableTableManager
                 Value<String?> investmentOwnerAccountId = const Value.absent(),
                 Value<String?> groupId = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
+                Value<int?> monthlyLimitMinor = const Value.absent(),
+                Value<bool> isCreditCard = const Value.absent(),
                 Value<DateTime?> archivedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -8686,6 +9915,8 @@ class $$AccountsTableTableManager
                 investmentOwnerAccountId: investmentOwnerAccountId,
                 groupId: groupId,
                 sortOrder: sortOrder,
+                monthlyLimitMinor: monthlyLimitMinor,
+                isCreditCard: isCreditCard,
                 archivedAt: archivedAt,
                 createdAt: createdAt,
                 rowid: rowid,
@@ -8868,6 +10099,7 @@ typedef $$SigningIdentitiesTableCreateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<String?> supersedesIdentityId,
       Value<DateTime?> supersededAt,
+      Value<DateTime?> acknowledgedAt,
       Value<int> rowid,
     });
 typedef $$SigningIdentitiesTableUpdateCompanionBuilder =
@@ -8877,6 +10109,7 @@ typedef $$SigningIdentitiesTableUpdateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<String?> supersedesIdentityId,
       Value<DateTime?> supersededAt,
+      Value<DateTime?> acknowledgedAt,
       Value<int> rowid,
     });
 
@@ -8985,6 +10218,11 @@ class $$SigningIdentitiesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<DateTime> get acknowledgedAt => $composableBuilder(
+    column: $table.acknowledgedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$SigningIdentitiesTableFilterComposer get supersedesIdentityId {
     final $$SigningIdentitiesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -9088,6 +10326,11 @@ class $$SigningIdentitiesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get acknowledgedAt => $composableBuilder(
+    column: $table.acknowledgedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$SigningIdentitiesTableOrderingComposer get supersedesIdentityId {
     final $$SigningIdentitiesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -9134,6 +10377,11 @@ class $$SigningIdentitiesTableAnnotationComposer
 
   GeneratedColumn<DateTime> get supersededAt => $composableBuilder(
     column: $table.supersededAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get acknowledgedAt => $composableBuilder(
+    column: $table.acknowledgedAt,
     builder: (column) => column,
   );
 
@@ -9254,6 +10502,7 @@ class $$SigningIdentitiesTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<String?> supersedesIdentityId = const Value.absent(),
                 Value<DateTime?> supersededAt = const Value.absent(),
+                Value<DateTime?> acknowledgedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SigningIdentitiesCompanion(
                 identityId: identityId,
@@ -9261,6 +10510,7 @@ class $$SigningIdentitiesTableTableManager
                 createdAt: createdAt,
                 supersedesIdentityId: supersedesIdentityId,
                 supersededAt: supersededAt,
+                acknowledgedAt: acknowledgedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -9270,6 +10520,7 @@ class $$SigningIdentitiesTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<String?> supersedesIdentityId = const Value.absent(),
                 Value<DateTime?> supersededAt = const Value.absent(),
+                Value<DateTime?> acknowledgedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SigningIdentitiesCompanion.insert(
                 identityId: identityId,
@@ -9277,6 +10528,7 @@ class $$SigningIdentitiesTableTableManager
                 createdAt: createdAt,
                 supersedesIdentityId: supersedesIdentityId,
                 supersededAt: supersededAt,
+                acknowledgedAt: acknowledgedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -16085,6 +17337,509 @@ typedef $$CategoryRulesTableProcessedTableManager =
       CategoryRuleRow,
       PrefetchHooks Function()
     >;
+typedef $$PayeesTableCreateCompanionBuilder =
+    PayeesCompanion Function({
+      Value<String> id,
+      required String name,
+      Value<String?> defaultCategoryId,
+      Value<String?> defaultFinancialAccountId,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$PayeesTableUpdateCompanionBuilder =
+    PayeesCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String?> defaultCategoryId,
+      Value<String?> defaultFinancialAccountId,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$PayeesTableFilterComposer
+    extends Composer<_$AppDatabase, $PayeesTable> {
+  $$PayeesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get defaultCategoryId => $composableBuilder(
+    column: $table.defaultCategoryId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get defaultFinancialAccountId => $composableBuilder(
+    column: $table.defaultFinancialAccountId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PayeesTableOrderingComposer
+    extends Composer<_$AppDatabase, $PayeesTable> {
+  $$PayeesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get defaultCategoryId => $composableBuilder(
+    column: $table.defaultCategoryId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get defaultFinancialAccountId => $composableBuilder(
+    column: $table.defaultFinancialAccountId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PayeesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PayeesTable> {
+  $$PayeesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get defaultCategoryId => $composableBuilder(
+    column: $table.defaultCategoryId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get defaultFinancialAccountId => $composableBuilder(
+    column: $table.defaultFinancialAccountId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$PayeesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PayeesTable,
+          PayeeRow,
+          $$PayeesTableFilterComposer,
+          $$PayeesTableOrderingComposer,
+          $$PayeesTableAnnotationComposer,
+          $$PayeesTableCreateCompanionBuilder,
+          $$PayeesTableUpdateCompanionBuilder,
+          (PayeeRow, BaseReferences<_$AppDatabase, $PayeesTable, PayeeRow>),
+          PayeeRow,
+          PrefetchHooks Function()
+        > {
+  $$PayeesTableTableManager(_$AppDatabase db, $PayeesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PayeesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PayeesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PayeesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String?> defaultCategoryId = const Value.absent(),
+                Value<String?> defaultFinancialAccountId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PayeesCompanion(
+                id: id,
+                name: name,
+                defaultCategoryId: defaultCategoryId,
+                defaultFinancialAccountId: defaultFinancialAccountId,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String name,
+                Value<String?> defaultCategoryId = const Value.absent(),
+                Value<String?> defaultFinancialAccountId = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => PayeesCompanion.insert(
+                id: id,
+                name: name,
+                defaultCategoryId: defaultCategoryId,
+                defaultFinancialAccountId: defaultFinancialAccountId,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PayeesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PayeesTable,
+      PayeeRow,
+      $$PayeesTableFilterComposer,
+      $$PayeesTableOrderingComposer,
+      $$PayeesTableAnnotationComposer,
+      $$PayeesTableCreateCompanionBuilder,
+      $$PayeesTableUpdateCompanionBuilder,
+      (PayeeRow, BaseReferences<_$AppDatabase, $PayeesTable, PayeeRow>),
+      PayeeRow,
+      PrefetchHooks Function()
+    >;
+typedef $$RecurringTemplatesTableCreateCompanionBuilder =
+    RecurringTemplatesCompanion Function({
+      Value<String> id,
+      required String name,
+      required TransactionDirection direction,
+      required String financialAccountId,
+      required String categoryId,
+      required int amountMinor,
+      required int dayOfMonth,
+      Value<String?> lastRecordedYearMonth,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$RecurringTemplatesTableUpdateCompanionBuilder =
+    RecurringTemplatesCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<TransactionDirection> direction,
+      Value<String> financialAccountId,
+      Value<String> categoryId,
+      Value<int> amountMinor,
+      Value<int> dayOfMonth,
+      Value<String?> lastRecordedYearMonth,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$RecurringTemplatesTableFilterComposer
+    extends Composer<_$AppDatabase, $RecurringTemplatesTable> {
+  $$RecurringTemplatesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    TransactionDirection,
+    TransactionDirection,
+    String
+  >
+  get direction => $composableBuilder(
+    column: $table.direction,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get financialAccountId => $composableBuilder(
+    column: $table.financialAccountId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get categoryId => $composableBuilder(
+    column: $table.categoryId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dayOfMonth => $composableBuilder(
+    column: $table.dayOfMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastRecordedYearMonth => $composableBuilder(
+    column: $table.lastRecordedYearMonth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$RecurringTemplatesTableOrderingComposer
+    extends Composer<_$AppDatabase, $RecurringTemplatesTable> {
+  $$RecurringTemplatesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get direction => $composableBuilder(
+    column: $table.direction,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get financialAccountId => $composableBuilder(
+    column: $table.financialAccountId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get categoryId => $composableBuilder(
+    column: $table.categoryId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dayOfMonth => $composableBuilder(
+    column: $table.dayOfMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastRecordedYearMonth => $composableBuilder(
+    column: $table.lastRecordedYearMonth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RecurringTemplatesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $RecurringTemplatesTable> {
+  $$RecurringTemplatesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<TransactionDirection, String>
+  get direction =>
+      $composableBuilder(column: $table.direction, builder: (column) => column);
+
+  GeneratedColumn<String> get financialAccountId => $composableBuilder(
+    column: $table.financialAccountId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get categoryId => $composableBuilder(
+    column: $table.categoryId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get dayOfMonth => $composableBuilder(
+    column: $table.dayOfMonth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get lastRecordedYearMonth => $composableBuilder(
+    column: $table.lastRecordedYearMonth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$RecurringTemplatesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $RecurringTemplatesTable,
+          RecurringTemplateRow,
+          $$RecurringTemplatesTableFilterComposer,
+          $$RecurringTemplatesTableOrderingComposer,
+          $$RecurringTemplatesTableAnnotationComposer,
+          $$RecurringTemplatesTableCreateCompanionBuilder,
+          $$RecurringTemplatesTableUpdateCompanionBuilder,
+          (
+            RecurringTemplateRow,
+            BaseReferences<
+              _$AppDatabase,
+              $RecurringTemplatesTable,
+              RecurringTemplateRow
+            >,
+          ),
+          RecurringTemplateRow,
+          PrefetchHooks Function()
+        > {
+  $$RecurringTemplatesTableTableManager(
+    _$AppDatabase db,
+    $RecurringTemplatesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RecurringTemplatesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RecurringTemplatesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RecurringTemplatesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<TransactionDirection> direction = const Value.absent(),
+                Value<String> financialAccountId = const Value.absent(),
+                Value<String> categoryId = const Value.absent(),
+                Value<int> amountMinor = const Value.absent(),
+                Value<int> dayOfMonth = const Value.absent(),
+                Value<String?> lastRecordedYearMonth = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RecurringTemplatesCompanion(
+                id: id,
+                name: name,
+                direction: direction,
+                financialAccountId: financialAccountId,
+                categoryId: categoryId,
+                amountMinor: amountMinor,
+                dayOfMonth: dayOfMonth,
+                lastRecordedYearMonth: lastRecordedYearMonth,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String name,
+                required TransactionDirection direction,
+                required String financialAccountId,
+                required String categoryId,
+                required int amountMinor,
+                required int dayOfMonth,
+                Value<String?> lastRecordedYearMonth = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => RecurringTemplatesCompanion.insert(
+                id: id,
+                name: name,
+                direction: direction,
+                financialAccountId: financialAccountId,
+                categoryId: categoryId,
+                amountMinor: amountMinor,
+                dayOfMonth: dayOfMonth,
+                lastRecordedYearMonth: lastRecordedYearMonth,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$RecurringTemplatesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $RecurringTemplatesTable,
+      RecurringTemplateRow,
+      $$RecurringTemplatesTableFilterComposer,
+      $$RecurringTemplatesTableOrderingComposer,
+      $$RecurringTemplatesTableAnnotationComposer,
+      $$RecurringTemplatesTableCreateCompanionBuilder,
+      $$RecurringTemplatesTableUpdateCompanionBuilder,
+      (
+        RecurringTemplateRow,
+        BaseReferences<
+          _$AppDatabase,
+          $RecurringTemplatesTable,
+          RecurringTemplateRow
+        >,
+      ),
+      RecurringTemplateRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -16124,4 +17879,8 @@ class $AppDatabaseManager {
       $$CsvImportProfilesTableTableManager(_db, _db.csvImportProfiles);
   $$CategoryRulesTableTableManager get categoryRules =>
       $$CategoryRulesTableTableManager(_db, _db.categoryRules);
+  $$PayeesTableTableManager get payees =>
+      $$PayeesTableTableManager(_db, _db.payees);
+  $$RecurringTemplatesTableTableManager get recurringTemplates =>
+      $$RecurringTemplatesTableTableManager(_db, _db.recurringTemplates);
 }

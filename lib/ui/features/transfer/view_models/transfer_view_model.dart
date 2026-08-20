@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 
@@ -10,11 +11,13 @@ import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../core/money_formatter.dart';
 
 class TransferViewModel extends ChangeNotifier {
   TransferViewModel({
     required LedgerRepository ledgerRepository,
     String? initialFromAccountId,
+    String? initialToAccountId,
     ExchangeRateService? exchangeRateService,
     SettingsRepository? settingsRepository,
   }) : _ledgerRepository = ledgerRepository,
@@ -35,10 +38,21 @@ class TransferViewModel extends ChangeNotifier {
         _fromAccountId = requestedIsActive ? requested : accounts.first.id;
       }
       if (_toAccountId == null) {
-        for (final account in accounts) {
-          if (account.id != _fromAccountId) {
-            _toAccountId = account.id;
-            break;
+        // credit-card-household-flow's "Pay card" pre-fill: same
+        // still-active-by-arrival safety as initialFromAccountId above.
+        final requestedTo = initialToAccountId;
+        final requestedToIsActive =
+            requestedTo != null &&
+            requestedTo != _fromAccountId &&
+            accounts.any((a) => a.id == requestedTo);
+        if (requestedToIsActive) {
+          _toAccountId = requestedTo;
+        } else {
+          for (final account in accounts) {
+            if (account.id != _fromAccountId) {
+              _toAccountId = account.id;
+              break;
+            }
           }
         }
       }
@@ -161,9 +175,11 @@ class TransferViewModel extends ChangeNotifier {
   /// Locally computed from the user's own entered amounts - no network
   /// call, so it's available even when the reference-rate setting is
   /// disabled or the fetch failed. `null` unless both amounts are entered
-  /// for a cross-currency transfer. Uses raw minor units directly: this
-  /// app's `formatAmountMinor` treats every currency as two-decimal, so
-  /// the minor-unit ratio already equals the major-unit ratio.
+  /// for a cross-currency transfer. Converts each side to its own major
+  /// units first (localized-money-formatting: minor-unit digit count is
+  /// per-currency, e.g. 0 for JPY vs 2 for USD - the raw minor-unit ratio
+  /// only equals the major-unit rate when both currencies share the same
+  /// digit count, which isn't true in general).
   ///
   /// When [feeDeductedFromAmount] is set, only `amountMinor - feeAmountMinor`
   /// is actually converted (mirrors the `transferAmountMinor` computation in
@@ -172,10 +188,14 @@ class TransferViewModel extends ChangeNotifier {
   double? get impliedRate {
     final amount = _amountMinor;
     final destination = _destinationAmountMinor;
+    final fromCurrency = currencyFor(_fromAccountId);
+    final toCurrency = currencyFor(_toAccountId);
     if (!isCrossCurrency ||
         amount == null ||
         amount <= 0 ||
-        destination == null) {
+        destination == null ||
+        fromCurrency == null ||
+        toCurrency == null) {
       return null;
     }
     final feeAmountMinor = _feeAmountMinor;
@@ -183,7 +203,12 @@ class TransferViewModel extends ChangeNotifier {
         ? amount - feeAmountMinor
         : amount;
     if (convertedAmount <= 0) return null;
-    return destination / convertedAmount;
+    final fromMajor =
+        convertedAmount /
+        math.pow(10, minorUnitDigitsForCurrency(fromCurrency));
+    final toMajor =
+        destination / math.pow(10, minorUnitDigitsForCurrency(toCurrency));
+    return toMajor / fromMajor;
   }
 
   int _referenceRateFetchGeneration = 0;

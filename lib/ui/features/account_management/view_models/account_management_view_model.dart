@@ -48,6 +48,7 @@ class AccountManagementViewModel extends ChangeNotifier {
     required AccountType type,
     required String groupId,
     int? openingBalanceMinor,
+    bool isCreditCard = false,
   }) {
     return _run(() async {
       await _ledgerRepository.createFinancialAccount(
@@ -55,6 +56,7 @@ class AccountManagementViewModel extends ChangeNotifier {
         type: type,
         groupId: groupId,
         openingBalanceMinor: openingBalanceMinor,
+        isCreditCard: isCreditCard,
       );
     });
   }
@@ -67,6 +69,10 @@ class AccountManagementViewModel extends ChangeNotifier {
 
   Future<bool> archiveAccount(String id) {
     return _run(() => _ledgerRepository.archiveFinancialAccount(id));
+  }
+
+  Future<bool> unarchiveAccount(String id) {
+    return _run(() => _ledgerRepository.unarchiveFinancialAccount(id));
   }
 
   Future<bool> reassignAccountGroup({
@@ -115,6 +121,10 @@ class AccountManagementViewModel extends ChangeNotifier {
 
   Future<bool> archiveGroup(String id) {
     return _run(() => _ledgerRepository.archiveAccountGroup(id));
+  }
+
+  Future<bool> unarchiveGroup(String id) {
+    return _run(() => _ledgerRepository.unarchiveAccountGroup(id));
   }
 
   Future<bool> _run(Future<void> Function() action) async {

@@ -87,6 +87,8 @@ class _TransferViewState extends State<TransferView> {
                 MoneyAmountField(
                   controller: _amountController,
                   labelText: 'Amount',
+                  currency:
+                      viewModel.currencyFor(viewModel.fromAccountId) ?? 'USD',
                   suffixText: viewModel.currencyFor(viewModel.fromAccountId),
                   onChangedMinor: viewModel.setAmountMinor,
                 ),
@@ -95,6 +97,8 @@ class _TransferViewState extends State<TransferView> {
                   MoneyAmountField(
                     controller: _destinationAmountController,
                     labelText: 'Destination amount (optional)',
+                    currency:
+                        viewModel.currencyFor(viewModel.toAccountId) ?? 'USD',
                     helperText:
                         'Leave blank if the exchange rate isn\'t known '
                         'yet - the transfer will be provisional until '
@@ -158,6 +162,8 @@ class _TransferViewState extends State<TransferView> {
                 MoneyAmountField(
                   controller: _feeAmountController,
                   labelText: 'Fee amount',
+                  currency:
+                      viewModel.currencyFor(viewModel.fromAccountId) ?? 'USD',
                   suffixText: viewModel.currencyFor(viewModel.fromAccountId),
                   onChangedMinor: viewModel.setFeeAmountMinor,
                 ),

@@ -1,14 +1,21 @@
+import 'dart:convert';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/account.dart';
+import '../../../../domain/models/transaction_direction.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/capture_action_sheet.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
 import '../../../core/money_formatter.dart';
 import '../../../core/status_banner.dart';
+import '../view_models/register_row.dart';
 import '../view_models/register_view_model.dart';
 import 'register_row_tile.dart';
 
@@ -18,15 +25,35 @@ class RegisterView extends StatelessWidget {
   const RegisterView({
     super.key,
     required this.viewModel,
-    this.onAddTransaction,
+    this.onSpent,
+    this.onReceived,
     this.onTransfer,
     this.onImport,
+    this.onFixEntry,
+    this.onPayCard,
   });
 
   final RegisterViewModel viewModel;
-  final VoidCallback? onAddTransaction;
+
+  /// home-hub-capture: the register's three former separate FABs
+  /// (import/transfer/add) consolidate into one Add action opening the
+  /// same Spent/Received/Moved money/Import choice Home's Add offers,
+  /// with the currently-viewed account pre-selected by the caller.
+  final VoidCallback? onSpent;
+  final VoidCallback? onReceived;
   final VoidCallback? onTransfer;
   final VoidCallback? onImport;
+
+  /// fix-this-correction-wizard: called with a fixable row when the user
+  /// taps it. Rows [RegisterViewModel.isRowFixable] rejects render with no
+  /// tap target at all.
+  final ValueChanged<RegisterRow>? onFixEntry;
+
+  /// credit-card-household-flow: shown only when
+  /// [RegisterViewModel.isSelectedAccountCreditCard] - a labeled shortcut
+  /// into the existing transfer flow, bank source, this card as
+  /// destination.
+  final VoidCallback? onPayCard;
 
   @override
   Widget build(BuildContext context) {
@@ -35,46 +62,31 @@ class RegisterView extends StatelessWidget {
         title: Text('Register', style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
+        actions: [
+          IconButton(
+            tooltip: 'Export CSV',
+            icon: const Icon(TablerIcons.fileExport),
+            onPressed: () => _exportCsv(context, viewModel),
+          ),
+        ],
       ),
       floatingActionButton: ListenableBuilder(
         listenable: viewModel,
-        builder: (context, _) => Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FloatingActionButton(
-              heroTag: 'register-import-fab',
-              onPressed: viewModel.isSelectedAccountArchived ? null : onImport,
-              backgroundColor: AppColors.primary,
-              child: const Icon(
-                TablerIcons.fileImport,
-                color: AppColors.cardBackground,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.medium),
-            FloatingActionButton(
-              heroTag: 'register-transfer-fab',
-              onPressed: viewModel.isSelectedAccountArchived
-                  ? null
-                  : onTransfer,
-              backgroundColor: AppColors.primary,
-              child: const Icon(
-                TablerIcons.arrowsExchange,
-                color: AppColors.cardBackground,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.medium),
-            FloatingActionButton(
-              heroTag: 'register-fab',
-              onPressed: viewModel.isSelectedAccountArchived
-                  ? null
-                  : onAddTransaction,
-              backgroundColor: AppColors.primary,
-              child: const Icon(
-                TablerIcons.plus,
-                color: AppColors.cardBackground,
-              ),
-            ),
-          ],
+        builder: (context, _) => FloatingActionButton.extended(
+          heroTag: 'register-add-fab',
+          onPressed: viewModel.isSelectedAccountArchived
+              ? null
+              : () => showCaptureActionSheet(
+                  context: context,
+                  onSpent: onSpent ?? () {},
+                  onReceived: onReceived ?? () {},
+                  onTransfer: onTransfer ?? () {},
+                  onImport: onImport ?? () {},
+                ),
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.cardBackground,
+          icon: const Icon(TablerIcons.plus),
+          label: const Text('Add'),
         ),
       ),
       body: ListenableBuilder(
@@ -106,6 +118,7 @@ class RegisterView extends StatelessWidget {
                   },
                 ),
               ),
+              _RegisterSearchBar(viewModel: viewModel),
               if (viewModel.canCloseoutSelectedAccount)
                 Padding(
                   padding: const EdgeInsets.symmetric(
@@ -114,6 +127,17 @@ class RegisterView extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: () => _showCloseoutDialog(context, viewModel),
                     child: const Text('Transfer remaining balance'),
+                  ),
+                ),
+              if (viewModel.isSelectedAccountCreditCard &&
+                  !viewModel.isSelectedAccountArchived)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.large,
+                  ),
+                  child: OutlinedButton(
+                    onPressed: onPayCard,
+                    child: const Text('Pay card'),
                   ),
                 ),
               Expanded(
@@ -131,10 +155,12 @@ class RegisterView extends StatelessWidget {
                         itemCount: viewModel.rows.length,
                         itemBuilder: (context, index) {
                           final row = viewModel.rows[index];
+                          final isFixable = viewModel.isRowFixable(row);
                           return RegisterRowTile(
                             row: row,
-                            onReverse: () =>
-                                viewModel.reverseEntry(row.entryId),
+                            onTap: isFixable
+                                ? () => onFixEntry?.call(row)
+                                : null,
                           );
                         },
                       ),
@@ -145,6 +171,51 @@ class RegisterView extends StatelessWidget {
       ),
     );
   }
+
+  /// ledger-data-export: picks a date range, exports the selected
+  /// account's transactions to CSV, then lets the user choose where to
+  /// save the file. Never touches signing-key material - the exported
+  /// data is exactly the same date/description/category/amount data the
+  /// Register itself already shows.
+  Future<void> _exportCsv(
+    BuildContext context,
+    RegisterViewModel viewModel,
+  ) async {
+    final now = DateTime.now();
+    final range = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      initialDateRange: DateTimeRange(
+        start: DateTime(now.year, now.month, 1),
+        end: now,
+      ),
+    );
+    if (range == null) return;
+
+    final csv = await viewModel.exportCsv(start: range.start, end: range.end);
+    if (csv == null) return;
+
+    String? accountName;
+    for (final account in viewModel.accounts) {
+      if (account.id == viewModel.selectedAccountId) {
+        accountName = account.name;
+        break;
+      }
+    }
+    final fileName =
+        '${accountName ?? 'register'}-'
+        '${_isoDate(range.start)}-to-${_isoDate(range.end)}.csv';
+    await FilePicker.platform.saveFile(
+      dialogTitle: 'Save CSV export',
+      fileName: fileName,
+      bytes: Uint8List.fromList(utf8.encode(csv)),
+    );
+  }
+
+  String _isoDate(DateTime date) =>
+      '${date.year}-${date.month.toString().padLeft(2, '0')}-'
+      '${date.day.toString().padLeft(2, '0')}';
 
   /// Controllers are intentionally not disposed after [showDialog] returns:
   /// the dialog route's exit animation still rebuilds its TextFields.
@@ -194,7 +265,7 @@ class RegisterView extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    'Amount: ${formatAmountMinor(viewModel.selectedAccountBalanceMinor)}'
+                    'Amount: ${formatAmountMinor(viewModel.selectedAccountBalanceMinor, sourceCurrency ?? 'USD')}'
                     '${sourceCurrency == null ? '' : ' $sourceCurrency'}',
                     style: AppTypography.body,
                   ),
@@ -203,6 +274,7 @@ class RegisterView extends StatelessWidget {
                     MoneyAmountField(
                       controller: destinationAmountController,
                       labelText: 'Destination amount',
+                      currency: destCurrency!,
                       suffixText: destCurrency,
                       onChangedMinor: (value) {
                         setDialogState(() => destinationAmountMinor = value);
@@ -266,6 +338,148 @@ class RegisterView extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+/// register-search: text search plus optional, combinable date-range and
+/// direction filters over the register's already-loaded rows (design.md
+/// Decision 1 - client-side, no new repository query). A small
+/// StatefulWidget only to own the search field's [TextEditingController]
+/// so the cursor position survives rebuilds triggered by the view model's
+/// own `notifyListeners` (mirrors [MoneyAmountField]'s precedent).
+class _RegisterSearchBar extends StatefulWidget {
+  const _RegisterSearchBar({required this.viewModel});
+
+  final RegisterViewModel viewModel;
+
+  @override
+  State<_RegisterSearchBar> createState() => _RegisterSearchBarState();
+}
+
+class _RegisterSearchBarState extends State<_RegisterSearchBar> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.viewModel.searchText);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickDateRange(BuildContext context) async {
+    final now = DateTime.now();
+    final picked = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      initialDateRange:
+          widget.viewModel.filterStartDate != null &&
+              widget.viewModel.filterEndDate != null
+          ? DateTimeRange(
+              start: widget.viewModel.filterStartDate!,
+              end: widget.viewModel.filterEndDate!,
+            )
+          : DateTimeRange(start: now, end: now),
+    );
+    if (picked != null) {
+      widget.viewModel.setDateRangeFilter(start: picked.start, end: picked.end);
+    }
+  }
+
+  String _formatDate(DateTime date) =>
+      '${date.year}-${date.month.toString().padLeft(2, '0')}-'
+      '${date.day.toString().padLeft(2, '0')}';
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: widget.viewModel,
+      builder: (context, _) {
+        final viewModel = widget.viewModel;
+        final hasDateRange =
+            viewModel.filterStartDate != null &&
+            viewModel.filterEndDate != null;
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.large,
+          ).copyWith(bottom: AppSpacing.medium),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                  labelText: 'Search',
+                  hintText: 'Description, category, or amount',
+                  prefixIcon: const Icon(TablerIcons.search),
+                  suffixIcon: viewModel.hasActiveSearchOrFilters
+                      ? IconButton(
+                          icon: const Icon(TablerIcons.x),
+                          tooltip: 'Clear search and filters',
+                          onPressed: () {
+                            _controller.clear();
+                            viewModel.clearSearchAndFilters();
+                          },
+                        )
+                      : null,
+                ),
+                onChanged: viewModel.setSearchText,
+              ),
+              const SizedBox(height: AppSpacing.small),
+              Wrap(
+                spacing: AppSpacing.small,
+                children: [
+                  ChoiceChip(
+                    label: const Text('All'),
+                    selected: viewModel.filterDirection == null,
+                    onSelected: (_) => viewModel.setDirectionFilter(null),
+                  ),
+                  ChoiceChip(
+                    label: const Text('Spent only'),
+                    selected:
+                        viewModel.filterDirection ==
+                        TransactionDirection.moneyOut,
+                    onSelected: (_) => viewModel.setDirectionFilter(
+                      TransactionDirection.moneyOut,
+                    ),
+                  ),
+                  ChoiceChip(
+                    label: const Text('Received only'),
+                    selected:
+                        viewModel.filterDirection ==
+                        TransactionDirection.moneyIn,
+                    onSelected: (_) => viewModel.setDirectionFilter(
+                      TransactionDirection.moneyIn,
+                    ),
+                  ),
+                  ActionChip(
+                    avatar: const Icon(TablerIcons.calendar, size: 16),
+                    label: Text(
+                      hasDateRange
+                          ? '${_formatDate(viewModel.filterStartDate!)} – '
+                                '${_formatDate(viewModel.filterEndDate!)}'
+                          : 'Date range',
+                    ),
+                    onPressed: () => _pickDateRange(context),
+                  ),
+                  if (hasDateRange)
+                    ActionChip(
+                      avatar: const Icon(TablerIcons.x, size: 16),
+                      label: const Text('Clear dates'),
+                      onPressed: () => viewModel.setDateRangeFilter(),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
