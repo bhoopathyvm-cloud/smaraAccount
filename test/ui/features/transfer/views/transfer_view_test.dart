@@ -168,7 +168,12 @@ void main() {
         transactionDate: anyNamed('transactionDate'),
         description: anyNamed('description'),
       ),
-    ).thenThrow(InvalidTransferException('accounts must be distinct'));
+    ).thenThrow(
+      InvalidTransferException(
+        'accounts must be distinct',
+        code: AppErrorCode.transferAccountsMustDiffer,
+      ),
+    );
 
     final viewModel = buildViewModel();
     addTearDown(viewModel.dispose);
@@ -186,7 +191,10 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('accounts must be distinct'), findsOneWidget);
+    expect(
+      find.text('Source and destination accounts must be different.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets(

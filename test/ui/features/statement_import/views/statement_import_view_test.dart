@@ -209,7 +209,8 @@ void main() {
       );
       await tester.pump();
 
-      expect(find.text('1 transactions parsed (1 skipped)'), findsOneWidget);
+      expect(find.text('1 transactions parsed'), findsOneWidget);
+      expect(find.text('1 skipped or excluded'), findsOneWidget);
       expect(find.text('Skipped rows'), findsOneWidget);
       expect(find.text('Missing transaction amount'), findsOneWidget);
       expect(find.text('Import into account'), findsOneWidget);
@@ -337,7 +338,7 @@ void main() {
     await tester.tap(find.text('Confirm import'));
     await tester.pumpAndSettle();
 
-    expect(find.text('1 posted'), findsOneWidget);
+    expect(find.text('1 posted, 0 failed'), findsOneWidget);
     verify(
       importRepository.postAcceptedRows(
         financialAccountId: checking.id,
@@ -567,7 +568,7 @@ void main() {
       );
       await pumpAtPreview(tester);
 
-      await tester.tap(find.byTooltip('Manage category rules'));
+      await tester.tap(find.byTooltip('Manage Saved Category Rules'));
       await tester.pumpAndSettle();
 
       expect(find.text('AMAZON'), findsOneWidget);
@@ -590,7 +591,7 @@ void main() {
       when(importRepository.deleteCategoryRule(any)).thenAnswer((_) async {});
       await pumpAtPreview(tester);
 
-      await tester.tap(find.byTooltip('Manage category rules'));
+      await tester.tap(find.byTooltip('Manage Saved Category Rules'));
       await tester.pumpAndSettle();
       await tester.tap(
         find.byWidgetPredicate((widget) => widget is PopupMenuButton),

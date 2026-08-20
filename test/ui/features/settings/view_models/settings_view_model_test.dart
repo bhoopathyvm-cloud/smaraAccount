@@ -112,7 +112,9 @@ void main() {
         expect(ok, isFalse);
         expect(
           viewModel.backupErrorMessage,
-          equals('belongs to a different identity'),
+          equals(
+            'This backup belongs to a different signing identity than the one on this device.',
+          ),
         );
       },
     );
@@ -133,7 +135,10 @@ void main() {
         );
 
         expect(ok, isFalse);
-        expect(viewModel.backupErrorMessage, equals('not a valid backup'));
+        expect(
+          viewModel.backupErrorMessage,
+          equals('This file is not a valid Smara backup.'),
+        );
       },
     );
 

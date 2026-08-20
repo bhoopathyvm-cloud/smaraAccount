@@ -300,7 +300,8 @@ class AppLocalizationsTa extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents =>
+      'ரொக்கம் மற்றும் ரொக்கத்திற்கு இணையானவை';
 
   @override
   String get systemGroupPensionRetirement => 'Pension & retirement';
@@ -318,13 +319,13 @@ class AppLocalizationsTa extends AppLocalizations {
   String get systemAccountCashBank => 'Cash & Bank';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'சம்பளம்';
 
   @override
   String get systemCategoryOtherIncome => 'Other Income';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'மளிகை';
 
   @override
   String get systemCategoryRentMortgage => 'Rent/Mortgage';
