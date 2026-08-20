@@ -5,8 +5,9 @@ Major European languages requested for Smara — German, French, Spanish, Italia
 ## What Changes
 
 - Add AI-translated ARBs for `de`, `fr`, `es`, `it`, `pt`, `hu`, `ro`.
-- Register those locales in `supportedLocales` and the language picker.
+- Register those locales in `supportedLocales` and the language picker with native names.
 - Spot-check layout for long German strings on primary actions.
+- Single `pt` locale: device `pt_BR` / `pt_PT` resolve to `pt` via foundation language-code matching.
 - Depends on `i18n-foundation`.
 
 ## Capabilities
@@ -15,7 +16,7 @@ Major European languages requested for Smara — German, French, Spanish, Italia
 - `locales-european`: German, French, Spanish, Italian, Portuguese, Hungarian, and Romanian as supported AI-draft UI locales.
 
 ### Modified Capabilities
-- (none archived yet)
+- `app-localization`: register these seven locales.
 
 ## Impact
 
