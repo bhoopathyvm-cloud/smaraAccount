@@ -56,4 +56,22 @@ void main() {
       expect(find.byIcon(Icons.lock_outline), findsNothing);
     },
   );
+
+  testWidgets(
+    'renders with no Directionality ancestor, matching main.dart wrapping the overlay above MaterialApp.router',
+    (tester) async {
+      when(controller.isBackgrounded).thenReturn(true);
+      when(controller.isSnapshotHidingEnabled).thenReturn(true);
+
+      await tester.pumpWidget(
+        SnapshotHidingOverlay(
+          appLockController: controller,
+          child: const MaterialApp(home: Text('Balance: 1000.00')),
+        ),
+      );
+
+      expect(tester.takeException(), isNull);
+      expect(find.byIcon(Icons.lock_outline), findsOneWidget);
+    },
+  );
 }
