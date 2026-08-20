@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/summary.dart';
 
@@ -63,7 +64,9 @@ class CategoryManagementViewModel extends ChangeNotifier {
       await _ledgerRepository.addCategory(name: name, type: type);
       _errorMessage = null;
     } on ArgumentError {
-      _errorMessage = 'Category must be Income or Expense.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationCategoryMustBeIncomeOrExpense),
+      );
     }
     notifyListeners();
   }
@@ -94,11 +97,13 @@ class CategoryManagementViewModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
       notifyListeners();
       return false;
     } on ArgumentError {
-      _errorMessage = 'Only an Expense category can have a monthly limit.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationOnlyExpenseHasMonthlyLimit),
+      );
       notifyListeners();
       return false;
     }

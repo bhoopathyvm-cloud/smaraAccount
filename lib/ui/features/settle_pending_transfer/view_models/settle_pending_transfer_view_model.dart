@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/home_overview.dart';
@@ -140,7 +141,9 @@ class SettlePendingTransferViewModel extends ChangeNotifier {
   Future<bool> submit() async {
     final settledAmountMinor = _settledAmountMinor;
     if (settledAmountMinor == null) {
-      _errorMessage = 'Amount that arrived is required.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationAmountArrivedRequired),
+      );
       notifyListeners();
       return false;
     }
@@ -148,7 +151,9 @@ class SettlePendingTransferViewModel extends ChangeNotifier {
         ? _settledToAccountId
         : _summary.pendingTransfer.sourceAccountId;
     if (settledToAccountId == null) {
-      _errorMessage = 'Choose which account received the funds.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationChooseReceivingAccount),
+      );
       notifyListeners();
       return false;
     }
@@ -168,7 +173,7 @@ class SettlePendingTransferViewModel extends ChangeNotifier {
       return true;
     } on PendingTransferException catch (e) {
       _isSubmitting = false;
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
       notifyListeners();
       return false;
     }

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/lock/app_lock_service.dart';
 import '../../../../domain/lock/biometric_authenticator.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
@@ -22,11 +23,13 @@ class SettingsViewModel extends ChangeNotifier {
     required AppLockService appLockService,
     required BiometricAuthenticator biometricAuthenticator,
     required AppLockController appLockController,
+    LocaleController? localeController,
   }) : _settingsRepository = settingsRepository,
        _ledgerRepository = ledgerRepository,
        _appLockService = appLockService,
        _biometricAuthenticator = biometricAuthenticator,
-       _appLockController = appLockController {
+       _appLockController = appLockController,
+       localeController = localeController {
     _load();
   }
 
@@ -35,6 +38,7 @@ class SettingsViewModel extends ChangeNotifier {
   final AppLockService _appLockService;
   final BiometricAuthenticator _biometricAuthenticator;
   final AppLockController _appLockController;
+  final LocaleController? localeController;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -153,7 +157,13 @@ class SettingsViewModel extends ChangeNotifier {
       return contents;
     } catch (e) {
       _isBackingUp = false;
-      _backupErrorMessage = 'Could not create the backup: $e';
+      _backupErrorMessage = localizeVmError(
+        AppFailure(
+          AppErrorCode.backupCreateFailed,
+          params: {'detail': '$e'},
+          debugMessage: '$e',
+        ),
+      );
       notifyListeners();
       return null;
     }
@@ -180,19 +190,19 @@ class SettingsViewModel extends ChangeNotifier {
       return true;
     } on ForeignBackupIdentityException catch (e) {
       _isRestoring = false;
-      _backupErrorMessage = e.message;
+      _backupErrorMessage = localizeVmError(e);
       notifyListeners();
       return false;
     } on InvalidLedgerBackupException catch (e) {
       _isRestoring = false;
-      _backupErrorMessage = e.message;
+      _backupErrorMessage = localizeVmError(e);
       notifyListeners();
       return false;
     } catch (_) {
       _isRestoring = false;
-      _backupErrorMessage =
-          'Could not restore this backup - wrong passphrase, or not a '
-          'Smara backup file.';
+      _backupErrorMessage = localizeVmError(
+        AppFailure(AppErrorCode.backupRestoreFailed),
+      );
       notifyListeners();
       return false;
     }

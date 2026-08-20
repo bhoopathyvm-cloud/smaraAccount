@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/journal_entry.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Disaster-recovery flow for true key loss - no recovery phrase or
 /// keystore file available (spec: "True Key-Loss Migration"). Loads the
@@ -56,7 +58,9 @@ class KeyLossMigrationViewModel extends ChangeNotifier {
       return true;
     } catch (_) {
       _isMigrating = false;
-      _errorMessage = 'Migration failed. Please try again.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationMigrationFailed),
+      );
       notifyListeners();
       return false;
     }

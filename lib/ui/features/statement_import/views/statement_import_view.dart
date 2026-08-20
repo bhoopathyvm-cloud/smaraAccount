@@ -7,6 +7,7 @@ import '../../../../domain/csv/csv_import_profile.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/statement_import/category_rule.dart';
 import '../../../../domain/statement_import/parsed_statement_transaction.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -28,7 +29,8 @@ class StatementImportView extends StatelessWidget {
   final StatementImportViewModel viewModel;
   final VoidCallback? onFinished;
 
-  Future<void> _pickFile() async {
+  Future<void> _pickFile(BuildContext context) async {
+    final l10n = l10nOf(context);
     try {
       // Not FileType.custom + allowedExtensions here: .ofx/.qfx aren't
       // registered macOS UTTypes, so the native allowedContentTypes
@@ -46,28 +48,31 @@ class StatementImportView extends StatelessWidget {
           : ['ofx', 'qfx'];
       if (!allowed.contains(extension)) {
         viewModel.reportPickFileError(
-          'Please select a .${allowed.join(" or .")} file '
-          '(got "${file.name}").',
+          l10n.pleaseSelectFile(allowed.join(' or .')),
         );
         return;
       }
 
       await viewModel.loadFile(name: file.name, bytes: bytes);
     } catch (error) {
-      viewModel.reportPickFileError('Could not open the file picker: $error');
+      viewModel.reportPickFileError(l10n.couldNotOpenFilePicker('$error'));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Import Statement', style: AppTypography.headerTitle),
+        title: Text(
+          l10n.importStatementTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         actions: [
           IconButton(
-            tooltip: 'Manage category rules',
+            tooltip: l10n.manageSavedCategoryRules,
             icon: const Icon(TablerIcons.adjustments),
             onPressed: () => Navigator.of(context).push<void>(
               MaterialPageRoute(
@@ -87,7 +92,7 @@ class StatementImportView extends StatelessWidget {
             ),
             StatementImportStep.pickFile => _PickFileStep(
               viewModel: viewModel,
-              onPickFile: _pickFile,
+              onPickFile: () => _pickFile(context),
             ),
             StatementImportStep.selectAccount when viewModel.isLoading =>
               const Center(child: CircularProgressIndicator()),
@@ -118,6 +123,7 @@ class _ChooseSourceStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.large),
@@ -125,19 +131,19 @@ class _ChooseSourceStep extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'What kind of statement file do you have?',
+              l10n.whatKindOfStatement,
               style: AppTypography.body,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.large),
             ElevatedButton(
               onPressed: () => viewModel.chooseSource(StatementSource.ofx),
-              child: const Text('Import OFX / QFX file'),
+              child: Text(l10n.importOfxQfxFile),
             ),
             const SizedBox(height: AppSpacing.medium),
             ElevatedButton(
               onPressed: () => viewModel.chooseSource(StatementSource.csv),
-              child: const Text('Import CSV file'),
+              child: Text(l10n.importCsvFile),
             ),
           ],
         ),
@@ -154,6 +160,7 @@ class _PickFileStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final extensions = viewModel.source == StatementSource.csv
         ? '.csv'
         : '.ofx or .qfx';
@@ -166,7 +173,7 @@ class _PickFileStep extends StatelessWidget {
             const Icon(TablerIcons.fileImport, size: 48),
             const SizedBox(height: AppSpacing.large),
             Text(
-              'Select a $extensions statement file to import',
+              l10n.selectStatementFile(extensions),
               style: AppTypography.body,
               textAlign: TextAlign.center,
             ),
@@ -181,7 +188,7 @@ class _PickFileStep extends StatelessWidget {
             const SizedBox(height: AppSpacing.large),
             ElevatedButton(
               onPressed: onPickFile,
-              child: const Text('Choose file'),
+              child: Text(l10n.actionChooseFile),
             ),
           ],
         ),
@@ -197,6 +204,7 @@ class _SelectAccountStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.large),
       child: Column(
@@ -204,21 +212,24 @@ class _SelectAccountStep extends StatelessWidget {
         children: [
           if (viewModel.source != StatementSource.csv)
             Text(
-              '${viewModel.parsedTransactionCount} transactions parsed'
-              '${viewModel.skippedRowCount > 0 ? ' (${viewModel.skippedRowCount} skipped)' : ''}',
+              l10n.parsedTransactionCount(
+                '${viewModel.parsedTransactionCount}',
+              ),
               style: AppTypography.body,
             )
           else
+            Text(l10n.chooseAccountForFile, style: AppTypography.body),
+          if (viewModel.skippedRowCount > 0)
             Text(
-              'Choose which account this file belongs to.',
+              l10n.skippedOrExcludedCount('${viewModel.skippedRowCount}'),
               style: AppTypography.body,
             ),
           const SizedBox(height: AppSpacing.large),
           EntityPickerField<Account>(
-            labelText: 'Import into account',
+            labelText: l10n.importIntoAccount,
             items: viewModel.accounts,
             idOf: (account) => account.id,
-            labelOf: (account) => account.name,
+            labelOf: (account) => localizeStoredName(l10n, account.name),
             value: viewModel.selectedAccountId,
             onChanged: (accountId) {
               if (accountId != null) viewModel.selectAccount(accountId);
@@ -272,15 +283,16 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
     // transition keeps rebuilding this TextField for a few more frames -
     // disposing the controller right away races that animation.
     final controller = TextEditingController(text: profile.name);
+    final l10n = l10nOf(context);
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Rename profile'),
+        title: Text(l10n.renameProfile),
         content: TextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -289,7 +301,7 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
               await widget.viewModel.renameProfile(profile.id, name);
               if (dialogContext.mounted) Navigator.of(dialogContext).pop();
             },
-            child: const Text('Save'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -300,27 +312,27 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
     BuildContext context,
     CsvImportProfile profile,
   ) async {
+    final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Delete profile?',
-      message:
-          'The saved column mapping "${profile.name}" will be deleted. '
-          'Statements already imported with it are unaffected.',
-      confirmLabel: 'Delete',
+      title: l10n.deleteProfileTitle,
+      message: l10n.deleteProfileBody(profile.name),
+      confirmLabel: l10n.actionDelete,
     );
     if (confirmed) await widget.viewModel.deleteProfile(profile.id);
   }
 
-  String _columnLabel(int index) {
+  String _columnLabel(AppLocalizations l10n, int index) {
     final headerRow = widget.viewModel.csvHeaderRow;
     final header = (headerRow != null && index < headerRow.length)
         ? headerRow[index]
         : null;
-    return header == null || header.isEmpty ? 'Column $index' : header;
+    return header == null || header.isEmpty ? l10n.columnN('$index') : header;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final viewModel = widget.viewModel;
     final columnCount = viewModel.csvColumnCount;
     final columnIndexes = List.generate(columnCount, (i) => i);
@@ -333,9 +345,7 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           if (viewModel.profiles.isNotEmpty) ...[
             DropdownButtonFormField<CsvImportProfile>(
               initialValue: null,
-              decoration: const InputDecoration(
-                labelText: 'Use a saved profile',
-              ),
+              decoration: InputDecoration(labelText: l10n.useSavedProfile),
               items: [
                 for (final profile in viewModel.profiles)
                   DropdownMenuItem(value: profile, child: Text(profile.name)),
@@ -364,14 +374,14 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
                         _confirmDeleteProfile(context, profile);
                     }
                   },
-                  itemBuilder: (context) => const [
+                  itemBuilder: (context) => [
                     PopupMenuItem(
                       value: _ProfileAction.rename,
-                      child: Text('Rename'),
+                      child: Text(l10n.actionRename),
                     ),
                     PopupMenuItem(
                       value: _ProfileAction.delete,
-                      child: Text('Delete'),
+                      child: Text(l10n.actionDelete),
                     ),
                   ],
                 ),
@@ -380,7 +390,7 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           ],
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('File has a header row'),
+            title: Text(l10n.fileHasHeader),
             value: viewModel.csvHasHeaderRow,
             onChanged: (value) =>
                 viewModel.updateCsvMapping(hasHeaderRow: value),
@@ -388,10 +398,10 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           const SizedBox(height: AppSpacing.medium),
           DropdownButtonFormField<int>(
             initialValue: viewModel.csvDateColumnIndex,
-            decoration: const InputDecoration(labelText: 'Date column'),
+            decoration: InputDecoration(labelText: l10n.dateColumn),
             items: [
               for (final i in columnIndexes)
-                DropdownMenuItem(value: i, child: Text(_columnLabel(i))),
+                DropdownMenuItem(value: i, child: Text(_columnLabel(l10n, i))),
             ],
             onChanged: (value) =>
                 viewModel.updateCsvMapping(dateColumnIndex: value),
@@ -399,19 +409,17 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           const SizedBox(height: AppSpacing.medium),
           TextField(
             controller: _datePatternController,
-            decoration: const InputDecoration(
-              labelText: 'Date format (e.g. dd/MM/yyyy)',
-            ),
+            decoration: InputDecoration(labelText: l10n.dateFormatHint),
             onChanged: (value) =>
                 viewModel.updateCsvMapping(datePattern: value),
           ),
           const SizedBox(height: AppSpacing.large),
-          Text('Description column(s)', style: AppTypography.body),
+          Text(l10n.descriptionColumns, style: AppTypography.body),
           for (final i in columnIndexes)
             CheckboxListTile(
               contentPadding: EdgeInsets.zero,
               dense: true,
-              title: Text(_columnLabel(i)),
+              title: Text(_columnLabel(l10n, i)),
               value: viewModel.csvDescriptionColumnIndexes.contains(i),
               onChanged: (checked) {
                 final updated = List<int>.of(
@@ -433,15 +441,15 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           // and a dropdown matches every other field on this screen.
           DropdownButtonFormField<CsvAmountConvention>(
             initialValue: viewModel.csvAmountConvention,
-            decoration: const InputDecoration(labelText: 'Amount convention'),
-            items: const [
+            decoration: InputDecoration(labelText: l10n.amountConvention),
+            items: [
               DropdownMenuItem(
                 value: CsvAmountConvention.signedColumn,
-                child: Text('Signed amount column'),
+                child: Text(l10n.signedAmountColumn),
               ),
               DropdownMenuItem(
                 value: CsvAmountConvention.debitCreditColumns,
-                child: Text('Separate debit / credit columns'),
+                child: Text(l10n.separateDebitCredit),
               ),
             ],
             onChanged: (value) {
@@ -454,10 +462,13 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           if (viewModel.csvAmountConvention == CsvAmountConvention.signedColumn)
             DropdownButtonFormField<int>(
               initialValue: viewModel.csvSignedAmountColumnIndex,
-              decoration: const InputDecoration(labelText: 'Amount column'),
+              decoration: InputDecoration(labelText: l10n.amountColumn),
               items: [
                 for (final i in columnIndexes)
-                  DropdownMenuItem(value: i, child: Text(_columnLabel(i))),
+                  DropdownMenuItem(
+                    value: i,
+                    child: Text(_columnLabel(l10n, i)),
+                  ),
               ],
               onChanged: (value) =>
                   viewModel.updateCsvMapping(signedAmountColumnIndex: value),
@@ -465,10 +476,13 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           else ...[
             DropdownButtonFormField<int>(
               initialValue: viewModel.csvDebitColumnIndex,
-              decoration: const InputDecoration(labelText: 'Debit column'),
+              decoration: InputDecoration(labelText: l10n.debitColumn),
               items: [
                 for (final i in columnIndexes)
-                  DropdownMenuItem(value: i, child: Text(_columnLabel(i))),
+                  DropdownMenuItem(
+                    value: i,
+                    child: Text(_columnLabel(l10n, i)),
+                  ),
               ],
               onChanged: (value) =>
                   viewModel.updateCsvMapping(debitColumnIndex: value),
@@ -476,10 +490,13 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
             const SizedBox(height: AppSpacing.medium),
             DropdownButtonFormField<int>(
               initialValue: viewModel.csvCreditColumnIndex,
-              decoration: const InputDecoration(labelText: 'Credit column'),
+              decoration: InputDecoration(labelText: l10n.creditColumn),
               items: [
                 for (final i in columnIndexes)
-                  DropdownMenuItem(value: i, child: Text(_columnLabel(i))),
+                  DropdownMenuItem(
+                    value: i,
+                    child: Text(_columnLabel(l10n, i)),
+                  ),
               ],
               onChanged: (value) =>
                   viewModel.updateCsvMapping(creditColumnIndex: value),
@@ -488,13 +505,11 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           const SizedBox(height: AppSpacing.large),
           DropdownButtonFormField<int?>(
             initialValue: viewModel.csvReferenceIdColumnIndex,
-            decoration: const InputDecoration(
-              labelText: 'Reference id column (optional)',
-            ),
+            decoration: InputDecoration(labelText: l10n.referenceIdColumn),
             items: [
-              const DropdownMenuItem(value: null, child: Text('None')),
+              DropdownMenuItem(value: null, child: Text(l10n.none)),
               for (final i in columnIndexes)
-                DropdownMenuItem(value: i, child: Text(_columnLabel(i))),
+                DropdownMenuItem(value: i, child: Text(_columnLabel(l10n, i))),
             ],
             onChanged: (value) =>
                 viewModel.updateCsvMapping(referenceIdColumnIndex: value),
@@ -502,20 +517,18 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           const SizedBox(height: AppSpacing.large),
           TextField(
             controller: _decimalSeparatorController,
-            decoration: const InputDecoration(
-              labelText: 'Decimal separator (. or ,)',
-            ),
+            decoration: InputDecoration(labelText: l10n.decimalSeparator),
             onChanged: (value) =>
                 viewModel.updateCsvMapping(decimalSeparator: value),
           ),
           const SizedBox(height: AppSpacing.medium),
           TextField(
             controller: _currencyController,
-            decoration: const InputDecoration(labelText: 'Currency'),
+            decoration: InputDecoration(labelText: l10n.currency),
             onChanged: (value) => viewModel.updateCsvMapping(currency: value),
           ),
           const SizedBox(height: AppSpacing.large),
-          Text('Preview', style: AppTypography.sectionLabel),
+          Text(l10n.actionPreview, style: AppTypography.sectionLabel),
           for (final row in viewModel.csvMappingPreviewRows)
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -536,9 +549,7 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
           const SizedBox(height: AppSpacing.large),
           TextField(
             controller: _profileNameController,
-            decoration: const InputDecoration(
-              labelText: 'Save this mapping as a profile (optional)',
-            ),
+            decoration: InputDecoration(labelText: l10n.saveMappingProfile),
           ),
           const SizedBox(height: AppSpacing.large),
           ElevatedButton(
@@ -547,7 +558,7 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
                     saveAsProfileName: _profileNameController.text.trim(),
                   )
                 : null,
-            child: const Text('Continue'),
+            child: Text(l10n.actionContinue),
           ),
         ],
       ),
@@ -605,24 +616,21 @@ class _PreviewStep extends StatelessWidget {
       text: group.isSingleRow ? '' : group.key,
     );
     var linkPayee = true;
+    final l10n = l10nOf(context);
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Save as a rule?'),
+          title: Text(l10n.saveAsRule),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                'Future imports whose description contains this keyword '
-                'will be categorized the same way automatically.',
-                style: AppTypography.metadata,
-              ),
+              Text(l10n.saveAsRuleBlurb, style: AppTypography.metadata),
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: keywordController,
                 autofocus: group.isSingleRow,
-                decoration: const InputDecoration(labelText: 'Keyword'),
+                decoration: InputDecoration(labelText: l10n.keyword),
               ),
               // payees-and-spending-memory: "Saving a rule offers to link a
               // payee too" - opt-in, pre-checked; declining still saves the
@@ -630,7 +638,7 @@ class _PreviewStep extends StatelessWidget {
               CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
-                title: const Text('Also remember as a payee'),
+                title: Text(l10n.alsoRememberPayee),
                 value: linkPayee,
                 onChanged: (value) =>
                     setDialogState(() => linkPayee = value ?? false),
@@ -640,7 +648,7 @@ class _PreviewStep extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Skip'),
+              child: Text(l10n.actionSkip),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -658,7 +666,7 @@ class _PreviewStep extends StatelessWidget {
                 }
                 if (dialogContext.mounted) Navigator.of(dialogContext).pop();
               },
-              child: const Text('Save rule'),
+              child: Text(l10n.actionSaveRule),
             ),
           ],
         ),
@@ -668,6 +676,7 @@ class _PreviewStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final expenseCategories = viewModel.categories
         .where(
           (c) => c.type == AccountType.expense || c.type == AccountType.income,
@@ -685,9 +694,9 @@ class _PreviewStep extends StatelessWidget {
       children: [
         if (viewModel.currencyMismatch)
           StatusBanner(
-            message:
-                "This file's currency (${viewModel.statementCurrency}) "
-                "doesn't match the selected account's currency.",
+            message: l10n.statementCurrencyMismatch(
+              viewModel.statementCurrency ?? '',
+            ),
             isError: true,
           ),
         if (skippedRows.isNotEmpty)
@@ -715,15 +724,16 @@ class _PreviewStep extends StatelessWidget {
                     children: [
                       if (!group.isSingleRow) ...[
                         Text(
-                          '${group.rowIndexes.length} rows',
+                          l10n.rowsGrouped('${group.rowIndexes.length}'),
                           style: AppTypography.sectionLabel,
                         ),
                         const SizedBox(height: AppSpacing.small),
                         EntityPickerField<Account>(
-                          labelText: 'Category for all',
+                          labelText: l10n.categoryForAll,
                           items: expenseCategories,
                           idOf: (category) => category.id,
-                          labelOf: (category) => category.name,
+                          labelOf: (category) =>
+                              localizeStoredName(l10n, category.name),
                           value: _groupCategoryId(group),
                           onChanged: (categoryId) =>
                               _assignGroupCategory(context, group, categoryId),
@@ -766,7 +776,7 @@ class _PreviewStep extends StatelessWidget {
                 ? null
                 : () => viewModel.confirmImport(),
             child: Text(
-              viewModel.isSubmitting ? 'Importing...' : 'Confirm import',
+              viewModel.isSubmitting ? l10n.importingLabel : l10n.confirmImport,
             ),
           ),
         ),
@@ -790,7 +800,7 @@ class _SkippedRowsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: AppSpacing.large),
-        Text('Skipped rows', style: AppTypography.cardTitle),
+        Text(l10nOf(context).skippedRows, style: AppTypography.cardTitle),
         const SizedBox(height: AppSpacing.small),
         ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 160),
@@ -839,6 +849,7 @@ class _PreviewRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Row(
       children: [
         Checkbox(value: selected, onChanged: (_) => onToggleSelected()),
@@ -867,7 +878,7 @@ class _PreviewRow extends StatelessWidget {
                 '${row.transaction.transactionDate.year}-'
                 '${row.transaction.transactionDate.month.toString().padLeft(2, '0')}-'
                 '${row.transaction.transactionDate.day.toString().padLeft(2, '0')}'
-                '${row.isDuplicate ? ' - possible duplicate' : ''}',
+                '${row.isDuplicate ? ' - ${l10n.possibleDuplicate}' : ''}',
                 style: AppTypography.metadata.copyWith(
                   color: row.isDuplicate
                       ? AppColors.signal
@@ -876,10 +887,10 @@ class _PreviewRow extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.small),
               EntityPickerField<Account>(
-                labelText: 'Category',
+                labelText: l10n.category,
                 items: categories,
                 idOf: (category) => category.id,
-                labelOf: (category) => category.name,
+                labelOf: (category) => localizeStoredName(l10n, category.name),
                 value: row.categoryId,
                 onChanged: onCategoryChanged,
               ),
@@ -899,22 +910,26 @@ class _SummaryStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final result = viewModel.batchResult;
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.large),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('${result?.postedCount ?? 0} posted', style: AppTypography.body),
+          Text(
+            l10n.postedFailedCount(
+              '${result?.postedCount ?? 0}',
+              '${result?.failedCount ?? 0}',
+            ),
+            style: AppTypography.body,
+          ),
           if (viewModel.skippedOrExcludedRowCount > 0)
             Text(
-              '${viewModel.skippedOrExcludedRowCount} skipped or excluded',
+              l10n.skippedOrExcludedCount(
+                '${viewModel.skippedOrExcludedRowCount}',
+              ),
               style: AppTypography.body.copyWith(color: AppColors.textMuted),
-            ),
-          if ((result?.failedCount ?? 0) > 0)
-            Text(
-              '${result!.failedCount} failed',
-              style: AppTypography.body.copyWith(color: AppColors.signal),
             ),
           const SizedBox(height: AppSpacing.large),
           Expanded(
@@ -933,7 +948,7 @@ class _SummaryStep extends StatelessWidget {
               ],
             ),
           ),
-          ElevatedButton(onPressed: onFinished, child: const Text('Done')),
+          ElevatedButton(onPressed: onFinished, child: Text(l10n.actionDone)),
         ],
       ),
     );
@@ -952,12 +967,14 @@ class _CategoryRuleManagementView extends StatelessWidget {
 
   final StatementImportViewModel viewModel;
 
-  String _categoryName(String categoryId) {
+  String _categoryName(AppLocalizations l10n, String categoryId) {
     final category = viewModel.categories
         .where((c) => c.id == categoryId)
         .cast<Account?>()
         .firstWhere((c) => c != null, orElse: () => null);
-    return category?.name ?? 'Unknown category';
+    return category == null
+        ? l10n.unknownCategory
+        : localizeStoredName(l10n, category.name);
   }
 
   Future<void> _showEditDialog(BuildContext context, CategoryRule rule) async {
@@ -972,69 +989,75 @@ class _CategoryRuleManagementView extends StatelessWidget {
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Edit rule'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: keywordController,
-                autofocus: true,
-                decoration: const InputDecoration(labelText: 'Keyword'),
+        builder: (context, setDialogState) {
+          final l10n = l10nOf(context);
+          return AlertDialog(
+            title: Text(l10n.editRule),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: keywordController,
+                  autofocus: true,
+                  decoration: InputDecoration(labelText: l10n.keyword),
+                ),
+                const SizedBox(height: AppSpacing.medium),
+                EntityPickerField<Account>(
+                  labelText: l10n.category,
+                  items: expenseCategories,
+                  idOf: (category) => category.id,
+                  labelOf: (category) =>
+                      localizeStoredName(l10n, category.name),
+                  value: categoryId,
+                  onChanged: (value) =>
+                      setDialogState(() => categoryId = value ?? categoryId),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: Text(l10n.actionCancel),
               ),
-              const SizedBox(height: AppSpacing.medium),
-              EntityPickerField<Account>(
-                labelText: 'Category',
-                items: expenseCategories,
-                idOf: (category) => category.id,
-                labelOf: (category) => category.name,
-                value: categoryId,
-                onChanged: (value) =>
-                    setDialogState(() => categoryId = value ?? categoryId),
+              ElevatedButton(
+                onPressed: () async {
+                  final keyword = keywordController.text.trim();
+                  if (keyword.isEmpty) return;
+                  await viewModel.updateCategoryRule(
+                    id: rule.id,
+                    keyword: keyword,
+                    categoryId: categoryId,
+                  );
+                  if (dialogContext.mounted) {
+                    Navigator.of(dialogContext).pop();
+                  }
+                },
+                child: Text(l10n.actionSave),
               ),
             ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final keyword = keywordController.text.trim();
-                if (keyword.isEmpty) return;
-                await viewModel.updateCategoryRule(
-                  id: rule.id,
-                  keyword: keyword,
-                  categoryId: categoryId,
-                );
-                if (dialogContext.mounted) Navigator.of(dialogContext).pop();
-              },
-              child: const Text('Save'),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 
   Future<void> _confirmDelete(BuildContext context, CategoryRule rule) async {
+    final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Delete rule?',
-      message:
-          'Imports will no longer be auto-categorized by "${rule.keyword}". '
-          'Transactions already categorized using this rule are unaffected.',
-      confirmLabel: 'Delete',
+      title: l10n.deleteRuleTitle,
+      message: l10n.deleteRuleBody(rule.keyword),
+      confirmLabel: l10n.actionDelete,
     );
     if (confirmed) await viewModel.deleteCategoryRule(rule.id);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Category rules', style: AppTypography.headerTitle),
+        title: Text(l10n.categoryRulesTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -1047,8 +1070,7 @@ class _CategoryRuleManagementView extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.large),
                 child: Text(
-                  'No saved rules yet. Assign a category to a group of rows '
-                  'during an import and choose "Save rule" to create one.',
+                  l10n.noSavedRules,
                   style: AppTypography.body,
                   textAlign: TextAlign.center,
                 ),
@@ -1061,7 +1083,7 @@ class _CategoryRuleManagementView extends StatelessWidget {
               final rule = rules[index];
               return ListTile(
                 title: Text(rule.keyword),
-                subtitle: Text(_categoryName(rule.categoryId)),
+                subtitle: Text(_categoryName(l10n, rule.categoryId)),
                 trailing: PopupMenuButton<_CategoryRuleAction>(
                   onSelected: (action) {
                     switch (action) {
@@ -1071,14 +1093,14 @@ class _CategoryRuleManagementView extends StatelessWidget {
                         _confirmDelete(context, rule);
                     }
                   },
-                  itemBuilder: (context) => const [
+                  itemBuilder: (context) => [
                     PopupMenuItem(
                       value: _CategoryRuleAction.edit,
-                      child: Text('Edit'),
+                      child: Text(l10n.actionEdit),
                     ),
                     PopupMenuItem(
                       value: _CategoryRuleAction.delete,
-                      child: Text('Delete'),
+                      child: Text(l10n.actionDelete),
                     ),
                   ],
                 ),

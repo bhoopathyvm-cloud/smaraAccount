@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -76,9 +77,10 @@ class _CorrectionViewState extends State<CorrectionView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fix this entry', style: AppTypography.headerTitle),
+        title: Text(l10n.fixThisEntry, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -99,22 +101,20 @@ class _CorrectionViewState extends State<CorrectionView> {
                     ),
                   ),
                   child: Text(
-                    'The old line stays exactly as it was. Confirming adds '
-                    'a correction next to it, so your history always shows '
-                    'what happened and when you fixed it.',
+                    l10n.fixBlurb,
                     style: AppTypography.body,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.large),
                 SegmentedButton<TransactionDirection>(
-                  segments: const [
+                  segments: [
                     ButtonSegment(
                       value: TransactionDirection.moneyIn,
-                      label: Text('Received'),
+                      label: Text(l10n.captureReceived),
                     ),
                     ButtonSegment(
                       value: TransactionDirection.moneyOut,
-                      label: Text('Spent'),
+                      label: Text(l10n.captureSpent),
                     ),
                   ],
                   selected: {widget.viewModel.direction},
@@ -123,26 +123,26 @@ class _CorrectionViewState extends State<CorrectionView> {
                 ),
                 const SizedBox(height: AppSpacing.large),
                 EntityPickerField<Account>(
-                  labelText: 'Account',
+                  labelText: l10n.account,
                   items: widget.viewModel.financialAccounts,
                   idOf: (account) => account.id,
-                  labelOf: (account) => account.name,
+                  labelOf: (account) => localizeStoredName(l10n, account.name),
                   value: widget.viewModel.financialAccountId,
                   onChanged: widget.viewModel.setFinancialAccountId,
                 ),
                 const SizedBox(height: AppSpacing.large),
                 MoneyAmountField(
                   controller: _amountController,
-                  labelText: 'Amount',
+                  labelText: l10n.amount,
                   currency: widget.viewModel.currency ?? 'USD',
                   onChangedMinor: widget.viewModel.setAmountMinor,
                 ),
                 const SizedBox(height: AppSpacing.large),
                 EntityPickerField<Account>(
-                  labelText: 'Category',
+                  labelText: l10n.category,
                   items: widget.viewModel.categories,
                   idOf: (account) => account.id,
-                  labelOf: (account) => account.name,
+                  labelOf: (account) => localizeStoredName(l10n, account.name),
                   value: widget.viewModel.categoryId,
                   onChanged: widget.viewModel.setCategoryId,
                 ),
@@ -150,7 +150,7 @@ class _CorrectionViewState extends State<CorrectionView> {
                 TextButton(
                   onPressed: _pickDate,
                   child: Text(
-                    'Date: ${widget.viewModel.transactionDate.year}-'
+                    '${l10n.dateLabel}: ${widget.viewModel.transactionDate.year}-'
                     '${widget.viewModel.transactionDate.month.toString().padLeft(2, '0')}-'
                     '${widget.viewModel.transactionDate.day.toString().padLeft(2, '0')}',
                   ),
@@ -158,8 +158,8 @@ class _CorrectionViewState extends State<CorrectionView> {
                 const SizedBox(height: AppSpacing.medium),
                 TextField(
                   controller: _descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Description (optional)',
+                  decoration: InputDecoration(
+                    labelText: l10n.descriptionOptional,
                   ),
                   onChanged: widget.viewModel.setDescription,
                 ),
@@ -173,7 +173,7 @@ class _CorrectionViewState extends State<CorrectionView> {
                 const SizedBox(height: AppSpacing.large),
                 ElevatedButton(
                   onPressed: widget.viewModel.isSubmitting ? null : _submit,
-                  child: const Text('Confirm fix'),
+                  child: Text(l10n.actionConfirmFix),
                 ),
               ],
             ),

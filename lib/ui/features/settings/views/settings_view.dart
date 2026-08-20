@@ -12,6 +12,7 @@ import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
+import '../../../../l10n/l10n.dart';
 import '../view_models/settings_view_model.dart';
 
 /// Views are lean. No business logic, no Repository calls. Listen to the
@@ -36,25 +37,59 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings', style: AppTypography.headerTitle),
+        title: Text(l10nOf(context).settingsTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
       body: ListenableBuilder(
-        listenable: viewModel,
+        listenable: Listenable.merge([
+          viewModel,
+          if (viewModel.localeController != null) viewModel.localeController!,
+        ]),
         builder: (context, _) {
+          final l10n = l10nOf(context);
           if (viewModel.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView(
             padding: const EdgeInsets.all(AppSpacing.large),
             children: [
+              if (viewModel.localeController != null) ...[
+                Text(l10n.settingsLanguage, style: AppTypography.sectionLabel),
+                const SizedBox(height: AppSpacing.base),
+                DropdownButtonFormField<String>(
+                  initialValue:
+                      viewModel.localeController!.overrideLocale == null
+                      ? kSystemLocalePreference
+                      : tagFromLocale(
+                          viewModel.localeController!.overrideLocale!,
+                        ),
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsLanguage,
+                  ),
+                  items: [
+                    DropdownMenuItem(
+                      value: kSystemLocalePreference,
+                      child: Text(l10n.settingsLanguageSystem),
+                    ),
+                    for (final tag in kSupportedLocaleTags)
+                      DropdownMenuItem(
+                        value: tag,
+                        child: Text(endonymForLocaleTag(tag)),
+                      ),
+                  ],
+                  onChanged: (tag) {
+                    if (tag != null) {
+                      viewModel.localeController!.setPreference(tag);
+                    }
+                  },
+                ),
+                const SizedBox(height: AppSpacing.xLarge),
+              ],
               SwitchListTile(
-                title: const Text('Fetch reference exchange rates'),
+                title: Text(l10n.settingsFetchFxRates),
                 subtitle: Text(
-                  'Shows an indicative market rate next to the '
-                  'destination amount on cross-currency transfers, for '
-                  'comparison only - never used to fill in the amount.',
+                  l10n.settingsFetchFxRatesSubtitle,
                   style: AppTypography.metadata,
                 ),
                 value: viewModel.referenceRateLookupEnabled,
@@ -63,12 +98,12 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.large),
               DropdownButtonFormField<ExchangeRateProvider>(
                 initialValue: viewModel.selectedProvider,
-                decoration: const InputDecoration(labelText: 'Rate provider'),
+                decoration: InputDecoration(labelText: l10n.settingsRateProvider),
                 items: [
                   for (final provider in ExchangeRateProvider.values)
                     DropdownMenuItem(
                       value: provider,
-                      child: Text(provider.displayName),
+                      child: Text(_exchangeRateProviderLabel(l10n, provider)),
                     ),
                 ],
                 onChanged: viewModel.referenceRateLookupEnabled
@@ -81,11 +116,9 @@ class SettingsView extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.xLarge),
               SwitchListTile(
-                title: const Text('Fetch market prices for investments'),
+                title: Text(l10n.settingsFetchMarketPrices),
                 subtitle: Text(
-                  'Looks up last prices for instruments that have a ticker '
-                  'or ISIN, to estimate portfolio value. Never used to '
-                  'record a trade, and never sends how many you hold.',
+                  l10n.settingsFetchMarketPricesSubtitle,
                   style: AppTypography.metadata,
                 ),
                 value: viewModel.marketPriceFetchEnabled,
@@ -94,14 +127,14 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.large),
               DropdownButtonFormField<QuoteProvider>(
                 initialValue: viewModel.selectedQuoteProvider,
-                decoration: const InputDecoration(
-                  labelText: 'Market price provider',
+                decoration: InputDecoration(
+                  labelText: l10n.settingsMarketPriceProvider,
                 ),
                 items: [
                   for (final provider in QuoteProvider.values)
                     DropdownMenuItem(
                       value: provider,
-                      child: Text(provider.displayName),
+                      child: Text(_quoteProviderLabel(l10n, provider)),
                     ),
                 ],
                 onChanged: viewModel.marketPriceFetchEnabled
@@ -115,14 +148,14 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.xLarge),
               DropdownButtonFormField<ResearchTool>(
                 initialValue: viewModel.selectedResearchTool,
-                decoration: const InputDecoration(
-                  labelText: 'Favourite research tool',
+                decoration: InputDecoration(
+                  labelText: l10n.settingsFavouriteResearchTool,
                 ),
                 items: [
                   for (final tool in ResearchTool.values)
                     DropdownMenuItem(
                       value: tool,
-                      child: Text(tool.displayName),
+                      child: Text(_researchToolLabel(l10n, tool)),
                     ),
                 ],
                 onChanged: (tool) {
@@ -132,19 +165,14 @@ class SettingsView extends StatelessWidget {
                 },
               ),
               Text(
-                'Tapping an instrument name on holdings opens this tool '
-                'in the browser with a research prompt — not an '
-                'integration, and not advice.',
+                l10n.settingsFavouriteResearchToolSubtitle,
                 style: AppTypography.metadata,
               ),
               const SizedBox(height: AppSpacing.xLarge),
-              Text('Backup', style: AppTypography.sectionLabel),
+              Text(l10n.settingsBackup, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
               Text(
-                'Save an encrypted copy of your books to a location you '
-                'choose, or restore from one. This is separate from your '
-                'recovery phrase or keystore file, which back up your '
-                'signing key, not your books.',
+                l10n.settingsBackupBlurb,
                 style: AppTypography.metadata,
               ),
               const SizedBox(height: AppSpacing.medium),
@@ -152,26 +180,25 @@ class SettingsView extends StatelessWidget {
                 onPressed: viewModel.isBackingUp
                     ? null
                     : () => _showSaveBackupDialog(context, viewModel),
-                child: const Text('Save backup'),
+                child: Text(l10n.actionSaveBackup),
               ),
               const SizedBox(height: AppSpacing.small),
               OutlinedButton(
                 onPressed: viewModel.isRestoring
                     ? null
                     : () => _showRestoreBackupDialog(context, viewModel),
-                child: const Text('Restore backup'),
+                child: Text(l10n.actionRestoreBackup),
               ),
               const SizedBox(height: AppSpacing.xLarge),
-              Text('Lock', style: AppTypography.sectionLabel),
+              Text(l10n.settingsLock, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
               Text(
-                'Require a PIN, or biometrics where available, to open '
-                'the app.',
+                l10n.settingsLockBlurb,
                 style: AppTypography.metadata,
               ),
               const SizedBox(height: AppSpacing.medium),
               SwitchListTile(
-                title: const Text('Require unlock to open the app'),
+                title: Text(l10n.settingsRequireUnlock),
                 value: viewModel.isAppLockEnabled,
                 onChanged: (value) => value
                     ? _showSetPinDialog(context, viewModel)
@@ -180,17 +207,29 @@ class SettingsView extends StatelessWidget {
               if (viewModel.isAppLockEnabled) ...[
                 OutlinedButton(
                   onPressed: () => _showChangePinDialog(context, viewModel),
-                  child: const Text('Change PIN'),
+                  child: Text(l10n.actionChangePin),
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 DropdownButtonFormField<int>(
                   initialValue: viewModel.appLockTimeoutMinutes,
-                  decoration: const InputDecoration(labelText: 'Lock after'),
-                  items: const [
-                    DropdownMenuItem(value: 0, child: Text('Immediately')),
-                    DropdownMenuItem(value: 1, child: Text('1 minute')),
-                    DropdownMenuItem(value: 5, child: Text('5 minutes')),
-                    DropdownMenuItem(value: 15, child: Text('15 minutes')),
+                  decoration: InputDecoration(labelText: l10n.settingsLockAfter),
+                  items: [
+                    DropdownMenuItem(
+                      value: 0,
+                      child: Text(l10n.settingsLockImmediately),
+                    ),
+                    DropdownMenuItem(
+                      value: 1,
+                      child: Text(l10n.settingsLock1Minute),
+                    ),
+                    DropdownMenuItem(
+                      value: 5,
+                      child: Text(l10n.settingsLock5Minutes),
+                    ),
+                    DropdownMenuItem(
+                      value: 15,
+                      child: Text(l10n.settingsLock15Minutes),
+                    ),
                   ],
                   onChanged: (minutes) {
                     if (minutes != null) {
@@ -201,7 +240,7 @@ class SettingsView extends StatelessWidget {
                 if (viewModel.isBiometricAvailable) ...[
                   const SizedBox(height: AppSpacing.medium),
                   SwitchListTile(
-                    title: const Text('Also allow biometrics'),
+                    title: Text(l10n.settingsAllowBiometrics),
                     value: viewModel.isBiometricEnabled,
                     onChanged: viewModel.setBiometricEnabled,
                   ),
@@ -210,10 +249,9 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.medium),
               if (viewModel.isSnapshotHidingAvailable)
                 SwitchListTile(
-                  title: const Text('Hide balances in the app switcher'),
+                  title: Text(l10n.settingsHideSnapshot),
                   subtitle: Text(
-                    'Obscures this screen when you switch to another app, '
-                    "so it isn't visible at a glance in the app switcher.",
+                    l10n.settingsHideSnapshotSubtitle,
                     style: AppTypography.metadata,
                   ),
                   value: viewModel.isSnapshotHidingEnabled,
@@ -221,52 +259,43 @@ class SettingsView extends StatelessWidget {
                 )
               else
                 Text(
-                  "Hiding balances in the app switcher isn't available on "
-                  'this platform.',
+                  l10n.settingsHideSnapshotUnavailable,
                   style: AppTypography.metadata,
                 ),
               const SizedBox(height: AppSpacing.xLarge),
-              Text('Payees', style: AppTypography.sectionLabel),
+              Text(l10n.settingsPayees, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
               Text(
-                'Remembered payee names and their default category and '
-                'account, suggested by autocomplete when recording a '
-                'transaction.',
+                l10n.settingsPayeesBlurb,
                 style: AppTypography.metadata,
               ),
               const SizedBox(height: AppSpacing.medium),
               OutlinedButton(
                 onPressed: onOpenPayees,
-                child: const Text('Manage payees'),
+                child: Text(l10n.settingsManagePayees),
               ),
               const SizedBox(height: AppSpacing.xLarge),
-              Text('Recurring templates', style: AppTypography.sectionLabel),
+              Text(l10n.settingsRecurring, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
               Text(
-                'Bills or income that repeat monthly, like rent or a '
-                'paycheck. A due template shows up on Home for you to '
-                'record with one tap - never posted automatically.',
+                l10n.settingsRecurringBlurb,
                 style: AppTypography.metadata,
               ),
               const SizedBox(height: AppSpacing.medium),
               OutlinedButton(
                 onPressed: onOpenRecurringTemplates,
-                child: const Text('Manage recurring templates'),
+                child: Text(l10n.settingsManageRecurring),
               ),
               const SizedBox(height: AppSpacing.xLarge),
-              Text('About', style: AppTypography.sectionLabel),
+              Text(l10n.settingsAbout, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
               Text(
-                'Why we don’t edit old entries',
+                l10n.whyWeDontEdit,
                 style: AppTypography.cardTitle,
               ),
               const SizedBox(height: AppSpacing.small),
               Text(
-                'When you fix a mistake, we keep the old line and add a '
-                'correction next to it instead of changing what you already '
-                'entered. That way your history always shows exactly what '
-                'happened and when you fixed it — nothing quietly '
-                'changes behind your back.',
+                l10n.whyWeDontEditBody,
                 style: AppTypography.metadata,
               ),
             ],
@@ -280,6 +309,7 @@ class SettingsView extends StatelessWidget {
     BuildContext context,
     SettingsViewModel viewModel,
   ) async {
+    final l10n = l10nOf(context);
     final passphraseController = TextEditingController();
     String? statusMessage;
     var isSaving = false;
@@ -288,21 +318,20 @@ class SettingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Save backup'),
+          title: Text(l10n.actionSaveBackup),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Choose a passphrase to protect this backup. There is no '
-                'way to recover it if you forget the passphrase.',
+                l10n.choosePassphraseTitle,
                 style: AppTypography.body,
               ),
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: passphraseController,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: 'Passphrase'),
+                decoration: InputDecoration(labelText: l10n.keystorePassphrase),
               ),
               if (statusMessage != null) ...[
                 const SizedBox(height: AppSpacing.medium),
@@ -318,7 +347,7 @@ class SettingsView extends StatelessWidget {
               onPressed: isSaving
                   ? null
                   : () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(l10n.actionCancel),
             ),
             ElevatedButton(
               onPressed: isSaving
@@ -327,7 +356,7 @@ class SettingsView extends StatelessWidget {
                       final passphrase = passphraseController.text;
                       if (passphrase.trim().isEmpty) {
                         setDialogState(
-                          () => statusMessage = 'Enter a passphrase.',
+                          () => statusMessage = l10n.validationPassphraseRequired,
                         );
                         return;
                       }
@@ -351,7 +380,7 @@ class SettingsView extends StatelessWidget {
                           'smara-backup-'
                           '${DateTime.now().millisecondsSinceEpoch}.smarabackup';
                       await FilePicker.platform.saveFile(
-                        dialogTitle: 'Save backup',
+                        dialogTitle: l10n.actionSaveBackup,
                         fileName: fileName,
                         bytes: Uint8List.fromList(utf8.encode(contents)),
                       );
@@ -359,7 +388,7 @@ class SettingsView extends StatelessWidget {
                         Navigator.of(dialogContext).pop();
                       }
                     },
-              child: const Text('Save'),
+              child: Text(l10n.actionSave),
             ),
           ],
         ),
@@ -371,6 +400,7 @@ class SettingsView extends StatelessWidget {
     BuildContext context,
     SettingsViewModel viewModel,
   ) async {
+    final l10n = l10nOf(context);
     final pageContext = context;
     final passphraseController = TextEditingController();
     PlatformFile? pickedFile;
@@ -381,16 +411,14 @@ class SettingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Restore backup'),
+          title: Text(l10n.actionRestoreBackup),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  'This replaces everything currently in this app with the '
-                  'backup — it does not merge. Choose a backup file and '
-                  'enter the passphrase you protected it with.',
+                  l10n.restoreBackupBlurb,
                   style: AppTypography.body,
                 ),
                 const SizedBox(height: AppSpacing.medium),
@@ -411,7 +439,7 @@ class SettingsView extends StatelessWidget {
                         },
                   child: Text(
                     pickedFile == null
-                        ? 'Choose backup file'
+                        ? l10n.actionChooseFile
                         : pickedFile!.name,
                   ),
                 ),
@@ -419,7 +447,7 @@ class SettingsView extends StatelessWidget {
                 TextField(
                   controller: passphraseController,
                   obscureText: true,
-                  decoration: const InputDecoration(labelText: 'Passphrase'),
+                  decoration: InputDecoration(labelText: l10n.keystorePassphrase),
                 ),
                 if (statusMessage != null) ...[
                   const SizedBox(height: AppSpacing.medium),
@@ -436,7 +464,7 @@ class SettingsView extends StatelessWidget {
               onPressed: isBusy
                   ? null
                   : () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(l10n.actionCancel),
             ),
             ElevatedButton(
               onPressed: isBusy
@@ -447,25 +475,22 @@ class SettingsView extends StatelessWidget {
                       final passphrase = passphraseController.text;
                       if (file == null || bytes == null) {
                         setDialogState(
-                          () => statusMessage = 'Choose a backup file first.',
+                          () => statusMessage = l10n.chooseBackupFileFirst,
                         );
                         return;
                       }
                       if (passphrase.trim().isEmpty) {
                         setDialogState(
-                          () =>
-                              statusMessage = "Enter the backup's passphrase.",
+                          () => statusMessage = l10n.validationPassphraseRequired,
                         );
                         return;
                       }
 
                       final confirmed = await confirmDestructiveAction(
                         context: dialogContext,
-                        title: 'Replace your local books?',
-                        message:
-                            'Everything currently in this app will be '
-                            'replaced by the backup. This cannot be undone.',
-                        confirmLabel: 'Replace',
+                        title: l10n.replaceBooksTitle,
+                        message: l10n.replaceBooksBody,
+                        confirmLabel: l10n.actionReplace,
                       );
                       if (!confirmed) return;
 
@@ -488,7 +513,7 @@ class SettingsView extends StatelessWidget {
                         });
                       }
                     },
-              child: const Text('Restore'),
+              child: Text(l10n.actionRestore),
             ),
           ],
         ),
@@ -500,6 +525,7 @@ class SettingsView extends StatelessWidget {
     BuildContext context,
     SettingsViewModel viewModel,
   ) async {
+    final l10n = l10nOf(context);
     final pinController = TextEditingController();
     final confirmController = TextEditingController();
     String? statusMessage;
@@ -508,7 +534,7 @@ class SettingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Set a PIN'),
+          title: Text(l10n.setPinTitle),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -517,14 +543,14 @@ class SettingsView extends StatelessWidget {
                 controller: pinController,
                 obscureText: true,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'PIN'),
+                decoration: InputDecoration(labelText: l10n.pinLabel),
               ),
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: confirmController,
                 obscureText: true,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Confirm PIN'),
+                decoration: InputDecoration(labelText: l10n.confirmPin),
               ),
               if (statusMessage != null) ...[
                 const SizedBox(height: AppSpacing.medium),
@@ -538,19 +564,21 @@ class SettingsView extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(l10n.actionCancel),
             ),
             ElevatedButton(
               onPressed: () async {
                 final pin = pinController.text;
                 if (pin.length < 4) {
                   setDialogState(
-                    () => statusMessage = 'PIN must be at least 4 digits.',
+                    () => statusMessage = l10n.validationPinMinLength,
                   );
                   return;
                 }
                 if (pin != confirmController.text) {
-                  setDialogState(() => statusMessage = "PINs don't match.");
+                  setDialogState(
+                    () => statusMessage = l10n.validationPinsDoNotMatch,
+                  );
                   return;
                 }
                 await viewModel.enableAppLock(pin);
@@ -558,7 +586,7 @@ class SettingsView extends StatelessWidget {
                   Navigator.of(dialogContext).pop();
                 }
               },
-              child: const Text('Set PIN'),
+              child: Text(l10n.actionSetPin),
             ),
           ],
         ),
@@ -570,6 +598,7 @@ class SettingsView extends StatelessWidget {
     BuildContext context,
     SettingsViewModel viewModel,
   ) async {
+    final l10n = l10nOf(context);
     final currentPinController = TextEditingController();
     final newPinController = TextEditingController();
     final confirmController = TextEditingController();
@@ -579,7 +608,7 @@ class SettingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Change PIN'),
+          title: Text(l10n.actionChangePin),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -588,21 +617,21 @@ class SettingsView extends StatelessWidget {
                 controller: currentPinController,
                 obscureText: true,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Current PIN'),
+                decoration: InputDecoration(labelText: l10n.currentPin),
               ),
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: newPinController,
                 obscureText: true,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'New PIN'),
+                decoration: InputDecoration(labelText: l10n.newPin),
               ),
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: confirmController,
                 obscureText: true,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'Confirm new PIN'),
+                decoration: InputDecoration(labelText: l10n.confirmNewPin),
               ),
               if (statusMessage != null) ...[
                 const SizedBox(height: AppSpacing.medium),
@@ -616,19 +645,21 @@ class SettingsView extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(l10n.actionCancel),
             ),
             ElevatedButton(
               onPressed: () async {
                 final newPin = newPinController.text;
                 if (newPin.length < 4) {
                   setDialogState(
-                    () => statusMessage = 'PIN must be at least 4 digits.',
+                    () => statusMessage = l10n.validationPinMinLength,
                   );
                   return;
                 }
                 if (newPin != confirmController.text) {
-                  setDialogState(() => statusMessage = "PINs don't match.");
+                  setDialogState(
+                    () => statusMessage = l10n.validationPinsDoNotMatch,
+                  );
                   return;
                 }
                 final changed = await viewModel.changePin(
@@ -637,7 +668,7 @@ class SettingsView extends StatelessWidget {
                 );
                 if (!changed) {
                   setDialogState(
-                    () => statusMessage = 'Current PIN is incorrect.',
+                    () => statusMessage = l10n.validationWrongPin,
                   );
                   return;
                 }
@@ -645,7 +676,7 @@ class SettingsView extends StatelessWidget {
                   Navigator.of(dialogContext).pop();
                 }
               },
-              child: const Text('Change PIN'),
+              child: Text(l10n.actionChangePin),
             ),
           ],
         ),
@@ -654,15 +685,13 @@ class SettingsView extends StatelessWidget {
   }
 
   void _showRestoredSuccessDialog(BuildContext context) {
+    final l10n = l10nOf(context);
     showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Backup restored'),
-        content: const Text(
-          'Your books have been restored. Close and reopen the app to '
-          "continue — it can't keep going until you do.",
-        ),
+        title: Text(l10n.backupRestored),
+        content: Text(l10n.backupRestoredBody),
         actions: [
           ElevatedButton(
             onPressed: () {
@@ -672,10 +701,36 @@ class SettingsView extends StatelessWidget {
                 exit(0);
               }
             },
-            child: const Text('Close app'),
+            child: Text(l10n.actionCloseApp),
           ),
         ],
       ),
     );
   }
+}
+
+String _exchangeRateProviderLabel(
+  AppLocalizations l10n,
+  ExchangeRateProvider provider,
+) {
+  return switch (provider) {
+    ExchangeRateProvider.frankfurter => l10n.providerFrankfurter,
+    ExchangeRateProvider.openErApi => l10n.providerOpenErApi,
+  };
+}
+
+String _quoteProviderLabel(AppLocalizations l10n, QuoteProvider provider) {
+  return switch (provider) {
+    QuoteProvider.stooq => l10n.providerStooq,
+    QuoteProvider.yahooFinance => l10n.providerYahooFinance,
+  };
+}
+
+String _researchToolLabel(AppLocalizations l10n, ResearchTool tool) {
+  return switch (tool) {
+    ResearchTool.chatGpt => l10n.researchChatGpt,
+    ResearchTool.claude => l10n.researchClaude,
+    ResearchTool.gemini => l10n.researchGemini,
+    ResearchTool.metaAi => l10n.researchMetaAi,
+  };
 }

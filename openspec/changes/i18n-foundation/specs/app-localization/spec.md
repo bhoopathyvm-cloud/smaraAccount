@@ -50,12 +50,12 @@ BIP39 recovery phrase generation and confirmation SHALL continue to use the Engl
 - **WHEN** the user views or confirms a recovery phrase while the UI locale is not English
 - **THEN** mnemonic words remain English BIP39 words
 
-### Requirement: Numeric Amounts Are Not Locale-Reformatted in v1
-Ledger amounts SHALL continue to render using the existing fixed numeric-dot format (e.g. `1234.56`) regardless of the active UI locale. Currency labels SHALL continue to use ISO 4217 codes rather than locale-specific symbols or grouping/decimal conventions. This SHALL hold even after locale packs add non-English UI text, since reformatting amounts per locale is explicitly deferred past v1.
+### Requirement: Ledger Amounts Follow Currency, Not UI Locale
+Ledger amounts SHALL continue to render using each currency's own grouping and decimal conventions (`formatAmountMinor` / `localeForCurrency`), not the active UI locale. Currency labels SHALL continue to use ISO 4217 codes. Switching the app language SHALL NOT change how a given currency amount is formatted.
 
-#### Scenario: Amount formatting is locale-invariant
-- **WHEN** the user views any screen showing a ledger amount, in any supported locale
-- **THEN** the amount renders in the same fixed numeric-dot format used for the English locale
+#### Scenario: Amount formatting is UI-locale-invariant
+- **WHEN** the user views any screen showing a ledger amount, in any supported UI locale
+- **THEN** the amount for a given currency renders the same as it did in English
 - **AND** the currency is shown as its ISO 4217 code, not a locale-specific symbol
 
 ### Requirement: System Default Names Display Localized When Unchanged

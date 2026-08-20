@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -39,9 +40,10 @@ class _FirstWeekSetupViewState extends State<FirstWeekSetupView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set up your accounts', style: AppTypography.headerTitle),
+        title: Text(l10n.firstWeekTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -65,46 +67,45 @@ class _FirstWeekSetupViewState extends State<FirstWeekSetupView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  "What's your main account called?",
+                  l10n.whatsMainAccountCalled,
                   style: AppTypography.sectionLabel,
                 ),
                 const SizedBox(height: AppSpacing.small),
                 Text(
-                  'This is the account already set up for you - give it a '
-                  'name you recognize, like your bank.',
+                  l10n.firstWeekBlurb,
                   style: AppTypography.metadata,
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 TextField(
                   controller: _mainAccountController,
-                  decoration: const InputDecoration(labelText: 'Account name'),
+                  decoration: InputDecoration(labelText: l10n.accountName),
                   onChanged: widget.viewModel.setMainAccountName,
                 ),
                 const SizedBox(height: AppSpacing.xLarge),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Add a credit card'),
+                  title: Text(l10n.addCreditCard),
                   value: widget.viewModel.hasCreditCard,
                   onChanged: widget.viewModel.setHasCreditCard,
                 ),
                 if (widget.viewModel.hasCreditCard)
                   TextField(
                     controller: _creditCardController,
-                    decoration: const InputDecoration(labelText: 'Card name'),
+                    decoration: InputDecoration(labelText: l10n.cardName),
                     onChanged: widget.viewModel.setCreditCardName,
                   ),
                 const SizedBox(height: AppSpacing.large),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Add a cash account'),
+                  title: Text(l10n.addCashAccount),
                   value: widget.viewModel.hasCashAccount,
                   onChanged: widget.viewModel.setHasCashAccount,
                 ),
                 if (widget.viewModel.hasCashAccount)
                   TextField(
                     controller: _cashAccountController,
-                    decoration: const InputDecoration(
-                      labelText: 'Cash account name',
+                    decoration: InputDecoration(
+                      labelText: l10n.cashAccountName,
                     ),
                     onChanged: widget.viewModel.setCashAccountName,
                   ),
@@ -123,7 +124,7 @@ class _FirstWeekSetupViewState extends State<FirstWeekSetupView> {
                           final success = await widget.viewModel.finish();
                           if (success) widget.onFinished();
                         },
-                  child: const Text('Finish'),
+                  child: Text(l10n.actionFinish),
                 ),
               ],
             ),

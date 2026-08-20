@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -25,9 +26,10 @@ class KeyLossMigrationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Migrate to a new key', style: AppTypography.headerTitle),
+        title: Text(l10n.migrationTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -48,27 +50,22 @@ class KeyLossMigrationView extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Without your recovery phrase or keystore file, this device\'s '
-                    'existing signing key cannot be recovered. Continuing generates '
-                    'a brand new key and re-signs every entry below under it, so the '
-                    'books can be trusted going forward.\n\n'
-                    'This does NOT retroactively prove the entries below were never '
-                    'tampered with - it only re-establishes trust from this point '
-                    'on. The original entries are kept, unchanged, as a read-only '
-                    'historical record.',
+                    l10n.migrationBlurb,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.large),
                 Text(
-                  'Review the entries below (${viewModel.entries.length} total) before continuing.',
+                  l10n.reviewEntriesBeforeContinuing(
+                    '${viewModel.entries.length}',
+                  ),
                   style: AppTypography.body,
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 300),
                   child: viewModel.entries.isEmpty
-                      ? const Center(child: Text('No entries recorded yet.'))
+                      ? Center(child: Text(l10n.registerNoEntries))
                       : ListView.builder(
                           shrinkWrap: true,
                           itemCount: viewModel.entries.length,
@@ -121,7 +118,7 @@ class KeyLossMigrationView extends StatelessWidget {
                   value: viewModel.hasConfirmed,
                   onChanged: (value) => viewModel.setConfirmed(value ?? false),
                   title: Text(
-                    'I confirm the current books are valid',
+                    l10n.iConfirmBooksValid,
                     style: AppTypography.body,
                   ),
                 ),
@@ -140,7 +137,7 @@ class KeyLossMigrationView extends StatelessWidget {
                           final success = await viewModel.confirmAndMigrate();
                           if (success) onMigrated();
                         },
-                  child: const Text('Migrate to a new key'),
+                  child: Text(l10n.migrationTitle),
                 ),
               ],
             ),

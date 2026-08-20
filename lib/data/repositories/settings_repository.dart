@@ -25,6 +25,7 @@ class SettingsRepository {
   static const _marketPriceFetchEnabledKey = 'marketPriceFetchEnabled';
   static const _quoteProviderKey = 'quoteProvider';
   static const _researchToolKey = 'researchTool';
+  static const _preferredLocaleTagKey = 'preferredLocaleTag';
 
   /// Defaults to disabled - this app has never made a network call before
   /// the reference-rate lookup, so the one new network-touching feature is
@@ -143,5 +144,15 @@ class SettingsRepository {
 
   Future<void> setSelectedResearchTool(ResearchTool tool) {
     return _preferences.setString(_researchToolKey, tool.name);
+  }
+
+  /// BCP-47 tag such as `en` or `ta`, or `system` to follow the device.
+  /// Null means the user has never chosen — treat as `system`.
+  Future<String?> preferredLocaleTag() {
+    return _preferences.getString(_preferredLocaleTagKey);
+  }
+
+  Future<void> setPreferredLocaleTag(String tag) {
+    return _preferences.setString(_preferredLocaleTagKey, tag);
   }
 }

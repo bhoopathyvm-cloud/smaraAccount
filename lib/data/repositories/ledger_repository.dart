@@ -583,6 +583,7 @@ class LedgerRepository {
           throw InvalidLedgerBackupException(
             'This backup has no signing identity - it is not a valid '
             'Smara backup.',
+            code: AppErrorCode.invalidLedgerBackupNoIdentity,
           );
         }
         backupIdentity = identity;
@@ -591,6 +592,7 @@ class LedgerRepository {
           throw InvalidLedgerBackupException(
             'This backup did not verify as intact books, so it was not '
             'restored.',
+            code: AppErrorCode.invalidLedgerBackupUnverified,
           );
         }
       } finally {
@@ -603,6 +605,8 @@ class LedgerRepository {
       await tempFile.delete();
       throw InvalidLedgerBackupException(
         'This file could not be opened as a Smara backup: $e',
+        code: AppErrorCode.invalidLedgerBackupUnreadable,
+        params: {'detail': '$e'},
       );
     }
 
@@ -997,10 +1001,10 @@ class LedgerRepository {
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null ||
         (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.');
+      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
     }
     if (row.archivedAt != null) {
-      throw AccountGroupException('Account $id is archived.');
+      throw AccountGroupException('Account $id is archived.', code: AppErrorCode.accountArchived);
     }
     return row;
   }
@@ -1016,15 +1020,16 @@ class LedgerRepository {
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null ||
         (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.');
+      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
     }
     if (row.archivedAt == null) {
-      throw AccountGroupException('Account $id is not archived.');
+      throw AccountGroupException('Account $id is not archived.', code: AppErrorCode.accountNotArchived);
     }
     final balance = await displayBalanceMinor(id);
     if (balance <= 0) {
       throw AccountGroupException(
         'Account $id has no positive display balance to close out.',
+        code: AppErrorCode.accountNoPositiveBalanceToCloseOut,
       );
     }
     return row;
@@ -1040,6 +1045,7 @@ class LedgerRepository {
     if (groupId == null) {
       throw AccountGroupException(
         'Account ${accountRow.id} has no group assigned.',
+        code: AppErrorCode.accountHasNoGroup,
       );
     }
     final group = await (_db.select(
@@ -1049,6 +1055,7 @@ class LedgerRepository {
     if (currency == null) {
       throw AccountGroupException(
         'Account group $groupId has no currency set yet.',
+        code: AppErrorCode.groupHasNoCurrency,
       );
     }
     return currency;
@@ -1070,11 +1077,13 @@ class LedgerRepository {
     if (holdsInvestments && type != AccountType.asset) {
       throw AccountGroupException(
         'Only asset accounts can be marked as investment accounts.',
+        code: AppErrorCode.investmentAccountsMustBeAssets,
       );
     }
     if (isCreditCard && type != AccountType.liability) {
       throw AccountGroupException(
         'Only liability accounts can be marked as credit cards.',
+        code: AppErrorCode.creditCardsMustBeLiabilities,
       );
     }
     if (openingBalanceMinor != null && openingBalanceMinor <= 0) {
@@ -1087,7 +1096,7 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(groupId))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $groupId not found.');
+      throw AccountGroupException('Account group $groupId not found.', code: AppErrorCode.groupNotFound);
     }
     final expectedKind = type == AccountType.asset
         ? AccountGroupKind.assetGroup
@@ -1095,6 +1104,7 @@ class LedgerRepository {
     if (group.kind != expectedKind) {
       throw AccountGroupException(
         'Account type $type does not match group kind ${group.kind}.',
+        code: AppErrorCode.accountTypeDoesNotMatchGroup,
       );
     }
     // Defensive: the app-level currency-backfill gate (needsCurrencyBackfill)
@@ -1104,6 +1114,7 @@ class LedgerRepository {
     if (group.currency == null) {
       throw AccountGroupException(
         'Account group $groupId has no currency set yet.',
+        code: AppErrorCode.groupHasNoCurrency,
       );
     }
 
@@ -1177,7 +1188,7 @@ class LedgerRepository {
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null ||
         (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.');
+      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
     }
     await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
       AccountsCompanion(name: Value(newName)),
@@ -1194,13 +1205,13 @@ class LedgerRepository {
     if (account == null ||
         (account.type != AccountType.asset &&
             account.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.');
+      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
     }
     final group = await (_db.select(
       _db.accountGroups,
     )..where((g) => g.id.equals(groupId))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $groupId not found.');
+      throw AccountGroupException('Account group $groupId not found.', code: AppErrorCode.groupNotFound);
     }
     final expectedKind = account.type == AccountType.asset
         ? AccountGroupKind.assetGroup
@@ -1208,6 +1219,7 @@ class LedgerRepository {
     if (group.kind != expectedKind) {
       throw AccountGroupException(
         'Account type ${account.type} does not match group kind ${group.kind}.',
+        code: AppErrorCode.accountTypeDoesNotMatchGroup,
       );
     }
     // multi-currency-support: reassigning across currencies would silently
@@ -1222,6 +1234,7 @@ class LedgerRepository {
         throw AccountGroupException(
           'Cannot reassign to a group with a different currency '
           '(${currentGroup.currency} -> ${group.currency}).',
+          code: AppErrorCode.cannotReassignDifferentCurrency,
         );
       }
     }
@@ -1242,7 +1255,7 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(groupId))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $groupId not found.');
+      throw AccountGroupException('Account group $groupId not found.', code: AppErrorCode.groupNotFound);
     }
     final activeMembers =
         await (_db.select(_db.accounts)..where(
@@ -1256,6 +1269,7 @@ class LedgerRepository {
     if (activeMembers.isNotEmpty) {
       throw AccountGroupException(
         'Cannot change currency while the group has active financial accounts.',
+        code: AppErrorCode.cannotChangeGroupCurrencyWithAccounts,
       );
     }
     await (_db.update(_db.accountGroups)..where((g) => g.id.equals(groupId)))
@@ -1296,7 +1310,7 @@ class LedgerRepository {
     if (account == null ||
         (account.type != AccountType.asset &&
             account.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.');
+      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
     }
     await _db.transaction(() async {
       await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
@@ -1323,7 +1337,7 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(id))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $id not found.');
+      throw AccountGroupException('Account group $id not found.', code: AppErrorCode.groupNotFound);
     }
     await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
       AccountGroupsCompanion(name: Value(newName)),
@@ -1343,7 +1357,7 @@ class LedgerRepository {
     required String currency,
   }) async {
     if (currency.trim().isEmpty) {
-      throw AccountGroupException('Currency is required to create a group.');
+      throw AccountGroupException('Currency is required to create a group.', code: AppErrorCode.currencyRequiredToCreateGroup);
     }
     final existing = await _db.select(_db.accountGroups).get();
     final nextSortOrder =
@@ -1378,13 +1392,13 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(id))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $id not found.');
+      throw AccountGroupException('Account group $id not found.', code: AppErrorCode.groupNotFound);
     }
     if (group.isSystem) {
-      throw AccountGroupException('System account groups cannot be archived.');
+      throw AccountGroupException('System account groups cannot be archived.', code: AppErrorCode.systemGroupCannotBeArchived);
     }
     if (group.archivedAt != null) {
-      throw AccountGroupException('Account group $id is already archived.');
+      throw AccountGroupException('Account group $id is already archived.', code: AppErrorCode.groupAlreadyArchived);
     }
     final activeMembers =
         await (_db.select(_db.accounts)..where(
@@ -1398,6 +1412,7 @@ class LedgerRepository {
     if (activeMembers.isNotEmpty) {
       throw AccountGroupException(
         'Cannot archive a group with active financial accounts.',
+        code: AppErrorCode.cannotArchiveGroupWithAccounts,
       );
     }
     await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
@@ -1417,10 +1432,10 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(id))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $id not found.');
+      throw AccountGroupException('Account group $id not found.', code: AppErrorCode.groupNotFound);
     }
     if (group.isSystem) {
-      throw AccountGroupException('System account groups are never archived.');
+      throw AccountGroupException('System account groups are never archived.', code: AppErrorCode.systemGroupNeverArchived);
     }
     await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
       const AccountGroupsCompanion(archivedAt: Value(null)),
@@ -1435,9 +1450,9 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(id))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $id not found.');
+      throw AccountGroupException('Account group $id not found.', code: AppErrorCode.groupNotFound);
     }
-    throw AccountGroupException('Account groups cannot be deleted.');
+    throw AccountGroupException('Account groups cannot be deleted.', code: AppErrorCode.accountGroupsCannotBeDeleted);
   }
 
   /// Validates `amountMinor > 0`, derives the two postings, stamps
@@ -1473,6 +1488,7 @@ class LedgerRepository {
     if (amountMinor <= 0) {
       throw InvalidTransactionAmountException(
         'Transaction amount must be positive and non-zero, got $amountMinor.',
+        code: AppErrorCode.amountMustBePositive,
       );
     }
 
@@ -1485,6 +1501,7 @@ class LedgerRepository {
       throw InvalidTransactionAmountException(
         'accountCurrencyAmountMinor must not be supplied for a '
         'same-currency transaction.',
+        code: AppErrorCode.accountCurrencyAmountNotForSameCurrency,
       );
     }
 
@@ -1518,6 +1535,7 @@ class LedgerRepository {
         throw InvalidTransactionAmountException(
           'Account-currency amount must be positive and non-zero, '
           'got $accountCurrencyAmountMinor.',
+          code: AppErrorCode.accountCurrencyAmountMustBePositive,
         );
       }
       return _appendSignedEntry(
@@ -1576,11 +1594,13 @@ class LedgerRepository {
     if (totalAmountMinor <= 0) {
       throw InvalidTransactionAmountException(
         'Transaction amount must be positive and non-zero, got $totalAmountMinor.',
+        code: AppErrorCode.amountMustBePositive,
       );
     }
     if (splitLines.length < 2) {
       throw InvalidTransactionAmountException(
         'A split needs at least two category lines, got ${splitLines.length}.',
+        code: AppErrorCode.splitNeedsTwoLines,
       );
     }
     for (var i = 0; i < splitLines.length; i++) {
@@ -1589,6 +1609,7 @@ class LedgerRepository {
         throw InvalidTransactionAmountException(
           'Split line ${i + 1} (${splitLines[i].categoryId}) must be '
           'positive and non-zero, got $amount.',
+          code: AppErrorCode.splitLineMustBePositive,
         );
       }
     }
@@ -1600,6 +1621,7 @@ class LedgerRepository {
       throw InvalidTransactionAmountException(
         'Split lines sum to $linesTotal, which does not match the '
         'transaction total of $totalAmountMinor.',
+        code: AppErrorCode.splitLinesMustSumToTotal,
       );
     }
 
@@ -1679,11 +1701,13 @@ class LedgerRepository {
     if (amountMinor <= 0) {
       throw InvalidTransferException(
         'Transfer amount must be positive and non-zero, got $amountMinor.',
+        code: AppErrorCode.transferAmountMustBePositive,
       );
     }
     if (fromAccountId == toAccountId) {
       throw InvalidTransferException(
         'Source and destination accounts must be distinct.',
+        code: AppErrorCode.transferAccountsMustDiffer,
       );
     }
     final fromAccount = await _requireActiveFinancialAccount(fromAccountId);
@@ -1715,6 +1739,7 @@ class LedgerRepository {
     if (fromAccountId == toAccountId) {
       throw InvalidTransferException(
         'Source and destination accounts must be distinct.',
+        code: AppErrorCode.transferAccountsMustDiffer,
       );
     }
     final fromAccount = await _requireCloseoutEligibleFinancialAccount(
@@ -1729,6 +1754,7 @@ class LedgerRepository {
       throw InvalidTransferException(
         'A cross-currency closeout requires a known destination amount; '
         'a pending transfer is not allowed on an archived account.',
+        code: AppErrorCode.closeoutRequiresDestinationAmount,
       );
     }
     await _postTransfer(
@@ -1761,6 +1787,7 @@ class LedgerRepository {
         throw InvalidTransferException(
           'destinationAmountMinor must not be supplied for a '
           'same-currency transfer.',
+          code: AppErrorCode.destinationAmountNotForSameCurrency,
         );
       }
       if (fromAccount.holdsInvestments) {
@@ -1769,6 +1796,7 @@ class LedgerRepository {
           throw InvalidTransferException(
             'Cannot transfer more than the investment account cash balance '
             '($cashBalance minor units).',
+            code: AppErrorCode.investmentCashExceeded,
           );
         }
       }
@@ -1789,6 +1817,7 @@ class LedgerRepository {
         throw InvalidTransferException(
           'Destination amount must be positive and non-zero, '
           'got $destinationAmountMinor.',
+          code: AppErrorCode.destinationAmountMustBePositive,
         );
       }
       if (fromAccount.holdsInvestments) {
@@ -1797,6 +1826,7 @@ class LedgerRepository {
           throw InvalidTransferException(
             'Cannot transfer more than the investment account cash balance '
             '($cashBalance minor units).',
+            code: AppErrorCode.investmentCashExceeded,
           );
         }
       }
@@ -1906,6 +1936,7 @@ class LedgerRepository {
       throw PendingTransferException(
         'Cannot reverse a provisional entry while its pending transfer is '
         'still unsettled. Settle it instead.',
+        code: AppErrorCode.cannotReverseUnsettledProvisional,
       );
     }
 
@@ -2006,10 +2037,10 @@ class LedgerRepository {
       _db.accounts,
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null || row.type != AccountType.expense) {
-      throw PendingTransferException('$id is not an active Expense category.');
+      throw PendingTransferException('$id is not an active Expense category.', code: AppErrorCode.notActiveExpenseCategory);
     }
     if (row.archivedAt != null) {
-      throw PendingTransferException('$id is not an active Expense category.');
+      throw PendingTransferException('$id is not an active Expense category.', code: AppErrorCode.notActiveExpenseCategory);
     }
   }
 
@@ -2044,6 +2075,7 @@ class LedgerRepository {
     if (settledAmountMinor < 0) {
       throw PendingTransferException(
         'Settled amount must not be negative, got $settledAmountMinor.',
+        code: AppErrorCode.settledAmountMustNotBeNegative,
       );
     }
 
@@ -2053,11 +2085,13 @@ class LedgerRepository {
     if (pending == null) {
       throw PendingTransferException(
         'Pending transfer $pendingTransferId not found.',
+        code: AppErrorCode.pendingTransferNotFound,
       );
     }
     if (pending.status == PendingTransferStatus.settled) {
       throw PendingTransferException(
         'Pending transfer $pendingTransferId is already settled.',
+        code: AppErrorCode.pendingTransferAlreadySettled,
       );
     }
 
@@ -2071,6 +2105,7 @@ class LedgerRepository {
       throw PendingTransferException(
         'settledToAccountId must be the pending transfer\'s own source or '
         'destination account.',
+        code: AppErrorCode.settledToMustBeSourceOrDestination,
       );
     }
 
@@ -2085,6 +2120,7 @@ class LedgerRepository {
       throw PendingTransferException(
         'feeCategoryId is only applicable when settling a transfer back to '
         'its own source account.',
+        code: AppErrorCode.feeCategoryOnlyWhenReturningToSource,
       );
     }
     // The destination-delivery / foreignTransaction path has no fee
@@ -2099,6 +2135,7 @@ class LedgerRepository {
         'Settled amount must be positive when settling to the destination '
         'or a foreign-currency transaction - use the source-account path '
         'for a total loss.',
+        code: AppErrorCode.settledAmountMustBePositiveForDelivery,
       );
     }
 
@@ -2116,6 +2153,7 @@ class LedgerRepository {
         'Settled amount ($settledAmountMinor) cannot exceed the provisional '
         'amount ($provisionalAmountAbs) when settling back to the source '
         'account.',
+        code: AppErrorCode.settledAmountExceedsProvisional,
       );
     }
 
@@ -2449,6 +2487,7 @@ class LedgerRepository {
     if (quantityScaled <= 0 || unitPriceMinor <= 0) {
       throw const InvestmentException(
         'Buy quantity and unit price must be positive.',
+        code: AppErrorCode.buyQuantityAndPriceMustBePositive,
       );
     }
     await _requireInvestmentCashAccount(accountId);
@@ -2456,10 +2495,13 @@ class LedgerRepository {
       _db.instruments,
     )..where((i) => i.id.equals(instrumentId))).getSingleOrNull();
     if (instrument == null) {
-      throw InvestmentException('Instrument $instrumentId not found.');
+      throw InvestmentException('Instrument $instrumentId not found.', code: AppErrorCode.instrumentNotFound);
     }
     if (instrument.archivedAt != null) {
-      throw const InvestmentException('Cannot buy an archived instrument.');
+      throw const InvestmentException(
+        'Cannot buy an archived instrument.',
+        code: AppErrorCode.instrumentArchived,
+      );
     }
 
     final totalCostMinor = multiplyScaledQuantityPrice(
@@ -2471,11 +2513,13 @@ class LedgerRepository {
     if (fundingSource == BuyFundingSource.nonCash && hasBrokerage) {
       throw const InvestmentException(
         'Non-cash acquisitions cannot include brokerage.',
+        code: AppErrorCode.nonCashCannotIncludeBrokerage,
       );
     }
     if (hasBrokerage && brokerageExpenseCategoryId == null) {
       throw const InvestmentException(
         'An active expense category is required when brokerage is positive.',
+        code: AppErrorCode.brokerageRequiresExpenseCategory,
       );
     }
     if (hasBrokerage) {
@@ -2485,6 +2529,7 @@ class LedgerRepository {
       if (incomeCategoryId == null) {
         throw const InvestmentException(
           'An active income category is required for a non-cash acquisition.',
+          code: AppErrorCode.incomeRequiredForNonCash,
         );
       }
       await _requireActiveIncomeCategory(incomeCategoryId);
@@ -2557,10 +2602,14 @@ class LedgerRepository {
       } on InvalidTransactionAmountException catch (e) {
         throw InvestmentException(
           'Buy posted, but brokerage fee failed: ${e.message}',
+          code: AppErrorCode.brokerageFailedAfterBuy,
+          params: {'detail': e.message},
         );
       } on AccountGroupException catch (e) {
         throw InvestmentException(
           'Buy posted, but brokerage fee failed: ${e.message}',
+          code: AppErrorCode.brokerageFailedAfterBuy,
+          params: {'detail': e.message},
         );
       }
     }
@@ -2583,6 +2632,7 @@ class LedgerRepository {
     if (quantityScaled <= 0 || unitPriceMinor <= 0) {
       throw const InvestmentException(
         'Sell quantity and unit price must be positive.',
+        code: AppErrorCode.sellQuantityAndPriceMustBePositive,
       );
     }
     await _requireInvestmentCashAccount(accountId, allowArchived: true);
@@ -2596,11 +2646,13 @@ class LedgerRepository {
     if (hasBrokerage && proceedsMinor < feeMinor) {
       throw const InvestmentException(
         'Sell proceeds must be at least the brokerage amount.',
+        code: AppErrorCode.sellProceedsMustCoverBrokerage,
       );
     }
     if (hasBrokerage && brokerageExpenseCategoryId == null) {
       throw const InvestmentException(
         'An active expense category is required when brokerage is positive.',
+        code: AppErrorCode.brokerageRequiresExpenseCategory,
       );
     }
     if (hasBrokerage) {
@@ -2622,6 +2674,7 @@ class LedgerRepository {
             : _dateOnly(until);
         throw LockedQuantityException(
           'Cannot sell: some units are locked until $untilLabel.',
+          params: {'date': untilLabel},
         );
       }
       throw InsufficientQuantityException(
@@ -2641,6 +2694,7 @@ class LedgerRepository {
       if (gainIncomeCategoryId == null) {
         throw const InvestmentException(
           'An active income category is required for a realized gain.',
+          code: AppErrorCode.incomeRequiredForGain,
         );
       }
       await _requireActiveIncomeCategory(gainIncomeCategoryId);
@@ -2648,6 +2702,7 @@ class LedgerRepository {
       if (lossExpenseCategoryId == null) {
         throw const InvestmentException(
           'An active expense category is required for a realized loss.',
+          code: AppErrorCode.expenseRequiredForLoss,
         );
       }
       await _requireActiveExpenseCategory(lossExpenseCategoryId);
@@ -2711,10 +2766,14 @@ class LedgerRepository {
       } on InvalidTransactionAmountException catch (e) {
         throw InvestmentException(
           'Sell posted, but brokerage fee failed: ${e.message}',
+          code: AppErrorCode.brokerageFailedAfterSell,
+          params: {'detail': e.message},
         );
       } on AccountGroupException catch (e) {
         throw InvestmentException(
           'Sell posted, but brokerage fee failed: ${e.message}',
+          code: AppErrorCode.brokerageFailedAfterSell,
+          params: {'detail': e.message},
         );
       }
     }
@@ -2731,7 +2790,7 @@ class LedgerRepository {
     String? description,
   }) async {
     if (amountMinor <= 0) {
-      throw const InvestmentException('Dividend amount must be positive.');
+      throw const InvestmentException('Dividend amount must be positive.', code: AppErrorCode.dividendMustBePositive);
     }
     await _requireInvestmentCashAccount(accountId, allowArchived: true);
     await _requireActiveIncomeCategory(incomeCategoryId);
@@ -2739,7 +2798,7 @@ class LedgerRepository {
       _db.instruments,
     )..where((i) => i.id.equals(instrumentId))).getSingleOrNull();
     if (instrument == null) {
-      throw InvestmentException('Instrument $instrumentId not found.');
+      throw InvestmentException('Instrument $instrumentId not found.', code: AppErrorCode.instrumentNotFound);
     }
 
     return _appendSignedEntry(
@@ -2758,10 +2817,10 @@ class LedgerRepository {
       _db.accounts,
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null || row.type != AccountType.income) {
-      throw InvestmentException('$id is not an active Income category.');
+      throw InvestmentException('$id is not an active Income category.', code: AppErrorCode.notActiveIncomeCategory);
     }
     if (row.archivedAt != null) {
-      throw InvestmentException('$id is not an active Income category.');
+      throw InvestmentException('$id is not an active Income category.', code: AppErrorCode.notActiveIncomeCategory);
     }
   }
 
@@ -2773,10 +2832,10 @@ class LedgerRepository {
       _db.accounts,
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null || row.type != AccountType.asset || !row.holdsInvestments) {
-      throw InvestmentException('Account $id is not an investment account.');
+      throw InvestmentException('Account $id is not an investment account.', code: AppErrorCode.notInvestmentAccount);
     }
     if (row.archivedAt != null && !allowArchived) {
-      throw AccountGroupException('Account $id is archived.');
+      throw AccountGroupException('Account $id is archived.', code: AppErrorCode.accountArchived);
     }
     return row;
   }
@@ -2789,6 +2848,7 @@ class LedgerRepository {
     if (row == null) {
       throw InvestmentException(
         'No inventory companion for investment account $cashAccountId.',
+        code: AppErrorCode.noInventoryCompanion,
       );
     }
     return row.id;
@@ -2894,6 +2954,7 @@ class LedgerRepository {
       throw InvestmentReversalBlockedException(
         'Cannot reverse this buy: later sell(s) depend on its units. '
         'Reverse dependent sell(s) first: ${blockingSells.join(", ")}.',
+        params: {'sells': blockingSells.join(', ')},
       );
     }
   }
@@ -3124,6 +3185,7 @@ class LedgerRepository {
       if (monthlyLimitMinor <= 0) {
         throw InvalidTransactionAmountException(
           'Monthly limit must be positive and non-zero, got $monthlyLimitMinor.',
+          code: AppErrorCode.monthlyLimitMustBePositive,
         );
       }
       final row = await (_db.select(
@@ -3221,6 +3283,7 @@ class LedgerRepository {
             account.type != AccountType.liability)) {
       throw AccountGroupException(
         'Account $financialAccountId is not a financial account.',
+        code: AppErrorCode.accountNotFinancial,
       );
     }
     final startDate = _dateOnly(start);
@@ -3924,6 +3987,7 @@ class LedgerRepository {
     if (amountMinor <= 0) {
       throw InvalidTransactionAmountException(
         'Template amount must be positive and non-zero, got $amountMinor.',
+        code: AppErrorCode.templateAmountMustBePositive,
       );
     }
     if (dayOfMonth < 1 || dayOfMonth > 31) {

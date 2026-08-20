@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/recurring_template.dart';
@@ -136,11 +137,13 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
       notifyListeners();
       return false;
-    } on ArgumentError catch (e) {
-      _errorMessage = e.message?.toString() ?? 'Invalid template.';
+    } on ArgumentError {
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationInvalidTemplate),
+      );
       notifyListeners();
       return false;
     }

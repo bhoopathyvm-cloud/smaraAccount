@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import '../../l10n/l10n.dart';
 
 /// The design system's "Destructive" button pattern (smara-design-system.md):
 /// red outlined, red text, transparent background.
@@ -15,8 +16,9 @@ Future<bool> confirmDestructiveAction({
   required BuildContext context,
   required String title,
   required String message,
-  String confirmLabel = 'Archive',
+  String? confirmLabel,
 }) async {
+  final l10n = l10nOf(context);
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (dialogContext) => AlertDialog(
@@ -25,12 +27,12 @@ Future<bool> confirmDestructiveAction({
       actions: [
         TextButton(
           onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: const Text('Cancel'),
+          child: Text(l10n.actionCancel),
         ),
         OutlinedButton(
           style: destructiveButtonStyle,
           onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: Text(confirmLabel),
+          child: Text(confirmLabel ?? l10n.actionHide),
         ),
       ],
     ),

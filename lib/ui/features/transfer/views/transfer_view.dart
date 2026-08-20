@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/account.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -47,9 +48,10 @@ class _TransferViewState extends State<TransferView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Moved money', style: AppTypography.headerTitle),
+        title: Text(l10n.captureMovedMoney, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -63,30 +65,30 @@ class _TransferViewState extends State<TransferView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 EntityPickerField<Account>(
-                  labelText: 'From account',
+                  labelText: l10n.fromAccount,
                   items: viewModel.accounts,
                   idOf: (account) => account.id,
-                  labelOf: (account) => account.name,
+                  labelOf: (account) => localizeStoredName(l10n, account.name),
                   value: viewModel.fromAccountId,
                   onChanged: viewModel.setFromAccountId,
                 ),
                 const SizedBox(height: AppSpacing.large),
                 EntityPickerField<Account>(
                   key: ValueKey(viewModel.fromAccountId),
-                  labelText: 'To account',
+                  labelText: l10n.toAccount,
                   items: [
                     for (final account in viewModel.accounts)
                       if (account.id != viewModel.fromAccountId) account,
                   ],
                   idOf: (account) => account.id,
-                  labelOf: (account) => account.name,
+                  labelOf: (account) => localizeStoredName(l10n, account.name),
                   value: viewModel.toAccountId,
                   onChanged: viewModel.setToAccountId,
                 ),
                 const SizedBox(height: AppSpacing.large),
                 MoneyAmountField(
                   controller: _amountController,
-                  labelText: 'Amount',
+                  labelText: l10n.amount,
                   currency:
                       viewModel.currencyFor(viewModel.fromAccountId) ?? 'USD',
                   suffixText: viewModel.currencyFor(viewModel.fromAccountId),
@@ -96,13 +98,10 @@ class _TransferViewState extends State<TransferView> {
                   const SizedBox(height: AppSpacing.large),
                   MoneyAmountField(
                     controller: _destinationAmountController,
-                    labelText: 'Destination amount (optional)',
+                    labelText: l10n.destinationAmountOptional,
                     currency:
                         viewModel.currencyFor(viewModel.toAccountId) ?? 'USD',
-                    helperText:
-                        'Leave blank if the exchange rate isn\'t known '
-                        'yet - the transfer will be provisional until '
-                        'settled.',
+                    helperText: l10n.leaveBlankIfRateUnknown,
                     helperMaxLines: 2,
                     suffixText: viewModel.currencyFor(viewModel.toAccountId),
                     onChangedMinor: viewModel.setDestinationAmountMinor,
@@ -111,7 +110,7 @@ class _TransferViewState extends State<TransferView> {
                     const SizedBox(height: AppSpacing.small),
                     Text(
                       _formatRate(
-                        'Reference rate',
+                        l10n.referenceRate,
                         viewModel.currencyFor(viewModel.fromAccountId),
                         viewModel.currencyFor(viewModel.toAccountId),
                         viewModel.referenceRate!,
@@ -123,7 +122,7 @@ class _TransferViewState extends State<TransferView> {
                     const SizedBox(height: AppSpacing.small),
                     Text(
                       _formatRate(
-                        'Your rate',
+                        l10n.yourRate,
                         viewModel.currencyFor(viewModel.fromAccountId),
                         viewModel.currencyFor(viewModel.toAccountId),
                         viewModel.impliedRate!,
@@ -136,32 +135,28 @@ class _TransferViewState extends State<TransferView> {
                 OutlinedButton(
                   onPressed: _pickDate,
                   child: Text(
-                    'Date: ${_formatDate(viewModel.transactionDate)}',
+                    '${l10n.dateLabel}: ${_formatDate(viewModel.transactionDate)}',
                   ),
                 ),
                 const SizedBox(height: AppSpacing.large),
                 TextField(
                   controller: _descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Description (optional)',
+                  decoration: InputDecoration(
+                    labelText: l10n.descriptionOptional,
                   ),
                   onChanged: viewModel.setDescription,
                 ),
                 const SizedBox(height: AppSpacing.xLarge),
-                Text('Fee (optional)', style: AppTypography.sectionLabel),
+                Text(l10n.feeOptional, style: AppTypography.sectionLabel),
                 const SizedBox(height: AppSpacing.small),
                 Text(
-                  'An upfront commission charged by your bank or an '
-                  'intermediary for this transfer, posted as its own '
-                  'expense - separate from any shortfall fee you might '
-                  'later record when settling a pending cross-currency '
-                  'transfer.',
+                  l10n.feeBankBlurb,
                   style: AppTypography.metadata,
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 MoneyAmountField(
                   controller: _feeAmountController,
-                  labelText: 'Fee amount',
+                  labelText: l10n.feeAmount,
                   currency:
                       viewModel.currencyFor(viewModel.fromAccountId) ?? 'USD',
                   suffixText: viewModel.currencyFor(viewModel.fromAccountId),
@@ -170,18 +165,19 @@ class _TransferViewState extends State<TransferView> {
                 if (viewModel.feeAmountMinor != null) ...[
                   const SizedBox(height: AppSpacing.large),
                   EntityPickerField<Account>(
-                    labelText: 'Fee category',
+                    labelText: l10n.feeCategory,
                     items: viewModel.expenseCategories,
                     idOf: (category) => category.id,
-                    labelOf: (category) => category.name,
+                    labelOf: (category) =>
+                        localizeStoredName(l10n, category.name),
                     value: viewModel.feeCategoryId,
                     onChanged: viewModel.setFeeCategoryId,
                   ),
                   const SizedBox(height: AppSpacing.large),
                   TextField(
                     controller: _feeDescriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Fee description (optional)',
+                    decoration: InputDecoration(
+                      labelText: l10n.feeDescriptionOptional,
                     ),
                     onChanged: viewModel.setFeeDescription,
                   ),
@@ -191,20 +187,14 @@ class _TransferViewState extends State<TransferView> {
                     value: viewModel.feeDeductedFromAmount,
                     onChanged: (value) =>
                         viewModel.setFeeDeductedFromAmount(value ?? false),
-                    title: const Text('Fee is deducted from the amount above'),
-                    subtitle: const Text(
-                      'On: the amount above is the total taken from this '
-                      'account, and the fee is carved out of it before '
-                      'conversion (e.g. a remittance service). Off: the fee '
-                      'is charged in addition to the full amount (e.g. a '
-                      'bank wire fee).',
-                    ),
+                    title: Text(l10n.feeDeducted),
+                    subtitle: Text(l10n.feeOnTopBlurb),
                   ),
                 ],
                 if (viewModel.accounts.length < 2) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    'Create at least two active accounts to make a transfer.',
+                    l10n.needTwoAccountsToTransfer,
                     style: AppTypography.body.copyWith(
                       color: AppColors.textMuted,
                     ),
@@ -227,7 +217,7 @@ class _TransferViewState extends State<TransferView> {
                             widget.onSaved?.call();
                           }
                         },
-                  child: const Text('Moved money'),
+                  child: Text(l10n.captureMovedMoney),
                 ),
               ],
             ),

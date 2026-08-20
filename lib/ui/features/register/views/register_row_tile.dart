@@ -5,6 +5,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import '../../../../domain/models/journal_entry.dart'
     show VerificationBreakReason;
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -25,6 +26,7 @@ class RegisterRowTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final isMoneyIn = row.direction == TransactionDirection.moneyIn;
     final amountText =
         '${isMoneyIn ? '+' : '−'}${formatAmountMinor(row.amountMinor, row.currency)}';
@@ -66,7 +68,10 @@ class RegisterRowTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text(row.categoryName, style: AppTypography.cardTitle),
+                        Text(
+                          localizeStoredName(l10n, row.categoryName),
+                          style: AppTypography.cardTitle,
+                        ),
                         if (row.isReversal) ...[
                           const SizedBox(width: AppSpacing.small),
                           Icon(
@@ -95,14 +100,14 @@ class RegisterRowTile extends StatelessWidget {
                     ),
                     if (isQuarantined)
                       Text(
-                        'Unverified - excluded from totals',
+                        l10n.registerUnverified,
                         style: AppTypography.metadata.copyWith(
                           color: AppColors.signal,
                         ),
                       ),
                     if (isSuperseded)
                       Text(
-                        'Superseded by migration - excluded from totals',
+                        l10n.registerSuperseded,
                         style: AppTypography.metadata.copyWith(
                           color: AppColors.textMuted,
                         ),
@@ -125,7 +130,7 @@ class RegisterRowTile extends StatelessWidget {
                   ),
                   if (onTap != null)
                     Text(
-                      'Fix',
+                      l10n.actionFix,
                       style: AppTypography.metadata.copyWith(
                         color: AppColors.textMuted,
                       ),

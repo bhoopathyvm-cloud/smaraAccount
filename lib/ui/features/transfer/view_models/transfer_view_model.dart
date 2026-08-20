@@ -7,6 +7,7 @@ import '../../../../data/exchange_rate_service.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
@@ -303,7 +304,9 @@ class TransferViewModel extends ChangeNotifier {
     final toAccountId = _toAccountId;
     final amountMinor = _amountMinor;
     if (fromAccountId == null || toAccountId == null || amountMinor == null) {
-      _errorMessage = 'From account, to account, and amount are required.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationFromToAmountRequired),
+      );
       notifyListeners();
       return false;
     }
@@ -311,9 +314,9 @@ class TransferViewModel extends ChangeNotifier {
     final feeAmountMinor = _feeAmountMinor;
     final hasFee = feeAmountMinor != null;
     if (hasFee && (feeAmountMinor <= 0 || _feeCategoryId == null)) {
-      _errorMessage =
-          'A transfer fee must be a positive amount with an expense '
-          'category selected.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationFeePositiveWithCategory),
+      );
       notifyListeners();
       return false;
     }
@@ -322,9 +325,9 @@ class TransferViewModel extends ChangeNotifier {
     if (hasFee && _feeDeductedFromAmount) {
       transferAmountMinor = amountMinor - feeAmountMinor;
       if (transferAmountMinor <= 0) {
-        _errorMessage =
-            'The fee must be less than the amount for a deducted-fee '
-            'transfer.';
+        _errorMessage = localizeVmError(
+          const AppFailure(AppErrorCode.validationFeeMustBeLessThanAmount),
+        );
         notifyListeners();
         return false;
       }
@@ -346,12 +349,12 @@ class TransferViewModel extends ChangeNotifier {
       );
     } on InvalidTransferException catch (error) {
       _isSubmitting = false;
-      _errorMessage = error.message;
+      _errorMessage = localizeVmError(error);
       notifyListeners();
       return false;
     } on AccountGroupException catch (error) {
       _isSubmitting = false;
-      _errorMessage = error.message;
+      _errorMessage = localizeVmError(error);
       notifyListeners();
       return false;
     }
@@ -371,16 +374,22 @@ class TransferViewModel extends ChangeNotifier {
         );
       } on InvalidTransactionAmountException catch (error) {
         _isSubmitting = false;
-        _errorMessage =
-            'Transfer saved, but the fee could not be recorded: '
-            '${error.message}';
+        _errorMessage = localizeVmError(
+          AppFailure(
+            AppErrorCode.validationTransferSavedFeeFailed,
+            params: {'detail': localizeVmError(error)},
+          ),
+        );
         notifyListeners();
         return false;
       } on AccountGroupException catch (error) {
         _isSubmitting = false;
-        _errorMessage =
-            'Transfer saved, but the fee could not be recorded: '
-            '${error.message}';
+        _errorMessage = localizeVmError(
+          AppFailure(
+            AppErrorCode.validationTransferSavedFeeFailed,
+            params: {'detail': localizeVmError(error)},
+          ),
+        );
         notifyListeners();
         return false;
       }
@@ -397,8 +406,8 @@ class TransferViewModel extends ChangeNotifier {
         .cast<Account?>()
         .firstWhere((a) => a != null, orElse: () => null);
     return destination == null
-        ? 'Fee for transfer'
-        : 'Fee for transfer to ${destination.name}';
+        ? englishAppLocalizations.feeForTransfer
+        : englishAppLocalizations.feeForTransferTo(destination.name);
   }
 
   @override

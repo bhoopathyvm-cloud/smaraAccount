@@ -339,7 +339,7 @@ void main() {
       final result = await viewModel.submit();
 
       expect(result, isFalse);
-      expect(viewModel.errorMessage, equals('must be positive'));
+      expect(viewModel.errorMessage, equals('Amount must be positive.'));
     },
   );
 

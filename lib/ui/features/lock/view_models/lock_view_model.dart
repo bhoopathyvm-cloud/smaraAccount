@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/lock/app_lock_service.dart';
 import '../../../../domain/lock/biometric_authenticator.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../../domain/exceptions.dart';
 import '../../../core/app_lock_controller.dart';
 
 /// The unlock screen's form state (app-lock spec: "Application Lock").
@@ -49,7 +51,7 @@ class LockViewModel extends ChangeNotifier {
     _isVerifying = true;
     notifyListeners();
     final success = await _biometricAuthenticator.authenticate(
-      reason: 'Unlock Smara Account',
+      reason: englishAppLocalizations.unlockBiometricReason,
     );
     _isVerifying = false;
     notifyListeners();
@@ -69,7 +71,9 @@ class LockViewModel extends ChangeNotifier {
       _lockController.markUnlocked();
       return true;
     }
-    _errorMessage = 'Wrong PIN. Try again.';
+    _errorMessage = localizeVmError(
+      const AppFailure(AppErrorCode.validationWrongPin),
+    );
     notifyListeners();
     return false;
   }

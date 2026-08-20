@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/database/tables/account_groups_table.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
+import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/account.dart';
+import '../../../../l10n/l10n.dart';
 
 /// first-week-setup-wizard: a guided sequence over account creation the
 /// app already supports (design.md Decision 1) - **correction, found
@@ -90,12 +92,16 @@ class FirstWeekSetupViewModel extends ChangeNotifier {
     final mainAccount = _seededMainAccount;
     final name = _mainAccountName.trim();
     if (mainAccount == null) {
-      _errorMessage = 'Still loading - try again in a moment.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationStillLoading),
+      );
       notifyListeners();
       return false;
     }
     if (name.isEmpty) {
-      _errorMessage = 'Name your main account.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationNameRequired),
+      );
       notifyListeners();
       return false;
     }

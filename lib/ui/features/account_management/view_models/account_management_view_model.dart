@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 
@@ -136,11 +137,11 @@ class AccountManagementViewModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on LastActiveAccountException catch (error) {
-      _errorMessage = error.message;
+      _errorMessage = localizeVmError(error);
     } on AccountGroupException catch (error) {
-      _errorMessage = error.message;
+      _errorMessage = localizeVmError(error);
     } on InvalidOpeningBalanceException catch (error) {
-      _errorMessage = error.message;
+      _errorMessage = localizeVmError(error);
     }
     notifyListeners();
     return false;

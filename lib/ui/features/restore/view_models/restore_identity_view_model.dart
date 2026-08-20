@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Reinstall/new-device restore, using a previously-saved recovery phrase
 /// or keystore file (spec: "Recoverable Reinstall or Device Migration").
@@ -55,15 +56,20 @@ class RestoreIdentityViewModel extends ChangeNotifier {
       _isSubmitting = false;
       notifyListeners();
       return true;
-    } on SigningIdentityMismatchException {
-      _errorMessage =
-          'This does not match the signing identity on this device\'s database.';
+    } on SigningIdentityMismatchException catch (e) {
+      _errorMessage = localizeVmError(e);
     } on SecretBoxAuthenticationError {
-      _errorMessage = 'Wrong passphrase for this keystore file.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationWrongKeystorePassphrase),
+      );
     } on FormatException {
-      _errorMessage = 'That doesn\'t look like a valid keystore file.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationInvalidKeystoreFile),
+      );
     } catch (_) {
-      _errorMessage = 'Could not restore from that recovery phrase.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationRestorePhraseFailed),
+      );
     }
 
     _isSubmitting = false;

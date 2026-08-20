@@ -5,6 +5,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/payee.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -83,9 +84,13 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Record transaction', style: AppTypography.headerTitle),
+        title: Text(
+          l10n.actionRecordTransaction,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -99,14 +104,14 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SegmentedButton<TransactionDirection>(
-                  segments: const [
+                  segments: [
                     ButtonSegment(
                       value: TransactionDirection.moneyIn,
-                      label: Text('Received'),
+                      label: Text(l10n.captureReceived),
                     ),
                     ButtonSegment(
                       value: TransactionDirection.moneyOut,
-                      label: Text('Spent'),
+                      label: Text(l10n.captureSpent),
                     ),
                   ],
                   selected: {widget.viewModel.direction},
@@ -127,13 +132,13 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                     spacing: AppSpacing.small,
                     children: [
                       ChoiceChip(
-                        label: const Text('Paid from card'),
+                        label: Text(l10n.paidFromCard),
                         selected: widget.viewModel.isPaidFromCard,
                         onSelected: (_) =>
                             widget.viewModel.selectPaidFromCard(),
                       ),
                       ChoiceChip(
-                        label: const Text('Paid from bank'),
+                        label: Text(l10n.paidFromBank),
                         selected: widget.viewModel.isPaidFromBank,
                         onSelected: (_) =>
                             widget.viewModel.selectPaidFromBank(),
@@ -143,17 +148,17 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                   const SizedBox(height: AppSpacing.medium),
                 ],
                 EntityPickerField<Account>(
-                  labelText: 'Account',
+                  labelText: l10n.account,
                   items: widget.viewModel.financialAccountOptions,
                   idOf: (account) => account.id,
-                  labelOf: (account) => account.name,
+                  labelOf: (account) => localizeStoredName(l10n, account.name),
                   value: widget.viewModel.financialAccountId,
                   onChanged: widget.viewModel.setFinancialAccountId,
                 ),
                 const SizedBox(height: AppSpacing.large),
                 MoneyAmountField(
                   controller: _amountController,
-                  labelText: 'Amount',
+                  labelText: l10n.amount,
                   currency:
                       widget.viewModel.nativeCurrency ??
                       widget.viewModel.accountCurrency ??
@@ -182,12 +187,12 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                       ),
                     ],
                     decoration: InputDecoration(
-                      labelText: 'Transaction currency (optional)',
+                      labelText: l10n.transactionCurrencyOptional,
                       helperText: widget.viewModel.accountCurrency == null
                           ? null
-                          : 'Leave blank if this was in '
-                                '${widget.viewModel.accountCurrency}, the '
-                                "account's own currency.",
+                          : l10n.leaveBlankIfThisWasAccountCurrency(
+                              widget.viewModel.accountCurrency!,
+                            ),
                       helperMaxLines: 2,
                       counterText: '',
                     ),
@@ -197,11 +202,9 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                     const SizedBox(height: AppSpacing.large),
                     MoneyAmountField(
                       controller: _accountCurrencyAmountController,
-                      labelText: 'Account-currency amount (optional)',
+                      labelText: l10n.accountCurrencyAmountOptional,
                       currency: widget.viewModel.accountCurrency ?? 'USD',
-                      helperText:
-                          'Leave blank if the exchange rate isn\'t known '
-                          'yet - it will post provisional until settled.',
+                      helperText: l10n.leaveBlankIfRateUnknown,
                       helperMaxLines: 2,
                       suffixText: widget.viewModel.accountCurrency,
                       onChangedMinor:
@@ -212,10 +215,11 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                 const SizedBox(height: AppSpacing.large),
                 if (!widget.viewModel.isSplitting) ...[
                   EntityPickerField<Account>(
-                    labelText: 'Category',
+                    labelText: l10n.category,
                     items: widget.viewModel.categories,
                     idOf: (category) => category.id,
-                    labelOf: (category) => category.name,
+                    labelOf: (category) =>
+                        localizeStoredName(l10n, category.name),
                     value: widget.viewModel.categoryId,
                     onChanged: widget.viewModel.setCategoryId,
                   ),
@@ -224,7 +228,7 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                     alignment: Alignment.centerLeft,
                     child: TextButton(
                       onPressed: widget.viewModel.startSplitting,
-                      child: const Text('Split into multiple categories'),
+                      child: Text(l10n.splitIntoCategories),
                     ),
                   ),
                 ] else
@@ -236,7 +240,7 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                 OutlinedButton(
                   onPressed: _pickDate,
                   child: Text(
-                    'Date: '
+                    '${l10n.dateLabel}: '
                     '${widget.viewModel.transactionDate.year}-'
                     '${widget.viewModel.transactionDate.month.toString().padLeft(2, '0')}-'
                     '${widget.viewModel.transactionDate.day.toString().padLeft(2, '0')}',
@@ -259,8 +263,8 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                         return TextField(
                           controller: controller,
                           focusNode: focusNode,
-                          decoration: const InputDecoration(
-                            labelText: 'Description (optional)',
+                          decoration: InputDecoration(
+                            labelText: l10n.descriptionOptional,
                           ),
                           onChanged: widget.viewModel.setDescription,
                         );
@@ -284,7 +288,7 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                           final success = await widget.viewModel.submit();
                           if (success) widget.onSaved?.call();
                         },
-                  child: const Text('Save'),
+                  child: Text(l10n.actionSave),
                 ),
               ],
             ),
@@ -309,6 +313,7 @@ class _SplitLines extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final currency = viewModel.accountCurrency ?? 'USD';
     final lines = viewModel.splitLines;
     return Column(
@@ -320,10 +325,11 @@ class _SplitLines extends StatelessWidget {
             children: [
               Expanded(
                 child: EntityPickerField<Account>(
-                  labelText: 'Category ${i + 1}',
+                  labelText: l10n.categoryN('${i + 1}'),
                   items: viewModel.categories,
                   idOf: (category) => category.id,
-                  labelOf: (category) => category.name,
+                  labelOf: (category) =>
+                      localizeStoredName(l10n, category.name),
                   value: lines[i].categoryId,
                   onChanged: (value) =>
                       viewModel.setSplitLineCategory(i, value),
@@ -333,7 +339,7 @@ class _SplitLines extends StatelessWidget {
               Expanded(
                 child: MoneyAmountField(
                   controller: amountControllerFor(lines[i].id),
-                  labelText: 'Amount',
+                  labelText: l10n.amount,
                   currency: currency,
                   suffixText: currency,
                   onChangedMinor: (value) =>
@@ -353,14 +359,14 @@ class _SplitLines extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: TextButton(
             onPressed: viewModel.addSplitLine,
-            child: const Text('Add category'),
+            child: Text(l10n.addCategory),
           ),
         ),
         const SizedBox(height: AppSpacing.small),
         Text(
-          'Remaining: '
-          '${formatAmountMinor(viewModel.splitRemainderMinor, currency)} '
-          '$currency',
+          l10n.homeRemaining(
+            '${formatAmountMinor(viewModel.splitRemainderMinor, currency)} $currency',
+          ),
           style: AppTypography.body.copyWith(
             color: viewModel.splitRemainderMinor == 0
                 ? AppColors.textSecondary

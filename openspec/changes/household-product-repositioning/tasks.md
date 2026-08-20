@@ -1,8 +1,8 @@
 ## 1. Program tracking
 
-- [ ] 1.1 Keep the child-change table in `proposal.md` aligned as changes
+- [x] 1.1 Keep the child-change table in `proposal.md` aligned as changes
   are archived or renamed.
-- [ ] 1.2 After Wave 1 ships, update `README.md` positioning to household
+- [x] 1.2 After Wave 1 ships, update `README.md` positioning to household
   books (not “learning OpenSpec ledger” as the lead line).
 
 ## 2. Wave 1 child changes (create artifacts — done in this branch)
@@ -36,5 +36,5 @@
 
 ## 6. Existing change
 
-- [ ] 6.1 Implement `i18n-foundation` (already proposed) after or alongside
+- [x] 6.1 Implement `i18n-foundation` (already proposed) after or alongside
   Wave 1 voice work.

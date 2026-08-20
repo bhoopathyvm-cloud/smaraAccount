@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -41,7 +42,7 @@ class _KeystoreExportViewState extends State<KeystoreExportView> {
     final passphrase = _passphraseController.text;
     if (passphrase.trim().isEmpty) {
       setState(
-        () => _statusMessage = 'Enter a passphrase to protect the file.',
+        () => _statusMessage = l10nOf(context).enterPassphraseToProtect,
       );
       return;
     }
@@ -63,22 +64,22 @@ class _KeystoreExportViewState extends State<KeystoreExportView> {
       widget.viewModel.recordKeystoreExportPath(file.path);
       setState(() {
         _isExporting = false;
-        _statusMessage = 'Saved to ${file.path}';
+        _statusMessage = l10nOf(context).savedToPath(file.path);
       });
     } catch (_) {
       setState(() {
         _isExporting = false;
-        _statusMessage =
-            'Could not export the keystore file. You can skip this step.';
+        _statusMessage = l10nOf(context).keystoreExportFailed;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Optional backup file', style: AppTypography.headerTitle),
+        title: Text(l10n.optionalBackupFile, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -89,17 +90,14 @@ class _KeystoreExportViewState extends State<KeystoreExportView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'As well as your recovery phrase, you can save an encrypted '
-              'keystore file protected by a passphrase you choose. This is '
-              'optional - your recovery phrase alone is always enough to '
-              'restore your signing key.',
+              l10n.keystoreExportBlurb,
               style: AppTypography.body,
             ),
             const SizedBox(height: AppSpacing.large),
             TextField(
               controller: _passphraseController,
               obscureText: true,
-              decoration: const InputDecoration(labelText: 'Passphrase'),
+              decoration: InputDecoration(labelText: l10n.keystorePassphrase),
             ),
             if (_statusMessage != null) ...[
               const SizedBox(height: AppSpacing.medium),
@@ -113,15 +111,15 @@ class _KeystoreExportViewState extends State<KeystoreExportView> {
             const SizedBox(height: AppSpacing.xLarge),
             ElevatedButton(
               onPressed: _isExporting ? null : _export,
-              child: const Text('Export keystore file'),
+              child: Text(l10n.exportKeystoreFile),
             ),
             const SizedBox(height: AppSpacing.medium),
             OutlinedButton(
               onPressed: widget.onContinue,
               child: Text(
                 widget.viewModel.keystoreExportPath == null
-                    ? 'Skip'
-                    : 'Continue',
+                    ? l10n.actionSkip
+                    : l10n.actionContinue,
               ),
             ),
           ],

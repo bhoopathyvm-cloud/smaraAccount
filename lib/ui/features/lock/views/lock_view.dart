@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -35,9 +36,10 @@ class _LockViewState extends State<LockView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Locked', style: AppTypography.headerTitle),
+        title: Text(l10n.lockScreenTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -55,7 +57,7 @@ class _LockViewState extends State<LockView> {
                   Icon(TablerIcons.lock, size: 48, color: AppColors.textMuted),
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    'Enter your PIN to continue',
+                    l10n.enterPinToContinue,
                     style: AppTypography.cardTitle,
                     textAlign: TextAlign.center,
                   ),
@@ -65,7 +67,7 @@ class _LockViewState extends State<LockView> {
                     obscureText: true,
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
-                    decoration: const InputDecoration(labelText: 'PIN'),
+                    decoration: InputDecoration(labelText: l10n.pinLabel),
                     onSubmitted: (_) => _submit(),
                   ),
                   if (widget.viewModel.errorMessage != null) ...[
@@ -81,7 +83,7 @@ class _LockViewState extends State<LockView> {
                   const SizedBox(height: AppSpacing.large),
                   ElevatedButton(
                     onPressed: widget.viewModel.isVerifying ? null : _submit,
-                    child: const Text('Unlock'),
+                    child: Text(l10n.actionUnlock),
                   ),
                   if (widget.viewModel.biometricEnabled) ...[
                     const SizedBox(height: AppSpacing.medium),
@@ -89,7 +91,7 @@ class _LockViewState extends State<LockView> {
                       onPressed: widget.viewModel.isVerifying
                           ? null
                           : widget.viewModel.authenticateWithBiometrics,
-                      child: const Text('Use biometrics'),
+                      child: Text(l10n.actionUseBiometrics),
                     ),
                   ],
                 ],

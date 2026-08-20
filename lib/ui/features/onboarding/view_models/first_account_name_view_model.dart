@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/account.dart';
+import '../../../../l10n/l10n.dart';
 
 /// deferred-onboarding-first-entry: name the seeded starter account
 /// before the guided first Spent/Received and before the recovery phrase.
@@ -44,12 +46,16 @@ class FirstAccountNameViewModel extends ChangeNotifier {
     final account = _seededAccount;
     final trimmed = _name.trim();
     if (account == null) {
-      _errorMessage = 'Still loading - try again in a moment.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationStillLoading),
+      );
       notifyListeners();
       return false;
     }
     if (trimmed.isEmpty) {
-      _errorMessage = 'Name your main account.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationNameRequired),
+      );
       notifyListeners();
       return false;
     }
@@ -65,7 +71,9 @@ class FirstAccountNameViewModel extends ChangeNotifier {
       );
       return true;
     } catch (e) {
-      _errorMessage = 'Could not save the account name.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationSaveAccountNameFailed),
+      );
       return false;
     } finally {
       _isSubmitting = false;

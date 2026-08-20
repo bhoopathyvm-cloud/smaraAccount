@@ -9,6 +9,7 @@ import '../../../../data/repositories/investment_holdings_logic.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/investment_research_prompt.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
@@ -165,11 +166,11 @@ class HoldingsViewModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on InvestmentException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
     } on AccountGroupException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
     }
     notifyListeners();
     return false;
@@ -192,7 +193,7 @@ class HoldingsViewModel extends ChangeNotifier {
       notifyListeners();
       return created;
     } on InvestmentException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
     }
     notifyListeners();
     return null;

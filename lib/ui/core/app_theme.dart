@@ -3,6 +3,26 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_spacing.dart';
 
+const kFontFamilyFallback = [
+  'Noto Sans',
+  'Noto Sans Devanagari',
+  'Noto Sans Tamil',
+  'Noto Sans Telugu',
+  'Noto Sans Kannada',
+  'Noto Sans Malayalam',
+  'Noto Sans Gujarati',
+  'Noto Sans Gurmukhi',
+  'Noto Sans Bengali',
+  'Noto Sans Oriya',
+  'Noto Naskh Arabic',
+  'Noto Sans CJK SC',
+  'Noto Sans CJK JP',
+  'Noto Sans CJK KR',
+  'Noto Sans Thai',
+  'Noto Sans Meetei Mayek',
+  'Noto Sans Ol Chiki',
+];
+
 /// Assembles a [ThemeData] from the 3-color rule and component patterns in
 /// smara-design-system.md. No color outside [AppColors] is introduced here.
 ThemeData buildAppTheme() {
@@ -17,7 +37,7 @@ ThemeData buildAppTheme() {
   );
 
   return ThemeData(
-    useMaterial3: true,
+    fontFamilyFallback: kFontFamilyFallback,
     colorScheme: colorScheme,
     scaffoldBackgroundColor: AppColors.pageBackground,
     cardTheme: CardThemeData(

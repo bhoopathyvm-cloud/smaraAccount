@@ -977,7 +977,10 @@ void main() {
             start: anyNamed('start'),
             end: anyNamed('end'),
           ),
-        ).thenThrow(AccountGroupException('not a financial account'));
+        ).thenThrow(AccountGroupException(
+          'not a financial account',
+          code: AppErrorCode.accountNotFinancial,
+        ));
 
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
@@ -992,7 +995,7 @@ void main() {
         );
 
         expect(csv, isNull);
-        expect(viewModel.errorMessage, equals('not a financial account'));
+        expect(viewModel.errorMessage, equals('That is not a financial account.'));
       },
     );
   });

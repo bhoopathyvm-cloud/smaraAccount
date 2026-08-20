@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/transaction_direction.dart';
@@ -151,7 +152,9 @@ class CorrectionViewModel extends ChangeNotifier {
     final financialAccountId = _financialAccountId;
     final amountMinor = _amountMinor;
     if (categoryId == null || financialAccountId == null) {
-      _errorMessage = 'Account and category are required.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationAccountCategoryRequired),
+      );
       notifyListeners();
       return false;
     }
@@ -172,22 +175,24 @@ class CorrectionViewModel extends ChangeNotifier {
       );
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
       return false;
     } on AccountGroupException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
       return false;
     } on AlreadyReversedException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
       return false;
     } on PendingTransferException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
       return false;
     } on InvestmentException catch (e) {
-      _errorMessage = e.message;
+      _errorMessage = localizeVmError(e);
       return false;
     } catch (e) {
-      _errorMessage = 'Could not save this fix.';
+      _errorMessage = localizeVmError(
+        const AppFailure(AppErrorCode.validationFixFailed),
+      );
       return false;
     } finally {
       _isSubmitting = false;

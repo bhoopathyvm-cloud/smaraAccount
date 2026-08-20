@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../data/repositories/ledger_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/statement_import_repository.dart';
+import '../l10n/l10n.dart';
 import '../domain/lock/app_lock_service.dart';
 import '../domain/lock/biometric_authenticator.dart';
 import '../domain/models/home_overview.dart';
@@ -360,6 +361,7 @@ GoRouter buildAppRouter(
             appLockService: AppLockService(),
             biometricAuthenticator: LocalAuthBiometricAuthenticator(),
             appLockController: appLockController,
+            localeController: context.read<LocaleController>(),
           ),
           onOpenPayees: () => context.push('/payees'),
           onOpenRecurringTemplates: () => context.push('/recurring-templates'),
@@ -569,7 +571,7 @@ Widget _buildSettlePendingTransfer(
     }
   }
   if (summary == null) {
-    return const Center(child: Text('Already settled.'));
+    return Center(child: Text(l10nOf(context).alreadySettled));
   }
   return SettlePendingTransferView(
     viewModel: SettlePendingTransferViewModel(

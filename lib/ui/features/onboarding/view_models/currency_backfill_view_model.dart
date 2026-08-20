@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 
 /// One-time prompt for a database migrated from schemaVersion 3 (before
 /// account groups had a currency) - see
@@ -29,7 +31,12 @@ class CurrencyBackfillViewModel extends ChangeNotifier {
       return true;
     } catch (e) {
       _isSubmitting = false;
-      _errorMessage = 'Could not save this currency: $e';
+      _errorMessage = localizeVmError(
+        AppFailure(
+          AppErrorCode.validationSaveCurrencyFailed,
+          params: {'detail': '$e'},
+        ),
+      );
       notifyListeners();
       return false;
     }

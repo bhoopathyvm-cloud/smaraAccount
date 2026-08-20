@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/crypto/signing_key_service.dart';
+import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Spans every onboarding screen (currency, recovery-phrase display,
 /// optional keystore export, confirmation) so the same [GeneratedIdentity]
@@ -63,7 +65,12 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
         _generated = generated;
       }
     } catch (e) {
-      _errorMessage = 'Could not generate a signing key on this device: $e';
+      _errorMessage = localizeVmError(
+        AppFailure(
+          AppErrorCode.validationGenerateKeyFailed,
+          params: {'detail': '$e'},
+        ),
+      );
     }
     notifyListeners();
   }
@@ -91,8 +98,12 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
     for (final index in confirmationWordIndices) {
       final entered = (enteredWords[index] ?? '').trim().toLowerCase();
       if (entered != generated.phrase.words[index]) {
-        _errorMessage =
-            'Word ${index + 1} doesn\'t match your saved phrase. Check it and try again.';
+        _errorMessage = localizeVmError(
+          AppFailure(
+            AppErrorCode.validationConfirmWordMismatch,
+            params: {'n': '${index + 1}'},
+          ),
+        );
         notifyListeners();
         return false;
       }

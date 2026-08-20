@@ -162,7 +162,9 @@ void main() {
     expect(viewModel.isSubmitting, isFalse);
     expect(
       viewModel.errorMessage,
-      equals('This entry has already been corrected.'),
+      equals(
+        'This entry has already been corrected. The original line stays as it is.',
+      ),
     );
   });
 }

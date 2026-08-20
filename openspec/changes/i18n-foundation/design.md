@@ -82,7 +82,13 @@ Each pack: add ARB files, register locales in `supportedLocales`, ensure fonts c
 
 ### 8. Number/date formatting
 
-`formatAmountMinor` stays numeric-dot for ledger consistency in v1 unless a follow-up explicitly adopts `NumberFormat`; currency **codes** remain ISO 4217. Material date pickers use Flutter's locale delegates once wired.
+`formatAmountMinor` keeps **currency-native** grouping and decimal
+separators (from CLDR via `localeForCurrency`), independent of the **UI
+locale**. Changing the app language from English to German must not
+reformat a USD amount. Currency **codes** remain ISO 4217. Material date
+pickers use Flutter's locale delegates once wired.
+
+v1 does **not** reformat ledger amounts to the active UI locale.
 
 ## Risks / Trade-offs
 

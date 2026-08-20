@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
+import '../../l10n/l10n.dart';
 import 'app_colors.dart';
 
 const _largeScreenMinWidth = 600.0;
-
-const _destinations = [
-  (icon: TablerIcons.home, label: 'Home', path: '/home'),
-  (icon: TablerIcons.receipt, label: 'Register', path: '/register'),
-  (icon: TablerIcons.chartBar, label: 'Summary', path: '/summary'),
-  (icon: TablerIcons.wallet, label: 'Accounts', path: '/accounts'),
-  (icon: TablerIcons.tag, label: 'Categories', path: '/categories'),
-];
 
 /// Bottom tab bar on narrow windows, a sidebar on wide ones (design
 /// system: mobile bottom nav vs. desktop sidebar/top bar) - the choice is
@@ -32,6 +25,14 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
+    final destinations = [
+      (icon: TablerIcons.home, label: l10n.navHome, path: '/home'),
+      (icon: TablerIcons.receipt, label: l10n.navRegister, path: '/register'),
+      (icon: TablerIcons.chartBar, label: l10n.navSummary, path: '/summary'),
+      (icon: TablerIcons.wallet, label: l10n.navAccounts, path: '/accounts'),
+      (icon: TablerIcons.tag, label: l10n.navCategories, path: '/categories'),
+    ];
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth > _largeScreenMinWidth) {
@@ -55,7 +56,7 @@ class AppShell extends StatelessWidget {
                     color: AppColors.borderCard,
                   ),
                   destinations: [
-                    for (final d in _destinations)
+                    for (final d in destinations)
                       NavigationRailDestination(
                         icon: Icon(d.icon),
                         label: Text(d.label),
@@ -74,7 +75,7 @@ class AppShell extends StatelessWidget {
             currentIndex: navigationShell.currentIndex,
             onTap: _onSelect,
             items: [
-              for (final d in _destinations)
+              for (final d in destinations)
                 BottomNavigationBarItem(icon: Icon(d.icon), label: d.label),
             ],
           ),

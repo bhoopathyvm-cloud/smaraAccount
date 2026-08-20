@@ -188,8 +188,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(
         find.text(
-          'Choose a passphrase to protect this backup. There is '
-          'no way to recover it if you forget the passphrase.',
+          'Choose a passphrase to protect this backup. There is no recovery if you forget it.',
         ),
         findsOneWidget,
       );
@@ -212,7 +211,7 @@ void main() {
 
       await tapScrolled(tester, find.text('Restore backup'));
       await tester.pumpAndSettle();
-      expect(find.text('Choose backup file'), findsOneWidget);
+      expect(find.text('Choose file'), findsOneWidget);
 
       await tester.enterText(find.byType(TextField), 'hunter2');
       await tester.tap(find.widgetWithText(ElevatedButton, 'Restore'));
@@ -263,7 +262,7 @@ void main() {
     await tester.tap(find.widgetWithText(ElevatedButton, 'Set PIN'));
     await tester.pump();
 
-    expect(find.text("PINs don't match."), findsOneWidget);
+    expect(find.text('The two PINs do not match.'), findsOneWidget);
     verifyNever(appLockService.setPin(any));
   });
 

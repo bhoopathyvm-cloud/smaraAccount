@@ -6,6 +6,7 @@ import '../../../../domain/models/account.dart';
 import '../../../../domain/models/instrument.dart';
 import '../../../../domain/models/instrument_holding.dart';
 import '../../../../domain/models/instrument_quote.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -16,29 +17,26 @@ import '../../../core/money_formatter.dart';
 import '../../../core/status_banner.dart';
 import '../view_models/holdings_view_model.dart';
 
-String instrumentKindLabel(InstrumentKind kind) => switch (kind) {
-  InstrumentKind.stock => 'Stock',
-  InstrumentKind.etf => 'ETF',
-  InstrumentKind.mutualFund => 'Mutual fund',
-  InstrumentKind.bond => 'Bond',
-  InstrumentKind.other => 'Other',
-};
+String instrumentKindLabel(AppLocalizations l10n, InstrumentKind kind) =>
+    switch (kind) {
+      InstrumentKind.stock => l10n.instrumentKindStock,
+      InstrumentKind.etf => l10n.instrumentKindEtf,
+      InstrumentKind.mutualFund => l10n.instrumentKindMutualFund,
+      InstrumentKind.bond => l10n.instrumentKindBond,
+      InstrumentKind.other => l10n.instrumentKindOther,
+    };
 
-String quoteUseLabel(QuoteUse use) => switch (use) {
-  QuoteUse.live => 'Live price',
-  QuoteUse.cached => 'Cached price',
-  QuoteUse.stale => 'Stale price',
-  QuoteUse.missing => 'Using cost (no price)',
-  QuoteUse.disabled => 'Quotes off — using cost/cache',
-  QuoteUse.currencyMismatch => 'Using cost (price currency differs)',
+String quoteUseLabel(AppLocalizations l10n, QuoteUse use) => switch (use) {
+  QuoteUse.live => l10n.quoteUseLive,
+  QuoteUse.cached => l10n.quoteUseCached,
+  QuoteUse.stale => l10n.quoteUseStale,
+  QuoteUse.missing => l10n.quoteUseMissing,
+  QuoteUse.disabled => l10n.quoteUseDisabled,
+  QuoteUse.currencyMismatch => l10n.quoteUseCurrencyMismatch,
 };
 
 class HoldingsView extends StatelessWidget {
-  const HoldingsView({
-    super.key,
-    required this.viewModel,
-    this.onOpenRegister,
-  });
+  const HoldingsView({super.key, required this.viewModel, this.onOpenRegister});
 
   final HoldingsViewModel viewModel;
   final VoidCallback? onOpenRegister;
@@ -49,16 +47,22 @@ class HoldingsView extends StatelessWidget {
       appBar: AppBar(
         title: ListenableBuilder(
           listenable: viewModel,
-          builder: (context, _) => Text(
-            viewModel.account?.name ?? 'Holdings',
-            style: AppTypography.headerTitle,
-          ),
+          builder: (context, _) {
+            final l10n = l10nOf(context);
+            final name = viewModel.account?.name;
+            return Text(
+              name == null
+                  ? l10n.holdingsTitle
+                  : localizeStoredName(l10n, name),
+              style: AppTypography.headerTitle,
+            );
+          },
         ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         actions: [
           IconButton(
-            tooltip: 'Cash register',
+            tooltip: l10nOf(context).homeCashRegister,
             onPressed: onOpenRegister,
             icon: const Icon(TablerIcons.receipt),
           ),
@@ -67,6 +71,7 @@ class HoldingsView extends StatelessWidget {
       body: ListenableBuilder(
         listenable: viewModel,
         builder: (context, _) {
+          final l10n = l10nOf(context);
           final currency = viewModel.currency;
           return Column(
             children: [
@@ -80,23 +85,28 @@ class HoldingsView extends StatelessWidget {
                 child: ListView(
                   padding: const EdgeInsets.all(AppSpacing.large),
                   children: [
-                    Text('CASH', style: AppTypography.sectionLabel),
+                    Text(l10n.holdingsCash, style: AppTypography.sectionLabel),
                     Text(
                       '${formatAmountMinor(viewModel.cashMinor, currency)} $currency',
                       style: AppTypography.balance,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     Text(
-                      'Book (cash + cost) ${formatAmountMinor(viewModel.bookMinor, currency)} $currency',
+                      l10n.holdingsBook(
+                        formatAmountMinor(viewModel.bookMinor, currency),
+                        currency,
+                      ),
                       style: AppTypography.body,
                     ),
                     Text(
-                      'Market estimate ${formatAmountMinor(viewModel.portfolioMinor, currency)} $currency',
+                      l10n.holdingsMarketEstimate(
+                        formatAmountMinor(viewModel.portfolioMinor, currency),
+                        currency,
+                      ),
                       style: AppTypography.cardTitle,
                     ),
                     Text(
-                      'Quotes are estimates, not a broker price. This app '
-                      'does not place orders.',
+                      l10n.holdingsQuotesBlurb,
                       style: AppTypography.metadata,
                     ),
                     const SizedBox(height: AppSpacing.xLarge),
@@ -108,24 +118,27 @@ class HoldingsView extends StatelessWidget {
                           onPressed: viewModel.isArchived
                               ? null
                               : () => _showBuyDialog(context),
-                          child: const Text('Buy'),
+                          child: Text(l10n.actionBuy),
                         ),
                         OutlinedButton(
                           onPressed: () => _showSellDialog(context),
-                          child: const Text('Sell'),
+                          child: Text(l10n.actionSell),
                         ),
                         OutlinedButton(
                           onPressed: () => _showDividendDialog(context),
-                          child: const Text('Dividend'),
+                          child: Text(l10n.actionDividend),
                         ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.xLarge),
-                    Text('INVENTORY', style: AppTypography.sectionLabel),
+                    Text(
+                      l10n.holdingsInventory,
+                      style: AppTypography.sectionLabel,
+                    ),
                     const SizedBox(height: AppSpacing.base),
                     if (viewModel.holdings.isEmpty)
                       Text(
-                        'No holdings yet. Record a buy to add an instrument.',
+                        l10n.holdingsNoHoldings,
                         style: AppTypography.metadata,
                       )
                     else
@@ -134,11 +147,11 @@ class HoldingsView extends StatelessWidget {
                           holding: holding,
                           currency: currency,
                           quoteUse: viewModel.displayQuoteUse(holding),
-                          onNameTap: () => _research(context, holding.instrument),
+                          onNameTap: () =>
+                              _research(context, holding.instrument),
                           onRename: () =>
                               _showRenameInstrumentDialog(context, holding),
-                          onArchive: () =>
-                              _archiveInstrument(context, holding),
+                          onArchive: () => _archiveInstrument(context, holding),
                         ),
                   ],
                 ),
@@ -153,23 +166,25 @@ class HoldingsView extends StatelessWidget {
   Future<void> _research(BuildContext context, Instrument instrument) async {
     final result = await viewModel.researchInstrument(instrument);
     if (!context.mounted) return;
+    final l10n = l10nOf(context);
     final message = result == ResearchLaunchResult.copied
-        ? 'Copied a research prompt — no browser URL available, or you are offline.'
-        : 'Opened your favourite research tool.';
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+        ? l10n.copiedResearchPrompt
+        : l10n.openedFavouriteResearchTool;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _archiveInstrument(
     BuildContext context,
     InstrumentHolding holding,
   ) async {
+    final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Hide ${holding.instrument.name}?',
-      message:
-          'Hidden instruments stay on past buys and sells. You can still '
-          'record a dividend for them.',
-      confirmLabel: 'Hide',
+      title: l10n.hideInstrumentTitle(holding.instrument.name),
+      message: l10n.hideInstrumentBody,
+      confirmLabel: l10n.actionHide,
     );
     if (confirmed) {
       await viewModel.archiveInstrument(holding.instrument.id);
@@ -180,16 +195,17 @@ class HoldingsView extends StatelessWidget {
     BuildContext context,
     InstrumentHolding holding,
   ) async {
+    final l10n = l10nOf(context);
     final controller = TextEditingController(text: holding.instrument.name);
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Rename instrument'),
+        title: Text(l10n.renameInstrument),
         content: TextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -203,7 +219,7 @@ class HoldingsView extends StatelessWidget {
                 Navigator.of(dialogContext).pop();
               }
             },
-            child: const Text('Save'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -211,6 +227,7 @@ class HoldingsView extends StatelessWidget {
   }
 
   Future<void> _showBuyDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
     final quantityController = TextEditingController();
     final priceController = TextEditingController();
     final brokerageController = TextEditingController();
@@ -236,28 +253,24 @@ class HoldingsView extends StatelessWidget {
         builder: (context, setDialogState) {
           final currency = viewModel.currency;
           return AlertDialog(
-            title: const Text('Buy'),
+            title: Text(l10n.actionBuy),
             content: SingleChildScrollView(
               child: SizedBox(
                 width: 420,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      'Record a trade that already happened. This app does '
-                      'not send orders to a broker.',
-                      style: AppTypography.metadata,
-                    ),
+                    Text(l10n.recordTradeBlurb, style: AppTypography.metadata),
                     const SizedBox(height: AppSpacing.medium),
                     SegmentedButton<BuyFundingSource>(
-                      segments: const [
+                      segments: [
                         ButtonSegment(
                           value: BuyFundingSource.cash,
-                          label: Text('Cash'),
+                          label: Text(l10n.cash),
                         ),
                         ButtonSegment(
                           value: BuyFundingSource.nonCash,
-                          label: Text('Non-cash'),
+                          label: Text(l10n.nonCash),
                         ),
                       ],
                       selected: {funding},
@@ -267,7 +280,7 @@ class HoldingsView extends StatelessWidget {
                     const SizedBox(height: AppSpacing.medium),
                     if (!creatingNew) ...[
                       EntityPickerField<Instrument>(
-                        labelText: 'Instrument',
+                        labelText: l10n.instrument,
                         items: viewModel.instruments
                             .where((i) => !i.archived)
                             .toList(),
@@ -279,22 +292,22 @@ class HoldingsView extends StatelessWidget {
                       TextButton(
                         onPressed: () =>
                             setDialogState(() => creatingNew = true),
-                        child: const Text('New instrument'),
+                        child: Text(l10n.newInstrument),
                       ),
                     ] else ...[
                       TextField(
                         controller: newNameController,
-                        decoration: const InputDecoration(labelText: 'Name'),
+                        decoration: InputDecoration(labelText: l10n.name),
                       ),
                       const SizedBox(height: AppSpacing.medium),
                       DropdownButtonFormField<InstrumentKind>(
                         initialValue: newKind,
-                        decoration: const InputDecoration(labelText: 'Kind'),
+                        decoration: InputDecoration(labelText: l10n.kindLabel),
                         items: [
                           for (final kind in InstrumentKind.values)
                             DropdownMenuItem(
                               value: kind,
-                              child: Text(instrumentKindLabel(kind)),
+                              child: Text(instrumentKindLabel(l10n, kind)),
                             ),
                         ],
                         onChanged: (kind) {
@@ -306,15 +319,15 @@ class HoldingsView extends StatelessWidget {
                       const SizedBox(height: AppSpacing.medium),
                       TextField(
                         controller: tickerController,
-                        decoration: const InputDecoration(
-                          labelText: 'Ticker (optional)',
+                        decoration: InputDecoration(
+                          labelText: l10n.tickerOptional,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.medium),
                       TextField(
                         controller: isinController,
-                        decoration: const InputDecoration(
-                          labelText: 'ISIN (optional)',
+                        decoration: InputDecoration(
+                          labelText: l10n.isinOptional,
                         ),
                       ),
                     ],
@@ -324,16 +337,14 @@ class HoldingsView extends StatelessWidget {
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
-                      decoration: const InputDecoration(
-                        labelText: 'Quantity',
-                      ),
+                      decoration: InputDecoration(labelText: l10n.quantity),
                       onChanged: (text) =>
                           quantityScaled = parseQuantityScaled(text),
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     MoneyAmountField(
                       controller: priceController,
-                      labelText: 'Unit price',
+                      labelText: l10n.unitPrice,
                       currency: currency,
                       onChangedMinor: (value) => unitPriceMinor = value,
                     ),
@@ -341,7 +352,7 @@ class HoldingsView extends StatelessWidget {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        'Date ${transactionDate.toIso8601String().substring(0, 10)}',
+                        '${l10n.dateLabel} ${transactionDate.toIso8601String().substring(0, 10)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
@@ -360,12 +371,12 @@ class HoldingsView extends StatelessWidget {
                       contentPadding: EdgeInsets.zero,
                       title: Text(
                         lockedUntil == null
-                            ? 'Lock until (optional)'
-                            : 'Locked until ${lockedUntil!.toIso8601String().substring(0, 10)}',
+                            ? l10n.lockUntilOptional
+                            : l10n.lockedUntilDate(
+                                lockedUntil!.toIso8601String().substring(0, 10),
+                              ),
                       ),
-                      subtitle: const Text(
-                        'Your own note of a restriction, not a broker rule.',
-                      ),
+                      subtitle: Text(l10n.lockUntilHint),
                       trailing: const Icon(TablerIcons.lock),
                       onTap: () async {
                         final picked = await showDatePicker(
@@ -381,26 +392,26 @@ class HoldingsView extends StatelessWidget {
                     ),
                     if (funding == BuyFundingSource.nonCash)
                       EntityPickerField<Account>(
-                        labelText: 'Income category',
+                        labelText: l10n.incomeCategory,
                         items: viewModel.incomeCategories,
                         idOf: (c) => c.id,
-                        labelOf: (c) => c.name,
+                        labelOf: (c) => localizeStoredName(l10n, c.name),
                         value: incomeCategoryId,
                         onChanged: (value) => incomeCategoryId = value,
                       ),
                     if (funding == BuyFundingSource.cash) ...[
                       MoneyAmountField(
                         controller: brokerageController,
-                        labelText: 'Brokerage (optional)',
+                        labelText: l10n.brokerageOptional,
                         currency: currency,
                         onChangedMinor: (value) => brokerageMinor = value,
                       ),
                       const SizedBox(height: AppSpacing.medium),
                       EntityPickerField<Account>(
-                        labelText: 'Brokerage expense category',
+                        labelText: l10n.brokerageExpenseCategory,
                         items: viewModel.expenseCategories,
                         idOf: (c) => c.id,
-                        labelOf: (c) => c.name,
+                        labelOf: (c) => localizeStoredName(l10n, c.name),
                         value: brokerageCategoryId,
                         onChanged: (value) => brokerageCategoryId = value,
                       ),
@@ -408,8 +419,8 @@ class HoldingsView extends StatelessWidget {
                     const SizedBox(height: AppSpacing.medium),
                     TextField(
                       controller: descriptionController,
-                      decoration: const InputDecoration(
-                        labelText: 'Description (optional)',
+                      decoration: InputDecoration(
+                        labelText: l10n.descriptionOptional,
                       ),
                     ),
                   ],
@@ -419,7 +430,7 @@ class HoldingsView extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('Cancel'),
+                child: Text(l10n.actionCancel),
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -463,7 +474,7 @@ class HoldingsView extends StatelessWidget {
                     Navigator.of(dialogContext).pop();
                   }
                 },
-                child: const Text('Record buy'),
+                child: Text(l10n.actionRecordBuy),
               ),
             ],
           );
@@ -473,6 +484,7 @@ class HoldingsView extends StatelessWidget {
   }
 
   Future<void> _showSellDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
     if (viewModel.holdings.isEmpty) return;
     final quantityController = TextEditingController();
     final priceController = TextEditingController();
@@ -500,25 +512,23 @@ class HoldingsView extends StatelessWidget {
                 )
               : null;
           return AlertDialog(
-            title: const Text('Sell'),
+            title: Text(l10n.actionSell),
             content: SingleChildScrollView(
               child: SizedBox(
                 width: 420,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      'Record a trade that already happened. This app does '
-                      'not send orders to a broker.',
-                      style: AppTypography.metadata,
-                    ),
+                    Text(l10n.recordTradeBlurb, style: AppTypography.metadata),
                     const SizedBox(height: AppSpacing.medium),
                     EntityPickerField<InstrumentHolding>(
-                      labelText: 'Instrument',
+                      labelText: l10n.instrument,
                       items: viewModel.holdings,
                       idOf: (h) => h.instrument.id,
-                      labelOf: (h) =>
-                          '${h.instrument.name} (${formatQuantityScaled(h.sellableQuantityScaled)} sellable)',
+                      labelOf: (h) => l10n.sellableQuantity(
+                        h.instrument.name,
+                        formatQuantityScaled(h.sellableQuantityScaled),
+                      ),
                       value: holding.instrument.id,
                       onChanged: (id) {
                         final next = viewModel.holdings
@@ -535,7 +545,7 @@ class HoldingsView extends StatelessWidget {
                       keyboardType: const TextInputType.numberWithOptions(
                         decimal: true,
                       ),
-                      decoration: const InputDecoration(labelText: 'Quantity'),
+                      decoration: InputDecoration(labelText: l10n.quantity),
                       onChanged: (text) => setDialogState(
                         () => quantityScaled = parseQuantityScaled(text),
                       ),
@@ -543,37 +553,36 @@ class HoldingsView extends StatelessWidget {
                     const SizedBox(height: AppSpacing.medium),
                     MoneyAmountField(
                       controller: priceController,
-                      labelText: 'Unit price',
+                      labelText: l10n.unitPrice,
                       currency: currency,
-                      onChangedMinor: (value) => setDialogState(
-                        () => unitPriceMinor = value,
-                      ),
+                      onChangedMinor: (value) =>
+                          setDialogState(() => unitPriceMinor = value),
                     ),
                     if (gainLoss != null) ...[
                       const SizedBox(height: AppSpacing.medium),
                       Text(
                         gainLoss > 0
-                            ? 'This looks like a gain'
+                            ? l10n.looksLikeGain
                             : gainLoss < 0
-                            ? 'This looks like a loss'
-                            : 'This looks like break-even',
+                            ? l10n.looksLikeLoss
+                            : l10n.looksLikeBreakEven,
                         style: AppTypography.body,
                       ),
                       if (gainLoss > 0)
                         EntityPickerField<Account>(
-                          labelText: 'Gain income category',
+                          labelText: l10n.gainIncomeCategory,
                           items: viewModel.incomeCategories,
                           idOf: (c) => c.id,
-                          labelOf: (c) => c.name,
+                          labelOf: (c) => localizeStoredName(l10n, c.name),
                           value: gainIncomeCategoryId,
                           onChanged: (value) => gainIncomeCategoryId = value,
                         ),
                       if (gainLoss < 0)
                         EntityPickerField<Account>(
-                          labelText: 'Loss expense category',
+                          labelText: l10n.lossExpenseCategory,
                           items: viewModel.expenseCategories,
                           idOf: (c) => c.id,
-                          labelOf: (c) => c.name,
+                          labelOf: (c) => localizeStoredName(l10n, c.name),
                           value: lossExpenseCategoryId,
                           onChanged: (value) => lossExpenseCategoryId = value,
                         ),
@@ -582,7 +591,7 @@ class HoldingsView extends StatelessWidget {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        'Date ${transactionDate.toIso8601String().substring(0, 10)}',
+                        '${l10n.dateLabel} ${transactionDate.toIso8601String().substring(0, 10)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
@@ -599,24 +608,24 @@ class HoldingsView extends StatelessWidget {
                     ),
                     MoneyAmountField(
                       controller: brokerageController,
-                      labelText: 'Brokerage (optional)',
+                      labelText: l10n.brokerageOptional,
                       currency: currency,
                       onChangedMinor: (value) => brokerageMinor = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     EntityPickerField<Account>(
-                      labelText: 'Brokerage expense category',
+                      labelText: l10n.brokerageExpenseCategory,
                       items: viewModel.expenseCategories,
                       idOf: (c) => c.id,
-                      labelOf: (c) => c.name,
+                      labelOf: (c) => localizeStoredName(l10n, c.name),
                       value: brokerageCategoryId,
                       onChanged: (value) => brokerageCategoryId = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     TextField(
                       controller: descriptionController,
-                      decoration: const InputDecoration(
-                        labelText: 'Description (optional)',
+                      decoration: InputDecoration(
+                        labelText: l10n.descriptionOptional,
                       ),
                     ),
                   ],
@@ -626,7 +635,7 @@ class HoldingsView extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('Cancel'),
+                child: Text(l10n.actionCancel),
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -650,7 +659,7 @@ class HoldingsView extends StatelessWidget {
                     Navigator.of(dialogContext).pop();
                   }
                 },
-                child: const Text('Record sell'),
+                child: Text(l10n.actionRecordSell),
               ),
             ],
           );
@@ -660,6 +669,7 @@ class HoldingsView extends StatelessWidget {
   }
 
   Future<void> _showDividendDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
     final instruments = viewModel.heldInstruments.isNotEmpty
         ? viewModel.heldInstruments
         : viewModel.instruments;
@@ -676,7 +686,7 @@ class HoldingsView extends StatelessWidget {
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) {
           return AlertDialog(
-            title: const Text('Dividend'),
+            title: Text(l10n.actionDividend),
             content: SingleChildScrollView(
               child: SizedBox(
                 width: 420,
@@ -684,7 +694,7 @@ class HoldingsView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     EntityPickerField<Instrument>(
-                      labelText: 'Instrument',
+                      labelText: l10n.instrument,
                       items: instruments,
                       idOf: (i) => i.id,
                       labelOf: (i) => i.name,
@@ -694,16 +704,16 @@ class HoldingsView extends StatelessWidget {
                     const SizedBox(height: AppSpacing.medium),
                     MoneyAmountField(
                       controller: amountController,
-                      labelText: 'Amount',
+                      labelText: l10n.amount,
                       currency: viewModel.currency,
                       onChangedMinor: (value) => amountMinor = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     EntityPickerField<Account>(
-                      labelText: 'Income category',
+                      labelText: l10n.incomeCategory,
                       items: viewModel.incomeCategories,
                       idOf: (c) => c.id,
-                      labelOf: (c) => c.name,
+                      labelOf: (c) => localizeStoredName(l10n, c.name),
                       value: incomeCategoryId,
                       onChanged: (value) => incomeCategoryId = value,
                     ),
@@ -711,7 +721,7 @@ class HoldingsView extends StatelessWidget {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        'Date ${transactionDate.toIso8601String().substring(0, 10)}',
+                        '${l10n.dateLabel} ${transactionDate.toIso8601String().substring(0, 10)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
@@ -728,8 +738,8 @@ class HoldingsView extends StatelessWidget {
                     ),
                     TextField(
                       controller: descriptionController,
-                      decoration: const InputDecoration(
-                        labelText: 'Description (optional)',
+                      decoration: InputDecoration(
+                        labelText: l10n.descriptionOptional,
                       ),
                     ),
                   ],
@@ -739,7 +749,7 @@ class HoldingsView extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('Cancel'),
+                child: Text(l10n.actionCancel),
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -761,7 +771,7 @@ class HoldingsView extends StatelessWidget {
                     Navigator.of(dialogContext).pop();
                   }
                 },
-                child: const Text('Record dividend'),
+                child: Text(l10n.actionRecordDividend),
               ),
             ],
           );
@@ -790,6 +800,7 @@ class _HoldingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final unrealized = holding.displayUnrealizedMinor;
     return Card(
       child: Padding(
@@ -812,32 +823,35 @@ class _HoldingRow extends StatelessWidget {
                 ),
                 PopupMenuButton<String>(
                   icon: const Icon(TablerIcons.dotsVertical),
-                  tooltip: 'Instrument actions',
+                  tooltip: l10n.instrumentActions,
                   onSelected: (value) {
                     if (value == 'rename') onRename();
                     if (value == 'archive') onArchive();
                   },
-                  itemBuilder: (context) => const [
-                    PopupMenuItem(value: 'rename', child: Text('Rename')),
-                    PopupMenuItem(value: 'archive', child: Text('Hide')),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 'rename',
+                      child: Text(l10n.actionRename),
+                    ),
+                    PopupMenuItem(
+                      value: 'archive',
+                      child: Text(l10n.actionHide),
+                    ),
                   ],
                 ),
               ],
             ),
             Text(
-              '${formatQuantityScaled(holding.quantityScaled)} units · '
-              'avg ${formatAmountMinor(holding.averageCostMinor, currency)} $currency',
+              '${l10n.holdingsUnitsCost(formatQuantityScaled(holding.quantityScaled))}'
+              '${formatAmountMinor(holding.averageCostMinor, currency)} $currency',
               style: AppTypography.body,
             ),
             Text(
-              'Unrealized ${formatAmountMinor(unrealized, currency)} $currency'
-              ' · ${quoteUseLabel(quoteUse)}',
+              '${l10n.unrealizedLabel(formatAmountMinor(unrealized, currency), currency)}'
+              ' · ${quoteUseLabel(l10n, quoteUse)}',
               style: AppTypography.metadata,
             ),
-            Text(
-              'Tap the name to research. Quotes are estimates, not advice.',
-              style: AppTypography.metadata,
-            ),
+            Text(l10n.holdingsTapNameToResearch, style: AppTypography.metadata),
           ],
         ),
       ),

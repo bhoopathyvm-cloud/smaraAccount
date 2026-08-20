@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/database/tables/accounts_table.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/journal_entry.dart';
@@ -298,20 +299,25 @@ class RegisterViewModel extends ChangeNotifier {
   String _counterpartLabel(List<String> accountIds) {
     final names = accountIds.map(_singleCounterpartLabel).toList();
     if (names.length <= 1) {
-      return names.isEmpty ? 'Transfer' : names.first;
+      return names.isEmpty ? englishAppLocalizations.actionTransfer : names.first;
     }
-    return '${names.first} +${names.length - 1} more';
+    return englishAppLocalizations.splitCounterpartMore(
+      names.first,
+      '${names.length - 1}',
+    );
   }
 
   String _singleCounterpartLabel(String accountId) {
     if (accountId == openingBalanceEquityAccountId) {
-      return 'Opening balance';
+      return englishAppLocalizations.openingBalance;
     }
     final category = _categoriesById[accountId];
     if (category != null) return category.name;
     final other = _accountsById[accountId];
-    if (other != null) return 'Transfer: ${other.name}';
-    return 'Transfer';
+    if (other != null) {
+      return englishAppLocalizations.transferToName(other.name);
+    }
+    return englishAppLocalizations.actionTransfer;
   }
 
   Future<void> reverseEntry(String entryId) =>
@@ -362,11 +368,11 @@ class RegisterViewModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on AccountGroupException catch (error) {
-      _errorMessage = error.message;
+      _errorMessage = localizeVmError(error);
       notifyListeners();
       return false;
     } on InvalidTransferException catch (error) {
-      _errorMessage = error.message;
+      _errorMessage = localizeVmError(error);
       notifyListeners();
       return false;
     }
@@ -393,7 +399,7 @@ class RegisterViewModel extends ChangeNotifier {
       notifyListeners();
       return csv;
     } on AccountGroupException catch (error) {
-      _errorMessage = error.message;
+      _errorMessage = localizeVmError(error);
       notifyListeners();
       return null;
     }

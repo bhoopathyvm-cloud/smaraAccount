@@ -5,11 +5,13 @@ notebook, with a history that can't quietly rewrite itself. No server, no
 cloud, no data leaving your device — just Flutter, your devices, and your
 own LAN.
 
-## About this project
+This repository is also a working example of [OpenSpec](https://github.com/Fission-AI/OpenSpec)
+and AI spec-driven development: features are specified first, then
+implemented. That process is how the household books are built; it is not
+the product pitch.
 
-SMARA Account is a learning implementation of [OpenSpec](https://github.com/Fission-AI/OpenSpec) and AI spec-driven development. Every line of code is written by AI, constrained by a strict set of guidelines and the feature specs defined through OpenSpec — the specs drive the implementation, not the other way around.
-
-This is an experimental, personal learning project, shared in case it's useful to others. It comes with **no liability and no support** from the author. Everything here is provided as-is, on a trial basis. If you'd like to improve it, pull requests are welcome — or fork it and take it in your own direction. This is a first pass, built with the knowledge I have today, and it will keep evolving.
+This is an experimental, personal project, shared in case it's useful to
+others. It comes with **no liability and no support** from the author.
 
 ## Tamper-evident design
 

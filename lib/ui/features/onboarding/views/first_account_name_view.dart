@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -34,9 +35,10 @@ class _FirstAccountNameViewState extends State<FirstAccountNameView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Name your account', style: AppTypography.headerTitle),
+        title: Text(l10n.firstAccountTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -57,21 +59,18 @@ class _FirstAccountNameViewState extends State<FirstAccountNameView> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  "What's your main account called?",
+                  l10n.whatsMainAccountCalled,
                   style: AppTypography.sectionLabel,
                 ),
                 const SizedBox(height: AppSpacing.small),
                 Text(
-                  'This is the account already set up for you - give it a '
-                  'name you recognize, like your bank. You will record one '
-                  'Spent or Received next, then protect the device with your '
-                  'recovery phrase.',
+                  l10n.firstAccountBlurb,
                   style: AppTypography.metadata,
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 TextField(
                   controller: _controller,
-                  decoration: const InputDecoration(labelText: 'Account name'),
+                  decoration: InputDecoration(labelText: l10n.accountName),
                   onChanged: widget.viewModel.setName,
                 ),
                 if (widget.viewModel.errorMessage != null) ...[
@@ -89,7 +88,7 @@ class _FirstAccountNameViewState extends State<FirstAccountNameView> {
                           final success = await widget.viewModel.submit();
                           if (success) widget.onFinished();
                         },
-                  child: const Text('Continue'),
+                  child: Text(l10n.actionContinue),
                 ),
               ],
             ),
