@@ -29,23 +29,27 @@ class SnapshotHidingOverlay extends StatelessWidget {
         final shouldCover =
             appLockController.isBackgrounded &&
             appLockController.isSnapshotHidingEnabled;
-        return Stack(
-          children: [
-            child,
-            if (shouldCover)
-              Positioned.fill(
-                child: ColoredBox(
-                  color: AppColors.primary,
-                  child: Center(
-                    child: Icon(
-                      Icons.lock_outline,
-                      size: 48,
-                      color: AppColors.cardBackground,
+        return Directionality(
+          textDirection: TextDirection.ltr,
+          child: Stack(
+            alignment: Alignment.topLeft,
+            children: [
+              child,
+              if (shouldCover)
+                Positioned.fill(
+                  child: ColoredBox(
+                    color: AppColors.primary,
+                    child: Center(
+                      child: Icon(
+                        Icons.lock_outline,
+                        size: 48,
+                        color: AppColors.cardBackground,
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         );
       },
     );
