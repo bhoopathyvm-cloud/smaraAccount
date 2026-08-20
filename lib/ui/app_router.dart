@@ -21,6 +21,8 @@ import 'features/first_week_setup/view_models/first_week_setup_view_model.dart';
 import 'features/first_week_setup/views/first_week_setup_view.dart';
 import 'features/home/view_models/home_view_model.dart';
 import 'features/home/views/home_view.dart';
+import 'features/holdings/view_models/holdings_view_model.dart';
+import 'features/holdings/views/holdings_view.dart';
 import 'features/lock/view_models/lock_view_model.dart';
 import 'features/lock/views/lock_view.dart';
 import 'features/migration/view_models/key_loss_migration_view_model.dart';
@@ -334,6 +336,22 @@ GoRouter buildAppRouter(
             _buildFixEntry(context, state, ledgerRepository),
       ),
       GoRoute(
+        path: '/holdings/:accountId',
+        builder: (context, state) {
+          final accountId = state.pathParameters['accountId']!;
+          return HoldingsView(
+            viewModel: HoldingsViewModel(
+              ledgerRepository: ledgerRepository,
+              settingsRepository: settingsRepository,
+              accountId: accountId,
+            ),
+            onOpenRegister: () => context.go(
+              '/register?accountId=${Uri.encodeQueryComponent(accountId)}',
+            ),
+          );
+        },
+      ),
+      GoRoute(
         path: '/settings',
         builder: (context, state) => SettingsView(
           viewModel: SettingsViewModel(
@@ -371,6 +389,9 @@ GoRouter buildAppRouter(
                   viewModel: context.read<HomeViewModel>(),
                   onAccountTap: (accountId) => context.go(
                     '/register?accountId=${Uri.encodeQueryComponent(accountId)}',
+                  ),
+                  onInvestmentAccountTap: (accountId) => context.push(
+                    '/holdings/${Uri.encodeComponent(accountId)}',
                   ),
                   onSettlePendingTransfer: (pendingTransferId) => context.push(
                     '/settle-pending-transfer/'

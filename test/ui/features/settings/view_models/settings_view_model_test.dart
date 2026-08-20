@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
+import 'package:smara_accounting/domain/models/quote_provider.dart';
+import 'package:smara_accounting/domain/models/research_tool.dart';
 import 'package:smara_accounting/ui/features/settings/view_models/settings_view_model.dart';
 
 import '../../../../mocks.mocks.dart';
@@ -26,6 +28,15 @@ void main() {
     when(
       settingsRepository.selectedProvider(),
     ).thenAnswer((_) async => ExchangeRateProvider.frankfurter);
+    when(
+      settingsRepository.isMarketPriceFetchEnabled(),
+    ).thenAnswer((_) async => true);
+    when(
+      settingsRepository.selectedQuoteProvider(),
+    ).thenAnswer((_) async => QuoteProvider.stooq);
+    when(
+      settingsRepository.selectedResearchTool(),
+    ).thenAnswer((_) async => ResearchTool.chatGpt);
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
     viewModel = SettingsViewModel(
       settingsRepository: settingsRepository,

@@ -7,12 +7,22 @@ class AccountBalance {
   const AccountBalance({
     required this.account,
     required this.displayBalanceMinor,
+    this.bookValueMinor,
+    this.isMarketEstimate = false,
   });
 
   final Account account;
 
-  /// Asset: funds held. Liability: amount owed. Always the UI-facing figure.
+  /// Asset: funds held. Liability: amount owed. For an investment account
+  /// this is portfolio value (cash + marks), labeled as a market estimate
+  /// when [isMarketEstimate] is true.
   final int displayBalanceMinor;
+
+  /// Cash + inventory at cost. Only set for investment accounts.
+  final int? bookValueMinor;
+
+  /// Home should label [displayBalanceMinor] as a market estimate.
+  final bool isMarketEstimate;
 }
 
 /// One account group section on the home overview. [group.currency] labels

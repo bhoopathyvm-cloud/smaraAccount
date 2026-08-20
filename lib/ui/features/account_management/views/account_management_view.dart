@@ -41,6 +41,7 @@ class AccountManagementView extends StatelessWidget {
     String? groupId;
     int? openingBalanceMinor;
     var isCreditCard = false;
+    var holdsInvestments = false;
 
     await showDialog<void>(
       context: context,
@@ -90,12 +91,28 @@ class AccountManagementView extends StatelessWidget {
                         if (type != AccountType.liability) {
                           isCreditCard = false;
                         }
+                        if (type != AccountType.asset) {
+                          holdsInvestments = false;
+                        }
                       });
                     },
                   ),
                   // credit-card-household-flow: set once at creation,
                   // never changeable afterward - a Liability-only flag,
                   // mirroring the holdsInvestments pattern.
+                  if (type == AccountType.asset)
+                    CheckboxListTile(
+                      contentPadding: EdgeInsets.zero,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: const Text('This account holds investments'),
+                      subtitle: const Text(
+                        'Cash plus inventory you record with Buy, Sell, and Dividend.',
+                      ),
+                      value: holdsInvestments,
+                      onChanged: (value) => setDialogState(
+                        () => holdsInvestments = value ?? false,
+                      ),
+                    ),
                   if (type == AccountType.liability)
                     CheckboxListTile(
                       contentPadding: EdgeInsets.zero,
@@ -142,6 +159,7 @@ class AccountManagementView extends StatelessWidget {
                           groupId: groupId!,
                           openingBalanceMinor: openingBalanceMinor,
                           isCreditCard: isCreditCard,
+                          holdsInvestments: holdsInvestments,
                         );
                         if (created && dialogContext.mounted) {
                           Navigator.of(dialogContext).pop();

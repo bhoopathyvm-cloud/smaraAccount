@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
+import 'package:smara_accounting/domain/models/quote_provider.dart';
+import 'package:smara_accounting/domain/models/research_tool.dart';
 import 'package:smara_accounting/ui/features/settings/view_models/settings_view_model.dart';
 import 'package:smara_accounting/ui/features/settings/views/settings_view.dart';
 
@@ -27,9 +29,23 @@ void main() {
       repository.selectedProvider(),
     ).thenAnswer((_) async => ExchangeRateProvider.frankfurter);
     when(
+      repository.isMarketPriceFetchEnabled(),
+    ).thenAnswer((_) async => true);
+    when(
+      repository.selectedQuoteProvider(),
+    ).thenAnswer((_) async => QuoteProvider.stooq);
+    when(
+      repository.selectedResearchTool(),
+    ).thenAnswer((_) async => ResearchTool.chatGpt);
+    when(
       repository.setReferenceRateLookupEnabled(any),
     ).thenAnswer((_) async {});
     when(repository.setSelectedProvider(any)).thenAnswer((_) async {});
+    when(repository.isAppLockEnabled()).thenAnswer((_) async => false);
+    when(repository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
+    when(
+      repository.isAppLockBiometricEnabled(),
+    ).thenAnswer((_) async => false);
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
   });
 
@@ -42,11 +58,26 @@ void main() {
       appLockController: appLockController,
     );
     addTearDown(viewModel.dispose);
+    tester.view.physicalSize = const Size(800, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    when(appLockController.isSnapshotHidingEnabled).thenReturn(false);
     await tester.pumpWidget(
       MaterialApp(home: SettingsView(viewModel: viewModel)),
     );
     await tester.pump();
+    while (viewModel.isLoading) {
+      await tester.pump();
+    }
+    await tester.pump();
     return viewModel;
+  }
+
+  Future<void> tapScrolled(WidgetTester tester, Finder finder) async {
+    await tester.scrollUntilVisible(finder, 200, scrollable: find.byType(Scrollable).first);
+    await tester.pumpAndSettle();
+    await tester.tap(finder);
   }
 
   testWidgets('the provider dropdown lists exactly the predefined enum '
@@ -153,7 +184,7 @@ void main() {
     (tester) async {
       await pumpSettings(tester);
 
-      await tester.tap(find.text('Save backup'));
+      await tapScrolled(tester, find.text('Save backup'));
       await tester.pumpAndSettle();
       expect(
         find.text(
@@ -179,7 +210,7 @@ void main() {
     (tester) async {
       await pumpSettings(tester);
 
-      await tester.tap(find.text('Restore backup'));
+      await tapScrolled(tester, find.text('Restore backup'));
       await tester.pumpAndSettle();
       expect(find.text('Choose backup file'), findsOneWidget);
 
@@ -203,7 +234,7 @@ void main() {
     when(repository.setAppLockEnabled(true)).thenAnswer((_) async {});
     await pumpSettings(tester);
 
-    await tester.tap(find.text('Require unlock to open the app'));
+    await tapScrolled(tester, find.text('Require unlock to open the app'));
     await tester.pumpAndSettle();
     expect(find.text('Set a PIN'), findsOneWidget);
 
@@ -223,7 +254,7 @@ void main() {
   ) async {
     await pumpSettings(tester);
 
-    await tester.tap(find.text('Require unlock to open the app'));
+    await tapScrolled(tester, find.text('Require unlock to open the app'));
     await tester.pumpAndSettle();
 
     final fields = find.byType(TextField);
@@ -248,7 +279,7 @@ void main() {
       ).thenAnswer((_) async {});
       await pumpSettings(tester);
 
-      await tester.tap(find.text('Require unlock to open the app'));
+      await tapScrolled(tester, find.text('Require unlock to open the app'));
       await tester.pump();
 
       verify(appLockService.clearPin()).called(1);
@@ -258,24 +289,27 @@ void main() {
   );
 
   testWidgets(
-    'the timeout dropdown and Change PIN are only shown once app lock is enabled',
+    'the timeout dropdown and Change PIN are hidden while app lock is off',
     (tester) async {
       when(repository.isAppLockEnabled()).thenAnswer((_) async => false);
       await pumpSettings(tester);
-      expect(find.text('Change PIN'), findsNothing);
-      expect(find.byType(DropdownButtonFormField<int>), findsNothing);
-
-      when(repository.isAppLockEnabled()).thenAnswer((_) async => true);
-      await pumpSettings(tester);
-      await tester.pump();
-      expect(find.text('Change PIN'), findsOneWidget);
-      // The list is now tall enough that this dropdown can be offstage
-      // (below the test viewport) - allWidgets/skipOffstage: false still
-      // finds it, since it genuinely exists in the tree either way.
+      expect(find.text('Change PIN', skipOffstage: false), findsNothing);
       expect(
         find.byType(DropdownButtonFormField<int>, skipOffstage: false),
-        findsOneWidget,
+        findsNothing,
       );
+    },
+  );
+
+  testWidgets(
+    'the timeout dropdown and Change PIN are shown once app lock is enabled',
+    (tester) async {
+      when(repository.isAppLockEnabled()).thenAnswer((_) async => true);
+      when(repository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
+      final viewModel = await pumpSettings(tester);
+      expect(viewModel.isAppLockEnabled, isTrue);
+      expect(find.text('Change PIN'), findsOneWidget);
+      expect(find.byType(DropdownButtonFormField<int>), findsOneWidget);
     },
   );
 }

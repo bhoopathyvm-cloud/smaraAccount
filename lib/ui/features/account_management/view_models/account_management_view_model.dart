@@ -43,12 +43,13 @@ class AccountManagementViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> createAccount({
+    Future<bool> createAccount({
     required String name,
     required AccountType type,
     required String groupId,
     int? openingBalanceMinor,
     bool isCreditCard = false,
+    bool holdsInvestments = false,
   }) {
     return _run(() async {
       await _ledgerRepository.createFinancialAccount(
@@ -57,6 +58,7 @@ class AccountManagementViewModel extends ChangeNotifier {
         groupId: groupId,
         openingBalanceMinor: openingBalanceMinor,
         isCreditCard: isCreditCard,
+        holdsInvestments: holdsInvestments,
       );
     });
   }

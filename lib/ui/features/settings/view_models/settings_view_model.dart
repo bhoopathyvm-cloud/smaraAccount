@@ -6,6 +6,8 @@ import '../../../../domain/exceptions.dart';
 import '../../../../domain/lock/app_lock_service.dart';
 import '../../../../domain/lock/biometric_authenticator.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
+import '../../../../domain/models/quote_provider.dart';
+import '../../../../domain/models/research_tool.dart';
 import '../../../core/app_lock_controller.dart';
 
 /// The app's Settings surface: the reference exchange-rate lookup's
@@ -43,6 +45,15 @@ class SettingsViewModel extends ChangeNotifier {
   ExchangeRateProvider _selectedProvider = ExchangeRateProvider.values.first;
   ExchangeRateProvider get selectedProvider => _selectedProvider;
 
+  bool _marketPriceFetchEnabled = true;
+  bool get marketPriceFetchEnabled => _marketPriceFetchEnabled;
+
+  QuoteProvider _selectedQuoteProvider = QuoteProvider.values.first;
+  QuoteProvider get selectedQuoteProvider => _selectedQuoteProvider;
+
+  ResearchTool _selectedResearchTool = ResearchTool.values.first;
+  ResearchTool get selectedResearchTool => _selectedResearchTool;
+
   bool _isAppLockEnabled = false;
   bool get isAppLockEnabled => _isAppLockEnabled;
 
@@ -71,6 +82,10 @@ class SettingsViewModel extends ChangeNotifier {
     _referenceRateLookupEnabled = await _settingsRepository
         .isReferenceRateLookupEnabled();
     _selectedProvider = await _settingsRepository.selectedProvider();
+    _marketPriceFetchEnabled = await _settingsRepository
+        .isMarketPriceFetchEnabled();
+    _selectedQuoteProvider = await _settingsRepository.selectedQuoteProvider();
+    _selectedResearchTool = await _settingsRepository.selectedResearchTool();
     _isAppLockEnabled = await _settingsRepository.isAppLockEnabled();
     _appLockTimeoutMinutes = await _settingsRepository.appLockTimeoutMinutes();
     _isBiometricEnabled = await _settingsRepository.isAppLockBiometricEnabled();
@@ -89,6 +104,24 @@ class SettingsViewModel extends ChangeNotifier {
     _selectedProvider = provider;
     notifyListeners();
     await _settingsRepository.setSelectedProvider(provider);
+  }
+
+  Future<void> setMarketPriceFetchEnabled(bool value) async {
+    _marketPriceFetchEnabled = value;
+    notifyListeners();
+    await _settingsRepository.setMarketPriceFetchEnabled(value);
+  }
+
+  Future<void> setSelectedQuoteProvider(QuoteProvider provider) async {
+    _selectedQuoteProvider = provider;
+    notifyListeners();
+    await _settingsRepository.setSelectedQuoteProvider(provider);
+  }
+
+  Future<void> setSelectedResearchTool(ResearchTool tool) async {
+    _selectedResearchTool = tool;
+    notifyListeners();
+    await _settingsRepository.setSelectedResearchTool(tool);
   }
 
   bool _isBackingUp = false;

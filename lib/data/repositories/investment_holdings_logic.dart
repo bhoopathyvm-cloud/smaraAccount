@@ -1,5 +1,6 @@
 import '../../domain/models/instrument.dart';
 import '../../domain/models/instrument_holding.dart';
+import '../../domain/models/instrument_quote.dart';
 import '../database/app_database.dart' show InstrumentRow;
 
 /// Cash-funded vs non-cash acquisition for [LedgerRepository.recordBuy].
@@ -127,12 +128,23 @@ InvestmentHoldingMetrics replayInvestmentHistory(
       ? (totalCostMinor * 10000) ~/ quantityScaled
       : 0;
 
+  DateTime? earliestLockedUntil;
+  for (final bucket in buckets) {
+    if (bucket.quantityScaled <= 0) continue;
+    final until = bucket.lockedUntil;
+    if (until == null || !evaluationDate.isBefore(until)) continue;
+    if (earliestLockedUntil == null || until.isBefore(earliestLockedUntil)) {
+      earliestLockedUntil = until;
+    }
+  }
+
   return InvestmentHoldingMetrics(
     quantityScaled: quantityScaled,
     totalCostMinor: totalCostMinor,
     averageCostMinor: averageCostMinor,
     sellableQuantityScaled: sellable < 0 ? 0 : sellable,
     lockedQuantityScaled: locked,
+    earliestLockedUntil: earliestLockedUntil,
   );
 }
 
@@ -161,6 +173,7 @@ class InvestmentHoldingMetrics {
     required this.averageCostMinor,
     required this.sellableQuantityScaled,
     required this.lockedQuantityScaled,
+    this.earliestLockedUntil,
   });
 
   final int quantityScaled;
@@ -168,11 +181,68 @@ class InvestmentHoldingMetrics {
   final int averageCostMinor;
   final int sellableQuantityScaled;
   final int lockedQuantityScaled;
+  final DateTime? earliestLockedUntil;
+}
+
+const quoteStaleAfter = Duration(hours: 24);
+
+/// Whether [quote] may be multiplied into a mark — currency must match
+/// the holding's group. Disabled quotes still use a matching cache.
+bool quoteIsUsable(InstrumentQuote? quote, String groupCurrency) {
+  return quote != null && quote.currency == groupCurrency;
+}
+
+QuoteUse quoteUseFor({
+  required InstrumentQuote? quote,
+  required String groupCurrency,
+  required bool quotesEnabled,
+  DateTime? now,
+}) {
+  if (quote != null && quote.currency != groupCurrency) {
+    return QuoteUse.currencyMismatch;
+  }
+  if (!quoteIsUsable(quote, groupCurrency)) {
+    return quotesEnabled ? QuoteUse.missing : QuoteUse.disabled;
+  }
+  if (!quotesEnabled) return QuoteUse.disabled;
+  final age = (now ?? DateTime.now()).difference(quote!.fetchedAt);
+  if (age > quoteStaleAfter) return QuoteUse.stale;
+  return QuoteUse.live;
+}
+
+/// Market contribution for an instrument: qty × last price when the quote
+/// is usable in [groupCurrency], otherwise book cost.
+HoldingValuation valueHolding({
+  required int quantityScaled,
+  required int totalCostMinor,
+  required InstrumentQuote? quote,
+  required String groupCurrency,
+  required bool quotesEnabled,
+  DateTime? now,
+}) {
+  final use = quoteUseFor(
+    quote: quote,
+    groupCurrency: groupCurrency,
+    quotesEnabled: quotesEnabled,
+    now: now,
+  );
+  final canUsePrice = quoteIsUsable(quote, groupCurrency);
+  final marketValueMinor = canUsePrice
+      ? multiplyScaledQuantityPrice(quantityScaled, quote!.priceMinor)
+      : totalCostMinor;
+  return HoldingValuation(
+    quantityScaled: quantityScaled,
+    totalCostMinor: totalCostMinor,
+    marketValueMinor: marketValueMinor,
+    unrealizedGainLossMinor: marketValueMinor - totalCostMinor,
+    quoteUse: use,
+  );
 }
 
 InstrumentHolding toInstrumentHolding({
   required InstrumentRow instrumentRow,
   required InvestmentHoldingMetrics metrics,
+  HoldingValuation? valuation,
 }) {
   final instrument = Instrument(
     id: instrumentRow.id,
@@ -188,5 +258,26 @@ InstrumentHolding toInstrumentHolding({
     averageCostMinor: metrics.averageCostMinor,
     totalCostMinor: metrics.totalCostMinor,
     sellableQuantityScaled: metrics.sellableQuantityScaled,
+    marketValueMinor: valuation?.marketValueMinor,
+    unrealizedGainLossMinor: valuation?.unrealizedGainLossMinor,
+    quoteUse: valuation?.quoteUse ?? QuoteUse.missing,
   );
+}
+
+String formatQuantityScaled(int quantityScaled) {
+  final value = quantityScaled / 10000;
+  if (value == value.roundToDouble()) return value.round().toString();
+  var text = value.toStringAsFixed(4);
+  while (text.contains('.') && (text.endsWith('0') || text.endsWith('.'))) {
+    text = text.substring(0, text.length - 1);
+  }
+  return text;
+}
+
+int? parseQuantityScaled(String text) {
+  final trimmed = text.trim();
+  if (trimmed.isEmpty) return null;
+  final value = double.tryParse(trimmed.replaceAll(',', '.'));
+  if (value == null || value <= 0) return null;
+  return (value * 10000).round();
 }

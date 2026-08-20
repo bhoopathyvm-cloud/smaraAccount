@@ -113,8 +113,11 @@ Home is the primary place you both glance at your money and add to it
   and what you've received, by category. A category with no activity
   this month simply isn't listed. A category with a monthly limit set
   (see Categories below) shows its progress here too.
-- **Account groups** — every account group with its accounts, tap an
-  account to open its Register.
+- **Account groups** — every account group with its accounts. Tap an
+  ordinary account to open its Register. Tap an investment account to
+  open holdings (cash, inventory, Buy/Sell/Dividend). Investment
+  totals on Home are a **market estimate** from last prices, not the
+  signed book.
 
 The **Add** button opens one choice: **Spent**, **Received**, **Moved
 money**, or **Import statement**. Register's own Add button opens the
@@ -205,7 +208,10 @@ groups they belong to.
   **This is a credit card** — a label you set once at creation and can't
   change afterward. A credit card behaves exactly like any other
   liability account for balance, transfers, and recording; the flag only
-  changes how it's shown and a couple of capture shortcuts (below).
+  changes how it's shown and a couple of capture shortcuts (below). For
+  an Asset account, you can mark **This account holds investments** —
+  also set once at creation. That account is cash plus inventory (see
+  Investments below).
 - **Create a group**: name, Asset or Liability, and a currency (ISO 4217,
   e.g. `USD`) — every account in a group shares that group's currency.
 - **Rename** an account or edit a group's name/currency (currency can only
@@ -241,6 +247,43 @@ use a period to group and a comma for the decimal, and so on. Type an
 amount using whichever separator its currency actually uses — the field
 tells you if what you typed isn't a valid amount, rather than silently
 treating it as empty.
+
+## Investments
+
+An investment account is still one of your accounts: transfers in and
+out move **cash only**. Inventory (shares, funds, and so on) is recorded
+separately with Buy, Sell, and Dividend — this app does not place
+orders or connect to a broker.
+
+Open the account from Home to see **holdings**: cash, book (cash + cost
+of what you hold), and a **market estimate** (cash + last prices). The
+estimate is labeled as such. If a price is missing, stale, turned off,
+or in another currency, that instrument is valued at cost.
+
+**Buy** records a trade that already happened: quantity, unit price,
+optional brokerage (a separate expense, like a transfer fee), optional
+description, and optional lock-until date (your own note of a
+restriction — not a broker rule). Fund it from cash, or as a
+**non-cash** acquisition (employer match, grant, gift) against an
+income category at fair value. You can create a new instrument inline
+the first time you buy it (name, kind from a fixed list, optional
+ticker, optional ISIN).
+
+**Sell** records proceeds at the price you enter. Gain or loss uses
+ordinary income or expense categories. Quantity you can sell excludes
+units still locked as of the sell date.
+
+**Dividend** is cash income for an instrument, including one you no
+longer hold (a payout can arrive after you sold).
+
+Hiding an investment account works like any other account, including
+**Transfer remaining balance** for leftover cash. That closeout can run
+again if a later sell or dividend puts cash back. Sell and Dividend stay
+available after hiding so you can wind down inventory; Buy does not.
+
+Tap an instrument **name** to research it in your favourite tool (see
+Settings). Use the row menu to rename or hide the instrument — not the
+name itself.
 
 ## Transfers
 
@@ -426,9 +469,16 @@ period-over-period read on where money went.
 - **Also allow biometrics**: shown only on a device with working Face
   ID/Touch ID/fingerprint unlock. When on, the lock screen tries
   biometrics first and always still accepts the PIN as a fallback.
-- **Hide balances in the app switcher**: obscures the app's content when
-  you switch to another app, independently of whether app lock itself is
-  on. Only shown on iOS and Android — desktop platforms (macOS, Windows)
-  have no equivalent app-switcher-snapshot mechanism to hide, so Settings
-  says so plainly there instead of showing a toggle that would do
-  nothing.
+- **Fetch market prices for investments**: on by default. When on, Home
+  and holdings look up last prices for instruments that have a ticker or
+  ISIN, to estimate what those holdings are worth. The lookup only sends
+  the ticker or ISIN — never how many you hold or what you paid. Quotes
+  never record a transaction. If a price is in a different currency than
+  the account, the app uses cost instead. Turn this off to stop the
+  requests; cached prices and cost are still used for the estimate.
+- **Market price provider**: which predefined quote source to use.
+- **Favourite research tool**: ChatGPT, Claude, Gemini, or Meta AI.
+  Tapping an instrument **name** on holdings opens that tool in the
+  browser with a research prompt (news, downside, upside — not advice).
+  If you're offline, the prompt is copied instead. Rename and hide use
+  the menu on the row, not the name.

@@ -18,6 +18,7 @@ class HomeView extends StatelessWidget {
     super.key,
     required this.viewModel,
     required this.onAccountTap,
+    this.onInvestmentAccountTap,
     this.onSettlePendingTransfer,
     this.onOpenSettings,
     this.onSpent,
@@ -28,6 +29,7 @@ class HomeView extends StatelessWidget {
 
   final HomeViewModel viewModel;
   final ValueChanged<String> onAccountTap;
+  final ValueChanged<String>? onInvestmentAccountTap;
   final ValueChanged<String>? onSettlePendingTransfer;
   final VoidCallback? onOpenSettings;
 
@@ -107,7 +109,11 @@ class HomeView extends StatelessWidget {
               ],
               const SizedBox(height: AppSpacing.xLarge),
               for (final section in overview.sections)
-                _GroupSection(section: section, onAccountTap: onAccountTap),
+                _GroupSection(
+                  section: section,
+                  onAccountTap: onAccountTap,
+                  onInvestmentAccountTap: onInvestmentAccountTap,
+                ),
               // Room for the FAB not to cover the last row.
               const SizedBox(height: AppSpacing.xLarge),
             ],
@@ -361,10 +367,15 @@ class _DueTemplates extends StatelessWidget {
 }
 
 class _GroupSection extends StatelessWidget {
-  const _GroupSection({required this.section, required this.onAccountTap});
+  const _GroupSection({
+    required this.section,
+    required this.onAccountTap,
+    this.onInvestmentAccountTap,
+  });
 
   final AccountGroupSection section;
   final ValueChanged<String> onAccountTap;
+  final ValueChanged<String>? onInvestmentAccountTap;
 
   @override
   Widget build(BuildContext context) {
@@ -421,15 +432,29 @@ class _GroupSection extends StatelessWidget {
                       : AppColors.textPrimary,
                 ),
               ),
-              subtitle: balance.account.archived
-                  ? Text('Hidden', style: AppTypography.metadata)
-                  : null,
+              subtitle: () {
+                final parts = <String>[
+                  if (balance.account.isInvestmentAccount &&
+                      balance.isMarketEstimate)
+                    'Market estimate',
+                  if (balance.account.archived) 'Hidden',
+                ];
+                if (parts.isEmpty) return null;
+                return Text(parts.join(' · '), style: AppTypography.metadata);
+              }(),
               trailing: Text(
                 '${formatAmountMinor(balance.displayBalanceMinor, formattingCurrency)} '
                 '${currency ?? '?'}',
                 style: AppTypography.body,
               ),
-              onTap: () => onAccountTap(balance.account.id),
+              onTap: () {
+                if (balance.account.isInvestmentAccount &&
+                    onInvestmentAccountTap != null) {
+                  onInvestmentAccountTap!(balance.account.id);
+                } else {
+                  onAccountTap(balance.account.id);
+                }
+              },
             ),
         ],
       ),

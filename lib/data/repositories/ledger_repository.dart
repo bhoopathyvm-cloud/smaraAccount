@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:drift/drift.dart';
@@ -12,6 +13,7 @@ import '../../domain/models/account.dart';
 import '../../domain/models/account_group.dart';
 import '../../domain/models/instrument.dart';
 import '../../domain/models/instrument_holding.dart';
+import '../../domain/models/instrument_quote.dart';
 import '../../domain/models/home_overview.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/journal_entry.dart';
@@ -2245,14 +2247,100 @@ class LedgerRepository {
   }
 
   Stream<List<InstrumentHolding>> watchHoldingsForAccount(String accountId) {
-    return watchInstruments(includeArchived: true).asyncMap((_) async {
-      return await computeHoldingsForAccount(accountId);
+    return _tickOn([
+      watchInstruments(includeArchived: true),
+      _db.select(_db.instrumentQuotes).watch(),
+      watchEntriesForAccount(accountId),
+    ]).asyncMap((_) => computeHoldingsForAccount(accountId));
+  }
+
+  /// Instruments that have ever had a lot in [accountId], including
+  /// ones currently at zero quantity (ex-dividend / fully sold).
+  Stream<List<Instrument>> watchInstrumentsHeldInAccount(String accountId) {
+    return watchHoldingsForAccount(accountId).asyncMap((_) async {
+      return computeInstrumentsHeldInAccount(accountId);
     });
   }
 
-  Future<List<InstrumentHolding>> computeHoldingsForAccount(
+  Future<List<Instrument>> computeInstrumentsHeldInAccount(
     String accountId,
   ) async {
+    final lots = await (_db.select(
+      _db.investmentLots,
+    )..where((l) => l.accountId.equals(accountId))).get();
+    final instrumentIds = lots.map((l) => l.instrumentId).toSet();
+    if (instrumentIds.isEmpty) return [];
+    final instruments = await (_db.select(
+      _db.instruments,
+    )..where((i) => i.id.isIn(instrumentIds))).get();
+    instruments.sort((a, b) => a.name.compareTo(b.name));
+    return instruments.map(_toDomainInstrument).toList();
+  }
+
+  Future<Map<String, InstrumentQuote>> _quotesByInstrumentId() async {
+    final rows = await _db.select(_db.instrumentQuotes).get();
+    return {
+      for (final row in rows)
+        row.instrumentId: InstrumentQuote(
+          instrumentId: row.instrumentId,
+          priceMinor: row.priceMinor,
+          currency: row.currency,
+          fetchedAt: row.fetchedAt,
+        ),
+    };
+  }
+
+  Stream<List<InstrumentQuote>> watchInstrumentQuotes() {
+    return _db.select(_db.instrumentQuotes).watch().map(
+      (rows) => rows
+          .map(
+            (row) => InstrumentQuote(
+              instrumentId: row.instrumentId,
+              priceMinor: row.priceMinor,
+              currency: row.currency,
+              fetchedAt: row.fetchedAt,
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  Future<void> cacheInstrumentQuote({
+    required String instrumentId,
+    required int priceMinor,
+    required String currency,
+  }) async {
+    final existing = await (_db.select(
+      _db.instrumentQuotes,
+    )..where((q) => q.instrumentId.equals(instrumentId))).get();
+    if (existing.isEmpty) {
+      await _db
+          .into(_db.instrumentQuotes)
+          .insert(
+            InstrumentQuotesCompanion.insert(
+              instrumentId: instrumentId,
+              priceMinor: priceMinor,
+              currency: currency,
+              fetchedAt: DateTime.now(),
+            ),
+          );
+      return;
+    }
+    await (_db.update(_db.instrumentQuotes)
+          ..where((q) => q.instrumentId.equals(instrumentId)))
+        .write(
+          InstrumentQuotesCompanion(
+            priceMinor: Value(priceMinor),
+            currency: Value(currency),
+            fetchedAt: Value(DateTime.now()),
+          ),
+        );
+  }
+
+  Future<List<InstrumentHolding>> computeHoldingsForAccount(
+    String accountId, {
+    bool includeZeroQuantity = false,
+  }) async {
     final lots = await (_db.select(
       _db.investmentLots,
     )..where((l) => l.accountId.equals(accountId))).get();
@@ -2263,6 +2351,18 @@ class LedgerRepository {
       _db.instruments,
     )..where((i) => i.id.isIn(instrumentIds))).get();
     final instrumentById = {for (final i in instruments) i.id: i};
+    final quotes = await _quotesByInstrumentId();
+    var groupCurrency = 'USD';
+    final cashRow = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(accountId))).getSingleOrNull();
+    if (cashRow != null) {
+      try {
+        groupCurrency = await _groupCurrencyFor(cashRow);
+      } on AccountGroupException {
+        // Fall back to USD for display-only valuation.
+      }
+    }
 
     final holdings = <InstrumentHolding>[];
     for (final instrumentId in instrumentIds) {
@@ -2273,13 +2373,64 @@ class LedgerRepository {
         instrumentId: instrumentId,
       );
       final metrics = replayInvestmentHistory(events);
-      if (metrics.quantityScaled <= 0) continue;
+      if (metrics.quantityScaled <= 0 && !includeZeroQuantity) continue;
+      final valuation = valueHolding(
+        quantityScaled: metrics.quantityScaled,
+        totalCostMinor: metrics.totalCostMinor,
+        quote: quotes[instrumentId],
+        groupCurrency: groupCurrency,
+        quotesEnabled: true,
+      );
       holdings.add(
-        toInstrumentHolding(instrumentRow: instrumentRow, metrics: metrics),
+        toInstrumentHolding(
+          instrumentRow: instrumentRow,
+          metrics: metrics,
+          valuation: valuation,
+        ),
       );
     }
     holdings.sort((a, b) => a.instrument.name.compareTo(b.instrument.name));
     return holdings;
+  }
+
+  Future<({int portfolioMinor, int bookMinor})> _portfolioForInvestmentAccount({
+    required String accountId,
+    required int cashMinor,
+    required String groupCurrency,
+  }) async {
+    final holdings = await computeHoldingsForAccount(accountId);
+    var marketInventory = 0;
+    var bookInventory = 0;
+    for (final holding in holdings) {
+      marketInventory += holding.displayMarketValueMinor;
+      bookInventory += holding.totalCostMinor;
+    }
+    return (
+      portfolioMinor: cashMinor + marketInventory,
+      bookMinor: cashMinor + bookInventory,
+    );
+  }
+
+  Stream<void> _tickOn(Iterable<Stream<dynamic>> streams) {
+    late StreamController<void> controller;
+    final subs = <StreamSubscription<dynamic>>[];
+    controller = StreamController<void>(
+      onListen: () {
+        for (final stream in streams) {
+          subs.add(
+            stream.listen((_) {
+              if (!controller.isClosed) controller.add(null);
+            }),
+          );
+        }
+      },
+      onCancel: () async {
+        for (final sub in subs) {
+          await sub.cancel();
+        }
+      },
+    );
+    return controller.stream;
   }
 
   Future<String> recordBuy({
@@ -2465,10 +2616,12 @@ class LedgerRepository {
     if (quantityScaled > metricsBeforeSell.sellableQuantityScaled) {
       final locked = metricsBeforeSell.lockedQuantityScaled;
       if (locked > 0) {
+        final until = metricsBeforeSell.earliestLockedUntil;
+        final untilLabel = until == null
+            ? 'a later date'
+            : _dateOnly(until);
         throw LockedQuantityException(
-          'Cannot sell $quantityScaled scaled units: only '
-          '${metricsBeforeSell.sellableQuantityScaled} are sellable '
-          '(locked quantity $locked).',
+          'Cannot sell: some units are locked until $untilLabel.',
         );
       }
       throw InsufficientQuantityException(
@@ -3170,7 +3323,10 @@ class LedgerRepository {
   }
 
   Stream<HomeOverview> watchHomeOverview() {
-    return watchEntries().asyncMap((_) => _buildHomeOverview());
+    return _tickOn([
+      watchEntries(),
+      _db.select(_db.instrumentQuotes).watch(),
+    ]).asyncMap((_) => _buildHomeOverview());
   }
 
   Future<HomeOverview> _buildHomeOverview() async {
@@ -3214,9 +3370,27 @@ class LedgerRepository {
       final balances = <AccountBalance>[];
       var groupTotal = 0;
       for (final account in members) {
-        final display = displayFor(account);
+        final cashOrOwed = displayFor(account);
+        var display = cashOrOwed;
+        int? bookValueMinor;
+        var isMarketEstimate = false;
+        if (account.isInvestmentAccount && currency != null) {
+          final valued = await _portfolioForInvestmentAccount(
+            accountId: account.id,
+            cashMinor: cashOrOwed,
+            groupCurrency: currency,
+          );
+          display = valued.portfolioMinor;
+          bookValueMinor = valued.bookMinor;
+          isMarketEstimate = true;
+        }
         balances.add(
-          AccountBalance(account: account, displayBalanceMinor: display),
+          AccountBalance(
+            account: account,
+            displayBalanceMinor: display,
+            bookValueMinor: bookValueMinor,
+            isMarketEstimate: isMarketEstimate,
+          ),
         );
         groupTotal += display;
         if (currency != null) {

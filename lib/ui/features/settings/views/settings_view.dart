@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../domain/models/exchange_rate_provider.dart';
+import '../../../../domain/models/quote_provider.dart';
+import '../../../../domain/models/research_tool.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -76,6 +78,64 @@ class SettingsView extends StatelessWidget {
                         }
                       }
                     : null,
+              ),
+              const SizedBox(height: AppSpacing.xLarge),
+              SwitchListTile(
+                title: const Text('Fetch market prices for investments'),
+                subtitle: Text(
+                  'Looks up last prices for instruments that have a ticker '
+                  'or ISIN, to estimate portfolio value. Never used to '
+                  'record a trade, and never sends how many you hold.',
+                  style: AppTypography.metadata,
+                ),
+                value: viewModel.marketPriceFetchEnabled,
+                onChanged: viewModel.setMarketPriceFetchEnabled,
+              ),
+              const SizedBox(height: AppSpacing.large),
+              DropdownButtonFormField<QuoteProvider>(
+                initialValue: viewModel.selectedQuoteProvider,
+                decoration: const InputDecoration(
+                  labelText: 'Market price provider',
+                ),
+                items: [
+                  for (final provider in QuoteProvider.values)
+                    DropdownMenuItem(
+                      value: provider,
+                      child: Text(provider.displayName),
+                    ),
+                ],
+                onChanged: viewModel.marketPriceFetchEnabled
+                    ? (provider) {
+                        if (provider != null) {
+                          viewModel.setSelectedQuoteProvider(provider);
+                        }
+                      }
+                    : null,
+              ),
+              const SizedBox(height: AppSpacing.xLarge),
+              DropdownButtonFormField<ResearchTool>(
+                initialValue: viewModel.selectedResearchTool,
+                decoration: const InputDecoration(
+                  labelText: 'Favourite research tool',
+                ),
+                items: [
+                  for (final tool in ResearchTool.values)
+                    DropdownMenuItem(
+                      value: tool,
+                      child: Text(tool.displayName),
+                    ),
+                ],
+                onChanged: (tool) {
+                  if (tool != null) {
+                    viewModel.setSelectedResearchTool(tool);
+                  }
+                },
+              ),
+              Text(
+                'Tapping an instrument name on holdings opens this tool '
+                'in the browser with a research prompt — not an '
+                'integration, and not advice.',
+                style: AppTypography.metadata,
               ),
               const SizedBox(height: AppSpacing.xLarge),
               Text('Backup', style: AppTypography.sectionLabel),

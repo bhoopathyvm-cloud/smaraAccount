@@ -97,11 +97,21 @@ class SmaraAccountingApp extends StatelessWidget {
               previous ??
               RestoreIdentityViewModel(ledgerRepository: repository),
         ),
-        ChangeNotifierProxyProvider<LedgerRepository, HomeViewModel>(
-          create: (context) =>
-              HomeViewModel(ledgerRepository: context.read<LedgerRepository>()),
-          update: (_, repository, previous) =>
-              previous ?? HomeViewModel(ledgerRepository: repository),
+        ChangeNotifierProxyProvider2<
+          LedgerRepository,
+          SettingsRepository,
+          HomeViewModel
+        >(
+          create: (context) => HomeViewModel(
+            ledgerRepository: context.read<LedgerRepository>(),
+            settingsRepository: context.read<SettingsRepository>(),
+          ),
+          update: (_, repository, settings, previous) =>
+              previous ??
+              HomeViewModel(
+                ledgerRepository: repository,
+                settingsRepository: settings,
+              ),
         ),
         ChangeNotifierProxyProvider<
           LedgerRepository,
