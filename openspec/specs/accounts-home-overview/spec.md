@@ -89,6 +89,23 @@ The home overview SHALL show a Pending Transfers section listing every unsettled
 - **WHEN** a pending transfer is settled, whether delivered to its original destination or returned to its source
 - **THEN** it no longer appears in the Pending Transfers section
 
+### Requirement: Plain-Language Pending Money
+Pending cross-currency items on the home overview SHALL be described in plain language stating what was sent and prompting the user to confirm what arrived, without requiring FX settlement vocabulary.
+
+#### Scenario: Pending line readable
+- **WHEN** a pending transfer exists
+- **THEN** the home line describes sent amount and accounts in plain language
+
+### Requirement: This Month Category Totals on Home
+The home overview SHALL include a section showing total spent per expense
+category and total received per income category for the current calendar
+month, based on transaction date.
+
+#### Scenario: Month totals visible
+- **WHEN** the user opens Home
+- **THEN** category totals for the current calendar month are shown
+- **AND** transfers and opening balances are excluded from those totals
+
 ### Requirement: Navigate From Home to Account Register
 From the home overview, the user SHALL be able to open the register for a selected financial account.
 

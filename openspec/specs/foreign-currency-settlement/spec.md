@@ -49,7 +49,7 @@ When the exact amount in the destination or account currency is known at the tim
 - **THEN** the system rejects the entry and nothing is posted
 
 ### Requirement: Settle a Pending Transfer or Transaction
-The user SHALL be able to settle a pending transfer or foreign-currency transaction by specifying which account actually received funds and the real settled amount. Settling to the original destination account posts the received amount in the destination currency and closes the pending transfer on its own, with no shortfall comparison — the destination-currency amount was never a promised figure to compare against. Settling back to the original source account posts the returned amount in the same currency as the provisional entry; if that amount is less than the provisional amount, the system SHALL post the shortfall as a fee or loss entry against a user-selected expense category. Either way, the Transfers-in-transit position opened by the provisional entry is always left fully closed. For a pending item of kind foreign-currency transaction, the account that receives the settled amount SHALL always be the transaction's own financial account, using the same-currency shortfall comparison — there is no alternate destination to choose.
+The user SHALL be able to settle a pending transfer or foreign-currency transaction by specifying which account actually received funds and the real settled amount. Settling to the original destination account posts the received amount in the destination currency and closes the pending transfer on its own, with no shortfall comparison — the destination-currency amount was never a promised figure to compare against. Settling back to the original source account posts the returned amount in the same currency as the provisional entry; if that amount is less than the provisional amount, the system SHALL post the shortfall as a fee or loss entry against a user-selected expense category. Either way, the Transfers-in-transit position opened by the provisional entry is always left fully closed. For a pending item of kind foreign-currency transaction, the account that receives the settled amount SHALL always be the transaction's own financial account, and settlement SHALL follow the same no-shortfall path as settling a transfer to its destination: the provisional clearing leg is in the transaction's native currency while the settled amount is in the account's currency, so there is no shared-currency figure to compare a shortfall against. There is no alternate destination to choose. A fee category SHALL be rejected for a foreign-currency transaction settlement. A zero settled amount SHALL be rejected for a foreign-currency transaction settlement, the same way a zero destination-delivery settlement is rejected.
 
 #### Scenario: Full settlement to the original destination
 - **WHEN** the user settles a pending transfer by confirming the original destination account and the amount that arrived there
@@ -73,11 +73,22 @@ The user SHALL be able to settle a pending transfer or foreign-currency transact
 
 #### Scenario: A foreign-currency transaction always settles to its own account
 - **WHEN** the user settles a pending item of kind foreign-currency transaction
-- **THEN** the settled amount posts against the transaction's own financial account, using the same-currency shortfall comparison as settling a transfer back to its source, regardless of any other account the user might otherwise be able to name for a transfer
+- **THEN** the settled amount posts against the transaction's own financial account
+- **AND** no shortfall comparison is applied
+- **AND** no fee or loss entry is posted
+- **AND** any other account the user might otherwise name for a transfer is ignored
 
 #### Scenario: A fee category is rejected when settling to the destination
 - **WHEN** the user supplies a fee category while settling to the original destination account
 - **THEN** the system rejects the settlement, since no shortfall comparison applies to a destination-currency settlement
+
+#### Scenario: A fee category is rejected when settling a foreign-currency transaction
+- **WHEN** the user supplies a fee category while settling a pending item of kind foreign-currency transaction
+- **THEN** the system rejects the settlement, since no shortfall comparison applies
+
+#### Scenario: A zero settled amount is rejected for destination delivery or a foreign-currency transaction
+- **WHEN** the user attempts to settle a pending transfer to its destination, or a pending foreign-currency transaction, with a settled amount of zero
+- **THEN** the system rejects the settlement and no entry is posted
 
 #### Scenario: Negative settled amount is rejected
 - **WHEN** the user attempts to settle a pending transfer with a negative settled amount

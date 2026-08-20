@@ -7,11 +7,15 @@ Provide the foundational double-entry accounting core for a single user on a sin
 ## Requirements
 
 ### Requirement: Starter Chart of Accounts
-The system SHALL provide a small starter set of Income and Expense categories on first use, so the user is not required to define every category before recording a transaction.
+The system SHALL provide a small starter set of Income and Expense categories on first use, so the user is not required to define every category before recording a transaction. The default Expense set SHALL include common household categories beyond the original minimal set, including Food out, Phone, and Health, seeded unconditionally regardless of which accounts the user creates during onboarding or the first-week setup wizard.
 
 #### Scenario: First launch provides starter categories
 - **WHEN** the user opens the application for the first time
 - **THEN** a small default set of Income and Expense categories exists and is available for use without any setup step
+
+#### Scenario: Household expense categories are included by default
+- **WHEN** the user opens the category picker after first launch
+- **THEN** Food out, Phone, and Health are available alongside the rest of the default starter set
 
 ### Requirement: Single Financial Account
 The system SHALL support one or more financial accounts (asset or liability) that transactions and transfers are recorded against. The historical constraint of exactly one financial account no longer applies; multi-account behavior is defined by the `multi-account-ledger` capability.
@@ -22,7 +26,7 @@ The system SHALL support one or more financial accounts (asset or liability) tha
 - **AND** each income or expense transaction is recorded against a user-selected financial account
 
 ### Requirement: Category Management
-The user SHALL be able to rename a category, add a new category, and archive a category that is no longer needed. Categories SHALL NOT be permanently deleted.
+The user SHALL be able to rename a category, add a new category, and archive a category that is no longer needed. Categories SHALL NOT be permanently deleted. An Expense category SHALL optionally have a monthly spending limit in minor units, which the user can set or clear like any other category field. An Income category SHALL NOT have a monthly limit.
 
 #### Scenario: Rename a category
 - **WHEN** the user renames an existing category
@@ -37,8 +41,28 @@ The user SHALL be able to rename a category, add a new category, and archive a c
 - **THEN** the category is no longer offered when recording a new transaction
 - **AND** the category and any entries that reference it remain fully visible in read-only views (register, summary)
 
+#### Scenario: Set a monthly limit
+- **WHEN** the user sets a monthly limit of 15000 on an Expense category
+- **THEN** the category's limit is stored and used for month-to-date progress display
+
+#### Scenario: Clear a monthly limit
+- **WHEN** the user clears a category's monthly limit
+- **THEN** no progress or over-limit indication is shown for that category going forward
+
+#### Scenario: Income categories have no limit
+- **WHEN** the user views an Income category's settings
+- **THEN** no monthly-limit field is offered
+
+### Requirement: Unarchive Income or Expense Category
+The user SHALL be able to restore an archived income or expense category
+to active status.
+
+#### Scenario: Unarchive category
+- **WHEN** the user restores an archived category
+- **THEN** the category appears when recording new transactions
+
 ### Requirement: Record a Transaction
-The user SHALL record a transaction by providing a transaction date, an amount, a direction (money in or money out), a category, and a financial account. The system SHALL derive a balanced double-entry journal entry from these inputs; the user SHALL NOT be required to select debit and credit accounts directly.
+The user SHALL record a transaction by providing a transaction date, an amount, a direction (money in or money out), a financial account, and either a single category or a **split** across two or more categories whose amounts sum exactly to the transaction total. The system SHALL derive a balanced double-entry journal entry from these inputs — one posting against the financial account and one posting per category leg — and the user SHALL NOT be required to select debit and credit accounts directly. A split SHALL be rejected before posting if its category amounts do not sum exactly to the transaction total, or if any category line is missing an active category.
 
 #### Scenario: Record money in
 - **WHEN** the user records a transaction as money in, with an amount, a transaction date, an Income category, and a financial account
@@ -51,6 +75,15 @@ The user SHALL record a transaction by providing a transaction date, an amount, 
 #### Scenario: Archived category is not offered
 - **WHEN** the user is choosing a category while recording a new transaction
 - **THEN** archived categories do not appear in the selection
+
+#### Scenario: Split across multiple categories
+- **WHEN** the user records a 100 expense split into 60 against Food and 40 against Household
+- **THEN** the system posts one journal entry with one financial-account posting of 100 and two category postings, 60 and 40
+- **AND** each category posting uses its own active category
+
+#### Scenario: Split amounts must sum to the total
+- **WHEN** the user attempts to record a split whose category amounts do not sum to the transaction total
+- **THEN** the system rejects the submit and no journal entry is posted
 
 ### Requirement: Transaction Amount Validation
 The system SHALL require every transaction amount to be a positive, non-zero value. A zero or negative amount SHALL be rejected before any journal entry is posted.
@@ -86,6 +119,22 @@ The user SHALL be able to reverse a posted entry as a single, independent, ordin
 #### Scenario: Entering the corrected transaction is independent
 - **WHEN** the user records the correct version of a transaction after reversing the mistaken one
 - **THEN** the system posts it as an ordinary new transaction, with no special linkage required to the reversal
+
+### Requirement: Correct via Fix Flow
+In addition to reversing an entry as a standalone action, the user SHALL
+be able to open a **Fix** flow from the register that posts a reversal
+and a replacement transaction reflecting corrected fields (amount,
+category, account, date, description) in one guided sequence. The
+original entry SHALL remain visible and unchanged.
+
+#### Scenario: Fix from register row
+- **WHEN** the user chooses Fix on a register row
+- **THEN** the system shows a form prefilled with the entry's fields
+- **AND** on confirm posts a reversal and a new entry with the edited values
+
+#### Scenario: Fix does not edit in place
+- **WHEN** the user completes a Fix flow
+- **THEN** no posted journal entry is modified in place
 
 ### Requirement: Transaction Register
 The system SHALL provide a reverse-chronological register of posted journal entries for a selected financial account, showing a running balance for that account. The most recently posted entry SHALL be listed first, so that it and the account's current balance are visible without scrolling.
