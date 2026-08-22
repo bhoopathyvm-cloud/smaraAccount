@@ -5,6 +5,14 @@
 Let the user export an encrypted, restorable copy of the local ledger
 database to a location they choose, and restore from it — a backup of
 the books, distinct from recovery-phrase/keystore identity restoration.
+The restored books remain useful because their signed history can be
+verified against the public signing identities carried in the backup.
+
+## Background References
+
+- [NIST: integrity](https://csrc.nist.gov/glossary/term/integrity)
+- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+- [IRS electronic accounting records FAQ](https://www.irs.gov/businesses/small-businesses-self-employed/use-of-electronic-accounting-software-records-frequently-asked-questions-and-answers)
 
 ## Requirements
 

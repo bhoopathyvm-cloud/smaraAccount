@@ -90,11 +90,17 @@ void main() {
         secureStorage: InMemorySecureKeyStorage(),
       ),
     );
-    // app_router.dart's redirect requires a confirmed signing identity
-    // before /register (or any other main route) is reachable - these
-    // tests exercise the ledger, not onboarding, so start past it.
+    // app_router.dart's redirect requires a confirmed AND acknowledged
+    // signing identity, plus a completed first-week-setup wizard, before
+    // /register (or any other main route) is reachable - these tests
+    // exercise the ledger, not onboarding, so start past all of it.
+    // (deferred-onboarding-first-entry otherwise sends every fresh
+    // identity through first-account-name -> first-entry -> the
+    // recovery-phrase screens before Home is ever reachable.)
     final generated = await repository.generateFirstIdentity();
     await repository.confirmFirstIdentity(generated, currency: 'USD');
+    await repository.acknowledgeIdentity();
+    await SettingsRepository().setFirstWeekSetupCompleted(true);
   });
 
   tearDown(() async {
@@ -211,7 +217,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
 
       expect(tester.takeException(), isNull);
-      expect(find.text('Archive'), findsWidgets);
+      expect(find.text('Hide'), findsWidgets);
 
       // Both branches stay mounted under StatefulShellRoute.indexedStack,
       // so switching tabs is what previously triggered a Hero tag
@@ -461,10 +467,44 @@ void main() {
         ),
       );
 
-      // First launch: walk the real onboarding UI. The continue button
-      // only renders once the ViewModel's async key generation has
-      // actually finished, unlike the bare presence of RecoveryPhraseView.
+      // Skip the first-week-setup wizard gate (unrelated to what this test
+      // covers) so Confirm below lands straight on Home, matching every
+      // other test's setUp() in this file.
+      await SettingsRepository().setFirstWeekSetupCompleted(true);
+
+      // First launch: walk the real onboarding UI, in the current
+      // deferred-onboarding-first-entry order - currency first (which
+      // commits the identity), then the starter account's name, then a
+      // guided first entry, and only then the recovery-phrase
+      // acknowledgment screens (app_router.dart's _onboardingPaths).
       await pumpApp(tester, buildAppFor(firstInstallRepository, freshDb));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      // CurrencySelectionView: defaults to USD, so Continue needs no input.
+      await tester.tap(find.text('Continue'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      // FirstAccountNameView: defaults to a starter account name, so
+      // Continue needs no input here either.
+      await tester.tap(find.text('Continue'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      // RecordTransactionView (the guided first entry) - this becomes the
+      // entry this test proves survives restore intact below.
+      await tester.enterText(find.byType(TextField).first, '10');
+      await tester.pump();
+      await tester.tap(find.byType(DropdownButtonFormField<String>).last);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.tap(find.text('Salary').last);
+      await tester.pump();
+      await tester.tap(find.text('Save'));
+      // The continue button only renders once the ViewModel's async key
+      // generation has actually finished, unlike the bare presence of
+      // RecoveryPhraseView.
       final continueButton = find.text('I\'ve saved my recovery phrase');
       await pumpUntilFound(tester, continueButton);
       expect(continueButton, findsOneWidget);
@@ -510,42 +550,19 @@ void main() {
       await tester.ensureVisible(confirmButton);
       await tester.pump(const Duration(milliseconds: 300));
       await tester.tap(confirmButton);
-      // Confirming the recovery phrase only validates it now - it no
-      // longer commits the identity directly. That happens one step
-      // later, once a currency is chosen (multi-currency-support
-      // design.md addendum), so the next screen is the currency picker.
-      await pumpUntilFound(tester, find.text('Choose your currency'));
+      // Confirming now goes straight to Home - the identity (and its
+      // currency) was already committed back at CurrencySelectionView.
+      await pumpUntilFound(
+        tester,
+        find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
+      );
       expect(
         find.textContaining('doesn\'t match'),
         findsNothing,
         reason: 'confirmation words were rejected',
       );
+      expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
 
-      final finishSetupButton = find.text('Finish setup');
-      await tester.ensureVisible(finishSetupButton);
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(finishSetupButton);
-      // Finishing triggers confirmFirstIdentity + verifyChain, then the
-      // redirect's own currentIdentity/hasMatchingStoredKey/verifyChain
-      // chain before /home finally builds - wait for a widget that only
-      // exists there.
-      await pumpUntilFound(tester, find.text('NET POSITION'));
-      expect(find.text('NET POSITION'), findsOneWidget);
-
-      final categories = await firstInstallRepository.watchCategories().first;
-      final incomeId = categories
-          .firstWhere((a) => a.type == AccountType.income)
-          .id;
-      final accounts = await firstInstallRepository
-          .watchFinancialAccounts()
-          .first;
-      await firstInstallRepository.recordTransaction(
-        amountMinor: 1000,
-        direction: TransactionDirection.moneyIn,
-        categoryId: incomeId,
-        financialAccountId: accounts.first.id,
-        transactionDate: DateTime(2026, 1, 15),
-      );
       final originalEntry =
           (await firstInstallRepository.watchEntries().first).single;
 
@@ -563,8 +580,11 @@ void main() {
 
       await tester.enterText(find.byType(TextField).first, words.join(' '));
       await tester.tap(find.text('Restore'));
-      await pumpUntilFound(tester, find.text('NET POSITION'));
-      expect(find.text('NET POSITION'), findsOneWidget);
+      await pumpUntilFound(
+        tester,
+        find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
+      );
+      expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
 
       final entries = await reinstalledRepository.watchEntries().first;
       expect(entries, hasLength(1));
@@ -625,8 +645,11 @@ void main() {
       await tester.tap(migrateButton);
       // Migration re-signs every entry (async crypto per entry) before the
       // redirect chain runs again for /home.
-      await pumpUntilFound(tester, find.text('NET POSITION'));
-      expect(find.text('NET POSITION'), findsOneWidget);
+      await pumpUntilFound(
+        tester,
+        find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
+      );
+      expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
 
       final newIdentity = (await postLossRepository.currentIdentity())!;
       expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
@@ -800,15 +823,15 @@ void main() {
       await tester.tap(popups.at(1));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.text('Archive'));
+      await tester.tap(find.text('Hide'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
       expect(
-        find.text('Cannot archive a group with active financial accounts.'),
+        find.text('Cannot hide a group that still has active accounts.'),
         findsOneWidget,
       );
 
@@ -830,10 +853,10 @@ void main() {
       await tester.tap(popups.last);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.text('Archive'));
+      await tester.tap(find.text('Hide'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 

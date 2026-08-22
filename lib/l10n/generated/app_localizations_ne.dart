@@ -1607,7 +1607,7 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'सक्रिय: माथिको रकम यो खाताबाट लिइएको कुल रकम हो; शुल्क त्यसैबाट कटौती हुन्छ।';
+      'सक्रिय हुँदा: माथिको रकम यो खाताबाट काटिएको कुल रकम हो; शुल्क त्यहीबाट कटाइन्छ।';
 
   @override
   String get feeBankBlurb => 'तपाईंको बैंक वा बिचौलियाले लिने अग्रिम कमिसन।';
@@ -1656,7 +1656,7 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name अब तिर्नुपर्नेको रूपमा प्रस्ताव गरिनेछैन। यसले पहिले नै रेकर्ड गरेका विगतका कारोबारमा असर पर्दैन।';
+    return '$name अब म्याद पुगेको रूपमा देखिने छैन। यसले पहिले नै रेकर्ड गरेका कारोबारहरू प्रभावित हुनेछैनन्।';
   }
 
   @override
@@ -1736,7 +1736,7 @@ class AppLocalizationsNe extends AppLocalizations {
   String get looksLikeLoss => 'यो नोक्सान जस्तो देखिन्छ';
 
   @override
-  String get looksLikeBreakEven => 'यो ब्रेक-इभन जस्तो देखिन्छ';
+  String get looksLikeBreakEven => 'यो नाफा-नोक्सान बराबर जस्तो देखिन्छ';
 
   @override
   String sellableQuantity(String name, String qty) {

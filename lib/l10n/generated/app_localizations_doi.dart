@@ -1023,7 +1023,7 @@ class AppLocalizationsDoi extends AppLocalizations {
   String get descriptionColumns => 'विवरण कॉलम';
 
   @override
-  String get referenceIdColumn => 'संदर्भ id कॉलम (वैकल्पिक)';
+  String get referenceIdColumn => 'संदर्भ ID कॉलम (वैकल्पिक)';
 
   @override
   String get skippedRows => 'छोड़े गे रो';
@@ -1601,7 +1601,7 @@ class AppLocalizationsDoi extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'उप्पर: उप्पर दित्ती रकम इस खाते थमां लेआ कुल रकम ऐ; फीस इसदे च्चा ही निकलदी ऐ।';
+      'चालू होने पर: उप्पर दित्ती रकम इस खाते थमां लेआ कुल रकम ऐ; फीस इसदे च्चा ही कटदी ऐ।';
 
   @override
   String get feeBankBlurb =>

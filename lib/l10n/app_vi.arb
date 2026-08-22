@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "Cụm từ khôi phục của bạn",
   "recoveryPhraseConfirmTitle": "Xác nhận cụm từ của bạn",
-  "recoveryPhraseBlurb": "24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Smara Accounting không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.",
+  "recoveryPhraseBlurb": "24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Sổ kế toán Smara không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.",
   "recoveryPhraseWriteDown": "Ghi lại các từ này theo đúng thứ tự và cất giữ ở nơi an toàn, tách biệt với thiết bị này.",
   "iveSavedRecoveryPhrase": "Tôi đã lưu cụm từ khôi phục của mình",
   "confirmPhraseBlurb": "Nhập các từ được yêu cầu từ cụm từ bạn vừa lưu.",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Mở khóa Smara Account",
+  "unlockBiometricReason": "Mở khóa Sổ kế toán Smara",
   "searchLabel": "Tìm",
   "openingBalance": "Số dư đầu kỳ",
   "transferToName": "Chuyển khoản: {name}",

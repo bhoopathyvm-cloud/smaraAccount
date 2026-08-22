@@ -787,7 +787,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Te 24 słowa to jedyny sposób na odzyskanie historii transakcji, jeśli to urządzenie zostanie zgubione, zresetowane lub wymienione. Smara Accounting nie ma serwera i nie może ich odzyskać za Ciebie.\n\nJeśli zgubisz to urządzenie razem z tą frazą, każda zapisana przez Ciebie transakcja stanie się trwale niemożliwa do zweryfikowania.';
+      'Te 24 słowa to jedyny sposób na odzyskanie historii transakcji, jeśli to urządzenie zostanie zgubione, zresetowane lub wymienione. Smara Księgowość nie ma serwera i nie może ich odzyskać za Ciebie.\n\nJeśli zgubisz to urządzenie razem z tą frazą, każda zapisana przez Ciebie transakcja stanie się trwale niemożliwa do zweryfikowania.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1548,7 +1548,7 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Odblokuj Smara Accounting';
+  String get unlockBiometricReason => 'Odblokuj Smara Księgowość';
 
   @override
   String get searchLabel => 'Szukaj';

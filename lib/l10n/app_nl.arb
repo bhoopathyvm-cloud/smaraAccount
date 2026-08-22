@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "Je herstelzin",
   "recoveryPhraseConfirmTitle": "Bevestig je zin",
-  "recoveryPhraseBlurb": "Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.",
+  "recoveryPhraseBlurb": "Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Boekhouding heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.",
   "recoveryPhraseWriteDown": "Schrijf deze woorden in volgorde op en bewaar ze op een veilige plek, gescheiden van dit toestel.",
   "iveSavedRecoveryPhrase": "Ik heb mijn herstelzin opgeslagen",
   "confirmPhraseBlurb": "Voer de gevraagde woorden in uit de zin die je zojuist hebt opgeslagen.",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Smara Account ontgrendelen",
+  "unlockBiometricReason": "Smara Boekhouding ontgrendelen",
   "searchLabel": "Zoeken",
   "openingBalance": "Beginsaldo",
   "transferToName": "Overboeking: {name}",
@@ -931,7 +931,7 @@
   "openedFavouriteResearchTool": "Je favoriete onderzoekstool geopend.",
   "looksLikeGain": "Dit lijkt een winst",
   "looksLikeLoss": "Dit lijkt een verlies",
-  "looksLikeBreakEven": "Dit lijkt break-even",
+  "looksLikeBreakEven": "Dit lijkt quitte",
   "sellableQuantity": "{name} ({qty} verkoopbaar)",
   "@sellableQuantity": {
     "placeholders": {

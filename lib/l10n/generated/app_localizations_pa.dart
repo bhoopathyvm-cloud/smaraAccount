@@ -282,7 +282,7 @@ class AppLocalizationsPa extends AppLocalizations {
   String get providerStooq => 'Stooq (ਰੋਜ਼ਾਨਾ ਕੀਮਤਾਂ)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (ਚਾਰਟ API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -1025,7 +1025,7 @@ class AppLocalizationsPa extends AppLocalizations {
   String get descriptionColumns => 'ਵੇਰਵਾ ਕਾਲਮ(ਾਂ)';
 
   @override
-  String get referenceIdColumn => 'ਹਵਾਲਾ id ਕਾਲਮ (ਵਿਕਲਪਿਕ)';
+  String get referenceIdColumn => 'ਹਵਾਲਾ ID ਕਾਲਮ (ਵਿਕਲਪਿਕ)';
 
   @override
   String get skippedRows => 'ਛੱਡੀਆਂ ਗਈਆਂ ਰੋਆਂ';

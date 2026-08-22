@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (ECB ହାର)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ଦୈନିକ ମୂଲ୍ୟ)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerYahooFinance": "Yahoo Finance (ଚାର୍ଟ API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -482,7 +482,7 @@
   "creditColumn": "କ୍ରେଡିଟ୍ ସ୍ତମ୍ଭ",
   "decimalSeparator": "ଦଶମିକ ବିଭାଜକ (. କିମ୍ବା ,)",
   "descriptionColumns": "ବର୍ଣ୍ଣନା ସ୍ତମ୍ଭ(ଗୁଡ଼ିକ)",
-  "referenceIdColumn": "ରେଫରେନ୍ସ id ସ୍ତମ୍ଭ (ଇଚ୍ଛାଧୀନ)",
+  "referenceIdColumn": "ରେଫରେନ୍ସ ID ସ୍ତମ୍ଭ (ଇଚ୍ଛାଧୀନ)",
   "skippedRows": "ଛାଡ଼ିଥିବା ଧାଡ଼ି",
   "parsedTransactionCount": "{count} କାରବାର ପ୍ରକ୍ରିୟାକରଣ ହେଲା",
   "@parsedTransactionCount": {

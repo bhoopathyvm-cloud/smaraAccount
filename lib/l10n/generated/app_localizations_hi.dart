@@ -786,7 +786,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'ये 24 शब्द इस डिवाइस के खो जाने, रीसेट होने, या बदले जाने पर आपके लेनदेन इतिहास को पुनर्प्राप्त करने का एकमात्र तरीका हैं। Smara Accounting का कोई सर्वर नहीं है और यह इन्हें आपके लिए पुनर्प्राप्त नहीं कर सकता।\n\nयदि आप इस डिवाइस और इस फ्रेज़ दोनों को खो देते हैं, तो आपके द्वारा दर्ज किया गया हर लेनदेन स्थायी रूप से असत्यापन योग्य हो जाता है।';
+      'ये 24 शब्द इस डिवाइस के खो जाने, रीसेट होने, या बदले जाने पर आपके लेनदेन इतिहास को पुनर्प्राप्त करने का एकमात्र तरीका हैं। स्मारा खाता का कोई सर्वर नहीं है और यह इन्हें आपके लिए पुनर्प्राप्त नहीं कर सकता।\n\nयदि आप इस डिवाइस और इस फ्रेज़ दोनों को खो देते हैं, तो आपके द्वारा दर्ज किया गया हर लेनदेन स्थायी रूप से असत्यापन योग्य हो जाता है।';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1543,7 +1543,7 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara Account अनलॉक करें';
+  String get unlockBiometricReason => 'स्मारा खाता अनलॉक करें';
 
   @override
   String get searchLabel => 'खोज';
@@ -1608,7 +1608,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'चालू: ऊपर दी गई राशि इस खाते से ली गई कुल राशि है; शुल्क इसी में से निकाला जाता है।';
+      'चालू होने पर: ऊपर दी गई राशि इस खाते से ली गई कुल राशि है; शुल्क उसी में से कटता है।';
 
   @override
   String get feeBankBlurb =>
@@ -1658,7 +1658,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name अब देय के रूप में पेश नहीं किया जाएगा। इसके द्वारा पहले से दर्ज किए गए लेनदेन प्रभावित नहीं होंगे।';
+    return '$name अब देय होने पर नहीं दिखेगा। इससे पहले दर्ज किए गए लेनदेन प्रभावित नहीं होंगे।';
   }
 
   @override
@@ -1737,7 +1737,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get looksLikeLoss => 'यह हानि जैसा लगता है';
 
   @override
-  String get looksLikeBreakEven => 'यह ब्रेक-ईवन जैसा लगता है';
+  String get looksLikeBreakEven => 'यह न लाभ न हानि जैसा लगता है';
 
   @override
   String sellableQuantity(String name, String qty) {

@@ -791,7 +791,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Queste 24 parole sono l\'unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Accounting non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.';
+      'Queste 24 parole sono l\'unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Contabilità non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.';
 
   @override
   String get recoveryPhraseWriteDown =>

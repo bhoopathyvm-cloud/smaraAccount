@@ -286,7 +286,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get providerStooq => 'Stooq (napi árfolyamok)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (grafikon API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -794,7 +794,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara Accountingnak nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.';
+      'Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara könyvelésnek nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1560,7 +1560,7 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara Account feloldása';
+  String get unlockBiometricReason => 'Smara könyvelés feloldása';
 
   @override
   String get searchLabel => 'Keresés';

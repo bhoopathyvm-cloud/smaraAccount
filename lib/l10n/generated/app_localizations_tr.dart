@@ -789,7 +789,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Accounting\'in bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.';
+      'Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Muhasebe\'nin bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1543,7 +1543,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara Account\'un kilidini aç';
+  String get unlockBiometricReason => 'Smara Muhasebe\'nin kilidini aç';
 
   @override
   String get searchLabel => 'Ara';

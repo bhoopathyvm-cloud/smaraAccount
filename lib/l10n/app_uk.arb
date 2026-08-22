@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (курси ЄЦБ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (щоденні котирування)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerYahooFinance": "Yahoo Finance (API графіків)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "Ваша відновлювальна фраза",
   "recoveryPhraseConfirmTitle": "Підтвердьте свою фразу",
-  "recoveryPhraseBlurb": "Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. Smara Accounting не має сервера і не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.",
+  "recoveryPhraseBlurb": "Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. У Smara обліку немає сервера, і він не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.",
   "recoveryPhraseWriteDown": "Запишіть ці слова по порядку та зберігайте їх у безпечному місці окремо від цього пристрою.",
   "iveSavedRecoveryPhrase": "Я зберіг(ла) свою відновлювальну фразу",
   "confirmPhraseBlurb": "Введіть запитувані слова з фрази, яку ви щойно зберегли.",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Розблокувати Smara Account",
+  "unlockBiometricReason": "Розблокувати Smara облік",
   "searchLabel": "Пошук",
   "openingBalance": "Початковий баланс",
   "transferToName": "Переказ: {name}",

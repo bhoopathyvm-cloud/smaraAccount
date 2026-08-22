@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (ECB రేట్లు)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (రోజువారీ కోట్‌లు)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerYahooFinance": "Yahoo Finance (చార్ట్ API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "స్మారా ఖాతాను అన్‌లాక్ చేయండి",
+  "unlockBiometricReason": "స్మారా అకౌంటింగ్‌ను అన్‌లాక్ చేయండి",
   "searchLabel": "శోధించు",
   "openingBalance": "ప్రారంభ నిల్వ",
   "transferToName": "బదిలీ: {name}",
@@ -811,7 +811,7 @@
   },
   "leaveBlankIfRateUnknown": "మారకపు రేటు ఇంకా తెలియకపోతే ఖాళీగా వదలండి.",
   "recordTradeBlurb": "ఇప్పటికే జరిగిన ట్రేడ్‌ను నమోదు చేయండి. ఈ యాప్ ఆర్డర్‌లను ఉంచదు.",
-  "feeOnTopBlurb": "ఆన్: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకున్న మొత్తం; రుసుము దాని నుండి తీసివేయబడుతుంది.",
+  "feeOnTopBlurb": "ఆన్‌లో ఉంటే: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకునే మొత్తం; రుసుము దానిలోనుంచే తీసివేయబడుతుంది.",
   "feeBankBlurb": "మీ బ్యాంక్ లేదా మధ్యవర్తి వసూలు చేసే ముందస్తు కమిషన్.",
   "validationPinMinLength": "PIN కనీసం 4 అంకెలు ఉండాలి.",
   "restoreBackupBlurb": "ఇది ప్రస్తుతం ఈ యాప్‌లో ఉన్న ప్రతిదాన్ని బ్యాకప్‌తో భర్తీ చేస్తుంది — ఇది విలీనం చేయదు. బ్యాకప్ ఫైల్‌ను ఎంచుకుని దానిని రక్షించిన పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.",
@@ -858,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} ఇక గడువుగా అందించబడదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.",
+  "deleteTemplateBody": "{name} ఇక గడువు వచ్చినప్పుడు కనిపించదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +931,7 @@
   "openedFavouriteResearchTool": "మీ ఇష్టమైన పరిశోధన సాధనం తెరవబడింది.",
   "looksLikeGain": "ఇది లాభంలా కనిపిస్తోంది",
   "looksLikeLoss": "ఇది నష్టంలా కనిపిస్తోంది",
-  "looksLikeBreakEven": "ఇది బ్రేక్-ఈవెన్‌లా కనిపిస్తోంది",
+  "looksLikeBreakEven": "ఇది లాభనష్టాల్లేనట్టుగా కనిపిస్తోంది",
   "sellableQuantity": "{name} ({qty} అమ్మదగినవి)",
   "@sellableQuantity": {
     "placeholders": {

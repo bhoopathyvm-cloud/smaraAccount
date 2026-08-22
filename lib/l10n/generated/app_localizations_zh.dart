@@ -771,7 +771,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      '如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara Accounting 没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。';
+      '如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara记账没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。';
 
   @override
   String get recoveryPhraseWriteDown => '按顺序写下这些单词，并将其存放在与此设备分开的安全地方。';
@@ -1445,7 +1445,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => '解锁 Smara Account';
+  String get unlockBiometricReason => '解锁 Smara记账';
 
   @override
   String get searchLabel => '搜索';

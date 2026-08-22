@@ -283,7 +283,7 @@ class AppLocalizationsTe extends AppLocalizations {
   String get providerStooq => 'Stooq (రోజువారీ కోట్‌లు)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (చార్ట్ API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -1543,7 +1543,7 @@ class AppLocalizationsTe extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'స్మారా ఖాతాను అన్‌లాక్ చేయండి';
+  String get unlockBiometricReason => 'స్మారా అకౌంటింగ్‌ను అన్‌లాక్ చేయండి';
 
   @override
   String get searchLabel => 'శోధించు';
@@ -1608,7 +1608,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'ఆన్: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకున్న మొత్తం; రుసుము దాని నుండి తీసివేయబడుతుంది.';
+      'ఆన్‌లో ఉంటే: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకునే మొత్తం; రుసుము దానిలోనుంచే తీసివేయబడుతుంది.';
 
   @override
   String get feeBankBlurb =>
@@ -1658,7 +1658,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name ఇక గడువుగా అందించబడదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.';
+    return '$name ఇక గడువు వచ్చినప్పుడు కనిపించదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.';
   }
 
   @override
@@ -1738,7 +1738,7 @@ class AppLocalizationsTe extends AppLocalizations {
   String get looksLikeLoss => 'ఇది నష్టంలా కనిపిస్తోంది';
 
   @override
-  String get looksLikeBreakEven => 'ఇది బ్రేక్-ఈవెన్‌లా కనిపిస్తోంది';
+  String get looksLikeBreakEven => 'ఇది లాభనష్టాల్లేనట్టుగా కనిపిస్తోంది';
 
   @override
   String sellableQuantity(String name, String qty) {

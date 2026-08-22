@@ -283,7 +283,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get providerStooq => 'Stooq (kuotasi harian)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (API grafik)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -788,7 +788,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      '24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Accounting tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.';
+      '24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Pembukuan tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1549,7 +1549,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Buka kunci Smara Account';
+  String get unlockBiometricReason => 'Buka kunci Smara Pembukuan';
 
   @override
   String get searchLabel => 'Cari';

@@ -784,7 +784,7 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'જો આ ડિવાઇસ ખોવાઈ જાય, રીસેટ થાય અથવા બદલાય, તો તમારો વ્યવહાર ઇતિહાસ પુનઃપ્રાપ્ત કરવાનો આ 24 શબ્દો જ એકમાત્ર માર્ગ છે. Smara Accounting પાસે કોઈ સર્વર નથી અને તે તમારા માટે તેમને પુનઃપ્રાપ્ત કરી શકતું નથી.\n\nજો તમે આ ડિવાઇસ અને આ ફ્રેઝ બંને ગુમાવો, તો તમે નોંધેલો દરેક વ્યવહાર કાયમ માટે અચકાસી ન શકાય તેવો બની જાય છે.';
+      'જો આ ડિવાઇસ ખોવાઈ જાય, રીસેટ થાય અથવા બદલાય, તો તમારો વ્યવહાર ઇતિહાસ પુનઃપ્રાપ્ત કરવાનો આ 24 શબ્દો જ એકમાત્ર માર્ગ છે. સ્મારા ખાતા પાસે કોઈ સર્વર નથી અને તે તમારા માટે તેમને પુનઃપ્રાપ્ત કરી શકતું નથી.\n\nજો તમે આ ડિવાઇસ અને આ ફ્રેઝ બંને ગુમાવો, તો તમે નોંધેલો દરેક વ્યવહાર કાયમ માટે અચકાસી ન શકાય તેવો બની જાય છે.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1535,7 +1535,7 @@ class AppLocalizationsGu extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara Account અનલૉક કરો';
+  String get unlockBiometricReason => 'સ્મારા ખાતું અનલૉક કરો';
 
   @override
   String get searchLabel => 'શોધો';
@@ -1600,7 +1600,7 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'ચાલુ: ઉપરની રકમ આ ખાતામાંથી લેવાયેલી કુલ રકમ છે; ફી તેમાંથી બાદ થાય છે.';
+      'ચાલુ હોય ત્યારે: ઉપરની રકમ આ ખાતામાંથી લેવામાં આવેલ કુલ રકમ છે; ફી તેમાંથી જ કપાય છે.';
 
   @override
   String get feeBankBlurb =>
@@ -1650,7 +1650,7 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name હવે બાકી તરીકે ઓફર થશે નહીં. તેણે પહેલેથી નોંધેલા ભૂતકાળના વ્યવહારો પર અસર થશે નહીં.';
+    return '$name હવે બાકી હોય ત્યારે દેખાશે નહીં. તેના દ્વારા પહેલેથી નોંધાયેલા વ્યવહારો પર અસર નહીં થાય.';
   }
 
   @override
@@ -1730,7 +1730,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get looksLikeLoss => 'આ નુકસાન જેવું લાગે છે';
 
   @override
-  String get looksLikeBreakEven => 'આ બ્રેક-ઇવન જેવું લાગે છે';
+  String get looksLikeBreakEven => 'આ નફો-નુકસાન સરખું લાગે છે';
 
   @override
   String sellableQuantity(String name, String qty) {

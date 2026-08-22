@@ -790,7 +790,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Accounting nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.';
+      'Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Contabilitate nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1556,7 +1556,7 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Deblocați Smara Accounting';
+  String get unlockBiometricReason => 'Deblocați Smara Contabilitate';
 
   @override
   String get searchLabel => 'Căutare';

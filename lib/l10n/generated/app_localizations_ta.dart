@@ -283,7 +283,7 @@ class AppLocalizationsTa extends AppLocalizations {
   String get providerStooq => 'Stooq (தினசரி விலைகள்)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (வரைபட API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -1556,7 +1556,7 @@ class AppLocalizationsTa extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'ஸ்மாரா கணக்கைத் திற';
+  String get unlockBiometricReason => 'ஸ்மாரா கணக்கியலைத் திறக்கவும்';
 
   @override
   String get searchLabel => 'தேடு';
@@ -1621,7 +1621,7 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'மேலே: மேலே உள்ள தொகை இந்த கணக்கிலிருந்து எடுக்கப்படும் மொத்தம்; கட்டணம் அதிலிருந்து வெளியேறும்.';
+      'இயக்கப்பட்டால்: மேலே உள்ள தொகை இந்தக் கணக்கிலிருந்து எடுக்கப்படும் மொத்தத் தொகை; கட்டணம் அதிலிருந்தே கழிக்கப்படும்.';
 
   @override
   String get feeBankBlurb =>
@@ -1672,7 +1672,7 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name இனி நிலுவையில் உள்ளதாக வழங்கப்படாது. அது ஏற்கனவே பதிவு செய்த கடந்த பரிவர்த்தனைகள் பாதிக்கப்படாது.';
+    return '$name இனி நிலுவை வந்தபோது காட்டப்படாது. அது ஏற்கனவே பதிவு செய்த பரிவர்த்தனைகள் பாதிக்கப்படாது.';
   }
 
   @override
@@ -1752,7 +1752,7 @@ class AppLocalizationsTa extends AppLocalizations {
   String get looksLikeLoss => 'இது ஒரு இழப்பு போல் தெரிகிறது';
 
   @override
-  String get looksLikeBreakEven => 'இது சம நிலை போல் தெரிகிறது';
+  String get looksLikeBreakEven => 'இது லாபமோ நஷ்டமோ இல்லாததாகத் தெரிகிறது';
 
   @override
   String sellableQuantity(String name, String qty) {

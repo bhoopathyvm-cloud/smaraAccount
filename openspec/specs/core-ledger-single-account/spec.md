@@ -4,6 +4,15 @@
 
 Provide the foundational double-entry accounting core for a single user on a single device: one financial account, a small starter chart of Income/Expense categories, transaction recording that derives a balanced journal entry without asking the user to pick debit/credit sides, strict immutability of posted entries with correction via reversal, a chronological register with running balance, and an income-vs-expense summary for a selected date range. No networking, multi-account, or business-feature support is in scope here — later changes build on this domain model without needing to reshape it.
 
+## Background References
+
+These references are non-normative context for immutable posted entries,
+correction-by-reversal, and the register as an audit trail:
+
+- [OpenStax: audit trails in accounting](https://openstax.org/books/principles-financial-accounting/pages/7-1-define-and-describe-the-components-of-an-accounting-information-system)
+- [NIST: audit trail](https://csrc.nist.gov/glossary/term/audit_trail)
+- [IRS electronic accounting records FAQ](https://www.irs.gov/businesses/small-businesses-self-employed/use-of-electronic-accounting-software-records-frequently-asked-questions-and-answers)
+
 ## Requirements
 
 ### Requirement: Starter Chart of Accounts

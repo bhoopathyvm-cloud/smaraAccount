@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "Tu frase de recuperación",
   "recoveryPhraseConfirmTitle": "Confirma tu frase",
-  "recoveryPhraseBlurb": "Estas 24 palabras son la única forma de recuperar tu historial de transacciones si este dispositivo se pierde, se restablece o se sustituye. Smara Accounting no tiene servidor y no puede recuperarlas por ti.\n\nSi pierdes este dispositivo y esta frase juntos, cada transacción que hayas registrado se vuelve permanentemente inverificable.",
+  "recoveryPhraseBlurb": "Estas 24 palabras son la única forma de recuperar tu historial de transacciones si este dispositivo se pierde, se restablece o se sustituye. Smara Contabilidad no tiene servidor y no puede recuperarlas por ti.\n\nSi pierdes este dispositivo y esta frase juntos, cada transacción que hayas registrado se vuelve permanentemente inverificable.",
   "recoveryPhraseWriteDown": "Escribe estas palabras en orden y guárdalas en un lugar seguro, separado de este dispositivo.",
   "iveSavedRecoveryPhrase": "He guardado mi frase de recuperación",
   "confirmPhraseBlurb": "Introduce las palabras solicitadas de la frase que acabas de guardar.",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Desbloquear Smara Account",
+  "unlockBiometricReason": "Desbloquear Smara Contabilidad",
   "searchLabel": "Buscar",
   "openingBalance": "Saldo inicial",
   "transferToName": "Transferencia: {name}",

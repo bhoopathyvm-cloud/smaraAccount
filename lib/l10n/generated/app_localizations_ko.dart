@@ -1468,7 +1468,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara 계좌 잠금 해제';
+  String get unlockBiometricReason => 'Smara 회계 잠금 해제';
 
   @override
   String get searchLabel => '검색';

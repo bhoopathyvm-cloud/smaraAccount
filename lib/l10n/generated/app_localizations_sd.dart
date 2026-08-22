@@ -283,7 +283,7 @@ class AppLocalizationsSd extends AppLocalizations {
   String get providerStooq => 'Stooq (روزاني قيمتون)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (چارٽ API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -1532,7 +1532,7 @@ class AppLocalizationsSd extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'سمارا کاتو اڻلاڪ ڪريو';
+  String get unlockBiometricReason => 'سمارا اڪائونٽنگ اڻلاڪ ڪريو';
 
   @override
   String get searchLabel => 'ڳوليو';

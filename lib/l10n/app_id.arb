@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (kurs ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (kuotasi harian)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerYahooFinance": "Yahoo Finance (API grafik)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "Frasa pemulihan Anda",
   "recoveryPhraseConfirmTitle": "Konfirmasi frasa Anda",
-  "recoveryPhraseBlurb": "24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Accounting tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.",
+  "recoveryPhraseBlurb": "24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Pembukuan tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.",
   "recoveryPhraseWriteDown": "Tuliskan kata-kata ini secara berurutan dan simpan di tempat yang aman, terpisah dari perangkat ini.",
   "iveSavedRecoveryPhrase": "Saya telah menyimpan frasa pemulihan saya",
   "confirmPhraseBlurb": "Masukkan kata-kata yang diminta dari frasa yang baru saja Anda simpan.",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Buka kunci Smara Account",
+  "unlockBiometricReason": "Buka kunci Smara Pembukuan",
   "searchLabel": "Cari",
   "openingBalance": "Saldo awal",
   "transferToName": "Transfer: {name}",

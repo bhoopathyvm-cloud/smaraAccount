@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (ECB விகிதங்கள்)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (தினசரி விலைகள்)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerYahooFinance": "Yahoo Finance (வரைபட API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "ஸ்மாரா கணக்கைத் திற",
+  "unlockBiometricReason": "ஸ்மாரா கணக்கியலைத் திறக்கவும்",
   "searchLabel": "தேடு",
   "openingBalance": "தொடக்க இருப்பு",
   "transferToName": "பரிமாற்றம்: {name}",
@@ -811,7 +811,7 @@
   },
   "leaveBlankIfRateUnknown": "மாற்று விகிதம் இன்னும் தெரியவில்லை என்றால் காலியாக விடவும்.",
   "recordTradeBlurb": "ஏற்கனவே நடந்த ஒரு வர்த்தகத்தைப் பதிவு செய்யவும். இந்த செயலி ஆர்டர்களை வைக்காது.",
-  "feeOnTopBlurb": "மேலே: மேலே உள்ள தொகை இந்த கணக்கிலிருந்து எடுக்கப்படும் மொத்தம்; கட்டணம் அதிலிருந்து வெளியேறும்.",
+  "feeOnTopBlurb": "இயக்கப்பட்டால்: மேலே உள்ள தொகை இந்தக் கணக்கிலிருந்து எடுக்கப்படும் மொத்தத் தொகை; கட்டணம் அதிலிருந்தே கழிக்கப்படும்.",
   "feeBankBlurb": "உங்கள் வங்கி அல்லது இடைத்தரகர் வசூலிக்கும் முன்கூட்டிய கமிஷன்.",
   "validationPinMinLength": "PIN குறைந்தது 4 இலக்கங்களாக இருக்க வேண்டும்.",
   "restoreBackupBlurb": "இது இந்த செயலியில் தற்போது உள்ள அனைத்தையும் காப்புப் பிரதியுடன் மாற்றும் — இது இணைக்காது. காப்புப் பிரதி கோப்பைத் தேர்ந்தெடுத்து அதைப் பாதுகாத்த கடவுச்சொல்லை உள்ளிடவும்.",
@@ -858,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} இனி நிலுவையில் உள்ளதாக வழங்கப்படாது. அது ஏற்கனவே பதிவு செய்த கடந்த பரிவர்த்தனைகள் பாதிக்கப்படாது.",
+  "deleteTemplateBody": "{name} இனி நிலுவை வந்தபோது காட்டப்படாது. அது ஏற்கனவே பதிவு செய்த பரிவர்த்தனைகள் பாதிக்கப்படாது.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +931,7 @@
   "openedFavouriteResearchTool": "உங்கள் விருப்பமான ஆய்வுக் கருவி திறக்கப்பட்டது.",
   "looksLikeGain": "இது ஒரு லாபம் போல் தெரிகிறது",
   "looksLikeLoss": "இது ஒரு இழப்பு போல் தெரிகிறது",
-  "looksLikeBreakEven": "இது சம நிலை போல் தெரிகிறது",
+  "looksLikeBreakEven": "இது லாபமோ நஷ்டமோ இல்லாததாகத் தெரிகிறது",
   "sellableQuantity": "{name} ({qty} விற்கக்கூடியது)",
   "@sellableQuantity": {
     "placeholders": {

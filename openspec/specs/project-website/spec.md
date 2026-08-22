@@ -2,25 +2,43 @@
 
 ## Purpose
 
-A static GitHub Pages site (problem statement, build-approach narrative,
-technical documentation, capability listing) deployed via GitHub Actions
-and served from the author's custom domain.
+A static GitHub Pages site deployed via GitHub Actions and served from the
+author's personal domain, `bhoopathy.com`. The site introduces Bhoopathy
+on the landing page, then organizes public work under an Open Source
+section. Smara Account is the first project in that section, with its
+problem statement, build-approach narrative, technical documentation, and
+capability listing kept under the project page.
 
 ## Requirements
 
-### Requirement: Public Site States the Problem and the Approach
-The repository SHALL contain a static website under `pages/` whose home page states, in visitor-facing terms, the problem SMARA Account solves (existing accounting tools require trusting a cloud provider, or don't make tampering with recorded history genuinely difficult) and how this project solves it (a local-first, tamper-evident, double-entry ledger with no server). A separate page SHALL describe how the project was built: the AI spec-driven development approach via OpenSpec, and the propose → apply → archive workflow.
+### Requirement: Public Site Has Personal Home and Open Source Sections
+The repository SHALL contain a static website under `pages/` whose home page introduces Bhoopathy and his interests in visitor-facing terms, without making Smara Account the whole site's landing page. The top-level navigation SHALL expose Home and Open Source. The Open Source section SHALL list public projects, with Smara Account as the first project and room for future projects.
 
-#### Scenario: Home page states the problem and solution
+#### Scenario: Home page introduces the author
 - **WHEN** a visitor opens the site's home page
-- **THEN** it explains what problem the project solves and how, without requiring the visitor to already know the codebase
+- **THEN** it introduces Bhoopathy, his background, and his software interests in 200 words or fewer
+
+#### Scenario: Open Source page lists projects
+- **WHEN** a visitor opens the Open Source section
+- **THEN** it lists Smara Account as the first project and leaves the structure open for more projects later
+
+### Requirement: Smara Account Project Page States the Name, Problem, Approach, and User Benefit
+The Smara Account project page SHALL explain the Sanskrit meaning of "Smara" as remembrance, memory, or recollection, and connect that meaning to the project's goal of preserving financial history. It SHALL then state, in visitor-facing terms, the problem Smara Account solves (existing accounting tools require trusting a cloud provider, or don't make tampering with recorded history genuinely difficult), how this project solves it (a local-first, tamper-evident, double-entry ledger with no server), and what a non-technical user gets from that design (verified history, warnings instead of silently wrong totals, safer backup/export review, and an honest correction trail). A separate page under the Smara Account project SHALL describe how the project was built: the AI spec-driven development approach via OpenSpec, and the propose → apply → archive workflow.
+
+#### Scenario: Smara project page explains the project
+- **WHEN** a visitor opens the Smara Account project overview
+- **THEN** it explains what the name means, what problem the project solves, how, and why that helps an ordinary user, without requiring the visitor to already know the codebase
+
+#### Scenario: Site gives background references without requiring them
+- **WHEN** a visitor reads the public site
+- **THEN** the Smara Account pages provide optional cross-references to relevant security and accounting material, including NIST integrity/signature/hash definitions, OWASP logging guidance, secure audit-log research, accounting audit-trail explanations, electronic accounting record guidance, and an industry example of a cryptographically verifiable journal
 
 #### Scenario: A dedicated page explains the build approach
 - **WHEN** a visitor navigates to the "how it was built" page
 - **THEN** it explains the OpenSpec-driven, AI-authored development approach and the propose/apply/archive workflow
 
 ### Requirement: Technical Documentation Links to the Repository as Source of Truth
-The site SHALL contain a technical/architecture page summarizing the stack, layering, and security/privacy stance in visitor-friendly terms, and SHALL link to the corresponding files in the repository (`Specs/architecture/smara-architecture.md`, `smara-tech-guidelines.md`) rather than duplicating their full content, so the two never silently diverge.
+The Smara Account project section SHALL contain a technical/architecture page summarizing the stack, layering, and security/privacy stance in visitor-friendly terms, and SHALL link to the corresponding files in the repository (`Specs/architecture/smara-architecture.md`, `smara-tech-guidelines.md`) rather than duplicating their full content, so the two never silently diverge.
 
 #### Scenario: Architecture page summarizes rather than duplicates
 - **WHEN** a visitor reads the site's architecture page
@@ -28,7 +46,7 @@ The site SHALL contain a technical/architecture page summarizing the stack, laye
 - **AND** it links to the full internal documentation in the repository for anyone wanting complete detail
 
 ### Requirement: Site Lists Implemented Capabilities
-The site SHALL contain a page listing the project's implemented capabilities, derived from `openspec/specs/`, so a visitor can see concretely what the spec-driven approach has produced.
+The Smara Account project section SHALL contain a page listing the project's implemented capabilities, derived from `openspec/specs/`, so a visitor can see concretely what the spec-driven approach has produced.
 
 #### Scenario: Capability listing reflects shipped work
 - **WHEN** a visitor reads the "what's built" page

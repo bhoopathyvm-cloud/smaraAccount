@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "Kurtarma ifadeniz",
   "recoveryPhraseConfirmTitle": "İfadenizi onaylayın",
-  "recoveryPhraseBlurb": "Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Accounting''in bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.",
+  "recoveryPhraseBlurb": "Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Muhasebe''nin bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.",
   "recoveryPhraseWriteDown": "Bu kelimeleri sırasıyla yazın ve bu cihazdan ayrı, güvenli bir yerde saklayın.",
   "iveSavedRecoveryPhrase": "Kurtarma ifademi kaydettim",
   "confirmPhraseBlurb": "Az önce kaydettiğiniz ifadeden istenen kelimeleri girin.",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Smara Account''un kilidini aç",
+  "unlockBiometricReason": "Smara Muhasebe''nin kilidini aç",
   "searchLabel": "Ara",
   "openingBalance": "Açılış bakiyesi",
   "transferToName": "Transfer: {name}",

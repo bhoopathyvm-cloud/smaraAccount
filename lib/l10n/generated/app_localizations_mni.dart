@@ -282,7 +282,7 @@ class AppLocalizationsMni extends AppLocalizations {
   String get providerStooq => 'Stooq (ꯅꯨꯃꯤꯠ ꯈꯨꯗꯤꯡꯒꯤ ꯗꯥꯝ)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (ꯆꯥꯔꯠ API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
