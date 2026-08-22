@@ -29,23 +29,30 @@ class SnapshotHidingOverlay extends StatelessWidget {
         final shouldCover =
             appLockController.isBackgrounded &&
             appLockController.isSnapshotHidingEnabled;
-        return Stack(
-          children: [
-            child,
-            if (shouldCover)
-              Positioned.fill(
-                child: ColoredBox(
-                  color: AppColors.primary,
-                  child: Center(
-                    child: Icon(
-                      Icons.lock_outline,
-                      size: 48,
-                      color: AppColors.cardBackground,
+        // This overlay sits above MaterialApp.router (see class doc), so no
+        // Directionality ancestor is guaranteed - Stack's default alignment
+        // and the cover's Icon both need one. The cover has no directional
+        // content, so a fixed ltr is fine regardless of the app's locale.
+        return Directionality(
+          textDirection: TextDirection.ltr,
+          child: Stack(
+            children: [
+              child,
+              if (shouldCover)
+                Positioned.fill(
+                  child: ColoredBox(
+                    color: AppColors.primary,
+                    child: Center(
+                      child: Icon(
+                        Icons.lock_outline,
+                        size: 48,
+                        color: AppColors.cardBackground,
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         );
       },
     );
