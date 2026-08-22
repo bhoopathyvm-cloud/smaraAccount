@@ -244,7 +244,7 @@ In addition to the default mode where a transfer fee posts as an additional debi
 - **AND** the fee posts as an additional debit, as already specified by the transfer fee requirement
 
 ### Requirement: Per-Account Balance and Register
-The system SHALL compute a current display balance for each financial account from its postings (asset balance = sum of included postings; liability amount owed = negated sum of included postings). The system SHALL provide a reverse-chronological register for a selected financial account showing a running display balance for that account. The most recently dated entry SHALL be listed first, so that it and the account's current balance are visible without scrolling. Running-balance amounts SHALL still be computed oldest-to-newest so each row's balance is as of that entry. Register rows SHALL correctly represent income/expense entries (category counterpart), transfers (counterparty account counterpart), and opening-balance entries (opening-balance counterpart label). The register SHALL remain fully readable for an archived financial account, including its history and current balance. The register's add-transaction control SHALL be disabled whenever the account currently selected in the register is archived.
+The system SHALL compute a current display balance for each financial account from its postings (asset balance = sum of included postings; liability amount owed = negated sum of included postings). The system SHALL provide a reverse-chronological register for a selected financial account showing a running display balance for that account. The most recently dated entry SHALL be listed first, so that it and the account's current balance are visible without scrolling. Running-balance amounts SHALL still be computed oldest-to-newest so each row's balance is as of that entry. Register rows SHALL correctly represent income/expense entries (category counterpart, or every category counterpart when the entry is a split, not only the first one found), transfers (counterparty account counterpart), and opening-balance entries (opening-balance counterpart label). The register SHALL remain fully readable for an archived financial account, including its history and current balance. The register's add-transaction control SHALL be disabled whenever the account currently selected in the register is archived.
 
 #### Scenario: Register is scoped to one account
 - **WHEN** the user opens the register for a specific financial account
@@ -281,6 +281,89 @@ The system SHALL compute a current display balance for each financial account fr
 - **WHEN** the user records a new entry against the currently viewed account
 - **THEN** the new entry appears as the first (topmost) row in the register
 - **AND** its running balance equals the account's current balance
+
+#### Scenario: A split entry's register row shows every category
+- **WHEN** the user views a split entry (one financial-account leg, multiple category legs) in that account's register
+- **THEN** the row's label reflects all of the split's categories, not only the first one encountered
+- **AND** the row's amount is the entry's full financial-account leg, unaffected by how many category legs it has
+
+### Requirement: Unarchive Financial Account
+The user SHALL be able to restore an archived financial account to active status. A restored account SHALL appear in pickers for new transactions and transfers. If the account's current group is itself archived, unarchiving the account SHALL also unarchive that group in the same action, so the account is never left referencing an archived group.
+
+#### Scenario: Unarchive account
+- **WHEN** the user restores an archived financial account
+- **THEN** the account appears when recording new spent received or moved money
+- **AND** `archivedAt` is cleared
+
+#### Scenario: Unarchiving an account also unarchives its archived group
+- **WHEN** the user restores an archived financial account whose group is itself archived
+- **THEN** both the account's `archivedAt` and the group's `archivedAt` are cleared
+- **AND** the group is available for assignment again
+
+### Requirement: Unarchive Account Group
+The user SHALL be able to restore an archived user-created account group to active status. A restored group SHALL be available for assignment to financial accounts of its kind and currency. Unarchiving a group SHALL NOT itself unarchive any of the accounts that reference it — that is done independently, per account. A system group SHALL NOT need this action, since system groups are never archived in the first place.
+
+#### Scenario: Unarchive a user-created group
+- **WHEN** the user restores an archived user-created account group
+- **THEN** the group is available for assignment to new or reassigned financial accounts
+- **AND** `archivedAt` is cleared
+
+#### Scenario: Unarchiving a group does not unarchive its former members
+- **WHEN** the user unarchives a group that has previously-archived member accounts
+- **THEN** those accounts remain archived until unarchived individually
+
+### Requirement: Liability Accounts May Be Flagged as Credit Cards
+When creating a liability financial account, the user SHALL be able to mark it as a credit card. The flag SHALL NOT be changeable after creation. An asset account SHALL NOT be markable as a credit card. A credit-card-flagged account remains an ordinary liability account for balance, archive, rename, transfer, and transaction-recording purposes — the flag changes only labeling and capture-flow defaults, not posting behavior.
+
+#### Scenario: Create a credit card account
+- **WHEN** the user creates a liability financial account marked as a credit card, with a name and a group
+- **THEN** the account is flagged as a credit card
+- **AND** it behaves as an ordinary liability account for balance, transfers, and transaction recording
+
+#### Scenario: An asset account cannot be flagged as a credit card
+- **WHEN** the user attempts to mark an asset financial account as a credit card
+- **THEN** the system rejects the create or the flag
+
+#### Scenario: The credit-card flag is immutable
+- **WHEN** the user attempts to change an existing account's credit-card flag after creation
+- **THEN** the system rejects the change
+
+### Requirement: Closeout Transfer Is Offered From the Archived Account Register
+When an archived financial account has a strictly positive current display balance, the system SHALL offer a closeout-transfer action on that account's register. The action SHALL let the user choose a different, active destination financial account and SHALL post the archived account's full current display balance. The amount posted SHALL be computed at submit time from the account's current display balance; it SHALL NOT be taken from a user-editable amount field. The general Transfer screen SHALL continue to exclude archived financial accounts as both source and destination. When the archived account's current display balance is zero or negative, the closeout action SHALL NOT be offered.
+
+#### Scenario: Closeout action shown for an archived account with a positive balance
+- **WHEN** the user opens the register for an archived financial account whose current display balance is strictly positive
+- **THEN** the system offers a closeout-transfer action on that register
+- **AND** the ordinary register-scoped Transfer action remains unavailable
+
+#### Scenario: Closeout action hidden when the balance is not positive
+- **WHEN** the user opens the register for an archived financial account whose current display balance is zero or negative
+- **THEN** the system does not offer a closeout-transfer action
+
+#### Scenario: Closeout amount is the full current balance, not user-entered
+- **WHEN** the user confirms a closeout transfer to a different, active financial account
+- **THEN** the posted source amount equals the archived account's current display balance at submit time
+- **AND** the user is not asked to type that amount
+
+#### Scenario: General transfer screen still excludes archived accounts
+- **WHEN** the user opens the general Transfer screen
+- **THEN** archived financial accounts are not offered as source or destination
+- **AND** closeout is not started from that screen
+
+### Requirement: Cross-Currency Closeout Requires a Known Destination Amount
+When the closeout destination account's group currency differs from the archived source account's group currency, the system SHALL require the destination-currency amount at submit time and SHALL post a single complete journal entry covering both currencies. The system SHALL NOT create a pending transfer for a closeout.
+
+#### Scenario: Cross-currency closeout with a known destination amount posts a complete entry
+- **WHEN** the user confirms a closeout from an archived account to an active account in a different-currency group and supplies the destination-currency amount
+- **THEN** the system posts one complete journal entry
+- **AND** no pending transfer is created
+- **AND** the archived account's current display balance becomes zero
+
+#### Scenario: Cross-currency closeout without a destination amount is rejected
+- **WHEN** the user attempts a closeout to a different-currency active account without supplying a destination-currency amount
+- **THEN** the system rejects the closeout
+- **AND** no journal entry is posted
+- **AND** no pending transfer is created
 
 ### Requirement: Opening Balance on Account Creation
 When creating a financial account, the user SHALL be able to supply an optional opening balance. If an opening balance is supplied, it SHALL be a positive, non-zero amount. For an asset account, that amount SHALL mean funds held. For a liability account, that amount SHALL mean amount owed. The system SHALL post a balanced opening entry against the internal system equity account so the account’s current display balance equals that amount without recording it as user income or expense. Omitting the opening balance SHALL leave the account at zero with no opening entry.

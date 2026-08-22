@@ -4,25 +4,32 @@ Depends on `i18n-foundation`. Locales: Hindi (`hi`), Urdu (`ur`), Punjabi (`pa`)
 
 ## Goals / Non-Goals
 
-**Goals:** AI-draft ARB parity; register locales; RTL for Urdu; fonts for Devanagari, Gurmukhi, and Perso-Arabic scripts used here.
+**Goals:** AI-draft ARB parity; register locales; RTL for Urdu and Kashmiri; fonts for Devanagari, Gurmukhi, and Perso-Arabic scripts used here.
 
-**Non-Goals:** Human QA; separate Shahmukhi vs Gurmukhi Punjabi variants beyond a single `pa` choice for v1; BIP39 localization.
+**Non-Goals:** Human QA; separate Shahmukhi vs Gurmukhi Punjabi variants beyond a single Gurmukhi `pa` for v1; Devanagari Kashmiri variant; BIP39 localization.
 
 ## Decisions
 
 ### 1. Punjabi script for v1
-Use Gurmukhi (`pa`) as the primary AI-draft target unless foundation fonts already favor another; document the choice in the ARB `@@locale`.
+Gurmukhi (`pa`). Endonym: ਪੰਜਾਬੀ — Punjabi. Shahmukhi is out of v1.
 
 ### 2. Urdu is RTL
-Ensure `Directionality` flips when `ur` is active (Flutter locale + Material delegates).
+`Directionality` flips when `ur` is active. Endonym: اردو — Urdu.
 
-### 3. Kashmiri / Dogri availability
-Ship AI ARBs even if Material widget localizations are incomplete; app strings still resolve from ARBs.
+### 3. Kashmiri script and RTL
+v1 uses official Perso-Arabic orthography. Endonym: کٲشُر — Kashmiri (source: Kashmiri language / Unicode Kashmiri orthography). `ks` SHALL activate RTL the same way as Urdu. If Flutter does not treat `ks` as an RTL language code, force `TextDirection.rtl` at the app root. Devanagari Kashmiri is out of v1.
+
+### 4. Dogri / Maithili / Sanskrit / Hindi / Nepali
+Devanagari, LTR. Endonyms: हिन्दी, नेपाली, संस्कृतम्, डोगरी, मैथिली.
+
+### 5. Material coverage
+Ship AI ARBs even if Material widget localizations are incomplete; app strings still resolve from ARBs; date-picker chrome may stay English.
 
 ## Risks / Trade-offs
 
 - [Limited Flutter Material translations for some locales] → App chrome still localized via ARB; system widgets may show English.
-- [Script ambiguity for Punjabi/Sindhi-adjacent users] → Document v1 choice; revisit with regional variants later.
+- [Script ambiguity for Punjabi/Kashmiri users] → Document v1 choice; revisit with regional variants later.
+- [Kashmiri font / vowel marks] → Use a Noto Nastaliq/Noto Naskh Arabic family that covers Kashmiri additions; smoke-test کٲشُر in the picker.
 
 ## Migration Plan
 
@@ -30,4 +37,4 @@ Additive after foundation.
 
 ## Open Questions
 
-- Exact Kashmiri script orthography for AI drafts (Perso-Arabic vs Devanagari) — default Perso-Arabic if font available, else document fallback.
+None blocking. Kashmiri script is Perso-Arabic (Decision 3).
