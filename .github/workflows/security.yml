@@ -23,7 +23,7 @@ jobs:
       actions: read
       security-events: write
       contents: read
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.5.0"
+    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.5.1"
 
   # Full dependency-tree scan on every push to main and weekly, so a
   # vulnerability disclosed after merge is still caught.
