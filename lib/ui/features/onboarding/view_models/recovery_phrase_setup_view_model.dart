@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/crypto/signing_key_service.dart';
+import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Spans every onboarding screen (currency, recovery-phrase display,
 /// optional keystore export, confirmation) so the same [GeneratedIdentity]
@@ -18,7 +20,8 @@ import '../../../../domain/crypto/signing_key_service.dart';
 /// that gate. [ensureGenerated] transparently resumes from a stashed
 /// phrase (see [resumePendingIdentity]) if the app was killed and
 /// relaunched anywhere in this window, so the words are never lost.
-class RecoveryPhraseSetupViewModel extends ChangeNotifier {
+class RecoveryPhraseSetupViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   RecoveryPhraseSetupViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository;
 
@@ -34,13 +37,10 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   String? _keystoreExportPath;
   String? get keystoreExportPath => _keystoreExportPath;
 
-  bool get hasGenerationError => _errorMessage != null && _generated == null;
+  bool get hasGenerationError => failure != null && _generated == null;
 
   /// Idempotent - safe to call from every build of the display screen, and
   /// from [commitIdentity] before currency selection has even reached that
@@ -63,7 +63,12 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
         _generated = generated;
       }
     } catch (e) {
-      _errorMessage = 'Could not generate a signing key on this device: $e';
+      setFailure(
+        AppFailure(
+          AppErrorCode.validationGenerateKeyFailed,
+          params: {'detail': '$e'},
+        ),
+      );
     }
     notifyListeners();
   }
@@ -91,14 +96,16 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
     for (final index in confirmationWordIndices) {
       final entered = (enteredWords[index] ?? '').trim().toLowerCase();
       if (entered != generated.phrase.words[index]) {
-        _errorMessage =
-            'Word ${index + 1} doesn\'t match your saved phrase. Check it and try again.';
-        notifyListeners();
+        setFailure(
+          AppFailure(
+            AppErrorCode.validationConfirmWordMismatch,
+            params: {'n': '${index + 1}'},
+          ),
+        );
         return false;
       }
     }
-    _errorMessage = null;
-    notifyListeners();
+    clearFailure();
     return true;
   }
 
@@ -113,7 +120,7 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
     if (generated == null) return false;
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     await _ledgerRepository.confirmFirstIdentity(generated, currency: currency);

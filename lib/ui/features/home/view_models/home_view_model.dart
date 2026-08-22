@@ -2,15 +2,29 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../../data/instrument_quote_refresh.dart';
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/home_overview.dart';
+import '../../../../domain/models/instrument.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/summary.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  HomeViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository {
+  HomeViewModel({
+    required LedgerRepository ledgerRepository,
+    SettingsRepository? settingsRepository,
+    InstrumentQuoteRefresh? quoteRefresh,
+  }) : _ledgerRepository = ledgerRepository,
+       _quoteRefresh =
+           quoteRefresh ??
+           (settingsRepository == null
+               ? null
+               : InstrumentQuoteRefresh(
+                   settingsRepository: settingsRepository,
+                   ledgerRepository: ledgerRepository,
+                 )) {
     _subscription = _ledgerRepository.watchHomeOverview().listen((overview) {
       _overview = overview;
       _isLoading = false;
@@ -44,15 +58,36 @@ class HomeViewModel extends ChangeNotifier {
       };
       notifyListeners();
     });
+    if (_quoteRefresh != null) {
+      _instrumentsSubscription = _ledgerRepository.watchInstruments().listen((
+        instruments,
+      ) {
+        _instruments = instruments;
+        unawaited(_refreshQuotes());
+      });
+      _quoteTimer = Timer.periodic(const Duration(minutes: 5), (_) {
+        unawaited(_refreshQuotes());
+      });
+    }
   }
 
   final LedgerRepository _ledgerRepository;
+  final InstrumentQuoteRefresh? _quoteRefresh;
   late final StreamSubscription<HomeOverview> _subscription;
   late final StreamSubscription<List<CategoryTotal>>
   _categoryTotalsSubscription;
   late final StreamSubscription<List<DueRecurringTemplate>>
   _dueTemplatesSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
+  StreamSubscription<List<Instrument>>? _instrumentsSubscription;
+  Timer? _quoteTimer;
+  List<Instrument> _instruments = const [];
+
+  Future<void> _refreshQuotes() async {
+    final refresh = _quoteRefresh;
+    if (refresh == null) return;
+    await refresh.refresh(_instruments);
+  }
 
   Map<String, int> _limitByCategoryId = const {};
 
@@ -101,6 +136,8 @@ class HomeViewModel extends ChangeNotifier {
     _categoryTotalsSubscription.cancel();
     _dueTemplatesSubscription.cancel();
     _categoriesSubscription.cancel();
+    _instrumentsSubscription?.cancel();
+    _quoteTimer?.cancel();
     super.dispose();
   }
 }

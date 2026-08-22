@@ -1,0 +1,968 @@
+{
+  "@@locale": "kn",
+  "appTitle": "ಸ್ಮಾರ ಖಾತೆ",
+  "navHome": "ಮುಖಪುಟ",
+  "navRegister": "ರಿಜಿಸ್ಟರ್",
+  "navSummary": "ಸಾರಾಂಶ",
+  "navAccounts": "ಖಾತೆಗಳು",
+  "navCategories": "ವರ್ಗಗಳು",
+  "actionCancel": "ರದ್ದುಮಾಡಿ",
+  "actionSave": "ಉಳಿಸಿ",
+  "actionDelete": "ಅಳಿಸಿ",
+  "actionDone": "ಮುಗಿದಿದೆ",
+  "actionContinue": "ಮುಂದುವರಿಸಿ",
+  "actionDismiss": "ವಜಾಗೊಳಿಸಿ",
+  "actionRetry": "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ",
+  "actionSkip": "ಬಿಟ್ಟುಬಿಡಿ",
+  "actionConfirm": "ದೃಢೀಕರಿಸಿ",
+  "actionAdd": "ಸೇರಿಸಿ",
+  "actionEdit": "ಸಂಪಾದಿಸಿ",
+  "actionRename": "ಹೆಸರು ಬದಲಿಸಿ",
+  "actionHide": "ಮರೆಮಾಡಿ",
+  "actionCreate": "ರಚಿಸಿ",
+  "actionCloseApp": "ಆ್ಯಪ್ ಮುಚ್ಚಿ",
+  "actionUnlock": "ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
+  "actionSettle": "ಇತ್ಯರ್ಥಗೊಳಿಸಿ",
+  "actionFinish": "ಮುಗಿಸಿ",
+  "actionPreview": "ಮುನ್ನೋಟ",
+  "actionImport": "ಆಮದು ಮಾಡಿ",
+  "actionExportCsv": "CSV ರಫ್ತು ಮಾಡಿ",
+  "actionChooseFile": "ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ",
+  "actionRestore": "ಮರುಸ್ಥಾಪಿಸಿ",
+  "actionFix": "ಸರಿಪಡಿಸಿ",
+  "actionBuy": "ಖರೀದಿಸಿ",
+  "actionSell": "ಮಾರಾಟ ಮಾಡಿ",
+  "actionDividend": "ಡಿವಿಡೆಂಡ್",
+  "actionRecordBuy": "ಖರೀದಿ ದಾಖಲಿಸಿ",
+  "actionRecordSell": "ಮಾರಾಟ ದಾಖಲಿಸಿ",
+  "actionRecordDividend": "ಡಿವಿಡೆಂಡ್ ದಾಖಲಿಸಿ",
+  "actionPayCard": "ಕಾರ್ಡ್ ಪಾವತಿ",
+  "actionTransfer": "ವರ್ಗಾವಣೆ",
+  "actionRecordTransaction": "ವಹಿವಾಟು ದಾಖಲಿಸಿ",
+  "actionImportStatement": "ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಆಮದು ಮಾಡಿ",
+  "actionClearDates": "ದಿನಾಂಕಗಳನ್ನು ತೆರವುಗೊಳಿಸಿ",
+  "actionClearSearch": "ಹುಡುಕಾಟ ಮತ್ತು ಫಿಲ್ಟರ್‌ಗಳನ್ನು ತೆರವುಗೊಳಿಸಿ",
+  "actionUseBiometrics": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಬಳಸಿ",
+  "actionSetPin": "PIN ಹೊಂದಿಸಿ",
+  "actionChangePin": "PIN ಬದಲಿಸಿ",
+  "actionSaveBackup": "ಬ್ಯಾಕಪ್ ಉಳಿಸಿ",
+  "actionRestoreBackup": "ಬ್ಯಾಕಪ್ ಮರುಸ್ಥಾಪಿಸಿ",
+  "actionSaveRule": "ನಿಯಮ ಉಳಿಸಿ",
+  "actionConfirmFix": "ತಿದ್ದುಪಡಿ ದೃಢೀಕರಿಸಿ",
+  "captureSpent": "ಖರ್ಚು",
+  "captureReceived": "ಸ್ವೀಕೃತಿ",
+  "captureMovedMoney": "ಹಣ ವರ್ಗಾವಣೆ",
+  "captureImportStatement": "ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಆಮದು ಮಾಡಿ",
+  "settingsTitle": "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+  "settingsLanguage": "ಭಾಷೆ",
+  "settingsLanguageSystem": "ಸಾಧನದ ಭಾಷೆ",
+  "settingsFetchFxRates": "ಉಲ್ಲೇಖ ವಿನಿಮಯ ದರಗಳನ್ನು ಪಡೆಯಿರಿ",
+  "settingsFetchFxRatesSubtitle": "ಬೇರೆ ಬೇರೆ ಕರೆನ್ಸಿಗಳ ನಡುವಿನ ವರ್ಗಾವಣೆಗಳಲ್ಲಿ ಗಮ್ಯಸ್ಥಾನದ ಮೊತ್ತದ ಪಕ್ಕದಲ್ಲಿ ಸೂಚಕ ಮಾರುಕಟ್ಟೆ ದರವನ್ನು ತೋರಿಸುತ್ತದೆ, ಹೋಲಿಕೆಗಾಗಿ ಮಾತ್ರ - ಮೊತ್ತವನ್ನು ಭರ್ತಿ ಮಾಡಲು ಎಂದಿಗೂ ಬಳಸುವುದಿಲ್ಲ.",
+  "settingsRateProvider": "ದರ ಒದಗಿಸುವವರು",
+  "settingsFetchMarketPrices": "ಹೂಡಿಕೆಗಳಿಗೆ ಮಾರುಕಟ್ಟೆ ಬೆಲೆಗಳನ್ನು ಪಡೆಯಿರಿ",
+  "settingsFetchMarketPricesSubtitle": "ಟಿಕರ್ ಅಥವಾ ISIN ಹೊಂದಿರುವ ಸಾಧನಗಳ ಇತ್ತೀಚಿನ ಬೆಲೆಗಳನ್ನು ಪೋರ್ಟ್‌ಫೋಲಿಯೊ ಮೌಲ್ಯವನ್ನು ಅಂದಾಜಿಸಲು ಹುಡುಕುತ್ತದೆ. ವಹಿವಾಟು ದಾಖಲಿಸಲು ಎಂದಿಗೂ ಬಳಸುವುದಿಲ್ಲ, ಮತ್ತು ನೀವು ಎಷ್ಟು ಹೊಂದಿದ್ದೀರಿ ಎಂಬುದನ್ನು ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ.",
+  "settingsMarketPriceProvider": "ಮಾರುಕಟ್ಟೆ ಬೆಲೆ ಒದಗಿಸುವವರು",
+  "settingsFavouriteResearchTool": "ಮೆಚ್ಚಿನ ಸಂಶೋಧನಾ ಸಾಧನ",
+  "settingsFavouriteResearchToolSubtitle": "ಹೋಲ್ಡಿಂಗ್‌ಗಳಲ್ಲಿ ಸಾಧನದ ಹೆಸರನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿದರೆ ಈ ಸಾಧನವು ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಸಂಶೋಧನಾ ಪ್ರಾಂಪ್ಟ್‌ನೊಂದಿಗೆ ತೆರೆಯುತ್ತದೆ — ಇದು ಒಂದು ಸಂಯೋಜನೆ ಅಲ್ಲ, ಸಲಹೆಯೂ ಅಲ್ಲ.",
+  "settingsBackup": "ಬ್ಯಾಕಪ್",
+  "settingsBackupBlurb": "ನಿಮ್ಮ ಪುಸ್ತಕಗಳ ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡಿದ ಪ್ರತಿಯನ್ನು ನೀವು ಆಯ್ಕೆ ಮಾಡುವ ಸ್ಥಳದಲ್ಲಿ ಉಳಿಸಿ, ಅಥವಾ ಒಂದರಿಂದ ಮರುಸ್ಥಾಪಿಸಿ. ಇದು ನಿಮ್ಮ ಸಹಿ ಕೀಲಿಯನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡುವ ರಿಕವರಿ ಫ್ರೇಸ್ ಅಥವಾ ಕೀಸ್ಟೋರ್ ಫೈಲ್‌ಗಿಂತ ಪ್ರತ್ಯೇಕವಾಗಿದೆ, ನಿಮ್ಮ ಪುಸ್ತಕಗಳನ್ನಲ್ಲ.",
+  "settingsLock": "ಲಾಕ್",
+  "settingsLockBlurb": "ಆ್ಯಪ್ ತೆರೆಯಲು PIN ಅಥವಾ ಲಭ್ಯವಿದ್ದಲ್ಲಿ ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಅಗತ್ಯಪಡಿಸಿ.",
+  "settingsRequireUnlock": "ಆ್ಯಪ್ ತೆರೆಯಲು ಅನ್‌ಲಾಕ್ ಅಗತ್ಯಪಡಿಸಿ",
+  "settingsLockAfter": "ಈ ನಂತರ ಲಾಕ್ ಮಾಡಿ",
+  "settingsLockImmediately": "ತಕ್ಷಣ",
+  "settingsLock1Minute": "1 ನಿಮಿಷ",
+  "settingsLock5Minutes": "5 ನಿಮಿಷಗಳು",
+  "settingsLock15Minutes": "15 ನಿಮಿಷಗಳು",
+  "settingsAllowBiometrics": "ಬಯೋಮೆಟ್ರಿಕ್ಸ್ ಸಹ ಅನುಮತಿಸಿ",
+  "settingsHideSnapshot": "ಆ್ಯಪ್ ಸ್ವಿಚರ್‌ನಲ್ಲಿ ಬ್ಯಾಲೆನ್ಸ್‌ಗಳನ್ನು ಮರೆಮಾಡಿ",
+  "settingsHideSnapshotSubtitle": "ನೀವು ಇನ್ನೊಂದು ಆ್ಯಪ್‌ಗೆ ಬದಲಾಯಿಸಿದಾಗ ಈ ಸ್ಕ್ರೀನ್ ಅನ್ನು ಮರೆಮಾಡುತ್ತದೆ, ಆದ್ದರಿಂದ ಅದು ಆ್ಯಪ್ ಸ್ವಿಚರ್‌ನಲ್ಲಿ ಒಂದೇ ನೋಟದಲ್ಲಿ ಕಾಣಿಸುವುದಿಲ್ಲ.",
+  "settingsHideSnapshotUnavailable": "ಈ ಪ್ಲಾಟ್‌ಫಾರ್ಮ್‌ನಲ್ಲಿ ಆ್ಯಪ್ ಸ್ವಿಚರ್‌ನಲ್ಲಿ ಬ್ಯಾಲೆನ್ಸ್‌ಗಳನ್ನು ಮರೆಮಾಡುವುದು ಲಭ್ಯವಿಲ್ಲ.",
+  "settingsPayees": "ಪಾವತಿದಾರರು",
+  "settingsManagePayees": "ಪಾವತಿದಾರರನ್ನು ನಿರ್ವಹಿಸಿ",
+  "settingsPayeesBlurb": "ನೆನಪಿಟ್ಟುಕೊಂಡ ಪಾವತಿದಾರರ ಹೆಸರುಗಳು ಮತ್ತು ಅವರ ಡೀಫಾಲ್ಟ್ ವರ್ಗ ಮತ್ತು ಖಾತೆ, ವಹಿವಾಟನ್ನು ದಾಖಲಿಸುವಾಗ ಸ್ವಯಂಪೂರ್ಣಗೊಳಿಸುವಿಕೆಯಿಂದ ಸೂಚಿಸಲಾಗುತ್ತದೆ.",
+  "settingsRecurring": "ಆವರ್ತಕ ಟೆಂಪ್ಲೇಟ್‌ಗಳು",
+  "settingsManageRecurring": "ಆವರ್ತಕ ಟೆಂಪ್ಲೇಟ್‌ಗಳನ್ನು ನಿರ್ವಹಿಸಿ",
+  "settingsRecurringBlurb": "ಬಾಡಿಗೆ ಅಥವಾ ಸಂಬಳದಂತೆ ಪ್ರತಿ ತಿಂಗಳು ಪುನರಾವರ್ತನೆಯಾಗುವ ಬಿಲ್‌ಗಳು ಅಥವಾ ಆದಾಯ. ಬಾಕಿ ಇರುವ ಟೆಂಪ್ಲೇಟ್ ಮುಖಪುಟದಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ, ಒಂದೇ ಟ್ಯಾಪ್‌ನಲ್ಲಿ ದಾಖಲಿಸಲು - ಇದನ್ನು ಎಂದಿಗೂ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪೋಸ್ಟ್ ಮಾಡಲಾಗುವುದಿಲ್ಲ.",
+  "settingsAbout": "ಬಗ್ಗೆ",
+  "providerFrankfurter": "Frankfurter (ECB ದರಗಳು)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (ದೈನಂದಿನ ದರಗಳು)",
+  "providerYahooFinance": "Yahoo Finance (ಚಾರ್ಟ್ API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "ನಗದು ಮತ್ತು ನಗದು ಸಮಾನಗಳು",
+  "systemGroupPensionRetirement": "ಪಿಂಚಣಿ ಮತ್ತು ನಿವೃತ್ತಿ",
+  "systemGroupCreditShortTerm": "ಕ್ರೆಡಿಟ್ ಮತ್ತು ಅಲ್ಪಾವಧಿ ಸಾಲ",
+  "systemGroupLoansMortgages": "ಸಾಲಗಳು ಮತ್ತು ಗೃಹಸಾಲಗಳು",
+  "systemGroupInvestments": "ಹೂಡಿಕೆಗಳು",
+  "systemAccountCashBank": "ನಗದು ಮತ್ತು ಬ್ಯಾಂಕ್",
+  "systemCategorySalary": "ಸಂಬಳ",
+  "systemCategoryOtherIncome": "ಇತರ ಆದಾಯ",
+  "systemCategoryGroceries": "ದಿನಸಿ",
+  "systemCategoryRentMortgage": "ಬಾಡಿಗೆ/ಗೃಹಸಾಲ",
+  "systemCategoryUtilities": "ಉಪಯುಕ್ತತೆಗಳು",
+  "systemCategoryTransport": "ಸಾರಿಗೆ",
+  "systemCategoryFoodOut": "ಹೊರಗಿನ ಊಟ",
+  "systemCategoryPhone": "ಫೋನ್",
+  "systemCategoryHealth": "ಆರೋಗ್ಯ",
+  "systemCategoryOtherExpense": "ಇತರ ಖರ್ಚು",
+  "homeThisMonth": "ಈ ತಿಂಗಳು",
+  "homeMoneyInTransit": "ಸಾಗಣೆಯಲ್ಲಿರುವ ಹಣ",
+  "homeWhatYouHaveMinusWhatYouOwe": "ನಿಮ್ಮ ಬಳಿ ಇರುವುದು ಮೈನಸ್ ನೀವು ಬಾಕಿ ಇರುವುದು",
+  "homeWhatYouHave": "ನಿಮ್ಮ ಬಳಿ ಇರುವುದು {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "ನಿಮ್ಮ ಬಳಿ ಇರುವುದು {haveAmount} {currency}  •  ನೀವು ಬಾಕಿ ಇರುವುದು {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "ನೀವು {name} ಇಂದ {amount} {currency} ಕಳುಹಿಸಿದ್ದೀರಿ",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "ನೀವು {name} ಗೆ {amount} {currency} ಕಳುಹಿಸಿದ್ದೀರಿ",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "ಮರೆಮಾಡಲಾಗಿದೆ",
+  "allAccounts": "ಎಲ್ಲಾ ಖಾತೆಗಳು",
+  "savedToPath": "{path} ಗೆ ಉಳಿಸಲಾಗಿದೆ",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "ಕೀಸ್ಟೋರ್ ಫೈಲ್ ರಫ್ತು ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ನೀವು ಈ ಹಂತವನ್ನು ಬಿಟ್ಟುಬಿಡಬಹುದು.",
+  "enterPassphraseToProtect": "ಫೈಲ್ ಅನ್ನು ರಕ್ಷಿಸಲು ಪಾಸ್‌ಫ್ರೇಸ್ ನಮೂದಿಸಿ.",
+  "homeTapWhenArrived": "ಏನು ಬಂತು ಎಂದು ನಿಮಗೆ ತಿಳಿದಾಗ ಟ್ಯಾಪ್ ಮಾಡಿ",
+  "homeReturnedTo": "{name} ಗೆ ಹಿಂತಿರುಗಿಸಲಾಗಿದೆ",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "ಇಂದು ಬಾಕಿ",
+  "homeDueLine": "{category} · {account} · ದಾಖಲಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "ಮಿತಿ ಮೀರಿದೆ",
+  "homeSpentOfLimit": "{limit} ರಲ್ಲಿ {spent}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "ಉಳಿದಿರುವುದು: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "ಖಾತೆಗಳಿಲ್ಲ",
+  "homeCashRegister": "ನಗದು ರಿಜಿಸ್ಟರ್",
+  "homeMarketEstimate": "ಮಾರುಕಟ್ಟೆ ಅಂದಾಜು",
+  "registerTitle": "ರಿಜಿಸ್ಟರ್",
+  "registerSearchHint": "ವಿವರಣೆ, ವರ್ಗ ಅಥವಾ ಮೊತ್ತ",
+  "registerNoTransactions": "ಇನ್ನೂ ಯಾವುದೇ ವಹಿವಾಟುಗಳಿಲ್ಲ",
+  "registerNoEntries": "ಇನ್ನೂ ಯಾವುದೇ ನಮೂದುಗಳನ್ನು ದಾಖಲಿಸಲಾಗಿಲ್ಲ.",
+  "registerSpentOnly": "ಖರ್ಚು ಮಾತ್ರ",
+  "registerReceivedOnly": "ಸ್ವೀಕೃತಿ ಮಾತ್ರ",
+  "registerAll": "ಎಲ್ಲಾ",
+  "registerUnverified": "ಪರಿಶೀಲಿಸಲಾಗಿಲ್ಲ - ಒಟ್ಟುಗಳಿಂದ ಹೊರಗಿಡಲಾಗಿದೆ",
+  "registerSuperseded": "ಮೈಗ್ರೇಶನ್‌ನಿಂದ ಬದಲಾಯಿಸಲಾಗಿದೆ - ಒಟ್ಟುಗಳಿಂದ ಹೊರಗಿಡಲಾಗಿದೆ",
+  "summaryTitle": "ಸಾರಾಂಶ",
+  "summaryTotalIncome": "ಒಟ್ಟು ಆದಾಯ",
+  "summaryTotalExpense": "ಒಟ್ಟು ಖರ್ಚು",
+  "summaryDateRange": "{start} ರಿಂದ {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "ಖಾತೆಗಳು",
+  "categoriesTitle": "ವರ್ಗಗಳು",
+  "accountName": "ಖಾತೆಯ ಹೆಸರು",
+  "createAccount": "ಖಾತೆ ರಚಿಸಿ",
+  "createGroup": "ಗುಂಪು ರಚಿಸಿ",
+  "editGroup": "ಗುಂಪನ್ನು ಸಂಪಾದಿಸಿ",
+  "renameAccount": "ಖಾತೆಯ ಹೆಸರು ಬದಲಿಸಿ",
+  "renameCategory": "ವರ್ಗದ ಹೆಸರು ಬದಲಿಸಿ",
+  "addCategory": "ವರ್ಗ ಸೇರಿಸಿ",
+  "groupLabel": "ಗುಂಪು",
+  "kindLabel": "ಪ್ರಕಾರ",
+  "asset": "ಆಸ್ತಿ",
+  "liability": "ಬಾಧ್ಯತೆ",
+  "income": "ಆದಾಯ",
+  "expense": "ಖರ್ಚು",
+  "thisAccountHoldsInvestments": "ಈ ಖಾತೆ ಹೂಡಿಕೆಗಳನ್ನು ಹೊಂದಿದೆ",
+  "thisAccountHoldsInvestmentsSubtitle": "ನಗದು ಜೊತೆಗೆ ಖರೀದಿ, ಮಾರಾಟ ಮತ್ತು ಡಿವಿಡೆಂಡ್‌ನೊಂದಿಗೆ ನೀವು ದಾಖಲಿಸುವ ಇನ್ವೆಂಟರಿ.",
+  "thisIsACreditCard": "ಇದು ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್ ಆಗಿದೆ",
+  "openingBalanceOptional": "ಆರಂಭಿಕ ಬ್ಯಾಲೆನ್ಸ್ (ಐಚ್ಛಿಕ)",
+  "currencyIso": "ಕರೆನ್ಸಿ (ISO 4217)",
+  "currencyIsoExample": "ಕರೆನ್ಸಿ (ISO 4217, ಉದಾ. USD)",
+  "hideAccountTitle": "ಹೊಸ ನಮೂದುಗಳಿಂದ ಖಾತೆಯನ್ನು ಮರೆಮಾಡುವುದೇ?",
+  "hideCategoryTitle": "ಹೊಸ ನಮೂದುಗಳಿಂದ ವರ್ಗವನ್ನು ಮರೆಮಾಡುವುದೇ?",
+  "hideGroupTitle": "ಹೊಸ ನಮೂದುಗಳಿಂದ ಗುಂಪನ್ನು ಮರೆಮಾಡುವುದೇ?",
+  "reassignGroup": "ಗುಂಪನ್ನು ಮರುನಿಯೋಜಿಸಿ",
+  "transferRemainingBalance": "ಉಳಿದ ಬ್ಯಾಲೆನ್ಸ್ ವರ್ಗಾಯಿಸಿ",
+  "monthlyLimit": "ಮಾಸಿಕ ಮಿತಿ",
+  "monthlyLimitHint": "ಮಿತಿ (ತೆರವುಗೊಳಿಸಲು ಖಾಲಿ ಬಿಡಿ)",
+  "monthlyLimitBlurb": "ಈ ಖರ್ಚು ವರ್ಗಕ್ಕೆ ಒಂದು ಐಚ್ಛಿಕ ತಿಂಗಳ-ಆರಂಭದಿಂದ-ಇಂದಿನವರೆಗಿನ ಖರ್ಚಿನ ಮಾರ್ಗದರ್ಶಿ.",
+  "manageCategoryRules": "ವರ್ಗ ನಿಯಮಗಳನ್ನು ನಿರ್ವಹಿಸಿ",
+  "amount": "ಮೊತ್ತ",
+  "category": "ವರ್ಗ",
+  "account": "ಖಾತೆ",
+  "fromAccount": "ಇಂದ ಖಾತೆ",
+  "toAccount": "ಗೆ ಖಾತೆ",
+  "descriptionOptional": "ವಿವರಣೆ (ಐಚ್ಛಿಕ)",
+  "alsoRememberPayee": "ಪಾವತಿದಾರರಾಗಿಯೂ ನೆನಪಿಡಿ",
+  "splitIntoCategories": "ಬಹು ವರ್ಗಗಳಾಗಿ ವಿಭಜಿಸಿ",
+  "categoryN": "ವರ್ಗ {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "ಗಮ್ಯಸ್ಥಾನದ ಮೊತ್ತ",
+  "destinationAmountOptional": "ಗಮ್ಯಸ್ಥಾನದ ಮೊತ್ತ (ಐಚ್ಛಿಕ)",
+  "accountCurrencyAmountOptional": "ಖಾತೆ-ಕರೆನ್ಸಿ ಮೊತ್ತ (ಐಚ್ಛಿಕ)",
+  "transactionCurrencyOptional": "ವಹಿವಾಟು ಕರೆನ್ಸಿ (ಐಚ್ಛಿಕ)",
+  "feeOptional": "ಶುಲ್ಕ (ಐಚ್ಛಿಕ)",
+  "feeAmount": "ಶುಲ್ಕದ ಮೊತ್ತ",
+  "feeCategory": "ಶುಲ್ಕದ ವರ್ಗ",
+  "feeDescriptionOptional": "ಶುಲ್ಕದ ವಿವರಣೆ (ಐಚ್ಛಿಕ)",
+  "feeDeducted": "ಶುಲ್ಕವನ್ನು ಮೇಲಿನ ಮೊತ್ತದಿಂದ ಕಡಿತಗೊಳಿಸಲಾಗುತ್ತದೆ",
+  "needTwoAccountsToTransfer": "ವರ್ಗಾವಣೆ ಮಾಡಲು ಕನಿಷ್ಠ ಎರಡು ಸಕ್ರಿಯ ಖಾತೆಗಳನ್ನು ರಚಿಸಿ.",
+  "whatArrivedTitle": "ಏನು ಬಂತು?",
+  "whatArrivedBlurb": "ವಾಸ್ತವವಾಗಿ ಏನು ಬಂತು ಎಂದು ನಮಗೆ ತಿಳಿಸಿ.",
+  "amountThatArrived": "ಬಂದ ಮೊತ್ತ",
+  "feeLossCategory": "ಶುಲ್ಕ / ನಷ್ಟದ ವರ್ಗ",
+  "alreadySettled": "ಈಗಾಗಲೇ ಇತ್ಯರ್ಥಗೊಂಡಿದೆ.",
+  "holdingsTitle": "ಹೋಲ್ಡಿಂಗ್‌ಗಳು",
+  "holdingsCash": "ನಗದು",
+  "holdingsInventory": "ಇನ್ವೆಂಟರಿ",
+  "holdingsBook": "ಪುಸ್ತಕ ಮೌಲ್ಯ (ನಗದು + ವೆಚ್ಚ) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "ಮಾರುಕಟ್ಟೆ ಅಂದಾಜು {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "ಇನ್ನೂ ಯಾವುದೇ ಹೋಲ್ಡಿಂಗ್‌ಗಳಿಲ್ಲ. ಒಂದು ಸಾಧನ ಸೇರಿಸಲು ಖರೀದಿಯನ್ನು ದಾಖಲಿಸಿ.",
+  "holdingsQuotesBlurb": "ಉಲ್ಲೇಖಗಳು ಅಂದಾಜುಗಳಾಗಿವೆ, ಬ್ರೋಕರ್ ಬೆಲೆ ಅಲ್ಲ. ಈ ಆ್ಯಪ್ ಆದೇಶಗಳನ್ನು ನೀಡುವುದಿಲ್ಲ.",
+  "holdingsTapNameToResearch": "ಸಂಶೋಧನೆಗಾಗಿ ಹೆಸರನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ. ಉಲ್ಲೇಖಗಳು ಅಂದಾಜುಗಳಾಗಿವೆ, ಸಲಹೆ ಅಲ್ಲ.",
+  "instrument": "ಸಾಧನ",
+  "newInstrument": "ಹೊಸ ಸಾಧನ",
+  "renameInstrument": "ಸಾಧನದ ಹೆಸರು ಬದಲಿಸಿ",
+  "instrumentActions": "ಸಾಧನದ ಕ್ರಿಯೆಗಳು",
+  "hideInstrumentTitle": "{name} ಅನ್ನು ಮರೆಮಾಡುವುದೇ?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "ಟಿಕರ್ (ಐಚ್ಛಿಕ)",
+  "isinOptional": "ISIN (ಐಚ್ಛಿಕ)",
+  "quantity": "ಪ್ರಮಾಣ",
+  "unitPrice": "ಘಟಕ ಬೆಲೆ",
+  "brokerageOptional": "ಬ್ರೋಕರೇಜ್ (ಐಚ್ಛಿಕ)",
+  "brokerageExpenseCategory": "ಬ್ರೋಕರೇಜ್ ಖರ್ಚಿನ ವರ್ಗ",
+  "incomeCategory": "ಆದಾಯ ವರ್ಗ",
+  "gainIncomeCategory": "ಲಾಭದ ಆದಾಯ ವರ್ಗ",
+  "lossExpenseCategory": "ನಷ್ಟದ ಖರ್ಚಿನ ವರ್ಗ",
+  "nonCash": "ನಗದೇತರ",
+  "cash": "ನಗದು",
+  "locked": "ಲಾಕ್ ಆಗಿದೆ",
+  "lockUntilHint": "ಬ್ರೋಕರ್ ನಿಯಮವಲ್ಲ, ನಿರ್ಬಂಧದ ಬಗ್ಗೆ ನಿಮ್ಮ ಸ್ವಂತ ಟಿಪ್ಪಣಿ.",
+  "instrumentKindStock": "ಸ್ಟಾಕ್",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "ಮ್ಯೂಚುವಲ್ ಫಂಡ್",
+  "instrumentKindBond": "ಬಾಂಡ್",
+  "instrumentKindOther": "ಇತರ",
+  "quoteUseLive": "ಲೈವ್ ಬೆಲೆ",
+  "quoteUseCached": "ಕ್ಯಾಶ್ ಮಾಡಿದ ಬೆಲೆ",
+  "quoteUseStale": "ಹಳೆಯ ಬೆಲೆ",
+  "quoteUseMissing": "ವೆಚ್ಚವನ್ನು ಬಳಸಲಾಗುತ್ತಿದೆ (ಬೆಲೆ ಇಲ್ಲ)",
+  "quoteUseDisabled": "ಉಲ್ಲೇಖಗಳು ಆಫ್ ಆಗಿವೆ — ವೆಚ್ಚ/ಕ್ಯಾಶ್ ಬಳಸಲಾಗುತ್ತಿದೆ",
+  "quoteUseCurrencyMismatch": "ವೆಚ್ಚವನ್ನು ಬಳಸಲಾಗುತ್ತಿದೆ (ಬೆಲೆಯ ಕರೆನ್ಸಿ ಭಿನ್ನವಾಗಿದೆ)",
+  "unrealizedLabel": "ಸಾಕಾರಗೊಳ್ಳದ {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} ಘಟಕಗಳು · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "ನಿಮ್ಮ ರಿಕವರಿ ಫ್ರೇಸ್",
+  "recoveryPhraseConfirmTitle": "ನಿಮ್ಮ ಫ್ರೇಸ್ ದೃಢೀಕರಿಸಿ",
+  "recoveryPhraseBlurb": "ಈ ಸಾಧನ ಕಳೆದುಹೋದರೆ, ಮರುಹೊಂದಿಸಿದರೆ ಅಥವಾ ಬದಲಾಯಿಸಿದರೆ ನಿಮ್ಮ ವಹಿವಾಟು ಇತಿಹಾಸವನ್ನು ಮರುಪಡೆಯಲು ಈ 24 ಪದಗಳು ಏಕೈಕ ಮಾರ್ಗವಾಗಿವೆ. ಸ್ಮಾರ ಖಾತೆಗೆ ಸರ್ವರ್ ಇಲ್ಲ ಮತ್ತು ಅವುಗಳನ್ನು ನಿಮಗಾಗಿ ಮರುಪಡೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ.\n\nನೀವು ಈ ಸಾಧನ ಮತ್ತು ಈ ಫ್ರೇಸ್ ಎರಡನ್ನೂ ಒಟ್ಟಿಗೆ ಕಳೆದುಕೊಂಡರೆ, ನೀವು ದಾಖಲಿಸಿದ ಪ್ರತಿ ವಹಿವಾಟು ಶಾಶ್ವತವಾಗಿ ಪರಿಶೀಲಿಸಲಾಗದಂತಾಗುತ್ತದೆ.",
+  "recoveryPhraseWriteDown": "ಈ ಪದಗಳನ್ನು ಕ್ರಮವಾಗಿ ಬರೆದಿಟ್ಟುಕೊಳ್ಳಿ ಮತ್ತು ಈ ಸಾಧನದಿಂದ ಪ್ರತ್ಯೇಕವಾಗಿ ಸುರಕ್ಷಿತ ಸ್ಥಳದಲ್ಲಿ ಇರಿಸಿ.",
+  "iveSavedRecoveryPhrase": "ನಾನು ನನ್ನ ರಿಕವರಿ ಫ್ರೇಸ್ ಅನ್ನು ಉಳಿಸಿದ್ದೇನೆ",
+  "confirmPhraseBlurb": "ನೀವು ಈಗಷ್ಟೇ ಉಳಿಸಿದ ಫ್ರೇಸ್‌ನಿಂದ ಕೇಳಲಾದ ಪದಗಳನ್ನು ನಮೂದಿಸಿ.",
+  "wordNumber": "ಪದ #{n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "ಕೀಸ್ಟೋರ್ ಫೈಲ್ ರಫ್ತು ಮಾಡಿ",
+  "keystoreExportBlurb": "ನಿಮ್ಮ ರಿಕವರಿ ಫ್ರೇಸ್ ಜೊತೆಗೆ, ನೀವು ಆಯ್ಕೆ ಮಾಡುವ ಪಾಸ್‌ಫ್ರೇಸ್‌ನಿಂದ ರಕ್ಷಿತವಾದ ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡಿದ ಕೀಸ್ಟೋರ್ ಫೈಲ್ ಅನ್ನು ಉಳಿಸಬಹುದು. ಇದು ಐಚ್ಛಿಕ - ನಿಮ್ಮ ಸಹಿ ಕೀಲಿಯನ್ನು ಮರುಸ್ಥಾಪಿಸಲು ನಿಮ್ಮ ರಿಕವರಿ ಫ್ರೇಸ್ ಮಾತ್ರ ಯಾವಾಗಲೂ ಸಾಕಾಗುತ್ತದೆ.",
+  "keystorePassphrase": "ಪಾಸ್‌ಫ್ರೇಸ್",
+  "exportKeystoreFile": "ಕೀಸ್ಟೋರ್ ಫೈಲ್ ರಫ್ತು ಮಾಡಿ",
+  "chooseCurrencyTitle": "ನಿಮ್ಮ ಕರೆನ್ಸಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+  "chooseCurrencyBlurb": "ಪ್ರತಿಯೊಂದು ಖಾತೆ ಗುಂಪು (ನಗದು ಮತ್ತು ನಗದು ಸಮಾನಗಳು, ಪಿಂಚಣಿ ಮತ್ತು ನಿವೃತ್ತಿ, ಇತ್ಯಾದಿ) ಸದ್ಯಕ್ಕೆ ಈ ಒಂದೇ ಕರೆನ್ಸಿಯನ್ನು ಬಳಸುತ್ತದೆ. ಅದಕ್ಕಾಗಿ ಹೊಸ ಗುಂಪನ್ನು ರಚಿಸುವ ಮೂಲಕ ನೀವು ನಂತರ ಬೇರೆ ಕರೆನ್ಸಿಯಲ್ಲಿ ಖಾತೆಗಳನ್ನು ಸೇರಿಸಬಹುದು.",
+  "currencyBackfillTitle": "ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಗುಂಪುಗಳಿಗೆ ಕರೆನ್ಸಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+  "currencyBackfillBlurb": "ಈ ಆ್ಯಪ್ ಈಗ ಬಹು ಕರೆನ್ಸಿಗಳನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ. ನಿಮ್ಮ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಖಾತೆಗಳು ಮತ್ತು ಖಾತೆ ಗುಂಪುಗಳಿಗೆ ಕರೆನ್ಸಿ ಬೇಕಾಗುತ್ತದೆ - ಈ ಫೀಚರ್ ಅಸ್ತಿತ್ವದಲ್ಲಿ ಇರುವ ಮೊದಲೇ ಅವೆಲ್ಲವನ್ನೂ ಸ್ಥಾಪಿಸಲಾಗಿದ್ದರಿಂದ, ಒಂದು ಆಯ್ಕೆ ಎಲ್ಲದಕ್ಕೂ ಅನ್ವಯಿಸುತ್ತದೆ.",
+  "firstAccountTitle": "ನಿಮ್ಮ ಖಾತೆಗೆ ಹೆಸರಿಡಿ",
+  "firstAccountBlurb": "ಇದು ನಿಮಗಾಗಿ ಈಗಾಗಲೇ ಸ್ಥಾಪಿಸಲಾದ ಖಾತೆಯಾಗಿದೆ - ನಿಮ್ಮ ಬ್ಯಾಂಕ್‌ನಂತೆ, ನಿಮಗೆ ಗುರುತಿಸಬಹುದಾದ ಹೆಸರನ್ನು ನೀಡಿ. ನೀವು ಮುಂದೆ ಒಂದು ಖರ್ಚು ಅಥವಾ ಸ್ವೀಕೃತಿಯನ್ನು ದಾಖಲಿಸುತ್ತೀರಿ, ನಂತರ ನಿಮ್ಮ ರಿಕವರಿ ಫ್ರೇಸ್‌ನಿಂದ ಸಾಧನವನ್ನು ರಕ್ಷಿಸುತ್ತೀರಿ.",
+  "whatsMainAccountCalled": "ನಿಮ್ಮ ಮುಖ್ಯ ಖಾತೆಯ ಹೆಸರೇನು?",
+  "restoreTitle": "ಸಹಿ ಕೀಲಿಯನ್ನು ಮರುಸ್ಥಾಪಿಸಿ",
+  "restoreBlurb": "ಈ ಸಾಧನವು ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಪುಸ್ತಕಗಳನ್ನು ಹೊಂದಿದೆ, ಆದರೆ ಹೊಂದಾಣಿಕೆಯ ಸಹಿ ಕೀಲಿ ಇಲ್ಲ. ನಿಮ್ಮ ಉಳಿಸಿದ ರಿಕವರಿ ಫ್ರೇಸ್ ಅಥವಾ ಕೀಸ್ಟೋರ್ ಫೈಲ್‌ನಿಂದ ಅದನ್ನು ಮರುಸ್ಥಾಪಿಸಿ - ನಿಮ್ಮ ಡೇಟಾ ಸಾಮಾನ್ಯವಾಗಿ ಪರಿಶೀಲನೆಯಾಗುತ್ತದೆ, ಮತ್ತು ಏನೂ ಮರುಸಹಿ ಅಥವಾ ಬದಲಾವಣೆಗೊಳ್ಳುವುದಿಲ್ಲ.",
+  "recoveryPhrase24": "ರಿಕವರಿ ಫ್ರೇಸ್ (ಎಲ್ಲಾ 24 ಪದಗಳು)",
+  "keystoreFile": "ಕೀಸ್ಟೋರ್ ಫೈಲ್",
+  "keystoreFileContents": "ಕೀಸ್ಟೋರ್ ಫೈಲ್ ವಿಷಯಗಳು",
+  "optionalBackupFile": "ಐಚ್ಛಿಕ ಬ್ಯಾಕಪ್ ಫೈಲ್",
+  "iDontHavePhrase": "ನನ್ನ ಬಳಿ ರಿಕವರಿ ಫ್ರೇಸ್ ಅಥವಾ ಕೀಸ್ಟೋರ್ ಫೈಲ್ ಇಲ್ಲ",
+  "migrationTitle": "ಹೊಸ ಕೀಲಿಗೆ ಮೈಗ್ರೇಟ್ ಮಾಡಿ",
+  "migrationBlurb": "ನಿಮ್ಮ ರಿಕವರಿ ಫ್ರೇಸ್ ಅಥವಾ ಕೀಸ್ಟೋರ್ ಫೈಲ್ ಇಲ್ಲದೆ, ಈ ಸಾಧನದ ಸಹಿ ಕೀಲಿಯನ್ನು ಮರುಪಡೆಯಲಾಗುವುದಿಲ್ಲ. ನೀವು ಹೊಸ ಕೀಲಿಯನ್ನು ಪ್ರಾರಂಭಿಸಬಹುದು. ಹಳೆಯ ನಮೂದುಗಳು ಗೋಚರಿಸುತ್ತಲೇ ಇರುತ್ತವೆ ಆದರೆ ಬದಲಾಯಿಸಲ್ಪಡುತ್ತವೆ.",
+  "iConfirmBooksValid": "ಪ್ರಸ್ತುತ ಪುಸ್ತಕಗಳು ಮಾನ್ಯವಾಗಿವೆ ಎಂದು ನಾನು ದೃಢೀಕರಿಸುತ್ತೇನೆ",
+  "whyWeDontEdit": "ನಾವು ಹಳೆಯ ನಮೂದುಗಳನ್ನು ಏಕೆ ಸಂಪಾದಿಸುವುದಿಲ್ಲ",
+  "whyWeDontEditBody": "ನೀವು ತಪ್ಪನ್ನು ಸರಿಪಡಿಸಿದಾಗ, ನೀವು ಈಗಾಗಲೇ ನಮೂದಿಸಿದ್ದನ್ನು ಬದಲಾಯಿಸುವ ಬದಲು ನಾವು ಹಳೆಯ ಸಾಲನ್ನು ಉಳಿಸಿಕೊಂಡು ಅದರ ಪಕ್ಕದಲ್ಲಿ ತಿದ್ದುಪಡಿಯನ್ನು ಸೇರಿಸುತ್ತೇವೆ. ಆ ರೀತಿಯಲ್ಲಿ ನಿಮ್ಮ ಇತಿಹಾಸವು ಏನಾಯಿತು ಮತ್ತು ನೀವು ಅದನ್ನು ಯಾವಾಗ ಸರಿಪಡಿಸಿದಿರಿ ಎಂಬುದನ್ನು ಯಾವಾಗಲೂ ನಿಖರವಾಗಿ ತೋರಿಸುತ್ತದೆ — ನಿಮ್ಮ ಬೆನ್ನ ಹಿಂದೆ ಏನೂ ಸದ್ದಿಲ್ಲದೆ ಬದಲಾಗುವುದಿಲ್ಲ.",
+  "lockTitle": "ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
+  "lockScreenTitle": "ಲಾಕ್ ಆಗಿದೆ",
+  "enterPinToContinue": "ಮುಂದುವರಿಸಲು ನಿಮ್ಮ PIN ನಮೂದಿಸಿ",
+  "pinLabel": "PIN",
+  "setPinTitle": "PIN ಹೊಂದಿಸಿ",
+  "currentPin": "ಪ್ರಸ್ತುತ PIN",
+  "newPin": "ಹೊಸ PIN",
+  "confirmPin": "PIN ದೃಢೀಕರಿಸಿ",
+  "confirmNewPin": "ಹೊಸ PIN ದೃಢೀಕರಿಸಿ",
+  "firstWeekTitle": "ನಿಮ್ಮ ಖಾತೆಗಳನ್ನು ಹೊಂದಿಸಿ",
+  "addCashAccount": "ನಗದು ಖಾತೆ ಸೇರಿಸಿ",
+  "addCreditCard": "ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್ ಸೇರಿಸಿ",
+  "cashAccountName": "ನಗದು ಖಾತೆಯ ಹೆಸರು",
+  "cardName": "ಕಾರ್ಡಿನ ಹೆಸರು",
+  "paidFromBank": "ಬ್ಯಾಂಕ್‌ನಿಂದ ಪಾವತಿಸಲಾಗಿದೆ",
+  "paidFromCard": "ಕಾರ್ಡ್‌ನಿಂದ ಪಾವತಿಸಲಾಗಿದೆ",
+  "choosePassphraseTitle": "ಈ ಬ್ಯಾಕಪ್ ಅನ್ನು ರಕ್ಷಿಸಲು ಪಾಸ್‌ಫ್ರೇಸ್ ಆಯ್ಕೆಮಾಡಿ. ನೀವು ಅದನ್ನು ಮರೆತರೆ ಮರುಪಡೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "replaceBooksTitle": "ನಿಮ್ಮ ಸ್ಥಳೀಯ ಪುಸ್ತಕಗಳನ್ನು ಬದಲಾಯಿಸುವುದೇ?",
+  "replaceBooksBody": "ಇದು ಪ್ರಸ್ತುತ ಈ ಆ್ಯಪ್‌ನಲ್ಲಿರುವ ಎಲ್ಲವನ್ನೂ ಬ್ಯಾಕಪ್‌ನೊಂದಿಗೆ ಬದಲಾಯಿಸುತ್ತದೆ. ನಂತರ ಆ್ಯಪ್ ಅನ್ನು ಮುಚ್ಚಿ ಮತ್ತೆ ತೆರೆಯಿರಿ.",
+  "chooseBackupFileFirst": "ಮೊದಲು ಬ್ಯಾಕಪ್ ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ.",
+  "backupRestored": "ಬ್ಯಾಕಪ್ ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ",
+  "backupRestoredBody": "ನಿಮ್ಮ ಪುಸ್ತಕಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ. ಮುಂದುವರಿಸಲು ಆ್ಯಪ್ ಅನ್ನು ಮುಚ್ಚಿ ಮತ್ತೆ ತೆರೆಯಿರಿ.",
+  "fixThisEntry": "ಈ ನಮೂದನ್ನು ಸರಿಪಡಿಸಿ",
+  "fixBlurb": "ಹಳೆಯ ಸಾಲು ಇದ್ದಂತೆಯೇ ಉಳಿಯುತ್ತದೆ. ದೃಢೀಕರಿಸಿದರೆ ಒಂದು ಹಿಂತಿರುಗಿಸುವ ಸಾಲು ಮತ್ತು ಸರಿಪಡಿಸಿದ ಸಾಲು ಸೇರುತ್ತದೆ.",
+  "importStatementTitle": "ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಆಮದು ಮಾಡಿ",
+  "importOfx": "OFX ಆಮದು ಮಾಡಿ",
+  "importOfxQfxFile": "OFX / QFX ಫೈಲ್ ಆಮದು ಮಾಡಿ",
+  "importCsvFile": "CSV ಫೈಲ್ ಆಮದು ಮಾಡಿ",
+  "whatKindOfStatement": "ನಿಮ್ಮ ಬಳಿ ಯಾವ ರೀತಿಯ ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಫೈಲ್ ಇದೆ?",
+  "chooseAccountForFile": "ಈ ಫೈಲ್ ಯಾವ ಖಾತೆಗೆ ಸೇರಿದೆ ಎಂದು ಆಯ್ಕೆಮಾಡಿ.",
+  "importIntoAccount": "ಖಾತೆಗೆ ಆಮದು ಮಾಡಿ",
+  "useSavedProfile": "ಉಳಿಸಿದ ಪ್ರೊಫೈಲ್ ಬಳಸಿ",
+  "saveMappingProfile": "ಈ ಮ್ಯಾಪಿಂಗ್ ಅನ್ನು ಪ್ರೊಫೈಲ್ ಆಗಿ ಉಳಿಸಿ (ಐಚ್ಛಿಕ)",
+  "renameProfile": "ಪ್ರೊಫೈಲ್ ಹೆಸರು ಬದಲಿಸಿ",
+  "deleteProfileTitle": "ಪ್ರೊಫೈಲ್ ಅಳಿಸುವುದೇ?",
+  "fileHasHeader": "ಫೈಲ್ ಹೆಡರ್ ಸಾಲನ್ನು ಹೊಂದಿದೆ",
+  "dateColumn": "ದಿನಾಂಕ ಕಾಲಂ",
+  "dateFormatHint": "ದಿನಾಂಕ ಸ್ವರೂಪ (ಉದಾ. dd/MM/yyyy)",
+  "amountColumn": "ಮೊತ್ತ ಕಾಲಂ",
+  "amountConvention": "ಮೊತ್ತದ ಸಂಪ್ರದಾಯ",
+  "signedAmountColumn": "ಸೈನ್ ಮಾಡಿದ ಮೊತ್ತ ಕಾಲಂ",
+  "separateDebitCredit": "ಪ್ರತ್ಯೇಕ ಡೆಬಿಟ್ / ಕ್ರೆಡಿಟ್ ಕಾಲಂಗಳು",
+  "debitColumn": "ಡೆಬಿಟ್ ಕಾಲಂ",
+  "creditColumn": "ಕ್ರೆಡಿಟ್ ಕಾಲಂ",
+  "decimalSeparator": "ದಶಮಾಂಶ ವಿಭಜಕ (. ಅಥವಾ ,)",
+  "descriptionColumns": "ವಿವರಣೆ ಕಾಲಂ(ಗಳು)",
+  "referenceIdColumn": "ಉಲ್ಲೇಖ ID ಕಾಲಂ (ಐಚ್ಛಿಕ)",
+  "skippedRows": "ಬಿಟ್ಟುಬಿಟ್ಟ ಸಾಲುಗಳು",
+  "parsedTransactionCount": "{count} ವಹಿವಾಟುಗಳನ್ನು ಪಾರ್ಸ್ ಮಾಡಲಾಗಿದೆ",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} ಬಿಟ್ಟುಬಿಟ್ಟಿದೆ ಅಥವಾ ಹೊರಗಿಡಲಾಗಿದೆ",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} ಪೋಸ್ಟ್ ಆಗಿದೆ, {failed} ವಿಫಲವಾಗಿದೆ",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "ಎಲ್ಲದಕ್ಕೂ ವರ್ಗ",
+  "saveAsRule": "ನಿಯಮವಾಗಿ ಉಳಿಸುವುದೇ?",
+  "saveAsRuleBlurb": "ವಿವರಣೆಯಲ್ಲಿ ಈ ಕೀವರ್ಡ್ ಹೊಂದಿರುವ ಭವಿಷ್ಯದ ಆಮದುಗಳು ಈ ವರ್ಗವನ್ನು ಬಳಸುತ್ತವೆ.",
+  "keyword": "ಕೀವರ್ಡ್",
+  "noSavedRules": "ಇನ್ನೂ ಯಾವುದೇ ಉಳಿಸಿದ ನಿಯಮಗಳಿಲ್ಲ. ನಿಯಮವನ್ನು ಉಳಿಸಲು ಸಾಲುಗಳ ಗುಂಪಿಗೆ ವರ್ಗವನ್ನು ನಿಯೋಜಿಸಿ.",
+  "deleteRuleTitle": "ನಿಯಮವನ್ನು ಅಳಿಸುವುದೇ?",
+  "editRule": "ನಿಯಮ ಸಂಪಾದಿಸಿ",
+  "rowsGrouped": "{count} ಸಾಲುಗಳು",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "ಆಮದು ಮಾಡಲು {extensions} ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "ಪಾವತಿದಾರರು",
+  "addPayee": "ಪಾವತಿದಾರರನ್ನು ಸೇರಿಸಿ",
+  "renamePayee": "ಪಾವತಿದಾರರ ಹೆಸರು ಬದಲಿಸಿ",
+  "deletePayeeTitle": "ಪಾವತಿದಾರರನ್ನು ಅಳಿಸುವುದೇ?",
+  "noPayeesYet": "ಇನ್ನೂ ಯಾವುದೇ ಪಾವತಿದಾರರಿಲ್ಲ",
+  "recurringTitle": "ಆವರ್ತಕ ಟೆಂಪ್ಲೇಟ್‌ಗಳು",
+  "noRecurringYet": "ಇನ್ನೂ ಯಾವುದೇ ಆವರ್ತಕ ಟೆಂಪ್ಲೇಟ್‌ಗಳಿಲ್ಲ",
+  "deleteTemplateTitle": "ಆವರ್ತಕ ಟೆಂಪ್ಲೇಟ್ ಅಳಿಸುವುದೇ?",
+  "dayOfMonth": "ತಿಂಗಳ ದಿನ (1-31)",
+  "dayOfMonthNote": "ಕಡಿಮೆ ದಿನಗಳಿರುವ ತಿಂಗಳು ಅದರ ಸ್ವಂತ ಕೊನೆಯ ದಿನವನ್ನು ಬಳಸುತ್ತದೆ.",
+  "dayOfMonthLine": "ತಿಂಗಳ {day} ನೇ ದಿನ - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "ಹೆಸರು",
+  "none": "ಯಾವುದೂ ಇಲ್ಲ",
+  "currency": "ಕರೆನ್ಸಿ",
+  "errorGeneric": "ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "errorSigningIdentityMismatch": "ಈ ರಿಕವರಿ ಫ್ರೇಸ್ ಅಥವಾ ಕೀಸ್ಟೋರ್ ಫೈಲ್ ಈ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಯಾವುದೇ ಸಹಿ ಗುರುತಿಗೆ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ.",
+  "errorInvalidLedgerBackup": "ಈ ಫೈಲ್ ಮಾನ್ಯ ಸ್ಮಾರ ಬ್ಯಾಕಪ್ ಅಲ್ಲ.",
+  "errorInvalidLedgerBackupNoIdentity": "ಈ ಬ್ಯಾಕಪ್‌ಗೆ ಸಹಿ ಗುರುತು ಇಲ್ಲ - ಇದು ಮಾನ್ಯ ಸ್ಮಾರ ಬ್ಯಾಕಪ್ ಅಲ್ಲ.",
+  "errorInvalidLedgerBackupUnverified": "ಈ ಬ್ಯಾಕಪ್ ಸಮಗ್ರ ಪುಸ್ತಕಗಳಾಗಿ ಪರಿಶೀಲನೆಯಾಗಲಿಲ್ಲ, ಆದ್ದರಿಂದ ಇದನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿಲ್ಲ.",
+  "errorInvalidLedgerBackupUnreadable": "ಈ ಫೈಲ್ ಅನ್ನು ಸ್ಮಾರ ಬ್ಯಾಕಪ್ ಆಗಿ ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "ಈ ಬ್ಯಾಕಪ್ ಈ ಸಾಧನದಲ್ಲಿರುವುದಕ್ಕಿಂತ ಭಿನ್ನವಾದ ಸಹಿ ಗುರುತಿಗೆ ಸೇರಿದೆ.",
+  "errorAccountNotFinancial": "ಅದು ಹಣಕಾಸು ಖಾತೆ ಅಲ್ಲ.",
+  "errorAccountArchived": "ಆ ಖಾತೆಯನ್ನು ಮರೆಮಾಡಲಾಗಿದೆ.",
+  "errorAccountNotArchived": "ಆ ಖಾತೆಯನ್ನು ಮರೆಮಾಡಲಾಗಿಲ್ಲ.",
+  "errorAccountNoPositiveBalanceToCloseOut": "ವರ್ಗಾಯಿಸಲು ಯಾವುದೇ ಉಳಿದ ಬ್ಯಾಲೆನ್ಸ್ ಇಲ್ಲ.",
+  "errorAccountHasNoGroup": "ಆ ಖಾತೆಗೆ ಯಾವುದೇ ಗುಂಪನ್ನು ನಿಯೋಜಿಸಲಾಗಿಲ್ಲ.",
+  "errorGroupHasNoCurrency": "ಆ ಗುಂಪಿಗೆ ಇನ್ನೂ ಕರೆನ್ಸಿ ಹೊಂದಿಸಲಾಗಿಲ್ಲ.",
+  "errorGroupNotFound": "ಆ ಖಾತೆ ಗುಂಪು ಕಂಡುಬಂದಿಲ್ಲ.",
+  "errorInvestmentAccountsMustBeAssets": "ಆಸ್ತಿ ಖಾತೆಗಳನ್ನು ಮಾತ್ರ ಹೂಡಿಕೆ ಖಾತೆಗಳಾಗಿ ಗುರುತಿಸಬಹುದು.",
+  "errorCreditCardsMustBeLiabilities": "ಬಾಧ್ಯತೆ ಖಾತೆಗಳನ್ನು ಮಾತ್ರ ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್‌ಗಳಾಗಿ ಗುರುತಿಸಬಹುದು.",
+  "errorOpeningBalanceMustBePositive": "ಒದಗಿಸಿದಾಗ ಆರಂಭಿಕ ಬ್ಯಾಲೆನ್ಸ್ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorAccountTypeDoesNotMatchGroup": "ಆ ಖಾತೆಯ ಪ್ರಕಾರ ಗುಂಪಿಗೆ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ.",
+  "errorLastActiveAccount": "ಕೊನೆಯ ಸಕ್ರಿಯ ಹಣಕಾಸು ಖಾತೆಯನ್ನು ಮರೆಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorCurrencyRequiredToCreateGroup": "ಗುಂಪನ್ನು ರಚಿಸಲು ಕರೆನ್ಸಿ ಅಗತ್ಯವಿದೆ.",
+  "errorSystemGroupCannotBeArchived": "ಅಂತರ್ನಿರ್ಮಿತ ಖಾತೆ ಗುಂಪುಗಳನ್ನು ಮರೆಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorGroupAlreadyArchived": "ಆ ಗುಂಪನ್ನು ಈಗಾಗಲೇ ಮರೆಮಾಡಲಾಗಿದೆ.",
+  "errorCannotArchiveGroupWithAccounts": "ಇನ್ನೂ ಸಕ್ರಿಯ ಖಾತೆಗಳನ್ನು ಹೊಂದಿರುವ ಗುಂಪನ್ನು ಮರೆಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorSystemGroupNeverArchived": "ಅಂತರ್ನಿರ್ಮಿತ ಖಾತೆ ಗುಂಪುಗಳನ್ನು ಎಂದಿಗೂ ಮರೆಮಾಡಲಾಗುವುದಿಲ್ಲ.",
+  "errorAccountGroupsCannotBeDeleted": "ಖಾತೆ ಗುಂಪುಗಳನ್ನು ಅಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorCannotReassignDifferentCurrency": "ಈ ಖಾತೆಯನ್ನು ಭಿನ್ನ ಕರೆನ್ಸಿ ಹೊಂದಿರುವ ಗುಂಪಿಗೆ ಸ್ಥಳಾಂತರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "ಗುಂಪು ಸಕ್ರಿಯ ಖಾತೆಗಳನ್ನು ಹೊಂದಿರುವಾಗ ಕರೆನ್ಸಿ ಬದಲಾಯಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorAmountMustBePositive": "ಮೊತ್ತ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorAccountCurrencyAmountMustBePositive": "ಖಾತೆ-ಕರೆನ್ಸಿ ಮೊತ್ತ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "ಖಾತೆ-ಕರೆನ್ಸಿ ಮೊತ್ತವು ವಿದೇಶಿ-ಕರೆನ್ಸಿ ನಮೂದಿಗೆ ಮಾತ್ರ.",
+  "errorSplitNeedsTwoLines": "ವಿಭಜನೆಗೆ ಕನಿಷ್ಠ ಎರಡು ವರ್ಗ ಸಾಲುಗಳು ಬೇಕು.",
+  "errorSplitLineMustBePositive": "ಪ್ರತಿ ವಿಭಜನೆ ಸಾಲು ಧನಾತ್ಮಕ ಮೊತ್ತವಾಗಿರಬೇಕು.",
+  "errorSplitLinesMustSumToTotal": "ವಿಭಜನೆ ಸಾಲುಗಳು ವಹಿವಾಟಿನ ಒಟ್ಟು ಮೊತ್ತಕ್ಕೆ ಸೇರಬೇಕು.",
+  "errorTransferAmountMustBePositive": "ವರ್ಗಾವಣೆ ಮೊತ್ತ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorTransferAccountsMustDiffer": "ಮೂಲ ಮತ್ತು ಗಮ್ಯಸ್ಥಾನದ ಖಾತೆಗಳು ಭಿನ್ನವಾಗಿರಬೇಕು.",
+  "errorCloseoutRequiresDestinationAmount": "ಬೇರೆ-ಕರೆನ್ಸಿ ಮುಕ್ತಾಯಕ್ಕೆ ತಿಳಿದಿರುವ ಗಮ್ಯಸ್ಥಾನದ ಮೊತ್ತ ಬೇಕು.",
+  "errorDestinationAmountNotForSameCurrency": "ಗಮ್ಯಸ್ಥಾನದ ಮೊತ್ತವು ಬೇರೆ-ಕರೆನ್ಸಿ ವರ್ಗಾವಣೆಗೆ ಮಾತ್ರ.",
+  "errorDestinationAmountMustBePositive": "ಗಮ್ಯಸ್ಥಾನದ ಮೊತ್ತ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorInvestmentCashExceeded": "ಈ ಹೂಡಿಕೆ ಖಾತೆಯ ನಗದಿಗಿಂತ ಹೆಚ್ಚು ವರ್ಗಾಯಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorCannotReverseUnsettledProvisional": "ಇದನ್ನು ಹಿಂತಿರುಗಿಸುವ ಬದಲು ಈ ಬಾಕಿ ಇರುವ ವರ್ಗಾವಣೆಯನ್ನು ಇತ್ಯರ್ಥಗೊಳಿಸಿ.",
+  "errorAlreadyReversed": "ಈ ನಮೂದನ್ನು ಈಗಾಗಲೇ ಸರಿಪಡಿಸಲಾಗಿದೆ. ಮೂಲ ಸಾಲು ಇದ್ದಂತೆಯೇ ಉಳಿಯುತ್ತದೆ.",
+  "errorNotActiveExpenseCategory": "ಸಕ್ರಿಯ ಖರ್ಚಿನ ವರ್ಗವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+  "errorNotActiveIncomeCategory": "ಸಕ್ರಿಯ ಆದಾಯ ವರ್ಗವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+  "errorSettledAmountMustNotBeNegative": "ಬಂದ ಮೊತ್ತ ಋಣಾತ್ಮಕವಾಗಿರಬಾರದು.",
+  "errorPendingTransferNotFound": "ಆ ಬಾಕಿ ಇರುವ ವರ್ಗಾವಣೆ ಕಂಡುಬಂದಿಲ್ಲ.",
+  "errorPendingTransferAlreadySettled": "ಆ ಬಾಕಿ ಇರುವ ವರ್ಗಾವಣೆ ಈಗಾಗಲೇ ಇತ್ಯರ್ಥಗೊಂಡಿದೆ.",
+  "errorSettledToMustBeSourceOrDestination": "ಮೂಲ ಮೂಲ ಅಥವಾ ಗಮ್ಯಸ್ಥಾನದ ಖಾತೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "ಹಣವನ್ನು ಮೂಲ ಖಾತೆಗೆ ಹಿಂತಿರುಗಿಸಿದಾಗ ಮಾತ್ರ ಶುಲ್ಕದ ವರ್ಗವನ್ನು ಬಳಸಲಾಗುತ್ತದೆ.",
+  "errorSettledAmountMustBePositiveForDelivery": "ಬಂದದ್ದಕ್ಕೆ ಧನಾತ್ಮಕ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ.",
+  "errorSettledAmountExceedsProvisional": "ಆ ಮೊತ್ತವು ಕಳುಹಿಸಿದ್ದಕ್ಕಿಂತ ಹೆಚ್ಚಾಗಿದೆ.",
+  "errorInstrumentNotFound": "ಆ ಸಾಧನ ಕಂಡುಬಂದಿಲ್ಲ.",
+  "errorIncomeRequiredForNonCash": "ನಗದೇತರ ಸ್ವಾಧೀನಕ್ಕೆ ಸಕ್ರಿಯ ಆದಾಯ ವರ್ಗ ಅಗತ್ಯವಿದೆ.",
+  "errorInsufficientCash": "ಆ ಖರೀದಿಗೆ ಈ ಹೂಡಿಕೆ ಖಾತೆಯಲ್ಲಿ ಸಾಕಷ್ಟು ನಗದು ಇಲ್ಲ.",
+  "errorSellQuantityAndPriceMustBePositive": "ಮಾರಾಟದ ಪ್ರಮಾಣ ಮತ್ತು ಘಟಕ ಬೆಲೆ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorLockedUntil": "ಮಾರಾಟ ಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ: ಕೆಲವು ಘಟಕಗಳು {date} ವರೆಗೆ ಲಾಕ್ ಆಗಿವೆ.",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "ನೀವು ಪ್ರಸ್ತುತ ಅನ್‌ಲಾಕ್ ಮಾಡಿ ಹೊಂದಿರುವುದಕ್ಕಿಂತ ಹೆಚ್ಚು ಮಾರಾಟ ಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorIncomeRequiredForGain": "ಸಾಕಾರಗೊಂಡ ಲಾಭಕ್ಕೆ ಸಕ್ರಿಯ ಆದಾಯ ವರ್ಗ ಅಗತ್ಯವಿದೆ.",
+  "errorExpenseRequiredForLoss": "ಸಾಕಾರಗೊಂಡ ನಷ್ಟಕ್ಕೆ ಸಕ್ರಿಯ ಖರ್ಚಿನ ವರ್ಗ ಅಗತ್ಯವಿದೆ.",
+  "errorBrokerageFailedAfterBuy": "ಖರೀದಿ ಪೋಸ್ಟ್ ಆಗಿದೆ, ಆದರೆ ಬ್ರೋಕರೇಜ್ ಶುಲ್ಕ ವಿಫಲವಾಗಿದೆ: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "ಮಾರಾಟ ಪೋಸ್ಟ್ ಆಗಿದೆ, ಆದರೆ ಬ್ರೋಕರೇಜ್ ಶುಲ್ಕ ವಿಫಲವಾಗಿದೆ: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "ಡಿವಿಡೆಂಡ್ ಮೊತ್ತ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorNotInvestmentAccount": "ಅದು ಹೂಡಿಕೆ ಖಾತೆ ಅಲ್ಲ.",
+  "errorNoInventoryCompanion": "ಈ ಹೂಡಿಕೆ ಖಾತೆಗೆ ಅದರ ಇನ್ವೆಂಟರಿ ಜೊತೆಗಾರ ಇಲ್ಲ.",
+  "errorInvestmentReversalBlocked": "ಈ ಖರೀದಿಯನ್ನು ಹಿಂತಿರುಗಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ: ನಂತರದ ಮಾರಾಟ(ಗಳು) ಅದರ ಘಟಕಗಳ ಮೇಲೆ ಅವಲಂಬಿತವಾಗಿವೆ. ಮೊದಲು ಅವಲಂಬಿತ ಮಾರಾಟ(ಗಳನ್ನು) ಹಿಂತಿರುಗಿಸಿ: {sells}.",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "ಮಾಸಿಕ ಮಿತಿ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorTemplateAmountMustBePositive": "ಟೆಂಪ್ಲೇಟ್ ಮೊತ್ತ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorOfxUnrecognized": "ಈ ಫೈಲ್ ಅನ್ನು OFX ಎಂದು ಗುರುತಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "errorCsvEmpty": "ಆಯ್ಕೆಮಾಡಿದ ಫೈಲ್ ಖಾಲಿಯಾಗಿದೆ.",
+  "errorCsvUnreadable": "ಈ ಫೈಲ್ ಅನ್ನು CSV ಆಗಿ ಓದಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "errorCsvNoRows": "ಆಯ್ಕೆಮಾಡಿದ ಫೈಲ್‌ಗೆ ಸಾಲುಗಳಿಲ್ಲ.",
+  "errorBackupCreateFailed": "ಬ್ಯಾಕಪ್ ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "ಈ ಬ್ಯಾಕಪ್ ಅನ್ನು ಮರುಸ್ಥಾಪಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ - ತಪ್ಪಾದ ಪಾಸ್‌ಫ್ರೇಸ್, ಅಥವಾ ಸ್ಮಾರ ಬ್ಯಾಕಪ್ ಫೈಲ್ ಅಲ್ಲ.",
+  "validationAmountAccountCategoryRequired": "ಮೊತ್ತ, ಖಾತೆ ಮತ್ತು ವರ್ಗ ಅಗತ್ಯವಿದೆ.",
+  "validationAmountAccountRequired": "ಮೊತ್ತ ಮತ್ತು ಖಾತೆ ಅಗತ್ಯವಿದೆ.",
+  "validationSplitLineIncomplete": "ಪ್ರತಿ ವಿಭಜನೆ ಸಾಲಿಗೆ ವರ್ಗ ಮತ್ತು ಮೊತ್ತ ಬೇಕು.",
+  "validationSplitSumMismatch": "ವಿಭಜನೆ ಸಾಲುಗಳು ವಹಿವಾಟಿನ ಒಟ್ಟು ಮೊತ್ತಕ್ಕೆ ಸೇರಬೇಕು.",
+  "validationFromToAmountRequired": "ಮೂಲ ಖಾತೆ, ಗಮ್ಯಸ್ಥಾನದ ಖಾತೆ ಮತ್ತು ಮೊತ್ತ ಅಗತ್ಯವಿದೆ.",
+  "validationAmountArrivedRequired": "ಬಂದ ಮೊತ್ತ ಅಗತ್ಯವಿದೆ.",
+  "validationChooseReceivingAccount": "ಹಣವನ್ನು ಸ್ವೀಕರಿಸಿದ ಖಾತೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+  "validationAccountCategoryRequired": "ಖಾತೆ ಮತ್ತು ವರ್ಗ ಅಗತ್ಯವಿದೆ.",
+  "validationFixFailed": "ಈ ತಿದ್ದುಪಡಿಯನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "validationNameRequired": "ನಿಮ್ಮ ಮುಖ್ಯ ಖಾತೆಗೆ ಹೆಸರಿಡಿ.",
+  "validationStillLoading": "ಇನ್ನೂ ಲೋಡ್ ಆಗುತ್ತಿದೆ - ಸ್ವಲ್ಪ ಸಮಯದಲ್ಲಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "validationSaveAccountNameFailed": "ಖಾತೆಯ ಹೆಸರನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "validationWrongPin": "ತಪ್ಪಾದ PIN. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "validationCategoryMustBeIncomeOrExpense": "ವರ್ಗ ಆದಾಯ ಅಥವಾ ಖರ್ಚು ಆಗಿರಬೇಕು.",
+  "validationOnlyExpenseHasMonthlyLimit": "ಖರ್ಚಿನ ವರ್ಗ ಮಾತ್ರ ಮಾಸಿಕ ಮಿತಿಯನ್ನು ಹೊಂದಬಹುದು.",
+  "validationInvalidTemplate": "ಅಮಾನ್ಯ ಟೆಂಪ್ಲೇಟ್.",
+  "validationWrongKeystorePassphrase": "ಈ ಕೀಸ್ಟೋರ್ ಫೈಲ್‌ಗೆ ತಪ್ಪಾದ ಪಾಸ್‌ಫ್ರೇಸ್.",
+  "validationInvalidKeystoreFile": "ಇದು ಮಾನ್ಯ ಕೀಸ್ಟೋರ್ ಫೈಲ್‌ನಂತೆ ಕಾಣಿಸುತ್ತಿಲ್ಲ.",
+  "validationRestorePhraseFailed": "ಆ ರಿಕವರಿ ಫ್ರೇಸ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "validationGenerateKeyFailed": "ಈ ಸಾಧನದಲ್ಲಿ ಸಹಿ ಕೀಲಿಯನ್ನು ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "ಈ ಕರೆನ್ಸಿಯನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "ಮೈಗ್ರೇಶನ್ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "validationChooseBackupFile": "ಮೊದಲು ಬ್ಯಾಕಪ್ ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ.",
+  "validationPassphraseRequired": "ಪಾಸ್‌ಫ್ರೇಸ್ ನಮೂದಿಸಿ.",
+  "validationPinsDoNotMatch": "ಎರಡು PIN ಗಳು ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ.",
+  "validationFeePositiveWithCategory": "ವರ್ಗಾವಣೆ ಶುಲ್ಕವು ಆಯ್ಕೆಮಾಡಿದ ಖರ್ಚಿನ ವರ್ಗದೊಂದಿಗೆ ಧನಾತ್ಮಕ ಮೊತ್ತವಾಗಿರಬೇಕು.",
+  "validationFeeMustBeLessThanAmount": "ಕಡಿತಗೊಳಿಸಿದ-ಶುಲ್ಕದ ವರ್ಗಾವಣೆಗೆ ಶುಲ್ಕವು ಮೊತ್ತಕ್ಕಿಂತ ಕಡಿಮೆ ಇರಬೇಕು.",
+  "validationTransferSavedFeeFailed": "ವರ್ಗಾವಣೆ ಉಳಿಸಲಾಗಿದೆ, ಆದರೆ ಶುಲ್ಕವನ್ನು ದಾಖಲಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "ಮಾನ್ಯ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ.",
+  "validationConfirmWordMismatch": "ಪದ {n} ನಿಮ್ಮ ಉಳಿಸಿದ ಫ್ರೇಸ್‌ಗೆ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ. ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "ಖರೀದಿಯ ಪ್ರಮಾಣ ಮತ್ತು ಘಟಕ ಬೆಲೆ ಧನಾತ್ಮಕವಾಗಿರಬೇಕು.",
+  "errorInstrumentArchived": "ಮರೆಮಾಡಿದ ಸಾಧನವನ್ನು ಖರೀದಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorNonCashCannotIncludeBrokerage": "ನಗದೇತರ ಸ್ವಾಧೀನಗಳು ಬ್ರೋಕರೇಜ್ ಅನ್ನು ಒಳಗೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ.",
+  "errorBrokerageRequiresExpenseCategory": "ಬ್ರೋಕರೇಜ್ ಧನಾತ್ಮಕವಾಗಿದ್ದಾಗ ಸಕ್ರಿಯ ಖರ್ಚಿನ ವರ್ಗ ಅಗತ್ಯವಿದೆ.",
+  "errorSellProceedsMustCoverBrokerage": "ಮಾರಾಟದ ಆದಾಯವು ಕನಿಷ್ಠ ಬ್ರೋಕರೇಜ್ ಮೊತ್ತವಾಗಿರಬೇಕು.",
+  "homeSpentOfLimitThisMonth": "ಈ ತಿಂಗಳು {limit} ರಲ್ಲಿ {spent}",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "ಸ್ಮಾರ ಖಾತೆಯನ್ನು ಅನ್‌ಲಾಕ್ ಮಾಡಿ",
+  "searchLabel": "ಹುಡುಕಿ",
+  "openingBalance": "ಆರಂಭಿಕ ಬ್ಯಾಲೆನ್ಸ್",
+  "transferToName": "ವರ್ಗಾವಣೆ: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "ವರ್ಗಾವಣೆಗೆ ಶುಲ್ಕ",
+  "feeForTransferTo": "{name} ಗೆ ವರ್ಗಾವಣೆಯ ಶುಲ್ಕ",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "ಫೈಲ್ ಪಿಕರ್ ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "ದಯವಿಟ್ಟು .{extensions} ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "ಕರೆನ್ಸಿ ಕೋಡ್ (ISO 4217, ಉದಾ. USD)",
+  "splitCounterpartMore": "{name} +{count} ಹೆಚ್ಚು",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "ದಿನಾಂಕ",
+  "noneSelected": "ಯಾವುದೂ ಇಲ್ಲ",
+  "reviewEntriesBeforeContinuing": "ಮುಂದುವರಿಸುವ ಮೊದಲು ಕೆಳಗಿನ ನಮೂದುಗಳನ್ನು ({count} ಒಟ್ಟು) ಪರಿಶೀಲಿಸಿ.",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "ನೀವು {amount} ಸ್ವೀಕರಿಸಿದ್ದೀರಿ",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "ವಿನಿಮಯ ದರ ಇನ್ನೂ ತಿಳಿದಿಲ್ಲದಿದ್ದರೆ ಖಾಲಿ ಬಿಡಿ.",
+  "recordTradeBlurb": "ಈಗಾಗಲೇ ನಡೆದ ವಹಿವಾಟನ್ನು ದಾಖಲಿಸಿ. ಈ ಆ್ಯಪ್ ಆದೇಶಗಳನ್ನು ನೀಡುವುದಿಲ್ಲ.",
+  "feeOnTopBlurb": "ಆನ್: ಮೇಲಿನ ಮೊತ್ತವು ಈ ಖಾತೆಯಿಂದ ತೆಗೆದುಕೊಂಡ ಒಟ್ಟು ಮೊತ್ತ; ಶುಲ್ಕವು ಅದರಿಂದ ಕಡಿತಗೊಳ್ಳುತ್ತದೆ.",
+  "feeBankBlurb": "ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಅಥವಾ ಮಧ್ಯವರ್ತಿಯಿಂದ ಮುಂಗಡವಾಗಿ ವಿಧಿಸಲಾದ ಕಮಿಷನ್.",
+  "validationPinMinLength": "PIN ಕನಿಷ್ಠ 4 ಅಂಕೆಗಳಷ್ಟು ಇರಬೇಕು.",
+  "restoreBackupBlurb": "ಇದು ಪ್ರಸ್ತುತ ಈ ಆ್ಯಪ್‌ನಲ್ಲಿರುವ ಎಲ್ಲವನ್ನೂ ಬ್ಯಾಕಪ್‌ನೊಂದಿಗೆ ಬದಲಾಯಿಸುತ್ತದೆ — ಇದು ವಿಲೀನಗೊಳ್ಳುವುದಿಲ್ಲ. ಬ್ಯಾಕಪ್ ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ನೀವು ಅದನ್ನು ರಕ್ಷಿಸಲು ಬಳಸಿದ ಪಾಸ್‌ಫ್ರೇಸ್ ನಮೂದಿಸಿ.",
+  "actionReplace": "ಬದಲಾಯಿಸಿ",
+  "hideAccountBody": "{name} ಇನ್ನು ಮುಂದೆ ಹೊಸ ವಹಿವಾಟುಗಳಿಗೆ ಲಭ್ಯವಿರುವುದಿಲ್ಲ.",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "ಖಾತೆಗಳನ್ನು ರಚಿಸುವಾಗ ಅಥವಾ ಮರುನಿಯೋಜಿಸುವಾಗ {name} ಇನ್ನು ಮುಂದೆ ನೀಡಲಾಗುವುದಿಲ್ಲ.",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "ಹೊಸ ವಹಿವಾಟುಗಳನ್ನು ದಾಖಲಿಸುವಾಗ {name} ಇನ್ನು ಮುಂದೆ ನೀಡಲಾಗುವುದಿಲ್ಲ.",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "ಮರೆಮಾಡಿದ ಸಾಧನಗಳು ಹಿಂದಿನ ಖರೀದಿಗಳು ಮತ್ತು ಮಾರಾಟಗಳಲ್ಲಿ ಉಳಿಯುತ್ತವೆ. ನೀವು ಅವುಗಳಿಗೆ ಇನ್ನೂ ಡಿವಿಡೆಂಡ್ ದಾಖಲಿಸಬಹುದು.",
+  "nameHidden": "{name} (ಮರೆಮಾಡಲಾಗಿದೆ)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "ಯಾವುದೇ ಕರೆನ್ಸಿ ಹೊಂದಿಸಲಾಗಿಲ್ಲ",
+  "deletePayeeBody": "{name} ಮತ್ತು ಅದರ ನೆನಪಿಟ್ಟುಕೊಂಡ ಡೀಫಾಲ್ಟ್‌ಗಳನ್ನು ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ. ಹಿಂದಿನ ವಹಿವಾಟುಗಳ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುವುದಿಲ್ಲ.",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} ಇನ್ನು ಮುಂದೆ ಬಾಕಿ ಎಂದು ನೀಡಲಾಗುವುದಿಲ್ಲ. ಅದು ಈಗಾಗಲೇ ದಾಖಲಿಸಿದ ಹಿಂದಿನ ವಹಿವಾಟುಗಳ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುವುದಿಲ್ಲ.",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "ಉಳಿಸಿದ ಕಾಲಂ ಮ್ಯಾಪಿಂಗ್ \"{name}\" ಅನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ. ಅದರೊಂದಿಗೆ ಈಗಾಗಲೇ ಆಮದು ಮಾಡಿದ ಸ್ಟೇಟ್‌ಮೆಂಟ್‌ಗಳ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುವುದಿಲ್ಲ.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "\"{keyword}\" ಮೂಲಕ ಆಮದುಗಳನ್ನು ಇನ್ನು ಮುಂದೆ ಸ್ವಯಂ-ವರ್ಗೀಕರಿಸಲಾಗುವುದಿಲ್ಲ. ಈ ನಿಯಮವನ್ನು ಬಳಸಿ ಈಗಾಗಲೇ ವರ್ಗೀಕರಿಸಿದ ವಹಿವಾಟುಗಳ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುವುದಿಲ್ಲ.",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "ಐಚ್ಛಿಕವಾಗಿ ಈಗ ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್ ಅಥವಾ ನಗದು ಖಾತೆಯನ್ನು ಸೇರಿಸಿ - ನೀವು ಯಾವಾಗಲೂ ನಂತರ ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಂದ ಹೆಚ್ಚಿನ ಖಾತೆಗಳನ್ನು ಸೇರಿಸಬಹುದು.",
+  "deliveredToDestination": "ಗಮ್ಯಸ್ಥಾನಕ್ಕೆ ತಲುಪಿಸಲಾಗಿದೆ",
+  "deliveredToName": "{name} ಗೆ ತಲುಪಿಸಲಾಗಿದೆ",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "ನೀವು ನಿರೀಕ್ಷಿಸಿದ್ದಕ್ಕಿಂತ {amount} {currency} ಕಡಿಮೆ ಸ್ವೀಕರಿಸಿದ್ದೀರಿ - ವ್ಯತ್ಯಾಸವನ್ನು ಸರಿದೂಗಿಸಲು ವರ್ಗವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "ದಿನಾಂಕ ಶ್ರೇಣಿ",
+  "addTemplate": "ಟೆಂಪ್ಲೇಟ್ ಸೇರಿಸಿ",
+  "editTemplate": "ಟೆಂಪ್ಲೇಟ್ ಸಂಪಾದಿಸಿ",
+  "validationFillTemplateFields": "ಪ್ರತಿ ಕ್ಷೇತ್ರವನ್ನು ಮಾನ್ಯ ಮೊತ್ತ ಮತ್ತು ದಿನದೊಂದಿಗೆ ಭರ್ತಿ ಮಾಡಿ.",
+  "saveCsvExport": "CSV ರಫ್ತನ್ನು ಉಳಿಸಿ",
+  "referenceRate": "ಉಲ್ಲೇಖ ದರ",
+  "yourRate": "ನಿಮ್ಮ ದರ",
+  "leaveBlankIfThisWasAccountCurrency": "ಇದು ಖಾತೆಯ ಸ್ವಂತ ಕರೆನ್ಸಿಯಾದ {currency} ನಲ್ಲಿ ಇದ್ದರೆ ಖಾಲಿ ಬಿಡಿ.",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "ಇಲ್ಲಿಯವರೆಗೆ ಲಾಕ್ ಮಾಡಿ (ಐಚ್ಛಿಕ)",
+  "lockedUntilDate": "{date} ವರೆಗೆ ಲಾಕ್ ಆಗಿದೆ",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "ಸಂಶೋಧನಾ ಪ್ರಾಂಪ್ಟ್ ನಕಲಿಸಲಾಗಿದೆ — ಯಾವುದೇ ಬ್ರೌಸರ್ URL ಲಭ್ಯವಿಲ್ಲ, ಅಥವಾ ನೀವು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿದ್ದೀರಿ.",
+  "openedFavouriteResearchTool": "ನಿಮ್ಮ ಮೆಚ್ಚಿನ ಸಂಶೋಧನಾ ಸಾಧನವನ್ನು ತೆರೆಯಲಾಗಿದೆ.",
+  "looksLikeGain": "ಇದು ಲಾಭದಂತೆ ಕಾಣುತ್ತದೆ",
+  "looksLikeLoss": "ಇದು ನಷ್ಟದಂತೆ ಕಾಣುತ್ತದೆ",
+  "looksLikeBreakEven": "ಇದು ಸಮಬಲದಂತೆ ಕಾಣುತ್ತದೆ",
+  "sellableQuantity": "{name} ({qty} ಮಾರಾಟ ಮಾಡಬಹುದಾದ)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "ಕಾಲಂ {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "ಆಮದು ಮಾಡುತ್ತಿದೆ...",
+  "confirmImport": "ಆಮದನ್ನು ದೃಢೀಕರಿಸಿ",
+  "manageSavedCategoryRules": "ಉಳಿಸಿದ ವರ್ಗ ನಿಯಮಗಳನ್ನು ನಿರ್ವಹಿಸಿ",
+  "statementCurrencyMismatch": "ಈ ಫೈಲ್‌ನ ಕರೆನ್ಸಿ ({currency}) ಆಯ್ಕೆಮಾಡಿದ ಖಾತೆಯ ಕರೆನ್ಸಿಗೆ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ.",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "ವರ್ಗ ನಿಯಮಗಳು",
+  "possibleDuplicate": "ಸಂಭವನೀಯ ನಕಲಿ",
+  "unknownCategory": "ಅಜ್ಞಾತ ವರ್ಗ"
+}

@@ -339,7 +339,7 @@ void main() {
       // dropdown interaction needed to get a cross-currency pair.
       expect(find.text('Destination amount (optional)'), findsOneWidget);
       await tester.enterText(find.byType(TextField).first, '100.00');
-      await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Moved money'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
 
@@ -348,7 +348,7 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
-      expect(find.text('PENDING TRANSFERS'), findsOneWidget);
+      expect(find.text('MONEY IN TRANSIT'), findsOneWidget);
       final pendingBefore =
           (await repository.watchPendingTransfers().first).single;
       expect(pendingBefore.currency, equals('USD'));
@@ -412,7 +412,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
-    expect(find.text('PENDING TRANSFERS'), findsOneWidget);
+    expect(find.text('MONEY IN TRANSIT'), findsOneWidget);
     await tester.tap(find.textContaining('→').first);
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 200));

@@ -4,12 +4,13 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Reinstall/new-device restore, using a previously-saved recovery phrase
 /// or keystore file (spec: "Recoverable Reinstall or Device Migration").
 /// Never re-signs or alters any entry - only re-derives and matches the
 /// device's private key.
-class RestoreIdentityViewModel extends ChangeNotifier {
+class RestoreIdentityViewModel extends ChangeNotifier with LocalizedErrorMixin {
   RestoreIdentityViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository;
 
@@ -17,9 +18,6 @@ class RestoreIdentityViewModel extends ChangeNotifier {
 
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
-
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
 
   Future<bool> restoreFromPhrase(String phraseText) {
     final words = phraseText
@@ -46,7 +44,7 @@ class RestoreIdentityViewModel extends ChangeNotifier {
 
   Future<bool> _restore(Future<void> Function() attempt) async {
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -55,15 +53,16 @@ class RestoreIdentityViewModel extends ChangeNotifier {
       _isSubmitting = false;
       notifyListeners();
       return true;
-    } on SigningIdentityMismatchException {
-      _errorMessage =
-          'This does not match the signing identity on this device\'s database.';
+    } on SigningIdentityMismatchException catch (e) {
+      setFailure(e);
     } on SecretBoxAuthenticationError {
-      _errorMessage = 'Wrong passphrase for this keystore file.';
+      setFailure(
+        const AppFailure(AppErrorCode.validationWrongKeystorePassphrase),
+      );
     } on FormatException {
-      _errorMessage = 'That doesn\'t look like a valid keystore file.';
+      setFailure(const AppFailure(AppErrorCode.validationInvalidKeystoreFile));
     } catch (_) {
-      _errorMessage = 'Could not restore from that recovery phrase.';
+      setFailure(const AppFailure(AppErrorCode.validationRestorePhraseFailed));
     }
 
     _isSubmitting = false;

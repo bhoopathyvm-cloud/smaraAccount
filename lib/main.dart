@@ -5,6 +5,7 @@ import 'data/database/app_database.dart';
 import 'data/repositories/ledger_repository.dart';
 import 'data/repositories/settings_repository.dart';
 import 'data/repositories/statement_import_repository.dart';
+import 'l10n/l10n.dart';
 import 'ui/app_router.dart';
 import 'ui/core/app_lock_controller.dart';
 import 'ui/core/app_theme.dart';
@@ -38,6 +39,15 @@ class SmaraAccountingApp extends StatelessWidget {
           update: (_, db, _) => LedgerRepository(database: db),
         ),
         Provider<SettingsRepository>(create: (_) => SettingsRepository()),
+        ChangeNotifierProvider<LocaleController>(
+          create: (context) {
+            final controller = LocaleController(
+              settingsRepository: context.read<SettingsRepository>(),
+            );
+            controller.load();
+            return controller;
+          },
+        ),
         ChangeNotifierProvider<AppLockController>(
           create: (context) => AppLockController(
             settingsRepository: context.read<SettingsRepository>(),
@@ -97,11 +107,21 @@ class SmaraAccountingApp extends StatelessWidget {
               previous ??
               RestoreIdentityViewModel(ledgerRepository: repository),
         ),
-        ChangeNotifierProxyProvider<LedgerRepository, HomeViewModel>(
-          create: (context) =>
-              HomeViewModel(ledgerRepository: context.read<LedgerRepository>()),
-          update: (_, repository, previous) =>
-              previous ?? HomeViewModel(ledgerRepository: repository),
+        ChangeNotifierProxyProvider2<
+          LedgerRepository,
+          SettingsRepository,
+          HomeViewModel
+        >(
+          create: (context) => HomeViewModel(
+            ledgerRepository: context.read<LedgerRepository>(),
+            settingsRepository: context.read<SettingsRepository>(),
+          ),
+          update: (_, repository, settings, previous) =>
+              previous ??
+              HomeViewModel(
+                ledgerRepository: repository,
+                settingsRepository: settings,
+              ),
         ),
         ChangeNotifierProxyProvider<
           LedgerRepository,
@@ -139,6 +159,7 @@ class SmaraAccountingApp extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final appLockController = context.read<AppLockController>();
+          final localeController = context.watch<LocaleController>();
           final router = buildAppRouter(
             context.read<LedgerRepository>(),
             context.read<StatementImportRepository>(),
@@ -150,6 +171,15 @@ class SmaraAccountingApp extends StatelessWidget {
             child: MaterialApp.router(
               title: 'Smara Accounting',
               theme: buildAppTheme(),
+              locale: localeController.overrideLocale,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: supportedAppLocales,
+              localeListResolutionCallback: (locales, supported) {
+                final device = locales?.isNotEmpty == true
+                    ? locales!.first
+                    : null;
+                return localeController.resolve(device);
+              },
               routerConfig: router,
             ),
           );

@@ -43,13 +43,14 @@ void main() {
     required List<Posting> postings,
     bool isVerified = true,
     bool isSupersededByMigration = false,
+    String? reversesEntryId,
   }) {
     return JournalEntry(
       id: id,
       transactionDate: transactionDate,
       recordedAt: transactionDate,
       description: null,
-      reversesEntryId: null,
+      reversesEntryId: reversesEntryId,
       postings: postings,
       deviceChainSequence: 0,
       entryHash: const [],
@@ -466,6 +467,66 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       expect(viewModel.isRowFixable(viewModel.rows.single), isFalse);
+    });
+
+    test('false for an original that already has a reversal posted', () async {
+      when(
+        repository.watchCategories(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([income]));
+      when(repository.watchEntriesForAccount(any)).thenAnswer(
+        (_) => Stream.value([
+          testEntry(
+            id: 'e1',
+            transactionDate: DateTime(2026, 1, 1),
+            postings: const [
+              Posting(
+                id: 'p1',
+                entryId: 'e1',
+                accountId: 'asset-1',
+                amountMinor: 1000,
+                lineNumber: 1,
+              ),
+              Posting(
+                id: 'p2',
+                entryId: 'e1',
+                accountId: 'income-1',
+                amountMinor: -1000,
+                lineNumber: 2,
+              ),
+            ],
+          ),
+          testEntry(
+            id: 'e1-rev',
+            transactionDate: DateTime(2026, 1, 2),
+            reversesEntryId: 'e1',
+            postings: const [
+              Posting(
+                id: 'p3',
+                entryId: 'e1-rev',
+                accountId: 'asset-1',
+                amountMinor: -1000,
+                lineNumber: 1,
+              ),
+              Posting(
+                id: 'p4',
+                entryId: 'e1-rev',
+                accountId: 'income-1',
+                amountMinor: 1000,
+                lineNumber: 2,
+              ),
+            ],
+          ),
+        ]),
+      );
+
+      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
+
+      final original = viewModel.rows.firstWhere((r) => r.entryId == 'e1');
+      expect(viewModel.isRowFixable(original), isFalse);
     });
   });
 
@@ -916,7 +977,12 @@ void main() {
             start: anyNamed('start'),
             end: anyNamed('end'),
           ),
-        ).thenThrow(AccountGroupException('not a financial account'));
+        ).thenThrow(
+          AccountGroupException(
+            'not a financial account',
+            code: AppErrorCode.accountNotFinancial,
+          ),
+        );
 
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
@@ -931,7 +997,10 @@ void main() {
         );
 
         expect(csv, isNull);
-        expect(viewModel.errorMessage, equals('not a financial account'));
+        expect(
+          viewModel.errorMessage,
+          equals('That is not a financial account.'),
+        );
       },
     );
   });

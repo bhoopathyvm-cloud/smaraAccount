@@ -15,7 +15,7 @@
 ## 3. Flows
 
 - [x] 3.1 Transfer, import, archive confirmations use household phrasing.
-- [ ] 3.2 Register row action label “Fix” (wired in fix-this change).
+- [x] 3.2 Register row action label “Fix” (wired in fix-this change).
 
 ## 4. Settings
 

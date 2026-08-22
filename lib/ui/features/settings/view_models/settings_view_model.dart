@@ -3,9 +3,12 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/lock/app_lock_service.dart';
 import '../../../../domain/lock/biometric_authenticator.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
+import '../../../../domain/models/quote_provider.dart';
+import '../../../../domain/models/research_tool.dart';
 import '../../../core/app_lock_controller.dart';
 
 /// The app's Settings surface: the reference exchange-rate lookup's
@@ -13,18 +16,20 @@ import '../../../core/app_lock_controller.dart';
 /// Decision 5), ledger-backup-restore's Save/Restore backup actions, and
 /// app-lock's PIN/biometric/timeout/snapshot-hiding controls. Deliberately
 /// minimal - not a general preferences screen.
-class SettingsViewModel extends ChangeNotifier {
+class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   SettingsViewModel({
     required SettingsRepository settingsRepository,
     required LedgerRepository ledgerRepository,
     required AppLockService appLockService,
     required BiometricAuthenticator biometricAuthenticator,
     required AppLockController appLockController,
+    LocaleController? localeController,
   }) : _settingsRepository = settingsRepository,
        _ledgerRepository = ledgerRepository,
        _appLockService = appLockService,
        _biometricAuthenticator = biometricAuthenticator,
-       _appLockController = appLockController {
+       _appLockController = appLockController,
+       localeController = localeController {
     _load();
   }
 
@@ -33,6 +38,7 @@ class SettingsViewModel extends ChangeNotifier {
   final AppLockService _appLockService;
   final BiometricAuthenticator _biometricAuthenticator;
   final AppLockController _appLockController;
+  final LocaleController? localeController;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -42,6 +48,15 @@ class SettingsViewModel extends ChangeNotifier {
 
   ExchangeRateProvider _selectedProvider = ExchangeRateProvider.values.first;
   ExchangeRateProvider get selectedProvider => _selectedProvider;
+
+  bool _marketPriceFetchEnabled = true;
+  bool get marketPriceFetchEnabled => _marketPriceFetchEnabled;
+
+  QuoteProvider _selectedQuoteProvider = QuoteProvider.values.first;
+  QuoteProvider get selectedQuoteProvider => _selectedQuoteProvider;
+
+  ResearchTool _selectedResearchTool = ResearchTool.values.first;
+  ResearchTool get selectedResearchTool => _selectedResearchTool;
 
   bool _isAppLockEnabled = false;
   bool get isAppLockEnabled => _isAppLockEnabled;
@@ -71,6 +86,10 @@ class SettingsViewModel extends ChangeNotifier {
     _referenceRateLookupEnabled = await _settingsRepository
         .isReferenceRateLookupEnabled();
     _selectedProvider = await _settingsRepository.selectedProvider();
+    _marketPriceFetchEnabled = await _settingsRepository
+        .isMarketPriceFetchEnabled();
+    _selectedQuoteProvider = await _settingsRepository.selectedQuoteProvider();
+    _selectedResearchTool = await _settingsRepository.selectedResearchTool();
     _isAppLockEnabled = await _settingsRepository.isAppLockEnabled();
     _appLockTimeoutMinutes = await _settingsRepository.appLockTimeoutMinutes();
     _isBiometricEnabled = await _settingsRepository.isAppLockBiometricEnabled();
@@ -91,25 +110,41 @@ class SettingsViewModel extends ChangeNotifier {
     await _settingsRepository.setSelectedProvider(provider);
   }
 
+  Future<void> setMarketPriceFetchEnabled(bool value) async {
+    _marketPriceFetchEnabled = value;
+    notifyListeners();
+    await _settingsRepository.setMarketPriceFetchEnabled(value);
+  }
+
+  Future<void> setSelectedQuoteProvider(QuoteProvider provider) async {
+    _selectedQuoteProvider = provider;
+    notifyListeners();
+    await _settingsRepository.setSelectedQuoteProvider(provider);
+  }
+
+  Future<void> setSelectedResearchTool(ResearchTool tool) async {
+    _selectedResearchTool = tool;
+    notifyListeners();
+    await _settingsRepository.setSelectedResearchTool(tool);
+  }
+
   bool _isBackingUp = false;
   bool get isBackingUp => _isBackingUp;
 
   bool _isRestoring = false;
   bool get isRestoring => _isRestoring;
 
-  String? _backupErrorMessage;
-  String? get backupErrorMessage => _backupErrorMessage;
-  void clearBackupError() {
-    if (_backupErrorMessage == null) return;
-    _backupErrorMessage = null;
-    notifyListeners();
-  }
+  /// English mapping for unit tests; views should call
+  /// [backupErrorMessageFor] with the active locale.
+  String? get backupErrorMessage => errorMessage;
+  String? backupErrorMessageFor(AppLocalizations l10n) => errorMessageFor(l10n);
+  void clearBackupError() => clearFailure();
 
   /// Returns the encrypted backup file's contents, or null (with
   /// [backupErrorMessage] set) on failure.
   Future<String?> exportBackup({required String passphrase}) async {
     _isBackingUp = true;
-    _backupErrorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       final contents = await _ledgerRepository.exportLedgerBackup(
@@ -120,8 +155,13 @@ class SettingsViewModel extends ChangeNotifier {
       return contents;
     } catch (e) {
       _isBackingUp = false;
-      _backupErrorMessage = 'Could not create the backup: $e';
-      notifyListeners();
+      setFailure(
+        AppFailure(
+          AppErrorCode.backupCreateFailed,
+          params: {'detail': '$e'},
+          debugMessage: '$e',
+        ),
+      );
       return null;
     }
   }
@@ -135,7 +175,7 @@ class SettingsViewModel extends ChangeNotifier {
     required String passphrase,
   }) async {
     _isRestoring = true;
-    _backupErrorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       await _ledgerRepository.restoreLedgerBackup(
@@ -147,20 +187,15 @@ class SettingsViewModel extends ChangeNotifier {
       return true;
     } on ForeignBackupIdentityException catch (e) {
       _isRestoring = false;
-      _backupErrorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
     } on InvalidLedgerBackupException catch (e) {
       _isRestoring = false;
-      _backupErrorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
     } catch (_) {
       _isRestoring = false;
-      _backupErrorMessage =
-          'Could not restore this backup - wrong passphrase, or not a '
-          'Smara ledger backup file.';
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.backupRestoreFailed));
       return false;
     }
   }

@@ -1,0 +1,968 @@
+{
+  "@@locale": "tr",
+  "appTitle": "Smara Muhasebe",
+  "navHome": "Ana sayfa",
+  "navRegister": "Kayıt",
+  "navSummary": "Özet",
+  "navAccounts": "Hesaplar",
+  "navCategories": "Kategoriler",
+  "actionCancel": "İptal",
+  "actionSave": "Kaydet",
+  "actionDelete": "Sil",
+  "actionDone": "Tamam",
+  "actionContinue": "Devam",
+  "actionDismiss": "Kapat",
+  "actionRetry": "Tekrar dene",
+  "actionSkip": "Atla",
+  "actionConfirm": "Onayla",
+  "actionAdd": "Ekle",
+  "actionEdit": "Düzenle",
+  "actionRename": "Yeniden adlandır",
+  "actionHide": "Gizle",
+  "actionCreate": "Oluştur",
+  "actionCloseApp": "Uygulamayı kapat",
+  "actionUnlock": "Kilidi aç",
+  "actionSettle": "Kapat",
+  "actionFinish": "Bitir",
+  "actionPreview": "Önizle",
+  "actionImport": "İçe aktar",
+  "actionExportCsv": "CSV dışa aktar",
+  "actionChooseFile": "Dosya seç",
+  "actionRestore": "Geri yükle",
+  "actionFix": "Düzelt",
+  "actionBuy": "Al",
+  "actionSell": "Sat",
+  "actionDividend": "Temettü",
+  "actionRecordBuy": "Alış kaydet",
+  "actionRecordSell": "Satış kaydet",
+  "actionRecordDividend": "Temettü kaydet",
+  "actionPayCard": "Kart borcu öde",
+  "actionTransfer": "Transfer et",
+  "actionRecordTransaction": "İşlem kaydet",
+  "actionImportStatement": "Hesap özeti içe aktar",
+  "actionClearDates": "Tarihleri temizle",
+  "actionClearSearch": "Aramayı ve filtreleri temizle",
+  "actionUseBiometrics": "Biyometrik kullan",
+  "actionSetPin": "PIN belirle",
+  "actionChangePin": "PIN değiştir",
+  "actionSaveBackup": "Yedeği kaydet",
+  "actionRestoreBackup": "Yedeği geri yükle",
+  "actionSaveRule": "Kuralı kaydet",
+  "actionConfirmFix": "Düzeltmeyi onayla",
+  "captureSpent": "Harcanan",
+  "captureReceived": "Alınan",
+  "captureMovedMoney": "Para transferi",
+  "captureImportStatement": "Hesap özeti içe aktar",
+  "settingsTitle": "Ayarlar",
+  "settingsLanguage": "Dil",
+  "settingsLanguageSystem": "Cihaz dili",
+  "settingsFetchFxRates": "Referans döviz kurlarını getir",
+  "settingsFetchFxRatesSubtitle": "Farklı para birimleri arasındaki transferlerde hedef tutarın yanında yalnızca karşılaştırma amaçlı gösterge niteliğinde bir piyasa kuru gösterir - tutarı doldurmak için asla kullanılmaz.",
+  "settingsRateProvider": "Kur sağlayıcısı",
+  "settingsFetchMarketPrices": "Yatırımlar için piyasa fiyatlarını getir",
+  "settingsFetchMarketPricesSubtitle": "Ticker veya ISIN koduna sahip araçlar için son fiyatları bulur ve portföy değerini tahmin eder. Asla bir işlem kaydetmek için kullanılmaz ve ne kadar elinizde bulunduğunu asla göndermez.",
+  "settingsMarketPriceProvider": "Piyasa fiyatı sağlayıcısı",
+  "settingsFavouriteResearchTool": "Favori araştırma aracı",
+  "settingsFavouriteResearchToolSubtitle": "Varlıklarda bir enstrüman adına dokunmak, bu aracı tarayıcıda bir araştırma istemiyle açar — bu bir entegrasyon değildir ve tavsiye niteliği taşımaz.",
+  "settingsBackup": "Yedekleme",
+  "settingsBackupBlurb": "Defterlerinizin şifrelenmiş bir kopyasını seçtiğiniz bir konuma kaydedin veya birinden geri yükleyin. Bu, imzalama anahtarınızı yedekleyen kurtarma ifadenizden veya keystore dosyanızdan ayrıdır; defterlerinizi yedeklemez.",
+  "settingsLock": "Kilit",
+  "settingsLockBlurb": "Uygulamayı açmak için PIN veya mevcutsa biyometrik kimlik doğrulama isteyin.",
+  "settingsRequireUnlock": "Uygulamayı açmak için kilidin açılmasını iste",
+  "settingsLockAfter": "Şu süre sonra kilitle",
+  "settingsLockImmediately": "Hemen",
+  "settingsLock1Minute": "1 dakika",
+  "settingsLock5Minutes": "5 dakika",
+  "settingsLock15Minutes": "15 dakika",
+  "settingsAllowBiometrics": "Biyometrik kimlik doğrulamaya da izin ver",
+  "settingsHideSnapshot": "Bakiyeleri uygulama değiştiricide gizle",
+  "settingsHideSnapshotSubtitle": "Başka bir uygulamaya geçtiğinizde bu ekranı gizler, böylece uygulama değiştiricide anlık olarak görünmez.",
+  "settingsHideSnapshotUnavailable": "Bakiyeleri uygulama değiştiricide gizleme bu platformda kullanılamıyor.",
+  "settingsPayees": "Alıcılar",
+  "settingsManagePayees": "Alıcıları yönet",
+  "settingsPayeesBlurb": "İşlem kaydederken otomatik tamamlamayla önerilen, hatırlanan alıcı adları ile bunların varsayılan kategori ve hesabı.",
+  "settingsRecurring": "Yinelenen şablonlar",
+  "settingsManageRecurring": "Yinelenen şablonları yönet",
+  "settingsRecurringBlurb": "Kira veya maaş gibi her ay tekrarlanan fatura veya gelirler. Vadesi gelen bir şablon, tek dokunuşla kaydetmeniz için Ana Sayfa''da görünür - asla otomatik olarak işlenmez.",
+  "settingsAbout": "Hakkında",
+  "providerFrankfurter": "Frankfurter (ECB kurları)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (günlük fiyatlar)",
+  "providerYahooFinance": "Yahoo Finance (grafik API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "Nakit ve nakit benzerleri",
+  "systemGroupPensionRetirement": "Emeklilik ve emekli maaşı",
+  "systemGroupCreditShortTerm": "Kredi ve kısa vadeli borç",
+  "systemGroupLoansMortgages": "Krediler ve ipotekler",
+  "systemGroupInvestments": "Yatırımlar",
+  "systemAccountCashBank": "Nakit ve Banka",
+  "systemCategorySalary": "Maaş",
+  "systemCategoryOtherIncome": "Diğer Gelir",
+  "systemCategoryGroceries": "Market",
+  "systemCategoryRentMortgage": "Kira/İpotek",
+  "systemCategoryUtilities": "Faturalar",
+  "systemCategoryTransport": "Ulaşım",
+  "systemCategoryFoodOut": "Dışarıda yemek",
+  "systemCategoryPhone": "Telefon",
+  "systemCategoryHealth": "Sağlık",
+  "systemCategoryOtherExpense": "Diğer Gider",
+  "homeThisMonth": "BU AY",
+  "homeMoneyInTransit": "TRANSFERDEKİ PARA",
+  "homeWhatYouHaveMinusWhatYouOwe": "SAHİP OLDUĞUNUZ EKSİ BORCUNUZ",
+  "homeWhatYouHave": "Sahip olduğunuz {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "Sahip olduğunuz {haveAmount} {currency}  •  Borcunuz {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "{name} hesabından {amount} {currency} gönderdiniz",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "{name} hesabına {amount} {currency} gönderdiniz",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "Gizli",
+  "allAccounts": "Tüm hesaplar",
+  "savedToPath": "{path} konumuna kaydedildi",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "Keystore dosyası dışa aktarılamadı. Bu adımı atlayabilirsiniz.",
+  "enterPassphraseToProtect": "Dosyayı korumak için bir parola girin.",
+  "homeTapWhenArrived": "Ne geldiğini öğrendiğinizde dokunun",
+  "homeReturnedTo": "{name} hesabına iade edildi",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "BUGÜN VADESİ GELEN",
+  "homeDueLine": "{category} · {account} · kaydetmek için dokunun",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "Limit aşıldı",
+  "homeSpentOfLimit": "{limit} üzerinden {spent}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "Kalan: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "Hesap yok",
+  "homeCashRegister": "Nakit kaydı",
+  "homeMarketEstimate": "Piyasa değeri tahmini",
+  "registerTitle": "Kayıt",
+  "registerSearchHint": "Açıklama, kategori veya tutar",
+  "registerNoTransactions": "Henüz işlem yok",
+  "registerNoEntries": "Henüz kayıt yapılmadı.",
+  "registerSpentOnly": "Yalnızca harcamalar",
+  "registerReceivedOnly": "Yalnızca gelirler",
+  "registerAll": "Tümü",
+  "registerUnverified": "Doğrulanmadı - toplamlara dahil değil",
+  "registerSuperseded": "Anahtar geçişiyle geçersiz kılındı - toplamlara dahil değil",
+  "summaryTitle": "Özet",
+  "summaryTotalIncome": "Toplam gelir",
+  "summaryTotalExpense": "Toplam gider",
+  "summaryDateRange": "{start} - {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "Hesaplar",
+  "categoriesTitle": "Kategoriler",
+  "accountName": "Hesap adı",
+  "createAccount": "Hesap oluştur",
+  "createGroup": "Grup oluştur",
+  "editGroup": "Grubu düzenle",
+  "renameAccount": "Hesabı yeniden adlandır",
+  "renameCategory": "Kategoriyi yeniden adlandır",
+  "addCategory": "Kategori ekle",
+  "groupLabel": "Grup",
+  "kindLabel": "Tür",
+  "asset": "Varlık",
+  "liability": "Yükümlülük",
+  "income": "Gelir",
+  "expense": "Gider",
+  "thisAccountHoldsInvestments": "Bu hesap yatırımları tutar",
+  "thisAccountHoldsInvestmentsSubtitle": "Alış, Satış ve Temettü ile kaydettiğiniz nakit artı envanter.",
+  "thisIsACreditCard": "Bu bir kredi kartı",
+  "openingBalanceOptional": "Açılış bakiyesi (isteğe bağlı)",
+  "currencyIso": "Para birimi (ISO 4217)",
+  "currencyIsoExample": "Para birimi (ISO 4217, örn. USD)",
+  "hideAccountTitle": "Hesap yeni kayıtlardan gizlensin mi?",
+  "hideCategoryTitle": "Kategori yeni kayıtlardan gizlensin mi?",
+  "hideGroupTitle": "Grup yeni kayıtlardan gizlensin mi?",
+  "reassignGroup": "Grubu değiştir",
+  "transferRemainingBalance": "Kalan bakiyeyi transfer et",
+  "monthlyLimit": "Aylık limit",
+  "monthlyLimitHint": "Limit (temizlemek için boş bırakın)",
+  "monthlyLimitBlurb": "Bu gider kategorisi için isteğe bağlı, ay başından bugüne harcama rehberi.",
+  "manageCategoryRules": "Kategori kurallarını yönet",
+  "amount": "Tutar",
+  "category": "Kategori",
+  "account": "Hesap",
+  "fromAccount": "Kaynak hesap",
+  "toAccount": "Hedef hesap",
+  "descriptionOptional": "Açıklama (isteğe bağlı)",
+  "alsoRememberPayee": "Alıcı olarak da hatırla",
+  "splitIntoCategories": "Birden fazla kategoriye böl",
+  "categoryN": "Kategori {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "Hedef tutar",
+  "destinationAmountOptional": "Hedef tutar (isteğe bağlı)",
+  "accountCurrencyAmountOptional": "Hesap para birimi tutarı (isteğe bağlı)",
+  "transactionCurrencyOptional": "İşlem para birimi (isteğe bağlı)",
+  "feeOptional": "Ücret (isteğe bağlı)",
+  "feeAmount": "Ücret tutarı",
+  "feeCategory": "Ücret kategorisi",
+  "feeDescriptionOptional": "Ücret açıklaması (isteğe bağlı)",
+  "feeDeducted": "Ücret, yukarıdaki tutardan düşülür",
+  "needTwoAccountsToTransfer": "Transfer yapmak için en az iki aktif hesap oluşturun.",
+  "whatArrivedTitle": "Ne geldi?",
+  "whatArrivedBlurb": "Aslında ne geldiğini bize söyleyin.",
+  "amountThatArrived": "Gelen tutar",
+  "feeLossCategory": "Ücret / zarar kategorisi",
+  "alreadySettled": "Zaten kapatıldı.",
+  "holdingsTitle": "Varlıklar",
+  "holdingsCash": "Nakit",
+  "holdingsInventory": "ENVANTER",
+  "holdingsBook": "Defter (nakit + maliyet) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "Piyasa değeri tahmini {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "Henüz varlık yok. Bir enstrüman eklemek için alış kaydedin.",
+  "holdingsQuotesBlurb": "Fiyatlar tahminidir, aracı kurum fiyatı değildir. Bu uygulama emir vermez.",
+  "holdingsTapNameToResearch": "Araştırmak için ada dokunun. Fiyatlar tahminidir, tavsiye değildir.",
+  "instrument": "Enstrüman",
+  "newInstrument": "Yeni enstrüman",
+  "renameInstrument": "Enstrümanı yeniden adlandır",
+  "instrumentActions": "Enstrüman işlemleri",
+  "hideInstrumentTitle": "{name} gizlensin mi?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "Sembol (isteğe bağlı)",
+  "isinOptional": "ISIN (isteğe bağlı)",
+  "quantity": "Miktar",
+  "unitPrice": "Birim fiyat",
+  "brokerageOptional": "Komisyon (isteğe bağlı)",
+  "brokerageExpenseCategory": "Komisyon gider kategorisi",
+  "incomeCategory": "Gelir kategorisi",
+  "gainIncomeCategory": "Kazanç gelir kategorisi",
+  "lossExpenseCategory": "Zarar gider kategorisi",
+  "nonCash": "Nakit dışı",
+  "cash": "Nakit",
+  "locked": "Kilitli",
+  "lockUntilHint": "Kendi kısıtlama notunuz, aracı kurum kuralı değildir.",
+  "instrumentKindStock": "Hisse senedi",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "Yatırım fonu",
+  "instrumentKindBond": "Tahvil",
+  "instrumentKindOther": "Diğer",
+  "quoteUseLive": "Canlı fiyat",
+  "quoteUseCached": "Önbelleğe alınmış fiyat",
+  "quoteUseStale": "Güncel olmayan fiyat",
+  "quoteUseMissing": "Maliyet kullanılıyor (fiyat yok)",
+  "quoteUseDisabled": "Fiyatlar kapalı — maliyet/önbellek kullanılıyor",
+  "quoteUseCurrencyMismatch": "Maliyet kullanılıyor (fiyat para birimi farklı)",
+  "unrealizedLabel": "Gerçekleşmemiş {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} adet · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "Kurtarma ifadeniz",
+  "recoveryPhraseConfirmTitle": "İfadenizi onaylayın",
+  "recoveryPhraseBlurb": "Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Accounting''in bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.",
+  "recoveryPhraseWriteDown": "Bu kelimeleri sırasıyla yazın ve bu cihazdan ayrı, güvenli bir yerde saklayın.",
+  "iveSavedRecoveryPhrase": "Kurtarma ifademi kaydettim",
+  "confirmPhraseBlurb": "Az önce kaydettiğiniz ifadeden istenen kelimeleri girin.",
+  "wordNumber": "Kelime #{n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "Keystore dosyasını dışa aktar",
+  "keystoreExportBlurb": "Kurtarma ifadenize ek olarak, seçtiğiniz bir parolayla korunan şifrelenmiş bir keystore dosyası kaydedebilirsiniz. Bu isteğe bağlıdır - imzalama anahtarınızı geri yüklemek için tek başına kurtarma ifadeniz her zaman yeterlidir.",
+  "keystorePassphrase": "Parola",
+  "exportKeystoreFile": "Keystore dosyasını dışa aktar",
+  "chooseCurrencyTitle": "Para biriminizi seçin",
+  "chooseCurrencyBlurb": "Her hesap grubu (Nakit ve nakit benzerleri, Emeklilik ve emekli maaşı vb.) şimdilik bu tek para birimini kullanır. Farklı bir para birimi için yeni bir grup oluşturarak daha sonra da farklı para biriminde hesap ekleyebilirsiniz.",
+  "currencyBackfillTitle": "Mevcut gruplar için bir para birimi seçin",
+  "currencyBackfillBlurb": "Bu uygulama artık birden fazla para birimini destekliyor. Mevcut hesaplarınız ve hesap gruplarınızın bir para birimine ihtiyacı var - bu özellik var olmadan önce hepsi kurulduğundan, yapacağınız tek seçim hepsine uygulanır.",
+  "firstAccountTitle": "Hesabınızı adlandırın",
+  "firstAccountBlurb": "Bu, sizin için zaten kurulmuş olan hesap - bankanız gibi tanıyacağınız bir ad verin. Ardından bir Harcama veya Gelir kaydedecek, sonra da cihazı kurtarma ifadenizle koruyacaksınız.",
+  "whatsMainAccountCalled": "Ana hesabınızın adı ne?",
+  "restoreTitle": "İmzalama anahtarını geri yükle",
+  "restoreBlurb": "Bu cihazda mevcut defterler var, ancak eşleşen bir imzalama anahtarı yok. Kaydettiğiniz kurtarma ifadesinden veya keystore dosyasından geri yükleyin - verileriniz normal şekilde doğrulanacak ve hiçbir şey yeniden imzalanmayacak veya değiştirilmeyecek.",
+  "recoveryPhrase24": "Kurtarma ifadesi (24 kelimenin tamamı)",
+  "keystoreFile": "Keystore dosyası",
+  "keystoreFileContents": "Keystore dosyası içeriği",
+  "optionalBackupFile": "İsteğe bağlı yedek dosyası",
+  "iDontHavePhrase": "Kurtarma ifadem veya keystore dosyam yok",
+  "migrationTitle": "Yeni bir anahtara geçiş yap",
+  "migrationBlurb": "Kurtarma ifadeniz veya keystore dosyanız olmadan bu cihazın imzalama anahtarı kurtarılamaz. Yeni bir anahtarla başlayabilirsiniz. Eski kayıtlar görünür kalır ancak geçersiz kılınır.",
+  "iConfirmBooksValid": "Mevcut defterlerin geçerli olduğunu onaylıyorum",
+  "whyWeDontEdit": "Neden eski kayıtları düzenlemiyoruz",
+  "whyWeDontEditBody": "Bir hatayı düzelttiğinizde, zaten girdiğinizi değiştirmek yerine eski satırı tutar ve yanına bir düzeltme ekleriz. Böylece geçmişiniz her zaman tam olarak ne olduğunu ve ne zaman düzelttiğinizi gösterir — hiçbir şey arka planda sessizce değişmez.",
+  "lockTitle": "Kilidi aç",
+  "lockScreenTitle": "Kilitli",
+  "enterPinToContinue": "Devam etmek için PIN''inizi girin",
+  "pinLabel": "PIN",
+  "setPinTitle": "PIN belirle",
+  "currentPin": "Mevcut PIN",
+  "newPin": "Yeni PIN",
+  "confirmPin": "PIN''i onayla",
+  "confirmNewPin": "Yeni PIN''i onayla",
+  "firstWeekTitle": "Hesaplarınızı kurun",
+  "addCashAccount": "Nakit hesabı ekle",
+  "addCreditCard": "Kredi kartı ekle",
+  "cashAccountName": "Nakit hesap adı",
+  "cardName": "Kart adı",
+  "paidFromBank": "Bankadan ödendi",
+  "paidFromCard": "Karttan ödendi",
+  "choosePassphraseTitle": "Bu yedeği korumak için bir parola seçin. Unutursanız kurtarma imkanı yoktur.",
+  "replaceBooksTitle": "Yerel defterleriniz değiştirilsin mi?",
+  "replaceBooksBody": "Bu, uygulamada şu anda bulunan her şeyi yedekle değiştirir. Sonrasında uygulamayı kapatıp yeniden açın.",
+  "chooseBackupFileFirst": "Önce bir yedek dosyası seçin.",
+  "backupRestored": "Yedek geri yüklendi",
+  "backupRestoredBody": "Defterleriniz geri yüklendi. Devam etmek için uygulamayı kapatıp yeniden açın.",
+  "fixThisEntry": "Bu kaydı düzelt",
+  "fixBlurb": "Eski satır tam olarak olduğu gibi kalır. Onaylamak, bir ters kayıt ve düzeltilmiş kaydı ekler.",
+  "importStatementTitle": "Hesap Özeti İçe Aktar",
+  "importOfx": "OFX içe aktar",
+  "importOfxQfxFile": "OFX / QFX dosyası içe aktar",
+  "importCsvFile": "CSV dosyası içe aktar",
+  "whatKindOfStatement": "Ne tür bir hesap özeti dosyanız var?",
+  "chooseAccountForFile": "Bu dosyanın hangi hesaba ait olduğunu seçin.",
+  "importIntoAccount": "Şu hesaba aktar",
+  "useSavedProfile": "Kayıtlı bir profil kullan",
+  "saveMappingProfile": "Bu eşlemeyi profil olarak kaydet (isteğe bağlı)",
+  "renameProfile": "Profili yeniden adlandır",
+  "deleteProfileTitle": "Profil silinsin mi?",
+  "fileHasHeader": "Dosyada başlık satırı var",
+  "dateColumn": "Tarih sütunu",
+  "dateFormatHint": "Tarih biçimi (örn. gg/AA/yyyy)",
+  "amountColumn": "Tutar sütunu",
+  "amountConvention": "Tutar işareti kuralı",
+  "signedAmountColumn": "İşaretli tutar sütunu",
+  "separateDebitCredit": "Ayrı borç / alacak sütunları",
+  "debitColumn": "Borç sütunu",
+  "creditColumn": "Alacak sütunu",
+  "decimalSeparator": "Ondalık ayırıcı (. veya ,)",
+  "descriptionColumns": "Açıklama sütun(lar)ı",
+  "referenceIdColumn": "Referans no sütunu (isteğe bağlı)",
+  "skippedRows": "Atlanan satırlar",
+  "parsedTransactionCount": "{count} işlem ayrıştırıldı",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} atlandı veya hariç tutuldu",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} kaydedildi, {failed} başarısız oldu",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "Tümü için kategori",
+  "saveAsRule": "Kural olarak kaydedilsin mi?",
+  "saveAsRuleBlurb": "Açıklamasında bu anahtar kelimeyi içeren gelecekteki içe aktarımlar bu kategoriyi kullanacak.",
+  "keyword": "Anahtar kelime",
+  "noSavedRules": "Henüz kayıtlı kural yok. Bir kural kaydetmek için bir grup satıra kategori atayın.",
+  "deleteRuleTitle": "Kural silinsin mi?",
+  "editRule": "Kuralı düzenle",
+  "rowsGrouped": "{count} satır",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "İçe aktarmak için bir {extensions} hesap özeti dosyası seçin",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "Alıcılar",
+  "addPayee": "Alıcı ekle",
+  "renamePayee": "Alıcıyı yeniden adlandır",
+  "deletePayeeTitle": "Alıcı silinsin mi?",
+  "noPayeesYet": "Henüz alıcı yok",
+  "recurringTitle": "Yinelenen şablonlar",
+  "noRecurringYet": "Henüz yinelenen şablon yok",
+  "deleteTemplateTitle": "Yinelenen şablon silinsin mi?",
+  "dayOfMonth": "Ayın günü (1-31)",
+  "dayOfMonthNote": "Daha az güne sahip bir ay kendi son gününü kullanır.",
+  "dayOfMonthLine": "Ayın {day}. günü - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "Ad",
+  "none": "Yok",
+  "currency": "Para birimi",
+  "errorGeneric": "Bir şeyler ters gitti. Tekrar deneyin.",
+  "errorSigningIdentityMismatch": "Bu kurtarma ifadesi veya keystore dosyası bu veritabanındaki hiçbir imzalama kimliğiyle eşleşmiyor.",
+  "errorInvalidLedgerBackup": "Bu dosya geçerli bir Smara yedeği değil.",
+  "errorInvalidLedgerBackupNoIdentity": "Bu yedekte imzalama kimliği yok - geçerli bir Smara yedeği değil.",
+  "errorInvalidLedgerBackupUnverified": "Bu yedek, bozulmamış defterler olarak doğrulanamadı, bu nedenle geri yüklenmedi.",
+  "errorInvalidLedgerBackupUnreadable": "Bu dosya bir Smara yedeği olarak açılamadı: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "Bu yedek, bu cihazdakinden farklı bir imzalama kimliğine ait.",
+  "errorAccountNotFinancial": "Bu finansal bir hesap değil.",
+  "errorAccountArchived": "Bu hesap gizli.",
+  "errorAccountNotArchived": "Bu hesap gizli değil.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Transfer edilecek kalan bakiye yok.",
+  "errorAccountHasNoGroup": "Bu hesaba atanmış bir grup yok.",
+  "errorGroupHasNoCurrency": "Bu grup için henüz bir para birimi ayarlanmadı.",
+  "errorGroupNotFound": "Bu hesap grubu bulunamadı.",
+  "errorInvestmentAccountsMustBeAssets": "Yalnızca varlık hesapları yatırım hesabı olarak işaretlenebilir.",
+  "errorCreditCardsMustBeLiabilities": "Yalnızca yükümlülük hesapları kredi kartı olarak işaretlenebilir.",
+  "errorOpeningBalanceMustBePositive": "Belirtildiğinde açılış bakiyesi pozitif olmalıdır.",
+  "errorAccountTypeDoesNotMatchGroup": "Bu hesap türü grupla eşleşmiyor.",
+  "errorLastActiveAccount": "Son aktif finansal hesap gizlenemez.",
+  "errorCurrencyRequiredToCreateGroup": "Grup oluşturmak için para birimi gereklidir.",
+  "errorSystemGroupCannotBeArchived": "Yerleşik hesap grupları gizlenemez.",
+  "errorGroupAlreadyArchived": "Bu grup zaten gizli.",
+  "errorCannotArchiveGroupWithAccounts": "Hâlâ aktif hesapları olan bir grup gizlenemez.",
+  "errorSystemGroupNeverArchived": "Yerleşik hesap grupları asla gizlenmez.",
+  "errorAccountGroupsCannotBeDeleted": "Hesap grupları silinemez.",
+  "errorCannotReassignDifferentCurrency": "Bu hesap, farklı bir para birimine sahip bir gruba taşınamaz.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "Grubun aktif hesapları varken para birimi değiştirilemez.",
+  "errorAmountMustBePositive": "Tutar pozitif olmalıdır.",
+  "errorAccountCurrencyAmountMustBePositive": "Hesap para birimi tutarı pozitif olmalıdır.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "Hesap para birimi tutarı yalnızca yabancı para birimli bir kayıt içindir.",
+  "errorSplitNeedsTwoLines": "Bir bölme işlemi en az iki kategori satırı gerektirir.",
+  "errorSplitLineMustBePositive": "Her bölünmüş satır pozitif bir tutar olmalıdır.",
+  "errorSplitLinesMustSumToTotal": "Bölünmüş satırların toplamı işlem toplamına eşit olmalıdır.",
+  "errorTransferAmountMustBePositive": "Transfer tutarı pozitif olmalıdır.",
+  "errorTransferAccountsMustDiffer": "Kaynak ve hedef hesaplar farklı olmalıdır.",
+  "errorCloseoutRequiresDestinationAmount": "Para birimleri arası bir kapatma işlemi bilinen bir hedef tutar gerektirir.",
+  "errorDestinationAmountNotForSameCurrency": "Hedef tutar yalnızca para birimleri arası bir transfer içindir.",
+  "errorDestinationAmountMustBePositive": "Hedef tutar pozitif olmalıdır.",
+  "errorInvestmentCashExceeded": "Bu yatırım hesabının nakdinden fazlası transfer edilemez.",
+  "errorCannotReverseUnsettledProvisional": "Bu bekleyen transferi ters çevirmek yerine kapatın.",
+  "errorAlreadyReversed": "Bu kayıt zaten düzeltildi. Orijinal satır olduğu gibi kalır.",
+  "errorNotActiveExpenseCategory": "Aktif bir gider kategorisi seçin.",
+  "errorNotActiveIncomeCategory": "Aktif bir gelir kategorisi seçin.",
+  "errorSettledAmountMustNotBeNegative": "Gelen tutar negatif olamaz.",
+  "errorPendingTransferNotFound": "Bu bekleyen transfer bulunamadı.",
+  "errorPendingTransferAlreadySettled": "Bu bekleyen transfer zaten kapatıldı.",
+  "errorSettledToMustBeSourceOrDestination": "Orijinal kaynak veya hedef hesabı seçin.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "Ücret kategorisi yalnızca para kaynak hesaba iade edildiğinde kullanılır.",
+  "errorSettledAmountMustBePositiveForDelivery": "Gelen tutar için pozitif bir değer girin.",
+  "errorSettledAmountExceedsProvisional": "Bu tutar gönderilenden fazla.",
+  "errorInstrumentNotFound": "Bu enstrüman bulunamadı.",
+  "errorIncomeRequiredForNonCash": "Nakit dışı bir edinim için aktif bir gelir kategorisi gereklidir.",
+  "errorInsufficientCash": "Bu yatırım hesabında bu alış için yeterli nakit yok.",
+  "errorSellQuantityAndPriceMustBePositive": "Satış miktarı ve birim fiyat pozitif olmalıdır.",
+  "errorLockedUntil": "Satılamaz: bazı adetler {date} tarihine kadar kilitli.",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "Şu anda kilitsiz olarak elinizde bulunandan fazlası satılamaz.",
+  "errorIncomeRequiredForGain": "Gerçekleşen bir kazanç için aktif bir gelir kategorisi gereklidir.",
+  "errorExpenseRequiredForLoss": "Gerçekleşen bir zarar için aktif bir gider kategorisi gereklidir.",
+  "errorBrokerageFailedAfterBuy": "Alış kaydedildi, ancak komisyon ücreti kaydedilemedi: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "Satış kaydedildi, ancak komisyon ücreti kaydedilemedi: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "Temettü tutarı pozitif olmalıdır.",
+  "errorNotInvestmentAccount": "Bu bir yatırım hesabı değil.",
+  "errorNoInventoryCompanion": "Bu yatırım hesabının envanter eşleniği eksik.",
+  "errorInvestmentReversalBlocked": "Bu alış ters çevrilemez: sonraki satış(lar) bu adetlere bağlı. Önce bağımlı satış(lar)ı ters çevirin: {sells}.",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "Aylık limit pozitif olmalıdır.",
+  "errorTemplateAmountMustBePositive": "Şablon tutarı pozitif olmalıdır.",
+  "errorOfxUnrecognized": "Bu dosya OFX olarak tanınamadı.",
+  "errorCsvEmpty": "Seçilen dosya boş.",
+  "errorCsvUnreadable": "Bu dosya CSV olarak okunamadı.",
+  "errorCsvNoRows": "Seçilen dosyada satır yok.",
+  "errorBackupCreateFailed": "Yedek oluşturulamadı: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "Bu yedek geri yüklenemedi - yanlış parola veya geçerli bir Smara yedek dosyası değil.",
+  "validationAmountAccountCategoryRequired": "Tutar, hesap ve kategori gereklidir.",
+  "validationAmountAccountRequired": "Tutar ve hesap gereklidir.",
+  "validationSplitLineIncomplete": "Her bölünmüş satırın bir kategoriye ve tutara ihtiyacı vardır.",
+  "validationSplitSumMismatch": "Bölünmüş satırların toplamı işlem toplamına eşit olmalıdır.",
+  "validationFromToAmountRequired": "Kaynak hesap, hedef hesap ve tutar gereklidir.",
+  "validationAmountArrivedRequired": "Gelen tutar gereklidir.",
+  "validationChooseReceivingAccount": "Fonu hangi hesabın aldığını seçin.",
+  "validationAccountCategoryRequired": "Hesap ve kategori gereklidir.",
+  "validationFixFailed": "Bu düzeltme kaydedilemedi.",
+  "validationNameRequired": "Ana hesabınızı adlandırın.",
+  "validationStillLoading": "Hâlâ yükleniyor - birazdan tekrar deneyin.",
+  "validationSaveAccountNameFailed": "Hesap adı kaydedilemedi.",
+  "validationWrongPin": "Yanlış PIN. Tekrar deneyin.",
+  "validationCategoryMustBeIncomeOrExpense": "Kategori Gelir veya Gider olmalıdır.",
+  "validationOnlyExpenseHasMonthlyLimit": "Yalnızca bir Gider kategorisi aylık limite sahip olabilir.",
+  "validationInvalidTemplate": "Geçersiz şablon.",
+  "validationWrongKeystorePassphrase": "Bu keystore dosyası için yanlış parola.",
+  "validationInvalidKeystoreFile": "Bu geçerli bir keystore dosyasına benzemiyor.",
+  "validationRestorePhraseFailed": "Bu kurtarma ifadesinden geri yükleme yapılamadı.",
+  "validationGenerateKeyFailed": "Bu cihazda imzalama anahtarı oluşturulamadı: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "Bu para birimi kaydedilemedi: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "Geçiş başarısız oldu. Lütfen tekrar deneyin.",
+  "validationChooseBackupFile": "Önce bir yedek dosyası seçin.",
+  "validationPassphraseRequired": "Bir parola girin.",
+  "validationPinsDoNotMatch": "İki PIN eşleşmiyor.",
+  "validationFeePositiveWithCategory": "Transfer ücreti, bir gider kategorisi seçilmiş pozitif bir tutar olmalıdır.",
+  "validationFeeMustBeLessThanAmount": "Ücret düşülen transferde ücret, tutardan az olmalıdır.",
+  "validationTransferSavedFeeFailed": "Transfer kaydedildi, ancak ücret kaydedilemedi: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "Geçerli bir tutar girin.",
+  "validationConfirmWordMismatch": "{n}. kelime kayıtlı ifadenizle eşleşmiyor. Kontrol edip tekrar deneyin.",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "Alış miktarı ve birim fiyat pozitif olmalıdır.",
+  "errorInstrumentArchived": "Gizlenmiş bir enstrüman satın alınamaz.",
+  "errorNonCashCannotIncludeBrokerage": "Nakit dışı edinimler komisyon içeremez.",
+  "errorBrokerageRequiresExpenseCategory": "Komisyon pozitif olduğunda aktif bir gider kategorisi gereklidir.",
+  "errorSellProceedsMustCoverBrokerage": "Satış geliri en az komisyon tutarı kadar olmalıdır.",
+  "homeSpentOfLimitThisMonth": "Bu ay {limit} üzerinden {spent}",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "Smara Account''un kilidini aç",
+  "searchLabel": "Ara",
+  "openingBalance": "Açılış bakiyesi",
+  "transferToName": "Transfer: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "Transfer ücreti",
+  "feeForTransferTo": "{name} hesabına transfer ücreti",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "Dosya seçici açılamadı: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "Lütfen bir .{extensions} dosyası seçin",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "Para birimi kodu (ISO 4217, örn. USD)",
+  "splitCounterpartMore": "{name} ve {count} tane daha",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "Tarih",
+  "noneSelected": "Yok",
+  "reviewEntriesBeforeContinuing": "Devam etmeden önce aşağıdaki kayıtları gözden geçirin (toplam {count}).",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "{amount} aldınız",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "Döviz kuru henüz bilinmiyorsa boş bırakın.",
+  "recordTradeBlurb": "Zaten gerçekleşmiş bir işlemi kaydedin. Bu uygulama emir vermez.",
+  "feeOnTopBlurb": "Açık: yukarıdaki tutar bu hesaptan alınan toplamdır; ücret bunun içinden çıkar.",
+  "feeBankBlurb": "Bankanız veya bir aracı tarafından peşin olarak alınan bir komisyon.",
+  "validationPinMinLength": "PIN en az 4 haneli olmalıdır.",
+  "restoreBackupBlurb": "Bu, uygulamada şu anda bulunan her şeyi yedekle değiştirir — birleştirme yapmaz. Bir yedek dosyası seçin ve onu korurken kullandığınız parolayı girin.",
+  "actionReplace": "Değiştir",
+  "hideAccountBody": "{name} artık yeni işlemler için kullanılamayacak.",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} artık hesap oluştururken veya taşırken sunulmayacak.",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} artık yeni işlem kaydederken sunulmayacak.",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "Gizli enstrümanlar geçmiş alış ve satışlarda kalır. Onlar için hâlâ temettü kaydedebilirsiniz.",
+  "nameHidden": "{name} (gizli)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "Para birimi ayarlanmadı",
+  "deletePayeeBody": "{name} ve hatırlanan varsayılanları kaldırılacak. Geçmiş işlemler etkilenmez.",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} artık vadesi gelen olarak sunulmayacak. Zaten kaydettiği geçmiş işlemler etkilenmez.",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "Kayıtlı sütun eşlemesi \"{name}\" silinecek. Onunla zaten içe aktarılmış hesap özetleri etkilenmez.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "İçe aktarımlar artık \"{keyword}\" ile otomatik kategorize edilmeyecek. Bu kuralla zaten kategorize edilmiş işlemler etkilenmez.",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "İsterseniz şimdi bir kredi kartı veya nakit hesabı ekleyin - daha sonra Ayarlar''dan her zaman daha fazla hesap ekleyebilirsiniz.",
+  "deliveredToDestination": "Hedefe ulaştırıldı",
+  "deliveredToName": "{name} hesabına ulaştırıldı",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "Beklenenden {amount} {currency} daha az aldınız - farkı karşılamak için bir kategori seçin.",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "Tarih aralığı",
+  "addTemplate": "Şablon ekle",
+  "editTemplate": "Şablonu düzenle",
+  "validationFillTemplateFields": "Her alanı geçerli bir tutar ve günle doldurun.",
+  "saveCsvExport": "CSV dışa aktarımını kaydet",
+  "referenceRate": "Referans kur",
+  "yourRate": "Sizin kurunuz",
+  "leaveBlankIfThisWasAccountCurrency": "Bu, hesabın kendi para birimi olan {currency} cinsindense boş bırakın.",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "Şu tarihe kadar kilitle (isteğe bağlı)",
+  "lockedUntilDate": "{date} tarihine kadar kilitli",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "Bir araştırma istemi kopyalandı — kullanılabilir bir tarayıcı URL''si yok veya çevrimdışısınız.",
+  "openedFavouriteResearchTool": "Favori araştırma aracınız açıldı.",
+  "looksLikeGain": "Bu bir kazanç gibi görünüyor",
+  "looksLikeLoss": "Bu bir zarar gibi görünüyor",
+  "looksLikeBreakEven": "Bu başabaş gibi görünüyor",
+  "sellableQuantity": "{name} (satılabilir {qty})",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "Sütun {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "İçe aktarılıyor...",
+  "confirmImport": "İçe aktarımı onayla",
+  "manageSavedCategoryRules": "Kayıtlı Kategori Kurallarını Yönet",
+  "statementCurrencyMismatch": "Bu dosyanın para birimi ({currency}) seçilen hesabın para birimiyle eşleşmiyor.",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "Kategori kuralları",
+  "possibleDuplicate": "olası yinelenen",
+  "unknownCategory": "Bilinmeyen kategori"
+}

@@ -10,7 +10,10 @@ See proposal.md.
 
 ## Decisions
 
-VM calls reverseEntry then recordTransaction; show linked badge optionally.
+`LedgerRepository.fixPostedTransaction` posts the reversal and the
+replacement in one Drift transaction. The Fix view-model calls that
+single method. `reverseEntry` still exists for independent reversals
+and refuses a second reverse of the same original.
 
 ## Risks / Trade-offs
 

@@ -36,18 +36,20 @@ On first launch, the app walks you through this order:
    the starter account groups (Cash & cash equivalents, Credit &
    short-term debt, etc.) created for you, and generates your device's
    signing key automatically in the background.
-2. **Record one entry** — a guided Spent or Received, so you can try the
+2. **Name your main account** — a starter account is created for you;
+   give it a name you recognize, like your bank.
+3. **Record one entry** — a guided Spent or Received, so you can try the
    app before facing the recovery-phrase ritual.
-3. **Your recovery phrase** — the 24 words are generated and shown once.
+4. **Your recovery phrase** — the 24 words are generated and shown once.
    Tap "I've saved my recovery phrase" only once you've actually written
    them down.
-4. **Optional backup file** — enter a passphrase to export an encrypted
+5. **Optional backup file** — enter a passphrase to export an encrypted
    keystore file, or tap "Skip." Neither blocks you from continuing.
-5. **Confirm** — you re-enter part of your phrase to confirm you actually
+6. **Confirm** — you re-enter part of your phrase to confirm you actually
    saved it correctly.
 
-The entry you record in step 2 is a real, permanently signed transaction
-from the moment it posts — not a demo. Steps 3–5 are mandatory and block
+The entry you record in step 3 is a real, permanently signed transaction
+from the moment it posts — not a demo. Steps 4–6 are mandatory and block
 everything else (recording a second entry, leaving the app, even resuming
 after it's closed) until you complete them; if the app is closed partway
 through, it picks back up at the same step next time you open it, showing
@@ -55,25 +57,23 @@ the same phrase again.
 
 ## Setting up your accounts
 
-Right after onboarding finishes, a short one-time wizard helps you get
-from "just set up" to "ready to record real life":
+Right after onboarding finishes, a short one-time wizard offers two
+optional accounts beyond the main one you already named during
+onboarding (step 2 above):
 
-- **Name your main account** — a starter account already exists for you;
-  give it the name you actually recognize, like your bank. This step is
-  required.
 - **Add a credit card** (optional) — name it to create a liability
   account for it.
 - **Add a cash account** (optional) — name it to create a second asset
   account for cash you track separately.
 
-Skipping the optional steps just leaves you with the one main account,
-renamed — you can always add more accounts later from the Accounts tab.
-This wizard only ever appears once.
+Skipping both just leaves you with the one main account — you can
+always add more accounts later from the Accounts tab. This wizard only
+ever appears once.
 
 ## Restoring on a new device or after a reinstall
 
 If you reinstall the app, or move to a new device, and the app detects an
-existing ledger with no matching local signing key, it shows a **Restore
+existing books with no matching local signing key, it shows a **Restore
 signing key** screen instead of onboarding. Choose either:
 
 - **Recovery phrase** — paste all 24 words.
@@ -87,7 +87,7 @@ re-signs or alters any entry.
 
 If you don't have your recovery phrase or keystore file, tap "I don't have
 my recovery phrase or keystore file" on the restore screen. You'll review
-every existing entry and explicitly confirm the ledger looks correct, then
+every existing entry and explicitly confirm the books look correct, then
 the app generates a brand-new key and re-signs everything under it. This
 re-establishes trust **going forward only** — it does not retroactively
 prove earlier entries were never tampered with. The original entries are
@@ -99,12 +99,11 @@ Home is the primary place you both glance at your money and add to it
 (also where the gear icon opens **Settings**). It shows:
 
 - **What you have minus what you owe** — your overall balance per
-  currency (assets minus liabilities), with the assets/liabilities
-  breakdown underneath.
+  currency, with what you have and what you owe underneath.
 - **Due today** — recurring templates (see below) whose day has arrived
   or passed and haven't been recorded yet this month. Tap one to record
   it now — nothing posts on its own.
-- **Pending transfers** — a plain sentence for each one, like "You sent
+- **Money in transit** — a plain sentence for each one, like "You sent
   50.00 USD to Savings — tap when you know what arrived." These are
   cross-currency transfers or purchases whose exact amount wasn't known
   at the time; tap one to say what actually arrived.
@@ -112,8 +111,11 @@ Home is the primary place you both glance at your money and add to it
   and what you've received, by category. A category with no activity
   this month simply isn't listed. A category with a monthly limit set
   (see Categories below) shows its progress here too.
-- **Account groups** — every account group with its accounts, tap an
-  account to open its Register.
+- **Account groups** — every account group with its accounts. Tap an
+  ordinary account to open its Register. Tap an investment account to
+  open holdings (cash, inventory, Buy/Sell/Dividend). Investment
+  totals on Home are a **market estimate** from last prices, not the
+  signed book.
 
 The **Add** button opens one choice: **Spent**, **Received**, **Moved
 money**, or **Import statement**. Register's own Add button opens the
@@ -143,12 +145,10 @@ transaction in a foreign currency.
 Once posted, a split shows up in its account's Register as one row
 labeled with its first category plus how many more ("Groceries +1
 more") — the amount shown is always the full transaction, not any one
-category's share. Fixing or reversing a split reverses every category
-line together, in one action; the Fix flow itself is only offered for an
-ordinary, single-category entry, since there's no single category to
-prefill for a split. The Summary screen still totals each category leg
-into its own category correctly, exactly as it would for separate
-transactions.
+category's share. The Fix flow is only offered for an ordinary,
+single-category entry, since there's no single category to prefill for
+a split. The Summary screen still totals each category leg into its own
+category correctly, exactly as it would for separate transactions.
 
 Typing in the description field offers matching **payees** as you type —
 selecting one fills in the description and suggests that payee's default
@@ -206,7 +206,10 @@ groups they belong to.
   **This is a credit card** — a label you set once at creation and can't
   change afterward. A credit card behaves exactly like any other
   liability account for balance, transfers, and recording; the flag only
-  changes how it's shown and a couple of capture shortcuts (below).
+  changes how it's shown and a couple of capture shortcuts (below). For
+  an Asset account, you can mark **This account holds investments** —
+  also set once at creation. That account is cash plus inventory (see
+  Investments below).
 - **Create a group**: name, Asset or Liability, and a currency (ISO 4217,
   e.g. `USD`) — every account in a group shares that group's currency.
 - **Rename** an account or edit a group's name/currency (currency can only
@@ -243,6 +246,43 @@ amount using whichever separator its currency actually uses — the field
 tells you if what you typed isn't a valid amount, rather than silently
 treating it as empty.
 
+## Investments
+
+An investment account is still one of your accounts: transfers in and
+out move **cash only**. Inventory (shares, funds, and so on) is recorded
+separately with Buy, Sell, and Dividend — this app does not place
+orders or connect to a broker.
+
+Open the account from Home to see **holdings**: cash, book (cash + cost
+of what you hold), and a **market estimate** (cash + last prices). The
+estimate is labeled as such. If a price is missing, stale, turned off,
+or in another currency, that instrument is valued at cost.
+
+**Buy** records a trade that already happened: quantity, unit price,
+optional brokerage (a separate expense, like a transfer fee), optional
+description, and optional lock-until date (your own note of a
+restriction — not a broker rule). Fund it from cash, or as a
+**non-cash** acquisition (employer match, grant, gift) against an
+income category at fair value. You can create a new instrument inline
+the first time you buy it (name, kind from a fixed list, optional
+ticker, optional ISIN).
+
+**Sell** records proceeds at the price you enter. Gain or loss uses
+ordinary income or expense categories. Quantity you can sell excludes
+units still locked as of the sell date.
+
+**Dividend** is cash income for an instrument, including one you no
+longer hold (a payout can arrive after you sold).
+
+Hiding an investment account works like any other account, including
+**Transfer remaining balance** for leftover cash. That closeout can run
+again if a later sell or dividend puts cash back. Sell and Dividend stay
+available after hiding so you can wind down inventory; Buy does not.
+
+Tap an instrument **name** to research it in your favourite tool (see
+Settings). Use the row menu to rename or hide the instrument — not the
+name itself.
+
 ## Transfers
 
 From an account's Register (or the Accounts screen), start a transfer:
@@ -253,7 +293,7 @@ description.
 - **Cross-currency**: you can optionally enter the destination amount if
   you know the exchange rate — this posts a single complete entry.
   Leaving it blank posts a *provisional* entry that shows up under Home's
-  "Pending transfers" until you settle it with the actual amount received.
+  "Money in transit" until you confirm what actually arrived.
   If you've enabled reference-rate lookup in Settings, an indicative
   market rate is shown alongside your own implied rate, for comparison
   only — neither ever auto-fills the destination amount.
@@ -341,9 +381,9 @@ saves the rule exactly as it would otherwise.
 
 Each account's Register lists its transactions newest-first, with each
 row showing a direction icon, category, signed amount, and the running
-balance after that entry. Tap an ordinary Spent/Received row to **Fix**
-it: a form opens prefilled with that entry's account, amount, category,
-date, and description, ready to edit. Confirming never edits or deletes
+balance after that entry. An ordinary Spent/Received row that can be
+corrected shows **Fix**; tap it to open a form prefilled with that
+entry's account, amount, category, date, and description, ready to edit. Confirming never edits or deletes
 the original line — it posts a correction next to it instead, so the
 original stays visible and your history is never rewritten. Transfers,
 opening balances, and split entries aren't offered a tap target; they
@@ -410,7 +450,7 @@ period-over-period read on where money went.
   signing identity than the one already set up on this device is
   rejected, since that would combine two different people's books rather
   than restore your own. Right after a successful restore, the app closes
-  so you can reopen it and continue — the restored ledger is immediately
+  so you can reopen it and continue — the restored books are immediately
   readable and fully verified, but recording a new entry still needs the
   matching signing key restored separately, via recovery phrase or
   keystore.
@@ -427,9 +467,16 @@ period-over-period read on where money went.
 - **Also allow biometrics**: shown only on a device with working Face
   ID/Touch ID/fingerprint unlock. When on, the lock screen tries
   biometrics first and always still accepts the PIN as a fallback.
-- **Hide balances in the app switcher**: obscures the app's content when
-  you switch to another app, independently of whether app lock itself is
-  on. Only shown on iOS and Android — desktop platforms (macOS, Windows)
-  have no equivalent app-switcher-snapshot mechanism to hide, so Settings
-  says so plainly there instead of showing a toggle that would do
-  nothing.
+- **Fetch market prices for investments**: on by default. When on, Home
+  and holdings look up last prices for instruments that have a ticker or
+  ISIN, to estimate what those holdings are worth. The lookup only sends
+  the ticker or ISIN — never how many you hold or what you paid. Quotes
+  never record a transaction. If a price is in a different currency than
+  the account, the app uses cost instead. Turn this off to stop the
+  requests; cached prices and cost are still used for the estimate.
+- **Market price provider**: which predefined quote source to use.
+- **Favourite research tool**: ChatGPT, Claude, Gemini, or Meta AI.
+  Tapping an instrument **name** on holdings opens that tool in the
+  browser with a research prompt (news, downside, upside — not advice).
+  If you're offline, the prompt is copied instead. Rename and hide use
+  the menu on the row, not the name.

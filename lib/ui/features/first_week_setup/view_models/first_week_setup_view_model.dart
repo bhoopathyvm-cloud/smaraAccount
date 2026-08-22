@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/database/tables/account_groups_table.dart';
@@ -7,46 +5,26 @@ import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/models/account.dart';
 
-/// first-week-setup-wizard: a guided sequence over account creation the
-/// app already supports (design.md Decision 1) - **correction, found
-/// during implementation**: design.md's Context claimed no financial
-/// account is auto-seeded, but `LedgerRepository.confirmFirstIdentity`
-/// does seed one asset account named [financialAccountName] into
-/// [groupCashEquivalentsId]. So the "main account" step here renames
-/// that already-existing seeded account (found via [watchFinancialAccounts])
-/// rather than creating a second one; the optional credit-card and cash
-/// steps are unaffected and still call `createFinancialAccount` for real,
-/// since nothing is seeded in those groups.
+/// first-week-setup-wizard: optionally add a credit card and/or cash
+/// account, each created via the existing financial-account creation path
+/// (design.md Decision 1). **Correction, found during a later review**:
+/// this wizard originally also renamed the seeded main account here, but
+/// `deferred-onboarding-first-entry`'s guided first-entry flow (routed
+/// strictly before this wizard - see `lib/ui/app_router.dart`) already
+/// asks the user to name that same seeded account via
+/// `FirstAccountNameView`/`FirstAccountNameViewModel`. Asking twice for
+/// the one account's name added a redundant screen with no purpose, so
+/// naming stays solely in the earlier step and this wizard is scoped to
+/// just the optional credit-card and cash-account sub-steps.
 class FirstWeekSetupViewModel extends ChangeNotifier {
   FirstWeekSetupViewModel({
     required LedgerRepository ledgerRepository,
     required SettingsRepository settingsRepository,
   }) : _ledgerRepository = ledgerRepository,
-       _settingsRepository = settingsRepository {
-    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
-      accounts,
-    ) {
-      if (_seededMainAccount == null && accounts.isNotEmpty) {
-        _seededMainAccount = accounts.first;
-        _mainAccountName = accounts.first.name;
-      }
-      notifyListeners();
-    });
-  }
+       _settingsRepository = settingsRepository;
 
   final LedgerRepository _ledgerRepository;
   final SettingsRepository _settingsRepository;
-  late final StreamSubscription<List<Account>> _accountsSubscription;
-
-  Account? _seededMainAccount;
-  bool get isLoading => _seededMainAccount == null;
-
-  String _mainAccountName = '';
-  String get mainAccountName => _mainAccountName;
-  void setMainAccountName(String value) {
-    _mainAccountName = value;
-    notifyListeners();
-  }
 
   bool _hasCreditCard = false;
   bool get hasCreditCard => _hasCreditCard;
@@ -82,32 +60,13 @@ class FirstWeekSetupViewModel extends ChangeNotifier {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  /// Renames the seeded main account to [mainAccountName] (required), then
-  /// creates the optional credit card and/or cash account if the user
-  /// asked for one and named it. Marks the wizard complete either way, so
-  /// it's never shown again (spec: "First-Week Setup Wizard").
+  /// Creates the optional credit card and/or cash account if the user
+  /// asked for one and named it, then marks the wizard complete either
+  /// way, so it's never shown again (spec: "First-Week Setup Wizard").
   Future<bool> finish() async {
-    final mainAccount = _seededMainAccount;
-    final name = _mainAccountName.trim();
-    if (mainAccount == null) {
-      _errorMessage = 'Still loading - try again in a moment.';
-      notifyListeners();
-      return false;
-    }
-    if (name.isEmpty) {
-      _errorMessage = 'Name your main account.';
-      notifyListeners();
-      return false;
-    }
-
     _isSubmitting = true;
     _errorMessage = null;
     notifyListeners();
-
-    await _ledgerRepository.renameFinancialAccount(
-      id: mainAccount.id,
-      newName: name,
-    );
 
     final cardName = _creditCardName.trim();
     if (_hasCreditCard && cardName.isNotEmpty) {
@@ -132,11 +91,5 @@ class FirstWeekSetupViewModel extends ChangeNotifier {
     _isSubmitting = false;
     notifyListeners();
     return true;
-  }
-
-  @override
-  void dispose() {
-    _accountsSubscription.cancel();
-    super.dispose();
   }
 }

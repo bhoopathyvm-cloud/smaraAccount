@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/account.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -35,10 +36,11 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final summary = widget.viewModel.summary;
     return Scaffold(
       appBar: AppBar(
-        title: Text('What arrived?', style: AppTypography.headerTitle),
+        title: Text(l10n.whatArrivedTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -56,19 +58,25 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                 // jargon from the copy (design.md Decisions).
                 Text(
                   summary.destinationLabel == null
-                      ? 'You sent '
-                            '${formatAmountMinor(summary.amountMinor, summary.currency)} '
-                            '${summary.currency} from '
-                            '${summary.sourceAccountName}'
-                      : 'You sent '
-                            '${formatAmountMinor(summary.amountMinor, summary.currency)} '
-                            '${summary.currency} to ${summary.destinationLabel}',
+                      ? l10n.youSentFrom(
+                          formatAmountMinor(
+                            summary.amountMinor,
+                            summary.currency,
+                          ),
+                          summary.currency,
+                          localizeStoredName(l10n, summary.sourceAccountName),
+                        )
+                      : l10n.youSentTo(
+                          formatAmountMinor(
+                            summary.amountMinor,
+                            summary.currency,
+                          ),
+                          summary.currency,
+                          localizeStoredName(l10n, summary.destinationLabel!),
+                        ),
                   style: AppTypography.cardTitle,
                 ),
-                Text(
-                  'Tell us what actually arrived so we can settle it.',
-                  style: AppTypography.metadata,
-                ),
+                Text(l10n.whatArrivedBlurb, style: AppTypography.metadata),
                 const SizedBox(height: AppSpacing.large),
                 if (viewModel.isTransfer) ...[
                   RadioGroup<String?>(
@@ -79,14 +87,24 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                         RadioListTile<String?>(
                           title: Text(
                             summary.destinationLabel == null
-                                ? 'Delivered to destination'
-                                : 'Delivered to ${summary.destinationLabel}',
+                                ? l10n.deliveredToDestination
+                                : l10n.deliveredToName(
+                                    localizeStoredName(
+                                      l10n,
+                                      summary.destinationLabel!,
+                                    ),
+                                  ),
                           ),
                           value: summary.pendingTransfer.destinationAccountId,
                         ),
                         RadioListTile<String?>(
                           title: Text(
-                            'Returned to ${summary.sourceAccountName}',
+                            l10n.homeReturnedTo(
+                              localizeStoredName(
+                                l10n,
+                                summary.sourceAccountName,
+                              ),
+                            ),
                           ),
                           value: summary.pendingTransfer.sourceAccountId,
                         ),
@@ -97,7 +115,7 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                 ],
                 MoneyAmountField(
                   controller: _amountController,
-                  labelText: 'Settled amount',
+                  labelText: l10n.amountThatArrived,
                   currency: viewModel.settledAmountCurrency ?? summary.currency,
                   suffixText: viewModel.settledAmountCurrency,
                   onChangedMinor: viewModel.setSettledAmountMinor,
@@ -106,26 +124,30 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                     viewModel.shortfallMinor > 0) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    'You received '
-                    '${formatAmountMinor(viewModel.shortfallMinor, summary.currency)} '
-                    '${summary.currency} less than expected - choose a '
-                    'category to cover the difference.',
+                    l10n.youReceivedLessThanExpected(
+                      formatAmountMinor(
+                        viewModel.shortfallMinor,
+                        summary.currency,
+                      ),
+                      summary.currency,
+                    ),
                     style: AppTypography.body,
                   ),
                   const SizedBox(height: AppSpacing.base),
                   EntityPickerField<Account>(
-                    labelText: 'Fee / loss category',
+                    labelText: l10n.feeLossCategory,
                     items: viewModel.expenseCategories,
                     idOf: (category) => category.id,
-                    labelOf: (category) => category.name,
+                    labelOf: (category) =>
+                        localizeStoredName(l10n, category.name),
                     value: viewModel.feeCategoryId,
                     onChanged: viewModel.setFeeCategoryId,
                   ),
                 ],
-                if (viewModel.errorMessage != null) ...[
+                if (viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    viewModel.errorMessage!,
+                    viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],
@@ -138,7 +160,7 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                             widget.onSaved?.call();
                           }
                         },
-                  child: const Text('Settle'),
+                  child: Text(l10n.actionSettle),
                 ),
               ],
             ),

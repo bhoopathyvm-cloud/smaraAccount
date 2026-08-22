@@ -1,0 +1,968 @@
+{
+  "@@locale": "ar",
+  "appTitle": "سمارا للحسابات",
+  "navHome": "الرئيسية",
+  "navRegister": "السجل",
+  "navSummary": "الملخص",
+  "navAccounts": "الحسابات",
+  "navCategories": "التصنيفات",
+  "actionCancel": "إلغاء",
+  "actionSave": "حفظ",
+  "actionDelete": "حذف",
+  "actionDone": "تم",
+  "actionContinue": "متابعة",
+  "actionDismiss": "إغلاق",
+  "actionRetry": "إعادة المحاولة",
+  "actionSkip": "تخطي",
+  "actionConfirm": "تأكيد",
+  "actionAdd": "إضافة",
+  "actionEdit": "تعديل",
+  "actionRename": "إعادة التسمية",
+  "actionHide": "إخفاء",
+  "actionCreate": "إنشاء",
+  "actionCloseApp": "إغلاق التطبيق",
+  "actionUnlock": "فتح",
+  "actionSettle": "تسوية",
+  "actionFinish": "إنهاء",
+  "actionPreview": "معاينة",
+  "actionImport": "استيراد",
+  "actionExportCsv": "تصدير CSV",
+  "actionChooseFile": "اختيار ملف",
+  "actionRestore": "استعادة",
+  "actionFix": "تصحيح",
+  "actionBuy": "شراء",
+  "actionSell": "بيع",
+  "actionDividend": "توزيعات أرباح",
+  "actionRecordBuy": "تسجيل شراء",
+  "actionRecordSell": "تسجيل بيع",
+  "actionRecordDividend": "تسجيل توزيعات أرباح",
+  "actionPayCard": "سداد البطاقة",
+  "actionTransfer": "تحويل",
+  "actionRecordTransaction": "تسجيل معاملة",
+  "actionImportStatement": "استيراد كشف حساب",
+  "actionClearDates": "مسح التواريخ",
+  "actionClearSearch": "مسح البحث والمرشحات",
+  "actionUseBiometrics": "استخدام القياسات الحيوية",
+  "actionSetPin": "تعيين الرمز",
+  "actionChangePin": "تغيير الرمز",
+  "actionSaveBackup": "حفظ النسخة الاحتياطية",
+  "actionRestoreBackup": "استعادة النسخة الاحتياطية",
+  "actionSaveRule": "حفظ القاعدة",
+  "actionConfirmFix": "تأكيد التصحيح",
+  "captureSpent": "صرف",
+  "captureReceived": "وارد",
+  "captureMovedMoney": "نقل أموال",
+  "captureImportStatement": "استيراد كشف حساب",
+  "settingsTitle": "الإعدادات",
+  "settingsLanguage": "اللغة",
+  "settingsLanguageSystem": "لغة الجهاز",
+  "settingsFetchFxRates": "جلب أسعار الصرف المرجعية",
+  "settingsFetchFxRatesSubtitle": "يعرض سعر السوق الاسترشادي بجانب المبلغ الوجهة في التحويلات بين العملات، للمقارنة فقط - لا يُستخدم أبداً لملء المبلغ.",
+  "settingsRateProvider": "مزود سعر الصرف",
+  "settingsFetchMarketPrices": "جلب أسعار السوق للاستثمارات",
+  "settingsFetchMarketPricesSubtitle": "يبحث عن آخر الأسعار للأدوات المالية التي لها رمز تداول أو رقم ISIN، لتقدير قيمة المحفظة. لا يُستخدم أبداً لتسجيل صفقة، ولا يرسل عدد الوحدات التي تملكها.",
+  "settingsMarketPriceProvider": "مزود أسعار السوق",
+  "settingsFavouriteResearchTool": "أداة البحث المفضلة",
+  "settingsFavouriteResearchToolSubtitle": "النقر على اسم أداة مالية في المقتنيات يفتح هذه الأداة في المتصفح مع سؤال بحثي — وهذا ليس تكاملاً، وليس نصيحة استثمارية.",
+  "settingsBackup": "النسخ الاحتياطي",
+  "settingsBackupBlurb": "احفظ نسخة مشفرة من دفاترك في مكان تختاره، أو استعد نسخة من مكان محفوظ. هذا منفصل عن عبارة الاسترداد أو ملف مخزن المفاتيح، اللذين يحفظان مفتاح التوقيع الخاص بك، وليس دفاترك.",
+  "settingsLock": "القفل",
+  "settingsLockBlurb": "يتطلب رمزاً سرياً، أو القياسات الحيوية إن توفرت، لفتح التطبيق.",
+  "settingsRequireUnlock": "طلب فتح القفل عند فتح التطبيق",
+  "settingsLockAfter": "القفل بعد",
+  "settingsLockImmediately": "فوراً",
+  "settingsLock1Minute": "دقيقة واحدة",
+  "settingsLock5Minutes": "5 دقائق",
+  "settingsLock15Minutes": "15 دقيقة",
+  "settingsAllowBiometrics": "السماح بالقياسات الحيوية أيضاً",
+  "settingsHideSnapshot": "إخفاء الأرصدة في مبدل التطبيقات",
+  "settingsHideSnapshotSubtitle": "يُخفي هذه الشاشة عند التبديل إلى تطبيق آخر، بحيث لا تكون مرئية للوهلة الأولى في مبدل التطبيقات.",
+  "settingsHideSnapshotUnavailable": "إخفاء الأرصدة في مبدل التطبيقات غير متاح على هذه المنصة.",
+  "settingsPayees": "المستفيدون",
+  "settingsManagePayees": "إدارة المستفيدين",
+  "settingsPayeesBlurb": "أسماء المستفيدين المحفوظة مع الفئة والحساب الافتراضيين لكل منهم، تُقترح تلقائياً عند تسجيل معاملة.",
+  "settingsRecurring": "القوالب المتكررة",
+  "settingsManageRecurring": "إدارة القوالب المتكررة",
+  "settingsRecurringBlurb": "فواتير أو دخل يتكرر شهرياً، مثل الإيجار أو الراتب. يظهر القالب المستحق في الرئيسية لتسجيله بلمسة واحدة - لا يُرحّل تلقائياً أبداً.",
+  "settingsAbout": "حول",
+  "providerFrankfurter": "Frankfurter (أسعار البنك المركزي الأوروبي)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (أسعار يومية)",
+  "providerYahooFinance": "Yahoo Finance (واجهة الرسوم البيانية)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "النقد وما في حكمه",
+  "systemGroupPensionRetirement": "التقاعد والمعاش",
+  "systemGroupCreditShortTerm": "الائتمان والديون قصيرة الأجل",
+  "systemGroupLoansMortgages": "القروض والرهون العقارية",
+  "systemGroupInvestments": "الاستثمارات",
+  "systemAccountCashBank": "النقد والبنك",
+  "systemCategorySalary": "الراتب",
+  "systemCategoryOtherIncome": "دخل آخر",
+  "systemCategoryGroceries": "البقالة",
+  "systemCategoryRentMortgage": "الإيجار/الرهن العقاري",
+  "systemCategoryUtilities": "المرافق",
+  "systemCategoryTransport": "النقل",
+  "systemCategoryFoodOut": "الطعام بالخارج",
+  "systemCategoryPhone": "الهاتف",
+  "systemCategoryHealth": "الصحة",
+  "systemCategoryOtherExpense": "مصروف آخر",
+  "homeThisMonth": "هذا الشهر",
+  "homeMoneyInTransit": "أموال قيد التحويل",
+  "homeWhatYouHaveMinusWhatYouOwe": "ما تملكه ناقص ما عليك",
+  "homeWhatYouHave": "ما تملكه {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "ما تملكه {haveAmount} {currency}  •  ما عليك {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "أرسلت {amount} {currency} من {name}",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "أرسلت {amount} {currency} إلى {name}",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "مخفي",
+  "allAccounts": "جميع الحسابات",
+  "savedToPath": "تم الحفظ في {path}",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "تعذر تصدير ملف مخزن المفاتيح. يمكنك تخطي هذه الخطوة.",
+  "enterPassphraseToProtect": "أدخل عبارة مرور لحماية الملف.",
+  "homeTapWhenArrived": "اضغط عندما تعرف ما وصل",
+  "homeReturnedTo": "أُعيد إلى {name}",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "مستحق اليوم",
+  "homeDueLine": "{category} · {account} · اضغط للتسجيل",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "تجاوز الحد",
+  "homeSpentOfLimit": "{spent} من {limit}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "المتبقي: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "لا توجد حسابات",
+  "homeCashRegister": "صندوق النقدية",
+  "homeMarketEstimate": "تقدير السوق",
+  "registerTitle": "السجل",
+  "registerSearchHint": "الوصف أو الفئة أو المبلغ",
+  "registerNoTransactions": "لا توجد معاملات بعد",
+  "registerNoEntries": "لا توجد قيود مسجلة بعد.",
+  "registerSpentOnly": "الصادر فقط",
+  "registerReceivedOnly": "الوارد فقط",
+  "registerAll": "الكل",
+  "registerUnverified": "غير موثّق - مستبعد من الإجماليات",
+  "registerSuperseded": "استُبدل بالترحيل - مستبعد من الإجماليات",
+  "summaryTitle": "الملخص",
+  "summaryTotalIncome": "إجمالي الدخل",
+  "summaryTotalExpense": "إجمالي المصروفات",
+  "summaryDateRange": "من {start} إلى {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "الحسابات",
+  "categoriesTitle": "التصنيفات",
+  "accountName": "اسم الحساب",
+  "createAccount": "إنشاء حساب",
+  "createGroup": "إنشاء مجموعة",
+  "editGroup": "تعديل المجموعة",
+  "renameAccount": "إعادة تسمية الحساب",
+  "renameCategory": "إعادة تسمية الفئة",
+  "addCategory": "إضافة فئة",
+  "groupLabel": "المجموعة",
+  "kindLabel": "النوع",
+  "asset": "أصل",
+  "liability": "التزام",
+  "income": "دخل",
+  "expense": "مصروف",
+  "thisAccountHoldsInvestments": "هذا الحساب يحتفظ باستثمارات",
+  "thisAccountHoldsInvestmentsSubtitle": "نقد بالإضافة إلى مخزون تسجله بعمليات الشراء والبيع والتوزيعات.",
+  "thisIsACreditCard": "هذه بطاقة ائتمان",
+  "openingBalanceOptional": "الرصيد الافتتاحي (اختياري)",
+  "currencyIso": "العملة (ISO 4217)",
+  "currencyIsoExample": "العملة (ISO 4217، مثل USD)",
+  "hideAccountTitle": "إخفاء الحساب من القيود الجديدة؟",
+  "hideCategoryTitle": "إخفاء الفئة من القيود الجديدة؟",
+  "hideGroupTitle": "إخفاء المجموعة من القيود الجديدة؟",
+  "reassignGroup": "إعادة تعيين المجموعة",
+  "transferRemainingBalance": "تحويل الرصيد المتبقي",
+  "monthlyLimit": "الحد الشهري",
+  "monthlyLimitHint": "الحد (اتركه فارغاً لمسحه)",
+  "monthlyLimitBlurb": "دليل إنفاق اختياري لهذا الشهر حتى تاريخه لهذه الفئة من المصروفات.",
+  "manageCategoryRules": "إدارة قواعد الفئات",
+  "amount": "المبلغ",
+  "category": "الفئة",
+  "account": "الحساب",
+  "fromAccount": "من حساب",
+  "toAccount": "إلى حساب",
+  "descriptionOptional": "الوصف (اختياري)",
+  "alsoRememberPayee": "تذكّره أيضاً كمستفيد",
+  "splitIntoCategories": "تقسيم إلى عدة فئات",
+  "categoryN": "الفئة {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "مبلغ الوجهة",
+  "destinationAmountOptional": "مبلغ الوجهة (اختياري)",
+  "accountCurrencyAmountOptional": "المبلغ بعملة الحساب (اختياري)",
+  "transactionCurrencyOptional": "عملة المعاملة (اختياري)",
+  "feeOptional": "الرسوم (اختياري)",
+  "feeAmount": "مبلغ الرسوم",
+  "feeCategory": "فئة الرسوم",
+  "feeDescriptionOptional": "وصف الرسوم (اختياري)",
+  "feeDeducted": "تُخصم الرسوم من المبلغ أعلاه",
+  "needTwoAccountsToTransfer": "أنشئ حسابين نشطين على الأقل لإجراء تحويل.",
+  "whatArrivedTitle": "ماذا وصل؟",
+  "whatArrivedBlurb": "أخبرنا بما وصل فعلياً.",
+  "amountThatArrived": "المبلغ الذي وصل",
+  "feeLossCategory": "فئة الرسوم / الخسارة",
+  "alreadySettled": "تمت التسوية بالفعل.",
+  "holdingsTitle": "المقتنيات",
+  "holdingsCash": "النقد",
+  "holdingsInventory": "المخزون",
+  "holdingsBook": "القيمة الدفترية (نقد + تكلفة) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "تقدير السوق {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "لا توجد مقتنيات بعد. سجّل عملية شراء لإضافة أداة مالية.",
+  "holdingsQuotesBlurb": "الأسعار المعروضة تقديرية، وليست سعر الوسيط. هذا التطبيق لا ينفذ أوامر تداول.",
+  "holdingsTapNameToResearch": "اضغط على الاسم للبحث. الأسعار تقديرية، وليست نصيحة استثمارية.",
+  "instrument": "أداة مالية",
+  "newInstrument": "أداة مالية جديدة",
+  "renameInstrument": "إعادة تسمية الأداة المالية",
+  "instrumentActions": "إجراءات الأداة المالية",
+  "hideInstrumentTitle": "إخفاء {name}؟",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "رمز التداول (اختياري)",
+  "isinOptional": "ISIN (اختياري)",
+  "quantity": "الكمية",
+  "unitPrice": "سعر الوحدة",
+  "brokerageOptional": "عمولة الوساطة (اختياري)",
+  "brokerageExpenseCategory": "فئة مصروف الوساطة",
+  "incomeCategory": "فئة الدخل",
+  "gainIncomeCategory": "فئة دخل الأرباح",
+  "lossExpenseCategory": "فئة مصروف الخسائر",
+  "nonCash": "غير نقدي",
+  "cash": "نقد",
+  "locked": "مقفل",
+  "lockUntilHint": "ملاحظتك الخاصة بشأن قيد ما، وليست قاعدة من الوسيط.",
+  "instrumentKindStock": "سهم",
+  "instrumentKindEtf": "صندوق مؤشرات متداول (ETF)",
+  "instrumentKindMutualFund": "صندوق استثمار مشترك",
+  "instrumentKindBond": "سند",
+  "instrumentKindOther": "أخرى",
+  "quoteUseLive": "سعر مباشر",
+  "quoteUseCached": "سعر مخزّن مؤقتاً",
+  "quoteUseStale": "سعر قديم",
+  "quoteUseMissing": "استخدام التكلفة (لا يوجد سعر)",
+  "quoteUseDisabled": "الأسعار معطلة — استخدام التكلفة/المخزن المؤقت",
+  "quoteUseCurrencyMismatch": "استخدام التكلفة (عملة السعر مختلفة)",
+  "unrealizedLabel": "غير محقق {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} وحدة · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "عبارة الاسترداد الخاصة بك",
+  "recoveryPhraseConfirmTitle": "أكّد عبارتك",
+  "recoveryPhraseBlurb": "هذه الكلمات الـ24 هي الطريقة الوحيدة لاسترداد سجل معاملاتك في حال فقدان هذا الجهاز أو إعادة ضبطه أو استبداله. سمارا للحسابات لا تملك خادماً ولا يمكنها استرداد هذه الكلمات نيابة عنك.\n\nإذا فقدت هذا الجهاز وهذه العبارة معاً، تصبح كل معاملة سجّلتها غير قابلة للتحقق بشكل دائم.",
+  "recoveryPhraseWriteDown": "دوّن هذه الكلمات بالترتيب واحفظها في مكان آمن ومنفصل عن هذا الجهاز.",
+  "iveSavedRecoveryPhrase": "لقد حفظت عبارة الاسترداد الخاصة بي",
+  "confirmPhraseBlurb": "أدخل الكلمات المطلوبة من العبارة التي حفظتها للتو.",
+  "wordNumber": "الكلمة رقم {n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "تصدير ملف مخزن المفاتيح",
+  "keystoreExportBlurb": "بالإضافة إلى عبارة الاسترداد، يمكنك حفظ ملف مخزن مفاتيح مشفر محمي بعبارة مرور تختارها. هذا اختياري - عبارة الاسترداد وحدها كافية دائماً لاستعادة مفتاح التوقيع الخاص بك.",
+  "keystorePassphrase": "عبارة المرور",
+  "exportKeystoreFile": "تصدير ملف مخزن المفاتيح",
+  "chooseCurrencyTitle": "اختر عملتك",
+  "chooseCurrencyBlurb": "كل مجموعة حسابات (النقد وما في حكمه، التقاعد والمعاش، إلخ) تستخدم هذه العملة الواحدة حالياً. يمكنك لاحقاً إضافة حسابات بعملة مختلفة عبر إنشاء مجموعة جديدة لها.",
+  "currencyBackfillTitle": "اختر عملة للمجموعات الحالية",
+  "currencyBackfillBlurb": "يدعم هذا التطبيق الآن عملات متعددة. تحتاج حساباتك ومجموعات حساباتك الحالية إلى عملة - وبما أنها جميعاً أُنشئت قبل وجود هذه الميزة، ينطبق اختيار واحد عليها كلها.",
+  "firstAccountTitle": "سمِّ حسابك",
+  "firstAccountBlurb": "هذا هو الحساب المُعدّ لك مسبقاً - أعطه اسماً تتعرف عليه، مثل اسم بنكك. ستُسجّل عملية صرف أو استلام واحدة تالياً، ثم تحمي الجهاز بعبارة الاسترداد الخاصة بك.",
+  "whatsMainAccountCalled": "ما اسم حسابك الرئيسي؟",
+  "restoreTitle": "استعادة مفتاح التوقيع",
+  "restoreBlurb": "يحتوي هذا الجهاز على دفاتر موجودة، لكن بلا مفتاح توقيع مطابق. استعده من عبارة الاسترداد أو ملف مخزن المفاتيح المحفوظين لديك - ستتحقق بياناتك بشكل طبيعي، ولن يُعاد توقيع أو تعديل أي شيء.",
+  "recoveryPhrase24": "عبارة الاسترداد (الكلمات الـ24 كاملة)",
+  "keystoreFile": "ملف مخزن المفاتيح",
+  "keystoreFileContents": "محتويات ملف مخزن المفاتيح",
+  "optionalBackupFile": "ملف نسخة احتياطية اختياري",
+  "iDontHavePhrase": "ليس لدي عبارة الاسترداد أو ملف مخزن المفاتيح",
+  "migrationTitle": "الترحيل إلى مفتاح جديد",
+  "migrationBlurb": "بدون عبارة الاسترداد أو ملف مخزن المفاتيح، لا يمكن استعادة مفتاح التوقيع الخاص بهذا الجهاز. يمكنك بدء مفتاح جديد. تبقى القيود القديمة مرئية لكن تصبح مُستبدلة.",
+  "iConfirmBooksValid": "أؤكد أن الدفاتر الحالية صحيحة",
+  "whyWeDontEdit": "لماذا لا نُعدّل القيود القديمة",
+  "whyWeDontEditBody": "عندما تصحح خطأً، نُبقي على السطر القديم ونضيف تصحيحاً بجانبه بدلاً من تغيير ما أدخلته بالفعل. بهذه الطريقة يُظهر سجلك دائماً بالضبط ما حدث ومتى صححته — لا شيء يتغير خفية من ورائك.",
+  "lockTitle": "فتح القفل",
+  "lockScreenTitle": "مقفل",
+  "enterPinToContinue": "أدخل الرمز للمتابعة",
+  "pinLabel": "الرمز",
+  "setPinTitle": "تعيين رمز",
+  "currentPin": "الرمز الحالي",
+  "newPin": "الرمز الجديد",
+  "confirmPin": "تأكيد الرمز",
+  "confirmNewPin": "تأكيد الرمز الجديد",
+  "firstWeekTitle": "أعدّ حساباتك",
+  "addCashAccount": "إضافة حساب نقدي",
+  "addCreditCard": "إضافة بطاقة ائتمان",
+  "cashAccountName": "اسم الحساب النقدي",
+  "cardName": "اسم البطاقة",
+  "paidFromBank": "مدفوع من البنك",
+  "paidFromCard": "مدفوع من البطاقة",
+  "choosePassphraseTitle": "اختر عبارة مرور لحماية هذه النسخة الاحتياطية. لا يمكن الاسترداد إن نسيتها.",
+  "replaceBooksTitle": "استبدال دفاترك المحلية؟",
+  "replaceBooksBody": "هذا يستبدل كل ما هو موجود حالياً في هذا التطبيق بالنسخة الاحتياطية. أغلق التطبيق وأعد فتحه بعد ذلك.",
+  "chooseBackupFileFirst": "اختر ملف نسخة احتياطية أولاً.",
+  "backupRestored": "تم استعادة النسخة الاحتياطية",
+  "backupRestoredBody": "تم استعادة دفاترك. أغلق التطبيق وأعد فتحه للمتابعة.",
+  "fixThisEntry": "تصحيح هذا القيد",
+  "fixBlurb": "يبقى السطر القديم كما هو تماماً. التأكيد يضيف سطراً عكسياً والسطر المُصحح.",
+  "importStatementTitle": "استيراد كشف حساب",
+  "importOfx": "استيراد OFX",
+  "importOfxQfxFile": "استيراد ملف OFX / QFX",
+  "importCsvFile": "استيراد ملف CSV",
+  "whatKindOfStatement": "ما نوع ملف كشف الحساب لديك؟",
+  "chooseAccountForFile": "اختر الحساب الذي ينتمي إليه هذا الملف.",
+  "importIntoAccount": "الاستيراد إلى حساب",
+  "useSavedProfile": "استخدام ملف تعريف محفوظ",
+  "saveMappingProfile": "حفظ هذا التخطيط كملف تعريف (اختياري)",
+  "renameProfile": "إعادة تسمية ملف التعريف",
+  "deleteProfileTitle": "حذف ملف التعريف؟",
+  "fileHasHeader": "الملف يحتوي على صف عناوين",
+  "dateColumn": "عمود التاريخ",
+  "dateFormatHint": "تنسيق التاريخ (مثل dd/MM/yyyy)",
+  "amountColumn": "عمود المبلغ",
+  "amountConvention": "اصطلاح المبلغ",
+  "signedAmountColumn": "عمود المبلغ الموقّع",
+  "separateDebitCredit": "أعمدة منفصلة للمدين / الدائن",
+  "debitColumn": "عمود المدين",
+  "creditColumn": "عمود الدائن",
+  "decimalSeparator": "الفاصل العشري (. أو ,)",
+  "descriptionColumns": "عمود (أعمدة) الوصف",
+  "referenceIdColumn": "عمود رقم المرجع (اختياري)",
+  "skippedRows": "الصفوف المتخطاة",
+  "parsedTransactionCount": "تم تحليل {count} معاملة",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "تم تخطي أو استبعاد {count}",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "تم ترحيل {posted}، وفشل {failed}",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "الفئة للكل",
+  "saveAsRule": "الحفظ كقاعدة؟",
+  "saveAsRuleBlurb": "عمليات الاستيراد المستقبلية التي يحتوي وصفها على هذه الكلمة المفتاحية ستستخدم هذه الفئة.",
+  "keyword": "الكلمة المفتاحية",
+  "noSavedRules": "لا توجد قواعد محفوظة بعد. عيّن فئة لمجموعة من الصفوف لحفظ قاعدة.",
+  "deleteRuleTitle": "حذف القاعدة؟",
+  "editRule": "تعديل القاعدة",
+  "rowsGrouped": "{count} صف",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "اختر ملف كشف حساب {extensions} للاستيراد",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "المستفيدون",
+  "addPayee": "إضافة مستفيد",
+  "renamePayee": "إعادة تسمية المستفيد",
+  "deletePayeeTitle": "حذف المستفيد؟",
+  "noPayeesYet": "لا يوجد مستفيدون بعد",
+  "recurringTitle": "القوالب المتكررة",
+  "noRecurringYet": "لا توجد قوالب متكررة بعد",
+  "deleteTemplateTitle": "حذف القالب المتكرر؟",
+  "dayOfMonth": "يوم الشهر (1-31)",
+  "dayOfMonthNote": "الشهر ذو الأيام الأقل يستخدم آخر يوم فيه.",
+  "dayOfMonthLine": "اليوم {day} من الشهر - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "الاسم",
+  "none": "لا شيء",
+  "currency": "العملة",
+  "errorGeneric": "حدث خطأ. حاول مرة أخرى.",
+  "errorSigningIdentityMismatch": "عبارة الاسترداد أو ملف مخزن المفاتيح هذا لا يطابق أي هوية توقيع في قاعدة البيانات هذه.",
+  "errorInvalidLedgerBackup": "هذا الملف ليس نسخة احتياطية صالحة من سمارا.",
+  "errorInvalidLedgerBackupNoIdentity": "هذه النسخة الاحتياطية بلا هوية توقيع - وهي ليست نسخة احتياطية صالحة من سمارا.",
+  "errorInvalidLedgerBackupUnverified": "لم يتم التحقق من هذه النسخة الاحتياطية كدفاتر سليمة، لذا لم تُستعد.",
+  "errorInvalidLedgerBackupUnreadable": "تعذر فتح هذا الملف كنسخة احتياطية من سمارا: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "تنتمي هذه النسخة الاحتياطية إلى هوية توقيع مختلفة عن الموجودة على هذا الجهاز.",
+  "errorAccountNotFinancial": "هذا ليس حساباً مالياً.",
+  "errorAccountArchived": "هذا الحساب مخفي.",
+  "errorAccountNotArchived": "هذا الحساب غير مخفي.",
+  "errorAccountNoPositiveBalanceToCloseOut": "لا يوجد رصيد متبقٍ للتحويل.",
+  "errorAccountHasNoGroup": "لا توجد مجموعة معيّنة لهذا الحساب.",
+  "errorGroupHasNoCurrency": "لم يتم تعيين عملة لهذه المجموعة بعد.",
+  "errorGroupNotFound": "لم يتم العثور على مجموعة الحسابات هذه.",
+  "errorInvestmentAccountsMustBeAssets": "يمكن فقط تعيين حسابات الأصول كحسابات استثمارية.",
+  "errorCreditCardsMustBeLiabilities": "يمكن فقط تعيين حسابات الالتزامات كبطاقات ائتمان.",
+  "errorOpeningBalanceMustBePositive": "يجب أن يكون الرصيد الافتتاحي موجباً عند تقديمه.",
+  "errorAccountTypeDoesNotMatchGroup": "نوع هذا الحساب لا يطابق المجموعة.",
+  "errorLastActiveAccount": "لا يمكن إخفاء آخر حساب مالي نشط.",
+  "errorCurrencyRequiredToCreateGroup": "العملة مطلوبة لإنشاء مجموعة.",
+  "errorSystemGroupCannotBeArchived": "لا يمكن إخفاء مجموعات الحسابات المدمجة.",
+  "errorGroupAlreadyArchived": "هذه المجموعة مخفية بالفعل.",
+  "errorCannotArchiveGroupWithAccounts": "لا يمكن إخفاء مجموعة لا تزال تحتوي على حسابات نشطة.",
+  "errorSystemGroupNeverArchived": "مجموعات الحسابات المدمجة لا تُخفى أبداً.",
+  "errorAccountGroupsCannotBeDeleted": "لا يمكن حذف مجموعات الحسابات.",
+  "errorCannotReassignDifferentCurrency": "لا يمكن نقل هذا الحساب إلى مجموعة بعملة مختلفة.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "لا يمكن تغيير عملة المجموعة أثناء وجود حسابات نشطة فيها.",
+  "errorAmountMustBePositive": "يجب أن يكون المبلغ موجباً.",
+  "errorAccountCurrencyAmountMustBePositive": "يجب أن يكون المبلغ بعملة الحساب موجباً.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "المبلغ بعملة الحساب مخصص فقط لقيد بعملة أجنبية.",
+  "errorSplitNeedsTwoLines": "يحتاج التقسيم إلى سطرَي فئة على الأقل.",
+  "errorSplitLineMustBePositive": "يجب أن يكون كل سطر تقسيم مبلغاً موجباً.",
+  "errorSplitLinesMustSumToTotal": "يجب أن يتساوى مجموع أسطر التقسيم مع إجمالي المعاملة.",
+  "errorTransferAmountMustBePositive": "يجب أن يكون مبلغ التحويل موجباً.",
+  "errorTransferAccountsMustDiffer": "يجب أن يختلف حساب المصدر عن حساب الوجهة.",
+  "errorCloseoutRequiresDestinationAmount": "تحتاج التسوية النهائية بين عملتين إلى مبلغ وجهة معروف.",
+  "errorDestinationAmountNotForSameCurrency": "مبلغ الوجهة مخصص فقط لتحويل بين عملتين.",
+  "errorDestinationAmountMustBePositive": "يجب أن يكون مبلغ الوجهة موجباً.",
+  "errorInvestmentCashExceeded": "لا يمكن تحويل أكثر من نقد هذا الحساب الاستثماري.",
+  "errorCannotReverseUnsettledProvisional": "سوِّ هذا التحويل المعلق بدلاً من عكسه.",
+  "errorAlreadyReversed": "تم تصحيح هذا القيد بالفعل. يبقى السطر الأصلي كما هو.",
+  "errorNotActiveExpenseCategory": "اختر فئة مصروفات نشطة.",
+  "errorNotActiveIncomeCategory": "اختر فئة دخل نشطة.",
+  "errorSettledAmountMustNotBeNegative": "لا يمكن أن يكون المبلغ الذي وصل سالباً.",
+  "errorPendingTransferNotFound": "لم يتم العثور على التحويل المعلق هذا.",
+  "errorPendingTransferAlreadySettled": "تمت تسوية هذا التحويل المعلق بالفعل.",
+  "errorSettledToMustBeSourceOrDestination": "اختر حساب المصدر أو الوجهة الأصلي.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "تُستخدم فئة الرسوم فقط عند إعادة الأموال إلى حساب المصدر.",
+  "errorSettledAmountMustBePositiveForDelivery": "أدخل مبلغاً موجباً لما وصل.",
+  "errorSettledAmountExceedsProvisional": "هذا المبلغ أكبر مما أُرسل.",
+  "errorInstrumentNotFound": "لم يتم العثور على هذه الأداة المالية.",
+  "errorIncomeRequiredForNonCash": "مطلوب فئة دخل نشطة لعملية اقتناء غير نقدية.",
+  "errorInsufficientCash": "لا يوجد نقد كافٍ في هذا الحساب الاستثماري لعملية الشراء تلك.",
+  "errorSellQuantityAndPriceMustBePositive": "يجب أن تكون كمية البيع وسعر الوحدة موجبين.",
+  "errorLockedUntil": "لا يمكن البيع: بعض الوحدات مقفلة حتى {date}.",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "لا يمكن بيع أكثر مما تملكه حالياً غير مقفل.",
+  "errorIncomeRequiredForGain": "مطلوب فئة دخل نشطة للربح المحقق.",
+  "errorExpenseRequiredForLoss": "مطلوب فئة مصروفات نشطة للخسارة المحققة.",
+  "errorBrokerageFailedAfterBuy": "تم ترحيل الشراء، لكن فشلت رسوم الوساطة: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "تم ترحيل البيع، لكن فشلت رسوم الوساطة: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "يجب أن يكون مبلغ التوزيعات موجباً.",
+  "errorNotInvestmentAccount": "هذا ليس حساباً استثمارياً.",
+  "errorNoInventoryCompanion": "يفتقد هذا الحساب الاستثماري إلى حساب المخزون المرافق.",
+  "errorInvestmentReversalBlocked": "لا يمكن عكس عملية الشراء هذه: عمليات بيع لاحقة تعتمد على وحداتها. اعكس عمليات البيع المعتمدة أولاً: {sells}.",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "يجب أن يكون الحد الشهري موجباً.",
+  "errorTemplateAmountMustBePositive": "يجب أن يكون مبلغ القالب موجباً.",
+  "errorOfxUnrecognized": "تعذر التعرف على هذا الملف كملف OFX.",
+  "errorCsvEmpty": "الملف المحدد فارغ.",
+  "errorCsvUnreadable": "تعذر قراءة هذا الملف كملف CSV.",
+  "errorCsvNoRows": "الملف المحدد لا يحتوي على صفوف.",
+  "errorBackupCreateFailed": "تعذر إنشاء النسخة الاحتياطية: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "تعذر استعادة هذه النسخة الاحتياطية - عبارة مرور خاطئة، أو ليست ملف نسخة احتياطية من سمارا.",
+  "validationAmountAccountCategoryRequired": "المبلغ والحساب والفئة مطلوبة.",
+  "validationAmountAccountRequired": "المبلغ والحساب مطلوبان.",
+  "validationSplitLineIncomplete": "كل سطر تقسيم يحتاج إلى فئة ومبلغ.",
+  "validationSplitSumMismatch": "يجب أن يتساوى مجموع أسطر التقسيم مع إجمالي المعاملة.",
+  "validationFromToAmountRequired": "حساب المصدر وحساب الوجهة والمبلغ مطلوبة.",
+  "validationAmountArrivedRequired": "المبلغ الذي وصل مطلوب.",
+  "validationChooseReceivingAccount": "اختر الحساب الذي استلم الأموال.",
+  "validationAccountCategoryRequired": "الحساب والفئة مطلوبان.",
+  "validationFixFailed": "تعذر حفظ هذا التصحيح.",
+  "validationNameRequired": "سمِّ حسابك الرئيسي.",
+  "validationStillLoading": "لا يزال التحميل جارياً - حاول مرة أخرى بعد قليل.",
+  "validationSaveAccountNameFailed": "تعذر حفظ اسم الحساب.",
+  "validationWrongPin": "رمز خاطئ. حاول مرة أخرى.",
+  "validationCategoryMustBeIncomeOrExpense": "يجب أن تكون الفئة دخلاً أو مصروفاً.",
+  "validationOnlyExpenseHasMonthlyLimit": "يمكن فقط لفئة المصروفات أن يكون لها حد شهري.",
+  "validationInvalidTemplate": "قالب غير صالح.",
+  "validationWrongKeystorePassphrase": "عبارة مرور خاطئة لملف مخزن المفاتيح هذا.",
+  "validationInvalidKeystoreFile": "هذا لا يبدو كملف مخزن مفاتيح صالح.",
+  "validationRestorePhraseFailed": "تعذر الاستعادة من عبارة الاسترداد تلك.",
+  "validationGenerateKeyFailed": "تعذر توليد مفتاح توقيع على هذا الجهاز: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "تعذر حفظ هذه العملة: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "فشل الترحيل. حاول مرة أخرى من فضلك.",
+  "validationChooseBackupFile": "اختر ملف نسخة احتياطية أولاً.",
+  "validationPassphraseRequired": "أدخل عبارة مرور.",
+  "validationPinsDoNotMatch": "الرمزان غير متطابقين.",
+  "validationFeePositiveWithCategory": "يجب أن تكون رسوم التحويل مبلغاً موجباً مع اختيار فئة مصروفات.",
+  "validationFeeMustBeLessThanAmount": "يجب أن تكون الرسوم أقل من المبلغ لتحويل الرسوم المخصومة.",
+  "validationTransferSavedFeeFailed": "تم حفظ التحويل، لكن تعذر تسجيل الرسوم: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "أدخل مبلغاً صالحاً.",
+  "validationConfirmWordMismatch": "الكلمة {n} لا تطابق عبارتك المحفوظة. تحقق منها وحاول مرة أخرى.",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "يجب أن تكون كمية الشراء وسعر الوحدة موجبين.",
+  "errorInstrumentArchived": "لا يمكن شراء أداة مالية مخفية.",
+  "errorNonCashCannotIncludeBrokerage": "عمليات الاقتناء غير النقدية لا يمكن أن تتضمن عمولة وساطة.",
+  "errorBrokerageRequiresExpenseCategory": "مطلوب فئة مصروفات نشطة عندما تكون عمولة الوساطة موجبة.",
+  "errorSellProceedsMustCoverBrokerage": "يجب أن تغطي عائدات البيع عمولة الوساطة على الأقل.",
+  "homeSpentOfLimitThisMonth": "{spent} من {limit} هذا الشهر",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "فتح سمارا للحسابات",
+  "searchLabel": "بحث",
+  "openingBalance": "الرصيد الافتتاحي",
+  "transferToName": "تحويل: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "رسوم التحويل",
+  "feeForTransferTo": "رسوم التحويل إلى {name}",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "تعذر فتح منتقي الملفات: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "يرجى اختيار ملف .{extensions}",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "رمز العملة (ISO 4217، مثل USD)",
+  "splitCounterpartMore": "{name} +{count} أخرى",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "التاريخ",
+  "noneSelected": "لا شيء",
+  "reviewEntriesBeforeContinuing": "راجع القيود أدناه ({count} إجمالاً) قبل المتابعة.",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "استلمت {amount}",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "اتركه فارغاً إذا لم يكن سعر الصرف معروفاً بعد.",
+  "recordTradeBlurb": "سجّل صفقة حدثت بالفعل. هذا التطبيق لا ينفذ أوامر تداول.",
+  "feeOnTopBlurb": "مضافة: المبلغ أعلاه هو الإجمالي المأخوذ من هذا الحساب؛ وتُخصم الرسوم منه.",
+  "feeBankBlurb": "عمولة مقدّمة يفرضها بنكك أو وسيط.",
+  "validationPinMinLength": "يجب أن يتكون الرمز من 4 أرقام على الأقل.",
+  "restoreBackupBlurb": "هذا يستبدل كل ما هو موجود حالياً في هذا التطبيق بالنسخة الاحتياطية — ولا يدمجه. اختر ملف نسخة احتياطية وأدخل عبارة المرور التي حميته بها.",
+  "actionReplace": "استبدال",
+  "hideAccountBody": "{name} لن يكون متاحاً بعد الآن للمعاملات الجديدة.",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} لن تُعرض بعد الآن عند إنشاء أو إعادة تعيين الحسابات.",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} لن تُعرض بعد الآن عند تسجيل معاملات جديدة.",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "الأدوات المالية المخفية تبقى على عمليات الشراء والبيع السابقة. لا يزال بإمكانك تسجيل توزيعات أرباح لها.",
+  "nameHidden": "{name} (مخفي)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "لم يتم تعيين عملة",
+  "deletePayeeBody": "سيُحذف {name} والإعدادات الافتراضية المحفوظة له. المعاملات السابقة لا تتأثر.",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} لن يُعرض بعد الآن كمستحق. المعاملات السابقة التي سجّلها بالفعل لا تتأثر.",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "سيُحذف تخطيط الأعمدة المحفوظ \"{name}\". الكشوفات المستوردة به مسبقاً لا تتأثر.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "عمليات الاستيراد لن تُصنّف تلقائياً بعد الآن بـ\"{keyword}\". المعاملات المصنفة بالفعل باستخدام هذه القاعدة لا تتأثر.",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "أضف اختيارياً بطاقة ائتمان أو حساباً نقدياً الآن - يمكنك دائماً إضافة حسابات أخرى لاحقاً من الإعدادات.",
+  "deliveredToDestination": "تم التسليم إلى الوجهة",
+  "deliveredToName": "تم التسليم إلى {name}",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "استلمت {amount} {currency} أقل من المتوقع - اختر فئة لتغطية الفرق.",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "نطاق التاريخ",
+  "addTemplate": "إضافة قالب",
+  "editTemplate": "تعديل القالب",
+  "validationFillTemplateFields": "املأ كل حقل بمبلغ ويوم صالحين.",
+  "saveCsvExport": "حفظ تصدير CSV",
+  "referenceRate": "السعر المرجعي",
+  "yourRate": "سعرك",
+  "leaveBlankIfThisWasAccountCurrency": "اتركه فارغاً إذا كان هذا بعملة {currency}، عملة الحساب نفسه.",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "مقفل حتى (اختياري)",
+  "lockedUntilDate": "مقفل حتى {date}",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "تم نسخ سؤال بحثي — لا يوجد رابط متصفح متاح، أو أنك غير متصل بالإنترنت.",
+  "openedFavouriteResearchTool": "تم فتح أداة البحث المفضلة لديك.",
+  "looksLikeGain": "يبدو هذا ربحاً",
+  "looksLikeLoss": "يبدو هذا خسارة",
+  "looksLikeBreakEven": "يبدو هذا تعادلاً",
+  "sellableQuantity": "{name} ({qty} قابل للبيع)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "العمود {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "جارٍ الاستيراد...",
+  "confirmImport": "تأكيد الاستيراد",
+  "manageSavedCategoryRules": "إدارة قواعد الفئات المحفوظة",
+  "statementCurrencyMismatch": "عملة هذا الملف ({currency}) لا تطابق عملة الحساب المحدد.",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "قواعد الفئات",
+  "possibleDuplicate": "تكرار محتمل",
+  "unknownCategory": "فئة غير معروفة"
+}

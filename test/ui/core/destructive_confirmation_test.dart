@@ -31,7 +31,7 @@ void main() {
     expect(find.text('Archive group?'), findsOneWidget);
     expect(find.text('This cannot be undone.'), findsOneWidget);
 
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Archive'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
     await tester.pumpAndSettle();
 
     expect(result, isTrue);

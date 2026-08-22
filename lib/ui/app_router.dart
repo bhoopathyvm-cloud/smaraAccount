@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../data/repositories/ledger_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/statement_import_repository.dart';
+import '../l10n/l10n.dart';
 import '../domain/lock/app_lock_service.dart';
 import '../domain/lock/biometric_authenticator.dart';
 import '../domain/models/home_overview.dart';
@@ -21,14 +22,18 @@ import 'features/first_week_setup/view_models/first_week_setup_view_model.dart';
 import 'features/first_week_setup/views/first_week_setup_view.dart';
 import 'features/home/view_models/home_view_model.dart';
 import 'features/home/views/home_view.dart';
+import 'features/holdings/view_models/holdings_view_model.dart';
+import 'features/holdings/views/holdings_view.dart';
 import 'features/lock/view_models/lock_view_model.dart';
 import 'features/lock/views/lock_view.dart';
 import 'features/migration/view_models/key_loss_migration_view_model.dart';
 import 'features/migration/views/key_loss_migration_view.dart';
 import 'features/onboarding/view_models/currency_backfill_view_model.dart';
+import 'features/onboarding/view_models/first_account_name_view_model.dart';
 import 'features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'features/onboarding/views/currency_backfill_view.dart';
 import 'features/onboarding/views/currency_selection_view.dart';
+import 'features/onboarding/views/first_account_name_view.dart';
 import 'features/onboarding/views/keystore_export_view.dart';
 import 'features/onboarding/views/recovery_phrase_confirm_view.dart';
 import 'features/onboarding/views/recovery_phrase_view.dart';
@@ -56,9 +61,11 @@ import 'features/transfer/views/transfer_view.dart';
 
 // deferred-onboarding-first-entry: onboarding now runs currency selection
 // first (which commits the signing identity and seeds starter accounts),
-// then a guided first entry, and only then the mandatory recovery-phrase
-// acknowledgment screens - see the redirect logic below.
+// then names the first account, then a guided first entry, and only then
+// the mandatory recovery-phrase acknowledgment screens - see the redirect
+// logic below.
 const _currencyPath = '/onboarding/currency';
+const _firstAccountPath = '/onboarding/first-account';
 const _firstEntryPath = '/onboarding/first-entry';
 const _acknowledgmentPaths = {
   '/onboarding/recovery-phrase',
@@ -67,6 +74,7 @@ const _acknowledgmentPaths = {
 };
 const _onboardingPaths = {
   _currencyPath,
+  _firstAccountPath,
   _firstEntryPath,
   ..._acknowledgmentPaths,
 };
@@ -89,7 +97,7 @@ const _setupWizardPath = '/onboarding/first-week-setup';
 ///  - no identity yet -> pick a currency (commits the identity + starter
 ///    accounts automatically, before the phrase is ever shown)
 ///  - identity committed but not yet acknowledged, no entry recorded yet
-///    -> guided first entry
+///    -> name the first account, then guided first entry
 ///  - identity committed but not yet acknowledged, first entry recorded
 ///    -> the mandatory recovery-phrase acknowledgment screens
 ///  - identity exists but this device's secure storage has no matching
@@ -133,9 +141,10 @@ GoRouter buildAppRouter(
         final hasRecordedFirstEntry = await ledgerRepository
             .hasAnyJournalEntries();
         if (!hasRecordedFirstEntry) {
-          return state.matchedLocation == _firstEntryPath
+          return state.matchedLocation == _firstAccountPath ||
+                  state.matchedLocation == _firstEntryPath
               ? null
-              : _firstEntryPath;
+              : _firstAccountPath;
         }
         return _acknowledgmentPaths.contains(state.matchedLocation)
             ? null
@@ -190,6 +199,15 @@ GoRouter buildAppRouter(
         path: _currencyPath,
         builder: (context, state) => CurrencySelectionView(
           viewModel: context.read<RecoveryPhraseSetupViewModel>(),
+          onFinished: () => context.go(_firstAccountPath),
+        ),
+      ),
+      GoRoute(
+        path: _firstAccountPath,
+        builder: (context, state) => FirstAccountNameView(
+          viewModel: FirstAccountNameViewModel(
+            ledgerRepository: ledgerRepository,
+          ),
           onFinished: () => context.go(_firstEntryPath),
         ),
       ),
@@ -319,6 +337,22 @@ GoRouter buildAppRouter(
             _buildFixEntry(context, state, ledgerRepository),
       ),
       GoRoute(
+        path: '/holdings/:accountId',
+        builder: (context, state) {
+          final accountId = state.pathParameters['accountId']!;
+          return HoldingsView(
+            viewModel: HoldingsViewModel(
+              ledgerRepository: ledgerRepository,
+              settingsRepository: settingsRepository,
+              accountId: accountId,
+            ),
+            onOpenRegister: () => context.go(
+              '/register?accountId=${Uri.encodeQueryComponent(accountId)}',
+            ),
+          );
+        },
+      ),
+      GoRoute(
         path: '/settings',
         builder: (context, state) => SettingsView(
           viewModel: SettingsViewModel(
@@ -327,6 +361,7 @@ GoRouter buildAppRouter(
             appLockService: AppLockService(),
             biometricAuthenticator: LocalAuthBiometricAuthenticator(),
             appLockController: appLockController,
+            localeController: context.read<LocaleController>(),
           ),
           onOpenPayees: () => context.push('/payees'),
           onOpenRecurringTemplates: () => context.push('/recurring-templates'),
@@ -356,6 +391,9 @@ GoRouter buildAppRouter(
                   viewModel: context.read<HomeViewModel>(),
                   onAccountTap: (accountId) => context.go(
                     '/register?accountId=${Uri.encodeQueryComponent(accountId)}',
+                  ),
+                  onInvestmentAccountTap: (accountId) => context.push(
+                    '/holdings/${Uri.encodeComponent(accountId)}',
                   ),
                   onSettlePendingTransfer: (pendingTransferId) => context.push(
                     '/settle-pending-transfer/'
@@ -533,7 +571,7 @@ Widget _buildSettlePendingTransfer(
     }
   }
   if (summary == null) {
-    return const Center(child: Text('Already settled.'));
+    return Center(child: Text(l10nOf(context).alreadySettled));
   }
   return SettlePendingTransferView(
     viewModel: SettlePendingTransferViewModel(

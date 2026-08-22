@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/account.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -19,42 +20,42 @@ class CategoryManagementView extends StatelessWidget {
   final CategoryManagementViewModel viewModel;
 
   Future<void> _confirmArchive(BuildContext context, Account category) async {
+    final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Hide category from new entries?',
-      message:
-          '${category.name} will no longer be offered when recording new '
-          'transactions.',
-      confirmLabel: 'Hide',
+      title: l10n.hideCategoryTitle,
+      message: l10n.hideCategoryBody(localizeStoredName(l10n, category.name)),
+      confirmLabel: l10n.actionHide,
     );
     if (confirmed) await viewModel.archiveCategory(category.id);
   }
 
   Future<void> _showAddDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
     final nameController = TextEditingController();
     var type = AccountType.expense;
     await showDialog<void>(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Add category'),
+          title: Text(l10n.addCategory),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(labelText: 'Name'),
+                decoration: InputDecoration(labelText: l10n.name),
               ),
               const SizedBox(height: AppSpacing.medium),
               SegmentedButton<AccountType>(
-                segments: const [
+                segments: [
                   ButtonSegment(
                     value: AccountType.income,
-                    label: Text('Income'),
+                    label: Text(l10n.income),
                   ),
                   ButtonSegment(
                     value: AccountType.expense,
-                    label: Text('Expense'),
+                    label: Text(l10n.expense),
                   ),
                 ],
                 selected: {type},
@@ -66,7 +67,7 @@ class CategoryManagementView extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: Text(l10n.actionCancel),
             ),
             ElevatedButton(
               onPressed: () {
@@ -77,7 +78,7 @@ class CategoryManagementView extends StatelessWidget {
                 );
                 Navigator.of(context).pop();
               },
-              child: const Text('Add'),
+              child: Text(l10n.actionAdd),
             ),
           ],
         ),
@@ -86,16 +87,17 @@ class CategoryManagementView extends StatelessWidget {
   }
 
   Future<void> _showRenameDialog(BuildContext context, Account category) async {
+    final l10n = l10nOf(context);
     final controller = TextEditingController(text: category.name);
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Rename category'),
+        title: Text(l10n.renameCategory),
         content: TextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -106,7 +108,7 @@ class CategoryManagementView extends StatelessWidget {
               );
               Navigator.of(context).pop();
             },
-            child: const Text('Save'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -114,6 +116,7 @@ class CategoryManagementView extends StatelessWidget {
   }
 
   Future<void> _showLimitDialog(BuildContext context, Account category) async {
+    final l10n = l10nOf(context);
     final controller = TextEditingController(
       text: category.monthlyLimitMinor == null
           ? ''
@@ -127,17 +130,12 @@ class CategoryManagementView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Monthly limit'),
+          title: Text(l10n.monthlyLimit),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'An optional month-to-date spending guide for '
-                '${category.name} - informational only, it never blocks '
-                'recording a transaction.',
-                style: AppTypography.metadata,
-              ),
+              Text(l10n.monthlyLimitBlurb, style: AppTypography.metadata),
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: controller,
@@ -145,9 +143,7 @@ class CategoryManagementView extends StatelessWidget {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
-                  labelText: 'Limit (leave blank to clear)',
-                ),
+                decoration: InputDecoration(labelText: l10n.monthlyLimitHint),
               ),
               if (errorMessage != null) ...[
                 const SizedBox(height: AppSpacing.medium),
@@ -161,7 +157,7 @@ class CategoryManagementView extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(l10n.actionCancel),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -174,7 +170,7 @@ class CategoryManagementView extends StatelessWidget {
                   );
                   if (limitMinor == null) {
                     setDialogState(
-                      () => errorMessage = 'Enter a valid amount.',
+                      () => errorMessage = l10n.validationEnterValidAmount,
                     );
                     return;
                   }
@@ -186,10 +182,12 @@ class CategoryManagementView extends StatelessWidget {
                 if (ok && dialogContext.mounted) {
                   Navigator.of(dialogContext).pop();
                 } else {
-                  setDialogState(() => errorMessage = viewModel.errorMessage);
+                  setDialogState(
+                    () => errorMessage = viewModel.errorMessageFor(l10n),
+                  );
                 }
               },
-              child: const Text('Save'),
+              child: Text(l10n.actionSave),
             ),
           ],
         ),
@@ -201,7 +199,10 @@ class CategoryManagementView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories', style: AppTypography.headerTitle),
+        title: Text(
+          l10nOf(context).categoriesTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -217,6 +218,7 @@ class CategoryManagementView extends StatelessWidget {
           return ListView.builder(
             itemCount: viewModel.categories.length,
             itemBuilder: (context, index) {
+              final l10n = l10nOf(context);
               final category = viewModel.categories[index];
               return Card(
                 margin: const EdgeInsets.symmetric(
@@ -225,12 +227,20 @@ class CategoryManagementView extends StatelessWidget {
                 ),
                 child: ListTile(
                   leading: Icon(TablerIcons.tag, color: AppColors.textPrimary),
-                  title: Text(category.name, style: AppTypography.cardTitle),
+                  title: Text(
+                    localizeStoredName(l10n, category.name),
+                    style: AppTypography.cardTitle,
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(category.type.name, style: AppTypography.metadata),
+                      Text(
+                        category.type == AccountType.income
+                            ? l10n.income
+                            : l10n.expense,
+                        style: AppTypography.metadata,
+                      ),
                       if (category.type == AccountType.expense &&
                           category.monthlyLimitMinor != null)
                         MonthlyLimitProgress(
@@ -245,7 +255,7 @@ class CategoryManagementView extends StatelessWidget {
                       ? TextButton(
                           onPressed: () =>
                               viewModel.unarchiveCategory(category.id),
-                          child: const Text('Restore'),
+                          child: Text(l10n.actionRestore),
                         )
                       : Row(
                           mainAxisSize: MainAxisSize.min,
@@ -253,7 +263,7 @@ class CategoryManagementView extends StatelessWidget {
                             if (category.type == AccountType.expense)
                               IconButton(
                                 icon: const Icon(TablerIcons.target),
-                                tooltip: 'Monthly limit',
+                                tooltip: l10n.monthlyLimit,
                                 color: AppColors.textSecondary,
                                 onPressed: () =>
                                     _showLimitDialog(context, category),
@@ -269,7 +279,7 @@ class CategoryManagementView extends StatelessWidget {
                                 style: destructiveButtonStyle,
                                 onPressed: () =>
                                     _confirmArchive(context, category),
-                                child: const Text('Hide'),
+                                child: Text(l10n.actionHide),
                               ),
                             ),
                           ],

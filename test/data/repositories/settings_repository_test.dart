@@ -72,4 +72,8 @@ void main() {
       expect(await SettingsRepository().isFirstWeekSetupCompleted(), isTrue);
     },
   );
+
+  test('market price fetch defaults to enabled', () async {
+    expect(await SettingsRepository().isMarketPriceFetchEnabled(), isTrue);
+  });
 }

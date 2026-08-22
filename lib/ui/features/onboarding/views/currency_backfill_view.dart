@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -47,9 +48,13 @@ class _CurrencyBackfillViewState extends State<CurrencyBackfillView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Choose your currency', style: AppTypography.headerTitle),
+        title: Text(
+          l10n.currencyBackfillTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -62,13 +67,7 @@ class _CurrencyBackfillViewState extends State<CurrencyBackfillView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'This app now supports multiple currencies. Your existing '
-                  'accounts and account groups need a currency - since they '
-                  'were all set up before this feature existed, one choice '
-                  'applies to all of them.',
-                  style: AppTypography.body,
-                ),
+                Text(l10n.currencyBackfillBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 Wrap(
                   spacing: AppSpacing.small,
@@ -94,15 +93,13 @@ class _CurrencyBackfillViewState extends State<CurrencyBackfillView> {
                           newValue.copyWith(text: newValue.text.toUpperCase()),
                     ),
                   ],
-                  decoration: const InputDecoration(
-                    labelText: 'Currency code (ISO 4217, e.g. USD)',
-                  ),
+                  decoration: InputDecoration(labelText: l10n.currencyCodeIso),
                   onChanged: (_) => setState(() {}),
                 ),
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],
@@ -111,7 +108,7 @@ class _CurrencyBackfillViewState extends State<CurrencyBackfillView> {
                   onPressed: widget.viewModel.isSubmitting || !_isValid
                       ? null
                       : _submit,
-                  child: const Text('Continue'),
+                  child: Text(l10n.actionContinue),
                 ),
               ],
             ),

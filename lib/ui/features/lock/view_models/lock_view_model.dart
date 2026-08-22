@@ -3,12 +3,14 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/lock/app_lock_service.dart';
 import '../../../../domain/lock/biometric_authenticator.dart';
+import '../../../../l10n/l10n.dart';
+import '../../../../domain/exceptions.dart';
 import '../../../core/app_lock_controller.dart';
 
 /// The unlock screen's form state (app-lock spec: "Application Lock").
 /// Offers biometrics first (auto-prompted once, on open) when enabled,
 /// with the PIN always available as a fallback or primary path.
-class LockViewModel extends ChangeNotifier {
+class LockViewModel extends ChangeNotifier with LocalizedErrorMixin {
   LockViewModel({
     required AppLockService appLockService,
     required BiometricAuthenticator biometricAuthenticator,
@@ -32,9 +34,6 @@ class LockViewModel extends ChangeNotifier {
   bool _isVerifying = false;
   bool get isVerifying => _isVerifying;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   Future<void> _init() async {
     _biometricEnabled = await _settingsRepository.isAppLockBiometricEnabled();
     notifyListeners();
@@ -49,7 +48,7 @@ class LockViewModel extends ChangeNotifier {
     _isVerifying = true;
     notifyListeners();
     final success = await _biometricAuthenticator.authenticate(
-      reason: 'Unlock Smara Account',
+      reason: englishAppLocalizations.unlockBiometricReason,
     );
     _isVerifying = false;
     notifyListeners();
@@ -60,7 +59,7 @@ class LockViewModel extends ChangeNotifier {
 
   Future<bool> submitPin(String pin) async {
     _isVerifying = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
     final ok = await _appLockService.verifyPin(pin);
     _isVerifying = false;
@@ -69,8 +68,7 @@ class LockViewModel extends ChangeNotifier {
       _lockController.markUnlocked();
       return true;
     }
-    _errorMessage = 'Wrong PIN. Try again.';
-    notifyListeners();
+    setFailure(const AppFailure(AppErrorCode.validationWrongPin));
     return false;
   }
 }

@@ -1,0 +1,968 @@
+{
+  "@@locale": "pa",
+  "appTitle": "ਸਮਾਰਾ ਖਾਤਾ",
+  "navHome": "ਘਰ",
+  "navRegister": "ਰਜਿਸਟਰ",
+  "navSummary": "ਸਾਰ",
+  "navAccounts": "ਖਾਤੇ",
+  "navCategories": "ਸ਼੍ਰੇਣੀਆਂ",
+  "actionCancel": "ਰੱਦ",
+  "actionSave": "ਸੰਭਾਲੋ",
+  "actionDelete": "ਮਿਟਾਓ",
+  "actionDone": "ਹੋ ਗਿਆ",
+  "actionContinue": "ਜਾਰੀ ਰੱਖੋ",
+  "actionDismiss": "ਖਾਰਜ ਕਰੋ",
+  "actionRetry": "ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ",
+  "actionSkip": "ਛੱਡੋ",
+  "actionConfirm": "ਪੁਸ਼ਟੀ ਕਰੋ",
+  "actionAdd": "ਜੋੜੋ",
+  "actionEdit": "ਸੰਪਾਦਿਤ ਕਰੋ",
+  "actionRename": "ਨਾਮ ਬਦਲੋ",
+  "actionHide": "ਲੁਕਾਓ",
+  "actionCreate": "ਬਣਾਓ",
+  "actionCloseApp": "ਐਪ ਬੰਦ ਕਰੋ",
+  "actionUnlock": "ਅਨਲੌਕ ਕਰੋ",
+  "actionSettle": "ਨਿਪਟਾਓ",
+  "actionFinish": "ਸਮਾਪਤ ਕਰੋ",
+  "actionPreview": "ਝਲਕ",
+  "actionImport": "ਇੰਪੋਰਟ ਕਰੋ",
+  "actionExportCsv": "CSV ਐਕਸਪੋਰਟ ਕਰੋ",
+  "actionChooseFile": "ਫਾਈਲ ਚੁਣੋ",
+  "actionRestore": "ਬਹਾਲ ਕਰੋ",
+  "actionFix": "ਠੀਕ ਕਰੋ",
+  "actionBuy": "ਖਰੀਦੋ",
+  "actionSell": "ਵੇਚੋ",
+  "actionDividend": "ਲਾਭਅੰਸ਼",
+  "actionRecordBuy": "ਖਰੀਦ ਰਿਕਾਰਡ ਕਰੋ",
+  "actionRecordSell": "ਵਿਕਰੀ ਰਿਕਾਰਡ ਕਰੋ",
+  "actionRecordDividend": "ਲਾਭਅੰਸ਼ ਰਿਕਾਰਡ ਕਰੋ",
+  "actionPayCard": "ਕਾਰਡ ਭੁਗਤਾਨ ਕਰੋ",
+  "actionTransfer": "ਟ੍ਰਾਂਸਫਰ ਕਰੋ",
+  "actionRecordTransaction": "ਲੈਣ-ਦੇਣ ਰਿਕਾਰਡ ਕਰੋ",
+  "actionImportStatement": "ਸਟੇਟਮੈਂਟ ਇੰਪੋਰਟ ਕਰੋ",
+  "actionClearDates": "ਮਿਤੀਆਂ ਸਾਫ਼ ਕਰੋ",
+  "actionClearSearch": "ਖੋਜ ਅਤੇ ਫਿਲਟਰ ਸਾਫ਼ ਕਰੋ",
+  "actionUseBiometrics": "ਬਾਇਓਮੈਟ੍ਰਿਕਸ ਵਰਤੋ",
+  "actionSetPin": "ਪਿੰਨ ਸੈੱਟ ਕਰੋ",
+  "actionChangePin": "ਪਿੰਨ ਬਦਲੋ",
+  "actionSaveBackup": "ਬੈਕਅੱਪ ਸੰਭਾਲੋ",
+  "actionRestoreBackup": "ਬੈਕਅੱਪ ਬਹਾਲ ਕਰੋ",
+  "actionSaveRule": "ਨਿਯਮ ਸੰਭਾਲੋ",
+  "actionConfirmFix": "ਸੁਧਾਰ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+  "captureSpent": "ਖਰਚ",
+  "captureReceived": "ਪ੍ਰਾਪਤ",
+  "captureMovedMoney": "ਪੈਸਾ ਟ੍ਰਾਂਸਫਰ ਹੋਇਆ",
+  "captureImportStatement": "ਸਟੇਟਮੈਂਟ ਇੰਪੋਰਟ ਕਰੋ",
+  "settingsTitle": "ਸੈਟਿੰਗਾਂ",
+  "settingsLanguage": "ਭਾਸ਼ਾ",
+  "settingsLanguageSystem": "ਡਿਵਾਈਸ ਭਾਸ਼ਾ",
+  "settingsFetchFxRates": "ਹਵਾਲਾ ਵਟਾਂਦਰਾ ਦਰਾਂ ਲਿਆਓ",
+  "settingsFetchFxRatesSubtitle": "ਕਰਾਸ-ਮੁਦਰਾ ਟ੍ਰਾਂਸਫਰ ਸਮੇਂ ਟਿਕਾਣਾ ਰਕਮ ਦੇ ਨਾਲ ਇੱਕ ਸੰਕੇਤਕ ਮਾਰਕੀਟ ਦਰ ਦਿਖਾਉਂਦਾ ਹੈ, ਸਿਰਫ਼ ਤੁਲਨਾ ਲਈ - ਇਹ ਕਦੇ ਵੀ ਰਕਮ ਭਰਨ ਲਈ ਨਹੀਂ ਵਰਤਿਆ ਜਾਂਦਾ।",
+  "settingsRateProvider": "ਦਰ ਪ੍ਰਦਾਤਾ",
+  "settingsFetchMarketPrices": "ਨਿਵੇਸ਼ਾਂ ਲਈ ਮਾਰਕੀਟ ਕੀਮਤਾਂ ਲਿਆਓ",
+  "settingsFetchMarketPricesSubtitle": "ਟਿਕਰ ਜਾਂ ISIN ਵਾਲੇ ਇੰਸਟਰੂਮੈਂਟਾਂ ਦੀਆਂ ਆਖਰੀ ਕੀਮਤਾਂ ਲੱਭਦਾ ਹੈ, ਤਾਂ ਜੋ ਪੋਰਟਫੋਲੀਓ ਦੀ ਕੀਮਤ ਦਾ ਅੰਦਾਜ਼ਾ ਲਗਾਇਆ ਜਾ ਸਕੇ। ਇਹ ਕਦੇ ਵੀ ਲੈਣ-ਦੇਣ ਰਿਕਾਰਡ ਕਰਨ ਲਈ ਨਹੀਂ ਵਰਤਿਆ ਜਾਂਦਾ, ਅਤੇ ਕਦੇ ਵੀ ਇਹ ਨਹੀਂ ਭੇਜਦਾ ਕਿ ਤੁਹਾਡੇ ਕੋਲ ਕਿੰਨੇ ਹਨ।",
+  "settingsMarketPriceProvider": "ਮਾਰਕੀਟ ਕੀਮਤ ਪ੍ਰਦਾਤਾ",
+  "settingsFavouriteResearchTool": "ਪਸੰਦੀਦਾ ਖੋਜ ਟੂਲ",
+  "settingsFavouriteResearchToolSubtitle": "ਹੋਲਡਿੰਗਸ ਉੱਤੇ ਕਿਸੇ ਇੰਸਟਰੂਮੈਂਟ ਦੇ ਨਾਮ ਉੱਤੇ ਟੈਪ ਕਰਨ ਨਾਲ ਇਹ ਟੂਲ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਇੱਕ ਖੋਜ ਪ੍ਰੌਂਪਟ ਨਾਲ ਖੁੱਲ੍ਹਦਾ ਹੈ — ਇਹ ਕੋਈ ਏਕੀਕਰਨ ਨਹੀਂ, ਅਤੇ ਨਾ ਹੀ ਸਲਾਹ ਹੈ।",
+  "settingsBackup": "ਬੈਕਅੱਪ",
+  "settingsBackupBlurb": "ਆਪਣੀਆਂ ਕਿਤਾਬਾਂ ਦੀ ਇੱਕ ਇਨਕ੍ਰਿਪਟਡ ਕਾਪੀ ਆਪਣੀ ਪਸੰਦ ਦੇ ਸਥਾਨ ਉੱਤੇ ਸੰਭਾਲੋ, ਜਾਂ ਇਸ ਤੋਂ ਬਹਾਲ ਕਰੋ। ਇਹ ਤੁਹਾਡੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਤੋਂ ਵੱਖਰਾ ਹੈ, ਜੋ ਤੁਹਾਡੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਦਾ ਬੈਕਅੱਪ ਲੈਂਦੇ ਹਨ, ਤੁਹਾਡੀਆਂ ਕਿਤਾਬਾਂ ਦਾ ਨਹੀਂ।",
+  "settingsLock": "ਲੌਕ",
+  "settingsLockBlurb": "ਐਪ ਖੋਲ੍ਹਣ ਲਈ ਇੱਕ ਪਿੰਨ, ਜਾਂ ਜਿੱਥੇ ਉਪਲਬਧ ਹੋਵੇ ਬਾਇਓਮੈਟ੍ਰਿਕਸ ਲੋੜੀਂਦਾ ਬਣਾਓ।",
+  "settingsRequireUnlock": "ਐਪ ਖੋਲ੍ਹਣ ਲਈ ਅਨਲੌਕ ਲੋੜੀਂਦਾ",
+  "settingsLockAfter": "ਇਸ ਤੋਂ ਬਾਅਦ ਲੌਕ ਕਰੋ",
+  "settingsLockImmediately": "ਤੁਰੰਤ",
+  "settingsLock1Minute": "1 ਮਿੰਟ",
+  "settingsLock5Minutes": "5 ਮਿੰਟ",
+  "settingsLock15Minutes": "15 ਮਿੰਟ",
+  "settingsAllowBiometrics": "ਬਾਇਓਮੈਟ੍ਰਿਕਸ ਨੂੰ ਵੀ ਆਗਿਆ ਦਿਓ",
+  "settingsHideSnapshot": "ਐਪ ਸਵਿੱਚਰ ਵਿੱਚ ਬਕਾਇਆ ਲੁਕਾਓ",
+  "settingsHideSnapshotSubtitle": "ਜਦੋਂ ਤੁਸੀਂ ਕਿਸੇ ਹੋਰ ਐਪ ਵਿੱਚ ਸਵਿੱਚ ਕਰਦੇ ਹੋ ਤਾਂ ਇਹ ਸਕਰੀਨ ਲੁਕਾ ਦਿੰਦਾ ਹੈ, ਤਾਂ ਜੋ ਇਹ ਐਪ ਸਵਿੱਚਰ ਵਿੱਚ ਇੱਕ ਨਜ਼ਰ ਵਿੱਚ ਦਿਖਾਈ ਨਾ ਦੇਵੇ।",
+  "settingsHideSnapshotUnavailable": "ਐਪ ਸਵਿੱਚਰ ਵਿੱਚ ਬਕਾਇਆ ਲੁਕਾਉਣਾ ਇਸ ਪਲੇਟਫਾਰਮ ਉੱਤੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।",
+  "settingsPayees": "ਭੁਗਤਾਨ ਪ੍ਰਾਪਤਕਰਤਾ",
+  "settingsManagePayees": "ਭੁਗਤਾਨ ਪ੍ਰਾਪਤਕਰਤਾ ਪ੍ਰਬੰਧਿਤ ਕਰੋ",
+  "settingsPayeesBlurb": "ਯਾਦ ਰੱਖੇ ਗਏ ਪ੍ਰਾਪਤਕਰਤਾ ਨਾਮ ਅਤੇ ਉਹਨਾਂ ਦੀ ਡਿਫਾਲਟ ਸ਼੍ਰੇਣੀ ਅਤੇ ਖਾਤਾ, ਲੈਣ-ਦੇਣ ਰਿਕਾਰਡ ਕਰਦੇ ਸਮੇਂ ਆਟੋਕੰਪਲੀਟ ਦੁਆਰਾ ਸੁਝਾਏ ਜਾਂਦੇ ਹਨ।",
+  "settingsRecurring": "ਦੁਹਰਾਉਣ ਵਾਲੇ ਟੈਂਪਲੇਟ",
+  "settingsManageRecurring": "ਦੁਹਰਾਉਣ ਵਾਲੇ ਟੈਂਪਲੇਟ ਪ੍ਰਬੰਧਿਤ ਕਰੋ",
+  "settingsRecurringBlurb": "ਬਿੱਲ ਜਾਂ ਆਮਦਨ ਜੋ ਹਰ ਮਹੀਨੇ ਦੁਹਰਾਈ ਜਾਂਦੀ ਹੈ, ਜਿਵੇਂ ਕਿਰਾਇਆ ਜਾਂ ਤਨਖਾਹ। ਬਕਾਇਆ ਟੈਂਪਲੇਟ ਘਰ ਪੰਨੇ ਉੱਤੇ ਦਿਖਾਈ ਦਿੰਦਾ ਹੈ ਤਾਂ ਜੋ ਤੁਸੀਂ ਇੱਕ ਟੈਪ ਨਾਲ ਰਿਕਾਰਡ ਕਰ ਸਕੋ - ਇਹ ਕਦੇ ਵੀ ਆਪਣੇ-ਆਪ ਪੋਸਟ ਨਹੀਂ ਹੁੰਦਾ।",
+  "settingsAbout": "ਬਾਰੇ",
+  "providerFrankfurter": "Frankfurter (ECB ਦਰਾਂ)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (ਰੋਜ਼ਾਨਾ ਕੀਮਤਾਂ)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "ਨਕਦ ਅਤੇ ਨਕਦ ਸਮਾਨ",
+  "systemGroupPensionRetirement": "ਪੈਨਸ਼ਨ ਅਤੇ ਰਿਟਾਇਰਮੈਂਟ",
+  "systemGroupCreditShortTerm": "ਕ੍ਰੈਡਿਟ ਅਤੇ ਥੋੜ੍ਹੇ ਸਮੇਂ ਦਾ ਕਰਜ਼ਾ",
+  "systemGroupLoansMortgages": "ਕਰਜ਼ੇ ਅਤੇ ਮੌਰਗੇਜ",
+  "systemGroupInvestments": "ਨਿਵੇਸ਼",
+  "systemAccountCashBank": "ਨਕਦ ਅਤੇ ਬੈਂਕ",
+  "systemCategorySalary": "ਤਨਖਾਹ",
+  "systemCategoryOtherIncome": "ਹੋਰ ਆਮਦਨ",
+  "systemCategoryGroceries": "ਕਰਿਆਨਾ",
+  "systemCategoryRentMortgage": "ਕਿਰਾਇਆ/ਮੌਰਗੇਜ",
+  "systemCategoryUtilities": "ਯੂਟਿਲਿਟੀਜ਼",
+  "systemCategoryTransport": "ਆਵਾਜਾਈ",
+  "systemCategoryFoodOut": "ਬਾਹਰ ਖਾਣਾ",
+  "systemCategoryPhone": "ਫ਼ੋਨ",
+  "systemCategoryHealth": "ਸਿਹਤ",
+  "systemCategoryOtherExpense": "ਹੋਰ ਖਰਚ",
+  "homeThisMonth": "ਇਸ ਮਹੀਨੇ",
+  "homeMoneyInTransit": "ਪੈਸਾ ਟ੍ਰਾਂਜ਼ਿਟ ਵਿੱਚ",
+  "homeWhatYouHaveMinusWhatYouOwe": "ਤੁਹਾਡੇ ਕੋਲ ਜੋ ਹੈ ਘਟਾਓ ਤੁਸੀਂ ਜੋ ਦੇਣਦਾਰ ਹੋ",
+  "homeWhatYouHave": "ਤੁਹਾਡੇ ਕੋਲ ਹੈ {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "ਤੁਹਾਡੇ ਕੋਲ ਹੈ {haveAmount} {currency}  •  ਤੁਸੀਂ ਦੇਣਦਾਰ ਹੋ {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "ਤੁਸੀਂ {name} ਤੋਂ {amount} {currency} ਭੇਜੇ",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "ਤੁਸੀਂ {name} ਨੂੰ {amount} {currency} ਭੇਜੇ",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "ਲੁਕਿਆ ਹੋਇਆ",
+  "allAccounts": "ਸਾਰੇ ਖਾਤੇ",
+  "savedToPath": "{path} ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਨਹੀਂ ਹੋ ਸਕੀ। ਤੁਸੀਂ ਇਹ ਕਦਮ ਛੱਡ ਸਕਦੇ ਹੋ।",
+  "enterPassphraseToProtect": "ਫਾਈਲ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ ਇੱਕ ਪਾਸਫਰੇਜ਼ ਦਰਜ ਕਰੋ।",
+  "homeTapWhenArrived": "ਜਦੋਂ ਪਤਾ ਲੱਗੇ ਕਿ ਕੀ ਪਹੁੰਚਿਆ ਤਾਂ ਟੈਪ ਕਰੋ",
+  "homeReturnedTo": "{name} ਨੂੰ ਵਾਪਸ ਕੀਤਾ ਗਿਆ",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "ਅੱਜ ਬਕਾਇਆ",
+  "homeDueLine": "{category} · {account} · ਰਿਕਾਰਡ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "ਸੀਮਾ ਤੋਂ ਵੱਧ",
+  "homeSpentOfLimit": "{limit} ਵਿੱਚੋਂ {spent}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "ਬਾਕੀ: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "ਕੋਈ ਖਾਤਾ ਨਹੀਂ",
+  "homeCashRegister": "ਕੈਸ਼ ਰਜਿਸਟਰ",
+  "homeMarketEstimate": "ਮਾਰਕੀਟ ਅਨੁਮਾਨ",
+  "registerTitle": "ਰਜਿਸਟਰ",
+  "registerSearchHint": "ਵੇਰਵਾ, ਸ਼੍ਰੇਣੀ, ਜਾਂ ਰਕਮ",
+  "registerNoTransactions": "ਅਜੇ ਤੱਕ ਕੋਈ ਲੈਣ-ਦੇਣ ਨਹੀਂ",
+  "registerNoEntries": "ਅਜੇ ਤੱਕ ਕੋਈ ਐਂਟਰੀ ਰਿਕਾਰਡ ਨਹੀਂ ਹੋਈ।",
+  "registerSpentOnly": "ਸਿਰਫ਼ ਖਰਚ",
+  "registerReceivedOnly": "ਸਿਰਫ਼ ਪ੍ਰਾਪਤ",
+  "registerAll": "ਸਾਰੇ",
+  "registerUnverified": "ਗੈਰ-ਪ੍ਰਮਾਣਿਤ - ਕੁੱਲ ਵਿੱਚੋਂ ਬਾਹਰ",
+  "registerSuperseded": "ਮਾਈਗ੍ਰੇਸ਼ਨ ਦੁਆਰਾ ਬਦਲਿਆ ਗਿਆ - ਕੁੱਲ ਵਿੱਚੋਂ ਬਾਹਰ",
+  "summaryTitle": "ਸਾਰ",
+  "summaryTotalIncome": "ਕੁੱਲ ਆਮਦਨ",
+  "summaryTotalExpense": "ਕੁੱਲ ਖਰਚ",
+  "summaryDateRange": "{start} ਤੋਂ {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "ਖਾਤੇ",
+  "categoriesTitle": "ਸ਼੍ਰੇਣੀਆਂ",
+  "accountName": "ਖਾਤਾ ਨਾਮ",
+  "createAccount": "ਖਾਤਾ ਬਣਾਓ",
+  "createGroup": "ਗਰੁੱਪ ਬਣਾਓ",
+  "editGroup": "ਗਰੁੱਪ ਸੰਪਾਦਿਤ ਕਰੋ",
+  "renameAccount": "ਖਾਤੇ ਦਾ ਨਾਮ ਬਦਲੋ",
+  "renameCategory": "ਸ਼੍ਰੇਣੀ ਦਾ ਨਾਮ ਬਦਲੋ",
+  "addCategory": "ਸ਼੍ਰੇਣੀ ਜੋੜੋ",
+  "groupLabel": "ਗਰੁੱਪ",
+  "kindLabel": "ਕਿਸਮ",
+  "asset": "ਸੰਪਤੀ",
+  "liability": "ਦੇਣਦਾਰੀ",
+  "income": "ਆਮਦਨ",
+  "expense": "ਖਰਚ",
+  "thisAccountHoldsInvestments": "ਇਸ ਖਾਤੇ ਵਿੱਚ ਨਿਵੇਸ਼ ਹਨ",
+  "thisAccountHoldsInvestmentsSubtitle": "ਨਕਦ ਅਤੇ ਵਸਤੂ ਸੂਚੀ ਜੋ ਤੁਸੀਂ ਖਰੀਦੋ, ਵੇਚੋ, ਅਤੇ ਲਾਭਅੰਸ਼ ਨਾਲ ਰਿਕਾਰਡ ਕਰਦੇ ਹੋ।",
+  "thisIsACreditCard": "ਇਹ ਇੱਕ ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਹੈ",
+  "openingBalanceOptional": "ਸ਼ੁਰੂਆਤੀ ਬਕਾਇਆ (ਵਿਕਲਪਿਕ)",
+  "currencyIso": "ਮੁਦਰਾ (ISO 4217)",
+  "currencyIsoExample": "ਮੁਦਰਾ (ISO 4217, ਜਿਵੇਂ USD)",
+  "hideAccountTitle": "ਨਵੀਆਂ ਐਂਟਰੀਆਂ ਤੋਂ ਖਾਤਾ ਲੁਕਾਉਣਾ ਹੈ?",
+  "hideCategoryTitle": "ਨਵੀਆਂ ਐਂਟਰੀਆਂ ਤੋਂ ਸ਼੍ਰੇਣੀ ਲੁਕਾਉਣੀ ਹੈ?",
+  "hideGroupTitle": "ਨਵੀਆਂ ਐਂਟਰੀਆਂ ਤੋਂ ਗਰੁੱਪ ਲੁਕਾਉਣਾ ਹੈ?",
+  "reassignGroup": "ਗਰੁੱਪ ਮੁੜ-ਨਿਯੁਕਤ ਕਰੋ",
+  "transferRemainingBalance": "ਬਾਕੀ ਬਕਾਇਆ ਟ੍ਰਾਂਸਫਰ ਕਰੋ",
+  "monthlyLimit": "ਮਾਸਿਕ ਸੀਮਾ",
+  "monthlyLimitHint": "ਸੀਮਾ (ਸਾਫ਼ ਕਰਨ ਲਈ ਖਾਲੀ ਛੱਡੋ)",
+  "monthlyLimitBlurb": "ਇਸ ਖਰਚ ਸ਼੍ਰੇਣੀ ਲਈ ਇੱਕ ਵਿਕਲਪਿਕ ਮਹੀਨੇ-ਤੱਕ-ਹੁਣ ਖਰਚ ਗਾਈਡ।",
+  "manageCategoryRules": "ਸ਼੍ਰੇਣੀ ਨਿਯਮ ਪ੍ਰਬੰਧਿਤ ਕਰੋ",
+  "amount": "ਰਕਮ",
+  "category": "ਸ਼੍ਰੇਣੀ",
+  "account": "ਖਾਤਾ",
+  "fromAccount": "ਸਰੋਤ ਖਾਤਾ",
+  "toAccount": "ਟਿਕਾਣਾ ਖਾਤਾ",
+  "descriptionOptional": "ਵੇਰਵਾ (ਵਿਕਲਪਿਕ)",
+  "alsoRememberPayee": "ਪ੍ਰਾਪਤਕਰਤਾ ਵਜੋਂ ਵੀ ਯਾਦ ਰੱਖੋ",
+  "splitIntoCategories": "ਕਈ ਸ਼੍ਰੇਣੀਆਂ ਵਿੱਚ ਵੰਡੋ",
+  "categoryN": "ਸ਼੍ਰੇਣੀ {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "ਟਿਕਾਣਾ ਰਕਮ",
+  "destinationAmountOptional": "ਟਿਕਾਣਾ ਰਕਮ (ਵਿਕਲਪਿਕ)",
+  "accountCurrencyAmountOptional": "ਖਾਤਾ-ਮੁਦਰਾ ਰਕਮ (ਵਿਕਲਪਿਕ)",
+  "transactionCurrencyOptional": "ਲੈਣ-ਦੇਣ ਮੁਦਰਾ (ਵਿਕਲਪਿਕ)",
+  "feeOptional": "ਫੀਸ (ਵਿਕਲਪਿਕ)",
+  "feeAmount": "ਫੀਸ ਰਕਮ",
+  "feeCategory": "ਫੀਸ ਸ਼੍ਰੇਣੀ",
+  "feeDescriptionOptional": "ਫੀਸ ਵੇਰਵਾ (ਵਿਕਲਪਿਕ)",
+  "feeDeducted": "ਫੀਸ ਉਪਰੋਕਤ ਰਕਮ ਵਿੱਚੋਂ ਕੱਟੀ ਜਾਂਦੀ ਹੈ",
+  "needTwoAccountsToTransfer": "ਟ੍ਰਾਂਸਫਰ ਕਰਨ ਲਈ ਘੱਟੋ-ਘੱਟ ਦੋ ਸਰਗਰਮ ਖਾਤੇ ਬਣਾਓ।",
+  "whatArrivedTitle": "ਕੀ ਪਹੁੰਚਿਆ?",
+  "whatArrivedBlurb": "ਸਾਨੂੰ ਦੱਸੋ ਕਿ ਅਸਲ ਵਿੱਚ ਕੀ ਪਹੁੰਚਿਆ।",
+  "amountThatArrived": "ਪਹੁੰਚੀ ਰਕਮ",
+  "feeLossCategory": "ਫੀਸ / ਨੁਕਸਾਨ ਸ਼੍ਰੇਣੀ",
+  "alreadySettled": "ਪਹਿਲਾਂ ਹੀ ਨਿਪਟਾਇਆ ਗਿਆ।",
+  "holdingsTitle": "ਹੋਲਡਿੰਗਸ",
+  "holdingsCash": "ਨਕਦ",
+  "holdingsInventory": "ਵਸਤੂ ਸੂਚੀ",
+  "holdingsBook": "ਬਹੀ (ਨਕਦ + ਲਾਗਤ) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "ਮਾਰਕੀਟ ਅਨੁਮਾਨ {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "ਅਜੇ ਤੱਕ ਕੋਈ ਹੋਲਡਿੰਗ ਨਹੀਂ। ਇੰਸਟਰੂਮੈਂਟ ਜੋੜਨ ਲਈ ਇੱਕ ਖਰੀਦ ਰਿਕਾਰਡ ਕਰੋ।",
+  "holdingsQuotesBlurb": "ਕੀਮਤਾਂ ਅਨੁਮਾਨ ਹਨ, ਬ੍ਰੋਕਰ ਕੀਮਤ ਨਹੀਂ। ਇਹ ਐਪ ਕੋਈ ਆਰਡਰ ਨਹੀਂ ਦਿੰਦੀ।",
+  "holdingsTapNameToResearch": "ਖੋਜ ਕਰਨ ਲਈ ਨਾਮ ਉੱਤੇ ਟੈਪ ਕਰੋ। ਕੀਮਤਾਂ ਅਨੁਮਾਨ ਹਨ, ਸਲਾਹ ਨਹੀਂ।",
+  "instrument": "ਇੰਸਟਰੂਮੈਂਟ",
+  "newInstrument": "ਨਵਾਂ ਇੰਸਟਰੂਮੈਂਟ",
+  "renameInstrument": "ਇੰਸਟਰੂਮੈਂਟ ਦਾ ਨਾਮ ਬਦਲੋ",
+  "instrumentActions": "ਇੰਸਟਰੂਮੈਂਟ ਕਾਰਵਾਈਆਂ",
+  "hideInstrumentTitle": "{name} ਲੁਕਾਉਣਾ ਹੈ?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "ਟਿਕਰ (ਵਿਕਲਪਿਕ)",
+  "isinOptional": "ISIN (ਵਿਕਲਪਿਕ)",
+  "quantity": "ਮਾਤਰਾ",
+  "unitPrice": "ਯੂਨਿਟ ਕੀਮਤ",
+  "brokerageOptional": "ਬ੍ਰੋਕਰੇਜ (ਵਿਕਲਪਿਕ)",
+  "brokerageExpenseCategory": "ਬ੍ਰੋਕਰੇਜ ਖਰਚ ਸ਼੍ਰੇਣੀ",
+  "incomeCategory": "ਆਮਦਨ ਸ਼੍ਰੇਣੀ",
+  "gainIncomeCategory": "ਲਾਭ ਆਮਦਨ ਸ਼੍ਰੇਣੀ",
+  "lossExpenseCategory": "ਨੁਕਸਾਨ ਖਰਚ ਸ਼੍ਰੇਣੀ",
+  "nonCash": "ਗੈਰ-ਨਕਦ",
+  "cash": "ਨਕਦ",
+  "locked": "ਲੌਕ ਕੀਤਾ",
+  "lockUntilHint": "ਇਹ ਕਿਸੇ ਪਾਬੰਦੀ ਬਾਰੇ ਤੁਹਾਡਾ ਆਪਣਾ ਨੋਟ ਹੈ, ਬ੍ਰੋਕਰ ਨਿਯਮ ਨਹੀਂ।",
+  "instrumentKindStock": "ਸਟਾਕ",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "ਮਿਊਚੁਅਲ ਫੰਡ",
+  "instrumentKindBond": "ਬਾਂਡ",
+  "instrumentKindOther": "ਹੋਰ",
+  "quoteUseLive": "ਲਾਈਵ ਕੀਮਤ",
+  "quoteUseCached": "ਕੈਸ਼ ਕੀਤੀ ਕੀਮਤ",
+  "quoteUseStale": "ਪੁਰਾਣੀ ਕੀਮਤ",
+  "quoteUseMissing": "ਲਾਗਤ ਵਰਤੀ ਜਾ ਰਹੀ (ਕੋਈ ਕੀਮਤ ਨਹੀਂ)",
+  "quoteUseDisabled": "ਕੀਮਤਾਂ ਬੰਦ — ਲਾਗਤ/ਕੈਸ਼ ਵਰਤੀ ਜਾ ਰਹੀ",
+  "quoteUseCurrencyMismatch": "ਲਾਗਤ ਵਰਤੀ ਜਾ ਰਹੀ (ਕੀਮਤ ਮੁਦਰਾ ਵੱਖਰੀ ਹੈ)",
+  "unrealizedLabel": "ਅਣਵਸੂਲੀ {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} ਯੂਨਿਟ · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼",
+  "recoveryPhraseConfirmTitle": "ਆਪਣੇ ਵਾਕੰਸ਼ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+  "recoveryPhraseBlurb": "ਇਹ 24 ਸ਼ਬਦ ਹੀ ਇਕਲੌਤਾ ਤਰੀਕਾ ਹਨ ਜਿਸ ਨਾਲ ਤੁਸੀਂ ਆਪਣੇ ਲੈਣ-ਦੇਣ ਦਾ ਇਤਿਹਾਸ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ ਹੋ ਜੇਕਰ ਇਹ ਡਿਵਾਈਸ ਗੁਆਚ ਜਾਂਦੀ, ਰੀਸੈੱਟ ਹੁੰਦੀ, ਜਾਂ ਬਦਲੀ ਜਾਂਦੀ ਹੈ। ਸਮਾਰਾ ਖਾਤਾ ਦਾ ਕੋਈ ਸਰਵਰ ਨਹੀਂ ਹੈ ਅਤੇ ਇਹ ਤੁਹਾਡੇ ਲਈ ਉਹਨਾਂ ਨੂੰ ਮੁੜ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕਰ ਸਕਦਾ।\n\nਜੇਕਰ ਤੁਸੀਂ ਇਹ ਡਿਵਾਈਸ ਅਤੇ ਇਹ ਵਾਕੰਸ਼ ਇਕੱਠੇ ਗੁਆ ਦਿੰਦੇ ਹੋ, ਤਾਂ ਤੁਹਾਡੇ ਦੁਆਰਾ ਰਿਕਾਰਡ ਕੀਤਾ ਹਰ ਲੈਣ-ਦੇਣ ਸਥਾਈ ਤੌਰ ਉੱਤੇ ਅਪ੍ਰਮਾਣਿਤ ਹੋ ਜਾਂਦਾ ਹੈ।",
+  "recoveryPhraseWriteDown": "ਇਹ ਸ਼ਬਦ ਕ੍ਰਮ ਵਿੱਚ ਲਿਖੋ ਅਤੇ ਇਹਨਾਂ ਨੂੰ ਇਸ ਡਿਵਾਈਸ ਤੋਂ ਵੱਖਰੀ, ਸੁਰੱਖਿਅਤ ਥਾਂ ਉੱਤੇ ਰੱਖੋ।",
+  "iveSavedRecoveryPhrase": "ਮੈਂ ਆਪਣਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਸੰਭਾਲ ਲਿਆ ਹੈ",
+  "confirmPhraseBlurb": "ਤੁਹਾਡੇ ਵੱਲੋਂ ਹੁਣੇ ਸੰਭਾਲੇ ਵਾਕੰਸ਼ ਵਿੱਚੋਂ ਮੰਗੇ ਗਏ ਸ਼ਬਦ ਦਰਜ ਕਰੋ।",
+  "wordNumber": "ਸ਼ਬਦ #{n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਕਰੋ",
+  "keystoreExportBlurb": "ਆਪਣੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਦੇ ਨਾਲ, ਤੁਸੀਂ ਆਪਣੀ ਪਸੰਦ ਦੇ ਪਾਸਫਰੇਜ਼ ਨਾਲ ਸੁਰੱਖਿਅਤ ਇੱਕ ਇਨਕ੍ਰਿਪਟਡ ਕੀਸਟੋਰ ਫਾਈਲ ਵੀ ਸੰਭਾਲ ਸਕਦੇ ਹੋ। ਇਹ ਵਿਕਲਪਿਕ ਹੈ - ਇਕੱਲਾ ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਹੀ ਹਮੇਸ਼ਾ ਤੁਹਾਡੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਬਹਾਲ ਕਰਨ ਲਈ ਕਾਫ਼ੀ ਹੈ।",
+  "keystorePassphrase": "ਪਾਸਫਰੇਜ਼",
+  "exportKeystoreFile": "ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਕਰੋ",
+  "chooseCurrencyTitle": "ਆਪਣੀ ਮੁਦਰਾ ਚੁਣੋ",
+  "chooseCurrencyBlurb": "ਹਰ ਖਾਤਾ ਗਰੁੱਪ (ਨਕਦ ਅਤੇ ਨਕਦ ਸਮਾਨ, ਪੈਨਸ਼ਨ ਅਤੇ ਰਿਟਾਇਰਮੈਂਟ, ਆਦਿ) ਹੁਣ ਲਈ ਇਹ ਇੱਕੋ ਮੁਦਰਾ ਵਰਤਦਾ ਹੈ। ਤੁਸੀਂ ਬਾਅਦ ਵਿੱਚ ਇਸ ਲਈ ਇੱਕ ਨਵਾਂ ਗਰੁੱਪ ਬਣਾ ਕੇ ਵੱਖਰੀ ਮੁਦਰਾ ਵਿੱਚ ਖਾਤੇ ਜੋੜ ਸਕਦੇ ਹੋ।",
+  "currencyBackfillTitle": "ਮੌਜੂਦਾ ਗਰੁੱਪਾਂ ਲਈ ਇੱਕ ਮੁਦਰਾ ਚੁਣੋ",
+  "currencyBackfillBlurb": "ਇਹ ਐਪ ਹੁਣ ਕਈ ਮੁਦਰਾਵਾਂ ਦਾ ਸਮਰਥਨ ਕਰਦੀ ਹੈ। ਤੁਹਾਡੇ ਮੌਜੂਦਾ ਖਾਤਿਆਂ ਅਤੇ ਖਾਤਾ ਗਰੁੱਪਾਂ ਨੂੰ ਇੱਕ ਮੁਦਰਾ ਦੀ ਲੋੜ ਹੈ - ਕਿਉਂਕਿ ਇਹ ਸਾਰੇ ਇਸ ਸੁਵਿਧਾ ਦੇ ਮੌਜੂਦ ਹੋਣ ਤੋਂ ਪਹਿਲਾਂ ਸੈੱਟ ਕੀਤੇ ਗਏ ਸਨ, ਇੱਕ ਚੋਣ ਉਹਨਾਂ ਸਾਰਿਆਂ ਉੱਤੇ ਲਾਗੂ ਹੁੰਦੀ ਹੈ।",
+  "firstAccountTitle": "ਆਪਣੇ ਖਾਤੇ ਦਾ ਨਾਮ ਦਿਓ",
+  "firstAccountBlurb": "ਇਹ ਖਾਤਾ ਪਹਿਲਾਂ ਹੀ ਤੁਹਾਡੇ ਲਈ ਸੈੱਟ ਕੀਤਾ ਗਿਆ ਹੈ - ਇਸਨੂੰ ਇੱਕ ਜਾਣਿਆ-ਪਛਾਣਿਆ ਨਾਮ ਦਿਓ, ਜਿਵੇਂ ਤੁਹਾਡਾ ਬੈਂਕ। ਤੁਸੀਂ ਅੱਗੇ ਇੱਕ ਖਰਚ ਜਾਂ ਪ੍ਰਾਪਤੀ ਰਿਕਾਰਡ ਕਰੋਗੇ, ਫਿਰ ਆਪਣੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਨਾਲ ਡਿਵਾਈਸ ਦੀ ਸੁਰੱਖਿਆ ਕਰੋਗੇ।",
+  "whatsMainAccountCalled": "ਤੁਹਾਡੇ ਮੁੱਖ ਖਾਤੇ ਦਾ ਨਾਮ ਕੀ ਹੈ?",
+  "restoreTitle": "ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਬਹਾਲ ਕਰੋ",
+  "restoreBlurb": "ਇਸ ਡਿਵਾਈਸ ਵਿੱਚ ਪਹਿਲਾਂ ਤੋਂ ਖਾਤੇ ਹਨ, ਪਰ ਕੋਈ ਮੇਲ ਖਾਂਦੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਨਹੀਂ। ਇਸਨੂੰ ਆਪਣੇ ਸੰਭਾਲੇ ਹੋਏ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਤੋਂ ਬਹਾਲ ਕਰੋ - ਤੁਹਾਡਾ ਡਾਟਾ ਆਮ ਤੌਰ ਉੱਤੇ ਪ੍ਰਮਾਣਿਤ ਹੋਵੇਗਾ, ਅਤੇ ਕੁਝ ਵੀ ਮੁੜ-ਸਾਈਨ ਜਾਂ ਬਦਲਿਆ ਨਹੀਂ ਜਾਵੇਗਾ।",
+  "recoveryPhrase24": "ਰਿਕਵਰੀ ਵਾਕੰਸ਼ (ਸਾਰੇ 24 ਸ਼ਬਦ)",
+  "keystoreFile": "ਕੀਸਟੋਰ ਫਾਈਲ",
+  "keystoreFileContents": "ਕੀਸਟੋਰ ਫਾਈਲ ਸਮੱਗਰੀ",
+  "optionalBackupFile": "ਵਿਕਲਪਿਕ ਬੈਕਅੱਪ ਫਾਈਲ",
+  "iDontHavePhrase": "ਮੇਰੇ ਕੋਲ ਮੇਰਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਨਹੀਂ ਹੈ",
+  "migrationTitle": "ਇੱਕ ਨਵੀਂ ਕੁੰਜੀ ਵਿੱਚ ਮਾਈਗ੍ਰੇਟ ਕਰੋ",
+  "migrationBlurb": "ਆਪਣੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਤੋਂ ਬਿਨਾਂ, ਇਸ ਡਿਵਾਈਸ ਦੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਮੁੜ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ। ਤੁਸੀਂ ਇੱਕ ਨਵੀਂ ਕੁੰਜੀ ਸ਼ੁਰੂ ਕਰ ਸਕਦੇ ਹੋ। ਪੁਰਾਣੀਆਂ ਐਂਟਰੀਆਂ ਦਿਖਾਈ ਦਿੰਦੀਆਂ ਰਹਿਣਗੀਆਂ ਪਰ ਬਦਲੀਆਂ ਗਈਆਂ ਮੰਨੀਆਂ ਜਾਣਗੀਆਂ।",
+  "iConfirmBooksValid": "ਮੈਂ ਪੁਸ਼ਟੀ ਕਰਦਾ/ਕਰਦੀ ਹਾਂ ਕਿ ਮੌਜੂਦਾ ਕਿਤਾਬਾਂ ਵੈਧ ਹਨ",
+  "whyWeDontEdit": "ਅਸੀਂ ਪੁਰਾਣੀਆਂ ਐਂਟਰੀਆਂ ਕਿਉਂ ਸੰਪਾਦਿਤ ਨਹੀਂ ਕਰਦੇ",
+  "whyWeDontEditBody": "ਜਦੋਂ ਤੁਸੀਂ ਕੋਈ ਗਲਤੀ ਠੀਕ ਕਰਦੇ ਹੋ, ਅਸੀਂ ਪੁਰਾਣੀ ਲਾਈਨ ਨੂੰ ਰੱਖਦੇ ਹਾਂ ਅਤੇ ਤੁਹਾਡੇ ਵੱਲੋਂ ਪਹਿਲਾਂ ਹੀ ਦਰਜ ਕੀਤੇ ਗਏ ਨੂੰ ਬਦਲਣ ਦੀ ਬਜਾਏ ਇਸਦੇ ਨਾਲ ਇੱਕ ਸੁਧਾਰ ਜੋੜਦੇ ਹਾਂ। ਇਸ ਤਰ੍ਹਾਂ ਤੁਹਾਡਾ ਇਤਿਹਾਸ ਹਮੇਸ਼ਾ ਬਿਲਕੁਲ ਦਿਖਾਉਂਦਾ ਹੈ ਕਿ ਕੀ ਹੋਇਆ ਅਤੇ ਤੁਸੀਂ ਕਦੋਂ ਇਸਨੂੰ ਠੀਕ ਕੀਤਾ — ਤੁਹਾਡੀ ਪਿੱਠ ਪਿੱਛੇ ਚੁੱਪਚਾਪ ਕੁਝ ਨਹੀਂ ਬਦਲਦਾ।",
+  "lockTitle": "ਅਨਲੌਕ",
+  "lockScreenTitle": "ਲੌਕ",
+  "enterPinToContinue": "ਜਾਰੀ ਰੱਖਣ ਲਈ ਆਪਣਾ ਪਿੰਨ ਦਰਜ ਕਰੋ",
+  "pinLabel": "ਪਿੰਨ",
+  "setPinTitle": "ਇੱਕ ਪਿੰਨ ਸੈੱਟ ਕਰੋ",
+  "currentPin": "ਮੌਜੂਦਾ ਪਿੰਨ",
+  "newPin": "ਨਵਾਂ ਪਿੰਨ",
+  "confirmPin": "ਪਿੰਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+  "confirmNewPin": "ਨਵੇਂ ਪਿੰਨ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+  "firstWeekTitle": "ਆਪਣੇ ਖਾਤੇ ਸੈੱਟ ਅੱਪ ਕਰੋ",
+  "addCashAccount": "ਇੱਕ ਨਕਦ ਖਾਤਾ ਜੋੜੋ",
+  "addCreditCard": "ਇੱਕ ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਜੋੜੋ",
+  "cashAccountName": "ਨਕਦ ਖਾਤਾ ਨਾਮ",
+  "cardName": "ਕਾਰਡ ਨਾਮ",
+  "paidFromBank": "ਬੈਂਕ ਤੋਂ ਭੁਗਤਾਨ ਕੀਤਾ",
+  "paidFromCard": "ਕਾਰਡ ਤੋਂ ਭੁਗਤਾਨ ਕੀਤਾ",
+  "choosePassphraseTitle": "ਇਸ ਬੈਕਅੱਪ ਦੀ ਸੁਰੱਖਿਆ ਲਈ ਇੱਕ ਪਾਸਫਰੇਜ਼ ਚੁਣੋ। ਜੇਕਰ ਤੁਸੀਂ ਇਸਨੂੰ ਭੁੱਲ ਜਾਂਦੇ ਹੋ ਤਾਂ ਕੋਈ ਰਿਕਵਰੀ ਨਹੀਂ ਹੈ।",
+  "replaceBooksTitle": "ਆਪਣੀਆਂ ਸਥਾਨਕ ਕਿਤਾਬਾਂ ਬਦਲਣੀਆਂ ਹਨ?",
+  "replaceBooksBody": "ਇਹ ਇਸ ਐਪ ਵਿੱਚ ਮੌਜੂਦ ਹਰ ਚੀਜ਼ ਨੂੰ ਬੈਕਅੱਪ ਨਾਲ ਬਦਲ ਦਿੰਦਾ ਹੈ। ਬਾਅਦ ਵਿੱਚ ਐਪ ਬੰਦ ਕਰਕੇ ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।",
+  "chooseBackupFileFirst": "ਪਹਿਲਾਂ ਇੱਕ ਬੈਕਅੱਪ ਫਾਈਲ ਚੁਣੋ।",
+  "backupRestored": "ਬੈਕਅੱਪ ਬਹਾਲ ਹੋ ਗਿਆ",
+  "backupRestoredBody": "ਤੁਹਾਡੀਆਂ ਕਿਤਾਬਾਂ ਬਹਾਲ ਹੋ ਗਈਆਂ ਹਨ। ਜਾਰੀ ਰੱਖਣ ਲਈ ਐਪ ਬੰਦ ਕਰਕੇ ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।",
+  "fixThisEntry": "ਇਸ ਐਂਟਰੀ ਨੂੰ ਠੀਕ ਕਰੋ",
+  "fixBlurb": "ਪੁਰਾਣੀ ਲਾਈਨ ਬਿਲਕੁਲ ਉਵੇਂ ਹੀ ਰਹਿੰਦੀ ਹੈ ਜਿਵੇਂ ਸੀ। ਪੁਸ਼ਟੀ ਕਰਨ ਨਾਲ ਇੱਕ ਉਲਟਾਉਣ ਵਾਲੀ ਲਾਈਨ ਅਤੇ ਸੁਧਾਰੀ ਹੋਈ ਲਾਈਨ ਜੁੜ ਜਾਂਦੀ ਹੈ।",
+  "importStatementTitle": "ਸਟੇਟਮੈਂਟ ਇੰਪੋਰਟ ਕਰੋ",
+  "importOfx": "OFX ਇੰਪੋਰਟ ਕਰੋ",
+  "importOfxQfxFile": "OFX / QFX ਫਾਈਲ ਇੰਪੋਰਟ ਕਰੋ",
+  "importCsvFile": "CSV ਫਾਈਲ ਇੰਪੋਰਟ ਕਰੋ",
+  "whatKindOfStatement": "ਤੁਹਾਡੇ ਕੋਲ ਕਿਸ ਕਿਸਮ ਦੀ ਸਟੇਟਮੈਂਟ ਫਾਈਲ ਹੈ?",
+  "chooseAccountForFile": "ਚੁਣੋ ਕਿ ਇਹ ਫਾਈਲ ਕਿਸ ਖਾਤੇ ਦੀ ਹੈ।",
+  "importIntoAccount": "ਖਾਤੇ ਵਿੱਚ ਇੰਪੋਰਟ ਕਰੋ",
+  "useSavedProfile": "ਇੱਕ ਸੰਭਾਲੀ ਪ੍ਰੋਫਾਈਲ ਵਰਤੋ",
+  "saveMappingProfile": "ਇਸ ਮੈਪਿੰਗ ਨੂੰ ਪ੍ਰੋਫਾਈਲ ਵਜੋਂ ਸੰਭਾਲੋ (ਵਿਕਲਪਿਕ)",
+  "renameProfile": "ਪ੍ਰੋਫਾਈਲ ਦਾ ਨਾਮ ਬਦਲੋ",
+  "deleteProfileTitle": "ਪ੍ਰੋਫਾਈਲ ਮਿਟਾਉਣੀ ਹੈ?",
+  "fileHasHeader": "ਫਾਈਲ ਵਿੱਚ ਇੱਕ ਹੈਡਰ ਰੋ ਹੈ",
+  "dateColumn": "ਮਿਤੀ ਕਾਲਮ",
+  "dateFormatHint": "ਮਿਤੀ ਫਾਰਮੈਟ (ਜਿਵੇਂ dd/MM/yyyy)",
+  "amountColumn": "ਰਕਮ ਕਾਲਮ",
+  "amountConvention": "ਰਕਮ ਸੰਮੇਲਨ",
+  "signedAmountColumn": "ਦਸਤਖਤੀ ਰਕਮ ਕਾਲਮ",
+  "separateDebitCredit": "ਵੱਖਰੇ ਡੈਬਿਟ / ਕ੍ਰੈਡਿਟ ਕਾਲਮ",
+  "debitColumn": "ਡੈਬਿਟ ਕਾਲਮ",
+  "creditColumn": "ਕ੍ਰੈਡਿਟ ਕਾਲਮ",
+  "decimalSeparator": "ਦਸ਼ਮਲਵ ਵਿਭਾਜਕ (. ਜਾਂ ,)",
+  "descriptionColumns": "ਵੇਰਵਾ ਕਾਲਮ(ਾਂ)",
+  "referenceIdColumn": "ਹਵਾਲਾ id ਕਾਲਮ (ਵਿਕਲਪਿਕ)",
+  "skippedRows": "ਛੱਡੀਆਂ ਗਈਆਂ ਰੋਆਂ",
+  "parsedTransactionCount": "{count} ਲੈਣ-ਦੇਣ ਪ੍ਰੋਸੈਸ ਹੋਏ",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} ਛੱਡੇ ਜਾਂ ਬਾਹਰ ਰੱਖੇ ਗਏ",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} ਪੋਸਟ ਹੋਏ, {failed} ਅਸਫਲ ਹੋਏ",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "ਸਾਰਿਆਂ ਲਈ ਸ਼੍ਰੇਣੀ",
+  "saveAsRule": "ਇੱਕ ਨਿਯਮ ਵਜੋਂ ਸੰਭਾਲਣਾ ਹੈ?",
+  "saveAsRuleBlurb": "ਭਵਿੱਖ ਦੀਆਂ ਇੰਪੋਰਟਾਂ ਜਿਨ੍ਹਾਂ ਦੇ ਵੇਰਵੇ ਵਿੱਚ ਇਹ ਕੀਵਰਡ ਹੋਵੇਗਾ, ਇਹ ਸ਼੍ਰੇਣੀ ਵਰਤਣਗੀਆਂ।",
+  "keyword": "ਕੀਵਰਡ",
+  "noSavedRules": "ਅਜੇ ਤੱਕ ਕੋਈ ਸੰਭਾਲਿਆ ਨਿਯਮ ਨਹੀਂ। ਇੱਕ ਨਿਯਮ ਸੰਭਾਲਣ ਲਈ ਰੋਆਂ ਦੇ ਸਮੂਹ ਨੂੰ ਇੱਕ ਸ਼੍ਰੇਣੀ ਨਿਯੁਕਤ ਕਰੋ।",
+  "deleteRuleTitle": "ਨਿਯਮ ਮਿਟਾਉਣਾ ਹੈ?",
+  "editRule": "ਨਿਯਮ ਸੰਪਾਦਿਤ ਕਰੋ",
+  "rowsGrouped": "{count} ਰੋਆਂ",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "ਇੰਪੋਰਟ ਕਰਨ ਲਈ ਇੱਕ {extensions} ਸਟੇਟਮੈਂਟ ਫਾਈਲ ਚੁਣੋ",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "ਭੁਗਤਾਨ ਪ੍ਰਾਪਤਕਰਤਾ",
+  "addPayee": "ਪ੍ਰਾਪਤਕਰਤਾ ਜੋੜੋ",
+  "renamePayee": "ਪ੍ਰਾਪਤਕਰਤਾ ਦਾ ਨਾਮ ਬਦਲੋ",
+  "deletePayeeTitle": "ਪ੍ਰਾਪਤਕਰਤਾ ਮਿਟਾਉਣਾ ਹੈ?",
+  "noPayeesYet": "ਅਜੇ ਤੱਕ ਕੋਈ ਪ੍ਰਾਪਤਕਰਤਾ ਨਹੀਂ",
+  "recurringTitle": "ਦੁਹਰਾਉਣ ਵਾਲੇ ਟੈਂਪਲੇਟ",
+  "noRecurringYet": "ਅਜੇ ਤੱਕ ਕੋਈ ਦੁਹਰਾਉਣ ਵਾਲਾ ਟੈਂਪਲੇਟ ਨਹੀਂ",
+  "deleteTemplateTitle": "ਦੁਹਰਾਉਣ ਵਾਲਾ ਟੈਂਪਲੇਟ ਮਿਟਾਉਣਾ ਹੈ?",
+  "dayOfMonth": "ਮਹੀਨੇ ਦਾ ਦਿਨ (1-31)",
+  "dayOfMonthNote": "ਘੱਟ ਦਿਨਾਂ ਵਾਲਾ ਮਹੀਨਾ ਆਪਣਾ ਆਖਰੀ ਦਿਨ ਵਰਤਦਾ ਹੈ।",
+  "dayOfMonthLine": "ਮਹੀਨੇ ਦਾ ਦਿਨ {day} - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "ਨਾਮ",
+  "none": "ਕੋਈ ਨਹੀਂ",
+  "currency": "ਮੁਦਰਾ",
+  "errorGeneric": "ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+  "errorSigningIdentityMismatch": "ਇਹ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਇਸ ਡਾਟਾਬੇਸ ਵਿੱਚ ਕਿਸੇ ਵੀ ਸਾਈਨਿੰਗ ਪਛਾਣ ਨਾਲ ਮੇਲ ਨਹੀਂ ਖਾਂਦੀ।",
+  "errorInvalidLedgerBackup": "ਇਹ ਫਾਈਲ ਇੱਕ ਵੈਧ ਸਮਾਰਾ ਬੈਕਅੱਪ ਨਹੀਂ ਹੈ।",
+  "errorInvalidLedgerBackupNoIdentity": "ਇਸ ਬੈਕਅੱਪ ਦੀ ਕੋਈ ਸਾਈਨਿੰਗ ਪਛਾਣ ਨਹੀਂ ਹੈ - ਇਹ ਇੱਕ ਵੈਧ ਸਮਾਰਾ ਬੈਕਅੱਪ ਨਹੀਂ ਹੈ।",
+  "errorInvalidLedgerBackupUnverified": "ਇਹ ਬੈਕਅੱਪ ਇੱਕ ਬਰਕਰਾਰ ਕਿਤਾਬਾਂ ਵਜੋਂ ਪ੍ਰਮਾਣਿਤ ਨਹੀਂ ਹੋਇਆ, ਇਸ ਲਈ ਇਹ ਬਹਾਲ ਨਹੀਂ ਕੀਤਾ ਗਿਆ।",
+  "errorInvalidLedgerBackupUnreadable": "ਇਹ ਫਾਈਲ ਸਮਾਰਾ ਬੈਕਅੱਪ ਵਜੋਂ ਨਹੀਂ ਖੋਲ੍ਹੀ ਜਾ ਸਕੀ: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "ਇਹ ਬੈਕਅੱਪ ਇਸ ਡਿਵਾਈਸ ਵਾਲੀ ਪਛਾਣ ਤੋਂ ਵੱਖਰੀ ਸਾਈਨਿੰਗ ਪਛਾਣ ਨਾਲ ਸਬੰਧਤ ਹੈ।",
+  "errorAccountNotFinancial": "ਉਹ ਇੱਕ ਵਿੱਤੀ ਖਾਤਾ ਨਹੀਂ ਹੈ।",
+  "errorAccountArchived": "ਉਹ ਖਾਤਾ ਲੁਕਿਆ ਹੋਇਆ ਹੈ।",
+  "errorAccountNotArchived": "ਉਹ ਖਾਤਾ ਲੁਕਿਆ ਹੋਇਆ ਨਹੀਂ ਹੈ।",
+  "errorAccountNoPositiveBalanceToCloseOut": "ਟ੍ਰਾਂਸਫਰ ਕਰਨ ਲਈ ਕੋਈ ਬਾਕੀ ਬਕਾਇਆ ਨਹੀਂ ਹੈ।",
+  "errorAccountHasNoGroup": "ਉਸ ਖਾਤੇ ਨੂੰ ਕੋਈ ਗਰੁੱਪ ਨਿਯੁਕਤ ਨਹੀਂ ਹੈ।",
+  "errorGroupHasNoCurrency": "ਉਸ ਗਰੁੱਪ ਲਈ ਅਜੇ ਤੱਕ ਕੋਈ ਮੁਦਰਾ ਸੈੱਟ ਨਹੀਂ ਹੈ।",
+  "errorGroupNotFound": "ਉਹ ਖਾਤਾ ਗਰੁੱਪ ਨਹੀਂ ਮਿਲਿਆ।",
+  "errorInvestmentAccountsMustBeAssets": "ਸਿਰਫ਼ ਸੰਪਤੀ ਖਾਤਿਆਂ ਨੂੰ ਨਿਵੇਸ਼ ਖਾਤੇ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।",
+  "errorCreditCardsMustBeLiabilities": "ਸਿਰਫ਼ ਦੇਣਦਾਰੀ ਖਾਤਿਆਂ ਨੂੰ ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।",
+  "errorOpeningBalanceMustBePositive": "ਦਿੱਤੇ ਜਾਣ ਉੱਤੇ ਸ਼ੁਰੂਆਤੀ ਬਕਾਇਆ ਸਕਾਰਾਤਮਕ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।",
+  "errorAccountTypeDoesNotMatchGroup": "ਉਹ ਖਾਤਾ ਕਿਸਮ ਗਰੁੱਪ ਨਾਲ ਮੇਲ ਨਹੀਂ ਖਾਂਦੀ।",
+  "errorLastActiveAccount": "ਆਖਰੀ ਸਰਗਰਮ ਵਿੱਤੀ ਖਾਤਾ ਲੁਕਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।",
+  "errorCurrencyRequiredToCreateGroup": "ਗਰੁੱਪ ਬਣਾਉਣ ਲਈ ਮੁਦਰਾ ਲੋੜੀਂਦੀ ਹੈ।",
+  "errorSystemGroupCannotBeArchived": "ਬਿਲਟ-ਇਨ ਖਾਤਾ ਗਰੁੱਪ ਲੁਕਾਏ ਨਹੀਂ ਜਾ ਸਕਦੇ।",
+  "errorGroupAlreadyArchived": "ਉਹ ਗਰੁੱਪ ਪਹਿਲਾਂ ਹੀ ਲੁਕਿਆ ਹੋਇਆ ਹੈ।",
+  "errorCannotArchiveGroupWithAccounts": "ਅਜੇ ਵੀ ਸਰਗਰਮ ਖਾਤਿਆਂ ਵਾਲਾ ਗਰੁੱਪ ਲੁਕਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।",
+  "errorSystemGroupNeverArchived": "ਬਿਲਟ-ਇਨ ਖਾਤਾ ਗਰੁੱਪ ਕਦੇ ਵੀ ਲੁਕਾਏ ਨਹੀਂ ਜਾਂਦੇ।",
+  "errorAccountGroupsCannotBeDeleted": "ਖਾਤਾ ਗਰੁੱਪ ਮਿਟਾਏ ਨਹੀਂ ਜਾ ਸਕਦੇ।",
+  "errorCannotReassignDifferentCurrency": "ਇਸ ਖਾਤੇ ਨੂੰ ਵੱਖਰੀ ਮੁਦਰਾ ਵਾਲੇ ਗਰੁੱਪ ਵਿੱਚ ਨਹੀਂ ਭੇਜਿਆ ਜਾ ਸਕਦਾ।",
+  "errorCannotChangeGroupCurrencyWithAccounts": "ਜਿੰਨਾ ਚਿਰ ਗਰੁੱਪ ਵਿੱਚ ਸਰਗਰਮ ਖਾਤੇ ਹਨ, ਮੁਦਰਾ ਬਦਲੀ ਨਹੀਂ ਜਾ ਸਕਦੀ।",
+  "errorAmountMustBePositive": "ਰਕਮ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorAccountCurrencyAmountMustBePositive": "ਖਾਤਾ-ਮੁਦਰਾ ਰਕਮ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorAccountCurrencyAmountNotForSameCurrency": "ਖਾਤਾ-ਮੁਦਰਾ ਰਕਮ ਸਿਰਫ਼ ਵਿਦੇਸ਼ੀ-ਮੁਦਰਾ ਐਂਟਰੀ ਲਈ ਹੈ।",
+  "errorSplitNeedsTwoLines": "ਵੰਡ ਲਈ ਘੱਟੋ-ਘੱਟ ਦੋ ਸ਼੍ਰੇਣੀ ਲਾਈਨਾਂ ਲੋੜੀਂਦੀਆਂ ਹਨ।",
+  "errorSplitLineMustBePositive": "ਹਰ ਵੰਡ ਲਾਈਨ ਇੱਕ ਧਨਾਤਮਕ ਰਕਮ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorSplitLinesMustSumToTotal": "ਵੰਡ ਲਾਈਨਾਂ ਦਾ ਜੋੜ ਲੈਣ-ਦੇਣ ਦੇ ਕੁੱਲ ਦੇ ਬਰਾਬਰ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।",
+  "errorTransferAmountMustBePositive": "ਟ੍ਰਾਂਸਫਰ ਰਕਮ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorTransferAccountsMustDiffer": "ਸਰੋਤ ਅਤੇ ਟਿਕਾਣਾ ਖਾਤੇ ਵੱਖ-ਵੱਖ ਹੋਣੇ ਚਾਹੀਦੇ ਹਨ।",
+  "errorCloseoutRequiresDestinationAmount": "ਕਰਾਸ-ਮੁਦਰਾ ਬੰਦ ਕਰਨ ਲਈ ਇੱਕ ਜਾਣੀ-ਪਛਾਣੀ ਟਿਕਾਣਾ ਰਕਮ ਲੋੜੀਂਦੀ ਹੈ।",
+  "errorDestinationAmountNotForSameCurrency": "ਟਿਕਾਣਾ ਰਕਮ ਸਿਰਫ਼ ਕਰਾਸ-ਮੁਦਰਾ ਟ੍ਰਾਂਸਫਰ ਲਈ ਹੈ।",
+  "errorDestinationAmountMustBePositive": "ਟਿਕਾਣਾ ਰਕਮ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorInvestmentCashExceeded": "ਇਸ ਨਿਵੇਸ਼ ਖਾਤੇ ਦੀ ਨਕਦ ਤੋਂ ਵੱਧ ਟ੍ਰਾਂਸਫਰ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।",
+  "errorCannotReverseUnsettledProvisional": "ਇਸਨੂੰ ਉਲਟਾਉਣ ਦੀ ਬਜਾਏ ਇਸ ਬਕਾਇਆ ਟ੍ਰਾਂਸਫਰ ਨੂੰ ਨਿਪਟਾਓ।",
+  "errorAlreadyReversed": "ਇਹ ਐਂਟਰੀ ਪਹਿਲਾਂ ਹੀ ਠੀਕ ਕੀਤੀ ਜਾ ਚੁੱਕੀ ਹੈ। ਅਸਲੀ ਲਾਈਨ ਉਵੇਂ ਹੀ ਰਹਿੰਦੀ ਹੈ।",
+  "errorNotActiveExpenseCategory": "ਇੱਕ ਸਰਗਰਮ ਖਰਚ ਸ਼੍ਰੇਣੀ ਚੁਣੋ।",
+  "errorNotActiveIncomeCategory": "ਇੱਕ ਸਰਗਰਮ ਆਮਦਨ ਸ਼੍ਰੇਣੀ ਚੁਣੋ।",
+  "errorSettledAmountMustNotBeNegative": "ਪਹੁੰਚੀ ਰਕਮ ਨਕਾਰਾਤਮਕ ਨਹੀਂ ਹੋ ਸਕਦੀ।",
+  "errorPendingTransferNotFound": "ਉਹ ਬਕਾਇਆ ਟ੍ਰਾਂਸਫਰ ਨਹੀਂ ਮਿਲਿਆ।",
+  "errorPendingTransferAlreadySettled": "ਉਹ ਬਕਾਇਆ ਟ੍ਰਾਂਸਫਰ ਪਹਿਲਾਂ ਹੀ ਨਿਪਟਾਇਆ ਜਾ ਚੁੱਕਾ ਹੈ।",
+  "errorSettledToMustBeSourceOrDestination": "ਅਸਲੀ ਸਰੋਤ ਜਾਂ ਟਿਕਾਣਾ ਖਾਤਾ ਚੁਣੋ।",
+  "errorFeeCategoryOnlyWhenReturningToSource": "ਫੀਸ ਸ਼੍ਰੇਣੀ ਸਿਰਫ਼ ਉਦੋਂ ਵਰਤੀ ਜਾਂਦੀ ਹੈ ਜਦੋਂ ਪੈਸਾ ਸਰੋਤ ਖਾਤੇ ਵਿੱਚ ਵਾਪਸ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।",
+  "errorSettledAmountMustBePositiveForDelivery": "ਜੋ ਪਹੁੰਚਿਆ ਉਸ ਲਈ ਇੱਕ ਧਨਾਤਮਕ ਰਕਮ ਦਰਜ ਕਰੋ।",
+  "errorSettledAmountExceedsProvisional": "ਉਹ ਰਕਮ ਭੇਜੀ ਗਈ ਰਕਮ ਤੋਂ ਵੱਧ ਹੈ।",
+  "errorInstrumentNotFound": "ਉਹ ਇੰਸਟਰੂਮੈਂਟ ਨਹੀਂ ਮਿਲਿਆ।",
+  "errorIncomeRequiredForNonCash": "ਗੈਰ-ਨਕਦ ਪ੍ਰਾਪਤੀ ਲਈ ਇੱਕ ਸਰਗਰਮ ਆਮਦਨ ਸ਼੍ਰੇਣੀ ਲੋੜੀਂਦੀ ਹੈ।",
+  "errorInsufficientCash": "ਉਸ ਖਰੀਦ ਲਈ ਇਸ ਨਿਵੇਸ਼ ਖਾਤੇ ਵਿੱਚ ਲੋੜੀਂਦੀ ਨਕਦ ਨਹੀਂ ਹੈ।",
+  "errorSellQuantityAndPriceMustBePositive": "ਵਿਕਰੀ ਮਾਤਰਾ ਅਤੇ ਯੂਨਿਟ ਕੀਮਤ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorLockedUntil": "ਵੇਚਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ: ਕੁਝ ਯੂਨਿਟ {date} ਤੱਕ ਲੌਕ ਹਨ।",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "ਤੁਸੀਂ ਇਸ ਵੇਲੇ ਅਨਲੌਕ ਧਾਰਨ ਕੀਤੇ ਤੋਂ ਵੱਧ ਨਹੀਂ ਵੇਚ ਸਕਦੇ।",
+  "errorIncomeRequiredForGain": "ਵਸੂਲੇ ਗਏ ਲਾਭ ਲਈ ਇੱਕ ਸਰਗਰਮ ਆਮਦਨ ਸ਼੍ਰੇਣੀ ਲੋੜੀਂਦੀ ਹੈ।",
+  "errorExpenseRequiredForLoss": "ਵਸੂਲੇ ਗਏ ਨੁਕਸਾਨ ਲਈ ਇੱਕ ਸਰਗਰਮ ਖਰਚ ਸ਼੍ਰੇਣੀ ਲੋੜੀਂਦੀ ਹੈ।",
+  "errorBrokerageFailedAfterBuy": "ਖਰੀਦ ਪੋਸਟ ਹੋ ਗਈ, ਪਰ ਬ੍ਰੋਕਰੇਜ ਫੀਸ ਅਸਫਲ ਹੋਈ: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "ਵਿਕਰੀ ਪੋਸਟ ਹੋ ਗਈ, ਪਰ ਬ੍ਰੋਕਰੇਜ ਫੀਸ ਅਸਫਲ ਹੋਈ: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "ਲਾਭਅੰਸ਼ ਰਕਮ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorNotInvestmentAccount": "ਉਹ ਇੱਕ ਨਿਵੇਸ਼ ਖਾਤਾ ਨਹੀਂ ਹੈ।",
+  "errorNoInventoryCompanion": "ਇਸ ਨਿਵੇਸ਼ ਖਾਤੇ ਵਿੱਚ ਇਸਦੀ ਵਸਤੂ ਸੂਚੀ ਸਾਥੀ ਗੁੰਮ ਹੈ।",
+  "errorInvestmentReversalBlocked": "ਇਸ ਖਰੀਦ ਨੂੰ ਉਲਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ: ਬਾਅਦ ਦੀਆਂ ਵਿਕਰੀ(ਆਂ) ਇਸਦੇ ਯੂਨਿਟਾਂ ਉੱਤੇ ਨਿਰਭਰ ਹਨ। ਪਹਿਲਾਂ ਨਿਰਭਰ ਵਿਕਰੀ(ਆਂ) ਨੂੰ ਉਲਟਾਓ: {sells}।",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "ਮਾਸਿਕ ਸੀਮਾ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorTemplateAmountMustBePositive": "ਟੈਂਪਲੇਟ ਰਕਮ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorOfxUnrecognized": "ਇਸ ਫਾਈਲ ਨੂੰ OFX ਵਜੋਂ ਪਛਾਣਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ।",
+  "errorCsvEmpty": "ਚੁਣੀ ਗਈ ਫਾਈਲ ਖਾਲੀ ਹੈ।",
+  "errorCsvUnreadable": "ਇਸ ਫਾਈਲ ਨੂੰ CSV ਵਜੋਂ ਪੜ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ।",
+  "errorCsvNoRows": "ਚੁਣੀ ਗਈ ਫਾਈਲ ਵਿੱਚ ਕੋਈ ਰੋ ਨਹੀਂ ਹੈ।",
+  "errorBackupCreateFailed": "ਬੈਕਅੱਪ ਨਹੀਂ ਬਣਾਇਆ ਜਾ ਸਕਿਆ: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "ਇਹ ਬੈਕਅੱਪ ਬਹਾਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ - ਗਲਤ ਪਾਸਫਰੇਜ਼, ਜਾਂ ਇਹ ਸਮਾਰਾ ਬੈਕਅੱਪ ਫਾਈਲ ਨਹੀਂ ਹੈ।",
+  "validationAmountAccountCategoryRequired": "ਰਕਮ, ਖਾਤਾ, ਅਤੇ ਸ਼੍ਰੇਣੀ ਲੋੜੀਂਦੇ ਹਨ।",
+  "validationAmountAccountRequired": "ਰਕਮ ਅਤੇ ਖਾਤਾ ਲੋੜੀਂਦੇ ਹਨ।",
+  "validationSplitLineIncomplete": "ਹਰ ਵੰਡ ਲਾਈਨ ਨੂੰ ਇੱਕ ਸ਼੍ਰੇਣੀ ਅਤੇ ਇੱਕ ਰਕਮ ਦੀ ਲੋੜ ਹੈ।",
+  "validationSplitSumMismatch": "ਵੰਡ ਲਾਈਨਾਂ ਦਾ ਜੋੜ ਲੈਣ-ਦੇਣ ਦੇ ਕੁੱਲ ਦੇ ਬਰਾਬਰ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।",
+  "validationFromToAmountRequired": "ਸਰੋਤ ਖਾਤਾ, ਟਿਕਾਣਾ ਖਾਤਾ, ਅਤੇ ਰਕਮ ਲੋੜੀਂਦੇ ਹਨ।",
+  "validationAmountArrivedRequired": "ਪਹੁੰਚੀ ਰਕਮ ਲੋੜੀਂਦੀ ਹੈ।",
+  "validationChooseReceivingAccount": "ਚੁਣੋ ਕਿ ਕਿਹੜੇ ਖਾਤੇ ਨੇ ਫੰਡ ਪ੍ਰਾਪਤ ਕੀਤੇ।",
+  "validationAccountCategoryRequired": "ਖਾਤਾ ਅਤੇ ਸ਼੍ਰੇਣੀ ਲੋੜੀਂਦੇ ਹਨ।",
+  "validationFixFailed": "ਇਹ ਸੁਧਾਰ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ।",
+  "validationNameRequired": "ਆਪਣੇ ਮੁੱਖ ਖਾਤੇ ਦਾ ਨਾਮ ਦਿਓ।",
+  "validationStillLoading": "ਅਜੇ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ - ਥੋੜ੍ਹੀ ਦੇਰ ਬਾਅਦ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+  "validationSaveAccountNameFailed": "ਖਾਤੇ ਦਾ ਨਾਮ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ।",
+  "validationWrongPin": "ਗਲਤ ਪਿੰਨ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+  "validationCategoryMustBeIncomeOrExpense": "ਸ਼੍ਰੇਣੀ ਆਮਦਨ ਜਾਂ ਖਰਚ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "validationOnlyExpenseHasMonthlyLimit": "ਸਿਰਫ਼ ਇੱਕ ਖਰਚ ਸ਼੍ਰੇਣੀ ਦੀ ਮਾਸਿਕ ਸੀਮਾ ਹੋ ਸਕਦੀ ਹੈ।",
+  "validationInvalidTemplate": "ਅਵੈਧ ਟੈਂਪਲੇਟ।",
+  "validationWrongKeystorePassphrase": "ਇਸ ਕੀਸਟੋਰ ਫਾਈਲ ਲਈ ਗਲਤ ਪਾਸਫਰੇਜ਼।",
+  "validationInvalidKeystoreFile": "ਇਹ ਵੈਧ ਕੀਸਟੋਰ ਫਾਈਲ ਵਰਗੀ ਨਹੀਂ ਲੱਗਦੀ।",
+  "validationRestorePhraseFailed": "ਉਸ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਤੋਂ ਬਹਾਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।",
+  "validationGenerateKeyFailed": "ਇਸ ਡਿਵਾਈਸ ਉੱਤੇ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਤਿਆਰ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "ਇਹ ਮੁਦਰਾ ਸੰਭਾਲੀ ਨਹੀਂ ਜਾ ਸਕੀ: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "ਮਾਈਗ੍ਰੇਸ਼ਨ ਅਸਫਲ ਹੋਈ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+  "validationChooseBackupFile": "ਪਹਿਲਾਂ ਇੱਕ ਬੈਕਅੱਪ ਫਾਈਲ ਚੁਣੋ।",
+  "validationPassphraseRequired": "ਇੱਕ ਪਾਸਫਰੇਜ਼ ਦਰਜ ਕਰੋ।",
+  "validationPinsDoNotMatch": "ਦੋਵੇਂ ਪਿੰਨ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ।",
+  "validationFeePositiveWithCategory": "ਟ੍ਰਾਂਸਫਰ ਫੀਸ ਇੱਕ ਚੁਣੀ ਗਈ ਖਰਚ ਸ਼੍ਰੇਣੀ ਦੇ ਨਾਲ ਇੱਕ ਧਨਾਤਮਕ ਰਕਮ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "validationFeeMustBeLessThanAmount": "ਕੱਟੀ ਗਈ ਫੀਸ ਵਾਲੇ ਟ੍ਰਾਂਸਫਰ ਲਈ ਫੀਸ ਰਕਮ ਤੋਂ ਘੱਟ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "validationTransferSavedFeeFailed": "ਟ੍ਰਾਂਸਫਰ ਸੰਭਾਲਿਆ ਗਿਆ, ਪਰ ਫੀਸ ਰਿਕਾਰਡ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "ਇੱਕ ਵੈਧ ਰਕਮ ਦਰਜ ਕਰੋ।",
+  "validationConfirmWordMismatch": "ਸ਼ਬਦ {n} ਤੁਹਾਡੇ ਸੰਭਾਲੇ ਵਾਕੰਸ਼ ਨਾਲ ਮੇਲ ਨਹੀਂ ਖਾਂਦਾ। ਇਸਨੂੰ ਜਾਂਚੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "ਖਰੀਦ ਮਾਤਰਾ ਅਤੇ ਯੂਨਿਟ ਕੀਮਤ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "errorInstrumentArchived": "ਲੁਕੇ ਹੋਏ ਇੰਸਟਰੂਮੈਂਟ ਨੂੰ ਖਰੀਦਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।",
+  "errorNonCashCannotIncludeBrokerage": "ਗੈਰ-ਨਕਦ ਪ੍ਰਾਪਤੀਆਂ ਵਿੱਚ ਬ੍ਰੋਕਰੇਜ ਸ਼ਾਮਲ ਨਹੀਂ ਹੋ ਸਕਦਾ।",
+  "errorBrokerageRequiresExpenseCategory": "ਜਦੋਂ ਬ੍ਰੋਕਰੇਜ ਧਨਾਤਮਕ ਹੋਵੇ ਤਾਂ ਇੱਕ ਸਰਗਰਮ ਖਰਚ ਸ਼੍ਰੇਣੀ ਲੋੜੀਂਦੀ ਹੈ।",
+  "errorSellProceedsMustCoverBrokerage": "ਵਿਕਰੀ ਦੀ ਆਮਦਨ ਘੱਟੋ-ਘੱਟ ਬ੍ਰੋਕਰੇਜ ਰਕਮ ਦੇ ਬਰਾਬਰ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
+  "homeSpentOfLimitThisMonth": "ਇਸ ਮਹੀਨੇ {limit} ਵਿੱਚੋਂ {spent}",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "ਸਮਾਰਾ ਖਾਤਾ ਅਨਲੌਕ ਕਰੋ",
+  "searchLabel": "ਖੋਜ",
+  "openingBalance": "ਸ਼ੁਰੂਆਤੀ ਬਕਾਇਆ",
+  "transferToName": "ਟ੍ਰਾਂਸਫਰ: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "ਟ੍ਰਾਂਸਫਰ ਲਈ ਫੀਸ",
+  "feeForTransferTo": "{name} ਨੂੰ ਟ੍ਰਾਂਸਫਰ ਲਈ ਫੀਸ",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "ਫਾਈਲ ਪਿਕਰ ਨਹੀਂ ਖੋਲ੍ਹਿਆ ਜਾ ਸਕਿਆ: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ .{extensions} ਫਾਈਲ ਚੁਣੋ",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "ਮੁਦਰਾ ਕੋਡ (ISO 4217, ਜਿਵੇਂ USD)",
+  "splitCounterpartMore": "{name} +{count} ਹੋਰ",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "ਮਿਤੀ",
+  "noneSelected": "ਕੋਈ ਨਹੀਂ",
+  "reviewEntriesBeforeContinuing": "ਜਾਰੀ ਰੱਖਣ ਤੋਂ ਪਹਿਲਾਂ ਹੇਠਾਂ ਦਿੱਤੀਆਂ ਐਂਟਰੀਆਂ (ਕੁੱਲ {count}) ਦੀ ਸਮੀਖਿਆ ਕਰੋ।",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "ਤੁਸੀਂ {amount} ਪ੍ਰਾਪਤ ਕੀਤੇ",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "ਜੇਕਰ ਵਟਾਂਦਰਾ ਦਰ ਅਜੇ ਪਤਾ ਨਹੀਂ ਤਾਂ ਖਾਲੀ ਛੱਡੋ।",
+  "recordTradeBlurb": "ਪਹਿਲਾਂ ਹੋ ਚੁੱਕੇ ਵਪਾਰ ਨੂੰ ਰਿਕਾਰਡ ਕਰੋ। ਇਹ ਐਪ ਕੋਈ ਆਰਡਰ ਨਹੀਂ ਦਿੰਦੀ।",
+  "feeOnTopBlurb": "ਉੱਪਰ: ਉਪਰੋਕਤ ਰਕਮ ਇਸ ਖਾਤੇ ਵਿੱਚੋਂ ਲਈ ਗਈ ਕੁੱਲ ਰਕਮ ਹੈ; ਫੀਸ ਇਸ ਵਿੱਚੋਂ ਨਿਕਲਦੀ ਹੈ।",
+  "feeBankBlurb": "ਤੁਹਾਡੇ ਬੈਂਕ ਜਾਂ ਕਿਸੇ ਵਿਚੋਲੇ ਦੁਆਰਾ ਪਹਿਲਾਂ ਤੋਂ ਲਿਆ ਗਿਆ ਕਮਿਸ਼ਨ।",
+  "validationPinMinLength": "ਪਿੰਨ ਘੱਟੋ-ਘੱਟ 4 ਅੰਕਾਂ ਦਾ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।",
+  "restoreBackupBlurb": "ਇਹ ਇਸ ਐਪ ਵਿੱਚ ਮੌਜੂਦ ਹਰ ਚੀਜ਼ ਨੂੰ ਬੈਕਅੱਪ ਨਾਲ ਬਦਲ ਦਿੰਦਾ ਹੈ — ਇਹ ਮਰਜ ਨਹੀਂ ਕਰਦਾ। ਇੱਕ ਬੈਕਅੱਪ ਫਾਈਲ ਚੁਣੋ ਅਤੇ ਉਹ ਪਾਸਫਰੇਜ਼ ਦਰਜ ਕਰੋ ਜਿਸ ਨਾਲ ਤੁਸੀਂ ਇਸਨੂੰ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਸੀ।",
+  "actionReplace": "ਬਦਲੋ",
+  "hideAccountBody": "{name} ਨਵੇਂ ਲੈਣ-ਦੇਣ ਲਈ ਉਪਲਬਧ ਨਹੀਂ ਰਹੇਗਾ।",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} ਖਾਤੇ ਬਣਾਉਣ ਜਾਂ ਮੁੜ-ਨਿਯੁਕਤ ਕਰਨ ਸਮੇਂ ਪੇਸ਼ ਨਹੀਂ ਕੀਤਾ ਜਾਵੇਗਾ।",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} ਨਵੇਂ ਲੈਣ-ਦੇਣ ਰਿਕਾਰਡ ਕਰਨ ਸਮੇਂ ਪੇਸ਼ ਨਹੀਂ ਕੀਤਾ ਜਾਵੇਗਾ।",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "ਲੁਕੇ ਹੋਏ ਇੰਸਟਰੂਮੈਂਟ ਪਿਛਲੀਆਂ ਖਰੀਦਾਂ ਅਤੇ ਵਿਕਰੀਆਂ ਉੱਤੇ ਰਹਿੰਦੇ ਹਨ। ਤੁਸੀਂ ਅਜੇ ਵੀ ਉਹਨਾਂ ਲਈ ਲਾਭਅੰਸ਼ ਰਿਕਾਰਡ ਕਰ ਸਕਦੇ ਹੋ।",
+  "nameHidden": "{name} (ਲੁਕਿਆ ਹੋਇਆ)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "ਕੋਈ ਮੁਦਰਾ ਸੈੱਟ ਨਹੀਂ",
+  "deletePayeeBody": "{name} ਅਤੇ ਇਸਦੇ ਯਾਦ ਰੱਖੇ ਡਿਫਾਲਟ ਹਟਾ ਦਿੱਤੇ ਜਾਣਗੇ। ਪਿਛਲੇ ਲੈਣ-ਦੇਣ ਪ੍ਰਭਾਵਿਤ ਨਹੀਂ ਹੋਣਗੇ।",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} ਹੁਣ ਬਕਾਇਆ ਵਜੋਂ ਪੇਸ਼ ਨਹੀਂ ਕੀਤਾ ਜਾਵੇਗਾ। ਇਸ ਦੁਆਰਾ ਪਹਿਲਾਂ ਹੀ ਰਿਕਾਰਡ ਕੀਤੇ ਲੈਣ-ਦੇਣ ਪ੍ਰਭਾਵਿਤ ਨਹੀਂ ਹੋਣਗੇ।",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "ਸੰਭਾਲੀ ਕਾਲਮ ਮੈਪਿੰਗ \"{name}\" ਮਿਟਾਈ ਜਾਵੇਗੀ। ਇਸ ਨਾਲ ਪਹਿਲਾਂ ਇੰਪੋਰਟ ਕੀਤੀਆਂ ਸਟੇਟਮੈਂਟਾਂ ਪ੍ਰਭਾਵਿਤ ਨਹੀਂ ਹੋਣਗੀਆਂ।",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "ਇੰਪੋਰਟ ਹੁਣ \"{keyword}\" ਦੁਆਰਾ ਆਪਣੇ-ਆਪ ਸ਼੍ਰੇਣੀਬੱਧ ਨਹੀਂ ਹੋਣਗੀਆਂ। ਇਸ ਨਿਯਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਪਹਿਲਾਂ ਹੀ ਸ਼੍ਰੇਣੀਬੱਧ ਕੀਤੇ ਲੈਣ-ਦੇਣ ਪ੍ਰਭਾਵਿਤ ਨਹੀਂ ਹੋਣਗੇ।",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "ਹੁਣ ਵਿਕਲਪਿਕ ਤੌਰ ਉੱਤੇ ਇੱਕ ਕ੍ਰੈਡਿਟ ਕਾਰਡ ਜਾਂ ਨਕਦ ਖਾਤਾ ਜੋੜੋ - ਤੁਸੀਂ ਬਾਅਦ ਵਿੱਚ ਸੈਟਿੰਗਾਂ ਤੋਂ ਹਮੇਸ਼ਾ ਹੋਰ ਖਾਤੇ ਜੋੜ ਸਕਦੇ ਹੋ।",
+  "deliveredToDestination": "ਟਿਕਾਣੇ ਉੱਤੇ ਪਹੁੰਚਾਇਆ ਗਿਆ",
+  "deliveredToName": "{name} ਨੂੰ ਪਹੁੰਚਾਇਆ ਗਿਆ",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "ਤੁਸੀਂ ਉਮੀਦ ਨਾਲੋਂ {amount} {currency} ਘੱਟ ਪ੍ਰਾਪਤ ਕੀਤੇ - ਫਰਕ ਨੂੰ ਪੂਰਾ ਕਰਨ ਲਈ ਇੱਕ ਸ਼੍ਰੇਣੀ ਚੁਣੋ।",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "ਮਿਤੀ ਸੀਮਾ",
+  "addTemplate": "ਟੈਂਪਲੇਟ ਜੋੜੋ",
+  "editTemplate": "ਟੈਂਪਲੇਟ ਸੰਪਾਦਿਤ ਕਰੋ",
+  "validationFillTemplateFields": "ਹਰ ਖੇਤਰ ਨੂੰ ਇੱਕ ਵੈਧ ਰਕਮ ਅਤੇ ਦਿਨ ਨਾਲ ਭਰੋ।",
+  "saveCsvExport": "CSV ਐਕਸਪੋਰਟ ਸੰਭਾਲੋ",
+  "referenceRate": "ਹਵਾਲਾ ਦਰ",
+  "yourRate": "ਤੁਹਾਡੀ ਦਰ",
+  "leaveBlankIfThisWasAccountCurrency": "ਜੇਕਰ ਇਹ {currency} ਵਿੱਚ ਸੀ, ਖਾਤੇ ਦੀ ਆਪਣੀ ਮੁਦਰਾ, ਤਾਂ ਖਾਲੀ ਛੱਡੋ।",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "ਲੌਕ ਹੋਣ ਦਾ ਸਮਾਂ (ਵਿਕਲਪਿਕ)",
+  "lockedUntilDate": "{date} ਤੱਕ ਲੌਕ ਹੈ",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "ਇੱਕ ਖੋਜ ਪ੍ਰੌਂਪਟ ਕਾਪੀ ਕੀਤਾ ਗਿਆ — ਕੋਈ ਬ੍ਰਾਊਜ਼ਰ URL ਉਪਲਬਧ ਨਹੀਂ, ਜਾਂ ਤੁਸੀਂ ਔਫਲਾਈਨ ਹੋ।",
+  "openedFavouriteResearchTool": "ਤੁਹਾਡਾ ਪਸੰਦੀਦਾ ਖੋਜ ਟੂਲ ਖੋਲ੍ਹਿਆ ਗਿਆ।",
+  "looksLikeGain": "ਇਹ ਇੱਕ ਲਾਭ ਵਰਗਾ ਲੱਗਦਾ ਹੈ",
+  "looksLikeLoss": "ਇਹ ਇੱਕ ਨੁਕਸਾਨ ਵਰਗਾ ਲੱਗਦਾ ਹੈ",
+  "looksLikeBreakEven": "ਇਹ ਬਰੇਕ-ਈਵਨ ਵਰਗਾ ਲੱਗਦਾ ਹੈ",
+  "sellableQuantity": "{name} ({qty} ਵਿਕਣਯੋਗ)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "ਕਾਲਮ {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "ਇੰਪੋਰਟ ਹੋ ਰਿਹਾ ਹੈ...",
+  "confirmImport": "ਇੰਪੋਰਟ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
+  "manageSavedCategoryRules": "ਸੰਭਾਲੇ ਸ਼੍ਰੇਣੀ ਨਿਯਮ ਪ੍ਰਬੰਧਿਤ ਕਰੋ",
+  "statementCurrencyMismatch": "ਇਸ ਫਾਈਲ ਦੀ ਮੁਦਰਾ ({currency}) ਚੁਣੇ ਗਏ ਖਾਤੇ ਦੀ ਮੁਦਰਾ ਨਾਲ ਮੇਲ ਨਹੀਂ ਖਾਂਦੀ।",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "ਸ਼੍ਰੇਣੀ ਨਿਯਮ",
+  "possibleDuplicate": "ਸੰਭਾਵਿਤ ਡੁਪਲੀਕੇਟ",
+  "unknownCategory": "ਅਣਜਾਣ ਸ਼੍ਰੇਣੀ"
+}

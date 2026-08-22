@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
+import '../../l10n/l10n.dart';
 import 'app_colors.dart';
 import 'app_spacing.dart';
 import 'app_typography.dart';
@@ -30,6 +31,7 @@ class MonthlyLimitProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     final isOverLimit = spentMinor > limitMinor;
     final fraction = limitMinor <= 0
         ? 1.0
@@ -53,9 +55,10 @@ class MonthlyLimitProgress extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${formatAmountMinor(spentMinor, monthlyLimitDisplayCurrency)} of '
-                '${formatAmountMinor(limitMinor, monthlyLimitDisplayCurrency)} '
-                'this month',
+                l10n.homeSpentOfLimitThisMonth(
+                  formatAmountMinor(spentMinor, monthlyLimitDisplayCurrency),
+                  formatAmountMinor(limitMinor, monthlyLimitDisplayCurrency),
+                ),
                 style: AppTypography.metadata,
               ),
               if (isOverLimit) ...[
@@ -67,7 +70,7 @@ class MonthlyLimitProgress extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Over limit',
+                  l10n.homeOverLimit,
                   style: AppTypography.metadata.copyWith(
                     color: AppColors.textSecondary,
                   ),

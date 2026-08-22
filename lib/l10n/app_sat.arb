@@ -1,0 +1,968 @@
+{
+  "@@locale": "sat",
+  "appTitle": "ᱥᱢᱟᱨᱟ ᱦᱤᱥᱟᱹᱵ",
+  "navHome": "ᱚᱲᱟᱜ",
+  "navRegister": "ᱨᱮᱡᱤᱥᱴᱚᱨ",
+  "navSummary": "ᱥᱟᱹᱨᱤ",
+  "navAccounts": "ᱦᱤᱥᱟᱹᱵ",
+  "navCategories": "ᱡᱟᱹᱛ",
+  "actionCancel": "ᱵᱟᱹᱨᱜᱤᱞ",
+  "actionSave": "ᱥᱟᱺᱪᱟᱣ ᱢᱮ",
+  "actionDelete": "ᱢᱮᱴᱟᱣ ᱢᱮ",
+  "actionDone": "ᱚᱠᱛᱚ",
+  "actionContinue": "ᱡᱟᱨᱤ ᱢᱮ",
+  "actionDismiss": "ᱵᱚᱸᱫᱚᱭ ᱢᱮ",
+  "actionRetry": "ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ",
+  "actionSkip": "ᱥᱠᱤᱯ ᱢᱮ",
+  "actionConfirm": "ᱪᱮᱛᱟᱱ ᱢᱮ",
+  "actionAdd": "ᱥᱮᱞᱮᱫ ᱢᱮ",
+  "actionEdit": "ᱮᱰᱤᱴ ᱢᱮ",
+  "actionRename": "ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ",
+  "actionHide": "ᱩᱠᱩ ᱢᱮ",
+  "actionCreate": "ᱵᱮᱱᱟᱣ ᱢᱮ",
+  "actionCloseApp": "ᱮᱯ ᱵᱚᱸᱫᱚᱭ ᱢᱮ",
+  "actionUnlock": "ᱠᱷᱩᱞᱟᱹ ᱢᱮ",
+  "actionSettle": "ᱴᱷᱤᱠ ᱢᱮ",
+  "actionFinish": "ᱯᱩᱨᱟᱹᱣ ᱢᱮ",
+  "actionPreview": "ᱧᱮᱞ ᱢᱮ",
+  "actionImport": "ᱟᱢᱯᱚᱴ ᱢᱮ",
+  "actionExportCsv": "ᱥᱤᱮᱥᱵᱷᱤ ᱮᱠᱥᱯᱚᱴ ᱢᱮ",
+  "actionChooseFile": "ᱯᱷᱟᱭᱞ ᱪᱩᱱ ᱢᱮ",
+  "actionRestore": "ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱢᱮ",
+  "actionFix": "ᱴᱷᱤᱠ ᱢᱮ",
+  "actionBuy": "ᱠᱤᱨᱤᱸ ᱢᱮ",
+  "actionSell": "ᱟᱠᱤᱨᱤᱸ ᱢᱮ",
+  "actionDividend": "ᱞᱟᱵᱷᱟᱸᱥ",
+  "actionRecordBuy": "ᱠᱤᱨᱤᱸ ᱚᱞ ᱢᱮ",
+  "actionRecordSell": "ᱟᱠᱤᱨᱤᱸ ᱚᱞ ᱢᱮ",
+  "actionRecordDividend": "ᱞᱟᱵᱷᱟᱸᱥ ᱚᱞ ᱢᱮ",
+  "actionPayCard": "ᱠᱟᱨᱰ ᱵᱷᱚᱨᱚ ᱢᱮ",
+  "actionTransfer": "ᱴᱨᱟᱸᱥᱯᱷᱚᱨ",
+  "actionRecordTransaction": "ᱠᱟᱹᱢᱤ ᱚᱞ ᱢᱮ",
+  "actionImportStatement": "ᱥᱴᱮᱴᱢᱮᱸᱴ ᱟᱢᱯᱚᱴ ᱢᱮ",
+  "actionClearDates": "ᱫᱤᱱ ᱥᱟᱯᱷᱟᱭ ᱢᱮ",
+  "actionClearSearch": "ᱥᱮᱸᱫᱽᱨᱟ ᱟᱨ ᱯᱷᱤᱞᱴᱚᱨ ᱥᱟᱯᱷᱟᱭ ᱢᱮ",
+  "actionUseBiometrics": "ᱵᱟᱭᱳᱢᱮᱴᱨᱤᱠᱥ ᱵᱮᱵᱷᱟᱨ ᱢᱮ",
+  "actionSetPin": "ᱯᱤᱱ ᱛᱚᱭᱚᱨ ᱢᱮ",
+  "actionChangePin": "ᱯᱤᱱ ᱵᱚᱫᱚᱞ ᱢᱮ",
+  "actionSaveBackup": "ᱵᱮᱠᱟᱯ ᱥᱟᱺᱪᱟᱣ ᱢᱮ",
+  "actionRestoreBackup": "ᱵᱮᱠᱟᱯ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱢᱮ",
+  "actionSaveRule": "ᱱᱤᱭᱚᱢ ᱥᱟᱺᱪᱟᱣ ᱢᱮ",
+  "actionConfirmFix": "ᱴᱷᱤᱠ ᱪᱮᱛᱟᱱ ᱢᱮ",
+  "captureSpent": "ᱠᱷᱚᱨᱚᱪ",
+  "captureReceived": "ᱢᱤᱞᱟ",
+  "captureMovedMoney": "ᱴᱚᱠᱟ ᱵᱚᱫᱚᱞ",
+  "captureImportStatement": "ᱥᱴᱮᱴᱢᱮᱸᱴ ᱟᱢᱯᱚᱴ",
+  "settingsTitle": "ᱥᱮᱴᱤᱝ",
+  "settingsLanguage": "ᱯᱟᱹᱨᱥᱤ",
+  "settingsLanguageSystem": "ᱥᱟᱫᱷᱚᱱ ᱯᱟᱹᱨᱥᱤ",
+  "settingsFetchFxRates": "ᱨᱮᱚᱷᱨᱮᱸᱥ ᱮᱠᱥᱪᱮᱸᱡ ᱨᱮᱴ ᱟᱹᱱᱟᱭ ᱢᱮ",
+  "settingsFetchFxRatesSubtitle": "ᱢᱩᱫᱨᱟ ᱵᱚᱫᱚᱞ ᱚᱠᱟ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱨᱮ, ᱱᱚᱶᱟ ᱫᱚ ᱛᱩᱞᱚᱱᱟᱜ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱟᱱ, ᱮᱞ ᱯᱩᱨᱟᱹᱣ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱚᱱ ᱵᱮᱵᱷᱟᱨ ᱵᱟᱝᱟᱭ ᱦᱩᱭ᱾",
+  "settingsRateProvider": "ᱨᱮᱴ ᱫᱟᱛᱟᱹ",
+  "settingsFetchMarketPrices": "ᱵᱟᱡᱟᱨ ᱫᱟᱢ ᱟᱹᱱᱟᱭ ᱢᱮ",
+  "settingsFetchMarketPricesSubtitle": "ᱴᱤᱠᱚᱨ ᱟᱨ ISIN ᱢᱮᱱᱟᱜ ᱥᱟᱫᱷᱚᱱ ᱠᱚ ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱫᱟᱢ ᱟᱹᱱᱟᱭ ᱢᱮ, ᱯᱳᱨᱴᱷᱚᱞᱤᱳ ᱫᱟᱢ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱹᱜᱤᱫ᱾ ᱠᱟᱹᱢᱤ ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱝ, ᱟᱨ ᱚᱠᱟ ᱞᱮᱠᱷᱟ ᱢᱮᱱᱟᱜᱼᱟ ᱚᱱᱟ ᱵᱟᱝ ᱠᱩᱞᱟᱹᱭ᱾",
+  "settingsMarketPriceProvider": "ᱵᱟᱡᱟᱨ ᱫᱟᱢ ᱫᱟᱛᱟᱹ",
+  "settingsFavouriteResearchTool": "ᱢᱚᱱ ᱠᱟᱛᱷᱟ ᱚᱸᱥᱟᱨ ᱦᱟᱛᱤᱭᱟᱨ",
+  "settingsFavouriteResearchToolSubtitle": "ᱦᱚᱞᱰᱤᱝ ᱨᱮ ᱥᱟᱫᱷᱚᱱ ᱧᱩᱛᱩᱢ ᱚᱛᱟᱭ ᱛᱟᱦᱮᱸᱱᱟ ᱠᱷᱟᱱ ᱱᱚᱶᱟ ᱦᱟᱛᱤᱭᱟᱨ ᱵᱽᱨᱟᱣᱡᱚᱨ ᱨᱮ ᱠᱷᱩᱞᱟᱹᱭᱟ — ᱮᱠᱴᱳ ᱵᱟᱝᱟ, ᱟᱨ ᱥᱚᱞᱟᱹᱦᱟ ᱵᱟᱝᱟ᱾",
+  "settingsBackup": "ᱵᱮᱠᱟᱯ",
+  "settingsBackupBlurb": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱮᱱᱠᱨᱤᱯᱴᱮᱰ ᱵᱮᱠᱟᱯ ᱚᱠᱟ ᱴᱷᱟᱶ ᱥᱟᱺᱪᱟᱣ ᱢᱮ ᱚᱱᱟ ᱟᱢ ᱵᱟᱪᱷᱟᱣᱟ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱚᱱᱟᱛᱮ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱢᱮ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱟᱢ ᱨᱮᱭᱟᱜ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱟᱨ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱠᱷᱚᱱ ᱴᱷᱟᱲᱟᱹᱜ᱾",
+  "settingsLock": "ᱞᱚᱠ",
+  "settingsLockBlurb": "ᱮᱯ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱯᱤᱱ ᱥᱮ ᱵᱟᱭᱳᱢᱮᱴᱨᱤᱠᱥ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱱᱟ᱾",
+  "settingsRequireUnlock": "ᱮᱯ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱩᱞᱟᱹ ᱫᱚᱨᱠᱟᱨ",
+  "settingsLockAfter": "ᱞᱚᱠ ᱛᱟᱭᱚᱢ ᱛᱟᱭᱚᱢ",
+  "settingsLockImmediately": "ᱱᱤᱛᱚᱜ",
+  "settingsLock1Minute": "᱑ ᱢᱤᱱᱤᱴ",
+  "settingsLock5Minutes": "᱕ ᱢᱤᱱᱤᱴ",
+  "settingsLock15Minutes": "᱑᱕ ᱢᱤᱱᱤᱴ",
+  "settingsAllowBiometrics": "ᱵᱟᱭᱳᱢᱮᱴᱨᱤᱠᱥ ᱦᱚᱡ ᱮᱢ ᱢᱮ",
+  "settingsHideSnapshot": "ᱮᱯ ᱥᱩᱭᱴᱪᱚᱨ ᱨᱮ ᱵᱮᱞᱮᱸᱥ ᱩᱠᱩ ᱢᱮ",
+  "settingsHideSnapshotSubtitle": "ᱡᱟᱦᱟᱸ ᱟᱢ ᱮᱴᱟᱜ ᱮᱯ ᱨᱮ ᱪᱟᱞᱟᱜᱼᱟᱢ, ᱚᱱᱟ ᱚᱠᱛᱚ ᱱᱚᱶᱟ ᱯᱟᱴᱟ ᱩᱠᱩ ᱦᱩᱭᱟ, ᱟᱨ ᱮᱯ ᱥᱩᱭᱴᱪᱚᱨ ᱨᱮ ᱵᱟᱭ ᱧᱮᱞᱚᱜᱼᱟ᱾",
+  "settingsHideSnapshotUnavailable": "ᱱᱚᱶᱟ ᱯᱞᱟᱴᱯᱷᱳᱨᱚᱢ ᱨᱮ ᱮᱯ ᱥᱩᱭᱴᱪᱚᱨ ᱨᱮ ᱵᱮᱞᱮᱸᱥ ᱩᱠᱩ ᱵᱟᱝ ᱢᱮᱴᱟᱣᱟ᱾",
+  "settingsPayees": "ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ",
+  "settingsManagePayees": "ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵᱠᱚ ᱨᱮᱭᱟᱜ ᱵᱮᱵᱚᱥᱛᱷᱟ",
+  "settingsPayeesBlurb": "ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱧᱩᱛᱩᱢ ᱟᱨ ᱩᱱᱠᱩᱭ ᱠᱟᱴᱴᱮᱜᱚᱨᱤ ᱟᱨ ᱦᱤᱥᱟᱹᱵ ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱᱟ, ᱠᱟᱹᱢᱤ ᱚᱞ ᱚᱠᱛᱚ ᱟᱡ ᱚᱞ ᱚᱲᱟᱜ ᱮᱢᱟ᱾",
+  "settingsRecurring": "ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ",
+  "settingsManageRecurring": "ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ ᱵᱮᱵᱚᱥᱛᱷᱟ",
+  "settingsRecurringBlurb": "ᱚᱠᱟ ᱵᱤᱞ ᱥᱮ ᱟᱭ ᱫᱚᱦᱲᱟ ᱪᱟᱸᱫᱚ ᱨᱮ ᱦᱩᱭᱩᱜᱼᱟ, ᱡᱮᱞᱠᱟ ᱵᱷᱟᱰᱟ ᱥᱮ ᱛᱚᱱᱚᱜ᱾ ᱡᱟᱦᱟᱸ ᱴᱮᱢᱯᱞᱮᱴ ᱚᱠᱛᱚ ᱦᱩᱭᱩᱜᱼᱟ, ᱚᱱᱟ ᱚᱲᱟᱜ ᱨᱮ ᱩᱫᱩᱜᱼᱟ ᱢᱤᱫ ᱴᱚᱠᱚᱸ ᱚᱞ ᱞᱟᱹᱜᱤᱫ — ᱟᱡᱮ ᱟᱡᱮ ᱵᱟᱝ ᱚᱞᱚᱜᱼᱟ᱾",
+  "settingsAbout": "ᱵᱟᱵᱚᱛ",
+  "providerFrankfurter": "Frankfurter (ECB ᱨᱮᱴ)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (ᱚᱠᱛᱚ ᱚᱠᱛᱚ ᱫᱟᱢ)",
+  "providerYahooFinance": "Yahoo Finance (ᱪᱟᱨᱴ API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "ᱴᱚᱠᱟ ᱟᱨ ᱴᱚᱠᱟ ᱞᱮᱠᱟᱱ",
+  "systemGroupPensionRetirement": "ᱯᱮᱸᱥᱚᱱ",
+  "systemGroupCreditShortTerm": "ᱠᱚᱨᱡᱽ ᱟᱨ ᱚᱠᱚᱴᱚ ᱫᱮᱸ",
+  "systemGroupLoansMortgages": "ᱠᱚᱨᱡᱽ ᱟᱨ ᱢᱚᱨᱴᱜᱮᱡ",
+  "systemGroupInvestments": "ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ",
+  "systemAccountCashBank": "ᱴᱚᱠᱟ ᱟᱨ ᱵᱮᱸᱠ",
+  "systemCategorySalary": "ᱛᱚᱸᱠᱟ",
+  "systemCategoryOtherIncome": "ᱮᱴᱟᱜ ᱢᱤᱞᱟ",
+  "systemCategoryGroceries": "ᱡᱤᱱᱤᱥ",
+  "systemCategoryRentMortgage": "ᱵᱷᱟᱲᱟ/ᱢᱚᱨᱴᱜᱮᱡ",
+  "systemCategoryUtilities": "ᱥᱮᱵᱟ ᱵᱤᱞ",
+  "systemCategoryTransport": "ᱜᱟᱲᱤ ᱵᱟᱹᱲᱤ",
+  "systemCategoryFoodOut": "ᱵᱟᱦᱨᱮ ᱡᱚᱢ",
+  "systemCategoryPhone": "ᱯᱷᱳᱱ",
+  "systemCategoryHealth": "ᱥᱟᱥᱛᱷᱚ",
+  "systemCategoryOtherExpense": "ᱮᱴᱟᱜ ᱠᱷᱚᱨᱚᱪ",
+  "homeThisMonth": "ᱱᱚᱣᱟ ᱪᱟᱸᱫᱚ",
+  "homeMoneyInTransit": "ᱴᱚᱠᱟ ᱨᱟᱥᱛᱟ ᱨᱮ",
+  "homeWhatYouHaveMinusWhatYouOwe": "ᱟᱢ ᱛᱟᱭᱚᱢ ᱠᱷᱚᱱ ᱟᱢ ᱫᱮᱱᱟ ᱟᱲᱟᱜ",
+  "homeWhatYouHave": "ᱟᱢ ᱛᱟᱭᱚᱢ {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "ᱟᱢ ᱛᱟᱭᱚᱢ {haveAmount} {currency}  •  ᱟᱢ ᱫᱮᱱᱟ {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "ᱟᱢ {name} ᱠᱷᱚᱱ {amount} {currency} ᱠᱩᱞ ᱠᱮᱫᱟ",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "ᱟᱢ {name} ᱛᱮ {amount} {currency} ᱠᱩᱞ ᱠᱮᱫᱟ",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "ᱩᱠᱩ ᱠᱟᱱᱟ",
+  "allAccounts": "ᱡᱚᱛᱚ ᱦᱤᱥᱟᱹᱵ",
+  "savedToPath": "ᱥᱟᱺᱪᱟᱣ ᱮᱱᱟ {path} ᱨᱮ",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱮᱠᱥᱯᱚᱴ ᱵᱟᱝ ᱦᱩᱭᱮᱱᱟ᱾ ᱱᱚᱶᱟ ᱥᱳᱯᱟᱱ ᱥᱠᱤᱯ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱢ᱾",
+  "enterPassphraseToProtect": "ᱯᱷᱟᱭᱞ ᱨᱚᱠᱷᱭᱟ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱥᱣᱟᱨᱰ ᱚᱞ ᱢᱮ᱾",
+  "homeTapWhenArrived": "ᱡᱟᱦᱟᱸ ᱦᱚᱸ ᱪᱮᱫᱟᱜ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ ᱚᱱᱟ ᱵᱟᱰᱟᱭᱮᱭᱟᱢ ᱠᱷᱟᱱ ᱴᱮᱯ ᱢᱮ",
+  "homeReturnedTo": "{name} ᱛᱮ ᱨᱩᱣᱟᱲ ᱠᱮᱫᱟ",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "ᱛᱮᱦᱮᱸᱡ ᱫᱮᱱᱟ",
+  "homeDueLine": "{category} · {account} · ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱴᱮᱯ ᱢᱮ",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "ᱥᱤᱢᱟ ᱞᱟᱛᱟᱨ",
+  "homeSpentOfLimit": "{limit} ᱠᱷᱚᱱ {spent}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "ᱛᱮᱦᱮᱸᱱ: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "ᱦᱤᱥᱟᱹᱵ ᱵᱟᱭᱟ",
+  "homeCashRegister": "ᱴᱚᱠᱟ ᱨᱮᱡᱤᱥᱴᱚᱨ",
+  "homeMarketEstimate": "ᱵᱟᱡᱟᱨ ᱟᱸᱫᱟᱡᱽ",
+  "registerTitle": "ᱨᱮᱡᱤᱥᱴᱚᱨ",
+  "registerSearchHint": "ᱵᱮᱣᱟᱹᱨ, ᱡᱟᱹᱛ, ᱥᱮ ᱮᱞ",
+  "registerNoTransactions": "ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱠᱟᱹᱢᱤ ᱵᱟᱭᱟ",
+  "registerNoEntries": "ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱵᱟᱝ ᱚᱞ ᱟᱠᱟᱱᱟ᱾",
+  "registerSpentOnly": "ᱠᱷᱚᱨᱚᱪ ᱠᱷᱟᱱ",
+  "registerReceivedOnly": "ᱢᱤᱞᱟ ᱠᱷᱟᱱ",
+  "registerAll": "ᱡᱚᱛᱚ",
+  "registerUnverified": "ᱵᱟᱭ ᱛᱟᱭᱚᱢ - ᱡᱚᱢᱟᱣ ᱨᱮ ᱵᱟᱭ ᱛᱟᱦᱮᱸᱱᱟ",
+  "registerSuperseded": "ᱢᱟᱭᱭᱚᱨᱮᱥᱚᱱ ᱛᱮ ᱵᱚᱫᱚᱞ - ᱡᱚᱢᱟᱣ ᱨᱮ ᱵᱟᱭ ᱛᱟᱦᱮᱸᱱᱟ",
+  "summaryTitle": "ᱥᱟᱹᱨᱤ",
+  "summaryTotalIncome": "ᱡᱚᱛᱚ ᱢᱤᱞᱟ",
+  "summaryTotalExpense": "ᱡᱚᱛᱚ ᱠᱷᱚᱨᱚᱪ",
+  "summaryDateRange": "{start} ᱠᱷᱚᱱ {end} ᱛᱟᱦᱮᱸᱱ",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "ᱦᱤᱥᱟᱹᱵ",
+  "categoriesTitle": "ᱡᱟᱹᱛ",
+  "accountName": "ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ",
+  "createAccount": "ᱦᱤᱥᱟᱹᱵ ᱵᱮᱱᱟᱣ ᱢᱮ",
+  "createGroup": "ᱫᱚᱞ ᱵᱮᱱᱟᱣ ᱢᱮ",
+  "editGroup": "ᱫᱚᱞ ᱮᱰᱤᱴ ᱢᱮ",
+  "renameAccount": "ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ",
+  "renameCategory": "ᱡᱟᱹᱛ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ",
+  "addCategory": "ᱡᱟᱹᱛ ᱥᱮᱞᱮᱫ ᱢᱮ",
+  "groupLabel": "ᱫᱚᱞ",
+  "kindLabel": "ᱞᱮᱠᱟᱱ",
+  "asset": "ᱥᱚᱢᱯᱚᱫ",
+  "liability": "ᱫᱮᱱᱟ",
+  "income": "ᱢᱤᱞᱟ",
+  "expense": "ᱠᱷᱚᱨᱚᱪ",
+  "thisAccountHoldsInvestments": "ᱱᱚᱶᱟ ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱢᱮᱱᱟᱜᱼᱟ",
+  "thisAccountHoldsInvestmentsSubtitle": "ᱴᱚᱠᱟ ᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱠᱟ ᱟᱢ ᱠᱤᱨᱤᱸ, ᱟᱠᱤᱨᱤᱸ, ᱟᱨ ᱞᱟᱵᱷᱟᱸᱥ ᱛᱮ ᱚᱞᱮᱭᱟᱢ᱾",
+  "thisIsACreditCard": "ᱱᱚᱶᱟ ᱫᱚ ᱠᱨᱮᱰᱤᱴ ᱠᱟᱨᱰ ᱠᱟᱱᱟ",
+  "openingBalanceOptional": "ᱮᱦᱚᱵ ᱵᱮᱞᱮᱸᱥ (ᱮᱴᱠᱮᱛᱮ)",
+  "currencyIso": "ᱢᱩᱫᱨᱟ (ISO 4217)",
+  "currencyIsoExample": "ᱢᱩᱫᱨᱟ (ISO 4217, ᱡᱮᱞᱠᱟ USD)",
+  "hideAccountTitle": "ᱱᱟᱶᱟ ᱚᱞ ᱠᱷᱚᱱ ᱦᱤᱥᱟᱹᱵ ᱩᱠᱩ ᱟᱢᱟ ᱥᱮ?",
+  "hideCategoryTitle": "ᱱᱟᱶᱟ ᱚᱞ ᱠᱷᱚᱱ ᱡᱟᱹᱛ ᱩᱠᱩ ᱟᱢᱟ ᱥᱮ?",
+  "hideGroupTitle": "ᱱᱟᱶᱟ ᱚᱞ ᱠᱷᱚᱱ ᱫᱚᱞ ᱩᱠᱩ ᱟᱢᱟ ᱥᱮ?",
+  "reassignGroup": "ᱫᱚᱞ ᱟᱨ ᱵᱟᱰᱟᱭ ᱢᱮ",
+  "transferRemainingBalance": "ᱛᱮᱦᱮᱸᱱ ᱵᱮᱞᱮᱸᱥ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱢᱮ",
+  "monthlyLimit": "ᱪᱟᱸᱫᱚ ᱥᱤᱢᱟ",
+  "monthlyLimitHint": "ᱥᱤᱢᱟ (ᱥᱟᱯᱷᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱟᱹᱞᱤ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ)",
+  "monthlyLimitBlurb": "ᱱᱚᱶᱟ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱞᱟᱹᱜᱤᱫ ᱪᱟᱸᱫᱚ ᱛᱮᱦᱮᱸᱱ ᱠᱷᱚᱨᱚᱪ ᱨᱮᱭᱟᱜ ᱮᱴᱠᱮᱛᱮ ᱫᱮᱠᱷᱟᱣ᱾",
+  "manageCategoryRules": "ᱡᱟᱹᱛ ᱱᱤᱭᱚᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱵᱚᱥᱛᱷᱟ",
+  "amount": "ᱮᱞ",
+  "category": "ᱡᱟᱹᱛ",
+  "account": "ᱦᱤᱥᱟᱹᱵ",
+  "fromAccount": "ᱦᱤᱥᱟᱹᱵ ᱠᱷᱚᱱ",
+  "toAccount": "ᱦᱤᱥᱟᱹᱵ ᱛᱮ",
+  "descriptionOptional": "ᱵᱮᱣᱟᱹᱨ (ᱮᱴᱠᱮᱛᱮ)",
+  "alsoRememberPayee": "ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱞᱮᱠᱷᱟ ᱦᱚᱸ ᱦᱚᱲᱢᱚ ᱢᱮ",
+  "splitIntoCategories": "ᱟᱭᱢᱟ ᱡᱟᱹᱛ ᱨᱮ ᱴᱷᱚᱠᱟ ᱢᱮ",
+  "categoryN": "ᱡᱟᱹᱛ {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "ᱛᱟᱸᱦᱮᱸ ᱮᱞ",
+  "destinationAmountOptional": "ᱛᱟᱸᱦᱮᱸ ᱮᱞ (ᱮᱴᱠᱮᱛᱮ)",
+  "accountCurrencyAmountOptional": "ᱦᱤᱥᱟᱹᱵ ᱢᱩᱫᱨᱟ ᱮᱞ (ᱮᱴᱠᱮᱛᱮ)",
+  "transactionCurrencyOptional": "ᱠᱟᱹᱢᱤ ᱢᱩᱫᱨᱟ (ᱮᱴᱠᱮᱛᱮ)",
+  "feeOptional": "ᱯᱷᱤᱥ (ᱮᱴᱠᱮᱛᱮ)",
+  "feeAmount": "ᱯᱷᱤᱥ ᱮᱞ",
+  "feeCategory": "ᱯᱷᱤᱥ ᱡᱟᱹᱛ",
+  "feeDescriptionOptional": "ᱯᱷᱤᱥ ᱵᱮᱣᱟᱹᱨ (ᱮᱴᱠᱮᱛᱮ)",
+  "feeDeducted": "ᱪᱮᱛᱟᱱ ᱮᱞ ᱠᱷᱚᱱ ᱯᱷᱤᱥ ᱮᱴᱟᱜᱟᱭᱮᱱᱟ",
+  "needTwoAccountsToTransfer": "ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱨ ᱥᱚᱱᱚᱛ ᱦᱤᱥᱟᱹᱵ ᱵᱮᱱᱟᱣ ᱢᱮ᱾",
+  "whatArrivedTitle": "ᱪᱮᱫᱟᱜ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ?",
+  "whatArrivedBlurb": "ᱪᱮᱫᱟᱜ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ ᱚᱱᱟ ᱢᱮᱛᱟᱣ ᱢᱮ᱾",
+  "amountThatArrived": "ᱥᱮᱴᱮᱨ ᱮᱞ",
+  "feeLossCategory": "ᱯᱷᱤᱥ/ᱞᱚᱠᱥᱟᱱ ᱡᱟᱹᱛ",
+  "alreadySettled": "ᱛᱟᱭᱚᱢ ᱛᱮ ᱴᱷᱤᱠ ᱦᱩᱭ ᱮᱱᱟ᱾",
+  "holdingsTitle": "ᱦᱚᱞᱰᱤᱝ",
+  "holdingsCash": "ᱴᱚᱠᱟ",
+  "holdingsInventory": "ᱡᱤᱱᱤᱥ ᱠᱳᱴᱟ",
+  "holdingsBook": "ᱵᱩᱠ (ᱴᱚᱠᱟ + ᱞᱟᱜᱚᱛ) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "ᱵᱟᱡᱟᱨ ᱟᱸᱫᱟᱡᱽ {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱦᱚᱞᱰᱤᱝ ᱵᱟᱭᱟ᱾ ᱥᱟᱫᱷᱚᱱ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ ᱠᱤᱨᱤᱸ ᱚᱞ ᱢᱮ᱾",
+  "holdingsQuotesBlurb": "ᱫᱟᱢ ᱠᱚ ᱫᱚ ᱟᱸᱫᱟᱡᱽ ᱠᱟᱱᱟ, ᱵᱨᱳᱠᱚᱨ ᱫᱟᱢ ᱵᱟᱝᱟ᱾ ᱱᱚᱶᱟ ᱮᱯ ᱳᱨᱰᱚᱨ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "holdingsTapNameToResearch": "ᱚᱸᱥᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱧᱩᱛᱩᱢ ᱴᱮᱯ ᱢᱮ᱾ ᱫᱟᱢ ᱠᱚ ᱫᱚ ᱟᱸᱫᱟᱡᱽ, ᱥᱚᱞᱟᱹᱦᱟ ᱵᱟᱝᱟ᱾",
+  "instrument": "ᱥᱟᱫᱷᱚᱱ",
+  "newInstrument": "ᱱᱟᱶᱟ ᱥᱟᱫᱷᱚᱱ",
+  "renameInstrument": "ᱥᱟᱫᱷᱚᱱ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ",
+  "instrumentActions": "ᱥᱟᱫᱷᱚᱱ ᱠᱟᱹᱢᱤ",
+  "hideInstrumentTitle": "{name} ᱩᱠᱩ ᱟᱢᱟ ᱥᱮ?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "ᱴᱤᱠᱚᱨ (ᱮᱴᱠᱮᱛᱮ)",
+  "isinOptional": "ISIN (ᱮᱴᱠᱮᱛᱮ)",
+  "quantity": "ᱦᱤᱥᱟᱹᱵ ᱞᱮᱠᱷᱟ",
+  "unitPrice": "ᱢᱤᱫ ᱨᱮᱭᱟᱜ ᱫᱟᱢ",
+  "brokerageOptional": "ᱵᱨᱳᱠᱚᱨᱮᱡ (ᱮᱴᱠᱮᱛᱮ)",
+  "brokerageExpenseCategory": "ᱵᱨᱳᱠᱚᱨᱮᱡ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ",
+  "incomeCategory": "ᱢᱤᱞᱟ ᱡᱟᱹᱛ",
+  "gainIncomeCategory": "ᱞᱟᱵᱷ ᱢᱤᱞᱟ ᱡᱟᱹᱛ",
+  "lossExpenseCategory": "ᱞᱚᱠᱥᱟᱱ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ",
+  "nonCash": "ᱴᱚᱠᱟ ᱵᱟᱝ",
+  "cash": "ᱴᱚᱠᱟ",
+  "locked": "ᱞᱚᱠ ᱠᱟᱱᱟ",
+  "lockUntilHint": "ᱱᱚᱶᱟ ᱫᱚ ᱟᱢ ᱨᱮᱭᱟᱜ ᱴᱤᱯᱚᱬᱤ ᱠᱟᱱᱟ, ᱵᱨᱳᱠᱚᱨ ᱨᱮᱭᱟᱜ ᱱᱤᱭᱚᱢ ᱵᱟᱝᱟ᱾",
+  "instrumentKindStock": "ᱥᱴᱚᱠ",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "ᱢᱤᱭᱩᱴᱩᱭᱟᱞ ᱯᱷᱚᱸᱰ",
+  "instrumentKindBond": "ᱵᱚᱸᱰ",
+  "instrumentKindOther": "ᱮᱴᱟᱜ",
+  "quoteUseLive": "ᱱᱤᱛᱚᱜ ᱨᱮᱭᱟᱜ ᱫᱟᱢ",
+  "quoteUseCached": "ᱠᱮᱥ ᱫᱟᱢ",
+  "quoteUseStale": "ᱯᱩᱨᱟᱹᱱ ᱫᱟᱢ",
+  "quoteUseMissing": "ᱞᱟᱜᱚᱛ ᱵᱮᱵᱷᱟᱨ (ᱫᱟᱢ ᱵᱟᱭᱟ)",
+  "quoteUseDisabled": "ᱫᱟᱢ ᱵᱚᱸᱫ — ᱞᱟᱜᱚᱛ/ᱠᱮᱥ ᱵᱮᱵᱷᱟᱨ",
+  "quoteUseCurrencyMismatch": "ᱞᱟᱜᱚᱛ ᱵᱮᱵᱷᱟᱨ (ᱫᱟᱢ ᱢᱩᱫᱨᱟ ᱦᱮᱡ ᱵᱟᱝᱟ)",
+  "unrealizedLabel": "ᱵᱟᱭ ᱢᱤᱞᱟᱣ {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} ᱭᱩᱱᱤᱴ · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ",
+  "recoveryPhraseConfirmTitle": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱯᱷᱨᱮᱡ ᱪᱮᱛᱟᱱ ᱢᱮ",
+  "recoveryPhraseBlurb": "ᱱᱚᱶᱟ ᱒᱔ ᱠᱟᱴᱷᱟ ᱠᱚ ᱫᱚ ᱢᱤᱫ ᱛᱟᱸ ᱨᱚᱥᱛᱟ ᱠᱟᱱᱟ ᱟᱢ ᱨᱮᱭᱟᱜ ᱠᱟᱹᱢᱤ ᱦᱤᱛᱚᱨᱤ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱞᱟᱹᱜᱤᱫ, ᱡᱟᱦᱟᱸ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱦᱟᱨᱟᱣ, ᱨᱤᱥᱮᱴ, ᱥᱮ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱩᱜᱼᱟ᱾ ᱥᱢᱟᱨᱟ ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱥᱚᱨᱣᱟᱨ ᱵᱟᱹᱱᱩᱜᱼᱟ, ᱟᱨ ᱟᱢ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱭ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾\n\nᱡᱟᱦᱟᱸ ᱟᱢ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱟᱨ ᱱᱚᱶᱟ ᱯᱷᱨᱮᱡ ᱢᱤᱫᱛᱟᱸ ᱦᱟᱨᱟᱣᱮᱭᱟᱢ, ᱟᱢ ᱚᱞ ᱟᱠᱟᱱ ᱡᱚᱛᱚ ᱠᱟᱹᱢᱤ ᱫᱚ ᱡᱚᱛᱚ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱭ ᱴᱷᱤᱠ ᱠᱟᱱᱟ᱾",
+  "recoveryPhraseWriteDown": "ᱱᱚᱶᱟ ᱠᱟᱴᱷᱟ ᱠᱚ ᱴᱷᱮᱨ ᱛᱮ ᱚᱞ ᱢᱮ ᱟᱨ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱠᱷᱚᱱ ᱵᱟᱹᱨᱚ ᱡᱟᱭᱜᱟ ᱨᱮ ᱨᱚᱠᱷᱭᱟ ᱢᱮ᱾",
+  "iveSavedRecoveryPhrase": "ᱟᱭᱧ ᱡᱮ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱟᱺᱪᱟᱣ ᱮᱫᱟᱭᱧ",
+  "confirmPhraseBlurb": "ᱟᱢ ᱡᱟᱦᱟᱸ ᱥᱟᱺᱪᱟᱣ ᱠᱮᱫᱟᱢ ᱚᱱᱟ ᱯᱷᱨᱮᱡ ᱠᱷᱚᱱ ᱡᱟᱦᱟᱸ ᱠᱟᱴᱷᱟ ᱠᱚ ᱠᱩᱠᱞᱤᱟᱭᱟ, ᱚᱱᱟ ᱚᱞ ᱢᱮ᱾",
+  "wordNumber": "ᱠᱟᱴᱷᱟ #{n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱮᱠᱥᱯᱚᱴ",
+  "keystoreExportBlurb": "ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱛᱮ, ᱟᱢ ᱟᱢ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱟᱥᱣᱟᱨᱰ ᱛᱮ ᱨᱚᱠᱷᱭᱟ ᱮᱱᱟ ᱮᱱᱠᱨᱤᱯᱴᱮᱰ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱦᱚᱸ ᱥᱟᱺᱪᱟᱣ ᱫᱟᱲᱮᱭᱟᱜᱢᱮᱭᱟ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱮᱴᱠᱮᱛᱮ - ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱢᱤᱫᱟᱜᱟᱜ ᱥᱟᱺᱜᱮ ᱟᱢ ᱨᱮᱭᱟᱜ ᱥᱟᱭᱤᱱ ᱠᱤ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱞᱟᱹᱜᱤᱫ ᱡᱚᱛᱚ ᱠᱷᱚᱱ ᱴᱷᱤᱠ᱾",
+  "keystorePassphrase": "ᱯᱟᱥᱣᱟᱨᱰ",
+  "exportKeystoreFile": "ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱮᱠᱥᱯᱚᱴ ᱢᱮ",
+  "chooseCurrencyTitle": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱩᱫᱨᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ",
+  "chooseCurrencyBlurb": "ᱡᱚᱛᱚ ᱦᱤᱥᱟᱹᱵ ᱫᱚᱞ (ᱴᱚᱠᱟ ᱟᱨ ᱴᱚᱠᱟ ᱞᱮᱠᱟᱱ, ᱯᱮᱸᱥᱚᱱ, ᱦᱚᱸᱰᱮ) ᱱᱤᱛᱚᱜ ᱢᱤᱫ ᱢᱩᱫᱨᱟ ᱵᱮᱵᱷᱟᱨ ᱛᱟᱦᱮᱸᱱᱟ᱾ ᱛᱟᱭᱚᱢ ᱛᱮ ᱟᱢ ᱮᱴᱟᱜ ᱢᱩᱫᱨᱟ ᱨᱮ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱞᱮᱫ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ ᱱᱟᱶᱟ ᱫᱚᱞ ᱵᱮᱱᱟᱣ ᱛᱮ᱾",
+  "currencyBackfillTitle": "ᱛᱟᱭᱚᱢ ᱫᱚᱞ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱫᱨᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ",
+  "currencyBackfillBlurb": "ᱱᱚᱶᱟ ᱮᱯ ᱱᱤᱛᱚᱜ ᱟᱭᱢᱟ ᱢᱩᱫᱨᱟ ᱥᱟᱶᱛᱮ ᱠᱟᱹᱢᱤ ᱠᱟᱱᱟ᱾ ᱟᱢ ᱨᱮᱭᱟᱜ ᱛᱟᱭᱚᱢ ᱦᱤᱥᱟᱹᱵ ᱟᱨ ᱫᱚᱞ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱫᱨᱟ ᱫᱚᱨᱠᱟᱨ - ᱪᱮᱫᱟᱜ ᱠᱷᱟᱛᱤᱨ ᱩᱱᱠᱩ ᱫᱚ ᱱᱚᱶᱟ ᱨᱚᱠᱚᱢ ᱵᱟᱭᱚ ᱠᱷᱚᱱ ᱚᱛᱮ ᱵᱮᱱᱟᱣ ᱟᱠᱟᱱᱟ, ᱢᱤᱫ ᱵᱟᱪᱷᱟᱣ ᱫᱚ ᱡᱚᱛᱚ ᱨᱮ ᱞᱟᱹᱜᱤᱫ ᱦᱩᱭᱩᱜᱼᱟ᱾",
+  "firstAccountTitle": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱮᱢ ᱢᱮ",
+  "firstAccountBlurb": "ᱱᱚᱶᱟ ᱫᱚ ᱟᱢ ᱞᱟᱹᱜᱤᱫ ᱛᱟᱭᱚᱢ ᱛᱮ ᱛᱚᱭᱚᱨ ᱠᱟᱱ ᱦᱤᱥᱟᱹᱵ ᱠᱟᱱᱟ - ᱟᱢ ᱡᱟᱦᱟᱸ ᱵᱟᱰᱟᱭ ᱩᱫᱩᱜ, ᱚᱱᱟ ᱧᱩᱛᱩᱢ ᱮᱢ ᱢᱮ, ᱡᱮᱞᱠᱟ ᱟᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱸᱠ᱾ ᱟᱢ ᱛᱟᱭᱚᱢ ᱛᱮ ᱢᱤᱫ ᱠᱷᱚᱨᱚᱪ ᱥᱮ ᱢᱤᱞᱟ ᱚᱞᱟᱢ, ᱟᱨ ᱛᱟᱭᱚᱢ ᱛᱮ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱛᱮ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱚᱠᱷᱭᱟᱢᱮ᱾",
+  "whatsMainAccountCalled": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱩᱬᱩᱛ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱪᱮᱫᱟᱜ ᱠᱟᱱᱟ?",
+  "restoreTitle": "ᱥᱟᱭᱤᱱ ᱠᱤ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ",
+  "restoreBlurb": "ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮ ᱦᱤᱥᱟᱹᱵ ᱢᱮᱱᱟᱜᱼᱟ, ᱢᱮᱱᱠᱷᱟᱱ ᱦᱮᱡ ᱥᱟᱭᱤᱱ ᱠᱤ ᱵᱟᱭᱟ᱾ ᱟᱢ ᱨᱮᱭᱟᱜ ᱨᱚᱠᱷᱭᱟ ᱠᱟᱱ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱠᱷᱚᱱ ᱚᱱᱟ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱢᱮ - ᱟᱢ ᱨᱮᱭᱟᱜ ᱰᱟᱴᱟ ᱫᱚ ᱛᱟᱭᱚᱢ ᱞᱮᱠᱷᱟ ᱴᱷᱤᱠ ᱛᱟᱦᱮᱸᱱᱟ, ᱟᱨ ᱚᱠᱟ ᱦᱚᱸ ᱵᱟᱭ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱚᱜᱼᱟ᱾",
+  "recoveryPhrase24": "ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ (ᱡᱚᱛᱚ ᱒᱔ ᱠᱟᱴᱷᱟ)",
+  "keystoreFile": "ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ",
+  "keystoreFileContents": "ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱨᱮᱭᱟᱜ ᱵᱤᱥᱚᱭ",
+  "optionalBackupFile": "ᱮᱴᱠᱮᱛᱮ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ",
+  "iDontHavePhrase": "ᱟᱭᱧ ᱞᱚᱠᱷᱟᱸ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱵᱟᱭᱟ",
+  "migrationTitle": "ᱱᱟᱶᱟ ᱠᱤ ᱛᱮ ᱢᱟᱭᱭᱚᱨᱮᱥᱚᱱ",
+  "migrationBlurb": "ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱵᱚᱭᱦᱟᱛᱮ, ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮᱭᱟᱜ ᱥᱟᱭᱤᱱ ᱠᱤ ᱵᱟᱭ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱠᱟᱛᱮᱡᱽᱟ᱾ ᱟᱢ ᱱᱟᱶᱟ ᱠᱤ ᱮᱛᱚᱦᱚᱵ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ᱾ ᱯᱩᱨᱟᱹᱱ ᱚᱞ ᱠᱚ ᱧᱮᱞ ᱦᱩᱭᱩᱜᱼᱟ ᱢᱮᱱᱠᱷᱟᱱ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱩᱜᱼᱟ᱾",
+  "iConfirmBooksValid": "ᱟᱭᱧ ᱪᱮᱛᱟᱱ ᱟᱭᱮᱱᱟ ᱡᱮ ᱱᱤᱛᱚᱜ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱫᱚ ᱴᱷᱤᱠ ᱠᱟᱱᱟ",
+  "whyWeDontEdit": "ᱚᱠᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱮ ᱯᱩᱨᱟᱹᱱ ᱚᱞ ᱵᱟᱭ ᱮᱰᱤᱴ ᱮᱫᱟᱞᱮ",
+  "whyWeDontEditBody": "ᱡᱟᱦᱟᱸ ᱟᱢ ᱢᱤᱫ ᱵᱷᱩᱞ ᱴᱷᱤᱠ ᱢᱮᱛᱟᱭᱢᱮ, ᱟᱞᱮ ᱫᱚ ᱯᱩᱨᱟᱹᱱ ᱞᱟᱭᱤᱱ ᱚᱛᱮ ᱨᱚᱠᱷᱭᱟ ᱟᱞᱮᱭᱟ ᱟᱨ ᱚᱱᱟ ᱞᱚᱠᱚᱸ ᱴᱷᱤᱠ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱫᱟᱞᱮ, ᱚᱱᱟ ᱵᱟᱫᱮ ᱡᱟᱦᱟᱸ ᱟᱢ ᱚᱞ ᱟᱠᱟᱫᱟᱢ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱮᱫᱟᱞᱮ᱾ ᱚᱱᱟᱛᱮ ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱛᱚᱨᱤ ᱫᱚ ᱛᱟᱭᱚᱢ ᱛᱮ ᱩᱫᱩᱠᱟᱹᱭᱟ ᱡᱮ ᱪᱮᱫᱟᱜ ᱦᱩᱭᱮᱱᱟ ᱟᱨ ᱚᱠᱟ ᱚᱠᱛᱚ ᱟᱢ ᱴᱷᱤᱠ ᱠᱮᱫᱟᱢ — ᱩᱠᱩ ᱛᱮ ᱪᱮᱫᱟᱜ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱚᱜᱼᱟ᱾",
+  "lockTitle": "ᱠᱷᱩᱞᱟᱹ",
+  "lockScreenTitle": "ᱞᱚᱠ ᱠᱟᱱᱟ",
+  "enterPinToContinue": "ᱡᱟᱨᱤ ᱞᱟᱹᱜᱤᱫ ᱟᱢ ᱨᱮᱭᱟᱜ ᱯᱤᱱ ᱚᱞ ᱢᱮ",
+  "pinLabel": "ᱯᱤᱱ",
+  "setPinTitle": "ᱯᱤᱱ ᱛᱚᱭᱚᱨ ᱢᱮ",
+  "currentPin": "ᱱᱤᱛᱚᱜ ᱨᱮᱭᱟᱜ ᱯᱤᱱ",
+  "newPin": "ᱱᱟᱶᱟ ᱯᱤᱱ",
+  "confirmPin": "ᱯᱤᱱ ᱪᱮᱛᱟᱱ ᱢᱮ",
+  "confirmNewPin": "ᱱᱟᱶᱟ ᱯᱤᱱ ᱪᱮᱛᱟᱱ ᱢᱮ",
+  "firstWeekTitle": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱛᱚᱭᱚᱨ ᱢᱮ",
+  "addCashAccount": "ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱞᱮᱫ ᱢᱮ",
+  "addCreditCard": "ᱠᱨᱮᱰᱤᱴ ᱠᱟᱨᱰ ᱥᱮᱞᱮᱫ ᱢᱮ",
+  "cashAccountName": "ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ",
+  "cardName": "ᱠᱟᱨᱰ ᱧᱩᱛᱩᱢ",
+  "paidFromBank": "ᱵᱮᱸᱠ ᱠᱷᱚᱱ ᱵᱷᱚᱨᱚᱭᱮᱱᱟ",
+  "paidFromCard": "ᱠᱟᱨᱰ ᱠᱷᱚᱱ ᱵᱷᱚᱨᱚᱭᱮᱱᱟ",
+  "choosePassphraseTitle": "ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱨᱚᱠᱷᱭᱟ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾ ᱡᱟᱦᱟᱸ ᱟᱢ ᱩᱫᱩᱜᱼᱟᱢ ᱚᱱᱟ ᱡᱟᱦᱟᱸ ᱦᱚᱸ ᱵᱟᱭ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱᱚᱜᱼᱟ᱾",
+  "replaceBooksTitle": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱚᱲᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱵᱚᱫᱚᱞ ᱟᱢᱟ ᱥᱮ?",
+  "replaceBooksBody": "ᱱᱚᱶᱟ ᱮᱯ ᱨᱮ ᱱᱤᱛᱚᱜ ᱢᱮᱱᱟᱜ ᱡᱚᱛᱚ ᱫᱚ ᱵᱮᱠᱟᱯ ᱛᱮ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱩᱜᱼᱟ᱾ ᱛᱟᱭᱚᱢ ᱛᱮ ᱮᱯ ᱵᱚᱸᱫᱚᱭ ᱠᱟᱛᱮ ᱫᱚᱦᱲᱟ ᱠᱷᱩᱞᱟᱹ ᱢᱮ᱾",
+  "chooseBackupFileFirst": "ᱯᱟᱦᱤᱞᱮ ᱢᱤᱫ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾",
+  "backupRestored": "ᱵᱮᱠᱟᱯ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱦᱩᱭ ᱮᱱᱟ",
+  "backupRestoredBody": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱫᱚ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱦᱩᱭ ᱮᱱᱟ᱾ ᱡᱟᱨᱤ ᱞᱟᱹᱜᱤᱫ ᱮᱯ ᱵᱚᱸᱫᱚᱭ ᱠᱟᱛᱮ ᱫᱚᱦᱲᱟ ᱠᱷᱩᱞᱟᱹ ᱢᱮ᱾",
+  "fixThisEntry": "ᱱᱚᱶᱟ ᱚᱞ ᱴᱷᱤᱠ ᱢᱮ",
+  "fixBlurb": "ᱯᱩᱨᱟᱹᱱ ᱞᱟᱭᱤᱱ ᱫᱚ ᱡᱮᱞᱠᱟ ᱛᱟᱦᱮᱸᱱ ᱠᱟᱱᱟ ᱚᱱᱟ ᱞᱮᱠᱷᱟ ᱛᱟᱦᱮᱸᱱᱟ᱾ ᱪᱮᱛᱟᱱ ᱠᱟᱛᱮ ᱢᱤᱫ ᱩᱞᱴᱟ ᱞᱟᱭᱤᱱ ᱟᱨ ᱴᱷᱤᱠ ᱞᱟᱭᱤᱱ ᱥᱮᱞᱮᱫ ᱦᱩᱭᱩᱜᱼᱟ᱾",
+  "importStatementTitle": "ᱥᱴᱮᱴᱢᱮᱸᱴ ᱟᱢᱯᱚᱴ",
+  "importOfx": "OFX ᱟᱢᱯᱚᱴ",
+  "importOfxQfxFile": "OFX / QFX ᱯᱷᱟᱭᱞ ᱟᱢᱯᱚᱴ",
+  "importCsvFile": "CSV ᱯᱷᱟᱭᱞ ᱟᱢᱯᱚᱴ",
+  "whatKindOfStatement": "ᱟᱢ ᱛᱟᱭᱚᱢ ᱪᱮᱫ ᱞᱮᱠᱟᱱ ᱥᱴᱮᱴᱢᱮᱸᱴ ᱯᱷᱟᱭᱞ ᱢᱮᱱᱟᱜᱼᱟ?",
+  "chooseAccountForFile": "ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱱᱟ ᱚᱱᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾",
+  "importIntoAccount": "ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱟᱢᱯᱚᱴ",
+  "useSavedProfile": "ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱯᱽᱨᱚᱯᱷᱟᱭᱤᱞ ᱵᱮᱵᱷᱟᱨ ᱢᱮ",
+  "saveMappingProfile": "ᱱᱚᱶᱟ ᱢᱮᱯᱤᱝ ᱫᱚ ᱯᱽᱨᱚᱯᱷᱟᱭᱤᱞ ᱞᱮᱠᱷᱟ ᱥᱟᱺᱪᱟᱣ ᱢᱮ (ᱮᱴᱠᱮᱛᱮ)",
+  "renameProfile": "ᱯᱽᱨᱚᱯᱷᱟᱭᱤᱞ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ",
+  "deleteProfileTitle": "ᱯᱽᱨᱚᱯᱷᱟᱭᱤᱞ ᱢᱮᱴᱟᱣ ᱟᱢᱟ ᱥᱮ?",
+  "fileHasHeader": "ᱯᱷᱟᱭᱞ ᱨᱮ ᱦᱮᱰᱚᱨ ᱞᱟᱭᱤᱱ ᱢᱮᱱᱟᱜᱼᱟ",
+  "dateColumn": "ᱫᱤᱱ ᱠᱚᱞᱚᱢ",
+  "dateFormatHint": "ᱫᱤᱱ ᱨᱚᱠᱚᱢ (ᱡᱮᱞᱠᱟ dd/MM/yyyy)",
+  "amountColumn": "ᱮᱞ ᱠᱚᱞᱚᱢ",
+  "amountConvention": "ᱮᱞ ᱨᱮᱭᱟᱜ ᱨᱤᱛᱤ",
+  "signedAmountColumn": "ᱥᱟᱭᱤᱱ ᱠᱤ ᱮᱞ ᱠᱚᱞᱚᱢ",
+  "separateDebitCredit": "ᱟᱭᱢᱟ ᱰᱮᱵᱤᱴ / ᱠᱨᱮᱰᱤᱴ ᱠᱚᱞᱚᱢ",
+  "debitColumn": "ᱰᱮᱵᱤᱴ ᱠᱚᱞᱚᱢ",
+  "creditColumn": "ᱠᱨᱮᱰᱤᱴ ᱠᱚᱞᱚᱢ",
+  "decimalSeparator": "ᱰᱮᱥᱤᱢᱚᱞ ᱪᱤᱱᱦᱟ (. ᱥᱮ ,)",
+  "descriptionColumns": "ᱵᱮᱣᱟᱹᱨ ᱠᱚᱞᱚᱢ",
+  "referenceIdColumn": "ᱨᱮᱯᱷᱨᱮᱸᱥ ᱟᱭᱰᱤ ᱠᱚᱞᱚᱢ (ᱮᱴᱠᱮᱛᱮ)",
+  "skippedRows": "ᱥᱠᱤᱯ ᱠᱟᱱ ᱞᱟᱭᱤᱱ",
+  "parsedTransactionCount": "{count} ᱠᱟᱹᱢᱤ ᱯᱟᱨᱥ ᱦᱩᱭᱮᱱᱟ",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} ᱥᱠᱤᱯ ᱥᱮ ᱵᱟᱰ",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} ᱚᱞ ᱦᱩᱭ ᱮᱱᱟ, {failed} ᱵᱟᱭ ᱴᱷᱤᱠ",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "ᱡᱚᱛᱚ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱹᱛ",
+  "saveAsRule": "ᱱᱤᱭᱚᱢ ᱞᱮᱠᱷᱟ ᱥᱟᱺᱪᱟᱣ ᱟᱢᱟ ᱥᱮ?",
+  "saveAsRuleBlurb": "ᱛᱟᱭᱚᱢ ᱛᱮ ᱚᱠᱟ ᱟᱢᱯᱚᱴ ᱨᱮ ᱱᱚᱶᱟ ᱠᱤᱚᱭᱟᱰ ᱢᱮᱱᱟᱜᱼᱟ ᱚᱱᱟ ᱨᱮ ᱱᱚᱶᱟ ᱡᱟᱹᱛ ᱵᱮᱵᱷᱟᱨᱚᱜᱼᱟ᱾",
+  "keyword": "ᱠᱤᱚᱭᱟᱰ",
+  "noSavedRules": "ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱱᱤᱭᱚᱢ ᱵᱟᱭᱟ᱾ ᱱᱤᱭᱚᱢ ᱥᱟᱺᱪᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱫᱚᱞ ᱞᱟᱭᱤᱱ ᱨᱮ ᱡᱟᱹᱛ ᱮᱢ ᱢᱮ᱾",
+  "deleteRuleTitle": "ᱱᱤᱭᱚᱢ ᱢᱮᱴᱟᱣ ᱟᱢᱟ ᱥᱮ?",
+  "editRule": "ᱱᱤᱭᱚᱢ ᱮᱰᱤᱴ ᱢᱮ",
+  "rowsGrouped": "{count} ᱞᱟᱭᱤᱱ",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "{extensions} ᱥᱴᱮᱴᱢᱮᱸᱴ ᱯᱷᱟᱭᱞ ᱟᱢᱯᱚᱴ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱪᱷᱟᱣ ᱢᱮ",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ",
+  "addPayee": "ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱥᱮᱞᱮᱫ ᱢᱮ",
+  "renamePayee": "ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ",
+  "deletePayeeTitle": "ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱢᱮᱴᱟᱣ ᱟᱢᱟ ᱥᱮ?",
+  "noPayeesYet": "ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱵᱟᱭᱟ",
+  "recurringTitle": "ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ",
+  "noRecurringYet": "ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ ᱵᱟᱭᱟ",
+  "deleteTemplateTitle": "ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ ᱢᱮᱴᱟᱣ ᱟᱢᱟ ᱥᱮ?",
+  "dayOfMonth": "ᱪᱟᱸᱫᱚ ᱨᱮᱭᱟᱜ ᱫᱤᱱ (1-31)",
+  "dayOfMonthNote": "ᱚᱠᱟ ᱪᱟᱸᱫᱚ ᱨᱮ ᱚᱠᱚᱭ ᱫᱤᱱ ᱢᱮᱱᱟᱜᱼᱟ, ᱚᱱᱟ ᱨᱮᱭᱟᱜ ᱢᱩᱪᱟᱹᱫ ᱫᱤᱱ ᱵᱮᱵᱷᱟᱨᱚᱜᱼᱟ᱾",
+  "dayOfMonthLine": "ᱪᱟᱸᱫᱚ ᱨᱮᱭᱟᱜ ᱫᱤᱱ {day} - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "ᱧᱩᱛᱩᱢ",
+  "none": "ᱛᱟᱦᱮᱸᱸ ᱵᱟᱝ",
+  "currency": "ᱢᱩᱫᱨᱟ",
+  "errorGeneric": "ᱪᱮᱫᱟᱜ ᱵᱟᱝ ᱴᱷᱤᱠ᱾ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾",
+  "errorSigningIdentityMismatch": "ᱱᱚᱶᱟ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱫᱚ ᱱᱚᱶᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱨᱮ ᱚᱠᱟ ᱦᱚᱸ ᱥᱟᱭᱤᱱ ᱠᱤ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡ ᱠᱟᱱᱟ᱾",
+  "errorInvalidLedgerBackup": "ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ ᱴᱷᱤᱠ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱵᱟᱝᱟ᱾",
+  "errorInvalidLedgerBackupNoIdentity": "ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱨᱮ ᱥᱟᱭᱤᱱ ᱠᱤ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱵᱟᱭᱟ - ᱱᱚᱶᱟ ᱴᱷᱤᱠ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱵᱟᱝᱟ᱾",
+  "errorInvalidLedgerBackupUnverified": "ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱫᱚ ᱴᱷᱤᱠ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱨᱩᱡᱩ ᱠᱮᱱᱟ, ᱚᱱᱟᱛᱮ ᱵᱟᱭ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱦᱩᱭᱮᱱᱟ᱾",
+  "errorInvalidLedgerBackupUnreadable": "ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱞᱮᱠᱷᱟ ᱠᱷᱩᱞᱟᱹ ᱵᱟᱭ ᱦᱩᱭᱮᱱᱟ: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱫᱚ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮᱭᱟᱜ ᱥᱟᱭᱤᱱ ᱠᱤ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱠᱷᱚᱱ ᱮᱴᱟᱜ ᱠᱟᱱ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱨᱮᱭᱟᱜ ᱠᱟᱱᱟ᱾",
+  "errorAccountNotFinancial": "ᱚᱱᱟ ᱫᱚ ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱝᱟ᱾",
+  "errorAccountArchived": "ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱫᱚ ᱩᱠᱩ ᱠᱟᱱᱟ᱾",
+  "errorAccountNotArchived": "ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱫᱚ ᱩᱠᱩ ᱵᱟᱝᱟ᱾",
+  "errorAccountNoPositiveBalanceToCloseOut": "ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱛᱮᱦᱮᱸᱱ ᱵᱮᱞᱮᱸᱥ ᱵᱟᱝᱟ᱾",
+  "errorAccountHasNoGroup": "ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱞ ᱵᱟᱭ ᱛᱚᱭᱚᱨ᱾",
+  "errorGroupHasNoCurrency": "ᱚᱱᱟ ᱫᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱫᱨᱟ ᱵᱟᱭ ᱛᱚᱭᱚᱨ ᱟᱠᱟᱱᱟ᱾",
+  "errorGroupNotFound": "ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱫᱚᱞ ᱵᱟᱭ ᱧᱟᱢᱮᱱᱟ᱾",
+  "errorInvestmentAccountsMustBeAssets": "ᱟᱥᱮᱴ ᱦᱤᱥᱟᱹᱵ ᱠᱷᱟᱱ ᱮᱢ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱞᱮᱠᱷᱟ ᱪᱤᱱᱦᱟ ᱠᱟᱛᱮ ᱦᱩᱭᱟ᱾",
+  "errorCreditCardsMustBeLiabilities": "ᱫᱮᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱷᱟᱱ ᱮᱢ ᱠᱨᱮᱰᱤᱴ ᱠᱟᱨᱰ ᱞᱮᱠᱷᱟ ᱪᱤᱱᱦᱟ ᱠᱟᱛᱮ ᱦᱩᱭᱟ᱾",
+  "errorOpeningBalanceMustBePositive": "ᱮᱦᱚᱵ ᱵᱮᱞᱮᱸᱥ, ᱡᱩᱫᱤ ᱮᱢᱟ ᱠᱟᱱᱟ, ᱚᱱᱟ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟ᱾",
+  "errorAccountTypeDoesNotMatchGroup": "ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱞᱮᱠᱟᱱ ᱫᱚ ᱫᱚᱞ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡᱟ᱾",
+  "errorLastActiveAccount": "ᱢᱩᱪᱟᱹᱫ ᱥᱚᱱᱚᱛ ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱩᱠᱩ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorCurrencyRequiredToCreateGroup": "ᱫᱚᱞ ᱵᱮᱱᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱫᱨᱟ ᱫᱚᱨᱠᱟᱨ᱾",
+  "errorSystemGroupCannotBeArchived": "ᱵᱤᱞᱴ-ᱤᱱ ᱫᱚᱞ ᱠᱚ ᱩᱠᱩ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorGroupAlreadyArchived": "ᱚᱱᱟ ᱫᱚᱞ ᱫᱚ ᱛᱟᱭᱚᱢ ᱛᱮ ᱩᱠᱩ ᱠᱟᱱᱟ᱾",
+  "errorCannotArchiveGroupWithAccounts": "ᱚᱠᱟ ᱫᱚᱞ ᱨᱮ ᱟᱡᱚᱠ ᱦᱚᱸ ᱥᱚᱱᱚᱛ ᱦᱤᱥᱟᱹᱵ ᱢᱮᱱᱟᱜᱼᱟ ᱚᱱᱟ ᱩᱠᱩ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorSystemGroupNeverArchived": "ᱵᱤᱞᱴ-ᱤᱱ ᱫᱚᱞ ᱠᱚ ᱡᱟᱦᱟᱸ ᱦᱚᱸ ᱵᱟᱭ ᱩᱠᱩᱚᱜᱼᱟ᱾",
+  "errorAccountGroupsCannotBeDeleted": "ᱦᱤᱥᱟᱹᱵ ᱫᱚᱞ ᱢᱮᱴᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorCannotReassignDifferentCurrency": "ᱮᱴᱟᱜ ᱢᱩᱫᱨᱟ ᱨᱮᱭᱟᱜ ᱫᱚᱞ ᱨᱮ ᱱᱚᱶᱟ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱰᱟᱭ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorCannotChangeGroupCurrencyWithAccounts": "ᱡᱟᱦᱟᱸ ᱛᱟᱠᱮᱫ ᱫᱚᱞ ᱨᱮ ᱥᱚᱱᱚᱛ ᱦᱤᱥᱟᱹᱵ ᱢᱮᱱᱟᱜᱼᱟ, ᱢᱩᱫᱨᱟ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorAmountMustBePositive": "ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorAccountCurrencyAmountMustBePositive": "ᱦᱤᱥᱟᱹᱵ ᱢᱩᱫᱨᱟ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorAccountCurrencyAmountNotForSameCurrency": "ᱦᱤᱥᱟᱹᱵ ᱢᱩᱫᱨᱟ ᱮᱞ ᱫᱚ ᱮᱴᱟᱜ ᱢᱩᱫᱨᱟ ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱟᱱ ᱮᱢ ᱦᱩᱭᱟ᱾",
+  "errorSplitNeedsTwoLines": "ᱴᱷᱚᱠᱟ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱨ ᱡᱟᱹᱛ ᱞᱟᱭᱤᱱ ᱫᱚᱨᱠᱟᱨ᱾",
+  "errorSplitLineMustBePositive": "ᱛᱷᱚᱠᱟ ᱞᱟᱭᱤᱱ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱮᱞ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorSplitLinesMustSumToTotal": "ᱛᱷᱚᱠᱟ ᱞᱟᱭᱤᱱ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚᱠᱚᱭ ᱫᱚ ᱠᱟᱹᱢᱤ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚ ᱮᱞ ᱥᱟᱶᱛᱮ ᱦᱮᱡ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorTransferAmountMustBePositive": "ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorTransferAccountsMustDiffer": "ᱮᱦᱚᱵ ᱟᱨ ᱛᱟᱸᱦᱮᱸ ᱦᱤᱥᱟᱹᱵ ᱫᱚ ᱚᱠᱟᱛᱚ ᱚᱠᱟ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorCloseoutRequiresDestinationAmount": "ᱢᱩᱫᱨᱟ-ᱵᱚᱫᱚᱞ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱰᱟᱭ ᱛᱟᱸᱦᱮᱸ ᱮᱞ ᱧᱟᱢ ᱟᱠᱟᱱᱟ ᱚᱱᱟ ᱫᱚᱨᱠᱟᱨ᱾",
+  "errorDestinationAmountNotForSameCurrency": "ᱛᱟᱸᱦᱮᱸ ᱮᱞ ᱫᱚ ᱢᱩᱫᱨᱟ-ᱵᱚᱫᱚᱞ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱟᱱ ᱮᱢ ᱦᱩᱭᱟ᱾",
+  "errorDestinationAmountMustBePositive": "ᱛᱟᱸᱦᱮᱸ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorInvestmentCashExceeded": "ᱱᱚᱶᱟ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱴᱚᱠᱟ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorCannotReverseUnsettledProvisional": "ᱩᱞᱴᱟ ᱵᱟᱫᱮ ᱱᱚᱶᱟ ᱛᱮᱦᱮᱸᱱ ᱟᱠᱟᱱ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱴᱷᱤᱠ ᱢᱮ᱾",
+  "errorAlreadyReversed": "ᱱᱚᱶᱟ ᱚᱞ ᱫᱚ ᱛᱟᱭᱚᱢ ᱛᱮ ᱴᱷᱤᱠ ᱦᱩᱭ ᱮᱱᱟ᱾ ᱢᱩᱞ ᱞᱟᱭᱤᱱ ᱫᱚ ᱡᱮᱞᱠᱟ ᱛᱟᱦᱮᱸᱱ ᱠᱟᱱᱟ ᱚᱱᱟ ᱞᱮᱠᱷᱟ ᱛᱟᱦᱮᱸᱱᱟ᱾",
+  "errorNotActiveExpenseCategory": "ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾",
+  "errorNotActiveIncomeCategory": "ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱢᱤᱞᱟ ᱡᱟᱹᱛ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾",
+  "errorSettledAmountMustNotBeNegative": "ᱥᱮᱴᱮᱨ ᱮᱞ ᱫᱚ ᱱᱮᱜᱮᱴᱤᱵᱽ ᱵᱟᱭ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorPendingTransferNotFound": "ᱚᱱᱟ ᱛᱮᱦᱮᱸᱱ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱵᱟᱭ ᱧᱟᱢᱮᱱᱟ᱾",
+  "errorPendingTransferAlreadySettled": "ᱚᱱᱟ ᱛᱮᱦᱮᱸᱱ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱫᱚ ᱛᱟᱭᱚᱢ ᱛᱮ ᱴᱷᱤᱠ ᱦᱩᱭ ᱮᱱᱟ᱾",
+  "errorSettledToMustBeSourceOrDestination": "ᱮᱦᱚᱵ ᱥᱮ ᱛᱟᱸᱦᱮᱸ ᱢᱩᱞ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾",
+  "errorFeeCategoryOnlyWhenReturningToSource": "ᱯᱷᱤᱥ ᱡᱟᱹᱛ ᱫᱚ ᱚᱠᱛᱚ ᱴᱚᱠᱟ ᱮᱦᱚᱵ ᱦᱤᱥᱟᱹᱵ ᱛᱮ ᱨᱩᱣᱟᱲ ᱦᱩᱭ ᱟᱛᱟᱭ ᱚᱱᱟ ᱠᱷᱟᱱ ᱮᱢ ᱦᱩᱭᱟ᱾",
+  "errorSettledAmountMustBePositiveForDelivery": "ᱥᱮᱴᱮᱨ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱮᱞ ᱚᱞ ᱢᱮ᱾",
+  "errorSettledAmountExceedsProvisional": "ᱚᱱᱟ ᱮᱞ ᱫᱚ ᱠᱩᱞ ᱟᱠᱟᱱ ᱠᱷᱚᱱ ᱰᱷᱮᱨᱟᱜᱼᱟ᱾",
+  "errorInstrumentNotFound": "ᱚᱱᱟ ᱥᱟᱫᱷᱚᱱ ᱵᱟᱭ ᱧᱟᱢᱮᱱᱟ᱾",
+  "errorIncomeRequiredForNonCash": "ᱴᱚᱠᱟ ᱵᱟᱝ ᱠᱟᱹᱢᱤ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱢᱤᱞᱟ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾",
+  "errorInsufficientCash": "ᱱᱚᱶᱟ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱚᱱᱟ ᱠᱤᱨᱤᱸ ᱞᱟᱹᱜᱤᱫ ᱴᱚᱠᱟ ᱠᱚᱢ ᱠᱟᱱᱟ᱾",
+  "errorSellQuantityAndPriceMustBePositive": "ᱟᱠᱤᱨᱤᱸ ᱦᱤᱥᱟᱹᱵ ᱞᱮᱠᱷᱟ ᱟᱨ ᱢᱤᱫ ᱨᱮᱭᱟᱜ ᱫᱟᱢ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorLockedUntil": "ᱟᱠᱤᱨᱤᱸ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ: ᱡᱟᱹᱭᱫᱟ ᱭᱩᱱᱤᱴ ᱫᱚ {date} ᱛᱟᱦᱮᱸᱸ ᱞᱚᱠ ᱠᱟᱱᱟ᱾",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "ᱟᱢ ᱛᱟᱭᱚᱢ ᱛᱮ ᱞᱚᱠ ᱵᱟᱭ ᱠᱟᱱ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱟᱠᱤᱨᱤᱸ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorIncomeRequiredForGain": "ᱞᱟᱵᱷ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱢᱤᱞᱟ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾",
+  "errorExpenseRequiredForLoss": "ᱞᱚᱠᱥᱟᱱ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾",
+  "errorBrokerageFailedAfterBuy": "ᱠᱤᱨᱤᱸ ᱚᱞ ᱦᱩᱭ ᱮᱱᱟ, ᱢᱮᱱᱠᱷᱟᱱ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱯᱷᱤᱥ ᱵᱟᱭ ᱴᱷᱤᱠ: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "ᱟᱠᱤᱨᱤᱸ ᱚᱞ ᱦᱩᱭ ᱮᱱᱟ, ᱢᱮᱱᱠᱷᱟᱱ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱯᱷᱤᱥ ᱵᱟᱭ ᱴᱷᱤᱠ: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "ᱞᱟᱵᱷᱟᱸᱥ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorNotInvestmentAccount": "ᱚᱱᱟ ᱫᱚ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱝᱟ᱾",
+  "errorNoInventoryCompanion": "ᱱᱚᱶᱟ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱳᱴᱟ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱭᱟ᱾",
+  "errorInvestmentReversalBlocked": "ᱱᱚᱶᱟ ᱠᱤᱨᱤᱸ ᱩᱞᱴᱟ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ: ᱛᱟᱭᱚᱢ ᱦᱤᱥᱟᱹᱵ ᱠᱚ ᱚᱱᱟ ᱭᱩᱱᱤᱴ ᱨᱮ ᱠᱷᱟᱴᱟᱹᱭ᱾ ᱯᱟᱦᱤᱞᱮ ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱚ ᱩᱞᱴᱟ ᱢᱮ: {sells}᱾",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "ᱪᱟᱸᱫᱚ ᱥᱤᱢᱟ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorTemplateAmountMustBePositive": "ᱴᱮᱢᱯᱞᱮᱴ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorOfxUnrecognized": "ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ OFX ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱪᱤᱱᱦᱟᱹᱭᱮᱱᱟ᱾",
+  "errorCsvEmpty": "ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱷᱟᱭᱞ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱠᱟᱱᱟ᱾",
+  "errorCsvUnreadable": "ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ CSV ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱯᱟᱲᱦᱟᱣ ᱮᱱᱟ᱾",
+  "errorCsvNoRows": "ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱷᱟᱭᱞ ᱨᱮ ᱞᱟᱭᱤᱱ ᱵᱟᱭᱟ᱾",
+  "errorBackupCreateFailed": "ᱵᱮᱠᱟᱯ ᱵᱮᱱᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ - ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱭ ᱴᱷᱤᱠ, ᱥᱮ ᱴᱷᱤᱠ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱵᱟᱝᱟ᱾",
+  "validationAmountAccountCategoryRequired": "ᱮᱞ, ᱦᱤᱥᱟᱹᱵ, ᱟᱨ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾",
+  "validationAmountAccountRequired": "ᱮᱞ ᱟᱨ ᱦᱤᱥᱟᱹᱵ ᱫᱚᱨᱠᱟᱨ᱾",
+  "validationSplitLineIncomplete": "ᱡᱚᱛᱚ ᱛᱷᱚᱠᱟ ᱞᱟᱭᱤᱱ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱹᱛ ᱟᱨ ᱮᱞ ᱫᱚᱨᱠᱟᱨ᱾",
+  "validationSplitSumMismatch": "ᱛᱷᱚᱠᱟ ᱞᱟᱭᱤᱱ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚᱠᱚᱭ ᱫᱚ ᱠᱟᱹᱢᱤ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚ ᱮᱞ ᱥᱟᱶᱛᱮ ᱦᱮᱡ ᱦᱩᱭᱟᱢᱟ᱾",
+  "validationFromToAmountRequired": "ᱮᱦᱚᱵ ᱦᱤᱥᱟᱹᱵ, ᱛᱟᱸᱦᱮᱸ ᱦᱤᱥᱟᱹᱵ, ᱟᱨ ᱮᱞ ᱫᱚᱨᱠᱟᱨ᱾",
+  "validationAmountArrivedRequired": "ᱥᱮᱴᱮᱨ ᱮᱞ ᱫᱚᱨᱠᱟᱨ᱾",
+  "validationChooseReceivingAccount": "ᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱮᱞ ᱢᱤᱞᱟ ᱠᱮᱫᱟ ᱚᱱᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾",
+  "validationAccountCategoryRequired": "ᱦᱤᱥᱟᱹᱵ ᱟᱨ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾",
+  "validationFixFailed": "ᱱᱚᱶᱟ ᱴᱷᱤᱠ ᱥᱟᱺᱪᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ᱾",
+  "validationNameRequired": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱩᱬᱩᱛ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱮᱢ ᱢᱮ᱾",
+  "validationStillLoading": "ᱱᱤᱛᱚᱜ ᱦᱚᱸ ᱞᱚᱰᱤᱝ ᱦᱩᱭᱩᱜᱼᱟ - ᱴᱷᱚᱲᱟ ᱚᱠᱛᱚ ᱛᱟᱭᱚᱢ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾",
+  "validationSaveAccountNameFailed": "ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱥᱟᱺᱪᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ᱾",
+  "validationWrongPin": "ᱯᱤᱱ ᱵᱟᱭ ᱴᱷᱤᱠ᱾ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾",
+  "validationCategoryMustBeIncomeOrExpense": "ᱡᱟᱹᱛ ᱫᱚ ᱢᱤᱞᱟ ᱥᱮ ᱠᱷᱚᱨᱚᱪ ᱦᱩᱭᱟᱢᱟ᱾",
+  "validationOnlyExpenseHasMonthlyLimit": "ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱠᱷᱟᱱ ᱮᱢ ᱪᱟᱸᱫᱚ ᱥᱤᱢᱟ ᱛᱟᱦᱮᱸᱱᱟ᱾",
+  "validationInvalidTemplate": "ᱴᱮᱢᱯᱞᱮᱴ ᱵᱟᱭ ᱴᱷᱤᱠ᱾",
+  "validationWrongKeystorePassphrase": "ᱱᱚᱶᱟ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱭ ᱴᱷᱤᱠ᱾",
+  "validationInvalidKeystoreFile": "ᱱᱚᱶᱟ ᱫᱚ ᱴᱷᱤᱠ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱧᱮᱞᱚᱜᱼᱟ᱾",
+  "validationRestorePhraseFailed": "ᱚᱱᱟ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱠᱷᱚᱱ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ᱾",
+  "validationGenerateKeyFailed": "ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮ ᱥᱟᱭᱤᱱ ᱠᱤ ᱵᱮᱱᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "ᱱᱚᱶᱟ ᱢᱩᱫᱨᱟ ᱥᱟᱺᱪᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "ᱢᱟᱭᱭᱚᱨᱮᱥᱚᱱ ᱵᱟᱭ ᱴᱷᱤᱠ ᱦᱩᱭᱮᱱᱟ᱾ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾",
+  "validationChooseBackupFile": "ᱯᱟᱦᱤᱞᱮ ᱢᱤᱫ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾",
+  "validationPassphraseRequired": "ᱯᱟᱥᱣᱟᱨᱰ ᱚᱞ ᱢᱮ᱾",
+  "validationPinsDoNotMatch": "ᱵᱟᱨ ᱯᱤᱱ ᱫᱚ ᱵᱟᱭ ᱦᱮᱡᱟ᱾",
+  "validationFeePositiveWithCategory": "ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱯᱷᱤᱥ ᱫᱚ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱛᱮ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱮᱞ ᱦᱩᱭᱟᱢᱟ᱾",
+  "validationFeeMustBeLessThanAmount": "ᱯᱷᱤᱥ ᱮᱴᱟᱜᱟᱣ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱤᱥ ᱫᱚ ᱮᱞ ᱠᱷᱚᱱ ᱦᱩᱰᱤᱧ ᱦᱩᱭᱟᱢᱟ᱾",
+  "validationTransferSavedFeeFailed": "ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱥᱟᱺᱪᱟᱣ ᱦᱩᱭ ᱮᱱᱟ, ᱢᱮᱱᱠᱷᱟᱱ ᱯᱷᱤᱥ ᱚᱞ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "ᱴᱷᱤᱠ ᱮᱞ ᱚᱞ ᱢᱮ᱾",
+  "validationConfirmWordMismatch": "ᱠᱟᱴᱷᱟ {n} ᱫᱚ ᱟᱢ ᱨᱮᱭᱟᱜ ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱯᱷᱨᱮᱡ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡᱟ᱾ ᱧᱮᱞ ᱢᱮ ᱟᱨ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "ᱠᱤᱨᱤᱸ ᱦᱤᱥᱟᱹᱵ ᱞᱮᱠᱷᱟ ᱟᱨ ᱢᱤᱫ ᱨᱮᱭᱟᱜ ᱫᱟᱢ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾",
+  "errorInstrumentArchived": "ᱩᱠᱩ ᱠᱟᱱ ᱥᱟᱫᱷᱚᱱ ᱠᱤᱨᱤᱸ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorNonCashCannotIncludeBrokerage": "ᱴᱚᱠᱟ ᱵᱟᱝ ᱠᱟᱹᱢᱤ ᱨᱮ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱵᱟᱭ ᱥᱟᱢᱟᱣ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "errorBrokerageRequiresExpenseCategory": "ᱡᱟᱦᱟᱸ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭ, ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾",
+  "errorSellProceedsMustCoverBrokerage": "ᱟᱠᱤᱨᱤᱸ ᱠᱷᱚᱱ ᱢᱤᱞᱟ ᱮᱞ ᱫᱚ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱮᱞ ᱠᱷᱚᱱ ᱦᱩᱰᱤᱧ ᱵᱟᱭ ᱦᱩᱭᱟᱢᱟ᱾",
+  "homeSpentOfLimitThisMonth": "{limit} ᱠᱷᱚᱱ {spent} ᱱᱚᱣᱟ ᱪᱟᱸᱫᱚ ᱨᱮ",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "ᱥᱢᱟᱨᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱷᱩᱞᱟᱹ ᱢᱮ",
+  "searchLabel": "ᱥᱮᱸᱫᱽᱨᱟ",
+  "openingBalance": "ᱮᱦᱚᱵ ᱵᱮᱞᱮᱸᱥ",
+  "transferToName": "ᱴᱨᱟᱸᱥᱯᱷᱚᱨ: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱤᱥ",
+  "feeForTransferTo": "{name} ᱛᱮ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱤᱥ",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "ᱯᱷᱟᱭᱞ ᱯᱤᱠᱚᱨ ᱠᱷᱩᱞᱟᱹ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": ".{extensions} ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "ᱢᱩᱫᱨᱟ ᱠᱳᱰ (ISO 4217, ᱡᱮᱞᱠᱟ USD)",
+  "splitCounterpartMore": "{name} +{count} ᱮᱴᱟᱜ",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "ᱫᱤᱱ",
+  "noneSelected": "ᱛᱟᱦᱮᱸᱸ ᱵᱟᱝ",
+  "reviewEntriesBeforeContinuing": "ᱡᱟᱨᱤ ᱞᱟᱹᱜᱤᱫ ᱞᱟᱛᱟᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱚᱞ ᱠᱚ ({count} ᱡᱚᱛᱚ) ᱧᱮᱞ ᱢᱮ᱾",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "ᱟᱢ {amount} ᱢᱤᱞᱟ ᱠᱮᱫᱟᱢ",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "ᱡᱩᱫᱤ ᱮᱠᱥᱪᱮᱸᱡ ᱨᱮᱴ ᱵᱟᱭ ᱵᱟᱰᱟᱭᱟᱣ ᱠᱟᱱᱟ, ᱡᱟᱦᱟᱸ ᱠᱷᱟᱹᱞᱤ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ᱾",
+  "recordTradeBlurb": "ᱚᱠᱟ ᱦᱩᱭ ᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱞ ᱢᱮ᱾ ᱱᱚᱶᱟ ᱮᱯ ᱳᱨᱰᱚᱨ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾",
+  "feeOnTopBlurb": "ᱪᱚᱴᱚ ᱨᱮ: ᱪᱮᱛᱟᱱ ᱮᱞ ᱫᱚ ᱱᱚᱶᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱷᱚᱱ ᱡᱚᱛᱚ ᱮᱴᱟᱜᱟᱣ ᱠᱟᱱ, ᱯᱷᱤᱥ ᱫᱚ ᱚᱱᱟ ᱠᱷᱚᱱ ᱮᱴᱟᱜᱚᱜᱼᱟ᱾",
+  "feeBankBlurb": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱸᱠ ᱥᱮ ᱢᱚᱲᱦᱚᱛ ᱫᱟᱨᱟᱭ ᱛᱮ ᱢᱤᱫ ᱟᱹᱜᱩ ᱠᱚᱢᱤᱥᱚᱱ᱾",
+  "validationPinMinLength": "ᱯᱤᱱ ᱫᱚ ᱡᱟᱦᱟᱸ ᱦᱚᱸ ᱚᱨᱮᱭ ᱛᱮ ᱔ ᱟᱸᱠ ᱦᱩᱭᱟᱢᱟ᱾",
+  "restoreBackupBlurb": "ᱱᱚᱶᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱮᱯ ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱚᱛᱚ ᱵᱮᱠᱟᱯ ᱛᱮ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱩᱜᱼᱟ — ᱢᱮᱥᱚᱴ ᱵᱟᱭ ᱦᱩᱭᱩᱜᱼᱟ᱾ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ ᱟᱨ ᱚᱱᱟ ᱨᱚᱠᱷᱭᱟ ᱠᱟᱱ ᱯᱟᱥᱣᱟᱨᱰ ᱚᱞ ᱢᱮ᱾",
+  "actionReplace": "ᱵᱚᱫᱚᱞ ᱢᱮ",
+  "hideAccountBody": "{name} ᱫᱚ ᱱᱟᱶᱟ ᱠᱟᱹᱢᱤ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱭ ᱢᱮᱱᱟᱜᱼᱟ᱾",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} ᱫᱚ ᱦᱤᱥᱟᱹᱵ ᱵᱮᱱᱟᱣ ᱥᱮ ᱵᱟᱰᱟᱭ ᱚᱠᱛᱚ ᱵᱟᱭ ᱮᱢᱚᱜᱼᱟ᱾",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} ᱫᱚ ᱱᱟᱶᱟ ᱠᱟᱹᱢᱤ ᱚᱞ ᱚᱠᱛᱚ ᱵᱟᱭ ᱮᱢᱚᱜᱼᱟ᱾",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "ᱩᱠᱩ ᱠᱟᱱ ᱥᱟᱫᱷᱚᱱ ᱫᱚ ᱯᱩᱨᱟᱹᱱ ᱠᱤᱨᱤᱸ ᱟᱨ ᱟᱠᱤᱨᱤᱸ ᱨᱮ ᱛᱟᱦᱮᱸᱱᱟ᱾ ᱟᱢ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ ᱞᱟᱵᱷᱟᱸᱥ ᱦᱚᱸ ᱚᱞ ᱫᱟᱲᱮᱭᱟᱜᱢᱮᱭᱟ᱾",
+  "nameHidden": "{name} (ᱩᱠᱩ ᱠᱟᱱᱟ)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "ᱢᱩᱫᱨᱟ ᱵᱟᱭ ᱛᱚᱭᱚᱨ",
+  "deletePayeeBody": "{name} ᱟᱨ ᱩᱱᱠᱩ ᱨᱮᱭᱟᱜ ᱢᱩᱞ ᱥᱟᱺᱪᱟᱣ ᱠᱚ ᱮᱴᱟᱜᱚᱜᱼᱟ᱾ ᱯᱩᱨᱟᱹᱱ ᱠᱟᱹᱢᱤ ᱠᱚ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱦᱩᱭᱟ᱾",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} ᱫᱚ ᱛᱮᱦᱮᱸᱡ ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱮᱢᱚᱜᱼᱟ᱾ ᱛᱟᱦᱮᱸ ᱚᱞ ᱟᱠᱟᱱ ᱯᱩᱨᱟᱹᱱ ᱠᱟᱹᱢᱤ ᱠᱚ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱦᱩᱭᱟ᱾",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱠᱚᱞᱚᱢ ᱢᱮᱯᱤᱝ \"{name}\" ᱫᱚ ᱢᱮᱴᱟᱣ ᱦᱩᱭᱟ᱾ ᱛᱟᱦᱮᱸ ᱟᱢᱯᱚᱴ ᱟᱠᱟᱱ ᱥᱴᱮᱴᱢᱮᱸᱴ ᱠᱚ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱦᱩᱭᱟ᱾",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "ᱟᱢᱯᱚᱴ ᱠᱚ ᱫᱚ \"{keyword}\" ᱛᱮ ᱟᱡ ᱡᱟᱹᱛ ᱵᱟᱭ ᱦᱩᱭᱚᱜᱼᱟ᱾ ᱱᱚᱶᱟ ᱱᱤᱭᱚᱢ ᱛᱮ ᱡᱟᱹᱛ ᱦᱩᱭ ᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱠᱚ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱦᱩᱭᱟ᱾",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "ᱮᱴᱠᱮᱛᱮ ᱛᱮ ᱱᱤᱛᱚᱜ ᱠᱨᱮᱰᱤᱴ ᱠᱟᱨᱰ ᱥᱮ ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱞᱮᱫ ᱢᱮ - ᱟᱢ ᱛᱟᱭᱚᱢ ᱛᱮ ᱥᱮᱴᱤᱝ ᱠᱷᱚᱱ ᱟᱨᱦᱚᱸ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱞᱮᱫ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ᱾",
+  "deliveredToDestination": "ᱛᱟᱸᱦᱮᱸ ᱨᱮ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ",
+  "deliveredToName": "{name} ᱛᱮ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "ᱟᱢ ᱟᱥᱟ ᱠᱷᱚᱱ {amount} {currency} ᱠᱚᱢ ᱢᱤᱞᱟ ᱠᱮᱫᱟᱢ - ᱟᱲᱟᱹᱜ ᱴᱷᱚᱠᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱹᱛ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "ᱫᱤᱱ ᱚᱠᱟ ᱠᱷᱚᱱ ᱚᱠᱟ",
+  "addTemplate": "ᱴᱮᱢᱯᱞᱮᱴ ᱥᱮᱞᱮᱫ ᱢᱮ",
+  "editTemplate": "ᱴᱮᱢᱯᱞᱮᱴ ᱮᱰᱤᱴ ᱢᱮ",
+  "validationFillTemplateFields": "ᱡᱚᱛᱚ ᱠᱷᱚᱱ ᱫᱚ ᱴᱷᱤᱠ ᱮᱞ ᱟᱨ ᱫᱤᱱ ᱛᱮ ᱯᱮᱨᱮᱡ ᱢᱮ᱾",
+  "saveCsvExport": "CSV ᱮᱠᱥᱯᱚᱴ ᱥᱟᱺᱪᱟᱣ ᱢᱮ",
+  "referenceRate": "ᱨᱮᱚᱷᱨᱮᱸᱥ ᱨᱮᱴ",
+  "yourRate": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱨᱮᱴ",
+  "leaveBlankIfThisWasAccountCurrency": "ᱡᱩᱫᱤ ᱱᱚᱶᱟ ᱫᱚ {currency} ᱨᱮ ᱛᱟᱦᱮᱸᱱ ᱠᱟᱱᱟ, ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱢᱩᱬᱩᱛ ᱢᱩᱫᱨᱟ, ᱚᱱᱟ ᱠᱷᱟᱹᱞᱤ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ᱾",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "ᱛᱟᱦᱮᱸᱸ ᱞᱚᱠ (ᱮᱴᱠᱮᱛᱮ)",
+  "lockedUntilDate": "{date} ᱛᱟᱦᱮᱸᱸ ᱞᱚᱠ ᱠᱟᱱᱟ",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "ᱚᱸᱥᱟᱨ ᱠᱟᱛᱷᱟ ᱠᱚᱯᱤ ᱦᱩᱭ ᱮᱱᱟ — ᱵᱽᱨᱟᱣᱡᱚᱨ URL ᱵᱟᱭᱟ, ᱥᱮ ᱟᱢ ᱳᱯᱷᱞᱟᱭᱤᱱ ᱢᱮᱱᱟᱜᱼᱟᱢ᱾",
+  "openedFavouriteResearchTool": "ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱚᱱ ᱠᱟᱛᱷᱟ ᱚᱸᱥᱟᱨ ᱦᱟᱛᱤᱭᱟᱨ ᱠᱷᱩᱞᱟᱹ ᱦᱩᱭ ᱮᱱᱟ᱾",
+  "looksLikeGain": "ᱱᱚᱶᱟ ᱫᱚ ᱞᱟᱵᱷ ᱞᱮᱠᱷᱟ ᱧᱮᱞᱚᱜᱼᱟ",
+  "looksLikeLoss": "ᱱᱚᱶᱟ ᱫᱚ ᱞᱚᱠᱥᱟᱱ ᱞᱮᱠᱷᱟ ᱧᱮᱞᱚᱜᱼᱟ",
+  "looksLikeBreakEven": "ᱱᱚᱶᱟ ᱫᱚ ᱥᱚᱢᱟᱱ ᱞᱮᱠᱷᱟ ᱧᱮᱞᱚᱜᱼᱟ",
+  "sellableQuantity": "{name} ({qty} ᱟᱠᱤᱨᱤᱸ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "ᱠᱚᱞᱚᱢ {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "ᱟᱢᱯᱚᱴ ᱦᱩᱭᱩᱜᱼᱟ...",
+  "confirmImport": "ᱟᱢᱯᱚᱴ ᱪᱮᱛᱟᱱ ᱢᱮ",
+  "manageSavedCategoryRules": "ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱡᱟᱹᱛ ᱱᱤᱭᱚᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱵᱚᱥᱛᱷᱟ",
+  "statementCurrencyMismatch": "ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱨᱮᱭᱟᱜ ᱢᱩᱫᱨᱟ ({currency}) ᱫᱚ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱢᱩᱫᱨᱟ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡᱟ᱾",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "ᱡᱟᱹᱛ ᱱᱤᱭᱚᱢ",
+  "possibleDuplicate": "ᱫᱩᱠᱞᱤᱠᱮᱴ ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ",
+  "unknownCategory": "ᱵᱟᱭ ᱵᱟᱰᱟᱭ ᱡᱟᱹᱛ"
+}

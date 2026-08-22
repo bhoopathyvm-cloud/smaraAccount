@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/database/tables/accounts_table.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/journal_entry.dart';
@@ -14,7 +15,7 @@ import 'register_row.dart';
 
 /// Account-scoped register: counterpart labels for category / transfer /
 /// opening balance; running display balance for the viewed account.
-class RegisterViewModel extends ChangeNotifier {
+class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   RegisterViewModel({
     required LedgerRepository ledgerRepository,
     String? initialAccountId,
@@ -168,13 +169,7 @@ class RegisterViewModel extends ChangeNotifier {
     return from != null && to != null && from != to;
   }
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-  void clearError() {
-    if (_errorMessage == null) return;
-    _errorMessage = null;
-    notifyListeners();
-  }
+  void clearError() => clearFailure();
 
   void selectAccount(String accountId) {
     if (_selectedAccountId == accountId) return;
@@ -298,20 +293,27 @@ class RegisterViewModel extends ChangeNotifier {
   String _counterpartLabel(List<String> accountIds) {
     final names = accountIds.map(_singleCounterpartLabel).toList();
     if (names.length <= 1) {
-      return names.isEmpty ? 'Transfer' : names.first;
+      return names.isEmpty
+          ? englishAppLocalizations.actionTransfer
+          : names.first;
     }
-    return '${names.first} +${names.length - 1} more';
+    return englishAppLocalizations.splitCounterpartMore(
+      names.first,
+      '${names.length - 1}',
+    );
   }
 
   String _singleCounterpartLabel(String accountId) {
     if (accountId == openingBalanceEquityAccountId) {
-      return 'Opening balance';
+      return englishAppLocalizations.openingBalance;
     }
     final category = _categoriesById[accountId];
     if (category != null) return category.name;
     final other = _accountsById[accountId];
-    if (other != null) return 'Transfer: ${other.name}';
-    return 'Transfer';
+    if (other != null) {
+      return englishAppLocalizations.transferToName(other.name);
+    }
+    return englishAppLocalizations.actionTransfer;
   }
 
   Future<void> reverseEntry(String entryId) =>
@@ -323,12 +325,16 @@ class RegisterViewModel extends ChangeNotifier {
   /// the opening-balance equity account, or (split-transactions) more
   /// than one category leg, since the Fix form has exactly one category
   /// field to prefill. It must also not already be a reversal,
-  /// quarantined, or superseded (those are corrected or explained some
-  /// other way, not re-fixed).
+  /// quarantined, superseded, or already corrected by a later reversal
+  /// (those are explained some other way, not re-fixed).
   bool isRowFixable(RegisterRow row) {
+    final alreadyCorrected = _lastEntries.any(
+      (entry) => entry.reversesEntryId == row.entryId,
+    );
     return row.counterpartAccountIds.length == 1 &&
         _categoriesById.containsKey(row.counterpartAccountIds.single) &&
         !row.isReversal &&
+        !alreadyCorrected &&
         row.isVerified &&
         !row.isSupersededByMigration;
   }
@@ -345,7 +351,7 @@ class RegisterViewModel extends ChangeNotifier {
   }) async {
     final fromAccountId = _selectedAccountId;
     if (fromAccountId == null) return false;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       await _ledgerRepository.recordArchivedAccountCloseoutTransfer(
@@ -358,12 +364,10 @@ class RegisterViewModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on AccountGroupException catch (error) {
-      _errorMessage = error.message;
-      notifyListeners();
+      setFailure(error);
       return false;
     } on InvalidTransferException catch (error) {
-      _errorMessage = error.message;
-      notifyListeners();
+      setFailure(error);
       return false;
     }
   }
@@ -379,7 +383,7 @@ class RegisterViewModel extends ChangeNotifier {
   }) async {
     final accountId = _selectedAccountId;
     if (accountId == null) return null;
-    _errorMessage = null;
+    clearFailure();
     try {
       final csv = await _ledgerRepository.exportLedgerCsv(
         financialAccountId: accountId,
@@ -389,8 +393,7 @@ class RegisterViewModel extends ChangeNotifier {
       notifyListeners();
       return csv;
     } on AccountGroupException catch (error) {
-      _errorMessage = error.message;
-      notifyListeners();
+      setFailure(error);
       return null;
     }
   }

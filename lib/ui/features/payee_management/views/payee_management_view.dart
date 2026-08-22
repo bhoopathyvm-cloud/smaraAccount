@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/payee.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -18,32 +19,32 @@ class PayeeManagementView extends StatelessWidget {
   final PayeeManagementViewModel viewModel;
 
   Future<void> _confirmDelete(BuildContext context, Payee payee) async {
+    final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Delete payee?',
-      message:
-          '${payee.name} and its remembered defaults will be removed. '
-          'Past transactions are unaffected.',
-      confirmLabel: 'Delete',
+      title: l10n.deletePayeeTitle,
+      message: l10n.deletePayeeBody(payee.name),
+      confirmLabel: l10n.actionDelete,
     );
     if (confirmed) await viewModel.deletePayee(payee.id);
   }
 
   Future<void> _showAddDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
     final nameController = TextEditingController();
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add payee'),
+        title: Text(l10n.addPayee),
         content: TextField(
           controller: nameController,
           autofocus: true,
-          decoration: const InputDecoration(labelText: 'Name'),
+          decoration: InputDecoration(labelText: l10n.name),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -51,7 +52,7 @@ class PayeeManagementView extends StatelessWidget {
               viewModel.addPayee(nameController.text.trim());
               Navigator.of(context).pop();
             },
-            child: const Text('Add'),
+            child: Text(l10n.actionAdd),
           ),
         ],
       ),
@@ -59,16 +60,17 @@ class PayeeManagementView extends StatelessWidget {
   }
 
   Future<void> _showRenameDialog(BuildContext context, Payee payee) async {
+    final l10n = l10nOf(context);
     final controller = TextEditingController(text: payee.name);
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Rename payee'),
+        title: Text(l10n.renamePayee),
         content: TextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -79,7 +81,7 @@ class PayeeManagementView extends StatelessWidget {
               );
               Navigator.of(context).pop();
             },
-            child: const Text('Save'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -90,7 +92,10 @@ class PayeeManagementView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payees', style: AppTypography.headerTitle),
+        title: Text(
+          l10nOf(context).payeesTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -106,7 +111,7 @@ class PayeeManagementView extends StatelessWidget {
           if (viewModel.payees.isEmpty) {
             return Center(
               child: Text(
-                'No payees yet',
+                l10nOf(context).noPayeesYet,
                 style: AppTypography.body.copyWith(color: AppColors.textMuted),
               ),
             );

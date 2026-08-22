@@ -159,7 +159,7 @@ void main() {
       );
 
       expect(ok, isFalse);
-      expect(viewModel.errorMessage, equals('must be positive'));
+      expect(viewModel.errorMessage, equals('Amount must be positive.'));
     },
   );
 

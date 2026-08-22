@@ -3,6 +3,37 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_spacing.dart';
 
+/// Known limitation (i18n-foundation, found during a later review): these
+/// families are declared for `ThemeData.fontFamilyFallback` but no font
+/// assets are bundled with the app (no `flutter: fonts:` entry in
+/// pubspec.yaml). This only renders correctly where the OS already has a
+/// system font installed under this exact family name - reliably true on
+/// Android (which ships Noto-named system fonts for most of these
+/// scripts), NOT guaranteed on iOS/desktop, which use different family
+/// names for their own built-in Indic/CJK/Arabic rendering. Non-Latin
+/// scripts may render as tofu or substitute an unintended font on those
+/// platforms until real font assets are bundled - unresolved follow-up
+/// work, not fixed by this declaration alone.
+const kFontFamilyFallback = [
+  'Noto Sans',
+  'Noto Sans Devanagari',
+  'Noto Sans Tamil',
+  'Noto Sans Telugu',
+  'Noto Sans Kannada',
+  'Noto Sans Malayalam',
+  'Noto Sans Gujarati',
+  'Noto Sans Gurmukhi',
+  'Noto Sans Bengali',
+  'Noto Sans Oriya',
+  'Noto Naskh Arabic',
+  'Noto Sans CJK SC',
+  'Noto Sans CJK JP',
+  'Noto Sans CJK KR',
+  'Noto Sans Thai',
+  'Noto Sans Meetei Mayek',
+  'Noto Sans Ol Chiki',
+];
+
 /// Assembles a [ThemeData] from the 3-color rule and component patterns in
 /// smara-design-system.md. No color outside [AppColors] is introduced here.
 ThemeData buildAppTheme() {
@@ -17,7 +48,7 @@ ThemeData buildAppTheme() {
   );
 
   return ThemeData(
-    useMaterial3: true,
+    fontFamilyFallback: kFontFamilyFallback,
     colorScheme: colorScheme,
     scaffoldBackgroundColor: AppColors.pageBackground,
     cardTheme: CardThemeData(

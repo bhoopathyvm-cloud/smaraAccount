@@ -1,0 +1,968 @@
+{
+  "@@locale": "ro",
+  "appTitle": "Smara Contabilitate",
+  "navHome": "Acasă",
+  "navRegister": "Registru",
+  "navSummary": "Rezumat",
+  "navAccounts": "Conturi",
+  "navCategories": "Categorii",
+  "actionCancel": "Anulează",
+  "actionSave": "Salvează",
+  "actionDelete": "Șterge",
+  "actionDone": "Gata",
+  "actionContinue": "Continuă",
+  "actionDismiss": "Închide",
+  "actionRetry": "Reîncearcă",
+  "actionSkip": "Omite",
+  "actionConfirm": "Confirmă",
+  "actionAdd": "Adaugă",
+  "actionEdit": "Editează",
+  "actionRename": "Redenumește",
+  "actionHide": "Ascunde",
+  "actionCreate": "Creează",
+  "actionCloseApp": "Închide aplicația",
+  "actionUnlock": "Deblochează",
+  "actionSettle": "Decontează",
+  "actionFinish": "Finalizează",
+  "actionPreview": "Previzualizare",
+  "actionImport": "Importă",
+  "actionExportCsv": "Exportă CSV",
+  "actionChooseFile": "Alege fișierul",
+  "actionRestore": "Restaurează",
+  "actionFix": "Corectează",
+  "actionBuy": "Cumpără",
+  "actionSell": "Vinde",
+  "actionDividend": "Dividend",
+  "actionRecordBuy": "Înregistrează cumpărarea",
+  "actionRecordSell": "Înregistrează vânzarea",
+  "actionRecordDividend": "Înregistrează dividendul",
+  "actionPayCard": "Plătește cardul",
+  "actionTransfer": "Transferă",
+  "actionRecordTransaction": "Înregistrează tranzacția",
+  "actionImportStatement": "Importă extrasul",
+  "actionClearDates": "Șterge datele",
+  "actionClearSearch": "Șterge căutarea și filtrele",
+  "actionUseBiometrics": "Folosește datele biometrice",
+  "actionSetPin": "Setează codul PIN",
+  "actionChangePin": "Schimbă codul PIN",
+  "actionSaveBackup": "Salvează copia de rezervă",
+  "actionRestoreBackup": "Restaurează copia de rezervă",
+  "actionSaveRule": "Salvează regula",
+  "actionConfirmFix": "Confirmă corecția",
+  "captureSpent": "Cheltuit",
+  "captureReceived": "Încasat",
+  "captureMovedMoney": "Bani mutați",
+  "captureImportStatement": "Importă extrasul",
+  "settingsTitle": "Setări",
+  "settingsLanguage": "Limbă",
+  "settingsLanguageSystem": "Limba dispozitivului",
+  "settingsFetchFxRates": "Obține cursuri de schimb de referință",
+  "settingsFetchFxRatesSubtitle": "Afișează un curs de piață orientativ lângă suma de destinație la transferurile în valută diferită, doar pentru comparație - nu este folosit niciodată pentru a completa suma.",
+  "settingsRateProvider": "Furnizor de curs",
+  "settingsFetchMarketPrices": "Obține prețurile de piață pentru investiții",
+  "settingsFetchMarketPricesSubtitle": "Caută ultimele prețuri pentru instrumentele care au un simbol bursier sau ISIN, pentru a estima valoarea portofoliului. Nu este folosit niciodată pentru a înregistra o tranzacție și nu trimite niciodată câte unități dețineți.",
+  "settingsMarketPriceProvider": "Furnizor de prețuri de piață",
+  "settingsFavouriteResearchTool": "Instrument preferat de cercetare",
+  "settingsFavouriteResearchToolSubtitle": "Atingerea numelui unui instrument din portofoliu deschide acest instrument în browser cu o interogare de cercetare — nu este o integrare și nu reprezintă un sfat.",
+  "settingsBackup": "Copie de rezervă",
+  "settingsBackupBlurb": "Salvați o copie criptată a registrelor dvs. într-o locație aleasă de dvs., sau restaurați dintr-una. Acest lucru este diferit de fraza de recuperare sau fișierul keystore, care protejează cheia dvs. de semnare, nu registrele.",
+  "settingsLock": "Blocare",
+  "settingsLockBlurb": "Solicitați un cod PIN sau datele biometrice, unde sunt disponibile, pentru a deschide aplicația.",
+  "settingsRequireUnlock": "Solicită deblocarea pentru a deschide aplicația",
+  "settingsLockAfter": "Blochează după",
+  "settingsLockImmediately": "Imediat",
+  "settingsLock1Minute": "1 minut",
+  "settingsLock5Minutes": "5 minute",
+  "settingsLock15Minutes": "15 minute",
+  "settingsAllowBiometrics": "Permite și datele biometrice",
+  "settingsHideSnapshot": "Ascunde soldurile în comutatorul de aplicații",
+  "settingsHideSnapshotSubtitle": "Ascunde acest ecran atunci când comutați la o altă aplicație, astfel încât să nu fie vizibil dintr-o privire în comutatorul de aplicații.",
+  "settingsHideSnapshotUnavailable": "Ascunderea soldurilor în comutatorul de aplicații nu este disponibilă pe această platformă.",
+  "settingsPayees": "Beneficiari",
+  "settingsManagePayees": "Gestionează beneficiarii",
+  "settingsPayeesBlurb": "Nume de beneficiari memorate împreună cu categoria și contul implicite, sugerate prin completare automată la înregistrarea unei tranzacții.",
+  "settingsRecurring": "Șabloane recurente",
+  "settingsManageRecurring": "Gestionează șabloanele recurente",
+  "settingsRecurringBlurb": "Facturi sau venituri care se repetă lunar, cum ar fi chiria sau salariul. Un șablon scadent apare pe ecranul Acasă pentru a-l înregistra dintr-o atingere - nu este niciodată înregistrat automat.",
+  "settingsAbout": "Despre",
+  "providerFrankfurter": "Frankfurter (cursuri BCE)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (cotații zilnice)",
+  "providerYahooFinance": "Yahoo Finance (API pentru grafice)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "Numerar și echivalente de numerar",
+  "systemGroupPensionRetirement": "Pensie și pensionare",
+  "systemGroupCreditShortTerm": "Credit și datorii pe termen scurt",
+  "systemGroupLoansMortgages": "Împrumuturi și credite ipotecare",
+  "systemGroupInvestments": "Investiții",
+  "systemAccountCashBank": "Numerar și bancă",
+  "systemCategorySalary": "Salariu",
+  "systemCategoryOtherIncome": "Alte venituri",
+  "systemCategoryGroceries": "Cumpărături alimentare",
+  "systemCategoryRentMortgage": "Chirie/Credit ipotecar",
+  "systemCategoryUtilities": "Utilități",
+  "systemCategoryTransport": "Transport",
+  "systemCategoryFoodOut": "Mese în oraș",
+  "systemCategoryPhone": "Telefon",
+  "systemCategoryHealth": "Sănătate",
+  "systemCategoryOtherExpense": "Alte cheltuieli",
+  "homeThisMonth": "LUNA ACEASTA",
+  "homeMoneyInTransit": "BANI ÎN TRANZIT",
+  "homeWhatYouHaveMinusWhatYouOwe": "CE AVEȚI MINUS CE DATORAȚI",
+  "homeWhatYouHave": "Aveți {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "Aveți {haveAmount} {currency}  •  Datorați {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "Ați trimis {amount} {currency} din {name}",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "Ați trimis {amount} {currency} către {name}",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "Ascuns",
+  "allAccounts": "Toate conturile",
+  "savedToPath": "Salvat în {path}",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "Nu s-a putut exporta fișierul keystore. Puteți omite acest pas.",
+  "enterPassphraseToProtect": "Introduceți o frază de acces pentru a proteja fișierul.",
+  "homeTapWhenArrived": "Atingeți când știți ce a ajuns",
+  "homeReturnedTo": "Returnat la {name}",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "SCADENT ASTĂZI",
+  "homeDueLine": "{category} · {account} · atingeți pentru a înregistra",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "Peste limită",
+  "homeSpentOfLimit": "{spent} din {limit}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "Rămas: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "Niciun cont",
+  "homeCashRegister": "Casă de numerar",
+  "homeMarketEstimate": "Estimare de piață",
+  "registerTitle": "Registru",
+  "registerSearchHint": "Descriere, categorie sau sumă",
+  "registerNoTransactions": "Nicio tranzacție încă",
+  "registerNoEntries": "Nu există încă înregistrări.",
+  "registerSpentOnly": "Doar cheltuieli",
+  "registerReceivedOnly": "Doar încasări",
+  "registerAll": "Toate",
+  "registerUnverified": "Neverificat - exclus din totaluri",
+  "registerSuperseded": "Înlocuit prin migrare - exclus din totaluri",
+  "summaryTitle": "Rezumat",
+  "summaryTotalIncome": "Total venituri",
+  "summaryTotalExpense": "Total cheltuieli",
+  "summaryDateRange": "{start} până la {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "Conturi",
+  "categoriesTitle": "Categorii",
+  "accountName": "Numele contului",
+  "createAccount": "Creează cont",
+  "createGroup": "Creează grup",
+  "editGroup": "Editează grupul",
+  "renameAccount": "Redenumește contul",
+  "renameCategory": "Redenumește categoria",
+  "addCategory": "Adaugă categorie",
+  "groupLabel": "Grup",
+  "kindLabel": "Tip",
+  "asset": "Activ",
+  "liability": "Pasiv",
+  "income": "Venit",
+  "expense": "Cheltuială",
+  "thisAccountHoldsInvestments": "Acest cont conține investiții",
+  "thisAccountHoldsInvestmentsSubtitle": "Numerar plus inventarul pe care îl înregistrați cu Cumpără, Vinde și Dividend.",
+  "thisIsACreditCard": "Acesta este un card de credit",
+  "openingBalanceOptional": "Sold inițial (opțional)",
+  "currencyIso": "Monedă (ISO 4217)",
+  "currencyIsoExample": "Monedă (ISO 4217, ex.: USD)",
+  "hideAccountTitle": "Ascundeți contul din înregistrările noi?",
+  "hideCategoryTitle": "Ascundeți categoria din înregistrările noi?",
+  "hideGroupTitle": "Ascundeți grupul din înregistrările noi?",
+  "reassignGroup": "Reatribuie grupul",
+  "transferRemainingBalance": "Transferă soldul rămas",
+  "monthlyLimit": "Limită lunară",
+  "monthlyLimitHint": "Limită (lăsați necompletat pentru a șterge)",
+  "monthlyLimitBlurb": "Un ghid opțional al cheltuielilor de la începutul lunii pentru această categorie de cheltuieli.",
+  "manageCategoryRules": "Gestionează regulile categoriei",
+  "amount": "Sumă",
+  "category": "Categorie",
+  "account": "Cont",
+  "fromAccount": "Cont sursă",
+  "toAccount": "Cont destinație",
+  "descriptionOptional": "Descriere (opțional)",
+  "alsoRememberPayee": "Reține și ca beneficiar",
+  "splitIntoCategories": "Împarte în mai multe categorii",
+  "categoryN": "Categoria {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "Suma de destinație",
+  "destinationAmountOptional": "Suma de destinație (opțional)",
+  "accountCurrencyAmountOptional": "Suma în moneda contului (opțional)",
+  "transactionCurrencyOptional": "Moneda tranzacției (opțional)",
+  "feeOptional": "Comision (opțional)",
+  "feeAmount": "Suma comisionului",
+  "feeCategory": "Categoria comisionului",
+  "feeDescriptionOptional": "Descrierea comisionului (opțional)",
+  "feeDeducted": "Comisionul este dedus din suma de mai sus",
+  "needTwoAccountsToTransfer": "Creați cel puțin două conturi active pentru a face un transfer.",
+  "whatArrivedTitle": "Ce a ajuns?",
+  "whatArrivedBlurb": "Spuneți-ne ce a ajuns efectiv.",
+  "amountThatArrived": "Suma care a ajuns",
+  "feeLossCategory": "Categoria comisionului / pierderii",
+  "alreadySettled": "Deja decontat.",
+  "holdingsTitle": "Portofoliu",
+  "holdingsCash": "Numerar",
+  "holdingsInventory": "INVENTAR",
+  "holdingsBook": "Valoare contabilă (numerar + cost) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "Estimare de piață {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "Nu există încă poziții. Înregistrați o cumpărare pentru a adăuga un instrument.",
+  "holdingsQuotesBlurb": "Cotațiile sunt estimări, nu un preț de broker. Această aplicație nu plasează ordine.",
+  "holdingsTapNameToResearch": "Atingeți numele pentru a cerceta. Cotațiile sunt estimări, nu un sfat.",
+  "instrument": "Instrument",
+  "newInstrument": "Instrument nou",
+  "renameInstrument": "Redenumește instrumentul",
+  "instrumentActions": "Acțiuni instrument",
+  "hideInstrumentTitle": "Ascundeți {name}?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "Simbol bursier (opțional)",
+  "isinOptional": "ISIN (opțional)",
+  "quantity": "Cantitate",
+  "unitPrice": "Preț unitar",
+  "brokerageOptional": "Comision de brokeraj (opțional)",
+  "brokerageExpenseCategory": "Categoria cheltuielii de brokeraj",
+  "incomeCategory": "Categoria de venit",
+  "gainIncomeCategory": "Categoria de venit din câștig",
+  "lossExpenseCategory": "Categoria de cheltuială din pierdere",
+  "nonCash": "Non-monetar",
+  "cash": "Numerar",
+  "locked": "Blocat",
+  "lockUntilHint": "Propria dvs. notă privind o restricție, nu o regulă a brokerului.",
+  "instrumentKindStock": "Acțiune",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "Fond mutual",
+  "instrumentKindBond": "Obligațiune",
+  "instrumentKindOther": "Altul",
+  "quoteUseLive": "Preț live",
+  "quoteUseCached": "Preț din cache",
+  "quoteUseStale": "Preț neactualizat",
+  "quoteUseMissing": "Se folosește costul (fără preț)",
+  "quoteUseDisabled": "Cotații dezactivate — se folosește costul/cache-ul",
+  "quoteUseCurrencyMismatch": "Se folosește costul (moneda prețului diferă)",
+  "unrealizedLabel": "Nerealizat {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} unități · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "Fraza dvs. de recuperare",
+  "recoveryPhraseConfirmTitle": "Confirmați fraza",
+  "recoveryPhraseBlurb": "Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Accounting nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.",
+  "recoveryPhraseWriteDown": "Notați aceste cuvinte în ordine și păstrați-le într-un loc sigur, separat de acest dispozitiv.",
+  "iveSavedRecoveryPhrase": "Mi-am salvat fraza de recuperare",
+  "confirmPhraseBlurb": "Introduceți cuvintele solicitate din fraza pe care tocmai ați salvat-o.",
+  "wordNumber": "Cuvântul nr. {n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "Exportă fișierul keystore",
+  "keystoreExportBlurb": "Pe lângă fraza de recuperare, puteți salva un fișier keystore criptat, protejat de o frază de acces aleasă de dvs. Acest lucru este opțional - fraza de recuperare este întotdeauna suficientă pentru a restaura cheia de semnare.",
+  "keystorePassphrase": "Frază de acces",
+  "exportKeystoreFile": "Exportă fișierul keystore",
+  "chooseCurrencyTitle": "Alegeți moneda",
+  "chooseCurrencyBlurb": "Fiecare grup de conturi (Numerar și echivalente de numerar, Pensie și pensionare etc.) folosește deocamdată această monedă unică. Puteți adăuga totuși conturi într-o monedă diferită mai târziu, creând un grup nou pentru aceasta.",
+  "currencyBackfillTitle": "Alegeți o monedă pentru grupurile existente",
+  "currencyBackfillBlurb": "Această aplicație acceptă acum mai multe monede. Conturile și grupurile de conturi existente au nevoie de o monedă - deoarece toate au fost create înainte ca această funcție să existe, o singură alegere se aplică tuturor.",
+  "firstAccountTitle": "Denumiți contul",
+  "firstAccountBlurb": "Acesta este contul deja configurat pentru dvs. - dați-i un nume pe care îl recunoașteți, cum ar fi cel al băncii dvs. În continuare veți înregistra o Cheltuială sau o Încasare, apoi veți proteja dispozitivul cu fraza de recuperare.",
+  "whatsMainAccountCalled": "Cum se numește contul dvs. principal?",
+  "restoreTitle": "Restaurați cheia de semnare",
+  "restoreBlurb": "Acest dispozitiv are registre existente, dar nicio cheie de semnare corespunzătoare. Restaurați-o din fraza de recuperare salvată sau din fișierul keystore - datele dvs. se vor verifica normal, iar nimic nu va fi resemnat sau modificat.",
+  "recoveryPhrase24": "Fraza de recuperare (toate cele 24 de cuvinte)",
+  "keystoreFile": "Fișier keystore",
+  "keystoreFileContents": "Conținutul fișierului keystore",
+  "optionalBackupFile": "Fișier de rezervă opțional",
+  "iDontHavePhrase": "Nu am fraza de recuperare sau fișierul keystore",
+  "migrationTitle": "Migrează la o cheie nouă",
+  "migrationBlurb": "Fără fraza de recuperare sau fișierul keystore, cheia de semnare a acestui dispozitiv nu poate fi recuperată. Puteți începe o cheie nouă. Înregistrările vechi rămân vizibile, dar sunt înlocuite.",
+  "iConfirmBooksValid": "Confirm că registrele actuale sunt valide",
+  "whyWeDontEdit": "De ce nu edităm înregistrările vechi",
+  "whyWeDontEditBody": "Când corectați o greșeală, păstrăm linia veche și adăugăm o corecție lângă ea, în loc să schimbăm ce ați introdus deja. Astfel, istoricul dvs. arată mereu exact ce s-a întâmplat și când ați corectat - nimic nu se schimbă pe ascuns.",
+  "lockTitle": "Deblochează",
+  "lockScreenTitle": "Blocat",
+  "enterPinToContinue": "Introduceți codul PIN pentru a continua",
+  "pinLabel": "PIN",
+  "setPinTitle": "Setați un cod PIN",
+  "currentPin": "Codul PIN actual",
+  "newPin": "Cod PIN nou",
+  "confirmPin": "Confirmați codul PIN",
+  "confirmNewPin": "Confirmați noul cod PIN",
+  "firstWeekTitle": "Configurați-vă conturile",
+  "addCashAccount": "Adăugați un cont de numerar",
+  "addCreditCard": "Adăugați un card de credit",
+  "cashAccountName": "Numele contului de numerar",
+  "cardName": "Numele cardului",
+  "paidFromBank": "Plătit din bancă",
+  "paidFromCard": "Plătit cu cardul",
+  "choosePassphraseTitle": "Alegeți o frază de acces pentru a proteja această copie de rezervă. Nu există nicio modalitate de recuperare dacă o uitați.",
+  "replaceBooksTitle": "Înlocuiți registrele locale?",
+  "replaceBooksBody": "Aceasta va înlocui tot ce se află în prezent în această aplicație cu copia de rezervă. Închideți și redeschideți aplicația după aceea.",
+  "chooseBackupFileFirst": "Alegeți mai întâi un fișier de rezervă.",
+  "backupRestored": "Copie de rezervă restaurată",
+  "backupRestoredBody": "Registrele dvs. au fost restaurate. Închideți și redeschideți aplicația pentru a continua.",
+  "fixThisEntry": "Corectează această înregistrare",
+  "fixBlurb": "Linia veche rămâne exact așa cum a fost. Confirmarea adaugă o linie de stornare și una corectată.",
+  "importStatementTitle": "Importă extrasul",
+  "importOfx": "Importă OFX",
+  "importOfxQfxFile": "Importă fișierul OFX / QFX",
+  "importCsvFile": "Importă fișierul CSV",
+  "whatKindOfStatement": "Ce tip de fișier de extras aveți?",
+  "chooseAccountForFile": "Alegeți contul căruia îi aparține acest fișier.",
+  "importIntoAccount": "Importă în contul",
+  "useSavedProfile": "Folosește un profil salvat",
+  "saveMappingProfile": "Salvează această mapare ca profil (opțional)",
+  "renameProfile": "Redenumește profilul",
+  "deleteProfileTitle": "Ștergeți profilul?",
+  "fileHasHeader": "Fișierul are un rând de antet",
+  "dateColumn": "Coloana datei",
+  "dateFormatHint": "Formatul datei (ex.: zz/LL/aaaa)",
+  "amountColumn": "Coloana sumei",
+  "amountConvention": "Convenția sumei",
+  "signedAmountColumn": "Coloana sumei cu semn",
+  "separateDebitCredit": "Coloane separate debit / credit",
+  "debitColumn": "Coloana de debit",
+  "creditColumn": "Coloana de credit",
+  "decimalSeparator": "Separator zecimal (. sau ,)",
+  "descriptionColumns": "Coloana(ele) de descriere",
+  "referenceIdColumn": "Coloana ID-ului de referință (opțional)",
+  "skippedRows": "Rânduri omise",
+  "parsedTransactionCount": "{count} tranzacții analizate",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} omise sau excluse",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} înregistrate, {failed} eșuate",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "Categorie pentru toate",
+  "saveAsRule": "Salvați ca regulă?",
+  "saveAsRuleBlurb": "Importurile viitoare a căror descriere conține acest cuvânt cheie vor folosi această categorie.",
+  "keyword": "Cuvânt cheie",
+  "noSavedRules": "Nu există încă reguli salvate. Atribuiți o categorie unui grup de rânduri pentru a salva o regulă.",
+  "deleteRuleTitle": "Ștergeți regula?",
+  "editRule": "Editează regula",
+  "rowsGrouped": "{count} rânduri",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "Selectați un fișier de extras {extensions} pentru import",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "Beneficiari",
+  "addPayee": "Adaugă beneficiar",
+  "renamePayee": "Redenumește beneficiarul",
+  "deletePayeeTitle": "Ștergeți beneficiarul?",
+  "noPayeesYet": "Niciun beneficiar încă",
+  "recurringTitle": "Șabloane recurente",
+  "noRecurringYet": "Niciun șablon recurent încă",
+  "deleteTemplateTitle": "Ștergeți șablonul recurent?",
+  "dayOfMonth": "Ziua din lună (1-31)",
+  "dayOfMonthNote": "O lună cu mai puține zile folosește propria ultimă zi.",
+  "dayOfMonthLine": "Ziua {day} a lunii - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "Nume",
+  "none": "Niciunul",
+  "currency": "Monedă",
+  "errorGeneric": "A apărut o eroare. Încercați din nou.",
+  "errorSigningIdentityMismatch": "Această frază de recuperare sau fișier keystore nu se potrivește cu nicio identitate de semnare din această bază de date.",
+  "errorInvalidLedgerBackup": "Acest fișier nu este o copie de rezervă Smara validă.",
+  "errorInvalidLedgerBackupNoIdentity": "Această copie de rezervă nu are identitate de semnare - nu este o copie de rezervă Smara validă.",
+  "errorInvalidLedgerBackupUnverified": "Această copie de rezervă nu s-a verificat ca registre intacte, așa că nu a fost restaurată.",
+  "errorInvalidLedgerBackupUnreadable": "Acest fișier nu a putut fi deschis ca o copie de rezervă Smara: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "Această copie de rezervă aparține unei identități de semnare diferite de cea de pe acest dispozitiv.",
+  "errorAccountNotFinancial": "Acesta nu este un cont financiar.",
+  "errorAccountArchived": "Acest cont este ascuns.",
+  "errorAccountNotArchived": "Acest cont nu este ascuns.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Nu există sold rămas de transferat.",
+  "errorAccountHasNoGroup": "Acest cont nu are un grup atribuit.",
+  "errorGroupHasNoCurrency": "Acest grup nu are încă o monedă setată.",
+  "errorGroupNotFound": "Acest grup de conturi nu a fost găsit.",
+  "errorInvestmentAccountsMustBeAssets": "Doar conturile de active pot fi marcate drept conturi de investiții.",
+  "errorCreditCardsMustBeLiabilities": "Doar conturile de pasive pot fi marcate drept carduri de credit.",
+  "errorOpeningBalanceMustBePositive": "Soldul inițial trebuie să fie pozitiv atunci când este introdus.",
+  "errorAccountTypeDoesNotMatchGroup": "Acest tip de cont nu corespunde grupului.",
+  "errorLastActiveAccount": "Nu se poate ascunde ultimul cont financiar activ.",
+  "errorCurrencyRequiredToCreateGroup": "Este necesară o monedă pentru a crea un grup.",
+  "errorSystemGroupCannotBeArchived": "Grupurile de conturi predefinite nu pot fi ascunse.",
+  "errorGroupAlreadyArchived": "Acest grup este deja ascuns.",
+  "errorCannotArchiveGroupWithAccounts": "Nu se poate ascunde un grup care încă are conturi active.",
+  "errorSystemGroupNeverArchived": "Grupurile de conturi predefinite nu sunt niciodată ascunse.",
+  "errorAccountGroupsCannotBeDeleted": "Grupurile de conturi nu pot fi șterse.",
+  "errorCannotReassignDifferentCurrency": "Acest cont nu poate fi mutat într-un grup cu o monedă diferită.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "Moneda nu poate fi schimbată atât timp cât grupul are conturi active.",
+  "errorAmountMustBePositive": "Suma trebuie să fie pozitivă.",
+  "errorAccountCurrencyAmountMustBePositive": "Suma în moneda contului trebuie să fie pozitivă.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "Suma în moneda contului este doar pentru o înregistrare într-o valută străină.",
+  "errorSplitNeedsTwoLines": "O împărțire necesită cel puțin două linii de categorie.",
+  "errorSplitLineMustBePositive": "Fiecare linie de împărțire trebuie să aibă o sumă pozitivă.",
+  "errorSplitLinesMustSumToTotal": "Liniile de împărțire trebuie să însumeze totalul tranzacției.",
+  "errorTransferAmountMustBePositive": "Suma transferului trebuie să fie pozitivă.",
+  "errorTransferAccountsMustDiffer": "Contul sursă și cel de destinație trebuie să fie diferite.",
+  "errorCloseoutRequiresDestinationAmount": "O închidere între valute diferite necesită o sumă de destinație cunoscută.",
+  "errorDestinationAmountNotForSameCurrency": "Suma de destinație este doar pentru un transfer între valute diferite.",
+  "errorDestinationAmountMustBePositive": "Suma de destinație trebuie să fie pozitivă.",
+  "errorInvestmentCashExceeded": "Nu se poate transfera mai mult decât numerarul acestui cont de investiții.",
+  "errorCannotReverseUnsettledProvisional": "Decontați acest transfer în așteptare în loc să îl stornați.",
+  "errorAlreadyReversed": "Această înregistrare a fost deja corectată. Linia originală rămâne neschimbată.",
+  "errorNotActiveExpenseCategory": "Alegeți o categorie de cheltuieli activă.",
+  "errorNotActiveIncomeCategory": "Alegeți o categorie de venituri activă.",
+  "errorSettledAmountMustNotBeNegative": "Suma care a ajuns nu poate fi negativă.",
+  "errorPendingTransferNotFound": "Acest transfer în așteptare nu a fost găsit.",
+  "errorPendingTransferAlreadySettled": "Acest transfer în așteptare este deja decontat.",
+  "errorSettledToMustBeSourceOrDestination": "Alegeți contul sursă sau de destinație original.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "O categorie de comision este folosită doar când banii sunt returnați în contul sursă.",
+  "errorSettledAmountMustBePositiveForDelivery": "Introduceți o sumă pozitivă pentru ce a ajuns.",
+  "errorSettledAmountExceedsProvisional": "Această sumă este mai mare decât cea trimisă.",
+  "errorInstrumentNotFound": "Acest instrument nu a fost găsit.",
+  "errorIncomeRequiredForNonCash": "Este necesară o categorie de venit activă pentru o achiziție non-monetară.",
+  "errorInsufficientCash": "Nu există suficient numerar în acest cont de investiții pentru această cumpărare.",
+  "errorSellQuantityAndPriceMustBePositive": "Cantitatea și prețul unitar de vânzare trebuie să fie pozitive.",
+  "errorLockedUntil": "Nu se poate vinde: unele unități sunt blocate până la {date}.",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "Nu se poate vinde mai mult decât dețineți deblocat momentan.",
+  "errorIncomeRequiredForGain": "Este necesară o categorie de venit activă pentru un câștig realizat.",
+  "errorExpenseRequiredForLoss": "Este necesară o categorie de cheltuieli activă pentru o pierdere realizată.",
+  "errorBrokerageFailedAfterBuy": "Cumpărare înregistrată, dar comisionul de brokeraj a eșuat: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "Vânzare înregistrată, dar comisionul de brokeraj a eșuat: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "Suma dividendului trebuie să fie pozitivă.",
+  "errorNotInvestmentAccount": "Acesta nu este un cont de investiții.",
+  "errorNoInventoryCompanion": "Acestui cont de investiții îi lipsește inventarul asociat.",
+  "errorInvestmentReversalBlocked": "Nu se poate storna această cumpărare: vânzările ulterioare depind de unitățile ei. Stornați mai întâi vânzările dependente: {sells}.",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "Limita lunară trebuie să fie pozitivă.",
+  "errorTemplateAmountMustBePositive": "Suma șablonului trebuie să fie pozitivă.",
+  "errorOfxUnrecognized": "Acest fișier nu a putut fi recunoscut ca OFX.",
+  "errorCsvEmpty": "Fișierul selectat este gol.",
+  "errorCsvUnreadable": "Acest fișier nu a putut fi citit ca CSV.",
+  "errorCsvNoRows": "Fișierul selectat nu are rânduri.",
+  "errorBackupCreateFailed": "Copia de rezervă nu a putut fi creată: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "Această copie de rezervă nu a putut fi restaurată - frază de acces greșită sau nu este un fișier de rezervă Smara.",
+  "validationAmountAccountCategoryRequired": "Suma, contul și categoria sunt obligatorii.",
+  "validationAmountAccountRequired": "Suma și contul sunt obligatorii.",
+  "validationSplitLineIncomplete": "Fiecare linie de împărțire necesită o categorie și o sumă.",
+  "validationSplitSumMismatch": "Liniile de împărțire trebuie să însumeze totalul tranzacției.",
+  "validationFromToAmountRequired": "Contul sursă, contul de destinație și suma sunt obligatorii.",
+  "validationAmountArrivedRequired": "Suma care a ajuns este obligatorie.",
+  "validationChooseReceivingAccount": "Alegeți contul care a primit fondurile.",
+  "validationAccountCategoryRequired": "Contul și categoria sunt obligatorii.",
+  "validationFixFailed": "Această corecție nu a putut fi salvată.",
+  "validationNameRequired": "Denumiți contul dvs. principal.",
+  "validationStillLoading": "Se încarcă încă - încercați din nou peste puțin timp.",
+  "validationSaveAccountNameFailed": "Numele contului nu a putut fi salvat.",
+  "validationWrongPin": "Cod PIN greșit. Încercați din nou.",
+  "validationCategoryMustBeIncomeOrExpense": "Categoria trebuie să fie Venit sau Cheltuială.",
+  "validationOnlyExpenseHasMonthlyLimit": "Doar o categorie de cheltuieli poate avea o limită lunară.",
+  "validationInvalidTemplate": "Șablon nevalid.",
+  "validationWrongKeystorePassphrase": "Frază de acces greșită pentru acest fișier keystore.",
+  "validationInvalidKeystoreFile": "Acesta nu pare a fi un fișier keystore valid.",
+  "validationRestorePhraseFailed": "Nu s-a putut restaura din acea frază de recuperare.",
+  "validationGenerateKeyFailed": "Nu s-a putut genera o cheie de semnare pe acest dispozitiv: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "Această monedă nu a putut fi salvată: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "Migrarea a eșuat. Încercați din nou.",
+  "validationChooseBackupFile": "Alegeți mai întâi un fișier de rezervă.",
+  "validationPassphraseRequired": "Introduceți o frază de acces.",
+  "validationPinsDoNotMatch": "Cele două coduri PIN nu se potrivesc.",
+  "validationFeePositiveWithCategory": "Un comision de transfer trebuie să fie o sumă pozitivă cu o categorie de cheltuieli selectată.",
+  "validationFeeMustBeLessThanAmount": "Comisionul trebuie să fie mai mic decât suma pentru un transfer cu comision dedus.",
+  "validationTransferSavedFeeFailed": "Transfer salvat, dar comisionul nu a putut fi înregistrat: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "Introduceți o sumă validă.",
+  "validationConfirmWordMismatch": "Cuvântul {n} nu se potrivește cu fraza salvată. Verificați-l și încercați din nou.",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "Cantitatea și prețul unitar de cumpărare trebuie să fie pozitive.",
+  "errorInstrumentArchived": "Nu se poate cumpăra un instrument arhivat.",
+  "errorNonCashCannotIncludeBrokerage": "Achizițiile non-monetare nu pot include comision de brokeraj.",
+  "errorBrokerageRequiresExpenseCategory": "Este necesară o categorie de cheltuieli activă atunci când comisionul de brokeraj este pozitiv.",
+  "errorSellProceedsMustCoverBrokerage": "Încasările din vânzare trebuie să acopere cel puțin suma comisionului de brokeraj.",
+  "homeSpentOfLimitThisMonth": "{spent} din {limit} luna aceasta",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "Deblocați Smara Accounting",
+  "searchLabel": "Căutare",
+  "openingBalance": "Sold inițial",
+  "transferToName": "Transfer: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "Comision de transfer",
+  "feeForTransferTo": "Comision de transfer către {name}",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "Selectorul de fișiere nu a putut fi deschis: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "Selectați un fișier .{extensions}",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "Codul monedei (ISO 4217, ex.: USD)",
+  "splitCounterpartMore": "{name} +{count} mai mult",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "Data",
+  "noneSelected": "Niciunul",
+  "reviewEntriesBeforeContinuing": "Verificați înregistrările de mai jos ({count} în total) înainte de a continua.",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "Ați primit {amount}",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "Lăsați necompletat dacă cursul de schimb nu este încă cunoscut.",
+  "recordTradeBlurb": "Înregistrați o tranzacție care s-a realizat deja. Această aplicație nu plasează ordine.",
+  "feeOnTopBlurb": "Inclus: suma de mai sus este totalul retras din acest cont; comisionul este dedus din el.",
+  "feeBankBlurb": "Un comision perceput în avans de banca dvs. sau de un intermediar.",
+  "validationPinMinLength": "Codul PIN trebuie să aibă cel puțin 4 cifre.",
+  "restoreBackupBlurb": "Aceasta va înlocui tot ce se află în prezent în această aplicație cu copia de rezervă — nu combină datele. Alegeți un fișier de rezervă și introduceți fraza de acces cu care l-ați protejat.",
+  "actionReplace": "Înlocuiește",
+  "hideAccountBody": "{name} nu va mai fi disponibil pentru tranzacții noi.",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} nu va mai fi oferit la crearea sau reatribuirea conturilor.",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} nu va mai fi oferită la înregistrarea tranzacțiilor noi.",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "Instrumentele ascunse rămân pe cumpărările și vânzările trecute. Puteți în continuare înregistra un dividend pentru ele.",
+  "nameHidden": "{name} (ascuns)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "Nicio monedă setată",
+  "deletePayeeBody": "{name} și valorile implicite memorate vor fi eliminate. Tranzacțiile anterioare nu sunt afectate.",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} nu va mai fi oferit ca scadent. Tranzacțiile deja înregistrate de el nu sunt afectate.",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "Maparea coloanelor salvată \"{name}\" va fi ștearsă. Extrasele deja importate cu ea nu sunt afectate.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "Importurile nu vor mai fi categorisite automat prin \"{keyword}\". Tranzacțiile deja categorisite cu această regulă nu sunt afectate.",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "Opțional, adăugați acum un card de credit sau un cont de numerar - puteți oricând adăuga mai multe conturi ulterior din Setări.",
+  "deliveredToDestination": "Livrat la destinație",
+  "deliveredToName": "Livrat la {name}",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "Ați primit {amount} {currency} mai puțin decât era de așteptat - alegeți o categorie pentru a acoperi diferența.",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "Interval de date",
+  "addTemplate": "Adaugă șablon",
+  "editTemplate": "Editează șablonul",
+  "validationFillTemplateFields": "Completați fiecare câmp cu o sumă și o zi valide.",
+  "saveCsvExport": "Salvează exportul CSV",
+  "referenceRate": "Curs de referință",
+  "yourRate": "Cursul dvs.",
+  "leaveBlankIfThisWasAccountCurrency": "Lăsați necompletat dacă a fost în {currency}, moneda proprie a contului.",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "Blocat până la (opțional)",
+  "lockedUntilDate": "Blocat până la {date}",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "S-a copiat o interogare de cercetare — nu există un URL de browser disponibil sau sunteți offline.",
+  "openedFavouriteResearchTool": "S-a deschis instrumentul dvs. preferat de cercetare.",
+  "looksLikeGain": "Acesta pare a fi un câștig",
+  "looksLikeLoss": "Aceasta pare a fi o pierdere",
+  "looksLikeBreakEven": "Acesta pare a fi un prag de rentabilitate",
+  "sellableQuantity": "{name} ({qty} disponibile pentru vânzare)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "Coloana {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "Se importă...",
+  "confirmImport": "Confirmă importul",
+  "manageSavedCategoryRules": "Gestionează regulile de categorii salvate",
+  "statementCurrencyMismatch": "Moneda acestui fișier ({currency}) nu corespunde monedei contului selectat.",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "Reguli de categorii",
+  "possibleDuplicate": "posibil duplicat",
+  "unknownCategory": "Categorie necunoscută"
+}

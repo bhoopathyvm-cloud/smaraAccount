@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/transaction_direction.dart';
@@ -12,7 +13,7 @@ import '../../../../domain/models/transaction_direction.dart';
 /// prefilled from the original entry, editable, and on [fix] posts a
 /// reversal of the original plus a new entry with the corrected fields -
 /// the original entry is never edited or deleted (Golden Rule #7).
-class CorrectionViewModel extends ChangeNotifier {
+class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   CorrectionViewModel({
     required LedgerRepository ledgerRepository,
     required this.entryId,
@@ -140,31 +141,27 @@ class CorrectionViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
-  /// Posts the fix: a reversal of [entryId], then a new entry with the
-  /// corrected fields. Not atomic across the two calls - if the second
-  /// fails (e.g. an invalid category), the original is already reversed
-  /// and safely visible either way; the user simply records the
-  /// replacement by hand instead of losing anything.
+  /// Posts the fix: a reversal of [entryId] and a new entry with the
+  /// corrected fields, as one repository transaction. The original entry
+  /// is never edited or deleted (Golden Rule #7).
   Future<bool> fix() async {
     final categoryId = _categoryId;
     final financialAccountId = _financialAccountId;
     final amountMinor = _amountMinor;
     if (categoryId == null || financialAccountId == null) {
-      _errorMessage = 'Account and category are required.';
-      notifyListeners();
+      setFailure(
+        const AppFailure(AppErrorCode.validationAccountCategoryRequired),
+      );
       return false;
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
-      await _ledgerRepository.reverseEntry(entryId);
-      await _ledgerRepository.recordTransaction(
+      await _ledgerRepository.fixPostedTransaction(
+        entryId: entryId,
         amountMinor: amountMinor,
         direction: _direction,
         categoryId: categoryId,
@@ -172,19 +169,28 @@ class CorrectionViewModel extends ChangeNotifier {
         transactionDate: _transactionDate,
         description: _description,
       );
-      _isSubmitting = false;
-      notifyListeners();
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _isSubmitting = false;
-      _errorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
     } on AccountGroupException catch (e) {
-      _isSubmitting = false;
-      _errorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
+    } on AlreadyReversedException catch (e) {
+      setFailure(e);
+      return false;
+    } on PendingTransferException catch (e) {
+      setFailure(e);
+      return false;
+    } on InvestmentException catch (e) {
+      setFailure(e);
+      return false;
+    } catch (e) {
+      setFailure(const AppFailure(AppErrorCode.validationFixFailed));
+      return false;
+    } finally {
+      _isSubmitting = false;
+      notifyListeners();
     }
   }
 

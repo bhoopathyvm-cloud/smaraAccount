@@ -69,7 +69,7 @@ void main() {
 
       expect(find.textContaining('test entry'), findsOneWidget);
       expect(
-        find.textContaining('does NOT retroactively prove'),
+        find.textContaining('Old entries stay visible but are superseded'),
         findsOneWidget,
       );
     },

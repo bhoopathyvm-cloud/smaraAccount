@@ -7,6 +7,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -57,14 +58,15 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register', style: AppTypography.headerTitle),
+        title: Text(l10n.registerTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         actions: [
           IconButton(
-            tooltip: 'Export CSV',
+            tooltip: l10n.actionExportCsv,
             icon: const Icon(TablerIcons.fileExport),
             onPressed: () => _exportCsv(context, viewModel),
           ),
@@ -86,7 +88,7 @@ class RegisterView extends StatelessWidget {
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.cardBackground,
           icon: const Icon(TablerIcons.plus),
-          label: const Text('Add'),
+          label: Text(l10n.actionAdd),
         ),
       ),
       body: ListenableBuilder(
@@ -95,23 +97,24 @@ class RegisterView extends StatelessWidget {
           if (viewModel.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
+          final l10n = l10nOf(context);
           return Column(
             children: [
-              if (viewModel.errorMessage != null)
+              if (viewModel.errorMessageFor(l10n) != null)
                 StatusBanner(
-                  message: viewModel.errorMessage!,
+                  message: viewModel.errorMessageFor(l10n)!,
                   isError: true,
                   onDismiss: viewModel.clearError,
                 ),
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.large),
                 child: EntityPickerField<Account>(
-                  labelText: 'Account',
+                  labelText: l10n.account,
                   items: viewModel.accounts,
                   idOf: (account) => account.id,
                   labelOf: (account) => account.archived
-                      ? '${account.name} (archived)'
-                      : account.name,
+                      ? l10n.nameHidden(localizeStoredName(l10n, account.name))
+                      : localizeStoredName(l10n, account.name),
                   value: viewModel.selectedAccountId,
                   onChanged: (accountId) {
                     if (accountId != null) viewModel.selectAccount(accountId);
@@ -126,7 +129,7 @@ class RegisterView extends StatelessWidget {
                   ),
                   child: OutlinedButton(
                     onPressed: () => _showCloseoutDialog(context, viewModel),
-                    child: const Text('Transfer remaining balance'),
+                    child: Text(l10n.transferRemainingBalance),
                   ),
                 ),
               if (viewModel.isSelectedAccountCreditCard &&
@@ -137,14 +140,14 @@ class RegisterView extends StatelessWidget {
                   ),
                   child: OutlinedButton(
                     onPressed: onPayCard,
-                    child: const Text('Pay card'),
+                    child: Text(l10n.actionPayCard),
                   ),
                 ),
               Expanded(
                 child: viewModel.rows.isEmpty
                     ? Center(
                         child: Text(
-                          'No transactions yet',
+                          l10n.registerNoTransactions,
                           style: AppTypography.body.copyWith(
                             color: AppColors.textMuted,
                           ),
@@ -181,6 +184,7 @@ class RegisterView extends StatelessWidget {
     BuildContext context,
     RegisterViewModel viewModel,
   ) async {
+    final l10n = l10nOf(context);
     final now = DateTime.now();
     final range = await showDateRangePicker(
       context: context,
@@ -207,7 +211,7 @@ class RegisterView extends StatelessWidget {
         '${accountName ?? 'register'}-'
         '${_isoDate(range.start)}-to-${_isoDate(range.end)}.csv';
     await FilePicker.platform.saveFile(
-      dialogTitle: 'Save CSV export',
+      dialogTitle: l10n.saveCsvExport,
       fileName: fileName,
       bytes: Uint8List.fromList(utf8.encode(csv)),
     );
@@ -243,17 +247,18 @@ class RegisterView extends StatelessWidget {
           );
           final destCurrency = viewModel.currencyFor(toAccountId);
           return AlertDialog(
-            title: const Text('Transfer remaining balance'),
+            title: Text(l10nOf(context).transferRemainingBalance),
             content: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   EntityPickerField<Account>(
-                    labelText: 'To account',
+                    labelText: l10nOf(context).toAccount,
                     items: viewModel.closeoutDestinationCandidates,
                     idOf: (account) => account.id,
-                    labelOf: (account) => account.name,
+                    labelOf: (account) =>
+                        localizeStoredName(l10nOf(context), account.name),
                     value: toAccountId,
                     onChanged: (accountId) {
                       setDialogState(() {
@@ -265,7 +270,7 @@ class RegisterView extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    'Amount: ${formatAmountMinor(viewModel.selectedAccountBalanceMinor, sourceCurrency ?? 'USD')}'
+                    '${l10nOf(context).amount}: ${formatAmountMinor(viewModel.selectedAccountBalanceMinor, sourceCurrency ?? 'USD')}'
                     '${sourceCurrency == null ? '' : ' $sourceCurrency'}',
                     style: AppTypography.body,
                   ),
@@ -273,7 +278,7 @@ class RegisterView extends StatelessWidget {
                   if (isCrossCurrency)
                     MoneyAmountField(
                       controller: destinationAmountController,
-                      labelText: 'Destination amount',
+                      labelText: l10nOf(context).destinationAmount,
                       currency: destCurrency!,
                       suffixText: destCurrency,
                       onChangedMinor: (value) {
@@ -284,8 +289,8 @@ class RegisterView extends StatelessWidget {
                     const SizedBox(height: AppSpacing.medium),
                   TextField(
                     controller: descriptionController,
-                    decoration: const InputDecoration(
-                      labelText: 'Description (optional)',
+                    decoration: InputDecoration(
+                      labelText: l10nOf(context).descriptionOptional,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.medium),
@@ -302,7 +307,7 @@ class RegisterView extends StatelessWidget {
                       }
                     },
                     child: Text(
-                      'Date: ${transactionDate.year}-'
+                      '${l10nOf(context).dateLabel}: ${transactionDate.year}-'
                       '${transactionDate.month.toString().padLeft(2, '0')}-'
                       '${transactionDate.day.toString().padLeft(2, '0')}',
                     ),
@@ -313,7 +318,7 @@ class RegisterView extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('Cancel'),
+                child: Text(l10nOf(context).actionCancel),
               ),
               ElevatedButton(
                 onPressed: toAccountId == null
@@ -332,7 +337,7 @@ class RegisterView extends StatelessWidget {
                           Navigator.of(dialogContext).pop();
                         }
                       },
-                child: const Text('Transfer'),
+                child: Text(l10nOf(context).actionTransfer),
               ),
             ],
           );
@@ -402,6 +407,7 @@ class _RegisterSearchBarState extends State<_RegisterSearchBar> {
       listenable: widget.viewModel,
       builder: (context, _) {
         final viewModel = widget.viewModel;
+        final l10n = l10nOf(context);
         final hasDateRange =
             viewModel.filterStartDate != null &&
             viewModel.filterEndDate != null;
@@ -415,13 +421,13 @@ class _RegisterSearchBarState extends State<_RegisterSearchBar> {
               TextField(
                 controller: _controller,
                 decoration: InputDecoration(
-                  labelText: 'Search',
-                  hintText: 'Description, category, or amount',
+                  labelText: l10n.searchLabel,
+                  hintText: l10n.registerSearchHint,
                   prefixIcon: const Icon(TablerIcons.search),
                   suffixIcon: viewModel.hasActiveSearchOrFilters
                       ? IconButton(
                           icon: const Icon(TablerIcons.x),
-                          tooltip: 'Clear search and filters',
+                          tooltip: l10n.actionClearSearch,
                           onPressed: () {
                             _controller.clear();
                             viewModel.clearSearchAndFilters();
@@ -436,12 +442,12 @@ class _RegisterSearchBarState extends State<_RegisterSearchBar> {
                 spacing: AppSpacing.small,
                 children: [
                   ChoiceChip(
-                    label: const Text('All'),
+                    label: Text(l10n.registerAll),
                     selected: viewModel.filterDirection == null,
                     onSelected: (_) => viewModel.setDirectionFilter(null),
                   ),
                   ChoiceChip(
-                    label: const Text('Spent only'),
+                    label: Text(l10n.registerSpentOnly),
                     selected:
                         viewModel.filterDirection ==
                         TransactionDirection.moneyOut,
@@ -450,7 +456,7 @@ class _RegisterSearchBarState extends State<_RegisterSearchBar> {
                     ),
                   ),
                   ChoiceChip(
-                    label: const Text('Received only'),
+                    label: Text(l10n.registerReceivedOnly),
                     selected:
                         viewModel.filterDirection ==
                         TransactionDirection.moneyIn,
@@ -464,14 +470,14 @@ class _RegisterSearchBarState extends State<_RegisterSearchBar> {
                       hasDateRange
                           ? '${_formatDate(viewModel.filterStartDate!)} – '
                                 '${_formatDate(viewModel.filterEndDate!)}'
-                          : 'Date range',
+                          : l10n.dateRangeLabel,
                     ),
                     onPressed: () => _pickDateRange(context),
                   ),
                   if (hasDateRange)
                     ActionChip(
                       avatar: const Icon(TablerIcons.x, size: 16),
-                      label: const Text('Clear dates'),
+                      label: Text(l10n.actionClearDates),
                       onPressed: () => viewModel.setDateRangeFilter(),
                     ),
                 ],

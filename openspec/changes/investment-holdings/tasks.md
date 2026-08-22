@@ -10,7 +10,7 @@
 - [x] 2.2 Transfers involving an investment account move **cash only**; reject cash-out greater than cash; cross-currency funding uses the existing `foreign-currency-settlement` path unchanged.
 - [x] 2.3 `watchFinancialAccounts` / home / pickers never list the internal inventory companion.
 - [x] 2.3b Investment account cash remains selectable in the ordinary record-transaction (income/expense) screen, unmodified — the escape hatch for custody/maintenance/wire fees not covered by Buy/Sell/Dividend/brokerage. Never touches inventory.
-- [ ] 2.4 Archiving an investment account with a positive cash balance is allowed, using the existing archived-account closeout-transfer mechanism unchanged; no investment-specific archiving rule for cash. Unlike an ordinary archived account, the closeout-eligibility check must re-trigger whenever cash goes positive again (not just once), since a later sell or dividend (task 3.2, 3.3) can do that on an archived account.
+- [x] 2.4 Archiving an investment account with a positive cash balance is allowed, using the existing archived-account closeout-transfer mechanism unchanged; no investment-specific archiving rule for cash. Unlike an ordinary archived account, the closeout-eligibility check must re-trigger whenever cash goes positive again (not just once), since a later sell or dividend (task 3.2, 3.3) can do that on an archived account.
 
 ## 3. Buy, sell, dividend, brokerage
 
@@ -24,33 +24,33 @@
 
 ## 4. Quotes, portfolio value, and unrealized gain/loss
 
-- [ ] 4.1 Predefined free quote provider enum; request ticker/ISIN only; cache prices; no journal write.
-- [ ] 4.2 Refresh while Home or holdings is in the foreground; Settings can disable all quote HTTP. This toggle is separate from and clearly distinguishable from `reference-exchange-rate-lookup`'s existing "Fetch reference exchange rates" toggle in the same Settings screen (different concept, different label, e.g. "Fetch market prices for investments").
-- [ ] 4.3 Portfolio value = cash + Σ(qty × last price or cost); missing/stale/disabled labeled; skip live price if quote currency ≠ group currency (use cost).
-- [ ] 4.4 Holdings view shows, per instrument, unrealized gain/loss = (qty × last price/cache/cost) − lot cost.
-- [ ] 4.5 Home group total and net position use portfolio value for investment accounts, labeled as a market estimate; holdings header also shows book (cash + cost).
+- [x] 4.1 Predefined free quote provider enum; request ticker/ISIN only; cache prices; no journal write.
+- [x] 4.2 Refresh while Home or holdings is in the foreground; Settings can disable all quote HTTP. This toggle is separate from and clearly distinguishable from `reference-exchange-rate-lookup`'s existing "Fetch reference exchange rates" toggle in the same Settings screen (different concept, different label, e.g. "Fetch market prices for investments").
+- [x] 4.3 Portfolio value = cash + Σ(qty × last price or cost); missing/stale/disabled labeled; skip live price if quote currency ≠ group currency (use cost).
+- [x] 4.4 Holdings view shows, per instrument, unrealized gain/loss = (qty × last price/cache/cost) − lot cost.
+- [x] 4.5 Home group total and net position use portfolio value for investment accounts, labeled as a market estimate; holdings header also shows book (cash + cost).
 
 ## 5. Tests
 
-- [ ] 5.1 Cash in/out; cash-out exceeding cash rejected; inventory unchanged by transfers; cross-currency funding follows `foreign-currency-settlement`.
-- [ ] 5.2 Cash-funded buy with and without brokerage; insufficient cash; inventory and cash math.
-- [ ] 5.3 Non-cash acquisition: posts income not cash; rejected without an income category; combined with a cash-funded buy reproduces a "buy 3, get 1 free" scenario correctly. The same instrument held in two different investment accounts tracks independent quantity/cost per account (lots scoped by account_id), while renaming/archiving the instrument affects both accounts (global, matching categories).
-- [ ] 5.4 Lock-until: a locked lot's quantity is excluded from sellable quantity; becomes sellable once the transaction date reaches lock-until; rejection message states the date. End-to-end: a non-cash acquisition WITH a lock-until date (the full "buy 3, get 1 free with a vesting period" case) correctly posts income, adds 4 total units, and excludes only the locked unit from sellable quantity.
-- [ ] 5.5 Dividend: increases cash, posts income, never changes inventory.
-- [ ] 5.5b Standalone non-cash acquisition (no companion cash buy): posts income, adds lot, cash unchanged, all units locked if lock-until set.
-- [ ] 5.5c Dividend for an instrument with zero current quantity (ex-div/payment-date lag) still posts.
-- [ ] 5.6 Sell at gain and loss with brokerage; over-sell (and over-sell-of-unlocked-only) rejected; sell where brokerage exceeds proceeds rejected; date-ordered average cost.
-- [ ] 5.7 Backdated buy recomputes an instrument's *current* quantity/cost correctly; previously recorded sells' already-posted realized gain/loss amounts are verified UNCHANGED (regression test for the immutability rule, not just a happy-path check).
-- [ ] 5.7b Zero-cash investment account rejects a cash-funded buy before any funding.
-- [ ] 5.8 Reversing a buy with no dependent later sell removes its contribution (including any lock-until constraint) and reverses cash/income; reversing a buy whose units a later sell already relied on is rejected; reversing a sell always succeeds and restores units/cost and cash/gain-loss; reversing a dividend always succeeds and never touches quantity/cost; brokerage fee entries reverse independently of their buy/sell.
-- [ ] 5.9 Archiving an investment account succeeds with a positive cash balance; its closeout transfer works exactly as for any other account; sell and dividend continue to work after archiving; buy and non-cash acquisition are rejected after archiving; a closeout transfer, a later sell, then a second closeout transfer all succeed in sequence (repeatable eligibility, not lifetime-once); a dividend on a no-longer-held instrument still posts.
-- [ ] 5.10 Quote HTTP includes no quantity/cost/account fields; failed quote does not block buy/sell/dividend; disable stops requests.
-- [ ] 5.11 Unrealized gain/loss matches (market contribution − book cost) per instrument.
-- [ ] 5.12 Home net position uses portfolio value; book still visible on the account view.
+- [x] 5.1 Cash in/out; cash-out exceeding cash rejected; inventory unchanged by transfers; cross-currency funding follows `foreign-currency-settlement`.
+- [x] 5.2 Cash-funded buy with and without brokerage; insufficient cash; inventory and cash math.
+- [x] 5.3 Non-cash acquisition: posts income not cash; rejected without an income category; combined with a cash-funded buy reproduces a "buy 3, get 1 free" scenario correctly. The same instrument held in two different investment accounts tracks independent quantity/cost per account (lots scoped by account_id), while renaming/archiving the instrument affects both accounts (global, matching categories).
+- [x] 5.4 Lock-until: a locked lot's quantity is excluded from sellable quantity; becomes sellable once the transaction date reaches lock-until; rejection message states the date. End-to-end: a non-cash acquisition WITH a lock-until date (the full "buy 3, get 1 free with a vesting period" case) correctly posts income, adds 4 total units, and excludes only the locked unit from sellable quantity.
+- [x] 5.5 Dividend: increases cash, posts income, never changes inventory.
+- [x] 5.5b Standalone non-cash acquisition (no companion cash buy): posts income, adds lot, cash unchanged, all units locked if lock-until set.
+- [x] 5.5c Dividend for an instrument with zero current quantity (ex-div/payment-date lag) still posts.
+- [x] 5.6 Sell at gain and loss with brokerage; over-sell (and over-sell-of-unlocked-only) rejected; sell where brokerage exceeds proceeds rejected; date-ordered average cost.
+- [x] 5.7 Backdated buy recomputes an instrument's *current* quantity/cost correctly; previously recorded sells' already-posted realized gain/loss amounts are verified UNCHANGED (regression test for the immutability rule, not just a happy-path check).
+- [x] 5.7b Zero-cash investment account rejects a cash-funded buy before any funding.
+- [x] 5.8 Reversing a buy with no dependent later sell removes its contribution (including any lock-until constraint) and reverses cash/income; reversing a buy whose units a later sell already relied on is rejected; reversing a sell always succeeds and restores units/cost and cash/gain-loss; reversing a dividend always succeeds and never touches quantity/cost; brokerage fee entries reverse independently of their buy/sell.
+- [x] 5.9 Archiving an investment account succeeds with a positive cash balance; its closeout transfer works exactly as for any other account; sell and dividend continue to work after archiving; buy and non-cash acquisition are rejected after archiving; a closeout transfer, a later sell, then a second closeout transfer all succeed in sequence (repeatable eligibility, not lifetime-once); a dividend on a no-longer-held instrument still posts.
+- [x] 5.10 Quote HTTP includes no quantity/cost/account fields; failed quote does not block buy/sell/dividend; disable stops requests.
+- [x] 5.11 Unrealized gain/loss matches (market contribution − book cost) per instrument.
+- [x] 5.12 Home net position uses portfolio value; book still visible on the account view.
 
 ## 6. UI and docs
 
-- [ ] 6.1 Create-account: investment toggle (asset only). Holdings view: cash, inventory (with unrealized gain/loss), Buy (funding-source choice, optional lock-until date, optional description), Sell (category picker determined by gain/loss direction after price entry, optional description), Dividend (optional description), brokerage field (`MoneyAmountField` / `EntityPickerField` / `confirmDestructiveAction` as elsewhere). Inline instrument creation during first buy of a new instrument (name, kind from fixed list, optional ticker, optional ISIN).
-- [ ] 6.2 No order ticket, no broker connect. Instrument management: create/rename/archive. Rename/archive use a menu or edit icon on the inventory row, NOT a tap on the instrument name itself — `investment-research-enablement` claims that exact tap target for opening research, so the two must not collide.
-- [ ] 6.3 User guide: cash in/out, inventory, buy/sell (including a non-cash acquisition example and lock-until), dividends, quotes as estimates, not dealing, and that archiving allows a positive-cash closeout transfer (repeatable) while sell and dividend stay available for winding down inventory and recording a late payout.
-- [ ] 6.4 `dart analyze` and full test suite.
+- [x] 6.1 Create-account: investment toggle (asset only). Holdings view: cash, inventory (with unrealized gain/loss), Buy (funding-source choice, optional lock-until date, optional description), Sell (category picker determined by gain/loss direction after price entry, optional description), Dividend (optional description), brokerage field (`MoneyAmountField` / `EntityPickerField` / `confirmDestructiveAction` as elsewhere). Inline instrument creation during first buy of a new instrument (name, kind from fixed list, optional ticker, optional ISIN).
+- [x] 6.2 No order ticket, no broker connect. Instrument management: create/rename/archive. Rename/archive use a menu or edit icon on the inventory row, NOT a tap on the instrument name itself — `investment-research-enablement` claims that exact tap target for opening research, so the two must not collide.
+- [x] 6.3 User guide: cash in/out, inventory, buy/sell (including a non-cash acquisition example and lock-until), dividends, quotes as estimates, not dealing, and that archiving allows a positive-cash closeout transfer (repeatable) while sell and dividend stay available for winding down inventory and recording a late payout.
+- [x] 6.4 `dart analyze` and full test suite.

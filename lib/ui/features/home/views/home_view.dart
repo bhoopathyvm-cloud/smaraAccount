@@ -5,6 +5,7 @@ import '../../../../domain/models/home_overview.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/summary.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -18,6 +19,7 @@ class HomeView extends StatelessWidget {
     super.key,
     required this.viewModel,
     required this.onAccountTap,
+    this.onInvestmentAccountTap,
     this.onSettlePendingTransfer,
     this.onOpenSettings,
     this.onSpent,
@@ -28,6 +30,7 @@ class HomeView extends StatelessWidget {
 
   final HomeViewModel viewModel;
   final ValueChanged<String> onAccountTap;
+  final ValueChanged<String>? onInvestmentAccountTap;
   final ValueChanged<String>? onSettlePendingTransfer;
   final VoidCallback? onOpenSettings;
 
@@ -41,14 +44,15 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home', style: AppTypography.headerTitle),
+        title: Text(l10n.navHome, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         actions: [
           IconButton(
-            tooltip: 'Settings',
+            tooltip: l10n.settingsTitle,
             onPressed: onOpenSettings,
             icon: const Icon(TablerIcons.settings),
           ),
@@ -66,7 +70,7 @@ class HomeView extends StatelessWidget {
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         icon: const Icon(TablerIcons.plus),
-        label: const Text('Add'),
+        label: Text(l10n.actionAdd),
       ),
       body: ListenableBuilder(
         listenable: viewModel,
@@ -107,7 +111,11 @@ class HomeView extends StatelessWidget {
               ],
               const SizedBox(height: AppSpacing.xLarge),
               for (final section in overview.sections)
-                _GroupSection(section: section, onAccountTap: onAccountTap),
+                _GroupSection(
+                  section: section,
+                  onAccountTap: onAccountTap,
+                  onInvestmentAccountTap: onInvestmentAccountTap,
+                ),
               // Room for the FAB not to cover the last row.
               const SizedBox(height: AppSpacing.xLarge),
             ],
@@ -139,10 +147,13 @@ class _ThisMonth extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('THIS MONTH', style: AppTypography.sectionLabel),
+          Text(
+            l10nOf(context).homeThisMonth,
+            style: AppTypography.sectionLabel,
+          ),
           const SizedBox(height: AppSpacing.base),
           if (expenseTotals.isNotEmpty) ...[
-            Text('Spent', style: AppTypography.cardTitle),
+            Text(l10nOf(context).captureSpent, style: AppTypography.cardTitle),
             for (final total in expenseTotals)
               _CategoryTotalRow(
                 total: total,
@@ -151,7 +162,10 @@ class _ThisMonth extends StatelessWidget {
             const SizedBox(height: AppSpacing.medium),
           ],
           if (incomeTotals.isNotEmpty) ...[
-            Text('Received', style: AppTypography.cardTitle),
+            Text(
+              l10nOf(context).captureReceived,
+              style: AppTypography.cardTitle,
+            ),
             for (final total in incomeTotals) _CategoryTotalRow(total: total),
           ],
         ],
@@ -176,7 +190,10 @@ class _CategoryTotalRow extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(total.categoryName, style: AppTypography.body),
+                child: Text(
+                  localizeStoredName(l10nOf(context), total.categoryName),
+                  style: AppTypography.body,
+                ),
               ),
               // Categories aren't scoped to one currency (they're shared
               // across accounts of potentially different currencies) - same
@@ -211,12 +228,15 @@ class _NetPositions extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'WHAT YOU HAVE MINUS WHAT YOU OWE',
+            l10nOf(context).homeWhatYouHaveMinusWhatYouOwe,
             style: AppTypography.sectionLabel,
           ),
           const SizedBox(height: AppSpacing.base),
           if (overview.netPositionsByCurrency.isEmpty)
-            Text('0.00', style: AppTypography.balance)
+            Text(
+              formatAmountMinor(0, _emptyNetCurrency(overview)),
+              style: AppTypography.balance,
+            )
           else
             for (final position in overview.netPositionsByCurrency)
               Padding(
@@ -225,8 +245,13 @@ class _NetPositions extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${formatAmountMinor(position.netPositionMinor, position.currency)} '
-                      '${position.currency}',
+                      l10nOf(context).homeNetPosition(
+                        formatAmountMinor(
+                          position.netPositionMinor,
+                          position.currency,
+                        ),
+                        position.currency,
+                      ),
                       style: AppTypography.balance.copyWith(
                         color: position.netPositionMinor < 0
                             ? AppColors.signal
@@ -234,10 +259,17 @@ class _NetPositions extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Assets ${formatAmountMinor(position.totalAssetsMinor, position.currency)} '
-                      '${position.currency}  •  Liabilities '
-                      '${formatAmountMinor(position.totalLiabilitiesMinor, position.currency)} '
-                      '${position.currency}',
+                      l10nOf(context).homeHaveAndOwe(
+                        formatAmountMinor(
+                          position.totalAssetsMinor,
+                          position.currency,
+                        ),
+                        position.currency,
+                        formatAmountMinor(
+                          position.totalLiabilitiesMinor,
+                          position.currency,
+                        ),
+                      ),
                       style: AppTypography.metadata,
                     ),
                   ],
@@ -247,6 +279,14 @@ class _NetPositions extends StatelessWidget {
       ),
     );
   }
+}
+
+String _emptyNetCurrency(HomeOverview overview) {
+  for (final section in overview.sections) {
+    final currency = section.group.currency;
+    if (currency != null) return currency;
+  }
+  return 'USD';
 }
 
 class _PendingTransfers extends StatelessWidget {
@@ -266,7 +306,10 @@ class _PendingTransfers extends StatelessWidget {
           ),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text('PENDING TRANSFERS', style: AppTypography.sectionLabel),
+            child: Text(
+              l10nOf(context).homeMoneyInTransit,
+              style: AppTypography.sectionLabel,
+            ),
           ),
         ),
         const Divider(height: 1),
@@ -281,16 +324,26 @@ class _PendingTransfers extends StatelessWidget {
             // "Plain-Language Pending Money").
             title: Text(
               pending.destinationLabel == null
-                  ? 'You sent '
-                        '${formatAmountMinor(pending.amountMinor, pending.currency)} '
-                        '${pending.currency} from ${pending.sourceAccountName}'
-                  : 'You sent '
-                        '${formatAmountMinor(pending.amountMinor, pending.currency)} '
-                        '${pending.currency} to ${pending.destinationLabel}',
+                  ? l10nOf(context).youSentFrom(
+                      formatAmountMinor(pending.amountMinor, pending.currency),
+                      pending.currency,
+                      localizeStoredName(
+                        l10nOf(context),
+                        pending.sourceAccountName,
+                      ),
+                    )
+                  : l10nOf(context).youSentTo(
+                      formatAmountMinor(pending.amountMinor, pending.currency),
+                      pending.currency,
+                      localizeStoredName(
+                        l10nOf(context),
+                        pending.destinationLabel!,
+                      ),
+                    ),
               style: AppTypography.cardTitle,
             ),
             subtitle: Text(
-              'Tap when you know what arrived',
+              l10nOf(context).homeTapWhenArrived,
               style: AppTypography.metadata,
             ),
             onTap: onTap == null
@@ -321,7 +374,10 @@ class _DueTemplates extends StatelessWidget {
           ),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text('DUE TODAY', style: AppTypography.sectionLabel),
+            child: Text(
+              l10nOf(context).homeDueToday,
+              style: AppTypography.sectionLabel,
+            ),
           ),
         ),
         const Divider(height: 1),
@@ -335,7 +391,10 @@ class _DueTemplates extends StatelessWidget {
             ),
             title: Text(due.template.name, style: AppTypography.cardTitle),
             subtitle: Text(
-              '${due.categoryName} · ${due.financialAccountName} · tap to record',
+              l10nOf(context).homeDueLine(
+                localizeStoredName(l10nOf(context), due.categoryName),
+                localizeStoredName(l10nOf(context), due.financialAccountName),
+              ),
               style: AppTypography.metadata,
             ),
             trailing: Text(
@@ -350,10 +409,15 @@ class _DueTemplates extends StatelessWidget {
 }
 
 class _GroupSection extends StatelessWidget {
-  const _GroupSection({required this.section, required this.onAccountTap});
+  const _GroupSection({
+    required this.section,
+    required this.onAccountTap,
+    this.onInvestmentAccountTap,
+  });
 
   final AccountGroupSection section;
   final ValueChanged<String> onAccountTap;
+  final ValueChanged<String>? onInvestmentAccountTap;
 
   @override
   Widget build(BuildContext context) {
@@ -377,7 +441,10 @@ class _GroupSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    section.group.name.toUpperCase(),
+                    localizeStoredName(
+                      l10nOf(context),
+                      section.group.name,
+                    ).toUpperCase(),
                     style: AppTypography.sectionLabel,
                   ),
                 ),
@@ -403,22 +470,37 @@ class _GroupSection extends StatelessWidget {
                 color: AppColors.textSecondary,
               ),
               title: Text(
-                balance.account.name,
+                localizeStoredName(l10nOf(context), balance.account.name),
                 style: AppTypography.cardTitle.copyWith(
                   color: balance.account.archived
                       ? AppColors.textMuted
                       : AppColors.textPrimary,
                 ),
               ),
-              subtitle: balance.account.archived
-                  ? Text('Hidden', style: AppTypography.metadata)
-                  : null,
+              subtitle: () {
+                final l10n = l10nOf(context);
+                final parts = <String>[
+                  if (balance.account.isInvestmentAccount &&
+                      balance.isMarketEstimate)
+                    l10n.homeMarketEstimate,
+                  if (balance.account.archived) l10n.hiddenLabel,
+                ];
+                if (parts.isEmpty) return null;
+                return Text(parts.join(' · '), style: AppTypography.metadata);
+              }(),
               trailing: Text(
                 '${formatAmountMinor(balance.displayBalanceMinor, formattingCurrency)} '
                 '${currency ?? '?'}',
                 style: AppTypography.body,
               ),
-              onTap: () => onAccountTap(balance.account.id),
+              onTap: () {
+                if (balance.account.isInvestmentAccount &&
+                    onInvestmentAccountTap != null) {
+                  onInvestmentAccountTap!(balance.account.id);
+                } else {
+                  onAccountTap(balance.account.id);
+                }
+              },
             ),
         ],
       ),

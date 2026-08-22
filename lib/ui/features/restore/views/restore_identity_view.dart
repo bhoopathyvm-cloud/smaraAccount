@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -58,9 +59,10 @@ class _RestoreIdentityViewState extends State<RestoreIdentityView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Restore signing key', style: AppTypography.headerTitle),
+        title: Text(l10n.restoreTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -73,23 +75,17 @@ class _RestoreIdentityViewState extends State<RestoreIdentityView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'This device has an existing ledger, but no matching signing '
-                  'key. Restore it from your saved recovery phrase or keystore '
-                  'file - your data will verify normally, and nothing will be '
-                  're-signed or altered.',
-                  style: AppTypography.body,
-                ),
+                Text(l10n.restoreBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 SegmentedButton<_RestoreMode>(
-                  segments: const [
+                  segments: [
                     ButtonSegment(
                       value: _RestoreMode.phrase,
-                      label: Text('Recovery phrase'),
+                      label: Text(l10n.recoveryPhrase24),
                     ),
                     ButtonSegment(
                       value: _RestoreMode.keystore,
-                      label: Text('Keystore file'),
+                      label: Text(l10n.keystoreFile),
                     ),
                   ],
                   selected: {_mode},
@@ -101,43 +97,43 @@ class _RestoreIdentityViewState extends State<RestoreIdentityView> {
                   TextField(
                     controller: _phraseController,
                     maxLines: 4,
-                    decoration: const InputDecoration(
-                      labelText: 'Recovery phrase (all 24 words)',
+                    decoration: InputDecoration(
+                      labelText: l10n.recoveryPhrase24,
                     ),
                   )
                 else ...[
                   TextField(
                     controller: _keystoreController,
                     maxLines: 4,
-                    decoration: const InputDecoration(
-                      labelText: 'Keystore file contents',
+                    decoration: InputDecoration(
+                      labelText: l10n.keystoreFileContents,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   TextField(
                     controller: _passphraseController,
                     obscureText: true,
-                    decoration: const InputDecoration(labelText: 'Passphrase'),
+                    decoration: InputDecoration(
+                      labelText: l10n.keystorePassphrase,
+                    ),
                   ),
                 ],
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],
                 const SizedBox(height: AppSpacing.xLarge),
                 ElevatedButton(
                   onPressed: widget.viewModel.isSubmitting ? null : _submit,
-                  child: const Text('Restore'),
+                  child: Text(l10n.actionRestore),
                 ),
                 const SizedBox(height: AppSpacing.large),
                 TextButton(
                   onPressed: widget.onNoRecoveryMaterial,
-                  child: const Text(
-                    'I don\'t have my recovery phrase or keystore file',
-                  ),
+                  child: Text(l10n.iDontHavePhrase),
                 ),
               ],
             ),

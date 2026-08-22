@@ -19,14 +19,20 @@ const _bom = [0xEF, 0xBB, 0xBF];
 List<List<String>> readCsvRows(List<int> bytes) {
   final content = _decode(bytes);
   if (content.trim().isEmpty) {
-    throw CsvParseException('The selected file is empty.');
+    throw CsvParseException(
+      'The selected file is empty.',
+      code: AppErrorCode.csvEmpty,
+    );
   }
 
   final List<List<dynamic>> rawRows;
   try {
     rawRows = const CsvDecoder().convert(content);
   } catch (error) {
-    throw CsvParseException('Could not read this file as CSV: $error');
+    throw CsvParseException(
+      'Could not read this file as CSV: $error',
+      code: AppErrorCode.csvUnreadable,
+    );
   }
 
   final rows = rawRows
@@ -35,7 +41,10 @@ List<List<String>> readCsvRows(List<int> bytes) {
       .toList();
 
   if (rows.isEmpty) {
-    throw CsvParseException('The selected file has no rows.');
+    throw CsvParseException(
+      'The selected file has no rows.',
+      code: AppErrorCode.csvNoRows,
+    );
   }
   return rows;
 }

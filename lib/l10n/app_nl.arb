@@ -1,0 +1,968 @@
+{
+  "@@locale": "nl",
+  "appTitle": "Smara Boekhouding",
+  "navHome": "Home",
+  "navRegister": "Register",
+  "navSummary": "Overzicht",
+  "navAccounts": "Rekeningen",
+  "navCategories": "Categorieën",
+  "actionCancel": "Annuleren",
+  "actionSave": "Opslaan",
+  "actionDelete": "Verwijderen",
+  "actionDone": "Klaar",
+  "actionContinue": "Doorgaan",
+  "actionDismiss": "Sluiten",
+  "actionRetry": "Opnieuw proberen",
+  "actionSkip": "Overslaan",
+  "actionConfirm": "Bevestigen",
+  "actionAdd": "Toevoegen",
+  "actionEdit": "Bewerken",
+  "actionRename": "Naam wijzigen",
+  "actionHide": "Verbergen",
+  "actionCreate": "Aanmaken",
+  "actionCloseApp": "App sluiten",
+  "actionUnlock": "Ontgrendelen",
+  "actionSettle": "Afwikkelen",
+  "actionFinish": "Voltooien",
+  "actionPreview": "Voorbeeld",
+  "actionImport": "Importeren",
+  "actionExportCsv": "CSV exporteren",
+  "actionChooseFile": "Bestand kiezen",
+  "actionRestore": "Herstellen",
+  "actionFix": "Corrigeren",
+  "actionBuy": "Kopen",
+  "actionSell": "Verkopen",
+  "actionDividend": "Dividend",
+  "actionRecordBuy": "Aankoop registreren",
+  "actionRecordSell": "Verkoop registreren",
+  "actionRecordDividend": "Dividend registreren",
+  "actionPayCard": "Kaart betalen",
+  "actionTransfer": "Overboeken",
+  "actionRecordTransaction": "Transactie registreren",
+  "actionImportStatement": "Afschrift importeren",
+  "actionClearDates": "Datums wissen",
+  "actionClearSearch": "Zoekopdracht en filters wissen",
+  "actionUseBiometrics": "Biometrie gebruiken",
+  "actionSetPin": "Pincode instellen",
+  "actionChangePin": "Pincode wijzigen",
+  "actionSaveBackup": "Back-up opslaan",
+  "actionRestoreBackup": "Back-up herstellen",
+  "actionSaveRule": "Regel opslaan",
+  "actionConfirmFix": "Correctie bevestigen",
+  "captureSpent": "Uitgegeven",
+  "captureReceived": "Ontvangen",
+  "captureMovedMoney": "Geld verplaatst",
+  "captureImportStatement": "Afschrift importeren",
+  "settingsTitle": "Instellingen",
+  "settingsLanguage": "Taal",
+  "settingsLanguageSystem": "Apparaattaal",
+  "settingsFetchFxRates": "Referentiewisselkoersen ophalen",
+  "settingsFetchFxRatesSubtitle": "Toont een indicatieve marktkoers naast het bestemmingsbedrag bij overboekingen tussen valuta, uitsluitend ter vergelijking - wordt nooit gebruikt om het bedrag automatisch in te vullen.",
+  "settingsRateProvider": "Koersaanbieder",
+  "settingsFetchMarketPrices": "Marktprijzen voor beleggingen ophalen",
+  "settingsFetchMarketPricesSubtitle": "Zoekt de laatste prijzen op voor instrumenten met een ticker of ISIN, om de portefeuillewaarde te schatten. Wordt nooit gebruikt om een transactie vast te leggen en verstuurt nooit hoeveel je in bezit hebt.",
+  "settingsMarketPriceProvider": "Marktprijsaanbieder",
+  "settingsFavouriteResearchTool": "Favoriete onderzoekstool",
+  "settingsFavouriteResearchToolSubtitle": "Als je op een instrumentnaam bij je posities tikt, opent deze tool in de browser met een onderzoeksvraag — geen integratie en geen advies.",
+  "settingsBackup": "Back-up",
+  "settingsBackupBlurb": "Sla een versleutelde kopie van je boekhouding op een locatie naar keuze op, of herstel er een. Dit is iets anders dan je herstelzin of keystore-bestand, die je ondertekeningssleutel back-uppen, niet je boekhouding.",
+  "settingsLock": "Vergrendeling",
+  "settingsLockBlurb": "Vereis een pincode, of biometrie waar beschikbaar, om de app te openen.",
+  "settingsRequireUnlock": "Ontgrendeling vereisen om de app te openen",
+  "settingsLockAfter": "Vergrendelen na",
+  "settingsLockImmediately": "Direct",
+  "settingsLock1Minute": "1 minuut",
+  "settingsLock5Minutes": "5 minuten",
+  "settingsLock15Minutes": "15 minuten",
+  "settingsAllowBiometrics": "Ook biometrie toestaan",
+  "settingsHideSnapshot": "Saldi verbergen in de app-switcher",
+  "settingsHideSnapshotSubtitle": "Verbergt dit scherm wanneer je naar een andere app schakelt, zodat het niet in één oogopslag zichtbaar is in de app-switcher.",
+  "settingsHideSnapshotUnavailable": "Saldi verbergen in de app-switcher is niet beschikbaar op dit platform.",
+  "settingsPayees": "Begunstigden",
+  "settingsManagePayees": "Begunstigden beheren",
+  "settingsPayeesBlurb": "Onthouden begunstigdennamen met hun standaardcategorie en -rekening, voorgesteld door automatisch aanvullen bij het registreren van een transactie.",
+  "settingsRecurring": "Terugkerende sjablonen",
+  "settingsManageRecurring": "Terugkerende sjablonen beheren",
+  "settingsRecurringBlurb": "Rekeningen of inkomsten die maandelijks terugkeren, zoals huur of salaris. Een vervallen sjabloon verschijnt op Home zodat je het met één tik kunt registreren - nooit automatisch geboekt.",
+  "settingsAbout": "Over",
+  "providerFrankfurter": "Frankfurter (ECB-koersen)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (dagelijkse koersen)",
+  "providerYahooFinance": "Yahoo Finance (chart-API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "Liquide middelen",
+  "systemGroupPensionRetirement": "Pensioen",
+  "systemGroupCreditShortTerm": "Krediet & kortlopende schulden",
+  "systemGroupLoansMortgages": "Leningen & hypotheken",
+  "systemGroupInvestments": "Beleggingen",
+  "systemAccountCashBank": "Kas & Bank",
+  "systemCategorySalary": "Salaris",
+  "systemCategoryOtherIncome": "Overige inkomsten",
+  "systemCategoryGroceries": "Boodschappen",
+  "systemCategoryRentMortgage": "Huur/Hypotheek",
+  "systemCategoryUtilities": "Nutsvoorzieningen",
+  "systemCategoryTransport": "Vervoer",
+  "systemCategoryFoodOut": "Uit eten",
+  "systemCategoryPhone": "Telefoon",
+  "systemCategoryHealth": "Gezondheid",
+  "systemCategoryOtherExpense": "Overige uitgaven",
+  "homeThisMonth": "DEZE MAAND",
+  "homeMoneyInTransit": "GELD ONDERWEG",
+  "homeWhatYouHaveMinusWhatYouOwe": "WAT JE HEBT MIN WAT JE SCHULDIG BENT",
+  "homeWhatYouHave": "Wat je hebt {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "Wat je hebt {haveAmount} {currency}  •  Wat je schuldig bent {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "Je stuurde {amount} {currency} vanaf {name}",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "Je stuurde {amount} {currency} naar {name}",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "Verborgen",
+  "allAccounts": "Alle rekeningen",
+  "savedToPath": "Opgeslagen op {path}",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "Het keystore-bestand kon niet worden geëxporteerd. Je kunt deze stap overslaan.",
+  "enterPassphraseToProtect": "Voer een wachtwoordzin in om het bestand te beveiligen.",
+  "homeTapWhenArrived": "Tik zodra je weet wat er is aangekomen",
+  "homeReturnedTo": "Teruggestort naar {name}",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "VANDAAG VERSCHULDIGD",
+  "homeDueLine": "{category} · {account} · tik om te registreren",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "Over de limiet",
+  "homeSpentOfLimit": "{spent} van {limit}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "Resterend: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "Geen rekeningen",
+  "homeCashRegister": "Kasregister",
+  "homeMarketEstimate": "Marktschatting",
+  "registerTitle": "Register",
+  "registerSearchHint": "Omschrijving, categorie of bedrag",
+  "registerNoTransactions": "Nog geen transacties",
+  "registerNoEntries": "Nog geen boekingen geregistreerd.",
+  "registerSpentOnly": "Alleen uitgaven",
+  "registerReceivedOnly": "Alleen ontvangsten",
+  "registerAll": "Alles",
+  "registerUnverified": "Niet geverifieerd - buiten totalen gehouden",
+  "registerSuperseded": "Vervangen door migratie - buiten totalen gehouden",
+  "summaryTitle": "Overzicht",
+  "summaryTotalIncome": "Totale inkomsten",
+  "summaryTotalExpense": "Totale uitgaven",
+  "summaryDateRange": "{start} tot {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "Rekeningen",
+  "categoriesTitle": "Categorieën",
+  "accountName": "Rekeningnaam",
+  "createAccount": "Rekening aanmaken",
+  "createGroup": "Groep aanmaken",
+  "editGroup": "Groep bewerken",
+  "renameAccount": "Rekening hernoemen",
+  "renameCategory": "Categorie hernoemen",
+  "addCategory": "Categorie toevoegen",
+  "groupLabel": "Groep",
+  "kindLabel": "Type",
+  "asset": "Bezitting",
+  "liability": "Verplichting",
+  "income": "Inkomsten",
+  "expense": "Uitgaven",
+  "thisAccountHoldsInvestments": "Deze rekening bevat beleggingen",
+  "thisAccountHoldsInvestmentsSubtitle": "Kas plus voorraad die je vastlegt met Kopen, Verkopen en Dividend.",
+  "thisIsACreditCard": "Dit is een creditcard",
+  "openingBalanceOptional": "Beginsaldo (optioneel)",
+  "currencyIso": "Valuta (ISO 4217)",
+  "currencyIsoExample": "Valuta (ISO 4217, bijv. USD)",
+  "hideAccountTitle": "Rekening verbergen voor nieuwe boekingen?",
+  "hideCategoryTitle": "Categorie verbergen voor nieuwe boekingen?",
+  "hideGroupTitle": "Groep verbergen voor nieuwe boekingen?",
+  "reassignGroup": "Groep opnieuw toewijzen",
+  "transferRemainingBalance": "Resterend saldo overboeken",
+  "monthlyLimit": "Maandlimiet",
+  "monthlyLimitHint": "Limiet (leeg laten om te wissen)",
+  "monthlyLimitBlurb": "Een optionele richtlijn voor uitgaven tot nu toe deze maand, voor deze uitgavencategorie.",
+  "manageCategoryRules": "Categorieregels beheren",
+  "amount": "Bedrag",
+  "category": "Categorie",
+  "account": "Rekening",
+  "fromAccount": "Van rekening",
+  "toAccount": "Naar rekening",
+  "descriptionOptional": "Omschrijving (optioneel)",
+  "alsoRememberPayee": "Ook onthouden als begunstigde",
+  "splitIntoCategories": "Splitsen over meerdere categorieën",
+  "categoryN": "Categorie {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "Bestemmingsbedrag",
+  "destinationAmountOptional": "Bestemmingsbedrag (optioneel)",
+  "accountCurrencyAmountOptional": "Bedrag in rekeningvaluta (optioneel)",
+  "transactionCurrencyOptional": "Transactievaluta (optioneel)",
+  "feeOptional": "Kosten (optioneel)",
+  "feeAmount": "Kostenbedrag",
+  "feeCategory": "Kostencategorie",
+  "feeDescriptionOptional": "Omschrijving kosten (optioneel)",
+  "feeDeducted": "Kosten worden ingehouden op bovenstaand bedrag",
+  "needTwoAccountsToTransfer": "Maak minstens twee actieve rekeningen aan om een overboeking te doen.",
+  "whatArrivedTitle": "Wat is er aangekomen?",
+  "whatArrivedBlurb": "Vertel ons wat er werkelijk is aangekomen.",
+  "amountThatArrived": "Aangekomen bedrag",
+  "feeLossCategory": "Kosten-/verliescategorie",
+  "alreadySettled": "Al afgewikkeld.",
+  "holdingsTitle": "Posities",
+  "holdingsCash": "Kas",
+  "holdingsInventory": "VOORRAAD",
+  "holdingsBook": "Boekwaarde (kas + kostprijs) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "Marktschatting {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "Nog geen posities. Registreer een aankoop om een instrument toe te voegen.",
+  "holdingsQuotesBlurb": "Koersen zijn schattingen, geen brokerprijs. Deze app plaatst geen orders.",
+  "holdingsTapNameToResearch": "Tik op de naam om te onderzoeken. Koersen zijn schattingen, geen advies.",
+  "instrument": "Instrument",
+  "newInstrument": "Nieuw instrument",
+  "renameInstrument": "Instrument hernoemen",
+  "instrumentActions": "Instrumentacties",
+  "hideInstrumentTitle": "{name} verbergen?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "Ticker (optioneel)",
+  "isinOptional": "ISIN (optioneel)",
+  "quantity": "Aantal",
+  "unitPrice": "Eenheidsprijs",
+  "brokerageOptional": "Brokerkosten (optioneel)",
+  "brokerageExpenseCategory": "Uitgavencategorie brokerkosten",
+  "incomeCategory": "Inkomstencategorie",
+  "gainIncomeCategory": "Inkomstencategorie voor winst",
+  "lossExpenseCategory": "Uitgavencategorie voor verlies",
+  "nonCash": "Niet-cash",
+  "cash": "Cash",
+  "locked": "Vergrendeld",
+  "lockUntilHint": "Je eigen notitie over een beperking, geen brokerregel.",
+  "instrumentKindStock": "Aandeel",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "Beleggingsfonds",
+  "instrumentKindBond": "Obligatie",
+  "instrumentKindOther": "Overig",
+  "quoteUseLive": "Actuele koers",
+  "quoteUseCached": "Gecachete koers",
+  "quoteUseStale": "Verouderde koers",
+  "quoteUseMissing": "Kostprijs gebruikt (geen koers)",
+  "quoteUseDisabled": "Koersen uit — kostprijs/cache gebruikt",
+  "quoteUseCurrencyMismatch": "Kostprijs gebruikt (koersvaluta wijkt af)",
+  "unrealizedLabel": "Ongerealiseerd {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} eenheden · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "Je herstelzin",
+  "recoveryPhraseConfirmTitle": "Bevestig je zin",
+  "recoveryPhraseBlurb": "Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.",
+  "recoveryPhraseWriteDown": "Schrijf deze woorden in volgorde op en bewaar ze op een veilige plek, gescheiden van dit toestel.",
+  "iveSavedRecoveryPhrase": "Ik heb mijn herstelzin opgeslagen",
+  "confirmPhraseBlurb": "Voer de gevraagde woorden in uit de zin die je zojuist hebt opgeslagen.",
+  "wordNumber": "Woord #{n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "Keystore-bestand exporteren",
+  "keystoreExportBlurb": "Naast je herstelzin kun je een versleuteld keystore-bestand opslaan, beveiligd met een wachtwoordzin naar keuze. Dit is optioneel - je herstelzin alleen is altijd genoeg om je ondertekeningssleutel te herstellen.",
+  "keystorePassphrase": "Wachtwoordzin",
+  "exportKeystoreFile": "Keystore-bestand exporteren",
+  "chooseCurrencyTitle": "Kies je valuta",
+  "chooseCurrencyBlurb": "Elke rekeninggroep (Liquide middelen, Pensioen, enz.) gebruikt voorlopig deze ene valuta. Je kunt later nog rekeningen in een andere valuta toevoegen door er een nieuwe groep voor aan te maken.",
+  "currencyBackfillTitle": "Kies een valuta voor bestaande groepen",
+  "currencyBackfillBlurb": "Deze app ondersteunt nu meerdere valuta. Je bestaande rekeningen en rekeninggroepen hebben een valuta nodig - omdat ze allemaal zijn aangemaakt voordat deze functie bestond, geldt één keuze voor ze allemaal.",
+  "firstAccountTitle": "Geef je rekening een naam",
+  "firstAccountBlurb": "Dit is de rekening die al voor je is aangemaakt - geef hem een naam die je herkent, zoals je bank. Hierna registreer je één Uitgave of Ontvangst, en beveilig je daarna het toestel met je herstelzin.",
+  "whatsMainAccountCalled": "Hoe heet je hoofdrekening?",
+  "restoreTitle": "Ondertekeningssleutel herstellen",
+  "restoreBlurb": "Dit toestel heeft al een boekhouding, maar geen bijpassende ondertekeningssleutel. Herstel deze vanuit je opgeslagen herstelzin of keystore-bestand - je gegevens worden gewoon geverifieerd en er wordt niets opnieuw ondertekend of gewijzigd.",
+  "recoveryPhrase24": "Herstelzin (alle 24 woorden)",
+  "keystoreFile": "Keystore-bestand",
+  "keystoreFileContents": "Inhoud keystore-bestand",
+  "optionalBackupFile": "Optioneel back-upbestand",
+  "iDontHavePhrase": "Ik heb mijn herstelzin of keystore-bestand niet",
+  "migrationTitle": "Migreren naar een nieuwe sleutel",
+  "migrationBlurb": "Zonder je herstelzin of keystore-bestand kan de ondertekeningssleutel van dit toestel niet worden hersteld. Je kunt een nieuwe sleutel starten. Oude boekingen blijven zichtbaar maar worden vervangen.",
+  "iConfirmBooksValid": "Ik bevestig dat de huidige boekhouding klopt",
+  "whyWeDontEdit": "Waarom we oude boekingen niet bewerken",
+  "whyWeDontEditBody": "Als je een fout corrigeert, laten we de oude regel staan en voegen we er een correctie naast toe, in plaats van te wijzigen wat je al had ingevoerd. Zo toont je geschiedenis altijd precies wat er is gebeurd en wanneer je het hebt gecorrigeerd — er verandert nooit iets stiekem achter je rug.",
+  "lockTitle": "Ontgrendelen",
+  "lockScreenTitle": "Vergrendeld",
+  "enterPinToContinue": "Voer je pincode in om door te gaan",
+  "pinLabel": "Pincode",
+  "setPinTitle": "Stel een pincode in",
+  "currentPin": "Huidige pincode",
+  "newPin": "Nieuwe pincode",
+  "confirmPin": "Bevestig pincode",
+  "confirmNewPin": "Bevestig nieuwe pincode",
+  "firstWeekTitle": "Stel je rekeningen in",
+  "addCashAccount": "Voeg een contante rekening toe",
+  "addCreditCard": "Voeg een creditcard toe",
+  "cashAccountName": "Naam contante rekening",
+  "cardName": "Naam kaart",
+  "paidFromBank": "Betaald vanaf bank",
+  "paidFromCard": "Betaald met kaart",
+  "choosePassphraseTitle": "Kies een wachtwoordzin om deze back-up te beveiligen. Er is geen herstel mogelijk als je deze vergeet.",
+  "replaceBooksTitle": "Je lokale boekhouding vervangen?",
+  "replaceBooksBody": "Dit vervangt alles wat nu in deze app staat door de back-up. Sluit en heropen de app daarna.",
+  "chooseBackupFileFirst": "Kies eerst een back-upbestand.",
+  "backupRestored": "Back-up hersteld",
+  "backupRestoredBody": "Je boekhouding is hersteld. Sluit en heropen de app om door te gaan.",
+  "fixThisEntry": "Deze boeking corrigeren",
+  "fixBlurb": "De oude regel blijft precies zoals hij was. Bevestigen voegt een tegenboeking en de gecorrigeerde regel toe.",
+  "importStatementTitle": "Afschrift importeren",
+  "importOfx": "OFX importeren",
+  "importOfxQfxFile": "OFX-/QFX-bestand importeren",
+  "importCsvFile": "CSV-bestand importeren",
+  "whatKindOfStatement": "Wat voor soort afschriftbestand heb je?",
+  "chooseAccountForFile": "Kies bij welke rekening dit bestand hoort.",
+  "importIntoAccount": "Importeren in rekening",
+  "useSavedProfile": "Gebruik een opgeslagen profiel",
+  "saveMappingProfile": "Deze koppeling opslaan als profiel (optioneel)",
+  "renameProfile": "Profiel hernoemen",
+  "deleteProfileTitle": "Profiel verwijderen?",
+  "fileHasHeader": "Bestand heeft een koprij",
+  "dateColumn": "Datumkolom",
+  "dateFormatHint": "Datumnotatie (bijv. dd/MM/jjjj)",
+  "amountColumn": "Bedragkolom",
+  "amountConvention": "Bedragconventie",
+  "signedAmountColumn": "Kolom met getekend bedrag",
+  "separateDebitCredit": "Aparte debet-/creditkolommen",
+  "debitColumn": "Debetkolom",
+  "creditColumn": "Creditkolom",
+  "decimalSeparator": "Decimaalteken (. of ,)",
+  "descriptionColumns": "Omschrijvingskolom(men)",
+  "referenceIdColumn": "Referentiekolom (optioneel)",
+  "skippedRows": "Overgeslagen rijen",
+  "parsedTransactionCount": "{count} transacties verwerkt",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} overgeslagen of uitgesloten",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} geboekt, {failed} mislukt",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "Categorie voor alles",
+  "saveAsRule": "Opslaan als regel?",
+  "saveAsRuleBlurb": "Toekomstige imports waarvan de omschrijving dit trefwoord bevat, gebruiken deze categorie.",
+  "keyword": "Trefwoord",
+  "noSavedRules": "Nog geen opgeslagen regels. Wijs een categorie toe aan een groep rijen om een regel op te slaan.",
+  "deleteRuleTitle": "Regel verwijderen?",
+  "editRule": "Regel bewerken",
+  "rowsGrouped": "{count} rijen",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "Selecteer een {extensions}-afschriftbestand om te importeren",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "Begunstigden",
+  "addPayee": "Begunstigde toevoegen",
+  "renamePayee": "Begunstigde hernoemen",
+  "deletePayeeTitle": "Begunstigde verwijderen?",
+  "noPayeesYet": "Nog geen begunstigden",
+  "recurringTitle": "Terugkerende sjablonen",
+  "noRecurringYet": "Nog geen terugkerende sjablonen",
+  "deleteTemplateTitle": "Terugkerend sjabloon verwijderen?",
+  "dayOfMonth": "Dag van de maand (1-31)",
+  "dayOfMonthNote": "Een maand met minder dagen gebruikt zijn eigen laatste dag.",
+  "dayOfMonthLine": "Dag {day} van de maand - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "Naam",
+  "none": "Geen",
+  "currency": "Valuta",
+  "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
+  "errorSigningIdentityMismatch": "Deze herstelzin of dit keystore-bestand komt niet overeen met een ondertekeningsidentiteit in deze database.",
+  "errorInvalidLedgerBackup": "Dit bestand is geen geldige Smara-back-up.",
+  "errorInvalidLedgerBackupNoIdentity": "Deze back-up heeft geen ondertekeningsidentiteit - het is geen geldige Smara-back-up.",
+  "errorInvalidLedgerBackupUnverified": "Deze back-up kon niet worden geverifieerd als intacte boekhouding en is daarom niet hersteld.",
+  "errorInvalidLedgerBackupUnreadable": "Dit bestand kon niet worden geopend als Smara-back-up: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "Deze back-up hoort bij een andere ondertekeningsidentiteit dan die op dit toestel.",
+  "errorAccountNotFinancial": "Dat is geen financiële rekening.",
+  "errorAccountArchived": "Die rekening is verborgen.",
+  "errorAccountNotArchived": "Die rekening is niet verborgen.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Er is geen resterend saldo om over te boeken.",
+  "errorAccountHasNoGroup": "Aan die rekening is geen groep toegewezen.",
+  "errorGroupHasNoCurrency": "Voor die groep is nog geen valuta ingesteld.",
+  "errorGroupNotFound": "Die rekeninggroep is niet gevonden.",
+  "errorInvestmentAccountsMustBeAssets": "Alleen bezittingsrekeningen kunnen als beleggingsrekening worden gemarkeerd.",
+  "errorCreditCardsMustBeLiabilities": "Alleen verplichtingenrekeningen kunnen als creditcard worden gemarkeerd.",
+  "errorOpeningBalanceMustBePositive": "Het beginsaldo moet positief zijn indien opgegeven.",
+  "errorAccountTypeDoesNotMatchGroup": "Dat rekeningtype komt niet overeen met de groep.",
+  "errorLastActiveAccount": "De laatste actieve financiële rekening kan niet worden verborgen.",
+  "errorCurrencyRequiredToCreateGroup": "Er is een valuta nodig om een groep aan te maken.",
+  "errorSystemGroupCannotBeArchived": "Ingebouwde rekeninggroepen kunnen niet worden verborgen.",
+  "errorGroupAlreadyArchived": "Die groep is al verborgen.",
+  "errorCannotArchiveGroupWithAccounts": "Een groep met nog actieve rekeningen kan niet worden verborgen.",
+  "errorSystemGroupNeverArchived": "Ingebouwde rekeninggroepen worden nooit verborgen.",
+  "errorAccountGroupsCannotBeDeleted": "Rekeninggroepen kunnen niet worden verwijderd.",
+  "errorCannotReassignDifferentCurrency": "Deze rekening kan niet worden verplaatst naar een groep met een andere valuta.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "De valuta kan niet worden gewijzigd zolang de groep actieve rekeningen heeft.",
+  "errorAmountMustBePositive": "Bedrag moet positief zijn.",
+  "errorAccountCurrencyAmountMustBePositive": "Bedrag in rekeningvaluta moet positief zijn.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "Bedrag in rekeningvaluta is alleen voor een boeking in vreemde valuta.",
+  "errorSplitNeedsTwoLines": "Een splitsing heeft minstens twee categorieregels nodig.",
+  "errorSplitLineMustBePositive": "Elke splitsingsregel moet een positief bedrag zijn.",
+  "errorSplitLinesMustSumToTotal": "Splitsingsregels moeten optellen tot het totale transactiebedrag.",
+  "errorTransferAmountMustBePositive": "Overboekingsbedrag moet positief zijn.",
+  "errorTransferAccountsMustDiffer": "Bron- en bestemmingsrekening moeten verschillend zijn.",
+  "errorCloseoutRequiresDestinationAmount": "Een afsluiting tussen valuta vereist een bekend bestemmingsbedrag.",
+  "errorDestinationAmountNotForSameCurrency": "Bestemmingsbedrag is alleen voor een overboeking tussen valuta.",
+  "errorDestinationAmountMustBePositive": "Bestemmingsbedrag moet positief zijn.",
+  "errorInvestmentCashExceeded": "Er kan niet meer worden overgeboekt dan de kas van deze beleggingsrekening.",
+  "errorCannotReverseUnsettledProvisional": "Wikkel deze lopende overboeking af in plaats van deze te herroepen.",
+  "errorAlreadyReversed": "Deze boeking is al gecorrigeerd. De oorspronkelijke regel blijft ongewijzigd.",
+  "errorNotActiveExpenseCategory": "Kies een actieve uitgavencategorie.",
+  "errorNotActiveIncomeCategory": "Kies een actieve inkomstencategorie.",
+  "errorSettledAmountMustNotBeNegative": "Aangekomen bedrag kan niet negatief zijn.",
+  "errorPendingTransferNotFound": "Die lopende overboeking is niet gevonden.",
+  "errorPendingTransferAlreadySettled": "Die lopende overboeking is al afgewikkeld.",
+  "errorSettledToMustBeSourceOrDestination": "Kies de oorspronkelijke bron- of bestemmingsrekening.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "Een kostencategorie wordt alleen gebruikt wanneer geld wordt teruggestort naar de bronrekening.",
+  "errorSettledAmountMustBePositiveForDelivery": "Voer een positief bedrag in voor wat er is aangekomen.",
+  "errorSettledAmountExceedsProvisional": "Dat bedrag is meer dan er is verstuurd.",
+  "errorInstrumentNotFound": "Dat instrument is niet gevonden.",
+  "errorIncomeRequiredForNonCash": "Voor een niet-cash verwerving is een actieve inkomstencategorie vereist.",
+  "errorInsufficientCash": "Onvoldoende kas op deze beleggingsrekening voor die aankoop.",
+  "errorSellQuantityAndPriceMustBePositive": "Verkoophoeveelheid en eenheidsprijs moeten positief zijn.",
+  "errorLockedUntil": "Verkopen niet mogelijk: sommige eenheden zijn vergrendeld tot {date}.",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "Je kunt niet meer verkopen dan je momenteel onvergrendeld in bezit hebt.",
+  "errorIncomeRequiredForGain": "Voor een gerealiseerde winst is een actieve inkomstencategorie vereist.",
+  "errorExpenseRequiredForLoss": "Voor een gerealiseerd verlies is een actieve uitgavencategorie vereist.",
+  "errorBrokerageFailedAfterBuy": "Aankoop geboekt, maar brokerkosten zijn mislukt: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "Verkoop geboekt, maar brokerkosten zijn mislukt: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "Dividendbedrag moet positief zijn.",
+  "errorNotInvestmentAccount": "Dat is geen beleggingsrekening.",
+  "errorNoInventoryCompanion": "Bij deze beleggingsrekening ontbreekt de bijbehorende voorraadrekening.",
+  "errorInvestmentReversalBlocked": "Deze aankoop kan niet worden herroepen: latere verkoop/verkopen zijn afhankelijk van deze eenheden. Herroep eerst de afhankelijke verkoop/verkopen: {sells}.",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "Maandlimiet moet positief zijn.",
+  "errorTemplateAmountMustBePositive": "Sjabloonbedrag moet positief zijn.",
+  "errorOfxUnrecognized": "Dit bestand kon niet worden herkend als OFX.",
+  "errorCsvEmpty": "Het geselecteerde bestand is leeg.",
+  "errorCsvUnreadable": "Dit bestand kon niet worden gelezen als CSV.",
+  "errorCsvNoRows": "Het geselecteerde bestand heeft geen rijen.",
+  "errorBackupCreateFailed": "De back-up kon niet worden gemaakt: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "Deze back-up kon niet worden hersteld - onjuiste wachtwoordzin, of geen Smara-back-upbestand.",
+  "validationAmountAccountCategoryRequired": "Bedrag, rekening en categorie zijn verplicht.",
+  "validationAmountAccountRequired": "Bedrag en rekening zijn verplicht.",
+  "validationSplitLineIncomplete": "Elke splitsingsregel heeft een categorie en een bedrag nodig.",
+  "validationSplitSumMismatch": "Splitsingsregels moeten optellen tot het totale transactiebedrag.",
+  "validationFromToAmountRequired": "Van-rekening, naar-rekening en bedrag zijn verplicht.",
+  "validationAmountArrivedRequired": "Aangekomen bedrag is verplicht.",
+  "validationChooseReceivingAccount": "Kies welke rekening het geld heeft ontvangen.",
+  "validationAccountCategoryRequired": "Rekening en categorie zijn verplicht.",
+  "validationFixFailed": "Deze correctie kon niet worden opgeslagen.",
+  "validationNameRequired": "Geef je hoofdrekening een naam.",
+  "validationStillLoading": "Nog aan het laden - probeer het straks opnieuw.",
+  "validationSaveAccountNameFailed": "De rekeningnaam kon niet worden opgeslagen.",
+  "validationWrongPin": "Onjuiste pincode. Probeer het opnieuw.",
+  "validationCategoryMustBeIncomeOrExpense": "Categorie moet Inkomsten of Uitgaven zijn.",
+  "validationOnlyExpenseHasMonthlyLimit": "Alleen een uitgavencategorie kan een maandlimiet hebben.",
+  "validationInvalidTemplate": "Ongeldig sjabloon.",
+  "validationWrongKeystorePassphrase": "Onjuiste wachtwoordzin voor dit keystore-bestand.",
+  "validationInvalidKeystoreFile": "Dat lijkt geen geldig keystore-bestand te zijn.",
+  "validationRestorePhraseFailed": "Herstellen vanuit die herstelzin is mislukt.",
+  "validationGenerateKeyFailed": "Er kon geen ondertekeningssleutel worden gegenereerd op dit toestel: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "Deze valuta kon niet worden opgeslagen: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "Migratie mislukt. Probeer het opnieuw.",
+  "validationChooseBackupFile": "Kies eerst een back-upbestand.",
+  "validationPassphraseRequired": "Voer een wachtwoordzin in.",
+  "validationPinsDoNotMatch": "De twee pincodes komen niet overeen.",
+  "validationFeePositiveWithCategory": "Overboekingskosten moeten een positief bedrag zijn met een geselecteerde uitgavencategorie.",
+  "validationFeeMustBeLessThanAmount": "Bij een overboeking met ingehouden kosten moeten de kosten lager zijn dan het bedrag.",
+  "validationTransferSavedFeeFailed": "Overboeking opgeslagen, maar de kosten konden niet worden geregistreerd: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "Voer een geldig bedrag in.",
+  "validationConfirmWordMismatch": "Woord {n} komt niet overeen met je opgeslagen zin. Controleer het en probeer het opnieuw.",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "Aankoophoeveelheid en eenheidsprijs moeten positief zijn.",
+  "errorInstrumentArchived": "Een gearchiveerd instrument kan niet worden gekocht.",
+  "errorNonCashCannotIncludeBrokerage": "Niet-cash verwervingen kunnen geen brokerkosten bevatten.",
+  "errorBrokerageRequiresExpenseCategory": "Als de brokerkosten positief zijn, is een actieve uitgavencategorie vereist.",
+  "errorSellProceedsMustCoverBrokerage": "De verkoopopbrengst moet minstens gelijk zijn aan de brokerkosten.",
+  "homeSpentOfLimitThisMonth": "{spent} van {limit} deze maand",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "Smara Account ontgrendelen",
+  "searchLabel": "Zoeken",
+  "openingBalance": "Beginsaldo",
+  "transferToName": "Overboeking: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "Kosten voor overboeking",
+  "feeForTransferTo": "Kosten voor overboeking naar {name}",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "De bestandskiezer kon niet worden geopend: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "Selecteer een .{extensions}-bestand",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "Valutacode (ISO 4217, bijv. USD)",
+  "splitCounterpartMore": "{name} +{count} meer",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "Datum",
+  "noneSelected": "Geen",
+  "reviewEntriesBeforeContinuing": "Controleer onderstaande boekingen ({count} in totaal) voordat je doorgaat.",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "Je ontving {amount}",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "Laat leeg als de wisselkoers nog niet bekend is.",
+  "recordTradeBlurb": "Registreer een transactie die al heeft plaatsgevonden. Deze app plaatst geen orders.",
+  "feeOnTopBlurb": "Aan: het bovenstaande bedrag is het totaal dat van deze rekening wordt afgeschreven; de kosten worden hieruit betaald.",
+  "feeBankBlurb": "Een vooraf in rekening gebrachte commissie door je bank of een tussenpersoon.",
+  "validationPinMinLength": "Pincode moet minstens 4 cijfers hebben.",
+  "restoreBackupBlurb": "Dit vervangt alles wat nu in deze app staat door de back-up — het wordt niet samengevoegd. Kies een back-upbestand en voer de wachtwoordzin in waarmee je het hebt beveiligd.",
+  "actionReplace": "Vervangen",
+  "hideAccountBody": "{name} is niet meer beschikbaar voor nieuwe transacties.",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} wordt niet meer aangeboden bij het aanmaken of opnieuw toewijzen van rekeningen.",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} wordt niet meer aangeboden bij het registreren van nieuwe transacties.",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "Verborgen instrumenten blijven staan op eerdere aan- en verkopen. Je kunt er nog steeds een dividend voor registreren.",
+  "nameHidden": "{name} (verborgen)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "Geen valuta ingesteld",
+  "deletePayeeBody": "{name} en de bijbehorende onthouden standaardwaarden worden verwijderd. Eerdere transacties blijven ongewijzigd.",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} wordt niet meer als vervallen aangeboden. Eerdere transacties die het al heeft geregistreerd, blijven ongewijzigd.",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "De opgeslagen kolomkoppeling \"{name}\" wordt verwijderd. Al geïmporteerde afschriften blijven ongewijzigd.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "Imports worden niet meer automatisch gecategoriseerd op basis van \"{keyword}\". Transacties die met deze regel al zijn gecategoriseerd, blijven ongewijzigd.",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "Voeg nu optioneel een creditcard of contante rekening toe - je kunt later altijd meer rekeningen toevoegen via Instellingen.",
+  "deliveredToDestination": "Afgeleverd bij bestemming",
+  "deliveredToName": "Afgeleverd bij {name}",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "Je ontving {amount} {currency} minder dan verwacht - kies een categorie om het verschil te dekken.",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "Datumbereik",
+  "addTemplate": "Sjabloon toevoegen",
+  "editTemplate": "Sjabloon bewerken",
+  "validationFillTemplateFields": "Vul elk veld in met een geldig bedrag en een geldige dag.",
+  "saveCsvExport": "CSV-export opslaan",
+  "referenceRate": "Referentiekoers",
+  "yourRate": "Jouw koers",
+  "leaveBlankIfThisWasAccountCurrency": "Laat leeg als dit in {currency} was, de eigen valuta van de rekening.",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "Vergrendelen tot (optioneel)",
+  "lockedUntilDate": "Vergrendeld tot {date}",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "Een onderzoeksvraag gekopieerd — geen browser-URL beschikbaar, of je bent offline.",
+  "openedFavouriteResearchTool": "Je favoriete onderzoekstool geopend.",
+  "looksLikeGain": "Dit lijkt een winst",
+  "looksLikeLoss": "Dit lijkt een verlies",
+  "looksLikeBreakEven": "Dit lijkt break-even",
+  "sellableQuantity": "{name} ({qty} verkoopbaar)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "Kolom {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "Bezig met importeren...",
+  "confirmImport": "Import bevestigen",
+  "manageSavedCategoryRules": "Opgeslagen categorieregels beheren",
+  "statementCurrencyMismatch": "De valuta van dit bestand ({currency}) komt niet overeen met de valuta van de geselecteerde rekening.",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "Categorieregels",
+  "possibleDuplicate": "mogelijk duplicaat",
+  "unknownCategory": "Onbekende categorie"
+}

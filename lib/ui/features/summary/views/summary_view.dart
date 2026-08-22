@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/account.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -31,9 +32,10 @@ class SummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Summary', style: AppTypography.headerTitle),
+        title: Text(l10n.summaryTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -46,10 +48,12 @@ class SummaryView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 EntityPickerField<Account?>(
-                  labelText: 'Account',
+                  labelText: l10n.account,
                   items: [null, ...viewModel.financialAccounts],
                   idOf: (account) => account?.id ?? '',
-                  labelOf: (account) => account?.name ?? 'All accounts',
+                  labelOf: (account) => account == null
+                      ? l10n.allAccounts
+                      : localizeStoredName(l10n, account.name),
                   value: viewModel.financialAccountId ?? '',
                   onChanged: (accountId) => viewModel.setFinancialAccountId(
                     accountId == null || accountId.isEmpty ? null : accountId,
@@ -59,17 +63,20 @@ class SummaryView extends StatelessWidget {
                 OutlinedButton(
                   onPressed: () => _pickRange(context),
                   child: Text(
-                    '${_formatDate(viewModel.start)} to ${_formatDate(viewModel.end)}',
+                    l10n.summaryDateRange(
+                      _formatDate(viewModel.start),
+                      _formatDate(viewModel.end),
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xLarge),
                 _SummaryCard(
-                  label: 'Total income',
+                  label: l10n.summaryTotalIncome,
                   amountMinor: viewModel.summary.totalIncomeMinor,
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 _SummaryCard(
-                  label: 'Total expense',
+                  label: l10n.summaryTotalExpense,
                   amountMinor: viewModel.summary.totalExpenseMinor,
                 ),
               ],

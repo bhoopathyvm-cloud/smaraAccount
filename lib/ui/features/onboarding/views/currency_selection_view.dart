@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -51,9 +52,10 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Choose your currency', style: AppTypography.headerTitle),
+        title: Text(l10n.chooseCurrencyTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -66,13 +68,7 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Every account group (Cash & cash equivalents, Pension & '
-                  'retirement, etc.) uses this one currency for now. You can '
-                  'still add accounts in a different currency later by '
-                  'creating a new group for it.',
-                  style: AppTypography.body,
-                ),
+                Text(l10n.chooseCurrencyBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 Wrap(
                   spacing: AppSpacing.small,
@@ -98,15 +94,13 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
                           newValue.copyWith(text: newValue.text.toUpperCase()),
                     ),
                   ],
-                  decoration: const InputDecoration(
-                    labelText: 'Currency code (ISO 4217, e.g. USD)',
-                  ),
+                  decoration: InputDecoration(labelText: l10n.currencyCodeIso),
                   onChanged: (_) => setState(() {}),
                 ),
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],
@@ -115,7 +109,7 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
                   onPressed: widget.viewModel.isSubmitting || !_isValid
                       ? null
                       : _submit,
-                  child: const Text('Continue'),
+                  child: Text(l10n.actionContinue),
                 ),
               ],
             ),

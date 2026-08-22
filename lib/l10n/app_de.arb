@@ -1,0 +1,968 @@
+{
+  "@@locale": "de",
+  "appTitle": "Smara Buchhaltung",
+  "navHome": "Start",
+  "navRegister": "Register",
+  "navSummary": "Übersicht",
+  "navAccounts": "Konten",
+  "navCategories": "Kategorien",
+  "actionCancel": "Abbrechen",
+  "actionSave": "Speichern",
+  "actionDelete": "Löschen",
+  "actionDone": "Fertig",
+  "actionContinue": "Weiter",
+  "actionDismiss": "Schließen",
+  "actionRetry": "Erneut versuchen",
+  "actionSkip": "Überspringen",
+  "actionConfirm": "Bestätigen",
+  "actionAdd": "Hinzufügen",
+  "actionEdit": "Bearbeiten",
+  "actionRename": "Umbenennen",
+  "actionHide": "Ausblenden",
+  "actionCreate": "Anlegen",
+  "actionCloseApp": "App schließen",
+  "actionUnlock": "Entsperren",
+  "actionSettle": "Abschließen",
+  "actionFinish": "Abschließen",
+  "actionPreview": "Vorschau",
+  "actionImport": "Importieren",
+  "actionExportCsv": "CSV exportieren",
+  "actionChooseFile": "Datei auswählen",
+  "actionRestore": "Wiederherstellen",
+  "actionFix": "Korrigieren",
+  "actionBuy": "Kaufen",
+  "actionSell": "Verkaufen",
+  "actionDividend": "Dividende",
+  "actionRecordBuy": "Kauf erfassen",
+  "actionRecordSell": "Verkauf erfassen",
+  "actionRecordDividend": "Dividende erfassen",
+  "actionPayCard": "Karte bezahlen",
+  "actionTransfer": "Umbuchen",
+  "actionRecordTransaction": "Transaktion erfassen",
+  "actionImportStatement": "Kontoauszug importieren",
+  "actionClearDates": "Daten löschen",
+  "actionClearSearch": "Suche und Filter zurücksetzen",
+  "actionUseBiometrics": "Biometrie verwenden",
+  "actionSetPin": "PIN festlegen",
+  "actionChangePin": "PIN ändern",
+  "actionSaveBackup": "Sicherung speichern",
+  "actionRestoreBackup": "Sicherung wiederherstellen",
+  "actionSaveRule": "Regel speichern",
+  "actionConfirmFix": "Korrektur bestätigen",
+  "captureSpent": "Ausgegeben",
+  "captureReceived": "Erhalten",
+  "captureMovedMoney": "Geld verschoben",
+  "captureImportStatement": "Kontoauszug importieren",
+  "settingsTitle": "Einstellungen",
+  "settingsLanguage": "Sprache",
+  "settingsLanguageSystem": "Gerätesprache",
+  "settingsFetchFxRates": "Referenz-Wechselkurse abrufen",
+  "settingsFetchFxRatesSubtitle": "Zeigt neben dem Zielbetrag bei Fremdwährungsüberweisungen einen indikativen Marktkurs nur zum Vergleich an – wird nie zum Ausfüllen des Betrags verwendet.",
+  "settingsRateProvider": "Kursanbieter",
+  "settingsFetchMarketPrices": "Marktpreise für Investitionen abrufen",
+  "settingsFetchMarketPricesSubtitle": "Ruft die letzten Kurse für Instrumente mit Ticker oder ISIN ab, um den Portfoliowert zu schätzen. Wird nie zur Erfassung eines Trades verwendet und sendet nie, wie viele Sie halten.",
+  "settingsMarketPriceProvider": "Marktpreisanbieter",
+  "settingsFavouriteResearchTool": "Bevorzugtes Recherchetool",
+  "settingsFavouriteResearchToolSubtitle": "Ein Tippen auf einen Instrumentennamen bei den Beständen öffnet dieses Tool im Browser mit einem Recherche-Prompt – keine Integration und keine Anlageberatung.",
+  "settingsBackup": "Sicherung",
+  "settingsBackupBlurb": "Speichern Sie eine verschlüsselte Kopie Ihrer Bücher an einem selbst gewählten Ort oder stellen Sie sie von dort wieder her. Dies ist getrennt von Ihrer Wiederherstellungsphrase oder Keystore-Datei, die Ihren Signierschlüssel sichern, nicht Ihre Bücher.",
+  "settingsLock": "Sperre",
+  "settingsLockBlurb": "Für das Öffnen der App eine PIN oder, sofern verfügbar, Biometrie verlangen.",
+  "settingsRequireUnlock": "Zum Öffnen der App Entsperren erforderlich machen",
+  "settingsLockAfter": "Sperren nach",
+  "settingsLockImmediately": "Sofort",
+  "settingsLock1Minute": "1 Minute",
+  "settingsLock5Minutes": "5 Minuten",
+  "settingsLock15Minutes": "15 Minuten",
+  "settingsAllowBiometrics": "Auch Biometrie zulassen",
+  "settingsHideSnapshot": "Kontostände im App-Wechsler ausblenden",
+  "settingsHideSnapshotSubtitle": "Verdeckt diesen Bildschirm beim Wechseln zu einer anderen App, damit er im App-Wechsler nicht auf einen Blick sichtbar ist.",
+  "settingsHideSnapshotUnavailable": "Kontostände im App-Wechsler ausblenden ist auf dieser Plattform nicht verfügbar.",
+  "settingsPayees": "Zahlungsempfänger",
+  "settingsManagePayees": "Zahlungsempfänger verwalten",
+  "settingsPayeesBlurb": "Gemerkte Zahlungsempfängernamen mit ihrer Standardkategorie und ihrem Standardkonto, die bei der Autovervollständigung beim Erfassen einer Transaktion vorgeschlagen werden.",
+  "settingsRecurring": "Wiederkehrende Vorlagen",
+  "settingsManageRecurring": "Wiederkehrende Vorlagen verwalten",
+  "settingsRecurringBlurb": "Rechnungen oder Einnahmen, die sich monatlich wiederholen, wie Miete oder Gehalt. Eine fällige Vorlage erscheint auf der Startseite, um sie mit einem Tipp zu erfassen – wird nie automatisch gebucht.",
+  "settingsAbout": "Über",
+  "providerFrankfurter": "Frankfurter (EZB-Kurse)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (tägliche Kurse)",
+  "providerYahooFinance": "Yahoo Finance (Chart-API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "Bargeld & Zahlungsmitteläquivalente",
+  "systemGroupPensionRetirement": "Rente & Altersvorsorge",
+  "systemGroupCreditShortTerm": "Kredit & kurzfristige Schulden",
+  "systemGroupLoansMortgages": "Darlehen & Hypotheken",
+  "systemGroupInvestments": "Investitionen",
+  "systemAccountCashBank": "Bargeld & Bank",
+  "systemCategorySalary": "Gehalt",
+  "systemCategoryOtherIncome": "Sonstige Einnahmen",
+  "systemCategoryGroceries": "Lebensmittel",
+  "systemCategoryRentMortgage": "Miete/Hypothek",
+  "systemCategoryUtilities": "Nebenkosten",
+  "systemCategoryTransport": "Transport",
+  "systemCategoryFoodOut": "Essen gehen",
+  "systemCategoryPhone": "Telefon",
+  "systemCategoryHealth": "Gesundheit",
+  "systemCategoryOtherExpense": "Sonstige Ausgaben",
+  "homeThisMonth": "DIESER MONAT",
+  "homeMoneyInTransit": "GELD UNTERWEGS",
+  "homeWhatYouHaveMinusWhatYouOwe": "WAS SIE HABEN MINUS WAS SIE SCHULDEN",
+  "homeWhatYouHave": "Ihr Guthaben {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "Ihr Guthaben {haveAmount} {currency}  •  Ihre Schulden {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "Sie haben {amount} {currency} von {name} gesendet",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "Sie haben {amount} {currency} an {name} gesendet",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "Ausgeblendet",
+  "allAccounts": "Alle Konten",
+  "savedToPath": "Gespeichert unter {path}",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "Die Keystore-Datei konnte nicht exportiert werden. Sie können diesen Schritt überspringen.",
+  "enterPassphraseToProtect": "Geben Sie eine Passphrase ein, um die Datei zu schützen.",
+  "homeTapWhenArrived": "Tippen, sobald Sie wissen, was angekommen ist",
+  "homeReturnedTo": "Zurück an {name}",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "HEUTE FÄLLIG",
+  "homeDueLine": "{category} · {account} · zum Erfassen tippen",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "Limit überschritten",
+  "homeSpentOfLimit": "{spent} von {limit}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "Verbleibend: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "Keine Konten",
+  "homeCashRegister": "Bargeldkasse",
+  "homeMarketEstimate": "Marktschätzung",
+  "registerTitle": "Register",
+  "registerSearchHint": "Beschreibung, Kategorie oder Betrag",
+  "registerNoTransactions": "Noch keine Transaktionen",
+  "registerNoEntries": "Noch keine Einträge erfasst.",
+  "registerSpentOnly": "Nur Ausgaben",
+  "registerReceivedOnly": "Nur Einnahmen",
+  "registerAll": "Alle",
+  "registerUnverified": "Nicht verifiziert – von Summen ausgeschlossen",
+  "registerSuperseded": "Durch Migration ersetzt – von Summen ausgeschlossen",
+  "summaryTitle": "Übersicht",
+  "summaryTotalIncome": "Gesamteinnahmen",
+  "summaryTotalExpense": "Gesamtausgaben",
+  "summaryDateRange": "{start} bis {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "Konten",
+  "categoriesTitle": "Kategorien",
+  "accountName": "Kontoname",
+  "createAccount": "Konto anlegen",
+  "createGroup": "Gruppe anlegen",
+  "editGroup": "Gruppe bearbeiten",
+  "renameAccount": "Konto umbenennen",
+  "renameCategory": "Kategorie umbenennen",
+  "addCategory": "Kategorie hinzufügen",
+  "groupLabel": "Gruppe",
+  "kindLabel": "Art",
+  "asset": "Aktiva",
+  "liability": "Passiva",
+  "income": "Einnahmen",
+  "expense": "Ausgaben",
+  "thisAccountHoldsInvestments": "Dieses Konto enthält Investitionen",
+  "thisAccountHoldsInvestmentsSubtitle": "Bargeld plus Bestand, den Sie mit Kaufen, Verkaufen und Dividende erfassen.",
+  "thisIsACreditCard": "Dies ist eine Kreditkarte",
+  "openingBalanceOptional": "Anfangssaldo (optional)",
+  "currencyIso": "Währung (ISO 4217)",
+  "currencyIsoExample": "Währung (ISO 4217, z. B. USD)",
+  "hideAccountTitle": "Konto aus neuen Einträgen ausblenden?",
+  "hideCategoryTitle": "Kategorie aus neuen Einträgen ausblenden?",
+  "hideGroupTitle": "Gruppe aus neuen Einträgen ausblenden?",
+  "reassignGroup": "Gruppe neu zuweisen",
+  "transferRemainingBalance": "Restguthaben umbuchen",
+  "monthlyLimit": "Monatslimit",
+  "monthlyLimitHint": "Limit (leer lassen zum Löschen)",
+  "monthlyLimitBlurb": "Ein optionaler Richtwert für die bisherigen Ausgaben dieser Kategorie im laufenden Monat.",
+  "manageCategoryRules": "Kategorieregeln verwalten",
+  "amount": "Betrag",
+  "category": "Kategorie",
+  "account": "Konto",
+  "fromAccount": "Von Konto",
+  "toAccount": "An Konto",
+  "descriptionOptional": "Beschreibung (optional)",
+  "alsoRememberPayee": "Auch als Zahlungsempfänger merken",
+  "splitIntoCategories": "In mehrere Kategorien aufteilen",
+  "categoryN": "Kategorie {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "Zielbetrag",
+  "destinationAmountOptional": "Zielbetrag (optional)",
+  "accountCurrencyAmountOptional": "Betrag in Kontowährung (optional)",
+  "transactionCurrencyOptional": "Transaktionswährung (optional)",
+  "feeOptional": "Gebühr (optional)",
+  "feeAmount": "Gebührenbetrag",
+  "feeCategory": "Gebührenkategorie",
+  "feeDescriptionOptional": "Gebührenbeschreibung (optional)",
+  "feeDeducted": "Die Gebühr wird vom obigen Betrag abgezogen",
+  "needTwoAccountsToTransfer": "Erstellen Sie mindestens zwei aktive Konten, um eine Umbuchung vorzunehmen.",
+  "whatArrivedTitle": "Was ist angekommen?",
+  "whatArrivedBlurb": "Geben Sie an, was tatsächlich angekommen ist.",
+  "amountThatArrived": "Angekommener Betrag",
+  "feeLossCategory": "Gebühren-/Verlustkategorie",
+  "alreadySettled": "Bereits abgeschlossen.",
+  "holdingsTitle": "Bestände",
+  "holdingsCash": "Bargeld",
+  "holdingsInventory": "BESTAND",
+  "holdingsBook": "Buchwert (Bargeld + Kosten) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "Marktschätzung {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "Noch keine Bestände. Erfassen Sie einen Kauf, um ein Instrument hinzuzufügen.",
+  "holdingsQuotesBlurb": "Kurse sind Schätzungen, kein Maklerpreis. Diese App platziert keine Orders.",
+  "holdingsTapNameToResearch": "Tippen Sie auf den Namen, um zu recherchieren. Kurse sind Schätzungen, keine Beratung.",
+  "instrument": "Instrument",
+  "newInstrument": "Neues Instrument",
+  "renameInstrument": "Instrument umbenennen",
+  "instrumentActions": "Instrumentaktionen",
+  "hideInstrumentTitle": "{name} ausblenden?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "Ticker (optional)",
+  "isinOptional": "ISIN (optional)",
+  "quantity": "Menge",
+  "unitPrice": "Stückpreis",
+  "brokerageOptional": "Courtage (optional)",
+  "brokerageExpenseCategory": "Courtage-Ausgabenkategorie",
+  "incomeCategory": "Einnahmenkategorie",
+  "gainIncomeCategory": "Gewinn-Einnahmenkategorie",
+  "lossExpenseCategory": "Verlust-Ausgabenkategorie",
+  "nonCash": "Nicht bar",
+  "cash": "Bargeld",
+  "locked": "Gesperrt",
+  "lockUntilHint": "Ihr eigener Vermerk zu einer Beschränkung, keine Maklerregel.",
+  "instrumentKindStock": "Aktie",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "Investmentfonds",
+  "instrumentKindBond": "Anleihe",
+  "instrumentKindOther": "Andere",
+  "quoteUseLive": "Live-Kurs",
+  "quoteUseCached": "Zwischengespeicherter Kurs",
+  "quoteUseStale": "Veralteter Kurs",
+  "quoteUseMissing": "Kosten werden verwendet (kein Kurs)",
+  "quoteUseDisabled": "Kurse deaktiviert — Kosten/Cache wird verwendet",
+  "quoteUseCurrencyMismatch": "Kosten werden verwendet (Kurswährung weicht ab)",
+  "unrealizedLabel": "Nicht realisiert {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} Einheiten · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "Ihre Wiederherstellungsphrase",
+  "recoveryPhraseConfirmTitle": "Bestätigen Sie Ihre Phrase",
+  "recoveryPhraseBlurb": "Diese 24 Wörter sind die einzige Möglichkeit, Ihren Transaktionsverlauf wiederherzustellen, falls dieses Gerät verloren geht, zurückgesetzt oder ersetzt wird. Smara Buchhaltung hat keinen Server und kann sie nicht für Sie wiederherstellen.\n\nWenn Sie dieses Gerät und diese Phrase zusammen verlieren, wird jede von Ihnen erfasste Transaktion dauerhaft nicht mehr verifizierbar.",
+  "recoveryPhraseWriteDown": "Schreiben Sie diese Wörter in der richtigen Reihenfolge auf und bewahren Sie sie sicher und getrennt von diesem Gerät auf.",
+  "iveSavedRecoveryPhrase": "Ich habe meine Wiederherstellungsphrase gespeichert",
+  "confirmPhraseBlurb": "Geben Sie die angeforderten Wörter aus der soeben gespeicherten Phrase ein.",
+  "wordNumber": "Wort Nr. {n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "Keystore-Datei exportieren",
+  "keystoreExportBlurb": "Zusätzlich zu Ihrer Wiederherstellungsphrase können Sie eine verschlüsselte, durch eine selbst gewählte Passphrase geschützte Keystore-Datei speichern. Dies ist optional – Ihre Wiederherstellungsphrase allein reicht immer aus, um Ihren Signierschlüssel wiederherzustellen.",
+  "keystorePassphrase": "Passphrase",
+  "exportKeystoreFile": "Keystore-Datei exportieren",
+  "chooseCurrencyTitle": "Wählen Sie Ihre Währung",
+  "chooseCurrencyBlurb": "Jede Kontogruppe (Bargeld & Zahlungsmitteläquivalente, Rente & Altersvorsorge usw.) verwendet vorerst diese eine Währung. Sie können später weiterhin Konten in einer anderen Währung hinzufügen, indem Sie dafür eine neue Gruppe anlegen.",
+  "currencyBackfillTitle": "Wählen Sie eine Währung für bestehende Gruppen",
+  "currencyBackfillBlurb": "Diese App unterstützt jetzt mehrere Währungen. Ihre bestehenden Konten und Kontogruppen benötigen eine Währung – da sie alle vor Einführung dieser Funktion eingerichtet wurden, gilt eine Wahl für sie alle.",
+  "firstAccountTitle": "Benennen Sie Ihr Konto",
+  "firstAccountBlurb": "Dies ist das bereits für Sie eingerichtete Konto – geben Sie ihm einen Namen, den Sie erkennen, wie Ihre Bank. Sie erfassen als Nächstes ein Ausgegeben oder Erhalten und schützen dann das Gerät mit Ihrer Wiederherstellungsphrase.",
+  "whatsMainAccountCalled": "Wie heißt Ihr Hauptkonto?",
+  "restoreTitle": "Signierschlüssel wiederherstellen",
+  "restoreBlurb": "Dieses Gerät hat vorhandene Bücher, aber keinen passenden Signierschlüssel. Stellen Sie ihn aus Ihrer gespeicherten Wiederherstellungsphrase oder Keystore-Datei wieder her – Ihre Daten werden normal verifiziert, und nichts wird neu signiert oder verändert.",
+  "recoveryPhrase24": "Wiederherstellungsphrase (alle 24 Wörter)",
+  "keystoreFile": "Keystore-Datei",
+  "keystoreFileContents": "Inhalt der Keystore-Datei",
+  "optionalBackupFile": "Optionale Sicherungsdatei",
+  "iDontHavePhrase": "Ich habe meine Wiederherstellungsphrase oder Keystore-Datei nicht",
+  "migrationTitle": "Zu einem neuen Schlüssel migrieren",
+  "migrationBlurb": "Ohne Ihre Wiederherstellungsphrase oder Keystore-Datei kann der Signierschlüssel dieses Geräts nicht wiederhergestellt werden. Sie können mit einem neuen Schlüssel beginnen. Alte Einträge bleiben sichtbar, gelten aber als ersetzt.",
+  "iConfirmBooksValid": "Ich bestätige, dass die aktuellen Bücher gültig sind",
+  "whyWeDontEdit": "Warum wir alte Einträge nicht bearbeiten",
+  "whyWeDontEditBody": "Wenn Sie einen Fehler korrigieren, behalten wir die alte Zeile und fügen daneben eine Korrektur hinzu, statt zu ändern, was Sie bereits eingegeben haben. So zeigt Ihr Verlauf immer genau, was passiert ist und wann Sie es korrigiert haben — nichts ändert sich heimlich im Hintergrund.",
+  "lockTitle": "Entsperren",
+  "lockScreenTitle": "Gesperrt",
+  "enterPinToContinue": "PIN eingeben, um fortzufahren",
+  "pinLabel": "PIN",
+  "setPinTitle": "PIN festlegen",
+  "currentPin": "Aktuelle PIN",
+  "newPin": "Neue PIN",
+  "confirmPin": "PIN bestätigen",
+  "confirmNewPin": "Neue PIN bestätigen",
+  "firstWeekTitle": "Richten Sie Ihre Konten ein",
+  "addCashAccount": "Bargeldkonto hinzufügen",
+  "addCreditCard": "Kreditkarte hinzufügen",
+  "cashAccountName": "Name des Bargeldkontos",
+  "cardName": "Kartenname",
+  "paidFromBank": "Von Bank bezahlt",
+  "paidFromCard": "Von Karte bezahlt",
+  "choosePassphraseTitle": "Wählen Sie eine Passphrase zum Schutz dieser Sicherung. Es gibt keine Wiederherstellung, wenn Sie sie vergessen.",
+  "replaceBooksTitle": "Ihre lokalen Bücher ersetzen?",
+  "replaceBooksBody": "Dies ersetzt alles, was sich derzeit in dieser App befindet, durch die Sicherung. Schließen und öffnen Sie die App danach erneut.",
+  "chooseBackupFileFirst": "Wählen Sie zuerst eine Sicherungsdatei aus.",
+  "backupRestored": "Sicherung wiederhergestellt",
+  "backupRestoredBody": "Ihre Bücher wurden wiederhergestellt. Schließen und öffnen Sie die App erneut, um fortzufahren.",
+  "fixThisEntry": "Diesen Eintrag korrigieren",
+  "fixBlurb": "Die alte Zeile bleibt genau so, wie sie war. Das Bestätigen fügt eine Umkehrzeile und die korrigierte hinzu.",
+  "importStatementTitle": "Kontoauszug importieren",
+  "importOfx": "OFX importieren",
+  "importOfxQfxFile": "OFX-/QFX-Datei importieren",
+  "importCsvFile": "CSV-Datei importieren",
+  "whatKindOfStatement": "Welche Art von Kontoauszugsdatei haben Sie?",
+  "chooseAccountForFile": "Wählen Sie das Konto, zu dem diese Datei gehört.",
+  "importIntoAccount": "In Konto importieren",
+  "useSavedProfile": "Gespeichertes Profil verwenden",
+  "saveMappingProfile": "Diese Zuordnung als Profil speichern (optional)",
+  "renameProfile": "Profil umbenennen",
+  "deleteProfileTitle": "Profil löschen?",
+  "fileHasHeader": "Datei hat eine Kopfzeile",
+  "dateColumn": "Datumsspalte",
+  "dateFormatHint": "Datumsformat (z. B. dd/MM/yyyy)",
+  "amountColumn": "Betragsspalte",
+  "amountConvention": "Betragskonvention",
+  "signedAmountColumn": "Vorzeichenbehaftete Betragsspalte",
+  "separateDebitCredit": "Separate Soll-/Haben-Spalten",
+  "debitColumn": "Sollspalte",
+  "creditColumn": "Habenspalte",
+  "decimalSeparator": "Dezimaltrennzeichen (. oder ,)",
+  "descriptionColumns": "Beschreibungsspalte(n)",
+  "referenceIdColumn": "Referenz-ID-Spalte (optional)",
+  "skippedRows": "Übersprungene Zeilen",
+  "parsedTransactionCount": "{count} Transaktionen analysiert",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} übersprungen oder ausgeschlossen",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} gebucht, {failed} fehlgeschlagen",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "Kategorie für alle",
+  "saveAsRule": "Als Regel speichern?",
+  "saveAsRuleBlurb": "Künftige Importe, deren Beschreibung dieses Schlüsselwort enthält, verwenden diese Kategorie.",
+  "keyword": "Schlüsselwort",
+  "noSavedRules": "Noch keine gespeicherten Regeln. Weisen Sie einer Gruppe von Zeilen eine Kategorie zu, um eine Regel zu speichern.",
+  "deleteRuleTitle": "Regel löschen?",
+  "editRule": "Regel bearbeiten",
+  "rowsGrouped": "{count} Zeilen",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "Wählen Sie eine {extensions}-Kontoauszugsdatei zum Importieren aus",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "Zahlungsempfänger",
+  "addPayee": "Zahlungsempfänger hinzufügen",
+  "renamePayee": "Zahlungsempfänger umbenennen",
+  "deletePayeeTitle": "Zahlungsempfänger löschen?",
+  "noPayeesYet": "Noch keine Zahlungsempfänger",
+  "recurringTitle": "Wiederkehrende Vorlagen",
+  "noRecurringYet": "Noch keine wiederkehrenden Vorlagen",
+  "deleteTemplateTitle": "Wiederkehrende Vorlage löschen?",
+  "dayOfMonth": "Tag des Monats (1–31)",
+  "dayOfMonthNote": "Ein Monat mit weniger Tagen verwendet seinen eigenen letzten Tag.",
+  "dayOfMonthLine": "Tag {day} des Monats – ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "Name",
+  "none": "Keine",
+  "currency": "Währung",
+  "errorGeneric": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+  "errorSigningIdentityMismatch": "Diese Wiederherstellungsphrase oder Keystore-Datei stimmt mit keiner Signieridentität in dieser Datenbank überein.",
+  "errorInvalidLedgerBackup": "Diese Datei ist keine gültige Smara-Sicherung.",
+  "errorInvalidLedgerBackupNoIdentity": "Diese Sicherung hat keine Signieridentität – sie ist keine gültige Smara-Sicherung.",
+  "errorInvalidLedgerBackupUnverified": "Diese Sicherung wurde nicht als intakte Bücher verifiziert, daher wurde sie nicht wiederhergestellt.",
+  "errorInvalidLedgerBackupUnreadable": "Diese Datei konnte nicht als Smara-Sicherung geöffnet werden: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "Diese Sicherung gehört zu einer anderen Signieridentität als der auf diesem Gerät.",
+  "errorAccountNotFinancial": "Das ist kein Finanzkonto.",
+  "errorAccountArchived": "Dieses Konto ist ausgeblendet.",
+  "errorAccountNotArchived": "Dieses Konto ist nicht ausgeblendet.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Es gibt kein verbleibendes Guthaben zum Umbuchen.",
+  "errorAccountHasNoGroup": "Diesem Konto ist keine Gruppe zugewiesen.",
+  "errorGroupHasNoCurrency": "Dieser Gruppe ist noch keine Währung zugewiesen.",
+  "errorGroupNotFound": "Diese Kontogruppe wurde nicht gefunden.",
+  "errorInvestmentAccountsMustBeAssets": "Nur Aktivkonten können als Investmentkonten markiert werden.",
+  "errorCreditCardsMustBeLiabilities": "Nur Passivkonten können als Kreditkarten markiert werden.",
+  "errorOpeningBalanceMustBePositive": "Der Anfangssaldo muss positiv sein, sofern angegeben.",
+  "errorAccountTypeDoesNotMatchGroup": "Dieser Kontotyp stimmt nicht mit der Gruppe überein.",
+  "errorLastActiveAccount": "Das letzte aktive Finanzkonto kann nicht ausgeblendet werden.",
+  "errorCurrencyRequiredToCreateGroup": "Zum Anlegen einer Gruppe ist eine Währung erforderlich.",
+  "errorSystemGroupCannotBeArchived": "Integrierte Kontogruppen können nicht ausgeblendet werden.",
+  "errorGroupAlreadyArchived": "Diese Gruppe ist bereits ausgeblendet.",
+  "errorCannotArchiveGroupWithAccounts": "Eine Gruppe mit noch aktiven Konten kann nicht ausgeblendet werden.",
+  "errorSystemGroupNeverArchived": "Integrierte Kontogruppen werden nie ausgeblendet.",
+  "errorAccountGroupsCannotBeDeleted": "Kontogruppen können nicht gelöscht werden.",
+  "errorCannotReassignDifferentCurrency": "Dieses Konto kann nicht in eine Gruppe mit einer anderen Währung verschoben werden.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "Die Währung kann nicht geändert werden, solange die Gruppe aktive Konten hat.",
+  "errorAmountMustBePositive": "Der Betrag muss positiv sein.",
+  "errorAccountCurrencyAmountMustBePositive": "Der Betrag in Kontowährung muss positiv sein.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "Der Betrag in Kontowährung gilt nur für einen Fremdwährungseintrag.",
+  "errorSplitNeedsTwoLines": "Eine Aufteilung benötigt mindestens zwei Kategoriezeilen.",
+  "errorSplitLineMustBePositive": "Jede Aufteilungszeile muss ein positiver Betrag sein.",
+  "errorSplitLinesMustSumToTotal": "Die Aufteilungszeilen müssen sich zum Transaktionsgesamtbetrag summieren.",
+  "errorTransferAmountMustBePositive": "Der Umbuchungsbetrag muss positiv sein.",
+  "errorTransferAccountsMustDiffer": "Quell- und Zielkonto müssen unterschiedlich sein.",
+  "errorCloseoutRequiresDestinationAmount": "Ein grenzüberschreitender Abschluss benötigt einen bekannten Zielbetrag.",
+  "errorDestinationAmountNotForSameCurrency": "Der Zielbetrag gilt nur für eine Fremdwährungsüberweisung.",
+  "errorDestinationAmountMustBePositive": "Der Zielbetrag muss positiv sein.",
+  "errorInvestmentCashExceeded": "Es kann nicht mehr überwiesen werden, als dieses Investmentkonto an Bargeld hat.",
+  "errorCannotReverseUnsettledProvisional": "Schließen Sie diese schwebende Überweisung ab, statt sie umzukehren.",
+  "errorAlreadyReversed": "Dieser Eintrag wurde bereits korrigiert. Die ursprüngliche Zeile bleibt unverändert.",
+  "errorNotActiveExpenseCategory": "Wählen Sie eine aktive Ausgabenkategorie.",
+  "errorNotActiveIncomeCategory": "Wählen Sie eine aktive Einnahmenkategorie.",
+  "errorSettledAmountMustNotBeNegative": "Der angekommene Betrag darf nicht negativ sein.",
+  "errorPendingTransferNotFound": "Diese schwebende Überweisung wurde nicht gefunden.",
+  "errorPendingTransferAlreadySettled": "Diese schwebende Überweisung wurde bereits abgeschlossen.",
+  "errorSettledToMustBeSourceOrDestination": "Wählen Sie das ursprüngliche Quell- oder Zielkonto.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "Eine Gebührenkategorie wird nur verwendet, wenn Geld an das Quellkonto zurückgegeben wird.",
+  "errorSettledAmountMustBePositiveForDelivery": "Geben Sie für das Angekommene einen positiven Betrag ein.",
+  "errorSettledAmountExceedsProvisional": "Dieser Betrag ist höher als der gesendete.",
+  "errorInstrumentNotFound": "Dieses Instrument wurde nicht gefunden.",
+  "errorIncomeRequiredForNonCash": "Für einen unbaren Erwerb ist eine aktive Einnahmenkategorie erforderlich.",
+  "errorInsufficientCash": "In diesem Investmentkonto ist nicht genug Bargeld für diesen Kauf vorhanden.",
+  "errorSellQuantityAndPriceMustBePositive": "Verkaufsmenge und Stückpreis müssen positiv sein.",
+  "errorLockedUntil": "Verkauf nicht möglich: Einige Einheiten sind bis {date} gesperrt.",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "Es kann nicht mehr verkauft werden, als Sie derzeit unverschlossen halten.",
+  "errorIncomeRequiredForGain": "Für einen realisierten Gewinn ist eine aktive Einnahmenkategorie erforderlich.",
+  "errorExpenseRequiredForLoss": "Für einen realisierten Verlust ist eine aktive Ausgabenkategorie erforderlich.",
+  "errorBrokerageFailedAfterBuy": "Kauf gebucht, aber Courtage fehlgeschlagen: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "Verkauf gebucht, aber Courtage fehlgeschlagen: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "Der Dividendenbetrag muss positiv sein.",
+  "errorNotInvestmentAccount": "Das ist kein Investmentkonto.",
+  "errorNoInventoryCompanion": "Diesem Investmentkonto fehlt sein zugehöriges Bestandskonto.",
+  "errorInvestmentReversalBlocked": "Dieser Kauf kann nicht rückgängig gemacht werden: spätere Verkäufe hängen von seinen Einheiten ab. Machen Sie zuerst die abhängigen Verkäufe rückgängig: {sells}.",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "Das Monatslimit muss positiv sein.",
+  "errorTemplateAmountMustBePositive": "Der Vorlagenbetrag muss positiv sein.",
+  "errorOfxUnrecognized": "Diese Datei konnte nicht als OFX erkannt werden.",
+  "errorCsvEmpty": "Die ausgewählte Datei ist leer.",
+  "errorCsvUnreadable": "Diese Datei konnte nicht als CSV gelesen werden.",
+  "errorCsvNoRows": "Die ausgewählte Datei hat keine Zeilen.",
+  "errorBackupCreateFailed": "Die Sicherung konnte nicht erstellt werden: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "Diese Sicherung konnte nicht wiederhergestellt werden – falsche Passphrase oder keine Smara-Sicherungsdatei.",
+  "validationAmountAccountCategoryRequired": "Betrag, Konto und Kategorie sind erforderlich.",
+  "validationAmountAccountRequired": "Betrag und Konto sind erforderlich.",
+  "validationSplitLineIncomplete": "Jede Aufteilungszeile benötigt eine Kategorie und einen Betrag.",
+  "validationSplitSumMismatch": "Die Aufteilungszeilen müssen sich zum Transaktionsgesamtbetrag summieren.",
+  "validationFromToAmountRequired": "Von-Konto, An-Konto und Betrag sind erforderlich.",
+  "validationAmountArrivedRequired": "Der angekommene Betrag ist erforderlich.",
+  "validationChooseReceivingAccount": "Wählen Sie, welches Konto die Gelder erhalten hat.",
+  "validationAccountCategoryRequired": "Konto und Kategorie sind erforderlich.",
+  "validationFixFailed": "Diese Korrektur konnte nicht gespeichert werden.",
+  "validationNameRequired": "Benennen Sie Ihr Hauptkonto.",
+  "validationStillLoading": "Wird noch geladen – versuchen Sie es gleich noch einmal.",
+  "validationSaveAccountNameFailed": "Der Kontoname konnte nicht gespeichert werden.",
+  "validationWrongPin": "Falsche PIN. Erneut versuchen.",
+  "validationCategoryMustBeIncomeOrExpense": "Die Kategorie muss Einnahmen oder Ausgaben sein.",
+  "validationOnlyExpenseHasMonthlyLimit": "Nur eine Ausgabenkategorie kann ein Monatslimit haben.",
+  "validationInvalidTemplate": "Ungültige Vorlage.",
+  "validationWrongKeystorePassphrase": "Falsche Passphrase für diese Keystore-Datei.",
+  "validationInvalidKeystoreFile": "Das sieht nicht wie eine gültige Keystore-Datei aus.",
+  "validationRestorePhraseFailed": "Von dieser Wiederherstellungsphrase konnte nicht wiederhergestellt werden.",
+  "validationGenerateKeyFailed": "Auf diesem Gerät konnte kein Signierschlüssel erzeugt werden: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "Diese Währung konnte nicht gespeichert werden: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "Migration fehlgeschlagen. Bitte erneut versuchen.",
+  "validationChooseBackupFile": "Wählen Sie zuerst eine Sicherungsdatei aus.",
+  "validationPassphraseRequired": "Geben Sie eine Passphrase ein.",
+  "validationPinsDoNotMatch": "Die beiden PINs stimmen nicht überein.",
+  "validationFeePositiveWithCategory": "Eine Überweisungsgebühr muss ein positiver Betrag mit ausgewählter Ausgabenkategorie sein.",
+  "validationFeeMustBeLessThanAmount": "Die Gebühr muss bei einer Überweisung mit abgezogener Gebühr geringer als der Betrag sein.",
+  "validationTransferSavedFeeFailed": "Überweisung gespeichert, aber die Gebühr konnte nicht erfasst werden: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "Geben Sie einen gültigen Betrag ein.",
+  "validationConfirmWordMismatch": "Wort {n} stimmt nicht mit Ihrer gespeicherten Phrase überein. Überprüfen Sie es und versuchen Sie es erneut.",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "Kaufmenge und Stückpreis müssen positiv sein.",
+  "errorInstrumentArchived": "Ein ausgeblendetes Instrument kann nicht gekauft werden.",
+  "errorNonCashCannotIncludeBrokerage": "Unbare Erwerbe können keine Courtage enthalten.",
+  "errorBrokerageRequiresExpenseCategory": "Bei positiver Courtage ist eine aktive Ausgabenkategorie erforderlich.",
+  "errorSellProceedsMustCoverBrokerage": "Der Verkaufserlös muss mindestens die Courtage decken.",
+  "homeSpentOfLimitThisMonth": "{spent} von {limit} in diesem Monat",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "Smara Buchhaltung entsperren",
+  "searchLabel": "Suchen",
+  "openingBalance": "Anfangssaldo",
+  "transferToName": "Umbuchung: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "Gebühr für Umbuchung",
+  "feeForTransferTo": "Gebühr für Umbuchung an {name}",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "Der Dateiauswähler konnte nicht geöffnet werden: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "Bitte wählen Sie eine .{extensions}-Datei",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "Währungscode (ISO 4217, z. B. USD)",
+  "splitCounterpartMore": "{name} +{count} weitere",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "Datum",
+  "noneSelected": "Keine",
+  "reviewEntriesBeforeContinuing": "Überprüfen Sie die untenstehenden Einträge ({count} insgesamt), bevor Sie fortfahren.",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "Sie haben {amount} erhalten",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "Leer lassen, wenn der Wechselkurs noch nicht bekannt ist.",
+  "recordTradeBlurb": "Erfassen Sie einen bereits erfolgten Trade. Diese App platziert keine Orders.",
+  "feeOnTopBlurb": "An: Der obige Betrag ist der Gesamtbetrag, der diesem Konto entnommen wird; die Gebühr wird davon abgezogen.",
+  "feeBankBlurb": "Eine im Voraus erhobene Provision Ihrer Bank oder eines Vermittlers.",
+  "validationPinMinLength": "Die PIN muss mindestens 4 Stellen haben.",
+  "restoreBackupBlurb": "Dies ersetzt alles, was sich derzeit in dieser App befindet, durch die Sicherung — es wird nicht zusammengeführt. Wählen Sie eine Sicherungsdatei und geben Sie die Passphrase ein, mit der Sie sie geschützt haben.",
+  "actionReplace": "Ersetzen",
+  "hideAccountBody": "{name} steht für neue Transaktionen nicht mehr zur Verfügung.",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} wird beim Erstellen oder Neuzuweisen von Konten nicht mehr angeboten.",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} wird beim Erfassen neuer Transaktionen nicht mehr angeboten.",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "Ausgeblendete Instrumente bleiben bei vergangenen Käufen und Verkäufen erhalten. Sie können weiterhin eine Dividende dafür erfassen.",
+  "nameHidden": "{name} (ausgeblendet)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "Keine Währung festgelegt",
+  "deletePayeeBody": "{name} und die zugehörigen gemerkten Standardwerte werden entfernt. Vergangene Transaktionen bleiben unberührt.",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} wird nicht mehr als fällig angeboten. Bereits erfasste vergangene Transaktionen bleiben unberührt.",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "Die gespeicherte Spaltenzuordnung \"{name}\" wird gelöscht. Bereits damit importierte Kontoauszüge bleiben unberührt.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "Importe werden nicht mehr automatisch anhand von \"{keyword}\" kategorisiert. Transaktionen, die bereits mit dieser Regel kategorisiert wurden, bleiben unberührt.",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "Fügen Sie optional jetzt eine Kreditkarte oder ein Bargeldkonto hinzu – Sie können später jederzeit weitere Konten über die Einstellungen hinzufügen.",
+  "deliveredToDestination": "An Ziel geliefert",
+  "deliveredToName": "An {name} geliefert",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "Sie haben {amount} {currency} weniger als erwartet erhalten - wählen Sie eine Kategorie, um die Differenz zu decken.",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "Zeitraum",
+  "addTemplate": "Vorlage hinzufügen",
+  "editTemplate": "Vorlage bearbeiten",
+  "validationFillTemplateFields": "Füllen Sie jedes Feld mit einem gültigen Betrag und Tag aus.",
+  "saveCsvExport": "CSV-Export speichern",
+  "referenceRate": "Referenzkurs",
+  "yourRate": "Ihr Kurs",
+  "leaveBlankIfThisWasAccountCurrency": "Leer lassen, wenn dies in {currency}, der eigenen Kontowährung, erfolgte.",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "Sperren bis (optional)",
+  "lockedUntilDate": "Gesperrt bis {date}",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "Ein Recherche-Prompt wurde kopiert — keine Browser-URL verfügbar, oder Sie sind offline.",
+  "openedFavouriteResearchTool": "Ihr bevorzugtes Recherchetool wurde geöffnet.",
+  "looksLikeGain": "Das sieht nach einem Gewinn aus",
+  "looksLikeLoss": "Das sieht nach einem Verlust aus",
+  "looksLikeBreakEven": "Das sieht nach einem Ausgleich aus",
+  "sellableQuantity": "{name} ({qty} verkaufbar)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "Spalte {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "Wird importiert …",
+  "confirmImport": "Import bestätigen",
+  "manageSavedCategoryRules": "Gespeicherte Kategorieregeln verwalten",
+  "statementCurrencyMismatch": "Die Währung dieser Datei ({currency}) stimmt nicht mit der Währung des ausgewählten Kontos überein.",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "Kategorieregeln",
+  "possibleDuplicate": "mögliches Duplikat",
+  "unknownCategory": "Unbekannte Kategorie"
+}

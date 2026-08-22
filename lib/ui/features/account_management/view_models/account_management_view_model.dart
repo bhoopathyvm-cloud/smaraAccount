@@ -4,10 +4,12 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 
-class AccountManagementViewModel extends ChangeNotifier {
+class AccountManagementViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   AccountManagementViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository {
     _accountsSubscription = _ledgerRepository
@@ -34,14 +36,7 @@ class AccountManagementViewModel extends ChangeNotifier {
   List<AccountGroup> _groups = const [];
   List<AccountGroup> get groups => _groups;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
-  void clearError() {
-    if (_errorMessage == null) return;
-    _errorMessage = null;
-    notifyListeners();
-  }
+  void clearError() => clearFailure();
 
   Future<bool> createAccount({
     required String name,
@@ -49,6 +44,7 @@ class AccountManagementViewModel extends ChangeNotifier {
     required String groupId,
     int? openingBalanceMinor,
     bool isCreditCard = false,
+    bool holdsInvestments = false,
   }) {
     return _run(() async {
       await _ledgerRepository.createFinancialAccount(
@@ -57,6 +53,7 @@ class AccountManagementViewModel extends ChangeNotifier {
         groupId: groupId,
         openingBalanceMinor: openingBalanceMinor,
         isCreditCard: isCreditCard,
+        holdsInvestments: holdsInvestments,
       );
     });
   }
@@ -130,17 +127,15 @@ class AccountManagementViewModel extends ChangeNotifier {
   Future<bool> _run(Future<void> Function() action) async {
     try {
       await action();
-      _errorMessage = null;
-      notifyListeners();
+      clearFailure();
       return true;
     } on LastActiveAccountException catch (error) {
-      _errorMessage = error.message;
+      setFailure(error);
     } on AccountGroupException catch (error) {
-      _errorMessage = error.message;
+      setFailure(error);
     } on InvalidOpeningBalanceException catch (error) {
-      _errorMessage = error.message;
+      setFailure(error);
     }
-    notifyListeners();
     return false;
   }
 

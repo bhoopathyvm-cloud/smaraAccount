@@ -113,7 +113,10 @@ void main() {
       await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
       await tester.pumpAndSettle();
 
-      expect(find.text('cannot archive the last account'), findsOneWidget);
+      expect(
+        find.text('Cannot hide the last active financial account.'),
+        findsOneWidget,
+      );
     },
   );
 
@@ -160,7 +163,14 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.enterText(find.byType(TextField).first, 'Business');
-      await tester.tap(find.text('Liability'));
+      await tester.tap(
+        find
+            .descendant(
+              of: find.byType(AlertDialog),
+              matching: find.text('Liability'),
+            )
+            .first,
+      );
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(ChoiceChip, 'EUR'));
       await tester.pumpAndSettle();
@@ -394,6 +404,7 @@ void main() {
       when(repository.archiveAccountGroup(businessGroup.id)).thenThrow(
         AccountGroupException(
           'Cannot archive a group with active financial accounts.',
+          code: AppErrorCode.cannotArchiveGroupWithAccounts,
         ),
       );
 
@@ -415,7 +426,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('Cannot archive a group with active financial accounts.'),
+        find.text('Cannot hide a group that still has active accounts.'),
         findsOneWidget,
       );
     },
@@ -566,7 +577,14 @@ void main() {
 
         expect(find.text('This is a credit card'), findsNothing);
 
-        await tester.tap(find.text('Liability'));
+        await tester.tap(
+          find
+              .descendant(
+                of: find.byType(AlertDialog),
+                matching: find.text('Liability'),
+              )
+              .first,
+        );
         await tester.pump();
 
         expect(find.text('This is a credit card'), findsOneWidget);
@@ -604,11 +622,25 @@ void main() {
 
       await tester.tap(find.byIcon(TablerIcons.plus));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Liability'));
+      await tester.tap(
+        find
+            .descendant(
+              of: find.byType(AlertDialog),
+              matching: find.text('Liability'),
+            )
+            .first,
+      );
       await tester.pump();
       await tester.tap(find.text('This is a credit card'));
       await tester.pump();
-      await tester.tap(find.text('Asset'));
+      await tester.tap(
+        find
+            .descendant(
+              of: find.byType(AlertDialog),
+              matching: find.text('Asset'),
+            )
+            .first,
+      );
       await tester.pump();
 
       expect(find.text('This is a credit card'), findsNothing);

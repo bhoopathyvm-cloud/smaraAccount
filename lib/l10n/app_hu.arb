@@ -1,0 +1,968 @@
+{
+  "@@locale": "hu",
+  "appTitle": "Smara könyvelés",
+  "navHome": "Kezdőlap",
+  "navRegister": "Napló",
+  "navSummary": "Összesítő",
+  "navAccounts": "Számlák",
+  "navCategories": "Kategóriák",
+  "actionCancel": "Mégse",
+  "actionSave": "Mentés",
+  "actionDelete": "Törlés",
+  "actionDone": "Kész",
+  "actionContinue": "Tovább",
+  "actionDismiss": "Bezárás",
+  "actionRetry": "Újra",
+  "actionSkip": "Kihagyás",
+  "actionConfirm": "Megerősítés",
+  "actionAdd": "Hozzáadás",
+  "actionEdit": "Szerkesztés",
+  "actionRename": "Átnevezés",
+  "actionHide": "Elrejtés",
+  "actionCreate": "Létrehozás",
+  "actionCloseApp": "Alkalmazás bezárása",
+  "actionUnlock": "Feloldás",
+  "actionSettle": "Rendezés",
+  "actionFinish": "Befejezés",
+  "actionPreview": "Előnézet",
+  "actionImport": "Importálás",
+  "actionExportCsv": "CSV exportálása",
+  "actionChooseFile": "Fájl kiválasztása",
+  "actionRestore": "Visszaállítás",
+  "actionFix": "Javítás",
+  "actionBuy": "Vétel",
+  "actionSell": "Eladás",
+  "actionDividend": "Osztalék",
+  "actionRecordBuy": "Vétel rögzítése",
+  "actionRecordSell": "Eladás rögzítése",
+  "actionRecordDividend": "Osztalék rögzítése",
+  "actionPayCard": "Kártya fizetése",
+  "actionTransfer": "Átutalás",
+  "actionRecordTransaction": "Tranzakció rögzítése",
+  "actionImportStatement": "Kivonat importálása",
+  "actionClearDates": "Dátumok törlése",
+  "actionClearSearch": "Keresés és szűrők törlése",
+  "actionUseBiometrics": "Biometrikus azonosítás használata",
+  "actionSetPin": "PIN beállítása",
+  "actionChangePin": "PIN módosítása",
+  "actionSaveBackup": "Biztonsági mentés",
+  "actionRestoreBackup": "Biztonsági mentés visszaállítása",
+  "actionSaveRule": "Szabály mentése",
+  "actionConfirmFix": "Javítás megerősítése",
+  "captureSpent": "Kiadás",
+  "captureReceived": "Bevétel",
+  "captureMovedMoney": "Pénz mozgatva",
+  "captureImportStatement": "Kivonat importálása",
+  "settingsTitle": "Beállítások",
+  "settingsLanguage": "Nyelv",
+  "settingsLanguageSystem": "Eszköz nyelve",
+  "settingsFetchFxRates": "Referencia árfolyamok lekérése",
+  "settingsFetchFxRatesSubtitle": "Devizák közötti átutalásoknál a célösszeg mellett tájékoztató jellegű piaci árfolyamot mutat, kizárólag összehasonlításra - soha nem használjuk az összeg kitöltésére.",
+  "settingsRateProvider": "Árfolyam-szolgáltató",
+  "settingsFetchMarketPrices": "Piaci árak lekérése a befektetésekhez",
+  "settingsFetchMarketPricesSubtitle": "Az utolsó árakat keresi ki azoknál az eszközöknél, amelyeknek van tickerük vagy ISIN-jük, hogy megbecsülje a portfólió értékét. Soha nem használjuk ügylet rögzítésére, és soha nem küldi el, mennyit tart belőle.",
+  "settingsMarketPriceProvider": "Piaci ár szolgáltató",
+  "settingsFavouriteResearchTool": "Kedvenc kutatóeszköz",
+  "settingsFavouriteResearchToolSubtitle": "Ha a portfólión rákoppint egy eszköz nevére, ez az eszköz nyílik meg a böngészőben egy kutatási felszólítással — ez nem integráció, és nem tanács.",
+  "settingsBackup": "Biztonsági mentés",
+  "settingsBackupBlurb": "Mentsen egy titkosított másolatot a könyveiről egy Ön által választott helyre, vagy állítsa vissza onnan. Ez különbözik a helyreállítási kifejezéstől vagy a kulcstartó fájltól, amelyek az aláíró kulcsát mentik, nem a könyveit.",
+  "settingsLock": "Zárolás",
+  "settingsLockBlurb": "Az alkalmazás megnyitásához kérjen PIN-t, vagy ahol elérhető, biometrikus azonosítást.",
+  "settingsRequireUnlock": "Feloldás kötelezővé tétele az alkalmazás megnyitásához",
+  "settingsLockAfter": "Zárolás ennyi idő után",
+  "settingsLockImmediately": "Azonnal",
+  "settingsLock1Minute": "1 perc",
+  "settingsLock5Minutes": "5 perc",
+  "settingsLock15Minutes": "15 perc",
+  "settingsAllowBiometrics": "Biometrikus azonosítás engedélyezése is",
+  "settingsHideSnapshot": "Egyenlegek elrejtése az alkalmazásváltóban",
+  "settingsHideSnapshotSubtitle": "Elhomályosítja ezt a képernyőt, amikor másik alkalmazásra vált, hogy ne legyen egy pillantásra látható az alkalmazásváltóban.",
+  "settingsHideSnapshotUnavailable": "Az egyenlegek elrejtése az alkalmazásváltóban ezen a platformon nem érhető el.",
+  "settingsPayees": "Kedvezményezettek",
+  "settingsManagePayees": "Kedvezményezettek kezelése",
+  "settingsPayeesBlurb": "Megjegyzett kedvezményezett nevek és azok alapértelmezett kategóriája és számlája, amelyeket az automatikus kiegészítés javasol tranzakció rögzítésekor.",
+  "settingsRecurring": "Ismétlődő sablonok",
+  "settingsManageRecurring": "Ismétlődő sablonok kezelése",
+  "settingsRecurringBlurb": "Havonta ismétlődő számlák vagy bevételek, például lakbér vagy fizetés. Egy esedékes sablon megjelenik a Kezdőlapon, hogy egy koppintással rögzíthesse - soha nem kerül automatikusan könyvelésre.",
+  "settingsAbout": "Névjegy",
+  "providerFrankfurter": "Frankfurter (EKB árfolyamok)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (napi árfolyamok)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "Készpénz és készpénz-egyenértékesek",
+  "systemGroupPensionRetirement": "Nyugdíj és nyugdíj-megtakarítás",
+  "systemGroupCreditShortTerm": "Hitel és rövid lejáratú tartozás",
+  "systemGroupLoansMortgages": "Kölcsönök és jelzáloghitelek",
+  "systemGroupInvestments": "Befektetések",
+  "systemAccountCashBank": "Készpénz és bank",
+  "systemCategorySalary": "Fizetés",
+  "systemCategoryOtherIncome": "Egyéb bevétel",
+  "systemCategoryGroceries": "Élelmiszer",
+  "systemCategoryRentMortgage": "Lakbér/jelzálog",
+  "systemCategoryUtilities": "Rezsi",
+  "systemCategoryTransport": "Közlekedés",
+  "systemCategoryFoodOut": "Étkezés étteremben",
+  "systemCategoryPhone": "Telefon",
+  "systemCategoryHealth": "Egészség",
+  "systemCategoryOtherExpense": "Egyéb kiadás",
+  "homeThisMonth": "EZ A HÓNAP",
+  "homeMoneyInTransit": "ÚTON LÉVŐ PÉNZ",
+  "homeWhatYouHaveMinusWhatYouOwe": "AMI ÖNNÉL VAN MÍNUSZ AMIVEL TARTOZIK",
+  "homeWhatYouHave": "Amije van: {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "Amije van: {haveAmount} {currency}  •  Amivel tartozik: {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "Ön {amount} {currency} összeget küldött innen: {name}",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "Ön {amount} {currency} összeget küldött ide: {name}",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "Elrejtve",
+  "allAccounts": "Összes számla",
+  "savedToPath": "Mentve ide: {path}",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "Nem sikerült exportálni a kulcstartó fájlt. Ezt a lépést kihagyhatja.",
+  "enterPassphraseToProtect": "Adjon meg egy jelmondatot a fájl védelméhez.",
+  "homeTapWhenArrived": "Koppintson, ha tudja, mi érkezett meg",
+  "homeReturnedTo": "Visszaküldve ide: {name}",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "MA ESEDÉKES",
+  "homeDueLine": "{category} · {account} · koppintson a rögzítéshez",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "Limit túllépve",
+  "homeSpentOfLimit": "{spent} / {limit}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "Hátralévő: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "Nincs számla",
+  "homeCashRegister": "Készpénzállomány",
+  "homeMarketEstimate": "Piaci becslés",
+  "registerTitle": "Napló",
+  "registerSearchHint": "Leírás, kategória vagy összeg",
+  "registerNoTransactions": "Még nincs tranzakció",
+  "registerNoEntries": "Még nincs rögzített tétel.",
+  "registerSpentOnly": "Csak kiadások",
+  "registerReceivedOnly": "Csak bevételek",
+  "registerAll": "Összes",
+  "registerUnverified": "Nincs ellenőrizve - kizárva az összesítésből",
+  "registerSuperseded": "Migráció által felülírva - kizárva az összesítésből",
+  "summaryTitle": "Összesítő",
+  "summaryTotalIncome": "Összes bevétel",
+  "summaryTotalExpense": "Összes kiadás",
+  "summaryDateRange": "{start} - {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "Számlák",
+  "categoriesTitle": "Kategóriák",
+  "accountName": "Számla neve",
+  "createAccount": "Számla létrehozása",
+  "createGroup": "Csoport létrehozása",
+  "editGroup": "Csoport szerkesztése",
+  "renameAccount": "Számla átnevezése",
+  "renameCategory": "Kategória átnevezése",
+  "addCategory": "Kategória hozzáadása",
+  "groupLabel": "Csoport",
+  "kindLabel": "Típus",
+  "asset": "Eszköz",
+  "liability": "Kötelezettség",
+  "income": "Bevétel",
+  "expense": "Kiadás",
+  "thisAccountHoldsInvestments": "Ez a számla befektetéseket tartalmaz",
+  "thisAccountHoldsInvestmentsSubtitle": "Készpénz plusz állomány, amelyet Vétel, Eladás és Osztalék funkciókkal rögzít.",
+  "thisIsACreditCard": "Ez egy hitelkártya",
+  "openingBalanceOptional": "Nyitóegyenleg (opcionális)",
+  "currencyIso": "Pénznem (ISO 4217)",
+  "currencyIsoExample": "Pénznem (ISO 4217, pl. USD)",
+  "hideAccountTitle": "Elrejti a számlát az új tételek elől?",
+  "hideCategoryTitle": "Elrejti a kategóriát az új tételek elől?",
+  "hideGroupTitle": "Elrejti a csoportot az új tételek elől?",
+  "reassignGroup": "Csoport újbóli hozzárendelése",
+  "transferRemainingBalance": "Fennmaradó egyenleg átutalása",
+  "monthlyLimit": "Havi keret",
+  "monthlyLimitHint": "Keret (üresen hagyva törli)",
+  "monthlyLimitBlurb": "Egy opcionális, hó eleje óta eltelt kiadási útmutató ehhez a kiadási kategóriához.",
+  "manageCategoryRules": "Kategóriaszabályok kezelése",
+  "amount": "Összeg",
+  "category": "Kategória",
+  "account": "Számla",
+  "fromAccount": "Forrásszámla",
+  "toAccount": "Célszámla",
+  "descriptionOptional": "Leírás (opcionális)",
+  "alsoRememberPayee": "Kedvezményezettként is megjegyzés",
+  "splitIntoCategories": "Felosztás több kategóriára",
+  "categoryN": "{n}. kategória",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "Célösszeg",
+  "destinationAmountOptional": "Célösszeg (opcionális)",
+  "accountCurrencyAmountOptional": "Számla pénznemében megadott összeg (opcionális)",
+  "transactionCurrencyOptional": "Tranzakció pénzneme (opcionális)",
+  "feeOptional": "Díj (opcionális)",
+  "feeAmount": "Díj összege",
+  "feeCategory": "Díj kategóriája",
+  "feeDescriptionOptional": "Díj leírása (opcionális)",
+  "feeDeducted": "A díjat a fenti összegből vonjuk le",
+  "needTwoAccountsToTransfer": "Az átutaláshoz hozzon létre legalább két aktív számlát.",
+  "whatArrivedTitle": "Mi érkezett meg?",
+  "whatArrivedBlurb": "Adja meg, mi érkezett meg valójában.",
+  "amountThatArrived": "Megérkezett összeg",
+  "feeLossCategory": "Díj / veszteség kategória",
+  "alreadySettled": "Már rendezve.",
+  "holdingsTitle": "Állomány",
+  "holdingsCash": "Készpénz",
+  "holdingsInventory": "ÁLLOMÁNY",
+  "holdingsBook": "Könyv szerinti (készpénz + bekerülési érték) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "Piaci becslés {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "Még nincs állomány. Egy eszköz hozzáadásához rögzítsen egy vételt.",
+  "holdingsQuotesBlurb": "Az árfolyamok becslések, nem bróker árak. Ez az alkalmazás nem ad le megbízásokat.",
+  "holdingsTapNameToResearch": "Koppintson a névre a kutatáshoz. Az árfolyamok becslések, nem tanácsok.",
+  "instrument": "Eszköz",
+  "newInstrument": "Új eszköz",
+  "renameInstrument": "Eszköz átnevezése",
+  "instrumentActions": "Eszközműveletek",
+  "hideInstrumentTitle": "Elrejti ezt: {name}?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "Ticker (opcionális)",
+  "isinOptional": "ISIN (opcionális)",
+  "quantity": "Mennyiség",
+  "unitPrice": "Egységár",
+  "brokerageOptional": "Bróker jutalék (opcionális)",
+  "brokerageExpenseCategory": "Bróker jutalék kiadási kategória",
+  "incomeCategory": "Bevételi kategória",
+  "gainIncomeCategory": "Nyereség bevételi kategória",
+  "lossExpenseCategory": "Veszteség kiadási kategória",
+  "nonCash": "Nem készpénzes",
+  "cash": "Készpénz",
+  "locked": "Zárolva",
+  "lockUntilHint": "Ez az Ön saját feljegyzése egy korlátozásról, nem bróker szabály.",
+  "instrumentKindStock": "Részvény",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "Befektetési alap",
+  "instrumentKindBond": "Kötvény",
+  "instrumentKindOther": "Egyéb",
+  "quoteUseLive": "Élő árfolyam",
+  "quoteUseCached": "Gyorsítótárazott árfolyam",
+  "quoteUseStale": "Elavult árfolyam",
+  "quoteUseMissing": "Bekerülési érték használata (nincs árfolyam)",
+  "quoteUseDisabled": "Árfolyamok kikapcsolva — bekerülési érték/gyorsítótár használata",
+  "quoteUseCurrencyMismatch": "Bekerülési érték használata (az árfolyam pénzneme eltér)",
+  "unrealizedLabel": "Nem realizált {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} egység · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "Az Ön helyreállítási kifejezése",
+  "recoveryPhraseConfirmTitle": "Erősítse meg a kifejezését",
+  "recoveryPhraseBlurb": "Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara Accountingnak nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.",
+  "recoveryPhraseWriteDown": "Írja le ezeket a szavakat sorrendben, és tárolja őket biztonságos helyen, ettől az eszköztől elkülönítve.",
+  "iveSavedRecoveryPhrase": "Elmentettem a helyreállítási kifejezésemet",
+  "confirmPhraseBlurb": "Adja meg a kért szavakat az imént elmentett kifejezésből.",
+  "wordNumber": "{n}. szó",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "Kulcstartó fájl exportálása",
+  "keystoreExportBlurb": "A helyreállítási kifejezés mellett elmenthet egy titkosított kulcstartó fájlt is, amelyet az Ön által választott jelmondat véd. Ez opcionális - a helyreállítási kifejezés önmagában mindig elegendő az aláíró kulcs visszaállításához.",
+  "keystorePassphrase": "Jelmondat",
+  "exportKeystoreFile": "Kulcstartó fájl exportálása",
+  "chooseCurrencyTitle": "Válassza ki a pénznemét",
+  "chooseCurrencyBlurb": "Minden számlacsoport (Készpénz és készpénz-egyenértékesek, Nyugdíj stb.) egyelőre ezt az egy pénznemet használja. Később egy új csoport létrehozásával továbbra is hozzáadhat más pénznemű számlákat.",
+  "currencyBackfillTitle": "Válasszon pénznemet a meglévő csoportokhoz",
+  "currencyBackfillBlurb": "Ez az alkalmazás most már több pénznemet is támogat. A meglévő számláinak és számlacsoportjainak pénznemre van szükségük - mivel mindegyiket a funkció bevezetése előtt hozták létre, egyetlen választás vonatkozik mindegyikükre.",
+  "firstAccountTitle": "Nevezze el a számláját",
+  "firstAccountBlurb": "Ez az a számla, amely már be van állítva Önnek - adjon neki egy Ön számára ismerős nevet, például a bankjáét. Ezután rögzít egy Kiadást vagy Bevételt, majd megvédi az eszközt a helyreállítási kifejezésével.",
+  "whatsMainAccountCalled": "Mi a fő számlájának a neve?",
+  "restoreTitle": "Aláíró kulcs visszaállítása",
+  "restoreBlurb": "Ezen az eszközön léteznek könyvek, de nincs hozzájuk illő aláíró kulcs. Állítsa vissza az elmentett helyreállítási kifejezéséből vagy kulcstartó fájljából - az adatai a szokásos módon ellenőrizhetők lesznek, és semmi sem lesz újra aláírva vagy módosítva.",
+  "recoveryPhrase24": "Helyreállítási kifejezés (mind a 24 szó)",
+  "keystoreFile": "Kulcstartó fájl",
+  "keystoreFileContents": "Kulcstartó fájl tartalma",
+  "optionalBackupFile": "Opcionális biztonsági mentés fájl",
+  "iDontHavePhrase": "Nincs meg a helyreállítási kifejezésem vagy a kulcstartó fájlom",
+  "migrationTitle": "Áttérés új kulcsra",
+  "migrationBlurb": "A helyreállítási kifejezés vagy a kulcstartó fájl nélkül ennek az eszköznek az aláíró kulcsa nem állítható vissza. Elindíthat egy új kulcsot. A régi tételek láthatók maradnak, de felülíródnak.",
+  "iConfirmBooksValid": "Megerősítem, hogy a jelenlegi könyvek érvényesek",
+  "whyWeDontEdit": "Miért nem szerkesztjük a régi tételeket",
+  "whyWeDontEditBody": "Amikor kijavít egy hibát, megtartjuk a régi sort, és egy korrekciót adunk hozzá mellé, ahelyett hogy megváltoztatnánk, amit már beírt. Így az előzményei mindig pontosan mutatják, mi történt, és mikor javította ki — semmi sem változik csendben a háta mögött.",
+  "lockTitle": "Feloldás",
+  "lockScreenTitle": "Zárolva",
+  "enterPinToContinue": "PIN megadása a folytatáshoz",
+  "pinLabel": "PIN",
+  "setPinTitle": "PIN beállítása",
+  "currentPin": "Jelenlegi PIN",
+  "newPin": "Új PIN",
+  "confirmPin": "PIN megerősítése",
+  "confirmNewPin": "Új PIN megerősítése",
+  "firstWeekTitle": "Állítsa be a számláit",
+  "addCashAccount": "Készpénzszámla hozzáadása",
+  "addCreditCard": "Hitelkártya hozzáadása",
+  "cashAccountName": "Készpénzszámla neve",
+  "cardName": "Kártya neve",
+  "paidFromBank": "Bankból fizetve",
+  "paidFromCard": "Kártyából fizetve",
+  "choosePassphraseTitle": "Válasszon jelmondatot ennek a biztonsági mentésnek a védelméhez. Ha elfelejti, nincs helyreállítás.",
+  "replaceBooksTitle": "Lecseréli a helyi könyveit?",
+  "replaceBooksBody": "Ez lecseréli mindazt, ami jelenleg ebben az alkalmazásban van, a biztonsági mentésre. Ezután zárja be és nyissa meg újra az alkalmazást.",
+  "chooseBackupFileFirst": "Először válasszon biztonsági mentés fájlt.",
+  "backupRestored": "Biztonsági mentés visszaállítva",
+  "backupRestoredBody": "A könyvei helyreálltak. A folytatáshoz zárja be és nyissa meg újra az alkalmazást.",
+  "fixThisEntry": "Ennek a tételnek a javítása",
+  "fixBlurb": "A régi sor pontosan úgy marad, ahogy volt. A megerősítés hozzáad egy sztornó sort és a javított sort.",
+  "importStatementTitle": "Kivonat importálása",
+  "importOfx": "OFX importálása",
+  "importOfxQfxFile": "OFX / QFX fájl importálása",
+  "importCsvFile": "CSV fájl importálása",
+  "whatKindOfStatement": "Milyen típusú kivonatfájlja van?",
+  "chooseAccountForFile": "Válassza ki, melyik számlához tartozik ez a fájl.",
+  "importIntoAccount": "Importálás ebbe a számlába",
+  "useSavedProfile": "Mentett profil használata",
+  "saveMappingProfile": "Ennek a hozzárendelésnek mentése profilként (opcionális)",
+  "renameProfile": "Profil átnevezése",
+  "deleteProfileTitle": "Törli a profilt?",
+  "fileHasHeader": "A fájl fejlécsort tartalmaz",
+  "dateColumn": "Dátum oszlop",
+  "dateFormatHint": "Dátumformátum (pl. éééé.HH.nn)",
+  "amountColumn": "Összeg oszlop",
+  "amountConvention": "Összeg jelölési szabály",
+  "signedAmountColumn": "Előjeles összeg oszlop",
+  "separateDebitCredit": "Külön terhelés / jóváírás oszlop",
+  "debitColumn": "Terhelés oszlop",
+  "creditColumn": "Jóváírás oszlop",
+  "decimalSeparator": "Tizedesjel (. vagy ,)",
+  "descriptionColumns": "Leírás oszlop(ok)",
+  "referenceIdColumn": "Referenciaazonosító oszlop (opcionális)",
+  "skippedRows": "Kihagyott sorok",
+  "parsedTransactionCount": "{count} tranzakció feldolgozva",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} kihagyva vagy kizárva",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} könyvelve, {failed} sikertelen",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "Kategória mindenre",
+  "saveAsRule": "Menti szabályként?",
+  "saveAsRuleBlurb": "A jövőbeli importálások, amelyek leírása tartalmazza ezt a kulcsszót, ezt a kategóriát fogják használni.",
+  "keyword": "Kulcsszó",
+  "noSavedRules": "Még nincs mentett szabály. Rendeljen kategóriát egy sorcsoporthoz a szabály mentéséhez.",
+  "deleteRuleTitle": "Törli a szabályt?",
+  "editRule": "Szabály szerkesztése",
+  "rowsGrouped": "{count} sor",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "Válasszon egy {extensions} kivonatfájlt az importáláshoz",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "Kedvezményezettek",
+  "addPayee": "Kedvezményezett hozzáadása",
+  "renamePayee": "Kedvezményezett átnevezése",
+  "deletePayeeTitle": "Törli a kedvezményezettet?",
+  "noPayeesYet": "Még nincs kedvezményezett",
+  "recurringTitle": "Ismétlődő sablonok",
+  "noRecurringYet": "Még nincs ismétlődő sablon",
+  "deleteTemplateTitle": "Törli az ismétlődő sablont?",
+  "dayOfMonth": "Hónap napja (1-31)",
+  "dayOfMonthNote": "A kevesebb nappal rendelkező hónap a saját utolsó napját használja.",
+  "dayOfMonthLine": "A hónap {day}. napja - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "Név",
+  "none": "Nincs",
+  "currency": "Pénznem",
+  "errorGeneric": "Hiba történt. Próbálja újra.",
+  "errorSigningIdentityMismatch": "Ez a helyreállítási kifejezés vagy kulcstartó fájl nem egyezik egyetlen aláíró identitással sem ebben az adatbázisban.",
+  "errorInvalidLedgerBackup": "Ez a fájl nem érvényes Smara biztonsági mentés.",
+  "errorInvalidLedgerBackupNoIdentity": "Ennek a biztonsági mentésnek nincs aláíró identitása - ez nem érvényes Smara biztonsági mentés.",
+  "errorInvalidLedgerBackupUnverified": "Ez a biztonsági mentés nem igazolódott sértetlen könyvekként, ezért nem lett visszaállítva.",
+  "errorInvalidLedgerBackupUnreadable": "Ez a fájl nem nyitható meg Smara biztonsági mentésként: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "Ez a biztonsági mentés egy másik aláíró identitáshoz tartozik, mint amelyik ezen az eszközön van.",
+  "errorAccountNotFinancial": "Ez nem pénzügyi számla.",
+  "errorAccountArchived": "Az a számla el van rejtve.",
+  "errorAccountNotArchived": "Az a számla nincs elrejtve.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Nincs fennmaradó egyenleg átutalásra.",
+  "errorAccountHasNoGroup": "Ahhoz a számlához nincs csoport rendelve.",
+  "errorGroupHasNoCurrency": "Annak a csoportnak még nincs beállítva pénzneme.",
+  "errorGroupNotFound": "Az a számlacsoport nem található.",
+  "errorInvestmentAccountsMustBeAssets": "Csak eszközszámlák jelölhetők meg befektetési számlaként.",
+  "errorCreditCardsMustBeLiabilities": "Csak kötelezettségszámlák jelölhetők meg hitelkártyaként.",
+  "errorOpeningBalanceMustBePositive": "Ha meg van adva, a nyitóegyenlegnek pozitívnak kell lennie.",
+  "errorAccountTypeDoesNotMatchGroup": "Az a számlatípus nem egyezik a csoporttal.",
+  "errorLastActiveAccount": "Az utolsó aktív pénzügyi számla nem rejthető el.",
+  "errorCurrencyRequiredToCreateGroup": "A csoport létrehozásához pénznem szükséges.",
+  "errorSystemGroupCannotBeArchived": "A beépített számlacsoportok nem rejthetők el.",
+  "errorGroupAlreadyArchived": "Az a csoport már el van rejtve.",
+  "errorCannotArchiveGroupWithAccounts": "Nem rejthető el olyan csoport, amelyben még vannak aktív számlák.",
+  "errorSystemGroupNeverArchived": "A beépített számlacsoportok soha nincsenek elrejtve.",
+  "errorAccountGroupsCannotBeDeleted": "A számlacsoportok nem törölhetők.",
+  "errorCannotReassignDifferentCurrency": "Ez a számla nem helyezhető át eltérő pénznemű csoportba.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "A pénznem nem módosítható, amíg a csoportban aktív számlák vannak.",
+  "errorAmountMustBePositive": "Az összegnek pozitívnak kell lennie.",
+  "errorAccountCurrencyAmountMustBePositive": "A számla pénznemében megadott összegnek pozitívnak kell lennie.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "A számla pénznemében megadott összeg csak devizás tételekhez használható.",
+  "errorSplitNeedsTwoLines": "Egy felosztáshoz legalább két kategóriasor szükséges.",
+  "errorSplitLineMustBePositive": "Minden felosztási sornak pozitív összegűnek kell lennie.",
+  "errorSplitLinesMustSumToTotal": "A felosztási soroknak összesen a tranzakció teljes összegét kell kiadniuk.",
+  "errorTransferAmountMustBePositive": "Az átutalási összegnek pozitívnak kell lennie.",
+  "errorTransferAccountsMustDiffer": "A forrás- és célszámlának különbözőnek kell lennie.",
+  "errorCloseoutRequiresDestinationAmount": "A devizák közötti lezáráshoz ismert célösszeg szükséges.",
+  "errorDestinationAmountNotForSameCurrency": "A célösszeg csak devizák közötti átutaláshoz használható.",
+  "errorDestinationAmountMustBePositive": "A célösszegnek pozitívnak kell lennie.",
+  "errorInvestmentCashExceeded": "Nem utalható át több, mint amennyi készpénz ezen a befektetési számlán van.",
+  "errorCannotReverseUnsettledProvisional": "Rendezze ezt a függő átutalást ahelyett, hogy sztornózná.",
+  "errorAlreadyReversed": "Ez a tétel már javítva lett. Az eredeti sor változatlan marad.",
+  "errorNotActiveExpenseCategory": "Válasszon aktív kiadási kategóriát.",
+  "errorNotActiveIncomeCategory": "Válasszon aktív bevételi kategóriát.",
+  "errorSettledAmountMustNotBeNegative": "A megérkezett összeg nem lehet negatív.",
+  "errorPendingTransferNotFound": "Az a függő átutalás nem található.",
+  "errorPendingTransferAlreadySettled": "Az a függő átutalás már rendezve van.",
+  "errorSettledToMustBeSourceOrDestination": "Válassza az eredeti forrás- vagy célszámlát.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "Díjkategória csak akkor használatos, ha a pénz visszakerül a forrásszámlára.",
+  "errorSettledAmountMustBePositiveForDelivery": "Adjon meg egy pozitív összeget arra, ami megérkezett.",
+  "errorSettledAmountExceedsProvisional": "Az az összeg több, mint amennyit elküldtek.",
+  "errorInstrumentNotFound": "Az az eszköz nem található.",
+  "errorIncomeRequiredForNonCash": "Nem készpénzes szerzéshez aktív bevételi kategória szükséges.",
+  "errorInsufficientCash": "Nincs elég készpénz ezen a befektetési számlán ehhez a vételhez.",
+  "errorSellQuantityAndPriceMustBePositive": "Az eladási mennyiségnek és az egységárnak pozitívnak kell lennie.",
+  "errorLockedUntil": "Nem adható el: néhány egység {date} dátumig zárolva van.",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "Nem adható el több, mint amennyi jelenleg zárolatlanul van birtokában.",
+  "errorIncomeRequiredForGain": "Realizált nyereséghez aktív bevételi kategória szükséges.",
+  "errorExpenseRequiredForLoss": "Realizált veszteséghez aktív kiadási kategória szükséges.",
+  "errorBrokerageFailedAfterBuy": "A vétel könyvelve lett, de a bróker jutalék sikertelen volt: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "Az eladás könyvelve lett, de a bróker jutalék sikertelen volt: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "Az osztalék összegének pozitívnak kell lennie.",
+  "errorNotInvestmentAccount": "Ez nem befektetési számla.",
+  "errorNoInventoryCompanion": "Ebből a befektetési számlából hiányzik a hozzá tartozó állomány.",
+  "errorInvestmentReversalBlocked": "Ez a vétel nem sztornózható: későbbi eladás(ok) függnek az egységeitől. Először sztornózza a függő eladás(oka)t: {sells}.",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "A havi keretnek pozitívnak kell lennie.",
+  "errorTemplateAmountMustBePositive": "A sablon összegének pozitívnak kell lennie.",
+  "errorOfxUnrecognized": "Ez a fájl nem ismerhető fel OFX-ként.",
+  "errorCsvEmpty": "A kiválasztott fájl üres.",
+  "errorCsvUnreadable": "Ez a fájl nem olvasható CSV-ként.",
+  "errorCsvNoRows": "A kiválasztott fájlban nincsenek sorok.",
+  "errorBackupCreateFailed": "Nem sikerült létrehozni a biztonsági mentést: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "Ez a biztonsági mentés nem állítható vissza - rossz jelmondat, vagy nem Smara biztonsági mentés fájl.",
+  "validationAmountAccountCategoryRequired": "Az összeg, a számla és a kategória kötelező.",
+  "validationAmountAccountRequired": "Az összeg és a számla kötelező.",
+  "validationSplitLineIncomplete": "Minden felosztási sorhoz kategória és összeg szükséges.",
+  "validationSplitSumMismatch": "A felosztási soroknak összesen a tranzakció teljes összegét kell kiadniuk.",
+  "validationFromToAmountRequired": "A forrásszámla, a célszámla és az összeg kötelező.",
+  "validationAmountArrivedRequired": "A megérkezett összeg megadása kötelező.",
+  "validationChooseReceivingAccount": "Válassza ki, melyik számla kapta a pénzt.",
+  "validationAccountCategoryRequired": "A számla és a kategória kötelező.",
+  "validationFixFailed": "Nem sikerült elmenteni ezt a javítást.",
+  "validationNameRequired": "Nevezze el a fő számláját.",
+  "validationStillLoading": "Még betöltés alatt - próbálja meg egy pillanat múlva.",
+  "validationSaveAccountNameFailed": "Nem sikerült elmenteni a számla nevét.",
+  "validationWrongPin": "Hibás PIN. Próbálja újra.",
+  "validationCategoryMustBeIncomeOrExpense": "A kategóriának bevételnek vagy kiadásnak kell lennie.",
+  "validationOnlyExpenseHasMonthlyLimit": "Csak kiadási kategóriának lehet havi kerete.",
+  "validationInvalidTemplate": "Érvénytelen sablon.",
+  "validationWrongKeystorePassphrase": "Hibás jelmondat ehhez a kulcstartó fájlhoz.",
+  "validationInvalidKeystoreFile": "Ez nem tűnik érvényes kulcstartó fájlnak.",
+  "validationRestorePhraseFailed": "Nem sikerült visszaállítani abból a helyreállítási kifejezésből.",
+  "validationGenerateKeyFailed": "Nem sikerült aláíró kulcsot generálni ezen az eszközön: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "Nem sikerült elmenteni ezt a pénznemet: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "A migráció sikertelen volt. Kérjük, próbálja újra.",
+  "validationChooseBackupFile": "Először válasszon biztonsági mentés fájlt.",
+  "validationPassphraseRequired": "Adjon meg egy jelmondatot.",
+  "validationPinsDoNotMatch": "A két PIN nem egyezik.",
+  "validationFeePositiveWithCategory": "Az átutalási díjnak pozitív összegűnek kell lennie, kiválasztott kiadási kategóriával.",
+  "validationFeeMustBeLessThanAmount": "A díjnak kevesebbnek kell lennie az összegnél a levont díjas átutalásnál.",
+  "validationTransferSavedFeeFailed": "Az átutalás mentve lett, de a díjat nem sikerült rögzíteni: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "Adjon meg egy érvényes összeget.",
+  "validationConfirmWordMismatch": "A(z) {n}. szó nem egyezik az elmentett kifejezésével. Ellenőrizze, és próbálja újra.",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "A vételi mennyiségnek és az egységárnak pozitívnak kell lennie.",
+  "errorInstrumentArchived": "Nem vásárolható archivált eszköz.",
+  "errorNonCashCannotIncludeBrokerage": "Nem készpénzes szerzések nem tartalmazhatnak bróker jutalékot.",
+  "errorBrokerageRequiresExpenseCategory": "Ha a bróker jutalék pozitív, aktív kiadási kategória szükséges.",
+  "errorSellProceedsMustCoverBrokerage": "Az eladási bevételnek legalább a bróker jutalék összegét fedeznie kell.",
+  "homeSpentOfLimitThisMonth": "{spent} / {limit} ebben a hónapban",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "Smara Account feloldása",
+  "searchLabel": "Keresés",
+  "openingBalance": "Nyitóegyenleg",
+  "transferToName": "Átutalás: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "Átutalási díj",
+  "feeForTransferTo": "Átutalási díj ide: {name}",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "Nem sikerült megnyitni a fájlválasztót: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "Válasszon egy .{extensions} fájlt",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "Pénznemkód (ISO 4217, pl. USD)",
+  "splitCounterpartMore": "{name} +{count} további",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "Dátum",
+  "noneSelected": "Nincs",
+  "reviewEntriesBeforeContinuing": "Folytatás előtt tekintse át az alábbi tételeket (összesen {count}).",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "Ön kapott {amount} összeget",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "Hagyja üresen, ha az árfolyam még nem ismert.",
+  "recordTradeBlurb": "Rögzítsen egy már megtörtént ügyletet. Ez az alkalmazás nem ad le megbízásokat.",
+  "feeOnTopBlurb": "Bekapcsolva: a fenti összeg a számláról levont teljes összeg; a díj ebből kerül levonásra.",
+  "feeBankBlurb": "A bankja vagy egy közvetítő által felszámított előzetes jutalék.",
+  "validationPinMinLength": "A PIN-nek legalább 4 számjegyűnek kell lennie.",
+  "restoreBackupBlurb": "Ez lecseréli mindazt, ami jelenleg ebben az alkalmazásban van, a biztonsági mentésre — nem egyesíti. Válasszon egy biztonsági mentés fájlt, és adja meg a jelmondatot, amellyel védte.",
+  "actionReplace": "Csere",
+  "hideAccountBody": "{name} a továbbiakban nem lesz elérhető új tételekhez.",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "Számla létrehozásakor vagy áthelyezésekor a(z) {name} a továbbiakban nem lesz felkínálva.",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "Új tranzakció rögzítésekor a(z) {name} a továbbiakban nem lesz felkínálva.",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "Az elrejtett eszközök megmaradnak a korábbi vételeken és eladásokon. Osztalékot továbbra is rögzíthet hozzájuk.",
+  "nameHidden": "{name} (elrejtve)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "Nincs pénznem beállítva",
+  "deletePayeeBody": "A(z) {name} és a hozzá tartozó megjegyzett alapértelmezések törlődnek. A korábbi tranzakciókat ez nem érinti.",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "A(z) {name} a továbbiakban nem lesz felkínálva esedékesként. Az általa már rögzített tranzakciókat ez nem érinti.",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "A mentett oszlop-hozzárendelés (\"{name}\") törlődik. Az azzal már importált kivonatokat ez nem érinti.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "Az importálások a továbbiakban nem lesznek automatikusan kategorizálva a(z) \"{keyword}\" alapján. Az e szabállyal már kategorizált tranzakciókat ez nem érinti.",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "Opcionálisan adjon hozzá most egy hitelkártyát vagy készpénzszámlát - később a Beállításokból mindig hozzáadhat további számlákat.",
+  "deliveredToDestination": "Kézbesítve a célszámlára",
+  "deliveredToName": "Kézbesítve ide: {name}",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "Ön {amount} {currency} összeggel kevesebbet kapott a vártnál - válasszon kategóriát a különbözet fedezésére.",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "Dátumtartomány",
+  "addTemplate": "Sablon hozzáadása",
+  "editTemplate": "Sablon szerkesztése",
+  "validationFillTemplateFields": "Töltsön ki minden mezőt érvényes összeggel és nappal.",
+  "saveCsvExport": "CSV export mentése",
+  "referenceRate": "Referencia árfolyam",
+  "yourRate": "Az Ön árfolyama",
+  "leaveBlankIfThisWasAccountCurrency": "Hagyja üresen, ha ez {currency} pénznemben volt, a számla saját pénznemében.",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "Zárolva eddig (opcionális)",
+  "lockedUntilDate": "Zárolva eddig: {date}",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "Egy kutatási felszólítás átmásolva — nincs elérhető böngésző URL, vagy Ön offline van.",
+  "openedFavouriteResearchTool": "Megnyílt a kedvenc kutatóeszköze.",
+  "looksLikeGain": "Ez nyereségnek tűnik",
+  "looksLikeLoss": "Ez veszteségnek tűnik",
+  "looksLikeBreakEven": "Ez nullszaldósnak tűnik",
+  "sellableQuantity": "{name} ({qty} eladható)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "{index}. oszlop",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "Importálás...",
+  "confirmImport": "Importálás megerősítése",
+  "manageSavedCategoryRules": "Mentett kategóriaszabályok kezelése",
+  "statementCurrencyMismatch": "Ennek a fájlnak a pénzneme ({currency}) nem egyezik a kiválasztott számla pénznemével.",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "Kategóriaszabályok",
+  "possibleDuplicate": "lehetséges duplikátum",
+  "unknownCategory": "Ismeretlen kategória"
+}

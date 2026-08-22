@@ -7,13 +7,14 @@ import '../../../../data/exchange_rate_service.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/transaction_direction.dart';
 import '../../../core/money_formatter.dart';
 
-class TransferViewModel extends ChangeNotifier {
+class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   TransferViewModel({
     required LedgerRepository ledgerRepository,
     String? initialFromAccountId,
@@ -295,26 +296,21 @@ class TransferViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   Future<bool> submit() async {
     final fromAccountId = _fromAccountId;
     final toAccountId = _toAccountId;
     final amountMinor = _amountMinor;
     if (fromAccountId == null || toAccountId == null || amountMinor == null) {
-      _errorMessage = 'From account, to account, and amount are required.';
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationFromToAmountRequired));
       return false;
     }
 
     final feeAmountMinor = _feeAmountMinor;
     final hasFee = feeAmountMinor != null;
     if (hasFee && (feeAmountMinor <= 0 || _feeCategoryId == null)) {
-      _errorMessage =
-          'A transfer fee must be a positive amount with an expense '
-          'category selected.';
-      notifyListeners();
+      setFailure(
+        const AppFailure(AppErrorCode.validationFeePositiveWithCategory),
+      );
       return false;
     }
 
@@ -322,16 +318,15 @@ class TransferViewModel extends ChangeNotifier {
     if (hasFee && _feeDeductedFromAmount) {
       transferAmountMinor = amountMinor - feeAmountMinor;
       if (transferAmountMinor <= 0) {
-        _errorMessage =
-            'The fee must be less than the amount for a deducted-fee '
-            'transfer.';
-        notifyListeners();
+        setFailure(
+          const AppFailure(AppErrorCode.validationFeeMustBeLessThanAmount),
+        );
         return false;
       }
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       await _ledgerRepository.recordTransfer(
@@ -346,13 +341,11 @@ class TransferViewModel extends ChangeNotifier {
       );
     } on InvalidTransferException catch (error) {
       _isSubmitting = false;
-      _errorMessage = error.message;
-      notifyListeners();
+      setFailure(error);
       return false;
     } on AccountGroupException catch (error) {
       _isSubmitting = false;
-      _errorMessage = error.message;
-      notifyListeners();
+      setFailure(error);
       return false;
     }
 
@@ -371,17 +364,21 @@ class TransferViewModel extends ChangeNotifier {
         );
       } on InvalidTransactionAmountException catch (error) {
         _isSubmitting = false;
-        _errorMessage =
-            'Transfer saved, but the fee could not be recorded: '
-            '${error.message}';
-        notifyListeners();
+        setFailure(
+          AppFailure(
+            AppErrorCode.validationTransferSavedFeeFailed,
+            params: {'detail': error.toString()},
+          ),
+        );
         return false;
       } on AccountGroupException catch (error) {
         _isSubmitting = false;
-        _errorMessage =
-            'Transfer saved, but the fee could not be recorded: '
-            '${error.message}';
-        notifyListeners();
+        setFailure(
+          AppFailure(
+            AppErrorCode.validationTransferSavedFeeFailed,
+            params: {'detail': error.toString()},
+          ),
+        );
         return false;
       }
     }
@@ -397,8 +394,8 @@ class TransferViewModel extends ChangeNotifier {
         .cast<Account?>()
         .firstWhere((a) => a != null, orElse: () => null);
     return destination == null
-        ? 'Fee for transfer'
-        : 'Fee for transfer to ${destination.name}';
+        ? englishAppLocalizations.feeForTransfer
+        : englishAppLocalizations.feeForTransferTo(destination.name);
   }
 
   @override

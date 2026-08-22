@@ -1,12 +1,15 @@
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 
 /// One-time prompt for a database migrated from schemaVersion 3 (before
 /// account groups had a currency) - see
 /// [LedgerRepository.needsCurrencyBackfill] (multi-currency-support
 /// design.md Migration Plan step 3).
-class CurrencyBackfillViewModel extends ChangeNotifier {
+class CurrencyBackfillViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   CurrencyBackfillViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository;
 
@@ -15,12 +18,9 @@ class CurrencyBackfillViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   Future<bool> submit(String currency) async {
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       await _ledgerRepository.backfillGroupCurrencies(currency);
@@ -29,8 +29,12 @@ class CurrencyBackfillViewModel extends ChangeNotifier {
       return true;
     } catch (e) {
       _isSubmitting = false;
-      _errorMessage = 'Could not save this currency: $e';
-      notifyListeners();
+      setFailure(
+        AppFailure(
+          AppErrorCode.validationSaveCurrencyFailed,
+          params: {'detail': '$e'},
+        ),
+      );
       return false;
     }
   }

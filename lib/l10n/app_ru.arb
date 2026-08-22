@@ -1,0 +1,968 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Smara учёт",
+  "navHome": "Главная",
+  "navRegister": "Журнал",
+  "navSummary": "Итоги",
+  "navAccounts": "Счета",
+  "navCategories": "Категории",
+  "actionCancel": "Отмена",
+  "actionSave": "Сохранить",
+  "actionDelete": "Удалить",
+  "actionDone": "Готово",
+  "actionContinue": "Продолжить",
+  "actionDismiss": "Закрыть",
+  "actionRetry": "Повторить",
+  "actionSkip": "Пропустить",
+  "actionConfirm": "Подтвердить",
+  "actionAdd": "Добавить",
+  "actionEdit": "Изменить",
+  "actionRename": "Переименовать",
+  "actionHide": "Скрыть",
+  "actionCreate": "Создать",
+  "actionCloseApp": "Закрыть приложение",
+  "actionUnlock": "Разблокировать",
+  "actionSettle": "Закрыть",
+  "actionFinish": "Завершить",
+  "actionPreview": "Предпросмотр",
+  "actionImport": "Импорт",
+  "actionExportCsv": "Экспорт в CSV",
+  "actionChooseFile": "Выбрать файл",
+  "actionRestore": "Восстановить",
+  "actionFix": "Исправить",
+  "actionBuy": "Купить",
+  "actionSell": "Продать",
+  "actionDividend": "Дивиденд",
+  "actionRecordBuy": "Записать покупку",
+  "actionRecordSell": "Записать продажу",
+  "actionRecordDividend": "Записать дивиденд",
+  "actionPayCard": "Оплатить карту",
+  "actionTransfer": "Перевод",
+  "actionRecordTransaction": "Записать операцию",
+  "actionImportStatement": "Импортировать выписку",
+  "actionClearDates": "Очистить даты",
+  "actionClearSearch": "Очистить поиск и фильтры",
+  "actionUseBiometrics": "Использовать биометрию",
+  "actionSetPin": "Задать PIN",
+  "actionChangePin": "Изменить PIN",
+  "actionSaveBackup": "Сохранить резервную копию",
+  "actionRestoreBackup": "Восстановить из резервной копии",
+  "actionSaveRule": "Сохранить правило",
+  "actionConfirmFix": "Подтвердить исправление",
+  "captureSpent": "Расход",
+  "captureReceived": "Приход",
+  "captureMovedMoney": "Перемещение денег",
+  "captureImportStatement": "Импорт выписки",
+  "settingsTitle": "Настройки",
+  "settingsLanguage": "Язык",
+  "settingsLanguageSystem": "Язык устройства",
+  "settingsFetchFxRates": "Получать справочные курсы валют",
+  "settingsFetchFxRatesSubtitle": "Показывает ориентировочный рыночный курс рядом с суммой назначения при переводах между валютами — только для сравнения, никогда не используется для заполнения суммы.",
+  "settingsRateProvider": "Поставщик курсов",
+  "settingsFetchMarketPrices": "Получать рыночные цены для инвестиций",
+  "settingsFetchMarketPricesSubtitle": "Показывает последние цены для инструментов с тикером или ISIN, чтобы оценить стоимость портфеля. Никогда не используется для записи сделки и не передаёт, сколько вы держите.",
+  "settingsMarketPriceProvider": "Поставщик рыночных цен",
+  "settingsFavouriteResearchTool": "Любимый инструмент анализа",
+  "settingsFavouriteResearchToolSubtitle": "Нажатие на название инструмента в портфеле открывает этот инструмент в браузере с исследовательским запросом — это не интеграция и не финансовый совет.",
+  "settingsBackup": "Резервное копирование",
+  "settingsBackupBlurb": "Сохраните зашифрованную копию ваших книг в выбранном месте или восстановите из неё. Это не то же самое, что фраза восстановления или файл ключей, которые защищают ваш ключ подписи, а не сами книги.",
+  "settingsLock": "Блокировка",
+  "settingsLockBlurb": "Требовать PIN-код или биометрию (где доступна) для открытия приложения.",
+  "settingsRequireUnlock": "Требовать разблокировку для открытия приложения",
+  "settingsLockAfter": "Блокировать через",
+  "settingsLockImmediately": "Немедленно",
+  "settingsLock1Minute": "1 минуту",
+  "settingsLock5Minutes": "5 минут",
+  "settingsLock15Minutes": "15 минут",
+  "settingsAllowBiometrics": "Также разрешить биометрию",
+  "settingsHideSnapshot": "Скрывать баланс в списке приложений",
+  "settingsHideSnapshotSubtitle": "Скрывает этот экран, когда вы переключаетесь на другое приложение, чтобы он не был виден мельком в списке приложений.",
+  "settingsHideSnapshotUnavailable": "Скрытие баланса в списке приложений недоступно на этой платформе.",
+  "settingsPayees": "Получатели платежей",
+  "settingsManagePayees": "Управление получателями платежей",
+  "settingsPayeesBlurb": "Запомненные имена получателей платежей вместе с их категорией и счётом по умолчанию, предлагаемые автозаполнением при записи операции.",
+  "settingsRecurring": "Регулярные шаблоны",
+  "settingsManageRecurring": "Управление регулярными шаблонами",
+  "settingsRecurringBlurb": "Счета или доходы, повторяющиеся ежемесячно, например аренда или зарплата. Наступивший шаблон появляется на главном экране, чтобы вы могли записать его одним нажатием — никогда не проводится автоматически.",
+  "settingsAbout": "О приложении",
+  "providerFrankfurter": "Frankfurter (курсы ЕЦБ)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (дневные котировки)",
+  "providerYahooFinance": "Yahoo Finance (API графиков)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "Денежные средства и эквиваленты",
+  "systemGroupPensionRetirement": "Пенсия и пенсионные накопления",
+  "systemGroupCreditShortTerm": "Кредиты и краткосрочные долги",
+  "systemGroupLoansMortgages": "Займы и ипотека",
+  "systemGroupInvestments": "Инвестиции",
+  "systemAccountCashBank": "Наличные и банк",
+  "systemCategorySalary": "Зарплата",
+  "systemCategoryOtherIncome": "Прочие доходы",
+  "systemCategoryGroceries": "Продукты",
+  "systemCategoryRentMortgage": "Аренда/ипотека",
+  "systemCategoryUtilities": "Коммунальные услуги",
+  "systemCategoryTransport": "Транспорт",
+  "systemCategoryFoodOut": "Еда вне дома",
+  "systemCategoryPhone": "Телефон",
+  "systemCategoryHealth": "Здоровье",
+  "systemCategoryOtherExpense": "Прочие расходы",
+  "homeThisMonth": "ЭТОТ МЕСЯЦ",
+  "homeMoneyInTransit": "ДЕНЬГИ В ПУТИ",
+  "homeWhatYouHaveMinusWhatYouOwe": "ЧТО У ВАС ЕСТЬ МИНУС ЧТО ВЫ ДОЛЖНЫ",
+  "homeWhatYouHave": "У вас есть {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "У вас есть {haveAmount} {currency}  •  Вы должны {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "Вы отправили {amount} {currency} со счёта {name}",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "Вы отправили {amount} {currency} на счёт {name}",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "Скрыто",
+  "allAccounts": "Все счета",
+  "savedToPath": "Сохранено в {path}",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "Не удалось экспортировать файл ключей. Этот шаг можно пропустить.",
+  "enterPassphraseToProtect": "Введите парольную фразу для защиты файла.",
+  "homeTapWhenArrived": "Нажмите, когда узнаете, что пришло",
+  "homeReturnedTo": "Возвращено на {name}",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "СЕГОДНЯ СРОК",
+  "homeDueLine": "{category} · {account} · нажмите, чтобы записать",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "Превышен лимит",
+  "homeSpentOfLimit": "{spent} из {limit}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "Осталось: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "Нет счетов",
+  "homeCashRegister": "Денежные средства",
+  "homeMarketEstimate": "Рыночная оценка",
+  "registerTitle": "Журнал",
+  "registerSearchHint": "Описание, категория или сумма",
+  "registerNoTransactions": "Пока нет операций",
+  "registerNoEntries": "Записей пока нет.",
+  "registerSpentOnly": "Только расходы",
+  "registerReceivedOnly": "Только поступления",
+  "registerAll": "Все",
+  "registerUnverified": "Не подтверждено - не входит в итоги",
+  "registerSuperseded": "Заменено при миграции - не входит в итоги",
+  "summaryTitle": "Итоги",
+  "summaryTotalIncome": "Общий доход",
+  "summaryTotalExpense": "Общий расход",
+  "summaryDateRange": "{start} — {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "Счета",
+  "categoriesTitle": "Категории",
+  "accountName": "Название счёта",
+  "createAccount": "Создать счёт",
+  "createGroup": "Создать группу",
+  "editGroup": "Изменить группу",
+  "renameAccount": "Переименовать счёт",
+  "renameCategory": "Переименовать категорию",
+  "addCategory": "Добавить категорию",
+  "groupLabel": "Группа",
+  "kindLabel": "Вид",
+  "asset": "Актив",
+  "liability": "Обязательство",
+  "income": "Доход",
+  "expense": "Расход",
+  "thisAccountHoldsInvestments": "Этот счёт хранит инвестиции",
+  "thisAccountHoldsInvestmentsSubtitle": "Денежные средства плюс активы, которые вы записываете через Покупку, Продажу и Дивиденды.",
+  "thisIsACreditCard": "Это кредитная карта",
+  "openingBalanceOptional": "Начальный баланс (необязательно)",
+  "currencyIso": "Валюта (ISO 4217)",
+  "currencyIsoExample": "Валюта (ISO 4217, напр. USD)",
+  "hideAccountTitle": "Скрыть счёт от новых записей?",
+  "hideCategoryTitle": "Скрыть категорию от новых записей?",
+  "hideGroupTitle": "Скрыть группу от новых записей?",
+  "reassignGroup": "Изменить группу",
+  "transferRemainingBalance": "Перевести оставшийся баланс",
+  "monthlyLimit": "Месячный лимит",
+  "monthlyLimitHint": "Лимит (оставьте пустым, чтобы очистить)",
+  "monthlyLimitBlurb": "Необязательный ориентир расходов с начала месяца для этой категории расходов.",
+  "manageCategoryRules": "Управление правилами категорий",
+  "amount": "Сумма",
+  "category": "Категория",
+  "account": "Счёт",
+  "fromAccount": "Со счёта",
+  "toAccount": "На счёт",
+  "descriptionOptional": "Описание (необязательно)",
+  "alsoRememberPayee": "Также запомнить как получателя платежа",
+  "splitIntoCategories": "Разделить на несколько категорий",
+  "categoryN": "Категория {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "Сумма назначения",
+  "destinationAmountOptional": "Сумма назначения (необязательно)",
+  "accountCurrencyAmountOptional": "Сумма в валюте счёта (необязательно)",
+  "transactionCurrencyOptional": "Валюта операции (необязательно)",
+  "feeOptional": "Комиссия (необязательно)",
+  "feeAmount": "Сумма комиссии",
+  "feeCategory": "Категория комиссии",
+  "feeDescriptionOptional": "Описание комиссии (необязательно)",
+  "feeDeducted": "Комиссия вычитается из указанной выше суммы",
+  "needTwoAccountsToTransfer": "Создайте как минимум два активных счёта, чтобы выполнить перевод.",
+  "whatArrivedTitle": "Что пришло?",
+  "whatArrivedBlurb": "Укажите, что фактически пришло.",
+  "amountThatArrived": "Сумма, которая пришла",
+  "feeLossCategory": "Категория комиссии / убытка",
+  "alreadySettled": "Уже завершено.",
+  "holdingsTitle": "Портфель",
+  "holdingsCash": "Денежные средства",
+  "holdingsInventory": "АКТИВЫ",
+  "holdingsBook": "Балансовая стоимость (деньги + себестоимость) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "Рыночная оценка {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "Пока нет активов. Запишите покупку, чтобы добавить инструмент.",
+  "holdingsQuotesBlurb": "Котировки являются оценкой, а не брокерской ценой. Это приложение не размещает заявки.",
+  "holdingsTapNameToResearch": "Нажмите на название для анализа. Котировки — это оценка, а не совет.",
+  "instrument": "Инструмент",
+  "newInstrument": "Новый инструмент",
+  "renameInstrument": "Переименовать инструмент",
+  "instrumentActions": "Действия с инструментом",
+  "hideInstrumentTitle": "Скрыть {name}?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "Тикер (необязательно)",
+  "isinOptional": "ISIN (необязательно)",
+  "quantity": "Количество",
+  "unitPrice": "Цена за единицу",
+  "brokerageOptional": "Брокерская комиссия (необязательно)",
+  "brokerageExpenseCategory": "Категория расходов на брокерскую комиссию",
+  "incomeCategory": "Категория дохода",
+  "gainIncomeCategory": "Категория дохода от прибыли",
+  "lossExpenseCategory": "Категория расходов от убытка",
+  "nonCash": "Неденежное",
+  "cash": "Денежные средства",
+  "locked": "Заблокировано",
+  "lockUntilHint": "Ваша собственная заметка об ограничении, а не правило брокера.",
+  "instrumentKindStock": "Акция",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "Паевой фонд",
+  "instrumentKindBond": "Облигация",
+  "instrumentKindOther": "Другое",
+  "quoteUseLive": "Актуальная цена",
+  "quoteUseCached": "Цена из кэша",
+  "quoteUseStale": "Устаревшая цена",
+  "quoteUseMissing": "Используется себестоимость (цена отсутствует)",
+  "quoteUseDisabled": "Котировки отключены — используется себестоимость/кэш",
+  "quoteUseCurrencyMismatch": "Используется себестоимость (валюта цены отличается)",
+  "unrealizedLabel": "Нереализовано {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} ед. · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "Ваша фраза восстановления",
+  "recoveryPhraseConfirmTitle": "Подтвердите вашу фразу",
+  "recoveryPhraseBlurb": "Эти 24 слова — единственный способ восстановить историю ваших операций, если это устройство будет утеряно, сброшено или заменено. У Smara Accounting нет сервера, и он не может восстановить их за вас.\n\nЕсли вы потеряете это устройство и эту фразу вместе, каждая записанная вами операция станет навсегда непроверяемой.",
+  "recoveryPhraseWriteDown": "Запишите эти слова по порядку и храните их в безопасном месте отдельно от этого устройства.",
+  "iveSavedRecoveryPhrase": "Я сохранил свою фразу восстановления",
+  "confirmPhraseBlurb": "Введите запрошенные слова из фразы, которую вы только что сохранили.",
+  "wordNumber": "Слово №{n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "Экспорт файла ключей",
+  "keystoreExportBlurb": "Помимо фразы восстановления, вы можете сохранить зашифрованный файл ключей, защищённый выбранной вами парольной фразой. Это необязательно - одной фразы восстановления всегда достаточно, чтобы восстановить ключ подписи.",
+  "keystorePassphrase": "Парольная фраза",
+  "exportKeystoreFile": "Экспортировать файл ключей",
+  "chooseCurrencyTitle": "Выберите вашу валюту",
+  "chooseCurrencyBlurb": "Каждая группа счетов (Денежные средства и эквиваленты, Пенсия и накопления и т. д.) пока использует одну эту валюту. Вы всегда сможете добавить счета в другой валюте позже, создав для неё новую группу.",
+  "currencyBackfillTitle": "Выберите валюту для существующих групп",
+  "currencyBackfillBlurb": "Теперь приложение поддерживает несколько валют. Вашим существующим счетам и группам счетов нужна валюта - поскольку все они были созданы до появления этой функции, для всех них применяется один выбор.",
+  "firstAccountTitle": "Назовите ваш счёт",
+  "firstAccountBlurb": "Это уже настроенный для вас счёт - дайте ему узнаваемое название, например, название вашего банка. Далее вы запишете одну операцию «Расход» или «Приход», а затем защитите устройство фразой восстановления.",
+  "whatsMainAccountCalled": "Как называется ваш основной счёт?",
+  "restoreTitle": "Восстановление ключа подписи",
+  "restoreBlurb": "На этом устройстве есть книги учёта, но нет подходящего ключа подписи. Восстановите его из сохранённой фразы восстановления или файла ключей - ваши данные будут проверяться как обычно, ничего не будет переподписано или изменено.",
+  "recoveryPhrase24": "Фраза восстановления (все 24 слова)",
+  "keystoreFile": "Файл ключей",
+  "keystoreFileContents": "Содержимое файла ключей",
+  "optionalBackupFile": "Необязательный файл резервной копии",
+  "iDontHavePhrase": "У меня нет фразы восстановления или файла ключей",
+  "migrationTitle": "Переход на новый ключ",
+  "migrationBlurb": "Без фразы восстановления или файла ключей ключ подписи этого устройства невозможно восстановить. Вы можете начать с нового ключа. Старые записи остаются видимыми, но считаются замещёнными.",
+  "iConfirmBooksValid": "Я подтверждаю, что текущие книги учёта верны",
+  "whyWeDontEdit": "Почему мы не редактируем старые записи",
+  "whyWeDontEditBody": "Когда вы исправляете ошибку, мы сохраняем старую строку и добавляем рядом с ней исправление, вместо того чтобы менять то, что вы уже ввели. Так ваша история всегда показывает, что именно произошло и когда вы это исправили — ничто не меняется незаметно.",
+  "lockTitle": "Разблокировка",
+  "lockScreenTitle": "Заблокировано",
+  "enterPinToContinue": "Введите ваш PIN, чтобы продолжить",
+  "pinLabel": "PIN",
+  "setPinTitle": "Задайте PIN",
+  "currentPin": "Текущий PIN",
+  "newPin": "Новый PIN",
+  "confirmPin": "Подтвердите PIN",
+  "confirmNewPin": "Подтвердите новый PIN",
+  "firstWeekTitle": "Настройте ваши счета",
+  "addCashAccount": "Добавить наличный счёт",
+  "addCreditCard": "Добавить кредитную карту",
+  "cashAccountName": "Название наличного счёта",
+  "cardName": "Название карты",
+  "paidFromBank": "Оплачено с банковского счёта",
+  "paidFromCard": "Оплачено картой",
+  "choosePassphraseTitle": "Выберите парольную фразу для защиты этой резервной копии. Если вы её забудете, восстановление будет невозможно.",
+  "replaceBooksTitle": "Заменить ваши локальные книги учёта?",
+  "replaceBooksBody": "Это заменит всё текущее содержимое приложения резервной копией. После этого закройте и снова откройте приложение.",
+  "chooseBackupFileFirst": "Сначала выберите файл резервной копии.",
+  "backupRestored": "Резервная копия восстановлена",
+  "backupRestoredBody": "Ваши книги учёта восстановлены. Закройте и снова откройте приложение, чтобы продолжить.",
+  "fixThisEntry": "Исправить эту запись",
+  "fixBlurb": "Старая строка остаётся точно такой, какой была. Подтверждение добавляет сторнирующую строку и исправленную.",
+  "importStatementTitle": "Импорт выписки",
+  "importOfx": "Импорт OFX",
+  "importOfxQfxFile": "Импорт файла OFX / QFX",
+  "importCsvFile": "Импорт файла CSV",
+  "whatKindOfStatement": "Какой у вас тип файла выписки?",
+  "chooseAccountForFile": "Выберите, какому счёту принадлежит этот файл.",
+  "importIntoAccount": "Импортировать в счёт",
+  "useSavedProfile": "Использовать сохранённый профиль",
+  "saveMappingProfile": "Сохранить это сопоставление как профиль (необязательно)",
+  "renameProfile": "Переименовать профиль",
+  "deleteProfileTitle": "Удалить профиль?",
+  "fileHasHeader": "Файл содержит строку заголовка",
+  "dateColumn": "Столбец даты",
+  "dateFormatHint": "Формат даты (напр. дд/ММ/гггг)",
+  "amountColumn": "Столбец суммы",
+  "amountConvention": "Соглашение о сумме",
+  "signedAmountColumn": "Столбец суммы со знаком",
+  "separateDebitCredit": "Отдельные столбцы дебета / кредита",
+  "debitColumn": "Столбец дебета",
+  "creditColumn": "Столбец кредита",
+  "decimalSeparator": "Десятичный разделитель (. или ,)",
+  "descriptionColumns": "Столбец(-ы) описания",
+  "referenceIdColumn": "Столбец референс-номера (необязательно)",
+  "skippedRows": "Пропущенные строки",
+  "parsedTransactionCount": "{count} операций распознано",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} пропущено или исключено",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} проведено, {failed} не удалось",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "Категория для всех",
+  "saveAsRule": "Сохранить как правило?",
+  "saveAsRuleBlurb": "Будущие импорты, описание которых содержит это ключевое слово, будут использовать эту категорию.",
+  "keyword": "Ключевое слово",
+  "noSavedRules": "Пока нет сохранённых правил. Назначьте категорию группе строк, чтобы сохранить правило.",
+  "deleteRuleTitle": "Удалить правило?",
+  "editRule": "Изменить правило",
+  "rowsGrouped": "{count} строк(и)",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "Выберите файл выписки {extensions} для импорта",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "Получатели платежей",
+  "addPayee": "Добавить получателя",
+  "renamePayee": "Переименовать получателя",
+  "deletePayeeTitle": "Удалить получателя?",
+  "noPayeesYet": "Пока нет получателей",
+  "recurringTitle": "Регулярные шаблоны",
+  "noRecurringYet": "Пока нет регулярных шаблонов",
+  "deleteTemplateTitle": "Удалить регулярный шаблон?",
+  "dayOfMonth": "День месяца (1-31)",
+  "dayOfMonthNote": "В месяце с меньшим числом дней используется его последний день.",
+  "dayOfMonthLine": "День {day} месяца - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "Имя",
+  "none": "Нет",
+  "currency": "Валюта",
+  "errorGeneric": "Что-то пошло не так. Попробуйте ещё раз.",
+  "errorSigningIdentityMismatch": "Эта фраза восстановления или файл ключей не соответствуют ни одной подписывающей идентичности в этой базе данных.",
+  "errorInvalidLedgerBackup": "Этот файл не является действительной резервной копией Smara.",
+  "errorInvalidLedgerBackupNoIdentity": "В этой резервной копии нет подписывающей идентичности - это не действительная резервная копия Smara.",
+  "errorInvalidLedgerBackupUnverified": "Эта резервная копия не прошла проверку как целостные книги учёта, поэтому не была восстановлена.",
+  "errorInvalidLedgerBackupUnreadable": "Не удалось открыть этот файл как резервную копию Smara: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "Эта резервная копия принадлежит другой подписывающей идентичности, отличной от той, что на этом устройстве.",
+  "errorAccountNotFinancial": "Это не финансовый счёт.",
+  "errorAccountArchived": "Этот счёт скрыт.",
+  "errorAccountNotArchived": "Этот счёт не скрыт.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Нет оставшегося баланса для перевода.",
+  "errorAccountHasNoGroup": "У этого счёта не назначена группа.",
+  "errorGroupHasNoCurrency": "У этой группы ещё не задана валюта.",
+  "errorGroupNotFound": "Эта группа счетов не найдена.",
+  "errorInvestmentAccountsMustBeAssets": "Только счета-активы могут быть отмечены как инвестиционные счета.",
+  "errorCreditCardsMustBeLiabilities": "Только счета-обязательства могут быть отмечены как кредитные карты.",
+  "errorOpeningBalanceMustBePositive": "Начальный баланс должен быть положительным, если он указан.",
+  "errorAccountTypeDoesNotMatchGroup": "Тип этого счёта не соответствует группе.",
+  "errorLastActiveAccount": "Нельзя скрыть последний активный финансовый счёт.",
+  "errorCurrencyRequiredToCreateGroup": "Для создания группы требуется валюта.",
+  "errorSystemGroupCannotBeArchived": "Встроенные группы счетов нельзя скрыть.",
+  "errorGroupAlreadyArchived": "Эта группа уже скрыта.",
+  "errorCannotArchiveGroupWithAccounts": "Нельзя скрыть группу, в которой ещё есть активные счета.",
+  "errorSystemGroupNeverArchived": "Встроенные группы счетов никогда не скрываются.",
+  "errorAccountGroupsCannotBeDeleted": "Группы счетов нельзя удалить.",
+  "errorCannotReassignDifferentCurrency": "Нельзя переместить этот счёт в группу с другой валютой.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "Нельзя изменить валюту, пока в группе есть активные счета.",
+  "errorAmountMustBePositive": "Сумма должна быть положительной.",
+  "errorAccountCurrencyAmountMustBePositive": "Сумма в валюте счёта должна быть положительной.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "Сумма в валюте счёта указывается только для записи в иностранной валюте.",
+  "errorSplitNeedsTwoLines": "Для разделения нужно как минимум две строки категорий.",
+  "errorSplitLineMustBePositive": "Каждая строка разделения должна быть положительной суммой.",
+  "errorSplitLinesMustSumToTotal": "Сумма строк разделения должна совпадать с общей суммой операции.",
+  "errorTransferAmountMustBePositive": "Сумма перевода должна быть положительной.",
+  "errorTransferAccountsMustDiffer": "Счёт-источник и счёт назначения должны отличаться.",
+  "errorCloseoutRequiresDestinationAmount": "Для закрытия межвалютного перевода нужна известная сумма назначения.",
+  "errorDestinationAmountNotForSameCurrency": "Сумма назначения указывается только для межвалютного перевода.",
+  "errorDestinationAmountMustBePositive": "Сумма назначения должна быть положительной.",
+  "errorInvestmentCashExceeded": "Нельзя перевести больше, чем есть денежных средств на этом инвестиционном счёте.",
+  "errorCannotReverseUnsettledProvisional": "Вместо отмены завершите этот ожидающий перевод.",
+  "errorAlreadyReversed": "Эта запись уже исправлена. Исходная строка остаётся без изменений.",
+  "errorNotActiveExpenseCategory": "Выберите активную категорию расходов.",
+  "errorNotActiveIncomeCategory": "Выберите активную категорию доходов.",
+  "errorSettledAmountMustNotBeNegative": "Сумма, которая пришла, не может быть отрицательной.",
+  "errorPendingTransferNotFound": "Этот ожидающий перевод не найден.",
+  "errorPendingTransferAlreadySettled": "Этот ожидающий перевод уже завершён.",
+  "errorSettledToMustBeSourceOrDestination": "Выберите исходный счёт или счёт назначения.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "Категория комиссии используется только тогда, когда деньги возвращаются на счёт-источник.",
+  "errorSettledAmountMustBePositiveForDelivery": "Введите положительную сумму того, что пришло.",
+  "errorSettledAmountExceedsProvisional": "Эта сумма больше, чем было отправлено.",
+  "errorInstrumentNotFound": "Этот инструмент не найден.",
+  "errorIncomeRequiredForNonCash": "Для неденежного приобретения требуется активная категория доходов.",
+  "errorInsufficientCash": "На этом инвестиционном счёте недостаточно денежных средств для этой покупки.",
+  "errorSellQuantityAndPriceMustBePositive": "Количество и цена за единицу при продаже должны быть положительными.",
+  "errorLockedUntil": "Нельзя продать: часть единиц заблокирована до {date}.",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "Нельзя продать больше, чем у вас есть незаблокированного в наличии.",
+  "errorIncomeRequiredForGain": "Для реализованной прибыли требуется активная категория доходов.",
+  "errorExpenseRequiredForLoss": "Для реализованного убытка требуется активная категория расходов.",
+  "errorBrokerageFailedAfterBuy": "Покупка проведена, но не удалось записать брокерскую комиссию: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "Продажа проведена, но не удалось записать брокерскую комиссию: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "Сумма дивиденда должна быть положительной.",
+  "errorNotInvestmentAccount": "Это не инвестиционный счёт.",
+  "errorNoInventoryCompanion": "У этого инвестиционного счёта отсутствует парный счёт активов.",
+  "errorInvestmentReversalBlocked": "Нельзя отменить эту покупку: последующие продажи зависят от этих единиц. Сначала отмените зависимые продажи: {sells}.",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "Месячный лимит должен быть положительным.",
+  "errorTemplateAmountMustBePositive": "Сумма шаблона должна быть положительной.",
+  "errorOfxUnrecognized": "Не удалось распознать этот файл как OFX.",
+  "errorCsvEmpty": "Выбранный файл пуст.",
+  "errorCsvUnreadable": "Не удалось прочитать этот файл как CSV.",
+  "errorCsvNoRows": "В выбранном файле нет строк.",
+  "errorBackupCreateFailed": "Не удалось создать резервную копию: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "Не удалось восстановить эту резервную копию - неверная парольная фраза либо это не файл резервной копии Smara.",
+  "validationAmountAccountCategoryRequired": "Необходимо указать сумму, счёт и категорию.",
+  "validationAmountAccountRequired": "Необходимо указать сумму и счёт.",
+  "validationSplitLineIncomplete": "Для каждой строки разделения нужны категория и сумма.",
+  "validationSplitSumMismatch": "Сумма строк разделения должна совпадать с общей суммой операции.",
+  "validationFromToAmountRequired": "Необходимо указать счёт-источник, счёт назначения и сумму.",
+  "validationAmountArrivedRequired": "Необходимо указать сумму, которая пришла.",
+  "validationChooseReceivingAccount": "Выберите счёт, который получил средства.",
+  "validationAccountCategoryRequired": "Необходимо указать счёт и категорию.",
+  "validationFixFailed": "Не удалось сохранить это исправление.",
+  "validationNameRequired": "Назовите ваш основной счёт.",
+  "validationStillLoading": "Ещё загружается - попробуйте снова через мгновение.",
+  "validationSaveAccountNameFailed": "Не удалось сохранить название счёта.",
+  "validationWrongPin": "Неверный PIN. Попробуйте ещё раз.",
+  "validationCategoryMustBeIncomeOrExpense": "Категория должна быть доходом или расходом.",
+  "validationOnlyExpenseHasMonthlyLimit": "Месячный лимит может быть только у категории расходов.",
+  "validationInvalidTemplate": "Недопустимый шаблон.",
+  "validationWrongKeystorePassphrase": "Неверная парольная фраза для этого файла ключей.",
+  "validationInvalidKeystoreFile": "Это не похоже на действительный файл ключей.",
+  "validationRestorePhraseFailed": "Не удалось восстановить по этой фразе восстановления.",
+  "validationGenerateKeyFailed": "Не удалось сгенерировать ключ подписи на этом устройстве: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "Не удалось сохранить эту валюту: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "Миграция не удалась. Попробуйте ещё раз.",
+  "validationChooseBackupFile": "Сначала выберите файл резервной копии.",
+  "validationPassphraseRequired": "Введите парольную фразу.",
+  "validationPinsDoNotMatch": "Два PIN-кода не совпадают.",
+  "validationFeePositiveWithCategory": "Комиссия за перевод должна быть положительной суммой с выбранной категорией расходов.",
+  "validationFeeMustBeLessThanAmount": "Для перевода с удержанием комиссии комиссия должна быть меньше суммы.",
+  "validationTransferSavedFeeFailed": "Перевод сохранён, но не удалось записать комиссию: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "Введите корректную сумму.",
+  "validationConfirmWordMismatch": "Слово {n} не совпадает с вашей сохранённой фразой. Проверьте и попробуйте снова.",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "Количество и цена за единицу при покупке должны быть положительными.",
+  "errorInstrumentArchived": "Нельзя купить скрытый инструмент.",
+  "errorNonCashCannotIncludeBrokerage": "Неденежные приобретения не могут включать брокерскую комиссию.",
+  "errorBrokerageRequiresExpenseCategory": "При положительной брокерской комиссии требуется активная категория расходов.",
+  "errorSellProceedsMustCoverBrokerage": "Выручка от продажи должна быть не меньше суммы брокерской комиссии.",
+  "homeSpentOfLimitThisMonth": "{spent} из {limit} за этот месяц",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "Разблокировать Smara учёт",
+  "searchLabel": "Поиск",
+  "openingBalance": "Начальный баланс",
+  "transferToName": "Перевод: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "Комиссия за перевод",
+  "feeForTransferTo": "Комиссия за перевод к {name}",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "Не удалось открыть выбор файла: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "Выберите файл .{extensions}",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "Код валюты (ISO 4217, напр. USD)",
+  "splitCounterpartMore": "{name} и ещё {count}",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "Дата",
+  "noneSelected": "Нет",
+  "reviewEntriesBeforeContinuing": "Прежде чем продолжить, просмотрите записи ниже (всего {count}).",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "Вы получили {amount}",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "Оставьте пустым, если курс обмена ещё неизвестен.",
+  "recordTradeBlurb": "Запишите сделку, которая уже состоялась. Это приложение не размещает заявки.",
+  "feeOnTopBlurb": "Сверху: указанная выше сумма — это общая сумма, списываемая с этого счёта; комиссия удерживается из неё.",
+  "feeBankBlurb": "Авансовая комиссия, взимаемая вашим банком или посредником.",
+  "validationPinMinLength": "PIN должен содержать не менее 4 цифр.",
+  "restoreBackupBlurb": "Это заменит всё текущее содержимое приложения резервной копией — без объединения. Выберите файл резервной копии и введите парольную фразу, которой вы её защитили.",
+  "actionReplace": "Заменить",
+  "hideAccountBody": "{name} больше не будет доступен для новых операций.",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} больше не будет предлагаться при создании или переназначении счетов.",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} больше не будет предлагаться при записи новых операций.",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "Скрытые инструменты остаются в прошлых покупках и продажах. Вы всё ещё можете записать для них дивиденд.",
+  "nameHidden": "{name} (скрыто)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "Валюта не задана",
+  "deletePayeeBody": "{name} и его запомненные значения по умолчанию будут удалены. Прошлые операции не затронуты.",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} больше не будет предлагаться как наступивший. Уже записанные им прошлые операции не затронуты.",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "Сохранённое сопоставление столбцов «{name}» будет удалено. Уже импортированные с его помощью выписки не затронуты.",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "Импорты больше не будут автоматически категоризироваться по «{keyword}». Уже категоризированные по этому правилу операции не затронуты.",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "По желанию добавьте сейчас кредитную карту или наличный счёт - вы всегда сможете добавить больше счетов позже, в настройках.",
+  "deliveredToDestination": "Доставлено в пункт назначения",
+  "deliveredToName": "Доставлено на {name}",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "Вы получили на {amount} {currency} меньше, чем ожидалось - выберите категорию, чтобы покрыть разницу.",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "Диапазон дат",
+  "addTemplate": "Добавить шаблон",
+  "editTemplate": "Изменить шаблон",
+  "validationFillTemplateFields": "Заполните каждое поле корректной суммой и днём.",
+  "saveCsvExport": "Сохранить экспорт CSV",
+  "referenceRate": "Справочный курс",
+  "yourRate": "Ваш курс",
+  "leaveBlankIfThisWasAccountCurrency": "Оставьте пустым, если это было в {currency}, собственной валюте счёта.",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "Заблокировать до (необязательно)",
+  "lockedUntilDate": "Заблокировано до {date}",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "Скопирован исследовательский запрос — ссылка на браузер недоступна либо вы не в сети.",
+  "openedFavouriteResearchTool": "Открыт ваш любимый инструмент анализа.",
+  "looksLikeGain": "Похоже на прибыль",
+  "looksLikeLoss": "Похоже на убыток",
+  "looksLikeBreakEven": "Похоже на безубыточность",
+  "sellableQuantity": "{name} (доступно к продаже: {qty})",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "Столбец {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "Импортируется...",
+  "confirmImport": "Подтвердить импорт",
+  "manageSavedCategoryRules": "Управление сохранёнными правилами категорий",
+  "statementCurrencyMismatch": "Валюта этого файла ({currency}) не совпадает с валютой выбранного счёта.",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "Правила категорий",
+  "possibleDuplicate": "возможный дубликат",
+  "unknownCategory": "Неизвестная категория"
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -35,9 +36,10 @@ class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your recovery phrase', style: AppTypography.headerTitle),
+        title: Text(l10n.recoveryPhraseTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -53,7 +55,7 @@ class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      widget.viewModel.errorMessage!,
+                      widget.viewModel.errorMessageFor(l10n)!,
                       style: AppTypography.body.copyWith(
                         color: AppColors.signal,
                       ),
@@ -62,7 +64,7 @@ class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
                     const SizedBox(height: AppSpacing.large),
                     ElevatedButton(
                       onPressed: widget.viewModel.ensureGenerated,
-                      child: const Text('Retry'),
+                      child: Text(l10n.actionRetry),
                     ),
                   ],
                 ),
@@ -86,20 +88,12 @@ class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
                     ),
                   ),
                   child: Text(
-                    'These 24 words are the only way to recover your transaction '
-                    'history if this device is lost, reset, or replaced. Smara '
-                    'Accounting has no server and cannot recover them for you.\n\n'
-                    'If you lose this device and this phrase together, every '
-                    'transaction you\'ve recorded becomes permanently unverifiable.',
+                    l10n.recoveryPhraseBlurb,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.large),
-                Text(
-                  'Write these words down in order and store them somewhere safe '
-                  'and separate from this device.',
-                  style: AppTypography.body,
-                ),
+                Text(l10n.recoveryPhraseWriteDown, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 GridView.builder(
                   shrinkWrap: true,
@@ -133,7 +127,7 @@ class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
                 const SizedBox(height: AppSpacing.xLarge),
                 ElevatedButton(
                   onPressed: widget.onContinue,
-                  child: const Text('I\'ve saved my recovery phrase'),
+                  child: Text(l10n.iveSavedRecoveryPhrase),
                 ),
               ],
             ),

@@ -1,0 +1,968 @@
+{
+  "@@locale": "or",
+  "appTitle": "ସ୍ମାରା ଖାତା",
+  "navHome": "ହୋମ୍",
+  "navRegister": "ରେଜିଷ୍ଟର",
+  "navSummary": "ସାରାଂଶ",
+  "navAccounts": "ଖାତା",
+  "navCategories": "ବର୍ଗ",
+  "actionCancel": "ବାତିଲ୍",
+  "actionSave": "ସଞ୍ଚୟ",
+  "actionDelete": "ଡିଲିଟ୍ କରନ୍ତୁ",
+  "actionDone": "ହୋଇଗଲା",
+  "actionContinue": "ଜାରି ରଖନ୍ତୁ",
+  "actionDismiss": "ଖାରଜ କରନ୍ତୁ",
+  "actionRetry": "ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ",
+  "actionSkip": "ଛାଡ଼ନ୍ତୁ",
+  "actionConfirm": "ନିଶ୍ଚିତ କରନ୍ତୁ",
+  "actionAdd": "ଯୋଡନ୍ତୁ",
+  "actionEdit": "ସମ୍ପାଦନା କରନ୍ତୁ",
+  "actionRename": "ନାମ ବଦଳାନ୍ତୁ",
+  "actionHide": "ଲୁଚାନ୍ତୁ",
+  "actionCreate": "ସୃଷ୍ଟି କରନ୍ତୁ",
+  "actionCloseApp": "ଆପ୍ ବନ୍ଦ କରନ୍ତୁ",
+  "actionUnlock": "ଅନଲକ୍ କରନ୍ତୁ",
+  "actionSettle": "ସେଟଲ୍ କରନ୍ତୁ",
+  "actionFinish": "ସମାପ୍ତ କରନ୍ତୁ",
+  "actionPreview": "ପୂର୍ବାବଲୋକନ",
+  "actionImport": "ଆମଦାନୀ କରନ୍ତୁ",
+  "actionExportCsv": "CSV ରପ୍ତାନୀ କରନ୍ତୁ",
+  "actionChooseFile": "ଫାଇଲ୍ ବାଛନ୍ତୁ",
+  "actionRestore": "ପୁନଃସ୍ଥାପନ କରନ୍ତୁ",
+  "actionFix": "ସଂଶୋଧନ କରନ୍ତୁ",
+  "actionBuy": "କିଣନ୍ତୁ",
+  "actionSell": "ବିକ୍ରୟ କରନ୍ତୁ",
+  "actionDividend": "ଲାଭାଂଶ",
+  "actionRecordBuy": "କ୍ରୟ ରେକର୍ଡ କରନ୍ତୁ",
+  "actionRecordSell": "ବିକ୍ରୟ ରେକର୍ଡ କରନ୍ତୁ",
+  "actionRecordDividend": "ଲାଭାଂଶ ରେକର୍ଡ କରନ୍ତୁ",
+  "actionPayCard": "କାର୍ଡ ପେମେଣ୍ଟ କରନ୍ତୁ",
+  "actionTransfer": "ସ୍ଥାନାନ୍ତର",
+  "actionRecordTransaction": "କାରବାର ରେକର୍ଡ କରନ୍ତୁ",
+  "actionImportStatement": "ଷ୍ଟେଟମେଣ୍ଟ ଆମଦାନୀ କରନ୍ତୁ",
+  "actionClearDates": "ତାରିଖ ଖାଲି କରନ୍ତୁ",
+  "actionClearSearch": "ଖୋଜ ଏବଂ ଫିଲ୍ଟର ଖାଲି କରନ୍ତୁ",
+  "actionUseBiometrics": "ବାୟୋମେଟ୍ରିକ୍ ବ୍ୟବହାର କରନ୍ତୁ",
+  "actionSetPin": "ପିନ୍ ସେଟ୍ କରନ୍ତୁ",
+  "actionChangePin": "ପିନ୍ ବଦଳାନ୍ତୁ",
+  "actionSaveBackup": "ବ୍ୟାକଅପ୍ ସଞ୍ଚୟ କରନ୍ତୁ",
+  "actionRestoreBackup": "ବ୍ୟାକଅପ୍ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ",
+  "actionSaveRule": "ନିୟମ ସଞ୍ଚୟ କରନ୍ତୁ",
+  "actionConfirmFix": "ସଂଶୋଧନ ନିଶ୍ଚିତ କରନ୍ତୁ",
+  "captureSpent": "ଖର୍ଚ୍ଚ",
+  "captureReceived": "ଗ୍ରହଣ",
+  "captureMovedMoney": "ଟଙ୍କା ସ୍ଥାନାନ୍ତରିତ",
+  "captureImportStatement": "ଷ୍ଟେଟମେଣ୍ଟ ଆମଦାନୀ କରନ୍ତୁ",
+  "settingsTitle": "ସେଟିଂସ୍",
+  "settingsLanguage": "ଭାଷା",
+  "settingsLanguageSystem": "ଡିଭାଇସ୍ ଭାଷା",
+  "settingsFetchFxRates": "ରେଫରେନ୍ସ ବିନିମୟ ହାର ଆଣନ୍ତୁ",
+  "settingsFetchFxRatesSubtitle": "କ୍ରସ୍-ମୁଦ୍ରା ସ୍ଥାନାନ୍ତର ସମୟରେ ଗନ୍ତବ୍ୟ ରାଶି ପାଖରେ ଏକ ସୂଚକ ମାର୍କେଟ୍ ହାର ଦେଖାଏ, କେବଳ ତୁଳନା ପାଇଁ - ଏହା କେବେ ବି ରାଶି ପୂରଣ କରିବାକୁ ବ୍ୟବହୃତ ହୁଏ ନାହିଁ।",
+  "settingsRateProvider": "ହାର ପ୍ରଦାନକାରୀ",
+  "settingsFetchMarketPrices": "ନିବେଶ ପାଇଁ ମାର୍କେଟ୍ ମୂଲ୍ୟ ଆଣନ୍ତୁ",
+  "settingsFetchMarketPricesSubtitle": "ଟିକର୍ କିମ୍ବା ISIN ଥିବା ଉପକରଣଗୁଡ଼ିକର ଅନ୍ତିମ ମୂଲ୍ୟ ଖୋଜେ, ଯାହା ଦ୍ୱାରା ପୋର୍ଟଫୋଲିଓ ମୂଲ୍ୟ ଅନୁମାନ କରାଯାଏ। ଏହା କେବେ ବି କୌଣସି କାରବାର ରେକର୍ଡ କରିବାକୁ ବ୍ୟବହୃତ ହୁଏ ନାହିଁ, ଏବଂ ଆପଣ କେତେ ଧାରଣ କରିଛନ୍ତି ତାହା କେବେ ପଠାଏ ନାହିଁ।",
+  "settingsMarketPriceProvider": "ମାର୍କେଟ୍ ମୂଲ୍ୟ ପ୍ରଦାନକାରୀ",
+  "settingsFavouriteResearchTool": "ପସନ୍ଦିତ ଅନୁସନ୍ଧାନ ଉପକରଣ",
+  "settingsFavouriteResearchToolSubtitle": "ହୋଲ୍ଡିଂସରେ ଏକ ଉପକରଣ ନାମ ଉପରେ ଟାପ୍ କଲେ ଏହା ବ୍ରାଉଜରରେ ଏକ ଅନୁସନ୍ଧାନ ପ୍ରମ୍ପ୍ଟ ସହିତ ଖୁଲିଯାଏ — ଏହା କୌଣସି ଇଣ୍ଟିଗ୍ରେସନ୍ ନୁହେଁ, ଏବଂ ପରାମର୍ଶ ମଧ୍ୟ ନୁହେଁ।",
+  "settingsBackup": "ବ୍ୟାକଅପ୍",
+  "settingsBackupBlurb": "ଆପଣଙ୍କ ଖାତାର ଏକ ଏନକ୍ରିପ୍ଟ କପି ଆପଣଙ୍କ ପସନ୍ଦର ସ୍ଥାନରେ ସଞ୍ଚୟ କରନ୍ତୁ, କିମ୍ବା ସେଥିରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏହା ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ଠାରୁ ଅଲଗା, ଯାହା ଆପଣଙ୍କ ସାଇନିଂ କୀ ର ବ୍ୟାକଅପ୍ ରଖେ, ଆପଣଙ୍କ ଖାତାର ନୁହେଁ।",
+  "settingsLock": "ଲକ୍",
+  "settingsLockBlurb": "ଆପ୍ ଖୋଲିବା ପାଇଁ ଏକ ପିନ୍, କିମ୍ବା ଉପଲବ୍ଧ ଥିଲେ ବାୟୋମେଟ୍ରିକ୍ ଆବଶ୍ୟକ କରନ୍ତୁ।",
+  "settingsRequireUnlock": "ଆପ୍ ଖୋଲିବାକୁ ଅନଲକ୍ ଆବଶ୍ୟକ",
+  "settingsLockAfter": "ଏହା ପରେ ଲକ୍ କରନ୍ତୁ",
+  "settingsLockImmediately": "ତୁରନ୍ତ",
+  "settingsLock1Minute": "୧ ମିନିଟ୍",
+  "settingsLock5Minutes": "୫ ମିନିଟ୍",
+  "settingsLock15Minutes": "୧୫ ମିନିଟ୍",
+  "settingsAllowBiometrics": "ବାୟୋମେଟ୍ରିକ୍ ମଧ୍ୟ ଅନୁମତି ଦିଅନ୍ତୁ",
+  "settingsHideSnapshot": "ଆପ୍ ସ୍ୱିଚର୍‌ରେ ବାକି ଲୁଚାନ୍ତୁ",
+  "settingsHideSnapshotSubtitle": "ଆପଣ ଅନ୍ୟ ଏକ ଆପ୍‌କୁ ସ୍ୱିଚ୍ କରିବା ସମୟରେ ଏହି ସ୍କ୍ରିନ୍‌କୁ ଲୁଚାଏ, ଯାହା ଦ୍ୱାରା ଏହା ଆପ୍ ସ୍ୱିଚର୍‌ରେ ଏକ ନଜରରେ ଦେଖାଯାଏ ନାହିଁ।",
+  "settingsHideSnapshotUnavailable": "ଆପ୍ ସ୍ୱିଚର୍‌ରେ ବାକି ଲୁଚାଇବା ଏହି ପ୍ଲାଟଫର୍ମରେ ଉପଲବ୍ଧ ନାହିଁ।",
+  "settingsPayees": "ପ୍ରାପକ",
+  "settingsManagePayees": "ପ୍ରାପକ ପରିଚାଳନା କରନ୍ତୁ",
+  "settingsPayeesBlurb": "ମନେରଖାଯାଇଥିବା ପ୍ରାପକ ନାମ ଏବଂ ସେମାନଙ୍କର ଡିଫଲ୍ଟ ବର୍ଗ ଓ ଖାତା, ଏକ କାରବାର ରେକର୍ଡ କରିବା ସମୟରେ ଅଟୋକମ୍ପ୍ଲିଟ୍ ଦ୍ୱାରା ପରାମର୍ଶ ଦିଆଯାଏ।",
+  "settingsRecurring": "ପୁନରାବୃତ୍ତ ଟେମ୍ପଲେଟ୍",
+  "settingsManageRecurring": "ପୁନରାବୃତ୍ତ ଟେମ୍ପଲେଟ୍ ପରିଚାଳନା କରନ୍ତୁ",
+  "settingsRecurringBlurb": "ମାସିକ ପୁନରାବୃତ୍ତ ହେଉଥିବା ବିଲ୍ କିମ୍ବା ଆୟ, ଯେମିତି ଭଡ଼ା କିମ୍ବା ଦରମା। ଏକ ଦେୟ ଟେମ୍ପଲେଟ୍ ହୋମ୍‌ରେ ଦେଖାଯାଏ ଯାହା ଆପଣ ଗୋଟିଏ ଟାପ୍‌ରେ ରେକର୍ଡ କରିପାରିବେ - ଏହା କେବେ ବି ସ୍ୱୟଂଚାଳିତ ଭାବେ ପୋଷ୍ଟ ହୁଏ ନାହିଁ।",
+  "settingsAbout": "ବିଷୟରେ",
+  "providerFrankfurter": "Frankfurter (ECB ହାର)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "Stooq (ଦୈନିକ ମୂଲ୍ୟ)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "ନଗଦ ଏବଂ ନଗଦ ସମତୁଲ୍ୟ",
+  "systemGroupPensionRetirement": "ପେନସନ ଏବଂ ଅବସର",
+  "systemGroupCreditShortTerm": "କ୍ରେଡିଟ୍ ଏବଂ ସ୍ୱଳ୍ପକାଳୀନ ଋଣ",
+  "systemGroupLoansMortgages": "ଋଣ ଏବଂ ବନ୍ଧକ",
+  "systemGroupInvestments": "ନିବେଶ",
+  "systemAccountCashBank": "ନଗଦ ଏବଂ ବ୍ୟାଙ୍କ",
+  "systemCategorySalary": "ଦରମା",
+  "systemCategoryOtherIncome": "ଅନ୍ୟ ଆୟ",
+  "systemCategoryGroceries": "ମୁଦିଖାନା",
+  "systemCategoryRentMortgage": "ଭଡ଼ା/ବନ୍ଧକ",
+  "systemCategoryUtilities": "ୟୁଟିଲିଟି",
+  "systemCategoryTransport": "ପରିବହନ",
+  "systemCategoryFoodOut": "ବାହାରେ ଖାଦ୍ୟ",
+  "systemCategoryPhone": "ଫୋନ୍",
+  "systemCategoryHealth": "ସ୍ୱାସ୍ଥ୍ୟ",
+  "systemCategoryOtherExpense": "ଅନ୍ୟ ଖର୍ଚ୍ଚ",
+  "homeThisMonth": "ଏହି ମାସ",
+  "homeMoneyInTransit": "ଟଙ୍କା ପଠାଯାଉଛି",
+  "homeWhatYouHaveMinusWhatYouOwe": "ଆପଣଙ୍କ ପାଖରେ ଥିବା ଓ ଦେୟ ମଧ୍ୟରେ ଫରକ",
+  "homeWhatYouHave": "ଆପଣଙ୍କ ପାଖରେ ଅଛି {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "ଆପଣଙ୍କ ପାଖରେ ଅଛି {haveAmount} {currency}  •  ଆପଣ ଦେବାକୁ ଅଛନ୍ତି {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "ଆପଣ {name} ରୁ {amount} {currency} ପଠାଇଛନ୍ତି",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "ଆପଣ {name} କୁ {amount} {currency} ପଠାଇଛନ୍ତି",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "ଲୁକ୍କାୟିତ",
+  "allAccounts": "ସମସ୍ତ ଖାତା",
+  "savedToPath": "{path} ରେ ସଞ୍ଚୟ ହେଲା",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ରପ୍ତାନୀ ହୋଇପାରିଲା ନାହିଁ। ଆପଣ ଏହି ପାଦକ୍ଷେପ ଛାଡ଼ିପାରିବେ।",
+  "enterPassphraseToProtect": "ଫାଇଲ୍‌କୁ ସୁରକ୍ଷିତ କରିବାକୁ ଏକ ପାସଫ୍ରେଜ୍ ପ୍ରବେଶ କରନ୍ତୁ।",
+  "homeTapWhenArrived": "କଣ ପହଞ୍ଚିଲା ଜାଣିଲେ ଟାପ୍ କରନ୍ତୁ",
+  "homeReturnedTo": "{name} କୁ ଫେରସ୍ତ ହେଲା",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "ଆଜି ଦେୟ",
+  "homeDueLine": "{category} · {account} · ରେକର୍ଡ କରିବାକୁ ଟାପ୍ କରନ୍ତୁ",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "ସୀମା ଅତିକ୍ରମ",
+  "homeSpentOfLimit": "{limit} ର {spent}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "ଅବଶିଷ୍ଟ: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "କୌଣସି ଖାତା ନାହିଁ",
+  "homeCashRegister": "କ୍ୟାଶ ରେଜିଷ୍ଟର",
+  "homeMarketEstimate": "ମାର୍କେଟ୍ ଅନୁମାନ",
+  "registerTitle": "ରେଜିଷ୍ଟର",
+  "registerSearchHint": "ବର୍ଣ୍ଣନା, ବର୍ଗ, କିମ୍ବା ରାଶି",
+  "registerNoTransactions": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି କାରବାର ନାହିଁ",
+  "registerNoEntries": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଏଣ୍ଟ୍ରି ରେକର୍ଡ ହୋଇନାହିଁ।",
+  "registerSpentOnly": "କେବଳ ଖର୍ଚ୍ଚ",
+  "registerReceivedOnly": "କେବଳ ଗ୍ରହଣ",
+  "registerAll": "ସମସ୍ତ",
+  "registerUnverified": "ଅଯାଞ୍ଚିତ - ମୋଟ ଠାରୁ ବାଦ",
+  "registerSuperseded": "ମାଇଗ୍ରେସନ୍ ଦ୍ୱାରା ପ୍ରତିସ୍ଥାପିତ - ମୋଟ ଠାରୁ ବାଦ",
+  "summaryTitle": "ସାରାଂଶ",
+  "summaryTotalIncome": "ମୋଟ ଆୟ",
+  "summaryTotalExpense": "ମୋଟ ଖର୍ଚ୍ଚ",
+  "summaryDateRange": "{start} ରୁ {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "ଖାତା",
+  "categoriesTitle": "ବର୍ଗ",
+  "accountName": "ଖାତା ନାମ",
+  "createAccount": "ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ",
+  "createGroup": "ଗୋଷ୍ଠୀ ସୃଷ୍ଟି କରନ୍ତୁ",
+  "editGroup": "ଗୋଷ୍ଠୀ ସମ୍ପାଦନା କରନ୍ତୁ",
+  "renameAccount": "ଖାତା ନାମ ବଦଳାନ୍ତୁ",
+  "renameCategory": "ବର୍ଗ ନାମ ବଦଳାନ୍ତୁ",
+  "addCategory": "ବର୍ଗ ଯୋଡନ୍ତୁ",
+  "groupLabel": "ଗୋଷ୍ଠୀ",
+  "kindLabel": "ପ୍ରକାର",
+  "asset": "ସମ୍ପତ୍ତି",
+  "liability": "ଦାୟିତ୍ୱ",
+  "income": "ଆୟ",
+  "expense": "ଖର୍ଚ୍ଚ",
+  "thisAccountHoldsInvestments": "ଏହି ଖାତାରେ ନିବେଶ ଅଛି",
+  "thisAccountHoldsInvestmentsSubtitle": "ନଗଦ ଏବଂ ଆପଣ କ୍ରୟ, ବିକ୍ରୟ ଓ ଲାଭାଂଶ ସହିତ ରେକର୍ଡ କରୁଥିବା ମାଲସାମାନ।",
+  "thisIsACreditCard": "ଏହା ଏକ କ୍ରେଡିଟ୍ କାର୍ଡ",
+  "openingBalanceOptional": "ଆରମ୍ଭ ବାକି (ଇଚ୍ଛାଧୀନ)",
+  "currencyIso": "ମୁଦ୍ରା (ISO 4217)",
+  "currencyIsoExample": "ମୁଦ୍ରା (ISO 4217, ଯଥା USD)",
+  "hideAccountTitle": "ନୂଆ ଏଣ୍ଟ୍ରି ପାଇଁ ଖାତା ଲୁଚାଇବେ କି?",
+  "hideCategoryTitle": "ନୂଆ ଏଣ୍ଟ୍ରି ପାଇଁ ବର୍ଗ ଲୁଚାଇବେ କି?",
+  "hideGroupTitle": "ନୂଆ ଏଣ୍ଟ୍ରି ପାଇଁ ଗୋଷ୍ଠୀ ଲୁଚାଇବେ କି?",
+  "reassignGroup": "ଗୋଷ୍ଠୀ ପୁନଃନିଯୁକ୍ତ କରନ୍ତୁ",
+  "transferRemainingBalance": "ଅବଶିଷ୍ଟ ବାକି ସ୍ଥାନାନ୍ତର କରନ୍ତୁ",
+  "monthlyLimit": "ମାସିକ ସୀମା",
+  "monthlyLimitHint": "ସୀମା (ଖାଲି କରିବାକୁ ଖାଲି ରଖନ୍ତୁ)",
+  "monthlyLimitBlurb": "ଏହି ଖର୍ଚ୍ଚ ବର୍ଗ ପାଇଁ ଏକ ଇଚ୍ଛାଧୀନ ମାସ-ପର୍ଯ୍ୟନ୍ତ ଖର୍ଚ୍ଚ ମାର୍ଗଦର୍ଶିକା।",
+  "manageCategoryRules": "ବର୍ଗ ନିୟମ ପରିଚାଳନା କରନ୍ତୁ",
+  "amount": "ରାଶି",
+  "category": "ବର୍ଗ",
+  "account": "ଖାତା",
+  "fromAccount": "ଉତ୍ସ ଖାତା",
+  "toAccount": "ଗନ୍ତବ୍ୟ ଖାତା",
+  "descriptionOptional": "ବର୍ଣ୍ଣନା (ଇଚ୍ଛାଧୀନ)",
+  "alsoRememberPayee": "ଏକ ପ୍ରାପକ ଭାବେ ମଧ୍ୟ ମନେରଖନ୍ତୁ",
+  "splitIntoCategories": "ଏକାଧିକ ବର୍ଗରେ ବିଭାଜନ କରନ୍ତୁ",
+  "categoryN": "ବର୍ଗ {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "ଗନ୍ତବ୍ୟ ରାଶି",
+  "destinationAmountOptional": "ଗନ୍ତବ୍ୟ ରାଶି (ଇଚ୍ଛାଧୀନ)",
+  "accountCurrencyAmountOptional": "ଖାତା-ମୁଦ୍ରା ରାଶି (ଇଚ୍ଛାଧୀନ)",
+  "transactionCurrencyOptional": "କାରବାର ମୁଦ୍ରା (ଇଚ୍ଛାଧୀନ)",
+  "feeOptional": "ଫି (ଇଚ୍ଛାଧୀନ)",
+  "feeAmount": "ଫି ରାଶି",
+  "feeCategory": "ଫି ବର୍ଗ",
+  "feeDescriptionOptional": "ଫି ବର୍ଣ୍ଣନା (ଇଚ୍ଛାଧୀନ)",
+  "feeDeducted": "ଉପରୋକ୍ତ ରାଶିରୁ ଫି କଟାଯାଏ",
+  "needTwoAccountsToTransfer": "ସ୍ଥାନାନ୍ତର କରିବାକୁ ଅତିକମରେ ଦୁଇଟି ସକ୍ରିୟ ଖାତା ସୃଷ୍ଟି କରନ୍ତୁ।",
+  "whatArrivedTitle": "କଣ ପହଞ୍ଚିଲା?",
+  "whatArrivedBlurb": "ପ୍ରକୃତରେ କଣ ପହଞ୍ଚିଲା ତାହା ଆମକୁ କୁହନ୍ତୁ।",
+  "amountThatArrived": "ପହଞ୍ଚିଥିବା ରାଶି",
+  "feeLossCategory": "ଫି / କ୍ଷତି ବର୍ଗ",
+  "alreadySettled": "ପୂର୍ବରୁ ସେଟଲ୍ ହୋଇଛି।",
+  "holdingsTitle": "ହୋଲ୍ଡିଂସ",
+  "holdingsCash": "ନଗଦ",
+  "holdingsInventory": "ମାଲସାମାନ",
+  "holdingsBook": "ବୁକ୍ (ନଗଦ + ମୂଲ୍ୟ) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "ମାର୍କେଟ୍ ଅନୁମାନ {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ହୋଲ୍ଡିଂ ନାହିଁ। ଏକ ଉପକରଣ ଯୋଡିବାକୁ ଏକ କ୍ରୟ ରେକର୍ଡ କରନ୍ତୁ।",
+  "holdingsQuotesBlurb": "ମୂଲ୍ୟଗୁଡ଼ିକ ଅନୁମାନ, ବ୍ରୋକର ମୂଲ୍ୟ ନୁହେଁ। ଏହି ଆପ୍ କୌଣସି ଅର୍ଡର ଦିଏ ନାହିଁ।",
+  "holdingsTapNameToResearch": "ଅନୁସନ୍ଧାନ କରିବାକୁ ନାମ ଉପରେ ଟାପ୍ କରନ୍ତୁ। ମୂଲ୍ୟଗୁଡ଼ିକ ଅନୁମାନ, ପରାମର୍ଶ ନୁହେଁ।",
+  "instrument": "ଉପକରଣ",
+  "newInstrument": "ନୂଆ ଉପକରଣ",
+  "renameInstrument": "ଉପକରଣ ନାମ ବଦଳାନ୍ତୁ",
+  "instrumentActions": "ଉପକରଣ କାର୍ଯ୍ୟ",
+  "hideInstrumentTitle": "{name} ଲୁଚାଇବେ କି?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "ଟିକର୍ (ଇଚ୍ଛାଧୀନ)",
+  "isinOptional": "ISIN (ଇଚ୍ଛାଧୀନ)",
+  "quantity": "ପରିମାଣ",
+  "unitPrice": "ୟୁନିଟ୍ ମୂଲ୍ୟ",
+  "brokerageOptional": "ବ୍ରୋକରେଜ୍ (ଇଚ୍ଛାଧୀନ)",
+  "brokerageExpenseCategory": "ବ୍ରୋକରେଜ୍ ଖର୍ଚ୍ଚ ବର୍ଗ",
+  "incomeCategory": "ଆୟ ବର୍ଗ",
+  "gainIncomeCategory": "ଲାଭ ଆୟ ବର୍ଗ",
+  "lossExpenseCategory": "କ୍ଷତି ଖର୍ଚ୍ଚ ବର୍ଗ",
+  "nonCash": "ଅଣ-ନଗଦ",
+  "cash": "ନଗଦ",
+  "locked": "ଲକ୍ ହୋଇଛି",
+  "lockUntilHint": "ଏହା ଆପଣଙ୍କ ନିଜର ପ୍ରତିବନ୍ଧକ ବିଷୟରେ ଟିପ୍ପଣୀ, ବ୍ରୋକର ନିୟମ ନୁହେଁ।",
+  "instrumentKindStock": "ଷ୍ଟକ୍",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "ମ୍ୟୁଚୁଆଲ୍ ଫଣ୍ଡ",
+  "instrumentKindBond": "ବଣ୍ଡ",
+  "instrumentKindOther": "ଅନ୍ୟ",
+  "quoteUseLive": "ଲାଇଭ୍ ମୂଲ୍ୟ",
+  "quoteUseCached": "କେସ୍ ହୋଇଥିବା ମୂଲ୍ୟ",
+  "quoteUseStale": "ପୁରୁଣା ମୂଲ୍ୟ",
+  "quoteUseMissing": "ମୂଲ୍ୟ ବ୍ୟବହାର (କୌଣସି ମୂଲ୍ୟ ନାହିଁ)",
+  "quoteUseDisabled": "ମୂଲ୍ୟ ବନ୍ଦ — ମୂଲ୍ୟ/କେସ୍ ବ୍ୟବହାର",
+  "quoteUseCurrencyMismatch": "ମୂଲ୍ୟ ବ୍ୟବହାର (ମୂଲ୍ୟ ମୁଦ୍ରା ଭିନ୍ନ)",
+  "unrealizedLabel": "ଅବାସ୍ତବିତ {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} ୟୁନିଟ୍ · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ",
+  "recoveryPhraseConfirmTitle": "ଆପଣଙ୍କ ବାକ୍ୟାଂଶ ନିଶ୍ଚିତ କରନ୍ତୁ",
+  "recoveryPhraseBlurb": "ଏହି ୨୪ଟି ଶବ୍ଦ ହେଉଛି ଆପଣଙ୍କ ଡିଭାଇସ୍ ହଜିଗଲେ, ରିସେଟ୍ ହେଲେ, କିମ୍ବା ବଦଳାଗଲେ ଆପଣଙ୍କ କାରବାର ଇତିହାସ ପୁନରୁଦ୍ଧାର କରିବାର ଏକମାତ୍ର ଉପାୟ। ସ୍ମାରା ଖାତାର କୌଣସି ସର୍ଭର ନାହିଁ ଏବଂ ଏହା ଆପଣଙ୍କ ପାଇଁ ସେଗୁଡ଼ିକୁ ପୁନରୁଦ୍ଧାର କରିପାରିବ ନାହିଁ।\n\nଯଦି ଆପଣ ଏହି ଡିଭାଇସ୍ ଏବଂ ଏହି ବାକ୍ୟାଂଶ ଏକାସାଙ୍ଗରେ ହରାଇଦିଅନ୍ତି, ତେବେ ଆପଣ ରେକର୍ଡ କରିଥିବା ପ୍ରତ୍ୟେକ କାରବାର ସ୍ଥାୟୀ ଭାବେ ଅଯାଞ୍ଚିତ ହୋଇଯିବ।",
+  "recoveryPhraseWriteDown": "ଏହି ଶବ୍ଦଗୁଡ଼ିକୁ କ୍ରମରେ ଲେଖି ରଖନ୍ତୁ ଏବଂ ସେଗୁଡ଼ିକୁ ଏହି ଡିଭାଇସ୍ ଠାରୁ ଅଲଗା ଏକ ସୁରକ୍ଷିତ ସ୍ଥାନରେ ରଖନ୍ତୁ।",
+  "iveSavedRecoveryPhrase": "ମୁଁ ମୋର ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ ସଞ୍ଚୟ କରିସାରିଛି",
+  "confirmPhraseBlurb": "ଆପଣ ଏବେ ସଞ୍ଚୟ କରିଥିବା ବାକ୍ୟାଂଶରୁ ମାଗାଯାଇଥିବା ଶବ୍ଦଗୁଡ଼ିକ ପ୍ରବେଶ କରନ୍ତୁ।",
+  "wordNumber": "ଶବ୍ଦ #{n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ରପ୍ତାନୀ କରନ୍ତୁ",
+  "keystoreExportBlurb": "ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ ସହିତ, ଆପଣ ଆପଣଙ୍କ ପସନ୍ଦର ଏକ ପାସଫ୍ରେଜ୍ ଦ୍ୱାରା ସୁରକ୍ଷିତ ଏକ ଏନକ୍ରିପ୍ଟ କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ମଧ୍ୟ ସଞ୍ଚୟ କରିପାରିବେ। ଏହା ଇଚ୍ଛାଧୀନ - ଏକମାତ୍ର ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ ସର୍ବଦା ଆପଣଙ୍କ ସାଇନିଂ କୀ ପୁନଃସ୍ଥାପନ କରିବାକୁ ଯଥେଷ୍ଟ।",
+  "keystorePassphrase": "ପାସଫ୍ରେଜ୍",
+  "exportKeystoreFile": "କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ରପ୍ତାନୀ କରନ୍ତୁ",
+  "chooseCurrencyTitle": "ଆପଣଙ୍କ ମୁଦ୍ରା ବାଛନ୍ତୁ",
+  "chooseCurrencyBlurb": "ପ୍ରତ୍ୟେକ ଖାତା ଗୋଷ୍ଠୀ (ନଗଦ ଏବଂ ନଗଦ ସମତୁଲ୍ୟ, ପେନସନ ଏବଂ ଅବସର, ଇତ୍ୟାଦି) ବର୍ତ୍ତମାନ ପାଇଁ ଏହି ଏକମାତ୍ର ମୁଦ୍ରା ବ୍ୟବହାର କରେ। ଆପଣ ଏଥିପାଇଁ ଏକ ନୂଆ ଗୋଷ୍ଠୀ ସୃଷ୍ଟି କରି ପରେ ମଧ୍ୟ ଭିନ୍ନ ମୁଦ୍ରାରେ ଖାତା ଯୋଡିପାରିବେ।",
+  "currencyBackfillTitle": "ବର୍ତ୍ତମାନର ଗୋଷ୍ଠୀ ପାଇଁ ଏକ ମୁଦ୍ରା ବାଛନ୍ତୁ",
+  "currencyBackfillBlurb": "ଏହି ଆପ୍ ବର୍ତ୍ତମାନ ଏକାଧିକ ମୁଦ୍ରାକୁ ସମର୍ଥନ କରେ। ଆପଣଙ୍କ ବର୍ତ୍ତମାନର ଖାତା ଏବଂ ଖାତା ଗୋଷ୍ଠୀଗୁଡ଼ିକୁ ଏକ ମୁଦ୍ରା ଆବଶ୍ୟକ - ଯେହେତୁ ସେଗୁଡ଼ିକ ଏହି ସୁବିଧା ଆସିବା ପୂର୍ବରୁ ସ୍ଥାପିତ ହୋଇଥିଲା, ଏକ ପସନ୍ଦ ସେସବୁ ଉପରେ ପ୍ରଯୁଜ୍ୟ ହୁଏ।",
+  "firstAccountTitle": "ଆପଣଙ୍କ ଖାତାର ନାମ ଦିଅନ୍ତୁ",
+  "firstAccountBlurb": "ଏହା ପୂର୍ବରୁ ଆପଣଙ୍କ ପାଇଁ ସେଟଅପ୍ ହୋଇଥିବା ଖାତା - ଏହାକୁ ଏକ ପରିଚିତ ନାମ ଦିଅନ୍ତୁ, ଯେମିତି ଆପଣଙ୍କ ବ୍ୟାଙ୍କ। ପରବର୍ତ୍ତୀ ସମୟରେ ଆପଣ ଏକ ଖର୍ଚ୍ଚ କିମ୍ବା ଗ୍ରହଣ ରେକର୍ଡ କରିବେ, ତାପରେ ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ ସହିତ ଡିଭାଇସ୍‌କୁ ସୁରକ୍ଷିତ କରିବେ।",
+  "whatsMainAccountCalled": "ଆପଣଙ୍କ ମୁଖ୍ୟ ଖାତାର ନାମ କଣ?",
+  "restoreTitle": "ସାଇନିଂ କୀ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ",
+  "restoreBlurb": "ଏହି ଡିଭାଇସ୍‌ରେ ପୂର୍ବରୁ ଖାତା ଅଛି, କିନ୍ତୁ ମେଳଖାଉଥିବା ସାଇନିଂ କୀ ନାହିଁ। ଆପଣଙ୍କ ସଞ୍ଚିତ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍‌ରୁ ଏହାକୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ - ଆପଣଙ୍କ ଡାଟା ସାଧାରଣ ଭାବେ ଯାଞ୍ଚ ହେବ, ଏବଂ କିଛି ପୁନଃ-ସାଇନ୍ କିମ୍ବା ପରିବର୍ତ୍ତିତ ହେବ ନାହିଁ।",
+  "recoveryPhrase24": "ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ (ସମସ୍ତ ୨୪ ଶବ୍ଦ)",
+  "keystoreFile": "କୀ-ଷ୍ଟୋର ଫାଇଲ୍",
+  "keystoreFileContents": "କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ବିଷୟବସ୍ତୁ",
+  "optionalBackupFile": "ଇଚ୍ଛାଧୀନ ବ୍ୟାକଅପ୍ ଫାଇଲ୍",
+  "iDontHavePhrase": "ମୋ ପାଖରେ ମୋର ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ନାହିଁ",
+  "migrationTitle": "ଏକ ନୂଆ କୀକୁ ମାଇଗ୍ରେଟ୍ କରନ୍ତୁ",
+  "migrationBlurb": "ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ବିନା, ଏହି ଡିଭାଇସ୍‌ର ସାଇନିଂ କୀ ପୁନରୁଦ୍ଧାର କରାଯାଇପାରିବ ନାହିଁ। ଆପଣ ଏକ ନୂଆ କୀ ଆରମ୍ଭ କରିପାରିବେ। ପୁରୁଣା ଏଣ୍ଟ୍ରି ଦେଖାଯିବାରେ ରହିବ କିନ୍ତୁ ପ୍ରତିସ୍ଥାପିତ ହେବ।",
+  "iConfirmBooksValid": "ମୁଁ ନିଶ୍ଚିତ କରୁଛି ଯେ ବର୍ତ୍ତମାନର ଖାତା ବୈଧ ଅଛି",
+  "whyWeDontEdit": "ଆମେ କାହିଁକି ପୁରୁଣା ଏଣ୍ଟ୍ରି ସମ୍ପାଦନା କରୁନାହୁଁ",
+  "whyWeDontEditBody": "ଯେତେବେଳେ ଆପଣ ଏକ ଭୁଲ ସଂଶୋଧନ କରନ୍ତି, ଆମେ ପୁରୁଣା ଲାଇନ୍ ରଖୁ ଏବଂ ଆପଣ ପୂର୍ବରୁ ଲେଖିଥିବାକୁ ବଦଳାଇବା ପରିବର୍ତ୍ତେ ଏହା ପାଖରେ ଏକ ସଂଶୋଧନ ଯୋଡ଼ିଥାଉ। ଏହି ପ୍ରକାରେ ଆପଣଙ୍କ ଇତିହାସ ସର୍ବଦା ପ୍ରକୃତରେ କଣ ହୋଇଥିଲା ଏବଂ ଆପଣ କେବେ ତାହା ସଂଶୋଧନ କରିଥିଲେ ତାହା ଦେଖାଏ — ଆପଣଙ୍କ ପଛରେ କିଛି ଚୁପ୍‌ଚାପ୍ ବଦଳେ ନାହିଁ।",
+  "lockTitle": "ଅନଲକ୍",
+  "lockScreenTitle": "ଲକ୍",
+  "enterPinToContinue": "ଜାରି ରଖିବାକୁ ଆପଣଙ୍କ ପିନ୍ ପ୍ରବେଶ କରନ୍ତୁ",
+  "pinLabel": "ପିନ୍",
+  "setPinTitle": "ଏକ ପିନ୍ ସେଟ୍ କରନ୍ତୁ",
+  "currentPin": "ବର୍ତ୍ତମାନ ପିନ୍",
+  "newPin": "ନୂଆ ପିନ୍",
+  "confirmPin": "ପିନ୍ ନିଶ୍ଚିତ କରନ୍ତୁ",
+  "confirmNewPin": "ନୂଆ ପିନ୍ ନିଶ୍ଚିତ କରନ୍ତୁ",
+  "firstWeekTitle": "ଆପଣଙ୍କ ଖାତା ସେଟଅପ୍ କରନ୍ତୁ",
+  "addCashAccount": "ଏକ ନଗଦ ଖାତା ଯୋଡନ୍ତୁ",
+  "addCreditCard": "ଏକ କ୍ରେଡିଟ୍ କାର୍ଡ ଯୋଡନ୍ତୁ",
+  "cashAccountName": "ନଗଦ ଖାତା ନାମ",
+  "cardName": "କାର୍ଡ ନାମ",
+  "paidFromBank": "ବ୍ୟାଙ୍କରୁ ପେମେଣ୍ଟ",
+  "paidFromCard": "କାର୍ଡରୁ ପେମେଣ୍ଟ",
+  "choosePassphraseTitle": "ଏହି ବ୍ୟାକଅପ୍‌କୁ ସୁରକ୍ଷିତ କରିବାକୁ ଏକ ପାସଫ୍ରେଜ୍ ବାଛନ୍ତୁ। ଯଦି ଆପଣ ଏହାକୁ ଭୁଲିଯାଆନ୍ତି ତେବେ କୌଣସି ପୁନରୁଦ୍ଧାର ନାହିଁ।",
+  "replaceBooksTitle": "ଆପଣଙ୍କ ସ୍ଥାନୀୟ ଖାତା ବଦଳାଇବେ କି?",
+  "replaceBooksBody": "ଏହା ବର୍ତ୍ତମାନ ଏହି ଆପ୍‌ରେ ଥିବା ସବୁକିଛିକୁ ବ୍ୟାକଅପ୍ ସହିତ ବଦଳାଇଦିଏ। ପରେ ଆପ୍‌କୁ ବନ୍ଦ କରି ପୁଣି ଖୋଲନ୍ତୁ।",
+  "chooseBackupFileFirst": "ପ୍ରଥମେ ଏକ ବ୍ୟାକଅପ୍ ଫାଇଲ୍ ବାଛନ୍ତୁ।",
+  "backupRestored": "ବ୍ୟାକଅପ୍ ପୁନଃସ୍ଥାପିତ ହେଲା",
+  "backupRestoredBody": "ଆପଣଙ୍କ ଖାତା ପୁନଃସ୍ଥାପିତ ହୋଇଛି। ଜାରି ରଖିବାକୁ ଆପ୍‌କୁ ବନ୍ଦ କରି ପୁଣି ଖୋଲନ୍ତୁ।",
+  "fixThisEntry": "ଏହି ଏଣ୍ଟ୍ରି ସଂଶୋଧନ କରନ୍ତୁ",
+  "fixBlurb": "ପୁରୁଣା ଲାଇନ୍ ଠିକ୍ ଯେମିତି ଥିଲା ସେମିତି ରହେ। ନିଶ୍ଚିତ କଲେ ଏକ ବିପରୀତ ଲାଇନ୍ ଏବଂ ସଂଶୋଧିତ ଲାଇନ୍ ଯୋଡ଼େ।",
+  "importStatementTitle": "ଷ୍ଟେଟମେଣ୍ଟ ଆମଦାନୀ କରନ୍ତୁ",
+  "importOfx": "OFX ଆମଦାନୀ କରନ୍ତୁ",
+  "importOfxQfxFile": "OFX / QFX ଫାଇଲ୍ ଆମଦାନୀ କରନ୍ତୁ",
+  "importCsvFile": "CSV ଫାଇଲ୍ ଆମଦାନୀ କରନ୍ତୁ",
+  "whatKindOfStatement": "ଆପଣଙ୍କ ପାଖରେ କେଉଁ ପ୍ରକାର ଷ୍ଟେଟମେଣ୍ଟ ଫାଇଲ୍ ଅଛି?",
+  "chooseAccountForFile": "ଏହି ଫାଇଲ୍ କେଉଁ ଖାତାର ତାହା ବାଛନ୍ତୁ।",
+  "importIntoAccount": "ଖାତାରେ ଆମଦାନୀ କରନ୍ତୁ",
+  "useSavedProfile": "ଏକ ସଞ୍ଚିତ ପ୍ରୋଫାଇଲ୍ ବ୍ୟବହାର କରନ୍ତୁ",
+  "saveMappingProfile": "ଏହି ମ୍ୟାପିଂକୁ ଏକ ପ୍ରୋଫାଇଲ୍ ଭାବେ ସଞ୍ଚୟ କରନ୍ତୁ (ଇଚ୍ଛାଧୀନ)",
+  "renameProfile": "ପ୍ରୋଫାଇଲ୍ ନାମ ବଦଳାନ୍ତୁ",
+  "deleteProfileTitle": "ପ୍ରୋଫାଇଲ୍ ଡିଲିଟ୍ କରିବେ କି?",
+  "fileHasHeader": "ଫାଇଲ୍‌ରେ ଏକ ହେଡର ଧାଡ଼ି ଅଛି",
+  "dateColumn": "ତାରିଖ ସ୍ତମ୍ଭ",
+  "dateFormatHint": "ତାରିଖ ଫର୍ମାଟ୍ (ଯଥା dd/MM/yyyy)",
+  "amountColumn": "ରାଶି ସ୍ତମ୍ଭ",
+  "amountConvention": "ରାଶି ପ୍ରଚଳନ",
+  "signedAmountColumn": "ଚିହ୍ନିତ ରାଶି ସ୍ତମ୍ଭ",
+  "separateDebitCredit": "ଅଲଗା ଡେବିଟ୍ / କ୍ରେଡିଟ୍ ସ୍ତମ୍ଭ",
+  "debitColumn": "ଡେବିଟ୍ ସ୍ତମ୍ଭ",
+  "creditColumn": "କ୍ରେଡିଟ୍ ସ୍ତମ୍ଭ",
+  "decimalSeparator": "ଦଶମିକ ବିଭାଜକ (. କିମ୍ବା ,)",
+  "descriptionColumns": "ବର୍ଣ୍ଣନା ସ୍ତମ୍ଭ(ଗୁଡ଼ିକ)",
+  "referenceIdColumn": "ରେଫରେନ୍ସ id ସ୍ତମ୍ଭ (ଇଚ୍ଛାଧୀନ)",
+  "skippedRows": "ଛାଡ଼ିଥିବା ଧାଡ଼ି",
+  "parsedTransactionCount": "{count} କାରବାର ପ୍ରକ୍ରିୟାକରଣ ହେଲା",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} ଛାଡ଼ିଦିଆଗଲା କିମ୍ବା ବାଦ ଦିଆଗଲା",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} ପୋଷ୍ଟ ହେଲା, {failed} ବିଫଳ ହେଲା",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "ସମସ୍ତଙ୍କ ପାଇଁ ବର୍ଗ",
+  "saveAsRule": "ଏକ ନିୟମ ଭାବେ ସଞ୍ଚୟ କରିବେ କି?",
+  "saveAsRuleBlurb": "ଭବିଷ୍ୟତର ଆମଦାନୀଗୁଡ଼ିକ ଯାହାର ବର୍ଣ୍ଣନାରେ ଏହି କୀୱାର୍ଡ ଅଛି ସେଗୁଡ଼ିକ ଏହି ବର୍ଗ ବ୍ୟବହାର କରିବେ।",
+  "keyword": "କୀୱାର୍ଡ",
+  "noSavedRules": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସଞ୍ଚିତ ନିୟମ ନାହିଁ। ଏକ ନିୟମ ସଞ୍ଚୟ କରିବାକୁ ଧାଡ଼ିଗୁଡ଼ିକର ଏକ ଗୋଷ୍ଠୀକୁ ଏକ ବର୍ଗ ନିଯୁକ୍ତ କରନ୍ତୁ।",
+  "deleteRuleTitle": "ନିୟମ ଡିଲିଟ୍ କରିବେ କି?",
+  "editRule": "ନିୟମ ସମ୍ପାଦନା କରନ୍ତୁ",
+  "rowsGrouped": "{count} ଧାଡ଼ି",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "ଆମଦାନୀ କରିବାକୁ ଏକ {extensions} ଷ୍ଟେଟମେଣ୍ଟ ଫାଇଲ୍ ଚୟନ କରନ୍ତୁ",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "ପ୍ରାପକ",
+  "addPayee": "ପ୍ରାପକ ଯୋଡନ୍ତୁ",
+  "renamePayee": "ପ୍ରାପକ ନାମ ବଦଳାନ୍ତୁ",
+  "deletePayeeTitle": "ପ୍ରାପକ ଡିଲିଟ୍ କରିବେ କି?",
+  "noPayeesYet": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପ୍ରାପକ ନାହିଁ",
+  "recurringTitle": "ପୁନରାବୃତ୍ତ ଟେମ୍ପଲେଟ୍",
+  "noRecurringYet": "ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପୁନରାବୃତ୍ତ ଟେମ୍ପଲେଟ୍ ନାହିଁ",
+  "deleteTemplateTitle": "ପୁନରାବୃତ୍ତ ଟେମ୍ପଲେଟ୍ ଡିଲିଟ୍ କରିବେ କି?",
+  "dayOfMonth": "ମାସର ଦିନ (୧-୩୧)",
+  "dayOfMonthNote": "କମ୍ ଦିନ ଥିବା ମାସ ନିଜର ଅନ୍ତିମ ଦିନ ବ୍ୟବହାର କରେ।",
+  "dayOfMonthLine": "ମାସର ଦିନ {day} - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "ନାମ",
+  "none": "କିଛି ନାହିଁ",
+  "currency": "ମୁଦ୍ରା",
+  "errorGeneric": "କିଛି ଭୁଲ ହେଲା। ଦୟାକରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
+  "errorSigningIdentityMismatch": "ଏହି ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ଏହି ଡାଟାବେସର କୌଣସି ସାଇନିଂ ପରିଚୟ ସହିତ ମେଳ ଖାଏ ନାହିଁ।",
+  "errorInvalidLedgerBackup": "ଏହି ଫାଇଲ୍ ଏକ ବୈଧ ସ୍ମାରା ବ୍ୟାକଅପ୍ ନୁହେଁ।",
+  "errorInvalidLedgerBackupNoIdentity": "ଏହି ବ୍ୟାକଅପ୍‌ର କୌଣସି ସାଇନିଂ ପରିଚୟ ନାହିଁ - ଏହା ଏକ ବୈଧ ସ୍ମାରା ବ୍ୟାକଅପ୍ ନୁହେଁ।",
+  "errorInvalidLedgerBackupUnverified": "ଏହି ବ୍ୟାକଅପ୍ ଏକ ଅକ୍ଷତ ଖାତା ଭାବେ ଯାଞ୍ଚ ହୋଇପାରିଲା ନାହିଁ, ତେଣୁ ଏହା ପୁନଃସ୍ଥାପିତ ହେଲା ନାହିଁ।",
+  "errorInvalidLedgerBackupUnreadable": "ଏହି ଫାଇଲ୍‌କୁ ସ୍ମାରା ବ୍ୟାକଅପ୍ ଭାବେ ଖୋଲାଯାଇପାରିଲା ନାହିଁ: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "ଏହି ବ୍ୟାକଅପ୍ ଏହି ଡିଭାଇସ୍‌ର ପରିଚୟ ଠାରୁ ଭିନ୍ନ ଏକ ସାଇନିଂ ପରିଚୟର ଅଟେ।",
+  "errorAccountNotFinancial": "ତାହା ଏକ ଆର୍ଥିକ ଖାତା ନୁହେଁ।",
+  "errorAccountArchived": "ସେହି ଖାତା ଲୁକ୍କାୟିତ।",
+  "errorAccountNotArchived": "ସେହି ଖାତା ଲୁକ୍କାୟିତ ନୁହେଁ।",
+  "errorAccountNoPositiveBalanceToCloseOut": "ସ୍ଥାନାନ୍ତର କରିବାକୁ କୌଣସି ଅବଶିଷ୍ଟ ବାକି ନାହିଁ।",
+  "errorAccountHasNoGroup": "ସେହି ଖାତାକୁ କୌଣସି ଗୋଷ୍ଠୀ ନିଯୁକ୍ତ ହୋଇନାହିଁ।",
+  "errorGroupHasNoCurrency": "ସେହି ଗୋଷ୍ଠୀ ପାଇଁ ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ମୁଦ୍ରା ସେଟ୍ ହୋଇନାହିଁ।",
+  "errorGroupNotFound": "ସେହି ଖାତା ଗୋଷ୍ଠୀ ମିଳିଲା ନାହିଁ।",
+  "errorInvestmentAccountsMustBeAssets": "କେବଳ ସମ୍ପତ୍ତି ଖାତାକୁ ନିବେଶ ଖାତା ଭାବେ ଚିହ୍ନଟ କରାଯାଇପାରିବ।",
+  "errorCreditCardsMustBeLiabilities": "କେବଳ ଦାୟିତ୍ୱ ଖାତାକୁ କ୍ରେଡିଟ୍ କାର୍ଡ ଭାବେ ଚିହ୍ନଟ କରାଯାଇପାରିବ।",
+  "errorOpeningBalanceMustBePositive": "ପ୍ରଦାନ କରାଗଲେ ଆରମ୍ଭ ବାକି ଅବଶ୍ୟ ଧନାତ୍ମକ ହେବା ଉଚିତ।",
+  "errorAccountTypeDoesNotMatchGroup": "ସେହି ଖାତା ପ୍ରକାର ଗୋଷ୍ଠୀ ସହିତ ମେଳ ଖାଏ ନାହିଁ।",
+  "errorLastActiveAccount": "ଅନ୍ତିମ ସକ୍ରିୟ ଆର୍ଥିକ ଖାତାକୁ ଲୁଚାଇ ହେବ ନାହିଁ।",
+  "errorCurrencyRequiredToCreateGroup": "ଏକ ଗୋଷ୍ଠୀ ସୃଷ୍ଟି କରିବାକୁ ମୁଦ୍ରା ଆବଶ୍ୟକ।",
+  "errorSystemGroupCannotBeArchived": "ବିଲ୍ଟ-ଇନ୍ ଖାତା ଗୋଷ୍ଠୀ ଲୁଚାଇ ହେବ ନାହିଁ।",
+  "errorGroupAlreadyArchived": "ସେହି ଗୋଷ୍ଠୀ ପୂର୍ବରୁ ଲୁକ୍କାୟିତ।",
+  "errorCannotArchiveGroupWithAccounts": "ସକ୍ରିୟ ଖାତା ଥିବା ଏକ ଗୋଷ୍ଠୀକୁ ଲୁଚାଇ ହେବ ନାହିଁ।",
+  "errorSystemGroupNeverArchived": "ବିଲ୍ଟ-ଇନ୍ ଖାତା ଗୋଷ୍ଠୀ କେବେ ବି ଲୁଚାଯାଏ ନାହିଁ।",
+  "errorAccountGroupsCannotBeDeleted": "ଖାତା ଗୋଷ୍ଠୀ ଡିଲିଟ୍ କରାଯାଇପାରିବ ନାହିଁ।",
+  "errorCannotReassignDifferentCurrency": "ଏହି ଖାତାକୁ ଭିନ୍ନ ମୁଦ୍ରା ଥିବା ଗୋଷ୍ଠୀକୁ ମୁଭ୍ କରାଯାଇପାରିବ ନାହିଁ।",
+  "errorCannotChangeGroupCurrencyWithAccounts": "ଗୋଷ୍ଠୀରେ ସକ୍ରିୟ ଖାତା ଥିବା ପର୍ଯ୍ୟନ୍ତ ମୁଦ୍ରା ବଦଳାଇ ହେବ ନାହିଁ।",
+  "errorAmountMustBePositive": "ରାଶି ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorAccountCurrencyAmountMustBePositive": "ଖାତା-ମୁଦ୍ରା ରାଶି ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorAccountCurrencyAmountNotForSameCurrency": "ଖାତା-ମୁଦ୍ରା ରାଶି କେବଳ ବିଦେଶୀ-ମୁଦ୍ରା ଏଣ୍ଟ୍ରି ପାଇଁ।",
+  "errorSplitNeedsTwoLines": "ଏକ ବିଭାଜନରେ ଅତିକମରେ ଦୁଇଟି ବର୍ଗ ଲାଇନ୍ ଆବଶ୍ୟକ।",
+  "errorSplitLineMustBePositive": "ପ୍ରତ୍ୟେକ ବିଭାଜନ ଲାଇନ୍ ଏକ ଧନାତ୍ମକ ରାଶି ହେବା ଆବଶ୍ୟକ।",
+  "errorSplitLinesMustSumToTotal": "ବିଭାଜନ ଲାଇନ୍‌ଗୁଡ଼ିକ କାରବାର ମୋଟ ସହିତ ମେଳ ଖାଇବା ଆବଶ୍ୟକ।",
+  "errorTransferAmountMustBePositive": "ସ୍ଥାନାନ୍ତର ରାଶି ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorTransferAccountsMustDiffer": "ଉତ୍ସ ଏବଂ ଗନ୍ତବ୍ୟ ଖାତା ଭିନ୍ନ ହେବା ଆବଶ୍ୟକ।",
+  "errorCloseoutRequiresDestinationAmount": "ଏକ କ୍ରସ୍-ମୁଦ୍ରା ବନ୍ଦ ପାଇଁ ଏକ ଜଣାଶୁଣା ଗନ୍ତବ୍ୟ ରାଶି ଆବଶ୍ୟକ।",
+  "errorDestinationAmountNotForSameCurrency": "ଗନ୍ତବ୍ୟ ରାଶି କେବଳ ଏକ କ୍ରସ୍-ମୁଦ୍ରା ସ୍ଥାନାନ୍ତର ପାଇଁ।",
+  "errorDestinationAmountMustBePositive": "ଗନ୍ତବ୍ୟ ରାଶି ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorInvestmentCashExceeded": "ଏହି ନିବେଶ ଖାତାର ନଗଦ ଠାରୁ ଅଧିକ ସ୍ଥାନାନ୍ତର କରାଯାଇପାରିବ ନାହିଁ।",
+  "errorCannotReverseUnsettledProvisional": "ଏହାକୁ ବିପରୀତ କରିବା ପରିବର୍ତ୍ତେ ଏହି ବିଚାରାଧୀନ ସ୍ଥାନାନ୍ତରକୁ ସେଟଲ୍ କରନ୍ତୁ।",
+  "errorAlreadyReversed": "ଏହି ଏଣ୍ଟ୍ରି ପୂର୍ବରୁ ସଂଶୋଧିତ ହୋଇଛି। ମୂଳ ଲାଇନ୍ ଯେମିତି ଅଛି ସେମିତି ରହିଛି।",
+  "errorNotActiveExpenseCategory": "ଏକ ସକ୍ରିୟ ଖର୍ଚ୍ଚ ବର୍ଗ ବାଛନ୍ତୁ।",
+  "errorNotActiveIncomeCategory": "ଏକ ସକ୍ରିୟ ଆୟ ବର୍ଗ ବାଛନ୍ତୁ।",
+  "errorSettledAmountMustNotBeNegative": "ପହଞ୍ଚିଥିବା ରାଶି ଋଣାତ୍ମକ ହୋଇପାରିବ ନାହିଁ।",
+  "errorPendingTransferNotFound": "ସେହି ବିଚାରାଧୀନ ସ୍ଥାନାନ୍ତର ମିଳିଲା ନାହିଁ।",
+  "errorPendingTransferAlreadySettled": "ସେହି ବିଚାରାଧୀନ ସ୍ଥାନାନ୍ତର ପୂର୍ବରୁ ସେଟଲ୍ ହୋଇସାରିଛି।",
+  "errorSettledToMustBeSourceOrDestination": "ମୂଳ ଉତ୍ସ କିମ୍ବା ଗନ୍ତବ୍ୟ ଖାତା ବାଛନ୍ତୁ।",
+  "errorFeeCategoryOnlyWhenReturningToSource": "ଏକ ଫି ବର୍ଗ କେବଳ ଟଙ୍କା ଉତ୍ସ ଖାତାକୁ ଫେରାଇ ଦିଆଗଲେ ବ୍ୟବହୃତ ହୁଏ।",
+  "errorSettledAmountMustBePositiveForDelivery": "ପହଞ୍ଚିଥିବା ପାଇଁ ଏକ ଧନାତ୍ମକ ରାଶି ପ୍ରବେଶ କରନ୍ତୁ।",
+  "errorSettledAmountExceedsProvisional": "ସେହି ରାଶି ପଠାଯାଇଥିବା ଠାରୁ ଅଧିକ।",
+  "errorInstrumentNotFound": "ସେହି ଉପକରଣ ମିଳିଲା ନାହିଁ।",
+  "errorIncomeRequiredForNonCash": "ଏକ ଅଣ-ନଗଦ ଅଧିଗ୍ରହଣ ପାଇଁ ଏକ ସକ୍ରିୟ ଆୟ ବର୍ଗ ଆବଶ୍ୟକ।",
+  "errorInsufficientCash": "ସେହି କ୍ରୟ ପାଇଁ ଏହି ନିବେଶ ଖାତାରେ ପର୍ଯ୍ୟାପ୍ତ ନଗଦ ନାହିଁ।",
+  "errorSellQuantityAndPriceMustBePositive": "ବିକ୍ରୟ ପରିମାଣ ଏବଂ ୟୁନିଟ୍ ମୂଲ୍ୟ ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorLockedUntil": "ବିକ୍ରୟ କରାଯାଇପାରିବ ନାହିଁ: କିଛି ୟୁନିଟ୍ {date} ପର୍ଯ୍ୟନ୍ତ ଲକ୍ ହୋଇଛି।",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "ଆପଣ ବର୍ତ୍ତମାନ ଅନଲକ୍ ଥିବା ଠାରୁ ଅଧିକ ବିକ୍ରୟ କରିପାରିବେ ନାହିଁ।",
+  "errorIncomeRequiredForGain": "ଏକ ଅର୍ଜିତ ଲାଭ ପାଇଁ ଏକ ସକ୍ରିୟ ଆୟ ବର୍ଗ ଆବଶ୍ୟକ।",
+  "errorExpenseRequiredForLoss": "ଏକ ଅର୍ଜିତ କ୍ଷତି ପାଇଁ ଏକ ସକ୍ରିୟ ଖର୍ଚ୍ଚ ବର୍ଗ ଆବଶ୍ୟକ।",
+  "errorBrokerageFailedAfterBuy": "କ୍ରୟ ପୋଷ୍ଟ ହେଲା, କିନ୍ତୁ ବ୍ରୋକରେଜ୍ ଫି ବିଫଳ ହେଲା: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "ବିକ୍ରୟ ପୋଷ୍ଟ ହେଲା, କିନ୍ତୁ ବ୍ରୋକରେଜ୍ ଫି ବିଫଳ ହେଲା: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "ଲାଭାଂଶ ରାଶି ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorNotInvestmentAccount": "ତାହା ଏକ ନିବେଶ ଖାତା ନୁହେଁ।",
+  "errorNoInventoryCompanion": "ଏହି ନିବେଶ ଖାତାରେ ଏହାର ମାଲସାମାନ ସାଥୀ ନାହିଁ।",
+  "errorInvestmentReversalBlocked": "ଏହି କ୍ରୟକୁ ବିପରୀତ କରାଯାଇପାରିବ ନାହିଁ: ପରବର୍ତ୍ତୀ ବିକ୍ରୟ(ଗୁଡ଼ିକ) ଏହାର ୟୁନିଟ୍ ଉପରେ ନିର୍ଭରଶୀଳ। ପ୍ରଥମେ ନିର୍ଭରଶୀଳ ବିକ୍ରୟ(ଗୁଡ଼ିକ) ବିପରୀତ କରନ୍ତୁ: {sells}।",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "ମାସିକ ସୀମା ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorTemplateAmountMustBePositive": "ଟେମ୍ପଲେଟ୍ ରାଶି ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorOfxUnrecognized": "ଏହି ଫାଇଲ୍‌କୁ OFX ଭାବେ ଚିହ୍ନଟ କରାଯାଇପାରିଲା ନାହିଁ।",
+  "errorCsvEmpty": "ଚୟନିତ ଫାଇଲ୍ ଖାଲି ଅଛି।",
+  "errorCsvUnreadable": "ଏହି ଫାଇଲ୍‌କୁ CSV ଭାବେ ପଢ଼ାଯାଇପାରିଲା ନାହିଁ।",
+  "errorCsvNoRows": "ଚୟନିତ ଫାଇଲ୍‌ରେ କୌଣସି ଧାଡ଼ି ନାହିଁ।",
+  "errorBackupCreateFailed": "ବ୍ୟାକଅପ୍ ସୃଷ୍ଟି କରାଯାଇପାରିଲା ନାହିଁ: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "ଏହି ବ୍ୟାକଅପ୍ ପୁନଃସ୍ଥାପିତ ହୋଇପାରିଲା ନାହିଁ - ଭୁଲ ପାସଫ୍ରେଜ୍, କିମ୍ବା ଏହା ଏକ ସ୍ମାରା ବ୍ୟାକଅପ୍ ଫାଇଲ୍ ନୁହେଁ।",
+  "validationAmountAccountCategoryRequired": "ରାଶି, ଖାତା, ଏବଂ ବର୍ଗ ଆବଶ୍ୟକ।",
+  "validationAmountAccountRequired": "ରାଶି ଏବଂ ଖାତା ଆବଶ୍ୟକ।",
+  "validationSplitLineIncomplete": "ପ୍ରତ୍ୟେକ ବିଭାଜନ ଲାଇନ୍‌କୁ ଏକ ବର୍ଗ ଏବଂ ଏକ ରାଶି ଆବଶ୍ୟକ।",
+  "validationSplitSumMismatch": "ବିଭାଜନ ଲାଇନ୍‌ଗୁଡ଼ିକ କାରବାର ମୋଟ ସହିତ ମେଳ ଖାଇବା ଆବଶ୍ୟକ।",
+  "validationFromToAmountRequired": "ଉତ୍ସ ଖାତା, ଗନ୍ତବ୍ୟ ଖାତା, ଏବଂ ରାଶି ଆବଶ୍ୟକ।",
+  "validationAmountArrivedRequired": "ପହଞ୍ଚିଥିବା ରାଶି ଆବଶ୍ୟକ।",
+  "validationChooseReceivingAccount": "ଟଙ୍କା ଗ୍ରହଣ କରିଥିବା ଖାତା ବାଛନ୍ତୁ।",
+  "validationAccountCategoryRequired": "ଖାତା ଏବଂ ବର୍ଗ ଆବଶ୍ୟକ।",
+  "validationFixFailed": "ଏହି ସଂଶୋଧନ ସଞ୍ଚୟ କରାଯାଇପାରିଲା ନାହିଁ।",
+  "validationNameRequired": "ଆପଣଙ୍କ ମୁଖ୍ୟ ଖାତାର ନାମ ଦିଅନ୍ତୁ।",
+  "validationStillLoading": "ଏପର୍ଯ୍ୟନ୍ତ ଲୋଡ୍ ହେଉଛି - ଟିକିଏ ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
+  "validationSaveAccountNameFailed": "ଖାତା ନାମ ସଞ୍ଚୟ କରାଯାଇପାରିଲା ନାହିଁ।",
+  "validationWrongPin": "ଭୁଲ ପିନ୍। ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
+  "validationCategoryMustBeIncomeOrExpense": "ବର୍ଗ ଆୟ କିମ୍ବା ଖର୍ଚ୍ଚ ହେବା ଆବଶ୍ୟକ।",
+  "validationOnlyExpenseHasMonthlyLimit": "କେବଳ ଏକ ଖର୍ଚ୍ଚ ବର୍ଗର ମାସିକ ସୀମା ହୋଇପାରେ।",
+  "validationInvalidTemplate": "ଅବୈଧ ଟେମ୍ପଲେଟ୍।",
+  "validationWrongKeystorePassphrase": "ଏହି କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ପାଇଁ ଭୁଲ ପାସଫ୍ରେଜ୍।",
+  "validationInvalidKeystoreFile": "ତାହା ଏକ ବୈଧ କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ପରି ଦେଖାଯାଉ ନାହିଁ।",
+  "validationRestorePhraseFailed": "ସେହି ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶରୁ ପୁନଃସ୍ଥାପନ କରାଯାଇପାରିଲା ନାହିଁ।",
+  "validationGenerateKeyFailed": "ଏହି ଡିଭାଇସ୍‌ରେ ଏକ ସାଇନିଂ କୀ ସୃଷ୍ଟି କରାଯାଇପାରିଲା ନାହିଁ: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "ଏହି ମୁଦ୍ରା ସଞ୍ଚୟ କରାଯାଇପାରିଲା ନାହିଁ: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "ମାଇଗ୍ରେସନ୍ ବିଫଳ ହେଲା। ଦୟାକରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
+  "validationChooseBackupFile": "ପ୍ରଥମେ ଏକ ବ୍ୟାକଅପ୍ ଫାଇଲ୍ ବାଛନ୍ତୁ।",
+  "validationPassphraseRequired": "ଏକ ପାସଫ୍ରେଜ୍ ପ୍ରବେଶ କରନ୍ତୁ।",
+  "validationPinsDoNotMatch": "ଦୁଇଟି ପିନ୍ ମେଳ ଖାଉ ନାହିଁ।",
+  "validationFeePositiveWithCategory": "ଏକ ସ୍ଥାନାନ୍ତର ଫି ଏକ ଚୟନିତ ଖର୍ଚ୍ଚ ବର୍ଗ ସହିତ ଏକ ଧନାତ୍ମକ ରାଶି ହେବା ଆବଶ୍ୟକ।",
+  "validationFeeMustBeLessThanAmount": "କଟା ଫି ସ୍ଥାନାନ୍ତର ପାଇଁ ଫି ରାଶି ଠାରୁ କମ୍ ହେବା ଆବଶ୍ୟକ।",
+  "validationTransferSavedFeeFailed": "ସ୍ଥାନାନ୍ତର ସଞ୍ଚିତ ହେଲା, କିନ୍ତୁ ଫି ରେକର୍ଡ କରାଯାଇପାରିଲା ନାହିଁ: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "ଏକ ବୈଧ ରାଶି ପ୍ରବେଶ କରନ୍ତୁ।",
+  "validationConfirmWordMismatch": "ଶବ୍ଦ {n} ଆପଣଙ୍କ ସଞ୍ଚିତ ବାକ୍ୟାଂଶ ସହିତ ମେଳ ଖାଉ ନାହିଁ। ଏହାକୁ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "କ୍ରୟ ପରିମାଣ ଏବଂ ୟୁନିଟ୍ ମୂଲ୍ୟ ଧନାତ୍ମକ ହେବା ଆବଶ୍ୟକ।",
+  "errorInstrumentArchived": "ଏକ ଲୁକ୍କାୟିତ ଉପକରଣ କ୍ରୟ କରାଯାଇପାରିବ ନାହିଁ।",
+  "errorNonCashCannotIncludeBrokerage": "ଅଣ-ନଗଦ ଅଧିଗ୍ରହଣରେ ବ୍ରୋକରେଜ୍ ଅନ୍ତର୍ଭୁକ୍ତ ହୋଇପାରିବ ନାହିଁ।",
+  "errorBrokerageRequiresExpenseCategory": "ବ୍ରୋକରେଜ୍ ଧନାତ୍ମକ ଥିଲେ ଏକ ସକ୍ରିୟ ଖର୍ଚ୍ଚ ବର୍ଗ ଆବଶ୍ୟକ।",
+  "errorSellProceedsMustCoverBrokerage": "ବିକ୍ରୟ ଆୟ ଅତିକମରେ ବ୍ରୋକରେଜ୍ ରାଶି ସହିତ ସମାନ ହେବା ଆବଶ୍ୟକ।",
+  "homeSpentOfLimitThisMonth": "ଏହି ମାସ {limit} ର {spent}",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "ସ୍ମାରା ଖାତା ଅନଲକ୍ କରନ୍ତୁ",
+  "searchLabel": "ଖୋଜନ୍ତୁ",
+  "openingBalance": "ଆରମ୍ଭ ବାକି",
+  "transferToName": "ସ୍ଥାନାନ୍ତର: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "ସ୍ଥାନାନ୍ତର ପାଇଁ ଫି",
+  "feeForTransferTo": "{name} କୁ ସ୍ଥାନାନ୍ତର ପାଇଁ ଫି",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "ଫାଇଲ୍ ପିକର୍ ଖୋଲାଯାଇପାରିଲା ନାହିଁ: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "ଦୟାକରି ଏକ .{extensions} ଫାଇଲ୍ ବାଛନ୍ତୁ",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "ମୁଦ୍ରା କୋଡ୍ (ISO 4217, ଯଥା USD)",
+  "splitCounterpartMore": "{name} +{count} ଅଧିକ",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "ତାରିଖ",
+  "noneSelected": "କିଛି ନାହିଁ",
+  "reviewEntriesBeforeContinuing": "ଜାରି ରଖିବା ପୂର୍ବରୁ ତଳେ ଥିବା ଏଣ୍ଟ୍ରି (ମୋଟ {count}) ସମୀକ୍ଷା କରନ୍ତୁ।",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "ଆପଣ {amount} ଗ୍ରହଣ କଲେ",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "ଯଦି ବିନିମୟ ହାର ଏପର୍ଯ୍ୟନ୍ତ ଜଣା ନାହିଁ ତେବେ ଖାଲି ରଖନ୍ତୁ।",
+  "recordTradeBlurb": "ପୂର୍ବରୁ ହୋଇଥିବା ଏକ ବ୍ୟବସାୟ ରେକର୍ଡ କରନ୍ତୁ। ଏହି ଆପ୍ କୌଣସି ଅର୍ଡର ଦିଏ ନାହିଁ।",
+  "feeOnTopBlurb": "ଉପରେ: ଉପରୋକ୍ତ ରାଶି ଏହି ଖାତାରୁ ନିଆଯାଉଥିବା ମୋଟ ରାଶି; ଫି ଏଥିରୁ ବାହାରକୁ ଆସେ।",
+  "feeBankBlurb": "ଆପଣଙ୍କ ବ୍ୟାଙ୍କ କିମ୍ବା ଏକ ମଧ୍ୟସ୍ଥ ଦ୍ୱାରା ଅଗ୍ରିମ ପ୍ରଭାର।",
+  "validationPinMinLength": "ପିନ୍ ଅତିକମରେ ୪ ଅଙ୍କର ହେବା ଆବଶ୍ୟକ।",
+  "restoreBackupBlurb": "ଏହା ବର୍ତ୍ତମାନ ଏହି ଆପ୍‌ରେ ଥିବା ସବୁକିଛିକୁ ବ୍ୟାକଅପ୍ ସହିତ ବଦଳାଇଦିଏ — ଏହା ମର୍ଜ୍ କରେ ନାହିଁ। ଏକ ବ୍ୟାକଅପ୍ ଫାଇଲ୍ ବାଛନ୍ତୁ ଏବଂ ଆପଣ ଏହାକୁ ସୁରକ୍ଷିତ କରିଥିବା ପାସଫ୍ରେଜ୍ ପ୍ରବେଶ କରନ୍ତୁ।",
+  "actionReplace": "ବଦଳାନ୍ତୁ",
+  "hideAccountBody": "{name} ନୂଆ କାରବାର ପାଇଁ ଉପଲବ୍ଧ ରହିବ ନାହିଁ।",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} ଖାତା ସୃଷ୍ଟି କିମ୍ବା ପୁନଃନିଯୁକ୍ତି କରିବା ସମୟରେ ଅଫର୍ କରାଯିବ ନାହିଁ।",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} ନୂଆ କାରବାର ରେକର୍ଡ କରିବା ସମୟରେ ଅଫର୍ କରାଯିବ ନାହିଁ।",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "ଲୁକ୍କାୟିତ ଉପକରଣ ପୂର୍ବର କ୍ରୟ ଏବଂ ବିକ୍ରୟରେ ରହେ। ଆପଣ ସେମାନଙ୍କ ପାଇଁ ଏବେ ମଧ୍ୟ ଏକ ଲାଭାଂଶ ରେକର୍ଡ କରିପାରିବେ।",
+  "nameHidden": "{name} (ଲୁକ୍କାୟିତ)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "କୌଣସି ମୁଦ୍ରା ସେଟ୍ ହୋଇନାହିଁ",
+  "deletePayeeBody": "{name} ଏବଂ ଏହାର ମନେରଖାଯାଇଥିବା ଡିଫଲ୍ଟ ବାହାର କରାଯିବ। ପୂର୍ବର କାରବାର ପ୍ରଭାବିତ ହେବ ନାହିଁ।",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} ଆଉ ଦେୟ ଭାବେ ଅଫର୍ କରାଯିବ ନାହିଁ। ଏହା ପୂର୍ବରୁ ରେକର୍ଡ କରିଥିବା କାରବାର ପ୍ରଭାବିତ ହେବ ନାହିଁ।",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "ସଞ୍ଚିତ ସ୍ତମ୍ଭ ମ୍ୟାପିଂ \"{name}\" ଡିଲିଟ୍ ହେବ। ଏହା ସହିତ ପୂର୍ବରୁ ଆମଦାନୀ ହୋଇଥିବା ଷ୍ଟେଟମେଣ୍ଟ ପ୍ରଭାବିତ ହେବ ନାହିଁ।",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "ଆମଦାନୀଗୁଡ଼ିକ ଆଉ \"{keyword}\" ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବେ ବର୍ଗୀକୃତ ହେବ ନାହିଁ। ଏହି ନିୟମ ବ୍ୟବହାର କରି ପୂର୍ବରୁ ବର୍ଗୀକୃତ ହୋଇଥିବା କାରବାର ପ୍ରଭାବିତ ହେବ ନାହିଁ।",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "ବର୍ତ୍ତମାନ ଇଚ୍ଛାଧୀନ ଭାବେ ଏକ କ୍ରେଡିଟ୍ କାର୍ଡ କିମ୍ବା ନଗଦ ଖାତା ଯୋଡନ୍ତୁ - ଆପଣ ପରେ ସେଟିଂସରୁ ସର୍ବଦା ଅଧିକ ଖାତା ଯୋଡିପାରିବେ।",
+  "deliveredToDestination": "ଗନ୍ତବ୍ୟକୁ ପହଞ୍ଚିଲା",
+  "deliveredToName": "{name} କୁ ପହଞ୍ଚିଲା",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "ଆପଣ ଆଶା କରିଥିବା ଠାରୁ {amount} {currency} କମ୍ ଗ୍ରହଣ କଲେ - ଫରକ ଢାଙ୍କିବାକୁ ଏକ ବର୍ଗ ବାଛନ୍ତୁ।",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "ତାରିଖ ପରିସର",
+  "addTemplate": "ଟେମ୍ପଲେଟ୍ ଯୋଡନ୍ତୁ",
+  "editTemplate": "ଟେମ୍ପଲେଟ୍ ସମ୍ପାଦନା କରନ୍ତୁ",
+  "validationFillTemplateFields": "ପ୍ରତ୍ୟେକ ଫିଲ୍ଡକୁ ଏକ ବୈଧ ରାଶି ଏବଂ ଦିନ ସହିତ ପୂରଣ କରନ୍ତୁ।",
+  "saveCsvExport": "CSV ରପ୍ତାନୀ ସଞ୍ଚୟ କରନ୍ତୁ",
+  "referenceRate": "ରେଫରେନ୍ସ ହାର",
+  "yourRate": "ଆପଣଙ୍କ ହାର",
+  "leaveBlankIfThisWasAccountCurrency": "ଯଦି ଏହା {currency} ରେ ଥିଲା, ଖାତାର ନିଜସ୍ୱ ମୁଦ୍ରା, ତେବେ ଖାଲି ରଖନ୍ତୁ।",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "ଲକ୍ ପର୍ଯ୍ୟନ୍ତ (ଇଚ୍ଛାଧୀନ)",
+  "lockedUntilDate": "{date} ପର୍ଯ୍ୟନ୍ତ ଲକ୍ ହୋଇଛି",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "ଏକ ଅନୁସନ୍ଧାନ ପ୍ରମ୍ପ୍ଟ କପି ହେଲା — କୌଣସି ବ୍ରାଉଜର URL ଉପଲବ୍ଧ ନାହିଁ, କିମ୍ବା ଆପଣ ଅଫଲାଇନ୍ ଅଛନ୍ତି।",
+  "openedFavouriteResearchTool": "ଆପଣଙ୍କ ପସନ୍ଦିତ ଅନୁସନ୍ଧାନ ଉପକରଣ ଖୋଲିଲା।",
+  "looksLikeGain": "ଏହା ଏକ ଲାଭ ପରି ଦେଖାଯାଏ",
+  "looksLikeLoss": "ଏହା ଏକ କ୍ଷତି ପରି ଦେଖାଯାଏ",
+  "looksLikeBreakEven": "ଏହା ବ୍ରେକ୍-ଇଭେନ୍ ପରି ଦେଖାଯାଏ",
+  "sellableQuantity": "{name} ({qty} ବିକ୍ରୟଯୋଗ୍ୟ)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "ସ୍ତମ୍ଭ {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "ଆମଦାନୀ ହେଉଛି...",
+  "confirmImport": "ଆମଦାନୀ ନିଶ୍ଚିତ କରନ୍ତୁ",
+  "manageSavedCategoryRules": "ସଞ୍ଚିତ ବର୍ଗ ନିୟମ ପରିଚାଳନା କରନ୍ତୁ",
+  "statementCurrencyMismatch": "ଏହି ଫାଇଲ୍‌ର ମୁଦ୍ରା ({currency}) ଚୟନିତ ଖାତାର ମୁଦ୍ରା ସହିତ ମେଳ ଖାଏ ନାହିଁ।",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "ବର୍ଗ ନିୟମ",
+  "possibleDuplicate": "ସମ୍ଭାବିତ ନକଲ",
+  "unknownCategory": "ଅଜଣା ବର୍ଗ"
+}

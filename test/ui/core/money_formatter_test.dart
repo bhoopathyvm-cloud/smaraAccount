@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 import 'package:smara_accounting/ui/core/money_formatter.dart';
 
 void main() {
@@ -29,11 +30,10 @@ void main() {
       expect(formatAmountMinor(123456, 'ZZZ'), equals('1,234.56'));
     });
 
-    test('the same amount and currency format identically regardless of '
-        'which currency was formatted immediately before it (no shared '
-        'mutable locale state leaking between calls)', () {
-      formatAmountMinor(100000000, 'INR');
+    test('USD formatting does not follow the process/UI locale', () {
+      Intl.defaultLocale = 'de_DE';
       expect(formatAmountMinor(123456, 'USD'), equals('1,234.56'));
+      Intl.defaultLocale = 'en_US';
     });
   });
 

@@ -1,6 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/models/exchange_rate_provider.dart';
+import '../../domain/models/quote_provider.dart';
+import '../../domain/models/research_tool.dart';
 
 /// Plain, non-secret app preferences (currently just the reference
 /// exchange-rate lookup's enable/disable flag and selected provider).
@@ -20,6 +22,10 @@ class SettingsRepository {
   static const _appLockBiometricEnabledKey = 'appLockBiometricEnabled';
   static const _hideAppSwitcherSnapshotKey = 'hideAppSwitcherSnapshot';
   static const _firstWeekSetupCompletedKey = 'firstWeekSetupCompleted';
+  static const _marketPriceFetchEnabledKey = 'marketPriceFetchEnabled';
+  static const _quoteProviderKey = 'quoteProvider';
+  static const _researchToolKey = 'researchTool';
+  static const _preferredLocaleTagKey = 'preferredLocaleTag';
 
   /// Defaults to disabled - this app has never made a network call before
   /// the reference-rate lookup, so the one new network-touching feature is
@@ -103,5 +109,50 @@ class SettingsRepository {
 
   Future<void> setFirstWeekSetupCompleted(bool value) {
     return _preferences.setBool(_firstWeekSetupCompletedKey, value);
+  }
+
+  /// Defaults to enabled so portfolio value works without a scavenger hunt
+  /// (investment-holdings design.md Decision 10). Distinct from the FX
+  /// reference-rate toggle.
+  Future<bool> isMarketPriceFetchEnabled() async {
+    return await _preferences.getBool(_marketPriceFetchEnabledKey) ?? true;
+  }
+
+  Future<void> setMarketPriceFetchEnabled(bool value) {
+    return _preferences.setBool(_marketPriceFetchEnabledKey, value);
+  }
+
+  Future<QuoteProvider> selectedQuoteProvider() async {
+    final stored = await _preferences.getString(_quoteProviderKey);
+    for (final provider in QuoteProvider.values) {
+      if (provider.name == stored) return provider;
+    }
+    return QuoteProvider.values.first;
+  }
+
+  Future<void> setSelectedQuoteProvider(QuoteProvider provider) {
+    return _preferences.setString(_quoteProviderKey, provider.name);
+  }
+
+  Future<ResearchTool> selectedResearchTool() async {
+    final stored = await _preferences.getString(_researchToolKey);
+    for (final tool in ResearchTool.values) {
+      if (tool.name == stored) return tool;
+    }
+    return ResearchTool.values.first;
+  }
+
+  Future<void> setSelectedResearchTool(ResearchTool tool) {
+    return _preferences.setString(_researchToolKey, tool.name);
+  }
+
+  /// BCP-47 tag such as `en` or `ta`, or `system` to follow the device.
+  /// Null means the user has never chosen — treat as `system`.
+  Future<String?> preferredLocaleTag() {
+    return _preferences.getString(_preferredLocaleTagKey);
+  }
+
+  Future<void> setPreferredLocaleTag(String tag) {
+    return _preferences.setString(_preferredLocaleTagKey, tag);
   }
 }

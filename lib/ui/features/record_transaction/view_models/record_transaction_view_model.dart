@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../domain/models/payee.dart';
@@ -28,7 +29,8 @@ class SplitLine {
 
 /// Form state for recording a transaction (amount, direction, category,
 /// financial account, date).
-class RecordTransactionViewModel extends ChangeNotifier {
+class RecordTransactionViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   RecordTransactionViewModel({
     required LedgerRepository ledgerRepository,
     String? initialFinancialAccountId,
@@ -335,9 +337,6 @@ class RecordTransactionViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   Future<bool> submit() {
     return isSplitting ? _submitSplit() : _submitSingle();
   }
@@ -349,13 +348,14 @@ class RecordTransactionViewModel extends ChangeNotifier {
     if (categoryId == null ||
         amountMinor == null ||
         financialAccountId == null) {
-      _errorMessage = 'Amount, account, and category are required.';
-      notifyListeners();
+      setFailure(
+        const AppFailure(AppErrorCode.validationAmountAccountCategoryRequired),
+      );
       return false;
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -384,13 +384,11 @@ class RecordTransactionViewModel extends ChangeNotifier {
       return true;
     } on InvalidTransactionAmountException catch (e) {
       _isSubmitting = false;
-      _errorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
     } on AccountGroupException catch (e) {
       _isSubmitting = false;
-      _errorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
     }
   }
@@ -403,25 +401,24 @@ class RecordTransactionViewModel extends ChangeNotifier {
     final amountMinor = _amountMinor;
     final financialAccountId = _financialAccountId;
     if (amountMinor == null || financialAccountId == null) {
-      _errorMessage = 'Amount and account are required.';
-      notifyListeners();
+      setFailure(
+        const AppFailure(AppErrorCode.validationAmountAccountRequired),
+      );
       return false;
     }
     if (_splitLines.any(
       (line) => line.categoryId == null || line.amountMinor == null,
     )) {
-      _errorMessage = 'Every split line needs a category and an amount.';
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationSplitLineIncomplete));
       return false;
     }
     if (splitRemainderMinor != 0) {
-      _errorMessage = 'Split lines must add up to the transaction total.';
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationSplitSumMismatch));
       return false;
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -441,13 +438,11 @@ class RecordTransactionViewModel extends ChangeNotifier {
       return true;
     } on InvalidTransactionAmountException catch (e) {
       _isSubmitting = false;
-      _errorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
     } on AccountGroupException catch (e) {
       _isSubmitting = false;
-      _errorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
     }
   }

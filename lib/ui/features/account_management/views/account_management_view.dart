@@ -4,6 +4,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -35,12 +36,14 @@ class AccountManagementView extends StatelessWidget {
   // rebuilding) for a few frames after showDialog's Future resolves, so
   // disposing immediately after await races that animation and throws.
   Future<void> _showCreateDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
     final nameController = TextEditingController();
     final balanceController = TextEditingController();
     var type = AccountType.asset;
     String? groupId;
     int? openingBalanceMinor;
     var isCreditCard = false;
+    var holdsInvestments = false;
 
     await showDialog<void>(
       context: context,
@@ -60,7 +63,7 @@ class AccountManagementView extends StatelessWidget {
               .map((group) => group.currency)
               .firstWhere((currency) => currency != null, orElse: () => null);
           return AlertDialog(
-            title: const Text('Create account'),
+            title: Text(l10n.createAccount),
             content: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -68,18 +71,18 @@ class AccountManagementView extends StatelessWidget {
                   TextField(
                     controller: nameController,
                     autofocus: true,
-                    decoration: const InputDecoration(labelText: 'Name'),
+                    decoration: InputDecoration(labelText: l10n.name),
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   SegmentedButton<AccountType>(
-                    segments: const [
+                    segments: [
                       ButtonSegment(
                         value: AccountType.asset,
-                        label: Text('Asset'),
+                        label: Text(l10n.asset),
                       ),
                       ButtonSegment(
                         value: AccountType.liability,
-                        label: Text('Liability'),
+                        label: Text(l10n.liability),
                       ),
                     ],
                     selected: {type},
@@ -90,17 +93,31 @@ class AccountManagementView extends StatelessWidget {
                         if (type != AccountType.liability) {
                           isCreditCard = false;
                         }
+                        if (type != AccountType.asset) {
+                          holdsInvestments = false;
+                        }
                       });
                     },
                   ),
                   // credit-card-household-flow: set once at creation,
                   // never changeable afterward - a Liability-only flag,
                   // mirroring the holdsInvestments pattern.
+                  if (type == AccountType.asset)
+                    CheckboxListTile(
+                      contentPadding: EdgeInsets.zero,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(l10n.thisAccountHoldsInvestments),
+                      subtitle: Text(l10n.thisAccountHoldsInvestmentsSubtitle),
+                      value: holdsInvestments,
+                      onChanged: (value) => setDialogState(
+                        () => holdsInvestments = value ?? false,
+                      ),
+                    ),
                   if (type == AccountType.liability)
                     CheckboxListTile(
                       contentPadding: EdgeInsets.zero,
                       controlAffinity: ListTileControlAffinity.leading,
-                      title: const Text('This is a credit card'),
+                      title: Text(l10n.thisIsACreditCard),
                       value: isCreditCard,
                       onChanged: (value) =>
                           setDialogState(() => isCreditCard = value ?? false),
@@ -108,17 +125,17 @@ class AccountManagementView extends StatelessWidget {
                   const SizedBox(height: AppSpacing.medium),
                   EntityPickerField<AccountGroup>(
                     key: ValueKey(type),
-                    labelText: 'Group',
+                    labelText: l10n.groupLabel,
                     items: groups,
                     idOf: (group) => group.id,
-                    labelOf: (group) => group.name,
+                    labelOf: (group) => localizeStoredName(l10n, group.name),
                     value: groupId,
                     onChanged: (value) => groupId = value,
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   MoneyAmountField(
                     controller: balanceController,
-                    labelText: 'Opening balance (optional)',
+                    labelText: l10n.openingBalanceOptional,
                     currency: selectedGroupCurrency ?? 'USD',
                     onChangedMinor: (value) => openingBalanceMinor = value,
                   ),
@@ -128,7 +145,7 @@ class AccountManagementView extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('Cancel'),
+                child: Text(l10n.actionCancel),
               ),
               ElevatedButton(
                 onPressed: groupId == null
@@ -142,12 +159,13 @@ class AccountManagementView extends StatelessWidget {
                           groupId: groupId!,
                           openingBalanceMinor: openingBalanceMinor,
                           isCreditCard: isCreditCard,
+                          holdsInvestments: holdsInvestments,
                         );
                         if (created && dialogContext.mounted) {
                           Navigator.of(dialogContext).pop();
                         }
                       },
-                child: const Text('Create'),
+                child: Text(l10n.actionCreate),
               ),
             ],
           );
@@ -160,16 +178,17 @@ class AccountManagementView extends StatelessWidget {
     BuildContext context,
     Account account,
   ) async {
+    final l10n = l10nOf(context);
     final controller = TextEditingController(text: account.name);
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Rename account'),
+        title: Text(l10n.renameAccount),
         content: TextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -183,7 +202,7 @@ class AccountManagementView extends StatelessWidget {
                 Navigator.of(dialogContext).pop();
               }
             },
-            child: const Text('Save'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -194,6 +213,7 @@ class AccountManagementView extends StatelessWidget {
     BuildContext context,
     AccountGroup group,
   ) async {
+    final l10n = l10nOf(context);
     final controller = TextEditingController(text: group.name);
     final currencyController = TextEditingController(text: group.currency);
     final hasActiveAccounts = viewModel.accounts.any(
@@ -202,7 +222,7 @@ class AccountManagementView extends StatelessWidget {
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Edit group'),
+        title: Text(l10n.editGroup),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -221,9 +241,9 @@ class AccountManagementView extends StatelessWidget {
                 ),
               ],
               decoration: InputDecoration(
-                labelText: 'Currency (ISO 4217)',
+                labelText: l10n.currencyIso,
                 helperText: hasActiveAccounts
-                    ? 'Cannot change currency while this group has active accounts.'
+                    ? l10n.errorCannotChangeGroupCurrencyWithAccounts
                     : null,
                 helperMaxLines: 2,
               ),
@@ -233,7 +253,7 @@ class AccountManagementView extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -258,7 +278,7 @@ class AccountManagementView extends StatelessWidget {
               }
               if (dialogContext.mounted) Navigator.of(dialogContext).pop();
             },
-            child: const Text('Save'),
+            child: Text(l10n.actionSave),
           ),
         ],
       ),
@@ -266,6 +286,7 @@ class AccountManagementView extends StatelessWidget {
   }
 
   Future<void> _showCreateGroupDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
     final nameController = TextEditingController();
     final currencyController = TextEditingController(
       text: _commonCurrencies.first,
@@ -276,7 +297,7 @@ class AccountManagementView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Create group'),
+          title: Text(l10n.createGroup),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -284,18 +305,18 @@ class AccountManagementView extends StatelessWidget {
                 TextField(
                   controller: nameController,
                   autofocus: true,
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  decoration: InputDecoration(labelText: l10n.name),
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 SegmentedButton<AccountGroupKind>(
-                  segments: const [
+                  segments: [
                     ButtonSegment(
                       value: AccountGroupKind.assetGroup,
-                      label: Text('Asset'),
+                      label: Text(l10n.asset),
                     ),
                     ButtonSegment(
                       value: AccountGroupKind.liabilityGroup,
-                      label: Text('Liability'),
+                      label: Text(l10n.liability),
                     ),
                   ],
                   selected: {kind},
@@ -328,8 +349,8 @@ class AccountManagementView extends StatelessWidget {
                           newValue.copyWith(text: newValue.text.toUpperCase()),
                     ),
                   ],
-                  decoration: const InputDecoration(
-                    labelText: 'Currency (ISO 4217, e.g. USD)',
+                  decoration: InputDecoration(
+                    labelText: l10n.currencyIsoExample,
                   ),
                   onChanged: (_) => setDialogState(() {}),
                 ),
@@ -339,7 +360,7 @@ class AccountManagementView extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(l10n.actionCancel),
             ),
             ElevatedButton(
               onPressed:
@@ -357,7 +378,7 @@ class AccountManagementView extends StatelessWidget {
                         Navigator.of(dialogContext).pop();
                       }
                     },
-              child: const Text('Create'),
+              child: Text(l10n.actionCreate),
             ),
           ],
         ),
@@ -369,13 +390,12 @@ class AccountManagementView extends StatelessWidget {
     BuildContext context,
     AccountGroup group,
   ) async {
+    final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Hide group from new entries?',
-      message:
-          '${group.name} will no longer be offered when creating or '
-          'reassigning accounts.',
-      confirmLabel: 'Hide',
+      title: l10n.hideGroupTitle,
+      message: l10n.hideGroupBody(localizeStoredName(l10n, group.name)),
+      confirmLabel: l10n.actionHide,
     );
     if (confirmed) await viewModel.archiveGroup(group.id);
   }
@@ -384,6 +404,7 @@ class AccountManagementView extends StatelessWidget {
     BuildContext context,
     Account account,
   ) async {
+    final l10n = l10nOf(context);
     final kind = account.type == AccountType.asset
         ? AccountGroupKind.assetGroup
         : AccountGroupKind.liabilityGroup;
@@ -408,19 +429,19 @@ class AccountManagementView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Reassign group'),
+          title: Text(l10n.reassignGroup),
           content: EntityPickerField<AccountGroup>(
-            labelText: 'Group',
+            labelText: l10n.groupLabel,
             items: groups,
             idOf: (group) => group.id,
-            labelOf: (group) => group.name,
+            labelOf: (group) => localizeStoredName(l10n, group.name),
             value: groupId,
             onChanged: (value) => setDialogState(() => groupId = value),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(l10n.actionCancel),
             ),
             ElevatedButton(
               onPressed: groupId == null
@@ -434,7 +455,7 @@ class AccountManagementView extends StatelessWidget {
                         Navigator.of(dialogContext).pop();
                       }
                     },
-              child: const Text('Save'),
+              child: Text(l10n.actionSave),
             ),
           ],
         ),
@@ -443,12 +464,12 @@ class AccountManagementView extends StatelessWidget {
   }
 
   Future<void> _confirmArchive(BuildContext context, Account account) async {
+    final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Hide account from new entries?',
-      message:
-          '${account.name} will no longer be available for new transactions.',
-      confirmLabel: 'Hide',
+      title: l10n.hideAccountTitle,
+      message: l10n.hideAccountBody(localizeStoredName(l10n, account.name)),
+      confirmLabel: l10n.actionHide,
     );
     if (confirmed) await viewModel.archiveAccount(account.id);
   }
@@ -457,22 +478,25 @@ class AccountManagementView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Accounts', style: AppTypography.headerTitle),
+        title: Text(
+          l10nOf(context).accountsTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         actions: [
           IconButton(
-            tooltip: 'Create group',
+            tooltip: l10nOf(context).createGroup,
             onPressed: () => _showCreateGroupDialog(context),
             icon: const Icon(TablerIcons.folderPlus),
           ),
           IconButton(
-            tooltip: 'Transfer',
+            tooltip: l10nOf(context).actionTransfer,
             onPressed: onTransfer,
             icon: const Icon(TablerIcons.arrowsExchange),
           ),
           IconButton(
-            tooltip: 'Import OFX',
+            tooltip: l10nOf(context).importOfx,
             onPressed: onImport,
             icon: const Icon(TablerIcons.fileImport),
           ),
@@ -489,9 +513,9 @@ class AccountManagementView extends StatelessWidget {
         builder: (context, _) => ListView(
           padding: const EdgeInsets.only(bottom: 80),
           children: [
-            if (viewModel.errorMessage != null)
+            if (viewModel.errorMessageFor(l10nOf(context)) != null)
               StatusBanner(
-                message: viewModel.errorMessage!,
+                message: viewModel.errorMessageFor(l10nOf(context))!,
                 onDismiss: viewModel.clearError,
               ),
             for (final group in viewModel.groups)
@@ -548,22 +572,28 @@ class _GroupAccounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Column(
       children: [
         ListTile(
-          title: Text(group.name, style: AppTypography.sectionLabel),
+          title: Text(
+            localizeStoredName(l10n, group.name),
+            style: AppTypography.sectionLabel,
+          ),
           subtitle: Text(
-            group.archived ? 'Hidden' : group.currency ?? 'No currency set',
+            group.archived
+                ? l10n.hiddenLabel
+                : group.currency ?? l10n.noCurrencySet,
             style: AppTypography.metadata,
           ),
           trailing: group.archived
               ? TextButton(
                   onPressed: onUnarchiveGroup,
-                  child: const Text('Restore'),
+                  child: Text(l10n.actionRestore),
                 )
               : group.isSystem
               ? IconButton(
-                  tooltip: 'Edit group',
+                  tooltip: l10n.editGroup,
                   icon: const Icon(TablerIcons.pencil),
                   onPressed: onRenameGroup,
                 )
@@ -576,14 +606,14 @@ class _GroupAccounts extends StatelessWidget {
                         onArchiveGroup();
                     }
                   },
-                  itemBuilder: (context) => const [
+                  itemBuilder: (context) => [
                     PopupMenuItem(
                       value: _GroupAction.rename,
-                      child: Text('Edit group'),
+                      child: Text(l10n.editGroup),
                     ),
                     PopupMenuItem(
                       value: _GroupAction.archive,
-                      child: Text('Hide'),
+                      child: Text(l10n.actionHide),
                     ),
                   ],
                 ),
@@ -594,7 +624,7 @@ class _GroupAccounts extends StatelessWidget {
             padding: const EdgeInsets.all(AppSpacing.large),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text('No accounts', style: AppTypography.metadata),
+              child: Text(l10n.homeNoAccounts, style: AppTypography.metadata),
             ),
           ),
         for (final account in accounts)
@@ -605,15 +635,22 @@ class _GroupAccounts extends StatelessWidget {
                   ? AppColors.textMuted
                   : AppColors.textSecondary,
             ),
-            title: Text(account.name, style: AppTypography.cardTitle),
+            title: Text(
+              localizeStoredName(l10n, account.name),
+              style: AppTypography.cardTitle,
+            ),
             subtitle: Text(
-              account.archived ? 'Hidden' : account.type.name,
+              account.archived
+                  ? l10n.hiddenLabel
+                  : account.type == AccountType.asset
+                  ? l10n.asset
+                  : l10n.liability,
               style: AppTypography.metadata,
             ),
             trailing: account.archived
                 ? TextButton(
                     onPressed: () => onUnarchiveAccount(account),
-                    child: const Text('Restore'),
+                    child: Text(l10n.actionRestore),
                   )
                 : PopupMenuButton<_AccountAction>(
                     onSelected: (action) {
@@ -626,18 +663,18 @@ class _GroupAccounts extends StatelessWidget {
                           onArchiveAccount(account);
                       }
                     },
-                    itemBuilder: (context) => const [
+                    itemBuilder: (context) => [
                       PopupMenuItem(
                         value: _AccountAction.rename,
-                        child: Text('Rename'),
+                        child: Text(l10n.actionRename),
                       ),
                       PopupMenuItem(
                         value: _AccountAction.reassign,
-                        child: Text('Reassign group'),
+                        child: Text(l10n.reassignGroup),
                       ),
                       PopupMenuItem(
                         value: _AccountAction.archive,
-                        child: Text('Hide'),
+                        child: Text(l10n.actionHide),
                       ),
                     ],
                   ),

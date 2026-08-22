@@ -4,6 +4,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -25,22 +26,22 @@ class RecurringTemplateManagementView extends StatelessWidget {
     BuildContext context,
     RecurringTemplate template,
   ) async {
+    final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
-      title: 'Delete recurring template?',
-      message:
-          '${template.name} will no longer be offered as due. Past '
-          'transactions it already recorded are unaffected.',
-      confirmLabel: 'Delete',
+      title: l10n.deleteTemplateTitle,
+      message: l10n.deleteTemplateBody(template.name),
+      confirmLabel: l10n.actionDelete,
     );
     if (confirmed) await viewModel.deleteTemplate(template.id);
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recurring templates', style: AppTypography.headerTitle),
+        title: Text(l10n.recurringTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -56,7 +57,7 @@ class RecurringTemplateManagementView extends StatelessWidget {
           if (viewModel.templates.isEmpty) {
             return Center(
               child: Text(
-                'No recurring templates yet',
+                l10n.noRecurringYet,
                 style: AppTypography.body.copyWith(color: AppColors.textMuted),
               ),
             );
@@ -82,7 +83,7 @@ class RecurringTemplateManagementView extends StatelessWidget {
                   ),
                   title: Text(template.name, style: AppTypography.cardTitle),
                   subtitle: Text(
-                    'Day ${template.dayOfMonth} of the month - '
+                    '${l10n.dayOfMonthLine('${template.dayOfMonth}')}'
                     '${formatAmountMinor(template.amountMinor, currency ?? 'USD')}'
                     '${currency == null ? '' : ' $currency'}',
                     style: AppTypography.metadata,
@@ -132,13 +133,14 @@ class RecurringTemplateManagementView extends StatelessWidget {
             ? null
             : viewModel.financialAccounts.first.id);
     String? categoryId = existing?.categoryId;
-    var errorMessage = viewModel.errorMessage;
+    var errorMessage = viewModel.errorMessageFor(l10nOf(context));
     var initialAmountSet = false;
 
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) {
+          final l10n = l10nOf(context);
           final currency = viewModel.currencyFor(financialAccountId) ?? 'USD';
           if (!initialAmountSet && existing != null) {
             initialAmountSet = true;
@@ -148,7 +150,9 @@ class RecurringTemplateManagementView extends StatelessWidget {
             );
           }
           return AlertDialog(
-            title: Text(existing == null ? 'Add template' : 'Edit template'),
+            title: Text(
+              existing == null ? l10n.addTemplate : l10n.editTemplate,
+            ),
             content: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -156,18 +160,18 @@ class RecurringTemplateManagementView extends StatelessWidget {
                 children: [
                   TextField(
                     controller: nameController,
-                    decoration: const InputDecoration(labelText: 'Name'),
+                    decoration: InputDecoration(labelText: l10n.name),
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   SegmentedButton<TransactionDirection>(
-                    segments: const [
+                    segments: [
                       ButtonSegment(
                         value: TransactionDirection.moneyIn,
-                        label: Text('Received'),
+                        label: Text(l10n.captureReceived),
                       ),
                       ButtonSegment(
                         value: TransactionDirection.moneyOut,
-                        label: Text('Spent'),
+                        label: Text(l10n.captureSpent),
                       ),
                     ],
                     selected: {direction},
@@ -180,20 +184,22 @@ class RecurringTemplateManagementView extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   EntityPickerField<Account>(
-                    labelText: 'Account',
+                    labelText: l10n.account,
                     items: viewModel.financialAccounts,
                     idOf: (account) => account.id,
-                    labelOf: (account) => account.name,
+                    labelOf: (account) =>
+                        localizeStoredName(l10n, account.name),
                     value: financialAccountId,
                     onChanged: (value) =>
                         setDialogState(() => financialAccountId = value),
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   EntityPickerField<Account>(
-                    labelText: 'Category',
+                    labelText: l10n.category,
                     items: viewModel.categoriesFor(direction),
                     idOf: (category) => category.id,
-                    labelOf: (category) => category.name,
+                    labelOf: (category) =>
+                        localizeStoredName(l10n, category.name),
                     value: categoryId,
                     onChanged: (value) =>
                         setDialogState(() => categoryId = value),
@@ -201,7 +207,7 @@ class RecurringTemplateManagementView extends StatelessWidget {
                   const SizedBox(height: AppSpacing.medium),
                   MoneyAmountField(
                     controller: amountController,
-                    labelText: 'Amount',
+                    labelText: l10n.amount,
                     currency: currency,
                     suffixText: currency,
                     onChangedMinor: (_) {},
@@ -210,10 +216,9 @@ class RecurringTemplateManagementView extends StatelessWidget {
                   TextField(
                     controller: dayController,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Day of month (1-31)',
-                      helperText:
-                          'A month with fewer days uses its own last day.',
+                    decoration: InputDecoration(
+                      labelText: l10n.dayOfMonth,
+                      helperText: l10n.dayOfMonthNote,
                       helperMaxLines: 2,
                     ),
                   ),
@@ -232,7 +237,7 @@ class RecurringTemplateManagementView extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(dialogContext).pop(),
-                child: const Text('Cancel'),
+                child: Text(l10n.actionCancel),
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -250,8 +255,7 @@ class RecurringTemplateManagementView extends StatelessWidget {
                       amountMinor == null ||
                       dayOfMonth == null) {
                     setDialogState(
-                      () => errorMessage =
-                          'Fill in every field with a valid amount and day.',
+                      () => errorMessage = l10n.validationFillTemplateFields,
                     );
                     return;
                   }
@@ -276,10 +280,14 @@ class RecurringTemplateManagementView extends StatelessWidget {
                   if (ok && dialogContext.mounted) {
                     Navigator.of(dialogContext).pop();
                   } else {
-                    setDialogState(() => errorMessage = viewModel.errorMessage);
+                    setDialogState(
+                      () => errorMessage = viewModel.errorMessageFor(l10n),
+                    );
                   }
                 },
-                child: Text(existing == null ? 'Add' : 'Save'),
+                child: Text(
+                  existing == null ? l10n.actionAdd : l10n.actionSave,
+                ),
               ),
             ],
           );

@@ -52,7 +52,7 @@ void main() {
         ),
       );
 
-      expect(find.text('Recovery phrase (all 24 words)'), findsOneWidget);
+      expect(find.text('Recovery phrase (all 24 words)'), findsNWidgets(2));
       await tester.enterText(find.byType(TextField).first, 'word1 word2 word3');
       await tester.tap(find.text('Restore'));
       await tester.pump();

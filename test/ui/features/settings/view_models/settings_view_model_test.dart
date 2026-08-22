@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
+import 'package:smara_accounting/domain/models/quote_provider.dart';
+import 'package:smara_accounting/domain/models/research_tool.dart';
 import 'package:smara_accounting/ui/features/settings/view_models/settings_view_model.dart';
 
 import '../../../../mocks.mocks.dart';
@@ -26,6 +28,15 @@ void main() {
     when(
       settingsRepository.selectedProvider(),
     ).thenAnswer((_) async => ExchangeRateProvider.frankfurter);
+    when(
+      settingsRepository.isMarketPriceFetchEnabled(),
+    ).thenAnswer((_) async => true);
+    when(
+      settingsRepository.selectedQuoteProvider(),
+    ).thenAnswer((_) async => QuoteProvider.stooq);
+    when(
+      settingsRepository.selectedResearchTool(),
+    ).thenAnswer((_) async => ResearchTool.chatGpt);
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
     viewModel = SettingsViewModel(
       settingsRepository: settingsRepository,
@@ -101,7 +112,9 @@ void main() {
         expect(ok, isFalse);
         expect(
           viewModel.backupErrorMessage,
-          equals('belongs to a different identity'),
+          equals(
+            'This backup belongs to a different signing identity than the one on this device.',
+          ),
         );
       },
     );
@@ -122,7 +135,10 @@ void main() {
         );
 
         expect(ok, isFalse);
-        expect(viewModel.backupErrorMessage, equals('not a valid backup'));
+        expect(
+          viewModel.backupErrorMessage,
+          equals('This file is not a valid Smara backup.'),
+        );
       },
     );
 

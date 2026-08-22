@@ -4,10 +4,10 @@ import 'package:test/test.dart';
 
 void main() {
   group('RecoveryPhrase.generate', () {
-    test('produces a 24-word phrase', () {
+    test('uses the English BIP39 wordlist regardless of other languages', () {
+      final english = Language.english.list.toSet();
       final phrase = RecoveryPhrase.generate();
-
-      expect(phrase.words, hasLength(24));
+      expect(phrase.words.every(english.contains), isTrue);
     });
 
     test('produces different words on each call', () {

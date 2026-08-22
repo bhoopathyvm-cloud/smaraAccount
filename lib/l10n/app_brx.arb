@@ -1,0 +1,968 @@
+{
+  "@@locale": "brx",
+  "appTitle": "स्मारा खाता",
+  "navHome": "घर",
+  "navRegister": "रेजिष्टार",
+  "navSummary": "सार",
+  "navAccounts": "खाताफोर",
+  "navCategories": "थाखोफोर",
+  "actionCancel": "बातिल",
+  "actionSave": "थिना हो",
+  "actionDelete": "मेटथार",
+  "actionDone": "जाबाय",
+  "actionContinue": "थां जा",
+  "actionDismiss": "बन्द",
+  "actionRetry": "फिन नाजा",
+  "actionSkip": "आगजाब",
+  "actionConfirm": "गोदान खालाम",
+  "actionAdd": "दाजाब",
+  "actionEdit": "सुद्रांथि",
+  "actionRename": "मुंसुद्रांथि",
+  "actionHide": "गुमुर",
+  "actionCreate": "सोरजि",
+  "actionCloseApp": "एप बन्द खालाम",
+  "actionUnlock": "लाक खोला",
+  "actionSettle": "मिटायथि",
+  "actionFinish": "जोबथा",
+  "actionPreview": "गिबि नु",
+  "actionImport": "आयात",
+  "actionExportCsv": "CSV एक्सपोर्ट",
+  "actionChooseFile": "फाइल सायख",
+  "actionRestore": "फिन दिन",
+  "actionFix": "सुद्रि",
+  "actionBuy": "फोजाब",
+  "actionSell": "सायख फोरो",
+  "actionDividend": "लाभांश",
+  "actionRecordBuy": "फोजाबनाय दर्ज खालाम",
+  "actionRecordSell": "फोरोनाय दर्ज खालाम",
+  "actionRecordDividend": "लाभांश दर्ज खालाम",
+  "actionPayCard": "कार्ड बिबार",
+  "actionTransfer": "ट्रांसफार",
+  "actionRecordTransaction": "लेनदेन दर्ज खालाम",
+  "actionImportStatement": "स्टेटमेंट आयात",
+  "actionClearDates": "तारीख साफ",
+  "actionClearSearch": "नागिरनाय आरो फिल्टार साफ",
+  "actionUseBiometrics": "बायोमेट्रिक बिबार",
+  "actionSetPin": "पिन थि",
+  "actionChangePin": "पिन सोलाय",
+  "actionSaveBackup": "बैकअप थिना हो",
+  "actionRestoreBackup": "बैकअप फिन दिन",
+  "actionSaveRule": "नियम थिना हो",
+  "actionConfirmFix": "सुद्रिनाय गोदान खालाम",
+  "captureSpent": "फोरजाब",
+  "captureReceived": "मोन",
+  "captureMovedMoney": "रां ओंथि खालामबाय",
+  "captureImportStatement": "स्टेटमेंट आयात",
+  "settingsTitle": "सेटिं",
+  "settingsLanguage": "राव",
+  "settingsLanguageSystem": "डिभाइसनि राव",
+  "settingsFetchFxRates": "सन्दर्भ मुद्रा रेट मोन",
+  "settingsFetchFxRatesSubtitle": "गुबुन मुद्रा ट्रांसफारआव लक्ष्य राशिनि सोदोबाव एबि बजार रेट खौ दिन्थि, तुलना खायनोखिनि - कुनैबो समाव राशि दाजाबनोआव बिबार खालामनि",
+  "settingsRateProvider": "रेट देनाय संस्था",
+  "settingsFetchMarketPrices": "निबेस आयदा बजार दाम मोन",
+  "settingsFetchMarketPricesSubtitle": "टिकर एबा ISIN थांनाय साधनफोरनि सिबसिन दाम सायख, पोर्टफोलियोनि दाम आगमबाब खालामनो। कुनैबो समाव व्यापार दर्ज खालामनो बिबार खालामनि, आरो नंगौ कतोब दंनाय अराव खालामनि।",
+  "settingsMarketPriceProvider": "बजार दाम देनाय संस्था",
+  "settingsFavouriteResearchTool": "फोरमान अनुसंधान टूल",
+  "settingsFavouriteResearchToolSubtitle": "होल्डिंगआव साधननि मुं टाब खालामनाय ब्राउजारआव बे टूलखौ अनुसंधान प्रोम्प्टजों खेव - एखे एकीकरण नङा, आरो सलाहबो नङा।",
+  "settingsBackup": "बैकअप",
+  "settingsBackupBlurb": "नोंथांनि बुखिनि इंक्रिप्ट खालामनाय कापि नोंथांनि सायखनाय जायगायाव थिना दो, एबा एखेनिफ्राय फिन दिन। बे नोंथांनि रिकभरि फ्रेजनिफ्राय एबा कीस्टोर फाइलनिफ्राय अलग, जायखौ नोंथांनि साइनिं की थिना दो, बुखि नङा।",
+  "settingsLock": "लाक",
+  "settingsLockBlurb": "एप खोलनो पिन, एबा बायोमेट्रिक जेराव मोनो हाया।",
+  "settingsRequireUnlock": "एप खोलनो अनलाक नंगौ",
+  "settingsLockAfter": "बाथिनि उन्दै लाक",
+  "settingsLockImmediately": "थाबैलाय",
+  "settingsLock1Minute": "1 मिनिट",
+  "settingsLock5Minutes": "5 मिनिट",
+  "settingsLock15Minutes": "15 मिनिट",
+  "settingsAllowBiometrics": "बायोमेट्रिकबो हाया",
+  "settingsHideSnapshot": "एप स्विचारआव बेलेंस गुमुर",
+  "settingsHideSnapshotSubtitle": "नोंथां गुबुन एपआव सोलायबाय समाव बे स्क्रिनखौ गुमुर, जायलानाय बे एप स्विचारआव सोदोबसारै नुनो हायाब्ला।",
+  "settingsHideSnapshotUnavailable": "एप स्विचारआव बेलेंस गुमुरनाय बे प्लेटफर्मआव मोनैआ।",
+  "settingsPayees": "पेइफोर",
+  "settingsManagePayees": "पेइफोर बेवस्था खालाम",
+  "settingsPayeesBlurb": "मोनथिनाय पेइनि मुं आरो बिथांनि डिफल्ट थाखो आरो खाता, लेनदेन दर्ज खालामनाय समाव अटोकम्प्लिटजों सुझाबदों।",
+  "settingsRecurring": "फिन-फिन जायगा टेम्पलेट",
+  "settingsManageRecurring": "फिन-फिन जायगा टेम्पलेट बेवस्था खालाम",
+  "settingsRecurringBlurb": "बिल एबा आय जायदि दान-दान होयो, गुदि भाड़ा एबा दरमोहा। नंगौ टेम्पलेट घरनि पेजआव सायख नुथाब, दर्ज खालामनो सा टाबबो नंगौ - सुनाव-सुनाव पोस्ट खालामाखै।",
+  "settingsAbout": "बारे",
+  "providerFrankfurter": "फ्रैंकफर्टार (ECB रेट)",
+  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
+  "providerStooq": "स्टूक (दान-दान कोट)",
+  "providerYahooFinance": "याहू फाइनांस (चार्ट API)",
+  "researchChatGpt": "ChatGPT",
+  "researchClaude": "Claude",
+  "researchGemini": "Gemini",
+  "researchMetaAi": "Meta AI",
+  "systemGroupCashEquivalents": "रां आरो रांनि दोबथि जिनिस",
+  "systemGroupPensionRetirement": "पेंसन आरो रिटायरमेंट",
+  "systemGroupCreditShortTerm": "क्रेडिट आरो गुदि सम बाथिनि रिन",
+  "systemGroupLoansMortgages": "रिन आरो मर्टगेज",
+  "systemGroupInvestments": "निबेस",
+  "systemAccountCashBank": "रां आरो बेंक",
+  "systemCategorySalary": "दरमोहा",
+  "systemCategoryOtherIncome": "गुबुन आय",
+  "systemCategoryGroceries": "बाजार-साजार",
+  "systemCategoryRentMortgage": "भाड़ा/मर्टगेज",
+  "systemCategoryUtilities": "यूटिलिटि",
+  "systemCategoryTransport": "यागायनाय-रावगायनाय",
+  "systemCategoryFoodOut": "बारागिरि जौलाबनाय",
+  "systemCategoryPhone": "फोन",
+  "systemCategoryHealth": "हेल्थ",
+  "systemCategoryOtherExpense": "गुबुन फोरजाब",
+  "homeThisMonth": "बे दान",
+  "homeMoneyInTransit": "रां रस्तायाव दं",
+  "homeWhatYouHaveMinusWhatYouOwe": "नोंथांनि दंनाय बाद नोंथांनि रिन",
+  "homeWhatYouHave": "नोंथांनि दं {amount} {currency}",
+  "@homeWhatYouHave": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNetPosition": "{amount} {currency}",
+  "@homeNetPosition": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "homeHaveAndOwe": "नोंथांनि दं {haveAmount} {currency}  •  नोंथांनि रिन {oweAmount} {currency}",
+  "@homeHaveAndOwe": {
+    "placeholders": {
+      "haveAmount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "oweAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentFrom": "नोंथांयो {name} निफ्राय {amount} {currency} दैथाय",
+  "@youSentFrom": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youSentTo": "नोंथांयो {name} खौ {amount} {currency} दैथाय",
+  "@youSentTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hiddenLabel": "गुमुरबाय",
+  "allAccounts": "गासैबो खाता",
+  "savedToPath": "{path} आव थिनाबाय",
+  "@savedToPath": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportFailed": "कीस्टोर फाइल एक्सपोर्ट खालामनो हायाखै। नोंथांयो बे बाथ्रा आगजाबनो हागोन।",
+  "enterPassphraseToProtect": "फाइलखौ रोखा खालामनो सा पासफ्रेज बागार।",
+  "homeTapWhenArrived": "मा फैयोब्ला मिथिबाय समाव टाब खालाम",
+  "homeReturnedTo": "{name} आव फिन फैबाय",
+  "@homeReturnedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDueToday": "गिदिं नंगौ",
+  "homeDueLine": "{category} · {account} · दर्ज खालामनो टाब खालाम",
+  "@homeDueLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOverLimit": "सिमानिखौ बांसिनबाय",
+  "homeSpentOfLimit": "{limit} नि {spent}",
+  "@homeSpentOfLimit": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRemaining": "उलिबाय: {amount}",
+  "@homeRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNoAccounts": "खाता जायेंगा",
+  "homeCashRegister": "रां रेजिष्टार",
+  "homeMarketEstimate": "बजार आगमबाब",
+  "registerTitle": "रेजिष्टार",
+  "registerSearchHint": "बर्नना, थाखो, एबा राशि",
+  "registerNoTransactions": "दानि तक लेनदेन जायेंगा",
+  "registerNoEntries": "दानि तक कुनैबो एंट्री दर्ज खालामाखै।",
+  "registerSpentOnly": "फोरजाबखिनि",
+  "registerReceivedOnly": "मोननायखिनि",
+  "registerAll": "गासैबो",
+  "registerUnverified": "गोदान खालामाखै - सारनिफ्राय बाहरै",
+  "registerSuperseded": "पुनर्गठननायजों बदलबाय - सारनिफ्राय बाहरै",
+  "summaryTitle": "सार",
+  "summaryTotalIncome": "गासै आय",
+  "summaryTotalExpense": "गासै फोरजाब",
+  "summaryDateRange": "{start} निफ्राय {end}",
+  "@summaryDateRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsTitle": "खाताफोर",
+  "categoriesTitle": "थाखोफोर",
+  "accountName": "खातानि मुं",
+  "createAccount": "खाता सोरजि",
+  "createGroup": "दल सोरजि",
+  "editGroup": "दल सुद्रांथि",
+  "renameAccount": "खातानि मुं सोलाय",
+  "renameCategory": "थाखोनि मुं सोलाय",
+  "addCategory": "थाखो दाजाब",
+  "groupLabel": "दल",
+  "kindLabel": "बिजाब",
+  "asset": "सोमाव जिनिस",
+  "liability": "रिन",
+  "income": "आय",
+  "expense": "फोरजाब",
+  "thisAccountHoldsInvestments": "बे खाताया निबेस दंख",
+  "thisAccountHoldsInvestmentsSubtitle": "रां लांबो फोजाब, फोरो, आरो लाभांशजों दर्ज खालामनाय इन्भेंटरि।",
+  "thisIsACreditCard": "बे क्रेडिट कार्ड",
+  "openingBalanceOptional": "खुलिनाय बेलेंस (जरूरी नङा)",
+  "currencyIso": "करेंसी (ISO 4217)",
+  "currencyIsoExample": "करेंसी (ISO 4217, गुदि USD)",
+  "hideAccountTitle": "फिसा एंट्रिनिफ्राय खाताखौ गुमुरनांगौ?",
+  "hideCategoryTitle": "फिसा एंट्रिनिफ्राय थाखोखौ गुमुरनांगौ?",
+  "hideGroupTitle": "फिसा एंट्रिनिफ्राय दलखौ गुमुरनांगौ?",
+  "reassignGroup": "दल फिन थि",
+  "transferRemainingBalance": "उलिनाय बेलेंस ट्रांसफार खालाम",
+  "monthlyLimit": "दान-दाननि सिमा",
+  "monthlyLimitHint": "सिमा (साफ खालामनो सा गुबै था)",
+  "monthlyLimitBlurb": "बे फोरजाब थाखोआ बाबदि दान-दाननि फोरजाबनि सिबसिन आगमबाब निर्देश।",
+  "manageCategoryRules": "थाखो नियमफोर बेवस्था खालाम",
+  "amount": "राशि",
+  "category": "थाखो",
+  "account": "खाता",
+  "fromAccount": "खातानिफ्राय",
+  "toAccount": "खाताआव",
+  "descriptionOptional": "बर्नना (जरूरी नङा)",
+  "alsoRememberPayee": "पेइबो हुद्रि थिना दो",
+  "splitIntoCategories": "गिबि थाखोआव भाग खालाम",
+  "categoryN": "थाखो {n}",
+  "@categoryN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "destinationAmount": "जायगा राशि",
+  "destinationAmountOptional": "जायगा राशि (जरूरी नङा)",
+  "accountCurrencyAmountOptional": "खाता-करेंसी राशि (जरूरी नङा)",
+  "transactionCurrencyOptional": "लेनदेन करेंसी (जरूरी नङा)",
+  "feeOptional": "फी (जरूरी नङा)",
+  "feeAmount": "फी राशि",
+  "feeCategory": "फी थाखो",
+  "feeDescriptionOptional": "फी बर्नना (जरूरी नङा)",
+  "feeDeducted": "फी उन्दैनि राशिनिफ्राय गुबैबाय",
+  "needTwoAccountsToTransfer": "ट्रांसफार खालामनो बेसेनजादों दुखान सक्रिय खाता सोरजिनांगौ।",
+  "whatArrivedTitle": "मा फैबाय?",
+  "whatArrivedBlurb": "मा गोदाननानै फैबाय बेखौ बुंदो।",
+  "amountThatArrived": "फैनाय राशि",
+  "feeLossCategory": "फी / गोमानथि थाखो",
+  "alreadySettled": "मिटायबाय जायो।",
+  "holdingsTitle": "होल्डिं",
+  "holdingsCash": "रां",
+  "holdingsInventory": "इन्भेंटरि",
+  "holdingsBook": "बुक (रां + दाम) {amount} {currency}",
+  "@holdingsBook": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsMarketEstimate": "बजार आगमबाब {amount} {currency}",
+  "@holdingsMarketEstimate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsNoHoldings": "दानि तक होल्डिं जायेंगा। साधन दाजाबनो सा फोजाब दर्ज खालाम।",
+  "holdingsQuotesBlurb": "कोट आगमबाब, ब्रोकार दाम नङा। बे एपा आर्डार दिनि।",
+  "holdingsTapNameToResearch": "अनुसंधाननो मुंआव टाब खालाम। कोटफोर आगमबाब, सलाह नङा।",
+  "instrument": "साधन",
+  "newInstrument": "फिसा साधन",
+  "renameInstrument": "साधननि मुं सोलाय",
+  "instrumentActions": "साधननि खालामफोर",
+  "hideInstrumentTitle": "{name} गुमुरनांगौ?",
+  "@hideInstrumentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "tickerOptional": "टिकर (जरूरी नङा)",
+  "isinOptional": "ISIN (जरूरी नङा)",
+  "quantity": "मान",
+  "unitPrice": "यूनिट दाम",
+  "brokerageOptional": "ब्रोकरेज (जरूरी नङा)",
+  "brokerageExpenseCategory": "ब्रोकरेज फोरजाब थाखो",
+  "incomeCategory": "आय थाखो",
+  "gainIncomeCategory": "फाइदा आय थाखो",
+  "lossExpenseCategory": "गोमानथि फोरजाब थाखो",
+  "nonCash": "रां नङा",
+  "cash": "रां",
+  "locked": "लाकबाय",
+  "lockUntilHint": "नोंथांनि गिबि सिमानि हुद्रि, ब्रोकार नियम नङा।",
+  "instrumentKindStock": "स्टक",
+  "instrumentKindEtf": "ETF",
+  "instrumentKindMutualFund": "म्युचुअल फंड",
+  "instrumentKindBond": "बंड",
+  "instrumentKindOther": "गुबुन",
+  "quoteUseLive": "लाइभ दाम",
+  "quoteUseCached": "क्यास खालामनाय दाम",
+  "quoteUseStale": "बांसि दिनैनि दाम नङा",
+  "quoteUseMissing": "दाम बिबार खालामबाय (कोट जायेंगा)",
+  "quoteUseDisabled": "कोट बन्द — दाम/क्यास बिबार खालामबाय",
+  "quoteUseCurrencyMismatch": "दाम बिबार खालामबाय (दामनि करेंसी अलग)",
+  "unrealizedLabel": "गोनांथिआ फाइदा {amount} {currency}",
+  "@unrealizedLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "holdingsUnitsCost": "{qty} यूनिट · ",
+  "@holdingsUnitsCost": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "recoveryPhraseTitle": "नोंथांनि रिकभरि फ्रेज",
+  "recoveryPhraseConfirmTitle": "नोंथांनि फ्रेज गोदान खालाम",
+  "recoveryPhraseBlurb": "बे 24 सोदोब मात्र रस्ता जायखौलायनानै बे डिभाइस गोमानथि जाबाय, रिसेट जाबाय, एबा सोलायबाय समाव नोंथांनि लेनदेन इतिहास फिन मोननि। स्मारा खाताया सर्भार जायेंगा आरो बेखौ नोंथांनिखायनो फिन मोननो हायाखै।\n\nनोंथांयो बे डिभाइस आरो बे फ्रेजखौ जोबोरै गोमानथि खालामबाब्ला, नोंथांयो दर्ज खालामबाय गासैबो लेनदेन थाबैनोबाबो गोदान खालामनो हायाखै जागोन।",
+  "recoveryPhraseWriteDown": "बे सोदोबफोरखौ क्रमआव लिख आरो बेखौ बे डिभाइसनिफ्राय अलग रोखाथाब जायगायाव थिना दो।",
+  "iveSavedRecoveryPhrase": "आं नोंनि रिकभरि फ्रेज थिनाबाय",
+  "confirmPhraseBlurb": "नोंथांयो दानि थिनाबाय फ्रेजनिफ्राय गोयनांनाय सोदोबफोर बागार।",
+  "wordNumber": "सोदोब #{n}",
+  "@wordNumber": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "keystoreExportTitle": "कीस्टोर फाइल एक्सपोर्ट खालाम",
+  "keystoreExportBlurb": "नोंथांनि रिकभरि फ्रेजनि सांग्रांथि, नोंथांयो सायखनाय पासफ्रेजजों रोखा खालामनाय इंक्रिप्ट खालामनाय कीस्टोर फाइल थिना दोनो हागोन। बे जरूरी नङा - नोंथांनि रिकभरि फ्रेज गिबिनोबाबो नोंथांनि साइनिं की फिन मोननो गोबां।",
+  "keystorePassphrase": "पासफ्रेज",
+  "exportKeystoreFile": "कीस्टोर फाइल एक्सपोर्ट खालाम",
+  "chooseCurrencyTitle": "नोंथांनि करेंसी सायख",
+  "chooseCurrencyBlurb": "गासैबो खाता दल (रां आरो रांनि दोबथि जिनिस, पेंसन आरो रिटायरमेंट, ...) दानिखिनि बे सा करेंसी बिबार खालामदों। नोंथांयो सिगाংआव फिसा दल सोरजिनानै गुबुन करेंसीआव खाता दाजाबनो हायो।",
+  "currencyBackfillTitle": "मोनथिनाय दलफोराव सा करेंसी सायख",
+  "currencyBackfillBlurb": "बे एपा दानि गिबि करेंसी सहायता खालामदों। नोंथांनि मोनथिनाय खाता आरो खाता दलफोरनो सा करेंसी नंगौ - बे फिचार जायनि सिगां बिफोरखौ बेवस्था खालामबाय, गुबै सायखनायआ बिफोर गासैबोखायनो लागुगोन।",
+  "firstAccountTitle": "नोंथांनि खातानि मुं थि",
+  "firstAccountBlurb": "बेयो नोंथांखायनो सिगाংनिफ्राय बेवस्था खालामबाय खाता - बेखौ नोंथांयो सिनायथिनाय मुं गुदि नोंथांनि बेंकनि मुं थि। नोंथांयो सिगां सा फोजाब एबा मोननाय दर्ज खालामनांगौ, बादि डिभाइसखौ नोंथांनि रिकभरि फ्रेजजों रोखाथाब।",
+  "whatsMainAccountCalled": "नोंथांनि गाहाय खातानि मुं मा?",
+  "restoreTitle": "साइनिं की फिन दिन",
+  "restoreBlurb": "बे डिभाइसआव मोनथिनाय बुखि दं, फेब्ला मिलनाय साइनिं की जायेंगा। नोंथांनि थिनाबाय रिकभरि फ्रेज एबा कीस्टोर फाइलनिफ्राय बेखौ फिन दिन - नोंथांनि डाटा साधारनकुथि गोदान खालामगोन, आरो कुनैबो फिन-साइन एबा सोलायनाय जागोन।",
+  "recoveryPhrase24": "रिकभरि फ्रेज (गासैबो 24 सोदोब)",
+  "keystoreFile": "कीस्टोर फाइल",
+  "keystoreFileContents": "कीस्टोर फाइलनि गुदान",
+  "optionalBackupFile": "जरूरी नङानाय बैकअप फाइल",
+  "iDontHavePhrase": "आंनो रिकभरि फ्रेज एबा कीस्टोर फाइल जायेंगा",
+  "migrationTitle": "फिसा कीआव पुनर्गठन खालाम",
+  "migrationBlurb": "नोंथांनि रिकभरि फ्रेज एबा कीस्टोर फाइल जायेंगाबो, बे डिभाइसनि साइनिं कीखौ फिन मोननो हायाखै। नोंथांयो फिसा की सिगां खालामनो हागोन। दानिनि एंट्रिफोर नुनैनो थांगोन एबाब बदलबाय जागोन।",
+  "iConfirmBooksValid": "आं दानिनि बुखि थार जागोन गोदान खालामदों",
+  "whyWeDontEdit": "बुखिय गोबां जोबथानाय एंट्री मानो सुद्रांथियै",
+  "whyWeDontEditBody": "नोंथांयो सा गोरोन्थि सुद्रिबाब्ला, बुयो जोबथा लाइनखौ थिना दोनानै बेनि सोदोबसार सुद्रिनाय दाजाबदों, नोंथांयो दाजाबबाय बेखौ सोलायनाय नङा। बेनि थाखाय नोंथांनि इतिहासा जायखिजाबाय आरो मानाव सुद्रिबाय बेखौ थार दिन्थिनाय थादों — नोंथांनि गिबारि गोयै कुनैबो सोलायाखै।",
+  "lockTitle": "अनलाक",
+  "lockScreenTitle": "लाकबाय",
+  "enterPinToContinue": "थां जानो पिन बागार",
+  "pinLabel": "पिन",
+  "setPinTitle": "पिन सा थि",
+  "currentPin": "दानिनि पिन",
+  "newPin": "फिसा पिन",
+  "confirmPin": "पिन गोदान खालाम",
+  "confirmNewPin": "फिसा पिन गोदान खालाम",
+  "firstWeekTitle": "नोंथांनि खाताफोर बेवस्था खालाम",
+  "addCashAccount": "रां खाता दाजाब",
+  "addCreditCard": "क्रेडिट कार्ड दाजाब",
+  "cashAccountName": "रां खातानि मुं",
+  "cardName": "कार्डनि मुं",
+  "paidFromBank": "बेंकनिफ्राय दिनाय",
+  "paidFromCard": "कार्डनिफ्राय दिनाय",
+  "choosePassphraseTitle": "बे बैकअपखौ रोखा खालामनो सा पासफ्रेज सायख। नोंथांयो हुद्रि गोमानथि खालामबाब्ला फिन मोननाय जायेंगा।",
+  "replaceBooksTitle": "नोंथांनि लोकल बुखिखौ बदलनांगौ?",
+  "replaceBooksBody": "बेयो बैकअपजों बे एपआव दानि थानाय गासैबो बदलदों। बादिनो एपखौ बन्द खालामनानै फिन खेव।",
+  "chooseBackupFileFirst": "सिगां सा बैकअप फाइल सायख।",
+  "backupRestored": "बैकअप फिन दिनबाय",
+  "backupRestoredBody": "नोंथांनि बुखि फिन दिनबाय जायो। थां जानो एपखौ बन्द खालामनानै फिन खेव।",
+  "fixThisEntry": "बे एंट्रिखौ सुद्रि",
+  "fixBlurb": "जोबथा लाइन जेराव बाहागोन बादियो थादों। गोदान खालामनायाव सा फिन-बाहागोन लाइन आरो सुद्रिबाय बे दाजाबदों।",
+  "importStatementTitle": "स्टेटमेंट आयात खालाम",
+  "importOfx": "OFX आयात",
+  "importOfxQfxFile": "OFX / QFX फाइल आयात",
+  "importCsvFile": "CSV फाइल आयात",
+  "whatKindOfStatement": "नोंथांनि गुबान बिजाबनि स्टेटमेंट फाइल दं?",
+  "chooseAccountForFile": "बे फाइल गुबान खाताखायनो थायो सायख।",
+  "importIntoAccount": "खाताआव आयात खालाम",
+  "useSavedProfile": "थिनाबाय प्रोफाइल बिबार खालाम",
+  "saveMappingProfile": "बे मैपिंगखौ प्रोफाइल बादि थिना हो (जरूरी नङा)",
+  "renameProfile": "प्रोफाइलनि मुं सोलाय",
+  "deleteProfileTitle": "प्रोफाइल मेटथारनांगौ?",
+  "fileHasHeader": "फाइलआव हेडार लाइन दं",
+  "dateColumn": "तारीख कलम",
+  "dateFormatHint": "तारीखनि फर्मेट (गुदि dd/MM/yyyy)",
+  "amountColumn": "राशि कलम",
+  "amountConvention": "राशि नियम",
+  "signedAmountColumn": "साइन खालामनाय राशि कलम",
+  "separateDebitCredit": "अलग डेबिट / क्रेडिट कलम",
+  "debitColumn": "डेबिट कलम",
+  "creditColumn": "क्रेडिट कलम",
+  "decimalSeparator": "दशमलव चिन (. एबा ,)",
+  "descriptionColumns": "बर्नना कलम(फोर)",
+  "referenceIdColumn": "रेफरेंस id कलम (जरूरी नङा)",
+  "skippedRows": "आगजाबबाय रो",
+  "parsedTransactionCount": "{count} लेनदेन पार्स खालामबाय",
+  "@parsedTransactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "skippedOrExcludedCount": "{count} आगजाबबाय एबा बाहर खालामबाय",
+  "@skippedOrExcludedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "postedFailedCount": "{posted} पोस्ट खालामबाय, {failed} फेल जाबाय",
+  "@postedFailedCount": {
+    "placeholders": {
+      "posted": {
+        "type": "String"
+      },
+      "failed": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryForAll": "गासैबोखायनो थाखो",
+  "saveAsRule": "नियम बादि थिना हो?",
+  "saveAsRuleBlurb": "बे कीवर्ड थांनाय बर्ननानि फिसा आयातफोरा बे थाखोखौ बिबार खालामगोन।",
+  "keyword": "कीवर्ड",
+  "noSavedRules": "दानि तक थिनाबाय नियम जायेंगा। नियम थिना दोनो सा दल रोफोराव थाखो थि।",
+  "deleteRuleTitle": "नियम मेटथारनांगौ?",
+  "editRule": "नियम सुद्रांथि",
+  "rowsGrouped": "{count} रो",
+  "@rowsGrouped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "selectStatementFile": "आयात खालामनो सा {extensions} स्टेटमेंट फाइल सायख",
+  "@selectStatementFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "payeesTitle": "पेइफोर",
+  "addPayee": "पेइ दाजाब",
+  "renamePayee": "पेइनि मुं सोलाय",
+  "deletePayeeTitle": "पेइ मेटथारनांगौ?",
+  "noPayeesYet": "दानि तक पेइ जायेंगा",
+  "recurringTitle": "फिन-फिन जायगा टेम्पलेट",
+  "noRecurringYet": "दानि तक फिन-फिन जायगा टेम्पलेट जायेंगा",
+  "deleteTemplateTitle": "फिन-फिन जायगा टेम्पलेट मेटथारनांगौ?",
+  "dayOfMonth": "दाननि सान (1-31)",
+  "dayOfMonthNote": "उन गोन सान थानाय दाना गिबि जोबथा सानखौ बिबार खालामदों।",
+  "dayOfMonthLine": "दाननि सान {day} - ",
+  "@dayOfMonthLine": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "name": "मुं",
+  "none": "जायेंगा",
+  "currency": "करेंसी",
+  "errorGeneric": "माबा गोरोन्थि जाबाय। नोगोर फिन नाजा।",
+  "errorSigningIdentityMismatch": "बे रिकभरि फ्रेज एबा कीस्टोर फाइला बे डाटाबेसआव कुनैबो साइनिं परिचयजों मिलाखै।",
+  "errorInvalidLedgerBackup": "बे फाइला थार स्मारा बैकअप नङा।",
+  "errorInvalidLedgerBackupNoIdentity": "बे बैकअपआव साइनिं परिचय जायेंगा - बेयो थार स्मारा बैकअप नङा।",
+  "errorInvalidLedgerBackupUnverified": "बे बैकअपा गोरोबथि बुखि बादि गोदान जायाखै, बेखायनो फिन दिनाखै।",
+  "errorInvalidLedgerBackupUnreadable": "बे फाइलखौ स्मारा बैकअप बादि खेवनो हायाखै: {detail}",
+  "@errorInvalidLedgerBackupUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignBackupIdentity": "बे बैकअपा बे डिभाइसआव थानाय बिनिफ्राय अलग सा साइनिं परिचयनि।",
+  "errorAccountNotFinancial": "बेयो सा वित्तीय खाता नङा।",
+  "errorAccountArchived": "बे खाताया गुमुरबाय।",
+  "errorAccountNotArchived": "बे खाताया गुमुराखै।",
+  "errorAccountNoPositiveBalanceToCloseOut": "ट्रांसफार खालामनो उलिनाय बेलेंस जायेंगा।",
+  "errorAccountHasNoGroup": "बे खाताखौ कुनैबो दल थिनाखै।",
+  "errorGroupHasNoCurrency": "बे दलखौ दानि तक करेंसी थिनाखै।",
+  "errorGroupNotFound": "बे खाता दलखौ मोनाखै।",
+  "errorInvestmentAccountsMustBeAssets": "सोमाव जिनिस खाताखिनि निबेस खाता बादि थिनो हागोन।",
+  "errorCreditCardsMustBeLiabilities": "रिन खाताखिनि क्रेडिट कार्ड बादि थिनो हागोन।",
+  "errorOpeningBalanceMustBePositive": "बागारबाब्ला खुलिनाय बेलेंसा पजिभ होनांगौ।",
+  "errorAccountTypeDoesNotMatchGroup": "बे खातानि बिजाबा दलजों मिलेआखै।",
+  "errorLastActiveAccount": "जोबथा सक्रिय वित्तीय खाताखौ गुमुरनो हायाखै।",
+  "errorCurrencyRequiredToCreateGroup": "दल सोरजिनो करेंसी नंगौ।",
+  "errorSystemGroupCannotBeArchived": "बिल्ट-इन खाता दलफोरखौ गुमुरनो हायाखै।",
+  "errorGroupAlreadyArchived": "बे दला गुमुरबाय जायो।",
+  "errorCannotArchiveGroupWithAccounts": "सक्रिय खाता दंनाय दलखौ गुमुरनो हायाखै।",
+  "errorSystemGroupNeverArchived": "बिल्ट-इन खाता दलफोरखौ कुनैबो समाव गुमुरा।",
+  "errorAccountGroupsCannotBeDeleted": "खाता दलफोरखौ मेटथारनो हायाखै।",
+  "errorCannotReassignDifferentCurrency": "बे खाताखौ अलग करेंसीनि दलआव ओंथिनो हायाखै।",
+  "errorCannotChangeGroupCurrencyWithAccounts": "दलआव सक्रिय खाता थानाय समाव करेंसी सोलायनो हायाखै।",
+  "errorAmountMustBePositive": "राशिया पजिभ होनांगौ।",
+  "errorAccountCurrencyAmountMustBePositive": "खाता-करेंसी राशिया पजिभ होनांगौ।",
+  "errorAccountCurrencyAmountNotForSameCurrency": "खाता-करेंसी राशिया गुबुन-करेंसीनि एंट्रिखायनोखिनि।",
+  "errorSplitNeedsTwoLines": "भाग खालामनोयाव बेसेनजादों दुखान थाखो लाइन नंगौ।",
+  "errorSplitLineMustBePositive": "गासैबो भाग लाइना पजिभ राशि जानांगौ।",
+  "errorSplitLinesMustSumToTotal": "भाग लाइनफोरा लेनदेन सारजों दाजाबनांगौ।",
+  "errorTransferAmountMustBePositive": "ट्रांसफार राशिया पजिभ होनांगौ।",
+  "errorTransferAccountsMustDiffer": "गुदि आरो जायगा खाताफोर अलग जानांगौ।",
+  "errorCloseoutRequiresDestinationAmount": "गुबुन-करेंसी मिटायथिनोयाव मिथिनाय जायगा राशि नंगौ।",
+  "errorDestinationAmountNotForSameCurrency": "जायगा राशिया गुबुन-करेंसी ट्रांसफारखायनोखिनि।",
+  "errorDestinationAmountMustBePositive": "जायगा राशिया पजिभ होनांगौ।",
+  "errorInvestmentCashExceeded": "बे निबेस खातानि रांनिफ्राय बांसि ट्रांसफार खालामनो हायाखै।",
+  "errorCannotReverseUnsettledProvisional": "बेखौ फिन-बाहागोन खालामनि सिगां बे गोबां ट्रांसफारखौ मिटायथि।",
+  "errorAlreadyReversed": "बे एंट्रिखौ सुद्रिबाय जायो। गुदि लाइना जेराव बाहागोन बादियो थादों।",
+  "errorNotActiveExpenseCategory": "सा सक्रिय फोरजाब थाखो सायख।",
+  "errorNotActiveIncomeCategory": "सा सक्रिय आय थाखो सायख।",
+  "errorSettledAmountMustNotBeNegative": "फैनाय राशिया नेगेटिभ जानो हायाखै।",
+  "errorPendingTransferNotFound": "बे गोबां ट्रांसफारखौ मोनाखै।",
+  "errorPendingTransferAlreadySettled": "बे गोबां ट्रांसफारा मिटायथिबाय जायो।",
+  "errorSettledToMustBeSourceOrDestination": "गुदि गुदि एबा जायगा खाता सायख।",
+  "errorFeeCategoryOnlyWhenReturningToSource": "फी थाखोया रां गुदि खाताआव फिन फैनाय समाव खिनि बिबार खालामनि।",
+  "errorSettledAmountMustBePositiveForDelivery": "फैनायखायनो सा पजिभ राशि बागार।",
+  "errorSettledAmountExceedsProvisional": "बे राशिया दैथायनायनिफ्राय बांसि।",
+  "errorInstrumentNotFound": "बे साधनखौ मोनाखै।",
+  "errorIncomeRequiredForNonCash": "रां नङा मोननायखायनो सक्रिय आय थाखो नंगौ।",
+  "errorInsufficientCash": "बे फोजाबखायनो बे निबेस खाताआव गोनांथि रां जायेंगा।",
+  "errorSellQuantityAndPriceMustBePositive": "फोरो मान आरो यूनिट दामा पजिभ होनांगौ।",
+  "errorLockedUntil": "फोरोनो हायाखै: गुबां यूनिटफोर {date} तक लाकबाय।",
+  "@errorLockedUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInsufficientQuantity": "नोंथांयो दानि दंख लाकाखैनायनिफ्राय बांसि फोरोनो हायाखै।",
+  "errorIncomeRequiredForGain": "गोनां जाबाय फाइदाखायनो सक्रिय आय थाखो नंगौ।",
+  "errorExpenseRequiredForLoss": "गोनां जाबाय गोमानथिखायनो सक्रिय फोरजाब थाखो नंगौ।",
+  "errorBrokerageFailedAfterBuy": "फोजाबखौ पोस्ट खालामबाय, फेब्ला ब्रोकरेज फी फेल जाबाय: {detail}",
+  "@errorBrokerageFailedAfterBuy": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBrokerageFailedAfterSell": "फोरोखौ पोस्ट खालामबाय, फेब्ला ब्रोकरेज फी फेल जाबाय: {detail}",
+  "@errorBrokerageFailedAfterSell": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDividendMustBePositive": "लाभांश राशिया पजिभ होनांगौ।",
+  "errorNotInvestmentAccount": "बेयो सा निबेस खाता नङा।",
+  "errorNoInventoryCompanion": "बे निबेस खाताआव बेनि इन्भेंटरि साथी जायेंगा।",
+  "errorInvestmentReversalBlocked": "बे फोजाबखौ सुद्रिनो हायाखै: उन्दैनि फोरो(फोर) बेनि यूनिटफोरनिखौलाय दं। सिगां आस्रा खालामनाय फोरो(फोर) सुद्रि: {sells}।",
+  "@errorInvestmentReversalBlocked": {
+    "placeholders": {
+      "sells": {
+        "type": "String"
+      }
+    }
+  },
+  "errorMonthlyLimitMustBePositive": "दान-दाननि सिमाया पजिभ होनांगौ।",
+  "errorTemplateAmountMustBePositive": "टेम्पलेट राशिया पजिभ होनांगौ।",
+  "errorOfxUnrecognized": "बे फाइलखौ OFX बादि सिनायथिनो हायाखै।",
+  "errorCsvEmpty": "सायखबाय फाइला गुबै दं।",
+  "errorCsvUnreadable": "बे फाइलखौ CSV बादि फोरनो हायाखै।",
+  "errorCsvNoRows": "सायखबाय फाइलआव रो जायेंगा।",
+  "errorBackupCreateFailed": "बैकअप सोरजिनो हायाखै: {detail}",
+  "@errorBackupCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBackupRestoreFailed": "बे बैकअपखौ फिन दिननो हायाखै - गोरोन्थि पासफ्रेज, एबाब स्मारा बैकअप फाइल नङा।",
+  "validationAmountAccountCategoryRequired": "राशि, खाता, आरो थाखो नंगौ।",
+  "validationAmountAccountRequired": "राशि आरो खाता नंगौ।",
+  "validationSplitLineIncomplete": "गासैबो भाग लाइनखौ सा थाखो आरो सा राशि नंगौ।",
+  "validationSplitSumMismatch": "भाग लाइनफोरा लेनदेन सारजों दाजाबनांगौ।",
+  "validationFromToAmountRequired": "गुदि खाता, जायगा खाता, आरो राशि नंगौ।",
+  "validationAmountArrivedRequired": "फैनाय राशि नंगौ।",
+  "validationChooseReceivingAccount": "गुबान खाताया रां मोनबाय बेखौ सायख।",
+  "validationAccountCategoryRequired": "खाता आरो थाखो नंगौ।",
+  "validationFixFailed": "बे सुद्रिनायखौ थिनानो हायाखै।",
+  "validationNameRequired": "नोंथांनि गाहाय खातानि मुं थि।",
+  "validationStillLoading": "दानिबो लोड खालामदों - सान गोसो उन्दै फिन नाजा।",
+  "validationSaveAccountNameFailed": "खातानि मुंखौ थिनानो हायाखै।",
+  "validationWrongPin": "गोरोन्थि पिन। फिन नाजा।",
+  "validationCategoryMustBeIncomeOrExpense": "थाखोया आय एबा फोरजाब जानांगौ।",
+  "validationOnlyExpenseHasMonthlyLimit": "फोरजाब थाखोखिनि दान-दाननि सिमा दंनो हागोन।",
+  "validationInvalidTemplate": "गोरोन्थि टेम्पलेट।",
+  "validationWrongKeystorePassphrase": "बे कीस्टोर फाइलखायनो गोरोन्थि पासफ्रेज।",
+  "validationInvalidKeystoreFile": "बेयो थार कीस्टोर फाइल बादि नुयैआ।",
+  "validationRestorePhraseFailed": "बे रिकभरि फ्रेजनिफ्राय फिन दिननो हायाखै।",
+  "validationGenerateKeyFailed": "बे डिभाइसआव साइनिं की जनरेट खालामनो हायाखै: {detail}",
+  "@validationGenerateKeyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationSaveCurrencyFailed": "बे करेंसीखौ थिनानो हायाखै: {detail}",
+  "@validationSaveCurrencyFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationMigrationFailed": "पुनर्गठन फेल जाबाय। नोगोर फिन नाजा।",
+  "validationChooseBackupFile": "सिगां सा बैकअप फाइल सायख।",
+  "validationPassphraseRequired": "सा पासफ्रेज बागार।",
+  "validationPinsDoNotMatch": "दुखान पिना मिलेआखै।",
+  "validationFeePositiveWithCategory": "ट्रांसफार फीया सा फोरजाब थाखो सायखनायजों पजिभ राशि जानांगौ।",
+  "validationFeeMustBeLessThanAmount": "गुबैनाय-फी ट्रांसफारखायनो फीया राशिनिफ्राय गोसो जानांगौ।",
+  "validationTransferSavedFeeFailed": "ट्रांसफार थिनाबाय, फेब्ला फीखौ दर्ज खालामनो हायाखै: {detail}",
+  "@validationTransferSavedFeeFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "validationEnterValidAmount": "सा थार राशि बागार।",
+  "validationConfirmWordMismatch": "सोदोब {n} नोंथांनि थिनाबाय फ्रेजजों मिलेआखै। बेखौ सोदोबसार खालामनानै फिन नाजा।",
+  "@validationConfirmWordMismatch": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "errorBuyQuantityAndPriceMustBePositive": "फोजाब मान आरो यूनिट दामा पजिभ होनांगौ।",
+  "errorInstrumentArchived": "गुमुरबाय साधन फोजाबनो हायाखै।",
+  "errorNonCashCannotIncludeBrokerage": "रां नङा मोननायआव ब्रोकरेज सोमावनो हायाखै।",
+  "errorBrokerageRequiresExpenseCategory": "ब्रोकरेज पजिभ थानाय समाव सक्रिय फोरजाब थाखो नंगौ।",
+  "errorSellProceedsMustCoverBrokerage": "फोरोनि मोननायआ बेसेनजादों ब्रोकरेज राशि जानांगौ।",
+  "homeSpentOfLimitThisMonth": "बे दाननि {limit} नि {spent}",
+  "@homeSpentOfLimitThisMonth": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockBiometricReason": "स्मारा खाता अनलाक खालाम",
+  "searchLabel": "नागिर",
+  "openingBalance": "खुलिनाय बेलेंस",
+  "transferToName": "ट्रांसफार: {name}",
+  "@transferToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feeForTransfer": "ट्रांसफारखायनो फी",
+  "feeForTransferTo": "{name} आव ट्रांसफारखायनो फी",
+  "@feeForTransferTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotOpenFilePicker": "फाइल पिकारखौ खेवनो हायाखै: {detail}",
+  "@couldNotOpenFilePicker": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "pleaseSelectFile": "नोगोर सा .{extensions} फाइल सायख",
+  "@pleaseSelectFile": {
+    "placeholders": {
+      "extensions": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyCodeIso": "करेंसी कोड (ISO 4217, गुदि USD)",
+  "splitCounterpartMore": "{name} +{count} गुबुन",
+  "@splitCounterpartMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "dateLabel": "तारीख",
+  "noneSelected": "जायेंगा",
+  "reviewEntriesBeforeContinuing": "थां जानि सिगां उन्दैनि एंट्रिफोर ({count} सार) नुथाब।",
+  "@reviewEntriesBeforeContinuing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceived": "नोंथांयो {amount} मोनबाय",
+  "@youReceived": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveBlankIfRateUnknown": "मुद्रा रेट दानि तक मिथिआगोन्थिब्ला गुबै थ।",
+  "recordTradeBlurb": "सिगायाब्ला जाबाय सा व्यापार दर्ज खालाम। बे एपा आर्डार दिनि।",
+  "feeOnTopBlurb": "अन: उन्दैनि राशिया बे खातानिफ्राय दैथायबाय सार, फीया बेनिफ्राय उलियो।",
+  "feeBankBlurb": "नोंथांनि बेंक एबा सा मध्यस्थनि सिगाংनि कमीशन।",
+  "validationPinMinLength": "पिना बेसेनजादों 4 अंक जानांगौ।",
+  "restoreBackupBlurb": "बेयो बैकअपजों बे एपआव दानि थानाय गासैबो बदलदों — बेयो मिलाआखै। सा बैकअप फाइल सायखनानै नोंथांयो बेखौ रोखा खालामनाय पासफ्रेज बागार।",
+  "actionReplace": "बदल",
+  "hideAccountBody": "{name} फिसा लेनदेनखायनो मोनैआ जागोन।",
+  "@hideAccountBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideGroupBody": "{name} खाता सोरजिनाय एबा फिन थिनाय समाव फोरमानाखै जागोन।",
+  "@hideGroupBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideCategoryBody": "{name} फिसा लेनदेन दर्ज खालामनाय समाव फोरमानाखै जागोन।",
+  "@hideCategoryBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hideInstrumentBody": "गुमुरबाय साधनफोर जोबथा फोजाब आरो फोरोआव थायो। नोंथांयो बिफोरखायनो लाभांश दर्ज खालामनो हागोनबाबो।",
+  "nameHidden": "{name} (गुमुरबाय)",
+  "@nameHidden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noCurrencySet": "करेंसी थियाखै",
+  "deletePayeeBody": "{name} आरो बिनि मोनथिनाय डिफल्टफोर उलिगोन। जोबथा लेनदेनफोर नुबाया।",
+  "@deletePayeeBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTemplateBody": "{name} गिदिं बादि फोरमानाखै जागोन। बुयो दानिनि तक दर्ज खालामबाय जोबथा लेनदेनफोर नुबाया।",
+  "@deleteTemplateBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProfileBody": "थिनाबाय कलम मैपिंग \"{name}\" खौ मेटथारगोन। बेजों दानि तक आयात खालामबाय स्टेटमेंटफोर नुबाया।",
+  "@deleteProfileBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteRuleBody": "आयातफोरा फिन \"{keyword}\" जों अटो-थाखो खालामाखै जागोन। बे नियमजों दानि तक थाखो खालामबाय लेनदेनफोर नुबाया।",
+  "@deleteRuleBody": {
+    "placeholders": {
+      "keyword": {
+        "type": "String"
+      }
+    }
+  },
+  "firstWeekBlurb": "जरूरी नङानाय दानि सा क्रेडिट कार्ड एबा सा रां खाता दाजाब - नोंथांयो सिगायाव सेटिंनिफ्राय बांसि खाता दाजाबनो हागोन जायखिजाबाय।",
+  "deliveredToDestination": "जायगायाव फैबाय",
+  "deliveredToName": "{name} आव फैबाय",
+  "@deliveredToName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youReceivedLessThanExpected": "नोंथांयो सोदोबथानायखिनि गोसो {amount} {currency} मोनबाय - सा थाखो सायखनानै अफादखौ फोरबो।",
+  "@youReceivedLessThanExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "dateRangeLabel": "तारीख सिमा",
+  "addTemplate": "टेम्पलेट दाजाब",
+  "editTemplate": "टेम्पलेट सुद्रांथि",
+  "validationFillTemplateFields": "गासैबो फिल्डखौ थार राशि आरो सानजों गोदान खालाम।",
+  "saveCsvExport": "CSV एक्सपोर्ट थिना हो",
+  "referenceRate": "सन्दर्भ रेट",
+  "yourRate": "नोंथांनि रेट",
+  "leaveBlankIfThisWasAccountCurrency": "बेयो {currency}आव जायोब्ला, खातानि गिबि करेंसी, गुबै थ।",
+  "@leaveBlankIfThisWasAccountCurrency": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "lockUntilOptional": "बाथिनि तक लाक (जरूरी नङा)",
+  "lockedUntilDate": "{date} तक लाकबाय",
+  "@lockedUntilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "copiedResearchPrompt": "अनुसंधान प्रोम्प्ट कपि खालामबाय — ब्राउजार URL मोनैआ, एबा नोंथां अफलाइन दं।",
+  "openedFavouriteResearchTool": "नोंथांनि फोरमान अनुसंधान टूल खेवबाय।",
+  "looksLikeGain": "बेयो सा फाइदा बादि नुयो",
+  "looksLikeLoss": "बेयो सा गोमानथि बादि नुयो",
+  "looksLikeBreakEven": "बेयो सम-सम बादि नुयो",
+  "sellableQuantity": "{name} ({qty} फोरोनो हागोन)",
+  "@sellableQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "columnN": "कलम {index}",
+  "@columnN": {
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "importingLabel": "आयात खालामदों...",
+  "confirmImport": "आयात गोदान खालाम",
+  "manageSavedCategoryRules": "थिनाबाय थाखो नियमफोर बेवस्था खालाम",
+  "statementCurrencyMismatch": "बे फाइलनि करेंसीया ({currency}) सायखबाय खातानि करेंसीजों मिलेआखै।",
+  "@statementCurrencyMismatch": {
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryRulesTitle": "थाखो नियमफोर",
+  "possibleDuplicate": "जायो हागोन डुप्लिकेट",
+  "unknownCategory": "मोनोबथि थाखो"
+}

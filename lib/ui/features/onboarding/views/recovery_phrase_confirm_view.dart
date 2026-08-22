@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
@@ -54,9 +55,13 @@ class _RecoveryPhraseConfirmViewState extends State<RecoveryPhraseConfirmView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Confirm your phrase', style: AppTypography.headerTitle),
+        title: Text(
+          l10n.recoveryPhraseConfirmTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,
@@ -69,10 +74,7 @@ class _RecoveryPhraseConfirmViewState extends State<RecoveryPhraseConfirmView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Enter the requested words from the phrase you just saved.',
-                  style: AppTypography.body,
-                ),
+                Text(l10n.confirmPhraseBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 for (final index
                     in RecoveryPhraseSetupViewModel
@@ -80,14 +82,14 @@ class _RecoveryPhraseConfirmViewState extends State<RecoveryPhraseConfirmView> {
                   TextField(
                     controller: _controllers[index],
                     decoration: InputDecoration(
-                      labelText: 'Word #${index + 1}',
+                      labelText: l10n.wordNumber('${index + 1}'),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.medium),
                 ],
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                   const SizedBox(height: AppSpacing.medium),
@@ -95,7 +97,7 @@ class _RecoveryPhraseConfirmViewState extends State<RecoveryPhraseConfirmView> {
                 const SizedBox(height: AppSpacing.medium),
                 ElevatedButton(
                   onPressed: widget.viewModel.isSubmitting ? null : _submit,
-                  child: const Text('Confirm'),
+                  child: Text(l10n.actionConfirm),
                 ),
               ],
             ),

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/summary.dart';
 
@@ -14,7 +15,8 @@ import '../../../../domain/models/summary.dart';
 ///
 /// Also the primary, always-available home for monthly-category-limits'
 /// month-to-date spent-vs-limit progress (design.md Decision 2).
-class CategoryManagementViewModel extends ChangeNotifier {
+class CategoryManagementViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   CategoryManagementViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository {
     _subscription = _ledgerRepository
@@ -47,9 +49,6 @@ class CategoryManagementViewModel extends ChangeNotifier {
   int monthToDateSpentFor(String categoryId) =>
       _spentByCategoryId[categoryId] ?? 0;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   void _onCategories(List<Account> categories) {
     _categories = categories;
     notifyListeners();
@@ -61,11 +60,12 @@ class CategoryManagementViewModel extends ChangeNotifier {
   }) async {
     try {
       await _ledgerRepository.addCategory(name: name, type: type);
-      _errorMessage = null;
+      clearFailure();
     } on ArgumentError {
-      _errorMessage = 'Category must be Income or Expense.';
+      setFailure(
+        const AppFailure(AppErrorCode.validationCategoryMustBeIncomeOrExpense),
+      );
     }
-    notifyListeners();
   }
 
   Future<void> renameCategory({required String id, required String newName}) {
@@ -90,16 +90,15 @@ class CategoryManagementViewModel extends ChangeNotifier {
         id: id,
         monthlyLimitMinor: monthlyLimitMinor,
       );
-      _errorMessage = null;
-      notifyListeners();
+      clearFailure();
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = e.message;
-      notifyListeners();
+      setFailure(e);
       return false;
     } on ArgumentError {
-      _errorMessage = 'Only an Expense category can have a monthly limit.';
-      notifyListeners();
+      setFailure(
+        const AppFailure(AppErrorCode.validationOnlyExpenseHasMonthlyLimit),
+      );
       return false;
     }
   }

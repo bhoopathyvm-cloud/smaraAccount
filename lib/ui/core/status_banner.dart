@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 import 'app_typography.dart';
+import '../../l10n/l10n.dart';
 
 /// A status/error message banner. Shows a Dismiss action only when
 /// [onDismiss] is supplied; [isError] switches the message to signal-red.
@@ -28,7 +29,10 @@ class StatusBanner extends StatelessWidget {
       ),
       actions: [
         if (onDismiss != null)
-          TextButton(onPressed: onDismiss, child: const Text('Dismiss'))
+          TextButton(
+            onPressed: onDismiss,
+            child: Text(l10nOf(context).actionDismiss),
+          )
         else
           const SizedBox.shrink(),
       ],
