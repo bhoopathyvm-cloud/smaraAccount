@@ -170,10 +170,20 @@ NETWORK:
   constraint from earlier exploration, not re-litigated per change.
 
 AUTHENTICATION:
-  None in the current phase (single user, single device). Any device
-  passcode/biometric app-lock is a future, separately-scoped decision,
-  not assumed here.
+  Optional app lock is available on-device. When enabled, opening the
+  app or returning after the configured idle timeout requires the user's
+  app PIN, with device biometrics as an optional convenience fallback
+  where supported. This protects casual local access; it does not replace
+  the signed-history integrity model or OS-level device security.
 ```
+
+The signed-history model follows common integrity and audit-log patterns:
+hashes act as content fingerprints, digital signatures verify that those
+fingerprints came from the user's signing identity, and chaining makes
+the order of history verifiable. See the non-normative background links
+in `openspec/specs/ledger-integrity-signing/spec.md`, especially NIST's
+definitions of integrity, digital signatures, and hash functions, OWASP's
+logging guidance, and Schneier/Kelsey's secure audit-log research.
 
 ---
 

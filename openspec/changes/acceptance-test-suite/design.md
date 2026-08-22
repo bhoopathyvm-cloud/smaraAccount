@@ -363,6 +363,18 @@ blocking on each other.
   whether the FAB genuinely doesn't render in this state or the finder
   itself is wrong, since the lock-badge check immediately before it
   passes reliably.
+- **[Risk]** `tapReliably`'s fixed inner poll window (40 tries, 4s) is
+  enough for most taps but not a submit that itself does real I/O
+  (recording a transaction, posting a transfer) - confirmed during this
+  change's own implementation on a cross-currency transfer submit, where
+  the tap genuinely worked and navigated to Home, but wasn't detected
+  within 4s, so `tapReliably` moved to a second attempt and re-evaluated
+  the (now-gone, already-navigated-away) submit button's finder, throwing
+  "Bad state: No element" from `ensureVisible`. Mitigation: `tapReliably`
+  takes an `innerTries` parameter (default 40); any submit action expected
+  to do real I/O before its success condition can be observed should pass
+  a higher value (150+, matching the patience already used elsewhere for
+  I/O-bound waits).
 - **[Risk]** Real on-disk database + real keychain means a crashed test run
   (not just a failed one) could skip `addTearDown` → **Mitigation**: pre-run
   cleanup (Decision 3) runs before every invocation regardless of how the

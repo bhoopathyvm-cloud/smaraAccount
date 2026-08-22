@@ -5,6 +5,34 @@ and receive like a notebook, and history can't quietly rewrite itself.
 Everything described here reflects the app as it currently exists —
 nothing in this guide is a planned or proposed feature.
 
+## Why verified history matters
+
+You do not need to understand accounting standards or cryptography to get
+the point of SMARA Account. Financial records become useful when you can
+look back later and trust what you are seeing: what you spent, what you
+received, what you corrected, and whether a backup still contains the same
+history you originally recorded.
+
+SMARA Account gives you that signal locally. Every posted entry is signed
+and linked to the entry before it. When the app opens, it checks that
+history. If something outside the app changed an old entry, deleted one,
+or damaged the database, the affected entries can be shown as unverified
+instead of silently counted in balances.
+
+That helps in ordinary situations:
+
+- restoring a backup and knowing the books still verify;
+- exporting records for an accountant or tax adviser;
+- spotting damage from a bad file copy, sync conflict, or manual database
+  edit;
+- reviewing a correction without losing the original entry;
+- keeping shared household or small-business books honest about what
+  changed and when.
+
+It does not prove that every transaction was truthful when entered, and it
+does not replace your device passcode, app lock, or backups. It means the
+stored history cannot be quietly rewritten later without the app noticing.
+
 ## Your recovery phrase
 
 Every device generates its own signing key, and every transaction you
@@ -389,7 +417,9 @@ original stays visible and your history is never rewritten. Transfers,
 opening balances, and split entries aren't offered a tap target; they
 don't have a Fix flow of their own yet.
 An entry flagged as unverified (its signature no longer chains correctly)
-is still shown, never hidden, with an error treatment.
+is still shown, never hidden, with an error treatment. It is excluded
+from totals because the app can no longer prove that entry and the entries
+after it still match the signed history.
 
 Above the list, a **Search** box matches a row's description, category,
 or amount as you type. Chips below it narrow further, combinable with
@@ -413,7 +443,9 @@ category, each with that category's own share of the total, not the
 whole amount repeated. The export never includes your recovery phrase,
 keystore, or any other signing-key material — only the same
 date/description/category/amount data the Register itself already shows
-you.
+you. The verification column is useful when handing records to an
+accountant or reviewing old exports because it tells the reader whether
+each row still belongs to the app's intact signed history.
 
 ## Summary
 
@@ -480,3 +512,23 @@ period-over-period read on where money went.
   browser with a research prompt (news, downside, upside — not advice).
   If you're offline, the prompt is copied instead. Rename and hide use
   the menu on the row, not the name.
+
+## Background reading
+
+These links are not required to use the app. They explain the larger
+ideas SMARA Account borrows from security and accounting practice:
+
+- [NIST: integrity](https://csrc.nist.gov/glossary/term/integrity) —
+  protecting information from improper modification or destruction.
+- [NIST: digital signature](https://csrc.nist.gov/glossary/term/digital_signature)
+  and [hash function](https://csrc.nist.gov/glossary/term/hash_function) —
+  the building blocks used to verify signed records.
+- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+  and [Schneier/Kelsey secure audit logs](https://www.schneier.com/academic/archives/1999/05/secure_audit_logs_to.html)
+  — why important histories should detect tampering.
+- [OpenStax: audit trails in accounting](https://openstax.org/books/principles-financial-accounting/pages/7-1-define-and-describe-the-components-of-an-accounting-information-system)
+  and the [IRS electronic accounting records FAQ](https://www.irs.gov/businesses/small-businesses-self-employed/use-of-electronic-accounting-software-records-frequently-asked-questions-and-answers)
+  — why transaction-level history and record integrity matter in ordinary
+  bookkeeping.
+- [AWS QLDB journal overview](https://aws.amazon.com/blogs/aws/now-available-amazon-quantum-ledger-database-qldb/)
+  — an industry example of cryptographically verifiable ledger history.

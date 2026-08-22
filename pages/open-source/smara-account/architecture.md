@@ -31,7 +31,7 @@ Repositories, Repositories talk to Drift. This keeps business logic out
 of widgets and out of the database layer, and makes each piece testable
 on its own.
 
-## Security and privacy stance
+## Security And Privacy Stance
 
 All ledger data stays on the device, in a local SQLite database. There's
 no account, no cloud sync, and nothing sent off-device by default. The
@@ -44,7 +44,25 @@ in the SQLite file itself, and every posted journal entry is signed and
 hash-chained so that tampering with a past entry breaks verification
 from that point forward, detected the next time the app starts.
 
-## Full documentation
+For users, this means the app treats unverifiable history as suspect
+instead of silently including it in balances. It is useful during backup
+restore, CSV export, accountant handoff, and any situation where the user
+needs to know whether old records still match what was originally posted.
+It is not a substitute for device security or backups, and it does not
+prove that a transaction was true when entered; it detects later hidden
+changes to the stored record.
+
+The implementation is based on common integrity patterns: cryptographic
+hashes act as content fingerprints, digital signatures bind those
+fingerprints to the user's signing identity, and the hash chain makes
+history order-sensitive. See [NIST on integrity](https://csrc.nist.gov/glossary/term/integrity),
+[digital signatures](https://csrc.nist.gov/glossary/term/digital_signature),
+and [hash functions](https://csrc.nist.gov/glossary/term/hash_function),
+plus [Schneier/Kelsey on secure audit logs](https://www.schneier.com/academic/archives/1999/05/secure_audit_logs_to.html)
+and [AWS QLDB's verifiable journal overview](https://aws.amazon.com/blogs/aws/now-available-amazon-quantum-ledger-database-qldb/)
+for industry context.
+
+## Full Documentation
 
 For the complete, current picture — project structure, data flow
 diagrams, the full technology-choice rationale, and the engineering

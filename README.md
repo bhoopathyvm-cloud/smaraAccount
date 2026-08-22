@@ -23,6 +23,13 @@ The ledger is deliberately designed so entries cannot be manipulated manually â€
 
 This tradeoff is intentional: without a recoverable key, there's no backdoor for editing history, which is what makes the transaction log genuinely immutable rather than immutable-in-name-only.
 
+For a normal user, the useful promise is simpler: old financial history
+cannot be quietly rewritten without the app noticing. That helps when
+restoring backups, exporting records, reviewing corrections, or handing
+books to an accountant. See the [user guide](docs/user-guide.md) and the
+[project site](pages/index.md) for the plain-language version and
+background references.
+
 ## Usage
 
 See the [user guide](docs/user-guide.md) for how to use the app â€” onboarding and your recovery phrase, accounts, categories, transfers, importing bank statements, and more.

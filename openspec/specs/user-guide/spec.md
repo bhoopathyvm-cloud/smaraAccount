@@ -4,7 +4,9 @@
 
 An accurate, complete end-user guide to using the app's features, kept
 scoped to what has actually shipped. (Purpose derived from the
-`project-documentation` change; refine as the capability evolves.)
+`project-documentation` change; refine as the capability evolves.) The
+guide explains verified history in plain language before exposing users
+to recovery-key tradeoffs or cryptographic terminology.
 
 ## Requirements
 
@@ -93,3 +95,14 @@ The user guide SHALL clearly explain, before or alongside the onboarding instruc
 #### Scenario: Guide explains both backup mechanisms
 - **WHEN** a user reads the onboarding section of the user guide
 - **THEN** it describes both the recovery phrase and the optional keystore export, and when each is used to restore access
+
+### Requirement: User Guide Explains Verified History Benefit
+The user guide SHALL explain tamper detection from an end-user perspective before the recovery phrase section: financial history is useful when the user can later trust what they see; signed and chained entries let the app detect hidden changes, damaged files, or mismatched restores; unverifiable entries remain visible but are not trusted in totals; and the feature does not prove that a transaction was truthful when originally entered.
+
+#### Scenario: Guide explains why a normal user should care
+- **WHEN** a user reads the opening sections of the user guide
+- **THEN** it explains practical benefits such as backup confidence, accountant/tax handoff, damage detection, correction review, and shared-book accountability without requiring the user to understand security standards
+
+#### Scenario: Guide includes optional background references
+- **WHEN** a user wants deeper context
+- **THEN** the guide links to relevant external material about integrity, digital signatures, hash functions, tamper-aware logs, audit trails, and electronic accounting records

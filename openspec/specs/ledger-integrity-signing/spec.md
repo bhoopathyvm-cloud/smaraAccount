@@ -2,7 +2,18 @@
 
 ## Purpose
 
-Protect the local ledger with a device signing identity, hash-chained signed journal entries, startup integrity verification, quarantine/re-anchoring after breaks, and recovery or true key-loss migration flows.
+Protect the local ledger with a device signing identity, hash-chained signed journal entries, startup integrity verification, quarantine/re-anchoring after breaks, and recovery or true key-loss migration flows. For users, this provides verified history: the app can warn when stored books no longer match what was originally signed, rather than silently counting damaged or modified entries.
+
+## Background References
+
+These references are non-normative context for the integrity model:
+
+- [NIST: integrity](https://csrc.nist.gov/glossary/term/integrity)
+- [NIST: digital signature](https://csrc.nist.gov/glossary/term/digital_signature)
+- [NIST: hash function](https://csrc.nist.gov/glossary/term/hash_function)
+- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+- [Schneier/Kelsey: Secure Audit Logs to Support Computer Forensics](https://www.schneier.com/academic/archives/1999/05/secure_audit_logs_to.html)
+- [AWS QLDB journal overview](https://aws.amazon.com/blogs/aws/now-available-amazon-quantum-ledger-database-qldb/)
 
 ## Requirements
 

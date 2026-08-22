@@ -1,4 +1,4 @@
-# How it was built
+# How It Was Built
 
 SMARA Account is a learning implementation of two things at once: a
 tamper-evident ledger, and AI spec-driven development. Every line of
@@ -7,7 +7,13 @@ a strict set of engineering guidelines and by feature specifications
 defined through [OpenSpec](https://github.com/Fission-AI/OpenSpec). The
 specs drive the implementation, not the other way around.
 
-## Why spec-first, not vibe-coded
+For an end user, that matters because the project is trying to make two
+kinds of trust inspectable: the trustworthiness of the financial history,
+and the trustworthiness of the development process. The ledger records
+corrections instead of rewriting old entries, while the repository keeps
+human-readable specs that say what each shipped feature is supposed to do.
+
+## Why Spec-First, Not Vibe-Coded
 
 It's tempting to treat an AI coding assistant as a fast typist and just
 describe what you want in the moment. That works for small, throwaway
@@ -22,7 +28,7 @@ Concretely, that means: no behavior ships that isn't backed by a spec
 scenario. If a review finds code that isn't covered by one, the fix is
 either a spec update or a code change to match the spec — not silence.
 
-## The workflow: propose → apply → archive
+## The Workflow: Propose → Apply → Archive
 
 Every change to the project goes through the same three stages:
 
@@ -46,7 +52,7 @@ describe what the app actually does right now (not what's planned), and
 every past change is still readable later, instead of being squashed
 into an opaque commit history.
 
-## Want to build the same way?
+## Want To Build The Same Way?
 
 The full workflow, branching convention, and the engineering guidelines
 this project holds itself to are documented in

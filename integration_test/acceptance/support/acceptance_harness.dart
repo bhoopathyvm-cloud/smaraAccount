@@ -115,18 +115,26 @@ Future<void> enterTextReliably(
   int maxAttempts = 3,
 }) async {
   for (var attempt = 0; attempt < maxAttempts; attempt++) {
-    final target = fieldTarget();
-    await tester.ensureVisible(target);
-    await tester.pump(const Duration(milliseconds: 100));
-    // Explicit focus first: on this live binding, `enterText` alone has
-    // been observed to update the controller's raw text without the
-    // field's `onChanged` callback actually firing (the ViewModel never
-    // saw the value), unlike a virtual-clock widget test.
-    await tester.showKeyboard(target);
-    await tester.pump(const Duration(milliseconds: 100));
-    await tester.enterText(target, text);
-    await tester.pump(const Duration(milliseconds: 100));
-    await tester.testTextInput.receiveAction(TextInputAction.done);
+    // See tapReliably's matching try/catch: a previous attempt can have
+    // already succeeded and navigated away just before its own poll
+    // window closed, making this attempt's target legitimately gone.
+    try {
+      final target = fieldTarget();
+      await tester.ensureVisible(target);
+      await tester.pump(const Duration(milliseconds: 100));
+      // Explicit focus first: on this live binding, `enterText` alone has
+      // been observed to update the controller's raw text without the
+      // field's `onChanged` callback actually firing (the ViewModel never
+      // saw the value), unlike a virtual-clock widget test.
+      await tester.showKeyboard(target);
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.enterText(target, text);
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+    } catch (_) {
+      if (succeeded()) return;
+      rethrow;
+    }
     await tester.pump();
     for (var i = 0; i < 20; i++) {
       if (succeeded()) return;
@@ -150,18 +158,46 @@ Future<void> enterTextReliably(
 /// hit, matching `integration_test/app_test.dart`'s existing convention
 /// for exactly this. The retry loop remains as a second layer, for any
 /// tap that still misses despite being scrolled into view.
+///
+/// [innerTries] bounds how long each attempt polls for [succeeded] before
+/// giving up and re-tapping - default 40 (4s) is enough for most taps, but
+/// a submit that itself does real I/O (recording a transaction, posting a
+/// transfer) can genuinely take longer than that to reach the screen
+/// [succeeded] checks for. A tap that actually worked but wasn't detected
+/// in time causes the *next* attempt's `tapTarget()` to resolve to zero
+/// elements (the button is legitimately gone, having already navigated
+/// away) - confirmed during this change's own implementation on a
+/// cross-currency transfer submit.
 Future<void> tapReliably(
   WidgetTester tester,
   Finder Function() tapTarget,
   bool Function() succeeded, {
   int maxAttempts = 3,
+  int innerTries = 40,
 }) async {
   for (var attempt = 0; attempt < maxAttempts; attempt++) {
-    final target = tapTarget();
-    await tester.ensureVisible(target);
-    await tester.pump(const Duration(milliseconds: 100));
-    await tester.tap(target);
-    for (var i = 0; i < 40; i++) {
+    // A previous attempt's tap can have actually worked and already
+    // navigated away by the time this attempt starts (innerTries
+    // exhausted just before `succeeded()` would have turned true) -
+    // `tapTarget()`/`ensureVisible` then throws because the target is
+    // legitimately gone, not because anything is actually wrong. Treat
+    // that as success-already-happened rather than a real failure.
+    try {
+      final target = tapTarget();
+      await tester.ensureVisible(target);
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.tap(target);
+    } catch (e) {
+      if (succeeded()) return;
+      // ignore: avoid_print
+      print(
+        'tapReliably: target/ensureVisible/tap threw ($e) and succeeded() '
+        'was still false - not the delayed-success case.\n'
+        '${_visibleTextsDump()}',
+      );
+      rethrow;
+    }
+    for (var i = 0; i < innerTries; i++) {
       if (succeeded()) return;
       await tester.pump(const Duration(milliseconds: 100));
     }
