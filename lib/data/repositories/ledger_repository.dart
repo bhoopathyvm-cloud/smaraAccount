@@ -3483,6 +3483,13 @@ class LedgerRepository {
     return _tickOn([
       watchEntries(),
       _db.select(_db.instrumentQuotes).watch(),
+      // A newly created account with no opening balance posts no journal
+      // entry at all, so watchEntries() alone would never tick this
+      // stream for it - it would stay invisible on Home (and, since
+      // Home is the only route to HoldingsView, unreachable) until some
+      // unrelated entry happened to post.
+      _db.select(_db.accounts).watch(),
+      _db.select(_db.accountGroups).watch(),
     ]).asyncMap((_) => _buildHomeOverview());
   }
 

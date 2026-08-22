@@ -364,7 +364,7 @@ class SettingsView extends StatelessWidget {
                       final fileName =
                           'smara-backup-'
                           '${DateTime.now().millisecondsSinceEpoch}.smarabackup';
-                      await FilePicker.platform.saveFile(
+                      await FilePicker.saveFile(
                         dialogTitle: l10n.actionSaveBackup,
                         fileName: fileName,
                         bytes: Uint8List.fromList(utf8.encode(contents)),
@@ -408,10 +408,8 @@ class SettingsView extends StatelessWidget {
                   onPressed: isBusy
                       ? null
                       : () async {
-                          final result = await FilePicker.platform.pickFiles(
-                            withData: true,
-                          );
-                          final file = result?.files.single;
+                          final result = await FilePicker.pickFiles();
+                          final file = result.isEmpty ? null : result.first;
                           if (file != null) {
                             setDialogState(() {
                               pickedFile = file;
@@ -455,7 +453,8 @@ class SettingsView extends StatelessWidget {
                   ? null
                   : () async {
                       final file = pickedFile;
-                      final bytes = file?.bytes;
+                      final bytes = await file?.readAsBytes();
+                      if (!dialogContext.mounted) return;
                       final passphrase = passphraseController.text;
                       if (file == null || bytes == null) {
                         setDialogState(

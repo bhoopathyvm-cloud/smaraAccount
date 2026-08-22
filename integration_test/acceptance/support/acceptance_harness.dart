@@ -222,6 +222,459 @@ String _visibleTextsDump() {
   return 'Visible texts at failure: $texts';
 }
 
+/// Finds a `TextField`/`MoneyAmountField` (which renders a bare
+/// `TextField`) by its exact `InputDecoration.labelText`, rather than a
+/// positional index into `find.byType(TextField)`. The investment dialogs
+/// (Create account, Buy, Sell, Dividend) have several fields whose
+/// presence and order shift with conditional branches (cash vs non-cash,
+/// new-vs-existing instrument, gain vs loss category) - a label-based
+/// finder stays correct regardless of which branch is showing, unlike
+/// counting `.first`/`.at(n)` the way the simpler, linear onboarding
+/// screens allowed elsewhere in this harness.
+Finder textFieldWithLabel(String label) {
+  return find.byWidgetPredicate(
+    (widget) => widget is TextField && widget.decoration?.labelText == label,
+  );
+}
+
+/// Taps the `DropdownButtonFormField` labelled [fieldLabel] (an
+/// `EntityPickerField`), opens it, and selects [optionText]. Scoped by
+/// label rather than position for the same reason [textFieldWithLabel]
+/// is - these dialogs have several dropdowns whose presence/order is
+/// conditional.
+Future<void> selectDropdownOption(
+  WidgetTester tester, {
+  required String fieldLabel,
+  required String optionText,
+}) async {
+  Finder dropdown() => find.byWidgetPredicate(
+    (widget) =>
+        widget is DropdownButtonFormField<String> &&
+        widget.decoration.labelText == fieldLabel,
+  );
+  // [optionText] can already be visible elsewhere on screen (e.g. a
+  // group name that's also a section header on the underlying Accounts
+  // list, still present in the tree - just covered by the dialog's
+  // modal barrier), so a bare find.text(optionText) presence check is
+  // unreliable here, unlike most other dropdowns in this harness.
+  //
+  // A *closed* DropdownButtonFormField always keeps exactly one
+  // DropdownMenuItem mounted - the currently selected value's own
+  // rendered child - so counting DropdownMenuItem widgets can't tell
+  // "menu open" from "menu closed" (that count is 1 either way) and
+  // "isEmpty" can never become true once a selection exists. Instead,
+  // check whether [optionText] is the dropdown's own current selection
+  // by scoping the text search to the dropdown widget's subtree, which
+  // sidesteps the underlying-screen collision entirely.
+  bool isSelected() => find
+      .descendant(of: dropdown(), matching: find.text(optionText))
+      .evaluate()
+      .isNotEmpty;
+
+  if (isSelected()) return;
+
+  for (var attempt = 0; attempt < 3 && !isSelected(); attempt++) {
+    await tester.ensureVisible(dropdown());
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.tap(dropdown());
+    await tester.pumpAndSettle();
+    // The popup is pushed onto the root Overlay after the app's main
+    // content, so its copy of optionText is the last match in traversal
+    // order - the same convention this harness's other dropdowns rely
+    // on for an unambiguous tap target.
+    final option = find.text(optionText).last;
+    if (option.evaluate().isNotEmpty) {
+      await tester.tap(option);
+      await tester.pumpAndSettle();
+    } else {
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+  }
+
+  expect(
+    isSelected(),
+    isTrue,
+    reason:
+        'selectDropdownOption: "$optionText" was never selected for the '
+        '"$fieldLabel" dropdown after retries.\n${_visibleTextsDump()}',
+  );
+}
+
+/// Creates an investment account through the real Accounts GUI: Create
+/// account -> check "This account holds investments" -> pick the seeded
+/// "Investments" group -> optional opening cash -> Create. Assumes the
+/// app is already on some screen with the bottom nav reachable (i.e.
+/// after [completeOnboardingWithGuidedEntry]). Leaves the app on the
+/// Accounts screen with the new account visible.
+Future<void> createInvestmentAccountThroughGui(
+  WidgetTester tester, {
+  required String accountName,
+  String? openingCashText,
+  String groupName = 'Investments',
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.navAccounts),
+    () => find.byType(FloatingActionButton).evaluate().isNotEmpty,
+  );
+  await tapReliably(
+    tester,
+    () => find.byType(FloatingActionButton),
+    () => find.text(l10n.createAccount).evaluate().isNotEmpty,
+  );
+
+  await enterTextReliably(
+    tester,
+    () => find.byType(TextField).first,
+    accountName,
+    () {
+      final field = find.byType(TextField).evaluate().first.widget as TextField;
+      return field.controller?.text == accountName;
+    },
+  );
+
+  // Type defaults to Asset, which is what makes the investments checkbox
+  // available - no SegmentedButton interaction needed.
+  await tapReliably(
+    tester,
+    () =>
+        find.widgetWithText(CheckboxListTile, l10n.thisAccountHoldsInvestments),
+    () {
+      final checkbox =
+          find
+                  .widgetWithText(
+                    CheckboxListTile,
+                    l10n.thisAccountHoldsInvestments,
+                  )
+                  .evaluate()
+                  .single
+                  .widget
+              as CheckboxListTile;
+      return checkbox.value == true;
+    },
+  );
+
+  // The group picker defaults to the first asset group (a seeded
+  // default, not "Investments") - must be selected explicitly.
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.groupLabel,
+    optionText: groupName,
+  );
+
+  if (openingCashText != null) {
+    await enterTextReliably(
+      tester,
+      () => textFieldWithLabel(l10n.openingBalanceOptional),
+      openingCashText,
+      () {
+        final field =
+            textFieldWithLabel(
+                  l10n.openingBalanceOptional,
+                ).evaluate().single.widget
+                as TextField;
+        return field.controller?.text == openingCashText;
+      },
+    );
+  }
+
+  // find.text() also matches the Name TextField's own EditableText, which
+  // still renders `accountName` while the dialog is open - a trivially
+  // true, collision-prone success signal (same class of bug as the group
+  // dropdown's, described above). Check the dialog itself is gone instead.
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionCreate),
+    () => find.byType(AlertDialog).evaluate().isEmpty,
+    innerTries: 150,
+  );
+}
+
+/// Opens [accountName]'s holdings screen from Home (the
+/// `onInvestmentAccountTap` path - tapping the account's own row, not a
+/// sub-icon). Waits for the "INVENTORY" section header, which only
+/// renders on `HoldingsView`.
+Future<void> openHoldingsFor(WidgetTester tester, String accountName) async {
+  final l10n = AppLocalizationsEn();
+  await tapReliably(
+    tester,
+    () => find.text(l10n.navHome),
+    () => find.text(accountName).evaluate().isNotEmpty,
+  );
+  // The account name can transiently satisfy the check above from the
+  // outgoing screen's still-mounted widgets mid-transition, before Home
+  // itself has actually settled - pumpAndSettle here so the next tap
+  // targets Home's real, final ListTile rather than a ghost that's about
+  // to be replaced.
+  await tester.pumpAndSettle();
+  await tapReliably(
+    tester,
+    () => find.ancestor(
+      of: find.text(accountName),
+      matching: find.byType(ListTile),
+    ),
+    () => find.text(l10n.holdingsInventory).evaluate().isNotEmpty,
+    innerTries: 150,
+  );
+}
+
+/// Records a cash-funded Buy of a *new* instrument through the real
+/// holdings Buy dialog. Assumes the app is already on that account's
+/// holdings screen (via [openHoldingsFor]). If [brokerageText] and
+/// [brokerageExpenseCategory] are both given, fills the brokerage
+/// fields; otherwise leaves them blank. If [expectSuccess] is false,
+/// submits and waits for `errorInsufficientCash` instead of the
+/// instrument appearing - for the zero-cash-rejected scenario.
+Future<void> recordCashFundedBuyThroughGui(
+  WidgetTester tester, {
+  required String instrumentName,
+  required String quantityText,
+  required String unitPriceText,
+  String? brokerageText,
+  String? brokerageExpenseCategory,
+  bool expectSuccess = true,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionBuy),
+    () => find.text(l10n.newInstrument).evaluate().isNotEmpty,
+    innerTries: 150,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.newInstrument),
+    () => textFieldWithLabel(l10n.name).evaluate().isNotEmpty,
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.name),
+    instrumentName,
+    () {
+      final field =
+          textFieldWithLabel(l10n.name).evaluate().single.widget as TextField;
+      return field.controller?.text == instrumentName;
+    },
+  );
+
+  // Kind defaults to Stock - no picker interaction needed for the
+  // common case this helper covers.
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.quantity),
+    quantityText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.quantity).evaluate().single.widget
+              as TextField;
+      return field.controller?.text == quantityText;
+    },
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.unitPrice),
+    unitPriceText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.unitPrice).evaluate().single.widget
+              as TextField;
+      return field.controller?.text == unitPriceText;
+    },
+  );
+
+  if (brokerageText != null && brokerageExpenseCategory != null) {
+    await enterTextReliably(
+      tester,
+      () => textFieldWithLabel(l10n.brokerageOptional),
+      brokerageText,
+      () {
+        final field =
+            textFieldWithLabel(l10n.brokerageOptional).evaluate().single.widget
+                as TextField;
+        return field.controller?.text == brokerageText;
+      },
+    );
+    await selectDropdownOption(
+      tester,
+      fieldLabel: l10n.brokerageExpenseCategory,
+      optionText: brokerageExpenseCategory,
+    );
+  }
+
+  if (expectSuccess) {
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(ElevatedButton, l10n.actionRecordBuy),
+      () =>
+          find.text(instrumentName).evaluate().isNotEmpty &&
+          find.text(l10n.actionRecordBuy).evaluate().isEmpty,
+      innerTries: 150,
+    );
+  } else {
+    final submit = find.widgetWithText(ElevatedButton, l10n.actionRecordBuy);
+    await tester.ensureVisible(submit);
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.tap(submit);
+    await pumpUntilFound(tester, find.text(l10n.errorInsufficientCash));
+  }
+}
+
+/// Navigates Accounts tab -> the app-bar Transfer icon (`l10n.actionTransfer`
+/// tooltip) and waits for the Transfer screen (`l10n.captureMovedMoney`
+/// used as both its title and submit button) to be reachable. Leaves the
+/// screen open with its From/To pickers at whatever they last defaulted
+/// to, for [submitTransferThroughGui] (or an inline assertion, e.g. that
+/// an investment account's inventory companion never appears in either
+/// picker) to act on next.
+Future<void> openTransferScreen(WidgetTester tester) async {
+  final l10n = AppLocalizationsEn();
+  await tapReliably(
+    tester,
+    () => find.text(l10n.navAccounts),
+    () => find.byTooltip(l10n.actionTransfer).evaluate().isNotEmpty,
+  );
+  await tapReliably(
+    tester,
+    () => find.byTooltip(l10n.actionTransfer),
+    () => find.text(l10n.captureMovedMoney).evaluate().isNotEmpty,
+  );
+}
+
+/// Fills and submits the Transfer screen already opened by
+/// [openTransferScreen]. If [expectSuccess], waits for the whole screen
+/// (title and button both read `l10n.captureMovedMoney`) to disappear -
+/// TransferView pops back on success. If not, submits once and waits for
+/// the inline `l10n.errorInvestmentCashExceeded` banner instead - the
+/// screen is a full page (not a dialog), so a rejected submit just leaves
+/// it exactly as is rather than closing anything.
+Future<void> submitTransferThroughGui(
+  WidgetTester tester, {
+  required String fromAccountName,
+  required String toAccountName,
+  required String amountText,
+  bool expectSuccess = true,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.fromAccount,
+    optionText: fromAccountName,
+  );
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.toAccount,
+    optionText: toAccountName,
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.amount),
+    amountText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.amount).evaluate().single.widget as TextField;
+      return field.controller?.text == amountText;
+    },
+  );
+
+  final submit = find.widgetWithText(ElevatedButton, l10n.captureMovedMoney);
+  if (expectSuccess) {
+    await tapReliably(
+      tester,
+      () => submit,
+      () => find.text(l10n.captureMovedMoney).evaluate().isEmpty,
+      innerTries: 150,
+    );
+  } else {
+    await tester.ensureVisible(submit);
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.tap(submit);
+    await pumpUntilFound(tester, find.text(l10n.errorInvestmentCashExceeded));
+  }
+}
+
+/// Pops the current pushed route (e.g. the Transfer screen after a
+/// rejected submit leaves it open) via its auto-generated AppBar back
+/// button, back to whatever pushed it.
+Future<void> popPushedScreen(WidgetTester tester) async {
+  await tapReliably(
+    tester,
+    () => find.byType(BackButton),
+    () => find.byType(BackButton).evaluate().isEmpty,
+  );
+}
+
+/// Records a Spent transaction against [accountName] through the ordinary
+/// Home FAB -> capture sheet -> `l10n.captureSpent` -> RecordTransactionView
+/// flow (the same screen [completeOnboardingWithGuidedEntry] drives for
+/// the guided first entry). Used to confirm an investment account behaves
+/// like any other financial account here - this posts a plain expense,
+/// decreasing the account's cash and never touching its inventory.
+Future<void> recordSpentThroughGui(
+  WidgetTester tester, {
+  required String accountName,
+  required String amountText,
+  required String categoryName,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.navHome),
+    () => find.byType(FloatingActionButton).evaluate().isNotEmpty,
+  );
+  await tapReliably(
+    tester,
+    () => find.byType(FloatingActionButton),
+    () => find.text(l10n.captureSpent).evaluate().isNotEmpty,
+  );
+  await tapReliably(
+    tester,
+    () => find.text(l10n.captureSpent),
+    () => find.byType(RecordTransactionView).evaluate().isNotEmpty,
+  );
+
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.account,
+    optionText: accountName,
+  );
+
+  await enterTextReliably(
+    tester,
+    () => find.byType(TextField).first,
+    amountText,
+    () {
+      final field = find.byType(TextField).evaluate().first.widget as TextField;
+      return field.controller?.text == amountText;
+    },
+  );
+
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.category,
+    optionText: categoryName,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.descendant(
+      of: find.byType(RecordTransactionView),
+      matching: find.text(l10n.actionSave),
+    ),
+    () => find.byType(RecordTransactionView).evaluate().isEmpty,
+    innerTries: 150,
+  );
+}
+
 /// Pumps the real app from a completely fresh device
 /// (`resetToFreshDevice` must already have run) all the way through the
 /// real onboarding GUI and its mandatory guided first entry, landing on

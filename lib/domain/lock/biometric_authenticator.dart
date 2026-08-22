@@ -35,7 +35,7 @@ class LocalAuthBiometricAuthenticator implements BiometricAuthenticator {
     try {
       return await _localAuth.authenticate(
         localizedReason: reason,
-        options: const AuthenticationOptions(stickyAuth: true),
+        persistAcrossBackgrounding: true,
       );
     } catch (_) {
       return false;
