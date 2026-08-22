@@ -33,7 +33,7 @@ jobs:
       actions: read
       security-events: write
       contents: read
-    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.5.0"
+    uses: "google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.5.1"
 
   # Scans the full commit history (not just the diff) for committed
   # secrets/keys - relevant here since this app handles a signing key and
