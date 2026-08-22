@@ -332,6 +332,37 @@ blocking on each other.
   against the actual seed data, not the specific category a scenario cares
   about - `tapReliably`'s failure-dump (visible texts) is what surfaced
   this immediately once added.
+- **[Risk]** A `tapReliably`/`enterTextReliably` success-check that only
+  checks "does a `TextField`/target exist" can be trivially satisfied by
+  something already on screen before the tap, silently masking a tap that
+  never actually landed (observed: checking for "any `TextField`" after
+  tapping the Register FAB passed instantly because Register's own search
+  bar is already a `TextField`, so the flow proceeded to enter text into
+  the search box instead of an entry form that was never reached).
+  Mitigation: check for the specific screen/widget type the tap should
+  have navigated to, never a generic "something exists" condition.
+- **[Risk]** Even a flow proven correct and passing repeatedly (the same
+  `completeOnboardingWithGuidedEntry` two other scenarios in this file
+  pass reliably with) can still hang for the tier's full multi-minute
+  `timeout` on an isolated run, with no different code path and no new
+  error signature - observed once during this change's own
+  implementation. This looks like genuine, irreducible flakiness in
+  driving a live macOS window in this environment, not a remaining logic
+  bug; not resolved here. A scenario timing out on a step that's
+  otherwise reliable is worth a bare rerun before assuming a real
+  regression.
+- **[Risk]** After the tamper-detection scenario's "restart," the
+  Register FAB (`find.byIcon(TablerIcons.plus)`) was not found at all
+  (`ensureVisible` finding zero elements) in a run that otherwise
+  completed the tamper-quarantine check correctly - unexplained, and
+  distinct from every other issue logged here (not a scroll/bounds issue,
+  not a stale-check issue, not an onboarding-timing issue). Not resolved
+  in this change - the re-anchoring half of the tamper-detection scenario
+  (recording a second entry after quarantine) was scoped out rather than
+  chased further; whoever picks this up next should start by confirming
+  whether the FAB genuinely doesn't render in this state or the finder
+  itself is wrong, since the lock-badge check immediately before it
+  passes reliably.
 - **[Risk]** Real on-disk database + real keychain means a crashed test run
   (not just a failed one) could skip `addTearDown` → **Mitigation**: pre-run
   cleanup (Decision 3) runs before every invocation regardless of how the

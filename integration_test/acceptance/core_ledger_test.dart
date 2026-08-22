@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations_en.dart';
+import 'package:smara_accounting/main.dart';
+import 'package:sqlite3/sqlite3.dart';
+import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import 'support/acceptance_harness.dart';
 
@@ -115,4 +119,61 @@ void main() {
     },
     timeout: const Timeout(Duration(minutes: 5)),
   );
+
+  testWidgets('tamper detection: a mutated row is quarantined on restart', (
+    tester,
+  ) async {
+    addTearDown(() => resetToFreshDevice(tester));
+
+    await completeOnboardingWithGuidedEntry(
+      tester,
+      amountText: '10',
+      categoryName: 'Salary',
+    );
+
+    // Unmount first so the app's own Drift connection (and the isolate
+    // drift_flutter spawns for it) closes before a second, raw
+    // connection to the same file opens - matching resetToFreshDevice's
+    // own reasoning for why it unmounts before deleting anything.
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(seconds: 1));
+
+    // Mutate the stored row directly - not through the app - exactly
+    // mimicking direct SQLite file access outside the app
+    // (drift_flutter names the file "<name>.sqlite"; app_database.dart
+    // uses name: 'smara_accounting').
+    final dbFile = sqlite3.open(
+      '${(await getApplicationSupportDirectory()).path}/smara_accounting.sqlite',
+    );
+    dbFile.execute(
+      "UPDATE journal_entries SET description = 'tampered outside the app'",
+    );
+    dbFile.close();
+
+    // "Restart": a fresh widget tree, same underlying database file -
+    // matching how the real app's database persists across restarts.
+    // Identity/first-week-setup state from completeOnboardingWithGuidedEntry
+    // already persisted (real Keychain, real SharedPreferences), so this
+    // lands straight on Home rather than re-onboarding.
+    await tester.pumpWidget(const SmaraAccountingApp());
+    await tester.pump();
+    await pumpUntilFound(
+      tester,
+      find.text(l10n.homeWhatYouHaveMinusWhatYouOwe),
+    );
+
+    await tapReliably(
+      tester,
+      () => find.text(l10n.navRegister),
+      () => find.byIcon(TablerIcons.lock).evaluate().isNotEmpty,
+    );
+    expect(find.byIcon(TablerIcons.lock), findsOneWidget);
+
+    // Re-anchoring (recording a second, clean entry after quarantine and
+    // confirming only the tampered one still shows the lock badge) is
+    // not yet covered here - tracked as its own follow-up task
+    // (tasks.md), not silently dropped.
+
+    await tester.pump(const Duration(seconds: 2));
+  }, timeout: const Timeout(Duration(minutes: 5)));
 }
