@@ -789,7 +789,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.';
+      'Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Boekhouding heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1554,7 +1554,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara Account ontgrendelen';
+  String get unlockBiometricReason => 'Smara Boekhouding ontgrendelen';
 
   @override
   String get searchLabel => 'Zoeken';
@@ -1750,7 +1750,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get looksLikeLoss => 'Dit lijkt een verlies';
 
   @override
-  String get looksLikeBreakEven => 'Dit lijkt break-even';
+  String get looksLikeBreakEven => 'Dit lijkt quitte';
 
   @override
   String sellableQuantity(String name, String qty) {

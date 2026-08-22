@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "La tua frase di recupero",
   "recoveryPhraseConfirmTitle": "Conferma la tua frase",
-  "recoveryPhraseBlurb": "Queste 24 parole sono l''unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Accounting non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.",
+  "recoveryPhraseBlurb": "Queste 24 parole sono l''unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Contabilità non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.",
   "recoveryPhraseWriteDown": "Scrivi queste parole in ordine e conservale in un luogo sicuro, separato da questo dispositivo.",
   "iveSavedRecoveryPhrase": "Ho salvato la mia frase di recupero",
   "confirmPhraseBlurb": "Inserisci le parole richieste dalla frase che hai appena salvato.",

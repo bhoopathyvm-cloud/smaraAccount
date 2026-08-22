@@ -1605,7 +1605,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'উপরে: উপরের পরিমাণটি এই হিসাব থেকে নেওয়া মোট; ফি এর মধ্যে থেকে বের হয়।';
+      'চালু থাকলে: উপরের অঙ্কটি এই হিসাব থেকে নেওয়া মোট টাকা; ফি সেই টাকার মধ্য থেকেই কাটা হয়।';
 
   @override
   String get feeBankBlurb =>
@@ -1655,7 +1655,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name আর বকেয়া হিসেবে প্রস্তাব করা হবে না। এটি ইতিমধ্যে রেকর্ড করা অতীতের লেনদেনে প্রভাব পড়বে না।';
+    return '$name আর বকেয়া টেমপ্লেট হিসেবে দেখানো হবে না। এটি আগেই যে লেনদেনগুলো রেকর্ড করেছে, সেগুলো প্রভাবিত হবে না।';
   }
 
   @override
@@ -1735,7 +1735,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get looksLikeLoss => 'এটি ক্ষতির মতো মনে হচ্ছে';
 
   @override
-  String get looksLikeBreakEven => 'এটি সমান-সমানের মতো মনে হচ্ছে';
+  String get looksLikeBreakEven => 'এটি লাভ-ক্ষতি সমান মনে হচ্ছে';
 
   @override
   String sellableQuantity(String name, String qty) {

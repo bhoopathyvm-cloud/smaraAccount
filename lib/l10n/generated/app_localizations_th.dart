@@ -282,7 +282,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get providerStooq => 'Stooq (ราคารายวัน)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (API กราฟ)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -782,7 +782,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      '24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน Smara Accounting ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร';
+      '24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน สมุดบัญชี Smara ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1523,7 +1523,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'ปลดล็อกบัญชี Smara';
+  String get unlockBiometricReason => 'ปลดล็อกสมุดบัญชี Smara';
 
   @override
   String get searchLabel => 'ค้นหา';

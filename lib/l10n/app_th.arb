@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (อัตราจาก ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ราคารายวัน)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerYahooFinance": "Yahoo Finance (API กราฟ)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "วลีกู้คืนของคุณ",
   "recoveryPhraseConfirmTitle": "ยืนยันวลีของคุณ",
-  "recoveryPhraseBlurb": "24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน Smara Accounting ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร",
+  "recoveryPhraseBlurb": "24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน สมุดบัญชี Smara ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร",
   "recoveryPhraseWriteDown": "จดคำเหล่านี้ตามลำดับและเก็บไว้ในที่ปลอดภัยแยกจากอุปกรณ์นี้",
   "iveSavedRecoveryPhrase": "ฉันได้บันทึกวลีกู้คืนของฉันแล้ว",
   "confirmPhraseBlurb": "ป้อนคำที่ระบบขอจากวลีที่คุณเพิ่งบันทึกไว้",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "ปลดล็อกบัญชี Smara",
+  "unlockBiometricReason": "ปลดล็อกสมุดบัญชี Smara",
   "searchLabel": "ค้นหา",
   "openingBalance": "ยอดยกมา",
   "transferToName": "โอนเงิน: {name}",

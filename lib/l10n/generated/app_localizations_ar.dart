@@ -1593,7 +1593,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'مضافة: المبلغ أعلاه هو الإجمالي المأخوذ من هذا الحساب؛ وتُخصم الرسوم منه.';
+      'عند التفعيل: المبلغ أعلاه هو الإجمالي المخصوم من هذا الحساب؛ وتُقتطع الرسوم منه.';
 
   @override
   String get feeBankBlurb => 'عمولة مقدّمة يفرضها بنكك أو وسيط.';
@@ -1643,7 +1643,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name لن يُعرض بعد الآن كمستحق. المعاملات السابقة التي سجّلها بالفعل لا تتأثر.';
+    return '$name لن يظهر بعد الآن كقالب مستحق. المعاملات السابقة التي سجّلها لا تتأثر.';
   }
 
   @override
@@ -1721,7 +1721,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get looksLikeLoss => 'يبدو هذا خسارة';
 
   @override
-  String get looksLikeBreakEven => 'يبدو هذا تعادلاً';
+  String get looksLikeBreakEven => 'يبدو هذا بلا ربح أو خسارة';
 
   @override
   String sellableQuantity(String name, String qty) {

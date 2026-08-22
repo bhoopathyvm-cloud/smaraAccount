@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "您的恢复短语",
   "recoveryPhraseConfirmTitle": "确认您的恢复短语",
-  "recoveryPhraseBlurb": "如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara Accounting 没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。",
+  "recoveryPhraseBlurb": "如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara记账没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。",
   "recoveryPhraseWriteDown": "按顺序写下这些单词，并将其存放在与此设备分开的安全地方。",
   "iveSavedRecoveryPhrase": "我已保存我的恢复短语",
   "confirmPhraseBlurb": "输入您刚保存的恢复短语中被要求的单词。",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "解锁 Smara Account",
+  "unlockBiometricReason": "解锁 Smara记账",
   "searchLabel": "搜索",
   "openingBalance": "期初余额",
   "transferToName": "转账：{name}",

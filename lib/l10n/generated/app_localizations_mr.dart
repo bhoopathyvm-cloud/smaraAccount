@@ -1601,7 +1601,7 @@ class AppLocalizationsMr extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'चालू: वरील रक्कम या खात्यातून घेतलेली एकूण रक्कम आहे; त्यातूनच शुल्क वजा होते.';
+      'चालू असल्यास: वरील रक्कम या खात्यातून घेतलेली एकूण रक्कम आहे; शुल्क त्यातूनच वजा होते.';
 
   @override
   String get feeBankBlurb =>
@@ -1651,7 +1651,7 @@ class AppLocalizationsMr extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name यापुढे देय म्हणून दिले जाणार नाही. त्याने आधीच नोंदवलेल्या मागील व्यवहारांवर परिणाम होणार नाही.';
+    return '$name यापुढे देय झाल्यावर दिसणार नाही. त्याने आधीच नोंदवलेल्या व्यवहारांवर परिणाम होणार नाही.';
   }
 
   @override
@@ -1730,7 +1730,7 @@ class AppLocalizationsMr extends AppLocalizations {
   String get looksLikeLoss => 'हा तोटा दिसत आहे';
 
   @override
-  String get looksLikeBreakEven => 'हे ब्रेक-इव्हन दिसत आहे';
+  String get looksLikeBreakEven => 'हे ना नफा ना तोटा असे दिसते';
 
   @override
   String sellableQuantity(String name, String qty) {

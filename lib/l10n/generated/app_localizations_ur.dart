@@ -1607,7 +1607,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'آن: اوپر دی گئی رقم اس اکاؤنٹ سے لی گئی کل رقم ہے؛ فیس اسی میں سے کاٹی جاتی ہے۔';
+      'چالو ہونے پر: اوپر دی گئی رقم اس اکاؤنٹ سے لی گئی کل رقم ہے؛ فیس اسی میں سے کاٹی جاتی ہے۔';
 
   @override
   String get feeBankBlurb =>
@@ -1657,7 +1657,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name کو مزید واجب الادا کے طور پر پیش نہیں کیا جائے گا۔ اس کی پہلے سے ریکارڈ شدہ ٹرانزیکشنز متاثر نہیں ہوں گی۔';
+    return '$name اب واجب الادا ہونے پر ظاہر نہیں ہوگا۔ اس سے پہلے سے ریکارڈ شدہ ٹرانزیکشنز متاثر نہیں ہوں گی۔';
   }
 
   @override
@@ -1736,7 +1736,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get looksLikeLoss => 'یہ نقصان لگتا ہے';
 
   @override
-  String get looksLikeBreakEven => 'یہ برابر سرابر لگتا ہے';
+  String get looksLikeBreakEven => 'یہ نہ نفع نہ نقصان لگتا ہے';
 
   @override
   String sellableQuantity(String name, String qty) {

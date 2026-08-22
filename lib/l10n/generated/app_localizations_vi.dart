@@ -790,7 +790,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      '24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Smara Accounting không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.';
+      '24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Sổ kế toán Smara không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1549,7 +1549,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Mở khóa Smara Account';
+  String get unlockBiometricReason => 'Mở khóa Sổ kế toán Smara';
 
   @override
   String get searchLabel => 'Tìm';

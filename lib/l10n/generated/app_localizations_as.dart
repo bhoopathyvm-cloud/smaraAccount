@@ -1538,7 +1538,7 @@ class AppLocalizationsAs extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'স্মাৰা একাউণ্ট আনলক কৰক';
+  String get unlockBiometricReason => 'স্মাৰা হিচাপ আনলক কৰক';
 
   @override
   String get searchLabel => 'সন্ধান';
@@ -1603,7 +1603,7 @@ class AppLocalizationsAs extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'ওপৰত: ওপৰৰ পৰিমাণটো এই একাউণ্টৰ পৰা লোৱা মুঠ; মাচুলটো ইয়াৰ পৰাই ওলায়।';
+      'চালু থাকিলে: ওপৰৰ পৰিমাণটো এই একাউণ্টৰ পৰা লোৱা মুঠ ধন; মাচুল সেই ধনৰ পৰাই কটা হয়।';
 
   @override
   String get feeBankBlurb =>

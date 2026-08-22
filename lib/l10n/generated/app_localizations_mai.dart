@@ -1601,7 +1601,7 @@ class AppLocalizationsMai extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'ऊपर सँ: उपरका राशि एहि खाता सँ कुल कटौती अछि; शुल्क ओहि सँ निकलैत अछि।';
+      'चालू रहला पर: ऊपरक राशि एहि खाता सँ काटल गेल कुल रकम अछि; शुल्क ओही मे सँ कटैत अछि।';
 
   @override
   String get feeBankBlurb =>
@@ -1730,7 +1730,7 @@ class AppLocalizationsMai extends AppLocalizations {
   String get looksLikeLoss => 'ई एकटा हानि जेहन लगैत अछि';
 
   @override
-  String get looksLikeBreakEven => 'ई ब्रेक-इवन जेहन लगैत अछि';
+  String get looksLikeBreakEven => 'ई न लाभ न हानि जकाँ लगैत अछि';
 
   @override
   String sellableQuantity(String name, String qty) {

@@ -286,7 +286,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get providerStooq => 'Stooq (щоденні котирування)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (API графіків)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -793,7 +793,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. Smara Accounting не має сервера і не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.';
+      'Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. У Smara обліку немає сервера, і він не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1551,7 +1551,7 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Розблокувати Smara Account';
+  String get unlockBiometricReason => 'Розблокувати Smara облік';
 
   @override
   String get searchLabel => 'Пошук';

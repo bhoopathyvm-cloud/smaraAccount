@@ -1021,7 +1021,7 @@ class AppLocalizationsBrx extends AppLocalizations {
   String get descriptionColumns => 'बर्नना कलम(फोर)';
 
   @override
-  String get referenceIdColumn => 'रेफरेंस id कलम (जरूरी नङा)';
+  String get referenceIdColumn => 'रेफरेंस ID कलम (जरूरी नङा)';
 
   @override
   String get skippedRows => 'आगजाबबाय रो';

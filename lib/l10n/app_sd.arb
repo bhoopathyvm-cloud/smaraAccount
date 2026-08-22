@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (ECB شرحون)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (روزاني قيمتون)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerYahooFinance": "Yahoo Finance (چارٽ API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "سمارا کاتو اڻلاڪ ڪريو",
+  "unlockBiometricReason": "سمارا اڪائونٽنگ اڻلاڪ ڪريو",
   "searchLabel": "ڳوليو",
   "openingBalance": "شروعاتي بيلنس",
   "transferToName": "منتقلي: {name}",

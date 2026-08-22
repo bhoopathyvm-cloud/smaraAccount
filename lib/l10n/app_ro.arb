@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "Fraza dvs. de recuperare",
   "recoveryPhraseConfirmTitle": "Confirmați fraza",
-  "recoveryPhraseBlurb": "Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Accounting nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.",
+  "recoveryPhraseBlurb": "Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Contabilitate nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.",
   "recoveryPhraseWriteDown": "Notați aceste cuvinte în ordine și păstrați-le într-un loc sigur, separat de acest dispozitiv.",
   "iveSavedRecoveryPhrase": "Mi-am salvat fraza de recuperare",
   "confirmPhraseBlurb": "Introduceți cuvintele solicitate din fraza pe care tocmai ați salvat-o.",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Deblocați Smara Accounting",
+  "unlockBiometricReason": "Deblocați Smara Contabilitate",
   "searchLabel": "Căutare",
   "openingBalance": "Sold inițial",
   "transferToName": "Transfer: {name}",

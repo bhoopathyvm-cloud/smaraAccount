@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Smara 계좌 잠금 해제",
+  "unlockBiometricReason": "Smara 회계 잠금 해제",
   "searchLabel": "검색",
   "openingBalance": "기초 잔액",
   "transferToName": "이체: {name}",

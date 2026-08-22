@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (EKB árfolyamok)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (napi árfolyamok)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerYahooFinance": "Yahoo Finance (grafikon API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -401,7 +401,7 @@
   },
   "recoveryPhraseTitle": "Az Ön helyreállítási kifejezése",
   "recoveryPhraseConfirmTitle": "Erősítse meg a kifejezését",
-  "recoveryPhraseBlurb": "Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara Accountingnak nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.",
+  "recoveryPhraseBlurb": "Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara könyvelésnek nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.",
   "recoveryPhraseWriteDown": "Írja le ezeket a szavakat sorrendben, és tárolja őket biztonságos helyen, ettől az eszköztől elkülönítve.",
   "iveSavedRecoveryPhrase": "Elmentettem a helyreállítási kifejezésemet",
   "confirmPhraseBlurb": "Adja meg a kért szavakat az imént elmentett kifejezésből.",
@@ -743,7 +743,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Smara Account feloldása",
+  "unlockBiometricReason": "Smara könyvelés feloldása",
   "searchLabel": "Keresés",
   "openingBalance": "Nyitóegyenleg",
   "transferToName": "Átutalás: {name}",

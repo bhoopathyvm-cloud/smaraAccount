@@ -482,7 +482,7 @@
   "creditColumn": "क्रेडिट कलम",
   "decimalSeparator": "दशमलव चिन (. एबा ,)",
   "descriptionColumns": "बर्नना कलम(फोर)",
-  "referenceIdColumn": "रेफरेंस id कलम (जरूरी नङा)",
+  "referenceIdColumn": "रेफरेंस ID कलम (जरूरी नङा)",
   "skippedRows": "आगजाबबाय रो",
   "parsedTransactionCount": "{count} लेनदेन पार्स खालामबाय",
   "@parsedTransactionCount": {
