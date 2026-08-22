@@ -1,18 +1,18 @@
 {
   "@@locale": "ta",
-  "appTitle": "Smara கணக்கு",
+  "appTitle": "ஸ்மாரா கணக்கியல்",
   "navHome": "முகப்பு",
   "navRegister": "பதிவேடு",
   "navSummary": "சுருக்கம்",
   "navAccounts": "கணக்குகள்",
   "navCategories": "வகைகள்",
-  "actionCancel": "ரத்து",
+  "actionCancel": "ரத்து செய்",
   "actionSave": "சேமி",
   "actionDelete": "நீக்கு",
   "actionDone": "முடிந்தது",
-  "actionContinue": "தொடர்",
-  "actionDismiss": "மூடு",
-  "actionRetry": "மீண்டும்",
+  "actionContinue": "தொடரவும்",
+  "actionDismiss": "நிராகரி",
+  "actionRetry": "மீண்டும் முயற்சி",
   "actionSkip": "தவிர்",
   "actionConfirm": "உறுதிப்படுத்து",
   "actionAdd": "சேர்",
@@ -20,100 +20,99 @@
   "actionRename": "பெயர் மாற்று",
   "actionHide": "மறை",
   "actionCreate": "உருவாக்கு",
-  "actionCloseApp": "Close app",
+  "actionCloseApp": "செயலியை மூடு",
   "actionUnlock": "திற",
-  "actionSettle": "முடிவு செய்",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
+  "actionSettle": "தீர்வு செய்",
+  "actionFinish": "முடி",
+  "actionPreview": "முன்னோட்டம்",
+  "actionImport": "இறக்குமதி செய்",
+  "actionExportCsv": "CSV ஏற்றுமதி செய்",
+  "actionChooseFile": "கோப்பைத் தேர்ந்தெடு",
   "actionRestore": "மீட்டமை",
-  "actionArchive": "Hide",
   "actionFix": "சரிசெய்",
   "actionBuy": "வாங்கு",
-  "actionSell": "விற்றுவிடு",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
+  "actionSell": "விற்று விடு",
+  "actionDividend": "ஈவுத்தொகை",
+  "actionRecordBuy": "வாங்கியதைப் பதிவு செய்",
+  "actionRecordSell": "விற்பனையைப் பதிவு செய்",
+  "actionRecordDividend": "ஈவுத்தொகையைப் பதிவு செய்",
+  "actionPayCard": "அட்டைக்குச் செலுத்து",
   "actionTransfer": "பரிமாற்றம்",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "பயோமெட்ரிக்ஸ்",
+  "actionRecordTransaction": "பரிவர்த்தனையைப் பதிவு செய்",
+  "actionImportStatement": "அறிக்கையை இறக்குமதி செய்",
+  "actionClearDates": "தேதிகளை அழி",
+  "actionClearSearch": "தேடலையும் வடிகட்டிகளையும் அழி",
+  "actionUseBiometrics": "பயோமெட்ரிக்ஸைப் பயன்படுத்து",
   "actionSetPin": "PIN அமை",
   "actionChangePin": "PIN மாற்று",
-  "actionSaveBackup": "காப்பு சேமி",
-  "actionRestoreBackup": "காப்பு மீட்டமை",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "செலவு",
-  "captureReceived": "வரவு",
-  "captureMovedMoney": "பணம் நகர்த்தல்",
+  "actionSaveBackup": "காப்புப் பிரதியைச் சேமி",
+  "actionRestoreBackup": "காப்புப் பிரதியை மீட்டமை",
+  "actionSaveRule": "விதியைச் சேமி",
+  "actionConfirmFix": "சரிசெய்தலை உறுதிப்படுத்து",
+  "captureSpent": "செலவழித்தது",
+  "captureReceived": "பெறப்பட்டது",
+  "captureMovedMoney": "பணம் மாற்றப்பட்டது",
   "captureImportStatement": "அறிக்கை இறக்குமதி",
   "settingsTitle": "அமைப்புகள்",
   "settingsLanguage": "மொழி",
   "settingsLanguageSystem": "சாதன மொழி",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "காப்பு",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
+  "settingsFetchFxRates": "குறிப்பு மாற்று விகிதங்களைப் பெறு",
+  "settingsFetchFxRatesSubtitle": "நாணய மாற்று பரிமாற்றங்களில் இலக்குத் தொகைக்கு அருகில் ஒரு குறிப்புச் சந்தை விகிதத்தைக் காட்டுகிறது, ஒப்பீட்டிற்கு மட்டுமே - தொகையை நிரப்பப் பயன்படுத்தப்படாது.",
+  "settingsRateProvider": "விகித வழங்குநர்",
+  "settingsFetchMarketPrices": "முதலீடுகளுக்கான சந்தை விலைகளைப் பெறு",
+  "settingsFetchMarketPricesSubtitle": "டிக்கர் அல்லது ISIN கொண்ட கருவிகளுக்கான கடைசி விலைகளைத் தேடுகிறது, போர்ட்ஃபோலியோ மதிப்பை மதிப்பிட. வர்த்தகத்தைப் பதிவு செய்யப் பயன்படுத்தப்படாது, நீங்கள் எவ்வளவு வைத்திருக்கிறீர்கள் என்பதையும் ஒருபோதும் அனுப்பாது.",
+  "settingsMarketPriceProvider": "சந்தை விலை வழங்குநர்",
+  "settingsFavouriteResearchTool": "விருப்பமான ஆய்வுக் கருவி",
+  "settingsFavouriteResearchToolSubtitle": "வைத்திருப்புகளில் ஒரு கருவியின் பெயரைத் தட்டுவது இந்தக் கருவியை உலாவியில் ஆய்வுக் குறிப்புடன் திறக்கும் — இது ஒருங்கிணைப்பு அல்ல, ஆலோசனையும் அல்ல.",
+  "settingsBackup": "காப்புப் பிரதி",
+  "settingsBackupBlurb": "உங்கள் கணக்குகளின் மறையாக்கம் செய்யப்பட்ட பிரதியை நீங்கள் தேர்ந்தெடுக்கும் இடத்தில் சேமிக்கவும், அல்லது ஒன்றிலிருந்து மீட்டமைக்கவும். இது உங்கள் மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பிலிருந்து வேறுபட்டது, அவை உங்கள் கையொப்பக் கோப்பை காப்பு செய்யும், உங்கள் கணக்குகளை அல்ல.",
   "settingsLock": "பூட்டு",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLockBlurb": "செயலியைத் திறக்க PIN அல்லது கிடைக்கும் இடத்தில் பயோமெட்ரிக்ஸ் தேவை.",
+  "settingsRequireUnlock": "செயலியைத் திறக்க அன்லாக் தேவை",
+  "settingsLockAfter": "பூட்டும் நேரம்",
+  "settingsLockImmediately": "உடனடியாக",
+  "settingsLock1Minute": "1 நிமிடம்",
+  "settingsLock5Minutes": "5 நிமிடங்கள்",
+  "settingsLock15Minutes": "15 நிமிடங்கள்",
+  "settingsAllowBiometrics": "பயோமெட்ரிக்ஸையும் அனுமதி",
+  "settingsHideSnapshot": "செயலி மாற்றியில் இருப்புகளை மறை",
+  "settingsHideSnapshotSubtitle": "நீங்கள் வேறொரு செயலிக்கு மாறும்போது இந்த திரையை மறைக்கிறது, அதனால் அது செயலி மாற்றியில் ஒரு பார்வையில் தெரியாது.",
+  "settingsHideSnapshotUnavailable": "செயலி மாற்றியில் இருப்புகளை மறைப்பது இந்த தளத்தில் கிடைக்கவில்லை.",
+  "settingsPayees": "பணம் பெறுநர்கள்",
+  "settingsManagePayees": "பணம் பெறுநர்களை நிர்வகி",
+  "settingsPayeesBlurb": "நினைவில் வைக்கப்பட்ட பணம் பெறுநர் பெயர்களும் அவற்றின் இயல்புநிலை வகை மற்றும் கணக்கும், பரிவர்த்தனையைப் பதிவு செய்யும்போது தானியங்கு நிறைவால் பரிந்துரைக்கப்படும்.",
+  "settingsRecurring": "தொடர்ச்சியான வார்ப்புருக்கள்",
+  "settingsManageRecurring": "தொடர்ச்சியான வார்ப்புருக்களை நிர்வகி",
+  "settingsRecurringBlurb": "வாடகை அல்லது சம்பளம் போன்று மாதந்தோறும் மீண்டும் வரும் பில்கள் அல்லது வருமானம். நிலுவையிலுள்ள வார்ப்புரு ஒரு தட்டலில் பதிவு செய்ய முகப்பில் காட்டப்படும் - தானாகப் பதிவு செய்யப்படாது.",
+  "settingsAbout": "பற்றி",
+  "providerFrankfurter": "Frankfurter (ECB விகிதங்கள்)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
+  "providerStooq": "Stooq (தினசரி விலைகள்)",
   "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "ரொக்கம் மற்றும் ரொக்கத்திற்கு இணையானவை",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
+  "systemGroupCashEquivalents": "பணம் மற்றும் பண இணையானவை",
+  "systemGroupPensionRetirement": "ஓய்வூதியம் மற்றும் ஓய்வு",
+  "systemGroupCreditShortTerm": "கடன் மற்றும் குறுகிய கால கடன்",
+  "systemGroupLoansMortgages": "கடன்கள் மற்றும் அடமானங்கள்",
+  "systemGroupInvestments": "முதலீடுகள்",
+  "systemAccountCashBank": "பணம் & வங்கி",
   "systemCategorySalary": "சம்பளம்",
-  "systemCategoryOtherIncome": "Other Income",
+  "systemCategoryOtherIncome": "பிற வருமானம்",
   "systemCategoryGroceries": "மளிகை",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemCategoryRentMortgage": "வாடகை/அடமானம்",
+  "systemCategoryUtilities": "பயன்பாட்டு சேவைகள்",
+  "systemCategoryTransport": "போக்குவரத்து",
+  "systemCategoryFoodOut": "வெளியில் உணவு",
+  "systemCategoryPhone": "தொலைபேசி",
+  "systemCategoryHealth": "சுகாதாரம்",
+  "systemCategoryOtherExpense": "பிற செலவு",
   "homeThisMonth": "இந்த மாதம்",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "பரிமாற்றத்தில் உள்ள பணம்",
+  "homeWhatYouHaveMinusWhatYouOwe": "நீங்கள் வைத்திருப்பது கழித்தல் நீங்கள் கடன்பட்டது",
+  "homeWhatYouHave": "நீங்கள் வைத்திருப்பது {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "நீங்கள் வைத்திருப்பது {haveAmount} {currency}  •  நீங்கள் கடன்பட்டது {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "நீங்கள் {name} இலிருந்து {amount} {currency} அனுப்பினீர்கள்",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "நீங்கள் {name} க்கு {amount} {currency} அனுப்பினீர்கள்",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "மறைக்கப்பட்டது",
+  "allAccounts": "அனைத்து கணக்குகளும்",
+  "savedToPath": "{path} இல் சேமிக்கப்பட்டது",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "கீஸ்டோர் கோப்பை ஏற்றுமதி செய்ய முடியவில்லை. இந்த படியைத் தவிர்க்கலாம்.",
+  "enterPassphraseToProtect": "கோப்பைப் பாதுகாக்க ஒரு கடவுச்சொல்லை உள்ளிடவும்.",
+  "homeTapWhenArrived": "என்ன வந்தது என்று தெரிந்தவுடன் தட்டவும்",
+  "homeReturnedTo": "{name} க்குத் திரும்பியது",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "இன்று நிலுவை",
+  "homeDueLine": "{category} · {account} · பதிவு செய்ய தட்டவும்",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "வரம்பை மீறியது",
+  "homeSpentOfLimit": "{limit} இல் {spent}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "மீதம்: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
+  "homeNoAccounts": "கணக்குகள் இல்லை",
+  "homeCashRegister": "பண பதிவேடு",
+  "homeMarketEstimate": "சந்தை மதிப்பீடு",
   "registerTitle": "பதிவேடு",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
+  "registerSearchHint": "விவரம், வகை, அல்லது தொகை",
+  "registerNoTransactions": "இதுவரை பரிவர்த்தனைகள் இல்லை",
+  "registerNoEntries": "இதுவரை பதிவுகள் இல்லை.",
+  "registerSpentOnly": "செலவு மட்டும்",
+  "registerReceivedOnly": "பெறப்பட்டவை மட்டும்",
+  "registerAll": "அனைத்தும்",
+  "registerUnverified": "சரிபார்க்கப்படவில்லை - மொத்தத்தில் சேர்க்கப்படவில்லை",
+  "registerSuperseded": "இடம்பெயர்வால் மாற்றப்பட்டது - மொத்தத்தில் சேர்க்கப்படவில்லை",
   "summaryTitle": "சுருக்கம்",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "summaryTotalIncome": "மொத்த வருமானம்",
+  "summaryTotalExpense": "மொத்த செலவு",
+  "summaryDateRange": "{start} முதல் {end} வரை",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -258,43 +257,43 @@
   },
   "accountsTitle": "கணக்குகள்",
   "categoriesTitle": "வகைகள்",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
+  "accountName": "கணக்கு பெயர்",
+  "createAccount": "கணக்கை உருவாக்கு",
+  "createGroup": "குழுவை உருவாக்கு",
+  "editGroup": "குழுவைத் திருத்து",
+  "renameAccount": "கணக்கு பெயரை மாற்று",
+  "renameCategory": "வகை பெயரை மாற்று",
+  "addCategory": "வகையைச் சேர்",
+  "groupLabel": "குழு",
+  "kindLabel": "வகை",
   "asset": "சொத்து",
   "liability": "பொறுப்பு",
   "income": "வருமானம்",
   "expense": "செலவு",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "thisAccountHoldsInvestments": "இந்தக் கணக்கு முதலீடுகளை வைத்திருக்கிறது",
+  "thisAccountHoldsInvestmentsSubtitle": "பணமும் நீங்கள் வாங்கு, விற்று விடு, ஈவுத்தொகை மூலம் பதிவு செய்யும் கையிருப்பும்.",
+  "thisIsACreditCard": "இது ஒரு கிரெடிட் கார்டு",
+  "openingBalanceOptional": "தொடக்க இருப்பு (விருப்பத்தேர்வு)",
+  "currencyIso": "நாணயம் (ISO 4217)",
+  "currencyIsoExample": "நாணயம் (ISO 4217, எ.கா. USD)",
+  "hideAccountTitle": "புதிய பதிவுகளிலிருந்து கணக்கை மறைக்கவா?",
+  "hideCategoryTitle": "புதிய பதிவுகளிலிருந்து வகையை மறைக்கவா?",
+  "hideGroupTitle": "புதிய பதிவுகளிலிருந்து குழுவை மறைக்கவா?",
+  "reassignGroup": "குழுவை மறு ஒதுக்கீடு செய்",
+  "transferRemainingBalance": "மீதமுள்ள இருப்பை பரிமாற்று",
+  "monthlyLimit": "மாத வரம்பு",
+  "monthlyLimitHint": "வரம்பு (அழிக்க காலியாக விடவும்)",
+  "monthlyLimitBlurb": "இந்த செலவு வகைக்கான விருப்பத்தேர்வு மாதம்-தேதி வரையிலான செலவு வழிகாட்டி.",
+  "manageCategoryRules": "வகை விதிகளை நிர்வகி",
+  "amount": "தொகை",
+  "category": "வகை",
+  "account": "கணக்கு",
+  "fromAccount": "அனுப்பும் கணக்கு",
+  "toAccount": "பெறும் கணக்கு",
+  "descriptionOptional": "விவரம் (விருப்பத்தேர்வு)",
+  "alsoRememberPayee": "பணம் பெறுநராகவும் நினைவில் வை",
+  "splitIntoCategories": "பல வகைகளாகப் பிரி",
+  "categoryN": "வகை {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "இலக்குத் தொகை",
+  "destinationAmountOptional": "இலக்குத் தொகை (விருப்பத்தேர்வு)",
+  "accountCurrencyAmountOptional": "கணக்கு-நாணயத் தொகை (விருப்பத்தேர்வு)",
+  "transactionCurrencyOptional": "பரிவர்த்தனை நாணயம் (விருப்பத்தேர்வு)",
+  "feeOptional": "கட்டணம் (விருப்பத்தேர்வு)",
+  "feeAmount": "கட்டணத் தொகை",
+  "feeCategory": "கட்டண வகை",
+  "feeDescriptionOptional": "கட்டண விவரம் (விருப்பத்தேர்வு)",
+  "feeDeducted": "மேலே உள்ள தொகையிலிருந்து கட்டணம் கழிக்கப்படுகிறது",
+  "needTwoAccountsToTransfer": "பரிமாற்றம் செய்ய குறைந்தது இரண்டு செயலில் உள்ள கணக்குகளை உருவாக்கவும்.",
+  "whatArrivedTitle": "என்ன வந்தது?",
+  "whatArrivedBlurb": "உண்மையில் என்ன வந்தது என்று சொல்லுங்கள்.",
+  "amountThatArrived": "வந்த தொகை",
+  "feeLossCategory": "கட்டணம் / இழப்பு வகை",
+  "alreadySettled": "ஏற்கனவே தீர்வு செய்யப்பட்டது.",
+  "holdingsTitle": "வைத்திருப்புகள்",
+  "holdingsCash": "பணம்",
+  "holdingsInventory": "கையிருப்பு",
+  "holdingsBook": "புத்தக மதிப்பு (பணம் + செலவு) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "சந்தை மதிப்பீடு {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "இதுவரை வைத்திருப்புகள் இல்லை. ஒரு கருவியைச் சேர்க்க ஒரு வாங்குதலைப் பதிவு செய்யவும்.",
+  "holdingsQuotesBlurb": "மேற்கோள்கள் மதிப்பீடுகள், தரகர் விலை அல்ல. இந்த செயலி ஆர்டர்களை வைக்காது.",
+  "holdingsTapNameToResearch": "ஆராய பெயரைத் தட்டவும். மேற்கோள்கள் மதிப்பீடுகள், ஆலோசனை அல்ல.",
+  "instrument": "கருவி",
+  "newInstrument": "புதிய கருவி",
+  "renameInstrument": "கருவியின் பெயரை மாற்று",
+  "instrumentActions": "கருவி செயல்கள்",
+  "hideInstrumentTitle": "{name} ஐ மறைக்கவா?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "டிக்கர் (விருப்பத்தேர்வு)",
+  "isinOptional": "ISIN (விருப்பத்தேர்வு)",
+  "quantity": "அளவு",
+  "unitPrice": "அலகு விலை",
+  "brokerageOptional": "தரகு கட்டணம் (விருப்பத்தேர்வு)",
+  "brokerageExpenseCategory": "தரகு செலவு வகை",
+  "incomeCategory": "வருமான வகை",
+  "gainIncomeCategory": "லாப வருமான வகை",
+  "lossExpenseCategory": "இழப்பு செலவு வகை",
+  "nonCash": "பணமில்லாத",
+  "cash": "பணம்",
+  "locked": "பூட்டப்பட்டது",
+  "lockUntilHint": "இது ஒரு தடையின் உங்கள் சொந்தக் குறிப்பு, தரகர் விதி அல்ல.",
+  "instrumentKindStock": "பங்கு",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "பரஸ்பர நிதி",
+  "instrumentKindBond": "பத்திரம்",
+  "instrumentKindOther": "பிற",
+  "quoteUseLive": "நேரடி விலை",
+  "quoteUseCached": "கேச் செய்யப்பட்ட விலை",
+  "quoteUseStale": "காலாவதியான விலை",
+  "quoteUseMissing": "செலவைப் பயன்படுத்துகிறது (விலை இல்லை)",
+  "quoteUseDisabled": "மேற்கோள்கள் அணைக்கப்பட்டன — செலவு/கேச் பயன்படுத்தப்படுகிறது",
+  "quoteUseCurrencyMismatch": "செலவைப் பயன்படுத்துகிறது (விலை நாணயம் வேறுபடுகிறது)",
+  "unrealizedLabel": "நிலுவை {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} அலகுகள் · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "உங்கள் மீட்பு சொற்றொடர்",
+  "recoveryPhraseConfirmTitle": "உங்கள் சொற்றொடரை உறுதிப்படுத்தவும்",
+  "recoveryPhraseBlurb": "இந்த சாதனம் தொலைந்தால், மீட்டமைக்கப்பட்டால் அல்லது மாற்றப்பட்டால், உங்கள் பரிவர்த்தனை வரலாற்றை மீட்டெடுக்க இந்த 24 சொற்களே ஒரே வழி. ஸ்மாரா கணக்கியலுக்கு சேவையகம் இல்லை, மேலும் அவற்றை உங்களுக்காக மீட்டெடுக்க முடியாது.\n\nஇந்த சாதனத்தையும் இந்த சொற்றொடரையும் ஒன்றாக இழந்தால், நீங்கள் பதிவு செய்த ஒவ்வொரு பரிவர்த்தனையும் நிரந்தரமாக சரிபார்க்க முடியாததாகிவிடும்.",
+  "recoveryPhraseWriteDown": "இந்த சொற்களை வரிசைப்படி எழுதி, இந்த சாதனத்திலிருந்து தனியாக பாதுகாப்பான இடத்தில் வைக்கவும்.",
+  "iveSavedRecoveryPhrase": "நான் எனது மீட்பு சொற்றொடரை சேமித்துவிட்டேன்",
+  "confirmPhraseBlurb": "நீங்கள் இப்போது சேமித்த சொற்றொடரிலிருந்து கேட்கப்பட்ட சொற்களை உள்ளிடவும்.",
+  "wordNumber": "சொல் #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
+  "keystoreExportTitle": "கீஸ்டோர் கோப்பை ஏற்றுமதி செய்",
+  "keystoreExportBlurb": "உங்கள் மீட்பு சொற்றொடருடன், நீங்கள் தேர்ந்தெடுக்கும் ஒரு கடவுச்சொல்லால் பாதுகாக்கப்பட்ட மறையாக்கம் செய்யப்பட்ட கீஸ்டோர் கோப்பையும் சேமிக்கலாம். இது விருப்பத்தேர்வு - உங்கள் மீட்பு சொற்றொடர் மட்டுமே உங்கள் கையொப்பக் கோப்பை மீட்டமைக்க எப்போதும் போதுமானது.",
+  "keystorePassphrase": "கடவுச்சொல்",
+  "exportKeystoreFile": "கீஸ்டோர் கோப்பை ஏற்றுமதி செய்",
+  "chooseCurrencyTitle": "உங்கள் நாணயத்தைத் தேர்ந்தெடுக்கவும்",
+  "chooseCurrencyBlurb": "ஒவ்வொரு கணக்குக் குழுவும் (பணம் & பண இணையானவை, ஓய்வூதியம் & ஓய்வு, முதலியன) தற்போது இந்த ஒரு நாணயத்தைப் பயன்படுத்துகிறது. அதற்கான புதிய குழுவை உருவாக்குவதன் மூலம் பின்னர் வேறு நாணயத்தில் கணக்குகளைச் சேர்க்கலாம்.",
+  "currencyBackfillTitle": "தற்போதுள்ள குழுக்களுக்கான நாணயத்தைத் தேர்ந்தெடுக்கவும்",
+  "currencyBackfillBlurb": "இந்த செயலி இப்போது பல நாணயங்களை ஆதரிக்கிறது. உங்கள் தற்போதுள்ள கணக்குகள் மற்றும் கணக்குக் குழுக்களுக்கு ஒரு நாணயம் தேவை - இந்த அம்சம் இருப்பதற்கு முன்பே அவை அனைத்தும் அமைக்கப்பட்டதால், ஒரே தேர்வு அவை அனைத்திற்கும் பொருந்தும்.",
+  "firstAccountTitle": "உங்கள் கணக்குக்குப் பெயரிடுங்கள்",
+  "firstAccountBlurb": "இது உங்களுக்காக ஏற்கனவே அமைக்கப்பட்ட கணக்கு - உங்கள் வங்கி போன்று நீங்கள் அடையாளம் காணும் பெயரைக் கொடுங்கள். அடுத்து ஒரு செலவு அல்லது பெறுதலைப் பதிவு செய்வீர்கள், பின்னர் உங்கள் மீட்பு சொற்றொடருடன் சாதனத்தைப் பாதுகாப்பீர்கள்.",
+  "whatsMainAccountCalled": "உங்கள் முதன்மைக் கணக்கின் பெயர் என்ன?",
+  "restoreTitle": "கையொப்பக் கீயை மீட்டமை",
+  "restoreBlurb": "இந்த சாதனத்தில் ஏற்கனவே கணக்குகள் உள்ளன, ஆனால் பொருந்தும் கையொப்பக் கீ இல்லை. உங்கள் சேமித்த மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பிலிருந்து அதை மீட்டமைக்கவும் - உங்கள் தரவு வழக்கம் போல சரிபார்க்கப்படும், மேலும் எதுவும் மீண்டும் கையொப்பமிடப்படாது அல்லது மாற்றப்படாது.",
+  "recoveryPhrase24": "மீட்பு சொற்றொடர் (அனைத்து 24 சொற்களும்)",
+  "keystoreFile": "கீஸ்டோர் கோப்பு",
+  "keystoreFileContents": "கீஸ்டோர் கோப்பு உள்ளடக்கங்கள்",
+  "optionalBackupFile": "விருப்பத்தேர்வு காப்புப் பிரதி கோப்பு",
+  "iDontHavePhrase": "என்னிடம் என் மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பு இல்லை",
+  "migrationTitle": "புதிய கீக்கு இடம்பெயர்",
+  "migrationBlurb": "உங்கள் மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பு இல்லாமல், இந்த சாதனத்தின் கையொப்பக் கீயை மீட்டமைக்க முடியாது. நீங்கள் புதிய கீயைத் தொடங்கலாம். பழைய பதிவுகள் தெரியும், ஆனால் மாற்றப்பட்டதாகக் குறிக்கப்படும்.",
+  "iConfirmBooksValid": "தற்போதைய கணக்குகள் செல்லுபடியாகும் என்று உறுதிப்படுத்துகிறேன்",
+  "whyWeDontEdit": "பழைய பதிவுகளை நாங்கள் ஏன் திருத்துவதில்லை",
+  "whyWeDontEditBody": "நீங்கள் ஒரு தவறைச் சரிசெய்யும்போது, நாங்கள் பழைய வரியை வைத்திருந்து, நீங்கள் ஏற்கனவே உள்ளிட்டதை மாற்றுவதற்குப் பதிலாக அதற்கு அடுத்ததாக ஒரு திருத்தத்தைச் சேர்க்கிறோம். அதனால் உங்கள் வரலாறு எப்போதும் என்ன நடந்தது, எப்போது சரிசெய்தீர்கள் என்பதைத் துல்லியமாகக் காட்டுகிறது — உங்களுக்குத் தெரியாமல் எதுவும் மாறாது.",
+  "lockTitle": "திற",
   "lockScreenTitle": "பூட்டப்பட்டது",
-  "enterPinToContinue": "தொடர PIN ஐ உள்ளிடவும்",
+  "enterPinToContinue": "தொடர உங்கள் PIN ஐ உள்ளிடவும்",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "PIN ஒன்றை அமை",
+  "currentPin": "தற்போதைய PIN",
+  "newPin": "புதிய PIN",
+  "confirmPin": "PIN ஐ உறுதிப்படுத்து",
+  "confirmNewPin": "புதிய PIN ஐ உறுதிப்படுத்து",
+  "firstWeekTitle": "உங்கள் கணக்குகளை அமைக்கவும்",
+  "addCashAccount": "பணக் கணக்கைச் சேர்",
+  "addCreditCard": "கிரெடிட் கார்டைச் சேர்",
+  "cashAccountName": "பணக் கணக்கு பெயர்",
+  "cardName": "அட்டை பெயர்",
+  "paidFromBank": "வங்கியிலிருந்து செலுத்தப்பட்டது",
+  "paidFromCard": "அட்டையிலிருந்து செலுத்தப்பட்டது",
+  "choosePassphraseTitle": "இந்த காப்புப் பிரதியைப் பாதுகாக்க ஒரு கடவுச்சொல்லைத் தேர்ந்தெடுக்கவும். நீங்கள் அதை மறந்தால் மீட்பு இல்லை.",
+  "replaceBooksTitle": "உங்கள் உள்ளூர் கணக்குகளை மாற்றவா?",
+  "replaceBooksBody": "இது இந்த செயலியில் தற்போது உள்ள அனைத்தையும் காப்புப் பிரதியுடன் மாற்றும். பின்னர் செயலியை மூடி மீண்டும் திறக்கவும்.",
+  "chooseBackupFileFirst": "முதலில் காப்புப் பிரதி கோப்பைத் தேர்ந்தெடுக்கவும்.",
+  "backupRestored": "காப்புப் பிரதி மீட்டமைக்கப்பட்டது",
+  "backupRestoredBody": "உங்கள் கணக்குகள் மீட்டமைக்கப்பட்டன. தொடர செயலியை மூடி மீண்டும் திறக்கவும்.",
+  "fixThisEntry": "இந்த பதிவைச் சரிசெய்",
+  "fixBlurb": "பழைய வரி அப்படியே இருக்கும். உறுதிப்படுத்துவது ஒரு தலைகீழ் வரியையும் திருத்தப்பட்டதையும் சேர்க்கும்.",
+  "importStatementTitle": "அறிக்கையை இறக்குமதி செய்",
+  "importOfx": "OFX ஐ இறக்குமதி செய்",
+  "importOfxQfxFile": "OFX / QFX கோப்பை இறக்குமதி செய்",
+  "importCsvFile": "CSV கோப்பை இறக்குமதி செய்",
+  "whatKindOfStatement": "உங்களிடம் எந்த வகையான அறிக்கை கோப்பு உள்ளது?",
+  "chooseAccountForFile": "இந்த கோப்பு எந்த கணக்குக்கு சொந்தமானது என்பதைத் தேர்ந்தெடுக்கவும்.",
+  "importIntoAccount": "கணக்கிற்குள் இறக்குமதி செய்",
+  "useSavedProfile": "சேமிக்கப்பட்ட சுயவிவரத்தைப் பயன்படு",
+  "saveMappingProfile": "இந்த மேப்பிங்கை ஒரு சுயவிவரமாகச் சேமி (விருப்பத்தேர்வு)",
+  "renameProfile": "சுயவிவரப் பெயரை மாற்று",
+  "deleteProfileTitle": "சுயவிவரத்தை நீக்கவா?",
+  "fileHasHeader": "கோப்பில் ஒரு தலைப்பு வரி உள்ளது",
+  "dateColumn": "தேதி நெடுவரிசை",
+  "dateFormatHint": "தேதி வடிவம் (எ.கா. dd/MM/yyyy)",
+  "amountColumn": "தொகை நெடுவரிசை",
+  "amountConvention": "தொகை மரபு",
+  "signedAmountColumn": "கையொப்பமிடப்பட்ட தொகை நெடுவரிசை",
+  "separateDebitCredit": "தனி டெபிட் / கிரெடிட் நெடுவரிசைகள்",
+  "debitColumn": "டெபிட் நெடுவரிசை",
+  "creditColumn": "கிரெடிட் நெடுவரிசை",
+  "decimalSeparator": "தசம பிரிப்பான் (. அல்லது ,)",
+  "descriptionColumns": "விவர நெடுவரிசை(கள்)",
+  "referenceIdColumn": "குறிப்பு ஐடி நெடுவரிசை (விருப்பத்தேர்வு)",
+  "skippedRows": "தவிர்க்கப்பட்ட வரிசைகள்",
+  "parsedTransactionCount": "{count} பரிவர்த்தனைகள் பகுப்பாய்வு செய்யப்பட்டன",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} தவிர்க்கப்பட்டன அல்லது விலக்கப்பட்டன",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} பதிவிடப்பட்டன, {failed} தோல்வியடைந்தன",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "அனைத்திற்குமான வகை",
+  "saveAsRule": "விதியாகச் சேமிக்கவா?",
+  "saveAsRuleBlurb": "இந்த முக்கிய வார்த்தையைக் கொண்ட விவரம் உள்ள எதிர்கால இறக்குமதிகள் இந்த வகையைப் பயன்படுத்தும்.",
+  "keyword": "முக்கிய வார்த்தை",
+  "noSavedRules": "இதுவரை சேமிக்கப்பட்ட விதிகள் இல்லை. ஒரு விதியைச் சேமிக்க வரிசைகளின் குழுவிற்கு ஒரு வகையை ஒதுக்கவும்.",
+  "deleteRuleTitle": "விதியை நீக்கவா?",
+  "editRule": "விதியைத் திருத்து",
+  "rowsGrouped": "{count} வரிசைகள்",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "இறக்குமதி செய்ய {extensions} அறிக்கை கோப்பைத் தேர்ந்தெடுக்கவும்",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "பணம் பெறுநர்கள்",
+  "addPayee": "பணம் பெறுநரைச் சேர்",
+  "renamePayee": "பணம் பெறுநர் பெயரை மாற்று",
+  "deletePayeeTitle": "பணம் பெறுநரை நீக்கவா?",
+  "noPayeesYet": "இதுவரை பணம் பெறுநர்கள் இல்லை",
+  "recurringTitle": "தொடர்ச்சியான வார்ப்புருக்கள்",
+  "noRecurringYet": "இதுவரை தொடர்ச்சியான வார்ப்புருக்கள் இல்லை",
+  "deleteTemplateTitle": "தொடர்ச்சியான வார்ப்புருவை நீக்கவா?",
+  "dayOfMonth": "மாதத்தின் நாள் (1-31)",
+  "dayOfMonthNote": "குறைவான நாட்களைக் கொண்ட மாதம் அதன் சொந்த கடைசி நாளைப் பயன்படுத்தும்.",
+  "dayOfMonthLine": "மாதத்தின் {day} ஆம் நாள் - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
-  "errorGeneric": "ஏதோ தவறு நடந்தது. மீண்டும் முயலவும்.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "name": "பெயர்",
+  "none": "ஏதுமில்லை",
+  "currency": "நாணயம்",
+  "errorGeneric": "ஏதோ தவறு நடந்தது. மீண்டும் முயற்சிக்கவும்.",
+  "errorSigningIdentityMismatch": "இந்த மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பு இந்தத் தரவுத்தளத்தில் உள்ள எந்த கையொப்ப அடையாளத்துடனும் பொருந்தவில்லை.",
+  "errorInvalidLedgerBackup": "இந்த கோப்பு செல்லுபடியாகும் ஸ்மாரா காப்புப்பிரதி அல்ல.",
+  "errorInvalidLedgerBackupNoIdentity": "இந்த காப்புப்பிரதிக்கு கையொப்ப அடையாளம் இல்லை - இது செல்லுபடியாகும் ஸ்மாரா காப்புப்பிரதி அல்ல.",
+  "errorInvalidLedgerBackupUnverified": "இந்த காப்புப்பிரதி முழுமையான கணக்குகளாக சரிபார்க்கப்படவில்லை, எனவே அது மீட்டமைக்கப்படவில்லை.",
+  "errorInvalidLedgerBackupUnreadable": "இந்த கோப்பை ஸ்மாரா காப்புப்பிரதியாகத் திறக்க முடியவில்லை: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "கடைசி செயலில் உள்ள கணக்கை மறைக்க முடியாது.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "இந்த காப்புப்பிரதி இந்த சாதனத்தில் உள்ளதை விட வேறு கையொப்ப அடையாளத்திற்குச் சொந்தமானது.",
+  "errorAccountNotFinancial": "அது ஒரு நிதிக் கணக்கு அல்ல.",
+  "errorAccountArchived": "அந்த கணக்கு மறைக்கப்பட்டுள்ளது.",
+  "errorAccountNotArchived": "அந்த கணக்கு மறைக்கப்படவில்லை.",
+  "errorAccountNoPositiveBalanceToCloseOut": "பரிமாற்ற மீதமுள்ள இருப்பு எதுவும் இல்லை.",
+  "errorAccountHasNoGroup": "அந்த கணக்கிற்கு குழு ஒதுக்கப்படவில்லை.",
+  "errorGroupHasNoCurrency": "அந்த குழுவிற்கு இன்னும் நாணயம் அமைக்கப்படவில்லை.",
+  "errorGroupNotFound": "அந்த கணக்குக் குழு கண்டறியப்படவில்லை.",
+  "errorInvestmentAccountsMustBeAssets": "சொத்து கணக்குகளை மட்டுமே முதலீட்டுக் கணக்குகளாகக் குறிக்க முடியும்.",
+  "errorCreditCardsMustBeLiabilities": "பொறுப்புக் கணக்குகளை மட்டுமே கிரெடிட் கார்டுகளாகக் குறிக்க முடியும்.",
+  "errorOpeningBalanceMustBePositive": "வழங்கப்படும்போது தொடக்க இருப்பு நேர்மறையாக இருக்க வேண்டும்.",
+  "errorAccountTypeDoesNotMatchGroup": "அந்த கணக்கு வகை குழுவுடன் பொருந்தவில்லை.",
+  "errorLastActiveAccount": "கடைசி செயலில் உள்ள நிதிக் கணக்கை மறைக்க முடியாது.",
+  "errorCurrencyRequiredToCreateGroup": "குழுவை உருவாக்க நாணயம் தேவை.",
+  "errorSystemGroupCannotBeArchived": "உள்ளமைக்கப்பட்ட கணக்குக் குழுக்களை மறைக்க முடியாது.",
+  "errorGroupAlreadyArchived": "அந்த குழு ஏற்கனவே மறைக்கப்பட்டுள்ளது.",
+  "errorCannotArchiveGroupWithAccounts": "இன்னும் செயலில் உள்ள கணக்குகளைக் கொண்ட குழுவை மறைக்க முடியாது.",
+  "errorSystemGroupNeverArchived": "உள்ளமைக்கப்பட்ட கணக்குக் குழுக்கள் ஒருபோதும் மறைக்கப்படாது.",
+  "errorAccountGroupsCannotBeDeleted": "கணக்குக் குழுக்களை நீக்க முடியாது.",
+  "errorCannotReassignDifferentCurrency": "வேறு நாணயம் கொண்ட குழுவிற்கு இந்த கணக்கை நகர்த்த முடியாது.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "குழுவில் செயலில் உள்ள கணக்குகள் இருக்கும்போது நாணயத்தை மாற்ற முடியாது.",
   "errorAmountMustBePositive": "தொகை நேர்மறையாக இருக்க வேண்டும்.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "கணக்கு-நாணயத் தொகை நேர்மறையாக இருக்க வேண்டும்.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "கணக்கு-நாணயத் தொகை வெளிநாட்டு நாணயப் பதிவுக்கு மட்டுமே.",
+  "errorSplitNeedsTwoLines": "பிரிவிற்கு குறைந்தது இரண்டு வகை வரிகள் தேவை.",
+  "errorSplitLineMustBePositive": "ஒவ்வொரு பிரிவு வரியும் நேர்மறையான தொகையாக இருக்க வேண்டும்.",
+  "errorSplitLinesMustSumToTotal": "பிரிவு வரிகள் பரிவர்த்தனை மொத்தத்திற்குக் கூட்டுத்தொகையாக இருக்க வேண்டும்.",
+  "errorTransferAmountMustBePositive": "பரிமாற்றத் தொகை நேர்மறையாக இருக்க வேண்டும்.",
+  "errorTransferAccountsMustDiffer": "மூல மற்றும் இலக்குக் கணக்குகள் வேறுபட்டதாக இருக்க வேண்டும்.",
+  "errorCloseoutRequiresDestinationAmount": "நாணய மாற்று முடிவுக்கு அறியப்பட்ட இலக்குத் தொகை தேவை.",
+  "errorDestinationAmountNotForSameCurrency": "இலக்குத் தொகை நாணய மாற்று பரிமாற்றத்திற்கு மட்டுமே.",
+  "errorDestinationAmountMustBePositive": "இலக்குத் தொகை நேர்மறையாக இருக்க வேண்டும்.",
+  "errorInvestmentCashExceeded": "இந்த முதலீட்டுக் கணக்கின் பணத்தை விட அதிகமாக பரிமாற்ற முடியாது.",
+  "errorCannotReverseUnsettledProvisional": "இந்த நிலுவை பரிமாற்றத்தைத் தலைகீழாக்குவதற்குப் பதிலாக அதைத் தீர்வு செய்யவும்.",
+  "errorAlreadyReversed": "இந்த பதிவு ஏற்கனவே சரிசெய்யப்பட்டது. அசல் வரி அப்படியே இருக்கும்.",
+  "errorNotActiveExpenseCategory": "செயலில் உள்ள செலவு வகையைத் தேர்ந்தெடுக்கவும்.",
+  "errorNotActiveIncomeCategory": "செயலில் உள்ள வருமான வகையைத் தேர்ந்தெடுக்கவும்.",
+  "errorSettledAmountMustNotBeNegative": "வந்த தொகை எதிர்மறையாக இருக்க முடியாது.",
+  "errorPendingTransferNotFound": "அந்த நிலுவை பரிமாற்றம் கண்டறியப்படவில்லை.",
+  "errorPendingTransferAlreadySettled": "அந்த நிலுவை பரிமாற்றம் ஏற்கனவே தீர்வு செய்யப்பட்டது.",
+  "errorSettledToMustBeSourceOrDestination": "அசல் மூல அல்லது இலக்குக் கணக்கைத் தேர்ந்தெடுக்கவும்.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "பணம் மூலக் கணக்கிற்குத் திரும்பும்போது மட்டுமே கட்டண வகை பயன்படுத்தப்படும்.",
+  "errorSettledAmountMustBePositiveForDelivery": "வந்ததற்கான நேர்மறையான தொகையை உள்ளிடவும்.",
+  "errorSettledAmountExceedsProvisional": "அந்தத் தொகை அனுப்பப்பட்டதை விட அதிகமாக உள்ளது.",
+  "errorInstrumentNotFound": "அந்த கருவி கண்டறியப்படவில்லை.",
+  "errorIncomeRequiredForNonCash": "பணமில்லாத கையகப்படுத்துதலுக்கு செயலில் உள்ள வருமான வகை தேவை.",
+  "errorInsufficientCash": "அந்த வாங்குதலுக்கு இந்த முதலீட்டுக் கணக்கில் போதிய பணம் இல்லை.",
+  "errorSellQuantityAndPriceMustBePositive": "விற்பனை அளவும் அலகு விலையும் நேர்மறையாக இருக்க வேண்டும்.",
+  "errorLockedUntil": "விற்க முடியாது: சில அலகுகள் {date} வரை பூட்டப்பட்டுள்ளன.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "நீங்கள் தற்போது பூட்டப்படாமல் வைத்திருப்பதை விட அதிகமாக விற்க முடியாது.",
+  "errorIncomeRequiredForGain": "உணரப்பட்ட லாபத்திற்கு செயலில் உள்ள வருமான வகை தேவை.",
+  "errorExpenseRequiredForLoss": "உணரப்பட்ட இழப்பிற்கு செயலில் உள்ள செலவு வகை தேவை.",
+  "errorBrokerageFailedAfterBuy": "வாங்குதல் பதிவிடப்பட்டது, ஆனால் தரகு கட்டணம் தோல்வியடைந்தது: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "விற்பனை பதிவிடப்பட்டது, ஆனால் தரகு கட்டணம் தோல்வியடைந்தது: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "ஈவுத்தொகை நேர்மறையாக இருக்க வேண்டும்.",
+  "errorNotInvestmentAccount": "அது ஒரு முதலீட்டுக் கணக்கு அல்ல.",
+  "errorNoInventoryCompanion": "இந்த முதலீட்டுக் கணக்கில் அதன் கையிருப்புத் துணை இல்லை.",
+  "errorInvestmentReversalBlocked": "இந்த வாங்குதலைத் தலைகீழாக்க முடியாது: பிந்தைய விற்பனை(கள்) அதன் அலகுகளைச் சார்ந்துள்ளன. முதலில் சார்பு விற்பனை(களை)த் தலைகீழாக்கவும்: {sells}.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "மாத வரம்பு நேர்மறையாக இருக்க வேண்டும்.",
+  "errorTemplateAmountMustBePositive": "வார்ப்புருத் தொகை நேர்மறையாக இருக்க வேண்டும்.",
+  "errorOfxUnrecognized": "இந்த கோப்பை OFX ஆக அடையாளம் காண முடியவில்லை.",
+  "errorCsvEmpty": "தேர்ந்தெடுக்கப்பட்ட கோப்பு காலியாக உள்ளது.",
+  "errorCsvUnreadable": "இந்த கோப்பை CSV ஆகப் படிக்க முடியவில்லை.",
+  "errorCsvNoRows": "தேர்ந்தெடுக்கப்பட்ட கோப்பில் வரிசைகள் இல்லை.",
+  "errorBackupCreateFailed": "காப்புப்பிரதியை உருவாக்க முடியவில்லை: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "தவறான PIN. மீண்டும் முயலவும்.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "இந்த காப்புப்பிரதியை மீட்டமைக்க முடியவில்லை - தவறான கடவுச்சொல், அல்லது இது ஸ்மாரா காப்புப்பிரதி கோப்பு அல்ல.",
+  "validationAmountAccountCategoryRequired": "தொகை, கணக்கு, மற்றும் வகை தேவை.",
+  "validationAmountAccountRequired": "தொகை மற்றும் கணக்கு தேவை.",
+  "validationSplitLineIncomplete": "ஒவ்வொரு பிரிவு வரிக்கும் ஒரு வகையும் ஒரு தொகையும் தேவை.",
+  "validationSplitSumMismatch": "பிரிவு வரிகள் பரிவர்த்தனை மொத்தத்திற்குக் கூட்டுத்தொகையாக இருக்க வேண்டும்.",
+  "validationFromToAmountRequired": "அனுப்பும் கணக்கு, பெறும் கணக்கு, மற்றும் தொகை தேவை.",
+  "validationAmountArrivedRequired": "வந்த தொகை தேவை.",
+  "validationChooseReceivingAccount": "பணத்தைப் பெற்ற கணக்கைத் தேர்ந்தெடுக்கவும்.",
+  "validationAccountCategoryRequired": "கணக்கு மற்றும் வகை தேவை.",
+  "validationFixFailed": "இந்த சரிசெய்தலைச் சேமிக்க முடியவில்லை.",
+  "validationNameRequired": "உங்கள் முதன்மைக் கணக்கிற்குப் பெயரிடுங்கள்.",
+  "validationStillLoading": "இன்னும் ஏற்றுகிறது - சிறிது நேரத்தில் மீண்டும் முயற்சிக்கவும்.",
+  "validationSaveAccountNameFailed": "கணக்கு பெயரைச் சேமிக்க முடியவில்லை.",
+  "validationWrongPin": "தவறான PIN. மீண்டும் முயற்சிக்கவும்.",
+  "validationCategoryMustBeIncomeOrExpense": "வகை வருமானமாகவோ செலவாகவோ இருக்க வேண்டும்.",
+  "validationOnlyExpenseHasMonthlyLimit": "செலவு வகைக்கு மட்டுமே மாத வரம்பு இருக்க முடியும்.",
+  "validationInvalidTemplate": "தவறான வார்ப்புரு.",
+  "validationWrongKeystorePassphrase": "இந்த கீஸ்டோர் கோப்பிற்கான தவறான கடவுச்சொல்.",
+  "validationInvalidKeystoreFile": "அது செல்லுபடியாகும் கீஸ்டோர் கோப்பு போல் தெரியவில்லை.",
+  "validationRestorePhraseFailed": "அந்த மீட்பு சொற்றொடரிலிருந்து மீட்டமைக்க முடியவில்லை.",
+  "validationGenerateKeyFailed": "இந்த சாதனத்தில் கையொப்பக் கீயை உருவாக்க முடியவில்லை: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "இந்த நாணயத்தைச் சேமிக்க முடியவில்லை: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "இடம்பெயர்வு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.",
+  "validationChooseBackupFile": "முதலில் காப்புப் பிரதி கோப்பைத் தேர்ந்தெடுக்கவும்.",
+  "validationPassphraseRequired": "ஒரு கடவுச்சொல்லை உள்ளிடவும்.",
+  "validationPinsDoNotMatch": "இரண்டு PIN களும் பொருந்தவில்லை.",
+  "validationFeePositiveWithCategory": "பரிமாற்றக் கட்டணம் ஒரு செலவு வகை தேர்ந்தெடுக்கப்பட்ட நேர்மறையான தொகையாக இருக்க வேண்டும்.",
+  "validationFeeMustBeLessThanAmount": "கழிக்கப்பட்ட-கட்டணப் பரிமாற்றத்திற்கு கட்டணம் தொகையை விட குறைவாக இருக்க வேண்டும்.",
+  "validationTransferSavedFeeFailed": "பரிமாற்றம் சேமிக்கப்பட்டது, ஆனால் கட்டணத்தைப் பதிவு செய்ய முடியவில்லை: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "செல்லுபடியாகும் தொகையை உள்ளிடவும்.",
+  "validationConfirmWordMismatch": "சொல் {n} உங்கள் சேமித்த சொற்றொடருடன் பொருந்தவில்லை. அதைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "வாங்குதல் அளவும் அலகு விலையும் நேர்மறையாக இருக்க வேண்டும்.",
+  "errorInstrumentArchived": "மறைக்கப்பட்ட கருவியை வாங்க முடியாது.",
+  "errorNonCashCannotIncludeBrokerage": "பணமில்லாத கையகப்படுத்துதல்களில் தரகு கட்டணத்தை சேர்க்க முடியாது.",
+  "errorBrokerageRequiresExpenseCategory": "தரகு கட்டணம் நேர்மறையாக இருக்கும்போது செயலில் உள்ள செலவு வகை தேவை.",
+  "errorSellProceedsMustCoverBrokerage": "விற்பனை வருவாய் குறைந்தபட்சம் தரகு கட்டணத் தொகையாக இருக்க வேண்டும்.",
+  "homeSpentOfLimitThisMonth": "இந்த மாதம் {limit} இல் {spent}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "ஸ்மாரா கணக்கைத் திற",
   "searchLabel": "தேடு",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "தொடக்க இருப்பு",
+  "transferToName": "பரிமாற்றம்: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "பரிமாற்றத்திற்கான கட்டணம்",
+  "feeForTransferTo": "{name} க்கான பரிமாற்றத்திற்கான கட்டணம்",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "கோப்புத் தேர்வியைத் திறக்க முடியவில்லை: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "தயவுசெய்து .{extensions} கோப்பைத் தேர்ந்தெடுக்கவும்",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "நாணயக் குறியீடு (ISO 4217, எ.கா. USD)",
+  "splitCounterpartMore": "{name} +{count} மேலும்",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "தேதி",
+  "noneSelected": "ஏதுமில்லை",
+  "reviewEntriesBeforeContinuing": "தொடர்வதற்கு முன் கீழே உள்ள பதிவுகளை (மொத்தம் {count}) மதிப்பாய்வு செய்யவும்.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "நீங்கள் {amount} பெற்றீர்கள்",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "மாற்று விகிதம் இன்னும் தெரியவில்லை என்றால் காலியாக விடவும்.",
+  "recordTradeBlurb": "ஏற்கனவே நடந்த ஒரு வர்த்தகத்தைப் பதிவு செய்யவும். இந்த செயலி ஆர்டர்களை வைக்காது.",
+  "feeOnTopBlurb": "மேலே: மேலே உள்ள தொகை இந்த கணக்கிலிருந்து எடுக்கப்படும் மொத்தம்; கட்டணம் அதிலிருந்து வெளியேறும்.",
+  "feeBankBlurb": "உங்கள் வங்கி அல்லது இடைத்தரகர் வசூலிக்கும் முன்கூட்டிய கமிஷன்.",
+  "validationPinMinLength": "PIN குறைந்தது 4 இலக்கங்களாக இருக்க வேண்டும்.",
+  "restoreBackupBlurb": "இது இந்த செயலியில் தற்போது உள்ள அனைத்தையும் காப்புப் பிரதியுடன் மாற்றும் — இது இணைக்காது. காப்புப் பிரதி கோப்பைத் தேர்ந்தெடுத்து அதைப் பாதுகாத்த கடவுச்சொல்லை உள்ளிடவும்.",
+  "actionReplace": "மாற்று",
+  "hideAccountBody": "{name} புதிய பரிவர்த்தனைகளுக்குக் கிடைக்காது.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "கணக்குகளை உருவாக்கும்போது அல்லது மறு ஒதுக்கீடு செய்யும்போது {name} வழங்கப்படாது.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "புதிய பரிவர்த்தனைகளைப் பதிவு செய்யும்போது {name} வழங்கப்படாது.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "மறைக்கப்பட்ட கருவிகள் கடந்த வாங்குதல்கள் மற்றும் விற்பனைகளில் தொடர்ந்திருக்கும். நீங்கள் அவற்றிற்கு இன்னும் ஈவுத்தொகையைப் பதிவு செய்யலாம்.",
+  "nameHidden": "{name} (மறைக்கப்பட்டது)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "நாணயம் அமைக்கப்படவில்லை",
+  "deletePayeeBody": "{name} மற்றும் அதன் நினைவில் வைக்கப்பட்ட இயல்புநிலைகள் அகற்றப்படும். கடந்த பரிவர்த்தனைகள் பாதிக்கப்படாது.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} இனி நிலுவையில் உள்ளதாக வழங்கப்படாது. அது ஏற்கனவே பதிவு செய்த கடந்த பரிவர்த்தனைகள் பாதிக்கப்படாது.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "சேமிக்கப்பட்ட நெடுவரிசை மேப்பிங் \"{name}\" நீக்கப்படும். அதனுடன் ஏற்கனவே இறக்குமதி செய்யப்பட்ட அறிக்கைகள் பாதிக்கப்படாது.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "இறக்குமதிகள் இனி \"{keyword}\" மூலம் தானாக வகைப்படுத்தப்படாது. இந்த விதியைப் பயன்படுத்தி ஏற்கனவே வகைப்படுத்தப்பட்ட பரிவர்த்தனைகள் பாதிக்கப்படாது.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "விருப்பமாக இப்போது ஒரு கிரெடிட் கார்டு அல்லது பணக் கணக்கைச் சேர்க்கவும் - அமைப்புகளிலிருந்து பின்னர் எப்போதும் மேலும் கணக்குகளைச் சேர்க்கலாம்.",
+  "deliveredToDestination": "இலக்கிற்கு வழங்கப்பட்டது",
+  "deliveredToName": "{name} க்கு வழங்கப்பட்டது",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "நீங்கள் எதிர்பார்த்ததை விட {amount} {currency} குறைவாகப் பெற்றீர்கள் - வித்தியாசத்தை ஈடுகட்ட ஒரு வகையைத் தேர்ந்தெடுக்கவும்.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "தேதி வரம்பு",
+  "addTemplate": "வார்ப்புருவைச் சேர்",
+  "editTemplate": "வார்ப்புருவைத் திருத்து",
+  "validationFillTemplateFields": "ஒவ்வொரு புலத்திலும் செல்லுபடியாகும் தொகை மற்றும் நாளை நிரப்பவும்.",
+  "saveCsvExport": "CSV ஏற்றுமதியைச் சேமி",
+  "referenceRate": "குறிப்பு விகிதம்",
+  "yourRate": "உங்கள் விகிதம்",
+  "leaveBlankIfThisWasAccountCurrency": "இது {currency} இல் இருந்தால், கணக்கின் சொந்த நாணயத்தில் இருந்தால் காலியாக விடவும்.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "வரை பூட்டு (விருப்பத்தேர்வு)",
+  "lockedUntilDate": "{date} வரை பூட்டப்பட்டது",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "ஒரு ஆய்வுக் குறிப்பு நகலெடுக்கப்பட்டது — உலாவி URL கிடைக்கவில்லை, அல்லது நீங்கள் ஆஃப்லைனில் உள்ளீர்கள்.",
+  "openedFavouriteResearchTool": "உங்கள் விருப்பமான ஆய்வுக் கருவி திறக்கப்பட்டது.",
+  "looksLikeGain": "இது ஒரு லாபம் போல் தெரிகிறது",
+  "looksLikeLoss": "இது ஒரு இழப்பு போல் தெரிகிறது",
+  "looksLikeBreakEven": "இது சம நிலை போல் தெரிகிறது",
+  "sellableQuantity": "{name} ({qty} விற்கக்கூடியது)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "நெடுவரிசை {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "இறக்குமதி செய்கிறது...",
+  "confirmImport": "இறக்குமதியை உறுதிப்படுத்து",
+  "manageSavedCategoryRules": "சேமிக்கப்பட்ட வகை விதிகளை நிர்வகி",
+  "statementCurrencyMismatch": "இந்த கோப்பின் நாணயம் ({currency}) தேர்ந்தெடுக்கப்பட்ட கணக்கின் நாணயத்துடன் பொருந்தவில்லை.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "வகை விதிகள்",
+  "possibleDuplicate": "சாத்தியமான நகல்",
+  "unknownCategory": "தெரியாத வகை"
 }

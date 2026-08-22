@@ -29,7 +29,8 @@ class SplitLine {
 
 /// Form state for recording a transaction (amount, direction, category,
 /// financial account, date).
-class RecordTransactionViewModel extends ChangeNotifier {
+class RecordTransactionViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   RecordTransactionViewModel({
     required LedgerRepository ledgerRepository,
     String? initialFinancialAccountId,
@@ -336,9 +337,6 @@ class RecordTransactionViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   Future<bool> submit() {
     return isSplitting ? _submitSplit() : _submitSingle();
   }
@@ -350,15 +348,14 @@ class RecordTransactionViewModel extends ChangeNotifier {
     if (categoryId == null ||
         amountMinor == null ||
         financialAccountId == null) {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationAmountAccountCategoryRequired),
       );
-      notifyListeners();
       return false;
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -387,13 +384,11 @@ class RecordTransactionViewModel extends ChangeNotifier {
       return true;
     } on InvalidTransactionAmountException catch (e) {
       _isSubmitting = false;
-      _errorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     } on AccountGroupException catch (e) {
       _isSubmitting = false;
-      _errorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     }
   }
@@ -406,31 +401,24 @@ class RecordTransactionViewModel extends ChangeNotifier {
     final amountMinor = _amountMinor;
     final financialAccountId = _financialAccountId;
     if (amountMinor == null || financialAccountId == null) {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationAmountAccountRequired),
       );
-      notifyListeners();
       return false;
     }
     if (_splitLines.any(
       (line) => line.categoryId == null || line.amountMinor == null,
     )) {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationSplitLineIncomplete),
-      );
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationSplitLineIncomplete));
       return false;
     }
     if (splitRemainderMinor != 0) {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationSplitSumMismatch),
-      );
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationSplitSumMismatch));
       return false;
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -450,13 +438,11 @@ class RecordTransactionViewModel extends ChangeNotifier {
       return true;
     } on InvalidTransactionAmountException catch (e) {
       _isSubmitting = false;
-      _errorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     } on AccountGroupException catch (e) {
       _isSubmitting = false;
-      _errorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     }
   }

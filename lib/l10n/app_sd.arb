@@ -1,119 +1,118 @@
 {
   "@@locale": "sd",
-  "appTitle": "سمارا کاتو",
+  "appTitle": "سمارا اڪائونٽنگ",
   "navHome": "گهر",
   "navRegister": "رجسٽر",
   "navSummary": "خلاصو",
   "navAccounts": "کاتا",
   "navCategories": "زمرا",
-  "actionCancel": "رد",
+  "actionCancel": "رد ڪريو",
   "actionSave": "محفوظ ڪريو",
-  "actionDelete": "Delete",
-  "actionDone": "Done",
-  "actionContinue": "Continue",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDelete": "خارج ڪريو",
+  "actionDone": "مڪمل",
+  "actionContinue": "جاري رکو",
+  "actionDismiss": "رد ڪريو",
+  "actionRetry": "ٻيهر ڪوشش ڪريو",
+  "actionSkip": "ڇڏي ڏيو",
+  "actionConfirm": "تصديق ڪريو",
   "actionAdd": "شامل ڪريو",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "خرچ",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionEdit": "تبديل ڪريو",
+  "actionRename": "نالو تبديل ڪريو",
+  "actionHide": "لڪايو",
+  "actionCreate": "ٺاهيو",
+  "actionCloseApp": "ايپ بند ڪريو",
+  "actionUnlock": "اڻلاڪ ڪريو",
+  "actionSettle": "سيٽل ڪريو",
+  "actionFinish": "پورو ڪريو",
+  "actionPreview": "اڳ منظر",
+  "actionImport": "درآمد ڪريو",
+  "actionExportCsv": "CSV برآمد ڪريو",
+  "actionChooseFile": "فائل چونڊيو",
+  "actionRestore": "بحال ڪريو",
+  "actionFix": "درست ڪريو",
+  "actionBuy": "خريد ڪريو",
+  "actionSell": "وڪرو ڪريو",
+  "actionDividend": "منافعو",
+  "actionRecordBuy": "خريداري رڪارڊ ڪريو",
+  "actionRecordSell": "وڪرو رڪارڊ ڪريو",
+  "actionRecordDividend": "منافعو رڪارڊ ڪريو",
+  "actionPayCard": "ڪارڊ ادا ڪريو",
+  "actionTransfer": "منتقلي",
+  "actionRecordTransaction": "ٽرانزيڪشن رڪارڊ ڪريو",
+  "actionImportStatement": "اسٽيٽمينٽ درآمد ڪريو",
+  "actionClearDates": "تاريخون صاف ڪريو",
+  "actionClearSearch": "ڳولا ۽ فلٽر صاف ڪريو",
+  "actionUseBiometrics": "بايوميٽرڪس استعمال ڪريو",
+  "actionSetPin": "PIN مقرر ڪريو",
+  "actionChangePin": "PIN تبديل ڪريو",
+  "actionSaveBackup": "بيڪ اپ محفوظ ڪريو",
+  "actionRestoreBackup": "بيڪ اپ بحال ڪريو",
+  "actionSaveRule": "قاعدو محفوظ ڪريو",
+  "actionConfirmFix": "درستي جي تصديق ڪريو",
+  "captureSpent": "خرچ ٿيل",
+  "captureReceived": "مليل",
+  "captureMovedMoney": "پئسا منتقل ٿيا",
+  "captureImportStatement": "اسٽيٽمينٽ درآمد",
   "settingsTitle": "سيٽنگون",
   "settingsLanguage": "ٻولي",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "ڊوائيس جي ٻولي",
+  "settingsFetchFxRates": "حوالي جي مٽاسٽا شرحون حاصل ڪريو",
+  "settingsFetchFxRatesSubtitle": "ڪراس-ڪرنسي منتقلين ۾ منزل جي رقم جي ڀرسان هڪ اشاري مارڪيٽ شرح ڏيکاري ٿو، صرف مقابلي لاءِ - رقم ڀرڻ لاءِ ڪڏهن به استعمال نه ٿيندو.",
+  "settingsRateProvider": "شرح مهيا ڪندڙ",
+  "settingsFetchMarketPrices": "سيڙپڪارين لاءِ مارڪيٽ جون قيمتون حاصل ڪريو",
+  "settingsFetchMarketPricesSubtitle": "ٽڪر يا ISIN رکندڙ اوزارن لاءِ آخري قيمتون ڳوليندو آهي، پورٽ فوليو جي قيمت جو اندازو لڳائڻ لاءِ. ڪڏهن به واپار رڪارڊ ڪرڻ لاءِ استعمال نه ٿيندو، ۽ ڪڏهن به اهو نه موڪليندو ته توهان وٽ ڪيترو آهي.",
+  "settingsMarketPriceProvider": "مارڪيٽ قيمت مهيا ڪندڙ",
+  "settingsFavouriteResearchTool": "پسنديده تحقيقي اوزار",
+  "settingsFavouriteResearchToolSubtitle": "هولڊنگز تي هڪ اوزار جو نالو ٽيپ ڪرڻ سان اهو اوزار برائوزر ۾ هڪ تحقيقي پرامپٽ سان کلندو — اهو ڪا انضمام ناهي، ۽ نه ڪا صلاح.",
+  "settingsBackup": "بيڪ اپ",
+  "settingsBackupBlurb": "پنهنجي حسابن جي هڪ رمز ٿيل ڪاپي توهان جي چونڊيل هنڌ تي محفوظ ڪريو، يا ان مان بحال ڪريو. هي توهان جي بحاليءَ واري جملي يا ڪيسٽور فائل کان الڳ آهي، جيڪي توهان جي سائننگ ڪي کي بيڪ اپ ڪن ٿيون، توهان جي حسابن کي نه.",
+  "settingsLock": "لاڪ",
+  "settingsLockBlurb": "ايپ کولڻ لاءِ PIN، يا جتي موجود هجي بايوميٽرڪس گهربل آهي.",
+  "settingsRequireUnlock": "ايپ کولڻ لاءِ اڻلاڪ گهربل آهي",
+  "settingsLockAfter": "هن بعد لاڪ ڪريو",
+  "settingsLockImmediately": "فوري طور تي",
+  "settingsLock1Minute": "1 منٽ",
+  "settingsLock5Minutes": "5 منٽ",
+  "settingsLock15Minutes": "15 منٽ",
+  "settingsAllowBiometrics": "بايوميٽرڪس به اجازت ڏيو",
+  "settingsHideSnapshot": "ايپ سوئچر ۾ بيلنس لڪايو",
+  "settingsHideSnapshotSubtitle": "جڏهن توهان ڪنهن ٻي ايپ ڏانهن مٽايو ٿا ته هي اسڪرين لڪائي ٿو، ته جيئن اهو ايپ سوئچر ۾ هڪ نظر ۾ نظر نه اچي.",
+  "settingsHideSnapshotUnavailable": "ايپ سوئچر ۾ بيلنس لڪائڻ هن پليٽ فارم تي موجود ناهي.",
+  "settingsPayees": "ادا ڪيا ويندڙ",
+  "settingsManagePayees": "ادا ڪيا ويندڙن کي منظم ڪريو",
+  "settingsPayeesBlurb": "ياد رکيل ادا ڪيا ويندڙ نالا ۽ سندن ڊفالٽ زمرو ۽ کاتو، ٽرانزيڪشن رڪارڊ ڪرڻ وقت آٽو ڪمپليٽ پاران تجويز ڪيل.",
+  "settingsRecurring": "بار بار ٿيندڙ ٽيمپليٽون",
+  "settingsManageRecurring": "بار بار ٿيندڙ ٽيمپليٽون منظم ڪريو",
+  "settingsRecurringBlurb": "بل يا آمدني جيڪا مهيني بمهينو بار بار ٿئي، جيئن ڪرايو يا پگهار. ڏنل ٽيمپليٽ گهر تي ڏيکاريل ٿئي ٿي ته جيئن توهان هڪ ٽيپ سان رڪارڊ ڪريو - ڪڏهن به خودڪار طور پوسٽ نه ٿيندي.",
+  "settingsAbout": "باري ۾",
+  "providerFrankfurter": "Frankfurter (ECB شرحون)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
+  "providerStooq": "Stooq (روزاني قيمتون)",
   "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "نقد ۽ نقد جي برابر شيون",
+  "systemGroupPensionRetirement": "پينشن ۽ رٽائرمينٽ",
+  "systemGroupCreditShortTerm": "ڪريڊٽ ۽ مختصر مدت جو قرض",
+  "systemGroupLoansMortgages": "قرض ۽ رهن",
+  "systemGroupInvestments": "سيڙپڪاري",
+  "systemAccountCashBank": "نقد ۽ بئنڪ",
+  "systemCategorySalary": "پگهار",
+  "systemCategoryOtherIncome": "ٻي آمدني",
+  "systemCategoryGroceries": "سودو سلف",
+  "systemCategoryRentMortgage": "ڪرايو/رهن",
+  "systemCategoryUtilities": "سهولتون",
+  "systemCategoryTransport": "ٽرانسپورٽ",
+  "systemCategoryFoodOut": "ٻاهر جو کاڌو",
+  "systemCategoryPhone": "فون",
+  "systemCategoryHealth": "صحت",
+  "systemCategoryOtherExpense": "ٻيو خرچ",
   "homeThisMonth": "هن مهيني",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "منتقلي ۾ پئسا",
+  "homeWhatYouHaveMinusWhatYouOwe": "جيڪو توهان وٽ آهي گھٽ جيڪو توهان تي قرض آهي",
+  "homeWhatYouHave": "توهان وٽ آهي {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "توهان وٽ آهي {haveAmount} {currency}  •  توهان تي قرض آهي {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "توهان {name} کان {amount} {currency} موڪليو",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "توهان {name} ڏانهن {amount} {currency} موڪليو",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "لڪل",
+  "allAccounts": "سڀ کاتا",
+  "savedToPath": "{path} تي محفوظ ٿيو",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "ڪيسٽور فائل برآمد نه ٿي سگهي. توهان هي مرحلو ڇڏي سگهو ٿا.",
+  "enterPassphraseToProtect": "فائل کي محفوظ ڪرڻ لاءِ هڪ پاسفريز داخل ڪريو.",
+  "homeTapWhenArrived": "جڏهن خبر پوي ته ڇا آيو ته ٽيپ ڪريو",
+  "homeReturnedTo": "{name} ڏانهن موٽيو",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "اڄ نيا آهي",
+  "homeDueLine": "{category} · {account} · رڪارڊ ڪرڻ لاءِ ٽيپ ڪريو",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "حد کان مٿي",
+  "homeSpentOfLimit": "{limit} مان {spent}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "بچيل: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "ڪوبه کاتو ناهي",
+  "homeCashRegister": "نقد رجسٽر",
+  "homeMarketEstimate": "مارڪيٽ اندازو",
+  "registerTitle": "رجسٽر",
+  "registerSearchHint": "تفصيل، زمرو، يا رقم",
+  "registerNoTransactions": "اڃا تائين ڪا ٽرانزيڪشن ناهي",
+  "registerNoEntries": "اڃا تائين ڪا اندراج رڪارڊ نه ٿي.",
+  "registerSpentOnly": "صرف خرچ",
+  "registerReceivedOnly": "صرف مليل",
+  "registerAll": "سڀ",
+  "registerUnverified": "غير تصديق ٿيل - ڪل مان خارج",
+  "registerSuperseded": "لڏپلاڻ سبب تبديل ٿيل - ڪل مان خارج",
+  "summaryTitle": "خلاصو",
+  "summaryTotalIncome": "ڪل آمدني",
+  "summaryTotalExpense": "ڪل خرچ",
+  "summaryDateRange": "{start} کان {end} تائين",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "کاتا",
+  "categoriesTitle": "زمرا",
+  "accountName": "کاتي جو نالو",
+  "createAccount": "کاتو ٺاهيو",
+  "createGroup": "گروپ ٺاهيو",
+  "editGroup": "گروپ کي تبديل ڪريو",
+  "renameAccount": "کاتي جو نالو تبديل ڪريو",
+  "renameCategory": "زمري جو نالو تبديل ڪريو",
+  "addCategory": "زمرو شامل ڪريو",
+  "groupLabel": "گروپ",
+  "kindLabel": "قسم",
+  "asset": "اثاثو",
+  "liability": "ذميواري",
+  "income": "آمدني",
+  "expense": "خرچ",
+  "thisAccountHoldsInvestments": "هي کاتو سيڙپڪاري رکي ٿو",
+  "thisAccountHoldsInvestmentsSubtitle": "نقد سان گڏ اهو انوینٽري جيڪا توهان خريد ڪريو، وڪرو ڪريو ۽ منافعو سان رڪارڊ ڪريو ٿا.",
+  "thisIsACreditCard": "هي هڪ ڪريڊٽ ڪارڊ آهي",
+  "openingBalanceOptional": "شروعاتي بيلنس (اختياري)",
+  "currencyIso": "ڪرنسي (ISO 4217)",
+  "currencyIsoExample": "ڪرنسي (ISO 4217، مثال طور USD)",
+  "hideAccountTitle": "نئين داخلائن مان کاتو لڪايو؟",
+  "hideCategoryTitle": "نئين داخلائن مان زمرو لڪايو؟",
+  "hideGroupTitle": "نئين داخلائن مان گروپ لڪايو؟",
+  "reassignGroup": "گروپ کي ٻيهر مقرر ڪريو",
+  "transferRemainingBalance": "بچيل بيلنس منتقل ڪريو",
+  "monthlyLimit": "مهيني جي حد",
+  "monthlyLimitHint": "حد (صاف ڪرڻ لاءِ خالي ڇڏيو)",
+  "monthlyLimitBlurb": "هن خرچ واري زمري لاءِ هڪ اختياري مهيني-تائين-تاريخ خرچ رهنما.",
+  "manageCategoryRules": "زمري جا قاعدا منظم ڪريو",
+  "amount": "رقم",
+  "category": "زمرو",
+  "account": "کاتو",
+  "fromAccount": "موڪليندڙ کاتو",
+  "toAccount": "وصول ڪندڙ کاتو",
+  "descriptionOptional": "تفصيل (اختياري)",
+  "alsoRememberPayee": "ادا ڪيا ويندڙ طور به ياد رکو",
+  "splitIntoCategories": "ڪيترن ئي زمرن ۾ ورهايو",
+  "categoryN": "زمرو {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "منزل جي رقم",
+  "destinationAmountOptional": "منزل جي رقم (اختياري)",
+  "accountCurrencyAmountOptional": "کاتي-ڪرنسي رقم (اختياري)",
+  "transactionCurrencyOptional": "ٽرانزيڪشن ڪرنسي (اختياري)",
+  "feeOptional": "فيس (اختياري)",
+  "feeAmount": "فيس جي رقم",
+  "feeCategory": "فيس جو زمرو",
+  "feeDescriptionOptional": "فيس جو تفصيل (اختياري)",
+  "feeDeducted": "فيس مٿين رقم مان ڪٽي وئي آهي",
+  "needTwoAccountsToTransfer": "منتقلي ڪرڻ لاءِ گھٽ ۾ گھٽ ٻه فعال کاتا ٺاهيو.",
+  "whatArrivedTitle": "ڇا آيو؟",
+  "whatArrivedBlurb": "اسان کي ٻڌايو ته حقيقت ۾ ڇا آيو.",
+  "amountThatArrived": "آيل رقم",
+  "feeLossCategory": "فيس / نقصان جو زمرو",
+  "alreadySettled": "اڳ ۾ ئي سيٽل ٿي چڪو آهي.",
+  "holdingsTitle": "هولڊنگز",
+  "holdingsCash": "نقد",
+  "holdingsInventory": "انوینٽري",
+  "holdingsBook": "بک ويلیو (نقد + قيمت) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "مارڪيٽ اندازو {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "اڃا تائين ڪا هولڊنگ ناهي. اوزار شامل ڪرڻ لاءِ هڪ خريداري رڪارڊ ڪريو.",
+  "holdingsQuotesBlurb": "قيمتون اندازا آهن، دلال جي قيمت ناهي. هي ايپ آرڊر نه ٿي رکي.",
+  "holdingsTapNameToResearch": "تحقيق ڪرڻ لاءِ نالو ٽيپ ڪريو. قيمتون اندازا آهن، صلاح ناهي.",
+  "instrument": "اوزار",
+  "newInstrument": "نئون اوزار",
+  "renameInstrument": "اوزار جو نالو تبديل ڪريو",
+  "instrumentActions": "اوزار جا عمل",
+  "hideInstrumentTitle": "{name} لڪايو؟",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "ٽڪر (اختياري)",
+  "isinOptional": "ISIN (اختياري)",
+  "quantity": "مقدار",
+  "unitPrice": "يونٽ قيمت",
+  "brokerageOptional": "دلالي (اختياري)",
+  "brokerageExpenseCategory": "دلالي خرچ جو زمرو",
+  "incomeCategory": "آمدني جو زمرو",
+  "gainIncomeCategory": "فائدي جي آمدني جو زمرو",
+  "lossExpenseCategory": "نقصان جي خرچ جو زمرو",
+  "nonCash": "غير نقد",
+  "cash": "نقد",
+  "locked": "لاڪ ٿيل",
+  "lockUntilHint": "هي هڪ پابندي بابت توهان جو پنهنجو نوٽ آهي، دلال جو ضابطو ناهي.",
+  "instrumentKindStock": "اسٽاڪ",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "ميوچوئل فنڊ",
+  "instrumentKindBond": "بانڊ",
+  "instrumentKindOther": "ٻيو",
+  "quoteUseLive": "لائيو قيمت",
+  "quoteUseCached": "ڪيش ٿيل قيمت",
+  "quoteUseStale": "پراڻي قيمت",
+  "quoteUseMissing": "قيمت استعمال ٿي رهي آهي (ڪا قيمت ناهي)",
+  "quoteUseDisabled": "قيمتون بند — قيمت/ڪيش استعمال ٿي رهي آهي",
+  "quoteUseCurrencyMismatch": "قيمت استعمال ٿي رهي آهي (قيمت جي ڪرنسي مختلف آهي)",
+  "unrealizedLabel": "غير حاصل ٿيل {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} يونٽ · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "توهان جو بحاليءَ وارو جملو",
+  "recoveryPhraseConfirmTitle": "پنهنجي جملي جي تصديق ڪريو",
+  "recoveryPhraseBlurb": "جيڪڏهن هي ڊوائيس گم ٿي وڃي، ري سيٽ ٿي وڃي، يا مٽجي وڃي ته توهان جي ٽرانزيڪشن جي تاريخ کي بحال ڪرڻ جو واحد طريقو هي 24 لفظ آهن. سمارا اڪائونٽنگ وٽ ڪوبه سرور ناهي ۽ اهي توهان لاءِ بحال نه ٿي سگهي.\n\nجيڪڏهن توهان هي ڊوائيس ۽ هي جملو گڏ وڃائي ڇڏيو، ته توهان جي رڪارڊ ٿيل هر ٽرانزيڪشن مستقل طور تصديق نه ٿيڻ جوڳي ٿي ويندي.",
+  "recoveryPhraseWriteDown": "هي لفظ ترتيب سان لکو ۽ انهن کي هن ڊوائيس کان الڳ ڪنهن محفوظ جاءِ تي رکو.",
+  "iveSavedRecoveryPhrase": "مون پنهنجو بحاليءَ وارو جملو محفوظ ڪري ڇڏيو آهي",
+  "confirmPhraseBlurb": "توهان هينئر محفوظ ڪيل جملي مان گهربل لفظ داخل ڪريو.",
+  "wordNumber": "لفظ #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
-  "lockScreenTitle": "Locked",
-  "enterPinToContinue": "Enter your PIN to continue",
+  "keystoreExportTitle": "ڪيسٽور فائل برآمد ڪريو",
+  "keystoreExportBlurb": "توهان جي بحاليءَ واري جملي سان گڏ، توهان هڪ رمز ٿيل ڪيسٽور فائل به محفوظ ڪري سگهو ٿا جيڪا توهان جي چونڊيل پاسفريز سان محفوظ آهي. هي اختياري آهي - توهان جي بحاليءَ وارو جملو اڪيلو ئي هميشه توهان جي سائننگ ڪي کي بحال ڪرڻ لاءِ ڪافي آهي.",
+  "keystorePassphrase": "پاسفريز",
+  "exportKeystoreFile": "ڪيسٽور فائل برآمد ڪريو",
+  "chooseCurrencyTitle": "پنهنجي ڪرنسي چونڊيو",
+  "chooseCurrencyBlurb": "هر کاتي جو گروپ (نقد ۽ نقد جي برابر شيون، پينشن ۽ رٽائرمينٽ، وغيره) هن وقت لاءِ هي هڪ ڪرنسي استعمال ڪري ٿو. توهان بعد ۾ ان لاءِ نئون گروپ ٺاهي مختلف ڪرنسي ۾ کاتا شامل ڪري سگهو ٿا.",
+  "currencyBackfillTitle": "موجوده گروپن لاءِ ڪرنسي چونڊيو",
+  "currencyBackfillBlurb": "هي ايپ هاڻي ڪيترن ئي ڪرنسين جي حمايت ڪري ٿي. توهان جي موجوده کاتن ۽ کاتي گروپن کي ڪرنسي جي ضرورت آهي - ڇاڪاڻ ته اهي سڀ هن خاصيت جي موجود ٿيڻ کان اڳ سيٽ اپ ٿيل هئا، هڪ چونڊ انهن سڀني تي لاڳو ٿئي ٿي.",
+  "firstAccountTitle": "پنهنجي کاتي جو نالو رکو",
+  "firstAccountBlurb": "هي توهان لاءِ اڳ ۾ ئي سيٽ اپ ٿيل کاتو آهي - ان کي هڪ نالو ڏيو جيڪو توهان سڃاڻو ٿا، جيئن توهان جي بئنڪ. توهان اڳيان هڪ خرچ يا وصولي رڪارڊ ڪندؤ، پوءِ پنهنجي بحاليءَ واري جملي سان ڊوائيس کي محفوظ ڪندؤ.",
+  "whatsMainAccountCalled": "توهان جي مکيه کاتي جو نالو ڇا آهي؟",
+  "restoreTitle": "سائننگ ڪي بحال ڪريو",
+  "restoreBlurb": "هن ڊوائيس ۾ اڳ ۾ ئي حساب موجود آهن، پر ملندڙ سائننگ ڪي ناهي. ان کي پنهنجي محفوظ ڪيل بحاليءَ واري جملي يا ڪيسٽور فائل مان بحال ڪريو - توهان جو ڊيٽا عام طور تي تصديق ٿيندو، ۽ ڪجهه به ٻيهر سائن يا تبديل نه ٿيندو.",
+  "recoveryPhrase24": "بحاليءَ وارو جملو (سڀ 24 لفظ)",
+  "keystoreFile": "ڪيسٽور فائل",
+  "keystoreFileContents": "ڪيسٽور فائل جو مواد",
+  "optionalBackupFile": "اختياري بيڪ اپ فائل",
+  "iDontHavePhrase": "منهنجو بحاليءَ وارو جملو يا ڪيسٽور فائل ناهي",
+  "migrationTitle": "نئين ڪي ڏانهن لڏپلاڻ ڪريو",
+  "migrationBlurb": "توهان جي بحاليءَ واري جملي يا ڪيسٽور فائل کان سواءِ، هن ڊوائيس جي سائننگ ڪي بحال نه ٿي سگهي. توهان نئين ڪي شروع ڪري سگهو ٿا. پراڻيون داخلائون نظر ايندڙ رهنديون پر انهن کي تبديل ٿيل طور نشان لڳل هوندو.",
+  "iConfirmBooksValid": "مان تصديق ٿو ڪريان ته موجوده حساب صحيح آهن",
+  "whyWeDontEdit": "اسان پراڻي داخلائن کي ڇو نه ٿا تبديل ڪريون",
+  "whyWeDontEditBody": "جڏهن توهان هڪ غلطي درست ڪريو ٿا، اسان پراڻي لائين کي رکون ٿا ۽ توهان اڳ ۾ ئي داخل ڪيل شي کي تبديل ڪرڻ بدران ان جي ڀرسان هڪ درستي شامل ڪريون ٿا. ان طرح توهان جي تاريخ هميشه بلڪل ڏيکاري ٿي ته ڇا ٿيو ۽ توهان ان کي ڪڏهن درست ڪيو — توهان جي پٺيءَ پويان چپ چاپ ڪجهه به تبديل نه ٿو ٿئي.",
+  "lockTitle": "اڻلاڪ",
+  "lockScreenTitle": "لاڪ ٿيل",
+  "enterPinToContinue": "جاري رکڻ لاءِ پنهنجو PIN داخل ڪريو",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "PIN مقرر ڪريو",
+  "currentPin": "موجوده PIN",
+  "newPin": "نئون PIN",
+  "confirmPin": "PIN جي تصديق ڪريو",
+  "confirmNewPin": "نئين PIN جي تصديق ڪريو",
+  "firstWeekTitle": "پنهنجا کاتا سيٽ اپ ڪريو",
+  "addCashAccount": "نقد کاتو شامل ڪريو",
+  "addCreditCard": "ڪريڊٽ ڪارڊ شامل ڪريو",
+  "cashAccountName": "نقد کاتي جو نالو",
+  "cardName": "ڪارڊ جو نالو",
+  "paidFromBank": "بئنڪ مان ادا ڪيل",
+  "paidFromCard": "ڪارڊ مان ادا ڪيل",
+  "choosePassphraseTitle": "هن بيڪ اپ کي محفوظ ڪرڻ لاءِ هڪ پاسفريز چونڊيو. جيڪڏهن توهان ان کي وساري ڇڏيو ته ڪا بحالي ناهي.",
+  "replaceBooksTitle": "پنهنجا مقامي حساب مٽايو؟",
+  "replaceBooksBody": "هي هن وقت هن ايپ ۾ موجود هر شيءِ کي بيڪ اپ سان مٽائي ڇڏيندو. بعد ۾ ايپ بند ڪري ٻيهر کوليو.",
+  "chooseBackupFileFirst": "پهرين هڪ بيڪ اپ فائل چونڊيو.",
+  "backupRestored": "بيڪ اپ بحال ٿيو",
+  "backupRestoredBody": "توهان جا حساب بحال ٿي ويا آهن. جاري رکڻ لاءِ ايپ بند ڪري ٻيهر کوليو.",
+  "fixThisEntry": "هي داخلا درست ڪريو",
+  "fixBlurb": "پراڻي لائن بلڪل اهڙي ئي رهي ٿي. تصديق ڪرڻ سان هڪ ابتڙ لائن ۽ درست ٿيل لائن شامل ٿئي ٿي.",
+  "importStatementTitle": "اسٽيٽمينٽ درآمد ڪريو",
+  "importOfx": "OFX درآمد ڪريو",
+  "importOfxQfxFile": "OFX / QFX فائل درآمد ڪريو",
+  "importCsvFile": "CSV فائل درآمد ڪريو",
+  "whatKindOfStatement": "توهان وٽ ڪهڙي قسم جي اسٽيٽمينٽ فائل آهي؟",
+  "chooseAccountForFile": "چونڊيو ته هي فائل ڪهڙي کاتي سان تعلق رکي ٿي.",
+  "importIntoAccount": "کاتي ۾ درآمد ڪريو",
+  "useSavedProfile": "محفوظ ٿيل پروفائل استعمال ڪريو",
+  "saveMappingProfile": "هن ميپنگ کي پروفائل طور محفوظ ڪريو (اختياري)",
+  "renameProfile": "پروفائل جو نالو تبديل ڪريو",
+  "deleteProfileTitle": "پروفائل خارج ڪريو؟",
+  "fileHasHeader": "فائل ۾ هيڊر واري قطار آهي",
+  "dateColumn": "تاريخ ڪالم",
+  "dateFormatHint": "تاريخ جي فارميٽ (مثال طور dd/MM/yyyy)",
+  "amountColumn": "رقم ڪالم",
+  "amountConvention": "رقم جو ضابطو",
+  "signedAmountColumn": "سائن ٿيل رقم ڪالم",
+  "separateDebitCredit": "الڳ ڊيبٽ / ڪريڊٽ ڪالم",
+  "debitColumn": "ڊيبٽ ڪالم",
+  "creditColumn": "ڪريڊٽ ڪالم",
+  "decimalSeparator": "اعشاريه علحدگي (. يا ,)",
+  "descriptionColumns": "تفصيل ڪالم(س)",
+  "referenceIdColumn": "حوالو ID ڪالم (اختياري)",
+  "skippedRows": "ڇڏيل قطارون",
+  "parsedTransactionCount": "{count} ٽرانزيڪشن پارس ٿيون",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} ڇڏيون ويون يا خارج ڪيون ويون",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} پوسٽ ٿيون، {failed} ناڪام ٿيون",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "سڀني لاءِ زمرو",
+  "saveAsRule": "قاعدي طور محفوظ ڪريو؟",
+  "saveAsRuleBlurb": "مستقبل جي درآمدون جن جي تفصيل ۾ هي لفظ شامل هوندو اهي هي زمرو استعمال ڪنديون.",
+  "keyword": "لفظ",
+  "noSavedRules": "اڃا تائين ڪو محفوظ ٿيل قاعدو ناهي. قاعدو محفوظ ڪرڻ لاءِ قطارن جي گروپ کي زمرو مقرر ڪريو.",
+  "deleteRuleTitle": "قاعدو خارج ڪريو؟",
+  "editRule": "قاعدو تبديل ڪريو",
+  "rowsGrouped": "{count} قطارون",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "درآمد ڪرڻ لاءِ هڪ {extensions} اسٽيٽمينٽ فائل چونڊيو",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "ادا ڪيا ويندڙ",
+  "addPayee": "ادا ڪيو ويندڙ شامل ڪريو",
+  "renamePayee": "ادا ڪيو ويندڙ جو نالو تبديل ڪريو",
+  "deletePayeeTitle": "ادا ڪيو ويندڙ خارج ڪريو؟",
+  "noPayeesYet": "اڃا تائين ڪوبه ادا ڪيو ويندڙ ناهي",
+  "recurringTitle": "بار بار ٿيندڙ ٽيمپليٽون",
+  "noRecurringYet": "اڃا تائين ڪا به بار بار ٿيندڙ ٽيمپليٽ ناهي",
+  "deleteTemplateTitle": "بار بار ٿيندڙ ٽيمپليٽ خارج ڪريو؟",
+  "dayOfMonth": "مهيني جو ڏينهن (1-31)",
+  "dayOfMonthNote": "گهٽ ڏينهن رکندڙ مهينو پنهنجو آخري ڏينهن استعمال ڪري ٿو.",
+  "dayOfMonthLine": "مهيني جو {day} ڏينهن - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
-  "errorGeneric": "ڪجهه غلط ٿيو. ٻيهر ڪوشش ڪريو.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "name": "نالو",
+  "none": "ڪجهه به نه",
+  "currency": "ڪرنسي",
+  "errorGeneric": "ڪجهه غلط ٿيو. مهرباني ڪري ٻيهر ڪوشش ڪريو.",
+  "errorSigningIdentityMismatch": "هي بحاليءَ وارو جملو يا ڪيسٽور فائل هن ڊيٽابيس ۾ ڪنهن به سائننگ سڃاڻپ سان نٿو ملي.",
+  "errorInvalidLedgerBackup": "هي فائل هڪ صحيح سمارا بيڪ اپ ناهي.",
+  "errorInvalidLedgerBackupNoIdentity": "هن بيڪ اپ ۾ ڪا سائننگ سڃاڻپ ناهي - اهو هڪ صحيح سمارا بيڪ اپ ناهي.",
+  "errorInvalidLedgerBackupUnverified": "هي بيڪ اپ مڪمل حسابن طور تصديق نه ٿيو، تنهنڪري اهو بحال نه ڪيو ويو.",
+  "errorInvalidLedgerBackupUnreadable": "هي فائل سمارا بيڪ اپ طور کولي نه سگهياسين: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "هي بيڪ اپ هن ڊوائيس تي موجود کان مختلف سائننگ سڃاڻپ سان تعلق رکي ٿو.",
+  "errorAccountNotFinancial": "اهو مالي کاتو ناهي.",
+  "errorAccountArchived": "اهو کاتو لڪل آهي.",
+  "errorAccountNotArchived": "اهو کاتو لڪل ناهي.",
+  "errorAccountNoPositiveBalanceToCloseOut": "منتقلي لاءِ ڪوبه بچيل بيلنس ناهي.",
+  "errorAccountHasNoGroup": "ان کاتي کي ڪوبه گروپ مقرر نه ٿيل آهي.",
+  "errorGroupHasNoCurrency": "ان گروپ لاءِ اڃا تائين ڪرنسي مقرر نه ٿي آهي.",
+  "errorGroupNotFound": "اهو کاتي جو گروپ نه مليو.",
+  "errorInvestmentAccountsMustBeAssets": "صرف اثاثن جا کاتا سيڙپڪاري کاتن طور نشان لڳائي سگهجن ٿا.",
+  "errorCreditCardsMustBeLiabilities": "صرف ذميوارين جا کاتا ڪريڊٽ ڪارڊن طور نشان لڳائي سگهجن ٿا.",
+  "errorOpeningBalanceMustBePositive": "ڏنل هجڻ تي شروعاتي بيلنس مثبت هجڻ گهرجي.",
+  "errorAccountTypeDoesNotMatchGroup": "ان کاتي جو قسم گروپ سان نٿو ملي.",
+  "errorLastActiveAccount": "آخري فعال مالي کاتو لڪائي نٿو سگهجي.",
+  "errorCurrencyRequiredToCreateGroup": "گروپ ٺاهڻ لاءِ ڪرنسي گهربل آهي.",
+  "errorSystemGroupCannotBeArchived": "بلٽ-ان کاتي جا گروپ لڪائي نٿا سگهجن.",
+  "errorGroupAlreadyArchived": "اهو گروپ اڳ ۾ ئي لڪل آهي.",
+  "errorCannotArchiveGroupWithAccounts": "اهو گروپ لڪائي نٿو سگهجي جنهن ۾ اڃا فعال کاتا آهن.",
+  "errorSystemGroupNeverArchived": "بلٽ-ان کاتي جا گروپ ڪڏهن به نه لڪائبا آهن.",
+  "errorAccountGroupsCannotBeDeleted": "کاتي جا گروپ خارج ٿي نٿا سگهجن.",
+  "errorCannotReassignDifferentCurrency": "هي کاتو مختلف ڪرنسي واري گروپ ڏانهن منتقل نٿو ڪري سگهجي.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "جڏهن گروپ ۾ فعال کاتا هجن ته ڪرنسي تبديل نٿي ڪري سگهجي.",
   "errorAmountMustBePositive": "رقم مثبت هجڻ گهرجي.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "کاتي-ڪرنسي رقم مثبت هجڻ گهرجي.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "کاتي-ڪرنسي رقم صرف پرڏيهي-ڪرنسي داخلا لاءِ آهي.",
+  "errorSplitNeedsTwoLines": "ورهاڱي لاءِ گھٽ ۾ گھٽ ٻه زمرا لائينون گهربل آهن.",
+  "errorSplitLineMustBePositive": "هر ورهاڱي لائين مثبت رقم هجڻ گهرجي.",
+  "errorSplitLinesMustSumToTotal": "ورهاڱي لائينون ٽرانزيڪشن جي ڪل تائين پهچڻ گهرجن.",
+  "errorTransferAmountMustBePositive": "منتقلي جي رقم مثبت هجڻ گهرجي.",
+  "errorTransferAccountsMustDiffer": "ماخذ ۽ منزل جا کاتا مختلف هجڻ گهرجن.",
+  "errorCloseoutRequiresDestinationAmount": "ڪراس-ڪرنسي بندش لاءِ هڪ ڄاتل منزل جي رقم گهربل آهي.",
+  "errorDestinationAmountNotForSameCurrency": "منزل جي رقم صرف ڪراس-ڪرنسي منتقلي لاءِ آهي.",
+  "errorDestinationAmountMustBePositive": "منزل جي رقم مثبت هجڻ گهرجي.",
+  "errorInvestmentCashExceeded": "هن سيڙپڪاري کاتي جي نقد کان وڌيڪ منتقل نٿو ڪري سگهجي.",
+  "errorCannotReverseUnsettledProvisional": "هن ٺهراهي منتقلي کي ابتڙ ڪرڻ بدران ان کي سيٽل ڪريو.",
+  "errorAlreadyReversed": "هي داخلا اڳ ۾ ئي درست ٿي چڪي آهي. اصل لائن اهڙي ئي رهي ٿي.",
+  "errorNotActiveExpenseCategory": "هڪ فعال خرچ جو زمرو چونڊيو.",
+  "errorNotActiveIncomeCategory": "هڪ فعال آمدني جو زمرو چونڊيو.",
+  "errorSettledAmountMustNotBeNegative": "آيل رقم منفي نٿي ٿي سگهي.",
+  "errorPendingTransferNotFound": "اها ٺهراهي منتقلي نه ملي.",
+  "errorPendingTransferAlreadySettled": "اها ٺهراهي منتقلي اڳ ۾ ئي سيٽل ٿيل آهي.",
+  "errorSettledToMustBeSourceOrDestination": "اصل ماخذ يا منزل جو کاتو چونڊيو.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "فيس جو زمرو صرف ان وقت استعمال ٿئي ٿو جڏهن پئسا ماخذ کاتي ڏانهن واپس موٽن.",
+  "errorSettledAmountMustBePositiveForDelivery": "جيڪو آيو ان لاءِ مثبت رقم داخل ڪريو.",
+  "errorSettledAmountExceedsProvisional": "اها رقم موڪليل کان وڌيڪ آهي.",
+  "errorInstrumentNotFound": "اهو اوزار نه مليو.",
+  "errorIncomeRequiredForNonCash": "غير نقد حاصلات لاءِ فعال آمدني جو زمرو گهربل آهي.",
+  "errorInsufficientCash": "ان خريداري لاءِ هن سيڙپڪاري کاتي ۾ ڪافي نقد ناهي.",
+  "errorSellQuantityAndPriceMustBePositive": "وڪري جي مقدار ۽ يونٽ قيمت مثبت هجڻ گهرجن.",
+  "errorLockedUntil": "وڪرو نٿو ڪري سگهجي: ڪجهه يونٽ {date} تائين لاڪ آهن.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "توهان هن وقت اڻلاڪ ٿيل رکيل کان وڌيڪ وڪرو نٿا ڪري سگهو.",
+  "errorIncomeRequiredForGain": "حاصل ٿيل فائدي لاءِ فعال آمدني جو زمرو گهربل آهي.",
+  "errorExpenseRequiredForLoss": "حاصل ٿيل نقصان لاءِ فعال خرچ جو زمرو گهربل آهي.",
+  "errorBrokerageFailedAfterBuy": "خريداري پوسٽ ٿي وئي، پر دلالي فيس ناڪام ٿي: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "وڪرو پوسٽ ٿي ويو، پر دلالي فيس ناڪام ٿي: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "منافعي جي رقم مثبت هجڻ گهرجي.",
+  "errorNotInvestmentAccount": "اهو سيڙپڪاري کاتو ناهي.",
+  "errorNoInventoryCompanion": "هن سيڙپڪاري کاتي ۾ ان جي انوینٽري ساٿي ناهي.",
+  "errorInvestmentReversalBlocked": "هي خريداري ابتڙ نٿي ڪري سگهجي: بعد وارا وڪرو ان جي يونٽن تي دارومدار رکن ٿا. پهرين دارومدار رکندڙ وڪرو ابتڙ ڪريو: {sells}.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "مهيني جي حد مثبت هجڻ گهرجي.",
+  "errorTemplateAmountMustBePositive": "ٽيمپليٽ جي رقم مثبت هجڻ گهرجي.",
+  "errorOfxUnrecognized": "هن فائل کي OFX طور سڃاڻي نه سگهياسين.",
+  "errorCsvEmpty": "چونڊيل فائل خالي آهي.",
+  "errorCsvUnreadable": "هن فائل کي CSV طور پڙهي نه سگهياسين.",
+  "errorCsvNoRows": "چونڊيل فائل ۾ ڪا به قطار ناهي.",
+  "errorBackupCreateFailed": "بيڪ اپ ٺاهي نه سگهياسين: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "هي بيڪ اپ بحال نه ڪري سگهياسين - غلط پاسفريز، يا اهو سمارا بيڪ اپ فائل ناهي.",
+  "validationAmountAccountCategoryRequired": "رقم، کاتو، ۽ زمرو گهربل آهن.",
+  "validationAmountAccountRequired": "رقم ۽ کاتو گهربل آهن.",
+  "validationSplitLineIncomplete": "هر ورهاڱي لائين لاءِ زمرو ۽ رقم گهربل آهي.",
+  "validationSplitSumMismatch": "ورهاڱي لائينون ٽرانزيڪشن جي ڪل تائين پهچڻ گهرجن.",
+  "validationFromToAmountRequired": "موڪليندڙ کاتو، وصول ڪندڙ کاتو، ۽ رقم گهربل آهن.",
+  "validationAmountArrivedRequired": "آيل رقم گهربل آهي.",
+  "validationChooseReceivingAccount": "چونڊيو ته ڪهڙي کاتي کي فنڊ مليا.",
+  "validationAccountCategoryRequired": "کاتو ۽ زمرو گهربل آهن.",
+  "validationFixFailed": "هي درستي محفوظ نه ٿي سگهي.",
+  "validationNameRequired": "پنهنجي مکيه کاتي جو نالو رکو.",
+  "validationStillLoading": "اڃا لوڊ ٿي رهيو آهي - ٿوري دير ۾ ٻيهر ڪوشش ڪريو.",
+  "validationSaveAccountNameFailed": "کاتي جو نالو محفوظ نه ٿي سگهيو.",
+  "validationWrongPin": "غلط PIN. ٻيهر ڪوشش ڪريو.",
+  "validationCategoryMustBeIncomeOrExpense": "زمرو آمدني يا خرچ هجڻ گهرجي.",
+  "validationOnlyExpenseHasMonthlyLimit": "صرف خرچ جو زمرو مهيني جي حد رکي سگهي ٿو.",
+  "validationInvalidTemplate": "غلط ٽيمپليٽ.",
+  "validationWrongKeystorePassphrase": "هن ڪيسٽور فائل لاءِ غلط پاسفريز.",
+  "validationInvalidKeystoreFile": "اهو صحيح ڪيسٽور فائل نٿو لڳي.",
+  "validationRestorePhraseFailed": "ان بحاليءَ واري جملي مان بحال نه ٿي سگهيو.",
+  "validationGenerateKeyFailed": "هن ڊوائيس تي سائننگ ڪي پيدا نه ٿي سگهي: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "هي ڪرنسي محفوظ نه ٿي سگهي: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "لڏپلاڻ ناڪام ٿي. مهرباني ڪري ٻيهر ڪوشش ڪريو.",
+  "validationChooseBackupFile": "پهرين هڪ بيڪ اپ فائل چونڊيو.",
+  "validationPassphraseRequired": "هڪ پاسفريز داخل ڪريو.",
+  "validationPinsDoNotMatch": "ٻئي PIN نٿا ملن.",
+  "validationFeePositiveWithCategory": "منتقلي جي فيس هڪ خرچ جو زمرو چونڊيل هجڻ سان مثبت رقم هجڻ گهرجي.",
+  "validationFeeMustBeLessThanAmount": "ڪٽيل-فيس منتقلي لاءِ فيس رقم کان گھٽ هجڻ گهرجي.",
+  "validationTransferSavedFeeFailed": "منتقلي محفوظ ٿي وئي، پر فيس رڪارڊ نه ٿي سگهي: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "هڪ صحيح رقم داخل ڪريو.",
+  "validationConfirmWordMismatch": "لفظ {n} توهان جي محفوظ ٿيل جملي سان نٿو ملي. ان کي جانچي ٻيهر ڪوشش ڪريو.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "خريداري جي مقدار ۽ يونٽ قيمت مثبت هجڻ گهرجن.",
+  "errorInstrumentArchived": "لڪل اوزار خريد نٿو ڪري سگهجي.",
+  "errorNonCashCannotIncludeBrokerage": "غير نقد حاصلاتن ۾ دلالي شامل نٿي ڪري سگهجي.",
+  "errorBrokerageRequiresExpenseCategory": "جڏهن دلالي مثبت هجي ته فعال خرچ جو زمرو گهربل آهي.",
+  "errorSellProceedsMustCoverBrokerage": "وڪري جي رقم گھٽ ۾ گھٽ دلالي جي رقم برابر هجڻ گهرجي.",
+  "homeSpentOfLimitThisMonth": "هن مهيني {limit} مان {spent}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "سمارا کاتو اڻلاڪ ڪريو",
   "searchLabel": "ڳوليو",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "شروعاتي بيلنس",
+  "transferToName": "منتقلي: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "منتقلي لاءِ فيس",
+  "feeForTransferTo": "{name} ڏانهن منتقلي لاءِ فيس",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "فائل پکر کولي نه سگهياسين: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "مهرباني ڪري هڪ .{extensions} فائل چونڊيو",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "ڪرنسي ڪوڊ (ISO 4217، مثال طور USD)",
+  "splitCounterpartMore": "{name} +{count} وڌيڪ",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "تاريخ",
+  "noneSelected": "ڪجهه به نه",
+  "reviewEntriesBeforeContinuing": "جاري رکڻ کان اڳ هيٺين داخلائن (ڪل {count}) جو جائزو وٺو.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "توهان کي {amount} مليو",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "جيڪڏهن مٽاسٽا جي شرح اڃا معلوم ناهي ته خالي ڇڏيو.",
+  "recordTradeBlurb": "هڪ واپار رڪارڊ ڪريو جيڪو اڳ ۾ ئي ٿي چڪو آهي. هي ايپ آرڊر نه ٿي رکي.",
+  "feeOnTopBlurb": "مٿي: مٿين رقم هن کاتي مان ورتل ڪل رقم آهي؛ فيس ان مان نڪري ٿي.",
+  "feeBankBlurb": "توهان جي بئنڪ يا وچولي پاران وصول ڪيل اڳوڻي ڪميشن.",
+  "validationPinMinLength": "PIN گھٽ ۾ گھٽ 4 انگ هجڻ گهرجي.",
+  "restoreBackupBlurb": "هي هن وقت هن ايپ ۾ موجود هر شيءِ کي بيڪ اپ سان مٽائي ڇڏيندو — اهو ضم نه ڪندو. هڪ بيڪ اپ فائل چونڊيو ۽ پاسفريز داخل ڪريو جنهن سان ان کي محفوظ ڪيو ويو هو.",
+  "actionReplace": "مٽايو",
+  "hideAccountBody": "{name} هاڻي نئين ٽرانزيڪشن لاءِ موجود نه هوندو.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "کاتا ٺاهڻ يا ٻيهر مقرر ڪرڻ وقت {name} هاڻي پيش نه ڪيو ويندو.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "نئين ٽرانزيڪشن رڪارڊ ڪرڻ وقت {name} هاڻي پيش نه ڪيو ويندو.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "لڪل اوزار پراڻي خريداري ۽ وڪري تي رهن ٿا. توهان اڃا به انهن لاءِ منافعو رڪارڊ ڪري سگهو ٿا.",
+  "nameHidden": "{name} (لڪل)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "ڪا ڪرنسي مقرر ناهي",
+  "deletePayeeBody": "{name} ۽ ان جا ياد رکيل ڊفالٽ هٽايا ويندا. پراڻيون ٽرانزيڪشنون متاثر نه ٿينديون.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} هاڻي نيا طور پيش نه ڪيو ويندو. ان جون اڳ ۾ ئي رڪارڊ ٿيل ٽرانزيڪشنون متاثر نه ٿينديون.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "محفوظ ٿيل ڪالم ميپنگ \"{name}\" خارج ٿي ويندي. ان سان اڳ ۾ ئي درآمد ٿيل اسٽيٽمينٽ متاثر نه ٿينديون.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "درآمدون هاڻي \"{keyword}\" ذريعي خودڪار زمرابندي نه ٿينديون. هي قاعدو استعمال ڪري اڳ ۾ ئي زمرابندي ٿيل ٽرانزيڪشنون متاثر نه ٿينديون.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "اختياري طور هاڻي هڪ ڪريڊٽ ڪارڊ يا نقد کاتو شامل ڪريو - توهان هميشه سيٽنگن مان بعد ۾ وڌيڪ کاتا شامل ڪري سگهو ٿا.",
+  "deliveredToDestination": "منزل تي پهچايو ويو",
+  "deliveredToName": "{name} تي پهچايو ويو",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "توهان کي اميد کان {amount} {currency} گھٽ مليو - فرق پورو ڪرڻ لاءِ هڪ زمرو چونڊيو.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "تاريخ جي حد",
+  "addTemplate": "ٽيمپليٽ شامل ڪريو",
+  "editTemplate": "ٽيمپليٽ تبديل ڪريو",
+  "validationFillTemplateFields": "هر فيلڊ ۾ هڪ صحيح رقم ۽ ڏينهن ڀريو.",
+  "saveCsvExport": "CSV برآمد محفوظ ڪريو",
+  "referenceRate": "حوالي جي شرح",
+  "yourRate": "توهان جي شرح",
+  "leaveBlankIfThisWasAccountCurrency": "جيڪڏهن هي {currency} ۾ هو، جيڪا کاتي جي پنهنجي ڪرنسي آهي، ته خالي ڇڏيو.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "تائين لاڪ (اختياري)",
+  "lockedUntilDate": "{date} تائين لاڪ ٿيل",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "تحقيقي پرامپٽ ڪاپي ٿيو — ڪوبه برائوزر URL موجود ناهي، يا توهان آف لائن آهيو.",
+  "openedFavouriteResearchTool": "توهان جو پسنديده تحقيقي اوزار کليو.",
+  "looksLikeGain": "هي هڪ فائدو لڳي ٿو",
+  "looksLikeLoss": "هي هڪ نقصان لڳي ٿو",
+  "looksLikeBreakEven": "هي برابر لڳي ٿو",
+  "sellableQuantity": "{name} ({qty} وڪري لائق)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "ڪالم {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "درآمد ٿي رهيو آهي...",
+  "confirmImport": "درآمد جي تصديق ڪريو",
+  "manageSavedCategoryRules": "محفوظ ٿيل زمري جا قاعدا منظم ڪريو",
+  "statementCurrencyMismatch": "هن فائل جي ڪرنسي ({currency}) چونڊيل کاتي جي ڪرنسي سان نٿي ملي.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "زمري جا قاعدا",
+  "possibleDuplicate": "ممڪن نقل",
+  "unknownCategory": "اڻڄاتل زمرو"
 }

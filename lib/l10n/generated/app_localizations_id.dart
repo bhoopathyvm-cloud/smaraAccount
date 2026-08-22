@@ -36,22 +36,22 @@ class AppLocalizationsId extends AppLocalizations {
   String get actionDelete => 'Hapus';
 
   @override
-  String get actionDone => 'Done';
+  String get actionDone => 'Selesai';
 
   @override
-  String get actionContinue => 'Lanjut';
+  String get actionContinue => 'Lanjutkan';
 
   @override
-  String get actionDismiss => 'Dismiss';
+  String get actionDismiss => 'Tutup';
 
   @override
-  String get actionRetry => 'Retry';
+  String get actionRetry => 'Coba lagi';
 
   @override
-  String get actionSkip => 'Skip';
+  String get actionSkip => 'Lewati';
 
   @override
-  String get actionConfirm => 'Confirm';
+  String get actionConfirm => 'Konfirmasi';
 
   @override
   String get actionAdd => 'Tambah';
@@ -60,115 +60,112 @@ class AppLocalizationsId extends AppLocalizations {
   String get actionEdit => 'Edit';
 
   @override
-  String get actionRename => 'Rename';
+  String get actionRename => 'Ganti nama';
 
   @override
-  String get actionHide => 'Hide';
+  String get actionHide => 'Sembunyikan';
 
   @override
-  String get actionCreate => 'Create';
+  String get actionCreate => 'Buat';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'Tutup aplikasi';
 
   @override
-  String get actionUnlock => 'Unlock';
+  String get actionUnlock => 'Buka kunci';
 
   @override
-  String get actionSettle => 'Settle';
+  String get actionSettle => 'Selesaikan';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => 'Selesai';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'Pratinjau';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'Impor';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'Ekspor CSV';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'Pilih file';
 
   @override
-  String get actionRestore => 'Restore';
+  String get actionRestore => 'Pulihkan';
 
   @override
-  String get actionArchive => 'Hide';
+  String get actionFix => 'Perbaiki';
 
   @override
-  String get actionFix => 'Fix';
+  String get actionBuy => 'Beli';
 
   @override
-  String get actionBuy => 'Buy';
+  String get actionSell => 'Jual';
 
   @override
-  String get actionSell => 'Sell';
+  String get actionDividend => 'Dividen';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionRecordBuy => 'Catat pembelian';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordSell => 'Catat penjualan';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordDividend => 'Catat dividen';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
-
-  @override
-  String get actionPayCard => 'Pay card';
+  String get actionPayCard => 'Bayar kartu';
 
   @override
   String get actionTransfer => 'Transfer';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionRecordTransaction => 'Catat transaksi';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionImportStatement => 'Impor rekening koran';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearDates => 'Hapus tanggal';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionClearSearch => 'Hapus pencarian dan filter';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionUseBiometrics => 'Gunakan biometrik';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionSetPin => 'Atur PIN';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionChangePin => 'Ubah PIN';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionSaveBackup => 'Simpan cadangan';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionRestoreBackup => 'Pulihkan cadangan';
 
   @override
-  String get actionSaveRule => 'Save rule';
+  String get actionSaveRule => 'Simpan aturan';
 
   @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get actionConfirmFix => 'Konfirmasi perbaikan';
 
   @override
   String get captureSpent => 'Pengeluaran';
 
   @override
-  String get captureReceived => 'Received';
+  String get captureReceived => 'Pemasukan';
 
   @override
-  String get captureMovedMoney => 'Moved money';
+  String get captureMovedMoney => 'Uang dipindahkan';
 
   @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => 'Impor rekening koran';
 
   @override
   String get settingsTitle => 'Pengaturan';
@@ -177,112 +174,113 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingsLanguage => 'Bahasa';
 
   @override
-  String get settingsLanguageSystem => 'Device language';
+  String get settingsLanguageSystem => 'Bahasa perangkat';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => 'Ambil kurs referensi';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      'Menampilkan kurs pasar indikatif di samping jumlah tujuan pada transfer lintas mata uang, hanya untuk perbandingan - tidak pernah digunakan untuk mengisi jumlah.';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'Penyedia kurs';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices => 'Ambil harga pasar untuk investasi';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'Mencari harga terakhir untuk instrumen yang memiliki ticker atau ISIN, untuk memperkirakan nilai portofolio. Tidak pernah digunakan untuk mencatat transaksi, dan tidak pernah mengirim berapa banyak yang Anda miliki.';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => 'Penyedia harga pasar';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => 'Alat riset favorit';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      'Mengetuk nama instrumen pada kepemilikan akan membuka alat ini di browser dengan perintah riset — bukan integrasi, dan bukan saran.';
 
   @override
-  String get settingsBackup => 'Backup';
+  String get settingsBackup => 'Cadangan';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      'Simpan salinan terenkripsi dari pembukuan Anda ke lokasi pilihan Anda, atau pulihkan dari sana. Ini terpisah dari frasa pemulihan atau file keystore Anda, yang mencadangkan kunci penandatanganan Anda, bukan pembukuan Anda.';
 
   @override
-  String get settingsLock => 'Lock';
+  String get settingsLock => 'Kunci';
 
   @override
   String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+      'Wajibkan PIN, atau biometrik jika tersedia, untuk membuka aplikasi.';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock =>
+      'Wajibkan buka kunci untuk membuka aplikasi';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'Kunci setelah';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'Segera';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1 menit';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5 menit';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15 menit';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => 'Izinkan biometrik juga';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot => 'Sembunyikan saldo di app switcher';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      'Menyamarkan layar ini saat Anda beralih ke aplikasi lain, sehingga tidak terlihat sekilas di app switcher.';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'Menyembunyikan saldo di app switcher tidak tersedia di platform ini.';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => 'Penerima';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => 'Kelola penerima';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      'Nama penerima yang diingat beserta kategori dan akun default-nya, disarankan oleh pelengkapan otomatis saat mencatat transaksi.';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => 'Templat berulang';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => 'Kelola templat berulang';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      'Tagihan atau pemasukan yang berulang setiap bulan, seperti sewa atau gaji. Templat yang jatuh tempo muncul di Beranda untuk Anda catat dengan satu ketukan - tidak pernah diposting secara otomatis.';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'Tentang';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter (kurs ECB)';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq (kuotasi harian)';
 
   @override
   String get providerYahooFinance => 'Yahoo Finance (chart API)';
@@ -300,66 +298,66 @@ class AppLocalizationsId extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => 'Kas & setara kas';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => 'Pensiun & dana hari tua';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => 'Kredit & utang jangka pendek';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'Pinjaman & KPR';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => 'Investasi';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => 'Kas & Bank';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'Gaji';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'Pemasukan lainnya';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'Belanja bulanan';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => 'Sewa/KPR';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => 'Utilitas';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => 'Transportasi';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => 'Makan di luar';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => 'Telepon';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => 'Kesehatan';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'Pengeluaran lainnya';
 
   @override
   String get homeThisMonth => 'BULAN INI';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => 'UANG DALAM PERJALANAN';
 
   @override
   String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+      'YANG ANDA MILIKI DIKURANGI YANG ANDA UTANG';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return 'Yang Anda miliki $amount $currency';
   }
 
   @override
@@ -369,1185 +367,1195 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return 'Yang Anda miliki $haveAmount $currency  •  Yang Anda utang $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return 'Anda mengirim $amount $currency dari $name';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return 'Anda mengirim $amount $currency ke $name';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => 'Tersembunyi';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'Semua akun';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return 'Disimpan ke $path';
   }
 
   @override
   String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+      'Tidak dapat mengekspor file keystore. Anda dapat melewati langkah ini.';
 
   @override
   String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+      'Masukkan frasa sandi untuk melindungi file ini.';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => 'Ketuk saat Anda tahu apa yang tiba';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return 'Dikembalikan ke $name';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => 'JATUH TEMPO HARI INI';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · ketuk untuk mencatat';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => 'Melebihi batas';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$spent dari $limit';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return 'Sisa: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => 'Tidak ada akun';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'Kas register';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => 'Estimasi pasar';
 
   @override
-  String get registerTitle => 'Register';
+  String get registerTitle => 'Buku';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => 'Deskripsi, kategori, atau jumlah';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => 'Belum ada transaksi';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => 'Belum ada entri yang dicatat.';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => 'Hanya pengeluaran';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => 'Hanya pemasukan';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'Semua';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified =>
+      'Belum terverifikasi - tidak termasuk dalam total';
 
   @override
   String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+      'Digantikan oleh migrasi - tidak termasuk dalam total';
 
   @override
-  String get summaryTitle => 'Summary';
+  String get summaryTitle => 'Ringkasan';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => 'Total pemasukan';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => 'Total pengeluaran';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start hingga $end';
   }
 
   @override
-  String get accountsTitle => 'Accounts';
+  String get accountsTitle => 'Akun';
 
   @override
-  String get categoriesTitle => 'Categories';
+  String get categoriesTitle => 'Kategori';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => 'Nama akun';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => 'Buat akun';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'Buat grup';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'Edit grup';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => 'Ganti nama akun';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'Ganti nama kategori';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'Tambah kategori';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'Grup';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => 'Jenis';
 
   @override
-  String get asset => 'Asset';
+  String get asset => 'Aset';
 
   @override
-  String get liability => 'Liability';
+  String get liability => 'Liabilitas';
 
   @override
-  String get income => 'Income';
+  String get income => 'Pemasukan';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Pengeluaran';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments => 'Akun ini menyimpan investasi';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      'Kas ditambah inventaris yang Anda catat dengan Beli, Jual, dan Dividen.';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'Ini adalah kartu kredit';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => 'Saldo awal (opsional)';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => 'Mata uang (ISO 4217)';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => 'Mata uang (ISO 4217, mis. USD)';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'Sembunyikan akun dari entri baru?';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'Sembunyikan kategori dari entri baru?';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'Sembunyikan grup dari entri baru?';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'Tetapkan ulang grup';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => 'Transfer sisa saldo';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => 'Batas bulanan';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => 'Batas (kosongkan untuk menghapus)';
 
   @override
   String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+      'Panduan pengeluaran opsional bulan-berjalan untuk kategori pengeluaran ini.';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'Kelola aturan kategori';
 
   @override
-  String get amount => 'Amount';
+  String get amount => 'Jumlah';
 
   @override
-  String get category => 'Category';
+  String get category => 'Kategori';
 
   @override
-  String get account => 'Account';
+  String get account => 'Akun';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => 'Dari akun';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => 'Ke akun';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => 'Deskripsi (opsional)';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => 'Ingat juga sebagai penerima';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => 'Bagi ke beberapa kategori';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return 'Kategori $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => 'Jumlah tujuan';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => 'Jumlah tujuan (opsional)';
 
   @override
   String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+      'Jumlah dalam mata uang akun (opsional)';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => 'Mata uang transaksi (opsional)';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => 'Biaya (opsional)';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => 'Jumlah biaya';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => 'Kategori biaya';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => 'Deskripsi biaya (opsional)';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => 'Biaya dipotong dari jumlah di atas';
 
   @override
   String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+      'Buat setidaknya dua akun aktif untuk melakukan transfer.';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => 'Apa yang tiba?';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => 'Beri tahu kami apa yang sebenarnya tiba.';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => 'Jumlah yang tiba';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => 'Kategori biaya / kerugian';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'Sudah diselesaikan.';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => 'Kepemilikan';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => 'Kas';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => 'INVENTARIS';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return 'Buku (kas + biaya) $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return 'Estimasi pasar $amount $currency';
   }
 
   @override
   String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+      'Belum ada kepemilikan. Catat pembelian untuk menambahkan instrumen.';
 
   @override
   String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+      'Kuotasi adalah perkiraan, bukan harga broker. Aplikasi ini tidak melakukan pemesanan.';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      'Ketuk nama untuk riset. Kuotasi adalah perkiraan, bukan saran.';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => 'Instrumen';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => 'Instrumen baru';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => 'Ganti nama instrumen';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => 'Tindakan instrumen';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return 'Sembunyikan $name?';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'Ticker (opsional)';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN (opsional)';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'Kuantitas';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => 'Harga satuan';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => 'Biaya broker (opsional)';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => 'Kategori biaya broker';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => 'Kategori pemasukan';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => 'Kategori pemasukan keuntungan';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => 'Kategori pengeluaran kerugian';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => 'Non-tunai';
 
   @override
-  String get cash => 'Cash';
+  String get cash => 'Tunai';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'Terkunci';
 
   @override
   String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+      'Ini adalah catatan Anda sendiri tentang suatu batasan, bukan aturan broker.';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => 'Saham';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => 'Reksa dana';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => 'Obligasi';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'Lainnya';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'Harga langsung';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'Harga tersimpan';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => 'Harga usang';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => 'Menggunakan biaya (tidak ada harga)';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled => 'Kuotasi nonaktif — menggunakan biaya/cache';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch =>
+      'Menggunakan biaya (mata uang harga berbeda)';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return 'Belum terealisasi $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty unit · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'Frasa pemulihan Anda';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'Konfirmasi frasa Anda';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      '24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Accounting tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'Tuliskan kata-kata ini secara berurutan dan simpan di tempat yang aman, terpisah dari perangkat ini.';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase =>
+      'Saya telah menyimpan frasa pemulihan saya';
 
   @override
   String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+      'Masukkan kata-kata yang diminta dari frasa yang baru saja Anda simpan.';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return 'Kata #$n';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'Ekspor file keystore';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'Selain frasa pemulihan Anda, Anda dapat menyimpan file keystore terenkripsi yang dilindungi oleh frasa sandi pilihan Anda. Ini opsional - frasa pemulihan Anda saja selalu cukup untuk memulihkan kunci penandatanganan Anda.';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'Frasa sandi';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'Ekspor file keystore';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => 'Pilih mata uang Anda';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      'Setiap grup akun (Kas & setara kas, Pensiun & dana hari tua, dll.) untuk saat ini menggunakan satu mata uang ini. Anda masih dapat menambahkan akun dalam mata uang lain nanti dengan membuat grup baru untuknya.';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle =>
+      'Pilih mata uang untuk grup yang sudah ada';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'Aplikasi ini sekarang mendukung banyak mata uang. Akun dan grup akun Anda yang sudah ada memerlukan mata uang - karena semuanya disiapkan sebelum fitur ini ada, satu pilihan berlaku untuk semuanya.';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => 'Beri nama akun Anda';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'Ini adalah akun yang sudah disiapkan untuk Anda - beri nama yang Anda kenali, seperti nama bank Anda. Anda akan mencatat satu Pengeluaran atau Pemasukan berikutnya, lalu melindungi perangkat dengan frasa pemulihan Anda.';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => 'Apa nama akun utama Anda?';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => 'Pulihkan kunci penandatanganan';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'Perangkat ini memiliki pembukuan yang sudah ada, tetapi tidak ada kunci penandatanganan yang cocok. Pulihkan dari frasa pemulihan atau file keystore yang tersimpan - data Anda akan terverifikasi secara normal, dan tidak ada yang akan ditandatangani ulang atau diubah.';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'Frasa pemulihan (semua 24 kata)';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'File keystore';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'Isi file keystore';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => 'File cadangan opsional';
 
   @override
   String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+      'Saya tidak memiliki frasa pemulihan atau file keystore saya';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => 'Migrasi ke kunci baru';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'Tanpa frasa pemulihan atau file keystore Anda, kunci penandatanganan perangkat ini tidak dapat dipulihkan. Anda dapat memulai kunci baru. Entri lama tetap terlihat tetapi dianggap digantikan.';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid =>
+      'Saya mengonfirmasi bahwa pembukuan saat ini valid';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => 'Mengapa kami tidak mengedit entri lama';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      'Saat Anda memperbaiki kesalahan, kami mempertahankan baris lama dan menambahkan koreksi di sebelahnya alih-alih mengubah apa yang sudah Anda masukkan. Dengan begitu riwayat Anda selalu menunjukkan persis apa yang terjadi dan kapan Anda memperbaikinya — tidak ada yang diam-diam berubah di belakang Anda.';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'Buka kunci';
 
   @override
   String get lockScreenTitle => 'Terkunci';
 
   @override
-  String get enterPinToContinue => 'Enter your PIN to continue';
+  String get enterPinToContinue => 'Masukkan PIN untuk melanjutkan';
 
   @override
   String get pinLabel => 'PIN';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'Atur PIN';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => 'PIN saat ini';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => 'PIN baru';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'Konfirmasi PIN';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => 'Konfirmasi PIN baru';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => 'Siapkan akun Anda';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => 'Tambahkan akun kas';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'Tambahkan kartu kredit';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => 'Nama akun kas';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'Nama kartu';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => 'Dibayar dari bank';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'Dibayar dari kartu';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'Pilih frasa sandi untuk melindungi cadangan ini. Tidak ada pemulihan jika Anda melupakannya.';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'Ganti pembukuan lokal Anda?';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'Ini akan mengganti semua yang ada di aplikasi ini saat ini dengan cadangan. Tutup dan buka kembali aplikasi setelahnya.';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => 'Pilih file cadangan terlebih dahulu.';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'Cadangan dipulihkan';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'Pembukuan Anda telah dipulihkan. Tutup dan buka kembali aplikasi untuk melanjutkan.';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'Perbaiki entri ini';
 
   @override
   String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+      'Baris lama tetap persis seperti semula. Konfirmasi menambahkan baris pembalik dan baris yang telah dikoreksi.';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => 'Impor Rekening Koran';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'Impor OFX';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'Impor file OFX / QFX';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'Impor file CSV';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement =>
+      'Jenis file rekening koran apa yang Anda miliki?';
 
   @override
   String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+      'Pilih akun mana yang menjadi milik file ini.';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'Impor ke akun';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => 'Gunakan profil tersimpan';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile =>
+      'Simpan pemetaan ini sebagai profil (opsional)';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'Ganti nama profil';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'Hapus profil?';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'File memiliki baris header';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => 'Kolom tanggal';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => 'Format tanggal (mis. dd/MM/yyyy)';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => 'Kolom jumlah';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => 'Konvensi jumlah';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => 'Kolom jumlah bertanda';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => 'Kolom debit / kredit terpisah';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => 'Kolom debit';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => 'Kolom kredit';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => 'Pemisah desimal (. atau ,)';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => 'Kolom deskripsi';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => 'Kolom ID referensi (opsional)';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'Baris yang dilewati';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return '$count transaksi diproses';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return '$count dilewati atau dikecualikan';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return '$posted diposting, $failed gagal';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'Kategori untuk semua';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'Simpan sebagai aturan?';
 
   @override
   String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+      'Impor di masa mendatang yang deskripsinya mengandung kata kunci ini akan menggunakan kategori ini.';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'Kata kunci';
 
   @override
   String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+      'Belum ada aturan tersimpan. Tetapkan kategori ke sekelompok baris untuk menyimpan aturan.';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'Hapus aturan?';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'Edit aturan';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count baris';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return 'Pilih file rekening koran $extensions untuk diimpor';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => 'Penerima';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => 'Tambah penerima';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => 'Ganti nama penerima';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => 'Hapus penerima?';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => 'Belum ada penerima';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => 'Templat berulang';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => 'Belum ada templat berulang';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => 'Hapus templat berulang?';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => 'Tanggal dalam bulan (1-31)';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote =>
+      'Bulan dengan hari lebih sedikit menggunakan hari terakhirnya sendiri.';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return 'Tanggal $day setiap bulan - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => 'Nama';
 
   @override
-  String get none => 'None';
+  String get none => 'Tidak ada';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'Mata uang';
 
   @override
   String get errorGeneric => 'Terjadi kesalahan. Coba lagi.';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'Frasa pemulihan atau file keystore ini tidak cocok dengan identitas penandatanganan mana pun di database ini.';
 
   @override
   String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+      'File ini bukan cadangan Smara yang valid.';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'Cadangan ini tidak memiliki identitas penandatanganan - ini bukan cadangan Smara yang valid.';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'Cadangan ini tidak terverifikasi sebagai pembukuan yang utuh, sehingga tidak dipulihkan.';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'File ini tidak dapat dibuka sebagai cadangan Smara: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'Cadangan ini milik identitas penandatanganan yang berbeda dari yang ada di perangkat ini.';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'Itu bukan akun finansial.';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'Akun tersebut disembunyikan.';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'Akun tersebut tidak disembunyikan.';
 
   @override
   String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+      'Tidak ada sisa saldo untuk ditransfer.';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup =>
+      'Akun tersebut tidak memiliki grup yang ditetapkan.';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency =>
+      'Grup tersebut belum memiliki mata uang yang diatur.';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'Grup akun tersebut tidak ditemukan.';
 
   @override
   String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+      'Hanya akun aset yang dapat ditandai sebagai akun investasi.';
 
   @override
   String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+      'Hanya akun liabilitas yang dapat ditandai sebagai kartu kredit.';
 
   @override
   String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+      'Jika diisi, saldo awal harus positif.';
 
   @override
   String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+      'Jenis akun tersebut tidak cocok dengan grup.';
 
   @override
   String get errorLastActiveAccount =>
-      'Cannot hide the last active financial account.';
+      'Akun finansial aktif terakhir tidak dapat disembunyikan.';
 
   @override
   String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+      'Mata uang diperlukan untuk membuat grup.';
 
   @override
   String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+      'Grup akun bawaan tidak dapat disembunyikan.';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'Grup tersebut sudah disembunyikan.';
 
   @override
   String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+      'Tidak dapat menyembunyikan grup yang masih memiliki akun aktif.';
 
   @override
   String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+      'Grup akun bawaan tidak pernah disembunyikan.';
 
   @override
   String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+      'Grup akun tidak dapat dihapus.';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'Akun ini tidak dapat dipindahkan ke grup dengan mata uang yang berbeda.';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'Tidak dapat mengubah mata uang selama grup memiliki akun aktif.';
 
   @override
   String get errorAmountMustBePositive => 'Jumlah harus positif.';
 
   @override
   String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+      'Jumlah dalam mata uang akun harus positif.';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      'Jumlah dalam mata uang akun hanya untuk entri mata uang asing.';
 
   @override
   String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+      'Pembagian memerlukan setidaknya dua baris kategori.';
 
   @override
   String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+      'Setiap baris pembagian harus berupa jumlah positif.';
 
   @override
   String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+      'Baris pembagian harus berjumlah sama dengan total transaksi.';
 
   @override
   String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+      'Jumlah transfer harus positif.';
 
   @override
   String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+      'Akun sumber dan tujuan harus berbeda.';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      'Penutupan lintas mata uang memerlukan jumlah tujuan yang diketahui.';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      'Jumlah tujuan hanya untuk transfer lintas mata uang.';
 
   @override
   String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+      'Jumlah tujuan harus positif.';
 
   @override
   String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+      'Tidak dapat mentransfer lebih dari kas akun investasi ini.';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      'Selesaikan transfer tertunda ini alih-alih membatalkannya.';
 
   @override
   String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+      'Entri ini sudah dikoreksi. Baris aslinya tetap seperti semula.';
 
   @override
   String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+      'Pilih kategori pengeluaran yang aktif.';
 
   @override
   String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+      'Pilih kategori pemasukan yang aktif.';
 
   @override
   String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+      'Jumlah yang tiba tidak boleh negatif.';
 
   @override
   String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+      'Transfer tertunda tersebut tidak ditemukan.';
 
   @override
   String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+      'Transfer tertunda tersebut sudah diselesaikan.';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      'Pilih akun sumber atau tujuan aslinya.';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      'Kategori biaya hanya digunakan saat uang dikembalikan ke akun sumber.';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      'Masukkan jumlah positif untuk apa yang tiba.';
 
   @override
   String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+      'Jumlah tersebut lebih besar dari yang dikirim.';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'Instrumen tersebut tidak ditemukan.';
 
   @override
   String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+      'Kategori pemasukan yang aktif diperlukan untuk akuisisi non-tunai.';
 
   @override
   String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+      'Kas tidak cukup di akun investasi ini untuk pembelian tersebut.';
 
   @override
   String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+      'Kuantitas jual dan harga satuan harus positif.';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return 'Tidak dapat menjual: beberapa unit terkunci hingga $date.';
   }
 
   @override
   String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+      'Tidak dapat menjual lebih dari yang Anda miliki dan tidak terkunci saat ini.';
 
   @override
   String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+      'Kategori pemasukan yang aktif diperlukan untuk keuntungan yang terealisasi.';
 
   @override
   String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+      'Kategori pengeluaran yang aktif diperlukan untuk kerugian yang terealisasi.';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return 'Pembelian diposting, tetapi biaya broker gagal: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return 'Penjualan diposting, tetapi biaya broker gagal: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive => 'Jumlah dividen harus positif.';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'Itu bukan akun investasi.';
 
   @override
   String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+      'Akun investasi ini kehilangan pasangan inventarisnya.';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'Tidak dapat membatalkan pembelian ini: penjualan berikutnya bergantung pada unitnya. Batalkan penjualan yang bergantung terlebih dahulu: $sells.';
   }
 
   @override
-  String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+  String get errorMonthlyLimitMustBePositive => 'Batas bulanan harus positif.';
 
   @override
   String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+      'Jumlah templat harus positif.';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized =>
+      'File ini tidak dapat dikenali sebagai OFX.';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => 'File yang dipilih kosong.';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => 'File ini tidak dapat dibaca sebagai CSV.';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => 'File yang dipilih tidak memiliki baris.';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'Tidak dapat membuat cadangan: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'Cadangan ini tidak dapat dipulihkan - frasa sandi salah, atau bukan file cadangan Smara.';
 
   @override
   String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+      'Jumlah, akun, dan kategori wajib diisi.';
 
   @override
-  String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+  String get validationAmountAccountRequired => 'Jumlah dan akun wajib diisi.';
 
   @override
   String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+      'Setiap baris pembagian memerlukan kategori dan jumlah.';
 
   @override
   String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+      'Baris pembagian harus berjumlah sama dengan total transaksi.';
 
   @override
   String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+      'Akun asal, akun tujuan, dan jumlah wajib diisi.';
 
   @override
-  String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+  String get validationAmountArrivedRequired => 'Jumlah yang tiba wajib diisi.';
 
   @override
   String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+      'Pilih akun mana yang menerima dana.';
 
   @override
   String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+      'Akun dan kategori wajib diisi.';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => 'Perbaikan ini tidak dapat disimpan.';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'Beri nama akun utama Anda.';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading => 'Masih memuat - coba lagi sesaat lagi.';
 
   @override
   String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+      'Nama akun tidak dapat disimpan.';
 
   @override
-  String get validationWrongPin => 'Wrong PIN. Try again.';
+  String get validationWrongPin => 'PIN salah. Coba lagi.';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'Kategori harus Pemasukan atau Pengeluaran.';
 
   @override
   String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+      'Hanya kategori Pengeluaran yang dapat memiliki batas bulanan.';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => 'Templat tidak valid.';
 
   @override
   String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+      'Frasa sandi salah untuk file keystore ini.';
 
   @override
   String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+      'Itu tampaknya bukan file keystore yang valid.';
 
   @override
   String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+      'Tidak dapat memulihkan dari frasa pemulihan tersebut.';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'Tidak dapat membuat kunci penandatanganan di perangkat ini: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'Tidak dapat menyimpan mata uang ini: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed => 'Migrasi gagal. Silakan coba lagi.';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile =>
+      'Pilih file cadangan terlebih dahulu.';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'Masukkan frasa sandi.';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => 'Kedua PIN tidak cocok.';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      'Biaya transfer harus berupa jumlah positif dengan kategori pengeluaran yang dipilih.';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      'Biaya harus lebih kecil dari jumlah untuk transfer dengan biaya yang dipotong.';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return 'Transfer disimpan, tetapi biaya tidak dapat dicatat: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => 'Masukkan jumlah yang valid.';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return 'Kata $n tidak cocok dengan frasa tersimpan Anda. Periksa dan coba lagi.';
   }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+      'Kuantitas beli dan harga satuan harus positif.';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived =>
+      'Tidak dapat membeli instrumen yang diarsipkan.';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      'Akuisisi non-tunai tidak dapat menyertakan biaya broker.';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      'Kategori pengeluaran yang aktif diperlukan saat biaya broker bernilai positif.';
 
   @override
   String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+      'Hasil penjualan harus setidaknya menutupi jumlah biaya broker.';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return '$spent dari $limit bulan ini';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'Buka kunci Smara Account';
 
   @override
   String get searchLabel => 'Cari';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => 'Saldo awal';
 
   @override
   String transferToName(String name) {
@@ -1555,219 +1563,219 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => 'Biaya transfer';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return 'Biaya transfer ke $name';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'Tidak dapat membuka pemilih file: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return 'Silakan pilih file .$extensions';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => 'Kode mata uang (ISO 4217, mis. USD)';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name +$count lainnya';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => 'Tanggal';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'Tidak ada';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return 'Tinjau entri di bawah ini ($count total) sebelum melanjutkan.';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return 'Anda menerima $amount';
   }
 
   @override
   String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+      'Kosongkan jika kurs tukar belum diketahui.';
 
   @override
   String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+      'Catat perdagangan yang sudah terjadi. Aplikasi ini tidak melakukan pemesanan.';
 
   @override
   String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+      'Aktif: jumlah di atas adalah total yang diambil dari akun ini; biaya diambil darinya.';
 
   @override
   String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+      'Komisi di muka yang dikenakan oleh bank Anda atau perantara.';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength => 'PIN harus setidaknya 4 digit.';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'Ini akan mengganti semua yang ada di aplikasi ini saat ini dengan cadangan — bukan menggabungkan. Pilih file cadangan dan masukkan frasa sandi yang Anda gunakan untuk melindunginya.';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => 'Ganti';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name tidak akan tersedia lagi untuk transaksi baru.';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return '$name tidak akan ditawarkan lagi saat membuat atau menetapkan ulang akun.';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return '$name tidak akan ditawarkan lagi saat mencatat transaksi baru.';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      'Instrumen yang disembunyikan tetap ada pada pembelian dan penjualan sebelumnya. Anda masih dapat mencatat dividen untuknya.';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name (tersembunyi)';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => 'Belum ada mata uang yang diatur';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$name dan default yang diingat untuknya akan dihapus. Transaksi sebelumnya tidak terpengaruh.';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$name tidak akan ditawarkan lagi sebagai jatuh tempo. Transaksi yang sudah dicatat olehnya tidak terpengaruh.';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return 'Pemetaan kolom tersimpan \"$name\" akan dihapus. Rekening koran yang sudah diimpor dengannya tidak terpengaruh.';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return 'Impor tidak akan lagi dikategorikan otomatis dengan \"$keyword\". Transaksi yang sudah dikategorikan menggunakan aturan ini tidak terpengaruh.';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'Secara opsional tambahkan kartu kredit atau akun kas sekarang - Anda selalu dapat menambahkan akun lain nanti dari Pengaturan.';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => 'Terkirim ke tujuan';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return 'Terkirim ke $name';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return 'Anda menerima $amount $currency lebih sedikit dari yang diharapkan - pilih kategori untuk menutupi selisihnya.';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => 'Rentang tanggal';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'Tambah templat';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'Edit templat';
 
   @override
   String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+      'Isi setiap kolom dengan jumlah dan tanggal yang valid.';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'Simpan ekspor CSV';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => 'Kurs referensi';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'Kurs Anda';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return 'Kosongkan jika ini dalam $currency, mata uang akun itu sendiri.';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'Terkunci hingga (opsional)';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return 'Terkunci hingga $date';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      'Perintah riset disalin — tidak ada URL browser yang tersedia, atau Anda sedang offline.';
 
   @override
   String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+      'Alat riset favorit Anda telah dibuka.';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'Ini terlihat seperti keuntungan';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'Ini terlihat seperti kerugian';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'Ini terlihat seperti impas';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name ($qty dapat dijual)';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return 'Kolom $index';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'Mengimpor...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'Konfirmasi impor';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => 'Kelola aturan kategori tersimpan';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'Mata uang file ini ($currency) tidak cocok dengan mata uang akun yang dipilih.';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'Aturan kategori';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => 'kemungkinan duplikat';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => 'Kategori tidak diketahui';
 }

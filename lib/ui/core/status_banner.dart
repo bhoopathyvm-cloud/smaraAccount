@@ -29,7 +29,10 @@ class StatusBanner extends StatelessWidget {
       ),
       actions: [
         if (onDismiss != null)
-          TextButton(onPressed: onDismiss, child: Text(l10nOf(context).actionDismiss))
+          TextButton(
+            onPressed: onDismiss,
+            child: Text(l10nOf(context).actionDismiss),
+          )
         else
           const SizedBox.shrink(),
       ],

@@ -5,6 +5,7 @@ import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/account_group.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
+import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/features/transfer/view_models/transfer_view_model.dart';
 import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 
@@ -194,6 +195,55 @@ void main() {
     expect(
       find.text('Source and destination accounts must be different.'),
       findsOneWidget,
+    );
+  });
+
+  testWidgets('a domain exception error message follows the active locale, not '
+      'hardcoded English (regression: localizeVmError baked every error '
+      'message to English regardless of the app language)', (tester) async {
+    when(
+      repository.recordTransfer(
+        fromAccountId: anyNamed('fromAccountId'),
+        toAccountId: anyNamed('toAccountId'),
+        amountMinor: anyNamed('amountMinor'),
+        transactionDate: anyNamed('transactionDate'),
+        description: anyNamed('description'),
+      ),
+    ).thenThrow(
+      InvalidTransferException(
+        'accounts must be distinct',
+        code: AppErrorCode.transferAccountsMustDiffer,
+      ),
+    );
+
+    final viewModel = buildViewModel();
+    addTearDown(viewModel.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        locale: const Locale('ta'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: supportedAppLocales,
+        home: TransferView(viewModel: viewModel),
+      ),
+    );
+    await tester.pump();
+
+    await tester.enterText(find.byType(TextField).first, '10.00');
+    await tester.ensureVisible(
+      find.widgetWithText(ElevatedButton, 'நகர்த்தப்பட்ட பணம்'),
+    );
+    await tester.tap(find.widgetWithText(ElevatedButton, 'நகர்த்தப்பட்ட பணம்'));
+    await tester.pump();
+    await tester.pump();
+
+    expect(
+      find.text('மூல மற்றும் இலக்குக் கணக்குகள் வேறுபட்டதாக இருக்க வேண்டும்.'),
+      findsOneWidget,
+    );
+    expect(
+      find.text('Source and destination accounts must be different.'),
+      findsNothing,
     );
   });
 

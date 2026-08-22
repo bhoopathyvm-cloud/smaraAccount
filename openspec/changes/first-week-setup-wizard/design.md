@@ -80,3 +80,27 @@ The optional credit-card and cash-account steps are unaffected by this
 correction - nothing is seeded in `groupCreditShortTermId`, or a second
 account in `groupCashEquivalentsId`, so those two steps still call
 `createFinancialAccount` for real, exactly as designed.
+
+## Correction, found during a later review
+
+The Risks section's mitigation for the `deferred-onboarding-first-entry`
+overlap ("this wizard is strictly post-protect; it doesn't touch the
+first-entry or acknowledgment sequencing that change owns") turned out
+to be insufficient: it addressed *sequencing* but not *content*.
+`deferred-onboarding-first-entry`'s own implementation later added
+`FirstAccountNameView` - a screen that renames the exact same seeded
+account, shown strictly *before* the recovery-phrase screen (i.e.
+before this wizard, which is gated to run strictly *after* it). Since
+this wizard's "main account" step independently prefilled and renamed
+that same account again, every first-time user was asked to name the
+one seeded account twice in a row, with no functional difference
+between the two prompts.
+
+Fixed by removing the main-account naming step from this wizard
+entirely - `FirstWeekSetupViewModel`/`FirstWeekSetupView` now only
+cover the optional credit-card and cash-account steps, which remain
+unaffected (nothing seeds those accounts, so they still need real
+creation). Naming the seeded account is owned solely by
+`deferred-onboarding-first-entry`'s `FirstAccountNameView` from here
+on. `firstWeekBlurb`'s copy was updated to describe only the optional
+steps that remain.

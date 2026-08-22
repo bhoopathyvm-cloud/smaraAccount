@@ -759,6 +759,46 @@ void main() {
     });
 
     test(
+      'two concurrent reverses of the same original never both succeed',
+      () async {
+        final incomeId = await firstCategoryId(AccountType.income);
+        await repository.recordTransaction(
+          amountMinor: 1000,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          financialAccountId: await firstFinancialAccountId(),
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final original = (await repository.watchEntries().first).single;
+
+        Future<Object?> attempt() async {
+          try {
+            await repository.reverseEntry(original.id);
+            return null;
+          } catch (e) {
+            return e;
+          }
+        }
+
+        final results = await Future.wait([attempt(), attempt()]);
+
+        final failures = results.whereType<AlreadyReversedException>();
+        expect(
+          failures,
+          hasLength(1),
+          reason:
+              'exactly one of the two concurrent calls must be rejected as '
+              'already-reversed - the guard check and the insert must be '
+              'atomic so overlapping callers cannot both pass the check '
+              'before either has posted its reversal',
+        );
+
+        final entries = await repository.watchEntries().first;
+        expect(entries, hasLength(2));
+      },
+    );
+
+    test(
       'fixPostedTransaction posts a reversal and a replacement together',
       () async {
         final accountId = await firstFinancialAccountId();

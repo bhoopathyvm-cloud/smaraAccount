@@ -16,7 +16,7 @@ import '../../../core/app_lock_controller.dart';
 /// Decision 5), ledger-backup-restore's Save/Restore backup actions, and
 /// app-lock's PIN/biometric/timeout/snapshot-hiding controls. Deliberately
 /// minimal - not a general preferences screen.
-class SettingsViewModel extends ChangeNotifier {
+class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   SettingsViewModel({
     required SettingsRepository settingsRepository,
     required LedgerRepository ledgerRepository,
@@ -134,19 +134,17 @@ class SettingsViewModel extends ChangeNotifier {
   bool _isRestoring = false;
   bool get isRestoring => _isRestoring;
 
-  String? _backupErrorMessage;
-  String? get backupErrorMessage => _backupErrorMessage;
-  void clearBackupError() {
-    if (_backupErrorMessage == null) return;
-    _backupErrorMessage = null;
-    notifyListeners();
-  }
+  /// English mapping for unit tests; views should call
+  /// [backupErrorMessageFor] with the active locale.
+  String? get backupErrorMessage => errorMessage;
+  String? backupErrorMessageFor(AppLocalizations l10n) => errorMessageFor(l10n);
+  void clearBackupError() => clearFailure();
 
   /// Returns the encrypted backup file's contents, or null (with
   /// [backupErrorMessage] set) on failure.
   Future<String?> exportBackup({required String passphrase}) async {
     _isBackingUp = true;
-    _backupErrorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       final contents = await _ledgerRepository.exportLedgerBackup(
@@ -157,14 +155,13 @@ class SettingsViewModel extends ChangeNotifier {
       return contents;
     } catch (e) {
       _isBackingUp = false;
-      _backupErrorMessage = localizeVmError(
+      setFailure(
         AppFailure(
           AppErrorCode.backupCreateFailed,
           params: {'detail': '$e'},
           debugMessage: '$e',
         ),
       );
-      notifyListeners();
       return null;
     }
   }
@@ -178,7 +175,7 @@ class SettingsViewModel extends ChangeNotifier {
     required String passphrase,
   }) async {
     _isRestoring = true;
-    _backupErrorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       await _ledgerRepository.restoreLedgerBackup(
@@ -190,20 +187,15 @@ class SettingsViewModel extends ChangeNotifier {
       return true;
     } on ForeignBackupIdentityException catch (e) {
       _isRestoring = false;
-      _backupErrorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     } on InvalidLedgerBackupException catch (e) {
       _isRestoring = false;
-      _backupErrorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     } catch (_) {
       _isRestoring = false;
-      _backupErrorMessage = localizeVmError(
-        AppFailure(AppErrorCode.backupRestoreFailed),
-      );
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.backupRestoreFailed));
       return false;
     }
   }

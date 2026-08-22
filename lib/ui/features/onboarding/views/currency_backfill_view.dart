@@ -67,10 +67,7 @@ class _CurrencyBackfillViewState extends State<CurrencyBackfillView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  l10n.currencyBackfillBlurb,
-                  style: AppTypography.body,
-                ),
+                Text(l10n.currencyBackfillBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 Wrap(
                   spacing: AppSpacing.small,
@@ -96,15 +93,13 @@ class _CurrencyBackfillViewState extends State<CurrencyBackfillView> {
                           newValue.copyWith(text: newValue.text.toUpperCase()),
                     ),
                   ],
-                  decoration: InputDecoration(
-                    labelText: l10n.currencyCodeIso,
-                  ),
+                  decoration: InputDecoration(labelText: l10n.currencyCodeIso),
                   onChanged: (_) => setState(() {}),
                 ),
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

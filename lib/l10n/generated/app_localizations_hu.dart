@@ -36,139 +36,136 @@ class AppLocalizationsHu extends AppLocalizations {
   String get actionDelete => 'Törlés';
 
   @override
-  String get actionDone => 'Done';
+  String get actionDone => 'Kész';
 
   @override
   String get actionContinue => 'Tovább';
 
   @override
-  String get actionDismiss => 'Dismiss';
+  String get actionDismiss => 'Bezárás';
 
   @override
-  String get actionRetry => 'Retry';
+  String get actionRetry => 'Újra';
 
   @override
-  String get actionSkip => 'Skip';
+  String get actionSkip => 'Kihagyás';
 
   @override
-  String get actionConfirm => 'Confirm';
+  String get actionConfirm => 'Megerősítés';
 
   @override
   String get actionAdd => 'Hozzáadás';
 
   @override
-  String get actionEdit => 'Edit';
+  String get actionEdit => 'Szerkesztés';
 
   @override
-  String get actionRename => 'Rename';
+  String get actionRename => 'Átnevezés';
 
   @override
-  String get actionHide => 'Hide';
+  String get actionHide => 'Elrejtés';
 
   @override
-  String get actionCreate => 'Create';
+  String get actionCreate => 'Létrehozás';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'Alkalmazás bezárása';
 
   @override
-  String get actionUnlock => 'Unlock';
+  String get actionUnlock => 'Feloldás';
 
   @override
-  String get actionSettle => 'Settle';
+  String get actionSettle => 'Rendezés';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => 'Befejezés';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'Előnézet';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'Importálás';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'CSV exportálása';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'Fájl kiválasztása';
 
   @override
-  String get actionRestore => 'Restore';
+  String get actionRestore => 'Visszaállítás';
 
   @override
-  String get actionArchive => 'Hide';
+  String get actionFix => 'Javítás';
 
   @override
-  String get actionFix => 'Fix';
+  String get actionBuy => 'Vétel';
 
   @override
-  String get actionBuy => 'Buy';
+  String get actionSell => 'Eladás';
 
   @override
-  String get actionSell => 'Sell';
+  String get actionDividend => 'Osztalék';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionRecordBuy => 'Vétel rögzítése';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordSell => 'Eladás rögzítése';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordDividend => 'Osztalék rögzítése';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionPayCard => 'Kártya fizetése';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionTransfer => 'Átutalás';
 
   @override
-  String get actionTransfer => 'Transfer';
+  String get actionRecordTransaction => 'Tranzakció rögzítése';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionImportStatement => 'Kivonat importálása';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionClearDates => 'Dátumok törlése';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearSearch => 'Keresés és szűrők törlése';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionUseBiometrics => 'Biometrikus azonosítás használata';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionSetPin => 'PIN beállítása';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionChangePin => 'PIN módosítása';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionSaveBackup => 'Biztonsági mentés';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionRestoreBackup => 'Biztonsági mentés visszaállítása';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionSaveRule => 'Szabály mentése';
 
   @override
-  String get actionSaveRule => 'Save rule';
-
-  @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get actionConfirmFix => 'Javítás megerősítése';
 
   @override
   String get captureSpent => 'Kiadás';
 
   @override
-  String get captureReceived => 'Received';
+  String get captureReceived => 'Bevétel';
 
   @override
-  String get captureMovedMoney => 'Moved money';
+  String get captureMovedMoney => 'Pénz mozgatva';
 
   @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => 'Kivonat importálása';
 
   @override
   String get settingsTitle => 'Beállítások';
@@ -177,112 +174,116 @@ class AppLocalizationsHu extends AppLocalizations {
   String get settingsLanguage => 'Nyelv';
 
   @override
-  String get settingsLanguageSystem => 'Device language';
+  String get settingsLanguageSystem => 'Eszköz nyelve';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => 'Referencia árfolyamok lekérése';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      'Devizák közötti átutalásoknál a célösszeg mellett tájékoztató jellegű piaci árfolyamot mutat, kizárólag összehasonlításra - soha nem használjuk az összeg kitöltésére.';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'Árfolyam-szolgáltató';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices =>
+      'Piaci árak lekérése a befektetésekhez';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'Az utolsó árakat keresi ki azoknál az eszközöknél, amelyeknek van tickerük vagy ISIN-jük, hogy megbecsülje a portfólió értékét. Soha nem használjuk ügylet rögzítésére, és soha nem küldi el, mennyit tart belőle.';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => 'Piaci ár szolgáltató';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => 'Kedvenc kutatóeszköz';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      'Ha a portfólión rákoppint egy eszköz nevére, ez az eszköz nyílik meg a böngészőben egy kutatási felszólítással — ez nem integráció, és nem tanács.';
 
   @override
-  String get settingsBackup => 'Backup';
+  String get settingsBackup => 'Biztonsági mentés';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      'Mentsen egy titkosított másolatot a könyveiről egy Ön által választott helyre, vagy állítsa vissza onnan. Ez különbözik a helyreállítási kifejezéstől vagy a kulcstartó fájltól, amelyek az aláíró kulcsát mentik, nem a könyveit.';
 
   @override
-  String get settingsLock => 'Lock';
+  String get settingsLock => 'Zárolás';
 
   @override
   String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+      'Az alkalmazás megnyitásához kérjen PIN-t, vagy ahol elérhető, biometrikus azonosítást.';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock =>
+      'Feloldás kötelezővé tétele az alkalmazás megnyitásához';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'Zárolás ennyi idő után';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'Azonnal';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1 perc';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5 perc';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15 perc';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics =>
+      'Biometrikus azonosítás engedélyezése is';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot =>
+      'Egyenlegek elrejtése az alkalmazásváltóban';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      'Elhomályosítja ezt a képernyőt, amikor másik alkalmazásra vált, hogy ne legyen egy pillantásra látható az alkalmazásváltóban.';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'Az egyenlegek elrejtése az alkalmazásváltóban ezen a platformon nem érhető el.';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => 'Kedvezményezettek';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => 'Kedvezményezettek kezelése';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      'Megjegyzett kedvezményezett nevek és azok alapértelmezett kategóriája és számlája, amelyeket az automatikus kiegészítés javasol tranzakció rögzítésekor.';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => 'Ismétlődő sablonok';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => 'Ismétlődő sablonok kezelése';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      'Havonta ismétlődő számlák vagy bevételek, például lakbér vagy fizetés. Egy esedékes sablon megjelenik a Kezdőlapon, hogy egy koppintással rögzíthesse - soha nem kerül automatikusan könyvelésre.';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'Névjegy';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter (EKB árfolyamok)';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq (napi árfolyamok)';
 
   @override
   String get providerYahooFinance => 'Yahoo Finance (chart API)';
@@ -300,66 +301,67 @@ class AppLocalizationsHu extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents =>
+      'Készpénz és készpénz-egyenértékesek';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => 'Nyugdíj és nyugdíj-megtakarítás';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => 'Hitel és rövid lejáratú tartozás';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'Kölcsönök és jelzáloghitelek';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => 'Befektetések';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => 'Készpénz és bank';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'Fizetés';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'Egyéb bevétel';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'Élelmiszer';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => 'Lakbér/jelzálog';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => 'Rezsi';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => 'Közlekedés';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => 'Étkezés étteremben';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => 'Telefon';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => 'Egészség';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'Egyéb kiadás';
 
   @override
   String get homeThisMonth => 'EZ A HÓNAP';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => 'ÚTON LÉVŐ PÉNZ';
 
   @override
   String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+      'AMI ÖNNÉL VAN MÍNUSZ AMIVEL TARTOZIK';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return 'Amije van: $amount $currency';
   }
 
   @override
@@ -369,861 +371,873 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return 'Amije van: $haveAmount $currency  •  Amivel tartozik: $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return 'Ön $amount $currency összeget küldött innen: $name';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return 'Ön $amount $currency összeget küldött ide: $name';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => 'Elrejtve';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'Összes számla';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return 'Mentve ide: $path';
   }
 
   @override
   String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+      'Nem sikerült exportálni a kulcstartó fájlt. Ezt a lépést kihagyhatja.';
 
   @override
   String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+      'Adjon meg egy jelmondatot a fájl védelméhez.';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => 'Koppintson, ha tudja, mi érkezett meg';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return 'Visszaküldve ide: $name';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => 'MA ESEDÉKES';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · koppintson a rögzítéshez';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => 'Limit túllépve';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$spent / $limit';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return 'Hátralévő: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => 'Nincs számla';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'Készpénzállomány';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => 'Piaci becslés';
 
   @override
-  String get registerTitle => 'Register';
+  String get registerTitle => 'Napló';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => 'Leírás, kategória vagy összeg';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => 'Még nincs tranzakció';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => 'Még nincs rögzített tétel.';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => 'Csak kiadások';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => 'Csak bevételek';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'Összes';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified =>
+      'Nincs ellenőrizve - kizárva az összesítésből';
 
   @override
   String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+      'Migráció által felülírva - kizárva az összesítésből';
 
   @override
-  String get summaryTitle => 'Summary';
+  String get summaryTitle => 'Összesítő';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => 'Összes bevétel';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => 'Összes kiadás';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start - $end';
   }
 
   @override
-  String get accountsTitle => 'Accounts';
+  String get accountsTitle => 'Számlák';
 
   @override
-  String get categoriesTitle => 'Categories';
+  String get categoriesTitle => 'Kategóriák';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => 'Számla neve';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => 'Számla létrehozása';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'Csoport létrehozása';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'Csoport szerkesztése';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => 'Számla átnevezése';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'Kategória átnevezése';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'Kategória hozzáadása';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'Csoport';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => 'Típus';
 
   @override
-  String get asset => 'Asset';
+  String get asset => 'Eszköz';
 
   @override
-  String get liability => 'Liability';
+  String get liability => 'Kötelezettség';
 
   @override
-  String get income => 'Income';
+  String get income => 'Bevétel';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Kiadás';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments =>
+      'Ez a számla befektetéseket tartalmaz';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      'Készpénz plusz állomány, amelyet Vétel, Eladás és Osztalék funkciókkal rögzít.';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'Ez egy hitelkártya';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => 'Nyitóegyenleg (opcionális)';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => 'Pénznem (ISO 4217)';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => 'Pénznem (ISO 4217, pl. USD)';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'Elrejti a számlát az új tételek elől?';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'Elrejti a kategóriát az új tételek elől?';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'Elrejti a csoportot az új tételek elől?';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'Csoport újbóli hozzárendelése';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => 'Fennmaradó egyenleg átutalása';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => 'Havi keret';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => 'Keret (üresen hagyva törli)';
 
   @override
   String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+      'Egy opcionális, hó eleje óta eltelt kiadási útmutató ehhez a kiadási kategóriához.';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'Kategóriaszabályok kezelése';
 
   @override
-  String get amount => 'Amount';
+  String get amount => 'Összeg';
 
   @override
-  String get category => 'Category';
+  String get category => 'Kategória';
 
   @override
-  String get account => 'Account';
+  String get account => 'Számla';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => 'Forrásszámla';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => 'Célszámla';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => 'Leírás (opcionális)';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => 'Kedvezményezettként is megjegyzés';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => 'Felosztás több kategóriára';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return '$n. kategória';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => 'Célösszeg';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => 'Célösszeg (opcionális)';
 
   @override
   String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+      'Számla pénznemében megadott összeg (opcionális)';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => 'Tranzakció pénzneme (opcionális)';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => 'Díj (opcionális)';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => 'Díj összege';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => 'Díj kategóriája';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => 'Díj leírása (opcionális)';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => 'A díjat a fenti összegből vonjuk le';
 
   @override
   String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+      'Az átutaláshoz hozzon létre legalább két aktív számlát.';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => 'Mi érkezett meg?';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => 'Adja meg, mi érkezett meg valójában.';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => 'Megérkezett összeg';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => 'Díj / veszteség kategória';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'Már rendezve.';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => 'Állomány';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => 'Készpénz';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => 'ÁLLOMÁNY';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return 'Könyv szerinti (készpénz + bekerülési érték) $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return 'Piaci becslés $amount $currency';
   }
 
   @override
   String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+      'Még nincs állomány. Egy eszköz hozzáadásához rögzítsen egy vételt.';
 
   @override
   String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+      'Az árfolyamok becslések, nem bróker árak. Ez az alkalmazás nem ad le megbízásokat.';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      'Koppintson a névre a kutatáshoz. Az árfolyamok becslések, nem tanácsok.';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => 'Eszköz';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => 'Új eszköz';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => 'Eszköz átnevezése';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => 'Eszközműveletek';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return 'Elrejti ezt: $name?';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'Ticker (opcionális)';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN (opcionális)';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'Mennyiség';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => 'Egységár';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => 'Bróker jutalék (opcionális)';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => 'Bróker jutalék kiadási kategória';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => 'Bevételi kategória';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => 'Nyereség bevételi kategória';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => 'Veszteség kiadási kategória';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => 'Nem készpénzes';
 
   @override
-  String get cash => 'Cash';
+  String get cash => 'Készpénz';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'Zárolva';
 
   @override
   String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+      'Ez az Ön saját feljegyzése egy korlátozásról, nem bróker szabály.';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => 'Részvény';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => 'Befektetési alap';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => 'Kötvény';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'Egyéb';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'Élő árfolyam';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'Gyorsítótárazott árfolyam';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => 'Elavult árfolyam';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => 'Bekerülési érték használata (nincs árfolyam)';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled =>
+      'Árfolyamok kikapcsolva — bekerülési érték/gyorsítótár használata';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch =>
+      'Bekerülési érték használata (az árfolyam pénzneme eltér)';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return 'Nem realizált $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty egység · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'Az Ön helyreállítási kifejezése';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'Erősítse meg a kifejezését';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      'Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara Accountingnak nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'Írja le ezeket a szavakat sorrendben, és tárolja őket biztonságos helyen, ettől az eszköztől elkülönítve.';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase =>
+      'Elmentettem a helyreállítási kifejezésemet';
 
   @override
   String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+      'Adja meg a kért szavakat az imént elmentett kifejezésből.';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return '$n. szó';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'Kulcstartó fájl exportálása';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'A helyreállítási kifejezés mellett elmenthet egy titkosított kulcstartó fájlt is, amelyet az Ön által választott jelmondat véd. Ez opcionális - a helyreállítási kifejezés önmagában mindig elegendő az aláíró kulcs visszaállításához.';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'Jelmondat';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'Kulcstartó fájl exportálása';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => 'Válassza ki a pénznemét';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      'Minden számlacsoport (Készpénz és készpénz-egyenértékesek, Nyugdíj stb.) egyelőre ezt az egy pénznemet használja. Később egy új csoport létrehozásával továbbra is hozzáadhat más pénznemű számlákat.';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle =>
+      'Válasszon pénznemet a meglévő csoportokhoz';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'Ez az alkalmazás most már több pénznemet is támogat. A meglévő számláinak és számlacsoportjainak pénznemre van szükségük - mivel mindegyiket a funkció bevezetése előtt hozták létre, egyetlen választás vonatkozik mindegyikükre.';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => 'Nevezze el a számláját';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'Ez az a számla, amely már be van állítva Önnek - adjon neki egy Ön számára ismerős nevet, például a bankjáét. Ezután rögzít egy Kiadást vagy Bevételt, majd megvédi az eszközt a helyreállítási kifejezésével.';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => 'Mi a fő számlájának a neve?';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => 'Aláíró kulcs visszaállítása';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'Ezen az eszközön léteznek könyvek, de nincs hozzájuk illő aláíró kulcs. Állítsa vissza az elmentett helyreállítási kifejezéséből vagy kulcstartó fájljából - az adatai a szokásos módon ellenőrizhetők lesznek, és semmi sem lesz újra aláírva vagy módosítva.';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'Helyreállítási kifejezés (mind a 24 szó)';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'Kulcstartó fájl';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'Kulcstartó fájl tartalma';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => 'Opcionális biztonsági mentés fájl';
 
   @override
   String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+      'Nincs meg a helyreállítási kifejezésem vagy a kulcstartó fájlom';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => 'Áttérés új kulcsra';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'A helyreállítási kifejezés vagy a kulcstartó fájl nélkül ennek az eszköznek az aláíró kulcsa nem állítható vissza. Elindíthat egy új kulcsot. A régi tételek láthatók maradnak, de felülíródnak.';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid =>
+      'Megerősítem, hogy a jelenlegi könyvek érvényesek';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => 'Miért nem szerkesztjük a régi tételeket';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      'Amikor kijavít egy hibát, megtartjuk a régi sort, és egy korrekciót adunk hozzá mellé, ahelyett hogy megváltoztatnánk, amit már beírt. Így az előzményei mindig pontosan mutatják, mi történt, és mikor javította ki — semmi sem változik csendben a háta mögött.';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'Feloldás';
 
   @override
   String get lockScreenTitle => 'Zárolva';
 
   @override
-  String get enterPinToContinue => 'Enter your PIN to continue';
+  String get enterPinToContinue => 'PIN megadása a folytatáshoz';
 
   @override
   String get pinLabel => 'PIN';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'PIN beállítása';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => 'Jelenlegi PIN';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => 'Új PIN';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'PIN megerősítése';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => 'Új PIN megerősítése';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => 'Állítsa be a számláit';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => 'Készpénzszámla hozzáadása';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'Hitelkártya hozzáadása';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => 'Készpénzszámla neve';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'Kártya neve';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => 'Bankból fizetve';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'Kártyából fizetve';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'Válasszon jelmondatot ennek a biztonsági mentésnek a védelméhez. Ha elfelejti, nincs helyreállítás.';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'Lecseréli a helyi könyveit?';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'Ez lecseréli mindazt, ami jelenleg ebben az alkalmazásban van, a biztonsági mentésre. Ezután zárja be és nyissa meg újra az alkalmazást.';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst =>
+      'Először válasszon biztonsági mentés fájlt.';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'Biztonsági mentés visszaállítva';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'A könyvei helyreálltak. A folytatáshoz zárja be és nyissa meg újra az alkalmazást.';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'Ennek a tételnek a javítása';
 
   @override
   String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+      'A régi sor pontosan úgy marad, ahogy volt. A megerősítés hozzáad egy sztornó sort és a javított sort.';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => 'Kivonat importálása';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'OFX importálása';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'OFX / QFX fájl importálása';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'CSV fájl importálása';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement => 'Milyen típusú kivonatfájlja van?';
 
   @override
   String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+      'Válassza ki, melyik számlához tartozik ez a fájl.';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'Importálás ebbe a számlába';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => 'Mentett profil használata';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile =>
+      'Ennek a hozzárendelésnek mentése profilként (opcionális)';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'Profil átnevezése';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'Törli a profilt?';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'A fájl fejlécsort tartalmaz';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => 'Dátum oszlop';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => 'Dátumformátum (pl. éééé.HH.nn)';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => 'Összeg oszlop';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => 'Összeg jelölési szabály';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => 'Előjeles összeg oszlop';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => 'Külön terhelés / jóváírás oszlop';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => 'Terhelés oszlop';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => 'Jóváírás oszlop';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => 'Tizedesjel (. vagy ,)';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => 'Leírás oszlop(ok)';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => 'Referenciaazonosító oszlop (opcionális)';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'Kihagyott sorok';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return '$count tranzakció feldolgozva';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return '$count kihagyva vagy kizárva';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return '$posted könyvelve, $failed sikertelen';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'Kategória mindenre';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'Menti szabályként?';
 
   @override
   String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+      'A jövőbeli importálások, amelyek leírása tartalmazza ezt a kulcsszót, ezt a kategóriát fogják használni.';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'Kulcsszó';
 
   @override
   String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+      'Még nincs mentett szabály. Rendeljen kategóriát egy sorcsoporthoz a szabály mentéséhez.';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'Törli a szabályt?';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'Szabály szerkesztése';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count sor';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return 'Válasszon egy $extensions kivonatfájlt az importáláshoz';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => 'Kedvezményezettek';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => 'Kedvezményezett hozzáadása';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => 'Kedvezményezett átnevezése';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => 'Törli a kedvezményezettet?';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => 'Még nincs kedvezményezett';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => 'Ismétlődő sablonok';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => 'Még nincs ismétlődő sablon';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => 'Törli az ismétlődő sablont?';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => 'Hónap napja (1-31)';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote =>
+      'A kevesebb nappal rendelkező hónap a saját utolsó napját használja.';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return 'A hónap $day. napja - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => 'Név';
 
   @override
-  String get none => 'None';
+  String get none => 'Nincs';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'Pénznem';
 
   @override
   String get errorGeneric => 'Hiba történt. Próbálja újra.';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'Ez a helyreállítási kifejezés vagy kulcstartó fájl nem egyezik egyetlen aláíró identitással sem ebben az adatbázisban.';
 
   @override
   String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+      'Ez a fájl nem érvényes Smara biztonsági mentés.';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'Ennek a biztonsági mentésnek nincs aláíró identitása - ez nem érvényes Smara biztonsági mentés.';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'Ez a biztonsági mentés nem igazolódott sértetlen könyvekként, ezért nem lett visszaállítva.';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'Ez a fájl nem nyitható meg Smara biztonsági mentésként: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'Ez a biztonsági mentés egy másik aláíró identitáshoz tartozik, mint amelyik ezen az eszközön van.';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'Ez nem pénzügyi számla.';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'Az a számla el van rejtve.';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'Az a számla nincs elrejtve.';
 
   @override
   String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+      'Nincs fennmaradó egyenleg átutalásra.';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup =>
+      'Ahhoz a számlához nincs csoport rendelve.';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency =>
+      'Annak a csoportnak még nincs beállítva pénzneme.';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'Az a számlacsoport nem található.';
 
   @override
   String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+      'Csak eszközszámlák jelölhetők meg befektetési számlaként.';
 
   @override
   String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+      'Csak kötelezettségszámlák jelölhetők meg hitelkártyaként.';
 
   @override
   String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+      'Ha meg van adva, a nyitóegyenlegnek pozitívnak kell lennie.';
 
   @override
   String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+      'Az a számlatípus nem egyezik a csoporttal.';
 
   @override
   String get errorLastActiveAccount =>
-      'Cannot hide the last active financial account.';
+      'Az utolsó aktív pénzügyi számla nem rejthető el.';
 
   @override
   String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+      'A csoport létrehozásához pénznem szükséges.';
 
   @override
   String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+      'A beépített számlacsoportok nem rejthetők el.';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'Az a csoport már el van rejtve.';
 
   @override
   String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+      'Nem rejthető el olyan csoport, amelyben még vannak aktív számlák.';
 
   @override
   String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+      'A beépített számlacsoportok soha nincsenek elrejtve.';
 
   @override
   String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+      'A számlacsoportok nem törölhetők.';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'Ez a számla nem helyezhető át eltérő pénznemű csoportba.';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'A pénznem nem módosítható, amíg a csoportban aktív számlák vannak.';
 
   @override
   String get errorAmountMustBePositive =>
@@ -1231,544 +1245,548 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+      'A számla pénznemében megadott összegnek pozitívnak kell lennie.';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      'A számla pénznemében megadott összeg csak devizás tételekhez használható.';
 
   @override
   String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+      'Egy felosztáshoz legalább két kategóriasor szükséges.';
 
   @override
   String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+      'Minden felosztási sornak pozitív összegűnek kell lennie.';
 
   @override
   String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+      'A felosztási soroknak összesen a tranzakció teljes összegét kell kiadniuk.';
 
   @override
   String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+      'Az átutalási összegnek pozitívnak kell lennie.';
 
   @override
   String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+      'A forrás- és célszámlának különbözőnek kell lennie.';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      'A devizák közötti lezáráshoz ismert célösszeg szükséges.';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      'A célösszeg csak devizák közötti átutaláshoz használható.';
 
   @override
   String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+      'A célösszegnek pozitívnak kell lennie.';
 
   @override
   String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+      'Nem utalható át több, mint amennyi készpénz ezen a befektetési számlán van.';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      'Rendezze ezt a függő átutalást ahelyett, hogy sztornózná.';
 
   @override
   String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+      'Ez a tétel már javítva lett. Az eredeti sor változatlan marad.';
 
   @override
   String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+      'Válasszon aktív kiadási kategóriát.';
 
   @override
   String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+      'Válasszon aktív bevételi kategóriát.';
 
   @override
   String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+      'A megérkezett összeg nem lehet negatív.';
 
   @override
   String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+      'Az a függő átutalás nem található.';
 
   @override
   String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+      'Az a függő átutalás már rendezve van.';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      'Válassza az eredeti forrás- vagy célszámlát.';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      'Díjkategória csak akkor használatos, ha a pénz visszakerül a forrásszámlára.';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      'Adjon meg egy pozitív összeget arra, ami megérkezett.';
 
   @override
   String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+      'Az az összeg több, mint amennyit elküldtek.';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'Az az eszköz nem található.';
 
   @override
   String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+      'Nem készpénzes szerzéshez aktív bevételi kategória szükséges.';
 
   @override
   String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+      'Nincs elég készpénz ezen a befektetési számlán ehhez a vételhez.';
 
   @override
   String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+      'Az eladási mennyiségnek és az egységárnak pozitívnak kell lennie.';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return 'Nem adható el: néhány egység $date dátumig zárolva van.';
   }
 
   @override
   String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+      'Nem adható el több, mint amennyi jelenleg zárolatlanul van birtokában.';
 
   @override
   String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+      'Realizált nyereséghez aktív bevételi kategória szükséges.';
 
   @override
   String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+      'Realizált veszteséghez aktív kiadási kategória szükséges.';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return 'A vétel könyvelve lett, de a bróker jutalék sikertelen volt: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return 'Az eladás könyvelve lett, de a bróker jutalék sikertelen volt: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive =>
+      'Az osztalék összegének pozitívnak kell lennie.';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'Ez nem befektetési számla.';
 
   @override
   String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+      'Ebből a befektetési számlából hiányzik a hozzá tartozó állomány.';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'Ez a vétel nem sztornózható: későbbi eladás(ok) függnek az egységeitől. Először sztornózza a függő eladás(oka)t: $sells.';
   }
 
   @override
   String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+      'A havi keretnek pozitívnak kell lennie.';
 
   @override
   String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+      'A sablon összegének pozitívnak kell lennie.';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized => 'Ez a fájl nem ismerhető fel OFX-ként.';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => 'A kiválasztott fájl üres.';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => 'Ez a fájl nem olvasható CSV-ként.';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => 'A kiválasztott fájlban nincsenek sorok.';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'Nem sikerült létrehozni a biztonsági mentést: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'Ez a biztonsági mentés nem állítható vissza - rossz jelmondat, vagy nem Smara biztonsági mentés fájl.';
 
   @override
   String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+      'Az összeg, a számla és a kategória kötelező.';
 
   @override
   String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+      'Az összeg és a számla kötelező.';
 
   @override
   String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+      'Minden felosztási sorhoz kategória és összeg szükséges.';
 
   @override
   String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+      'A felosztási soroknak összesen a tranzakció teljes összegét kell kiadniuk.';
 
   @override
   String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+      'A forrásszámla, a célszámla és az összeg kötelező.';
 
   @override
   String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+      'A megérkezett összeg megadása kötelező.';
 
   @override
   String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+      'Válassza ki, melyik számla kapta a pénzt.';
 
   @override
   String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+      'A számla és a kategória kötelező.';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => 'Nem sikerült elmenteni ezt a javítást.';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'Nevezze el a fő számláját.';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading =>
+      'Még betöltés alatt - próbálja meg egy pillanat múlva.';
 
   @override
   String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+      'Nem sikerült elmenteni a számla nevét.';
 
   @override
-  String get validationWrongPin => 'Wrong PIN. Try again.';
+  String get validationWrongPin => 'Hibás PIN. Próbálja újra.';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'A kategóriának bevételnek vagy kiadásnak kell lennie.';
 
   @override
   String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+      'Csak kiadási kategóriának lehet havi kerete.';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => 'Érvénytelen sablon.';
 
   @override
   String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+      'Hibás jelmondat ehhez a kulcstartó fájlhoz.';
 
   @override
   String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+      'Ez nem tűnik érvényes kulcstartó fájlnak.';
 
   @override
   String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+      'Nem sikerült visszaállítani abból a helyreállítási kifejezésből.';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'Nem sikerült aláíró kulcsot generálni ezen az eszközön: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'Nem sikerült elmenteni ezt a pénznemet: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed =>
+      'A migráció sikertelen volt. Kérjük, próbálja újra.';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile =>
+      'Először válasszon biztonsági mentés fájlt.';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'Adjon meg egy jelmondatot.';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => 'A két PIN nem egyezik.';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      'Az átutalási díjnak pozitív összegűnek kell lennie, kiválasztott kiadási kategóriával.';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      'A díjnak kevesebbnek kell lennie az összegnél a levont díjas átutalásnál.';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return 'Az átutalás mentve lett, de a díjat nem sikerült rögzíteni: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => 'Adjon meg egy érvényes összeget.';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return 'A(z) $n. szó nem egyezik az elmentett kifejezésével. Ellenőrizze, és próbálja újra.';
   }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+      'A vételi mennyiségnek és az egységárnak pozitívnak kell lennie.';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived => 'Nem vásárolható archivált eszköz.';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      'Nem készpénzes szerzések nem tartalmazhatnak bróker jutalékot.';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      'Ha a bróker jutalék pozitív, aktív kiadási kategória szükséges.';
 
   @override
   String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+      'Az eladási bevételnek legalább a bróker jutalék összegét fedeznie kell.';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return '$spent / $limit ebben a hónapban';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'Smara Account feloldása';
 
   @override
   String get searchLabel => 'Keresés';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => 'Nyitóegyenleg';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return 'Átutalás: $name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => 'Átutalási díj';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return 'Átutalási díj ide: $name';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'Nem sikerült megnyitni a fájlválasztót: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return 'Válasszon egy .$extensions fájlt';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => 'Pénznemkód (ISO 4217, pl. USD)';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name +$count további';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => 'Dátum';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'Nincs';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return 'Folytatás előtt tekintse át az alábbi tételeket (összesen $count).';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return 'Ön kapott $amount összeget';
   }
 
   @override
   String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+      'Hagyja üresen, ha az árfolyam még nem ismert.';
 
   @override
   String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+      'Rögzítsen egy már megtörtént ügyletet. Ez az alkalmazás nem ad le megbízásokat.';
 
   @override
   String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+      'Bekapcsolva: a fenti összeg a számláról levont teljes összeg; a díj ebből kerül levonásra.';
 
   @override
   String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+      'A bankja vagy egy közvetítő által felszámított előzetes jutalék.';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength =>
+      'A PIN-nek legalább 4 számjegyűnek kell lennie.';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'Ez lecseréli mindazt, ami jelenleg ebben az alkalmazásban van, a biztonsági mentésre — nem egyesíti. Válasszon egy biztonsági mentés fájlt, és adja meg a jelmondatot, amellyel védte.';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => 'Csere';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name a továbbiakban nem lesz elérhető új tételekhez.';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return 'Számla létrehozásakor vagy áthelyezésekor a(z) $name a továbbiakban nem lesz felkínálva.';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return 'Új tranzakció rögzítésekor a(z) $name a továbbiakban nem lesz felkínálva.';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      'Az elrejtett eszközök megmaradnak a korábbi vételeken és eladásokon. Osztalékot továbbra is rögzíthet hozzájuk.';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name (elrejtve)';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => 'Nincs pénznem beállítva';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return 'A(z) $name és a hozzá tartozó megjegyzett alapértelmezések törlődnek. A korábbi tranzakciókat ez nem érinti.';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return 'A(z) $name a továbbiakban nem lesz felkínálva esedékesként. Az általa már rögzített tranzakciókat ez nem érinti.';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return 'A mentett oszlop-hozzárendelés (\"$name\") törlődik. Az azzal már importált kivonatokat ez nem érinti.';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return 'Az importálások a továbbiakban nem lesznek automatikusan kategorizálva a(z) \"$keyword\" alapján. Az e szabállyal már kategorizált tranzakciókat ez nem érinti.';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'Opcionálisan adjon hozzá most egy hitelkártyát vagy készpénzszámlát - később a Beállításokból mindig hozzáadhat további számlákat.';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => 'Kézbesítve a célszámlára';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return 'Kézbesítve ide: $name';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return 'Ön $amount $currency összeggel kevesebbet kapott a vártnál - válasszon kategóriát a különbözet fedezésére.';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => 'Dátumtartomány';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'Sablon hozzáadása';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'Sablon szerkesztése';
 
   @override
   String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+      'Töltsön ki minden mezőt érvényes összeggel és nappal.';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'CSV export mentése';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => 'Referencia árfolyam';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'Az Ön árfolyama';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return 'Hagyja üresen, ha ez $currency pénznemben volt, a számla saját pénznemében.';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'Zárolva eddig (opcionális)';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return 'Zárolva eddig: $date';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      'Egy kutatási felszólítás átmásolva — nincs elérhető böngésző URL, vagy Ön offline van.';
 
   @override
-  String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+  String get openedFavouriteResearchTool => 'Megnyílt a kedvenc kutatóeszköze.';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'Ez nyereségnek tűnik';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'Ez veszteségnek tűnik';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'Ez nullszaldósnak tűnik';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name ($qty eladható)';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return '$index. oszlop';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'Importálás...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'Importálás megerősítése';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => 'Mentett kategóriaszabályok kezelése';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'Ennek a fájlnak a pénzneme ($currency) nem egyezik a kiválasztott számla pénznemével.';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'Kategóriaszabályok';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => 'lehetséges duplikátum';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => 'Ismeretlen kategória';
 }

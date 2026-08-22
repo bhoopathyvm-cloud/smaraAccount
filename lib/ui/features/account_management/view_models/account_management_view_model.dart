@@ -8,7 +8,8 @@ import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 
-class AccountManagementViewModel extends ChangeNotifier {
+class AccountManagementViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   AccountManagementViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository {
     _accountsSubscription = _ledgerRepository
@@ -35,16 +36,9 @@ class AccountManagementViewModel extends ChangeNotifier {
   List<AccountGroup> _groups = const [];
   List<AccountGroup> get groups => _groups;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
+  void clearError() => clearFailure();
 
-  void clearError() {
-    if (_errorMessage == null) return;
-    _errorMessage = null;
-    notifyListeners();
-  }
-
-    Future<bool> createAccount({
+  Future<bool> createAccount({
     required String name,
     required AccountType type,
     required String groupId,
@@ -133,17 +127,15 @@ class AccountManagementViewModel extends ChangeNotifier {
   Future<bool> _run(Future<void> Function() action) async {
     try {
       await action();
-      _errorMessage = null;
-      notifyListeners();
+      clearFailure();
       return true;
     } on LastActiveAccountException catch (error) {
-      _errorMessage = localizeVmError(error);
+      setFailure(error);
     } on AccountGroupException catch (error) {
-      _errorMessage = localizeVmError(error);
+      setFailure(error);
     } on InvalidOpeningBalanceException catch (error) {
-      _errorMessage = localizeVmError(error);
+      setFailure(error);
     }
-    notifyListeners();
     return false;
   }
 

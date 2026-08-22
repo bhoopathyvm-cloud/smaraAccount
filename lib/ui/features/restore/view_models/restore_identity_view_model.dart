@@ -10,7 +10,7 @@ import '../../../../l10n/l10n.dart';
 /// or keystore file (spec: "Recoverable Reinstall or Device Migration").
 /// Never re-signs or alters any entry - only re-derives and matches the
 /// device's private key.
-class RestoreIdentityViewModel extends ChangeNotifier {
+class RestoreIdentityViewModel extends ChangeNotifier with LocalizedErrorMixin {
   RestoreIdentityViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository;
 
@@ -18,9 +18,6 @@ class RestoreIdentityViewModel extends ChangeNotifier {
 
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
-
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
 
   Future<bool> restoreFromPhrase(String phraseText) {
     final words = phraseText
@@ -47,7 +44,7 @@ class RestoreIdentityViewModel extends ChangeNotifier {
 
   Future<bool> _restore(Future<void> Function() attempt) async {
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -57,19 +54,15 @@ class RestoreIdentityViewModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on SigningIdentityMismatchException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
     } on SecretBoxAuthenticationError {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationWrongKeystorePassphrase),
       );
     } on FormatException {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationInvalidKeystoreFile),
-      );
+      setFailure(const AppFailure(AppErrorCode.validationInvalidKeystoreFile));
     } catch (_) {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationRestorePhraseFailed),
-      );
+      setFailure(const AppFailure(AppErrorCode.validationRestorePhraseFailed));
     }
 
     _isSubmitting = false;

@@ -11,7 +11,8 @@ import '../../../../l10n/l10n.dart';
 /// keystore file available (spec: "True Key-Loss Migration"). Loads the
 /// current ledger for the user to review, requires an explicit
 /// confirmation before doing anything irreversible, then migrates.
-class KeyLossMigrationViewModel extends ChangeNotifier {
+class KeyLossMigrationViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   KeyLossMigrationViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository {
     _entriesSubscription = _ledgerRepository.watchEntries().listen(_onEntries);
@@ -33,9 +34,6 @@ class KeyLossMigrationViewModel extends ChangeNotifier {
   bool _isMigrating = false;
   bool get isMigrating => _isMigrating;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   void _onEntries(List<JournalEntry> entries) {
     _entries = entries;
     notifyListeners();
@@ -48,7 +46,7 @@ class KeyLossMigrationViewModel extends ChangeNotifier {
     if (!_hasConfirmed) return false;
 
     _isMigrating = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -58,10 +56,7 @@ class KeyLossMigrationViewModel extends ChangeNotifier {
       return true;
     } catch (_) {
       _isMigrating = false;
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationMigrationFailed),
-      );
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationMigrationFailed));
       return false;
     }
   }

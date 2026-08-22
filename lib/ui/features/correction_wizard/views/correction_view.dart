@@ -100,10 +100,7 @@ class _CorrectionViewState extends State<CorrectionView> {
                       AppSpacing.radiusMedium,
                     ),
                   ),
-                  child: Text(
-                    l10n.fixBlurb,
-                    style: AppTypography.body,
-                  ),
+                  child: Text(l10n.fixBlurb, style: AppTypography.body),
                 ),
                 const SizedBox(height: AppSpacing.large),
                 SegmentedButton<TransactionDirection>(
@@ -163,10 +160,10 @@ class _CorrectionViewState extends State<CorrectionView> {
                   ),
                   onChanged: widget.viewModel.setDescription,
                 ),
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

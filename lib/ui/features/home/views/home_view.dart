@@ -147,7 +147,10 @@ class _ThisMonth extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10nOf(context).homeThisMonth, style: AppTypography.sectionLabel),
+          Text(
+            l10nOf(context).homeThisMonth,
+            style: AppTypography.sectionLabel,
+          ),
           const SizedBox(height: AppSpacing.base),
           if (expenseTotals.isNotEmpty) ...[
             Text(l10nOf(context).captureSpent, style: AppTypography.cardTitle),
@@ -159,7 +162,10 @@ class _ThisMonth extends StatelessWidget {
             const SizedBox(height: AppSpacing.medium),
           ],
           if (incomeTotals.isNotEmpty) ...[
-            Text(l10nOf(context).captureReceived, style: AppTypography.cardTitle),
+            Text(
+              l10nOf(context).captureReceived,
+              style: AppTypography.cardTitle,
+            ),
             for (final total in incomeTotals) _CategoryTotalRow(total: total),
           ],
         ],
@@ -319,10 +325,7 @@ class _PendingTransfers extends StatelessWidget {
             title: Text(
               pending.destinationLabel == null
                   ? l10nOf(context).youSentFrom(
-                      formatAmountMinor(
-                        pending.amountMinor,
-                        pending.currency,
-                      ),
+                      formatAmountMinor(pending.amountMinor, pending.currency),
                       pending.currency,
                       localizeStoredName(
                         l10nOf(context),
@@ -330,10 +333,7 @@ class _PendingTransfers extends StatelessWidget {
                       ),
                     )
                   : l10nOf(context).youSentTo(
-                      formatAmountMinor(
-                        pending.amountMinor,
-                        pending.currency,
-                      ),
+                      formatAmountMinor(pending.amountMinor, pending.currency),
                       pending.currency,
                       localizeStoredName(
                         l10nOf(context),
@@ -393,10 +393,7 @@ class _DueTemplates extends StatelessWidget {
             subtitle: Text(
               l10nOf(context).homeDueLine(
                 localizeStoredName(l10nOf(context), due.categoryName),
-                localizeStoredName(
-                  l10nOf(context),
-                  due.financialAccountName,
-                ),
+                localizeStoredName(l10nOf(context), due.financialAccountName),
               ),
               style: AppTypography.metadata,
             ),

@@ -125,10 +125,12 @@ String localizeError(
     AppErrorCode.insufficientQuantity => l10n.errorInsufficientQuantity,
     AppErrorCode.incomeRequiredForGain => l10n.errorIncomeRequiredForGain,
     AppErrorCode.expenseRequiredForLoss => l10n.errorExpenseRequiredForLoss,
-    AppErrorCode.brokerageFailedAfterBuy =>
-      l10n.errorBrokerageFailedAfterBuy(p('detail')),
-    AppErrorCode.brokerageFailedAfterSell =>
-      l10n.errorBrokerageFailedAfterSell(p('detail')),
+    AppErrorCode.brokerageFailedAfterBuy => l10n.errorBrokerageFailedAfterBuy(
+      p('detail'),
+    ),
+    AppErrorCode.brokerageFailedAfterSell => l10n.errorBrokerageFailedAfterSell(
+      p('detail'),
+    ),
     AppErrorCode.dividendMustBePositive => l10n.errorDividendMustBePositive,
     AppErrorCode.notInvestmentAccount => l10n.errorNotInvestmentAccount,
     AppErrorCode.noInventoryCompanion => l10n.errorNoInventoryCompanion,
@@ -142,8 +144,9 @@ String localizeError(
     AppErrorCode.csvEmpty => l10n.errorCsvEmpty,
     AppErrorCode.csvUnreadable => l10n.errorCsvUnreadable,
     AppErrorCode.csvNoRows => l10n.errorCsvNoRows,
-    AppErrorCode.backupCreateFailed =>
-      l10n.errorBackupCreateFailed(p('detail')),
+    AppErrorCode.backupCreateFailed => l10n.errorBackupCreateFailed(
+      p('detail'),
+    ),
     AppErrorCode.backupRestoreFailed => l10n.errorBackupRestoreFailed,
     AppErrorCode.validationAmountAccountCategoryRequired =>
       l10n.validationAmountAccountCategoryRequired,
@@ -151,8 +154,7 @@ String localizeError(
       l10n.validationAmountAccountRequired,
     AppErrorCode.validationSplitLineIncomplete =>
       l10n.validationSplitLineIncomplete,
-    AppErrorCode.validationSplitSumMismatch =>
-      l10n.validationSplitSumMismatch,
+    AppErrorCode.validationSplitSumMismatch => l10n.validationSplitSumMismatch,
     AppErrorCode.validationFromToAmountRequired =>
       l10n.validationFromToAmountRequired,
     AppErrorCode.validationAmountArrivedRequired =>
@@ -183,8 +185,7 @@ String localizeError(
     AppErrorCode.validationSaveCurrencyFailed =>
       l10n.validationSaveCurrencyFailed(p('detail')),
     AppErrorCode.validationMigrationFailed => l10n.validationMigrationFailed,
-    AppErrorCode.validationChooseBackupFile =>
-      l10n.validationChooseBackupFile,
+    AppErrorCode.validationChooseBackupFile => l10n.validationChooseBackupFile,
     AppErrorCode.validationPassphraseRequired =>
       l10n.validationPassphraseRequired,
     AppErrorCode.validationPinsDoNotMatch => l10n.validationPinsDoNotMatch,
@@ -194,8 +195,7 @@ String localizeError(
       l10n.validationFeeMustBeLessThanAmount,
     AppErrorCode.validationTransferSavedFeeFailed =>
       l10n.validationTransferSavedFeeFailed(p('detail')),
-    AppErrorCode.validationEnterValidAmount =>
-      l10n.validationEnterValidAmount,
+    AppErrorCode.validationEnterValidAmount => l10n.validationEnterValidAmount,
     AppErrorCode.validationConfirmWordMismatch =>
       l10n.validationConfirmWordMismatch(p('n')),
   };

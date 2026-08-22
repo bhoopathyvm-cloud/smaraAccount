@@ -9,111 +9,110 @@
   "actionCancel": "ยกเลิก",
   "actionSave": "บันทึก",
   "actionDelete": "ลบ",
-  "actionDone": "Done",
+  "actionDone": "เสร็จสิ้น",
   "actionContinue": "ดำเนินการต่อ",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDismiss": "ปิด",
+  "actionRetry": "ลองอีกครั้ง",
+  "actionSkip": "ข้าม",
+  "actionConfirm": "ยืนยัน",
   "actionAdd": "เพิ่ม",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "รายจ่าย",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionEdit": "แก้ไข",
+  "actionRename": "เปลี่ยนชื่อ",
+  "actionHide": "ซ่อน",
+  "actionCreate": "สร้าง",
+  "actionCloseApp": "ปิดแอป",
+  "actionUnlock": "ปลดล็อก",
+  "actionSettle": "ชำระ",
+  "actionFinish": "สิ้นสุด",
+  "actionPreview": "ดูตัวอย่าง",
+  "actionImport": "นำเข้า",
+  "actionExportCsv": "ส่งออก CSV",
+  "actionChooseFile": "เลือกไฟล์",
+  "actionRestore": "กู้คืน",
+  "actionFix": "ปรับแก้",
+  "actionBuy": "ซื้อ",
+  "actionSell": "ขาย",
+  "actionDividend": "เงินปันผล",
+  "actionRecordBuy": "บันทึกการซื้อ",
+  "actionRecordSell": "บันทึกการขาย",
+  "actionRecordDividend": "บันทึกเงินปันผล",
+  "actionPayCard": "ชำระบัตร",
+  "actionTransfer": "โอนเงิน",
+  "actionRecordTransaction": "บันทึกรายการ",
+  "actionImportStatement": "นำเข้ารายการเดินบัญชี",
+  "actionClearDates": "ล้างวันที่",
+  "actionClearSearch": "ล้างการค้นหาและตัวกรอง",
+  "actionUseBiometrics": "ใช้ไบโอเมตริก",
+  "actionSetPin": "ตั้งรหัส PIN",
+  "actionChangePin": "เปลี่ยนรหัส PIN",
+  "actionSaveBackup": "บันทึกข้อมูลสำรอง",
+  "actionRestoreBackup": "กู้คืนข้อมูลสำรอง",
+  "actionSaveRule": "บันทึกกฎ",
+  "actionConfirmFix": "ยืนยันการแก้ไข",
+  "captureSpent": "จ่ายไป",
+  "captureReceived": "ได้รับ",
+  "captureMovedMoney": "โอนเงิน",
+  "captureImportStatement": "นำเข้ารายการเดินบัญชี",
   "settingsTitle": "การตั้งค่า",
   "settingsLanguage": "ภาษา",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "ภาษาของอุปกรณ์",
+  "settingsFetchFxRates": "ดึงอัตราแลกเปลี่ยนอ้างอิง",
+  "settingsFetchFxRatesSubtitle": "แสดงอัตราตลาดโดยประมาณข้างจำนวนเงินปลายทาง สำหรับการโอนเงินข้ามสกุลเงิน เพื่อเปรียบเทียบเท่านั้น - จะไม่ถูกนำไปใช้กรอกจำนวนเงินให้โดยอัตโนมัติ",
+  "settingsRateProvider": "ผู้ให้บริการอัตราแลกเปลี่ยน",
+  "settingsFetchMarketPrices": "ดึงราคาตลาดสำหรับการลงทุน",
+  "settingsFetchMarketPricesSubtitle": "ค้นหาราคาล่าสุดของตราสารที่มีสัญลักษณ์ (ticker) หรือ ISIN เพื่อประเมินมูลค่าพอร์ตการลงทุน จะไม่ถูกใช้บันทึกการซื้อขาย และจะไม่ส่งข้อมูลจำนวนที่คุณถืออยู่",
+  "settingsMarketPriceProvider": "ผู้ให้บริการราคาตลาด",
+  "settingsFavouriteResearchTool": "เครื่องมือค้นคว้าที่ชื่นชอบ",
+  "settingsFavouriteResearchToolSubtitle": "การแตะชื่อตราสารในหน้าการถือครองจะเปิดเครื่องมือนี้ในเบราว์เซอร์พร้อมคำค้นหา — ไม่ใช่การเชื่อมต่อระบบ และไม่ใช่คำแนะนำการลงทุน",
+  "settingsBackup": "สำรองข้อมูล",
+  "settingsBackupBlurb": "บันทึกสำเนาบัญชีของคุณแบบเข้ารหัสไว้ในตำแหน่งที่คุณเลือก หรือกู้คืนจากสำเนานั้น ซึ่งแยกต่างหากจากวลีกู้คืนหรือไฟล์ keystore ที่ใช้สำรองกุญแจลงลายเซ็นของคุณ ไม่ใช่บัญชีของคุณ",
+  "settingsLock": "ล็อก",
+  "settingsLockBlurb": "กำหนดให้ใส่รหัส PIN หรือไบโอเมตริก (หากมี) เพื่อเปิดแอป",
+  "settingsRequireUnlock": "ต้องปลดล็อกเพื่อเปิดแอป",
+  "settingsLockAfter": "ล็อกหลังจาก",
+  "settingsLockImmediately": "ทันที",
+  "settingsLock1Minute": "1 นาที",
+  "settingsLock5Minutes": "5 นาที",
+  "settingsLock15Minutes": "15 นาที",
+  "settingsAllowBiometrics": "อนุญาตให้ใช้ไบโอเมตริกด้วย",
+  "settingsHideSnapshot": "ซ่อนยอดคงเหลือในหน้าสลับแอป",
+  "settingsHideSnapshotSubtitle": "ปิดบังหน้าจอนี้เมื่อคุณสลับไปยังแอปอื่น เพื่อไม่ให้มองเห็นได้ทันทีในหน้าสลับแอป",
+  "settingsHideSnapshotUnavailable": "การซ่อนยอดคงเหลือในหน้าสลับแอปไม่รองรับบนแพลตฟอร์มนี้",
+  "settingsPayees": "ผู้รับเงิน",
+  "settingsManagePayees": "จัดการผู้รับเงิน",
+  "settingsPayeesBlurb": "ชื่อผู้รับเงินที่จดจำไว้พร้อมหมวดหมู่และบัญชีเริ่มต้น จะถูกแนะนำโดยอัตโนมัติเมื่อบันทึกรายการ",
+  "settingsRecurring": "แม่แบบรายการประจำ",
+  "settingsManageRecurring": "จัดการแม่แบบรายการประจำ",
+  "settingsRecurringBlurb": "ค่าใช้จ่ายหรือรายได้ที่เกิดซ้ำทุกเดือน เช่น ค่าเช่าหรือเงินเดือน แม่แบบที่ถึงกำหนดจะปรากฏในหน้าหลักให้คุณบันทึกด้วยการแตะเพียงครั้งเดียว - จะไม่ถูกบันทึกให้โดยอัตโนมัติ",
+  "settingsAbout": "เกี่ยวกับ",
+  "providerFrankfurter": "Frankfurter (อัตราจาก ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
+  "providerStooq": "Stooq (ราคารายวัน)",
   "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "เงินสดและรายการเทียบเท่าเงินสด",
+  "systemGroupPensionRetirement": "บำนาญและเกษียณอายุ",
+  "systemGroupCreditShortTerm": "เครดิตและหนี้ระยะสั้น",
+  "systemGroupLoansMortgages": "เงินกู้และสินเชื่อบ้าน",
+  "systemGroupInvestments": "การลงทุน",
+  "systemAccountCashBank": "เงินสดและธนาคาร",
+  "systemCategorySalary": "เงินเดือน",
+  "systemCategoryOtherIncome": "รายได้อื่น",
+  "systemCategoryGroceries": "ของชำ",
+  "systemCategoryRentMortgage": "ค่าเช่า/สินเชื่อบ้าน",
+  "systemCategoryUtilities": "ค่าสาธารณูปโภค",
+  "systemCategoryTransport": "การเดินทาง",
+  "systemCategoryFoodOut": "อาหารนอกบ้าน",
+  "systemCategoryPhone": "โทรศัพท์",
+  "systemCategoryHealth": "สุขภาพ",
+  "systemCategoryOtherExpense": "ค่าใช้จ่ายอื่น",
   "homeThisMonth": "เดือนนี้",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "เงินระหว่างโอน",
+  "homeWhatYouHaveMinusWhatYouOwe": "สิ่งที่คุณมี ลบ สิ่งที่คุณเป็นหนี้",
+  "homeWhatYouHave": "สิ่งที่คุณมี {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "สิ่งที่คุณมี {haveAmount} {currency}  •  สิ่งที่คุณเป็นหนี้ {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "คุณส่ง {amount} {currency} จาก {name}",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "คุณส่ง {amount} {currency} ไปยัง {name}",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "ซ่อนอยู่",
+  "allAccounts": "ทุกบัญชี",
+  "savedToPath": "บันทึกไปยัง {path}",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "ไม่สามารถส่งออกไฟล์ keystore ได้ คุณสามารถข้ามขั้นตอนนี้ได้",
+  "enterPassphraseToProtect": "ป้อนวลีรหัสผ่านเพื่อป้องกันไฟล์",
+  "homeTapWhenArrived": "แตะเมื่อคุณทราบว่าได้รับอะไร",
+  "homeReturnedTo": "คืนกลับไปยัง {name}",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "ครบกำหนดวันนี้",
+  "homeDueLine": "{category} · {account} · แตะเพื่อบันทึก",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "เกินวงเงิน",
+  "homeSpentOfLimit": "{spent} จาก {limit}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "คงเหลือ: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "ไม่มีบัญชี",
+  "homeCashRegister": "รายการเงินสด",
+  "homeMarketEstimate": "มูลค่าตามราคาตลาด",
+  "registerTitle": "รายการ",
+  "registerSearchHint": "คำอธิบาย หมวดหมู่ หรือจำนวนเงิน",
+  "registerNoTransactions": "ยังไม่มีรายการ",
+  "registerNoEntries": "ยังไม่มีการบันทึกรายการ",
+  "registerSpentOnly": "แสดงเฉพาะรายจ่าย",
+  "registerReceivedOnly": "แสดงเฉพาะรายรับ",
+  "registerAll": "ทั้งหมด",
+  "registerUnverified": "ยังไม่ยืนยัน - ไม่รวมในยอดรวม",
+  "registerSuperseded": "ถูกแทนที่ด้วยการย้ายกุญแจ - ไม่รวมในยอดรวม",
+  "summaryTitle": "สรุป",
+  "summaryTotalIncome": "รายรับรวม",
+  "summaryTotalExpense": "รายจ่ายรวม",
+  "summaryDateRange": "{start} ถึง {end}",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "บัญชี",
+  "categoriesTitle": "หมวดหมู่",
+  "accountName": "ชื่อบัญชี",
+  "createAccount": "สร้างบัญชี",
+  "createGroup": "สร้างกลุ่ม",
+  "editGroup": "แก้ไขกลุ่ม",
+  "renameAccount": "เปลี่ยนชื่อบัญชี",
+  "renameCategory": "เปลี่ยนชื่อหมวดหมู่",
+  "addCategory": "เพิ่มหมวดหมู่",
+  "groupLabel": "กลุ่ม",
+  "kindLabel": "ประเภท",
+  "asset": "สินทรัพย์",
+  "liability": "หนี้สิน",
+  "income": "รายได้",
+  "expense": "ค่าใช้จ่าย",
+  "thisAccountHoldsInvestments": "บัญชีนี้ใช้ถือครองการลงทุน",
+  "thisAccountHoldsInvestmentsSubtitle": "เงินสดบวกกับสินค้าคงคลังที่คุณบันทึกด้วยการซื้อ ขาย และเงินปันผล",
+  "thisIsACreditCard": "นี่คือบัตรเครดิต",
+  "openingBalanceOptional": "ยอดยกมา (ไม่บังคับ)",
+  "currencyIso": "สกุลเงิน (ISO 4217)",
+  "currencyIsoExample": "สกุลเงิน (ISO 4217 เช่น USD)",
+  "hideAccountTitle": "ซ่อนบัญชีจากรายการใหม่หรือไม่?",
+  "hideCategoryTitle": "ซ่อนหมวดหมู่จากรายการใหม่หรือไม่?",
+  "hideGroupTitle": "ซ่อนกลุ่มจากรายการใหม่หรือไม่?",
+  "reassignGroup": "ย้ายกลุ่ม",
+  "transferRemainingBalance": "โอนยอดคงเหลือ",
+  "monthlyLimit": "วงเงินรายเดือน",
+  "monthlyLimitHint": "วงเงิน (เว้นว่างเพื่อล้างค่า)",
+  "monthlyLimitBlurb": "แนวทางการใช้จ่ายสะสมตั้งแต่ต้นเดือนสำหรับหมวดหมู่รายจ่ายนี้ (ไม่บังคับ)",
+  "manageCategoryRules": "จัดการกฎหมวดหมู่",
+  "amount": "จำนวนเงิน",
+  "category": "หมวดหมู่",
+  "account": "บัญชี",
+  "fromAccount": "จากบัญชี",
+  "toAccount": "ไปยังบัญชี",
+  "descriptionOptional": "คำอธิบาย (ไม่บังคับ)",
+  "alsoRememberPayee": "จดจำเป็นผู้รับเงินด้วย",
+  "splitIntoCategories": "แบ่งเป็นหลายหมวดหมู่",
+  "categoryN": "หมวดหมู่ {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "จำนวนเงินปลายทาง",
+  "destinationAmountOptional": "จำนวนเงินปลายทาง (ไม่บังคับ)",
+  "accountCurrencyAmountOptional": "จำนวนเงินตามสกุลเงินบัญชี (ไม่บังคับ)",
+  "transactionCurrencyOptional": "สกุลเงินของรายการ (ไม่บังคับ)",
+  "feeOptional": "ค่าธรรมเนียม (ไม่บังคับ)",
+  "feeAmount": "จำนวนค่าธรรมเนียม",
+  "feeCategory": "หมวดหมู่ค่าธรรมเนียม",
+  "feeDescriptionOptional": "คำอธิบายค่าธรรมเนียม (ไม่บังคับ)",
+  "feeDeducted": "ค่าธรรมเนียมถูกหักจากจำนวนเงินด้านบน",
+  "needTwoAccountsToTransfer": "สร้างบัญชีที่ใช้งานอยู่อย่างน้อยสองบัญชีเพื่อทำการโอนเงิน",
+  "whatArrivedTitle": "ได้รับอะไร?",
+  "whatArrivedBlurb": "บอกเราว่าได้รับอะไรจริง ๆ",
+  "amountThatArrived": "จำนวนเงินที่ได้รับ",
+  "feeLossCategory": "หมวดหมู่ค่าธรรมเนียม / ขาดทุน",
+  "alreadySettled": "ชำระเรียบร้อยแล้ว",
+  "holdingsTitle": "การถือครอง",
+  "holdingsCash": "เงินสด",
+  "holdingsInventory": "สินค้าคงคลัง",
+  "holdingsBook": "ตามบัญชี (เงินสด + ต้นทุน) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "มูลค่าตามราคาตลาด {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "ยังไม่มีการถือครอง บันทึกการซื้อเพื่อเพิ่มตราสาร",
+  "holdingsQuotesBlurb": "ราคาที่แสดงเป็นเพียงการประมาณ ไม่ใช่ราคาจากโบรกเกอร์ แอปนี้ไม่ได้ส่งคำสั่งซื้อขาย",
+  "holdingsTapNameToResearch": "แตะชื่อเพื่อค้นคว้าข้อมูล ราคาที่แสดงเป็นเพียงการประมาณ ไม่ใช่คำแนะนำการลงทุน",
+  "instrument": "ตราสาร",
+  "newInstrument": "ตราสารใหม่",
+  "renameInstrument": "เปลี่ยนชื่อตราสาร",
+  "instrumentActions": "การดำเนินการกับตราสาร",
+  "hideInstrumentTitle": "ซ่อน {name} หรือไม่?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "สัญลักษณ์ตราสาร (ไม่บังคับ)",
+  "isinOptional": "ISIN (ไม่บังคับ)",
+  "quantity": "จำนวนหน่วย",
+  "unitPrice": "ราคาต่อหน่วย",
+  "brokerageOptional": "ค่านายหน้า (ไม่บังคับ)",
+  "brokerageExpenseCategory": "หมวดหมู่ค่าใช้จ่ายค่านายหน้า",
+  "incomeCategory": "หมวดหมู่รายได้",
+  "gainIncomeCategory": "หมวดหมู่รายได้จากกำไร",
+  "lossExpenseCategory": "หมวดหมู่ค่าใช้จ่ายจากขาดทุน",
+  "nonCash": "ไม่ใช่เงินสด",
+  "cash": "เงินสด",
+  "locked": "ถูกล็อก",
+  "lockUntilHint": "บันทึกข้อจำกัดของคุณเอง ไม่ใช่กฎของโบรกเกอร์",
+  "instrumentKindStock": "หุ้น",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "กองทุนรวม",
+  "instrumentKindBond": "พันธบัตร",
+  "instrumentKindOther": "อื่น ๆ",
+  "quoteUseLive": "ราคาสด",
+  "quoteUseCached": "ราคาที่แคชไว้",
+  "quoteUseStale": "ราคาที่ล้าสมัย",
+  "quoteUseMissing": "ใช้ต้นทุน (ไม่มีราคา)",
+  "quoteUseDisabled": "ปิดการดึงราคา — ใช้ต้นทุน/แคช",
+  "quoteUseCurrencyMismatch": "ใช้ต้นทุน (สกุลเงินราคาต่างกัน)",
+  "unrealizedLabel": "กำไร/ขาดทุนที่ยังไม่เกิดขึ้นจริง {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} หน่วย · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "วลีกู้คืนของคุณ",
+  "recoveryPhraseConfirmTitle": "ยืนยันวลีของคุณ",
+  "recoveryPhraseBlurb": "24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน Smara Accounting ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร",
+  "recoveryPhraseWriteDown": "จดคำเหล่านี้ตามลำดับและเก็บไว้ในที่ปลอดภัยแยกจากอุปกรณ์นี้",
+  "iveSavedRecoveryPhrase": "ฉันได้บันทึกวลีกู้คืนของฉันแล้ว",
+  "confirmPhraseBlurb": "ป้อนคำที่ระบบขอจากวลีที่คุณเพิ่งบันทึกไว้",
+  "wordNumber": "คำที่ #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
+  "keystoreExportTitle": "ส่งออกไฟล์ keystore",
+  "keystoreExportBlurb": "นอกเหนือจากวลีกู้คืนของคุณ คุณสามารถบันทึกไฟล์ keystore ที่เข้ารหัสและป้องกันด้วยวลีรหัสผ่านที่คุณเลือกได้ ขั้นตอนนี้ไม่บังคับ - วลีกู้คืนเพียงอย่างเดียวก็เพียงพอเสมอสำหรับการกู้คืนกุญแจลงลายเซ็นของคุณ",
+  "keystorePassphrase": "วลีรหัสผ่าน",
+  "exportKeystoreFile": "ส่งออกไฟล์ keystore",
+  "chooseCurrencyTitle": "เลือกสกุลเงินของคุณ",
+  "chooseCurrencyBlurb": "กลุ่มบัญชีทุกกลุ่ม (เงินสดและรายการเทียบเท่าเงินสด บำนาญและเกษียณอายุ ฯลฯ) จะใช้สกุลเงินเดียวนี้ไปก่อน คุณยังสามารถเพิ่มบัญชีในสกุลเงินอื่นได้ภายหลังโดยการสร้างกลุ่มใหม่สำหรับสกุลเงินนั้น",
+  "currencyBackfillTitle": "เลือกสกุลเงินสำหรับกลุ่มที่มีอยู่",
+  "currencyBackfillBlurb": "ตอนนี้แอปนี้รองรับหลายสกุลเงินแล้ว บัญชีและกลุ่มบัญชีที่มีอยู่ของคุณต้องมีสกุลเงิน - เนื่องจากทั้งหมดถูกตั้งค่าไว้ก่อนที่ฟีเจอร์นี้จะมีขึ้น การเลือกครั้งนี้จะมีผลกับทั้งหมด",
+  "firstAccountTitle": "ตั้งชื่อบัญชีของคุณ",
+  "firstAccountBlurb": "นี่คือบัญชีที่ถูกตั้งค่าไว้ให้คุณแล้ว - ตั้งชื่อที่คุณจำได้ เช่น ชื่อธนาคารของคุณ จากนั้นคุณจะบันทึกรายการจ่ายหรือรับหนึ่งรายการ แล้วปกป้องอุปกรณ์ด้วยวลีกู้คืนของคุณ",
+  "whatsMainAccountCalled": "บัญชีหลักของคุณชื่ออะไร?",
+  "restoreTitle": "กู้คืนกุญแจลงลายเซ็น",
+  "restoreBlurb": "อุปกรณ์นี้มีบัญชีอยู่แล้ว แต่ไม่มีกุญแจลงลายเซ็นที่ตรงกัน กู้คืนจากวลีกู้คืนหรือไฟล์ keystore ที่คุณบันทึกไว้ - ข้อมูลของคุณจะยืนยันได้ตามปกติ และจะไม่มีการลงลายเซ็นใหม่หรือเปลี่ยนแปลงใด ๆ",
+  "recoveryPhrase24": "วลีกู้คืน (ครบทั้ง 24 คำ)",
+  "keystoreFile": "ไฟล์ keystore",
+  "keystoreFileContents": "เนื้อหาไฟล์ keystore",
+  "optionalBackupFile": "ไฟล์สำรอง (ไม่บังคับ)",
+  "iDontHavePhrase": "ฉันไม่มีวลีกู้คืนหรือไฟล์ keystore",
+  "migrationTitle": "ย้ายไปใช้กุญแจใหม่",
+  "migrationBlurb": "หากไม่มีวลีกู้คืนหรือไฟล์ keystore กุญแจลงลายเซ็นของอุปกรณ์นี้จะไม่สามารถกู้คืนได้ คุณสามารถเริ่มต้นกุญแจใหม่ได้ รายการเก่าจะยังคงมองเห็นได้แต่จะถูกแทนที่",
+  "iConfirmBooksValid": "ฉันยืนยันว่าบัญชีปัจจุบันถูกต้อง",
+  "whyWeDontEdit": "ทำไมเราจึงไม่แก้ไขรายการเก่า",
+  "whyWeDontEditBody": "เมื่อคุณแก้ไขข้อผิดพลาด เราจะเก็บรายการเดิมไว้และเพิ่มรายการแก้ไขต่อท้าย แทนที่จะเปลี่ยนสิ่งที่คุณบันทึกไปแล้ว วิธีนี้ทำให้ประวัติของคุณแสดงสิ่งที่เกิดขึ้นจริงเสมอ รวมถึงเวลาที่คุณแก้ไข — ไม่มีอะไรถูกเปลี่ยนแปลงอย่างเงียบ ๆ โดยที่คุณไม่รู้",
+  "lockTitle": "ปลดล็อก",
   "lockScreenTitle": "ล็อก",
-  "enterPinToContinue": "Enter your PIN to continue",
+  "enterPinToContinue": "ป้อนรหัส PIN เพื่อดำเนินการต่อ",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "ตั้งรหัส PIN",
+  "currentPin": "PIN ปัจจุบัน",
+  "newPin": "PIN ใหม่",
+  "confirmPin": "ยืนยัน PIN",
+  "confirmNewPin": "ยืนยัน PIN ใหม่",
+  "firstWeekTitle": "ตั้งค่าบัญชีของคุณ",
+  "addCashAccount": "เพิ่มบัญชีเงินสด",
+  "addCreditCard": "เพิ่มบัตรเครดิต",
+  "cashAccountName": "ชื่อบัญชีเงินสด",
+  "cardName": "ชื่อบัตร",
+  "paidFromBank": "จ่ายจากธนาคาร",
+  "paidFromCard": "จ่ายจากบัตร",
+  "choosePassphraseTitle": "เลือกวลีรหัสผ่านเพื่อป้องกันข้อมูลสำรองนี้ หากคุณลืมจะไม่สามารถกู้คืนได้",
+  "replaceBooksTitle": "แทนที่บัญชีในเครื่องของคุณหรือไม่?",
+  "replaceBooksBody": "การดำเนินการนี้จะแทนที่ข้อมูลทั้งหมดในแอปนี้ด้วยข้อมูลสำรอง หลังจากนั้นให้ปิดและเปิดแอปใหม่",
+  "chooseBackupFileFirst": "เลือกไฟล์สำรองก่อน",
+  "backupRestored": "กู้คืนข้อมูลสำรองเรียบร้อยแล้ว",
+  "backupRestoredBody": "บัญชีของคุณได้รับการกู้คืนแล้ว ปิดและเปิดแอปใหม่เพื่อดำเนินการต่อ",
+  "fixThisEntry": "แก้ไขรายการนี้",
+  "fixBlurb": "รายการเดิมจะคงอยู่เหมือนเดิมทุกประการ การยืนยันจะเพิ่มรายการกลับรายการและรายการที่แก้ไขแล้ว",
+  "importStatementTitle": "นำเข้ารายการเดินบัญชี",
+  "importOfx": "นำเข้า OFX",
+  "importOfxQfxFile": "นำเข้าไฟล์ OFX / QFX",
+  "importCsvFile": "นำเข้าไฟล์ CSV",
+  "whatKindOfStatement": "คุณมีไฟล์รายการเดินบัญชีประเภทใด?",
+  "chooseAccountForFile": "เลือกว่าไฟล์นี้เป็นของบัญชีใด",
+  "importIntoAccount": "นำเข้าไปยังบัญชี",
+  "useSavedProfile": "ใช้โปรไฟล์ที่บันทึกไว้",
+  "saveMappingProfile": "บันทึกการจับคู่นี้เป็นโปรไฟล์ (ไม่บังคับ)",
+  "renameProfile": "เปลี่ยนชื่อโปรไฟล์",
+  "deleteProfileTitle": "ลบโปรไฟล์หรือไม่?",
+  "fileHasHeader": "ไฟล์มีแถวหัวตาราง",
+  "dateColumn": "คอลัมน์วันที่",
+  "dateFormatHint": "รูปแบบวันที่ (เช่น dd/MM/yyyy)",
+  "amountColumn": "คอลัมน์จำนวนเงิน",
+  "amountConvention": "รูปแบบเครื่องหมายจำนวนเงิน",
+  "signedAmountColumn": "คอลัมน์จำนวนเงินที่มีเครื่องหมาย",
+  "separateDebitCredit": "แยกคอลัมน์เดบิต / เครดิต",
+  "debitColumn": "คอลัมน์เดบิต",
+  "creditColumn": "คอลัมน์เครดิต",
+  "decimalSeparator": "ตัวคั่นทศนิยม (. หรือ ,)",
+  "descriptionColumns": "คอลัมน์คำอธิบาย",
+  "referenceIdColumn": "คอลัมน์รหัสอ้างอิง (ไม่บังคับ)",
+  "skippedRows": "แถวที่ข้าม",
+  "parsedTransactionCount": "แยกรายการได้ {count} รายการ",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "ข้ามหรือแยกออก {count} รายการ",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "บันทึกสำเร็จ {posted} รายการ, ล้มเหลว {failed} รายการ",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "หมวดหมู่สำหรับทั้งหมด",
+  "saveAsRule": "บันทึกเป็นกฎหรือไม่?",
+  "saveAsRuleBlurb": "การนำเข้าครั้งต่อไปที่คำอธิบายมีคำสำคัญนี้จะใช้หมวดหมู่นี้",
+  "keyword": "คำสำคัญ",
+  "noSavedRules": "ยังไม่มีกฎที่บันทึกไว้ กำหนดหมวดหมู่ให้กลุ่มแถวเพื่อบันทึกเป็นกฎ",
+  "deleteRuleTitle": "ลบกฎหรือไม่?",
+  "editRule": "แก้ไขกฎ",
+  "rowsGrouped": "{count} แถว",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "เลือกไฟล์รายการเดินบัญชี {extensions} เพื่อนำเข้า",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "ผู้รับเงิน",
+  "addPayee": "เพิ่มผู้รับเงิน",
+  "renamePayee": "เปลี่ยนชื่อผู้รับเงิน",
+  "deletePayeeTitle": "ลบผู้รับเงินหรือไม่?",
+  "noPayeesYet": "ยังไม่มีผู้รับเงิน",
+  "recurringTitle": "แม่แบบรายการประจำ",
+  "noRecurringYet": "ยังไม่มีแม่แบบรายการประจำ",
+  "deleteTemplateTitle": "ลบแม่แบบรายการประจำหรือไม่?",
+  "dayOfMonth": "วันที่ของเดือน (1-31)",
+  "dayOfMonthNote": "เดือนที่มีจำนวนวันน้อยกว่าจะใช้วันสุดท้ายของเดือนนั้นแทน",
+  "dayOfMonthLine": "วันที่ {day} ของเดือน - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
+  "name": "ชื่อ",
+  "none": "ไม่มี",
+  "currency": "สกุลเงิน",
   "errorGeneric": "เกิดข้อผิดพลาด โปรดลองอีกครั้ง",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "errorSigningIdentityMismatch": "วลีกู้คืนหรือไฟล์ keystore นี้ไม่ตรงกับตัวตนลงลายเซ็นใดในฐานข้อมูลนี้",
+  "errorInvalidLedgerBackup": "ไฟล์นี้ไม่ใช่ข้อมูลสำรองของ Smara ที่ถูกต้อง",
+  "errorInvalidLedgerBackupNoIdentity": "ข้อมูลสำรองนี้ไม่มีตัวตนลงลายเซ็น - จึงไม่ใช่ข้อมูลสำรองของ Smara ที่ถูกต้อง",
+  "errorInvalidLedgerBackupUnverified": "ข้อมูลสำรองนี้ไม่ผ่านการยืนยันว่าเป็นบัญชีที่สมบูรณ์ จึงไม่ได้ถูกกู้คืน",
+  "errorInvalidLedgerBackupUnreadable": "ไม่สามารถเปิดไฟล์นี้เป็นข้อมูลสำรองของ Smara ได้: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "ข้อมูลสำรองนี้เป็นของตัวตนลงลายเซ็นที่แตกต่างจากที่มีอยู่ในอุปกรณ์นี้",
+  "errorAccountNotFinancial": "นั่นไม่ใช่บัญชีการเงิน",
+  "errorAccountArchived": "บัญชีนั้นถูกซ่อนอยู่",
+  "errorAccountNotArchived": "บัญชีนั้นไม่ได้ถูกซ่อน",
+  "errorAccountNoPositiveBalanceToCloseOut": "ไม่มียอดคงเหลือให้โอน",
+  "errorAccountHasNoGroup": "บัญชีนั้นยังไม่ได้กำหนดกลุ่ม",
+  "errorGroupHasNoCurrency": "กลุ่มนั้นยังไม่ได้กำหนดสกุลเงิน",
+  "errorGroupNotFound": "ไม่พบกลุ่มบัญชีนั้น",
+  "errorInvestmentAccountsMustBeAssets": "เฉพาะบัญชีสินทรัพย์เท่านั้นที่สามารถกำหนดให้เป็นบัญชีการลงทุนได้",
+  "errorCreditCardsMustBeLiabilities": "เฉพาะบัญชีหนี้สินเท่านั้นที่สามารถกำหนดให้เป็นบัตรเครดิตได้",
+  "errorOpeningBalanceMustBePositive": "ยอดยกมาต้องเป็นค่าบวกเมื่อระบุ",
+  "errorAccountTypeDoesNotMatchGroup": "ประเภทบัญชีนั้นไม่ตรงกับกลุ่ม",
+  "errorLastActiveAccount": "ไม่สามารถซ่อนบัญชีการเงินที่ใช้งานอยู่บัญชีสุดท้ายได้",
+  "errorCurrencyRequiredToCreateGroup": "ต้องระบุสกุลเงินเพื่อสร้างกลุ่ม",
+  "errorSystemGroupCannotBeArchived": "กลุ่มบัญชีในตัวไม่สามารถซ่อนได้",
+  "errorGroupAlreadyArchived": "กลุ่มนั้นถูกซ่อนอยู่แล้ว",
+  "errorCannotArchiveGroupWithAccounts": "ไม่สามารถซ่อนกลุ่มที่ยังมีบัญชีที่ใช้งานอยู่ได้",
+  "errorSystemGroupNeverArchived": "กลุ่มบัญชีในตัวจะไม่ถูกซ่อนไม่ว่ากรณีใด",
+  "errorAccountGroupsCannotBeDeleted": "ไม่สามารถลบกลุ่มบัญชีได้",
+  "errorCannotReassignDifferentCurrency": "ไม่สามารถย้ายบัญชีนี้ไปยังกลุ่มที่มีสกุลเงินต่างกันได้",
+  "errorCannotChangeGroupCurrencyWithAccounts": "ไม่สามารถเปลี่ยนสกุลเงินขณะที่กลุ่มมีบัญชีที่ใช้งานอยู่ได้",
   "errorAmountMustBePositive": "จำนวนเงินต้องเป็นบวก",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "จำนวนเงินตามสกุลเงินบัญชีต้องเป็นบวก",
+  "errorAccountCurrencyAmountNotForSameCurrency": "จำนวนเงินตามสกุลเงินบัญชีใช้ได้เฉพาะรายการที่เป็นสกุลเงินต่างประเทศเท่านั้น",
+  "errorSplitNeedsTwoLines": "การแบ่งรายการต้องมีอย่างน้อยสองหมวดหมู่",
+  "errorSplitLineMustBePositive": "แต่ละรายการที่แบ่งต้องมีจำนวนเงินเป็นบวก",
+  "errorSplitLinesMustSumToTotal": "ผลรวมของรายการที่แบ่งต้องเท่ากับยอดรวมของรายการ",
+  "errorTransferAmountMustBePositive": "จำนวนเงินโอนต้องเป็นบวก",
+  "errorTransferAccountsMustDiffer": "บัญชีต้นทางและปลายทางต้องแตกต่างกัน",
+  "errorCloseoutRequiresDestinationAmount": "การปิดบัญชีข้ามสกุลเงินต้องระบุจำนวนเงินปลายทางที่ทราบแล้ว",
+  "errorDestinationAmountNotForSameCurrency": "จำนวนเงินปลายทางใช้ได้เฉพาะการโอนข้ามสกุลเงินเท่านั้น",
+  "errorDestinationAmountMustBePositive": "จำนวนเงินปลายทางต้องเป็นบวก",
+  "errorInvestmentCashExceeded": "ไม่สามารถโอนเกินยอดเงินสดของบัญชีการลงทุนนี้ได้",
+  "errorCannotReverseUnsettledProvisional": "ให้ชำระรายการโอนที่รอดำเนินการนี้แทนการกลับรายการ",
+  "errorAlreadyReversed": "รายการนี้ได้รับการแก้ไขแล้ว รายการต้นฉบับจะยังคงอยู่ตามเดิม",
+  "errorNotActiveExpenseCategory": "เลือกหมวดหมู่รายจ่ายที่ใช้งานอยู่",
+  "errorNotActiveIncomeCategory": "เลือกหมวดหมู่รายรับที่ใช้งานอยู่",
+  "errorSettledAmountMustNotBeNegative": "จำนวนเงินที่ได้รับต้องไม่ติดลบ",
+  "errorPendingTransferNotFound": "ไม่พบรายการโอนที่รอดำเนินการนั้น",
+  "errorPendingTransferAlreadySettled": "รายการโอนที่รอดำเนินการนั้นชำระเรียบร้อยแล้ว",
+  "errorSettledToMustBeSourceOrDestination": "เลือกบัญชีต้นทางหรือปลายทางเดิม",
+  "errorFeeCategoryOnlyWhenReturningToSource": "หมวดหมู่ค่าธรรมเนียมจะใช้ก็ต่อเมื่อเงินถูกคืนกลับไปยังบัญชีต้นทางเท่านั้น",
+  "errorSettledAmountMustBePositiveForDelivery": "ป้อนจำนวนเงินที่ได้รับเป็นค่าบวก",
+  "errorSettledAmountExceedsProvisional": "จำนวนเงินนั้นมากกว่าที่ถูกส่งไป",
+  "errorInstrumentNotFound": "ไม่พบตราสารนั้น",
+  "errorIncomeRequiredForNonCash": "ต้องมีหมวดหมู่รายรับที่ใช้งานอยู่สำหรับการได้มาแบบไม่ใช่เงินสด",
+  "errorInsufficientCash": "เงินสดในบัญชีการลงทุนนี้ไม่เพียงพอสำหรับการซื้อนั้น",
+  "errorSellQuantityAndPriceMustBePositive": "จำนวนหน่วยที่ขายและราคาต่อหน่วยต้องเป็นบวก",
+  "errorLockedUntil": "ไม่สามารถขายได้: บางหน่วยถูกล็อกจนถึง {date}",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "ไม่สามารถขายเกินจำนวนที่คุณถืออยู่ที่ไม่ถูกล็อกได้",
+  "errorIncomeRequiredForGain": "ต้องมีหมวดหมู่รายรับที่ใช้งานอยู่สำหรับกำไรที่เกิดขึ้นจริง",
+  "errorExpenseRequiredForLoss": "ต้องมีหมวดหมู่รายจ่ายที่ใช้งานอยู่สำหรับขาดทุนที่เกิดขึ้นจริง",
+  "errorBrokerageFailedAfterBuy": "บันทึกการซื้อแล้ว แต่ค่านายหน้าไม่สำเร็จ: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "บันทึกการขายแล้ว แต่ค่านายหน้าไม่สำเร็จ: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "จำนวนเงินปันผลต้องเป็นบวก",
+  "errorNotInvestmentAccount": "นั่นไม่ใช่บัญชีการลงทุน",
+  "errorNoInventoryCompanion": "บัญชีการลงทุนนี้ขาดบัญชีสินค้าคงคลังคู่กัน",
+  "errorInvestmentReversalBlocked": "ไม่สามารถกลับรายการซื้อนี้ได้: การขายในภายหลังขึ้นอยู่กับหน่วยของรายการนี้ กรุณากลับรายการขายที่เกี่ยวข้องก่อน: {sells}",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "วงเงินรายเดือนต้องเป็นบวก",
+  "errorTemplateAmountMustBePositive": "จำนวนเงินของแม่แบบต้องเป็นบวก",
+  "errorOfxUnrecognized": "ไม่สามารถระบุไฟล์นี้เป็น OFX ได้",
+  "errorCsvEmpty": "ไฟล์ที่เลือกว่างเปล่า",
+  "errorCsvUnreadable": "ไม่สามารถอ่านไฟล์นี้เป็น CSV ได้",
+  "errorCsvNoRows": "ไฟล์ที่เลือกไม่มีข้อมูล",
+  "errorBackupCreateFailed": "ไม่สามารถสร้างข้อมูลสำรองได้: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "ไม่สามารถกู้คืนข้อมูลสำรองนี้ได้ - วลีรหัสผ่านไม่ถูกต้อง หรือไม่ใช่ไฟล์สำรองของ Smara",
+  "validationAmountAccountCategoryRequired": "ต้องระบุจำนวนเงิน บัญชี และหมวดหมู่",
+  "validationAmountAccountRequired": "ต้องระบุจำนวนเงินและบัญชี",
+  "validationSplitLineIncomplete": "ทุกรายการที่แบ่งต้องมีหมวดหมู่และจำนวนเงิน",
+  "validationSplitSumMismatch": "ผลรวมของรายการที่แบ่งต้องเท่ากับยอดรวมของรายการ",
+  "validationFromToAmountRequired": "ต้องระบุบัญชีต้นทาง บัญชีปลายทาง และจำนวนเงิน",
+  "validationAmountArrivedRequired": "ต้องระบุจำนวนเงินที่ได้รับ",
+  "validationChooseReceivingAccount": "เลือกบัญชีที่ได้รับเงิน",
+  "validationAccountCategoryRequired": "ต้องระบุบัญชีและหมวดหมู่",
+  "validationFixFailed": "ไม่สามารถบันทึกการแก้ไขนี้ได้",
+  "validationNameRequired": "ตั้งชื่อบัญชีหลักของคุณ",
+  "validationStillLoading": "กำลังโหลดอยู่ - โปรดลองอีกครั้งในอีกสักครู่",
+  "validationSaveAccountNameFailed": "ไม่สามารถบันทึกชื่อบัญชีได้",
+  "validationWrongPin": "รหัส PIN ไม่ถูกต้อง ลองอีกครั้ง",
+  "validationCategoryMustBeIncomeOrExpense": "หมวดหมู่ต้องเป็นรายรับหรือรายจ่าย",
+  "validationOnlyExpenseHasMonthlyLimit": "เฉพาะหมวดหมู่รายจ่ายเท่านั้นที่สามารถมีวงเงินรายเดือนได้",
+  "validationInvalidTemplate": "แม่แบบไม่ถูกต้อง",
+  "validationWrongKeystorePassphrase": "วลีรหัสผ่านของไฟล์ keystore นี้ไม่ถูกต้อง",
+  "validationInvalidKeystoreFile": "นั่นดูไม่ใช่ไฟล์ keystore ที่ถูกต้อง",
+  "validationRestorePhraseFailed": "ไม่สามารถกู้คืนจากวลีกู้คืนนั้นได้",
+  "validationGenerateKeyFailed": "ไม่สามารถสร้างกุญแจลงลายเซ็นบนอุปกรณ์นี้ได้: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "ไม่สามารถบันทึกสกุลเงินนี้ได้: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "การย้ายกุญแจล้มเหลว โปรดลองอีกครั้ง",
+  "validationChooseBackupFile": "เลือกไฟล์สำรองก่อน",
+  "validationPassphraseRequired": "ป้อนวลีรหัสผ่าน",
+  "validationPinsDoNotMatch": "รหัส PIN ทั้งสองไม่ตรงกัน",
+  "validationFeePositiveWithCategory": "ค่าธรรมเนียมการโอนต้องเป็นจำนวนบวกและเลือกหมวดหมู่รายจ่ายไว้",
+  "validationFeeMustBeLessThanAmount": "ค่าธรรมเนียมต้องน้อยกว่าจำนวนเงินสำหรับการโอนแบบหักค่าธรรมเนียม",
+  "validationTransferSavedFeeFailed": "บันทึกการโอนแล้ว แต่ไม่สามารถบันทึกค่าธรรมเนียมได้: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "ป้อนจำนวนเงินที่ถูกต้อง",
+  "validationConfirmWordMismatch": "คำที่ {n} ไม่ตรงกับวลีที่คุณบันทึกไว้ ตรวจสอบแล้วลองอีกครั้ง",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "จำนวนหน่วยที่ซื้อและราคาต่อหน่วยต้องเป็นบวก",
+  "errorInstrumentArchived": "ไม่สามารถซื้อตราสารที่ถูกซ่อนไว้ได้",
+  "errorNonCashCannotIncludeBrokerage": "การได้มาแบบไม่ใช่เงินสดไม่สามารถมีค่านายหน้าได้",
+  "errorBrokerageRequiresExpenseCategory": "ต้องมีหมวดหมู่รายจ่ายที่ใช้งานอยู่เมื่อมีค่านายหน้า",
+  "errorSellProceedsMustCoverBrokerage": "เงินที่ได้จากการขายต้องมากกว่าหรือเท่ากับค่านายหน้า",
+  "homeSpentOfLimitThisMonth": "{spent} จาก {limit} ในเดือนนี้",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "ปลดล็อกบัญชี Smara",
   "searchLabel": "ค้นหา",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "ยอดยกมา",
+  "transferToName": "โอนเงิน: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "ค่าธรรมเนียมการโอน",
+  "feeForTransferTo": "ค่าธรรมเนียมการโอนไปยัง {name}",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "ไม่สามารถเปิดตัวเลือกไฟล์ได้: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "โปรดเลือกไฟล์ .{extensions}",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "รหัสสกุลเงิน (ISO 4217 เช่น USD)",
+  "splitCounterpartMore": "{name} และอีก {count} รายการ",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "วันที่",
+  "noneSelected": "ไม่มี",
+  "reviewEntriesBeforeContinuing": "ตรวจสอบรายการด้านล่าง (ทั้งหมด {count} รายการ) ก่อนดำเนินการต่อ",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "คุณได้รับ {amount}",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "เว้นว่างไว้หากยังไม่ทราบอัตราแลกเปลี่ยน",
+  "recordTradeBlurb": "บันทึกการซื้อขายที่เกิดขึ้นแล้ว แอปนี้ไม่ได้ส่งคำสั่งซื้อขาย",
+  "feeOnTopBlurb": "เปิด: จำนวนเงินด้านบนคือยอดรวมที่หักจากบัญชีนี้ โดยค่าธรรมเนียมจะถูกหักออกจากยอดนั้น",
+  "feeBankBlurb": "ค่าคอมมิชชันที่เรียกเก็บล่วงหน้าโดยธนาคารหรือตัวกลางของคุณ",
+  "validationPinMinLength": "รหัส PIN ต้องมีอย่างน้อย 4 หลัก",
+  "restoreBackupBlurb": "การดำเนินการนี้จะแทนที่ข้อมูลทั้งหมดในแอปนี้ด้วยข้อมูลสำรอง — จะไม่มีการรวมข้อมูล เลือกไฟล์สำรองและป้อนวลีรหัสผ่านที่คุณใช้ป้องกันไฟล์นั้น",
+  "actionReplace": "แทนที่",
+  "hideAccountBody": "{name} จะไม่สามารถใช้สำหรับรายการใหม่ได้อีกต่อไป",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "{name} จะไม่ปรากฏเป็นตัวเลือกเมื่อสร้างหรือย้ายบัญชีอีกต่อไป",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "{name} จะไม่ปรากฏเป็นตัวเลือกเมื่อบันทึกรายการใหม่อีกต่อไป",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "ตราสารที่ถูกซ่อนจะยังคงอยู่ในรายการซื้อขายในอดีต คุณยังสามารถบันทึกเงินปันผลให้กับตราสารเหล่านี้ได้",
+  "nameHidden": "{name} (ซ่อนอยู่)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "ยังไม่ได้กำหนดสกุลเงิน",
+  "deletePayeeBody": "{name} และค่าเริ่มต้นที่จดจำไว้จะถูกลบ รายการในอดีตจะไม่ได้รับผลกระทบ",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} จะไม่ปรากฏเป็นรายการครบกำหนดอีกต่อไป รายการในอดีตที่บันทึกไว้แล้วจะไม่ได้รับผลกระทบ",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "การจับคู่คอลัมน์ที่บันทึกไว้ \"{name}\" จะถูกลบ รายการเดินบัญชีที่นำเข้าไปแล้วด้วยการจับคู่นี้จะไม่ได้รับผลกระทบ",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "การนำเข้าจะไม่ถูกจัดหมวดหมู่อัตโนมัติด้วย \"{keyword}\" อีกต่อไป รายการที่ถูกจัดหมวดหมู่ด้วยกฎนี้ไปแล้วจะไม่ได้รับผลกระทบ",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "เพิ่มบัตรเครดิตหรือบัญชีเงินสดตอนนี้ได้หากต้องการ - คุณสามารถเพิ่มบัญชีเพิ่มเติมได้ภายหลังจากเมนูการตั้งค่า",
+  "deliveredToDestination": "ส่งถึงปลายทางแล้ว",
+  "deliveredToName": "ส่งถึง {name} แล้ว",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "คุณได้รับ {amount} {currency} น้อยกว่าที่คาดไว้ - เลือกหมวดหมู่เพื่อครอบคลุมส่วนต่าง",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "ช่วงวันที่",
+  "addTemplate": "เพิ่มแม่แบบ",
+  "editTemplate": "แก้ไขแม่แบบ",
+  "validationFillTemplateFields": "กรอกทุกช่องด้วยจำนวนเงินและวันที่ที่ถูกต้อง",
+  "saveCsvExport": "บันทึกไฟล์ CSV ที่ส่งออก",
+  "referenceRate": "อัตราอ้างอิง",
+  "yourRate": "อัตราของคุณ",
+  "leaveBlankIfThisWasAccountCurrency": "เว้นว่างไว้หากรายการนี้เป็นสกุลเงิน {currency} ซึ่งเป็นสกุลเงินของบัญชีนี้เอง",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "ล็อกจนถึง (ไม่บังคับ)",
+  "lockedUntilDate": "ล็อกจนถึง {date}",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "คัดลอกคำค้นหาแล้ว — ไม่มี URL เบราว์เซอร์ให้ใช้ หรือคุณออฟไลน์อยู่",
+  "openedFavouriteResearchTool": "เปิดเครื่องมือค้นคว้าที่คุณชื่นชอบแล้ว",
+  "looksLikeGain": "ดูเหมือนจะเป็นกำไร",
+  "looksLikeLoss": "ดูเหมือนจะเป็นขาดทุน",
+  "looksLikeBreakEven": "ดูเหมือนจะเท่าทุน",
+  "sellableQuantity": "{name} (ขายได้ {qty})",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "คอลัมน์ {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "กำลังนำเข้า...",
+  "confirmImport": "ยืนยันการนำเข้า",
+  "manageSavedCategoryRules": "จัดการกฎหมวดหมู่ที่บันทึกไว้",
+  "statementCurrencyMismatch": "สกุลเงินของไฟล์นี้ ({currency}) ไม่ตรงกับสกุลเงินของบัญชีที่เลือก",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "กฎหมวดหมู่",
+  "possibleDuplicate": "อาจซ้ำกับรายการอื่น",
+  "unknownCategory": "หมวดหมู่ที่ไม่ทราบ"
 }

@@ -20,7 +20,8 @@ import '../../../../l10n/l10n.dart';
 /// that gate. [ensureGenerated] transparently resumes from a stashed
 /// phrase (see [resumePendingIdentity]) if the app was killed and
 /// relaunched anywhere in this window, so the words are never lost.
-class RecoveryPhraseSetupViewModel extends ChangeNotifier {
+class RecoveryPhraseSetupViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   RecoveryPhraseSetupViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository;
 
@@ -36,13 +37,10 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   String? _keystoreExportPath;
   String? get keystoreExportPath => _keystoreExportPath;
 
-  bool get hasGenerationError => _errorMessage != null && _generated == null;
+  bool get hasGenerationError => failure != null && _generated == null;
 
   /// Idempotent - safe to call from every build of the display screen, and
   /// from [commitIdentity] before currency selection has even reached that
@@ -65,7 +63,7 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
         _generated = generated;
       }
     } catch (e) {
-      _errorMessage = localizeVmError(
+      setFailure(
         AppFailure(
           AppErrorCode.validationGenerateKeyFailed,
           params: {'detail': '$e'},
@@ -98,18 +96,16 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
     for (final index in confirmationWordIndices) {
       final entered = (enteredWords[index] ?? '').trim().toLowerCase();
       if (entered != generated.phrase.words[index]) {
-        _errorMessage = localizeVmError(
+        setFailure(
           AppFailure(
             AppErrorCode.validationConfirmWordMismatch,
             params: {'n': '${index + 1}'},
           ),
         );
-        notifyListeners();
         return false;
       }
     }
-    _errorMessage = null;
-    notifyListeners();
+    clearFailure();
     return true;
   }
 
@@ -124,7 +120,7 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier {
     if (generated == null) return false;
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     await _ledgerRepository.confirmFirstIdentity(generated, currency: currency);

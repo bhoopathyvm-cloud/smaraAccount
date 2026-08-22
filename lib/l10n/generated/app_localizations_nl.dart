@@ -36,139 +36,136 @@ class AppLocalizationsNl extends AppLocalizations {
   String get actionDelete => 'Verwijderen';
 
   @override
-  String get actionDone => 'Done';
+  String get actionDone => 'Klaar';
 
   @override
   String get actionContinue => 'Doorgaan';
 
   @override
-  String get actionDismiss => 'Dismiss';
+  String get actionDismiss => 'Sluiten';
 
   @override
-  String get actionRetry => 'Retry';
+  String get actionRetry => 'Opnieuw proberen';
 
   @override
-  String get actionSkip => 'Skip';
+  String get actionSkip => 'Overslaan';
 
   @override
-  String get actionConfirm => 'Confirm';
+  String get actionConfirm => 'Bevestigen';
 
   @override
   String get actionAdd => 'Toevoegen';
 
   @override
-  String get actionEdit => 'Edit';
+  String get actionEdit => 'Bewerken';
 
   @override
-  String get actionRename => 'Rename';
+  String get actionRename => 'Naam wijzigen';
 
   @override
-  String get actionHide => 'Hide';
+  String get actionHide => 'Verbergen';
 
   @override
-  String get actionCreate => 'Create';
+  String get actionCreate => 'Aanmaken';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'App sluiten';
 
   @override
-  String get actionUnlock => 'Unlock';
+  String get actionUnlock => 'Ontgrendelen';
 
   @override
-  String get actionSettle => 'Settle';
+  String get actionSettle => 'Afwikkelen';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => 'Voltooien';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'Voorbeeld';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'Importeren';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'CSV exporteren';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'Bestand kiezen';
 
   @override
-  String get actionRestore => 'Restore';
+  String get actionRestore => 'Herstellen';
 
   @override
-  String get actionArchive => 'Hide';
+  String get actionFix => 'Corrigeren';
 
   @override
-  String get actionFix => 'Fix';
+  String get actionBuy => 'Kopen';
 
   @override
-  String get actionBuy => 'Buy';
-
-  @override
-  String get actionSell => 'Sell';
+  String get actionSell => 'Verkopen';
 
   @override
   String get actionDividend => 'Dividend';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordBuy => 'Aankoop registreren';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordSell => 'Verkoop registreren';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionRecordDividend => 'Dividend registreren';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionPayCard => 'Kaart betalen';
 
   @override
-  String get actionTransfer => 'Transfer';
+  String get actionTransfer => 'Overboeken';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionRecordTransaction => 'Transactie registreren';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionImportStatement => 'Afschrift importeren';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearDates => 'Datums wissen';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionClearSearch => 'Zoekopdracht en filters wissen';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionUseBiometrics => 'Biometrie gebruiken';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionSetPin => 'Pincode instellen';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionChangePin => 'Pincode wijzigen';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionSaveBackup => 'Back-up opslaan';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionRestoreBackup => 'Back-up herstellen';
 
   @override
-  String get actionSaveRule => 'Save rule';
+  String get actionSaveRule => 'Regel opslaan';
 
   @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get actionConfirmFix => 'Correctie bevestigen';
 
   @override
-  String get captureSpent => 'Uitgave';
+  String get captureSpent => 'Uitgegeven';
 
   @override
-  String get captureReceived => 'Received';
+  String get captureReceived => 'Ontvangen';
 
   @override
-  String get captureMovedMoney => 'Moved money';
+  String get captureMovedMoney => 'Geld verplaatst';
 
   @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => 'Afschrift importeren';
 
   @override
   String get settingsTitle => 'Instellingen';
@@ -177,115 +174,117 @@ class AppLocalizationsNl extends AppLocalizations {
   String get settingsLanguage => 'Taal';
 
   @override
-  String get settingsLanguageSystem => 'Device language';
+  String get settingsLanguageSystem => 'Apparaattaal';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => 'Referentiewisselkoersen ophalen';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      'Toont een indicatieve marktkoers naast het bestemmingsbedrag bij overboekingen tussen valuta, uitsluitend ter vergelijking - wordt nooit gebruikt om het bedrag automatisch in te vullen.';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'Koersaanbieder';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices =>
+      'Marktprijzen voor beleggingen ophalen';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'Zoekt de laatste prijzen op voor instrumenten met een ticker of ISIN, om de portefeuillewaarde te schatten. Wordt nooit gebruikt om een transactie vast te leggen en verstuurt nooit hoeveel je in bezit hebt.';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => 'Marktprijsaanbieder';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => 'Favoriete onderzoekstool';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      'Als je op een instrumentnaam bij je posities tikt, opent deze tool in de browser met een onderzoeksvraag — geen integratie en geen advies.';
 
   @override
-  String get settingsBackup => 'Backup';
+  String get settingsBackup => 'Back-up';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      'Sla een versleutelde kopie van je boekhouding op een locatie naar keuze op, of herstel er een. Dit is iets anders dan je herstelzin of keystore-bestand, die je ondertekeningssleutel back-uppen, niet je boekhouding.';
 
   @override
-  String get settingsLock => 'Lock';
+  String get settingsLock => 'Vergrendeling';
 
   @override
   String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+      'Vereis een pincode, of biometrie waar beschikbaar, om de app te openen.';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock =>
+      'Ontgrendeling vereisen om de app te openen';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'Vergrendelen na';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'Direct';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1 minuut';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5 minuten';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15 minuten';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => 'Ook biometrie toestaan';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot => 'Saldi verbergen in de app-switcher';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      'Verbergt dit scherm wanneer je naar een andere app schakelt, zodat het niet in één oogopslag zichtbaar is in de app-switcher.';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'Saldi verbergen in de app-switcher is niet beschikbaar op dit platform.';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => 'Begunstigden';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => 'Begunstigden beheren';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      'Onthouden begunstigdennamen met hun standaardcategorie en -rekening, voorgesteld door automatisch aanvullen bij het registreren van een transactie.';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => 'Terugkerende sjablonen';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => 'Terugkerende sjablonen beheren';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      'Rekeningen of inkomsten die maandelijks terugkeren, zoals huur of salaris. Een vervallen sjabloon verschijnt op Home zodat je het met één tik kunt registreren - nooit automatisch geboekt.';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'Over';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter (ECB-koersen)';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq (dagelijkse koersen)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (chart-API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -300,66 +299,66 @@ class AppLocalizationsNl extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => 'Liquide middelen';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => 'Pensioen';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => 'Krediet & kortlopende schulden';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'Leningen & hypotheken';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => 'Beleggingen';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => 'Kas & Bank';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'Salaris';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'Overige inkomsten';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'Boodschappen';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => 'Huur/Hypotheek';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => 'Nutsvoorzieningen';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => 'Vervoer';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => 'Uit eten';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => 'Telefoon';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => 'Gezondheid';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'Overige uitgaven';
 
   @override
   String get homeThisMonth => 'DEZE MAAND';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => 'GELD ONDERWEG';
 
   @override
   String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+      'WAT JE HEBT MIN WAT JE SCHULDIG BENT';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return 'Wat je hebt $amount $currency';
   }
 
   @override
@@ -369,1405 +368,1420 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return 'Wat je hebt $haveAmount $currency  •  Wat je schuldig bent $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return 'Je stuurde $amount $currency vanaf $name';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return 'Je stuurde $amount $currency naar $name';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => 'Verborgen';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'Alle rekeningen';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return 'Opgeslagen op $path';
   }
 
   @override
   String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+      'Het keystore-bestand kon niet worden geëxporteerd. Je kunt deze stap overslaan.';
 
   @override
   String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+      'Voer een wachtwoordzin in om het bestand te beveiligen.';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => 'Tik zodra je weet wat er is aangekomen';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return 'Teruggestort naar $name';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => 'VANDAAG VERSCHULDIGD';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · tik om te registreren';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => 'Over de limiet';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$spent van $limit';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return 'Resterend: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => 'Geen rekeningen';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'Kasregister';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => 'Marktschatting';
 
   @override
   String get registerTitle => 'Register';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => 'Omschrijving, categorie of bedrag';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => 'Nog geen transacties';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => 'Nog geen boekingen geregistreerd.';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => 'Alleen uitgaven';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => 'Alleen ontvangsten';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'Alles';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified =>
+      'Niet geverifieerd - buiten totalen gehouden';
 
   @override
   String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+      'Vervangen door migratie - buiten totalen gehouden';
 
   @override
-  String get summaryTitle => 'Summary';
+  String get summaryTitle => 'Overzicht';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => 'Totale inkomsten';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => 'Totale uitgaven';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start tot $end';
   }
 
   @override
-  String get accountsTitle => 'Accounts';
+  String get accountsTitle => 'Rekeningen';
 
   @override
-  String get categoriesTitle => 'Categories';
+  String get categoriesTitle => 'Categorieën';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => 'Rekeningnaam';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => 'Rekening aanmaken';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'Groep aanmaken';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'Groep bewerken';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => 'Rekening hernoemen';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'Categorie hernoemen';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'Categorie toevoegen';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'Groep';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => 'Type';
 
   @override
-  String get asset => 'Asset';
+  String get asset => 'Bezitting';
 
   @override
-  String get liability => 'Liability';
+  String get liability => 'Verplichting';
 
   @override
-  String get income => 'Income';
+  String get income => 'Inkomsten';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Uitgaven';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments => 'Deze rekening bevat beleggingen';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      'Kas plus voorraad die je vastlegt met Kopen, Verkopen en Dividend.';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'Dit is een creditcard';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => 'Beginsaldo (optioneel)';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => 'Valuta (ISO 4217)';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => 'Valuta (ISO 4217, bijv. USD)';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'Rekening verbergen voor nieuwe boekingen?';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'Categorie verbergen voor nieuwe boekingen?';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'Groep verbergen voor nieuwe boekingen?';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'Groep opnieuw toewijzen';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => 'Resterend saldo overboeken';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => 'Maandlimiet';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => 'Limiet (leeg laten om te wissen)';
 
   @override
   String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+      'Een optionele richtlijn voor uitgaven tot nu toe deze maand, voor deze uitgavencategorie.';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'Categorieregels beheren';
 
   @override
-  String get amount => 'Amount';
+  String get amount => 'Bedrag';
 
   @override
-  String get category => 'Category';
+  String get category => 'Categorie';
 
   @override
-  String get account => 'Account';
+  String get account => 'Rekening';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => 'Van rekening';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => 'Naar rekening';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => 'Omschrijving (optioneel)';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => 'Ook onthouden als begunstigde';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => 'Splitsen over meerdere categorieën';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return 'Categorie $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => 'Bestemmingsbedrag';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => 'Bestemmingsbedrag (optioneel)';
 
   @override
   String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+      'Bedrag in rekeningvaluta (optioneel)';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => 'Transactievaluta (optioneel)';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => 'Kosten (optioneel)';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => 'Kostenbedrag';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => 'Kostencategorie';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => 'Omschrijving kosten (optioneel)';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => 'Kosten worden ingehouden op bovenstaand bedrag';
 
   @override
   String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+      'Maak minstens twee actieve rekeningen aan om een overboeking te doen.';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => 'Wat is er aangekomen?';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => 'Vertel ons wat er werkelijk is aangekomen.';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => 'Aangekomen bedrag';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => 'Kosten-/verliescategorie';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'Al afgewikkeld.';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => 'Posities';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => 'Kas';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => 'VOORRAAD';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return 'Boekwaarde (kas + kostprijs) $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return 'Marktschatting $amount $currency';
   }
 
   @override
   String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+      'Nog geen posities. Registreer een aankoop om een instrument toe te voegen.';
 
   @override
   String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+      'Koersen zijn schattingen, geen brokerprijs. Deze app plaatst geen orders.';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      'Tik op de naam om te onderzoeken. Koersen zijn schattingen, geen advies.';
 
   @override
   String get instrument => 'Instrument';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => 'Nieuw instrument';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => 'Instrument hernoemen';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => 'Instrumentacties';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return '$name verbergen?';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'Ticker (optioneel)';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN (optioneel)';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'Aantal';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => 'Eenheidsprijs';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => 'Brokerkosten (optioneel)';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => 'Uitgavencategorie brokerkosten';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => 'Inkomstencategorie';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => 'Inkomstencategorie voor winst';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => 'Uitgavencategorie voor verlies';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => 'Niet-cash';
 
   @override
   String get cash => 'Cash';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'Vergrendeld';
 
   @override
   String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+      'Je eigen notitie over een beperking, geen brokerregel.';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => 'Aandeel';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => 'Beleggingsfonds';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => 'Obligatie';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'Overig';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'Actuele koers';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'Gecachete koers';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => 'Verouderde koers';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => 'Kostprijs gebruikt (geen koers)';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled => 'Koersen uit — kostprijs/cache gebruikt';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch =>
+      'Kostprijs gebruikt (koersvaluta wijkt af)';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return 'Ongerealiseerd $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty eenheden · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'Je herstelzin';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'Bevestig je zin';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      'Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'Schrijf deze woorden in volgorde op en bewaar ze op een veilige plek, gescheiden van dit toestel.';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase => 'Ik heb mijn herstelzin opgeslagen';
 
   @override
   String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+      'Voer de gevraagde woorden in uit de zin die je zojuist hebt opgeslagen.';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return 'Woord #$n';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'Keystore-bestand exporteren';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'Naast je herstelzin kun je een versleuteld keystore-bestand opslaan, beveiligd met een wachtwoordzin naar keuze. Dit is optioneel - je herstelzin alleen is altijd genoeg om je ondertekeningssleutel te herstellen.';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'Wachtwoordzin';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'Keystore-bestand exporteren';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => 'Kies je valuta';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      'Elke rekeninggroep (Liquide middelen, Pensioen, enz.) gebruikt voorlopig deze ene valuta. Je kunt later nog rekeningen in een andere valuta toevoegen door er een nieuwe groep voor aan te maken.';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle => 'Kies een valuta voor bestaande groepen';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'Deze app ondersteunt nu meerdere valuta. Je bestaande rekeningen en rekeninggroepen hebben een valuta nodig - omdat ze allemaal zijn aangemaakt voordat deze functie bestond, geldt één keuze voor ze allemaal.';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => 'Geef je rekening een naam';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'Dit is de rekening die al voor je is aangemaakt - geef hem een naam die je herkent, zoals je bank. Hierna registreer je één Uitgave of Ontvangst, en beveilig je daarna het toestel met je herstelzin.';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => 'Hoe heet je hoofdrekening?';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => 'Ondertekeningssleutel herstellen';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'Dit toestel heeft al een boekhouding, maar geen bijpassende ondertekeningssleutel. Herstel deze vanuit je opgeslagen herstelzin of keystore-bestand - je gegevens worden gewoon geverifieerd en er wordt niets opnieuw ondertekend of gewijzigd.';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'Herstelzin (alle 24 woorden)';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'Keystore-bestand';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'Inhoud keystore-bestand';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => 'Optioneel back-upbestand';
 
   @override
   String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+      'Ik heb mijn herstelzin of keystore-bestand niet';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => 'Migreren naar een nieuwe sleutel';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'Zonder je herstelzin of keystore-bestand kan de ondertekeningssleutel van dit toestel niet worden hersteld. Je kunt een nieuwe sleutel starten. Oude boekingen blijven zichtbaar maar worden vervangen.';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid =>
+      'Ik bevestig dat de huidige boekhouding klopt';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => 'Waarom we oude boekingen niet bewerken';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      'Als je een fout corrigeert, laten we de oude regel staan en voegen we er een correctie naast toe, in plaats van te wijzigen wat je al had ingevoerd. Zo toont je geschiedenis altijd precies wat er is gebeurd en wanneer je het hebt gecorrigeerd — er verandert nooit iets stiekem achter je rug.';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'Ontgrendelen';
 
   @override
   String get lockScreenTitle => 'Vergrendeld';
 
   @override
-  String get enterPinToContinue => 'Enter your PIN to continue';
+  String get enterPinToContinue => 'Voer je pincode in om door te gaan';
 
   @override
-  String get pinLabel => 'PIN';
+  String get pinLabel => 'Pincode';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'Stel een pincode in';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => 'Huidige pincode';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => 'Nieuwe pincode';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'Bevestig pincode';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => 'Bevestig nieuwe pincode';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => 'Stel je rekeningen in';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => 'Voeg een contante rekening toe';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'Voeg een creditcard toe';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => 'Naam contante rekening';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'Naam kaart';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => 'Betaald vanaf bank';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'Betaald met kaart';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'Kies een wachtwoordzin om deze back-up te beveiligen. Er is geen herstel mogelijk als je deze vergeet.';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'Je lokale boekhouding vervangen?';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'Dit vervangt alles wat nu in deze app staat door de back-up. Sluit en heropen de app daarna.';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => 'Kies eerst een back-upbestand.';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'Back-up hersteld';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'Je boekhouding is hersteld. Sluit en heropen de app om door te gaan.';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'Deze boeking corrigeren';
 
   @override
   String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+      'De oude regel blijft precies zoals hij was. Bevestigen voegt een tegenboeking en de gecorrigeerde regel toe.';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => 'Afschrift importeren';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'OFX importeren';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'OFX-/QFX-bestand importeren';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'CSV-bestand importeren';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement => 'Wat voor soort afschriftbestand heb je?';
 
   @override
   String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+      'Kies bij welke rekening dit bestand hoort.';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'Importeren in rekening';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => 'Gebruik een opgeslagen profiel';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile =>
+      'Deze koppeling opslaan als profiel (optioneel)';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'Profiel hernoemen';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'Profiel verwijderen?';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'Bestand heeft een koprij';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => 'Datumkolom';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => 'Datumnotatie (bijv. dd/MM/jjjj)';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => 'Bedragkolom';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => 'Bedragconventie';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => 'Kolom met getekend bedrag';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => 'Aparte debet-/creditkolommen';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => 'Debetkolom';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => 'Creditkolom';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => 'Decimaalteken (. of ,)';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => 'Omschrijvingskolom(men)';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => 'Referentiekolom (optioneel)';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'Overgeslagen rijen';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return '$count transacties verwerkt';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return '$count overgeslagen of uitgesloten';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return '$posted geboekt, $failed mislukt';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'Categorie voor alles';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'Opslaan als regel?';
 
   @override
   String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+      'Toekomstige imports waarvan de omschrijving dit trefwoord bevat, gebruiken deze categorie.';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'Trefwoord';
 
   @override
   String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+      'Nog geen opgeslagen regels. Wijs een categorie toe aan een groep rijen om een regel op te slaan.';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'Regel verwijderen?';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'Regel bewerken';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count rijen';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return 'Selecteer een $extensions-afschriftbestand om te importeren';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => 'Begunstigden';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => 'Begunstigde toevoegen';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => 'Begunstigde hernoemen';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => 'Begunstigde verwijderen?';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => 'Nog geen begunstigden';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => 'Terugkerende sjablonen';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => 'Nog geen terugkerende sjablonen';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => 'Terugkerend sjabloon verwijderen?';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => 'Dag van de maand (1-31)';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote =>
+      'Een maand met minder dagen gebruikt zijn eigen laatste dag.';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return 'Dag $day van de maand - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => 'Naam';
 
   @override
-  String get none => 'None';
+  String get none => 'Geen';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'Valuta';
 
   @override
-  String get errorGeneric => 'Er ging iets mis. Probeer opnieuw.';
+  String get errorGeneric => 'Er is iets misgegaan. Probeer het opnieuw.';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'Deze herstelzin of dit keystore-bestand komt niet overeen met een ondertekeningsidentiteit in deze database.';
 
   @override
   String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+      'Dit bestand is geen geldige Smara-back-up.';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'Deze back-up heeft geen ondertekeningsidentiteit - het is geen geldige Smara-back-up.';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'Deze back-up kon niet worden geverifieerd als intacte boekhouding en is daarom niet hersteld.';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'Dit bestand kon niet worden geopend als Smara-back-up: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'Deze back-up hoort bij een andere ondertekeningsidentiteit dan die op dit toestel.';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'Dat is geen financiële rekening.';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'Die rekening is verborgen.';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'Die rekening is niet verborgen.';
 
   @override
   String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+      'Er is geen resterend saldo om over te boeken.';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup =>
+      'Aan die rekening is geen groep toegewezen.';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency =>
+      'Voor die groep is nog geen valuta ingesteld.';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'Die rekeninggroep is niet gevonden.';
 
   @override
   String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+      'Alleen bezittingsrekeningen kunnen als beleggingsrekening worden gemarkeerd.';
 
   @override
   String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+      'Alleen verplichtingenrekeningen kunnen als creditcard worden gemarkeerd.';
 
   @override
   String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+      'Het beginsaldo moet positief zijn indien opgegeven.';
 
   @override
   String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+      'Dat rekeningtype komt niet overeen met de groep.';
 
   @override
   String get errorLastActiveAccount =>
-      'Cannot hide the last active financial account.';
+      'De laatste actieve financiële rekening kan niet worden verborgen.';
 
   @override
   String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+      'Er is een valuta nodig om een groep aan te maken.';
 
   @override
   String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+      'Ingebouwde rekeninggroepen kunnen niet worden verborgen.';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'Die groep is al verborgen.';
 
   @override
   String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+      'Een groep met nog actieve rekeningen kan niet worden verborgen.';
 
   @override
   String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+      'Ingebouwde rekeninggroepen worden nooit verborgen.';
 
   @override
   String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+      'Rekeninggroepen kunnen niet worden verwijderd.';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'Deze rekening kan niet worden verplaatst naar een groep met een andere valuta.';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'De valuta kan niet worden gewijzigd zolang de groep actieve rekeningen heeft.';
 
   @override
   String get errorAmountMustBePositive => 'Bedrag moet positief zijn.';
 
   @override
   String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+      'Bedrag in rekeningvaluta moet positief zijn.';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      'Bedrag in rekeningvaluta is alleen voor een boeking in vreemde valuta.';
 
   @override
   String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+      'Een splitsing heeft minstens twee categorieregels nodig.';
 
   @override
   String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+      'Elke splitsingsregel moet een positief bedrag zijn.';
 
   @override
   String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+      'Splitsingsregels moeten optellen tot het totale transactiebedrag.';
 
   @override
   String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+      'Overboekingsbedrag moet positief zijn.';
 
   @override
   String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+      'Bron- en bestemmingsrekening moeten verschillend zijn.';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      'Een afsluiting tussen valuta vereist een bekend bestemmingsbedrag.';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      'Bestemmingsbedrag is alleen voor een overboeking tussen valuta.';
 
   @override
   String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+      'Bestemmingsbedrag moet positief zijn.';
 
   @override
   String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+      'Er kan niet meer worden overgeboekt dan de kas van deze beleggingsrekening.';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      'Wikkel deze lopende overboeking af in plaats van deze te herroepen.';
 
   @override
   String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+      'Deze boeking is al gecorrigeerd. De oorspronkelijke regel blijft ongewijzigd.';
 
   @override
   String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+      'Kies een actieve uitgavencategorie.';
 
   @override
   String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+      'Kies een actieve inkomstencategorie.';
 
   @override
   String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+      'Aangekomen bedrag kan niet negatief zijn.';
 
   @override
   String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+      'Die lopende overboeking is niet gevonden.';
 
   @override
   String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+      'Die lopende overboeking is al afgewikkeld.';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      'Kies de oorspronkelijke bron- of bestemmingsrekening.';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      'Een kostencategorie wordt alleen gebruikt wanneer geld wordt teruggestort naar de bronrekening.';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      'Voer een positief bedrag in voor wat er is aangekomen.';
 
   @override
   String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+      'Dat bedrag is meer dan er is verstuurd.';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'Dat instrument is niet gevonden.';
 
   @override
   String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+      'Voor een niet-cash verwerving is een actieve inkomstencategorie vereist.';
 
   @override
   String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+      'Onvoldoende kas op deze beleggingsrekening voor die aankoop.';
 
   @override
   String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+      'Verkoophoeveelheid en eenheidsprijs moeten positief zijn.';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return 'Verkopen niet mogelijk: sommige eenheden zijn vergrendeld tot $date.';
   }
 
   @override
   String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+      'Je kunt niet meer verkopen dan je momenteel onvergrendeld in bezit hebt.';
 
   @override
   String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+      'Voor een gerealiseerde winst is een actieve inkomstencategorie vereist.';
 
   @override
   String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+      'Voor een gerealiseerd verlies is een actieve uitgavencategorie vereist.';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return 'Aankoop geboekt, maar brokerkosten zijn mislukt: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return 'Verkoop geboekt, maar brokerkosten zijn mislukt: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive =>
+      'Dividendbedrag moet positief zijn.';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'Dat is geen beleggingsrekening.';
 
   @override
   String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+      'Bij deze beleggingsrekening ontbreekt de bijbehorende voorraadrekening.';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'Deze aankoop kan niet worden herroepen: latere verkoop/verkopen zijn afhankelijk van deze eenheden. Herroep eerst de afhankelijke verkoop/verkopen: $sells.';
   }
 
   @override
   String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+      'Maandlimiet moet positief zijn.';
 
   @override
   String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+      'Sjabloonbedrag moet positief zijn.';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized =>
+      'Dit bestand kon niet worden herkend als OFX.';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => 'Het geselecteerde bestand is leeg.';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable =>
+      'Dit bestand kon niet worden gelezen als CSV.';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => 'Het geselecteerde bestand heeft geen rijen.';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'De back-up kon niet worden gemaakt: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'Deze back-up kon niet worden hersteld - onjuiste wachtwoordzin, of geen Smara-back-upbestand.';
 
   @override
   String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+      'Bedrag, rekening en categorie zijn verplicht.';
 
   @override
   String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+      'Bedrag en rekening zijn verplicht.';
 
   @override
   String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+      'Elke splitsingsregel heeft een categorie en een bedrag nodig.';
 
   @override
   String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+      'Splitsingsregels moeten optellen tot het totale transactiebedrag.';
 
   @override
   String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+      'Van-rekening, naar-rekening en bedrag zijn verplicht.';
 
   @override
   String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+      'Aangekomen bedrag is verplicht.';
 
   @override
   String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+      'Kies welke rekening het geld heeft ontvangen.';
 
   @override
   String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+      'Rekening en categorie zijn verplicht.';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed =>
+      'Deze correctie kon niet worden opgeslagen.';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'Geef je hoofdrekening een naam.';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading =>
+      'Nog aan het laden - probeer het straks opnieuw.';
 
   @override
   String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+      'De rekeningnaam kon niet worden opgeslagen.';
 
   @override
-  String get validationWrongPin => 'Wrong PIN. Try again.';
+  String get validationWrongPin => 'Onjuiste pincode. Probeer het opnieuw.';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'Categorie moet Inkomsten of Uitgaven zijn.';
 
   @override
   String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+      'Alleen een uitgavencategorie kan een maandlimiet hebben.';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => 'Ongeldig sjabloon.';
 
   @override
   String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+      'Onjuiste wachtwoordzin voor dit keystore-bestand.';
 
   @override
   String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+      'Dat lijkt geen geldig keystore-bestand te zijn.';
 
   @override
   String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+      'Herstellen vanuit die herstelzin is mislukt.';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'Er kon geen ondertekeningssleutel worden gegenereerd op dit toestel: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'Deze valuta kon niet worden opgeslagen: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed =>
+      'Migratie mislukt. Probeer het opnieuw.';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile => 'Kies eerst een back-upbestand.';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'Voer een wachtwoordzin in.';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => 'De twee pincodes komen niet overeen.';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      'Overboekingskosten moeten een positief bedrag zijn met een geselecteerde uitgavencategorie.';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      'Bij een overboeking met ingehouden kosten moeten de kosten lager zijn dan het bedrag.';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return 'Overboeking opgeslagen, maar de kosten konden niet worden geregistreerd: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => 'Voer een geldig bedrag in.';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return 'Woord $n komt niet overeen met je opgeslagen zin. Controleer het en probeer het opnieuw.';
   }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+      'Aankoophoeveelheid en eenheidsprijs moeten positief zijn.';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived =>
+      'Een gearchiveerd instrument kan niet worden gekocht.';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      'Niet-cash verwervingen kunnen geen brokerkosten bevatten.';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      'Als de brokerkosten positief zijn, is een actieve uitgavencategorie vereist.';
 
   @override
   String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+      'De verkoopopbrengst moet minstens gelijk zijn aan de brokerkosten.';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return '$spent van $limit deze maand';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'Smara Account ontgrendelen';
 
   @override
   String get searchLabel => 'Zoeken';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => 'Beginsaldo';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return 'Overboeking: $name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => 'Kosten voor overboeking';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return 'Kosten voor overboeking naar $name';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'De bestandskiezer kon niet worden geopend: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return 'Selecteer een .$extensions-bestand';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => 'Valutacode (ISO 4217, bijv. USD)';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name +$count meer';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => 'Datum';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'Geen';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return 'Controleer onderstaande boekingen ($count in totaal) voordat je doorgaat.';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return 'Je ontving $amount';
   }
 
   @override
   String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+      'Laat leeg als de wisselkoers nog niet bekend is.';
 
   @override
   String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+      'Registreer een transactie die al heeft plaatsgevonden. Deze app plaatst geen orders.';
 
   @override
   String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+      'Aan: het bovenstaande bedrag is het totaal dat van deze rekening wordt afgeschreven; de kosten worden hieruit betaald.';
 
   @override
   String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+      'Een vooraf in rekening gebrachte commissie door je bank of een tussenpersoon.';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength =>
+      'Pincode moet minstens 4 cijfers hebben.';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'Dit vervangt alles wat nu in deze app staat door de back-up — het wordt niet samengevoegd. Kies een back-upbestand en voer de wachtwoordzin in waarmee je het hebt beveiligd.';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => 'Vervangen';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name is niet meer beschikbaar voor nieuwe transacties.';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return '$name wordt niet meer aangeboden bij het aanmaken of opnieuw toewijzen van rekeningen.';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return '$name wordt niet meer aangeboden bij het registreren van nieuwe transacties.';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      'Verborgen instrumenten blijven staan op eerdere aan- en verkopen. Je kunt er nog steeds een dividend voor registreren.';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name (verborgen)';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => 'Geen valuta ingesteld';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$name en de bijbehorende onthouden standaardwaarden worden verwijderd. Eerdere transacties blijven ongewijzigd.';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$name wordt niet meer als vervallen aangeboden. Eerdere transacties die het al heeft geregistreerd, blijven ongewijzigd.';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return 'De opgeslagen kolomkoppeling \"$name\" wordt verwijderd. Al geïmporteerde afschriften blijven ongewijzigd.';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return 'Imports worden niet meer automatisch gecategoriseerd op basis van \"$keyword\". Transacties die met deze regel al zijn gecategoriseerd, blijven ongewijzigd.';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'Voeg nu optioneel een creditcard of contante rekening toe - je kunt later altijd meer rekeningen toevoegen via Instellingen.';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => 'Afgeleverd bij bestemming';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return 'Afgeleverd bij $name';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return 'Je ontving $amount $currency minder dan verwacht - kies een categorie om het verschil te dekken.';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => 'Datumbereik';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'Sjabloon toevoegen';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'Sjabloon bewerken';
 
   @override
   String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+      'Vul elk veld in met een geldig bedrag en een geldige dag.';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'CSV-export opslaan';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => 'Referentiekoers';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'Jouw koers';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return 'Laat leeg als dit in $currency was, de eigen valuta van de rekening.';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'Vergrendelen tot (optioneel)';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return 'Vergrendeld tot $date';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      'Een onderzoeksvraag gekopieerd — geen browser-URL beschikbaar, of je bent offline.';
 
   @override
   String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+      'Je favoriete onderzoekstool geopend.';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'Dit lijkt een winst';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'Dit lijkt een verlies';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'Dit lijkt break-even';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name ($qty verkoopbaar)';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return 'Kolom $index';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'Bezig met importeren...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'Import bevestigen';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => 'Opgeslagen categorieregels beheren';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'De valuta van dit bestand ($currency) komt niet overeen met de valuta van de geselecteerde rekening.';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'Categorieregels';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => 'mogelijk duplicaat';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => 'Onbekende categorie';
 }

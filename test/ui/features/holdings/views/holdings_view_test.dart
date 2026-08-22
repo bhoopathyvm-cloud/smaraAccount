@@ -56,22 +56,24 @@ void main() {
     ledger = MockLedgerRepository();
     settings = MockSettingsRepository();
     when(
-      ledger.watchFinancialAccounts(includeArchived: anyNamed('includeArchived')),
+      ledger.watchFinancialAccounts(
+        includeArchived: anyNamed('includeArchived'),
+      ),
     ).thenAnswer((_) => Stream.value([account]));
-    when(ledger.watchHoldingsForAccount(any)).thenAnswer(
-      (_) => Stream.value([holding]),
-    );
+    when(
+      ledger.watchHoldingsForAccount(any),
+    ).thenAnswer((_) => Stream.value([holding]));
     when(ledger.watchInstruments()).thenAnswer((_) => Stream.value([apple]));
-    when(ledger.watchInstrumentsHeldInAccount(any)).thenAnswer(
-      (_) => Stream.value([apple]),
-    );
+    when(
+      ledger.watchInstrumentsHeldInAccount(any),
+    ).thenAnswer((_) => Stream.value([apple]));
     when(ledger.watchCategories()).thenAnswer((_) => Stream.value(const []));
     when(ledger.watchAccountGroups()).thenAnswer((_) => Stream.value([group]));
     when(ledger.displayBalanceMinor(any)).thenAnswer((_) async => 40000);
     when(settings.isMarketPriceFetchEnabled()).thenAnswer((_) async => false);
-    when(settings.selectedResearchTool()).thenAnswer(
-      (_) async => ResearchTool.chatGpt,
-    );
+    when(
+      settings.selectedResearchTool(),
+    ).thenAnswer((_) async => ResearchTool.chatGpt);
   });
 
   testWidgets('tapping the instrument name launches research', (tester) async {
@@ -98,7 +100,58 @@ void main() {
 
     expect(launched, isNotNull);
     expect(launched!.queryParameters['q'], contains('Apple Inc'));
-    expect(launched!.queryParameters['q']!.toLowerCase(), isNot(contains('40000')));
+    expect(
+      launched!.queryParameters['q']!.toLowerCase(),
+      isNot(contains('40000')),
+    );
     viewModel.dispose();
   });
+
+  testWidgets(
+    'dividend dialog only offers instruments this account has held, not every global instrument',
+    (tester) async {
+      const microsoft = Instrument(
+        id: 'inst-2',
+        name: 'Microsoft Corp',
+        kind: InstrumentKind.stock,
+        ticker: 'MSFT',
+        archived: false,
+      );
+      // Globally known (e.g. bought in a different investment account) but
+      // never held in THIS account - watchInstrumentsHeldInAccount excludes
+      // it from setUp()'s stubbed [apple] stream.
+      when(
+        ledger.watchInstruments(),
+      ).thenAnswer((_) => Stream.value([apple, microsoft]));
+
+      final viewModel = HoldingsViewModel(
+        ledgerRepository: ledger,
+        settingsRepository: settings,
+        accountId: 'inv-1',
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(home: HoldingsView(viewModel: viewModel)),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      await tester.tap(find.text('Dividend'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is DropdownButtonFormField<String> &&
+              widget.decoration.labelText == 'Instrument',
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Apple Inc'), findsWidgets);
+      expect(find.text('Microsoft Corp'), findsNothing);
+
+      viewModel.dispose();
+    },
+  );
 }

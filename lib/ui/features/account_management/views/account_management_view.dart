@@ -107,9 +107,7 @@ class AccountManagementView extends StatelessWidget {
                       contentPadding: EdgeInsets.zero,
                       controlAffinity: ListTileControlAffinity.leading,
                       title: Text(l10n.thisAccountHoldsInvestments),
-                      subtitle: Text(
-                        l10n.thisAccountHoldsInvestmentsSubtitle,
-                      ),
+                      subtitle: Text(l10n.thisAccountHoldsInvestmentsSubtitle),
                       value: holdsInvestments,
                       onChanged: (value) => setDialogState(
                         () => holdsInvestments = value ?? false,
@@ -480,7 +478,10 @@ class AccountManagementView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10nOf(context).accountsTitle, style: AppTypography.headerTitle),
+        title: Text(
+          l10nOf(context).accountsTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         actions: [
@@ -512,9 +513,9 @@ class AccountManagementView extends StatelessWidget {
         builder: (context, _) => ListView(
           padding: const EdgeInsets.only(bottom: 80),
           children: [
-            if (viewModel.errorMessage != null)
+            if (viewModel.errorMessageFor(l10nOf(context)) != null)
               StatusBanner(
-                message: viewModel.errorMessage!,
+                message: viewModel.errorMessageFor(l10nOf(context))!,
                 onDismiss: viewModel.clearError,
               ),
             for (final group in viewModel.groups)

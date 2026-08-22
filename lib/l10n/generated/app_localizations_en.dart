@@ -96,9 +96,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionRestore => 'Restore';
 
   @override
-  String get actionArchive => 'Hide';
-
-  @override
   String get actionFix => 'Fix';
 
   @override
@@ -1671,7 +1668,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'Optionally add a credit card or a cash account now - you can always add more accounts later from Settings.';
 
   @override
   String get deliveredToDestination => 'Delivered to destination';

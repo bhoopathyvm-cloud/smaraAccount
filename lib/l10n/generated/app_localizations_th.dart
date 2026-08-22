@@ -36,139 +36,136 @@ class AppLocalizationsTh extends AppLocalizations {
   String get actionDelete => 'ลบ';
 
   @override
-  String get actionDone => 'Done';
+  String get actionDone => 'เสร็จสิ้น';
 
   @override
   String get actionContinue => 'ดำเนินการต่อ';
 
   @override
-  String get actionDismiss => 'Dismiss';
+  String get actionDismiss => 'ปิด';
 
   @override
-  String get actionRetry => 'Retry';
+  String get actionRetry => 'ลองอีกครั้ง';
 
   @override
-  String get actionSkip => 'Skip';
+  String get actionSkip => 'ข้าม';
 
   @override
-  String get actionConfirm => 'Confirm';
+  String get actionConfirm => 'ยืนยัน';
 
   @override
   String get actionAdd => 'เพิ่ม';
 
   @override
-  String get actionEdit => 'Edit';
+  String get actionEdit => 'แก้ไข';
 
   @override
-  String get actionRename => 'Rename';
+  String get actionRename => 'เปลี่ยนชื่อ';
 
   @override
-  String get actionHide => 'Hide';
+  String get actionHide => 'ซ่อน';
 
   @override
-  String get actionCreate => 'Create';
+  String get actionCreate => 'สร้าง';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'ปิดแอป';
 
   @override
-  String get actionUnlock => 'Unlock';
+  String get actionUnlock => 'ปลดล็อก';
 
   @override
-  String get actionSettle => 'Settle';
+  String get actionSettle => 'ชำระ';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => 'สิ้นสุด';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'ดูตัวอย่าง';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'นำเข้า';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'ส่งออก CSV';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'เลือกไฟล์';
 
   @override
-  String get actionRestore => 'Restore';
+  String get actionRestore => 'กู้คืน';
 
   @override
-  String get actionArchive => 'Hide';
+  String get actionFix => 'ปรับแก้';
 
   @override
-  String get actionFix => 'Fix';
+  String get actionBuy => 'ซื้อ';
 
   @override
-  String get actionBuy => 'Buy';
+  String get actionSell => 'ขาย';
 
   @override
-  String get actionSell => 'Sell';
+  String get actionDividend => 'เงินปันผล';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionRecordBuy => 'บันทึกการซื้อ';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordSell => 'บันทึกการขาย';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordDividend => 'บันทึกเงินปันผล';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionPayCard => 'ชำระบัตร';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionTransfer => 'โอนเงิน';
 
   @override
-  String get actionTransfer => 'Transfer';
+  String get actionRecordTransaction => 'บันทึกรายการ';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionImportStatement => 'นำเข้ารายการเดินบัญชี';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionClearDates => 'ล้างวันที่';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearSearch => 'ล้างการค้นหาและตัวกรอง';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionUseBiometrics => 'ใช้ไบโอเมตริก';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionSetPin => 'ตั้งรหัส PIN';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionChangePin => 'เปลี่ยนรหัส PIN';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionSaveBackup => 'บันทึกข้อมูลสำรอง';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionRestoreBackup => 'กู้คืนข้อมูลสำรอง';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionSaveRule => 'บันทึกกฎ';
 
   @override
-  String get actionSaveRule => 'Save rule';
+  String get actionConfirmFix => 'ยืนยันการแก้ไข';
 
   @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get captureSpent => 'จ่ายไป';
 
   @override
-  String get captureSpent => 'รายจ่าย';
+  String get captureReceived => 'ได้รับ';
 
   @override
-  String get captureReceived => 'Received';
+  String get captureMovedMoney => 'โอนเงิน';
 
   @override
-  String get captureMovedMoney => 'Moved money';
-
-  @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => 'นำเข้ารายการเดินบัญชี';
 
   @override
   String get settingsTitle => 'การตั้งค่า';
@@ -177,112 +174,112 @@ class AppLocalizationsTh extends AppLocalizations {
   String get settingsLanguage => 'ภาษา';
 
   @override
-  String get settingsLanguageSystem => 'Device language';
+  String get settingsLanguageSystem => 'ภาษาของอุปกรณ์';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => 'ดึงอัตราแลกเปลี่ยนอ้างอิง';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      'แสดงอัตราตลาดโดยประมาณข้างจำนวนเงินปลายทาง สำหรับการโอนเงินข้ามสกุลเงิน เพื่อเปรียบเทียบเท่านั้น - จะไม่ถูกนำไปใช้กรอกจำนวนเงินให้โดยอัตโนมัติ';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'ผู้ให้บริการอัตราแลกเปลี่ยน';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices => 'ดึงราคาตลาดสำหรับการลงทุน';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'ค้นหาราคาล่าสุดของตราสารที่มีสัญลักษณ์ (ticker) หรือ ISIN เพื่อประเมินมูลค่าพอร์ตการลงทุน จะไม่ถูกใช้บันทึกการซื้อขาย และจะไม่ส่งข้อมูลจำนวนที่คุณถืออยู่';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => 'ผู้ให้บริการราคาตลาด';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => 'เครื่องมือค้นคว้าที่ชื่นชอบ';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      'การแตะชื่อตราสารในหน้าการถือครองจะเปิดเครื่องมือนี้ในเบราว์เซอร์พร้อมคำค้นหา — ไม่ใช่การเชื่อมต่อระบบ และไม่ใช่คำแนะนำการลงทุน';
 
   @override
-  String get settingsBackup => 'Backup';
+  String get settingsBackup => 'สำรองข้อมูล';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      'บันทึกสำเนาบัญชีของคุณแบบเข้ารหัสไว้ในตำแหน่งที่คุณเลือก หรือกู้คืนจากสำเนานั้น ซึ่งแยกต่างหากจากวลีกู้คืนหรือไฟล์ keystore ที่ใช้สำรองกุญแจลงลายเซ็นของคุณ ไม่ใช่บัญชีของคุณ';
 
   @override
-  String get settingsLock => 'Lock';
+  String get settingsLock => 'ล็อก';
 
   @override
   String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+      'กำหนดให้ใส่รหัส PIN หรือไบโอเมตริก (หากมี) เพื่อเปิดแอป';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock => 'ต้องปลดล็อกเพื่อเปิดแอป';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'ล็อกหลังจาก';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'ทันที';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1 นาที';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5 นาที';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15 นาที';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => 'อนุญาตให้ใช้ไบโอเมตริกด้วย';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot => 'ซ่อนยอดคงเหลือในหน้าสลับแอป';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      'ปิดบังหน้าจอนี้เมื่อคุณสลับไปยังแอปอื่น เพื่อไม่ให้มองเห็นได้ทันทีในหน้าสลับแอป';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'การซ่อนยอดคงเหลือในหน้าสลับแอปไม่รองรับบนแพลตฟอร์มนี้';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => 'ผู้รับเงิน';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => 'จัดการผู้รับเงิน';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      'ชื่อผู้รับเงินที่จดจำไว้พร้อมหมวดหมู่และบัญชีเริ่มต้น จะถูกแนะนำโดยอัตโนมัติเมื่อบันทึกรายการ';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => 'แม่แบบรายการประจำ';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => 'จัดการแม่แบบรายการประจำ';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      'ค่าใช้จ่ายหรือรายได้ที่เกิดซ้ำทุกเดือน เช่น ค่าเช่าหรือเงินเดือน แม่แบบที่ถึงกำหนดจะปรากฏในหน้าหลักให้คุณบันทึกด้วยการแตะเพียงครั้งเดียว - จะไม่ถูกบันทึกให้โดยอัตโนมัติ';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'เกี่ยวกับ';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter (อัตราจาก ECB)';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq (ราคารายวัน)';
 
   @override
   String get providerYahooFinance => 'Yahoo Finance (chart API)';
@@ -300,66 +297,66 @@ class AppLocalizationsTh extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => 'เงินสดและรายการเทียบเท่าเงินสด';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => 'บำนาญและเกษียณอายุ';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => 'เครดิตและหนี้ระยะสั้น';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'เงินกู้และสินเชื่อบ้าน';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => 'การลงทุน';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => 'เงินสดและธนาคาร';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'เงินเดือน';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'รายได้อื่น';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'ของชำ';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => 'ค่าเช่า/สินเชื่อบ้าน';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => 'ค่าสาธารณูปโภค';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => 'การเดินทาง';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => 'อาหารนอกบ้าน';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => 'โทรศัพท์';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => 'สุขภาพ';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'ค่าใช้จ่ายอื่น';
 
   @override
   String get homeThisMonth => 'เดือนนี้';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => 'เงินระหว่างโอน';
 
   @override
   String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+      'สิ่งที่คุณมี ลบ สิ่งที่คุณเป็นหนี้';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return 'สิ่งที่คุณมี $amount $currency';
   }
 
   @override
@@ -369,1405 +366,1390 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return 'สิ่งที่คุณมี $haveAmount $currency  •  สิ่งที่คุณเป็นหนี้ $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return 'คุณส่ง $amount $currency จาก $name';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return 'คุณส่ง $amount $currency ไปยัง $name';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => 'ซ่อนอยู่';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'ทุกบัญชี';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return 'บันทึกไปยัง $path';
   }
 
   @override
   String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+      'ไม่สามารถส่งออกไฟล์ keystore ได้ คุณสามารถข้ามขั้นตอนนี้ได้';
 
   @override
-  String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+  String get enterPassphraseToProtect => 'ป้อนวลีรหัสผ่านเพื่อป้องกันไฟล์';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => 'แตะเมื่อคุณทราบว่าได้รับอะไร';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return 'คืนกลับไปยัง $name';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => 'ครบกำหนดวันนี้';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · แตะเพื่อบันทึก';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => 'เกินวงเงิน';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$spent จาก $limit';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return 'คงเหลือ: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => 'ไม่มีบัญชี';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'รายการเงินสด';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => 'มูลค่าตามราคาตลาด';
 
   @override
-  String get registerTitle => 'Register';
+  String get registerTitle => 'รายการ';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => 'คำอธิบาย หมวดหมู่ หรือจำนวนเงิน';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => 'ยังไม่มีรายการ';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => 'ยังไม่มีการบันทึกรายการ';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => 'แสดงเฉพาะรายจ่าย';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => 'แสดงเฉพาะรายรับ';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'ทั้งหมด';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified => 'ยังไม่ยืนยัน - ไม่รวมในยอดรวม';
 
   @override
-  String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+  String get registerSuperseded => 'ถูกแทนที่ด้วยการย้ายกุญแจ - ไม่รวมในยอดรวม';
 
   @override
-  String get summaryTitle => 'Summary';
+  String get summaryTitle => 'สรุป';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => 'รายรับรวม';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => 'รายจ่ายรวม';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start ถึง $end';
   }
 
   @override
-  String get accountsTitle => 'Accounts';
+  String get accountsTitle => 'บัญชี';
 
   @override
-  String get categoriesTitle => 'Categories';
+  String get categoriesTitle => 'หมวดหมู่';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => 'ชื่อบัญชี';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => 'สร้างบัญชี';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'สร้างกลุ่ม';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'แก้ไขกลุ่ม';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => 'เปลี่ยนชื่อบัญชี';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'เปลี่ยนชื่อหมวดหมู่';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'เพิ่มหมวดหมู่';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'กลุ่ม';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => 'ประเภท';
 
   @override
-  String get asset => 'Asset';
+  String get asset => 'สินทรัพย์';
 
   @override
-  String get liability => 'Liability';
+  String get liability => 'หนี้สิน';
 
   @override
-  String get income => 'Income';
+  String get income => 'รายได้';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'ค่าใช้จ่าย';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments => 'บัญชีนี้ใช้ถือครองการลงทุน';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      'เงินสดบวกกับสินค้าคงคลังที่คุณบันทึกด้วยการซื้อ ขาย และเงินปันผล';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'นี่คือบัตรเครดิต';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => 'ยอดยกมา (ไม่บังคับ)';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => 'สกุลเงิน (ISO 4217)';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => 'สกุลเงิน (ISO 4217 เช่น USD)';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'ซ่อนบัญชีจากรายการใหม่หรือไม่?';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'ซ่อนหมวดหมู่จากรายการใหม่หรือไม่?';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'ซ่อนกลุ่มจากรายการใหม่หรือไม่?';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'ย้ายกลุ่ม';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => 'โอนยอดคงเหลือ';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => 'วงเงินรายเดือน';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => 'วงเงิน (เว้นว่างเพื่อล้างค่า)';
 
   @override
   String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+      'แนวทางการใช้จ่ายสะสมตั้งแต่ต้นเดือนสำหรับหมวดหมู่รายจ่ายนี้ (ไม่บังคับ)';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'จัดการกฎหมวดหมู่';
 
   @override
-  String get amount => 'Amount';
+  String get amount => 'จำนวนเงิน';
 
   @override
-  String get category => 'Category';
+  String get category => 'หมวดหมู่';
 
   @override
-  String get account => 'Account';
+  String get account => 'บัญชี';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => 'จากบัญชี';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => 'ไปยังบัญชี';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => 'คำอธิบาย (ไม่บังคับ)';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => 'จดจำเป็นผู้รับเงินด้วย';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => 'แบ่งเป็นหลายหมวดหมู่';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return 'หมวดหมู่ $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => 'จำนวนเงินปลายทาง';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => 'จำนวนเงินปลายทาง (ไม่บังคับ)';
 
   @override
   String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+      'จำนวนเงินตามสกุลเงินบัญชี (ไม่บังคับ)';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => 'สกุลเงินของรายการ (ไม่บังคับ)';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => 'ค่าธรรมเนียม (ไม่บังคับ)';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => 'จำนวนค่าธรรมเนียม';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => 'หมวดหมู่ค่าธรรมเนียม';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => 'คำอธิบายค่าธรรมเนียม (ไม่บังคับ)';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => 'ค่าธรรมเนียมถูกหักจากจำนวนเงินด้านบน';
 
   @override
   String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+      'สร้างบัญชีที่ใช้งานอยู่อย่างน้อยสองบัญชีเพื่อทำการโอนเงิน';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => 'ได้รับอะไร?';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => 'บอกเราว่าได้รับอะไรจริง ๆ';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => 'จำนวนเงินที่ได้รับ';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => 'หมวดหมู่ค่าธรรมเนียม / ขาดทุน';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'ชำระเรียบร้อยแล้ว';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => 'การถือครอง';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => 'เงินสด';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => 'สินค้าคงคลัง';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return 'ตามบัญชี (เงินสด + ต้นทุน) $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return 'มูลค่าตามราคาตลาด $amount $currency';
   }
 
   @override
   String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+      'ยังไม่มีการถือครอง บันทึกการซื้อเพื่อเพิ่มตราสาร';
 
   @override
   String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+      'ราคาที่แสดงเป็นเพียงการประมาณ ไม่ใช่ราคาจากโบรกเกอร์ แอปนี้ไม่ได้ส่งคำสั่งซื้อขาย';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      'แตะชื่อเพื่อค้นคว้าข้อมูล ราคาที่แสดงเป็นเพียงการประมาณ ไม่ใช่คำแนะนำการลงทุน';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => 'ตราสาร';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => 'ตราสารใหม่';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => 'เปลี่ยนชื่อตราสาร';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => 'การดำเนินการกับตราสาร';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return 'ซ่อน $name หรือไม่?';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'สัญลักษณ์ตราสาร (ไม่บังคับ)';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN (ไม่บังคับ)';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'จำนวนหน่วย';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => 'ราคาต่อหน่วย';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => 'ค่านายหน้า (ไม่บังคับ)';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => 'หมวดหมู่ค่าใช้จ่ายค่านายหน้า';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => 'หมวดหมู่รายได้';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => 'หมวดหมู่รายได้จากกำไร';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => 'หมวดหมู่ค่าใช้จ่ายจากขาดทุน';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => 'ไม่ใช่เงินสด';
 
   @override
-  String get cash => 'Cash';
+  String get cash => 'เงินสด';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'ถูกล็อก';
 
   @override
-  String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+  String get lockUntilHint => 'บันทึกข้อจำกัดของคุณเอง ไม่ใช่กฎของโบรกเกอร์';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => 'หุ้น';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => 'กองทุนรวม';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => 'พันธบัตร';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'อื่น ๆ';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'ราคาสด';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'ราคาที่แคชไว้';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => 'ราคาที่ล้าสมัย';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => 'ใช้ต้นทุน (ไม่มีราคา)';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled => 'ปิดการดึงราคา — ใช้ต้นทุน/แคช';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch => 'ใช้ต้นทุน (สกุลเงินราคาต่างกัน)';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return 'กำไร/ขาดทุนที่ยังไม่เกิดขึ้นจริง $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty หน่วย · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'วลีกู้คืนของคุณ';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'ยืนยันวลีของคุณ';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      '24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน Smara Accounting ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'จดคำเหล่านี้ตามลำดับและเก็บไว้ในที่ปลอดภัยแยกจากอุปกรณ์นี้';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase => 'ฉันได้บันทึกวลีกู้คืนของฉันแล้ว';
 
   @override
-  String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+  String get confirmPhraseBlurb => 'ป้อนคำที่ระบบขอจากวลีที่คุณเพิ่งบันทึกไว้';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return 'คำที่ #$n';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'ส่งออกไฟล์ keystore';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'นอกเหนือจากวลีกู้คืนของคุณ คุณสามารถบันทึกไฟล์ keystore ที่เข้ารหัสและป้องกันด้วยวลีรหัสผ่านที่คุณเลือกได้ ขั้นตอนนี้ไม่บังคับ - วลีกู้คืนเพียงอย่างเดียวก็เพียงพอเสมอสำหรับการกู้คืนกุญแจลงลายเซ็นของคุณ';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'วลีรหัสผ่าน';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'ส่งออกไฟล์ keystore';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => 'เลือกสกุลเงินของคุณ';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      'กลุ่มบัญชีทุกกลุ่ม (เงินสดและรายการเทียบเท่าเงินสด บำนาญและเกษียณอายุ ฯลฯ) จะใช้สกุลเงินเดียวนี้ไปก่อน คุณยังสามารถเพิ่มบัญชีในสกุลเงินอื่นได้ภายหลังโดยการสร้างกลุ่มใหม่สำหรับสกุลเงินนั้น';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle => 'เลือกสกุลเงินสำหรับกลุ่มที่มีอยู่';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'ตอนนี้แอปนี้รองรับหลายสกุลเงินแล้ว บัญชีและกลุ่มบัญชีที่มีอยู่ของคุณต้องมีสกุลเงิน - เนื่องจากทั้งหมดถูกตั้งค่าไว้ก่อนที่ฟีเจอร์นี้จะมีขึ้น การเลือกครั้งนี้จะมีผลกับทั้งหมด';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => 'ตั้งชื่อบัญชีของคุณ';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'นี่คือบัญชีที่ถูกตั้งค่าไว้ให้คุณแล้ว - ตั้งชื่อที่คุณจำได้ เช่น ชื่อธนาคารของคุณ จากนั้นคุณจะบันทึกรายการจ่ายหรือรับหนึ่งรายการ แล้วปกป้องอุปกรณ์ด้วยวลีกู้คืนของคุณ';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => 'บัญชีหลักของคุณชื่ออะไร?';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => 'กู้คืนกุญแจลงลายเซ็น';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'อุปกรณ์นี้มีบัญชีอยู่แล้ว แต่ไม่มีกุญแจลงลายเซ็นที่ตรงกัน กู้คืนจากวลีกู้คืนหรือไฟล์ keystore ที่คุณบันทึกไว้ - ข้อมูลของคุณจะยืนยันได้ตามปกติ และจะไม่มีการลงลายเซ็นใหม่หรือเปลี่ยนแปลงใด ๆ';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'วลีกู้คืน (ครบทั้ง 24 คำ)';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'ไฟล์ keystore';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'เนื้อหาไฟล์ keystore';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => 'ไฟล์สำรอง (ไม่บังคับ)';
 
   @override
-  String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+  String get iDontHavePhrase => 'ฉันไม่มีวลีกู้คืนหรือไฟล์ keystore';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => 'ย้ายไปใช้กุญแจใหม่';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'หากไม่มีวลีกู้คืนหรือไฟล์ keystore กุญแจลงลายเซ็นของอุปกรณ์นี้จะไม่สามารถกู้คืนได้ คุณสามารถเริ่มต้นกุญแจใหม่ได้ รายการเก่าจะยังคงมองเห็นได้แต่จะถูกแทนที่';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid => 'ฉันยืนยันว่าบัญชีปัจจุบันถูกต้อง';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => 'ทำไมเราจึงไม่แก้ไขรายการเก่า';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      'เมื่อคุณแก้ไขข้อผิดพลาด เราจะเก็บรายการเดิมไว้และเพิ่มรายการแก้ไขต่อท้าย แทนที่จะเปลี่ยนสิ่งที่คุณบันทึกไปแล้ว วิธีนี้ทำให้ประวัติของคุณแสดงสิ่งที่เกิดขึ้นจริงเสมอ รวมถึงเวลาที่คุณแก้ไข — ไม่มีอะไรถูกเปลี่ยนแปลงอย่างเงียบ ๆ โดยที่คุณไม่รู้';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'ปลดล็อก';
 
   @override
   String get lockScreenTitle => 'ล็อก';
 
   @override
-  String get enterPinToContinue => 'Enter your PIN to continue';
+  String get enterPinToContinue => 'ป้อนรหัส PIN เพื่อดำเนินการต่อ';
 
   @override
   String get pinLabel => 'PIN';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'ตั้งรหัส PIN';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => 'PIN ปัจจุบัน';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => 'PIN ใหม่';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'ยืนยัน PIN';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => 'ยืนยัน PIN ใหม่';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => 'ตั้งค่าบัญชีของคุณ';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => 'เพิ่มบัญชีเงินสด';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'เพิ่มบัตรเครดิต';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => 'ชื่อบัญชีเงินสด';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'ชื่อบัตร';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => 'จ่ายจากธนาคาร';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'จ่ายจากบัตร';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'เลือกวลีรหัสผ่านเพื่อป้องกันข้อมูลสำรองนี้ หากคุณลืมจะไม่สามารถกู้คืนได้';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'แทนที่บัญชีในเครื่องของคุณหรือไม่?';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'การดำเนินการนี้จะแทนที่ข้อมูลทั้งหมดในแอปนี้ด้วยข้อมูลสำรอง หลังจากนั้นให้ปิดและเปิดแอปใหม่';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => 'เลือกไฟล์สำรองก่อน';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'กู้คืนข้อมูลสำรองเรียบร้อยแล้ว';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'บัญชีของคุณได้รับการกู้คืนแล้ว ปิดและเปิดแอปใหม่เพื่อดำเนินการต่อ';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'แก้ไขรายการนี้';
 
   @override
   String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+      'รายการเดิมจะคงอยู่เหมือนเดิมทุกประการ การยืนยันจะเพิ่มรายการกลับรายการและรายการที่แก้ไขแล้ว';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => 'นำเข้ารายการเดินบัญชี';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'นำเข้า OFX';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'นำเข้าไฟล์ OFX / QFX';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'นำเข้าไฟล์ CSV';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement => 'คุณมีไฟล์รายการเดินบัญชีประเภทใด?';
 
   @override
-  String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+  String get chooseAccountForFile => 'เลือกว่าไฟล์นี้เป็นของบัญชีใด';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'นำเข้าไปยังบัญชี';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => 'ใช้โปรไฟล์ที่บันทึกไว้';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile => 'บันทึกการจับคู่นี้เป็นโปรไฟล์ (ไม่บังคับ)';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'เปลี่ยนชื่อโปรไฟล์';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'ลบโปรไฟล์หรือไม่?';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'ไฟล์มีแถวหัวตาราง';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => 'คอลัมน์วันที่';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => 'รูปแบบวันที่ (เช่น dd/MM/yyyy)';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => 'คอลัมน์จำนวนเงิน';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => 'รูปแบบเครื่องหมายจำนวนเงิน';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => 'คอลัมน์จำนวนเงินที่มีเครื่องหมาย';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => 'แยกคอลัมน์เดบิต / เครดิต';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => 'คอลัมน์เดบิต';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => 'คอลัมน์เครดิต';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => 'ตัวคั่นทศนิยม (. หรือ ,)';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => 'คอลัมน์คำอธิบาย';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => 'คอลัมน์รหัสอ้างอิง (ไม่บังคับ)';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'แถวที่ข้าม';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return 'แยกรายการได้ $count รายการ';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return 'ข้ามหรือแยกออก $count รายการ';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return 'บันทึกสำเร็จ $posted รายการ, ล้มเหลว $failed รายการ';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'หมวดหมู่สำหรับทั้งหมด';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'บันทึกเป็นกฎหรือไม่?';
 
   @override
   String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+      'การนำเข้าครั้งต่อไปที่คำอธิบายมีคำสำคัญนี้จะใช้หมวดหมู่นี้';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'คำสำคัญ';
 
   @override
   String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+      'ยังไม่มีกฎที่บันทึกไว้ กำหนดหมวดหมู่ให้กลุ่มแถวเพื่อบันทึกเป็นกฎ';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'ลบกฎหรือไม่?';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'แก้ไขกฎ';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count แถว';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return 'เลือกไฟล์รายการเดินบัญชี $extensions เพื่อนำเข้า';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => 'ผู้รับเงิน';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => 'เพิ่มผู้รับเงิน';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => 'เปลี่ยนชื่อผู้รับเงิน';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => 'ลบผู้รับเงินหรือไม่?';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => 'ยังไม่มีผู้รับเงิน';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => 'แม่แบบรายการประจำ';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => 'ยังไม่มีแม่แบบรายการประจำ';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => 'ลบแม่แบบรายการประจำหรือไม่?';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => 'วันที่ของเดือน (1-31)';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote =>
+      'เดือนที่มีจำนวนวันน้อยกว่าจะใช้วันสุดท้ายของเดือนนั้นแทน';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return 'วันที่ $day ของเดือน - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => 'ชื่อ';
 
   @override
-  String get none => 'None';
+  String get none => 'ไม่มี';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'สกุลเงิน';
 
   @override
   String get errorGeneric => 'เกิดข้อผิดพลาด โปรดลองอีกครั้ง';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'วลีกู้คืนหรือไฟล์ keystore นี้ไม่ตรงกับตัวตนลงลายเซ็นใดในฐานข้อมูลนี้';
 
   @override
   String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+      'ไฟล์นี้ไม่ใช่ข้อมูลสำรองของ Smara ที่ถูกต้อง';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'ข้อมูลสำรองนี้ไม่มีตัวตนลงลายเซ็น - จึงไม่ใช่ข้อมูลสำรองของ Smara ที่ถูกต้อง';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'ข้อมูลสำรองนี้ไม่ผ่านการยืนยันว่าเป็นบัญชีที่สมบูรณ์ จึงไม่ได้ถูกกู้คืน';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'ไม่สามารถเปิดไฟล์นี้เป็นข้อมูลสำรองของ Smara ได้: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'ข้อมูลสำรองนี้เป็นของตัวตนลงลายเซ็นที่แตกต่างจากที่มีอยู่ในอุปกรณ์นี้';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'นั่นไม่ใช่บัญชีการเงิน';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'บัญชีนั้นถูกซ่อนอยู่';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'บัญชีนั้นไม่ได้ถูกซ่อน';
 
   @override
-  String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+  String get errorAccountNoPositiveBalanceToCloseOut => 'ไม่มียอดคงเหลือให้โอน';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup => 'บัญชีนั้นยังไม่ได้กำหนดกลุ่ม';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency => 'กลุ่มนั้นยังไม่ได้กำหนดสกุลเงิน';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'ไม่พบกลุ่มบัญชีนั้น';
 
   @override
   String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+      'เฉพาะบัญชีสินทรัพย์เท่านั้นที่สามารถกำหนดให้เป็นบัญชีการลงทุนได้';
 
   @override
   String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+      'เฉพาะบัญชีหนี้สินเท่านั้นที่สามารถกำหนดให้เป็นบัตรเครดิตได้';
 
   @override
   String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+      'ยอดยกมาต้องเป็นค่าบวกเมื่อระบุ';
 
   @override
   String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+      'ประเภทบัญชีนั้นไม่ตรงกับกลุ่ม';
 
   @override
   String get errorLastActiveAccount =>
-      'Cannot hide the last active financial account.';
+      'ไม่สามารถซ่อนบัญชีการเงินที่ใช้งานอยู่บัญชีสุดท้ายได้';
 
   @override
   String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+      'ต้องระบุสกุลเงินเพื่อสร้างกลุ่ม';
 
   @override
   String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+      'กลุ่มบัญชีในตัวไม่สามารถซ่อนได้';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'กลุ่มนั้นถูกซ่อนอยู่แล้ว';
 
   @override
   String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+      'ไม่สามารถซ่อนกลุ่มที่ยังมีบัญชีที่ใช้งานอยู่ได้';
 
   @override
   String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+      'กลุ่มบัญชีในตัวจะไม่ถูกซ่อนไม่ว่ากรณีใด';
 
   @override
-  String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+  String get errorAccountGroupsCannotBeDeleted => 'ไม่สามารถลบกลุ่มบัญชีได้';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'ไม่สามารถย้ายบัญชีนี้ไปยังกลุ่มที่มีสกุลเงินต่างกันได้';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'ไม่สามารถเปลี่ยนสกุลเงินขณะที่กลุ่มมีบัญชีที่ใช้งานอยู่ได้';
 
   @override
   String get errorAmountMustBePositive => 'จำนวนเงินต้องเป็นบวก';
 
   @override
   String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+      'จำนวนเงินตามสกุลเงินบัญชีต้องเป็นบวก';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      'จำนวนเงินตามสกุลเงินบัญชีใช้ได้เฉพาะรายการที่เป็นสกุลเงินต่างประเทศเท่านั้น';
 
   @override
   String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+      'การแบ่งรายการต้องมีอย่างน้อยสองหมวดหมู่';
 
   @override
   String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+      'แต่ละรายการที่แบ่งต้องมีจำนวนเงินเป็นบวก';
 
   @override
   String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+      'ผลรวมของรายการที่แบ่งต้องเท่ากับยอดรวมของรายการ';
 
   @override
-  String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+  String get errorTransferAmountMustBePositive => 'จำนวนเงินโอนต้องเป็นบวก';
 
   @override
   String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+      'บัญชีต้นทางและปลายทางต้องแตกต่างกัน';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      'การปิดบัญชีข้ามสกุลเงินต้องระบุจำนวนเงินปลายทางที่ทราบแล้ว';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      'จำนวนเงินปลายทางใช้ได้เฉพาะการโอนข้ามสกุลเงินเท่านั้น';
 
   @override
   String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+      'จำนวนเงินปลายทางต้องเป็นบวก';
 
   @override
   String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+      'ไม่สามารถโอนเกินยอดเงินสดของบัญชีการลงทุนนี้ได้';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      'ให้ชำระรายการโอนที่รอดำเนินการนี้แทนการกลับรายการ';
 
   @override
   String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+      'รายการนี้ได้รับการแก้ไขแล้ว รายการต้นฉบับจะยังคงอยู่ตามเดิม';
 
   @override
   String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+      'เลือกหมวดหมู่รายจ่ายที่ใช้งานอยู่';
 
   @override
-  String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+  String get errorNotActiveIncomeCategory => 'เลือกหมวดหมู่รายรับที่ใช้งานอยู่';
 
   @override
   String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+      'จำนวนเงินที่ได้รับต้องไม่ติดลบ';
 
   @override
-  String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+  String get errorPendingTransferNotFound => 'ไม่พบรายการโอนที่รอดำเนินการนั้น';
 
   @override
   String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+      'รายการโอนที่รอดำเนินการนั้นชำระเรียบร้อยแล้ว';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      'เลือกบัญชีต้นทางหรือปลายทางเดิม';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      'หมวดหมู่ค่าธรรมเนียมจะใช้ก็ต่อเมื่อเงินถูกคืนกลับไปยังบัญชีต้นทางเท่านั้น';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      'ป้อนจำนวนเงินที่ได้รับเป็นค่าบวก';
 
   @override
   String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+      'จำนวนเงินนั้นมากกว่าที่ถูกส่งไป';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'ไม่พบตราสารนั้น';
 
   @override
   String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+      'ต้องมีหมวดหมู่รายรับที่ใช้งานอยู่สำหรับการได้มาแบบไม่ใช่เงินสด';
 
   @override
   String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+      'เงินสดในบัญชีการลงทุนนี้ไม่เพียงพอสำหรับการซื้อนั้น';
 
   @override
   String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+      'จำนวนหน่วยที่ขายและราคาต่อหน่วยต้องเป็นบวก';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return 'ไม่สามารถขายได้: บางหน่วยถูกล็อกจนถึง $date';
   }
 
   @override
   String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+      'ไม่สามารถขายเกินจำนวนที่คุณถืออยู่ที่ไม่ถูกล็อกได้';
 
   @override
   String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+      'ต้องมีหมวดหมู่รายรับที่ใช้งานอยู่สำหรับกำไรที่เกิดขึ้นจริง';
 
   @override
   String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+      'ต้องมีหมวดหมู่รายจ่ายที่ใช้งานอยู่สำหรับขาดทุนที่เกิดขึ้นจริง';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return 'บันทึกการซื้อแล้ว แต่ค่านายหน้าไม่สำเร็จ: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return 'บันทึกการขายแล้ว แต่ค่านายหน้าไม่สำเร็จ: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive => 'จำนวนเงินปันผลต้องเป็นบวก';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'นั่นไม่ใช่บัญชีการลงทุน';
 
   @override
   String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+      'บัญชีการลงทุนนี้ขาดบัญชีสินค้าคงคลังคู่กัน';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'ไม่สามารถกลับรายการซื้อนี้ได้: การขายในภายหลังขึ้นอยู่กับหน่วยของรายการนี้ กรุณากลับรายการขายที่เกี่ยวข้องก่อน: $sells';
   }
 
   @override
-  String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+  String get errorMonthlyLimitMustBePositive => 'วงเงินรายเดือนต้องเป็นบวก';
 
   @override
   String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+      'จำนวนเงินของแม่แบบต้องเป็นบวก';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized => 'ไม่สามารถระบุไฟล์นี้เป็น OFX ได้';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => 'ไฟล์ที่เลือกว่างเปล่า';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => 'ไม่สามารถอ่านไฟล์นี้เป็น CSV ได้';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => 'ไฟล์ที่เลือกไม่มีข้อมูล';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'ไม่สามารถสร้างข้อมูลสำรองได้: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'ไม่สามารถกู้คืนข้อมูลสำรองนี้ได้ - วลีรหัสผ่านไม่ถูกต้อง หรือไม่ใช่ไฟล์สำรองของ Smara';
 
   @override
   String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+      'ต้องระบุจำนวนเงิน บัญชี และหมวดหมู่';
 
   @override
-  String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+  String get validationAmountAccountRequired => 'ต้องระบุจำนวนเงินและบัญชี';
 
   @override
   String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+      'ทุกรายการที่แบ่งต้องมีหมวดหมู่และจำนวนเงิน';
 
   @override
   String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+      'ผลรวมของรายการที่แบ่งต้องเท่ากับยอดรวมของรายการ';
 
   @override
   String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+      'ต้องระบุบัญชีต้นทาง บัญชีปลายทาง และจำนวนเงิน';
 
   @override
-  String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+  String get validationAmountArrivedRequired => 'ต้องระบุจำนวนเงินที่ได้รับ';
 
   @override
-  String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+  String get validationChooseReceivingAccount => 'เลือกบัญชีที่ได้รับเงิน';
 
   @override
-  String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+  String get validationAccountCategoryRequired => 'ต้องระบุบัญชีและหมวดหมู่';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => 'ไม่สามารถบันทึกการแก้ไขนี้ได้';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'ตั้งชื่อบัญชีหลักของคุณ';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading =>
+      'กำลังโหลดอยู่ - โปรดลองอีกครั้งในอีกสักครู่';
 
   @override
-  String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+  String get validationSaveAccountNameFailed => 'ไม่สามารถบันทึกชื่อบัญชีได้';
 
   @override
-  String get validationWrongPin => 'Wrong PIN. Try again.';
+  String get validationWrongPin => 'รหัส PIN ไม่ถูกต้อง ลองอีกครั้ง';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'หมวดหมู่ต้องเป็นรายรับหรือรายจ่าย';
 
   @override
   String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+      'เฉพาะหมวดหมู่รายจ่ายเท่านั้นที่สามารถมีวงเงินรายเดือนได้';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => 'แม่แบบไม่ถูกต้อง';
 
   @override
   String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+      'วลีรหัสผ่านของไฟล์ keystore นี้ไม่ถูกต้อง';
 
   @override
   String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+      'นั่นดูไม่ใช่ไฟล์ keystore ที่ถูกต้อง';
 
   @override
   String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+      'ไม่สามารถกู้คืนจากวลีกู้คืนนั้นได้';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'ไม่สามารถสร้างกุญแจลงลายเซ็นบนอุปกรณ์นี้ได้: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'ไม่สามารถบันทึกสกุลเงินนี้ได้: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed => 'การย้ายกุญแจล้มเหลว โปรดลองอีกครั้ง';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile => 'เลือกไฟล์สำรองก่อน';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'ป้อนวลีรหัสผ่าน';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => 'รหัส PIN ทั้งสองไม่ตรงกัน';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      'ค่าธรรมเนียมการโอนต้องเป็นจำนวนบวกและเลือกหมวดหมู่รายจ่ายไว้';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      'ค่าธรรมเนียมต้องน้อยกว่าจำนวนเงินสำหรับการโอนแบบหักค่าธรรมเนียม';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return 'บันทึกการโอนแล้ว แต่ไม่สามารถบันทึกค่าธรรมเนียมได้: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => 'ป้อนจำนวนเงินที่ถูกต้อง';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return 'คำที่ $n ไม่ตรงกับวลีที่คุณบันทึกไว้ ตรวจสอบแล้วลองอีกครั้ง';
   }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+      'จำนวนหน่วยที่ซื้อและราคาต่อหน่วยต้องเป็นบวก';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived => 'ไม่สามารถซื้อตราสารที่ถูกซ่อนไว้ได้';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      'การได้มาแบบไม่ใช่เงินสดไม่สามารถมีค่านายหน้าได้';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      'ต้องมีหมวดหมู่รายจ่ายที่ใช้งานอยู่เมื่อมีค่านายหน้า';
 
   @override
   String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+      'เงินที่ได้จากการขายต้องมากกว่าหรือเท่ากับค่านายหน้า';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return '$spent จาก $limit ในเดือนนี้';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'ปลดล็อกบัญชี Smara';
 
   @override
   String get searchLabel => 'ค้นหา';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => 'ยอดยกมา';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return 'โอนเงิน: $name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => 'ค่าธรรมเนียมการโอน';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return 'ค่าธรรมเนียมการโอนไปยัง $name';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'ไม่สามารถเปิดตัวเลือกไฟล์ได้: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return 'โปรดเลือกไฟล์ .$extensions';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => 'รหัสสกุลเงิน (ISO 4217 เช่น USD)';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name และอีก $count รายการ';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => 'วันที่';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'ไม่มี';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return 'ตรวจสอบรายการด้านล่าง (ทั้งหมด $count รายการ) ก่อนดำเนินการต่อ';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return 'คุณได้รับ $amount';
   }
 
   @override
   String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+      'เว้นว่างไว้หากยังไม่ทราบอัตราแลกเปลี่ยน';
 
   @override
   String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+      'บันทึกการซื้อขายที่เกิดขึ้นแล้ว แอปนี้ไม่ได้ส่งคำสั่งซื้อขาย';
 
   @override
   String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+      'เปิด: จำนวนเงินด้านบนคือยอดรวมที่หักจากบัญชีนี้ โดยค่าธรรมเนียมจะถูกหักออกจากยอดนั้น';
 
   @override
   String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+      'ค่าคอมมิชชันที่เรียกเก็บล่วงหน้าโดยธนาคารหรือตัวกลางของคุณ';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength => 'รหัส PIN ต้องมีอย่างน้อย 4 หลัก';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'การดำเนินการนี้จะแทนที่ข้อมูลทั้งหมดในแอปนี้ด้วยข้อมูลสำรอง — จะไม่มีการรวมข้อมูล เลือกไฟล์สำรองและป้อนวลีรหัสผ่านที่คุณใช้ป้องกันไฟล์นั้น';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => 'แทนที่';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name จะไม่สามารถใช้สำหรับรายการใหม่ได้อีกต่อไป';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return '$name จะไม่ปรากฏเป็นตัวเลือกเมื่อสร้างหรือย้ายบัญชีอีกต่อไป';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return '$name จะไม่ปรากฏเป็นตัวเลือกเมื่อบันทึกรายการใหม่อีกต่อไป';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      'ตราสารที่ถูกซ่อนจะยังคงอยู่ในรายการซื้อขายในอดีต คุณยังสามารถบันทึกเงินปันผลให้กับตราสารเหล่านี้ได้';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name (ซ่อนอยู่)';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => 'ยังไม่ได้กำหนดสกุลเงิน';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$name และค่าเริ่มต้นที่จดจำไว้จะถูกลบ รายการในอดีตจะไม่ได้รับผลกระทบ';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$name จะไม่ปรากฏเป็นรายการครบกำหนดอีกต่อไป รายการในอดีตที่บันทึกไว้แล้วจะไม่ได้รับผลกระทบ';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return 'การจับคู่คอลัมน์ที่บันทึกไว้ \"$name\" จะถูกลบ รายการเดินบัญชีที่นำเข้าไปแล้วด้วยการจับคู่นี้จะไม่ได้รับผลกระทบ';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return 'การนำเข้าจะไม่ถูกจัดหมวดหมู่อัตโนมัติด้วย \"$keyword\" อีกต่อไป รายการที่ถูกจัดหมวดหมู่ด้วยกฎนี้ไปแล้วจะไม่ได้รับผลกระทบ';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'เพิ่มบัตรเครดิตหรือบัญชีเงินสดตอนนี้ได้หากต้องการ - คุณสามารถเพิ่มบัญชีเพิ่มเติมได้ภายหลังจากเมนูการตั้งค่า';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => 'ส่งถึงปลายทางแล้ว';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return 'ส่งถึง $name แล้ว';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return 'คุณได้รับ $amount $currency น้อยกว่าที่คาดไว้ - เลือกหมวดหมู่เพื่อครอบคลุมส่วนต่าง';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => 'ช่วงวันที่';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'เพิ่มแม่แบบ';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'แก้ไขแม่แบบ';
 
   @override
   String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+      'กรอกทุกช่องด้วยจำนวนเงินและวันที่ที่ถูกต้อง';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'บันทึกไฟล์ CSV ที่ส่งออก';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => 'อัตราอ้างอิง';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'อัตราของคุณ';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return 'เว้นว่างไว้หากรายการนี้เป็นสกุลเงิน $currency ซึ่งเป็นสกุลเงินของบัญชีนี้เอง';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'ล็อกจนถึง (ไม่บังคับ)';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return 'ล็อกจนถึง $date';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      'คัดลอกคำค้นหาแล้ว — ไม่มี URL เบราว์เซอร์ให้ใช้ หรือคุณออฟไลน์อยู่';
 
   @override
   String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+      'เปิดเครื่องมือค้นคว้าที่คุณชื่นชอบแล้ว';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'ดูเหมือนจะเป็นกำไร';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'ดูเหมือนจะเป็นขาดทุน';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'ดูเหมือนจะเท่าทุน';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name (ขายได้ $qty)';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return 'คอลัมน์ $index';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'กำลังนำเข้า...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'ยืนยันการนำเข้า';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => 'จัดการกฎหมวดหมู่ที่บันทึกไว้';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'สกุลเงินของไฟล์นี้ ($currency) ไม่ตรงกับสกุลเงินของบัญชีที่เลือก';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'กฎหมวดหมู่';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => 'อาจซ้ำกับรายการอื่น';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => 'หมวดหมู่ที่ไม่ทราบ';
 }

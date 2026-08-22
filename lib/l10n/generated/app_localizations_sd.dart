@@ -9,7 +9,7 @@ class AppLocalizationsSd extends AppLocalizations {
   AppLocalizationsSd([String locale = 'sd']) : super(locale);
 
   @override
-  String get appTitle => 'سمارا کاتو';
+  String get appTitle => 'سمارا اڪائونٽنگ';
 
   @override
   String get navHome => 'گهر';
@@ -27,148 +27,145 @@ class AppLocalizationsSd extends AppLocalizations {
   String get navCategories => 'زمرا';
 
   @override
-  String get actionCancel => 'رد';
+  String get actionCancel => 'رد ڪريو';
 
   @override
   String get actionSave => 'محفوظ ڪريو';
 
   @override
-  String get actionDelete => 'Delete';
+  String get actionDelete => 'خارج ڪريو';
 
   @override
-  String get actionDone => 'Done';
+  String get actionDone => 'مڪمل';
 
   @override
-  String get actionContinue => 'Continue';
+  String get actionContinue => 'جاري رکو';
 
   @override
-  String get actionDismiss => 'Dismiss';
+  String get actionDismiss => 'رد ڪريو';
 
   @override
-  String get actionRetry => 'Retry';
+  String get actionRetry => 'ٻيهر ڪوشش ڪريو';
 
   @override
-  String get actionSkip => 'Skip';
+  String get actionSkip => 'ڇڏي ڏيو';
 
   @override
-  String get actionConfirm => 'Confirm';
+  String get actionConfirm => 'تصديق ڪريو';
 
   @override
   String get actionAdd => 'شامل ڪريو';
 
   @override
-  String get actionEdit => 'Edit';
+  String get actionEdit => 'تبديل ڪريو';
 
   @override
-  String get actionRename => 'Rename';
+  String get actionRename => 'نالو تبديل ڪريو';
 
   @override
-  String get actionHide => 'Hide';
+  String get actionHide => 'لڪايو';
 
   @override
-  String get actionCreate => 'Create';
+  String get actionCreate => 'ٺاهيو';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'ايپ بند ڪريو';
 
   @override
-  String get actionUnlock => 'Unlock';
+  String get actionUnlock => 'اڻلاڪ ڪريو';
 
   @override
-  String get actionSettle => 'Settle';
+  String get actionSettle => 'سيٽل ڪريو';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => 'پورو ڪريو';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'اڳ منظر';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'درآمد ڪريو';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'CSV برآمد ڪريو';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'فائل چونڊيو';
 
   @override
-  String get actionRestore => 'Restore';
+  String get actionRestore => 'بحال ڪريو';
 
   @override
-  String get actionArchive => 'Hide';
+  String get actionFix => 'درست ڪريو';
 
   @override
-  String get actionFix => 'Fix';
+  String get actionBuy => 'خريد ڪريو';
 
   @override
-  String get actionBuy => 'Buy';
+  String get actionSell => 'وڪرو ڪريو';
 
   @override
-  String get actionSell => 'Sell';
+  String get actionDividend => 'منافعو';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionRecordBuy => 'خريداري رڪارڊ ڪريو';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordSell => 'وڪرو رڪارڊ ڪريو';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordDividend => 'منافعو رڪارڊ ڪريو';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionPayCard => 'ڪارڊ ادا ڪريو';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionTransfer => 'منتقلي';
 
   @override
-  String get actionTransfer => 'Transfer';
+  String get actionRecordTransaction => 'ٽرانزيڪشن رڪارڊ ڪريو';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionImportStatement => 'اسٽيٽمينٽ درآمد ڪريو';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionClearDates => 'تاريخون صاف ڪريو';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearSearch => 'ڳولا ۽ فلٽر صاف ڪريو';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionUseBiometrics => 'بايوميٽرڪس استعمال ڪريو';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionSetPin => 'PIN مقرر ڪريو';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionChangePin => 'PIN تبديل ڪريو';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionSaveBackup => 'بيڪ اپ محفوظ ڪريو';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionRestoreBackup => 'بيڪ اپ بحال ڪريو';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionSaveRule => 'قاعدو محفوظ ڪريو';
 
   @override
-  String get actionSaveRule => 'Save rule';
+  String get actionConfirmFix => 'درستي جي تصديق ڪريو';
 
   @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get captureSpent => 'خرچ ٿيل';
 
   @override
-  String get captureSpent => 'خرچ';
+  String get captureReceived => 'مليل';
 
   @override
-  String get captureReceived => 'Received';
+  String get captureMovedMoney => 'پئسا منتقل ٿيا';
 
   @override
-  String get captureMovedMoney => 'Moved money';
-
-  @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => 'اسٽيٽمينٽ درآمد';
 
   @override
   String get settingsTitle => 'سيٽنگون';
@@ -177,112 +174,113 @@ class AppLocalizationsSd extends AppLocalizations {
   String get settingsLanguage => 'ٻولي';
 
   @override
-  String get settingsLanguageSystem => 'Device language';
+  String get settingsLanguageSystem => 'ڊوائيس جي ٻولي';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => 'حوالي جي مٽاسٽا شرحون حاصل ڪريو';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      'ڪراس-ڪرنسي منتقلين ۾ منزل جي رقم جي ڀرسان هڪ اشاري مارڪيٽ شرح ڏيکاري ٿو، صرف مقابلي لاءِ - رقم ڀرڻ لاءِ ڪڏهن به استعمال نه ٿيندو.';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'شرح مهيا ڪندڙ';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices =>
+      'سيڙپڪارين لاءِ مارڪيٽ جون قيمتون حاصل ڪريو';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'ٽڪر يا ISIN رکندڙ اوزارن لاءِ آخري قيمتون ڳوليندو آهي، پورٽ فوليو جي قيمت جو اندازو لڳائڻ لاءِ. ڪڏهن به واپار رڪارڊ ڪرڻ لاءِ استعمال نه ٿيندو، ۽ ڪڏهن به اهو نه موڪليندو ته توهان وٽ ڪيترو آهي.';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => 'مارڪيٽ قيمت مهيا ڪندڙ';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => 'پسنديده تحقيقي اوزار';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      'هولڊنگز تي هڪ اوزار جو نالو ٽيپ ڪرڻ سان اهو اوزار برائوزر ۾ هڪ تحقيقي پرامپٽ سان کلندو — اهو ڪا انضمام ناهي، ۽ نه ڪا صلاح.';
 
   @override
-  String get settingsBackup => 'Backup';
+  String get settingsBackup => 'بيڪ اپ';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      'پنهنجي حسابن جي هڪ رمز ٿيل ڪاپي توهان جي چونڊيل هنڌ تي محفوظ ڪريو، يا ان مان بحال ڪريو. هي توهان جي بحاليءَ واري جملي يا ڪيسٽور فائل کان الڳ آهي، جيڪي توهان جي سائننگ ڪي کي بيڪ اپ ڪن ٿيون، توهان جي حسابن کي نه.';
 
   @override
-  String get settingsLock => 'Lock';
+  String get settingsLock => 'لاڪ';
 
   @override
   String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+      'ايپ کولڻ لاءِ PIN، يا جتي موجود هجي بايوميٽرڪس گهربل آهي.';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock => 'ايپ کولڻ لاءِ اڻلاڪ گهربل آهي';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'هن بعد لاڪ ڪريو';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'فوري طور تي';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1 منٽ';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5 منٽ';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15 منٽ';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => 'بايوميٽرڪس به اجازت ڏيو';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot => 'ايپ سوئچر ۾ بيلنس لڪايو';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      'جڏهن توهان ڪنهن ٻي ايپ ڏانهن مٽايو ٿا ته هي اسڪرين لڪائي ٿو، ته جيئن اهو ايپ سوئچر ۾ هڪ نظر ۾ نظر نه اچي.';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'ايپ سوئچر ۾ بيلنس لڪائڻ هن پليٽ فارم تي موجود ناهي.';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => 'ادا ڪيا ويندڙ';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => 'ادا ڪيا ويندڙن کي منظم ڪريو';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      'ياد رکيل ادا ڪيا ويندڙ نالا ۽ سندن ڊفالٽ زمرو ۽ کاتو، ٽرانزيڪشن رڪارڊ ڪرڻ وقت آٽو ڪمپليٽ پاران تجويز ڪيل.';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => 'بار بار ٿيندڙ ٽيمپليٽون';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => 'بار بار ٿيندڙ ٽيمپليٽون منظم ڪريو';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      'بل يا آمدني جيڪا مهيني بمهينو بار بار ٿئي، جيئن ڪرايو يا پگهار. ڏنل ٽيمپليٽ گهر تي ڏيکاريل ٿئي ٿي ته جيئن توهان هڪ ٽيپ سان رڪارڊ ڪريو - ڪڏهن به خودڪار طور پوسٽ نه ٿيندي.';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'باري ۾';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter (ECB شرحون)';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq (روزاني قيمتون)';
 
   @override
   String get providerYahooFinance => 'Yahoo Finance (chart API)';
@@ -300,66 +298,66 @@ class AppLocalizationsSd extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => 'نقد ۽ نقد جي برابر شيون';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => 'پينشن ۽ رٽائرمينٽ';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => 'ڪريڊٽ ۽ مختصر مدت جو قرض';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'قرض ۽ رهن';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => 'سيڙپڪاري';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => 'نقد ۽ بئنڪ';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'پگهار';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'ٻي آمدني';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'سودو سلف';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => 'ڪرايو/رهن';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => 'سهولتون';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => 'ٽرانسپورٽ';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => 'ٻاهر جو کاڌو';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => 'فون';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => 'صحت';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'ٻيو خرچ';
 
   @override
   String get homeThisMonth => 'هن مهيني';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => 'منتقلي ۾ پئسا';
 
   @override
   String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+      'جيڪو توهان وٽ آهي گھٽ جيڪو توهان تي قرض آهي';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return 'توهان وٽ آهي $amount $currency';
   }
 
   @override
@@ -369,1405 +367,1398 @@ class AppLocalizationsSd extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return 'توهان وٽ آهي $haveAmount $currency  •  توهان تي قرض آهي $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return 'توهان $name کان $amount $currency موڪليو';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return 'توهان $name ڏانهن $amount $currency موڪليو';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => 'لڪل';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'سڀ کاتا';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return '$path تي محفوظ ٿيو';
   }
 
   @override
   String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+      'ڪيسٽور فائل برآمد نه ٿي سگهي. توهان هي مرحلو ڇڏي سگهو ٿا.';
 
   @override
   String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+      'فائل کي محفوظ ڪرڻ لاءِ هڪ پاسفريز داخل ڪريو.';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => 'جڏهن خبر پوي ته ڇا آيو ته ٽيپ ڪريو';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return '$name ڏانهن موٽيو';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => 'اڄ نيا آهي';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · رڪارڊ ڪرڻ لاءِ ٽيپ ڪريو';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => 'حد کان مٿي';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$limit مان $spent';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return 'بچيل: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => 'ڪوبه کاتو ناهي';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'نقد رجسٽر';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => 'مارڪيٽ اندازو';
 
   @override
-  String get registerTitle => 'Register';
+  String get registerTitle => 'رجسٽر';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => 'تفصيل، زمرو، يا رقم';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => 'اڃا تائين ڪا ٽرانزيڪشن ناهي';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => 'اڃا تائين ڪا اندراج رڪارڊ نه ٿي.';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => 'صرف خرچ';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => 'صرف مليل';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'سڀ';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified => 'غير تصديق ٿيل - ڪل مان خارج';
 
   @override
-  String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+  String get registerSuperseded => 'لڏپلاڻ سبب تبديل ٿيل - ڪل مان خارج';
 
   @override
-  String get summaryTitle => 'Summary';
+  String get summaryTitle => 'خلاصو';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => 'ڪل آمدني';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => 'ڪل خرچ';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start کان $end تائين';
   }
 
   @override
-  String get accountsTitle => 'Accounts';
+  String get accountsTitle => 'کاتا';
 
   @override
-  String get categoriesTitle => 'Categories';
+  String get categoriesTitle => 'زمرا';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => 'کاتي جو نالو';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => 'کاتو ٺاهيو';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'گروپ ٺاهيو';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'گروپ کي تبديل ڪريو';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => 'کاتي جو نالو تبديل ڪريو';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'زمري جو نالو تبديل ڪريو';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'زمرو شامل ڪريو';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'گروپ';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => 'قسم';
 
   @override
-  String get asset => 'Asset';
+  String get asset => 'اثاثو';
 
   @override
-  String get liability => 'Liability';
+  String get liability => 'ذميواري';
 
   @override
-  String get income => 'Income';
+  String get income => 'آمدني';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'خرچ';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments => 'هي کاتو سيڙپڪاري رکي ٿو';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      'نقد سان گڏ اهو انوینٽري جيڪا توهان خريد ڪريو، وڪرو ڪريو ۽ منافعو سان رڪارڊ ڪريو ٿا.';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'هي هڪ ڪريڊٽ ڪارڊ آهي';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => 'شروعاتي بيلنس (اختياري)';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => 'ڪرنسي (ISO 4217)';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => 'ڪرنسي (ISO 4217، مثال طور USD)';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'نئين داخلائن مان کاتو لڪايو؟';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'نئين داخلائن مان زمرو لڪايو؟';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'نئين داخلائن مان گروپ لڪايو؟';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'گروپ کي ٻيهر مقرر ڪريو';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => 'بچيل بيلنس منتقل ڪريو';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => 'مهيني جي حد';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => 'حد (صاف ڪرڻ لاءِ خالي ڇڏيو)';
 
   @override
   String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+      'هن خرچ واري زمري لاءِ هڪ اختياري مهيني-تائين-تاريخ خرچ رهنما.';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'زمري جا قاعدا منظم ڪريو';
 
   @override
-  String get amount => 'Amount';
+  String get amount => 'رقم';
 
   @override
-  String get category => 'Category';
+  String get category => 'زمرو';
 
   @override
-  String get account => 'Account';
+  String get account => 'کاتو';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => 'موڪليندڙ کاتو';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => 'وصول ڪندڙ کاتو';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => 'تفصيل (اختياري)';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => 'ادا ڪيا ويندڙ طور به ياد رکو';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => 'ڪيترن ئي زمرن ۾ ورهايو';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return 'زمرو $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => 'منزل جي رقم';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => 'منزل جي رقم (اختياري)';
 
   @override
-  String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+  String get accountCurrencyAmountOptional => 'کاتي-ڪرنسي رقم (اختياري)';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => 'ٽرانزيڪشن ڪرنسي (اختياري)';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => 'فيس (اختياري)';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => 'فيس جي رقم';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => 'فيس جو زمرو';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => 'فيس جو تفصيل (اختياري)';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => 'فيس مٿين رقم مان ڪٽي وئي آهي';
 
   @override
   String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+      'منتقلي ڪرڻ لاءِ گھٽ ۾ گھٽ ٻه فعال کاتا ٺاهيو.';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => 'ڇا آيو؟';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => 'اسان کي ٻڌايو ته حقيقت ۾ ڇا آيو.';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => 'آيل رقم';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => 'فيس / نقصان جو زمرو';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'اڳ ۾ ئي سيٽل ٿي چڪو آهي.';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => 'هولڊنگز';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => 'نقد';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => 'انوینٽري';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return 'بک ويلیو (نقد + قيمت) $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return 'مارڪيٽ اندازو $amount $currency';
   }
 
   @override
   String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+      'اڃا تائين ڪا هولڊنگ ناهي. اوزار شامل ڪرڻ لاءِ هڪ خريداري رڪارڊ ڪريو.';
 
   @override
   String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+      'قيمتون اندازا آهن، دلال جي قيمت ناهي. هي ايپ آرڊر نه ٿي رکي.';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      'تحقيق ڪرڻ لاءِ نالو ٽيپ ڪريو. قيمتون اندازا آهن، صلاح ناهي.';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => 'اوزار';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => 'نئون اوزار';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => 'اوزار جو نالو تبديل ڪريو';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => 'اوزار جا عمل';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return '$name لڪايو؟';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'ٽڪر (اختياري)';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN (اختياري)';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'مقدار';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => 'يونٽ قيمت';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => 'دلالي (اختياري)';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => 'دلالي خرچ جو زمرو';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => 'آمدني جو زمرو';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => 'فائدي جي آمدني جو زمرو';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => 'نقصان جي خرچ جو زمرو';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => 'غير نقد';
 
   @override
-  String get cash => 'Cash';
+  String get cash => 'نقد';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'لاڪ ٿيل';
 
   @override
   String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+      'هي هڪ پابندي بابت توهان جو پنهنجو نوٽ آهي، دلال جو ضابطو ناهي.';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => 'اسٽاڪ';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => 'ميوچوئل فنڊ';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => 'بانڊ';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'ٻيو';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'لائيو قيمت';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'ڪيش ٿيل قيمت';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => 'پراڻي قيمت';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => 'قيمت استعمال ٿي رهي آهي (ڪا قيمت ناهي)';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled => 'قيمتون بند — قيمت/ڪيش استعمال ٿي رهي آهي';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch =>
+      'قيمت استعمال ٿي رهي آهي (قيمت جي ڪرنسي مختلف آهي)';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return 'غير حاصل ٿيل $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty يونٽ · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'توهان جو بحاليءَ وارو جملو';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'پنهنجي جملي جي تصديق ڪريو';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      'جيڪڏهن هي ڊوائيس گم ٿي وڃي، ري سيٽ ٿي وڃي، يا مٽجي وڃي ته توهان جي ٽرانزيڪشن جي تاريخ کي بحال ڪرڻ جو واحد طريقو هي 24 لفظ آهن. سمارا اڪائونٽنگ وٽ ڪوبه سرور ناهي ۽ اهي توهان لاءِ بحال نه ٿي سگهي.\n\nجيڪڏهن توهان هي ڊوائيس ۽ هي جملو گڏ وڃائي ڇڏيو، ته توهان جي رڪارڊ ٿيل هر ٽرانزيڪشن مستقل طور تصديق نه ٿيڻ جوڳي ٿي ويندي.';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'هي لفظ ترتيب سان لکو ۽ انهن کي هن ڊوائيس کان الڳ ڪنهن محفوظ جاءِ تي رکو.';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase =>
+      'مون پنهنجو بحاليءَ وارو جملو محفوظ ڪري ڇڏيو آهي';
 
   @override
   String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+      'توهان هينئر محفوظ ڪيل جملي مان گهربل لفظ داخل ڪريو.';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return 'لفظ #$n';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'ڪيسٽور فائل برآمد ڪريو';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'توهان جي بحاليءَ واري جملي سان گڏ، توهان هڪ رمز ٿيل ڪيسٽور فائل به محفوظ ڪري سگهو ٿا جيڪا توهان جي چونڊيل پاسفريز سان محفوظ آهي. هي اختياري آهي - توهان جي بحاليءَ وارو جملو اڪيلو ئي هميشه توهان جي سائننگ ڪي کي بحال ڪرڻ لاءِ ڪافي آهي.';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'پاسفريز';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'ڪيسٽور فائل برآمد ڪريو';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => 'پنهنجي ڪرنسي چونڊيو';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      'هر کاتي جو گروپ (نقد ۽ نقد جي برابر شيون، پينشن ۽ رٽائرمينٽ، وغيره) هن وقت لاءِ هي هڪ ڪرنسي استعمال ڪري ٿو. توهان بعد ۾ ان لاءِ نئون گروپ ٺاهي مختلف ڪرنسي ۾ کاتا شامل ڪري سگهو ٿا.';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle => 'موجوده گروپن لاءِ ڪرنسي چونڊيو';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'هي ايپ هاڻي ڪيترن ئي ڪرنسين جي حمايت ڪري ٿي. توهان جي موجوده کاتن ۽ کاتي گروپن کي ڪرنسي جي ضرورت آهي - ڇاڪاڻ ته اهي سڀ هن خاصيت جي موجود ٿيڻ کان اڳ سيٽ اپ ٿيل هئا، هڪ چونڊ انهن سڀني تي لاڳو ٿئي ٿي.';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => 'پنهنجي کاتي جو نالو رکو';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'هي توهان لاءِ اڳ ۾ ئي سيٽ اپ ٿيل کاتو آهي - ان کي هڪ نالو ڏيو جيڪو توهان سڃاڻو ٿا، جيئن توهان جي بئنڪ. توهان اڳيان هڪ خرچ يا وصولي رڪارڊ ڪندؤ، پوءِ پنهنجي بحاليءَ واري جملي سان ڊوائيس کي محفوظ ڪندؤ.';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => 'توهان جي مکيه کاتي جو نالو ڇا آهي؟';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => 'سائننگ ڪي بحال ڪريو';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'هن ڊوائيس ۾ اڳ ۾ ئي حساب موجود آهن، پر ملندڙ سائننگ ڪي ناهي. ان کي پنهنجي محفوظ ڪيل بحاليءَ واري جملي يا ڪيسٽور فائل مان بحال ڪريو - توهان جو ڊيٽا عام طور تي تصديق ٿيندو، ۽ ڪجهه به ٻيهر سائن يا تبديل نه ٿيندو.';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'بحاليءَ وارو جملو (سڀ 24 لفظ)';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'ڪيسٽور فائل';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'ڪيسٽور فائل جو مواد';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => 'اختياري بيڪ اپ فائل';
 
   @override
-  String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+  String get iDontHavePhrase => 'منهنجو بحاليءَ وارو جملو يا ڪيسٽور فائل ناهي';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => 'نئين ڪي ڏانهن لڏپلاڻ ڪريو';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'توهان جي بحاليءَ واري جملي يا ڪيسٽور فائل کان سواءِ، هن ڊوائيس جي سائننگ ڪي بحال نه ٿي سگهي. توهان نئين ڪي شروع ڪري سگهو ٿا. پراڻيون داخلائون نظر ايندڙ رهنديون پر انهن کي تبديل ٿيل طور نشان لڳل هوندو.';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid => 'مان تصديق ٿو ڪريان ته موجوده حساب صحيح آهن';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => 'اسان پراڻي داخلائن کي ڇو نه ٿا تبديل ڪريون';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      'جڏهن توهان هڪ غلطي درست ڪريو ٿا، اسان پراڻي لائين کي رکون ٿا ۽ توهان اڳ ۾ ئي داخل ڪيل شي کي تبديل ڪرڻ بدران ان جي ڀرسان هڪ درستي شامل ڪريون ٿا. ان طرح توهان جي تاريخ هميشه بلڪل ڏيکاري ٿي ته ڇا ٿيو ۽ توهان ان کي ڪڏهن درست ڪيو — توهان جي پٺيءَ پويان چپ چاپ ڪجهه به تبديل نه ٿو ٿئي.';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'اڻلاڪ';
 
   @override
-  String get lockScreenTitle => 'Locked';
+  String get lockScreenTitle => 'لاڪ ٿيل';
 
   @override
-  String get enterPinToContinue => 'Enter your PIN to continue';
+  String get enterPinToContinue => 'جاري رکڻ لاءِ پنهنجو PIN داخل ڪريو';
 
   @override
   String get pinLabel => 'PIN';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'PIN مقرر ڪريو';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => 'موجوده PIN';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => 'نئون PIN';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'PIN جي تصديق ڪريو';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => 'نئين PIN جي تصديق ڪريو';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => 'پنهنجا کاتا سيٽ اپ ڪريو';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => 'نقد کاتو شامل ڪريو';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'ڪريڊٽ ڪارڊ شامل ڪريو';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => 'نقد کاتي جو نالو';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'ڪارڊ جو نالو';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => 'بئنڪ مان ادا ڪيل';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'ڪارڊ مان ادا ڪيل';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'هن بيڪ اپ کي محفوظ ڪرڻ لاءِ هڪ پاسفريز چونڊيو. جيڪڏهن توهان ان کي وساري ڇڏيو ته ڪا بحالي ناهي.';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'پنهنجا مقامي حساب مٽايو؟';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'هي هن وقت هن ايپ ۾ موجود هر شيءِ کي بيڪ اپ سان مٽائي ڇڏيندو. بعد ۾ ايپ بند ڪري ٻيهر کوليو.';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => 'پهرين هڪ بيڪ اپ فائل چونڊيو.';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'بيڪ اپ بحال ٿيو';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'توهان جا حساب بحال ٿي ويا آهن. جاري رکڻ لاءِ ايپ بند ڪري ٻيهر کوليو.';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'هي داخلا درست ڪريو';
 
   @override
   String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+      'پراڻي لائن بلڪل اهڙي ئي رهي ٿي. تصديق ڪرڻ سان هڪ ابتڙ لائن ۽ درست ٿيل لائن شامل ٿئي ٿي.';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => 'اسٽيٽمينٽ درآمد ڪريو';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'OFX درآمد ڪريو';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'OFX / QFX فائل درآمد ڪريو';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'CSV فائل درآمد ڪريو';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement => 'توهان وٽ ڪهڙي قسم جي اسٽيٽمينٽ فائل آهي؟';
 
   @override
   String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+      'چونڊيو ته هي فائل ڪهڙي کاتي سان تعلق رکي ٿي.';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'کاتي ۾ درآمد ڪريو';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => 'محفوظ ٿيل پروفائل استعمال ڪريو';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile =>
+      'هن ميپنگ کي پروفائل طور محفوظ ڪريو (اختياري)';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'پروفائل جو نالو تبديل ڪريو';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'پروفائل خارج ڪريو؟';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'فائل ۾ هيڊر واري قطار آهي';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => 'تاريخ ڪالم';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => 'تاريخ جي فارميٽ (مثال طور dd/MM/yyyy)';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => 'رقم ڪالم';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => 'رقم جو ضابطو';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => 'سائن ٿيل رقم ڪالم';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => 'الڳ ڊيبٽ / ڪريڊٽ ڪالم';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => 'ڊيبٽ ڪالم';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => 'ڪريڊٽ ڪالم';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => 'اعشاريه علحدگي (. يا ,)';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => 'تفصيل ڪالم(س)';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => 'حوالو ID ڪالم (اختياري)';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'ڇڏيل قطارون';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return '$count ٽرانزيڪشن پارس ٿيون';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return '$count ڇڏيون ويون يا خارج ڪيون ويون';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return '$posted پوسٽ ٿيون، $failed ناڪام ٿيون';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'سڀني لاءِ زمرو';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'قاعدي طور محفوظ ڪريو؟';
 
   @override
   String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+      'مستقبل جي درآمدون جن جي تفصيل ۾ هي لفظ شامل هوندو اهي هي زمرو استعمال ڪنديون.';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'لفظ';
 
   @override
   String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+      'اڃا تائين ڪو محفوظ ٿيل قاعدو ناهي. قاعدو محفوظ ڪرڻ لاءِ قطارن جي گروپ کي زمرو مقرر ڪريو.';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'قاعدو خارج ڪريو؟';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'قاعدو تبديل ڪريو';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count قطارون';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return 'درآمد ڪرڻ لاءِ هڪ $extensions اسٽيٽمينٽ فائل چونڊيو';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => 'ادا ڪيا ويندڙ';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => 'ادا ڪيو ويندڙ شامل ڪريو';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => 'ادا ڪيو ويندڙ جو نالو تبديل ڪريو';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => 'ادا ڪيو ويندڙ خارج ڪريو؟';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => 'اڃا تائين ڪوبه ادا ڪيو ويندڙ ناهي';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => 'بار بار ٿيندڙ ٽيمپليٽون';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => 'اڃا تائين ڪا به بار بار ٿيندڙ ٽيمپليٽ ناهي';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => 'بار بار ٿيندڙ ٽيمپليٽ خارج ڪريو؟';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => 'مهيني جو ڏينهن (1-31)';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote =>
+      'گهٽ ڏينهن رکندڙ مهينو پنهنجو آخري ڏينهن استعمال ڪري ٿو.';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return 'مهيني جو $day ڏينهن - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => 'نالو';
 
   @override
-  String get none => 'None';
+  String get none => 'ڪجهه به نه';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'ڪرنسي';
 
   @override
-  String get errorGeneric => 'ڪجهه غلط ٿيو. ٻيهر ڪوشش ڪريو.';
+  String get errorGeneric => 'ڪجهه غلط ٿيو. مهرباني ڪري ٻيهر ڪوشش ڪريو.';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'هي بحاليءَ وارو جملو يا ڪيسٽور فائل هن ڊيٽابيس ۾ ڪنهن به سائننگ سڃاڻپ سان نٿو ملي.';
 
   @override
-  String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+  String get errorInvalidLedgerBackup => 'هي فائل هڪ صحيح سمارا بيڪ اپ ناهي.';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'هن بيڪ اپ ۾ ڪا سائننگ سڃاڻپ ناهي - اهو هڪ صحيح سمارا بيڪ اپ ناهي.';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'هي بيڪ اپ مڪمل حسابن طور تصديق نه ٿيو، تنهنڪري اهو بحال نه ڪيو ويو.';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'هي فائل سمارا بيڪ اپ طور کولي نه سگهياسين: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'هي بيڪ اپ هن ڊوائيس تي موجود کان مختلف سائننگ سڃاڻپ سان تعلق رکي ٿو.';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'اهو مالي کاتو ناهي.';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'اهو کاتو لڪل آهي.';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'اهو کاتو لڪل ناهي.';
 
   @override
   String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+      'منتقلي لاءِ ڪوبه بچيل بيلنس ناهي.';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup => 'ان کاتي کي ڪوبه گروپ مقرر نه ٿيل آهي.';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency =>
+      'ان گروپ لاءِ اڃا تائين ڪرنسي مقرر نه ٿي آهي.';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'اهو کاتي جو گروپ نه مليو.';
 
   @override
   String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+      'صرف اثاثن جا کاتا سيڙپڪاري کاتن طور نشان لڳائي سگهجن ٿا.';
 
   @override
   String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+      'صرف ذميوارين جا کاتا ڪريڊٽ ڪارڊن طور نشان لڳائي سگهجن ٿا.';
 
   @override
   String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+      'ڏنل هجڻ تي شروعاتي بيلنس مثبت هجڻ گهرجي.';
 
   @override
   String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+      'ان کاتي جو قسم گروپ سان نٿو ملي.';
 
   @override
-  String get errorLastActiveAccount =>
-      'Cannot hide the last active financial account.';
+  String get errorLastActiveAccount => 'آخري فعال مالي کاتو لڪائي نٿو سگهجي.';
 
   @override
   String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+      'گروپ ٺاهڻ لاءِ ڪرنسي گهربل آهي.';
 
   @override
   String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+      'بلٽ-ان کاتي جا گروپ لڪائي نٿا سگهجن.';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'اهو گروپ اڳ ۾ ئي لڪل آهي.';
 
   @override
   String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+      'اهو گروپ لڪائي نٿو سگهجي جنهن ۾ اڃا فعال کاتا آهن.';
 
   @override
   String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+      'بلٽ-ان کاتي جا گروپ ڪڏهن به نه لڪائبا آهن.';
 
   @override
   String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+      'کاتي جا گروپ خارج ٿي نٿا سگهجن.';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'هي کاتو مختلف ڪرنسي واري گروپ ڏانهن منتقل نٿو ڪري سگهجي.';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'جڏهن گروپ ۾ فعال کاتا هجن ته ڪرنسي تبديل نٿي ڪري سگهجي.';
 
   @override
   String get errorAmountMustBePositive => 'رقم مثبت هجڻ گهرجي.';
 
   @override
   String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+      'کاتي-ڪرنسي رقم مثبت هجڻ گهرجي.';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      'کاتي-ڪرنسي رقم صرف پرڏيهي-ڪرنسي داخلا لاءِ آهي.';
 
   @override
   String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+      'ورهاڱي لاءِ گھٽ ۾ گھٽ ٻه زمرا لائينون گهربل آهن.';
 
   @override
   String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+      'هر ورهاڱي لائين مثبت رقم هجڻ گهرجي.';
 
   @override
   String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+      'ورهاڱي لائينون ٽرانزيڪشن جي ڪل تائين پهچڻ گهرجن.';
 
   @override
   String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+      'منتقلي جي رقم مثبت هجڻ گهرجي.';
 
   @override
   String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+      'ماخذ ۽ منزل جا کاتا مختلف هجڻ گهرجن.';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      'ڪراس-ڪرنسي بندش لاءِ هڪ ڄاتل منزل جي رقم گهربل آهي.';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      'منزل جي رقم صرف ڪراس-ڪرنسي منتقلي لاءِ آهي.';
 
   @override
   String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+      'منزل جي رقم مثبت هجڻ گهرجي.';
 
   @override
   String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+      'هن سيڙپڪاري کاتي جي نقد کان وڌيڪ منتقل نٿو ڪري سگهجي.';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      'هن ٺهراهي منتقلي کي ابتڙ ڪرڻ بدران ان کي سيٽل ڪريو.';
 
   @override
   String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+      'هي داخلا اڳ ۾ ئي درست ٿي چڪي آهي. اصل لائن اهڙي ئي رهي ٿي.';
 
   @override
-  String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+  String get errorNotActiveExpenseCategory => 'هڪ فعال خرچ جو زمرو چونڊيو.';
 
   @override
-  String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+  String get errorNotActiveIncomeCategory => 'هڪ فعال آمدني جو زمرو چونڊيو.';
 
   @override
-  String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+  String get errorSettledAmountMustNotBeNegative => 'آيل رقم منفي نٿي ٿي سگهي.';
 
   @override
-  String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+  String get errorPendingTransferNotFound => 'اها ٺهراهي منتقلي نه ملي.';
 
   @override
   String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+      'اها ٺهراهي منتقلي اڳ ۾ ئي سيٽل ٿيل آهي.';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      'اصل ماخذ يا منزل جو کاتو چونڊيو.';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      'فيس جو زمرو صرف ان وقت استعمال ٿئي ٿو جڏهن پئسا ماخذ کاتي ڏانهن واپس موٽن.';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      'جيڪو آيو ان لاءِ مثبت رقم داخل ڪريو.';
 
   @override
   String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+      'اها رقم موڪليل کان وڌيڪ آهي.';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'اهو اوزار نه مليو.';
 
   @override
   String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+      'غير نقد حاصلات لاءِ فعال آمدني جو زمرو گهربل آهي.';
 
   @override
   String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+      'ان خريداري لاءِ هن سيڙپڪاري کاتي ۾ ڪافي نقد ناهي.';
 
   @override
   String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+      'وڪري جي مقدار ۽ يونٽ قيمت مثبت هجڻ گهرجن.';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return 'وڪرو نٿو ڪري سگهجي: ڪجهه يونٽ $date تائين لاڪ آهن.';
   }
 
   @override
   String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+      'توهان هن وقت اڻلاڪ ٿيل رکيل کان وڌيڪ وڪرو نٿا ڪري سگهو.';
 
   @override
   String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+      'حاصل ٿيل فائدي لاءِ فعال آمدني جو زمرو گهربل آهي.';
 
   @override
   String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+      'حاصل ٿيل نقصان لاءِ فعال خرچ جو زمرو گهربل آهي.';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return 'خريداري پوسٽ ٿي وئي، پر دلالي فيس ناڪام ٿي: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return 'وڪرو پوسٽ ٿي ويو، پر دلالي فيس ناڪام ٿي: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive => 'منافعي جي رقم مثبت هجڻ گهرجي.';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'اهو سيڙپڪاري کاتو ناهي.';
 
   @override
   String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+      'هن سيڙپڪاري کاتي ۾ ان جي انوینٽري ساٿي ناهي.';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'هي خريداري ابتڙ نٿي ڪري سگهجي: بعد وارا وڪرو ان جي يونٽن تي دارومدار رکن ٿا. پهرين دارومدار رکندڙ وڪرو ابتڙ ڪريو: $sells.';
   }
 
   @override
-  String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+  String get errorMonthlyLimitMustBePositive => 'مهيني جي حد مثبت هجڻ گهرجي.';
 
   @override
   String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+      'ٽيمپليٽ جي رقم مثبت هجڻ گهرجي.';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized => 'هن فائل کي OFX طور سڃاڻي نه سگهياسين.';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => 'چونڊيل فائل خالي آهي.';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => 'هن فائل کي CSV طور پڙهي نه سگهياسين.';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => 'چونڊيل فائل ۾ ڪا به قطار ناهي.';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'بيڪ اپ ٺاهي نه سگهياسين: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'هي بيڪ اپ بحال نه ڪري سگهياسين - غلط پاسفريز، يا اهو سمارا بيڪ اپ فائل ناهي.';
 
   @override
   String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+      'رقم، کاتو، ۽ زمرو گهربل آهن.';
 
   @override
-  String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+  String get validationAmountAccountRequired => 'رقم ۽ کاتو گهربل آهن.';
 
   @override
   String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+      'هر ورهاڱي لائين لاءِ زمرو ۽ رقم گهربل آهي.';
 
   @override
   String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+      'ورهاڱي لائينون ٽرانزيڪشن جي ڪل تائين پهچڻ گهرجن.';
 
   @override
   String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+      'موڪليندڙ کاتو، وصول ڪندڙ کاتو، ۽ رقم گهربل آهن.';
 
   @override
-  String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+  String get validationAmountArrivedRequired => 'آيل رقم گهربل آهي.';
 
   @override
   String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+      'چونڊيو ته ڪهڙي کاتي کي فنڊ مليا.';
 
   @override
-  String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+  String get validationAccountCategoryRequired => 'کاتو ۽ زمرو گهربل آهن.';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => 'هي درستي محفوظ نه ٿي سگهي.';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'پنهنجي مکيه کاتي جو نالو رکو.';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading =>
+      'اڃا لوڊ ٿي رهيو آهي - ٿوري دير ۾ ٻيهر ڪوشش ڪريو.';
 
   @override
   String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+      'کاتي جو نالو محفوظ نه ٿي سگهيو.';
 
   @override
-  String get validationWrongPin => 'Wrong PIN. Try again.';
+  String get validationWrongPin => 'غلط PIN. ٻيهر ڪوشش ڪريو.';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'زمرو آمدني يا خرچ هجڻ گهرجي.';
 
   @override
   String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+      'صرف خرچ جو زمرو مهيني جي حد رکي سگهي ٿو.';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => 'غلط ٽيمپليٽ.';
 
   @override
   String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+      'هن ڪيسٽور فائل لاءِ غلط پاسفريز.';
 
   @override
-  String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+  String get validationInvalidKeystoreFile => 'اهو صحيح ڪيسٽور فائل نٿو لڳي.';
 
   @override
   String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+      'ان بحاليءَ واري جملي مان بحال نه ٿي سگهيو.';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'هن ڊوائيس تي سائننگ ڪي پيدا نه ٿي سگهي: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'هي ڪرنسي محفوظ نه ٿي سگهي: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed =>
+      'لڏپلاڻ ناڪام ٿي. مهرباني ڪري ٻيهر ڪوشش ڪريو.';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile => 'پهرين هڪ بيڪ اپ فائل چونڊيو.';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'هڪ پاسفريز داخل ڪريو.';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => 'ٻئي PIN نٿا ملن.';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      'منتقلي جي فيس هڪ خرچ جو زمرو چونڊيل هجڻ سان مثبت رقم هجڻ گهرجي.';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      'ڪٽيل-فيس منتقلي لاءِ فيس رقم کان گھٽ هجڻ گهرجي.';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return 'منتقلي محفوظ ٿي وئي، پر فيس رڪارڊ نه ٿي سگهي: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => 'هڪ صحيح رقم داخل ڪريو.';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return 'لفظ $n توهان جي محفوظ ٿيل جملي سان نٿو ملي. ان کي جانچي ٻيهر ڪوشش ڪريو.';
   }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+      'خريداري جي مقدار ۽ يونٽ قيمت مثبت هجڻ گهرجن.';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived => 'لڪل اوزار خريد نٿو ڪري سگهجي.';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      'غير نقد حاصلاتن ۾ دلالي شامل نٿي ڪري سگهجي.';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      'جڏهن دلالي مثبت هجي ته فعال خرچ جو زمرو گهربل آهي.';
 
   @override
   String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+      'وڪري جي رقم گھٽ ۾ گھٽ دلالي جي رقم برابر هجڻ گهرجي.';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return 'هن مهيني $limit مان $spent';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'سمارا کاتو اڻلاڪ ڪريو';
 
   @override
   String get searchLabel => 'ڳوليو';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => 'شروعاتي بيلنس';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return 'منتقلي: $name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => 'منتقلي لاءِ فيس';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return '$name ڏانهن منتقلي لاءِ فيس';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'فائل پکر کولي نه سگهياسين: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return 'مهرباني ڪري هڪ .$extensions فائل چونڊيو';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => 'ڪرنسي ڪوڊ (ISO 4217، مثال طور USD)';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name +$count وڌيڪ';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => 'تاريخ';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'ڪجهه به نه';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return 'جاري رکڻ کان اڳ هيٺين داخلائن (ڪل $count) جو جائزو وٺو.';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return 'توهان کي $amount مليو';
   }
 
   @override
   String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+      'جيڪڏهن مٽاسٽا جي شرح اڃا معلوم ناهي ته خالي ڇڏيو.';
 
   @override
   String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+      'هڪ واپار رڪارڊ ڪريو جيڪو اڳ ۾ ئي ٿي چڪو آهي. هي ايپ آرڊر نه ٿي رکي.';
 
   @override
   String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+      'مٿي: مٿين رقم هن کاتي مان ورتل ڪل رقم آهي؛ فيس ان مان نڪري ٿي.';
 
   @override
   String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+      'توهان جي بئنڪ يا وچولي پاران وصول ڪيل اڳوڻي ڪميشن.';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength => 'PIN گھٽ ۾ گھٽ 4 انگ هجڻ گهرجي.';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'هي هن وقت هن ايپ ۾ موجود هر شيءِ کي بيڪ اپ سان مٽائي ڇڏيندو — اهو ضم نه ڪندو. هڪ بيڪ اپ فائل چونڊيو ۽ پاسفريز داخل ڪريو جنهن سان ان کي محفوظ ڪيو ويو هو.';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => 'مٽايو';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name هاڻي نئين ٽرانزيڪشن لاءِ موجود نه هوندو.';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return 'کاتا ٺاهڻ يا ٻيهر مقرر ڪرڻ وقت $name هاڻي پيش نه ڪيو ويندو.';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return 'نئين ٽرانزيڪشن رڪارڊ ڪرڻ وقت $name هاڻي پيش نه ڪيو ويندو.';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      'لڪل اوزار پراڻي خريداري ۽ وڪري تي رهن ٿا. توهان اڃا به انهن لاءِ منافعو رڪارڊ ڪري سگهو ٿا.';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name (لڪل)';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => 'ڪا ڪرنسي مقرر ناهي';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$name ۽ ان جا ياد رکيل ڊفالٽ هٽايا ويندا. پراڻيون ٽرانزيڪشنون متاثر نه ٿينديون.';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$name هاڻي نيا طور پيش نه ڪيو ويندو. ان جون اڳ ۾ ئي رڪارڊ ٿيل ٽرانزيڪشنون متاثر نه ٿينديون.';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return 'محفوظ ٿيل ڪالم ميپنگ \"$name\" خارج ٿي ويندي. ان سان اڳ ۾ ئي درآمد ٿيل اسٽيٽمينٽ متاثر نه ٿينديون.';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return 'درآمدون هاڻي \"$keyword\" ذريعي خودڪار زمرابندي نه ٿينديون. هي قاعدو استعمال ڪري اڳ ۾ ئي زمرابندي ٿيل ٽرانزيڪشنون متاثر نه ٿينديون.';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'اختياري طور هاڻي هڪ ڪريڊٽ ڪارڊ يا نقد کاتو شامل ڪريو - توهان هميشه سيٽنگن مان بعد ۾ وڌيڪ کاتا شامل ڪري سگهو ٿا.';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => 'منزل تي پهچايو ويو';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return '$name تي پهچايو ويو';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return 'توهان کي اميد کان $amount $currency گھٽ مليو - فرق پورو ڪرڻ لاءِ هڪ زمرو چونڊيو.';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => 'تاريخ جي حد';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'ٽيمپليٽ شامل ڪريو';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'ٽيمپليٽ تبديل ڪريو';
 
   @override
   String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+      'هر فيلڊ ۾ هڪ صحيح رقم ۽ ڏينهن ڀريو.';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'CSV برآمد محفوظ ڪريو';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => 'حوالي جي شرح';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'توهان جي شرح';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return 'جيڪڏهن هي $currency ۾ هو، جيڪا کاتي جي پنهنجي ڪرنسي آهي، ته خالي ڇڏيو.';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'تائين لاڪ (اختياري)';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return '$date تائين لاڪ ٿيل';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      'تحقيقي پرامپٽ ڪاپي ٿيو — ڪوبه برائوزر URL موجود ناهي، يا توهان آف لائن آهيو.';
 
   @override
   String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+      'توهان جو پسنديده تحقيقي اوزار کليو.';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'هي هڪ فائدو لڳي ٿو';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'هي هڪ نقصان لڳي ٿو';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'هي برابر لڳي ٿو';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name ($qty وڪري لائق)';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return 'ڪالم $index';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'درآمد ٿي رهيو آهي...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'درآمد جي تصديق ڪريو';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => 'محفوظ ٿيل زمري جا قاعدا منظم ڪريو';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'هن فائل جي ڪرنسي ($currency) چونڊيل کاتي جي ڪرنسي سان نٿي ملي.';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'زمري جا قاعدا';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => 'ممڪن نقل';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => 'اڻڄاتل زمرو';
 }

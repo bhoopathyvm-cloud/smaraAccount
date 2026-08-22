@@ -10,7 +10,7 @@ import '../../../core/app_lock_controller.dart';
 /// The unlock screen's form state (app-lock spec: "Application Lock").
 /// Offers biometrics first (auto-prompted once, on open) when enabled,
 /// with the PIN always available as a fallback or primary path.
-class LockViewModel extends ChangeNotifier {
+class LockViewModel extends ChangeNotifier with LocalizedErrorMixin {
   LockViewModel({
     required AppLockService appLockService,
     required BiometricAuthenticator biometricAuthenticator,
@@ -33,9 +33,6 @@ class LockViewModel extends ChangeNotifier {
 
   bool _isVerifying = false;
   bool get isVerifying => _isVerifying;
-
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
 
   Future<void> _init() async {
     _biometricEnabled = await _settingsRepository.isAppLockBiometricEnabled();
@@ -62,7 +59,7 @@ class LockViewModel extends ChangeNotifier {
 
   Future<bool> submitPin(String pin) async {
     _isVerifying = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
     final ok = await _appLockService.verifyPin(pin);
     _isVerifying = false;
@@ -71,10 +68,7 @@ class LockViewModel extends ChangeNotifier {
       _lockController.markUnlocked();
       return true;
     }
-    _errorMessage = localizeVmError(
-      const AppFailure(AppErrorCode.validationWrongPin),
-    );
-    notifyListeners();
+    setFailure(const AppFailure(AppErrorCode.validationWrongPin));
     return false;
   }
 }

@@ -9,111 +9,110 @@
   "actionCancel": "Hủy",
   "actionSave": "Lưu",
   "actionDelete": "Xóa",
-  "actionDone": "Done",
+  "actionDone": "Xong",
   "actionContinue": "Tiếp tục",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDismiss": "Đóng",
+  "actionRetry": "Thử lại",
+  "actionSkip": "Bỏ qua",
+  "actionConfirm": "Xác nhận",
   "actionAdd": "Thêm",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "Chi tiêu",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionEdit": "Sửa",
+  "actionRename": "Đổi tên",
+  "actionHide": "Ẩn",
+  "actionCreate": "Tạo",
+  "actionCloseApp": "Đóng ứng dụng",
+  "actionUnlock": "Mở khóa",
+  "actionSettle": "Quyết toán",
+  "actionFinish": "Hoàn tất",
+  "actionPreview": "Xem trước",
+  "actionImport": "Nhập",
+  "actionExportCsv": "Xuất CSV",
+  "actionChooseFile": "Chọn tệp",
+  "actionRestore": "Khôi phục",
+  "actionFix": "Sửa",
+  "actionBuy": "Mua",
+  "actionSell": "Bán",
+  "actionDividend": "Cổ tức",
+  "actionRecordBuy": "Ghi nhận giao dịch mua",
+  "actionRecordSell": "Ghi nhận giao dịch bán",
+  "actionRecordDividend": "Ghi nhận cổ tức",
+  "actionPayCard": "Thanh toán thẻ",
+  "actionTransfer": "Chuyển khoản",
+  "actionRecordTransaction": "Ghi nhận giao dịch",
+  "actionImportStatement": "Nhập sao kê",
+  "actionClearDates": "Xóa ngày",
+  "actionClearSearch": "Xóa tìm kiếm và bộ lọc",
+  "actionUseBiometrics": "Dùng sinh trắc học",
+  "actionSetPin": "Đặt mã PIN",
+  "actionChangePin": "Đổi mã PIN",
+  "actionSaveBackup": "Lưu bản sao lưu",
+  "actionRestoreBackup": "Khôi phục bản sao lưu",
+  "actionSaveRule": "Lưu quy tắc",
+  "actionConfirmFix": "Xác nhận sửa",
+  "captureSpent": "Chi",
+  "captureReceived": "Thu",
+  "captureMovedMoney": "Chuyển tiền",
+  "captureImportStatement": "Nhập sao kê",
   "settingsTitle": "Cài đặt",
   "settingsLanguage": "Ngôn ngữ",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "Ngôn ngữ thiết bị",
+  "settingsFetchFxRates": "Lấy tỷ giá hối đoái tham khảo",
+  "settingsFetchFxRatesSubtitle": "Hiển thị tỷ giá thị trường tham khảo bên cạnh số tiền đích trong các giao dịch chuyển khoản khác loại tiền tệ, chỉ để so sánh - không bao giờ dùng để tự điền số tiền.",
+  "settingsRateProvider": "Nhà cung cấp tỷ giá",
+  "settingsFetchMarketPrices": "Lấy giá thị trường cho khoản đầu tư",
+  "settingsFetchMarketPricesSubtitle": "Tra cứu giá gần nhất cho các công cụ đầu tư có mã ticker hoặc ISIN, để ước tính giá trị danh mục. Không bao giờ dùng để ghi nhận giao dịch, và không bao giờ gửi đi số lượng bạn đang nắm giữ.",
+  "settingsMarketPriceProvider": "Nhà cung cấp giá thị trường",
+  "settingsFavouriteResearchTool": "Công cụ nghiên cứu yêu thích",
+  "settingsFavouriteResearchToolSubtitle": "Chạm vào tên một công cụ đầu tư trong danh mục nắm giữ sẽ mở công cụ này trên trình duyệt kèm gợi ý tra cứu — đây không phải tích hợp, và không phải lời khuyên đầu tư.",
+  "settingsBackup": "Sao lưu",
+  "settingsBackupBlurb": "Lưu một bản sao mã hóa của sổ sách của bạn vào nơi bạn chọn, hoặc khôi phục từ đó. Việc này khác với cụm từ khôi phục hoặc tệp keystore của bạn, vốn sao lưu khóa ký của bạn, chứ không phải sổ sách.",
+  "settingsLock": "Khóa",
+  "settingsLockBlurb": "Yêu cầu mã PIN, hoặc sinh trắc học nếu có, để mở ứng dụng.",
+  "settingsRequireUnlock": "Yêu cầu mở khóa để vào ứng dụng",
+  "settingsLockAfter": "Khóa sau",
+  "settingsLockImmediately": "Ngay lập tức",
+  "settingsLock1Minute": "1 phút",
+  "settingsLock5Minutes": "5 phút",
+  "settingsLock15Minutes": "15 phút",
+  "settingsAllowBiometrics": "Cũng cho phép sinh trắc học",
+  "settingsHideSnapshot": "Ẩn số dư trong trình chuyển ứng dụng",
+  "settingsHideSnapshotSubtitle": "Làm mờ màn hình này khi bạn chuyển sang ứng dụng khác, để nó không hiện ra ngay trong trình chuyển ứng dụng.",
+  "settingsHideSnapshotUnavailable": "Tính năng ẩn số dư trong trình chuyển ứng dụng không khả dụng trên nền tảng này.",
+  "settingsPayees": "Người thụ hưởng",
+  "settingsManagePayees": "Quản lý người thụ hưởng",
+  "settingsPayeesBlurb": "Tên người thụ hưởng đã lưu cùng danh mục và tài khoản mặc định của họ, được gợi ý tự động khi bạn ghi nhận một giao dịch.",
+  "settingsRecurring": "Mẫu định kỳ",
+  "settingsManageRecurring": "Quản lý mẫu định kỳ",
+  "settingsRecurringBlurb": "Hóa đơn hoặc thu nhập lặp lại hàng tháng, như tiền thuê nhà hay lương. Một mẫu đến hạn sẽ hiện trên Trang chủ để bạn ghi nhận chỉ với một chạm - không bao giờ tự động ghi sổ.",
+  "settingsAbout": "Giới thiệu",
+  "providerFrankfurter": "Frankfurter (tỷ giá ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerStooq": "Stooq (báo giá hàng ngày)",
+  "providerYahooFinance": "Yahoo Finance (API biểu đồ)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "Tiền mặt và các khoản tương đương tiền",
+  "systemGroupPensionRetirement": "Lương hưu và hưu trí",
+  "systemGroupCreditShortTerm": "Tín dụng và nợ ngắn hạn",
+  "systemGroupLoansMortgages": "Khoản vay và thế chấp",
+  "systemGroupInvestments": "Đầu tư",
+  "systemAccountCashBank": "Tiền mặt & Ngân hàng",
+  "systemCategorySalary": "Lương",
+  "systemCategoryOtherIncome": "Thu nhập khác",
+  "systemCategoryGroceries": "Hàng tạp hóa",
+  "systemCategoryRentMortgage": "Tiền thuê/Thế chấp",
+  "systemCategoryUtilities": "Tiện ích",
+  "systemCategoryTransport": "Đi lại",
+  "systemCategoryFoodOut": "Ăn ngoài",
+  "systemCategoryPhone": "Điện thoại",
+  "systemCategoryHealth": "Sức khỏe",
+  "systemCategoryOtherExpense": "Chi phí khác",
   "homeThisMonth": "THÁNG NÀY",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "TIỀN ĐANG CHUYỂN",
+  "homeWhatYouHaveMinusWhatYouOwe": "NHỮNG GÌ BẠN CÓ TRỪ NHỮNG GÌ BẠN NỢ",
+  "homeWhatYouHave": "Số bạn có {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "Số bạn có {haveAmount} {currency}  •  Số bạn nợ {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "Bạn đã gửi {amount} {currency} từ {name}",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "Bạn đã gửi {amount} {currency} đến {name}",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "Đã ẩn",
+  "allAccounts": "Tất cả tài khoản",
+  "savedToPath": "Đã lưu vào {path}",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "Không thể xuất tệp keystore. Bạn có thể bỏ qua bước này.",
+  "enterPassphraseToProtect": "Nhập một cụm mật khẩu để bảo vệ tệp này.",
+  "homeTapWhenArrived": "Chạm khi bạn biết đã nhận được gì",
+  "homeReturnedTo": "Đã hoàn về {name}",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "ĐẾN HẠN HÔM NAY",
+  "homeDueLine": "{category} · {account} · chạm để ghi nhận",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "Vượt hạn mức",
+  "homeSpentOfLimit": "{spent} trên {limit}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "Còn lại: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "Không có tài khoản",
+  "homeCashRegister": "Quỹ tiền mặt",
+  "homeMarketEstimate": "Ước tính thị trường",
+  "registerTitle": "Sổ",
+  "registerSearchHint": "Mô tả, danh mục, hoặc số tiền",
+  "registerNoTransactions": "Chưa có giao dịch nào",
+  "registerNoEntries": "Chưa có mục nào được ghi nhận.",
+  "registerSpentOnly": "Chỉ chi",
+  "registerReceivedOnly": "Chỉ thu",
+  "registerAll": "Tất cả",
+  "registerUnverified": "Chưa xác minh - không tính vào tổng",
+  "registerSuperseded": "Đã bị thay thế do di chuyển khóa - không tính vào tổng",
+  "summaryTitle": "Tóm tắt",
+  "summaryTotalIncome": "Tổng thu nhập",
+  "summaryTotalExpense": "Tổng chi tiêu",
+  "summaryDateRange": "{start} đến {end}",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "Tài khoản",
+  "categoriesTitle": "Danh mục",
+  "accountName": "Tên tài khoản",
+  "createAccount": "Tạo tài khoản",
+  "createGroup": "Tạo nhóm",
+  "editGroup": "Sửa nhóm",
+  "renameAccount": "Đổi tên tài khoản",
+  "renameCategory": "Đổi tên danh mục",
+  "addCategory": "Thêm danh mục",
+  "groupLabel": "Nhóm",
+  "kindLabel": "Loại",
+  "asset": "Tài sản",
+  "liability": "Nợ phải trả",
+  "income": "Thu nhập",
+  "expense": "Chi tiêu",
+  "thisAccountHoldsInvestments": "Tài khoản này nắm giữ khoản đầu tư",
+  "thisAccountHoldsInvestmentsSubtitle": "Tiền mặt cộng với hàng tồn kho đầu tư mà bạn ghi nhận bằng Mua, Bán và Cổ tức.",
+  "thisIsACreditCard": "Đây là thẻ tín dụng",
+  "openingBalanceOptional": "Số dư đầu kỳ (không bắt buộc)",
+  "currencyIso": "Đơn vị tiền tệ (ISO 4217)",
+  "currencyIsoExample": "Đơn vị tiền tệ (ISO 4217, ví dụ USD)",
+  "hideAccountTitle": "Ẩn tài khoản khỏi các mục mới?",
+  "hideCategoryTitle": "Ẩn danh mục khỏi các mục mới?",
+  "hideGroupTitle": "Ẩn nhóm khỏi các mục mới?",
+  "reassignGroup": "Chuyển sang nhóm khác",
+  "transferRemainingBalance": "Chuyển số dư còn lại",
+  "monthlyLimit": "Hạn mức hàng tháng",
+  "monthlyLimitHint": "Hạn mức (để trống để xóa)",
+  "monthlyLimitBlurb": "Một mức chi tiêu tham khảo tùy chọn tính từ đầu tháng cho danh mục chi tiêu này.",
+  "manageCategoryRules": "Quản lý quy tắc danh mục",
+  "amount": "Số tiền",
+  "category": "Danh mục",
+  "account": "Tài khoản",
+  "fromAccount": "Tài khoản nguồn",
+  "toAccount": "Tài khoản đích",
+  "descriptionOptional": "Mô tả (không bắt buộc)",
+  "alsoRememberPayee": "Đồng thời lưu làm người thụ hưởng",
+  "splitIntoCategories": "Chia thành nhiều danh mục",
+  "categoryN": "Danh mục {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "Số tiền đích",
+  "destinationAmountOptional": "Số tiền đích (không bắt buộc)",
+  "accountCurrencyAmountOptional": "Số tiền theo tiền tệ tài khoản (không bắt buộc)",
+  "transactionCurrencyOptional": "Loại tiền giao dịch (không bắt buộc)",
+  "feeOptional": "Phí (không bắt buộc)",
+  "feeAmount": "Số tiền phí",
+  "feeCategory": "Danh mục phí",
+  "feeDescriptionOptional": "Mô tả phí (không bắt buộc)",
+  "feeDeducted": "Phí được trừ từ số tiền ở trên",
+  "needTwoAccountsToTransfer": "Tạo ít nhất hai tài khoản đang hoạt động để thực hiện chuyển khoản.",
+  "whatArrivedTitle": "Đã nhận được gì?",
+  "whatArrivedBlurb": "Cho chúng tôi biết số tiền thực tế đã nhận được.",
+  "amountThatArrived": "Số tiền đã nhận",
+  "feeLossCategory": "Danh mục phí / lỗ",
+  "alreadySettled": "Đã quyết toán.",
+  "holdingsTitle": "Danh mục nắm giữ",
+  "holdingsCash": "Tiền mặt",
+  "holdingsInventory": "CÔNG CỤ ĐẦU TƯ",
+  "holdingsBook": "Giá trị sổ sách (tiền mặt + giá gốc) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "Ước tính thị trường {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "Chưa có khoản nắm giữ nào. Ghi nhận một giao dịch mua để thêm công cụ đầu tư.",
+  "holdingsQuotesBlurb": "Giá tham chiếu chỉ là ước tính, không phải giá của công ty môi giới. Ứng dụng này không đặt lệnh giao dịch.",
+  "holdingsTapNameToResearch": "Chạm vào tên để tra cứu. Giá tham chiếu chỉ là ước tính, không phải lời khuyên đầu tư.",
+  "instrument": "Công cụ đầu tư",
+  "newInstrument": "Công cụ đầu tư mới",
+  "renameInstrument": "Đổi tên công cụ đầu tư",
+  "instrumentActions": "Thao tác với công cụ đầu tư",
+  "hideInstrumentTitle": "Ẩn {name}?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "Mã chứng khoán (không bắt buộc)",
+  "isinOptional": "ISIN (không bắt buộc)",
+  "quantity": "Số lượng",
+  "unitPrice": "Đơn giá",
+  "brokerageOptional": "Phí môi giới (không bắt buộc)",
+  "brokerageExpenseCategory": "Danh mục chi phí môi giới",
+  "incomeCategory": "Danh mục thu nhập",
+  "gainIncomeCategory": "Danh mục thu nhập từ lãi",
+  "lossExpenseCategory": "Danh mục chi phí do lỗ",
+  "nonCash": "Phi tiền mặt",
+  "cash": "Tiền mặt",
+  "locked": "Bị khóa",
+  "lockUntilHint": "Đây là ghi chú riêng của bạn về một hạn chế, không phải quy định của công ty môi giới.",
+  "instrumentKindStock": "Cổ phiếu",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "Quỹ tương hỗ",
+  "instrumentKindBond": "Trái phiếu",
+  "instrumentKindOther": "Khác",
+  "quoteUseLive": "Giá trực tiếp",
+  "quoteUseCached": "Giá đã lưu tạm",
+  "quoteUseStale": "Giá đã cũ",
+  "quoteUseMissing": "Đang dùng giá gốc (không có giá)",
+  "quoteUseDisabled": "Đã tắt báo giá — dùng giá gốc/giá lưu tạm",
+  "quoteUseCurrencyMismatch": "Đang dùng giá gốc (khác loại tiền với giá niêm yết)",
+  "unrealizedLabel": "Chưa thực hiện {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} đơn vị · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "Cụm từ khôi phục của bạn",
+  "recoveryPhraseConfirmTitle": "Xác nhận cụm từ của bạn",
+  "recoveryPhraseBlurb": "24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Smara Accounting không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.",
+  "recoveryPhraseWriteDown": "Ghi lại các từ này theo đúng thứ tự và cất giữ ở nơi an toàn, tách biệt với thiết bị này.",
+  "iveSavedRecoveryPhrase": "Tôi đã lưu cụm từ khôi phục của mình",
+  "confirmPhraseBlurb": "Nhập các từ được yêu cầu từ cụm từ bạn vừa lưu.",
+  "wordNumber": "Từ số {n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
+  "keystoreExportTitle": "Xuất tệp keystore",
+  "keystoreExportBlurb": "Ngoài cụm từ khôi phục, bạn có thể lưu một tệp keystore đã mã hóa được bảo vệ bởi cụm mật khẩu do bạn chọn. Việc này không bắt buộc - chỉ riêng cụm từ khôi phục của bạn luôn đủ để khôi phục khóa ký.",
+  "keystorePassphrase": "Cụm mật khẩu",
+  "exportKeystoreFile": "Xuất tệp keystore",
+  "chooseCurrencyTitle": "Chọn đơn vị tiền tệ của bạn",
+  "chooseCurrencyBlurb": "Mỗi nhóm tài khoản (Tiền mặt và các khoản tương đương tiền, Lương hưu và hưu trí, v.v.) hiện đang dùng chung một đơn vị tiền tệ này. Sau này bạn vẫn có thể thêm tài khoản bằng một loại tiền tệ khác bằng cách tạo một nhóm mới cho nó.",
+  "currencyBackfillTitle": "Chọn đơn vị tiền tệ cho các nhóm hiện có",
+  "currencyBackfillBlurb": "Ứng dụng này hiện hỗ trợ nhiều loại tiền tệ. Các tài khoản và nhóm tài khoản hiện có của bạn cần một loại tiền tệ - vì tất cả đều được thiết lập trước khi tính năng này ra đời, một lựa chọn sẽ áp dụng cho tất cả.",
+  "firstAccountTitle": "Đặt tên cho tài khoản của bạn",
+  "firstAccountBlurb": "Đây là tài khoản đã được thiết lập sẵn cho bạn - hãy đặt cho nó một cái tên bạn dễ nhận ra, như tên ngân hàng của bạn. Tiếp theo bạn sẽ ghi nhận một khoản Chi hoặc Thu, sau đó bảo vệ thiết bị bằng cụm từ khôi phục của bạn.",
+  "whatsMainAccountCalled": "Tài khoản chính của bạn tên là gì?",
+  "restoreTitle": "Khôi phục khóa ký",
+  "restoreBlurb": "Thiết bị này đã có sổ sách, nhưng không có khóa ký phù hợp. Hãy khôi phục nó từ cụm từ khôi phục hoặc tệp keystore đã lưu - dữ liệu của bạn sẽ được xác minh bình thường, và không có gì bị ký lại hay thay đổi.",
+  "recoveryPhrase24": "Cụm từ khôi phục (đủ 24 từ)",
+  "keystoreFile": "Tệp keystore",
+  "keystoreFileContents": "Nội dung tệp keystore",
+  "optionalBackupFile": "Tệp sao lưu (không bắt buộc)",
+  "iDontHavePhrase": "Tôi không có cụm từ khôi phục hoặc tệp keystore",
+  "migrationTitle": "Chuyển sang khóa mới",
+  "migrationBlurb": "Nếu không có cụm từ khôi phục hoặc tệp keystore, khóa ký của thiết bị này không thể khôi phục được. Bạn có thể bắt đầu với một khóa mới. Các mục cũ vẫn hiển thị nhưng sẽ bị thay thế.",
+  "iConfirmBooksValid": "Tôi xác nhận sổ sách hiện tại là hợp lệ",
+  "whyWeDontEdit": "Vì sao chúng tôi không sửa các mục cũ",
+  "whyWeDontEditBody": "Khi bạn sửa một sai sót, chúng tôi giữ nguyên dòng cũ và thêm một điều chỉnh bên cạnh nó, thay vì thay đổi những gì bạn đã nhập. Nhờ vậy lịch sử của bạn luôn cho thấy chính xác điều gì đã xảy ra và khi nào bạn đã sửa nó — không có gì âm thầm thay đổi sau lưng bạn.",
+  "lockTitle": "Mở khóa",
   "lockScreenTitle": "Đã khóa",
-  "enterPinToContinue": "Enter your PIN to continue",
-  "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "enterPinToContinue": "Nhập mã PIN của bạn để tiếp tục",
+  "pinLabel": "Mã PIN",
+  "setPinTitle": "Đặt mã PIN",
+  "currentPin": "Mã PIN hiện tại",
+  "newPin": "Mã PIN mới",
+  "confirmPin": "Xác nhận mã PIN",
+  "confirmNewPin": "Xác nhận mã PIN mới",
+  "firstWeekTitle": "Thiết lập tài khoản của bạn",
+  "addCashAccount": "Thêm tài khoản tiền mặt",
+  "addCreditCard": "Thêm thẻ tín dụng",
+  "cashAccountName": "Tên tài khoản tiền mặt",
+  "cardName": "Tên thẻ",
+  "paidFromBank": "Thanh toán từ ngân hàng",
+  "paidFromCard": "Thanh toán từ thẻ",
+  "choosePassphraseTitle": "Chọn một cụm mật khẩu để bảo vệ bản sao lưu này. Sẽ không có cách khôi phục nếu bạn quên nó.",
+  "replaceBooksTitle": "Thay thế sổ sách trên máy này?",
+  "replaceBooksBody": "Việc này sẽ thay thế toàn bộ dữ liệu hiện có trong ứng dụng bằng bản sao lưu. Sau đó hãy đóng và mở lại ứng dụng.",
+  "chooseBackupFileFirst": "Hãy chọn một tệp sao lưu trước.",
+  "backupRestored": "Đã khôi phục bản sao lưu",
+  "backupRestoredBody": "Sổ sách của bạn đã được khôi phục. Hãy đóng và mở lại ứng dụng để tiếp tục.",
+  "fixThisEntry": "Sửa mục này",
+  "fixBlurb": "Dòng cũ vẫn giữ nguyên như trước. Xác nhận sẽ thêm một dòng đảo ngược và dòng đã điều chỉnh.",
+  "importStatementTitle": "Nhập sao kê",
+  "importOfx": "Nhập tệp OFX",
+  "importOfxQfxFile": "Nhập tệp OFX / QFX",
+  "importCsvFile": "Nhập tệp CSV",
+  "whatKindOfStatement": "Bạn có loại tệp sao kê nào?",
+  "chooseAccountForFile": "Chọn tài khoản mà tệp này thuộc về.",
+  "importIntoAccount": "Nhập vào tài khoản",
+  "useSavedProfile": "Dùng một hồ sơ đã lưu",
+  "saveMappingProfile": "Lưu ánh xạ này thành một hồ sơ (không bắt buộc)",
+  "renameProfile": "Đổi tên hồ sơ",
+  "deleteProfileTitle": "Xóa hồ sơ?",
+  "fileHasHeader": "Tệp có dòng tiêu đề",
+  "dateColumn": "Cột ngày",
+  "dateFormatHint": "Định dạng ngày (ví dụ dd/MM/yyyy)",
+  "amountColumn": "Cột số tiền",
+  "amountConvention": "Quy ước số tiền",
+  "signedAmountColumn": "Cột số tiền có dấu",
+  "separateDebitCredit": "Cột nợ / có riêng biệt",
+  "debitColumn": "Cột nợ",
+  "creditColumn": "Cột có",
+  "decimalSeparator": "Dấu phân cách thập phân (. hoặc ,)",
+  "descriptionColumns": "(Các) cột mô tả",
+  "referenceIdColumn": "Cột mã tham chiếu (không bắt buộc)",
+  "skippedRows": "Các hàng bị bỏ qua",
+  "parsedTransactionCount": "Đã phân tích {count} giao dịch",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} bị bỏ qua hoặc loại trừ",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} đã ghi sổ, {failed} thất bại",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "Danh mục cho tất cả",
+  "saveAsRule": "Lưu thành quy tắc?",
+  "saveAsRuleBlurb": "Các lần nhập sau này có mô tả chứa từ khóa này sẽ dùng danh mục này.",
+  "keyword": "Từ khóa",
+  "noSavedRules": "Chưa có quy tắc nào được lưu. Gán một danh mục cho một nhóm hàng để lưu quy tắc.",
+  "deleteRuleTitle": "Xóa quy tắc?",
+  "editRule": "Sửa quy tắc",
+  "rowsGrouped": "{count} hàng",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "Chọn một tệp sao kê {extensions} để nhập",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "Người thụ hưởng",
+  "addPayee": "Thêm người thụ hưởng",
+  "renamePayee": "Đổi tên người thụ hưởng",
+  "deletePayeeTitle": "Xóa người thụ hưởng?",
+  "noPayeesYet": "Chưa có người thụ hưởng nào",
+  "recurringTitle": "Mẫu định kỳ",
+  "noRecurringYet": "Chưa có mẫu định kỳ nào",
+  "deleteTemplateTitle": "Xóa mẫu định kỳ?",
+  "dayOfMonth": "Ngày trong tháng (1-31)",
+  "dayOfMonthNote": "Tháng có ít ngày hơn sẽ dùng ngày cuối cùng của chính tháng đó.",
+  "dayOfMonthLine": "Ngày {day} trong tháng - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
+  "name": "Tên",
+  "none": "Không có",
+  "currency": "Đơn vị tiền tệ",
   "errorGeneric": "Đã xảy ra lỗi. Thử lại.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "errorSigningIdentityMismatch": "Cụm từ khôi phục hoặc tệp keystore này không khớp với bất kỳ danh tính ký nào trong cơ sở dữ liệu này.",
+  "errorInvalidLedgerBackup": "Tệp này không phải là bản sao lưu Smara hợp lệ.",
+  "errorInvalidLedgerBackupNoIdentity": "Bản sao lưu này không có danh tính ký - đây không phải bản sao lưu Smara hợp lệ.",
+  "errorInvalidLedgerBackupUnverified": "Bản sao lưu này không được xác minh là sổ sách nguyên vẹn, nên đã không được khôi phục.",
+  "errorInvalidLedgerBackupUnreadable": "Không thể mở tệp này dưới dạng bản sao lưu Smara: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "Bản sao lưu này thuộc về một danh tính ký khác với danh tính trên thiết bị này.",
+  "errorAccountNotFinancial": "Đó không phải là tài khoản tài chính.",
+  "errorAccountArchived": "Tài khoản đó đang bị ẩn.",
+  "errorAccountNotArchived": "Tài khoản đó không bị ẩn.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Không còn số dư nào để chuyển.",
+  "errorAccountHasNoGroup": "Tài khoản đó chưa được gán vào nhóm nào.",
+  "errorGroupHasNoCurrency": "Nhóm đó chưa được thiết lập đơn vị tiền tệ.",
+  "errorGroupNotFound": "Không tìm thấy nhóm tài khoản đó.",
+  "errorInvestmentAccountsMustBeAssets": "Chỉ tài khoản tài sản mới có thể được đánh dấu là tài khoản đầu tư.",
+  "errorCreditCardsMustBeLiabilities": "Chỉ tài khoản nợ phải trả mới có thể được đánh dấu là thẻ tín dụng.",
+  "errorOpeningBalanceMustBePositive": "Số dư đầu kỳ phải là số dương nếu được cung cấp.",
+  "errorAccountTypeDoesNotMatchGroup": "Loại tài khoản đó không khớp với nhóm.",
+  "errorLastActiveAccount": "Không thể ẩn tài khoản tài chính đang hoạt động cuối cùng.",
+  "errorCurrencyRequiredToCreateGroup": "Cần chọn đơn vị tiền tệ để tạo nhóm.",
+  "errorSystemGroupCannotBeArchived": "Không thể ẩn các nhóm tài khoản có sẵn.",
+  "errorGroupAlreadyArchived": "Nhóm đó đã bị ẩn rồi.",
+  "errorCannotArchiveGroupWithAccounts": "Không thể ẩn một nhóm vẫn còn tài khoản đang hoạt động.",
+  "errorSystemGroupNeverArchived": "Các nhóm tài khoản có sẵn không bao giờ bị ẩn.",
+  "errorAccountGroupsCannotBeDeleted": "Không thể xóa nhóm tài khoản.",
+  "errorCannotReassignDifferentCurrency": "Không thể chuyển tài khoản này sang nhóm có đơn vị tiền tệ khác.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "Không thể thay đổi đơn vị tiền tệ khi nhóm còn tài khoản đang hoạt động.",
   "errorAmountMustBePositive": "Số tiền phải dương.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "Số tiền theo tiền tệ tài khoản phải là số dương.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "Số tiền theo tiền tệ tài khoản chỉ dùng cho giao dịch ngoại tệ.",
+  "errorSplitNeedsTwoLines": "Một giao dịch chia cần ít nhất hai dòng danh mục.",
+  "errorSplitLineMustBePositive": "Mỗi dòng chia phải là một số tiền dương.",
+  "errorSplitLinesMustSumToTotal": "Tổng các dòng chia phải bằng tổng số tiền giao dịch.",
+  "errorTransferAmountMustBePositive": "Số tiền chuyển khoản phải là số dương.",
+  "errorTransferAccountsMustDiffer": "Tài khoản nguồn và tài khoản đích phải khác nhau.",
+  "errorCloseoutRequiresDestinationAmount": "Một giao dịch tất toán khác loại tiền tệ cần một số tiền đích đã biết.",
+  "errorDestinationAmountNotForSameCurrency": "Số tiền đích chỉ dùng cho chuyển khoản khác loại tiền tệ.",
+  "errorDestinationAmountMustBePositive": "Số tiền đích phải là số dương.",
+  "errorInvestmentCashExceeded": "Không thể chuyển nhiều hơn số tiền mặt của tài khoản đầu tư này.",
+  "errorCannotReverseUnsettledProvisional": "Hãy quyết toán khoản chuyển đang chờ này thay vì đảo ngược nó.",
+  "errorAlreadyReversed": "Mục này đã được điều chỉnh trước đó. Dòng gốc vẫn giữ nguyên.",
+  "errorNotActiveExpenseCategory": "Hãy chọn một danh mục chi tiêu đang hoạt động.",
+  "errorNotActiveIncomeCategory": "Hãy chọn một danh mục thu nhập đang hoạt động.",
+  "errorSettledAmountMustNotBeNegative": "Số tiền đã nhận không được là số âm.",
+  "errorPendingTransferNotFound": "Không tìm thấy khoản chuyển đang chờ đó.",
+  "errorPendingTransferAlreadySettled": "Khoản chuyển đang chờ đó đã được quyết toán rồi.",
+  "errorSettledToMustBeSourceOrDestination": "Hãy chọn tài khoản nguồn hoặc tài khoản đích ban đầu.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "Danh mục phí chỉ được dùng khi tiền được hoàn về tài khoản nguồn.",
+  "errorSettledAmountMustBePositiveForDelivery": "Nhập một số tiền dương cho số đã nhận.",
+  "errorSettledAmountExceedsProvisional": "Số tiền đó nhiều hơn số tiền đã gửi.",
+  "errorInstrumentNotFound": "Không tìm thấy công cụ đầu tư đó.",
+  "errorIncomeRequiredForNonCash": "Cần một danh mục thu nhập đang hoạt động cho một giao dịch mua phi tiền mặt.",
+  "errorInsufficientCash": "Không đủ tiền mặt trong tài khoản đầu tư này cho giao dịch mua đó.",
+  "errorSellQuantityAndPriceMustBePositive": "Số lượng bán và đơn giá phải là số dương.",
+  "errorLockedUntil": "Không thể bán: một số đơn vị bị khóa đến {date}.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "Không thể bán nhiều hơn số lượng chưa bị khóa mà bạn hiện đang nắm giữ.",
+  "errorIncomeRequiredForGain": "Cần một danh mục thu nhập đang hoạt động cho khoản lãi đã thực hiện.",
+  "errorExpenseRequiredForLoss": "Cần một danh mục chi tiêu đang hoạt động cho khoản lỗ đã thực hiện.",
+  "errorBrokerageFailedAfterBuy": "Giao dịch mua đã ghi sổ, nhưng phí môi giới thất bại: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "Giao dịch bán đã ghi sổ, nhưng phí môi giới thất bại: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "Số tiền cổ tức phải là số dương.",
+  "errorNotInvestmentAccount": "Đó không phải là tài khoản đầu tư.",
+  "errorNoInventoryCompanion": "Tài khoản đầu tư này thiếu tài khoản hàng tồn kho đi kèm.",
+  "errorInvestmentReversalBlocked": "Không thể đảo ngược giao dịch mua này: các giao dịch bán sau đó phụ thuộc vào các đơn vị của nó. Hãy đảo ngược các giao dịch bán phụ thuộc trước: {sells}.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "Hạn mức hàng tháng phải là số dương.",
+  "errorTemplateAmountMustBePositive": "Số tiền của mẫu phải là số dương.",
+  "errorOfxUnrecognized": "Không thể nhận dạng tệp này là OFX.",
+  "errorCsvEmpty": "Tệp đã chọn trống rỗng.",
+  "errorCsvUnreadable": "Không thể đọc tệp này dưới dạng CSV.",
+  "errorCsvNoRows": "Tệp đã chọn không có hàng dữ liệu nào.",
+  "errorBackupCreateFailed": "Không thể tạo bản sao lưu: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "Không thể khôi phục bản sao lưu này - sai cụm mật khẩu, hoặc không phải tệp sao lưu Smara.",
+  "validationAmountAccountCategoryRequired": "Cần có số tiền, tài khoản, và danh mục.",
+  "validationAmountAccountRequired": "Cần có số tiền và tài khoản.",
+  "validationSplitLineIncomplete": "Mỗi dòng chia cần có danh mục và số tiền.",
+  "validationSplitSumMismatch": "Tổng các dòng chia phải bằng tổng số tiền giao dịch.",
+  "validationFromToAmountRequired": "Cần có tài khoản nguồn, tài khoản đích, và số tiền.",
+  "validationAmountArrivedRequired": "Cần nhập số tiền đã nhận.",
+  "validationChooseReceivingAccount": "Chọn tài khoản đã nhận số tiền.",
+  "validationAccountCategoryRequired": "Cần có tài khoản và danh mục.",
+  "validationFixFailed": "Không thể lưu bản sửa này.",
+  "validationNameRequired": "Hãy đặt tên cho tài khoản chính của bạn.",
+  "validationStillLoading": "Vẫn đang tải - hãy thử lại sau một chút.",
+  "validationSaveAccountNameFailed": "Không thể lưu tên tài khoản.",
+  "validationWrongPin": "Mã PIN sai. Thử lại.",
+  "validationCategoryMustBeIncomeOrExpense": "Danh mục phải là Thu nhập hoặc Chi tiêu.",
+  "validationOnlyExpenseHasMonthlyLimit": "Chỉ danh mục Chi tiêu mới có thể có hạn mức hàng tháng.",
+  "validationInvalidTemplate": "Mẫu không hợp lệ.",
+  "validationWrongKeystorePassphrase": "Sai cụm mật khẩu cho tệp keystore này.",
+  "validationInvalidKeystoreFile": "Tệp đó có vẻ không phải là tệp keystore hợp lệ.",
+  "validationRestorePhraseFailed": "Không thể khôi phục từ cụm từ khôi phục đó.",
+  "validationGenerateKeyFailed": "Không thể tạo khóa ký trên thiết bị này: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "Không thể lưu loại tiền tệ này: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "Di chuyển khóa thất bại. Vui lòng thử lại.",
+  "validationChooseBackupFile": "Hãy chọn một tệp sao lưu trước.",
+  "validationPassphraseRequired": "Nhập một cụm mật khẩu.",
+  "validationPinsDoNotMatch": "Hai mã PIN không khớp nhau.",
+  "validationFeePositiveWithCategory": "Phí chuyển khoản phải là số dương và phải chọn một danh mục chi tiêu.",
+  "validationFeeMustBeLessThanAmount": "Đối với giao dịch chuyển khoản trừ phí, phí phải nhỏ hơn số tiền chuyển.",
+  "validationTransferSavedFeeFailed": "Giao dịch chuyển khoản đã lưu, nhưng không thể ghi nhận phí: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "Nhập một số tiền hợp lệ.",
+  "validationConfirmWordMismatch": "Từ số {n} không khớp với cụm từ đã lưu của bạn. Hãy kiểm tra lại và thử lại.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "Số lượng mua và đơn giá phải là số dương.",
+  "errorInstrumentArchived": "Không thể mua một công cụ đầu tư đã bị ẩn.",
+  "errorNonCashCannotIncludeBrokerage": "Giao dịch mua phi tiền mặt không thể có phí môi giới.",
+  "errorBrokerageRequiresExpenseCategory": "Cần một danh mục chi tiêu đang hoạt động khi phí môi giới lớn hơn 0.",
+  "errorSellProceedsMustCoverBrokerage": "Số tiền thu được từ bán phải ít nhất bằng số tiền phí môi giới.",
+  "homeSpentOfLimitThisMonth": "{spent} trên {limit} tháng này",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "Mở khóa Smara Account",
   "searchLabel": "Tìm",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "Số dư đầu kỳ",
+  "transferToName": "Chuyển khoản: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "Phí chuyển khoản",
+  "feeForTransferTo": "Phí chuyển khoản đến {name}",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "Không thể mở trình chọn tệp: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "Vui lòng chọn một tệp .{extensions}",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "Mã đơn vị tiền tệ (ISO 4217, ví dụ USD)",
+  "splitCounterpartMore": "{name} +{count} nữa",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "Ngày",
+  "noneSelected": "Không có",
+  "reviewEntriesBeforeContinuing": "Xem lại các mục bên dưới (tổng cộng {count}) trước khi tiếp tục.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "Bạn đã nhận {amount}",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "Để trống nếu chưa biết tỷ giá hối đoái.",
+  "recordTradeBlurb": "Ghi nhận một giao dịch đã xảy ra. Ứng dụng này không đặt lệnh giao dịch.",
+  "feeOnTopBlurb": "Bật: số tiền ở trên là tổng số tiền bị trừ từ tài khoản này; phí được lấy từ trong đó.",
+  "feeBankBlurb": "Một khoản hoa hồng thu trước bởi ngân hàng của bạn hoặc một bên trung gian.",
+  "validationPinMinLength": "Mã PIN phải có ít nhất 4 chữ số.",
+  "restoreBackupBlurb": "Việc này thay thế toàn bộ dữ liệu hiện có trong ứng dụng bằng bản sao lưu — nó không hợp nhất dữ liệu. Chọn một tệp sao lưu và nhập cụm mật khẩu bạn đã dùng để bảo vệ nó.",
+  "actionReplace": "Thay thế",
+  "hideAccountBody": "{name} sẽ không còn khả dụng cho các giao dịch mới.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "{name} sẽ không còn được đề xuất khi tạo hoặc chuyển tài khoản sang nhóm khác.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "{name} sẽ không còn được đề xuất khi ghi nhận giao dịch mới.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "Các công cụ đầu tư đã ẩn vẫn giữ nguyên trên các giao dịch mua bán trước đó. Bạn vẫn có thể ghi nhận cổ tức cho chúng.",
+  "nameHidden": "{name} (đã ẩn)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "Chưa thiết lập đơn vị tiền tệ",
+  "deletePayeeBody": "{name} và các mặc định đã lưu của người này sẽ bị xóa. Các giao dịch trước đây không bị ảnh hưởng.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} sẽ không còn được nhắc đến hạn nữa. Các giao dịch trước đây mà nó đã ghi nhận không bị ảnh hưởng.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "Ánh xạ cột đã lưu \"{name}\" sẽ bị xóa. Các sao kê đã được nhập bằng ánh xạ này không bị ảnh hưởng.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "Các lần nhập sẽ không còn được tự động phân loại theo \"{keyword}\" nữa. Các giao dịch đã được phân loại bằng quy tắc này không bị ảnh hưởng.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "Bạn có thể tùy chọn thêm thẻ tín dụng hoặc tài khoản tiền mặt ngay bây giờ - bạn luôn có thể thêm tài khoản khác sau này từ Cài đặt.",
+  "deliveredToDestination": "Đã đến nơi đích",
+  "deliveredToName": "Đã đến {name}",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "Bạn đã nhận ít hơn dự kiến {amount} {currency} - hãy chọn một danh mục để bù đắp phần chênh lệch.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "Khoảng thời gian",
+  "addTemplate": "Thêm mẫu",
+  "editTemplate": "Sửa mẫu",
+  "validationFillTemplateFields": "Điền vào mọi trường với số tiền và ngày hợp lệ.",
+  "saveCsvExport": "Lưu tệp xuất CSV",
+  "referenceRate": "Tỷ giá tham khảo",
+  "yourRate": "Tỷ giá của bạn",
+  "leaveBlankIfThisWasAccountCurrency": "Để trống nếu giao dịch này bằng {currency}, đơn vị tiền tệ riêng của tài khoản.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "Khóa đến (không bắt buộc)",
+  "lockedUntilDate": "Bị khóa đến {date}",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "Đã sao chép gợi ý tra cứu — không có URL trình duyệt khả dụng, hoặc bạn đang ngoại tuyến.",
+  "openedFavouriteResearchTool": "Đã mở công cụ nghiên cứu yêu thích của bạn.",
+  "looksLikeGain": "Đây có vẻ là một khoản lãi",
+  "looksLikeLoss": "Đây có vẻ là một khoản lỗ",
+  "looksLikeBreakEven": "Đây có vẻ là hòa vốn",
+  "sellableQuantity": "{name} ({qty} có thể bán)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "Cột {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "Đang nhập...",
+  "confirmImport": "Xác nhận nhập",
+  "manageSavedCategoryRules": "Quản lý quy tắc danh mục đã lưu",
+  "statementCurrencyMismatch": "Đơn vị tiền tệ của tệp này ({currency}) không khớp với đơn vị tiền tệ của tài khoản đã chọn.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "Quy tắc danh mục",
+  "possibleDuplicate": "có thể trùng lặp",
+  "unknownCategory": "Danh mục không xác định"
 }

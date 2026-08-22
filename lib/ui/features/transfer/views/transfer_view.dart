@@ -149,10 +149,7 @@ class _TransferViewState extends State<TransferView> {
                 const SizedBox(height: AppSpacing.xLarge),
                 Text(l10n.feeOptional, style: AppTypography.sectionLabel),
                 const SizedBox(height: AppSpacing.small),
-                Text(
-                  l10n.feeBankBlurb,
-                  style: AppTypography.metadata,
-                ),
+                Text(l10n.feeBankBlurb, style: AppTypography.metadata),
                 const SizedBox(height: AppSpacing.medium),
                 MoneyAmountField(
                   controller: _feeAmountController,
@@ -200,10 +197,10 @@ class _TransferViewState extends State<TransferView> {
                     ),
                   ),
                 ],
-                if (viewModel.errorMessage != null) ...[
+                if (viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    viewModel.errorMessage!,
+                    viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

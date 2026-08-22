@@ -21,10 +21,7 @@ void main() {
     expect(
       localizeCaughtError(
         l10n,
-        const LockedQuantityException(
-          'debug',
-          params: {'date': '2027-06-15'},
-        ),
+        const LockedQuantityException('debug', params: {'date': '2027-06-15'}),
       ),
       equals('Cannot sell: some units are locked until 2027-06-15.'),
     );

@@ -20,7 +20,8 @@ import '../../../../domain/models/pending_transfer.dart';
 /// its own financial account, following the same no-shortfall path as
 /// destination delivery: no shortfall comparison, no fee/loss entry, no
 /// account picker, and a zero settled amount is rejected.
-class SettlePendingTransferViewModel extends ChangeNotifier {
+class SettlePendingTransferViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   SettlePendingTransferViewModel({
     required LedgerRepository ledgerRepository,
     required PendingTransferSummary summary,
@@ -135,31 +136,26 @@ class SettlePendingTransferViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   Future<bool> submit() async {
     final settledAmountMinor = _settledAmountMinor;
     if (settledAmountMinor == null) {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationAmountArrivedRequired),
       );
-      notifyListeners();
       return false;
     }
     final settledToAccountId = isTransfer
         ? _settledToAccountId
         : _summary.pendingTransfer.sourceAccountId;
     if (settledToAccountId == null) {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationChooseReceivingAccount),
       );
-      notifyListeners();
       return false;
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       await _ledgerRepository.settlePendingTransfer(
@@ -173,8 +169,7 @@ class SettlePendingTransferViewModel extends ChangeNotifier {
       return true;
     } on PendingTransferException catch (e) {
       _isSubmitting = false;
-      _errorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     }
   }

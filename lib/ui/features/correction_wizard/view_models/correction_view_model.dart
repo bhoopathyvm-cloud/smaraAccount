@@ -13,7 +13,7 @@ import '../../../../domain/models/transaction_direction.dart';
 /// prefilled from the original entry, editable, and on [fix] posts a
 /// reversal of the original plus a new entry with the corrected fields -
 /// the original entry is never edited or deleted (Golden Rule #7).
-class CorrectionViewModel extends ChangeNotifier {
+class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   CorrectionViewModel({
     required LedgerRepository ledgerRepository,
     required this.entryId,
@@ -141,9 +141,6 @@ class CorrectionViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   /// Posts the fix: a reversal of [entryId] and a new entry with the
   /// corrected fields, as one repository transaction. The original entry
   /// is never edited or deleted (Golden Rule #7).
@@ -152,15 +149,14 @@ class CorrectionViewModel extends ChangeNotifier {
     final financialAccountId = _financialAccountId;
     final amountMinor = _amountMinor;
     if (categoryId == null || financialAccountId == null) {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationAccountCategoryRequired),
       );
-      notifyListeners();
       return false;
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -175,24 +171,22 @@ class CorrectionViewModel extends ChangeNotifier {
       );
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
       return false;
     } on AccountGroupException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
       return false;
     } on AlreadyReversedException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
       return false;
     } on PendingTransferException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
       return false;
     } on InvestmentException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
       return false;
     } catch (e) {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationFixFailed),
-      );
+      setFailure(const AppFailure(AppErrorCode.validationFixFailed));
       return false;
     } finally {
       _isSubmitting = false;

@@ -175,7 +175,9 @@ class SmaraAccountingApp extends StatelessWidget {
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: supportedAppLocales,
               localeListResolutionCallback: (locales, supported) {
-                final device = locales?.isNotEmpty == true ? locales!.first : null;
+                final device = locales?.isNotEmpty == true
+                    ? locales!.first
+                    : null;
                 return localeController.resolve(device);
               },
               routerConfig: router,

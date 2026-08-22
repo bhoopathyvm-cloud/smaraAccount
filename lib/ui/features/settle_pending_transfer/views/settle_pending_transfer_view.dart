@@ -76,10 +76,7 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                         ),
                   style: AppTypography.cardTitle,
                 ),
-                Text(
-                  l10n.whatArrivedBlurb,
-                  style: AppTypography.metadata,
-                ),
+                Text(l10n.whatArrivedBlurb, style: AppTypography.metadata),
                 const SizedBox(height: AppSpacing.large),
                 if (viewModel.isTransfer) ...[
                   RadioGroup<String?>(
@@ -147,10 +144,10 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
                     onChanged: viewModel.setFeeCategoryId,
                   ),
                 ],
-                if (viewModel.errorMessage != null) ...[
+                if (viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    viewModel.errorMessage!,
+                    viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

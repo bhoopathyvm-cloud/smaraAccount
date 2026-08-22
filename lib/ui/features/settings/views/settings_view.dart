@@ -37,7 +37,10 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10nOf(context).settingsTitle, style: AppTypography.headerTitle),
+        title: Text(
+          l10nOf(context).settingsTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
@@ -64,9 +67,7 @@ class SettingsView extends StatelessWidget {
                       : tagFromLocale(
                           viewModel.localeController!.overrideLocale!,
                         ),
-                  decoration: InputDecoration(
-                    labelText: l10n.settingsLanguage,
-                  ),
+                  decoration: InputDecoration(labelText: l10n.settingsLanguage),
                   items: [
                     DropdownMenuItem(
                       value: kSystemLocalePreference,
@@ -98,7 +99,9 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.large),
               DropdownButtonFormField<ExchangeRateProvider>(
                 initialValue: viewModel.selectedProvider,
-                decoration: InputDecoration(labelText: l10n.settingsRateProvider),
+                decoration: InputDecoration(
+                  labelText: l10n.settingsRateProvider,
+                ),
                 items: [
                   for (final provider in ExchangeRateProvider.values)
                     DropdownMenuItem(
@@ -171,10 +174,7 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsBackup, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
-              Text(
-                l10n.settingsBackupBlurb,
-                style: AppTypography.metadata,
-              ),
+              Text(l10n.settingsBackupBlurb, style: AppTypography.metadata),
               const SizedBox(height: AppSpacing.medium),
               ElevatedButton(
                 onPressed: viewModel.isBackingUp
@@ -192,10 +192,7 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsLock, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
-              Text(
-                l10n.settingsLockBlurb,
-                style: AppTypography.metadata,
-              ),
+              Text(l10n.settingsLockBlurb, style: AppTypography.metadata),
               const SizedBox(height: AppSpacing.medium),
               SwitchListTile(
                 title: Text(l10n.settingsRequireUnlock),
@@ -212,7 +209,9 @@ class SettingsView extends StatelessWidget {
                 const SizedBox(height: AppSpacing.medium),
                 DropdownButtonFormField<int>(
                   initialValue: viewModel.appLockTimeoutMinutes,
-                  decoration: InputDecoration(labelText: l10n.settingsLockAfter),
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsLockAfter,
+                  ),
                   items: [
                     DropdownMenuItem(
                       value: 0,
@@ -265,10 +264,7 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsPayees, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
-              Text(
-                l10n.settingsPayeesBlurb,
-                style: AppTypography.metadata,
-              ),
+              Text(l10n.settingsPayeesBlurb, style: AppTypography.metadata),
               const SizedBox(height: AppSpacing.medium),
               OutlinedButton(
                 onPressed: onOpenPayees,
@@ -277,10 +273,7 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsRecurring, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
-              Text(
-                l10n.settingsRecurringBlurb,
-                style: AppTypography.metadata,
-              ),
+              Text(l10n.settingsRecurringBlurb, style: AppTypography.metadata),
               const SizedBox(height: AppSpacing.medium),
               OutlinedButton(
                 onPressed: onOpenRecurringTemplates,
@@ -289,15 +282,9 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsAbout, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
-              Text(
-                l10n.whyWeDontEdit,
-                style: AppTypography.cardTitle,
-              ),
+              Text(l10n.whyWeDontEdit, style: AppTypography.cardTitle),
               const SizedBox(height: AppSpacing.small),
-              Text(
-                l10n.whyWeDontEditBody,
-                style: AppTypography.metadata,
-              ),
+              Text(l10n.whyWeDontEditBody, style: AppTypography.metadata),
             ],
           );
         },
@@ -323,10 +310,7 @@ class SettingsView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                l10n.choosePassphraseTitle,
-                style: AppTypography.body,
-              ),
+              Text(l10n.choosePassphraseTitle, style: AppTypography.body),
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: passphraseController,
@@ -356,7 +340,8 @@ class SettingsView extends StatelessWidget {
                       final passphrase = passphraseController.text;
                       if (passphrase.trim().isEmpty) {
                         setDialogState(
-                          () => statusMessage = l10n.validationPassphraseRequired,
+                          () =>
+                              statusMessage = l10n.validationPassphraseRequired,
                         );
                         return;
                       }
@@ -371,7 +356,7 @@ class SettingsView extends StatelessWidget {
                       if (contents == null) {
                         setDialogState(() {
                           isSaving = false;
-                          statusMessage = viewModel.backupErrorMessage;
+                          statusMessage = viewModel.backupErrorMessageFor(l10n);
                         });
                         return;
                       }
@@ -417,10 +402,7 @@ class SettingsView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  l10n.restoreBackupBlurb,
-                  style: AppTypography.body,
-                ),
+                Text(l10n.restoreBackupBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.medium),
                 OutlinedButton(
                   onPressed: isBusy
@@ -447,7 +429,9 @@ class SettingsView extends StatelessWidget {
                 TextField(
                   controller: passphraseController,
                   obscureText: true,
-                  decoration: InputDecoration(labelText: l10n.keystorePassphrase),
+                  decoration: InputDecoration(
+                    labelText: l10n.keystorePassphrase,
+                  ),
                 ),
                 if (statusMessage != null) ...[
                   const SizedBox(height: AppSpacing.medium),
@@ -481,7 +465,8 @@ class SettingsView extends StatelessWidget {
                       }
                       if (passphrase.trim().isEmpty) {
                         setDialogState(
-                          () => statusMessage = l10n.validationPassphraseRequired,
+                          () =>
+                              statusMessage = l10n.validationPassphraseRequired,
                         );
                         return;
                       }
@@ -509,7 +494,7 @@ class SettingsView extends StatelessWidget {
                       } else {
                         setDialogState(() {
                           isBusy = false;
-                          statusMessage = viewModel.backupErrorMessage;
+                          statusMessage = viewModel.backupErrorMessageFor(l10n);
                         });
                       }
                     },
@@ -667,9 +652,7 @@ class SettingsView extends StatelessWidget {
                   newPin: newPin,
                 );
                 if (!changed) {
-                  setDialogState(
-                    () => statusMessage = l10n.validationWrongPin,
-                  );
+                  setDialogState(() => statusMessage = l10n.validationWrongPin);
                   return;
                 }
                 if (dialogContext.mounted) {

@@ -9,111 +9,110 @@
   "actionCancel": "Batal",
   "actionSave": "Simpan",
   "actionDelete": "Padam",
-  "actionDone": "Done",
+  "actionDone": "Selesai",
   "actionContinue": "Teruskan",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDismiss": "Tutup",
+  "actionRetry": "Cuba lagi",
+  "actionSkip": "Langkau",
+  "actionConfirm": "Sahkan",
   "actionAdd": "Tambah",
   "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
+  "actionRename": "Namakan semula",
+  "actionHide": "Sembunyikan",
+  "actionCreate": "Cipta",
+  "actionCloseApp": "Tutup aplikasi",
+  "actionUnlock": "Buka kunci",
+  "actionSettle": "Selesaikan",
+  "actionFinish": "Tamat",
+  "actionPreview": "Pratonton",
   "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "Belanja",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionExportCsv": "Eksport CSV",
+  "actionChooseFile": "Pilih fail",
+  "actionRestore": "Pulihkan",
+  "actionFix": "Betulkan",
+  "actionBuy": "Beli",
+  "actionSell": "Jual",
+  "actionDividend": "Dividen",
+  "actionRecordBuy": "Rekod pembelian",
+  "actionRecordSell": "Rekod jualan",
+  "actionRecordDividend": "Rekod dividen",
+  "actionPayCard": "Bayar kad",
+  "actionTransfer": "Pindahan",
+  "actionRecordTransaction": "Rekod transaksi",
+  "actionImportStatement": "Import penyata",
+  "actionClearDates": "Kosongkan tarikh",
+  "actionClearSearch": "Kosongkan carian dan penapis",
+  "actionUseBiometrics": "Guna biometrik",
+  "actionSetPin": "Tetapkan PIN",
+  "actionChangePin": "Tukar PIN",
+  "actionSaveBackup": "Simpan sandaran",
+  "actionRestoreBackup": "Pulihkan sandaran",
+  "actionSaveRule": "Simpan peraturan",
+  "actionConfirmFix": "Sahkan pembetulan",
+  "captureSpent": "Perbelanjaan",
+  "captureReceived": "Penerimaan",
+  "captureMovedMoney": "Wang dipindahkan",
+  "captureImportStatement": "Import penyata",
   "settingsTitle": "Tetapan",
   "settingsLanguage": "Bahasa",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "Bahasa peranti",
+  "settingsFetchFxRates": "Dapatkan kadar pertukaran rujukan",
+  "settingsFetchFxRatesSubtitle": "Menunjukkan kadar pasaran petunjuk di sebelah jumlah destinasi untuk pemindahan silang mata wang, hanya untuk perbandingan - tidak pernah digunakan untuk mengisi jumlah.",
+  "settingsRateProvider": "Penyedia kadar",
+  "settingsFetchMarketPrices": "Dapatkan harga pasaran untuk pelaburan",
+  "settingsFetchMarketPricesSubtitle": "Mencari harga terakhir untuk instrumen yang mempunyai ticker atau ISIN, untuk menganggarkan nilai portfolio. Tidak pernah digunakan untuk merekod dagangan, dan tidak pernah menghantar berapa banyak yang anda pegang.",
+  "settingsMarketPriceProvider": "Penyedia harga pasaran",
+  "settingsFavouriteResearchTool": "Alat penyelidikan kegemaran",
+  "settingsFavouriteResearchToolSubtitle": "Mengetik nama instrumen pada pegangan membuka alat ini dalam pelayar dengan gesaan penyelidikan — bukan integrasi, dan bukan nasihat.",
+  "settingsBackup": "Sandaran",
+  "settingsBackupBlurb": "Simpan salinan tersulit buku anda ke lokasi pilihan anda, atau pulihkan daripadanya. Ini berasingan daripada frasa pemulihan atau fail simpanan kunci anda, yang menyandarkan kunci tandatangan anda, bukan buku anda.",
+  "settingsLock": "Kunci",
+  "settingsLockBlurb": "Perlukan PIN, atau biometrik jika tersedia, untuk membuka aplikasi.",
+  "settingsRequireUnlock": "Perlukan buka kunci untuk membuka aplikasi",
+  "settingsLockAfter": "Kunci selepas",
+  "settingsLockImmediately": "Serta-merta",
+  "settingsLock1Minute": "1 minit",
+  "settingsLock5Minutes": "5 minit",
+  "settingsLock15Minutes": "15 minit",
+  "settingsAllowBiometrics": "Benarkan biometrik juga",
+  "settingsHideSnapshot": "Sembunyikan baki dalam penukar aplikasi",
+  "settingsHideSnapshotSubtitle": "Mengaburkan skrin ini apabila anda bertukar ke aplikasi lain, supaya ia tidak kelihatan sekilas pandang dalam penukar aplikasi.",
+  "settingsHideSnapshotUnavailable": "Menyembunyikan baki dalam penukar aplikasi tidak tersedia pada platform ini.",
+  "settingsPayees": "Penerima bayaran",
+  "settingsManagePayees": "Urus penerima bayaran",
+  "settingsPayeesBlurb": "Nama penerima bayaran yang diingati serta kategori dan akaun lalai mereka, dicadangkan melalui autolengkap semasa merekod transaksi.",
+  "settingsRecurring": "Templat berulang",
+  "settingsManageRecurring": "Urus templat berulang",
+  "settingsRecurringBlurb": "Bil atau pendapatan yang berulang setiap bulan, seperti sewa atau gaji. Templat yang tiba masanya dipaparkan pada Laman utama untuk anda rekod dengan satu ketikan - tidak pernah direkod secara automatik.",
+  "settingsAbout": "Perihal",
+  "providerFrankfurter": "Frankfurter (kadar ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerStooq": "Stooq (sebut harga harian)",
+  "providerYahooFinance": "Yahoo Finance (API carta)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "Tunai & setara tunai",
+  "systemGroupPensionRetirement": "Pencen & persaraan",
+  "systemGroupCreditShortTerm": "Kredit & hutang jangka pendek",
+  "systemGroupLoansMortgages": "Pinjaman & gadai janji",
+  "systemGroupInvestments": "Pelaburan",
+  "systemAccountCashBank": "Tunai & Bank",
+  "systemCategorySalary": "Gaji",
+  "systemCategoryOtherIncome": "Pendapatan Lain",
+  "systemCategoryGroceries": "Barangan runcit",
+  "systemCategoryRentMortgage": "Sewa/Gadai janji",
+  "systemCategoryUtilities": "Utiliti",
+  "systemCategoryTransport": "Pengangkutan",
+  "systemCategoryFoodOut": "Makan di luar",
+  "systemCategoryPhone": "Telefon",
+  "systemCategoryHealth": "Kesihatan",
+  "systemCategoryOtherExpense": "Perbelanjaan Lain",
   "homeThisMonth": "BULAN INI",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "WANG DALAM PERJALANAN",
+  "homeWhatYouHaveMinusWhatYouOwe": "APA YANG ANDA ADA TOLAK APA YANG ANDA HUTANG",
+  "homeWhatYouHave": "Apa yang anda ada {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "Apa yang anda ada {haveAmount} {currency}  •  Apa yang anda hutang {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "Anda menghantar {amount} {currency} daripada {name}",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "Anda menghantar {amount} {currency} kepada {name}",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "Tersembunyi",
+  "allAccounts": "Semua akaun",
+  "savedToPath": "Disimpan ke {path}",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "Fail simpanan kunci tidak dapat dieksport. Anda boleh langkau langkah ini.",
+  "enterPassphraseToProtect": "Masukkan frasa laluan untuk melindungi fail.",
+  "homeTapWhenArrived": "Ketik apabila anda tahu apa yang tiba",
+  "homeReturnedTo": "Dikembalikan kepada {name}",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "TIBA MASA HARI INI",
+  "homeDueLine": "{category} · {account} · ketik untuk rekod",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "Melebihi had",
+  "homeSpentOfLimit": "{spent} daripada {limit}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "Baki: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "Tiada akaun",
+  "homeCashRegister": "Daftar tunai",
+  "homeMarketEstimate": "Anggaran pasaran",
+  "registerTitle": "Daftar",
+  "registerSearchHint": "Penerangan, kategori, atau jumlah",
+  "registerNoTransactions": "Belum ada transaksi",
+  "registerNoEntries": "Belum ada entri direkodkan.",
+  "registerSpentOnly": "Perbelanjaan sahaja",
+  "registerReceivedOnly": "Penerimaan sahaja",
+  "registerAll": "Semua",
+  "registerUnverified": "Belum disahkan - dikecualikan daripada jumlah",
+  "registerSuperseded": "Digantikan oleh migrasi - dikecualikan daripada jumlah",
+  "summaryTitle": "Ringkasan",
+  "summaryTotalIncome": "Jumlah pendapatan",
+  "summaryTotalExpense": "Jumlah perbelanjaan",
+  "summaryDateRange": "{start} hingga {end}",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "Akaun",
+  "categoriesTitle": "Kategori",
+  "accountName": "Nama akaun",
+  "createAccount": "Cipta akaun",
+  "createGroup": "Cipta kumpulan",
+  "editGroup": "Edit kumpulan",
+  "renameAccount": "Namakan semula akaun",
+  "renameCategory": "Namakan semula kategori",
+  "addCategory": "Tambah kategori",
+  "groupLabel": "Kumpulan",
+  "kindLabel": "Jenis",
+  "asset": "Aset",
+  "liability": "Liabiliti",
+  "income": "Pendapatan",
+  "expense": "Perbelanjaan",
+  "thisAccountHoldsInvestments": "Akaun ini menyimpan pelaburan",
+  "thisAccountHoldsInvestmentsSubtitle": "Tunai ditambah inventori yang anda rekod dengan Beli, Jual, dan Dividen.",
+  "thisIsACreditCard": "Ini ialah kad kredit",
+  "openingBalanceOptional": "Baki pembukaan (pilihan)",
+  "currencyIso": "Mata wang (ISO 4217)",
+  "currencyIsoExample": "Mata wang (ISO 4217, cth. USD)",
+  "hideAccountTitle": "Sembunyikan akaun daripada entri baharu?",
+  "hideCategoryTitle": "Sembunyikan kategori daripada entri baharu?",
+  "hideGroupTitle": "Sembunyikan kumpulan daripada entri baharu?",
+  "reassignGroup": "Tugaskan semula kumpulan",
+  "transferRemainingBalance": "Pindahkan baki yang tinggal",
+  "monthlyLimit": "Had bulanan",
+  "monthlyLimitHint": "Had (biarkan kosong untuk kosongkan)",
+  "monthlyLimitBlurb": "Panduan perbelanjaan sehingga tarikh bulan ini yang pilihan untuk kategori perbelanjaan ini.",
+  "manageCategoryRules": "Urus peraturan kategori",
+  "amount": "Jumlah",
+  "category": "Kategori",
+  "account": "Akaun",
+  "fromAccount": "Akaun asal",
+  "toAccount": "Ke akaun",
+  "descriptionOptional": "Penerangan (pilihan)",
+  "alsoRememberPayee": "Ingat juga sebagai penerima bayaran",
+  "splitIntoCategories": "Pecahkan kepada beberapa kategori",
+  "categoryN": "Kategori {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "Jumlah destinasi",
+  "destinationAmountOptional": "Jumlah destinasi (pilihan)",
+  "accountCurrencyAmountOptional": "Jumlah mata wang akaun (pilihan)",
+  "transactionCurrencyOptional": "Mata wang transaksi (pilihan)",
+  "feeOptional": "Fi (pilihan)",
+  "feeAmount": "Jumlah fi",
+  "feeCategory": "Kategori fi",
+  "feeDescriptionOptional": "Penerangan fi (pilihan)",
+  "feeDeducted": "Fi ditolak daripada jumlah di atas",
+  "needTwoAccountsToTransfer": "Cipta sekurang-kurangnya dua akaun aktif untuk membuat pemindahan.",
+  "whatArrivedTitle": "Apa yang tiba?",
+  "whatArrivedBlurb": "Beritahu kami apa yang sebenarnya tiba.",
+  "amountThatArrived": "Jumlah yang tiba",
+  "feeLossCategory": "Kategori fi / kerugian",
+  "alreadySettled": "Sudah diselesaikan.",
+  "holdingsTitle": "Pegangan",
+  "holdingsCash": "Tunai",
+  "holdingsInventory": "INVENTORI",
+  "holdingsBook": "Buku (tunai + kos) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "Anggaran pasaran {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "Belum ada pegangan. Rekod pembelian untuk menambah instrumen.",
+  "holdingsQuotesBlurb": "Sebut harga adalah anggaran, bukan harga broker. Aplikasi ini tidak membuat pesanan.",
+  "holdingsTapNameToResearch": "Ketik nama untuk membuat penyelidikan. Sebut harga adalah anggaran, bukan nasihat.",
+  "instrument": "Instrumen",
+  "newInstrument": "Instrumen baharu",
+  "renameInstrument": "Namakan semula instrumen",
+  "instrumentActions": "Tindakan instrumen",
+  "hideInstrumentTitle": "Sembunyikan {name}?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "Ticker (pilihan)",
+  "isinOptional": "ISIN (pilihan)",
+  "quantity": "Kuantiti",
+  "unitPrice": "Harga seunit",
+  "brokerageOptional": "Brokeraj (pilihan)",
+  "brokerageExpenseCategory": "Kategori perbelanjaan brokeraj",
+  "incomeCategory": "Kategori pendapatan",
+  "gainIncomeCategory": "Kategori pendapatan keuntungan",
+  "lossExpenseCategory": "Kategori perbelanjaan kerugian",
+  "nonCash": "Bukan tunai",
+  "cash": "Tunai",
+  "locked": "Terkunci",
+  "lockUntilHint": "Nota anda sendiri tentang sekatan, bukan peraturan broker.",
+  "instrumentKindStock": "Saham",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "Dana bersama",
+  "instrumentKindBond": "Bon",
+  "instrumentKindOther": "Lain-lain",
+  "quoteUseLive": "Harga langsung",
+  "quoteUseCached": "Harga cache",
+  "quoteUseStale": "Harga lapuk",
+  "quoteUseMissing": "Menggunakan kos (tiada harga)",
+  "quoteUseDisabled": "Sebut harga dimatikan — menggunakan kos/cache",
+  "quoteUseCurrencyMismatch": "Menggunakan kos (mata wang harga berbeza)",
+  "unrealizedLabel": "Belum direalisasi {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} unit · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "Frasa pemulihan anda",
+  "recoveryPhraseConfirmTitle": "Sahkan frasa anda",
+  "recoveryPhraseBlurb": "24 perkataan ini adalah satu-satunya cara untuk memulihkan sejarah transaksi anda jika peranti ini hilang, ditetapkan semula, atau digantikan. Smara Perakaunan tiada pelayan dan tidak dapat memulihkannya untuk anda.\n\nJika anda kehilangan peranti ini dan frasa ini bersama-sama, setiap transaksi yang anda rekodkan menjadi tidak dapat disahkan secara kekal.",
+  "recoveryPhraseWriteDown": "Tuliskan perkataan ini secara berurutan dan simpan di tempat yang selamat serta berasingan daripada peranti ini.",
+  "iveSavedRecoveryPhrase": "Saya telah menyimpan frasa pemulihan saya",
+  "confirmPhraseBlurb": "Masukkan perkataan yang diminta daripada frasa yang baru anda simpan.",
+  "wordNumber": "Perkataan #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
-  "lockScreenTitle": "Dikunci",
-  "enterPinToContinue": "Enter your PIN to continue",
+  "keystoreExportTitle": "Eksport fail simpanan kunci",
+  "keystoreExportBlurb": "Selain frasa pemulihan anda, anda boleh menyimpan fail simpanan kunci tersulit yang dilindungi oleh frasa laluan pilihan anda. Ini pilihan - frasa pemulihan anda sahaja sentiasa mencukupi untuk memulihkan kunci tandatangan anda.",
+  "keystorePassphrase": "Frasa laluan",
+  "exportKeystoreFile": "Eksport fail simpanan kunci",
+  "chooseCurrencyTitle": "Pilih mata wang anda",
+  "chooseCurrencyBlurb": "Setiap kumpulan akaun (Tunai & setara tunai, Pencen & persaraan, dsb.) menggunakan satu mata wang ini buat masa ini. Anda masih boleh menambah akaun dalam mata wang berbeza kemudian dengan mencipta kumpulan baharu untuknya.",
+  "currencyBackfillTitle": "Pilih mata wang untuk kumpulan sedia ada",
+  "currencyBackfillBlurb": "Aplikasi ini kini menyokong pelbagai mata wang. Akaun dan kumpulan akaun sedia ada anda memerlukan mata wang - memandangkan semuanya disediakan sebelum ciri ini wujud, satu pilihan digunakan untuk semuanya.",
+  "firstAccountTitle": "Namakan akaun anda",
+  "firstAccountBlurb": "Ini ialah akaun yang telah disediakan untuk anda - berikan nama yang anda kenali, seperti bank anda. Anda akan merekod satu Perbelanjaan atau Penerimaan seterusnya, kemudian melindungi peranti dengan frasa pemulihan anda.",
+  "whatsMainAccountCalled": "Apakah nama akaun utama anda?",
+  "restoreTitle": "Pulihkan kunci tandatangan",
+  "restoreBlurb": "Peranti ini mempunyai buku sedia ada, tetapi tiada kunci tandatangan yang sepadan. Pulihkannya daripada frasa pemulihan atau fail simpanan kunci anda yang disimpan - data anda akan disahkan seperti biasa, dan tiada apa akan ditandatangani semula atau diubah.",
+  "recoveryPhrase24": "Frasa pemulihan (semua 24 perkataan)",
+  "keystoreFile": "Fail simpanan kunci",
+  "keystoreFileContents": "Kandungan fail simpanan kunci",
+  "optionalBackupFile": "Fail sandaran pilihan",
+  "iDontHavePhrase": "Saya tiada frasa pemulihan atau fail simpanan kunci saya",
+  "migrationTitle": "Hijrah ke kunci baharu",
+  "migrationBlurb": "Tanpa frasa pemulihan atau fail simpanan kunci anda, kunci tandatangan peranti ini tidak dapat dipulihkan. Anda boleh memulakan kunci baharu. Entri lama kekal kelihatan tetapi digantikan.",
+  "iConfirmBooksValid": "Saya mengesahkan buku semasa adalah sah",
+  "whyWeDontEdit": "Mengapa kami tidak mengedit entri lama",
+  "whyWeDontEditBody": "Apabila anda membetulkan kesilapan, kami mengekalkan baris lama dan menambah pembetulan di sebelahnya dan bukannya mengubah apa yang telah anda masukkan. Dengan itu sejarah anda sentiasa menunjukkan dengan tepat apa yang berlaku dan bila anda membetulkannya — tiada apa berubah secara senyap di belakang anda.",
+  "lockTitle": "Buka kunci",
+  "lockScreenTitle": "Terkunci",
+  "enterPinToContinue": "Masukkan PIN anda untuk meneruskan",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
+  "setPinTitle": "Tetapkan PIN",
+  "currentPin": "PIN semasa",
+  "newPin": "PIN baharu",
+  "confirmPin": "Sahkan PIN",
+  "confirmNewPin": "Sahkan PIN baharu",
+  "firstWeekTitle": "Sediakan akaun anda",
+  "addCashAccount": "Tambah akaun tunai",
+  "addCreditCard": "Tambah kad kredit",
+  "cashAccountName": "Nama akaun tunai",
+  "cardName": "Nama kad",
+  "paidFromBank": "Dibayar daripada bank",
+  "paidFromCard": "Dibayar daripada kad",
+  "choosePassphraseTitle": "Pilih frasa laluan untuk melindungi sandaran ini. Tiada pemulihan jika anda terlupa.",
+  "replaceBooksTitle": "Gantikan buku tempatan anda?",
+  "replaceBooksBody": "Ini menggantikan semua yang ada dalam aplikasi ini dengan sandaran. Tutup dan buka semula aplikasi selepas itu.",
+  "chooseBackupFileFirst": "Pilih fail sandaran dahulu.",
+  "backupRestored": "Sandaran dipulihkan",
+  "backupRestoredBody": "Buku anda telah dipulihkan. Tutup dan buka semula aplikasi untuk meneruskan.",
+  "fixThisEntry": "Betulkan entri ini",
+  "fixBlurb": "Baris lama kekal sepertimana asalnya. Mengesahkan menambah baris pembalikan dan baris yang dibetulkan.",
+  "importStatementTitle": "Import Penyata",
   "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "importOfxQfxFile": "Import fail OFX / QFX",
+  "importCsvFile": "Import fail CSV",
+  "whatKindOfStatement": "Apakah jenis fail penyata yang anda ada?",
+  "chooseAccountForFile": "Pilih akaun yang dimiliki fail ini.",
+  "importIntoAccount": "Import ke akaun",
+  "useSavedProfile": "Gunakan profil yang disimpan",
+  "saveMappingProfile": "Simpan pemetaan ini sebagai profil (pilihan)",
+  "renameProfile": "Namakan semula profil",
+  "deleteProfileTitle": "Padam profil?",
+  "fileHasHeader": "Fail mempunyai baris pengepala",
+  "dateColumn": "Lajur tarikh",
+  "dateFormatHint": "Format tarikh (cth. dd/MM/yyyy)",
+  "amountColumn": "Lajur jumlah",
+  "amountConvention": "Konvensyen jumlah",
+  "signedAmountColumn": "Lajur jumlah bertanda",
+  "separateDebitCredit": "Lajur debit / kredit berasingan",
+  "debitColumn": "Lajur debit",
+  "creditColumn": "Lajur kredit",
+  "decimalSeparator": "Pemisah perpuluhan (. atau ,)",
+  "descriptionColumns": "Lajur penerangan",
+  "referenceIdColumn": "Lajur id rujukan (pilihan)",
+  "skippedRows": "Baris dilangkau",
+  "parsedTransactionCount": "{count} transaksi dihurai",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} dilangkau atau dikecualikan",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} direkod, {failed} gagal",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "Kategori untuk semua",
+  "saveAsRule": "Simpan sebagai peraturan?",
+  "saveAsRuleBlurb": "Import akan datang yang penerangannya mengandungi kata kunci ini akan menggunakan kategori ini.",
+  "keyword": "Kata kunci",
+  "noSavedRules": "Belum ada peraturan disimpan. Tetapkan kategori kepada sekumpulan baris untuk simpan peraturan.",
+  "deleteRuleTitle": "Padam peraturan?",
+  "editRule": "Edit peraturan",
+  "rowsGrouped": "{count} baris",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "Pilih fail penyata {extensions} untuk diimport",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "Penerima bayaran",
+  "addPayee": "Tambah penerima bayaran",
+  "renamePayee": "Namakan semula penerima bayaran",
+  "deletePayeeTitle": "Padam penerima bayaran?",
+  "noPayeesYet": "Belum ada penerima bayaran",
+  "recurringTitle": "Templat berulang",
+  "noRecurringYet": "Belum ada templat berulang",
+  "deleteTemplateTitle": "Padam templat berulang?",
+  "dayOfMonth": "Hari dalam bulan (1-31)",
+  "dayOfMonthNote": "Bulan dengan hari lebih sedikit menggunakan hari terakhirnya sendiri.",
+  "dayOfMonthLine": "Hari {day} bulan tersebut - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
-  "errorGeneric": "Sesuatu tidak kena. Cuba lagi.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "name": "Nama",
+  "none": "Tiada",
+  "currency": "Mata wang",
+  "errorGeneric": "Sesuatu tidak kena. Sila cuba lagi.",
+  "errorSigningIdentityMismatch": "Frasa pemulihan atau fail simpanan kunci ini tidak sepadan dengan mana-mana identiti tandatangan dalam pangkalan data ini.",
+  "errorInvalidLedgerBackup": "Fail ini bukan sandaran Smara yang sah.",
+  "errorInvalidLedgerBackupNoIdentity": "Sandaran ini tiada identiti tandatangan - ia bukan sandaran Smara yang sah.",
+  "errorInvalidLedgerBackupUnverified": "Sandaran ini tidak disahkan sebagai buku yang utuh, jadi ia tidak dipulihkan.",
+  "errorInvalidLedgerBackupUnreadable": "Fail ini tidak dapat dibuka sebagai sandaran Smara: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
-  "errorAmountMustBePositive": "Jumlah mestilah positif.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorForeignBackupIdentity": "Sandaran ini adalah milik identiti tandatangan yang berbeza daripada yang ada pada peranti ini.",
+  "errorAccountNotFinancial": "Itu bukan akaun kewangan.",
+  "errorAccountArchived": "Akaun itu tersembunyi.",
+  "errorAccountNotArchived": "Akaun itu tidak tersembunyi.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Tiada baki tinggal untuk dipindahkan.",
+  "errorAccountHasNoGroup": "Akaun itu tiada kumpulan ditugaskan.",
+  "errorGroupHasNoCurrency": "Kumpulan itu belum mempunyai mata wang ditetapkan.",
+  "errorGroupNotFound": "Kumpulan akaun itu tidak dijumpai.",
+  "errorInvestmentAccountsMustBeAssets": "Hanya akaun aset boleh ditanda sebagai akaun pelaburan.",
+  "errorCreditCardsMustBeLiabilities": "Hanya akaun liabiliti boleh ditanda sebagai kad kredit.",
+  "errorOpeningBalanceMustBePositive": "Baki pembukaan mesti positif apabila disediakan.",
+  "errorAccountTypeDoesNotMatchGroup": "Jenis akaun itu tidak sepadan dengan kumpulan.",
+  "errorLastActiveAccount": "Tidak boleh sembunyikan akaun kewangan aktif terakhir.",
+  "errorCurrencyRequiredToCreateGroup": "Mata wang diperlukan untuk mencipta kumpulan.",
+  "errorSystemGroupCannotBeArchived": "Kumpulan akaun terbina dalam tidak boleh disembunyikan.",
+  "errorGroupAlreadyArchived": "Kumpulan itu sudah tersembunyi.",
+  "errorCannotArchiveGroupWithAccounts": "Tidak boleh sembunyikan kumpulan yang masih mempunyai akaun aktif.",
+  "errorSystemGroupNeverArchived": "Kumpulan akaun terbina dalam tidak pernah disembunyikan.",
+  "errorAccountGroupsCannotBeDeleted": "Kumpulan akaun tidak boleh dipadam.",
+  "errorCannotReassignDifferentCurrency": "Tidak boleh alihkan akaun ini ke kumpulan dengan mata wang berbeza.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "Tidak boleh tukar mata wang semasa kumpulan mempunyai akaun aktif.",
+  "errorAmountMustBePositive": "Jumlah mesti positif.",
+  "errorAccountCurrencyAmountMustBePositive": "Jumlah mata wang akaun mesti positif.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "Jumlah mata wang akaun hanya untuk entri mata wang asing.",
+  "errorSplitNeedsTwoLines": "Pembahagian memerlukan sekurang-kurangnya dua baris kategori.",
+  "errorSplitLineMustBePositive": "Setiap baris pembahagian mesti jumlah yang positif.",
+  "errorSplitLinesMustSumToTotal": "Baris pembahagian mesti berjumlah sama dengan jumlah transaksi.",
+  "errorTransferAmountMustBePositive": "Jumlah pindahan mesti positif.",
+  "errorTransferAccountsMustDiffer": "Akaun sumber dan destinasi mesti berbeza.",
+  "errorCloseoutRequiresDestinationAmount": "Penutupan silang mata wang memerlukan jumlah destinasi yang diketahui.",
+  "errorDestinationAmountNotForSameCurrency": "Jumlah destinasi hanya untuk pemindahan silang mata wang.",
+  "errorDestinationAmountMustBePositive": "Jumlah destinasi mesti positif.",
+  "errorInvestmentCashExceeded": "Tidak boleh pindah lebih daripada tunai akaun pelaburan ini.",
+  "errorCannotReverseUnsettledProvisional": "Selesaikan pemindahan tertangguh ini dan bukannya membalikkannya.",
+  "errorAlreadyReversed": "Entri ini telah dibetulkan. Baris asal kekal sepertimana adanya.",
+  "errorNotActiveExpenseCategory": "Pilih kategori perbelanjaan aktif.",
+  "errorNotActiveIncomeCategory": "Pilih kategori pendapatan aktif.",
+  "errorSettledAmountMustNotBeNegative": "Jumlah yang tiba tidak boleh negatif.",
+  "errorPendingTransferNotFound": "Pemindahan tertangguh itu tidak dijumpai.",
+  "errorPendingTransferAlreadySettled": "Pemindahan tertangguh itu sudah diselesaikan.",
+  "errorSettledToMustBeSourceOrDestination": "Pilih akaun sumber atau destinasi asal.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "Kategori fi hanya digunakan apabila wang dikembalikan ke akaun sumber.",
+  "errorSettledAmountMustBePositiveForDelivery": "Masukkan jumlah positif untuk apa yang tiba.",
+  "errorSettledAmountExceedsProvisional": "Jumlah itu lebih daripada yang dihantar.",
+  "errorInstrumentNotFound": "Instrumen itu tidak dijumpai.",
+  "errorIncomeRequiredForNonCash": "Kategori pendapatan aktif diperlukan untuk pemerolehan bukan tunai.",
+  "errorInsufficientCash": "Tunai tidak mencukupi dalam akaun pelaburan ini untuk pembelian itu.",
+  "errorSellQuantityAndPriceMustBePositive": "Kuantiti jualan dan harga seunit mesti positif.",
+  "errorLockedUntil": "Tidak boleh jual: sesetengah unit dikunci sehingga {date}.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "Tidak boleh jual lebih daripada yang anda pegang tanpa kunci sekarang.",
+  "errorIncomeRequiredForGain": "Kategori pendapatan aktif diperlukan untuk keuntungan direalisasi.",
+  "errorExpenseRequiredForLoss": "Kategori perbelanjaan aktif diperlukan untuk kerugian direalisasi.",
+  "errorBrokerageFailedAfterBuy": "Pembelian direkod, tetapi fi brokeraj gagal: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "Jualan direkod, tetapi fi brokeraj gagal: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "Jumlah dividen mesti positif.",
+  "errorNotInvestmentAccount": "Itu bukan akaun pelaburan.",
+  "errorNoInventoryCompanion": "Akaun pelaburan ini kehilangan pasangan inventorinya.",
+  "errorInvestmentReversalBlocked": "Tidak boleh balikkan pembelian ini: jualan kemudian bergantung pada unitnya. Balikkan jualan bergantung dahulu: {sells}.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "Had bulanan mesti positif.",
+  "errorTemplateAmountMustBePositive": "Jumlah templat mesti positif.",
+  "errorOfxUnrecognized": "Tidak dapat mengecam fail ini sebagai OFX.",
+  "errorCsvEmpty": "Fail yang dipilih kosong.",
+  "errorCsvUnreadable": "Tidak dapat membaca fail ini sebagai CSV.",
+  "errorCsvNoRows": "Fail yang dipilih tiada baris.",
+  "errorBackupCreateFailed": "Tidak dapat mencipta sandaran: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "Tidak dapat memulihkan sandaran ini - frasa laluan salah, atau bukan fail sandaran Smara.",
+  "validationAmountAccountCategoryRequired": "Jumlah, akaun, dan kategori diperlukan.",
+  "validationAmountAccountRequired": "Jumlah dan akaun diperlukan.",
+  "validationSplitLineIncomplete": "Setiap baris pembahagian memerlukan kategori dan jumlah.",
+  "validationSplitSumMismatch": "Baris pembahagian mesti berjumlah sama dengan jumlah transaksi.",
+  "validationFromToAmountRequired": "Akaun asal, akaun destinasi, dan jumlah diperlukan.",
+  "validationAmountArrivedRequired": "Jumlah yang tiba diperlukan.",
+  "validationChooseReceivingAccount": "Pilih akaun mana yang menerima dana.",
+  "validationAccountCategoryRequired": "Akaun dan kategori diperlukan.",
+  "validationFixFailed": "Tidak dapat menyimpan pembetulan ini.",
+  "validationNameRequired": "Namakan akaun utama anda.",
+  "validationStillLoading": "Masih memuatkan - cuba lagi sebentar.",
+  "validationSaveAccountNameFailed": "Tidak dapat menyimpan nama akaun.",
+  "validationWrongPin": "PIN salah. Cuba lagi.",
+  "validationCategoryMustBeIncomeOrExpense": "Kategori mesti Pendapatan atau Perbelanjaan.",
+  "validationOnlyExpenseHasMonthlyLimit": "Hanya kategori Perbelanjaan boleh mempunyai had bulanan.",
+  "validationInvalidTemplate": "Templat tidak sah.",
+  "validationWrongKeystorePassphrase": "Frasa laluan salah untuk fail simpanan kunci ini.",
+  "validationInvalidKeystoreFile": "Itu tidak kelihatan seperti fail simpanan kunci yang sah.",
+  "validationRestorePhraseFailed": "Tidak dapat memulihkan daripada frasa pemulihan itu.",
+  "validationGenerateKeyFailed": "Tidak dapat menjana kunci tandatangan pada peranti ini: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "Tidak dapat menyimpan mata wang ini: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "Migrasi gagal. Sila cuba lagi.",
+  "validationChooseBackupFile": "Pilih fail sandaran dahulu.",
+  "validationPassphraseRequired": "Masukkan frasa laluan.",
+  "validationPinsDoNotMatch": "Kedua-dua PIN tidak sepadan.",
+  "validationFeePositiveWithCategory": "Fi pemindahan mesti jumlah positif dengan kategori perbelanjaan dipilih.",
+  "validationFeeMustBeLessThanAmount": "Fi mesti kurang daripada jumlah untuk pemindahan fi-ditolak.",
+  "validationTransferSavedFeeFailed": "Pemindahan disimpan, tetapi fi tidak dapat direkodkan: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "Masukkan jumlah yang sah.",
+  "validationConfirmWordMismatch": "Perkataan {n} tidak sepadan dengan frasa anda yang disimpan. Semak dan cuba lagi.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "Kuantiti pembelian dan harga seunit mesti positif.",
+  "errorInstrumentArchived": "Tidak boleh membeli instrumen yang tersembunyi.",
+  "errorNonCashCannotIncludeBrokerage": "Pemerolehan bukan tunai tidak boleh termasuk brokeraj.",
+  "errorBrokerageRequiresExpenseCategory": "Kategori perbelanjaan aktif diperlukan apabila brokeraj adalah positif.",
+  "errorSellProceedsMustCoverBrokerage": "Hasil jualan mesti sekurang-kurangnya jumlah brokeraj.",
+  "homeSpentOfLimitThisMonth": "{spent} daripada {limit} bulan ini",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "Buka kunci Smara Perakaunan",
   "searchLabel": "Cari",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "Baki pembukaan",
+  "transferToName": "Pindahan: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "Fi untuk pemindahan",
+  "feeForTransferTo": "Fi untuk pemindahan kepada {name}",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "Tidak dapat membuka pemilih fail: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "Sila pilih fail .{extensions}",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "Kod mata wang (ISO 4217, cth. USD)",
+  "splitCounterpartMore": "{name} +{count} lagi",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "Tarikh",
+  "noneSelected": "Tiada",
+  "reviewEntriesBeforeContinuing": "Semak entri di bawah ({count} jumlah) sebelum meneruskan.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "Anda menerima {amount}",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "Biarkan kosong jika kadar pertukaran belum diketahui.",
+  "recordTradeBlurb": "Rekod dagangan yang telah berlaku. Aplikasi ini tidak membuat pesanan.",
+  "feeOnTopBlurb": "Aktif: jumlah di atas ialah jumlah keseluruhan yang diambil daripada akaun ini; fi ditolak daripadanya.",
+  "feeBankBlurb": "Komisen pendahuluan yang dikenakan oleh bank anda atau perantara.",
+  "validationPinMinLength": "PIN mesti sekurang-kurangnya 4 digit.",
+  "restoreBackupBlurb": "Ini menggantikan semua yang ada dalam aplikasi ini dengan sandaran — ia tidak digabungkan. Pilih fail sandaran dan masukkan frasa laluan yang anda gunakan untuk melindunginya.",
+  "actionReplace": "Gantikan",
+  "hideAccountBody": "{name} tidak lagi tersedia untuk transaksi baharu.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "{name} tidak lagi ditawarkan semasa mencipta atau menugaskan semula akaun.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "{name} tidak lagi ditawarkan semasa merekod transaksi baharu.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "Instrumen tersembunyi kekal pada pembelian dan jualan lepas. Anda masih boleh merekod dividen untuknya.",
+  "nameHidden": "{name} (tersembunyi)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "Tiada mata wang ditetapkan",
+  "deletePayeeBody": "{name} dan lalainya yang diingati akan dialih keluar. Transaksi lepas tidak terjejas.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} tidak lagi ditawarkan sebagai tiba masa. Transaksi lepas yang telah direkodkannya tidak terjejas.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "Pemetaan lajur yang disimpan \"{name}\" akan dipadam. Penyata yang telah diimport dengannya tidak terjejas.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "Import tidak lagi dikategorikan secara automatik oleh \"{keyword}\". Transaksi yang telah dikategorikan menggunakan peraturan ini tidak terjejas.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "Secara pilihan tambah kad kredit atau akaun tunai sekarang - anda sentiasa boleh menambah lebih banyak akaun kemudian daripada Tetapan.",
+  "deliveredToDestination": "Dihantar ke destinasi",
+  "deliveredToName": "Dihantar kepada {name}",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "Anda menerima {amount} {currency} kurang daripada jangkaan - pilih kategori untuk menampung perbezaan itu.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "Julat tarikh",
+  "addTemplate": "Tambah templat",
+  "editTemplate": "Edit templat",
+  "validationFillTemplateFields": "Isikan setiap medan dengan jumlah dan hari yang sah.",
+  "saveCsvExport": "Simpan eksport CSV",
+  "referenceRate": "Kadar rujukan",
+  "yourRate": "Kadar anda",
+  "leaveBlankIfThisWasAccountCurrency": "Biarkan kosong jika ini dalam {currency}, mata wang akaun itu sendiri.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "Kunci sehingga (pilihan)",
+  "lockedUntilDate": "Dikunci sehingga {date}",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "Menyalin gesaan penyelidikan — tiada URL pelayar tersedia, atau anda luar talian.",
+  "openedFavouriteResearchTool": "Membuka alat penyelidikan kegemaran anda.",
+  "looksLikeGain": "Ini kelihatan seperti keuntungan",
+  "looksLikeLoss": "Ini kelihatan seperti kerugian",
+  "looksLikeBreakEven": "Ini kelihatan pulang modal",
+  "sellableQuantity": "{name} ({qty} boleh dijual)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "Lajur {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "Mengimport...",
+  "confirmImport": "Sahkan import",
+  "manageSavedCategoryRules": "Urus Peraturan Kategori Tersimpan",
+  "statementCurrencyMismatch": "Mata wang fail ini ({currency}) tidak sepadan dengan mata wang akaun yang dipilih.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "Peraturan kategori",
+  "possibleDuplicate": "kemungkinan pendua",
+  "unknownCategory": "Kategori tidak diketahui"
 }

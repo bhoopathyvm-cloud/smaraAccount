@@ -63,20 +63,17 @@ class _FirstAccountNameViewState extends State<FirstAccountNameView> {
                   style: AppTypography.sectionLabel,
                 ),
                 const SizedBox(height: AppSpacing.small),
-                Text(
-                  l10n.firstAccountBlurb,
-                  style: AppTypography.metadata,
-                ),
+                Text(l10n.firstAccountBlurb, style: AppTypography.metadata),
                 const SizedBox(height: AppSpacing.medium),
                 TextField(
                   controller: _controller,
                   decoration: InputDecoration(labelText: l10n.accountName),
                   onChanged: widget.viewModel.setName,
                 ),
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

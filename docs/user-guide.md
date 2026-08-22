@@ -57,20 +57,18 @@ the same phrase again.
 
 ## Setting up your accounts
 
-Right after onboarding finishes, a short one-time wizard helps you get
-from "just set up" to "ready to record real life":
+Right after onboarding finishes, a short one-time wizard offers two
+optional accounts beyond the main one you already named during
+onboarding (step 2 above):
 
-- **Name your main account** — a starter account already exists for you;
-  give it the name you actually recognize, like your bank. This step is
-  required.
 - **Add a credit card** (optional) — name it to create a liability
   account for it.
 - **Add a cash account** (optional) — name it to create a second asset
   account for cash you track separately.
 
-Skipping the optional steps just leaves you with the one main account,
-renamed — you can always add more accounts later from the Accounts tab.
-This wizard only ever appears once.
+Skipping both just leaves you with the one main account — you can
+always add more accounts later from the Accounts tab. This wizard only
+ever appears once.
 
 ## Restoring on a new device or after a reinstall
 

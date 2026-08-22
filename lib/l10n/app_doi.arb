@@ -8,112 +8,111 @@
   "navCategories": "श्रेणियां",
   "actionCancel": "रद्द",
   "actionSave": "सुरक्षित करो",
-  "actionDelete": "Delete",
-  "actionDone": "Done",
-  "actionContinue": "Continue",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDelete": "मेटो",
+  "actionDone": "होई गेआ",
+  "actionContinue": "अग्गें चलो",
+  "actionDismiss": "बंद करो",
+  "actionRetry": "फिरी कोशिश करो",
+  "actionSkip": "छोड़ो",
+  "actionConfirm": "पुश्टि करो",
   "actionAdd": "जोड़ो",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "खर्च",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionEdit": "संपादन करो",
+  "actionRename": "नां बदलो",
+  "actionHide": "छपाओ",
+  "actionCreate": "बणाओ",
+  "actionCloseApp": "एप बंद करो",
+  "actionUnlock": "अनलॉक करो",
+  "actionSettle": "निपटारा करो",
+  "actionFinish": "पूरा करो",
+  "actionPreview": "पहलें दिखाओ",
+  "actionImport": "आयात करो",
+  "actionExportCsv": "CSV निकालो",
+  "actionChooseFile": "फाइल चुनो",
+  "actionRestore": "बहाल करो",
+  "actionFix": "ठीक करो",
+  "actionBuy": "खरीदो",
+  "actionSell": "बेचो",
+  "actionDividend": "लाभांश",
+  "actionRecordBuy": "खरीद दर्ज करो",
+  "actionRecordSell": "बिक्री दर्ज करो",
+  "actionRecordDividend": "लाभांश दर्ज करो",
+  "actionPayCard": "कार्ड दा भुगतान करो",
+  "actionTransfer": "ट्रांसफर करो",
+  "actionRecordTransaction": "लेन-देन दर्ज करो",
+  "actionImportStatement": "स्टेटमेंट आयात करो",
+  "actionClearDates": "तारीखां साफ करो",
+  "actionClearSearch": "तलाश कने फिल्टर साफ करो",
+  "actionUseBiometrics": "बायोमेट्रिक इस्तेमाल करो",
+  "actionSetPin": "पिन सेट करो",
+  "actionChangePin": "पिन बदलो",
+  "actionSaveBackup": "बैकअप सुरक्षित करो",
+  "actionRestoreBackup": "बैकअप बहाल करो",
+  "actionSaveRule": "नियम सुरक्षित करो",
+  "actionConfirmFix": "सुधार दी पुश्टि करो",
+  "captureSpent": "खर्च होआ",
+  "captureReceived": "मिल्या",
+  "captureMovedMoney": "पैसे ट्रांसफर होए",
+  "captureImportStatement": "स्टेटमेंट आयात करो",
   "settingsTitle": "सेटिंगां",
   "settingsLanguage": "भाशा",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "डिवाइस दी भाशा",
+  "settingsFetchFxRates": "संदर्भ विनिमय दर लयाओ",
+  "settingsFetchFxRatesSubtitle": "क्रॉस-करेंसी ट्रांसफर पर मंजिल राशि दे बरोबर इक अनुमानित बजार दर दस्सदा, सिर्फ तुलना आस्तै - राशि भरने आस्तै कदी इस्तेमाल नेईं होंदा।",
+  "settingsRateProvider": "दर प्रदाता",
+  "settingsFetchMarketPrices": "निवेश आस्तै बजार भाव लयाओ",
+  "settingsFetchMarketPricesSubtitle": "टिकर जां ISIN आळे इंस्ट्रूमेंट आस्तै आखरी भाव लब्भदा, ते पोर्टफोलियो दी कीमत दा अंदाजा लाना आस्तै। कदी बी सौदा दर्ज करने आस्तै इस्तेमाल नेईं होंदा, कने कदी नेईं दस्सदा जे तुसां कितणे रक्खे न।",
+  "settingsMarketPriceProvider": "बजार भाव प्रदाता",
+  "settingsFavouriteResearchTool": "पसंदीदा शोध टूल",
+  "settingsFavouriteResearchToolSubtitle": "होल्डिंग च्चों इंस्ट्रूमेंट दा नां दबाने पर ब्राउज़र च्च शोध प्रॉम्प्ट सोगी एह् टूल खुल्लदा — कोई इंटीग्रेशन नेईं, कने कोई सलाह नेईं।",
+  "settingsBackup": "बैकअप",
+  "settingsBackupBlurb": "अपने खातेआं दी इक एनक्रिप्टेड कॉपी अपने चुणी दित्ती जगहा च्च सुरक्षित करो, जां उत्थुआं बहाल करो। एह् तुंदी रिकवरी फ्रेज जां कीस्टोर फाइलै थमां बक्खरा ऐ, जेह्ड़ी तुंदी साइनिंग की दी बैकअप करदी ऐ, खातेआं दी नेईं।",
+  "settingsLock": "लॉक",
+  "settingsLockBlurb": "एप खोलने आस्तै पिन, जां जित्थै उपलब्ध होऐ बायोमेट्रिक, दी लोड़ करो।",
+  "settingsRequireUnlock": "एप खोलने आस्तै अनलॉक जरूरी करो",
+  "settingsLockAfter": "इत्थें बाद लॉक करो",
+  "settingsLockImmediately": "फौरन",
+  "settingsLock1Minute": "1 मिनट",
+  "settingsLock5Minutes": "5 मिनट",
+  "settingsLock15Minutes": "15 मिनट",
+  "settingsAllowBiometrics": "बायोमेट्रिक बी मनजूर करो",
+  "settingsHideSnapshot": "एप स्विचर च्च बकाया छपाओ",
+  "settingsHideSnapshotSubtitle": "जिसलै तुसें कुसी होर एप पर स्विच करदे ओ तां एह् स्क्रीन छपाई जंदी ऐ, ताकि एह् एप स्विचर च्च झट नेईं दिक्खी सकै।",
+  "settingsHideSnapshotUnavailable": "एप स्विचर च्च बकाया छपाना एह् प्लेटफार्म पर उपलब्ध नेईं ऐ।",
+  "settingsPayees": "पेई",
+  "settingsManagePayees": "पेई प्रबंधन करो",
+  "settingsPayeesBlurb": "याद रक्खी पेई दे नां कने उंदी डिफॉल्ट श्रेणी कने खाता, जेह्ड़े लेन-देन दर्ज करदे बगत ऑटोकम्प्लीट आसतै सुझाए जांदे न।",
+  "settingsRecurring": "बार-बार होने आळे टेम्पलेट",
+  "settingsManageRecurring": "बार-बार होने आळे टेम्पलेट प्रबंधन करो",
+  "settingsRecurringBlurb": "बिल जां आमदन जेह्ड़े हर म्हीने दुहराए दन्दे न, जियां किराया जां तनखा। इक ड्यू टेम्पलेट होम पर दिक्खी सकदा ऐ तां तुसें इक टैप कन्नै दर्ज करी सकनी ओ - कदी अपने आप पोस्ट नेईं होंदा।",
+  "settingsAbout": "बारे",
+  "providerFrankfurter": "फ्रैंकफर्टर (ECB दर)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerStooq": "स्टूक (रोजाना भाव)",
+  "providerYahooFinance": "याहू फाइनांस (चार्ट API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "नकद कने नकद दे बराबर",
+  "systemGroupPensionRetirement": "पेंशन कने सेवा-निवृत्ति",
+  "systemGroupCreditShortTerm": "क्रेडिट कने छोटी अवधि दा कर्ज",
+  "systemGroupLoansMortgages": "कर्जा कने मॉर्टगेज",
+  "systemGroupInvestments": "निवेश",
+  "systemAccountCashBank": "नकद कने बैंक",
+  "systemCategorySalary": "तनखा",
+  "systemCategoryOtherIncome": "होर आमदन",
+  "systemCategoryGroceries": "किराना",
+  "systemCategoryRentMortgage": "किराया/मॉर्टगेज",
+  "systemCategoryUtilities": "बिजली-पाणी आदि",
+  "systemCategoryTransport": "आवागमन",
+  "systemCategoryFoodOut": "बाहर दा खाना",
+  "systemCategoryPhone": "फोन",
+  "systemCategoryHealth": "सेह्त",
+  "systemCategoryOtherExpense": "होर खर्च",
   "homeThisMonth": "इस म्हीने",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "पैसा रस्ते च्च",
+  "homeWhatYouHaveMinusWhatYouOwe": "तुंदे कोल जो ऐ माइनस तुसें जो देना ऐ",
+  "homeWhatYouHave": "तुंदे कोल ऐ {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "तुंदे कोल ऐ {haveAmount} {currency}  •  तुसें देना ऐ {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "तुसें {name} थमां {amount} {currency} भेजे",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "तुसें {name} जो {amount} {currency} भेजे",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "छपाया होआ",
+  "allAccounts": "सारे खाते",
+  "savedToPath": "{path} च्च सुरक्षित होआ",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "कीस्टोर फाइल एक्सपोर्ट नेईं होई सकी। तुसें एह् कदम छोड़ी सकदे ओ।",
+  "enterPassphraseToProtect": "फाइल दी रक्षा आस्तै इक पासफ्रेज पाओ।",
+  "homeTapWhenArrived": "जिसलै पता लगै जाए के केह् पुज्जेआ तां टैप करो",
+  "homeReturnedTo": "{name} जो वापस आया",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "अज्ज देना ऐ",
+  "homeDueLine": "{category} · {account} · दर्ज करने आस्तै टैप करो",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "सीमा शा बद्धी",
+  "homeSpentOfLimit": "{limit} च्चा {spent}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "बाकी: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "कोई खाता नेईं",
+  "homeCashRegister": "नकद रजिस्टर",
+  "homeMarketEstimate": "बजार अनुमान",
+  "registerTitle": "रजिस्टर",
+  "registerSearchHint": "विवरण, श्रेणी, जां रकम",
+  "registerNoTransactions": "हाले तगर कोई लेन-देन नेईं",
+  "registerNoEntries": "हाले तगर कोई एंट्री दर्ज नेईं होई।",
+  "registerSpentOnly": "सिर्फ खर्च",
+  "registerReceivedOnly": "सिर्फ मिली रकम",
+  "registerAll": "सारे",
+  "registerUnverified": "असत्यापित - कुल च्चा बाह्र",
+  "registerSuperseded": "माइग्रेशन कन्नै बदली गेआ - कुल च्चा बाह्र",
+  "summaryTitle": "सार",
+  "summaryTotalIncome": "कुल आमदन",
+  "summaryTotalExpense": "कुल खर्च",
+  "summaryDateRange": "{start} थमां {end} तगर",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "खाते",
+  "categoriesTitle": "श्रेणियां",
+  "accountName": "खाते दा नां",
+  "createAccount": "खाता बणाओ",
+  "createGroup": "समूह बणाओ",
+  "editGroup": "समूह संपादन करो",
+  "renameAccount": "खाते दा नां बदलो",
+  "renameCategory": "श्रेणी दा नां बदलो",
+  "addCategory": "श्रेणी जोड़ो",
+  "groupLabel": "समूह",
+  "kindLabel": "किस्म",
+  "asset": "संपत्ति",
+  "liability": "देनदारी",
+  "income": "आमदन",
+  "expense": "खर्च",
+  "thisAccountHoldsInvestments": "एह् खाता निवेश रक्खदा ऐ",
+  "thisAccountHoldsInvestmentsSubtitle": "नकद कने खरीद, बिक्री, कने लाभांश कन्नै दर्ज कीता इन्वेंटरी।",
+  "thisIsACreditCard": "एह् इक क्रेडिट कार्ड ऐ",
+  "openingBalanceOptional": "शुरुआती बकाया (वैकल्पिक)",
+  "currencyIso": "करेंसी (ISO 4217)",
+  "currencyIsoExample": "करेंसी (ISO 4217, जियां USD)",
+  "hideAccountTitle": "नमें एंट्रियां थमां खाता छपाना ऐ?",
+  "hideCategoryTitle": "नमें एंट्रियां थमां श्रेणी छपाना ऐ?",
+  "hideGroupTitle": "नमें एंट्रियां थमां समूह छपाना ऐ?",
+  "reassignGroup": "समूह मुड़ी नियुक्त करो",
+  "transferRemainingBalance": "बाकी बकाया ट्रांसफर करो",
+  "monthlyLimit": "म्हीने दी सीमा",
+  "monthlyLimitHint": "सीमा (साफ करने आस्तै खाली छोड़ो)",
+  "monthlyLimitBlurb": "एह् खर्च श्रेणी आस्तै इक वैकल्पिक महीना-तगर खर्च दा मार्गदर्शन ऐ।",
+  "manageCategoryRules": "श्रेणी नियम प्रबंधन करो",
+  "amount": "रकम",
+  "category": "श्रेणी",
+  "account": "खाता",
+  "fromAccount": "किस खाते थमां",
+  "toAccount": "किस खाते जो",
+  "descriptionOptional": "विवरण (वैकल्पिक)",
+  "alsoRememberPayee": "पेई दे रूप च्च बी याद रक्खो",
+  "splitIntoCategories": "गिणी श्रेणियां च्च बंडो",
+  "categoryN": "श्रेणी {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "मंजिल दी रकम",
+  "destinationAmountOptional": "मंजिल दी रकम (वैकल्पिक)",
+  "accountCurrencyAmountOptional": "खाता-करेंसी रकम (वैकल्पिक)",
+  "transactionCurrencyOptional": "लेन-देन करेंसी (वैकल्पिक)",
+  "feeOptional": "फीस (वैकल्पिक)",
+  "feeAmount": "फीस दी रकम",
+  "feeCategory": "फीस श्रेणी",
+  "feeDescriptionOptional": "फीस विवरण (वैकल्पिक)",
+  "feeDeducted": "फीस उप्पर दित्ती रकम च्चा कट्टी जंदी ऐ",
+  "needTwoAccountsToTransfer": "ट्रांसफर करने आस्तै घट्टोघट्ट दो सक्रिय खाते बणाओ।",
+  "whatArrivedTitle": "केह् पुज्जेआ?",
+  "whatArrivedBlurb": "साढ़े ते दस्सो जे असल च्च केह् पुज्जेआ।",
+  "amountThatArrived": "पुज्जी रकम",
+  "feeLossCategory": "फीस / नुकसान श्रेणी",
+  "alreadySettled": "पहलें ही निपटारा होई गेआ।",
+  "holdingsTitle": "होल्डिंग",
+  "holdingsCash": "नकद",
+  "holdingsInventory": "इन्वेंटरी",
+  "holdingsBook": "बुक (नकद + लागत) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "बजार अनुमान {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "हाले तगर कोई होल्डिंग नेईं। इंस्ट्रूमेंट जोड़ने आस्तै इक खरीद दर्ज करो।",
+  "holdingsQuotesBlurb": "भाव अनुमान न, ब्रोकर दा भाव नेईं। एह् एप कोई ऑर्डर नेईं दिन्दा।",
+  "holdingsTapNameToResearch": "शोध आस्तै नां पर टैप करो। भाव अनुमान न, सलाह नेईं।",
+  "instrument": "इंस्ट्रूमेंट",
+  "newInstrument": "नमां इंस्ट्रूमेंट",
+  "renameInstrument": "इंस्ट्रूमेंट दा नां बदलो",
+  "instrumentActions": "इंस्ट्रूमेंट कार्रवाईयां",
+  "hideInstrumentTitle": "{name} छपाना ऐ?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "टिकर (वैकल्पिक)",
+  "isinOptional": "ISIN (वैकल्पिक)",
+  "quantity": "मात्रा",
+  "unitPrice": "यूनिट भाव",
+  "brokerageOptional": "ब्रोकरेज (वैकल्पिक)",
+  "brokerageExpenseCategory": "ब्रोकरेज खर्च श्रेणी",
+  "incomeCategory": "आमदन श्रेणी",
+  "gainIncomeCategory": "फायदा आमदन श्रेणी",
+  "lossExpenseCategory": "नुकसान खर्च श्रेणी",
+  "nonCash": "गैर-नकद",
+  "cash": "नकद",
+  "locked": "लॉक होआ",
+  "lockUntilHint": "इक रोक दा तुंदा अपणा नोट, ब्रोकर दा नियम नेईं।",
+  "instrumentKindStock": "स्टॉक",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "म्यूचुअल फंड",
+  "instrumentKindBond": "बॉन्ड",
+  "instrumentKindOther": "होर",
+  "quoteUseLive": "लाइव भाव",
+  "quoteUseCached": "कैश कीता भाव",
+  "quoteUseStale": "पुराणा भाव",
+  "quoteUseMissing": "लागत इस्तेमाल होआ (कोई भाव नेईं)",
+  "quoteUseDisabled": "भाव बंद — लागत/कैश इस्तेमाल होआ",
+  "quoteUseCurrencyMismatch": "लागत इस्तेमाल होआ (भाव दी करेंसी बक्खरी ऐ)",
+  "unrealizedLabel": "अवास्तविक {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} यूनिट · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "तुंदा रिकवरी फ्रेज",
+  "recoveryPhraseConfirmTitle": "अपणा फ्रेज पुश्टि करो",
+  "recoveryPhraseBlurb": "एह् 24 शब्द ही इक्को रस्ता न जिस कन्नै तुसें अपणा लेन-देन इतिहास बहाल करी सकदे ओ जेकर एह् डिवाइस गुआची जा, रीसेट होई जा, जां बदली जा। स्मारा खाते दा कोई सर्वर नेईं ऐ कने एह् तुंदे आस्तै इसदी बहाली नेईं करी सकदा।\n\nअगर तुसें एह् डिवाइस कने एह् फ्रेज दोनों गुआ लैते तां, तुंदे दर्ज कीते हर लेन-देन दी हमेशा आस्तै तसदीक नेईं होई सकनी।",
+  "recoveryPhraseWriteDown": "इनें शब्दें जो सही क्रम च्च लिखो कने इनेंज् इस डिवाइस थमां बक्खरी सुरक्षित जगहा च्च रक्खो।",
+  "iveSavedRecoveryPhrase": "मैं अपणा रिकवरी फ्रेज सुरक्षित करी लिया ऐ",
+  "confirmPhraseBlurb": "हुणें सुरक्षित कीती फ्रेज थमां मंगे गेदे शब्द पाओ।",
+  "wordNumber": "शब्द #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
-  "lockScreenTitle": "Locked",
-  "enterPinToContinue": "Enter your PIN to continue",
-  "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "keystoreExportTitle": "कीस्टोर फाइल एक्सपोर्ट करो",
+  "keystoreExportBlurb": "अपणे रिकवरी फ्रेज दे कन्नै-कन्नै, तुसें अपणी चुणी दित्ती पासफ्रेज कन्नै सुरक्षित इक एनक्रिप्टेड कीस्टोर फाइल बी सुरक्षित करी सकदे ओ। एह् वैकल्पिक ऐ - तुंदा रिकवरी फ्रेज कल्ला ही तुंदी साइनिंग की बहाल करने आस्तै हमेशा काफी ऐ।",
+  "keystorePassphrase": "पासफ्रेज",
+  "exportKeystoreFile": "कीस्टोर फाइल एक्सपोर्ट करो",
+  "chooseCurrencyTitle": "अपणी करेंसी चुनो",
+  "chooseCurrencyBlurb": "हर खाता समूह (नकद कने नकद बराबर, पेंशन कने सेवा-निवृत्ति, आदि) हाल आस्तै इक्को करेंसी इस्तेमाल करदा ऐ। तुसें बाद च्च इक नमीं समूह बनाई के बक्खरी करेंसी च्च खाते जोड़ी सकदे ओ।",
+  "currencyBackfillTitle": "मौजूदा समूहें आस्तै इक करेंसी चुनो",
+  "currencyBackfillBlurb": "एह् एप हुण गिणी करेंसियां दा समर्थन करदा ऐ। तुंदे मौजूदा खातें कने खाता समूहें जो इक करेंसी चाहिदी - कीजे उंदी सारें दी सेटअप एह् फीचर औने थमां पैह्लें होई गेई ही, इसलेई इक चोणा उं सारें पर लागू होग।",
+  "firstAccountTitle": "अपणे खाते दा नां रक्खो",
+  "firstAccountBlurb": "एह् उह्दे आस्तै पैह्लें थमां सेटअप कीता खाता ऐ - इसजो कोई ऐसा नां देओ जेह्ड़ा तुसें पछाणी सको, जियां तुंदा बैंक। तुसें अग्गें इक खर्च जां मिली रकम दर्ज करगे, फिर डिवाइस जो अपणे रिकवरी फ्रेज कन्नै सुरक्षित करगे।",
+  "whatsMainAccountCalled": "तुंदे मुक्ख खाते दा नां केह् ऐ?",
+  "restoreTitle": "साइनिंग की बहाल करो",
+  "restoreBlurb": "इस डिवाइस च्च मौजूदा खातेआं न, पर कोई मिलदी साइनिंग की नेईं ऐ। इसजो अपणे सुरक्षित कीते रिकवरी फ्रेज जां कीस्टोर फाइल थमां बहाल करो - तुंदा डेटा सामान्य रूप कन्नै तसदीक होग, कने कुछ बी दुबारा साइन जां बदली नेईं होग।",
+  "recoveryPhrase24": "रिकवरी फ्रेज (सारे 24 शब्द)",
+  "keystoreFile": "कीस्टोर फाइल",
+  "keystoreFileContents": "कीस्टोर फाइल दी सामग्री",
+  "optionalBackupFile": "वैकल्पिक बैकअप फाइल",
+  "iDontHavePhrase": "मेरे कोल रिकवरी फ्रेज जां कीस्टोर फाइल नेईं ऐ",
+  "migrationTitle": "नमीं की पर माइग्रेट करो",
+  "migrationBlurb": "तुंदे रिकवरी फ्रेज जां कीस्टोर फाइल दे बगैर, इस डिवाइस दी साइनिंग की बहाल नेईं होई सकदी। तुसें इक नमीं की शुरू करी सकदे ओ। पुराणी एंट्रियां दिक्खणे जोगी रौंगियां पर बदली गेदियां मन्नियां जांगियां।",
+  "iConfirmBooksValid": "मैं पुश्टि करना ने जे मौजूदा खाते सही न",
+  "whyWeDontEdit": "अस्सां पुराणी एंट्रियां जो एडिट कीएं नेईं करदे",
+  "whyWeDontEditBody": "जिसलै तुसें कोई गलती ठीक करदे ओ, तां असां पुराणी लाइन रक्खी लैंदे न कने उंदे बगल च्च इक सुधार जोड़ी दिंदे न, इसदे बजाए जे तुसें जो जेह्ड़ा दर्ज कीता उसजो बदली दान। इस चाल्ली तुंदा इतिहास हमेशा दस्सदा ऐ जे असल च्च केह् होआ कने तुसें कदूं ठीक कीता — तुंदी पिट्ठ पिच्छें कुसी बी चीज़ च्च चोरी-छिपे बदलाव नेईं औंदा।",
+  "lockTitle": "अनलॉक",
+  "lockScreenTitle": "लॉक होआ",
+  "enterPinToContinue": "अग्गें बधने आस्तै पिन पाओ",
+  "pinLabel": "पिन",
+  "setPinTitle": "पिन सेट करो",
+  "currentPin": "मौजूदा पिन",
+  "newPin": "नमां पिन",
+  "confirmPin": "पिन दी पुश्टि करो",
+  "confirmNewPin": "नमीं पिन दी पुश्टि करो",
+  "firstWeekTitle": "अपणे खाते सेटअप करो",
+  "addCashAccount": "नकद खाता जोड़ो",
+  "addCreditCard": "क्रेडिट कार्ड जोड़ो",
+  "cashAccountName": "नकद खाते दा नां",
+  "cardName": "कार्ड दा नां",
+  "paidFromBank": "बैंक थमां भुगतान होआ",
+  "paidFromCard": "कार्ड थमां भुगतान होआ",
+  "choosePassphraseTitle": "इस बैकअप दी रक्षा आस्तै इक पासफ्रेज चुनो। अगर तुसें एह् भूली गे तां कोई बहाली नेईं होग।",
+  "replaceBooksTitle": "तुंदे लोकल खाते बदलणे न?",
+  "replaceBooksBody": "एह् बैकअप कन्नै इस एप च्च मौजूदा सब्भ केह् बदली दिंदा ऐ। इसदे बाद एप बंद करी के मुड़ी खोह्लो।",
+  "chooseBackupFileFirst": "पैह्लें इक बैकअप फाइल चुनो।",
+  "backupRestored": "बैकअप बहाल होआ",
+  "backupRestoredBody": "तुंदे खाते बहाल होई गे न। अग्गें बधने आस्तै एप बंद करी के मुड़ी खोह्लो।",
+  "fixThisEntry": "एह् एंट्री ठीक करो",
+  "fixBlurb": "पुराणी लाइन बिल्कुल जियां ही रौंह्दी ऐ। पुश्टि करने कन्नै इक उलट लाइन कने सुधरी लाइन जुड़दी ऐ।",
+  "importStatementTitle": "स्टेटमेंट आयात करो",
+  "importOfx": "OFX आयात करो",
+  "importOfxQfxFile": "OFX / QFX फाइल आयात करो",
+  "importCsvFile": "CSV फाइल आयात करो",
+  "whatKindOfStatement": "तुंदे कोल केह्ड़ी किस्म दी स्टेटमेंट फाइल ऐ?",
+  "chooseAccountForFile": "चुनो जे एह् फाइल केह्ड़े खाते दी ऐ।",
+  "importIntoAccount": "खाते च्च आयात करो",
+  "useSavedProfile": "सुरक्षित कीता प्रोफाइल इस्तेमाल करो",
+  "saveMappingProfile": "इस मैपिंग जो प्रोफाइल दे रूप च्च सुरक्षित करो (वैकल्पिक)",
+  "renameProfile": "प्रोफाइल दा नां बदलो",
+  "deleteProfileTitle": "प्रोफाइल मेटणा ऐ?",
+  "fileHasHeader": "फाइल च्च इक हैडर लाइन ऐ",
+  "dateColumn": "तारीख कॉलम",
+  "dateFormatHint": "तारीख फार्मेट (जियां dd/MM/yyyy)",
+  "amountColumn": "रकम कॉलम",
+  "amountConvention": "रकम दा नियम",
+  "signedAmountColumn": "साइन कीता रकम कॉलम",
+  "separateDebitCredit": "बक्खरे डेबिट / क्रेडिट कॉलम",
+  "debitColumn": "डेबिट कॉलम",
+  "creditColumn": "क्रेडिट कॉलम",
+  "decimalSeparator": "दशमलव चिह्न (. जां ,)",
+  "descriptionColumns": "विवरण कॉलम",
+  "referenceIdColumn": "संदर्भ id कॉलम (वैकल्पिक)",
+  "skippedRows": "छोड़े गे रो",
+  "parsedTransactionCount": "{count} लेन-देन पार्स होए",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} छोड़े जां बाह्र कीते गे",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} पोस्ट होए, {failed} असफल होए",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "सारें आस्तै श्रेणी",
+  "saveAsRule": "नियम दे रूप च्च सुरक्षित करना ऐ?",
+  "saveAsRuleBlurb": "भविक्ख दे इंपोर्ट जिंदे विवरण च्च एह् कीवर्ड होग, एह् श्रेणी इस्तेमाल करङन।",
+  "keyword": "कीवर्ड",
+  "noSavedRules": "हाले तगर कोई सुरक्षित नियम नेईं। नियम सुरक्षित करने आस्तै रोआं दे इक समूह जो श्रेणी दिओ।",
+  "deleteRuleTitle": "नियम मेटणा ऐ?",
+  "editRule": "नियम संपादन करो",
+  "rowsGrouped": "{count} रो",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "आयात करने आस्तै इक {extensions} स्टेटमेंट फाइल चुनो",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "पेई",
+  "addPayee": "पेई जोड़ो",
+  "renamePayee": "पेई दा नां बदलो",
+  "deletePayeeTitle": "पेई मेटणा ऐ?",
+  "noPayeesYet": "हाले तगर कोई पेई नेईं",
+  "recurringTitle": "बार-बार होने आळे टेम्पलेट",
+  "noRecurringYet": "हाले तगर कोई बार-बार होने आळा टेम्पलेट नेईं",
+  "deleteTemplateTitle": "बार-बार होने आळा टेम्पलेट मेटणा ऐ?",
+  "dayOfMonth": "म्हीने दा दिन (1-31)",
+  "dayOfMonthNote": "घट्ट दिनें आळा म्हीना अपणा आखरी दिन इस्तेमाल करदा ऐ।",
+  "dayOfMonthLine": "म्हीने दा दिन {day} - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
-  "errorGeneric": "कुछ गलत होई गेआ। फिरी करो।",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "name": "नां",
+  "none": "कोई नेईं",
+  "currency": "करेंसी",
+  "errorGeneric": "कुछ गलत होई गेआ। फिरी कोशिश करो।",
+  "errorSigningIdentityMismatch": "एह् रिकवरी फ्रेज जां कीस्टोर फाइल इस डेटाबेस च्च कुसी बी साइनिंग पछाण कन्नै नेईं रलदी।",
+  "errorInvalidLedgerBackup": "एह् फाइल इक वैध स्मारा बैकअप नेईं ऐ।",
+  "errorInvalidLedgerBackupNoIdentity": "इस बैकअप च्च कोई साइनिंग पछाण नेईं ऐ - एह् इक वैध स्मारा बैकअप नेईं ऐ।",
+  "errorInvalidLedgerBackupUnverified": "एह् बैकअप ठीक-ठाक खातें दे रूप च्च तसदीक नेईं होआ, इसलेई एह् बहाल नेईं कीता गेआ।",
+  "errorInvalidLedgerBackupUnreadable": "एह् फाइल स्मारा बैकअप दे रूप च्च नेईं खुह्ली सकी: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
-  "errorAmountMustBePositive": "रकम धनात्मक होनी चाहिदी।",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorForeignBackupIdentity": "एह् बैकअप इस डिवाइस पर आळी थमां बक्खरी साइनिंग पछाण दा ऐ।",
+  "errorAccountNotFinancial": "एह् इक वित्तीय खाता नेईं ऐ।",
+  "errorAccountArchived": "एह् खाता छपाया होआ ऐ।",
+  "errorAccountNotArchived": "एह् खाता छपाया होआ नेईं ऐ।",
+  "errorAccountNoPositiveBalanceToCloseOut": "ट्रांसफर करने आस्तै कोई बाकी बकाया नेईं ऐ।",
+  "errorAccountHasNoGroup": "इस खाते जो कोई समूह नियुक्त नेईं ऐ।",
+  "errorGroupHasNoCurrency": "इस समूह जो हाले तगर कोई करेंसी सेट नेईं ऐ।",
+  "errorGroupNotFound": "एह् खाता समूह नेईं लब्भेआ।",
+  "errorInvestmentAccountsMustBeAssets": "सिर्फ संपत्ति खाते ही निवेश खाते दे रूप च्च चिह्नत होई सकदे न।",
+  "errorCreditCardsMustBeLiabilities": "सिर्फ देनदारी खाते ही क्रेडिट कार्ड दे रूप च्च चिह्नत होई सकदे न।",
+  "errorOpeningBalanceMustBePositive": "अगर दित्ती जा तां शुरुआती बकाया धनात्मक होणा चाहिदा।",
+  "errorAccountTypeDoesNotMatchGroup": "एह् खाता किस्म समूह कन्नै नेईं रलदा।",
+  "errorLastActiveAccount": "आखरी सक्रिय वित्तीय खाता छपाया नेईं जाई सकदा।",
+  "errorCurrencyRequiredToCreateGroup": "समूह बणाने आस्तै करेंसी जरूरी ऐ।",
+  "errorSystemGroupCannotBeArchived": "बिल्ट-इन खाता समूह छपाए नेईं जाई सकदे।",
+  "errorGroupAlreadyArchived": "एह् समूह पहलें ही छपाया होआ ऐ।",
+  "errorCannotArchiveGroupWithAccounts": "इक समूह जिस च्च सक्रिय खाते न, छपाया नेईं जाई सकदा।",
+  "errorSystemGroupNeverArchived": "बिल्ट-इन खाता समूह कदी छपाए नेईं जांदे।",
+  "errorAccountGroupsCannotBeDeleted": "खाता समूह मेटे नेईं जाई सकदे।",
+  "errorCannotReassignDifferentCurrency": "एह् खाता बक्खरी करेंसी आळे समूह च्च नेईं भेजेआ जाई सकदा।",
+  "errorCannotChangeGroupCurrencyWithAccounts": "जदूं तगर समूह च्च सक्रिय खाते न, करेंसी नेईं बदली जाई सकदी।",
+  "errorAmountMustBePositive": "रकम धनात्मक होणी चाहिदी।",
+  "errorAccountCurrencyAmountMustBePositive": "खाता-करेंसी रकम धनात्मक होणी चाहिदी।",
+  "errorAccountCurrencyAmountNotForSameCurrency": "खाता-करेंसी रकम सिर्फ बद्देशी-करेंसी एंट्री आस्तै ऐ।",
+  "errorSplitNeedsTwoLines": "इक स्प्लिट आस्तै घट्टोघट्ट दो श्रेणी लाइनां चाहिदियां।",
+  "errorSplitLineMustBePositive": "हर स्प्लिट लाइन इक धनात्मक रकम होणी चाहिदी।",
+  "errorSplitLinesMustSumToTotal": "स्प्लिट लाइनां जोड़ी के लेन-देन दे कुल जितणियां होणियां चाहिदियां।",
+  "errorTransferAmountMustBePositive": "ट्रांसफर रकम धनात्मक होणी चाहिदी।",
+  "errorTransferAccountsMustDiffer": "स्रोत कने मंजिल खाते बक्खरे-बक्खरे होणे चाहिदे न।",
+  "errorCloseoutRequiresDestinationAmount": "क्रॉस-करेंसी निपटारे आस्तै मालूम मंजिल रकम चाहिदी।",
+  "errorDestinationAmountNotForSameCurrency": "मंजिल रकम सिर्फ क्रॉस-करेंसी ट्रांसफर आस्तै ऐ।",
+  "errorDestinationAmountMustBePositive": "मंजिल रकम धनात्मक होणी चाहिदी।",
+  "errorInvestmentCashExceeded": "इस निवेश खाते दी नकद थमां बद्धी ट्रांसफर नेईं होई सकदा।",
+  "errorCannotReverseUnsettledProvisional": "इसजो उलटने दे बजाए इस पेंडिंग ट्रांसफर दा निपटारा करो।",
+  "errorAlreadyReversed": "एह् एंट्री पहलें ही ठीक कीती जाई चुक्की ऐ। मूल लाइन जियां ही रौंह्दी ऐ।",
+  "errorNotActiveExpenseCategory": "इक सक्रिय खर्च श्रेणी चुनो।",
+  "errorNotActiveIncomeCategory": "इक सक्रिय आमदन श्रेणी चुनो।",
+  "errorSettledAmountMustNotBeNegative": "पुज्जी रकम ऋणात्मक नेईं होई सकदी।",
+  "errorPendingTransferNotFound": "एह् पेंडिंग ट्रांसफर नेईं लब्भेआ।",
+  "errorPendingTransferAlreadySettled": "एह् पेंडिंग ट्रांसफर दा पहलें ही निपटारा होई गेआ।",
+  "errorSettledToMustBeSourceOrDestination": "मूल स्रोत जां मंजिल खाता चुनो।",
+  "errorFeeCategoryOnlyWhenReturningToSource": "फीस श्रेणी सिर्फ तां इस्तेमाल होंदी ऐ जिसलै पैसा स्रोत खाते जो वापस औंदा ऐ।",
+  "errorSettledAmountMustBePositiveForDelivery": "जो पुज्जेआ उसदे आस्तै इक धनात्मक रकम पाओ।",
+  "errorSettledAmountExceedsProvisional": "एह् रकम भेजी गेदी थमां बद्धी ऐ।",
+  "errorInstrumentNotFound": "एह् इंस्ट्रूमेंट नेईं लब्भेआ।",
+  "errorIncomeRequiredForNonCash": "गैर-नकद हासले आस्तै इक सक्रिय आमदन श्रेणी जरूरी ऐ।",
+  "errorInsufficientCash": "इस खरीद आस्तै इस निवेश खाते च्च कापी नकद नेईं ऐ।",
+  "errorSellQuantityAndPriceMustBePositive": "बिक्री मात्रा कने यूनिट भाव धनात्मक होणे चाहिदे न।",
+  "errorLockedUntil": "बेची नेईं जाई सकदा: किश यूनिट {date} तगर लॉक न।",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "जितणा तुंदे कोल हुण अनलॉक ऐ उस थमां बद्धी नेईं बेचेआ जाई सकदा।",
+  "errorIncomeRequiredForGain": "वसूली गेदे फायदे आस्तै इक सक्रिय आमदन श्रेणी जरूरी ऐ।",
+  "errorExpenseRequiredForLoss": "वसूली गेदे नुकसान आस्तै इक सक्रिय खर्च श्रेणी जरूरी ऐ।",
+  "errorBrokerageFailedAfterBuy": "खरीद पोस्ट होई गेई, पर ब्रोकरेज फीस फेल होई: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "बिक्री पोस्ट होई गेई, पर ब्रोकरेज फीस फेल होई: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "लाभांश रकम धनात्मक होणी चाहिदी।",
+  "errorNotInvestmentAccount": "एह् इक निवेश खाता नेईं ऐ।",
+  "errorNoInventoryCompanion": "इस निवेश खाते च्च इसदा इन्वेंटरी साथी गुम ऐ।",
+  "errorInvestmentReversalBlocked": "एह् खरीद उलट नेईं होई सकदी: बाद दी बिक्री(आं) इसदी यूनिटें उप्पर निर्भर न। पैह्लें निर्भर बिक्री(आं) उलट करो: {sells}।",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "म्हीने दी सीमा धनात्मक होणी चाहिदी।",
+  "errorTemplateAmountMustBePositive": "टेम्पलेट रकम धनात्मक होणी चाहिदी।",
+  "errorOfxUnrecognized": "एह् फाइल OFX दे रूप च्च नेईं पछाणी जाई सकी।",
+  "errorCsvEmpty": "चुणी गेदी फाइल खाली ऐ।",
+  "errorCsvUnreadable": "एह् फाइल CSV दे रूप च्च नेईं पढ़ी जाई सकी।",
+  "errorCsvNoRows": "चुणी गेदी फाइल च्च कोई रो नेईं ऐ।",
+  "errorBackupCreateFailed": "बैकअप नेईं बणाया जाई सकेआ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "एह् बैकअप बहाल नेईं होई सकेआ - गलत पासफ्रेज, जां एह् स्मारा बैकअप फाइल नेईं ऐ।",
+  "validationAmountAccountCategoryRequired": "रकम, खाता, कने श्रेणी जरूरी न।",
+  "validationAmountAccountRequired": "रकम कने खाता जरूरी न।",
+  "validationSplitLineIncomplete": "हर स्प्लिट लाइन जो इक श्रेणी कने इक रकम चाहिदी।",
+  "validationSplitSumMismatch": "स्प्लिट लाइनां जोड़ी के लेन-देन दे कुल जितणियां होणियां चाहिदियां।",
+  "validationFromToAmountRequired": "स्रोत खाता, मंजिल खाता, कने रकम जरूरी न।",
+  "validationAmountArrivedRequired": "पुज्जी रकम जरूरी ऐ।",
+  "validationChooseReceivingAccount": "चुनो जे किस खाते जो पैसे मिले।",
+  "validationAccountCategoryRequired": "खाता कने श्रेणी जरूरी न।",
+  "validationFixFailed": "एह् सुधार सुरक्षित नेईं होई सकेआ।",
+  "validationNameRequired": "अपणे मुक्ख खाते दा नां रक्खो।",
+  "validationStillLoading": "हाले लोड होआ करदा ऐ - थोह्ड़ी देर च्च फिरी कोशिश करो।",
+  "validationSaveAccountNameFailed": "खाते दा नां सुरक्षित नेईं होई सकेआ।",
+  "validationWrongPin": "गलत पिन। फिरी कोशिश करो।",
+  "validationCategoryMustBeIncomeOrExpense": "श्रेणी आमदन जां खर्च होणी चाहिदी।",
+  "validationOnlyExpenseHasMonthlyLimit": "सिर्फ इक खर्च श्रेणी दी म्हीने दी सीमा होई सकदी ऐ।",
+  "validationInvalidTemplate": "अवैध टेम्पलेट।",
+  "validationWrongKeystorePassphrase": "इस कीस्टोर फाइल आस्तै गलत पासफ्रेज।",
+  "validationInvalidKeystoreFile": "एह् इक वैध कीस्टोर फाइल नेईं लगदी।",
+  "validationRestorePhraseFailed": "उस रिकवरी फ्रेज थमां बहाल नेईं होई सकेआ।",
+  "validationGenerateKeyFailed": "इस डिवाइस पर साइनिंग की जनरेट नेईं होई सकी: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "एह् करेंसी सुरक्षित नेईं होई सकी: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "माइग्रेशन फेल होआ। फिरी कोशिश करो।",
+  "validationChooseBackupFile": "पैह्लें इक बैकअप फाइल चुनो।",
+  "validationPassphraseRequired": "इक पासफ्रेज पाओ।",
+  "validationPinsDoNotMatch": "दोनों पिन नेईं रलदे।",
+  "validationFeePositiveWithCategory": "ट्रांसफर फीस इक धनात्मक रकम होणी चाहिदी कने कोई खर्च श्रेणी चुणी होणी चाहिदी।",
+  "validationFeeMustBeLessThanAmount": "कट्टी फीस आळे ट्रांसफर आस्तै फीस रकम थमां घट्ट होणी चाहिदी।",
+  "validationTransferSavedFeeFailed": "ट्रांसफर सुरक्षित होआ, पर फीस दर्ज नेईं होई सकी: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "इक वैध रकम पाओ।",
+  "validationConfirmWordMismatch": "शब्द {n} तुंदे सुरक्षित कीते फ्रेज कन्नै नेईं रलदा। चैक करो कने फिरी कोशिश करो।",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "खरीद मात्रा कने यूनिट भाव धनात्मक होणे चाहिदे न।",
+  "errorInstrumentArchived": "छपाया होआ इंस्ट्रूमेंट खरीदेआ नेईं जाई सकदा।",
+  "errorNonCashCannotIncludeBrokerage": "गैर-नकद हासलें च्च ब्रोकरेज शामल नेईं होई सकदी।",
+  "errorBrokerageRequiresExpenseCategory": "जिसलै ब्रोकरेज धनात्मक होऐ तां इक सक्रिय खर्च श्रेणी जरूरी ऐ।",
+  "errorSellProceedsMustCoverBrokerage": "बिक्री दी आमदन घट्टोघट्ट ब्रोकरेज रकम जितणी होणी चाहिदी।",
+  "homeSpentOfLimitThisMonth": "इस म्हीने {limit} च्चा {spent}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "स्मारा खाता अनलॉक करो",
   "searchLabel": "तलाशो",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "शुरुआती बकाया",
+  "transferToName": "ट्रांसफर: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "ट्रांसफर आस्तै फीस",
+  "feeForTransferTo": "{name} जो ट्रांसफर आस्तै फीस",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "फाइल पिकर नेईं खुह्ली सकेआ: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "किरपा करी के इक .{extensions} फाइल चुनो",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "करेंसी कोड (ISO 4217, जियां USD)",
+  "splitCounterpartMore": "{name} +{count} होर",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "तारीख",
+  "noneSelected": "कोई नेईं",
+  "reviewEntriesBeforeContinuing": "अग्गें बधने थमां पैह्लें थल्लै दित्तियां एंट्रियां (कुल {count}) दिक्खो।",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "तुंदे कोल {amount} पुज्जे",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "अगर विनिमय दर हाले पता नेईं तां खाली छोड़ो।",
+  "recordTradeBlurb": "इक ओह्ला होआ सौदा दर्ज करो। एह् एप कोई ऑर्डर नेईं दिन्दा।",
+  "feeOnTopBlurb": "उप्पर: उप्पर दित्ती रकम इस खाते थमां लेआ कुल रकम ऐ; फीस इसदे च्चा ही निकलदी ऐ।",
+  "feeBankBlurb": "तुंदे बैंक जां कुसी बिचोलिए दुआरा लित्ता अगाऊं कमीशन।",
+  "validationPinMinLength": "पिन घट्टोघट्ट 4 अंकां दी होणी चाहिदी।",
+  "restoreBackupBlurb": "एह् बैकअप कन्नै इस एप च्च मौजूदा सब्भ केह् बदली दिंदा ऐ — एह् मर्ज नेईं करदा। इक बैकअप फाइल चुनो कने जिस पासफ्रेज कन्नै तुसें इसजो सुरक्षित कीता उ पाओ।",
+  "actionReplace": "बदलो",
+  "hideAccountBody": "{name} नमें लेन-देनें आस्तै उपलब्ध नेईं रौग।",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "{name} खाते बणाने जां मुड़ी नियुक्त करने बगत नेईं दस्सेआ जाग।",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "{name} नमें लेन-देन दर्ज करने बगत नेईं दस्सेआ जाग।",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "छपाए इंस्ट्रूमेंट पिछली खरीद-बिक्री पर बणे रौंह्दे न। तुसें उंदे आस्तै हाले बी लाभांश दर्ज करी सकदे ओ।",
+  "nameHidden": "{name} (छपाया होआ)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "कोई करेंसी सेट नेईं",
+  "deletePayeeBody": "{name} कने इसदे याद कीते डिफॉल्ट हटाई दित्ते जांगे। पिछले लेन-देन पर कोई असर नेईं पौग।",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} ड्यू दे रूप च्च नेईं दस्सेआ जाग। इसदे दुआरा पहलें ही दर्ज कीते लेन-देनें पर कोई असर नेईं पौग।",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "सुरक्षित कीती कॉलम मैपिंग \"{name}\" मेटी दित्ती जाग। इसदे कन्नै पहलें आयात कीते स्टेटमेंटें पर कोई असर नेईं पौग।",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "इंपोर्ट हुण \"{keyword}\" कन्नै अपने आप श्रेणीबद्ध नेईं होङन। इस नियम कन्नै पहलें श्रेणीबद्ध कीते लेन-देनें पर कोई असर नेईं पौग।",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "वैकल्पिक तौर उप्पर हुण इक क्रेडिट कार्ड जां नकद खाता जोड़ो - तुसें हमेशा बाद च्च सेटिंगें थमां होर खाते जोड़ी सकदे ओ।",
+  "deliveredToDestination": "मंजिल जो पुज्जी गेआ",
+  "deliveredToName": "{name} जो पुज्जी गेआ",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "तुंदे उमीद थमां घट्ट {amount} {currency} मिले - फर्क पूरा करने आस्तै इक श्रेणी चुनो।",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "तारीख दायरा",
+  "addTemplate": "टेम्पलेट जोड़ो",
+  "editTemplate": "टेम्पलेट संपादन करो",
+  "validationFillTemplateFields": "हर फील्ड इक वैध रकम कने दिन कन्नै भरो।",
+  "saveCsvExport": "CSV एक्सपोर्ट सुरक्षित करो",
+  "referenceRate": "संदर्भ दर",
+  "yourRate": "तुंदी दर",
+  "leaveBlankIfThisWasAccountCurrency": "अगर एह् {currency} च्च होआ, खाते दी अपणी करेंसी, तां खाली छोड़ो।",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "इत्थें तगर लॉक (वैकल्पिक)",
+  "lockedUntilDate": "{date} तगर लॉक ऐ",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "इक शोध प्रॉम्प्ट कॉपी होआ — कोई ब्राउज़र URL उपलब्ध नेईं, जां तुसें ऑफलाइन ओ।",
+  "openedFavouriteResearchTool": "तुंदा पसंदीदा शोध टूल खुह्ली गेआ।",
+  "looksLikeGain": "एह् इक फायदे वांगर लगदा ऐ",
+  "looksLikeLoss": "एह् इक नुकसान वांगर लगदा ऐ",
+  "looksLikeBreakEven": "एह् बराबरी वांगर लगदा ऐ",
+  "sellableQuantity": "{name} ({qty} बेची जाई सकदी ऐ)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "कॉलम {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "आयात होआ करदा ऐ...",
+  "confirmImport": "आयात दी पुश्टि करो",
+  "manageSavedCategoryRules": "सुरक्षित कीते श्रेणी नियम प्रबंधन करो",
+  "statementCurrencyMismatch": "इस फाइल दी करेंसी ({currency}) चुणे गेदे खाते दी करेंसी कन्नै नेईं रलदी।",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "श्रेणी नियम",
+  "possibleDuplicate": "संभावित नकल",
+  "unknownCategory": "अज्ञात श्रेणी"
 }

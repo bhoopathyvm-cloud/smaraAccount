@@ -68,10 +68,7 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  l10n.chooseCurrencyBlurb,
-                  style: AppTypography.body,
-                ),
+                Text(l10n.chooseCurrencyBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 Wrap(
                   spacing: AppSpacing.small,
@@ -97,15 +94,13 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
                           newValue.copyWith(text: newValue.text.toUpperCase()),
                     ),
                   ],
-                  decoration: InputDecoration(
-                    labelText: l10n.currencyCodeIso,
-                  ),
+                  decoration: InputDecoration(labelText: l10n.currencyCodeIso),
                   onChanged: (_) => setState(() {}),
                 ),
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

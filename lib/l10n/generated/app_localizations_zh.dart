@@ -69,7 +69,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get actionCreate => '创建';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => '关闭应用';
 
   @override
   String get actionUnlock => '解锁';
@@ -78,25 +78,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get actionSettle => '结清';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => '完成';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => '预览';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => '导入';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => '导出 CSV';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => '选择文件';
 
   @override
   String get actionRestore => '恢复';
-
-  @override
-  String get actionArchive => 'Hide';
 
   @override
   String get actionFix => '更正';
@@ -108,55 +105,55 @@ class AppLocalizationsZh extends AppLocalizations {
   String get actionSell => '卖出';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionDividend => '股息';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordBuy => '记录买入';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordSell => '记录卖出';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionRecordDividend => '记录股息';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionPayCard => '还款';
 
   @override
   String get actionTransfer => '转账';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionRecordTransaction => '记录交易';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionImportStatement => '导入对账单';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearDates => '清除日期';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionClearSearch => '清除搜索和筛选';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionUseBiometrics => '使用生物识别';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionSetPin => '设置 PIN';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionChangePin => '更改 PIN';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionSaveBackup => '保存备份';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionRestoreBackup => '恢复备份';
 
   @override
-  String get actionSaveRule => 'Save rule';
+  String get actionSaveRule => '保存规则';
 
   @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get actionConfirmFix => '确认更正';
 
   @override
   String get captureSpent => '支出';
@@ -168,7 +165,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get captureMovedMoney => '资金转移';
 
   @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => '导入对账单';
 
   @override
   String get settingsTitle => '设置';
@@ -180,112 +177,109 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsLanguageSystem => '设备语言';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => '获取参考汇率';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      '在跨币种转账时，在目标金额旁显示一个仅供参考的市场汇率，仅用于比较——绝不会用来自动填写金额。';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => '汇率提供方';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices => '获取投资的市场价格';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      '为拥有股票代码或 ISIN 的投资标的查询最新价格，以估算投资组合价值。绝不用于记录交易，也绝不会发送您持有的数量。';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => '市场价格提供方';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => '常用研究工具';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      '点按持仓中的标的名称，会在浏览器中打开该工具并附带一个研究提示——这不是集成功能，也不构成投资建议。';
 
   @override
   String get settingsBackup => '备份';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      '将您的账本加密副本保存到您选择的位置，或从中恢复。这与您的恢复短语或密钥库文件不同，后者备份的是您的签名密钥，而不是您的账本。';
 
   @override
   String get settingsLock => '锁定';
 
   @override
-  String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+  String get settingsLockBlurb => '要求输入 PIN，或在可用时使用生物识别，才能打开应用。';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock => '打开应用时需要解锁';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => '锁定延迟';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => '立即';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1 分钟';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5 分钟';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15 分钟';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => '同时允许生物识别';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot => '在应用切换器中隐藏余额';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      '当您切换到其他应用时遮挡此屏幕，使其不会在应用切换器中一眼被看到。';
 
   @override
-  String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+  String get settingsHideSnapshotUnavailable => '此平台不支持在应用切换器中隐藏余额。';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => '收款人';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => '管理收款人';
 
   @override
-  String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+  String get settingsPayeesBlurb => '已记住的收款人名称及其默认分类和账户，会在记录交易时通过自动完成提示。';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => '定期模板';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => '管理定期模板';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      '每月重复发生的账单或收入，例如房租或工资。到期的模板会显示在首页，供您一键记录——绝不会自动记账。';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => '关于';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter（欧洲央行汇率）';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq（每日报价）';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance（图表 API）';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -300,66 +294,65 @@ class AppLocalizationsZh extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => '现金及现金等价物';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => '养老金与退休金';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => '信贷与短期负债';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => '贷款与按揭';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => '投资';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => '现金与银行';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => '工资';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => '其他收入';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => '日用杂货';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => '房租/按揭';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => '水电煤气';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => '交通';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => '外食';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => '电话';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => '健康';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => '其他支出';
 
   @override
   String get homeThisMonth => '本月';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => '在途资金';
 
   @override
-  String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+  String get homeWhatYouHaveMinusWhatYouOwe => '您拥有的减去您所欠的';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return '您拥有 $amount $currency';
   }
 
   @override
@@ -369,116 +362,113 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return '您拥有 $haveAmount $currency  •  您所欠 $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return '您从 $name 发送了 $amount $currency';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return '您向 $name 发送了 $amount $currency';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => '已隐藏';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => '所有账户';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return '已保存到 $path';
   }
 
   @override
-  String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+  String get keystoreExportFailed => '无法导出密钥库文件。您可以跳过此步骤。';
 
   @override
-  String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+  String get enterPassphraseToProtect => '输入一个密码短语以保护此文件。';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => '确认收到内容后点按';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return '已退回至 $name';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => '今日到期';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · 点按记录';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => '超出限额';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$spent / $limit';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return '剩余：$amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => '没有账户';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => '现金账户';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => '市值估算';
 
   @override
   String get registerTitle => '流水';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => '描述、分类或金额';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => '尚无交易';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => '尚未记录任何条目。';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => '仅支出';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => '仅收入';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => '全部';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified => '未验证——不计入总计';
 
   @override
-  String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+  String get registerSuperseded => '已被迁移取代——不计入总计';
 
   @override
   String get summaryTitle => '汇总';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => '总收入';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => '总支出';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start 至 $end';
   }
 
   @override
@@ -488,31 +478,31 @@ class AppLocalizationsZh extends AppLocalizations {
   String get categoriesTitle => '分类';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => '账户名称';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => '创建账户';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => '创建分组';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => '编辑分组';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => '重命名账户';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => '重命名分类';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => '添加分类';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => '分组';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => '类型';
 
   @override
   String get asset => '资产';
@@ -527,364 +517,354 @@ class AppLocalizationsZh extends AppLocalizations {
   String get expense => '支出';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments => '此账户持有投资';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      '现金加上您通过“买入”“卖出”和“股息”记录的持仓。';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => '这是一张信用卡';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => '期初余额（可选）';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => '货币（ISO 4217）';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => '货币（ISO 4217，例如 USD）';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => '从新条目中隐藏此账户？';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => '从新条目中隐藏此分类？';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => '从新条目中隐藏此分组？';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => '重新分配分组';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => '转出剩余余额';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => '月度限额';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => '限额（留空以清除）';
 
   @override
-  String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+  String get monthlyLimitBlurb => '该支出分类的可选月度累计支出参考值。';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => '管理分类规则';
 
   @override
-  String get amount => 'Amount';
+  String get amount => '金额';
 
   @override
-  String get category => 'Category';
+  String get category => '分类';
 
   @override
-  String get account => 'Account';
+  String get account => '账户';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => '转出账户';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => '转入账户';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => '描述（可选）';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => '同时记住为收款人';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => '拆分为多个分类';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return '分类 $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => '目标金额';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => '目标金额（可选）';
 
   @override
-  String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+  String get accountCurrencyAmountOptional => '账户币种金额（可选）';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => '交易币种（可选）';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => '手续费（可选）';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => '手续费金额';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => '手续费分类';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => '手续费描述（可选）';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => '手续费从上方金额中扣除';
 
   @override
-  String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+  String get needTwoAccountsToTransfer => '至少创建两个有效账户才能进行转账。';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => '实际到账多少？';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => '请告诉我们实际到账的金额。';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => '实际到账金额';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => '手续费/亏损分类';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => '已结清。';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => '持仓';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => '现金';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => '持仓明细';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return '账面价值（现金+成本）$amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return '市值估算 $amount $currency';
   }
 
   @override
-  String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+  String get holdingsNoHoldings => '尚无持仓。记录一笔买入以添加投资标的。';
 
   @override
-  String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+  String get holdingsQuotesBlurb => '报价仅为估算，并非券商实时价格。此应用不进行下单交易。';
 
   @override
-  String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+  String get holdingsTapNameToResearch => '点按名称即可查询。报价仅为估算，不构成投资建议。';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => '投资标的';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => '新建投资标的';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => '重命名投资标的';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => '投资标的操作';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return '隐藏 $name？';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => '股票代码（可选）';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN（可选）';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => '数量';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => '单价';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => '经纪费（可选）';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => '经纪费支出分类';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => '收入分类';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => '收益收入分类';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => '亏损支出分类';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => '非现金';
 
   @override
-  String get cash => 'Cash';
+  String get cash => '现金';
 
   @override
-  String get locked => 'Locked';
+  String get locked => '已锁定';
 
   @override
-  String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+  String get lockUntilHint => '这是您自己记录的限制说明，并非券商的规则。';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => '股票';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => '共同基金';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => '债券';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => '其他';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => '实时价格';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => '缓存价格';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => '过期价格';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => '使用成本价（无报价）';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled => '报价已关闭——使用成本价/缓存';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch => '使用成本价（报价币种不同）';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return '未实现 $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty 份 · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => '您的恢复短语';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => '确认您的恢复短语';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      '如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara Accounting 没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。';
 
   @override
-  String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+  String get recoveryPhraseWriteDown => '按顺序写下这些单词，并将其存放在与此设备分开的安全地方。';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase => '我已保存我的恢复短语';
 
   @override
-  String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+  String get confirmPhraseBlurb => '输入您刚保存的恢复短语中被要求的单词。';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return '第 $n 个单词';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => '导出密钥库文件';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      '除了恢复短语外，您还可以保存一个由您选择的密码短语保护的加密密钥库文件。这是可选的——仅凭您的恢复短语始终足以恢复您的签名密钥。';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => '密码短语';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => '导出密钥库文件';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => '选择您的货币';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      '目前每个账户分组（现金及现金等价物、养老金与退休金等）都使用这一种货币。您以后仍可以通过创建新的分组来添加使用其他货币的账户。';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle => '为现有分组选择货币';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      '此应用现已支持多种货币。您现有的账户和账户分组需要指定一种货币——由于它们都是在该功能出现之前创建的，您的选择将统一应用于全部账户和分组。';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => '为您的账户命名';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      '这是已为您预先设置好的账户——为它取一个您能认出的名字，比如您的银行名称。接下来您会记录一笔支出或收入，然后用恢复短语保护此设备。';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => '您的主要账户叫什么名字？';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => '恢复签名密钥';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      '此设备已有账本，但没有匹配的签名密钥。请从您保存的恢复短语或密钥库文件中恢复它——您的数据将正常通过验证，不会有任何数据被重新签名或更改。';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => '恢复短语（全部 24 个单词）';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => '密钥库文件';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => '密钥库文件内容';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => '可选备份文件';
 
   @override
-  String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+  String get iDontHavePhrase => '我没有恢复短语或密钥库文件';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => '迁移到新密钥';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      '如果没有恢复短语或密钥库文件，此设备的签名密钥将无法恢复。您可以创建一个新密钥。旧条目仍会显示，但会被标记为已取代。';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid => '我确认当前账本有效';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => '我们为什么不修改旧条目';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      '当您更正一个错误时，我们会保留原有的记录行，并在旁边添加一条更正记录，而不是改动您已经录入的内容。这样，您的历史记录始终能准确显示实际发生了什么，以及您何时做了更正——不会有任何内容在您不知情的情况下被悄悄改变。';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => '解锁';
 
   @override
   String get lockScreenTitle => '已锁定';
@@ -896,877 +876,793 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pinLabel => 'PIN';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => '设置 PIN';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => '当前 PIN';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => '新 PIN';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => '确认 PIN';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => '确认新 PIN';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => '设置您的账户';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => '添加现金账户';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => '添加信用卡';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => '现金账户名称';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => '卡片名称';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => '从银行支付';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => '从卡片支付';
 
   @override
-  String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+  String get choosePassphraseTitle => '选择一个密码短语来保护此备份。如果您忘记它，将无法恢复。';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => '替换本机账本？';
 
   @override
-  String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+  String get replaceBooksBody => '此操作会用备份替换此应用中当前的所有内容。完成后请关闭并重新打开应用。';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => '请先选择一个备份文件。';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => '备份已恢复';
 
   @override
-  String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+  String get backupRestoredBody => '您的账本已恢复。请关闭并重新打开应用以继续。';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => '更正此条目';
 
   @override
-  String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+  String get fixBlurb => '旧记录行将保持原样不变。确认后会添加一条冲正记录和一条更正后的记录。';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => '导入对账单';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => '导入 OFX';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => '导入 OFX / QFX 文件';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => '导入 CSV 文件';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement => '您有哪种类型的对账单文件？';
 
   @override
-  String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+  String get chooseAccountForFile => '选择此文件所属的账户。';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => '导入到账户';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => '使用已保存的配置';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile => '将此映射保存为配置（可选）';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => '重命名配置';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => '删除配置？';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => '文件包含标题行';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => '日期列';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => '日期格式（例如 dd/MM/yyyy）';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => '金额列';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => '金额约定';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => '带符号金额列';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => '借方/贷方分列';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => '借方列';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => '贷方列';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => '小数分隔符（. 或 ,）';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => '描述列';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => '参考编号列（可选）';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => '已跳过的行';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return '已解析 $count 笔交易';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return '$count 条已跳过或排除';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return '已入账 $posted 条，失败 $failed 条';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => '全部使用此分类';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => '保存为规则？';
 
   @override
-  String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+  String get saveAsRuleBlurb => '以后描述中包含此关键词的导入记录都将使用此分类。';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => '关键词';
 
   @override
-  String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+  String get noSavedRules => '尚无已保存的规则。为一组行指定分类即可保存规则。';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => '删除规则？';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => '编辑规则';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count 行';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return '选择要导入的 $extensions 对账单文件';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => '收款人';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => '添加收款人';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => '重命名收款人';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => '删除收款人？';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => '尚无收款人';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => '定期模板';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => '尚无定期模板';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => '删除定期模板？';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => '每月日期（1-31）';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote => '天数较少的月份将使用该月的最后一天。';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return '每月第 $day 天 - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => '名称';
 
   @override
-  String get none => 'None';
+  String get none => '无';
 
   @override
-  String get currency => 'Currency';
+  String get currency => '货币';
 
   @override
   String get errorGeneric => '出错了，请重试。';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+  String get errorSigningIdentityMismatch => '此恢复短语或密钥库文件与此数据库中的任何签名身份都不匹配。';
 
   @override
-  String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+  String get errorInvalidLedgerBackup => '此文件不是有效的 Smara 备份。';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      '此备份没有签名身份——它不是有效的 Smara 备份。';
 
   @override
-  String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+  String get errorInvalidLedgerBackupUnverified => '此备份未能验证为完整的账本，因此未被恢复。';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return '无法将此文件作为 Smara 备份打开：$detail';
   }
 
   @override
-  String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+  String get errorForeignBackupIdentity => '此备份属于与本设备不同的签名身份。';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => '该账户不是财务账户。';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => '该账户已被隐藏。';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => '该账户未被隐藏。';
 
   @override
-  String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+  String get errorAccountNoPositiveBalanceToCloseOut => '没有剩余余额可供转出。';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup => '该账户未分配分组。';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency => '该分组尚未设置货币。';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => '未找到该账户分组。';
 
   @override
-  String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+  String get errorInvestmentAccountsMustBeAssets => '只有资产账户才能被标记为投资账户。';
 
   @override
-  String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+  String get errorCreditCardsMustBeLiabilities => '只有负债账户才能被标记为信用卡。';
 
   @override
-  String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+  String get errorOpeningBalanceMustBePositive => '如果提供期初余额，则必须为正数。';
 
   @override
-  String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+  String get errorAccountTypeDoesNotMatchGroup => '该账户类型与分组不匹配。';
 
   @override
-  String get errorLastActiveAccount => '无法隐藏最后一个有效账户。';
+  String get errorLastActiveAccount => '无法隐藏最后一个有效的财务账户。';
 
   @override
-  String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+  String get errorCurrencyRequiredToCreateGroup => '创建分组需要指定货币。';
 
   @override
-  String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+  String get errorSystemGroupCannotBeArchived => '内置账户分组不能被隐藏。';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => '该分组已被隐藏。';
 
   @override
-  String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+  String get errorCannotArchiveGroupWithAccounts => '无法隐藏仍有有效账户的分组。';
 
   @override
-  String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+  String get errorSystemGroupNeverArchived => '内置账户分组永远不会被隐藏。';
 
   @override
-  String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+  String get errorAccountGroupsCannotBeDeleted => '账户分组不能被删除。';
 
   @override
-  String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+  String get errorCannotReassignDifferentCurrency => '无法将此账户移动到货币不同的分组。';
 
   @override
-  String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+  String get errorCannotChangeGroupCurrencyWithAccounts => '分组中仍有有效账户时无法更改货币。';
 
   @override
   String get errorAmountMustBePositive => '金额必须为正数。';
 
   @override
-  String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+  String get errorAccountCurrencyAmountMustBePositive => '账户币种金额必须为正数。';
 
   @override
-  String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+  String get errorAccountCurrencyAmountNotForSameCurrency => '账户币种金额仅适用于外币条目。';
 
   @override
-  String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+  String get errorSplitNeedsTwoLines => '拆分至少需要两条分类记录行。';
 
   @override
-  String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+  String get errorSplitLineMustBePositive => '每条拆分记录行的金额必须为正数。';
 
   @override
-  String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+  String get errorSplitLinesMustSumToTotal => '拆分记录行的合计金额必须等于交易总额。';
 
   @override
-  String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+  String get errorTransferAmountMustBePositive => '转账金额必须为正数。';
 
   @override
-  String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+  String get errorTransferAccountsMustDiffer => '转出账户和转入账户必须不同。';
 
   @override
-  String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+  String get errorCloseoutRequiresDestinationAmount => '跨币种账户结清需要已知的目标金额。';
 
   @override
-  String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+  String get errorDestinationAmountNotForSameCurrency => '目标金额仅适用于跨币种转账。';
 
   @override
-  String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+  String get errorDestinationAmountMustBePositive => '目标金额必须为正数。';
 
   @override
-  String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+  String get errorInvestmentCashExceeded => '转出金额不能超过该投资账户的现金余额。';
 
   @override
-  String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+  String get errorCannotReverseUnsettledProvisional => '请结清此待处理转账，而不要将其冲正。';
 
   @override
-  String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+  String get errorAlreadyReversed => '此条目已被更正过。原始记录行保持不变。';
 
   @override
-  String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+  String get errorNotActiveExpenseCategory => '请选择一个有效的支出分类。';
 
   @override
-  String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+  String get errorNotActiveIncomeCategory => '请选择一个有效的收入分类。';
 
   @override
-  String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+  String get errorSettledAmountMustNotBeNegative => '实际到账金额不能为负数。';
 
   @override
-  String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+  String get errorPendingTransferNotFound => '未找到该待处理转账。';
 
   @override
-  String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+  String get errorPendingTransferAlreadySettled => '该待处理转账已结清。';
 
   @override
-  String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+  String get errorSettledToMustBeSourceOrDestination => '请选择原始的转出或转入账户。';
 
   @override
-  String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+  String get errorFeeCategoryOnlyWhenReturningToSource => '手续费分类仅在资金退回转出账户时使用。';
 
   @override
-  String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+  String get errorSettledAmountMustBePositiveForDelivery => '请为实际到账金额输入一个正数。';
 
   @override
-  String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+  String get errorSettledAmountExceedsProvisional => '该金额超过了实际发送的金额。';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => '未找到该投资标的。';
 
   @override
-  String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+  String get errorIncomeRequiredForNonCash => '非现金取得需要一个有效的收入分类。';
 
   @override
-  String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+  String get errorInsufficientCash => '该投资账户中现金不足，无法完成此次买入。';
 
   @override
-  String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+  String get errorSellQuantityAndPriceMustBePositive => '卖出数量和单价必须为正数。';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return '无法卖出：部分份额被锁定至 $date。';
   }
 
   @override
-  String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+  String get errorInsufficientQuantity => '卖出数量不能超过您当前持有的未锁定数量。';
 
   @override
-  String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+  String get errorIncomeRequiredForGain => '已实现收益需要一个有效的收入分类。';
 
   @override
-  String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+  String get errorExpenseRequiredForLoss => '已实现亏损需要一个有效的支出分类。';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return '买入已入账，但经纪费记录失败：$detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return '卖出已入账，但经纪费记录失败：$detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive => '股息金额必须为正数。';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => '该账户不是投资账户。';
 
   @override
-  String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+  String get errorNoInventoryCompanion => '此投资账户缺少与其配对的持仓账户。';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return '无法冲正此买入：后续的卖出交易依赖于其份额。请先冲正相关的卖出交易：$sells。';
   }
 
   @override
-  String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+  String get errorMonthlyLimitMustBePositive => '月度限额必须为正数。';
 
   @override
-  String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+  String get errorTemplateAmountMustBePositive => '模板金额必须为正数。';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized => '无法将此文件识别为 OFX 格式。';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => '所选文件为空。';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => '无法将此文件作为 CSV 读取。';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => '所选文件没有任何数据行。';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return '无法创建备份：$detail';
   }
 
   @override
-  String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+  String get errorBackupRestoreFailed => '无法恢复此备份——密码短语错误，或该文件不是 Smara 备份文件。';
 
   @override
-  String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+  String get validationAmountAccountCategoryRequired => '需要填写金额、账户和分类。';
 
   @override
-  String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+  String get validationAmountAccountRequired => '需要填写金额和账户。';
 
   @override
-  String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+  String get validationSplitLineIncomplete => '每条拆分记录行都需要分类和金额。';
 
   @override
-  String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+  String get validationSplitSumMismatch => '拆分记录行的合计金额必须等于交易总额。';
 
   @override
-  String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+  String get validationFromToAmountRequired => '需要填写转出账户、转入账户和金额。';
 
   @override
-  String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+  String get validationAmountArrivedRequired => '需要填写实际到账金额。';
 
   @override
-  String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+  String get validationChooseReceivingAccount => '请选择接收资金的账户。';
 
   @override
-  String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+  String get validationAccountCategoryRequired => '需要填写账户和分类。';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => '无法保存此项更正。';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => '请为您的主要账户命名。';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading => '仍在加载中——请稍后再试。';
 
   @override
-  String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+  String get validationSaveAccountNameFailed => '无法保存账户名称。';
 
   @override
   String get validationWrongPin => 'PIN 错误，请重试。';
 
   @override
-  String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+  String get validationCategoryMustBeIncomeOrExpense => '分类必须是收入或支出。';
 
   @override
-  String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+  String get validationOnlyExpenseHasMonthlyLimit => '只有支出分类才能设置月度限额。';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => '模板无效。';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+  String get validationWrongKeystorePassphrase => '此密钥库文件的密码短语错误。';
 
   @override
-  String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+  String get validationInvalidKeystoreFile => '该文件看起来不是有效的密钥库文件。';
 
   @override
-  String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+  String get validationRestorePhraseFailed => '无法从该恢复短语恢复。';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return '无法在此设备上生成签名密钥：$detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return '无法保存此货币：$detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed => '迁移失败。请重试。';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile => '请先选择一个备份文件。';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => '请输入密码短语。';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => '两次输入的 PIN 不一致。';
 
   @override
-  String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+  String get validationFeePositiveWithCategory => '转账手续费必须为正数，并选择一个支出分类。';
 
   @override
-  String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+  String get validationFeeMustBeLessThanAmount => '对于内扣手续费的转账，手续费必须小于转账金额。';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return '转账已保存，但手续费记录失败：$detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => '请输入有效金额。';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return '第 $n 个单词与您保存的恢复短语不匹配。请检查后重试。';
   }
 
   @override
-  String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+  String get errorBuyQuantityAndPriceMustBePositive => '买入数量和单价必须为正数。';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived => '无法买入已隐藏的投资标的。';
 
   @override
-  String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+  String get errorNonCashCannotIncludeBrokerage => '非现金取得不能包含经纪费。';
 
   @override
-  String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+  String get errorBrokerageRequiresExpenseCategory => '当经纪费大于零时，需要一个有效的支出分类。';
 
   @override
-  String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+  String get errorSellProceedsMustCoverBrokerage => '卖出所得金额必须至少覆盖经纪费金额。';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return '本月 $spent / $limit';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => '解锁 Smara Account';
 
   @override
   String get searchLabel => '搜索';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => '期初余额';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return '转账：$name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => '转账手续费';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return '转账至 $name 的手续费';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return '无法打开文件选择器：$detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return '请选择一个 .$extensions 文件';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => '货币代码（ISO 4217，例如 USD）';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name 及另外 $count 项';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => '日期';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => '无';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return '继续之前请查看下方条目（共 $count 条）。';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return '您收到了 $amount';
   }
 
   @override
-  String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+  String get leaveBlankIfRateUnknown => '如果尚不知道汇率，请留空。';
 
   @override
-  String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+  String get recordTradeBlurb => '记录一笔已经发生的交易。此应用不进行下单交易。';
 
   @override
-  String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+  String get feeOnTopBlurb => '开启：上方金额是从该账户扣除的总金额；手续费从中扣除。';
 
   @override
-  String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+  String get feeBankBlurb => '由您的银行或中间机构预先收取的佣金。';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength => 'PIN 必须至少为 4 位数字。';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      '此操作会用备份替换此应用中当前的所有内容——不会进行合并。请选择一个备份文件，并输入您当初设置的保护密码短语。';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => '替换';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name 将不再可用于新交易。';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return '在创建或重新分配账户时将不再提供 $name。';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return '在记录新交易时将不再提供 $name。';
   }
 
   @override
-  String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+  String get hideInstrumentBody => '已隐藏的投资标的仍会保留在以往的买入和卖出记录中。您仍可以为它们记录股息。';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name（已隐藏）';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => '未设置货币';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$name 及其记住的默认设置将被删除。过去的交易不受影响。';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$name 将不再显示为到期项目。它此前已记录的交易不受影响。';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return '已保存的列映射“$name”将被删除。此前使用它导入的对账单不受影响。';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return '导入记录将不再通过“$keyword”自动分类。此前已通过该规则分类的交易不受影响。';
   }
 
   @override
-  String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+  String get firstWeekBlurb => '您可以现在选择添加一张信用卡或一个现金账户——以后也可以随时在设置中添加更多账户。';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => '已送达目的账户';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return '已送达 $name';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return '您实际收到的金额比预期少 $amount $currency——请选择一个分类来处理差额。';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => '日期范围';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => '添加模板';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => '编辑模板';
 
   @override
-  String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+  String get validationFillTemplateFields => '请为每个字段填写有效的金额和日期。';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => '保存 CSV 导出';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => '参考汇率';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => '您的汇率';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return '如果金额本身就是 $currency（该账户自身的货币），请留空。';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => '锁定至（可选）';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return '锁定至 $date';
   }
 
   @override
-  String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+  String get copiedResearchPrompt => '已复制研究提示——没有可用的浏览器链接，或您当前处于离线状态。';
 
   @override
-  String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+  String get openedFavouriteResearchTool => '已打开您常用的研究工具。';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => '这看起来是一笔收益';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => '这看起来是一笔亏损';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => '这看起来是收支平衡';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name（可卖 $qty）';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return '第 $index 列';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => '正在导入…';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => '确认导入';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => '管理已保存的分类规则';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return '此文件的货币（$currency）与所选账户的货币不一致。';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => '分类规则';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => '可能重复';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => '未知分类';
 }

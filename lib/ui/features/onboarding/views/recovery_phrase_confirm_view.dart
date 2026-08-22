@@ -74,10 +74,7 @@ class _RecoveryPhraseConfirmViewState extends State<RecoveryPhraseConfirmView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  l10n.confirmPhraseBlurb,
-                  style: AppTypography.body,
-                ),
+                Text(l10n.confirmPhraseBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 for (final index
                     in RecoveryPhraseSetupViewModel
@@ -90,9 +87,9 @@ class _RecoveryPhraseConfirmViewState extends State<RecoveryPhraseConfirmView> {
                   ),
                   const SizedBox(height: AppSpacing.medium),
                 ],
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                   const SizedBox(height: AppSpacing.medium),

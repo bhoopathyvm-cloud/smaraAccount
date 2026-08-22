@@ -8,112 +8,111 @@
   "navCategories": "വിഭാഗങ്ങൾ",
   "actionCancel": "റദ്ദാക്കുക",
   "actionSave": "സംരക്ഷിക്കുക",
-  "actionDelete": "Delete",
-  "actionDone": "Done",
-  "actionContinue": "Continue",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDelete": "ഇല്ലാതാക്കുക",
+  "actionDone": "പൂർത്തിയായി",
+  "actionContinue": "തുടരുക",
+  "actionDismiss": "നിരസിക്കുക",
+  "actionRetry": "വീണ്ടും ശ്രമിക്കുക",
+  "actionSkip": "ഒഴിവാക്കുക",
+  "actionConfirm": "സ്ഥിരീകരിക്കുക",
   "actionAdd": "ചേർക്കുക",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "ചെലവ്",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionEdit": "തിരുത്തുക",
+  "actionRename": "പേര് മാറ്റുക",
+  "actionHide": "മറയ്ക്കുക",
+  "actionCreate": "സൃഷ്ടിക്കുക",
+  "actionCloseApp": "ആപ്പ് അടയ്ക്കുക",
+  "actionUnlock": "അൺലോക്ക് ചെയ്യുക",
+  "actionSettle": "തീർപ്പാക്കുക",
+  "actionFinish": "പൂർത്തിയാക്കുക",
+  "actionPreview": "പ്രിവ്യൂ ചെയ്യുക",
+  "actionImport": "ഇംപോർട്ട് ചെയ്യുക",
+  "actionExportCsv": "CSV എക്സ്പോർട്ട് ചെയ്യുക",
+  "actionChooseFile": "ഫയൽ തിരഞ്ഞെടുക്കുക",
+  "actionRestore": "പുനഃസ്ഥാപിക്കുക",
+  "actionFix": "ശരിയാക്കുക",
+  "actionBuy": "വാങ്ങുക",
+  "actionSell": "വിൽക്കുക",
+  "actionDividend": "ഡിവിഡന്റ്",
+  "actionRecordBuy": "വാങ്ങൽ രേഖപ്പെടുത്തുക",
+  "actionRecordSell": "വിൽപ്പന രേഖപ്പെടുത്തുക",
+  "actionRecordDividend": "ഡിവിഡന്റ് രേഖപ്പെടുത്തുക",
+  "actionPayCard": "കാർഡിലൂടെ അടയ്ക്കുക",
+  "actionTransfer": "ട്രാൻസ്ഫർ",
+  "actionRecordTransaction": "ഇടപാട് രേഖപ്പെടുത്തുക",
+  "actionImportStatement": "സ്റ്റേറ്റ്മെന്റ് ഇംപോർട്ട് ചെയ്യുക",
+  "actionClearDates": "തീയതികൾ മായ്ക്കുക",
+  "actionClearSearch": "തിരയലും ഫിൽട്ടറുകളും മായ്ക്കുക",
+  "actionUseBiometrics": "ബയോമെട്രിക്സ് ഉപയോഗിക്കുക",
+  "actionSetPin": "PIN സജ്ജമാക്കുക",
+  "actionChangePin": "PIN മാറ്റുക",
+  "actionSaveBackup": "ബാക്കപ്പ് സേവ് ചെയ്യുക",
+  "actionRestoreBackup": "ബാക്കപ്പ് പുനഃസ്ഥാപിക്കുക",
+  "actionSaveRule": "റൂൾ സേവ് ചെയ്യുക",
+  "actionConfirmFix": "തിരുത്തൽ സ്ഥിരീകരിക്കുക",
+  "captureSpent": "ചെലവായി",
+  "captureReceived": "ലഭിച്ചു",
+  "captureMovedMoney": "പണം മാറ്റി",
+  "captureImportStatement": "സ്റ്റേറ്റ്മെന്റ് ഇംപോർട്ട് ചെയ്യുക",
   "settingsTitle": "ക്രമീകരണങ്ങൾ",
   "settingsLanguage": "ഭാഷ",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "ഡിവൈസ് ഭാഷ",
+  "settingsFetchFxRates": "റഫറൻസ് വിനിമയ നിരക്കുകൾ ലഭ്യമാക്കുക",
+  "settingsFetchFxRatesSubtitle": "ക്രോസ്-കറൻസി ട്രാൻസ്ഫറുകളിൽ ലക്ഷ്യസ്ഥാന തുകയ്ക്ക് അരികിൽ ഒരു സൂചക മാർക്കറ്റ് നിരക്ക് കാണിക്കുന്നു, താരതമ്യത്തിന് മാത്രം - തുക പൂരിപ്പിക്കാൻ ഒരിക്കലും ഉപയോഗിക്കില്ല.",
+  "settingsRateProvider": "നിരക്ക് ദാതാവ്",
+  "settingsFetchMarketPrices": "നിക്ഷേപങ്ങൾക്കുള്ള മാർക്കറ്റ് വില ലഭ്യമാക്കുക",
+  "settingsFetchMarketPricesSubtitle": "ടിക്കറോ ISIN-ഓ ഉള്ള ഇൻസ്ട്രുമെന്റുകളുടെ അവസാന വില നോക്കി പോർട്ട്ഫോളിയോ മൂല്യം കണക്കാക്കുന്നു. ഒരു ഇടപാട് രേഖപ്പെടുത്താൻ ഒരിക്കലും ഉപയോഗിക്കില്ല, എത്ര കൈവശമുണ്ടെന്ന് ഒരിക്കലും അയക്കുകയുമില്ല.",
+  "settingsMarketPriceProvider": "മാർക്കറ്റ് വില ദാതാവ്",
+  "settingsFavouriteResearchTool": "പ്രിയപ്പെട്ട റിസർച്ച് ടൂൾ",
+  "settingsFavouriteResearchToolSubtitle": "ഹോൾഡിംഗ്സിൽ ഒരു ഇൻസ്ട്രുമെന്റിന്റെ പേരിൽ ടാപ്പ് ചെയ്താൽ ഈ ടൂൾ ബ്രൗസറിൽ ഒരു റിസർച്ച് പ്രോംപ്റ്റോടെ തുറക്കും — ഇത് ഒരു ഇന്റഗ്രേഷനല്ല, ഉപദേശവുമല്ല.",
+  "settingsBackup": "ബാക്കപ്പ്",
+  "settingsBackupBlurb": "നിങ്ങളുടെ കണക്കുകളുടെ എൻക്രിപ്റ്റഡ് പകർപ്പ് നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന സ്ഥലത്ത് സേവ് ചെയ്യുക, അല്ലെങ്കിൽ അതിൽ നിന്ന് പുനഃസ്ഥാപിക്കുക. ഇത് നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സിൽ നിന്നോ കീസ്റ്റോർ ഫയലിൽ നിന്നോ വ്യത്യസ്തമാണ്, അവ നിങ്ങളുടെ സൈനിംഗ് കീ ബാക്കപ്പ് ചെയ്യുന്നു, കണക്കുകളല്ല.",
+  "settingsLock": "ലോക്ക്",
+  "settingsLockBlurb": "ആപ്പ് തുറക്കാൻ PIN-ഓ, ലഭ്യമെങ്കിൽ ബയോമെട്രിക്സോ നിർബന്ധമാക്കുക.",
+  "settingsRequireUnlock": "ആപ്പ് തുറക്കാൻ അൺലോക്ക് നിർബന്ധമാക്കുക",
+  "settingsLockAfter": "ഇത്ര സമയത്തിന് ശേഷം ലോക്ക് ചെയ്യുക",
+  "settingsLockImmediately": "ഉടനടി",
+  "settingsLock1Minute": "1 മിനിറ്റ്",
+  "settingsLock5Minutes": "5 മിനിറ്റ്",
+  "settingsLock15Minutes": "15 മിനിറ്റ്",
+  "settingsAllowBiometrics": "ബയോമെട്രിക്സും അനുവദിക്കുക",
+  "settingsHideSnapshot": "ആപ്പ് സ്വിച്ചറിൽ ബാലൻസുകൾ മറയ്ക്കുക",
+  "settingsHideSnapshotSubtitle": "മറ്റൊരു ആപ്പിലേക്ക് മാറുമ്പോൾ ഈ സ്ക്രീൻ മറയ്ക്കുന്നു, അതിനാൽ ആപ്പ് സ്വിച്ചറിൽ ഒറ്റനോട്ടത്തിൽ ഇത് കാണില്ല.",
+  "settingsHideSnapshotUnavailable": "ഈ പ്ലാറ്റ്ഫോമിൽ ആപ്പ് സ്വിച്ചറിൽ ബാലൻസുകൾ മറയ്ക്കാൻ കഴിയില്ല.",
+  "settingsPayees": "പേയികൾ",
+  "settingsManagePayees": "പേയികളെ കൈകാര്യം ചെയ്യുക",
+  "settingsPayeesBlurb": "ഓർത്തിരിക്കുന്ന പേയികളുടെ പേരുകളും അവരുടെ ഡിഫോൾട്ട് വിഭാഗവും അക്കൗണ്ടും, ഒരു ഇടപാട് രേഖപ്പെടുത്തുമ്പോൾ ഓട്ടോകംപ്ലീറ്റ് നിർദ്ദേശിക്കുന്നത്.",
+  "settingsRecurring": "ആവർത്തന ടെംപ്ലേറ്റുകൾ",
+  "settingsManageRecurring": "ആവർത്തന ടെംപ്ലേറ്റുകൾ കൈകാര്യം ചെയ്യുക",
+  "settingsRecurringBlurb": "വാടകയോ ശമ്പളമോ പോലെ പ്രതിമാസം ആവർത്തിക്കുന്ന ബില്ലുകളോ വരുമാനമോ. അടയ്ക്കേണ്ട ടെംപ്ലേറ്റ് ഹോമിൽ കാണിക്കും, ഒറ്റ ടാപ്പിൽ രേഖപ്പെടുത്താൻ - ഒരിക്കലും സ്വയമേവ പോസ്റ്റ് ചെയ്യില്ല.",
+  "settingsAbout": "വിവരണം",
+  "providerFrankfurter": "Frankfurter (ECB നിരക്കുകൾ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerStooq": "Stooq (ദൈനംദിന ക്വോട്ടുകൾ)",
+  "providerYahooFinance": "Yahoo Finance (ചാർട്ട് API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "ക്യാഷും ക്യാഷ് തുല്യങ്ങളും",
+  "systemGroupPensionRetirement": "പെൻഷനും വിരമിക്കലും",
+  "systemGroupCreditShortTerm": "ക്രെഡിറ്റും ഹ്രസ്വകാല കടവും",
+  "systemGroupLoansMortgages": "വായ്പകളും മോർട്ട്ഗേജുകളും",
+  "systemGroupInvestments": "നിക്ഷേപങ്ങൾ",
+  "systemAccountCashBank": "ക്യാഷും ബാങ്കും",
+  "systemCategorySalary": "ശമ്പളം",
+  "systemCategoryOtherIncome": "മറ്റ് വരുമാനം",
+  "systemCategoryGroceries": "പലചരക്ക്",
+  "systemCategoryRentMortgage": "വാടക/മോർട്ട്ഗേജ്",
+  "systemCategoryUtilities": "യൂട്ടിലിറ്റികൾ",
+  "systemCategoryTransport": "യാത്ര",
+  "systemCategoryFoodOut": "പുറത്തുനിന്ന് ഭക്ഷണം",
+  "systemCategoryPhone": "ഫോൺ",
+  "systemCategoryHealth": "ആരോഗ്യം",
+  "systemCategoryOtherExpense": "മറ്റ് ചെലവ്",
   "homeThisMonth": "ഈ മാസം",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "കൈമാറ്റത്തിലുള്ള പണം",
+  "homeWhatYouHaveMinusWhatYouOwe": "നിങ്ങൾക്കുള്ളത് കുറയ്ക്കുക നിങ്ങൾ കൊടുക്കാനുള്ളത്",
+  "homeWhatYouHave": "നിങ്ങൾക്കുള്ളത് {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "നിങ്ങൾക്കുള്ളത് {haveAmount} {currency}  •  നിങ്ങൾ കൊടുക്കാനുള്ളത് {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "നിങ്ങൾ {name}-ൽ നിന്ന് {amount} {currency} അയച്ചു",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "നിങ്ങൾ {name}-ലേക്ക് {amount} {currency} അയച്ചു",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "മറച്ചത്",
+  "allAccounts": "എല്ലാ അക്കൗണ്ടുകളും",
+  "savedToPath": "{path}-ൽ സേവ് ചെയ്തു",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യാനായില്ല. നിങ്ങൾക്ക് ഈ ഘട്ടം ഒഴിവാക്കാം.",
+  "enterPassphraseToProtect": "ഫയൽ സംരക്ഷിക്കാൻ ഒരു പാസ്ഫ്രെയ്സ് നൽകുക.",
+  "homeTapWhenArrived": "എന്താണ് വന്നതെന്ന് അറിയുമ്പോൾ ടാപ്പ് ചെയ്യുക",
+  "homeReturnedTo": "{name}-ലേക്ക് തിരികെ എത്തി",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "ഇന്ന് അടയ്ക്കേണ്ടത്",
+  "homeDueLine": "{category} · {account} · രേഖപ്പെടുത്താൻ ടാപ്പ് ചെയ്യുക",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "പരിധി കടന്നു",
+  "homeSpentOfLimit": "{limit}-ൽ {spent}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "ബാക്കി: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "അക്കൗണ്ടുകളില്ല",
+  "homeCashRegister": "ക്യാഷ് രജിസ്റ്റർ",
+  "homeMarketEstimate": "മാർക്കറ്റ് എസ്റ്റിമേറ്റ്",
+  "registerTitle": "രജിസ്റ്റർ",
+  "registerSearchHint": "വിവരണം, വിഭാഗം, അല്ലെങ്കിൽ തുക",
+  "registerNoTransactions": "ഇതുവരെ ഇടപാടുകളൊന്നുമില്ല",
+  "registerNoEntries": "ഇതുവരെ എൻട്രികളൊന്നും രേഖപ്പെടുത്തിയിട്ടില്ല.",
+  "registerSpentOnly": "ചെലവ് മാത്രം",
+  "registerReceivedOnly": "ലഭിച്ചത് മാത്രം",
+  "registerAll": "എല്ലാം",
+  "registerUnverified": "സ്ഥിരീകരിക്കാത്തത് - മൊത്തത്തിൽ നിന്ന് ഒഴിവാക്കി",
+  "registerSuperseded": "മൈഗ്രേഷൻ വഴി മാറ്റിസ്ഥാപിച്ചു - മൊത്തത്തിൽ നിന്ന് ഒഴിവാക്കി",
+  "summaryTitle": "സംഗ്രഹം",
+  "summaryTotalIncome": "മൊത്തം വരുമാനം",
+  "summaryTotalExpense": "മൊത്തം ചെലവ്",
+  "summaryDateRange": "{start} മുതൽ {end} വരെ",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "അക്കൗണ്ടുകൾ",
+  "categoriesTitle": "വിഭാഗങ്ങൾ",
+  "accountName": "അക്കൗണ്ട് പേര്",
+  "createAccount": "അക്കൗണ്ട് സൃഷ്ടിക്കുക",
+  "createGroup": "ഗ്രൂപ്പ് സൃഷ്ടിക്കുക",
+  "editGroup": "ഗ്രൂപ്പ് തിരുത്തുക",
+  "renameAccount": "അക്കൗണ്ട് പേര് മാറ്റുക",
+  "renameCategory": "വിഭാഗം പേര് മാറ്റുക",
+  "addCategory": "വിഭാഗം ചേർക്കുക",
+  "groupLabel": "ഗ്രൂപ്പ്",
+  "kindLabel": "തരം",
+  "asset": "ആസ്തി",
+  "liability": "ബാധ്യത",
+  "income": "വരുമാനം",
+  "expense": "ചെലവ്",
+  "thisAccountHoldsInvestments": "ഈ അക്കൗണ്ടിൽ നിക്ഷേപങ്ങൾ സൂക്ഷിക്കുന്നു",
+  "thisAccountHoldsInvestmentsSubtitle": "ക്യാഷും, വാങ്ങൽ, വിൽപ്പന, ഡിവിഡന്റ് എന്നിവയിലൂടെ രേഖപ്പെടുത്തുന്ന ഇൻവെന്ററിയും.",
+  "thisIsACreditCard": "ഇത് ഒരു ക്രെഡിറ്റ് കാർഡാണ്",
+  "openingBalanceOptional": "പ്രാരംഭ ബാലൻസ് (ഓപ്ഷണൽ)",
+  "currencyIso": "കറൻസി (ISO 4217)",
+  "currencyIsoExample": "കറൻസി (ISO 4217, ഉദാ: USD)",
+  "hideAccountTitle": "പുതിയ എൻട്രികളിൽ നിന്ന് അക്കൗണ്ട് മറയ്ക്കണോ?",
+  "hideCategoryTitle": "പുതിയ എൻട്രികളിൽ നിന്ന് വിഭാഗം മറയ്ക്കണോ?",
+  "hideGroupTitle": "പുതിയ എൻട്രികളിൽ നിന്ന് ഗ്രൂപ്പ് മറയ്ക്കണോ?",
+  "reassignGroup": "ഗ്രൂപ്പ് വീണ്ടും നൽകുക",
+  "transferRemainingBalance": "ബാക്കിയുള്ള ബാലൻസ് ട്രാൻസ്ഫർ ചെയ്യുക",
+  "monthlyLimit": "പ്രതിമാസ പരിധി",
+  "monthlyLimitHint": "പരിധി (മായ്ക്കാൻ ശൂന്യമാക്കുക)",
+  "monthlyLimitBlurb": "ഈ ചെലവ് വിഭാഗത്തിന് ഒരു ഓപ്ഷണൽ മാസം-തുടങ്ങി-ഇന്നുവരെയുള്ള ചെലവ് സൂചകം.",
+  "manageCategoryRules": "വിഭാഗ നിയമങ്ങൾ കൈകാര്യം ചെയ്യുക",
+  "amount": "തുക",
+  "category": "വിഭാഗം",
+  "account": "അക്കൗണ്ട്",
+  "fromAccount": "ഫ്രം അക്കൗണ്ട്",
+  "toAccount": "ടു അക്കൗണ്ട്",
+  "descriptionOptional": "വിവരണം (ഓപ്ഷണൽ)",
+  "alsoRememberPayee": "ഒരു പേയി ആയും ഓർത്തുവയ്ക്കുക",
+  "splitIntoCategories": "ഒന്നിലധികം വിഭാഗങ്ങളായി വിഭജിക്കുക",
+  "categoryN": "വിഭാഗം {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "ലക്ഷ്യസ്ഥാന തുക",
+  "destinationAmountOptional": "ലക്ഷ്യസ്ഥാന തുക (ഓപ്ഷണൽ)",
+  "accountCurrencyAmountOptional": "അക്കൗണ്ട്-കറൻസി തുക (ഓപ്ഷണൽ)",
+  "transactionCurrencyOptional": "ഇടപാട് കറൻസി (ഓപ്ഷണൽ)",
+  "feeOptional": "ഫീ (ഓപ്ഷണൽ)",
+  "feeAmount": "ഫീ തുക",
+  "feeCategory": "ഫീ വിഭാഗം",
+  "feeDescriptionOptional": "ഫീ വിവരണം (ഓപ്ഷണൽ)",
+  "feeDeducted": "മുകളിലെ തുകയിൽ നിന്ന് ഫീ കുറയ്ക്കുന്നു",
+  "needTwoAccountsToTransfer": "ട്രാൻസ്ഫർ ചെയ്യാൻ കുറഞ്ഞത് രണ്ട് സജീവ അക്കൗണ്ടുകൾ സൃഷ്ടിക്കുക.",
+  "whatArrivedTitle": "എന്താണ് വന്നത്?",
+  "whatArrivedBlurb": "യഥാർത്ഥത്തിൽ എന്താണ് വന്നതെന്ന് ഞങ്ങളോട് പറയുക.",
+  "amountThatArrived": "വന്ന തുക",
+  "feeLossCategory": "ഫീ / നഷ്ട വിഭാഗം",
+  "alreadySettled": "ഇതിനകം തീർപ്പാക്കി.",
+  "holdingsTitle": "ഹോൾഡിംഗ്സ്",
+  "holdingsCash": "ക്യാഷ്",
+  "holdingsInventory": "ഇൻവെന്ററി",
+  "holdingsBook": "ബുക്ക് (ക്യാഷ് + ചെലവ്) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "മാർക്കറ്റ് എസ്റ്റിമേറ്റ് {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "ഇതുവരെ ഹോൾഡിംഗ്സ് ഇല്ല. ഒരു ഇൻസ്ട്രുമെന്റ് ചേർക്കാൻ ഒരു വാങ്ങൽ രേഖപ്പെടുത്തുക.",
+  "holdingsQuotesBlurb": "ക്വോട്ടുകൾ എസ്റ്റിമേറ്റുകളാണ്, ബ്രോക്കർ വിലയല്ല. ഈ ആപ്പ് ഓർഡറുകൾ നൽകുന്നില്ല.",
+  "holdingsTapNameToResearch": "റിസർച്ച് ചെയ്യാൻ പേരിൽ ടാപ്പ് ചെയ്യുക. ക്വോട്ടുകൾ എസ്റ്റിമേറ്റുകളാണ്, ഉപദേശമല്ല.",
+  "instrument": "ഇൻസ്ട്രുമെന്റ്",
+  "newInstrument": "പുതിയ ഇൻസ്ട്രുമെന്റ്",
+  "renameInstrument": "ഇൻസ്ട്രുമെന്റ് പേര് മാറ്റുക",
+  "instrumentActions": "ഇൻസ്ട്രുമെന്റ് പ്രവർത്തനങ്ങൾ",
+  "hideInstrumentTitle": "{name} മറയ്ക്കണോ?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "ടിക്കർ (ഓപ്ഷണൽ)",
+  "isinOptional": "ISIN (ഓപ്ഷണൽ)",
+  "quantity": "അളവ്",
+  "unitPrice": "യൂണിറ്റ് വില",
+  "brokerageOptional": "ബ്രോക്കറേജ് (ഓപ്ഷണൽ)",
+  "brokerageExpenseCategory": "ബ്രോക്കറേജ് ചെലവ് വിഭാഗം",
+  "incomeCategory": "വരുമാന വിഭാഗം",
+  "gainIncomeCategory": "ലാഭ വരുമാന വിഭാഗം",
+  "lossExpenseCategory": "നഷ്ട ചെലവ് വിഭാഗം",
+  "nonCash": "നോൺ-ക്യാഷ്",
+  "cash": "ക്യാഷ്",
+  "locked": "ലോക്ക് ചെയ്തത്",
+  "lockUntilHint": "ഇത് നിങ്ങളുടെ സ്വന്തം നിയന്ത്രണക്കുറിപ്പാണ്, ബ്രോക്കർ നിയമമല്ല.",
+  "instrumentKindStock": "സ്റ്റോക്ക്",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "മ്യൂച്വൽ ഫണ്ട്",
+  "instrumentKindBond": "ബോണ്ട്",
+  "instrumentKindOther": "മറ്റുള്ളവ",
+  "quoteUseLive": "ലൈവ് വില",
+  "quoteUseCached": "കാഷ്ഡ് വില",
+  "quoteUseStale": "പഴയ വില",
+  "quoteUseMissing": "ചെലവ് ഉപയോഗിക്കുന്നു (വിലയില്ല)",
+  "quoteUseDisabled": "ക്വോട്ടുകൾ ഓഫ് — ചെലവ്/കാഷ് ഉപയോഗിക്കുന്നു",
+  "quoteUseCurrencyMismatch": "ചെലവ് ഉപയോഗിക്കുന്നു (വിലയുടെ കറൻസി വ്യത്യസ്തമാണ്)",
+  "unrealizedLabel": "സാക്ഷാത്കരിക്കാത്തത് {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} യൂണിറ്റ് · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സ്",
+  "recoveryPhraseConfirmTitle": "നിങ്ങളുടെ ഫ്രെയ്സ് സ്ഥിരീകരിക്കുക",
+  "recoveryPhraseBlurb": "ഈ ഡിവൈസ് നഷ്ടപ്പെടുകയോ, റീസെറ്റ് ചെയ്യുകയോ, മാറ്റുകയോ ചെയ്താൽ നിങ്ങളുടെ ഇടപാട് ചരിത്രം വീണ്ടെടുക്കാനുള്ള ഒരേയൊരു വഴിയാണ് ഈ 24 വാക്കുകൾ. സ്മാര അക്കൗണ്ടിംഗിന് സെർവർ ഇല്ല, നിങ്ങൾക്കുവേണ്ടി അവ വീണ്ടെടുക്കാൻ കഴിയില്ല.\n\nഈ ഡിവൈസും ഈ ഫ്രെയ്സും ഒരുമിച്ച് നഷ്ടപ്പെട്ടാൽ, നിങ്ങൾ രേഖപ്പെടുത്തിയ ഓരോ ഇടപാടും എന്നെന്നേക്കുമായി സ്ഥിരീകരിക്കാൻ കഴിയാത്തതായി മാറും.",
+  "recoveryPhraseWriteDown": "ഈ വാക്കുകൾ ക്രമത്തിൽ എഴുതി വയ്ക്കുകയും ഈ ഡിവൈസിൽ നിന്ന് വേറിട്ട സുരക്ഷിതമായ ഒരിടത്ത് സൂക്ഷിക്കുകയും ചെയ്യുക.",
+  "iveSavedRecoveryPhrase": "ഞാൻ എന്റെ റിക്കവറി ഫ്രെയ്സ് സേവ് ചെയ്തു",
+  "confirmPhraseBlurb": "നിങ്ങൾ ഇപ്പോൾ സേവ് ചെയ്ത ഫ്രെയ്സിൽ നിന്ന് ആവശ്യപ്പെട്ട വാക്കുകൾ നൽകുക.",
+  "wordNumber": "വാക്ക് #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
-  "lockScreenTitle": "ലോക്ക്",
-  "enterPinToContinue": "Enter your PIN to continue",
+  "keystoreExportTitle": "കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യുക",
+  "keystoreExportBlurb": "നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സിന് പുറമേ, നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന ഒരു പാസ്ഫ്രെയ്സ് കൊണ്ട് സംരക്ഷിച്ച എൻക്രിപ്റ്റഡ് കീസ്റ്റോർ ഫയലും സേവ് ചെയ്യാം. ഇത് ഓപ്ഷണലാണ് - നിങ്ങളുടെ സൈനിംഗ് കീ പുനഃസ്ഥാപിക്കാൻ റിക്കവറി ഫ്രെയ്സ് മാത്രം എപ്പോഴും മതിയാകും.",
+  "keystorePassphrase": "പാസ്ഫ്രെയ്സ്",
+  "exportKeystoreFile": "കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യുക",
+  "chooseCurrencyTitle": "നിങ്ങളുടെ കറൻസി തിരഞ്ഞെടുക്കുക",
+  "chooseCurrencyBlurb": "എല്ലാ അക്കൗണ്ട് ഗ്രൂപ്പും (ക്യാഷും ക്യാഷ് തുല്യങ്ങളും, പെൻഷനും വിരമിക്കലും, തുടങ്ങിയവ) ഇപ്പോൾ ഈ ഒറ്റ കറൻസി ഉപയോഗിക്കുന്നു. പിന്നീട് ഇതിനായി ഒരു പുതിയ ഗ്രൂപ്പ് സൃഷ്ടിച്ച് വ്യത്യസ്ത കറൻസിയിൽ അക്കൗണ്ടുകൾ ചേർക്കാം.",
+  "currencyBackfillTitle": "നിലവിലുള്ള ഗ്രൂപ്പുകൾക്ക് ഒരു കറൻസി തിരഞ്ഞെടുക്കുക",
+  "currencyBackfillBlurb": "ഈ ആപ്പ് ഇപ്പോൾ ഒന്നിലധികം കറൻസികളെ പിന്തുണയ്ക്കുന്നു. നിങ്ങളുടെ നിലവിലുള്ള അക്കൗണ്ടുകൾക്കും അക്കൗണ്ട് ഗ്രൂപ്പുകൾക്കും ഒരു കറൻസി വേണം - ഈ ഫീച്ചർ വരുന്നതിന് മുൻപ് അവയെല്ലാം സെറ്റപ്പ് ചെയ്തതിനാൽ, ഒരു തിരഞ്ഞെടുപ്പ് അവയ്ക്കെല്ലാം ബാധകമാകും.",
+  "firstAccountTitle": "നിങ്ങളുടെ അക്കൗണ്ടിന് പേരിടുക",
+  "firstAccountBlurb": "ഇത് നിങ്ങൾക്കായി മുൻപേ സെറ്റപ്പ് ചെയ്ത അക്കൗണ്ടാണ് - നിങ്ങളുടെ ബാങ്ക് പോലെ, നിങ്ങൾക്ക് തിരിച്ചറിയാവുന്ന ഒരു പേര് നൽകുക. അടുത്തതായി നിങ്ങൾ ഒരു ചെലവ് അല്ലെങ്കിൽ ലഭിച്ചത് രേഖപ്പെടുത്തും, പിന്നീട് നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സ് കൊണ്ട് ഡിവൈസ് സംരക്ഷിക്കും.",
+  "whatsMainAccountCalled": "നിങ്ങളുടെ പ്രധാന അക്കൗണ്ടിന്റെ പേരെന്താണ്?",
+  "restoreTitle": "സൈനിംഗ് കീ പുനഃസ്ഥാപിക്കുക",
+  "restoreBlurb": "ഈ ഡിവൈസിൽ നിലവിലുള്ള കണക്കുകളുണ്ട്, പക്ഷേ പൊരുത്തപ്പെടുന്ന സൈനിംഗ് കീയില്ല. നിങ്ങളുടെ സേവ് ചെയ്ത റിക്കവറി ഫ്രെയ്സിൽ നിന്നോ കീസ്റ്റോർ ഫയലിൽ നിന്നോ അത് പുനഃസ്ഥാപിക്കുക - നിങ്ങളുടെ ഡാറ്റ സാധാരണ പോലെ സ്ഥിരീകരിക്കും, ഒന്നും വീണ്ടും സൈൻ ചെയ്യുകയോ മാറ്റുകയോ ചെയ്യില്ല.",
+  "recoveryPhrase24": "റിക്കവറി ഫ്രെയ്സ് (എല്ലാ 24 വാക്കുകളും)",
+  "keystoreFile": "കീസ്റ്റോർ ഫയൽ",
+  "keystoreFileContents": "കീസ്റ്റോർ ഫയലിന്റെ ഉള്ളടക്കം",
+  "optionalBackupFile": "ഓപ്ഷണൽ ബാക്കപ്പ് ഫയൽ",
+  "iDontHavePhrase": "എന്റെ കയ്യിൽ റിക്കവറി ഫ്രെയ്സോ കീസ്റ്റോർ ഫയലോ ഇല്ല",
+  "migrationTitle": "പുതിയ കീയിലേക്ക് മൈഗ്രേറ്റ് ചെയ്യുക",
+  "migrationBlurb": "നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സോ കീസ്റ്റോർ ഫയലോ ഇല്ലാതെ, ഈ ഡിവൈസിന്റെ സൈനിംഗ് കീ വീണ്ടെടുക്കാൻ കഴിയില്ല. നിങ്ങൾക്ക് ഒരു പുതിയ കീ തുടങ്ങാം. പഴയ എൻട്രികൾ ദൃശ്യമായി തുടരും പക്ഷേ അവ മാറ്റിസ്ഥാപിക്കപ്പെടും.",
+  "iConfirmBooksValid": "നിലവിലെ കണക്കുകൾ സാധുവാണെന്ന് ഞാൻ സ്ഥിരീകരിക്കുന്നു",
+  "whyWeDontEdit": "പഴയ എൻട്രികൾ ഞങ്ങൾ എന്തുകൊണ്ട് തിരുത്തുന്നില്ല",
+  "whyWeDontEditBody": "നിങ്ങൾ ഒരു തെറ്റ് ശരിയാക്കുമ്പോൾ, നിങ്ങൾ നൽകിയത് മാറ്റുന്നതിന് പകരം ഞങ്ങൾ പഴയ വരി സൂക്ഷിക്കുകയും അതിനടുത്ത് ഒരു തിരുത്തൽ ചേർക്കുകയും ചെയ്യുന്നു. അങ്ങനെ എന്താണ് സംഭവിച്ചതെന്നും എപ്പോൾ നിങ്ങൾ അത് ശരിയാക്കിയെന്നും നിങ്ങളുടെ ചരിത്രം എപ്പോഴും കൃത്യമായി കാണിക്കുന്നു — ഒന്നും നിങ്ങളറിയാതെ നിശബ്ദമായി മാറുന്നില്ല.",
+  "lockTitle": "അൺലോക്ക്",
+  "lockScreenTitle": "ലോക്ക് ചെയ്തു",
+  "enterPinToContinue": "തുടരാൻ നിങ്ങളുടെ PIN നൽകുക",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "ഒരു PIN സജ്ജമാക്കുക",
+  "currentPin": "നിലവിലെ PIN",
+  "newPin": "പുതിയ PIN",
+  "confirmPin": "PIN സ്ഥിരീകരിക്കുക",
+  "confirmNewPin": "പുതിയ PIN സ്ഥിരീകരിക്കുക",
+  "firstWeekTitle": "നിങ്ങളുടെ അക്കൗണ്ടുകൾ സജ്ജമാക്കുക",
+  "addCashAccount": "ഒരു ക്യാഷ് അക്കൗണ്ട് ചേർക്കുക",
+  "addCreditCard": "ഒരു ക്രെഡിറ്റ് കാർഡ് ചേർക്കുക",
+  "cashAccountName": "ക്യാഷ് അക്കൗണ്ട് പേര്",
+  "cardName": "കാർഡ് പേര്",
+  "paidFromBank": "ബാങ്കിൽ നിന്ന് അടച്ചു",
+  "paidFromCard": "കാർഡിൽ നിന്ന് അടച്ചു",
+  "choosePassphraseTitle": "ഈ ബാക്കപ്പ് സംരക്ഷിക്കാൻ ഒരു പാസ്ഫ്രെയ്സ് തിരഞ്ഞെടുക്കുക. ഇത് മറന്നാൽ വീണ്ടെടുക്കാൻ കഴിയില്ല.",
+  "replaceBooksTitle": "നിങ്ങളുടെ പ്രാദേശിക കണക്കുകൾ മാറ്റിസ്ഥാപിക്കണോ?",
+  "replaceBooksBody": "ഇത് ഈ ആപ്പിൽ നിലവിലുള്ളതെല്ലാം ബാക്കപ്പ് കൊണ്ട് മാറ്റിസ്ഥാപിക്കും. ശേഷം ആപ്പ് അടച്ച് വീണ്ടും തുറക്കുക.",
+  "chooseBackupFileFirst": "ആദ്യം ഒരു ബാക്കപ്പ് ഫയൽ തിരഞ്ഞെടുക്കുക.",
+  "backupRestored": "ബാക്കപ്പ് പുനഃസ്ഥാപിച്ചു",
+  "backupRestoredBody": "നിങ്ങളുടെ കണക്കുകൾ പുനഃസ്ഥാപിച്ചു. തുടരാൻ ആപ്പ് അടച്ച് വീണ്ടും തുറക്കുക.",
+  "fixThisEntry": "ഈ എൻട്രി ശരിയാക്കുക",
+  "fixBlurb": "പഴയ വരി അതേപടി തുടരും. സ്ഥിരീകരിക്കുന്നത് ഒരു റിവേഴ്സിംഗ് വരിയും തിരുത്തിയതും ചേർക്കും.",
+  "importStatementTitle": "സ്റ്റേറ്റ്മെന്റ് ഇംപോർട്ട് ചെയ്യുക",
+  "importOfx": "OFX ഇംപോർട്ട് ചെയ്യുക",
+  "importOfxQfxFile": "OFX / QFX ഫയൽ ഇംപോർട്ട് ചെയ്യുക",
+  "importCsvFile": "CSV ഫയൽ ഇംപോർട്ട് ചെയ്യുക",
+  "whatKindOfStatement": "നിങ്ങളുടെ കയ്യിൽ ഏത് തരം സ്റ്റേറ്റ്മെന്റ് ഫയലാണുള്ളത്?",
+  "chooseAccountForFile": "ഈ ഫയൽ ഏത് അക്കൗണ്ടിന്റേതാണെന്ന് തിരഞ്ഞെടുക്കുക.",
+  "importIntoAccount": "അക്കൗണ്ടിലേക്ക് ഇംപോർട്ട് ചെയ്യുക",
+  "useSavedProfile": "സേവ് ചെയ്ത ഒരു പ്രൊഫൈൽ ഉപയോഗിക്കുക",
+  "saveMappingProfile": "ഈ മാപ്പിംഗ് ഒരു പ്രൊഫൈലായി സേവ് ചെയ്യുക (ഓപ്ഷണൽ)",
+  "renameProfile": "പ്രൊഫൈൽ പേര് മാറ്റുക",
+  "deleteProfileTitle": "പ്രൊഫൈൽ ഇല്ലാതാക്കണോ?",
+  "fileHasHeader": "ഫയലിന് ഒരു ഹെഡർ വരിയുണ്ട്",
+  "dateColumn": "തീയതി കോളം",
+  "dateFormatHint": "തീയതി ഫോർമാറ്റ് (ഉദാ: dd/MM/yyyy)",
+  "amountColumn": "തുക കോളം",
+  "amountConvention": "തുക കൺവെൻഷൻ",
+  "signedAmountColumn": "സൈൻ ചെയ്ത തുക കോളം",
+  "separateDebitCredit": "ഡെബിറ്റ് / ക്രെഡിറ്റ് കോളങ്ങൾ വേറിട്ട്",
+  "debitColumn": "ഡെബിറ്റ് കോളം",
+  "creditColumn": "ക്രെഡിറ്റ് കോളം",
+  "decimalSeparator": "ദശാംശ വേർതിരിവ് (. അല്ലെങ്കിൽ ,)",
+  "descriptionColumns": "വിവരണ കോളം(കൾ)",
+  "referenceIdColumn": "റഫറൻസ് ഐഡി കോളം (ഓപ്ഷണൽ)",
+  "skippedRows": "ഒഴിവാക്കിയ വരികൾ",
+  "parsedTransactionCount": "{count} ഇടപാടുകൾ പാഴ്സ് ചെയ്തു",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} ഒഴിവാക്കി അല്ലെങ്കിൽ ഒഴിവാക്കപ്പെട്ടു",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} പോസ്റ്റ് ചെയ്തു, {failed} പരാജയപ്പെട്ടു",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "എല്ലാത്തിനും വിഭാഗം",
+  "saveAsRule": "ഒരു നിയമമായി സേവ് ചെയ്യണോ?",
+  "saveAsRuleBlurb": "ഈ കീവേഡ് വിവരണത്തിൽ അടങ്ങിയ ഭാവി ഇംപോർട്ടുകൾ ഈ വിഭാഗം ഉപയോഗിക്കും.",
+  "keyword": "കീവേഡ്",
+  "noSavedRules": "ഇതുവരെ സേവ് ചെയ്ത നിയമങ്ങളില്ല. ഒരു നിയമം സേവ് ചെയ്യാൻ വരികളുടെ ഒരു ഗ്രൂപ്പിന് ഒരു വിഭാഗം നൽകുക.",
+  "deleteRuleTitle": "നിയമം ഇല്ലാതാക്കണോ?",
+  "editRule": "നിയമം തിരുത്തുക",
+  "rowsGrouped": "{count} വരികൾ",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "ഇംപോർട്ട് ചെയ്യാൻ ഒരു {extensions} സ്റ്റേറ്റ്മെന്റ് ഫയൽ തിരഞ്ഞെടുക്കുക",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "പേയികൾ",
+  "addPayee": "പേയി ചേർക്കുക",
+  "renamePayee": "പേയി പേര് മാറ്റുക",
+  "deletePayeeTitle": "പേയി ഇല്ലാതാക്കണോ?",
+  "noPayeesYet": "ഇതുവരെ പേയികളില്ല",
+  "recurringTitle": "ആവർത്തന ടെംപ്ലേറ്റുകൾ",
+  "noRecurringYet": "ഇതുവരെ ആവർത്തന ടെംപ്ലേറ്റുകളില്ല",
+  "deleteTemplateTitle": "ആവർത്തന ടെംപ്ലേറ്റ് ഇല്ലാതാക്കണോ?",
+  "dayOfMonth": "മാസത്തിലെ ദിവസം (1-31)",
+  "dayOfMonthNote": "കുറച്ച് ദിവസങ്ങളുള്ള മാസം അതിന്റെ അവസാന ദിവസം ഉപയോഗിക്കും.",
+  "dayOfMonthLine": "മാസത്തിലെ ദിവസം {day} - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
-  "errorGeneric": "എന്തോ പിശക്. വീണ്ടും ശ്രമിക്കുക.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "name": "പേര്",
+  "none": "ഒന്നുമില്ല",
+  "currency": "കറൻസി",
+  "errorGeneric": "എന്തോ പിശക് സംഭവിച്ചു. വീണ്ടും ശ്രമിക്കുക.",
+  "errorSigningIdentityMismatch": "ഈ റിക്കവറി ഫ്രെയ്സോ കീസ്റ്റോർ ഫയലോ ഈ ഡാറ്റാബേസിലെ ഒരു സൈനിംഗ് ഐഡന്റിറ്റിയുമായും പൊരുത്തപ്പെടുന്നില്ല.",
+  "errorInvalidLedgerBackup": "ഈ ഫയൽ സാധുവായ സ്മാര ബാക്കപ്പ് അല്ല.",
+  "errorInvalidLedgerBackupNoIdentity": "ഈ ബാക്കപ്പിന് സൈനിംഗ് ഐഡന്റിറ്റി ഇല്ല - ഇത് സാധുവായ സ്മാര ബാക്കപ്പ് അല്ല.",
+  "errorInvalidLedgerBackupUnverified": "ഈ ബാക്കപ്പ് കേടുകൂടാത്ത കണക്കുകളായി സ്ഥിരീകരിക്കാനായില്ല, അതിനാൽ പുനഃസ്ഥാപിച്ചില്ല.",
+  "errorInvalidLedgerBackupUnreadable": "ഈ ഫയൽ സ്മാര ബാക്കപ്പായി തുറക്കാൻ കഴിഞ്ഞില്ല: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
-  "errorAmountMustBePositive": "തുക ധനാത്മകമായിരിക്കണം.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorForeignBackupIdentity": "ഈ ബാക്കപ്പ് ഈ ഡിവൈസിലേതിൽ നിന്ന് വ്യത്യസ്തമായ സൈനിംഗ് ഐഡന്റിറ്റിയുടേതാണ്.",
+  "errorAccountNotFinancial": "അത് ഒരു ഫിനാൻഷ്യൽ അക്കൗണ്ട് അല്ല.",
+  "errorAccountArchived": "ആ അക്കൗണ്ട് മറച്ചിരിക്കുന്നു.",
+  "errorAccountNotArchived": "ആ അക്കൗണ്ട് മറച്ചിട്ടില്ല.",
+  "errorAccountNoPositiveBalanceToCloseOut": "ട്രാൻസ്ഫർ ചെയ്യാൻ ബാക്കി ബാലൻസ് ഇല്ല.",
+  "errorAccountHasNoGroup": "ആ അക്കൗണ്ടിന് ഗ്രൂപ്പ് നിശ്ചയിച്ചിട്ടില്ല.",
+  "errorGroupHasNoCurrency": "ആ ഗ്രൂപ്പിന് ഇതുവരെ കറൻസി സെറ്റ് ചെയ്തിട്ടില്ല.",
+  "errorGroupNotFound": "ആ അക്കൗണ്ട് ഗ്രൂപ്പ് കണ്ടെത്തിയില്ല.",
+  "errorInvestmentAccountsMustBeAssets": "ആസ്തി അക്കൗണ്ടുകൾ മാത്രമേ നിക്ഷേപ അക്കൗണ്ടുകളായി അടയാളപ്പെടുത്താൻ കഴിയൂ.",
+  "errorCreditCardsMustBeLiabilities": "ബാധ്യതാ അക്കൗണ്ടുകൾ മാത്രമേ ക്രെഡിറ്റ് കാർഡുകളായി അടയാളപ്പെടുത്താൻ കഴിയൂ.",
+  "errorOpeningBalanceMustBePositive": "നൽകുകയാണെങ്കിൽ പ്രാരംഭ ബാലൻസ് പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorAccountTypeDoesNotMatchGroup": "ആ അക്കൗണ്ട് തരം ഗ്രൂപ്പുമായി പൊരുത്തപ്പെടുന്നില്ല.",
+  "errorLastActiveAccount": "അവസാന സജീവ ഫിനാൻഷ്യൽ അക്കൗണ്ട് മറയ്ക്കാൻ കഴിയില്ല.",
+  "errorCurrencyRequiredToCreateGroup": "ഗ്രൂപ്പ് സൃഷ്ടിക്കാൻ കറൻസി ആവശ്യമാണ്.",
+  "errorSystemGroupCannotBeArchived": "ബിൽറ്റ്-ഇൻ അക്കൗണ്ട് ഗ്രൂപ്പുകൾ മറയ്ക്കാൻ കഴിയില്ല.",
+  "errorGroupAlreadyArchived": "ആ ഗ്രൂപ്പ് ഇതിനകം മറച്ചിരിക്കുന്നു.",
+  "errorCannotArchiveGroupWithAccounts": "സജീവ അക്കൗണ്ടുകളുള്ള ഗ്രൂപ്പ് മറയ്ക്കാൻ കഴിയില്ല.",
+  "errorSystemGroupNeverArchived": "ബിൽറ്റ്-ഇൻ അക്കൗണ്ട് ഗ്രൂപ്പുകൾ ഒരിക്കലും മറയ്ക്കുന്നില്ല.",
+  "errorAccountGroupsCannotBeDeleted": "അക്കൗണ്ട് ഗ്രൂപ്പുകൾ ഇല്ലാതാക്കാൻ കഴിയില്ല.",
+  "errorCannotReassignDifferentCurrency": "വ്യത്യസ്ത കറൻസിയുള്ള ഗ്രൂപ്പിലേക്ക് ഈ അക്കൗണ്ട് മാറ്റാൻ കഴിയില്ല.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "ഗ്രൂപ്പിന് സജീവ അക്കൗണ്ടുകൾ ഉള്ളപ്പോൾ കറൻസി മാറ്റാൻ കഴിയില്ല.",
+  "errorAmountMustBePositive": "തുക പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorAccountCurrencyAmountMustBePositive": "അക്കൗണ്ട്-കറൻസി തുക പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "അക്കൗണ്ട്-കറൻസി തുക വിദേശ-കറൻസി എൻട്രിക്ക് മാത്രമാണ്.",
+  "errorSplitNeedsTwoLines": "ഒരു സ്പ്ലിറ്റിന് കുറഞ്ഞത് രണ്ട് വിഭാഗ വരികൾ വേണം.",
+  "errorSplitLineMustBePositive": "ഓരോ സ്പ്ലിറ്റ് വരിയും പോസിറ്റീവ് തുകയായിരിക്കണം.",
+  "errorSplitLinesMustSumToTotal": "സ്പ്ലിറ്റ് വരികൾ ഇടപാടിന്റെ ആകെ തുകയോട് കൂട്ടിച്ചേരണം.",
+  "errorTransferAmountMustBePositive": "ട്രാൻസ്ഫർ തുക പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorTransferAccountsMustDiffer": "സോഴ്സ്, ലക്ഷ്യസ്ഥാന അക്കൗണ്ടുകൾ വ്യത്യസ്തമായിരിക്കണം.",
+  "errorCloseoutRequiresDestinationAmount": "ക്രോസ്-കറൻസി ക്ലോസൗട്ടിന് അറിയാവുന്ന ലക്ഷ്യസ്ഥാന തുക വേണം.",
+  "errorDestinationAmountNotForSameCurrency": "ലക്ഷ്യസ്ഥാന തുക ക്രോസ്-കറൻസി ട്രാൻസ്ഫറിന് മാത്രമാണ്.",
+  "errorDestinationAmountMustBePositive": "ലക്ഷ്യസ്ഥാന തുക പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorInvestmentCashExceeded": "ഈ നിക്ഷേപ അക്കൗണ്ടിന്റെ ക്യാഷിനേക്കാൾ കൂടുതൽ ട്രാൻസ്ഫർ ചെയ്യാൻ കഴിയില്ല.",
+  "errorCannotReverseUnsettledProvisional": "ഇത് റിവേഴ്സ് ചെയ്യുന്നതിന് പകരം ഈ പെൻഡിംഗ് ട്രാൻസ്ഫർ തീർപ്പാക്കുക.",
+  "errorAlreadyReversed": "ഈ എൻട്രി ഇതിനകം തിരുത്തിയിട്ടുണ്ട്. ഒറിജിനൽ വരി അതേപടി തുടരും.",
+  "errorNotActiveExpenseCategory": "സജീവമായ ഒരു ചെലവ് വിഭാഗം തിരഞ്ഞെടുക്കുക.",
+  "errorNotActiveIncomeCategory": "സജീവമായ ഒരു വരുമാന വിഭാഗം തിരഞ്ഞെടുക്കുക.",
+  "errorSettledAmountMustNotBeNegative": "വന്ന തുക നെഗറ്റീവ് ആകാൻ പാടില്ല.",
+  "errorPendingTransferNotFound": "ആ പെൻഡിംഗ് ട്രാൻസ്ഫർ കണ്ടെത്തിയില്ല.",
+  "errorPendingTransferAlreadySettled": "ആ പെൻഡിംഗ് ട്രാൻസ്ഫർ ഇതിനകം തീർപ്പാക്കിയിട്ടുണ്ട്.",
+  "errorSettledToMustBeSourceOrDestination": "ഒറിജിനൽ സോഴ്സ് അല്ലെങ്കിൽ ലക്ഷ്യസ്ഥാന അക്കൗണ്ട് തിരഞ്ഞെടുക്കുക.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "പണം സോഴ്സ് അക്കൗണ്ടിലേക്ക് തിരികെ വരുമ്പോൾ മാത്രമേ ഫീ വിഭാഗം ഉപയോഗിക്കൂ.",
+  "errorSettledAmountMustBePositiveForDelivery": "വന്നതിന് ഒരു പോസിറ്റീവ് തുക നൽകുക.",
+  "errorSettledAmountExceedsProvisional": "ആ തുക അയച്ചതിനേക്കാൾ കൂടുതലാണ്.",
+  "errorInstrumentNotFound": "ആ ഇൻസ്ട്രുമെന്റ് കണ്ടെത്തിയില്ല.",
+  "errorIncomeRequiredForNonCash": "നോൺ-ക്യാഷ് ഏറ്റെടുക്കലിന് സജീവമായ ഒരു വരുമാന വിഭാഗം ആവശ്യമാണ്.",
+  "errorInsufficientCash": "ആ വാങ്ങലിന് ഈ നിക്ഷേപ അക്കൗണ്ടിൽ വേണ്ടത്ര ക്യാഷ് ഇല്ല.",
+  "errorSellQuantityAndPriceMustBePositive": "വിൽപ്പന അളവും യൂണിറ്റ് വിലയും പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorLockedUntil": "വിൽക്കാൻ കഴിയില്ല: ചില യൂണിറ്റുകൾ {date} വരെ ലോക്ക് ചെയ്തിരിക്കുന്നു.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "നിലവിൽ അൺലോക്ക് ചെയ്തിരിക്കുന്നതിനേക്കാൾ കൂടുതൽ വിൽക്കാൻ കഴിയില്ല.",
+  "errorIncomeRequiredForGain": "സാക്ഷാത്കരിച്ച ലാഭത്തിന് സജീവമായ ഒരു വരുമാന വിഭാഗം ആവശ്യമാണ്.",
+  "errorExpenseRequiredForLoss": "സാക്ഷാത്കരിച്ച നഷ്ടത്തിന് സജീവമായ ഒരു ചെലവ് വിഭാഗം ആവശ്യമാണ്.",
+  "errorBrokerageFailedAfterBuy": "വാങ്ങൽ പോസ്റ്റ് ചെയ്തു, പക്ഷേ ബ്രോക്കറേജ് ഫീ പരാജയപ്പെട്ടു: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "വിൽപ്പന പോസ്റ്റ് ചെയ്തു, പക്ഷേ ബ്രോക്കറേജ് ഫീ പരാജയപ്പെട്ടു: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "ഡിവിഡന്റ് തുക പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorNotInvestmentAccount": "അത് ഒരു നിക്ഷേപ അക്കൗണ്ട് അല്ല.",
+  "errorNoInventoryCompanion": "ഈ നിക്ഷേപ അക്കൗണ്ടിന് ഇൻവെന്ററി കമ്പാനിയൻ ഇല്ല.",
+  "errorInvestmentReversalBlocked": "ഈ വാങ്ങൽ റിവേഴ്സ് ചെയ്യാൻ കഴിയില്ല: പിന്നീടുള്ള വിൽപ്പന(കൾ) ഇതിന്റെ യൂണിറ്റുകളെ ആശ്രയിക്കുന്നു. ആശ്രിത വിൽപ്പന(കൾ) ആദ്യം റിവേഴ്സ് ചെയ്യുക: {sells}.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "പ്രതിമാസ പരിധി പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorTemplateAmountMustBePositive": "ടെംപ്ലേറ്റ് തുക പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorOfxUnrecognized": "ഈ ഫയലിനെ OFX ആയി തിരിച്ചറിയാൻ കഴിഞ്ഞില്ല.",
+  "errorCsvEmpty": "തിരഞ്ഞെടുത്ത ഫയൽ ശൂന്യമാണ്.",
+  "errorCsvUnreadable": "ഈ ഫയൽ CSV ആയി വായിക്കാൻ കഴിഞ്ഞില്ല.",
+  "errorCsvNoRows": "തിരഞ്ഞെടുത്ത ഫയലിൽ വരികളില്ല.",
+  "errorBackupCreateFailed": "ബാക്കപ്പ് സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "ഈ ബാക്കപ്പ് പുനഃസ്ഥാപിക്കാൻ കഴിഞ്ഞില്ല - തെറ്റായ പാസ്ഫ്രെയ്സ്, അല്ലെങ്കിൽ ഇത് സ്മാര ബാക്കപ്പ് ഫയൽ അല്ല.",
+  "validationAmountAccountCategoryRequired": "തുക, അക്കൗണ്ട്, വിഭാഗം എന്നിവ ആവശ്യമാണ്.",
+  "validationAmountAccountRequired": "തുകയും അക്കൗണ്ടും ആവശ്യമാണ്.",
+  "validationSplitLineIncomplete": "ഓരോ സ്പ്ലിറ്റ് വരിക്കും ഒരു വിഭാഗവും തുകയും വേണം.",
+  "validationSplitSumMismatch": "സ്പ്ലിറ്റ് വരികൾ ഇടപാടിന്റെ ആകെ തുകയോട് കൂട്ടിച്ചേരണം.",
+  "validationFromToAmountRequired": "ഫ്രം അക്കൗണ്ട്, ടു അക്കൗണ്ട്, തുക എന്നിവ ആവശ്യമാണ്.",
+  "validationAmountArrivedRequired": "വന്ന തുക ആവശ്യമാണ്.",
+  "validationChooseReceivingAccount": "ഏത് അക്കൗണ്ടിലാണ് ഫണ്ട് ലഭിച്ചതെന്ന് തിരഞ്ഞെടുക്കുക.",
+  "validationAccountCategoryRequired": "അക്കൗണ്ടും വിഭാഗവും ആവശ്യമാണ്.",
+  "validationFixFailed": "ഈ തിരുത്തൽ സേവ് ചെയ്യാൻ കഴിഞ്ഞില്ല.",
+  "validationNameRequired": "നിങ്ങളുടെ പ്രധാന അക്കൗണ്ടിന് പേരിടുക.",
+  "validationStillLoading": "ഇപ്പോഴും ലോഡ് ചെയ്യുന്നു - അൽപനേരം കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.",
+  "validationSaveAccountNameFailed": "അക്കൗണ്ട് പേര് സേവ് ചെയ്യാൻ കഴിഞ്ഞില്ല.",
+  "validationWrongPin": "തെറ്റായ PIN. വീണ്ടും ശ്രമിക്കുക.",
+  "validationCategoryMustBeIncomeOrExpense": "വിഭാഗം വരുമാനമോ ചെലവോ ആയിരിക്കണം.",
+  "validationOnlyExpenseHasMonthlyLimit": "ചെലവ് വിഭാഗത്തിന് മാത്രമേ പ്രതിമാസ പരിധി ഉണ്ടാകാൻ കഴിയൂ.",
+  "validationInvalidTemplate": "അസാധുവായ ടെംപ്ലേറ്റ്.",
+  "validationWrongKeystorePassphrase": "ഈ കീസ്റ്റോർ ഫയലിന് തെറ്റായ പാസ്ഫ്രെയ്സ്.",
+  "validationInvalidKeystoreFile": "അത് സാധുവായ കീസ്റ്റോർ ഫയൽ പോലെ തോന്നുന്നില്ല.",
+  "validationRestorePhraseFailed": "ആ റിക്കവറി ഫ്രെയ്സിൽ നിന്ന് പുനഃസ്ഥാപിക്കാൻ കഴിഞ്ഞില്ല.",
+  "validationGenerateKeyFailed": "ഈ ഡിവൈസിൽ സൈനിംഗ് കീ ജനറേറ്റ് ചെയ്യാൻ കഴിഞ്ഞില്ല: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "ഈ കറൻസി സേവ് ചെയ്യാൻ കഴിഞ്ഞില്ല: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "മൈഗ്രേഷൻ പരാജയപ്പെട്ടു. വീണ്ടും ശ്രമിക്കുക.",
+  "validationChooseBackupFile": "ആദ്യം ഒരു ബാക്കപ്പ് ഫയൽ തിരഞ്ഞെടുക്കുക.",
+  "validationPassphraseRequired": "ഒരു പാസ്ഫ്രെയ്സ് നൽകുക.",
+  "validationPinsDoNotMatch": "രണ്ട് PIN-കളും പൊരുത്തപ്പെടുന്നില്ല.",
+  "validationFeePositiveWithCategory": "ട്രാൻസ്ഫർ ഫീ, ചെലവ് വിഭാഗം തിരഞ്ഞെടുത്ത പോസിറ്റീവ് തുകയായിരിക്കണം.",
+  "validationFeeMustBeLessThanAmount": "കുറച്ച-ഫീ ട്രാൻസ്ഫറിന് ഫീ തുകയേക്കാൾ കുറവായിരിക്കണം.",
+  "validationTransferSavedFeeFailed": "ട്രാൻസ്ഫർ സേവ് ചെയ്തു, പക്ഷേ ഫീ രേഖപ്പെടുത്താൻ കഴിഞ്ഞില്ല: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "സാധുവായ തുക നൽകുക.",
+  "validationConfirmWordMismatch": "വാക്ക് {n} നിങ്ങൾ സേവ് ചെയ്ത ഫ്രെയ്സുമായി പൊരുത്തപ്പെടുന്നില്ല. പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "വാങ്ങൽ അളവും യൂണിറ്റ് വിലയും പോസിറ്റീവ് ആയിരിക്കണം.",
+  "errorInstrumentArchived": "മറച്ചുവച്ച ഇൻസ്ട്രുമെന്റ് വാങ്ങാൻ കഴിയില്ല.",
+  "errorNonCashCannotIncludeBrokerage": "നോൺ-ക്യാഷ് ഏറ്റെടുക്കലുകളിൽ ബ്രോക്കറേജ് ഉൾപ്പെടുത്താൻ കഴിയില്ല.",
+  "errorBrokerageRequiresExpenseCategory": "ബ്രോക്കറേജ് പോസിറ്റീവ് ആയിരിക്കുമ്പോൾ സജീവമായ ഒരു ചെലവ് വിഭാഗം ആവശ്യമാണ്.",
+  "errorSellProceedsMustCoverBrokerage": "വിൽപ്പന വരുമാനം കുറഞ്ഞത് ബ്രോക്കറേജ് തുകയെങ്കിലും ആയിരിക്കണം.",
+  "homeSpentOfLimitThisMonth": "ഈ മാസം {limit}-ൽ {spent}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "സ്മാര അക്കൗണ്ട് അൺലോക്ക് ചെയ്യുക",
   "searchLabel": "തിരയുക",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "പ്രാരംഭ ബാലൻസ്",
+  "transferToName": "ട്രാൻസ്ഫർ: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "ട്രാൻസ്ഫറിനുള്ള ഫീ",
+  "feeForTransferTo": "{name}-ലേക്കുള്ള ട്രാൻസ്ഫറിന്റെ ഫീ",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "ഫയൽ പിക്കർ തുറക്കാൻ കഴിഞ്ഞില്ല: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "ദയവായി ഒരു .{extensions} ഫയൽ തിരഞ്ഞെടുക്കുക",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "കറൻസി കോഡ് (ISO 4217, ഉദാ: USD)",
+  "splitCounterpartMore": "{name} +{count} കൂടുതൽ",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "തീയതി",
+  "noneSelected": "ഒന്നുമില്ല",
+  "reviewEntriesBeforeContinuing": "തുടരുന്നതിന് മുൻപ് താഴെയുള്ള എൻട്രികൾ ({count} എണ്ണം) പരിശോധിക്കുക.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "നിങ്ങൾക്ക് {amount} ലഭിച്ചു",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "വിനിമയ നിരക്ക് ഇതുവരെ അറിയില്ലെങ്കിൽ ശൂന്യമായി വിടുക.",
+  "recordTradeBlurb": "നടന്നുകഴിഞ്ഞ ഒരു ട്രേഡ് രേഖപ്പെടുത്തുക. ഈ ആപ്പ് ഓർഡറുകൾ നൽകുന്നില്ല.",
+  "feeOnTopBlurb": "ഓൺ: മുകളിലെ തുകയാണ് ഈ അക്കൗണ്ടിൽ നിന്ന് എടുക്കുന്ന ആകെ തുക; ഫീ അതിൽ നിന്ന് കുറയ്ക്കുന്നു.",
+  "feeBankBlurb": "നിങ്ങളുടെ ബാങ്കോ ഒരു ഇടനിലക്കാരനോ ഈടാക്കുന്ന മുൻകൂർ കമ്മീഷൻ.",
+  "validationPinMinLength": "PIN കുറഞ്ഞത് 4 അക്കമെങ്കിലും ഉണ്ടായിരിക്കണം.",
+  "restoreBackupBlurb": "ഇത് ഈ ആപ്പിൽ നിലവിലുള്ളതെല്ലാം ബാക്കപ്പ് കൊണ്ട് മാറ്റിസ്ഥാപിക്കും — ഇത് ലയിപ്പിക്കില്ല. ഒരു ബാക്കപ്പ് ഫയൽ തിരഞ്ഞെടുത്ത് അത് സംരക്ഷിച്ച പാസ്ഫ്രെയ്സ് നൽകുക.",
+  "actionReplace": "മാറ്റിസ്ഥാപിക്കുക",
+  "hideAccountBody": "{name} ഇനി പുതിയ ഇടപാടുകൾക്ക് ലഭ്യമാകില്ല.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "അക്കൗണ്ടുകൾ സൃഷ്ടിക്കുമ്പോഴോ വീണ്ടും നൽകുമ്പോഴോ {name} ഇനി വാഗ്ദാനം ചെയ്യില്ല.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "പുതിയ ഇടപാടുകൾ രേഖപ്പെടുത്തുമ്പോൾ {name} ഇനി വാഗ്ദാനം ചെയ്യില്ല.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "മറച്ച ഇൻസ്ട്രുമെന്റുകൾ പഴയ വാങ്ങലുകളിലും വിൽപ്പനകളിലും തുടരും. നിങ്ങൾക്ക് അവയ്ക്ക് ഇപ്പോഴും ഡിവിഡന്റ് രേഖപ്പെടുത്താം.",
+  "nameHidden": "{name} (മറച്ചത്)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "കറൻസി സെറ്റ് ചെയ്തിട്ടില്ല",
+  "deletePayeeBody": "{name}-ഉം അതിന്റെ ഓർത്തിരിക്കുന്ന ഡിഫോൾട്ടുകളും നീക്കം ചെയ്യപ്പെടും. പഴയ ഇടപാടുകളെ ഇത് ബാധിക്കില്ല.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} ഇനി അടയ്ക്കേണ്ടതായി വാഗ്ദാനം ചെയ്യില്ല. ഇത് ഇതിനകം രേഖപ്പെടുത്തിയ പഴയ ഇടപാടുകളെ ബാധിക്കില്ല.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "സേവ് ചെയ്ത കോളം മാപ്പിംഗ് \"{name}\" ഇല്ലാതാക്കും. ഇത് ഉപയോഗിച്ച് ഇതിനകം ഇംപോർട്ട് ചെയ്ത സ്റ്റേറ്റ്മെന്റുകളെ ഇത് ബാധിക്കില്ല.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "ഇംപോർട്ടുകൾ ഇനി \"{keyword}\" ഉപയോഗിച്ച് ഓട്ടോ-കാറ്റഗറൈസ് ചെയ്യില്ല. ഈ നിയമം ഉപയോഗിച്ച് ഇതിനകം കാറ്റഗറൈസ് ചെയ്ത ഇടപാടുകളെ ഇത് ബാധിക്കില്ല.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "ഐച്ഛികമായി ഇപ്പോൾ ഒരു ക്രെഡിറ്റ് കാർഡോ ക്യാഷ് അക്കൗണ്ടോ ചേർക്കുക - പിന്നീട് സെറ്റിംഗ്സിൽ നിന്ന് എപ്പോഴും കൂടുതൽ അക്കൗണ്ടുകൾ ചേർക്കാം.",
+  "deliveredToDestination": "ലക്ഷ്യസ്ഥാനത്ത് എത്തിച്ചു",
+  "deliveredToName": "{name}-ൽ എത്തിച്ചു",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "പ്രതീക്ഷിച്ചതിലും കുറവായി നിങ്ങൾക്ക് {amount} {currency} ലഭിച്ചു - വ്യത്യാസം നികത്താൻ ഒരു വിഭാഗം തിരഞ്ഞെടുക്കുക.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "തീയതി പരിധി",
+  "addTemplate": "ടെംപ്ലേറ്റ് ചേർക്കുക",
+  "editTemplate": "ടെംപ്ലേറ്റ് തിരുത്തുക",
+  "validationFillTemplateFields": "സാധുവായ തുകയും ദിവസവും ഉപയോഗിച്ച് എല്ലാ ഫീൽഡും പൂരിപ്പിക്കുക.",
+  "saveCsvExport": "CSV എക്സ്പോർട്ട് സേവ് ചെയ്യുക",
+  "referenceRate": "റഫറൻസ് നിരക്ക്",
+  "yourRate": "നിങ്ങളുടെ നിരക്ക്",
+  "leaveBlankIfThisWasAccountCurrency": "ഇത് അക്കൗണ്ടിന്റെ സ്വന്തം കറൻസിയായ {currency}-ൽ ആയിരുന്നെങ്കിൽ ശൂന്യമായി വിടുക.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "ഇത്രവരെ ലോക്ക് (ഓപ്ഷണൽ)",
+  "lockedUntilDate": "{date} വരെ ലോക്ക് ചെയ്തു",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "ഒരു റിസർച്ച് പ്രോംപ്റ്റ് കോപ്പി ചെയ്തു — ബ്രൗസർ URL ലഭ്യമല്ല, അല്ലെങ്കിൽ നിങ്ങൾ ഓഫ്‌ലൈനാണ്.",
+  "openedFavouriteResearchTool": "നിങ്ങളുടെ പ്രിയപ്പെട്ട റിസർച്ച് ടൂൾ തുറന്നു.",
+  "looksLikeGain": "ഇത് ഒരു ലാഭം പോലെ തോന്നുന്നു",
+  "looksLikeLoss": "ഇത് ഒരു നഷ്ടം പോലെ തോന്നുന്നു",
+  "looksLikeBreakEven": "ഇത് ബ്രേക്ക്-ഈവൻ പോലെ തോന്നുന്നു",
+  "sellableQuantity": "{name} ({qty} വിൽക്കാവുന്നത്)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "കോളം {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "ഇംപോർട്ട് ചെയ്യുന്നു...",
+  "confirmImport": "ഇംപോർട്ട് സ്ഥിരീകരിക്കുക",
+  "manageSavedCategoryRules": "സേവ് ചെയ്ത വിഭാഗ നിയമങ്ങൾ കൈകാര്യം ചെയ്യുക",
+  "statementCurrencyMismatch": "ഈ ഫയലിന്റെ കറൻസി ({currency}) തിരഞ്ഞെടുത്ത അക്കൗണ്ടിന്റെ കറൻസിയുമായി പൊരുത്തപ്പെടുന്നില്ല.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "വിഭാഗ നിയമങ്ങൾ",
+  "possibleDuplicate": "ആവർത്തനമാകാൻ സാധ്യത",
+  "unknownCategory": "അജ്ഞാത വിഭാഗം"
 }

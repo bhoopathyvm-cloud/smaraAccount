@@ -92,7 +92,10 @@ class PayeeManagementView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10nOf(context).payeesTitle, style: AppTypography.headerTitle),
+        title: Text(
+          l10nOf(context).payeesTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),

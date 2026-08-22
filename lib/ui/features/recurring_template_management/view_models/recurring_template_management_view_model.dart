@@ -14,7 +14,8 @@ import '../../../../domain/models/transaction_direction.dart';
 /// 11.2). Editing an existing template posts nothing itself - recording a
 /// due one is a separate, explicit action ([LedgerRepository.recordDueTemplate]
 /// via [HomeViewModel]).
-class RecurringTemplateManagementViewModel extends ChangeNotifier {
+class RecurringTemplateManagementViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   RecurringTemplateManagementViewModel({
     required LedgerRepository ledgerRepository,
   }) : _ledgerRepository = ledgerRepository {
@@ -84,13 +85,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier {
         ?.currency;
   }
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-  void clearError() {
-    if (_errorMessage == null) return;
-    _errorMessage = null;
-    notifyListeners();
-  }
+  void clearError() => clearFailure();
 
   Future<bool> createTemplate({
     required String name,
@@ -133,18 +128,13 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier {
   Future<bool> _save(Future<void> Function() action) async {
     try {
       await action();
-      _errorMessage = null;
-      notifyListeners();
+      clearFailure();
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     } on ArgumentError {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationInvalidTemplate),
-      );
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationInvalidTemplate));
       return false;
     }
   }

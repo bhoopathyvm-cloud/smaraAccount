@@ -135,10 +135,7 @@ class CategoryManagementView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                l10n.monthlyLimitBlurb,
-                style: AppTypography.metadata,
-              ),
+              Text(l10n.monthlyLimitBlurb, style: AppTypography.metadata),
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: controller,
@@ -146,9 +143,7 @@ class CategoryManagementView extends StatelessWidget {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: InputDecoration(
-                  labelText: l10n.monthlyLimitHint,
-                ),
+                decoration: InputDecoration(labelText: l10n.monthlyLimitHint),
               ),
               if (errorMessage != null) ...[
                 const SizedBox(height: AppSpacing.medium),
@@ -187,7 +182,9 @@ class CategoryManagementView extends StatelessWidget {
                 if (ok && dialogContext.mounted) {
                   Navigator.of(dialogContext).pop();
                 } else {
-                  setDialogState(() => errorMessage = viewModel.errorMessage);
+                  setDialogState(
+                    () => errorMessage = viewModel.errorMessageFor(l10n),
+                  );
                 }
               },
               child: Text(l10n.actionSave),
@@ -202,7 +199,10 @@ class CategoryManagementView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10nOf(context).categoriesTitle, style: AppTypography.headerTitle),
+        title: Text(
+          l10nOf(context).categoriesTitle,
+          style: AppTypography.headerTitle,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),

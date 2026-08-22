@@ -122,10 +122,10 @@ class KeyLossMigrationView extends StatelessWidget {
                     style: AppTypography.body,
                   ),
                 ),
-                if (viewModel.errorMessage != null) ...[
+                if (viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    viewModel.errorMessage!,
+                    viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

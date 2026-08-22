@@ -15,7 +15,7 @@ import 'register_row.dart';
 
 /// Account-scoped register: counterpart labels for category / transfer /
 /// opening balance; running display balance for the viewed account.
-class RegisterViewModel extends ChangeNotifier {
+class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   RegisterViewModel({
     required LedgerRepository ledgerRepository,
     String? initialAccountId,
@@ -169,13 +169,7 @@ class RegisterViewModel extends ChangeNotifier {
     return from != null && to != null && from != to;
   }
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-  void clearError() {
-    if (_errorMessage == null) return;
-    _errorMessage = null;
-    notifyListeners();
-  }
+  void clearError() => clearFailure();
 
   void selectAccount(String accountId) {
     if (_selectedAccountId == accountId) return;
@@ -299,7 +293,9 @@ class RegisterViewModel extends ChangeNotifier {
   String _counterpartLabel(List<String> accountIds) {
     final names = accountIds.map(_singleCounterpartLabel).toList();
     if (names.length <= 1) {
-      return names.isEmpty ? englishAppLocalizations.actionTransfer : names.first;
+      return names.isEmpty
+          ? englishAppLocalizations.actionTransfer
+          : names.first;
     }
     return englishAppLocalizations.splitCounterpartMore(
       names.first,
@@ -355,7 +351,7 @@ class RegisterViewModel extends ChangeNotifier {
   }) async {
     final fromAccountId = _selectedAccountId;
     if (fromAccountId == null) return false;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       await _ledgerRepository.recordArchivedAccountCloseoutTransfer(
@@ -368,12 +364,10 @@ class RegisterViewModel extends ChangeNotifier {
       notifyListeners();
       return true;
     } on AccountGroupException catch (error) {
-      _errorMessage = localizeVmError(error);
-      notifyListeners();
+      setFailure(error);
       return false;
     } on InvalidTransferException catch (error) {
-      _errorMessage = localizeVmError(error);
-      notifyListeners();
+      setFailure(error);
       return false;
     }
   }
@@ -389,7 +383,7 @@ class RegisterViewModel extends ChangeNotifier {
   }) async {
     final accountId = _selectedAccountId;
     if (accountId == null) return null;
-    _errorMessage = null;
+    clearFailure();
     try {
       final csv = await _ledgerRepository.exportLedgerCsv(
         financialAccountId: accountId,
@@ -399,8 +393,7 @@ class RegisterViewModel extends ChangeNotifier {
       notifyListeners();
       return csv;
     } on AccountGroupException catch (error) {
-      _errorMessage = localizeVmError(error);
-      notifyListeners();
+      setFailure(error);
       return null;
     }
   }

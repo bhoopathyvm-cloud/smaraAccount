@@ -20,100 +20,99 @@
   "actionRename": "名前を変更",
   "actionHide": "非表示",
   "actionCreate": "作成",
-  "actionCloseApp": "Close app",
+  "actionCloseApp": "アプリを閉じる",
   "actionUnlock": "ロック解除",
   "actionSettle": "確定",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
+  "actionFinish": "完了",
+  "actionPreview": "プレビュー",
+  "actionImport": "インポート",
+  "actionExportCsv": "CSVを書き出す",
+  "actionChooseFile": "ファイルを選択",
   "actionRestore": "復元",
-  "actionArchive": "Hide",
   "actionFix": "修正",
   "actionBuy": "買う",
   "actionSell": "売る",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
+  "actionDividend": "配当",
+  "actionRecordBuy": "買いを記録",
+  "actionRecordSell": "売りを記録",
+  "actionRecordDividend": "配当を記録",
+  "actionPayCard": "カードの支払い",
   "actionTransfer": "振替",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
+  "actionRecordTransaction": "取引を記録",
+  "actionImportStatement": "明細書をインポート",
+  "actionClearDates": "日付をクリア",
+  "actionClearSearch": "検索とフィルターをクリア",
+  "actionUseBiometrics": "生体認証を使う",
+  "actionSetPin": "PINを設定",
+  "actionChangePin": "PINを変更",
+  "actionSaveBackup": "バックアップを保存",
+  "actionRestoreBackup": "バックアップを復元",
+  "actionSaveRule": "ルールを保存",
+  "actionConfirmFix": "修正を確定",
   "captureSpent": "支出",
   "captureReceived": "収入",
   "captureMovedMoney": "資金移動",
-  "captureImportStatement": "Import statement",
+  "captureImportStatement": "明細書をインポート",
   "settingsTitle": "設定",
   "settingsLanguage": "言語",
   "settingsLanguageSystem": "端末の言語",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
+  "settingsFetchFxRates": "参考為替レートを取得",
+  "settingsFetchFxRatesSubtitle": "異なる通貨間の振替で、目安となる市場レートを送金先金額の横に表示します。比較目的のみで、金額の入力には一切使用しません。",
+  "settingsRateProvider": "レート提供元",
+  "settingsFetchMarketPrices": "投資の市場価格を取得",
+  "settingsFetchMarketPricesSubtitle": "ティッカーまたはISINが設定されている銘柄の最終価格を調べ、ポートフォリオの評価額を見積もります。取引の記録には使用されず、保有数量が送信されることもありません。",
+  "settingsMarketPriceProvider": "市場価格の提供元",
+  "settingsFavouriteResearchTool": "お気に入りの調査ツール",
+  "settingsFavouriteResearchToolSubtitle": "保有資産の銘柄名をタップすると、このツールがブラウザで調査用のプロンプトとともに開きます — 連携機能ではなく、助言でもありません。",
   "settingsBackup": "バックアップ",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
+  "settingsBackupBlurb": "選んだ場所に帳簿の暗号化コピーを保存する、またはそこから復元します。これは署名鍵をバックアップするリカバリーフレーズやキーストアファイルとは別のもので、帳簿そのものをバックアップするわけではありません。",
   "settingsLock": "ロック",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
-  "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "settingsLockBlurb": "アプリを開くのにPIN、または利用可能な場合は生体認証を必須にします。",
+  "settingsRequireUnlock": "アプリを開くのにロック解除を必須にする",
+  "settingsLockAfter": "ロックまでの時間",
+  "settingsLockImmediately": "すぐに",
+  "settingsLock1Minute": "1分",
+  "settingsLock5Minutes": "5分",
+  "settingsLock15Minutes": "15分",
+  "settingsAllowBiometrics": "生体認証も許可する",
+  "settingsHideSnapshot": "アプリ切り替え画面で残高を隠す",
+  "settingsHideSnapshotSubtitle": "他のアプリに切り替えたときにこの画面を隠し、アプリ切り替え画面で一目で見えないようにします。",
+  "settingsHideSnapshotUnavailable": "このプラットフォームでは、アプリ切り替え画面で残高を隠す機能は利用できません。",
+  "settingsPayees": "支払先",
+  "settingsManagePayees": "支払先を管理",
+  "settingsPayeesBlurb": "記憶された支払先の名前と、そのデフォルトのカテゴリ・口座です。取引の記録時にオートコンプリートで候補として表示されます。",
+  "settingsRecurring": "定期テンプレート",
+  "settingsManageRecurring": "定期テンプレートを管理",
+  "settingsRecurringBlurb": "家賃や給料のように毎月繰り返される支払いや収入です。期日が来たテンプレートはホーム画面に表示され、ワンタップで記録できます - 自動的に記帳されることはありません。",
+  "settingsAbout": "このアプリについて",
+  "providerFrankfurter": "Frankfurter（ECBレート）",
+  "providerOpenErApi": "ExchangeRate-API（open.er-api.com）",
+  "providerStooq": "Stooq（日次相場）",
+  "providerYahooFinance": "Yahoo Finance（チャートAPI）",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "現金及び現金同等物",
+  "systemGroupPensionRetirement": "年金・退職金",
+  "systemGroupCreditShortTerm": "クレジット・短期債務",
+  "systemGroupLoansMortgages": "ローン・住宅ローン",
+  "systemGroupInvestments": "投資",
+  "systemAccountCashBank": "現金・銀行口座",
+  "systemCategorySalary": "給与",
+  "systemCategoryOtherIncome": "その他の収入",
+  "systemCategoryGroceries": "食料品",
+  "systemCategoryRentMortgage": "家賃・住宅ローン",
+  "systemCategoryUtilities": "光熱費",
+  "systemCategoryTransport": "交通費",
+  "systemCategoryFoodOut": "外食",
+  "systemCategoryPhone": "通信費",
+  "systemCategoryHealth": "医療費",
+  "systemCategoryOtherExpense": "その他の支出",
   "homeThisMonth": "今月",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "送金中の資金",
+  "homeWhatYouHaveMinusWhatYouOwe": "資産から負債を引いた額",
+  "homeWhatYouHave": "保有額 {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "資産 {haveAmount} {currency}  •  負債 {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "{name}から{amount} {currency}を送金しました",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "{name}へ{amount} {currency}を送金しました",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "非表示",
+  "allAccounts": "すべての口座",
+  "savedToPath": "{path}に保存しました",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "キーストアファイルを書き出せませんでした。この手順はスキップできます。",
+  "enterPassphraseToProtect": "ファイルを保護するパスフレーズを入力してください。",
+  "homeTapWhenArrived": "何が届いたか分かったらタップしてください",
+  "homeReturnedTo": "{name}へ返金されました",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "本日期日",
+  "homeDueLine": "{category} · {account} · タップして記録",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "上限超過",
+  "homeSpentOfLimit": "{limit}中{spent}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "残り: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
+  "homeNoAccounts": "口座がありません",
+  "homeCashRegister": "レジ",
+  "homeMarketEstimate": "市場推定額",
   "registerTitle": "明細",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
+  "registerSearchHint": "摘要、カテゴリ、または金額",
+  "registerNoTransactions": "取引がまだありません",
+  "registerNoEntries": "記録された項目がまだありません。",
+  "registerSpentOnly": "支出のみ",
+  "registerReceivedOnly": "収入のみ",
+  "registerAll": "すべて",
+  "registerUnverified": "未検証 - 合計から除外",
+  "registerSuperseded": "移行により置き換え済み - 合計から除外",
   "summaryTitle": "概要",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "summaryTotalIncome": "総収入",
+  "summaryTotalExpense": "総支出",
+  "summaryDateRange": "{start}〜{end}",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -258,43 +257,43 @@
   },
   "accountsTitle": "口座",
   "categoriesTitle": "カテゴリ",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
+  "accountName": "口座名",
+  "createAccount": "口座を作成",
+  "createGroup": "グループを作成",
+  "editGroup": "グループを編集",
+  "renameAccount": "口座名を変更",
+  "renameCategory": "カテゴリ名を変更",
+  "addCategory": "カテゴリを追加",
+  "groupLabel": "グループ",
+  "kindLabel": "種類",
   "asset": "資産",
   "liability": "負債",
   "income": "収入",
   "expense": "支出",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "thisAccountHoldsInvestments": "この口座は投資を保有しています",
+  "thisAccountHoldsInvestmentsSubtitle": "現金に加え、買い・売り・配当で記録する保有資産です。",
+  "thisIsACreditCard": "これはクレジットカードです",
+  "openingBalanceOptional": "初期残高（任意）",
+  "currencyIso": "通貨（ISO 4217）",
+  "currencyIsoExample": "通貨（ISO 4217、例: USD）",
+  "hideAccountTitle": "この口座を新規取引の対象から外しますか？",
+  "hideCategoryTitle": "このカテゴリを新規取引の対象から外しますか？",
+  "hideGroupTitle": "このグループを新規取引の対象から外しますか？",
+  "reassignGroup": "グループを再割り当て",
+  "transferRemainingBalance": "残高を振り替える",
+  "monthlyLimit": "月間上限",
+  "monthlyLimitHint": "上限（空欄でクリア）",
+  "monthlyLimitBlurb": "この支出カテゴリに対する、月初からの任意の支出目安です。",
+  "manageCategoryRules": "カテゴリルールを管理",
+  "amount": "金額",
+  "category": "カテゴリ",
+  "account": "口座",
+  "fromAccount": "振替元口座",
+  "toAccount": "振替先口座",
+  "descriptionOptional": "摘要（任意）",
+  "alsoRememberPayee": "支払先としても記憶する",
+  "splitIntoCategories": "複数のカテゴリに分割",
+  "categoryN": "カテゴリ {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "振替先金額",
+  "destinationAmountOptional": "振替先金額（任意）",
+  "accountCurrencyAmountOptional": "口座通貨での金額（任意）",
+  "transactionCurrencyOptional": "取引通貨（任意）",
+  "feeOptional": "手数料（任意）",
+  "feeAmount": "手数料額",
+  "feeCategory": "手数料カテゴリ",
+  "feeDescriptionOptional": "手数料の摘要（任意）",
+  "feeDeducted": "手数料は上記の金額から差し引かれます",
+  "needTwoAccountsToTransfer": "振替を行うには、有効な口座を2つ以上作成してください。",
+  "whatArrivedTitle": "何が届きましたか？",
+  "whatArrivedBlurb": "実際に届いたものを教えてください。",
+  "amountThatArrived": "届いた金額",
+  "feeLossCategory": "手数料／損失カテゴリ",
+  "alreadySettled": "すでに確定済みです。",
+  "holdingsTitle": "保有資産",
+  "holdingsCash": "現金",
+  "holdingsInventory": "保有銘柄",
+  "holdingsBook": "帳簿価額（現金＋取得原価） {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "市場推定額 {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "保有資産はまだありません。買いを記録して銘柄を追加してください。",
+  "holdingsQuotesBlurb": "相場は推定値であり、証券会社の価格ではありません。このアプリは注文を発注しません。",
+  "holdingsTapNameToResearch": "銘柄名をタップして調べられます。相場は推定値であり、助言ではありません。",
+  "instrument": "銘柄",
+  "newInstrument": "新しい銘柄",
+  "renameInstrument": "銘柄名を変更",
+  "instrumentActions": "銘柄の操作",
+  "hideInstrumentTitle": "{name}を非表示にしますか？",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "ティッカー（任意）",
+  "isinOptional": "ISIN（任意）",
+  "quantity": "数量",
+  "unitPrice": "単価",
+  "brokerageOptional": "取引手数料（任意）",
+  "brokerageExpenseCategory": "取引手数料の支出カテゴリ",
+  "incomeCategory": "収入カテゴリ",
+  "gainIncomeCategory": "売却益の収入カテゴリ",
+  "lossExpenseCategory": "売却損の支出カテゴリ",
+  "nonCash": "非現金",
+  "cash": "現金",
+  "locked": "ロック中",
+  "lockUntilHint": "証券会社のルールではなく、あなた自身が記録する制限メモです。",
+  "instrumentKindStock": "株式",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "投資信託",
+  "instrumentKindBond": "債券",
+  "instrumentKindOther": "その他",
+  "quoteUseLive": "リアルタイム価格",
+  "quoteUseCached": "キャッシュ価格",
+  "quoteUseStale": "古い価格",
+  "quoteUseMissing": "価格なし（取得原価を使用）",
+  "quoteUseDisabled": "相場取得オフ — 取得原価／キャッシュを使用",
+  "quoteUseCurrencyMismatch": "取得原価を使用（価格の通貨が異なる）",
+  "unrealizedLabel": "含み損益 {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} 単位 · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "リカバリーフレーズ",
+  "recoveryPhraseConfirmTitle": "フレーズを確認",
+  "recoveryPhraseBlurb": "この24個の単語は、この端末を紛失・初期化・交換した場合に取引履歴を復元する唯一の方法です。Smara家計簿にはサーバーがなく、代わりに復元することはできません。\n\nこの端末とこのフレーズを両方失うと、記録したすべての取引は永久に検証できなくなります。",
+  "recoveryPhraseWriteDown": "これらの単語を順番に書き留め、この端末とは別の安全な場所に保管してください。",
+  "iveSavedRecoveryPhrase": "リカバリーフレーズを保存しました",
+  "confirmPhraseBlurb": "先ほど保存したフレーズから指定された単語を入力してください。",
+  "wordNumber": "単語 #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
+  "keystoreExportTitle": "キーストアファイルを書き出す",
+  "keystoreExportBlurb": "リカバリーフレーズに加えて、任意のパスフレーズで保護した暗号化キーストアファイルを保存できます。これは任意です - リカバリーフレーズだけでも常に署名鍵を復元するのに十分です。",
+  "keystorePassphrase": "パスフレーズ",
+  "exportKeystoreFile": "キーストアファイルを書き出す",
+  "chooseCurrencyTitle": "通貨を選択してください",
+  "chooseCurrencyBlurb": "現時点では、各口座グループ（現金及び現金同等物、年金・退職金など）はこの1つの通貨を使用します。後で新しいグループを作成すれば、別の通貨の口座を追加することもできます。",
+  "currencyBackfillTitle": "既存のグループの通貨を選択",
+  "currencyBackfillBlurb": "このアプリは複数通貨に対応しました。既存の口座と口座グループには通貨の設定が必要です。この機能が導入される前に作成されたものなので、すべてに同じ選択が適用されます。",
+  "firstAccountTitle": "口座に名前を付ける",
+  "firstAccountBlurb": "これはあなたのためにあらかじめ用意された口座です - 銀行名のような、わかりやすい名前を付けてください。次に支出または収入を1件記録し、その後リカバリーフレーズで端末を保護します。",
+  "whatsMainAccountCalled": "メインの口座の名前は何ですか？",
+  "restoreTitle": "署名鍵を復元",
+  "restoreBlurb": "この端末には既存の帳簿がありますが、一致する署名鍵がありません。保存したリカバリーフレーズまたはキーストアファイルから復元してください - データは通常どおり検証され、何も再署名や変更はされません。",
+  "recoveryPhrase24": "リカバリーフレーズ（24個すべての単語）",
+  "keystoreFile": "キーストアファイル",
+  "keystoreFileContents": "キーストアファイルの内容",
+  "optionalBackupFile": "任意のバックアップファイル",
+  "iDontHavePhrase": "リカバリーフレーズもキーストアファイルもありません",
+  "migrationTitle": "新しい鍵に移行",
+  "migrationBlurb": "リカバリーフレーズもキーストアファイルもない場合、この端末の署名鍵は復元できません。新しい鍵を開始できます。古い項目は表示されたままですが、置き換え済みとなります。",
+  "iConfirmBooksValid": "現在の帳簿が正しいことを確認しました",
+  "whyWeDontEdit": "古い項目を編集しない理由",
+  "whyWeDontEditBody": "誤りを修正するとき、すでに入力した内容を変更するのではなく、古い行をそのまま残し、隣に修正を追加します。こうすることで、何が起きたか、いつ修正したかが履歴に常に正確に表示され、気づかないうちに内容が変わることはありません。",
+  "lockTitle": "ロック解除",
   "lockScreenTitle": "ロック中",
-  "enterPinToContinue": "続けるにはPINを入力",
+  "enterPinToContinue": "続けるにはPINを入力してください",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "PINを設定",
+  "currentPin": "現在のPIN",
+  "newPin": "新しいPIN",
+  "confirmPin": "PINを確認",
+  "confirmNewPin": "新しいPINを確認",
+  "firstWeekTitle": "口座を設定する",
+  "addCashAccount": "現金口座を追加",
+  "addCreditCard": "クレジットカードを追加",
+  "cashAccountName": "現金口座名",
+  "cardName": "カード名",
+  "paidFromBank": "銀行から支払い",
+  "paidFromCard": "カードから支払い",
+  "choosePassphraseTitle": "このバックアップを保護するパスフレーズを選んでください。忘れた場合、復元する方法はありません。",
+  "replaceBooksTitle": "この端末の帳簿を置き換えますか？",
+  "replaceBooksBody": "これにより、現在このアプリにあるすべてのデータがバックアップの内容に置き換わります。その後アプリを閉じて開き直してください。",
+  "chooseBackupFileFirst": "先にバックアップファイルを選択してください。",
+  "backupRestored": "バックアップを復元しました",
+  "backupRestoredBody": "帳簿が復元されました。続けるにはアプリを閉じて開き直してください。",
+  "fixThisEntry": "この項目を修正",
+  "fixBlurb": "古い行はそのまま残ります。確定すると、取消行と修正後の行が追加されます。",
+  "importStatementTitle": "明細書をインポート",
+  "importOfx": "OFXをインポート",
+  "importOfxQfxFile": "OFX / QFXファイルをインポート",
+  "importCsvFile": "CSVファイルをインポート",
+  "whatKindOfStatement": "お持ちの明細書ファイルの種類は？",
+  "chooseAccountForFile": "このファイルがどの口座のものか選択してください。",
+  "importIntoAccount": "インポート先の口座",
+  "useSavedProfile": "保存済みプロファイルを使う",
+  "saveMappingProfile": "このマッピングをプロファイルとして保存（任意）",
+  "renameProfile": "プロファイル名を変更",
+  "deleteProfileTitle": "プロファイルを削除しますか？",
+  "fileHasHeader": "ファイルにヘッダー行がある",
+  "dateColumn": "日付の列",
+  "dateFormatHint": "日付形式（例: dd/MM/yyyy）",
+  "amountColumn": "金額の列",
+  "amountConvention": "金額の符号規則",
+  "signedAmountColumn": "符号付き金額の列",
+  "separateDebitCredit": "借方／貸方の列を分ける",
+  "debitColumn": "借方の列",
+  "creditColumn": "貸方の列",
+  "decimalSeparator": "小数点の記号（. または ,）",
+  "descriptionColumns": "摘要の列",
+  "referenceIdColumn": "参照IDの列（任意）",
+  "skippedRows": "スキップされた行",
+  "parsedTransactionCount": "{count}件の取引を解析しました",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count}件をスキップまたは除外",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted}件記帳、{failed}件失敗",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "すべてに適用するカテゴリ",
+  "saveAsRule": "ルールとして保存しますか？",
+  "saveAsRuleBlurb": "今後、摘要にこのキーワードを含むインポートには、このカテゴリが使用されます。",
+  "keyword": "キーワード",
+  "noSavedRules": "保存されたルールはまだありません。行のグループにカテゴリを割り当てるとルールを保存できます。",
+  "deleteRuleTitle": "ルールを削除しますか？",
+  "editRule": "ルールを編集",
+  "rowsGrouped": "{count}行",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "インポートする{extensions}明細書ファイルを選択してください",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "支払先",
+  "addPayee": "支払先を追加",
+  "renamePayee": "支払先名を変更",
+  "deletePayeeTitle": "支払先を削除しますか？",
+  "noPayeesYet": "支払先はまだありません",
+  "recurringTitle": "定期テンプレート",
+  "noRecurringYet": "定期テンプレートはまだありません",
+  "deleteTemplateTitle": "定期テンプレートを削除しますか？",
+  "dayOfMonth": "毎月の日（1〜31）",
+  "dayOfMonthNote": "日数が少ない月では、その月の最終日が使用されます。",
+  "dayOfMonthLine": "毎月{day}日 - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
+  "name": "名前",
+  "none": "なし",
+  "currency": "通貨",
   "errorGeneric": "問題が発生しました。もう一度お試しください。",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "errorSigningIdentityMismatch": "このリカバリーフレーズまたはキーストアファイルは、このデータベース内のどの署名アイデンティティとも一致しません。",
+  "errorInvalidLedgerBackup": "このファイルは有効なSmaraのバックアップではありません。",
+  "errorInvalidLedgerBackupNoIdentity": "このバックアップには署名アイデンティティがありません - 有効なSmaraのバックアップではありません。",
+  "errorInvalidLedgerBackupUnverified": "このバックアップは正常な帳簿として検証できなかったため、復元されませんでした。",
+  "errorInvalidLedgerBackupUnreadable": "このファイルをSmaraのバックアップとして開けませんでした: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "最後の有効な口座は非表示にできません。",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "このバックアップは、この端末のものとは異なる署名アイデンティティに属しています。",
+  "errorAccountNotFinancial": "それは財務口座ではありません。",
+  "errorAccountArchived": "その口座は非表示になっています。",
+  "errorAccountNotArchived": "その口座は非表示になっていません。",
+  "errorAccountNoPositiveBalanceToCloseOut": "振り替える残高がありません。",
+  "errorAccountHasNoGroup": "その口座にはグループが割り当てられていません。",
+  "errorGroupHasNoCurrency": "そのグループにはまだ通貨が設定されていません。",
+  "errorGroupNotFound": "その口座グループが見つかりませんでした。",
+  "errorInvestmentAccountsMustBeAssets": "資産口座のみを投資口座として設定できます。",
+  "errorCreditCardsMustBeLiabilities": "負債口座のみをクレジットカードとして設定できます。",
+  "errorOpeningBalanceMustBePositive": "初期残高を指定する場合は正の値である必要があります。",
+  "errorAccountTypeDoesNotMatchGroup": "その口座の種類はグループと一致しません。",
+  "errorLastActiveAccount": "最後の有効な財務口座を非表示にすることはできません。",
+  "errorCurrencyRequiredToCreateGroup": "グループを作成するには通貨が必要です。",
+  "errorSystemGroupCannotBeArchived": "組み込みの口座グループは非表示にできません。",
+  "errorGroupAlreadyArchived": "そのグループはすでに非表示になっています。",
+  "errorCannotArchiveGroupWithAccounts": "有効な口座がまだあるグループは非表示にできません。",
+  "errorSystemGroupNeverArchived": "組み込みの口座グループが非表示になることはありません。",
+  "errorAccountGroupsCannotBeDeleted": "口座グループは削除できません。",
+  "errorCannotReassignDifferentCurrency": "この口座を別の通貨のグループに移動することはできません。",
+  "errorCannotChangeGroupCurrencyWithAccounts": "グループに有効な口座がある間は通貨を変更できません。",
   "errorAmountMustBePositive": "金額は正の値にしてください。",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "口座通貨での金額は正の値にしてください。",
+  "errorAccountCurrencyAmountNotForSameCurrency": "口座通貨での金額は、外貨建ての項目にのみ使用します。",
+  "errorSplitNeedsTwoLines": "分割には少なくとも2つのカテゴリ行が必要です。",
+  "errorSplitLineMustBePositive": "分割した各行の金額は正の値である必要があります。",
+  "errorSplitLinesMustSumToTotal": "分割した行の合計は取引の総額と一致する必要があります。",
+  "errorTransferAmountMustBePositive": "振替金額は正の値にしてください。",
+  "errorTransferAccountsMustDiffer": "振替元口座と振替先口座は異なる必要があります。",
+  "errorCloseoutRequiresDestinationAmount": "異なる通貨間の決済には、振替先金額が既知である必要があります。",
+  "errorDestinationAmountNotForSameCurrency": "振替先金額は、異なる通貨間の振替にのみ使用します。",
+  "errorDestinationAmountMustBePositive": "振替先金額は正の値にしてください。",
+  "errorInvestmentCashExceeded": "この投資口座の現金を超えて振り替えることはできません。",
+  "errorCannotReverseUnsettledProvisional": "取り消す代わりに、この保留中の振替を確定してください。",
+  "errorAlreadyReversed": "この項目はすでに修正されています。元の行はそのまま残ります。",
+  "errorNotActiveExpenseCategory": "有効な支出カテゴリを選択してください。",
+  "errorNotActiveIncomeCategory": "有効な収入カテゴリを選択してください。",
+  "errorSettledAmountMustNotBeNegative": "届いた金額を負の値にすることはできません。",
+  "errorPendingTransferNotFound": "その保留中の振替が見つかりませんでした。",
+  "errorPendingTransferAlreadySettled": "その保留中の振替はすでに確定しています。",
+  "errorSettledToMustBeSourceOrDestination": "元の振替元口座または振替先口座を選択してください。",
+  "errorFeeCategoryOnlyWhenReturningToSource": "手数料カテゴリは、資金が振替元口座に戻る場合にのみ使用します。",
+  "errorSettledAmountMustBePositiveForDelivery": "届いた金額として正の値を入力してください。",
+  "errorSettledAmountExceedsProvisional": "その金額は送金額を超えています。",
+  "errorInstrumentNotFound": "その銘柄が見つかりませんでした。",
+  "errorIncomeRequiredForNonCash": "非現金での取得には有効な収入カテゴリが必要です。",
+  "errorInsufficientCash": "この投資口座には、その買いを行うための現金が不足しています。",
+  "errorSellQuantityAndPriceMustBePositive": "売却数量と単価は正の値にしてください。",
+  "errorLockedUntil": "売却できません: 一部の単位は{date}までロックされています。",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "現在ロック解除されている保有数を超えて売却することはできません。",
+  "errorIncomeRequiredForGain": "実現利益には有効な収入カテゴリが必要です。",
+  "errorExpenseRequiredForLoss": "実現損失には有効な支出カテゴリが必要です。",
+  "errorBrokerageFailedAfterBuy": "買いは記帳されましたが、取引手数料の記帳に失敗しました: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "売りは記帳されましたが、取引手数料の記帳に失敗しました: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "配当金額は正の値にしてください。",
+  "errorNotInvestmentAccount": "それは投資口座ではありません。",
+  "errorNoInventoryCompanion": "この投資口座には対応する保有資産の記録がありません。",
+  "errorInvestmentReversalBlocked": "この買いを取り消せません: 後の売り取引がその単位に依存しています。先に依存する売り取引を取り消してください: {sells}。",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "月間上限は正の値にしてください。",
+  "errorTemplateAmountMustBePositive": "テンプレートの金額は正の値にしてください。",
+  "errorOfxUnrecognized": "このファイルをOFXとして認識できませんでした。",
+  "errorCsvEmpty": "選択されたファイルは空です。",
+  "errorCsvUnreadable": "このファイルをCSVとして読み取れませんでした。",
+  "errorCsvNoRows": "選択されたファイルに行がありません。",
+  "errorBackupCreateFailed": "バックアップを作成できませんでした: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "PINが違います。もう一度入力してください。",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "このバックアップを復元できませんでした - パスフレーズが間違っているか、Smaraのバックアップファイルではありません。",
+  "validationAmountAccountCategoryRequired": "金額、口座、カテゴリは必須です。",
+  "validationAmountAccountRequired": "金額と口座は必須です。",
+  "validationSplitLineIncomplete": "分割した各行にはカテゴリと金額が必要です。",
+  "validationSplitSumMismatch": "分割した行の合計は取引の総額と一致する必要があります。",
+  "validationFromToAmountRequired": "振替元口座、振替先口座、金額は必須です。",
+  "validationAmountArrivedRequired": "届いた金額は必須です。",
+  "validationChooseReceivingAccount": "資金を受け取った口座を選択してください。",
+  "validationAccountCategoryRequired": "口座とカテゴリは必須です。",
+  "validationFixFailed": "この修正を保存できませんでした。",
+  "validationNameRequired": "メインの口座に名前を付けてください。",
+  "validationStillLoading": "読み込み中です - しばらくしてからもう一度お試しください。",
+  "validationSaveAccountNameFailed": "口座名を保存できませんでした。",
+  "validationWrongPin": "PINが違います。もう一度お試しください。",
+  "validationCategoryMustBeIncomeOrExpense": "カテゴリは収入または支出である必要があります。",
+  "validationOnlyExpenseHasMonthlyLimit": "月間上限を設定できるのは支出カテゴリのみです。",
+  "validationInvalidTemplate": "無効なテンプレートです。",
+  "validationWrongKeystorePassphrase": "このキーストアファイルのパスフレーズが違います。",
+  "validationInvalidKeystoreFile": "これは有効なキーストアファイルではないようです。",
+  "validationRestorePhraseFailed": "そのリカバリーフレーズから復元できませんでした。",
+  "validationGenerateKeyFailed": "この端末で署名鍵を生成できませんでした: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "この通貨を保存できませんでした: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "移行に失敗しました。もう一度お試しください。",
+  "validationChooseBackupFile": "先にバックアップファイルを選択してください。",
+  "validationPassphraseRequired": "パスフレーズを入力してください。",
+  "validationPinsDoNotMatch": "2つのPINが一致しません。",
+  "validationFeePositiveWithCategory": "振替手数料は、支出カテゴリを選択したうえで正の値にする必要があります。",
+  "validationFeeMustBeLessThanAmount": "手数料差し引き方式の振替では、手数料は金額より小さくする必要があります。",
+  "validationTransferSavedFeeFailed": "振替は保存されましたが、手数料を記録できませんでした: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "有効な金額を入力してください。",
+  "validationConfirmWordMismatch": "単語{n}が保存したフレーズと一致しません。確認してもう一度お試しください。",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "買いの数量と単価は正の値にしてください。",
+  "errorInstrumentArchived": "非表示にした銘柄を買うことはできません。",
+  "errorNonCashCannotIncludeBrokerage": "非現金での取得には取引手数料を含めることはできません。",
+  "errorBrokerageRequiresExpenseCategory": "取引手数料が正の値の場合、有効な支出カテゴリが必要です。",
+  "errorSellProceedsMustCoverBrokerage": "売却代金は取引手数料以上である必要があります。",
+  "homeSpentOfLimitThisMonth": "今月 {limit}中{spent}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "Smara家計簿のロックを解除",
   "searchLabel": "検索",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "初期残高",
+  "transferToName": "振替: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "振替手数料",
+  "feeForTransferTo": "{name}への振替手数料",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "ファイル選択画面を開けませんでした: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": ".{extensions}ファイルを選択してください",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "通貨コード（ISO 4217、例: USD）",
+  "splitCounterpartMore": "{name} 他{count}件",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "日付",
+  "noneSelected": "なし",
+  "reviewEntriesBeforeContinuing": "続ける前に、以下の項目（合計{count}件）を確認してください。",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "{amount}を受け取りました",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "為替レートがまだわからない場合は空欄のままにしてください。",
+  "recordTradeBlurb": "すでに行われた取引を記録します。このアプリは注文を発注しません。",
+  "feeOnTopBlurb": "オン: 上記の金額はこの口座から差し引かれる総額で、手数料はそこから差し引かれます。",
+  "feeBankBlurb": "銀行または仲介業者によって前もって請求される手数料です。",
+  "validationPinMinLength": "PINは4桁以上である必要があります。",
+  "restoreBackupBlurb": "これは、現在このアプリにあるすべてのデータをバックアップの内容に置き換えます — 結合はされません。バックアップファイルを選択し、保護に使用したパスフレーズを入力してください。",
+  "actionReplace": "置き換える",
+  "hideAccountBody": "{name}は今後、新しい取引には使用できなくなります。",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "{name}は今後、口座の作成や再割り当ての際に候補として表示されなくなります。",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "{name}は今後、新しい取引を記録する際に候補として表示されなくなります。",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "非表示にした銘柄は、過去の買い・売りにはそのまま残ります。配当も引き続き記録できます。",
+  "nameHidden": "{name}（非表示）",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "通貨が設定されていません",
+  "deletePayeeBody": "{name}とその記憶されたデフォルト値が削除されます。過去の取引には影響しません。",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name}は今後、期日として表示されなくなります。すでに記録された過去の取引には影響しません。",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "保存された列マッピング「{name}」が削除されます。すでにそれを使ってインポートした明細書には影響しません。",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "今後のインポートは「{keyword}」による自動カテゴリ分けの対象外になります。このルールですでにカテゴリ分けされた取引には影響しません。",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "任意で、今すぐクレジットカードや現金口座を追加できます - 口座は後からいつでも設定画面から追加できます。",
+  "deliveredToDestination": "振替先に到着済み",
+  "deliveredToName": "{name}に到着済み",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "予定より{amount} {currency}少なく受け取りました - 差額を計上するカテゴリを選択してください。",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "日付範囲",
+  "addTemplate": "テンプレートを追加",
+  "editTemplate": "テンプレートを編集",
+  "validationFillTemplateFields": "すべての項目に有効な金額と日を入力してください。",
+  "saveCsvExport": "CSVの書き出しを保存",
+  "referenceRate": "参考レート",
+  "yourRate": "あなたのレート",
+  "leaveBlankIfThisWasAccountCurrency": "口座自体の通貨である{currency}だった場合は空欄のままにしてください。",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "ロック期限（任意）",
+  "lockedUntilDate": "{date}までロック中",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "調査用プロンプトをコピーしました — ブラウザのURLが利用できないか、オフラインです。",
+  "openedFavouriteResearchTool": "お気に入りの調査ツールを開きました。",
+  "looksLikeGain": "これは利益のようです",
+  "looksLikeLoss": "これは損失のようです",
+  "looksLikeBreakEven": "これは損益ゼロのようです",
+  "sellableQuantity": "{name}（売却可能 {qty}）",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "列 {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "インポート中...",
+  "confirmImport": "インポートを確定",
+  "manageSavedCategoryRules": "保存済みカテゴリルールを管理",
+  "statementCurrencyMismatch": "このファイルの通貨（{currency}）は選択した口座の通貨と一致しません。",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "カテゴリルール",
+  "possibleDuplicate": "重複の可能性",
+  "unknownCategory": "不明なカテゴリ"
 }

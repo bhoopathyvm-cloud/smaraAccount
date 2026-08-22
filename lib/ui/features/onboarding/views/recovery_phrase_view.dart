@@ -55,7 +55,7 @@ class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      widget.viewModel.errorMessage!,
+                      widget.viewModel.errorMessageFor(l10n)!,
                       style: AppTypography.body.copyWith(
                         color: AppColors.signal,
                       ),
@@ -93,10 +93,7 @@ class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.large),
-                Text(
-                  l10n.recoveryPhraseWriteDown,
-                  style: AppTypography.body,
-                ),
+                Text(l10n.recoveryPhraseWriteDown, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 GridView.builder(
                   shrinkWrap: true,

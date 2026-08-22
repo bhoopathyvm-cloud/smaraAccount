@@ -30,145 +30,142 @@ class AppLocalizationsSat extends AppLocalizations {
   String get actionCancel => 'ᱵᱟᱹᱨᱜᱤᱞ';
 
   @override
-  String get actionSave => 'ᱥᱟᱺᱪᱟᱣ';
+  String get actionSave => 'ᱥᱟᱺᱪᱟᱣ ᱢᱮ';
 
   @override
-  String get actionDelete => 'Delete';
+  String get actionDelete => 'ᱢᱮᱴᱟᱣ ᱢᱮ';
 
   @override
-  String get actionDone => 'Done';
+  String get actionDone => 'ᱚᱠᱛᱚ';
 
   @override
-  String get actionContinue => 'Continue';
+  String get actionContinue => 'ᱡᱟᱨᱤ ᱢᱮ';
 
   @override
-  String get actionDismiss => 'Dismiss';
+  String get actionDismiss => 'ᱵᱚᱸᱫᱚᱭ ᱢᱮ';
 
   @override
-  String get actionRetry => 'Retry';
+  String get actionRetry => 'ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ';
 
   @override
-  String get actionSkip => 'Skip';
+  String get actionSkip => 'ᱥᱠᱤᱯ ᱢᱮ';
 
   @override
-  String get actionConfirm => 'Confirm';
+  String get actionConfirm => 'ᱪᱮᱛᱟᱱ ᱢᱮ';
 
   @override
-  String get actionAdd => 'ᱥᱮᱞᱮᱫ';
+  String get actionAdd => 'ᱥᱮᱞᱮᱫ ᱢᱮ';
 
   @override
-  String get actionEdit => 'Edit';
+  String get actionEdit => 'ᱮᱰᱤᱴ ᱢᱮ';
 
   @override
-  String get actionRename => 'Rename';
+  String get actionRename => 'ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ';
 
   @override
-  String get actionHide => 'Hide';
+  String get actionHide => 'ᱩᱠᱩ ᱢᱮ';
 
   @override
-  String get actionCreate => 'Create';
+  String get actionCreate => 'ᱵᱮᱱᱟᱣ ᱢᱮ';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'ᱮᱯ ᱵᱚᱸᱫᱚᱭ ᱢᱮ';
 
   @override
-  String get actionUnlock => 'Unlock';
+  String get actionUnlock => 'ᱠᱷᱩᱞᱟᱹ ᱢᱮ';
 
   @override
-  String get actionSettle => 'Settle';
+  String get actionSettle => 'ᱴᱷᱤᱠ ᱢᱮ';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => 'ᱯᱩᱨᱟᱹᱣ ᱢᱮ';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'ᱧᱮᱞ ᱢᱮ';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'ᱟᱢᱯᱚᱴ ᱢᱮ';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'ᱥᱤᱮᱥᱵᱷᱤ ᱮᱠᱥᱯᱚᱴ ᱢᱮ';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'ᱯᱷᱟᱭᱞ ᱪᱩᱱ ᱢᱮ';
 
   @override
-  String get actionRestore => 'Restore';
+  String get actionRestore => 'ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱢᱮ';
 
   @override
-  String get actionArchive => 'Hide';
+  String get actionFix => 'ᱴᱷᱤᱠ ᱢᱮ';
 
   @override
-  String get actionFix => 'Fix';
+  String get actionBuy => 'ᱠᱤᱨᱤᱸ ᱢᱮ';
 
   @override
-  String get actionBuy => 'Buy';
+  String get actionSell => 'ᱟᱠᱤᱨᱤᱸ ᱢᱮ';
 
   @override
-  String get actionSell => 'Sell';
+  String get actionDividend => 'ᱞᱟᱵᱷᱟᱸᱥ';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionRecordBuy => 'ᱠᱤᱨᱤᱸ ᱚᱞ ᱢᱮ';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordSell => 'ᱟᱠᱤᱨᱤᱸ ᱚᱞ ᱢᱮ';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordDividend => 'ᱞᱟᱵᱷᱟᱸᱥ ᱚᱞ ᱢᱮ';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionPayCard => 'ᱠᱟᱨᱰ ᱵᱷᱚᱨᱚ ᱢᱮ';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionTransfer => 'ᱴᱨᱟᱸᱥᱯᱷᱚᱨ';
 
   @override
-  String get actionTransfer => 'Transfer';
+  String get actionRecordTransaction => 'ᱠᱟᱹᱢᱤ ᱚᱞ ᱢᱮ';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionImportStatement => 'ᱥᱴᱮᱴᱢᱮᱸᱴ ᱟᱢᱯᱚᱴ ᱢᱮ';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionClearDates => 'ᱫᱤᱱ ᱥᱟᱯᱷᱟᱭ ᱢᱮ';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearSearch => 'ᱥᱮᱸᱫᱽᱨᱟ ᱟᱨ ᱯᱷᱤᱞᱴᱚᱨ ᱥᱟᱯᱷᱟᱭ ᱢᱮ';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionUseBiometrics => 'ᱵᱟᱭᱳᱢᱮᱴᱨᱤᱠᱥ ᱵᱮᱵᱷᱟᱨ ᱢᱮ';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionSetPin => 'ᱯᱤᱱ ᱛᱚᱭᱚᱨ ᱢᱮ';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionChangePin => 'ᱯᱤᱱ ᱵᱚᱫᱚᱞ ᱢᱮ';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionSaveBackup => 'ᱵᱮᱠᱟᱯ ᱥᱟᱺᱪᱟᱣ ᱢᱮ';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionRestoreBackup => 'ᱵᱮᱠᱟᱯ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱢᱮ';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionSaveRule => 'ᱱᱤᱭᱚᱢ ᱥᱟᱺᱪᱟᱣ ᱢᱮ';
 
   @override
-  String get actionSaveRule => 'Save rule';
-
-  @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get actionConfirmFix => 'ᱴᱷᱤᱠ ᱪᱮᱛᱟᱱ ᱢᱮ';
 
   @override
   String get captureSpent => 'ᱠᱷᱚᱨᱚᱪ';
 
   @override
-  String get captureReceived => 'Received';
+  String get captureReceived => 'ᱢᱤᱞᱟ';
 
   @override
-  String get captureMovedMoney => 'Moved money';
+  String get captureMovedMoney => 'ᱴᱚᱠᱟ ᱵᱚᱫᱚᱞ';
 
   @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => 'ᱥᱴᱮᱴᱢᱮᱸᱴ ᱟᱢᱯᱚᱴ';
 
   @override
   String get settingsTitle => 'ᱥᱮᱴᱤᱝ';
@@ -177,115 +174,115 @@ class AppLocalizationsSat extends AppLocalizations {
   String get settingsLanguage => 'ᱯᱟᱹᱨᱥᱤ';
 
   @override
-  String get settingsLanguageSystem => 'Device language';
+  String get settingsLanguageSystem => 'ᱥᱟᱫᱷᱚᱱ ᱯᱟᱹᱨᱥᱤ';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => 'ᱨᱮᱚᱷᱨᱮᱸᱥ ᱮᱠᱥᱪᱮᱸᱡ ᱨᱮᱴ ᱟᱹᱱᱟᱭ ᱢᱮ';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      'ᱢᱩᱫᱨᱟ ᱵᱚᱫᱚᱞ ᱚᱠᱟ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱨᱮ, ᱱᱚᱶᱟ ᱫᱚ ᱛᱩᱞᱚᱱᱟᱜ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱟᱱ, ᱮᱞ ᱯᱩᱨᱟᱹᱣ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱚᱱ ᱵᱮᱵᱷᱟᱨ ᱵᱟᱝᱟᱭ ᱦᱩᱭ᱾';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'ᱨᱮᱴ ᱫᱟᱛᱟᱹ';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices => 'ᱵᱟᱡᱟᱨ ᱫᱟᱢ ᱟᱹᱱᱟᱭ ᱢᱮ';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'ᱴᱤᱠᱚᱨ ᱟᱨ ISIN ᱢᱮᱱᱟᱜ ᱥᱟᱫᱷᱚᱱ ᱠᱚ ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱫᱟᱢ ᱟᱹᱱᱟᱭ ᱢᱮ, ᱯᱳᱨᱴᱷᱚᱞᱤᱳ ᱫᱟᱢ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱹᱜᱤᱫ᱾ ᱠᱟᱹᱢᱤ ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱝ, ᱟᱨ ᱚᱠᱟ ᱞᱮᱠᱷᱟ ᱢᱮᱱᱟᱜᱼᱟ ᱚᱱᱟ ᱵᱟᱝ ᱠᱩᱞᱟᱹᱭ᱾';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => 'ᱵᱟᱡᱟᱨ ᱫᱟᱢ ᱫᱟᱛᱟᱹ';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => 'ᱢᱚᱱ ᱠᱟᱛᱷᱟ ᱚᱸᱥᱟᱨ ᱦᱟᱛᱤᱭᱟᱨ';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      'ᱦᱚᱞᱰᱤᱝ ᱨᱮ ᱥᱟᱫᱷᱚᱱ ᱧᱩᱛᱩᱢ ᱚᱛᱟᱭ ᱛᱟᱦᱮᱸᱱᱟ ᱠᱷᱟᱱ ᱱᱚᱶᱟ ᱦᱟᱛᱤᱭᱟᱨ ᱵᱽᱨᱟᱣᱡᱚᱨ ᱨᱮ ᱠᱷᱩᱞᱟᱹᱭᱟ — ᱮᱠᱴᱳ ᱵᱟᱝᱟ, ᱟᱨ ᱥᱚᱞᱟᱹᱦᱟ ᱵᱟᱝᱟ᱾';
 
   @override
-  String get settingsBackup => 'Backup';
+  String get settingsBackup => 'ᱵᱮᱠᱟᱯ';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      'ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱮᱱᱠᱨᱤᱯᱴᱮᱰ ᱵᱮᱠᱟᱯ ᱚᱠᱟ ᱴᱷᱟᱶ ᱥᱟᱺᱪᱟᱣ ᱢᱮ ᱚᱱᱟ ᱟᱢ ᱵᱟᱪᱷᱟᱣᱟ, ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱚᱱᱟᱛᱮ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱢᱮ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱟᱢ ᱨᱮᱭᱟᱜ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱟᱨ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱠᱷᱚᱱ ᱴᱷᱟᱲᱟᱹᱜ᱾';
 
   @override
-  String get settingsLock => 'Lock';
+  String get settingsLock => 'ᱞᱚᱠ';
 
   @override
   String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+      'ᱮᱯ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱯᱤᱱ ᱥᱮ ᱵᱟᱭᱳᱢᱮᱴᱨᱤᱠᱥ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱱᱟ᱾';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock => 'ᱮᱯ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱩᱞᱟᱹ ᱫᱚᱨᱠᱟᱨ';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'ᱞᱚᱠ ᱛᱟᱭᱚᱢ ᱛᱟᱭᱚᱢ';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'ᱱᱤᱛᱚᱜ';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '᱑ ᱢᱤᱱᱤᱴ';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '᱕ ᱢᱤᱱᱤᱴ';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '᱑᱕ ᱢᱤᱱᱤᱴ';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => 'ᱵᱟᱭᱳᱢᱮᱴᱨᱤᱠᱥ ᱦᱚᱡ ᱮᱢ ᱢᱮ';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot => 'ᱮᱯ ᱥᱩᱭᱴᱪᱚᱨ ᱨᱮ ᱵᱮᱞᱮᱸᱥ ᱩᱠᱩ ᱢᱮ';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      'ᱡᱟᱦᱟᱸ ᱟᱢ ᱮᱴᱟᱜ ᱮᱯ ᱨᱮ ᱪᱟᱞᱟᱜᱼᱟᱢ, ᱚᱱᱟ ᱚᱠᱛᱚ ᱱᱚᱶᱟ ᱯᱟᱴᱟ ᱩᱠᱩ ᱦᱩᱭᱟ, ᱟᱨ ᱮᱯ ᱥᱩᱭᱴᱪᱚᱨ ᱨᱮ ᱵᱟᱭ ᱧᱮᱞᱚᱜᱼᱟ᱾';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'ᱱᱚᱶᱟ ᱯᱞᱟᱴᱯᱷᱳᱨᱚᱢ ᱨᱮ ᱮᱯ ᱥᱩᱭᱴᱪᱚᱨ ᱨᱮ ᱵᱮᱞᱮᱸᱥ ᱩᱠᱩ ᱵᱟᱝ ᱢᱮᱴᱟᱣᱟ᱾';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => 'ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => 'ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵᱠᱚ ᱨᱮᱭᱟᱜ ᱵᱮᱵᱚᱥᱛᱷᱟ';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      'ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱧᱩᱛᱩᱢ ᱟᱨ ᱩᱱᱠᱩᱭ ᱠᱟᱴᱴᱮᱜᱚᱨᱤ ᱟᱨ ᱦᱤᱥᱟᱹᱵ ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱᱟ, ᱠᱟᱹᱢᱤ ᱚᱞ ᱚᱠᱛᱚ ᱟᱡ ᱚᱞ ᱚᱲᱟᱜ ᱮᱢᱟ᱾';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => 'ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => 'ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ ᱵᱮᱵᱚᱥᱛᱷᱟ';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      'ᱚᱠᱟ ᱵᱤᱞ ᱥᱮ ᱟᱭ ᱫᱚᱦᱲᱟ ᱪᱟᱸᱫᱚ ᱨᱮ ᱦᱩᱭᱩᱜᱼᱟ, ᱡᱮᱞᱠᱟ ᱵᱷᱟᱰᱟ ᱥᱮ ᱛᱚᱱᱚᱜ᱾ ᱡᱟᱦᱟᱸ ᱴᱮᱢᱯᱞᱮᱴ ᱚᱠᱛᱚ ᱦᱩᱭᱩᱜᱼᱟ, ᱚᱱᱟ ᱚᱲᱟᱜ ᱨᱮ ᱩᱫᱩᱜᱼᱟ ᱢᱤᱫ ᱴᱚᱠᱚᱸ ᱚᱞ ᱞᱟᱹᱜᱤᱫ — ᱟᱡᱮ ᱟᱡᱮ ᱵᱟᱝ ᱚᱞᱚᱜᱼᱟ᱾';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'ᱵᱟᱵᱚᱛ';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter (ECB ᱨᱮᱴ)';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq (ᱚᱠᱛᱚ ᱚᱠᱛᱚ ᱫᱟᱢ)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (ᱪᱟᱨᱴ API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -300,66 +297,65 @@ class AppLocalizationsSat extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => 'ᱴᱚᱠᱟ ᱟᱨ ᱴᱚᱠᱟ ᱞᱮᱠᱟᱱ';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => 'ᱯᱮᱸᱥᱚᱱ';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => 'ᱠᱚᱨᱡᱽ ᱟᱨ ᱚᱠᱚᱴᱚ ᱫᱮᱸ';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'ᱠᱚᱨᱡᱽ ᱟᱨ ᱢᱚᱨᱴᱜᱮᱡ';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => 'ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => 'ᱴᱚᱠᱟ ᱟᱨ ᱵᱮᱸᱠ';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'ᱛᱚᱸᱠᱟ';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'ᱮᱴᱟᱜ ᱢᱤᱞᱟ';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'ᱡᱤᱱᱤᱥ';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => 'ᱵᱷᱟᱲᱟ/ᱢᱚᱨᱴᱜᱮᱡ';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => 'ᱥᱮᱵᱟ ᱵᱤᱞ';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => 'ᱜᱟᱲᱤ ᱵᱟᱹᱲᱤ';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => 'ᱵᱟᱦᱨᱮ ᱡᱚᱢ';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => 'ᱯᱷᱳᱱ';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => 'ᱥᱟᱥᱛᱷᱚ';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'ᱮᱴᱟᱜ ᱠᱷᱚᱨᱚᱪ';
 
   @override
   String get homeThisMonth => 'ᱱᱚᱣᱟ ᱪᱟᱸᱫᱚ';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => 'ᱴᱚᱠᱟ ᱨᱟᱥᱛᱟ ᱨᱮ';
 
   @override
-  String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+  String get homeWhatYouHaveMinusWhatYouOwe => 'ᱟᱢ ᱛᱟᱭᱚᱢ ᱠᱷᱚᱱ ᱟᱢ ᱫᱮᱱᱟ ᱟᱲᱟᱜ';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return 'ᱟᱢ ᱛᱟᱭᱚᱢ $amount $currency';
   }
 
   @override
@@ -369,1405 +365,1403 @@ class AppLocalizationsSat extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return 'ᱟᱢ ᱛᱟᱭᱚᱢ $haveAmount $currency  •  ᱟᱢ ᱫᱮᱱᱟ $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return 'ᱟᱢ $name ᱠᱷᱚᱱ $amount $currency ᱠᱩᱞ ᱠᱮᱫᱟ';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return 'ᱟᱢ $name ᱛᱮ $amount $currency ᱠᱩᱞ ᱠᱮᱫᱟ';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => 'ᱩᱠᱩ ᱠᱟᱱᱟ';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'ᱡᱚᱛᱚ ᱦᱤᱥᱟᱹᱵ';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return 'ᱥᱟᱺᱪᱟᱣ ᱮᱱᱟ $path ᱨᱮ';
   }
 
   @override
   String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+      'ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱮᱠᱥᱯᱚᱴ ᱵᱟᱝ ᱦᱩᱭᱮᱱᱟ᱾ ᱱᱚᱶᱟ ᱥᱳᱯᱟᱱ ᱥᱠᱤᱯ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱢ᱾';
 
   @override
-  String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+  String get enterPassphraseToProtect => 'ᱯᱷᱟᱭᱞ ᱨᱚᱠᱷᱭᱟ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱥᱣᱟᱨᱰ ᱚᱞ ᱢᱮ᱾';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived =>
+      'ᱡᱟᱦᱟᱸ ᱦᱚᱸ ᱪᱮᱫᱟᱜ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ ᱚᱱᱟ ᱵᱟᱰᱟᱭᱮᱭᱟᱢ ᱠᱷᱟᱱ ᱴᱮᱯ ᱢᱮ';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return '$name ᱛᱮ ᱨᱩᱣᱟᱲ ᱠᱮᱫᱟ';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => 'ᱛᱮᱦᱮᱸᱡ ᱫᱮᱱᱟ';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱴᱮᱯ ᱢᱮ';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => 'ᱥᱤᱢᱟ ᱞᱟᱛᱟᱨ';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$limit ᱠᱷᱚᱱ $spent';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return 'ᱛᱮᱦᱮᱸᱱ: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => 'ᱦᱤᱥᱟᱹᱵ ᱵᱟᱭᱟ';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'ᱴᱚᱠᱟ ᱨᱮᱡᱤᱥᱴᱚᱨ';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => 'ᱵᱟᱡᱟᱨ ᱟᱸᱫᱟᱡᱽ';
 
   @override
-  String get registerTitle => 'Register';
+  String get registerTitle => 'ᱨᱮᱡᱤᱥᱴᱚᱨ';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => 'ᱵᱮᱣᱟᱹᱨ, ᱡᱟᱹᱛ, ᱥᱮ ᱮᱞ';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => 'ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱠᱟᱹᱢᱤ ᱵᱟᱭᱟ';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => 'ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱵᱟᱝ ᱚᱞ ᱟᱠᱟᱱᱟ᱾';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => 'ᱠᱷᱚᱨᱚᱪ ᱠᱷᱟᱱ';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => 'ᱢᱤᱞᱟ ᱠᱷᱟᱱ';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'ᱡᱚᱛᱚ';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified => 'ᱵᱟᱭ ᱛᱟᱭᱚᱢ - ᱡᱚᱢᱟᱣ ᱨᱮ ᱵᱟᱭ ᱛᱟᱦᱮᱸᱱᱟ';
 
   @override
-  String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+  String get registerSuperseded => 'ᱢᱟᱭᱭᱚᱨᱮᱥᱚᱱ ᱛᱮ ᱵᱚᱫᱚᱞ - ᱡᱚᱢᱟᱣ ᱨᱮ ᱵᱟᱭ ᱛᱟᱦᱮᱸᱱᱟ';
 
   @override
-  String get summaryTitle => 'Summary';
+  String get summaryTitle => 'ᱥᱟᱹᱨᱤ';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => 'ᱡᱚᱛᱚ ᱢᱤᱞᱟ';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => 'ᱡᱚᱛᱚ ᱠᱷᱚᱨᱚᱪ';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start ᱠᱷᱚᱱ $end ᱛᱟᱦᱮᱸᱱ';
   }
 
   @override
-  String get accountsTitle => 'Accounts';
+  String get accountsTitle => 'ᱦᱤᱥᱟᱹᱵ';
 
   @override
-  String get categoriesTitle => 'Categories';
+  String get categoriesTitle => 'ᱡᱟᱹᱛ';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => 'ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => 'ᱦᱤᱥᱟᱹᱵ ᱵᱮᱱᱟᱣ ᱢᱮ';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'ᱫᱚᱞ ᱵᱮᱱᱟᱣ ᱢᱮ';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'ᱫᱚᱞ ᱮᱰᱤᱴ ᱢᱮ';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => 'ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'ᱡᱟᱹᱛ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'ᱡᱟᱹᱛ ᱥᱮᱞᱮᱫ ᱢᱮ';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'ᱫᱚᱞ';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => 'ᱞᱮᱠᱟᱱ';
 
   @override
-  String get asset => 'Asset';
+  String get asset => 'ᱥᱚᱢᱯᱚᱫ';
 
   @override
-  String get liability => 'Liability';
+  String get liability => 'ᱫᱮᱱᱟ';
 
   @override
-  String get income => 'Income';
+  String get income => 'ᱢᱤᱞᱟ';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'ᱠᱷᱚᱨᱚᱪ';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments =>
+      'ᱱᱚᱶᱟ ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱢᱮᱱᱟᱜᱼᱟ';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      'ᱴᱚᱠᱟ ᱟᱨ ᱡᱤᱱᱤᱥ ᱚᱠᱟ ᱟᱢ ᱠᱤᱨᱤᱸ, ᱟᱠᱤᱨᱤᱸ, ᱟᱨ ᱞᱟᱵᱷᱟᱸᱥ ᱛᱮ ᱚᱞᱮᱭᱟᱢ᱾';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'ᱱᱚᱶᱟ ᱫᱚ ᱠᱨᱮᱰᱤᱴ ᱠᱟᱨᱰ ᱠᱟᱱᱟ';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => 'ᱮᱦᱚᱵ ᱵᱮᱞᱮᱸᱥ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => 'ᱢᱩᱫᱨᱟ (ISO 4217)';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => 'ᱢᱩᱫᱨᱟ (ISO 4217, ᱡᱮᱞᱠᱟ USD)';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'ᱱᱟᱶᱟ ᱚᱞ ᱠᱷᱚᱱ ᱦᱤᱥᱟᱹᱵ ᱩᱠᱩ ᱟᱢᱟ ᱥᱮ?';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'ᱱᱟᱶᱟ ᱚᱞ ᱠᱷᱚᱱ ᱡᱟᱹᱛ ᱩᱠᱩ ᱟᱢᱟ ᱥᱮ?';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'ᱱᱟᱶᱟ ᱚᱞ ᱠᱷᱚᱱ ᱫᱚᱞ ᱩᱠᱩ ᱟᱢᱟ ᱥᱮ?';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'ᱫᱚᱞ ᱟᱨ ᱵᱟᱰᱟᱭ ᱢᱮ';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => 'ᱛᱮᱦᱮᱸᱱ ᱵᱮᱞᱮᱸᱥ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱢᱮ';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => 'ᱪᱟᱸᱫᱚ ᱥᱤᱢᱟ';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => 'ᱥᱤᱢᱟ (ᱥᱟᱯᱷᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱟᱹᱞᱤ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ)';
 
   @override
   String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+      'ᱱᱚᱶᱟ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱞᱟᱹᱜᱤᱫ ᱪᱟᱸᱫᱚ ᱛᱮᱦᱮᱸᱱ ᱠᱷᱚᱨᱚᱪ ᱨᱮᱭᱟᱜ ᱮᱴᱠᱮᱛᱮ ᱫᱮᱠᱷᱟᱣ᱾';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'ᱡᱟᱹᱛ ᱱᱤᱭᱚᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱵᱚᱥᱛᱷᱟ';
 
   @override
-  String get amount => 'Amount';
+  String get amount => 'ᱮᱞ';
 
   @override
-  String get category => 'Category';
+  String get category => 'ᱡᱟᱹᱛ';
 
   @override
-  String get account => 'Account';
+  String get account => 'ᱦᱤᱥᱟᱹᱵ';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => 'ᱦᱤᱥᱟᱹᱵ ᱠᱷᱚᱱ';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => 'ᱦᱤᱥᱟᱹᱵ ᱛᱮ';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => 'ᱵᱮᱣᱟᱹᱨ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => 'ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱞᱮᱠᱷᱟ ᱦᱚᱸ ᱦᱚᱲᱢᱚ ᱢᱮ';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => 'ᱟᱭᱢᱟ ᱡᱟᱹᱛ ᱨᱮ ᱴᱷᱚᱠᱟ ᱢᱮ';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return 'ᱡᱟᱹᱛ $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => 'ᱛᱟᱸᱦᱮᱸ ᱮᱞ';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => 'ᱛᱟᱸᱦᱮᱸ ᱮᱞ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+  String get accountCurrencyAmountOptional => 'ᱦᱤᱥᱟᱹᱵ ᱢᱩᱫᱨᱟ ᱮᱞ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => 'ᱠᱟᱹᱢᱤ ᱢᱩᱫᱨᱟ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => 'ᱯᱷᱤᱥ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => 'ᱯᱷᱤᱥ ᱮᱞ';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => 'ᱯᱷᱤᱥ ᱡᱟᱹᱛ';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => 'ᱯᱷᱤᱥ ᱵᱮᱣᱟᱹᱨ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => 'ᱪᱮᱛᱟᱱ ᱮᱞ ᱠᱷᱚᱱ ᱯᱷᱤᱥ ᱮᱴᱟᱜᱟᱭᱮᱱᱟ';
 
   @override
   String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+      'ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱨ ᱥᱚᱱᱚᱛ ᱦᱤᱥᱟᱹᱵ ᱵᱮᱱᱟᱣ ᱢᱮ᱾';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => 'ᱪᱮᱫᱟᱜ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ?';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => 'ᱪᱮᱫᱟᱜ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ ᱚᱱᱟ ᱢᱮᱛᱟᱣ ᱢᱮ᱾';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => 'ᱥᱮᱴᱮᱨ ᱮᱞ';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => 'ᱯᱷᱤᱥ/ᱞᱚᱠᱥᱟᱱ ᱡᱟᱹᱛ';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'ᱛᱟᱭᱚᱢ ᱛᱮ ᱴᱷᱤᱠ ᱦᱩᱭ ᱮᱱᱟ᱾';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => 'ᱦᱚᱞᱰᱤᱝ';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => 'ᱴᱚᱠᱟ';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => 'ᱡᱤᱱᱤᱥ ᱠᱳᱴᱟ';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return 'ᱵᱩᱠ (ᱴᱚᱠᱟ + ᱞᱟᱜᱚᱛ) $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return 'ᱵᱟᱡᱟᱨ ᱟᱸᱫᱟᱡᱽ $amount $currency';
   }
 
   @override
   String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+      'ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱦᱚᱞᱰᱤᱝ ᱵᱟᱭᱟ᱾ ᱥᱟᱫᱷᱚᱱ ᱥᱮᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ ᱠᱤᱨᱤᱸ ᱚᱞ ᱢᱮ᱾';
 
   @override
   String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+      'ᱫᱟᱢ ᱠᱚ ᱫᱚ ᱟᱸᱫᱟᱡᱽ ᱠᱟᱱᱟ, ᱵᱨᱳᱠᱚᱨ ᱫᱟᱢ ᱵᱟᱝᱟ᱾ ᱱᱚᱶᱟ ᱮᱯ ᱳᱨᱰᱚᱨ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      'ᱚᱸᱥᱟᱨ ᱞᱟᱹᱜᱤᱫ ᱧᱩᱛᱩᱢ ᱴᱮᱯ ᱢᱮ᱾ ᱫᱟᱢ ᱠᱚ ᱫᱚ ᱟᱸᱫᱟᱡᱽ, ᱥᱚᱞᱟᱹᱦᱟ ᱵᱟᱝᱟ᱾';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => 'ᱥᱟᱫᱷᱚᱱ';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => 'ᱱᱟᱶᱟ ᱥᱟᱫᱷᱚᱱ';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => 'ᱥᱟᱫᱷᱚᱱ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => 'ᱥᱟᱫᱷᱚᱱ ᱠᱟᱹᱢᱤ';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return '$name ᱩᱠᱩ ᱟᱢᱟ ᱥᱮ?';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'ᱴᱤᱠᱚᱨ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'ᱦᱤᱥᱟᱹᱵ ᱞᱮᱠᱷᱟ';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => 'ᱢᱤᱫ ᱨᱮᱭᱟᱜ ᱫᱟᱢ';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => 'ᱵᱨᱳᱠᱚᱨᱮᱡ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => 'ᱵᱨᱳᱠᱚᱨᱮᱡ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => 'ᱢᱤᱞᱟ ᱡᱟᱹᱛ';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => 'ᱞᱟᱵᱷ ᱢᱤᱞᱟ ᱡᱟᱹᱛ';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => 'ᱞᱚᱠᱥᱟᱱ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => 'ᱴᱚᱠᱟ ᱵᱟᱝ';
 
   @override
-  String get cash => 'Cash';
+  String get cash => 'ᱴᱚᱠᱟ';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'ᱞᱚᱠ ᱠᱟᱱᱟ';
 
   @override
   String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+      'ᱱᱚᱶᱟ ᱫᱚ ᱟᱢ ᱨᱮᱭᱟᱜ ᱴᱤᱯᱚᱬᱤ ᱠᱟᱱᱟ, ᱵᱨᱳᱠᱚᱨ ᱨᱮᱭᱟᱜ ᱱᱤᱭᱚᱢ ᱵᱟᱝᱟ᱾';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => 'ᱥᱴᱚᱠ';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => 'ᱢᱤᱭᱩᱴᱩᱭᱟᱞ ᱯᱷᱚᱸᱰ';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => 'ᱵᱚᱸᱰ';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'ᱮᱴᱟᱜ';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'ᱱᱤᱛᱚᱜ ᱨᱮᱭᱟᱜ ᱫᱟᱢ';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'ᱠᱮᱥ ᱫᱟᱢ';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => 'ᱯᱩᱨᱟᱹᱱ ᱫᱟᱢ';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => 'ᱞᱟᱜᱚᱛ ᱵᱮᱵᱷᱟᱨ (ᱫᱟᱢ ᱵᱟᱭᱟ)';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled => 'ᱫᱟᱢ ᱵᱚᱸᱫ — ᱞᱟᱜᱚᱛ/ᱠᱮᱥ ᱵᱮᱵᱷᱟᱨ';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch => 'ᱞᱟᱜᱚᱛ ᱵᱮᱵᱷᱟᱨ (ᱫᱟᱢ ᱢᱩᱫᱨᱟ ᱦᱮᱡ ᱵᱟᱝᱟ)';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return 'ᱵᱟᱭ ᱢᱤᱞᱟᱣ $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty ᱭᱩᱱᱤᱴ · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱯᱷᱨᱮᱡ ᱪᱮᱛᱟᱱ ᱢᱮ';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      'ᱱᱚᱶᱟ ᱒᱔ ᱠᱟᱴᱷᱟ ᱠᱚ ᱫᱚ ᱢᱤᱫ ᱛᱟᱸ ᱨᱚᱥᱛᱟ ᱠᱟᱱᱟ ᱟᱢ ᱨᱮᱭᱟᱜ ᱠᱟᱹᱢᱤ ᱦᱤᱛᱚᱨᱤ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱞᱟᱹᱜᱤᱫ, ᱡᱟᱦᱟᱸ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱦᱟᱨᱟᱣ, ᱨᱤᱥᱮᱴ, ᱥᱮ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱩᱜᱼᱟ᱾ ᱥᱢᱟᱨᱟ ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱥᱚᱨᱣᱟᱨ ᱵᱟᱹᱱᱩᱜᱼᱟ, ᱟᱨ ᱟᱢ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱭ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾\n\nᱡᱟᱦᱟᱸ ᱟᱢ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱟᱨ ᱱᱚᱶᱟ ᱯᱷᱨᱮᱡ ᱢᱤᱫᱛᱟᱸ ᱦᱟᱨᱟᱣᱮᱭᱟᱢ, ᱟᱢ ᱚᱞ ᱟᱠᱟᱱ ᱡᱚᱛᱚ ᱠᱟᱹᱢᱤ ᱫᱚ ᱡᱚᱛᱚ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱭ ᱴᱷᱤᱠ ᱠᱟᱱᱟ᱾';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'ᱱᱚᱶᱟ ᱠᱟᱴᱷᱟ ᱠᱚ ᱴᱷᱮᱨ ᱛᱮ ᱚᱞ ᱢᱮ ᱟᱨ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱠᱷᱚᱱ ᱵᱟᱹᱨᱚ ᱡᱟᱭᱜᱟ ᱨᱮ ᱨᱚᱠᱷᱭᱟ ᱢᱮ᱾';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase => 'ᱟᱭᱧ ᱡᱮ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱟᱺᱪᱟᱣ ᱮᱫᱟᱭᱧ';
 
   @override
   String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+      'ᱟᱢ ᱡᱟᱦᱟᱸ ᱥᱟᱺᱪᱟᱣ ᱠᱮᱫᱟᱢ ᱚᱱᱟ ᱯᱷᱨᱮᱡ ᱠᱷᱚᱱ ᱡᱟᱦᱟᱸ ᱠᱟᱴᱷᱟ ᱠᱚ ᱠᱩᱠᱞᱤᱟᱭᱟ, ᱚᱱᱟ ᱚᱞ ᱢᱮ᱾';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return 'ᱠᱟᱴᱷᱟ #$n';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱮᱠᱥᱯᱚᱴ';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱛᱮ, ᱟᱢ ᱟᱢ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱟᱥᱣᱟᱨᱰ ᱛᱮ ᱨᱚᱠᱷᱭᱟ ᱮᱱᱟ ᱮᱱᱠᱨᱤᱯᱴᱮᱰ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱦᱚᱸ ᱥᱟᱺᱪᱟᱣ ᱫᱟᱲᱮᱭᱟᱜᱢᱮᱭᱟ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱮᱴᱠᱮᱛᱮ - ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱢᱤᱫᱟᱜᱟᱜ ᱥᱟᱺᱜᱮ ᱟᱢ ᱨᱮᱭᱟᱜ ᱥᱟᱭᱤᱱ ᱠᱤ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱞᱟᱹᱜᱤᱫ ᱡᱚᱛᱚ ᱠᱷᱚᱱ ᱴᱷᱤᱠ᱾';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'ᱯᱟᱥᱣᱟᱨᱰ';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱮᱠᱥᱯᱚᱴ ᱢᱮ';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱩᱫᱨᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      'ᱡᱚᱛᱚ ᱦᱤᱥᱟᱹᱵ ᱫᱚᱞ (ᱴᱚᱠᱟ ᱟᱨ ᱴᱚᱠᱟ ᱞᱮᱠᱟᱱ, ᱯᱮᱸᱥᱚᱱ, ᱦᱚᱸᱰᱮ) ᱱᱤᱛᱚᱜ ᱢᱤᱫ ᱢᱩᱫᱨᱟ ᱵᱮᱵᱷᱟᱨ ᱛᱟᱦᱮᱸᱱᱟ᱾ ᱛᱟᱭᱚᱢ ᱛᱮ ᱟᱢ ᱮᱴᱟᱜ ᱢᱩᱫᱨᱟ ᱨᱮ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱞᱮᱫ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ ᱱᱟᱶᱟ ᱫᱚᱞ ᱵᱮᱱᱟᱣ ᱛᱮ᱾';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle => 'ᱛᱟᱭᱚᱢ ᱫᱚᱞ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱫᱨᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'ᱱᱚᱶᱟ ᱮᱯ ᱱᱤᱛᱚᱜ ᱟᱭᱢᱟ ᱢᱩᱫᱨᱟ ᱥᱟᱶᱛᱮ ᱠᱟᱹᱢᱤ ᱠᱟᱱᱟ᱾ ᱟᱢ ᱨᱮᱭᱟᱜ ᱛᱟᱭᱚᱢ ᱦᱤᱥᱟᱹᱵ ᱟᱨ ᱫᱚᱞ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱫᱨᱟ ᱫᱚᱨᱠᱟᱨ - ᱪᱮᱫᱟᱜ ᱠᱷᱟᱛᱤᱨ ᱩᱱᱠᱩ ᱫᱚ ᱱᱚᱶᱟ ᱨᱚᱠᱚᱢ ᱵᱟᱭᱚ ᱠᱷᱚᱱ ᱚᱛᱮ ᱵᱮᱱᱟᱣ ᱟᱠᱟᱱᱟ, ᱢᱤᱫ ᱵᱟᱪᱷᱟᱣ ᱫᱚ ᱡᱚᱛᱚ ᱨᱮ ᱞᱟᱹᱜᱤᱫ ᱦᱩᱭᱩᱜᱼᱟ᱾';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱮᱢ ᱢᱮ';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'ᱱᱚᱶᱟ ᱫᱚ ᱟᱢ ᱞᱟᱹᱜᱤᱫ ᱛᱟᱭᱚᱢ ᱛᱮ ᱛᱚᱭᱚᱨ ᱠᱟᱱ ᱦᱤᱥᱟᱹᱵ ᱠᱟᱱᱟ - ᱟᱢ ᱡᱟᱦᱟᱸ ᱵᱟᱰᱟᱭ ᱩᱫᱩᱜ, ᱚᱱᱟ ᱧᱩᱛᱩᱢ ᱮᱢ ᱢᱮ, ᱡᱮᱞᱠᱟ ᱟᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱸᱠ᱾ ᱟᱢ ᱛᱟᱭᱚᱢ ᱛᱮ ᱢᱤᱫ ᱠᱷᱚᱨᱚᱪ ᱥᱮ ᱢᱤᱞᱟ ᱚᱞᱟᱢ, ᱟᱨ ᱛᱟᱭᱚᱢ ᱛᱮ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱛᱮ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱚᱠᱷᱭᱟᱢᱮ᱾';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled =>
+      'ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱩᱬᱩᱛ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱪᱮᱫᱟᱜ ᱠᱟᱱᱟ?';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => 'ᱥᱟᱭᱤᱱ ᱠᱤ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮ ᱦᱤᱥᱟᱹᱵ ᱢᱮᱱᱟᱜᱼᱟ, ᱢᱮᱱᱠᱷᱟᱱ ᱦᱮᱡ ᱥᱟᱭᱤᱱ ᱠᱤ ᱵᱟᱭᱟ᱾ ᱟᱢ ᱨᱮᱭᱟᱜ ᱨᱚᱠᱷᱭᱟ ᱠᱟᱱ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱠᱷᱚᱱ ᱚᱱᱟ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱢᱮ - ᱟᱢ ᱨᱮᱭᱟᱜ ᱰᱟᱴᱟ ᱫᱚ ᱛᱟᱭᱚᱢ ᱞᱮᱠᱷᱟ ᱴᱷᱤᱠ ᱛᱟᱦᱮᱸᱱᱟ, ᱟᱨ ᱚᱠᱟ ᱦᱚᱸ ᱵᱟᱭ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱚᱜᱼᱟ᱾';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ (ᱡᱚᱛᱚ ᱒᱔ ᱠᱟᱴᱷᱟ)';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱨᱮᱭᱟᱜ ᱵᱤᱥᱚᱭ';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => 'ᱮᱴᱠᱮᱛᱮ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ';
 
   @override
-  String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+  String get iDontHavePhrase => 'ᱟᱭᱧ ᱞᱚᱠᱷᱟᱸ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱵᱟᱭᱟ';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => 'ᱱᱟᱶᱟ ᱠᱤ ᱛᱮ ᱢᱟᱭᱭᱚᱨᱮᱥᱚᱱ';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱵᱚᱭᱦᱟᱛᱮ, ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮᱭᱟᱜ ᱥᱟᱭᱤᱱ ᱠᱤ ᱵᱟᱭ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱠᱟᱛᱮᱡᱽᱟ᱾ ᱟᱢ ᱱᱟᱶᱟ ᱠᱤ ᱮᱛᱚᱦᱚᱵ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ᱾ ᱯᱩᱨᱟᱹᱱ ᱚᱞ ᱠᱚ ᱧᱮᱞ ᱦᱩᱭᱩᱜᱼᱟ ᱢᱮᱱᱠᱷᱟᱱ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱩᱜᱼᱟ᱾';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid =>
+      'ᱟᱭᱧ ᱪᱮᱛᱟᱱ ᱟᱭᱮᱱᱟ ᱡᱮ ᱱᱤᱛᱚᱜ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱫᱚ ᱴᱷᱤᱠ ᱠᱟᱱᱟ';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => 'ᱚᱠᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱮ ᱯᱩᱨᱟᱹᱱ ᱚᱞ ᱵᱟᱭ ᱮᱰᱤᱴ ᱮᱫᱟᱞᱮ';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      'ᱡᱟᱦᱟᱸ ᱟᱢ ᱢᱤᱫ ᱵᱷᱩᱞ ᱴᱷᱤᱠ ᱢᱮᱛᱟᱭᱢᱮ, ᱟᱞᱮ ᱫᱚ ᱯᱩᱨᱟᱹᱱ ᱞᱟᱭᱤᱱ ᱚᱛᱮ ᱨᱚᱠᱷᱭᱟ ᱟᱞᱮᱭᱟ ᱟᱨ ᱚᱱᱟ ᱞᱚᱠᱚᱸ ᱴᱷᱤᱠ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱫᱟᱞᱮ, ᱚᱱᱟ ᱵᱟᱫᱮ ᱡᱟᱦᱟᱸ ᱟᱢ ᱚᱞ ᱟᱠᱟᱫᱟᱢ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱮᱫᱟᱞᱮ᱾ ᱚᱱᱟᱛᱮ ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱛᱚᱨᱤ ᱫᱚ ᱛᱟᱭᱚᱢ ᱛᱮ ᱩᱫᱩᱠᱟᱹᱭᱟ ᱡᱮ ᱪᱮᱫᱟᱜ ᱦᱩᱭᱮᱱᱟ ᱟᱨ ᱚᱠᱟ ᱚᱠᱛᱚ ᱟᱢ ᱴᱷᱤᱠ ᱠᱮᱫᱟᱢ — ᱩᱠᱩ ᱛᱮ ᱪᱮᱫᱟᱜ ᱵᱟᱝ ᱵᱚᱫᱚᱞᱚᱜᱼᱟ᱾';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'ᱠᱷᱩᱞᱟᱹ';
 
   @override
-  String get lockScreenTitle => 'Locked';
+  String get lockScreenTitle => 'ᱞᱚᱠ ᱠᱟᱱᱟ';
 
   @override
-  String get enterPinToContinue => 'Enter your PIN to continue';
+  String get enterPinToContinue => 'ᱡᱟᱨᱤ ᱞᱟᱹᱜᱤᱫ ᱟᱢ ᱨᱮᱭᱟᱜ ᱯᱤᱱ ᱚᱞ ᱢᱮ';
 
   @override
-  String get pinLabel => 'PIN';
+  String get pinLabel => 'ᱯᱤᱱ';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'ᱯᱤᱱ ᱛᱚᱭᱚᱨ ᱢᱮ';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => 'ᱱᱤᱛᱚᱜ ᱨᱮᱭᱟᱜ ᱯᱤᱱ';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => 'ᱱᱟᱶᱟ ᱯᱤᱱ';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'ᱯᱤᱱ ᱪᱮᱛᱟᱱ ᱢᱮ';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => 'ᱱᱟᱶᱟ ᱯᱤᱱ ᱪᱮᱛᱟᱱ ᱢᱮ';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱛᱚᱭᱚᱨ ᱢᱮ';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => 'ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱞᱮᱫ ᱢᱮ';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'ᱠᱨᱮᱰᱤᱴ ᱠᱟᱨᱰ ᱥᱮᱞᱮᱫ ᱢᱮ';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => 'ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'ᱠᱟᱨᱰ ᱧᱩᱛᱩᱢ';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => 'ᱵᱮᱸᱠ ᱠᱷᱚᱱ ᱵᱷᱚᱨᱚᱭᱮᱱᱟ';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'ᱠᱟᱨᱰ ᱠᱷᱚᱱ ᱵᱷᱚᱨᱚᱭᱮᱱᱟ';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱨᱚᱠᱷᱭᱟ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾ ᱡᱟᱦᱟᱸ ᱟᱢ ᱩᱫᱩᱜᱼᱟᱢ ᱚᱱᱟ ᱡᱟᱦᱟᱸ ᱦᱚᱸ ᱵᱟᱭ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱᱚᱜᱼᱟ᱾';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱚᱲᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱵᱚᱫᱚᱞ ᱟᱢᱟ ᱥᱮ?';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'ᱱᱚᱶᱟ ᱮᱯ ᱨᱮ ᱱᱤᱛᱚᱜ ᱢᱮᱱᱟᱜ ᱡᱚᱛᱚ ᱫᱚ ᱵᱮᱠᱟᱯ ᱛᱮ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱩᱜᱼᱟ᱾ ᱛᱟᱭᱚᱢ ᱛᱮ ᱮᱯ ᱵᱚᱸᱫᱚᱭ ᱠᱟᱛᱮ ᱫᱚᱦᱲᱟ ᱠᱷᱩᱞᱟᱹ ᱢᱮ᱾';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => 'ᱯᱟᱦᱤᱞᱮ ᱢᱤᱫ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'ᱵᱮᱠᱟᱯ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱦᱩᱭ ᱮᱱᱟ';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'ᱟᱢ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱫᱚ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱦᱩᱭ ᱮᱱᱟ᱾ ᱡᱟᱨᱤ ᱞᱟᱹᱜᱤᱫ ᱮᱯ ᱵᱚᱸᱫᱚᱭ ᱠᱟᱛᱮ ᱫᱚᱦᱲᱟ ᱠᱷᱩᱞᱟᱹ ᱢᱮ᱾';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'ᱱᱚᱶᱟ ᱚᱞ ᱴᱷᱤᱠ ᱢᱮ';
 
   @override
   String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+      'ᱯᱩᱨᱟᱹᱱ ᱞᱟᱭᱤᱱ ᱫᱚ ᱡᱮᱞᱠᱟ ᱛᱟᱦᱮᱸᱱ ᱠᱟᱱᱟ ᱚᱱᱟ ᱞᱮᱠᱷᱟ ᱛᱟᱦᱮᱸᱱᱟ᱾ ᱪᱮᱛᱟᱱ ᱠᱟᱛᱮ ᱢᱤᱫ ᱩᱞᱴᱟ ᱞᱟᱭᱤᱱ ᱟᱨ ᱴᱷᱤᱠ ᱞᱟᱭᱤᱱ ᱥᱮᱞᱮᱫ ᱦᱩᱭᱩᱜᱼᱟ᱾';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => 'ᱥᱴᱮᱴᱢᱮᱸᱴ ᱟᱢᱯᱚᱴ';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'OFX ᱟᱢᱯᱚᱴ';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'OFX / QFX ᱯᱷᱟᱭᱞ ᱟᱢᱯᱚᱴ';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'CSV ᱯᱷᱟᱭᱞ ᱟᱢᱯᱚᱴ';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement =>
+      'ᱟᱢ ᱛᱟᱭᱚᱢ ᱪᱮᱫ ᱞᱮᱠᱟᱱ ᱥᱴᱮᱴᱢᱮᱸᱴ ᱯᱷᱟᱭᱞ ᱢᱮᱱᱟᱜᱼᱟ?';
 
   @override
   String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+      'ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱱᱟ ᱚᱱᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱟᱢᱯᱚᱴ';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => 'ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱯᱽᱨᱚᱯᱷᱟᱭᱤᱞ ᱵᱮᱵᱷᱟᱨ ᱢᱮ';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile =>
+      'ᱱᱚᱶᱟ ᱢᱮᱯᱤᱝ ᱫᱚ ᱯᱽᱨᱚᱯᱷᱟᱭᱤᱞ ᱞᱮᱠᱷᱟ ᱥᱟᱺᱪᱟᱣ ᱢᱮ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'ᱯᱽᱨᱚᱯᱷᱟᱭᱤᱞ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'ᱯᱽᱨᱚᱯᱷᱟᱭᱤᱞ ᱢᱮᱴᱟᱣ ᱟᱢᱟ ᱥᱮ?';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'ᱯᱷᱟᱭᱞ ᱨᱮ ᱦᱮᱰᱚᱨ ᱞᱟᱭᱤᱱ ᱢᱮᱱᱟᱜᱼᱟ';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => 'ᱫᱤᱱ ᱠᱚᱞᱚᱢ';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => 'ᱫᱤᱱ ᱨᱚᱠᱚᱢ (ᱡᱮᱞᱠᱟ dd/MM/yyyy)';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => 'ᱮᱞ ᱠᱚᱞᱚᱢ';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => 'ᱮᱞ ᱨᱮᱭᱟᱜ ᱨᱤᱛᱤ';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => 'ᱥᱟᱭᱤᱱ ᱠᱤ ᱮᱞ ᱠᱚᱞᱚᱢ';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => 'ᱟᱭᱢᱟ ᱰᱮᱵᱤᱴ / ᱠᱨᱮᱰᱤᱴ ᱠᱚᱞᱚᱢ';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => 'ᱰᱮᱵᱤᱴ ᱠᱚᱞᱚᱢ';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => 'ᱠᱨᱮᱰᱤᱴ ᱠᱚᱞᱚᱢ';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => 'ᱰᱮᱥᱤᱢᱚᱞ ᱪᱤᱱᱦᱟ (. ᱥᱮ ,)';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => 'ᱵᱮᱣᱟᱹᱨ ᱠᱚᱞᱚᱢ';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => 'ᱨᱮᱯᱷᱨᱮᱸᱥ ᱟᱭᱰᱤ ᱠᱚᱞᱚᱢ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'ᱥᱠᱤᱯ ᱠᱟᱱ ᱞᱟᱭᱤᱱ';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return '$count ᱠᱟᱹᱢᱤ ᱯᱟᱨᱥ ᱦᱩᱭᱮᱱᱟ';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return '$count ᱥᱠᱤᱯ ᱥᱮ ᱵᱟᱰ';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return '$posted ᱚᱞ ᱦᱩᱭ ᱮᱱᱟ, $failed ᱵᱟᱭ ᱴᱷᱤᱠ';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'ᱡᱚᱛᱚ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱹᱛ';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'ᱱᱤᱭᱚᱢ ᱞᱮᱠᱷᱟ ᱥᱟᱺᱪᱟᱣ ᱟᱢᱟ ᱥᱮ?';
 
   @override
   String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+      'ᱛᱟᱭᱚᱢ ᱛᱮ ᱚᱠᱟ ᱟᱢᱯᱚᱴ ᱨᱮ ᱱᱚᱶᱟ ᱠᱤᱚᱭᱟᱰ ᱢᱮᱱᱟᱜᱼᱟ ᱚᱱᱟ ᱨᱮ ᱱᱚᱶᱟ ᱡᱟᱹᱛ ᱵᱮᱵᱷᱟᱨᱚᱜᱼᱟ᱾';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'ᱠᱤᱚᱭᱟᱰ';
 
   @override
   String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+      'ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱱᱤᱭᱚᱢ ᱵᱟᱭᱟ᱾ ᱱᱤᱭᱚᱢ ᱥᱟᱺᱪᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱫᱚᱞ ᱞᱟᱭᱤᱱ ᱨᱮ ᱡᱟᱹᱛ ᱮᱢ ᱢᱮ᱾';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'ᱱᱤᱭᱚᱢ ᱢᱮᱴᱟᱣ ᱟᱢᱟ ᱥᱮ?';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'ᱱᱤᱭᱚᱢ ᱮᱰᱤᱴ ᱢᱮ';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count ᱞᱟᱭᱤᱱ';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return '$extensions ᱥᱴᱮᱴᱢᱮᱸᱴ ᱯᱷᱟᱭᱞ ᱟᱢᱯᱚᱴ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱪᱷᱟᱣ ᱢᱮ';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => 'ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => 'ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱥᱮᱞᱮᱫ ᱢᱮ';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => 'ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ ᱢᱮ';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => 'ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱢᱮᱴᱟᱣ ᱟᱢᱟ ᱥᱮ?';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => 'ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱛᱟᱠᱟ ᱢᱚᱱᱚᱵ ᱵᱟᱭᱟ';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => 'ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => 'ᱱᱤᱛᱚᱜ ᱛᱟᱠᱟᱢ ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ ᱵᱟᱭᱟ';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => 'ᱫᱚᱦᱲᱟ-ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ ᱢᱮᱴᱟᱣ ᱟᱢᱟ ᱥᱮ?';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => 'ᱪᱟᱸᱫᱚ ᱨᱮᱭᱟᱜ ᱫᱤᱱ (1-31)';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote =>
+      'ᱚᱠᱟ ᱪᱟᱸᱫᱚ ᱨᱮ ᱚᱠᱚᱭ ᱫᱤᱱ ᱢᱮᱱᱟᱜᱼᱟ, ᱚᱱᱟ ᱨᱮᱭᱟᱜ ᱢᱩᱪᱟᱹᱫ ᱫᱤᱱ ᱵᱮᱵᱷᱟᱨᱚᱜᱼᱟ᱾';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return 'ᱪᱟᱸᱫᱚ ᱨᱮᱭᱟᱜ ᱫᱤᱱ $day - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => 'ᱧᱩᱛᱩᱢ';
 
   @override
-  String get none => 'None';
+  String get none => 'ᱛᱟᱦᱮᱸᱸ ᱵᱟᱝ';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'ᱢᱩᱫᱨᱟ';
 
   @override
   String get errorGeneric => 'ᱪᱮᱫᱟᱜ ᱵᱟᱝ ᱴᱷᱤᱠ᱾ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'ᱱᱚᱶᱟ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱫᱚ ᱱᱚᱶᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱨᱮ ᱚᱠᱟ ᱦᱚᱸ ᱥᱟᱭᱤᱱ ᱠᱤ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡ ᱠᱟᱱᱟ᱾';
 
   @override
-  String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+  String get errorInvalidLedgerBackup => 'ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ ᱴᱷᱤᱠ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱵᱟᱝᱟ᱾';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱨᱮ ᱥᱟᱭᱤᱱ ᱠᱤ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱵᱟᱭᱟ - ᱱᱚᱶᱟ ᱴᱷᱤᱠ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱵᱟᱝᱟ᱾';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱫᱚ ᱴᱷᱤᱠ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱨᱩᱡᱩ ᱠᱮᱱᱟ, ᱚᱱᱟᱛᱮ ᱵᱟᱭ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱦᱩᱭᱮᱱᱟ᱾';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱞᱮᱠᱷᱟ ᱠᱷᱩᱞᱟᱹ ᱵᱟᱭ ᱦᱩᱭᱮᱱᱟ: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱫᱚ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮᱭᱟᱜ ᱥᱟᱭᱤᱱ ᱠᱤ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱠᱷᱚᱱ ᱮᱴᱟᱜ ᱠᱟᱱ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱨᱮᱭᱟᱜ ᱠᱟᱱᱟ᱾';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'ᱚᱱᱟ ᱫᱚ ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱝᱟ᱾';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱫᱚ ᱩᱠᱩ ᱠᱟᱱᱟ᱾';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱫᱚ ᱩᱠᱩ ᱵᱟᱝᱟ᱾';
 
   @override
   String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+      'ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱛᱮᱦᱮᱸᱱ ᱵᱮᱞᱮᱸᱥ ᱵᱟᱝᱟ᱾';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup => 'ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱹᱜᱤᱫ ᱫᱚᱞ ᱵᱟᱭ ᱛᱚᱭᱚᱨ᱾';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency => 'ᱚᱱᱟ ᱫᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱫᱨᱟ ᱵᱟᱭ ᱛᱚᱭᱚᱨ ᱟᱠᱟᱱᱟ᱾';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱫᱚᱞ ᱵᱟᱭ ᱧᱟᱢᱮᱱᱟ᱾';
 
   @override
   String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+      'ᱟᱥᱮᱴ ᱦᱤᱥᱟᱹᱵ ᱠᱷᱟᱱ ᱮᱢ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱞᱮᱠᱷᱟ ᱪᱤᱱᱦᱟ ᱠᱟᱛᱮ ᱦᱩᱭᱟ᱾';
 
   @override
   String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+      'ᱫᱮᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱷᱟᱱ ᱮᱢ ᱠᱨᱮᱰᱤᱴ ᱠᱟᱨᱰ ᱞᱮᱠᱷᱟ ᱪᱤᱱᱦᱟ ᱠᱟᱛᱮ ᱦᱩᱭᱟ᱾';
 
   @override
   String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+      'ᱮᱦᱚᱵ ᱵᱮᱞᱮᱸᱥ, ᱡᱩᱫᱤ ᱮᱢᱟ ᱠᱟᱱᱟ, ᱚᱱᱟ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟ᱾';
 
   @override
   String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+      'ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱞᱮᱠᱟᱱ ᱫᱚ ᱫᱚᱞ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡᱟ᱾';
 
   @override
   String get errorLastActiveAccount =>
-      'Cannot hide the last active financial account.';
+      'ᱢᱩᱪᱟᱹᱫ ᱥᱚᱱᱚᱛ ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱩᱠᱩ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+      'ᱫᱚᱞ ᱵᱮᱱᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱫᱨᱟ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+      'ᱵᱤᱞᱴ-ᱤᱱ ᱫᱚᱞ ᱠᱚ ᱩᱠᱩ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'ᱚᱱᱟ ᱫᱚᱞ ᱫᱚ ᱛᱟᱭᱚᱢ ᱛᱮ ᱩᱠᱩ ᱠᱟᱱᱟ᱾';
 
   @override
   String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+      'ᱚᱠᱟ ᱫᱚᱞ ᱨᱮ ᱟᱡᱚᱠ ᱦᱚᱸ ᱥᱚᱱᱚᱛ ᱦᱤᱥᱟᱹᱵ ᱢᱮᱱᱟᱜᱼᱟ ᱚᱱᱟ ᱩᱠᱩ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+      'ᱵᱤᱞᱴ-ᱤᱱ ᱫᱚᱞ ᱠᱚ ᱡᱟᱦᱟᱸ ᱦᱚᱸ ᱵᱟᱭ ᱩᱠᱩᱚᱜᱼᱟ᱾';
 
   @override
   String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+      'ᱦᱤᱥᱟᱹᱵ ᱫᱚᱞ ᱢᱮᱴᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'ᱮᱴᱟᱜ ᱢᱩᱫᱨᱟ ᱨᱮᱭᱟᱜ ᱫᱚᱞ ᱨᱮ ᱱᱚᱶᱟ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱰᱟᱭ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'ᱡᱟᱦᱟᱸ ᱛᱟᱠᱮᱫ ᱫᱚᱞ ᱨᱮ ᱥᱚᱱᱚᱛ ᱦᱤᱥᱟᱹᱵ ᱢᱮᱱᱟᱜᱼᱟ, ᱢᱩᱫᱨᱟ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorAmountMustBePositive => 'ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+      'ᱦᱤᱥᱟᱹᱵ ᱢᱩᱫᱨᱟ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      'ᱦᱤᱥᱟᱹᱵ ᱢᱩᱫᱨᱟ ᱮᱞ ᱫᱚ ᱮᱴᱟᱜ ᱢᱩᱫᱨᱟ ᱚᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱟᱱ ᱮᱢ ᱦᱩᱭᱟ᱾';
 
   @override
-  String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+  String get errorSplitNeedsTwoLines => 'ᱴᱷᱚᱠᱟ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱨ ᱡᱟᱹᱛ ᱞᱟᱭᱤᱱ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+      'ᱛᱷᱚᱠᱟ ᱞᱟᱭᱤᱱ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱮᱞ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+      'ᱛᱷᱚᱠᱟ ᱞᱟᱭᱤᱱ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚᱠᱚᱭ ᱫᱚ ᱠᱟᱹᱢᱤ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚ ᱮᱞ ᱥᱟᱶᱛᱮ ᱦᱮᱡ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+      'ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+      'ᱮᱦᱚᱵ ᱟᱨ ᱛᱟᱸᱦᱮᱸ ᱦᱤᱥᱟᱹᱵ ᱫᱚ ᱚᱠᱟᱛᱚ ᱚᱠᱟ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      'ᱢᱩᱫᱨᱟ-ᱵᱚᱫᱚᱞ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱰᱟᱭ ᱛᱟᱸᱦᱮᱸ ᱮᱞ ᱧᱟᱢ ᱟᱠᱟᱱᱟ ᱚᱱᱟ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      'ᱛᱟᱸᱦᱮᱸ ᱮᱞ ᱫᱚ ᱢᱩᱫᱨᱟ-ᱵᱚᱫᱚᱞ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱠᱷᱟᱱ ᱮᱢ ᱦᱩᱭᱟ᱾';
 
   @override
   String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+      'ᱛᱟᱸᱦᱮᱸ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+      'ᱱᱚᱶᱟ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱴᱚᱠᱟ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      'ᱩᱞᱴᱟ ᱵᱟᱫᱮ ᱱᱚᱶᱟ ᱛᱮᱦᱮᱸᱱ ᱟᱠᱟᱱ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱴᱷᱤᱠ ᱢᱮ᱾';
 
   @override
   String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+      'ᱱᱚᱶᱟ ᱚᱞ ᱫᱚ ᱛᱟᱭᱚᱢ ᱛᱮ ᱴᱷᱤᱠ ᱦᱩᱭ ᱮᱱᱟ᱾ ᱢᱩᱞ ᱞᱟᱭᱤᱱ ᱫᱚ ᱡᱮᱞᱠᱟ ᱛᱟᱦᱮᱸᱱ ᱠᱟᱱᱟ ᱚᱱᱟ ᱞᱮᱠᱷᱟ ᱛᱟᱦᱮᱸᱱᱟ᱾';
 
   @override
   String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+      'ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
 
   @override
-  String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+  String get errorNotActiveIncomeCategory => 'ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱢᱤᱞᱟ ᱡᱟᱹᱛ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
 
   @override
   String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+      'ᱥᱮᱴᱮᱨ ᱮᱞ ᱫᱚ ᱱᱮᱜᱮᱴᱤᱵᱽ ᱵᱟᱭ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
-  String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+  String get errorPendingTransferNotFound => 'ᱚᱱᱟ ᱛᱮᱦᱮᱸᱱ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱵᱟᱭ ᱧᱟᱢᱮᱱᱟ᱾';
 
   @override
   String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+      'ᱚᱱᱟ ᱛᱮᱦᱮᱸᱱ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱫᱚ ᱛᱟᱭᱚᱢ ᱛᱮ ᱴᱷᱤᱠ ᱦᱩᱭ ᱮᱱᱟ᱾';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      'ᱮᱦᱚᱵ ᱥᱮ ᱛᱟᱸᱦᱮᱸ ᱢᱩᱞ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      'ᱯᱷᱤᱥ ᱡᱟᱹᱛ ᱫᱚ ᱚᱠᱛᱚ ᱴᱚᱠᱟ ᱮᱦᱚᱵ ᱦᱤᱥᱟᱹᱵ ᱛᱮ ᱨᱩᱣᱟᱲ ᱦᱩᱭ ᱟᱛᱟᱭ ᱚᱱᱟ ᱠᱷᱟᱱ ᱮᱢ ᱦᱩᱭᱟ᱾';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      'ᱥᱮᱴᱮᱨ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱮᱞ ᱚᱞ ᱢᱮ᱾';
 
   @override
   String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+      'ᱚᱱᱟ ᱮᱞ ᱫᱚ ᱠᱩᱞ ᱟᱠᱟᱱ ᱠᱷᱚᱱ ᱰᱷᱮᱨᱟᱜᱼᱟ᱾';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'ᱚᱱᱟ ᱥᱟᱫᱷᱚᱱ ᱵᱟᱭ ᱧᱟᱢᱮᱱᱟ᱾';
 
   @override
   String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+      'ᱴᱚᱠᱟ ᱵᱟᱝ ᱠᱟᱹᱢᱤ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱢᱤᱞᱟ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+      'ᱱᱚᱶᱟ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱚᱱᱟ ᱠᱤᱨᱤᱸ ᱞᱟᱹᱜᱤᱫ ᱴᱚᱠᱟ ᱠᱚᱢ ᱠᱟᱱᱟ᱾';
 
   @override
   String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+      'ᱟᱠᱤᱨᱤᱸ ᱦᱤᱥᱟᱹᱵ ᱞᱮᱠᱷᱟ ᱟᱨ ᱢᱤᱫ ᱨᱮᱭᱟᱜ ᱫᱟᱢ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return 'ᱟᱠᱤᱨᱤᱸ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ: ᱡᱟᱹᱭᱫᱟ ᱭᱩᱱᱤᱴ ᱫᱚ $date ᱛᱟᱦᱮᱸᱸ ᱞᱚᱠ ᱠᱟᱱᱟ᱾';
   }
 
   @override
   String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+      'ᱟᱢ ᱛᱟᱭᱚᱢ ᱛᱮ ᱞᱚᱠ ᱵᱟᱭ ᱠᱟᱱ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱟᱠᱤᱨᱤᱸ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+      'ᱞᱟᱵᱷ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱢᱤᱞᱟ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+      'ᱞᱚᱠᱥᱟᱱ ᱞᱟᱹᱜᱤᱫ ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return 'ᱠᱤᱨᱤᱸ ᱚᱞ ᱦᱩᱭ ᱮᱱᱟ, ᱢᱮᱱᱠᱷᱟᱱ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱯᱷᱤᱥ ᱵᱟᱭ ᱴᱷᱤᱠ: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return 'ᱟᱠᱤᱨᱤᱸ ᱚᱞ ᱦᱩᱭ ᱮᱱᱟ, ᱢᱮᱱᱠᱷᱟᱱ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱯᱷᱤᱥ ᱵᱟᱭ ᱴᱷᱤᱠ: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive => 'ᱞᱟᱵᱷᱟᱸᱥ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'ᱚᱱᱟ ᱫᱚ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱝᱟ᱾';
 
   @override
   String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+      'ᱱᱚᱶᱟ ᱤᱱᱵᱷᱮᱥᱴᱢᱮᱸᱴ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱡᱤᱱᱤᱥ ᱠᱳᱴᱟ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱭᱟ᱾';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'ᱱᱚᱶᱟ ᱠᱤᱨᱤᱸ ᱩᱞᱴᱟ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ: ᱛᱟᱭᱚᱢ ᱦᱤᱥᱟᱹᱵ ᱠᱚ ᱚᱱᱟ ᱭᱩᱱᱤᱴ ᱨᱮ ᱠᱷᱟᱴᱟᱹᱭ᱾ ᱯᱟᱦᱤᱞᱮ ᱚᱱᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱚ ᱩᱞᱴᱟ ᱢᱮ: $sells᱾';
   }
 
   @override
   String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+      'ᱪᱟᱸᱫᱚ ᱥᱤᱢᱟ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+      'ᱴᱮᱢᱯᱞᱮᱴ ᱮᱞ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized => 'ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ OFX ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱪᱤᱱᱦᱟᱹᱭᱮᱱᱟ᱾';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => 'ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱷᱟᱭᱞ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱠᱟᱱᱟ᱾';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => 'ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ CSV ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱯᱟᱲᱦᱟᱣ ᱮᱱᱟ᱾';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => 'ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱷᱟᱭᱞ ᱨᱮ ᱞᱟᱭᱤᱱ ᱵᱟᱭᱟ᱾';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'ᱵᱮᱠᱟᱯ ᱵᱮᱱᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ - ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱭ ᱴᱷᱤᱠ, ᱥᱮ ᱴᱷᱤᱠ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱵᱟᱝᱟ᱾';
 
   @override
   String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+      'ᱮᱞ, ᱦᱤᱥᱟᱹᱵ, ᱟᱨ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
-  String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+  String get validationAmountAccountRequired => 'ᱮᱞ ᱟᱨ ᱦᱤᱥᱟᱹᱵ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+      'ᱡᱚᱛᱚ ᱛᱷᱚᱠᱟ ᱞᱟᱭᱤᱱ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱹᱛ ᱟᱨ ᱮᱞ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+      'ᱛᱷᱚᱠᱟ ᱞᱟᱭᱤᱱ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚᱠᱚᱭ ᱫᱚ ᱠᱟᱹᱢᱤ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚ ᱮᱞ ᱥᱟᱶᱛᱮ ᱦᱮᱡ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+      'ᱮᱦᱚᱵ ᱦᱤᱥᱟᱹᱵ, ᱛᱟᱸᱦᱮᱸ ᱦᱤᱥᱟᱹᱵ, ᱟᱨ ᱮᱞ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
-  String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+  String get validationAmountArrivedRequired => 'ᱥᱮᱴᱮᱨ ᱮᱞ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+      'ᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱮᱞ ᱢᱤᱞᱟ ᱠᱮᱫᱟ ᱚᱱᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
 
   @override
-  String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+  String get validationAccountCategoryRequired => 'ᱦᱤᱥᱟᱹᱵ ᱟᱨ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => 'ᱱᱚᱶᱟ ᱴᱷᱤᱠ ᱥᱟᱺᱪᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ᱾';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱩᱬᱩᱛ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱮᱢ ᱢᱮ᱾';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading =>
+      'ᱱᱤᱛᱚᱜ ᱦᱚᱸ ᱞᱚᱰᱤᱝ ᱦᱩᱭᱩᱜᱼᱟ - ᱴᱷᱚᱲᱟ ᱚᱠᱛᱚ ᱛᱟᱭᱚᱢ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾';
 
   @override
   String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+      'ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱥᱟᱺᱪᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ᱾';
 
   @override
-  String get validationWrongPin => 'Wrong PIN. Try again.';
+  String get validationWrongPin => 'ᱯᱤᱱ ᱵᱟᱭ ᱴᱷᱤᱠ᱾ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'ᱡᱟᱹᱛ ᱫᱚ ᱢᱤᱞᱟ ᱥᱮ ᱠᱷᱚᱨᱚᱪ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+      'ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱠᱷᱟᱱ ᱮᱢ ᱪᱟᱸᱫᱚ ᱥᱤᱢᱟ ᱛᱟᱦᱮᱸᱱᱟ᱾';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => 'ᱴᱮᱢᱯᱞᱮᱴ ᱵᱟᱭ ᱴᱷᱤᱠ᱾';
 
   @override
   String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+      'ᱱᱚᱶᱟ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱭ ᱴᱷᱤᱠ᱾';
 
   @override
   String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+      'ᱱᱚᱶᱟ ᱫᱚ ᱴᱷᱤᱠ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱧᱮᱞᱚᱜᱼᱟ᱾';
 
   @override
   String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+      'ᱚᱱᱟ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱠᱷᱚᱱ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ᱾';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮ ᱥᱟᱭᱤᱱ ᱠᱤ ᱵᱮᱱᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'ᱱᱚᱶᱟ ᱢᱩᱫᱨᱟ ᱥᱟᱺᱪᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed =>
+      'ᱢᱟᱭᱭᱚᱨᱮᱥᱚᱱ ᱵᱟᱭ ᱴᱷᱤᱠ ᱦᱩᱭᱮᱱᱟ᱾ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile => 'ᱯᱟᱦᱤᱞᱮ ᱢᱤᱫ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'ᱯᱟᱥᱣᱟᱨᱰ ᱚᱞ ᱢᱮ᱾';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => 'ᱵᱟᱨ ᱯᱤᱱ ᱫᱚ ᱵᱟᱭ ᱦᱮᱡᱟ᱾';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      'ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱯᱷᱤᱥ ᱫᱚ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱛᱮ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱮᱞ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      'ᱯᱷᱤᱥ ᱮᱴᱟᱜᱟᱣ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱤᱥ ᱫᱚ ᱮᱞ ᱠᱷᱚᱱ ᱦᱩᱰᱤᱧ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return 'ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱥᱟᱺᱪᱟᱣ ᱦᱩᱭ ᱮᱱᱟ, ᱢᱮᱱᱠᱷᱟᱱ ᱯᱷᱤᱥ ᱚᱞ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => 'ᱴᱷᱤᱠ ᱮᱞ ᱚᱞ ᱢᱮ᱾';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return 'ᱠᱟᱴᱷᱟ $n ᱫᱚ ᱟᱢ ᱨᱮᱭᱟᱜ ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱯᱷᱨᱮᱡ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡᱟ᱾ ᱧᱮᱞ ᱢᱮ ᱟᱨ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾';
   }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+      'ᱠᱤᱨᱤᱸ ᱦᱤᱥᱟᱹᱵ ᱞᱮᱠᱷᱟ ᱟᱨ ᱢᱤᱫ ᱨᱮᱭᱟᱜ ᱫᱟᱢ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived => 'ᱩᱠᱩ ᱠᱟᱱ ᱥᱟᱫᱷᱚᱱ ᱠᱤᱨᱤᱸ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      'ᱴᱚᱠᱟ ᱵᱟᱝ ᱠᱟᱹᱢᱤ ᱨᱮ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱵᱟᱭ ᱥᱟᱢᱟᱣ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      'ᱡᱟᱦᱟᱸ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱫᱚ ᱯᱚᱡᱤᱴᱤᱵᱽ ᱦᱩᱭ, ᱢᱤᱫ ᱥᱚᱱᱚᱛ ᱠᱷᱚᱨᱚᱪ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾';
 
   @override
   String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+      'ᱟᱠᱤᱨᱤᱸ ᱠᱷᱚᱱ ᱢᱤᱞᱟ ᱮᱞ ᱫᱚ ᱵᱨᱳᱠᱚᱨᱮᱡ ᱮᱞ ᱠᱷᱚᱱ ᱦᱩᱰᱤᱧ ᱵᱟᱭ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return '$limit ᱠᱷᱚᱱ $spent ᱱᱚᱣᱟ ᱪᱟᱸᱫᱚ ᱨᱮ';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'ᱥᱢᱟᱨᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱷᱩᱞᱟᱹ ᱢᱮ';
 
   @override
   String get searchLabel => 'ᱥᱮᱸᱫᱽᱨᱟ';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => 'ᱮᱦᱚᱵ ᱵᱮᱞᱮᱸᱥ';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return 'ᱴᱨᱟᱸᱥᱯᱷᱚᱨ: $name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => 'ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱤᱥ';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return '$name ᱛᱮ ᱴᱨᱟᱸᱥᱯᱷᱚᱨ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱤᱥ';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'ᱯᱷᱟᱭᱞ ᱯᱤᱠᱚᱨ ᱠᱷᱩᱞᱟᱹ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return '.$extensions ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => 'ᱢᱩᱫᱨᱟ ᱠᱳᱰ (ISO 4217, ᱡᱮᱞᱠᱟ USD)';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name +$count ᱮᱴᱟᱜ';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => 'ᱫᱤᱱ';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'ᱛᱟᱦᱮᱸᱸ ᱵᱟᱝ';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return 'ᱡᱟᱨᱤ ᱞᱟᱹᱜᱤᱫ ᱞᱟᱛᱟᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱚᱞ ᱠᱚ ($count ᱡᱚᱛᱚ) ᱧᱮᱞ ᱢᱮ᱾';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return 'ᱟᱢ $amount ᱢᱤᱞᱟ ᱠᱮᱫᱟᱢ';
   }
 
   @override
   String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+      'ᱡᱩᱫᱤ ᱮᱠᱥᱪᱮᱸᱡ ᱨᱮᱴ ᱵᱟᱭ ᱵᱟᱰᱟᱭᱟᱣ ᱠᱟᱱᱟ, ᱡᱟᱦᱟᱸ ᱠᱷᱟᱹᱞᱤ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ᱾';
 
   @override
   String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+      'ᱚᱠᱟ ᱦᱩᱭ ᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱚᱞ ᱢᱮ᱾ ᱱᱚᱶᱟ ᱮᱯ ᱳᱨᱰᱚᱨ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ᱾';
 
   @override
   String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+      'ᱪᱚᱴᱚ ᱨᱮ: ᱪᱮᱛᱟᱱ ᱮᱞ ᱫᱚ ᱱᱚᱶᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱷᱚᱱ ᱡᱚᱛᱚ ᱮᱴᱟᱜᱟᱣ ᱠᱟᱱ, ᱯᱷᱤᱥ ᱫᱚ ᱚᱱᱟ ᱠᱷᱚᱱ ᱮᱴᱟᱜᱚᱜᱼᱟ᱾';
 
   @override
   String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+      'ᱟᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱸᱠ ᱥᱮ ᱢᱚᱲᱦᱚᱛ ᱫᱟᱨᱟᱭ ᱛᱮ ᱢᱤᱫ ᱟᱹᱜᱩ ᱠᱚᱢᱤᱥᱚᱱ᱾';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength => 'ᱯᱤᱱ ᱫᱚ ᱡᱟᱦᱟᱸ ᱦᱚᱸ ᱚᱨᱮᱭ ᱛᱮ ᱔ ᱟᱸᱠ ᱦᱩᱭᱟᱢᱟ᱾';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'ᱱᱚᱶᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱮᱯ ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱚᱛᱚ ᱵᱮᱠᱟᱯ ᱛᱮ ᱵᱚᱫᱚᱞ ᱦᱩᱭᱩᱜᱼᱟ — ᱢᱮᱥᱚᱴ ᱵᱟᱭ ᱦᱩᱭᱩᱜᱼᱟ᱾ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ ᱟᱨ ᱚᱱᱟ ᱨᱚᱠᱷᱭᱟ ᱠᱟᱱ ᱯᱟᱥᱣᱟᱨᱰ ᱚᱞ ᱢᱮ᱾';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => 'ᱵᱚᱫᱚᱞ ᱢᱮ';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name ᱫᱚ ᱱᱟᱶᱟ ᱠᱟᱹᱢᱤ ᱞᱟᱹᱜᱤᱫ ᱵᱟᱭ ᱢᱮᱱᱟᱜᱼᱟ᱾';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return '$name ᱫᱚ ᱦᱤᱥᱟᱹᱵ ᱵᱮᱱᱟᱣ ᱥᱮ ᱵᱟᱰᱟᱭ ᱚᱠᱛᱚ ᱵᱟᱭ ᱮᱢᱚᱜᱼᱟ᱾';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return '$name ᱫᱚ ᱱᱟᱶᱟ ᱠᱟᱹᱢᱤ ᱚᱞ ᱚᱠᱛᱚ ᱵᱟᱭ ᱮᱢᱚᱜᱼᱟ᱾';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      'ᱩᱠᱩ ᱠᱟᱱ ᱥᱟᱫᱷᱚᱱ ᱫᱚ ᱯᱩᱨᱟᱹᱱ ᱠᱤᱨᱤᱸ ᱟᱨ ᱟᱠᱤᱨᱤᱸ ᱨᱮ ᱛᱟᱦᱮᱸᱱᱟ᱾ ᱟᱢ ᱚᱱᱟ ᱞᱟᱹᱜᱤᱫ ᱞᱟᱵᱷᱟᱸᱥ ᱦᱚᱸ ᱚᱞ ᱫᱟᱲᱮᱭᱟᱜᱢᱮᱭᱟ᱾';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name (ᱩᱠᱩ ᱠᱟᱱᱟ)';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => 'ᱢᱩᱫᱨᱟ ᱵᱟᱭ ᱛᱚᱭᱚᱨ';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$name ᱟᱨ ᱩᱱᱠᱩ ᱨᱮᱭᱟᱜ ᱢᱩᱞ ᱥᱟᱺᱪᱟᱣ ᱠᱚ ᱮᱴᱟᱜᱚᱜᱼᱟ᱾ ᱯᱩᱨᱟᱹᱱ ᱠᱟᱹᱢᱤ ᱠᱚ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱦᱩᱭᱟ᱾';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$name ᱫᱚ ᱛᱮᱦᱮᱸᱡ ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱮᱢᱚᱜᱼᱟ᱾ ᱛᱟᱦᱮᱸ ᱚᱞ ᱟᱠᱟᱱ ᱯᱩᱨᱟᱹᱱ ᱠᱟᱹᱢᱤ ᱠᱚ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱦᱩᱭᱟ᱾';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return 'ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱠᱚᱞᱚᱢ ᱢᱮᱯᱤᱝ \"$name\" ᱫᱚ ᱢᱮᱴᱟᱣ ᱦᱩᱭᱟ᱾ ᱛᱟᱦᱮᱸ ᱟᱢᱯᱚᱴ ᱟᱠᱟᱱ ᱥᱴᱮᱴᱢᱮᱸᱴ ᱠᱚ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱦᱩᱭᱟ᱾';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return 'ᱟᱢᱯᱚᱴ ᱠᱚ ᱫᱚ \"$keyword\" ᱛᱮ ᱟᱡ ᱡᱟᱹᱛ ᱵᱟᱭ ᱦᱩᱭᱚᱜᱼᱟ᱾ ᱱᱚᱶᱟ ᱱᱤᱭᱚᱢ ᱛᱮ ᱡᱟᱹᱛ ᱦᱩᱭ ᱟᱠᱟᱱ ᱠᱟᱹᱢᱤ ᱠᱚ ᱵᱚᱫᱚᱞ ᱵᱟᱭ ᱦᱩᱭᱟ᱾';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'ᱮᱴᱠᱮᱛᱮ ᱛᱮ ᱱᱤᱛᱚᱜ ᱠᱨᱮᱰᱤᱴ ᱠᱟᱨᱰ ᱥᱮ ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱞᱮᱫ ᱢᱮ - ᱟᱢ ᱛᱟᱭᱚᱢ ᱛᱮ ᱥᱮᱴᱤᱝ ᱠᱷᱚᱱ ᱟᱨᱦᱚᱸ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱞᱮᱫ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ᱾';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => 'ᱛᱟᱸᱦᱮᱸ ᱨᱮ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return '$name ᱛᱮ ᱥᱮᱴᱮᱨ ᱠᱟᱱᱟ';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return 'ᱟᱢ ᱟᱥᱟ ᱠᱷᱚᱱ $amount $currency ᱠᱚᱢ ᱢᱤᱞᱟ ᱠᱮᱫᱟᱢ - ᱟᱲᱟᱹᱜ ᱴᱷᱚᱠᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱹᱛ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => 'ᱫᱤᱱ ᱚᱠᱟ ᱠᱷᱚᱱ ᱚᱠᱟ';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'ᱴᱮᱢᱯᱞᱮᱴ ᱥᱮᱞᱮᱫ ᱢᱮ';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'ᱴᱮᱢᱯᱞᱮᱴ ᱮᱰᱤᱴ ᱢᱮ';
 
   @override
   String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+      'ᱡᱚᱛᱚ ᱠᱷᱚᱱ ᱫᱚ ᱴᱷᱤᱠ ᱮᱞ ᱟᱨ ᱫᱤᱱ ᱛᱮ ᱯᱮᱨᱮᱡ ᱢᱮ᱾';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'CSV ᱮᱠᱥᱯᱚᱴ ᱥᱟᱺᱪᱟᱣ ᱢᱮ';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => 'ᱨᱮᱚᱷᱨᱮᱸᱥ ᱨᱮᱴ';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱨᱮᱴ';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return 'ᱡᱩᱫᱤ ᱱᱚᱶᱟ ᱫᱚ $currency ᱨᱮ ᱛᱟᱦᱮᱸᱱ ᱠᱟᱱᱟ, ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱢᱩᱬᱩᱛ ᱢᱩᱫᱨᱟ, ᱚᱱᱟ ᱠᱷᱟᱹᱞᱤ ᱫᱟᱲᱮᱭᱟᱜᱢᱮ᱾';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'ᱛᱟᱦᱮᱸᱸ ᱞᱚᱠ (ᱮᱴᱠᱮᱛᱮ)';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return '$date ᱛᱟᱦᱮᱸᱸ ᱞᱚᱠ ᱠᱟᱱᱟ';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      'ᱚᱸᱥᱟᱨ ᱠᱟᱛᱷᱟ ᱠᱚᱯᱤ ᱦᱩᱭ ᱮᱱᱟ — ᱵᱽᱨᱟᱣᱡᱚᱨ URL ᱵᱟᱭᱟ, ᱥᱮ ᱟᱢ ᱳᱯᱷᱞᱟᱭᱤᱱ ᱢᱮᱱᱟᱜᱼᱟᱢ᱾';
 
   @override
   String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+      'ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱚᱱ ᱠᱟᱛᱷᱟ ᱚᱸᱥᱟᱨ ᱦᱟᱛᱤᱭᱟᱨ ᱠᱷᱩᱞᱟᱹ ᱦᱩᱭ ᱮᱱᱟ᱾';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'ᱱᱚᱶᱟ ᱫᱚ ᱞᱟᱵᱷ ᱞᱮᱠᱷᱟ ᱧᱮᱞᱚᱜᱼᱟ';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'ᱱᱚᱶᱟ ᱫᱚ ᱞᱚᱠᱥᱟᱱ ᱞᱮᱠᱷᱟ ᱧᱮᱞᱚᱜᱼᱟ';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'ᱱᱚᱶᱟ ᱫᱚ ᱥᱚᱢᱟᱱ ᱞᱮᱠᱷᱟ ᱧᱮᱞᱚᱜᱼᱟ';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name ($qty ᱟᱠᱤᱨᱤᱸ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ)';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return 'ᱠᱚᱞᱚᱢ $index';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'ᱟᱢᱯᱚᱴ ᱦᱩᱭᱩᱜᱼᱟ...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'ᱟᱢᱯᱚᱴ ᱪᱮᱛᱟᱱ ᱢᱮ';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => 'ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱡᱟᱹᱛ ᱱᱤᱭᱚᱢ ᱨᱮᱭᱟᱜ ᱵᱮᱵᱚᱥᱛᱷᱟ';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱨᱮᱭᱟᱜ ᱢᱩᱫᱨᱟ ($currency) ᱫᱚ ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱢᱩᱫᱨᱟ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡᱟ᱾';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'ᱡᱟᱹᱛ ᱱᱤᱭᱚᱢ';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => 'ᱫᱩᱠᱞᱤᱠᱮᱴ ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => 'ᱵᱟᱭ ᱵᱟᱰᱟᱭ ᱡᱟᱹᱛ';
 }

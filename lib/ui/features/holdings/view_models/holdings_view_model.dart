@@ -21,7 +21,7 @@ enum ResearchLaunchResult { opened, copied }
 
 /// Holdings screen for one investment account: cash, inventory, buy/sell/
 /// dividend, instrument housekeeping, and quote refresh while visible.
-class HoldingsViewModel extends ChangeNotifier {
+class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   HoldingsViewModel({
     required LedgerRepository ledgerRepository,
     required SettingsRepository settingsRepository,
@@ -49,14 +49,14 @@ class HoldingsViewModel extends ChangeNotifier {
           _account = accounts.where((a) => a.id == accountId).firstOrNull;
           notifyListeners();
         });
-    _holdingsSub = _ledgerRepository
-        .watchHoldingsForAccount(accountId)
-        .listen((holdings) async {
-          _holdings = holdings;
-          _cashMinor = await _ledgerRepository.displayBalanceMinor(accountId);
-          notifyListeners();
-          await _refreshQuotes();
-        });
+    _holdingsSub = _ledgerRepository.watchHoldingsForAccount(accountId).listen((
+      holdings,
+    ) async {
+      _holdings = holdings;
+      _cashMinor = await _ledgerRepository.displayBalanceMinor(accountId);
+      notifyListeners();
+      await _refreshQuotes();
+    });
     _instrumentsSub = _ledgerRepository.watchInstruments().listen((
       instruments,
     ) {
@@ -114,10 +114,12 @@ class HoldingsViewModel extends ChangeNotifier {
   List<Instrument> get heldInstruments => _heldInstruments;
 
   List<Account> _categories = const [];
-  List<Account> get incomeCategories =>
-      _categories.where((c) => c.type == AccountType.income && !c.archived).toList();
-  List<Account> get expenseCategories =>
-      _categories.where((c) => c.type == AccountType.expense && !c.archived).toList();
+  List<Account> get incomeCategories => _categories
+      .where((c) => c.type == AccountType.income && !c.archived)
+      .toList();
+  List<Account> get expenseCategories => _categories
+      .where((c) => c.type == AccountType.expense && !c.archived)
+      .toList();
 
   int _cashMinor = 0;
   int get cashMinor => _cashMinor;
@@ -145,13 +147,7 @@ class HoldingsViewModel extends ChangeNotifier {
     return 'USD';
   }
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-  void clearError() {
-    if (_errorMessage == null) return;
-    _errorMessage = null;
-    notifyListeners();
-  }
+  void clearError() => clearFailure();
 
   bool get isArchived => _account?.archived ?? false;
 
@@ -162,17 +158,20 @@ class HoldingsViewModel extends ChangeNotifier {
   Future<bool> _run(Future<void> Function() action) async {
     try {
       await action();
-      _errorMessage = null;
-      notifyListeners();
+      clearFailure();
       return true;
     } on InvestmentException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
     } on AccountGroupException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
+    } on PendingTransferException catch (e) {
+      // Buy/sell reuse `_requireActiveExpenseCategory` (brokerage fee,
+      // realized-loss category), which throws this type even though it's
+      // not a transfer - the shared validator's exception, not the caller's.
+      setFailure(e);
     }
-    notifyListeners();
     return false;
   }
 
@@ -189,13 +188,11 @@ class HoldingsViewModel extends ChangeNotifier {
         ticker: ticker,
         isin: isin,
       );
-      _errorMessage = null;
-      notifyListeners();
+      clearFailure();
       return created;
     } on InvestmentException catch (e) {
-      _errorMessage = localizeVmError(e);
+      setFailure(e);
     }
-    notifyListeners();
     return null;
   }
 

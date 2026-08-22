@@ -9,7 +9,8 @@ import '../../../../l10n/l10n.dart';
 
 /// deferred-onboarding-first-entry: name the seeded starter account
 /// before the guided first Spent/Received and before the recovery phrase.
-class FirstAccountNameViewModel extends ChangeNotifier {
+class FirstAccountNameViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   FirstAccountNameViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository {
     _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
@@ -39,29 +40,20 @@ class FirstAccountNameViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   Future<bool> submit() async {
     final account = _seededAccount;
     final trimmed = _name.trim();
     if (account == null) {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationStillLoading),
-      );
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationStillLoading));
       return false;
     }
     if (trimmed.isEmpty) {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationNameRequired),
-      );
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationNameRequired));
       return false;
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
     try {
@@ -71,7 +63,7 @@ class FirstAccountNameViewModel extends ChangeNotifier {
       );
       return true;
     } catch (e) {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationSaveAccountNameFailed),
       );
       return false;

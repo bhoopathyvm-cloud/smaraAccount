@@ -9,7 +9,7 @@ class AppLocalizationsKok extends AppLocalizations {
   AppLocalizationsKok([String locale = 'kok']) : super(locale);
 
   @override
-  String get appTitle => 'स्मारा खातें';
+  String get appTitle => 'स्मारा हिशोब';
 
   @override
   String get navHome => 'घर';
@@ -27,148 +27,145 @@ class AppLocalizationsKok extends AppLocalizations {
   String get navCategories => 'वर्ग';
 
   @override
-  String get actionCancel => 'रद्द';
+  String get actionCancel => 'रद्द करात';
 
   @override
   String get actionSave => 'जतन करात';
 
   @override
-  String get actionDelete => 'Delete';
+  String get actionDelete => 'काडून उडयात';
 
   @override
-  String get actionDone => 'Done';
+  String get actionDone => 'पूर्ण';
 
   @override
-  String get actionContinue => 'Continue';
+  String get actionContinue => 'मुखार वचात';
 
   @override
-  String get actionDismiss => 'Dismiss';
+  String get actionDismiss => 'बंद करात';
 
   @override
-  String get actionRetry => 'Retry';
+  String get actionRetry => 'परत यत्न करात';
 
   @override
-  String get actionSkip => 'Skip';
+  String get actionSkip => 'वगळात';
 
   @override
-  String get actionConfirm => 'Confirm';
+  String get actionConfirm => 'खात्री करात';
 
   @override
   String get actionAdd => 'जोडात';
 
   @override
-  String get actionEdit => 'Edit';
+  String get actionEdit => 'बदलात';
 
   @override
-  String get actionRename => 'Rename';
+  String get actionRename => 'नाव बदलात';
 
   @override
-  String get actionHide => 'Hide';
+  String get actionHide => 'लिपयात';
 
   @override
-  String get actionCreate => 'Create';
+  String get actionCreate => 'तयार करात';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'अॅप बंद करात';
 
   @override
-  String get actionUnlock => 'Unlock';
+  String get actionUnlock => 'उगडात';
 
   @override
-  String get actionSettle => 'Settle';
+  String get actionSettle => 'फारीक करात';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => 'पूर्ण करात';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'पूर्वावलोकन करात';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'आयात करात';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'CSV एक्सपोर्ट करात';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'फायल निवडात';
 
   @override
-  String get actionRestore => 'Restore';
+  String get actionRestore => 'पुनर्स्थापित करात';
 
   @override
-  String get actionArchive => 'Hide';
+  String get actionFix => 'सारकें करात';
 
   @override
-  String get actionFix => 'Fix';
+  String get actionBuy => 'खरेदी';
 
   @override
-  String get actionBuy => 'Buy';
+  String get actionSell => 'विक्री';
 
   @override
-  String get actionSell => 'Sell';
+  String get actionDividend => 'लाभांश';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionRecordBuy => 'खरेदी नोंद करात';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordSell => 'विक्री नोंद करात';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordDividend => 'लाभांश नोंद करात';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionPayCard => 'कार्ड फारीक करात';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionTransfer => 'वर्ग करात';
 
   @override
-  String get actionTransfer => 'Transfer';
+  String get actionRecordTransaction => 'व्यवहार नोंद करात';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionImportStatement => 'स्टेटमेंट आयात करात';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionClearDates => 'तारखो साफ करात';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearSearch => 'सोद आनी फिल्टर साफ करात';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionUseBiometrics => 'बायोमेट्रिक वापरात';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionSetPin => 'PIN सेट करात';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionChangePin => 'PIN बदलात';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionSaveBackup => 'बॅकअप जतन करात';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionRestoreBackup => 'बॅकअप पुनर्स्थापित करात';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionSaveRule => 'नेम जतन करात';
 
   @override
-  String get actionSaveRule => 'Save rule';
-
-  @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get actionConfirmFix => 'सारकेपणाची खात्री करात';
 
   @override
   String get captureSpent => 'खर्च';
 
   @override
-  String get captureReceived => 'Received';
+  String get captureReceived => 'जमा';
 
   @override
-  String get captureMovedMoney => 'Moved money';
+  String get captureMovedMoney => 'पैसे हलयले';
 
   @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => 'स्टेटमेंट आयात करात';
 
   @override
   String get settingsTitle => 'सेटिंग्ज';
@@ -177,115 +174,115 @@ class AppLocalizationsKok extends AppLocalizations {
   String get settingsLanguage => 'भास';
 
   @override
-  String get settingsLanguageSystem => 'Device language';
+  String get settingsLanguageSystem => 'साधनाची भास';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => 'संदर्भ विनिमय दर हाडात';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      'वेगळ्या चलनांतल्या वर्गावळींनी लक्ष्य रकमेशेजारी संदर्भासाठी बाजाराचो अंदाजीत दर दाखयता, फक्त तुळणेखातीर - रक्कम भरपाक कधींच वापरना.';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'दर पुरवणदार';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices => 'गुंतवणुकीखातीर बाजार मोल हाडात';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'टिकर वा ISIN आशिल्ल्या साधनांचे शेवटले मोल सोदून पोर्टफोलियोचें मोल अंदाजता. व्यवहार नोंद करपाक कधींच वापरना, आनी तुमच्याकडे कितलें आसा तें कधींच धाडना.';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => 'बाजार मोल पुरवणदार';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => 'आवडतें संशोधन साधन';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      'होल्डिंग्सांत साधनाचें नाव टॅप केल्यार हें साधन ब्राउझरांत संशोधन प्रॉम्प्टासयत उगडटा — हें इंटिग्रेशन न्हय, आनी सल्लो न्हय.';
 
   @override
-  String get settingsBackup => 'Backup';
+  String get settingsBackup => 'बॅकअप';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      'तुमच्या हिशोबाची एनक्रिप्टेड प्रत तुमी निवडिल्ल्या जाग्यार जतन करात, वा थंयसून पुनर्स्थापित करात. हें तुमच्या पुनर्प्राप्ती वाक्यां वा कीस्टोअर फायलीसावन वेगळें आसा, जी तुमची सही किल्ली बॅकअप करता, हिशोब न्हय.';
 
   @override
-  String get settingsLock => 'Lock';
+  String get settingsLock => 'लॉक';
 
   @override
   String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+      'अॅप उगडपाक PIN, वा शक्य आसल्यार बायोमेट्रिक, गरजेचें करता.';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock => 'अॅप उगडपाक अनलॉक गरजेचें करात';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'हाचे उपरांत लॉक करात';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'तत्काळ';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1 मिनीट';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5 मिनटां';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15 मिनटां';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => 'बायोमेट्रिकुय परवानगी दियात';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot => 'अॅप स्विचरांत शिल्लक लिपयात';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      'तुमी दुसऱ्या अॅपाक वचता तेन्ना हें स्क्रीन लिपयता, जेणेकरून अॅप स्विचरांत ती एका नदरेन दिसना.';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'ह्या प्लॅटफॉर्मार अॅप स्विचरांत शिल्लक लिपोवप शक्य ना.';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => 'प्राप्तकर्ते';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => 'प्राप्तकर्ते व्यवस्थापित करात';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      'याद दवरिल्ले प्राप्तकर्त्यांचीं नांवां आनी तांचो मूळ वर्ग आनी खातें, व्यवहार नोंद करतना ऑटोकम्प्लीटान सुचयतात.';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => 'नियमित टेम्प्लेट';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => 'नियमित टेम्प्लेट व्यवस्थापित करात';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      'भाडें वा पगारावरी दर म्हयन्याक परतपी बिल वा उत्पन्न. देणें आशिल्लें टेम्प्लेट घरा पानार दिसता, एका टॅपान नोंद करपाक - कधींच आपसूंक नोंद जायना.';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'विशीं';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter (ECB दर)';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq (दिसाळे भाव)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance (चार्ट API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -300,66 +297,66 @@ class AppLocalizationsKok extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => 'रोख आनी रोख-समान';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => 'पेन्शन आनी निवृत्ती';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => 'क्रेडिट आनी अल्पकालीन देणें';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'कर्ज आनी गिरवी';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => 'गुंतवणूक';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => 'रोख आनी बँक';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'पगार';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'हेर उत्पन्न';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'किराणा';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => 'भाडें/गिरवी';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => 'उपयोगिता';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => 'वाहतूक';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => 'बाहेर जेवण';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => 'फोन';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => 'भलायकी';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'हेर खर्च';
 
   @override
   String get homeThisMonth => 'ह्या म्हयन्यान';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => 'प्रवासांत आशिल्ले पैसे';
 
   @override
   String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+      'तुमच्याकडे आशिल्लें उणें तुमी देवचें';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return 'तुमच्याकडे आसा $amount $currency';
   }
 
   @override
@@ -369,1405 +366,1392 @@ class AppLocalizationsKok extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return 'तुमच्याकडे आसा $haveAmount $currency  •  तुमी देवचें $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return 'तुमी $name सावन $amount $currency धाडलें';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return 'तुमी $name कडे $amount $currency धाडलें';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => 'लिपयलां';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'सगळीं खातीं';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return '$path त जतन जालें';
   }
 
   @override
   String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+      'कीस्टोअर फायल एक्सपोर्ट करूंक जायना. तुमी हें पाऊल वगळपाक शकतात.';
 
   @override
-  String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+  String get enterPassphraseToProtect => 'फायल राखपाक पासफ्रेज दियात.';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => 'कितें पावलां तें कळ्ळ्यार टॅप करात';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return '$name कडे परतलें';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => 'आयज देणें';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · नोंद करपाक टॅप करात';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => 'मर्यादेवयर';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$limit पैकी $spent';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return 'उरिल्लें: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => 'खातीं ना';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'रोख खातें';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => 'बाजार अंदाज';
 
   @override
-  String get registerTitle => 'Register';
+  String get registerTitle => 'रजिस्टर';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => 'विवरण, वर्ग, वा रक्कम';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => 'अजून व्यवहार ना';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => 'अजून कोणतीच नोंद ना.';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => 'फक्त खर्च';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => 'फक्त जमा';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'सगळें';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified => 'पडताळणी ना - बेरजेंत सामील ना';
 
   @override
-  String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+  String get registerSuperseded => 'स्थलांतरान बदल्लां - बेरजेंत सामील ना';
 
   @override
-  String get summaryTitle => 'Summary';
+  String get summaryTitle => 'सारांश';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => 'एकूण उत्पन्न';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => 'एकूण खर्च';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start ते $end';
   }
 
   @override
-  String get accountsTitle => 'Accounts';
+  String get accountsTitle => 'खातीं';
 
   @override
-  String get categoriesTitle => 'Categories';
+  String get categoriesTitle => 'वर्ग';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => 'खात्याचें नाव';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => 'खातें तयार करात';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'गट तयार करात';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'गट बदलात';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => 'खात्याचें नाव बदलात';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'वर्गाचें नाव बदलात';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'वर्ग जोडात';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'गट';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => 'प्रकार';
 
   @override
-  String get asset => 'Asset';
+  String get asset => 'मालमत्ता';
 
   @override
-  String get liability => 'Liability';
+  String get liability => 'देणें';
 
   @override
-  String get income => 'Income';
+  String get income => 'उत्पन्न';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'खर्च';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments => 'हें खातें गुंतवणूक दवरता';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      'रोख आनी खरेदी, विक्री, लाभांशान तुमी नोंद करता ती वस्त सामग्री.';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'हें क्रेडिट कार्ड आसा';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => 'सुरवेची शिल्लक (वैकल्पिक)';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => 'चलन (ISO 4217)';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => 'चलन (ISO 4217, देखीक USD)';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'नव्या नोंदींतल्यान हें खातें लिपोवचें?';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'नव्या नोंदींतल्यान हो वर्ग लिपोवचो?';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'नव्या नोंदींतल्यान हो गट लिपोवचो?';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'गट परत नेमात';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => 'उरिल्ली शिल्लक वर्ग करात';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => 'म्हयन्याची मर्यादा';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => 'मर्यादा (साफ करपाक रिकामें दवरात)';
 
   @override
   String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+      'ह्या खर्च वर्गाखातीर एक वैकल्पिक म्हयन्यांतल्या खर्चाची मार्गदर्शक मर्यादा.';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'वर्ग नेम व्यवस्थापित करात';
 
   @override
-  String get amount => 'Amount';
+  String get amount => 'रक्कम';
 
   @override
-  String get category => 'Category';
+  String get category => 'वर्ग';
 
   @override
-  String get account => 'Account';
+  String get account => 'खातें';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => 'सावन खातें';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => 'कडेन खातें';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => 'विवरण (वैकल्पिक)';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => 'प्राप्तकर्ता म्हूण उय याद दवरात';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => 'फुडल्या वर्गांनी वाटात';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return 'वर्ग $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => 'लक्ष्य रक्कम';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => 'लक्ष्य रक्कम (वैकल्पिक)';
 
   @override
-  String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+  String get accountCurrencyAmountOptional => 'खात्या-चलन रक्कम (वैकल्पिक)';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => 'व्यवहार चलन (वैकल्पिक)';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => 'फी (वैकल्पिक)';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => 'फी रक्कम';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => 'फी वर्ग';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => 'फी विवरण (वैकल्पिक)';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => 'फी वयल्या रकमेंतल्यान वजा जाता';
 
   @override
   String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+      'वर्गावळ करपाक कमीत कमी दोन सक्रीय खातीं तयार करात.';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => 'कितें पावलां?';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => 'खरेंच कितें पावलां तें सांगात.';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => 'पावल्ली रक्कम';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => 'फी / लुकसाणीचो वर्ग';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'आधीच फारीक जालां.';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => 'होल्डिंग्स';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => 'रोख';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => 'साठो';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return 'बुक (रोख + मोल) $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return 'बाजार अंदाज $amount $currency';
   }
 
   @override
   String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+      'अजून होल्डिंग्स ना. साधन जोडपाक खरेदी नोंद करात.';
 
   @override
   String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+      'भाव अंदाज आसात, ब्रोकराचो भाव न्हय. हें अॅप ऑर्डर दिना.';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      'संशोधनाखातीर नावार टॅप करात. भाव अंदाज आसात, सल्लो न्हय.';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => 'साधन';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => 'नवें साधन';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => 'साधनाचें नाव बदलात';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => 'साधनाच्यो क्रिया';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return '$name लिपोवचें?';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'टिकर (वैकल्पिक)';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN (वैकल्पिक)';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'संख्या';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => 'एकक दर';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => 'ब्रोकरेज (वैकल्पिक)';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => 'ब्रोकरेज खर्च वर्ग';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => 'उत्पन्न वर्ग';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => 'फायद्याचो उत्पन्न वर्ग';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => 'लुकसाणीचो खर्च वर्ग';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => 'रोख न्हंय';
 
   @override
-  String get cash => 'Cash';
+  String get cash => 'रोख';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'लॉक जालां';
 
   @override
   String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+      'ब्रोकराचो नेम न्हय, तुमची स्वताची मर्यादेची नोंद.';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => 'शेअर';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => 'म्युच्युअल फंड';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => 'बॉण्ड';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'हेर';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'लाइव्ह भाव';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'कॅश्ड भाव';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => 'जुनो भाव';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => 'मोल वापरतात (भाव ना)';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled => 'भाव बंद — मोल/कॅश वापरतात';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch => 'मोल वापरतात (भावाचें चलन वेगळें)';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return 'अवास्तविक $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty एकक · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'तुमचें पुनर्प्राप्ती वाक्य';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'तुमचें वाक्य निश्चीत करात';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      'हीं 24 उतरां हो एकमात मार्ग आसा तुमचो व्यवहार इतिहास परत मेळोवपाचो, जर हें साधन हरवलें, रीसेट जालें, वा बदल्लें. स्मारा हिशोबाक सर्व्हर ना आनी तो तुमच्याखातीर हीं परत मेळोवंक शकना.\n\nजर तुमी हें साधन आनी हें वाक्य एकठांय हरयलें, जाल्यार तुमी नोंद केल्लो हरेक व्यवहार सदांकाळाखातीर पडताळपाक शकना जाता.';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'हीं उतरां क्रमान बरयात आनी हातूंत साधनासावन वेगळ्या सुरक्षीत जाग्यार दवरात.';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase => 'म्हजें पुनर्प्राप्ती वाक्य जतन केलां';
 
   @override
   String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+      'तुमी आतांच जतन केल्ल्या वाक्यांतलीं मागिल्लीं उतरां भरात.';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return 'उतर #$n';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'कीस्टोअर फायल एक्सपोर्ट करात';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'तुमच्या पुनर्प्राप्ती वाक्याभायर, तुमी एनक्रिप्टेड कीस्टोअर फायल जतन करूंक शकतात जी तुमी निवडिल्ल्या पासफ्रेजान राखल्या. हें वैकल्पिक आसा - एकटें पुनर्प्राप्ती वाक्य सदांच तुमची सही किल्ली परत हाडपाक पुरो.';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'पासफ्रेज';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'कीस्टोअर फायल एक्सपोर्ट करात';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => 'तुमचें चलन निवडात';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      'प्रत्येक खातें गट (रोख आनी रोख-समान, पेन्शन आनी निवृत्ती, वगैरे) सद्या हें एकच चलन वापरता. फुडें तुमी दुसऱ्या चलनांत खातीं जोडपाक शकतात नवो गट तयार करून.';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle => 'सद्याच्या गटांखातीर चलन निवडात';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'हें अॅप आतां फुडल्यो चलनां आदार करता. तुमचीं सद्याचीं खातीं आनी खातें गटांक चलन जाय - कारण तीं सगळीं हें वैशिष्ट्य येवचेआदीं तयार जाल्लीं, एकच निवड सगळ्यांक लागू जाता.';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => 'तुमच्या खात्याक नाव दियात';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'हें खातें तुमच्याखातीर आदींच तयार आसा - तुमच्या बँकावरी वळखपाजोगें नाव दियात. तुमी फुडें एक खर्च वा जमा नोंद करतले, उपरांत पुनर्प्राप्ती वाक्यान साधन राखतले.';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => 'तुमच्या मुखेल खात्याचें नाव कितें आसा?';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => 'सही किल्ली पुनर्स्थापित करात';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'ह्या साधनार सद्याचो हिशोब आसा, पूण जुळपी सही किल्ली ना. तुमच्या जतन केल्ल्या पुनर्प्राप्ती वाक्यासावन वा कीस्टोअर फायलीसावन ती पुनर्स्थापित करात - तुमचो डेटा सामान्यपणान पडताळ्ळो वता, आनी कांयच परत साइन वा बदल जावचें ना.';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'पुनर्प्राप्ती वाक्य (सगळीं 24 उतरां)';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'कीस्टोअर फायल';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'कीस्टोअर फायलीचो मजकूर';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => 'वैकल्पिक बॅकअप फायल';
 
   @override
   String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+      'म्हजेकडे पुनर्प्राप्ती वाक्य वा कीस्टोअर फायल ना';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => 'नव्या किल्लेक स्थलांतर करात';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'पुनर्प्राप्ती वाक्य वा कीस्टोअर फायलीभायर, ह्या साधनाची सही किल्ली परत मेळची ना. तुमी नवी किल्ली सुरू करूंक शकतात. जुन्यो नोंदी दिसतच रावतात पूण त्यो बदल्ल्यात अशें दाखयतात.';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid => 'म्हजी खात्री आसा की सद्याचो हिशोब वैध आसा';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => 'आमी जुन्यो नोंदी कित्याक बदलनात';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      'तुमी एक चूक सारकी करतना, आमी जुनी वळ तशीच दवरतात आनी तिच्या बगल्यान एक सुदारणा जोडटात, तुमी आदींच घातल्लें बदलपाच्या बदला. हातूंतल्यान तुमचो इतिहास सदांच खरेंच कितें घडलें आनी तुमी कदी सारकें केलें तें दाखयता — फाटल्यान कांयच सांतुरी बदलना.';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'अनलॉक करात';
 
   @override
-  String get lockScreenTitle => 'Locked';
+  String get lockScreenTitle => 'लॉक जालां';
 
   @override
-  String get enterPinToContinue => 'Enter your PIN to continue';
+  String get enterPinToContinue => 'मुखार वचपाक तुमचो PIN भरात';
 
   @override
   String get pinLabel => 'PIN';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'PIN सेट करात';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => 'सद्याचो PIN';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => 'नवो PIN';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'PIN निश्चीत करात';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => 'नवो PIN निश्चीत करात';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => 'तुमचीं खातीं सेट करात';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => 'रोख खातें जोडात';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'क्रेडिट कार्ड जोडात';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => 'रोख खात्याचें नाव';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'कार्डाचें नाव';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => 'बँकेसावन फारीक केलां';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'कार्डासावन फारीक केलां';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'हो बॅकअप राखपाक पासफ्रेज निवडात. तुमी विसल्यार परत मेळचें ना.';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'तुमचो थळावो हिशोब बदलचो?';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'हें अॅपांत सद्या आशिल्लें सगळें बॅकअपान बदलता. उपरांत अॅप बंद करून परत उगडात.';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => 'पयलीं बॅकअप फायल निवडात.';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'बॅकअप पुनर्स्थापित जालो';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'तुमचो हिशोब पुनर्स्थापित जालो. मुखार वचपाक अॅप बंद करून परत उगडात.';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'ही नोंद सारकी करात';
 
   @override
   String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+      'जुनी वळ जशीच्यातशी उरता. खात्री केल्यार एक उलटी वळ आनी सारकी केल्ली वळ जोडटा.';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => 'स्टेटमेंट आयात करात';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'OFX आयात करात';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'OFX / QFX फायल आयात करात';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'CSV फायल आयात करात';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement =>
+      'तुमच्याकडे कसल्या प्रकाराची स्टेटमेंट फायल आसा?';
 
   @override
-  String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+  String get chooseAccountForFile => 'ही फायल कोणत्या खात्याची तें निवडात.';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'ह्या खात्यांत आयात करात';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => 'जतन केल्लो प्रोफायल वापरात';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile =>
+      'हें मॅपिंग प्रोफायल म्हूण जतन करात (वैकल्पिक)';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'प्रोफायलाचें नाव बदलात';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'प्रोफायल काडून उडोवचो?';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'फायलींत हेडर वळ आसा';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => 'तारीख स्तंभ';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => 'तारीख स्वरूप (देखीक dd/MM/yyyy)';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => 'रक्कम स्तंभ';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => 'रक्कम पद्दत';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => 'चिन्हित रक्कम स्तंभ';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => 'वेगळे डेबिट / क्रेडिट स्तंभ';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => 'डेबिट स्तंभ';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => 'क्रेडिट स्तंभ';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => 'दशांश विभाजक (. वा ,)';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => 'विवरण स्तंभ';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => 'संदर्भ ID स्तंभ (वैकल्पिक)';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'वगळिल्ल्यो वळी';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return '$count व्यवहार विश्लेषीत';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return '$count वगळिल्ले वा भायर काडिल्ले';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return '$posted नोंद जाल्ले, $failed अपेशी';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'सगळ्यांखातीर वर्ग';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'नेम म्हूण जतन करचें?';
 
   @override
   String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+      'फुडलें आयात ज्यांच्या विवरणांत हो कीवर्ड आसतलो तांकां हो वर्ग लागू जातलो.';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'कीवर्ड';
 
   @override
   String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+      'अजून जतन केल्ले नेम ना. वळींच्या गटाक वर्ग नेमल्यार नेम जतन जाता.';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'नेम काडून उडोवचो?';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'नेम बदलात';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count वळी';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return 'आयात करपाक $extensions स्टेटमेंट फायल निवडात';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => 'प्राप्तकर्ते';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => 'प्राप्तकर्ता जोडात';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => 'प्राप्तकर्त्याचें नाव बदलात';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => 'प्राप्तकर्ता काडून उडोवचो?';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => 'अजून प्राप्तकर्ते ना';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => 'नियमित टेम्प्लेट';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => 'अजून नियमित टेम्प्लेट ना';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => 'नियमित टेम्प्लेट काडून उडोवचें?';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => 'म्हयन्याचो दीस (1-31)';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote => 'कमी दीस आशिल्लो म्हयनो आपलो शेवटलो दीस वापरता.';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return 'म्हयन्याचो $day दीस - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => 'नाव';
 
   @override
-  String get none => 'None';
+  String get none => 'कांयच ना';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'चलन';
 
   @override
   String get errorGeneric => 'कांय चुकले. परत यत्न करात.';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'हें पुनर्प्राप्ती वाक्य वा कीस्टोअर फायल ह्या डेटाबेसांतल्या कोणत्याच सही वळखीशी जुळना.';
 
   @override
-  String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+  String get errorInvalidLedgerBackup => 'ही फायल वैध स्मारा बॅकअप न्हय.';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'ह्या बॅकअपाक सही वळख ना - हो वैध स्मारा बॅकअप न्हय.';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'हो बॅकअप पूर्ण हिशोब म्हूण पडताळ्ळो ना, म्हणून तो पुनर्स्थापित जालो ना.';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'ही फायल स्मारा बॅकअप म्हूण उगडपाक जायना: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'हो बॅकअप ह्या साधनावयल्या सही वळखीपरस वेगळ्या वळखीचो आसा.';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'तें आर्थिक खातें न्हय.';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'तें खातें लिपयलां.';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'तें खातें लिपयलां ना.';
 
   @override
   String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+      'वर्ग करपाक उरिल्ली शिल्लक ना.';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup => 'त्या खात्याक गट नेमिल्लो ना.';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency => 'त्या गटाक अजून चलन सेट केलां ना.';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'तो खातें गट मेळ्ळो ना.';
 
   @override
   String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+      'फक्त मालमत्ता खातीं गुंतवणूक खातीं म्हूण नेमूं येतात.';
 
   @override
   String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+      'फक्त देणें खातीं क्रेडिट कार्ड म्हूण नेमूं येतात.';
 
   @override
   String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+      'दिल्यार सुरवेची शिल्लक धनात्मक आसची.';
 
   @override
   String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+      'त्या खात्याचो प्रकार गटाशी जुळना.';
 
   @override
-  String get errorLastActiveAccount =>
-      'Cannot hide the last active financial account.';
+  String get errorLastActiveAccount => 'शेवटलें सक्रीय खातें लिपोवंक जायना.';
 
   @override
-  String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+  String get errorCurrencyRequiredToCreateGroup => 'गट तयार करपाक चलन गरजेचें.';
 
   @override
   String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+      'बिल्ट-इन खातें गट लिपोवंक जायनात.';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'तो गट आधीच लिपयला.';
 
   @override
   String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+      'सक्रीय खातीं आशिल्लो गट लिपोवंक जायना.';
 
   @override
   String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+      'बिल्ट-इन खातें गट केन्नाच लिपयनात.';
 
   @override
   String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+      'खातें गट काडून उडोवंक जायनात.';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'हें खातें वेगळ्या चलनाच्या गटाक हलोवंक जायना.';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'गटांत सक्रीय खातीं आसतना चलन बदलूंक जायना.';
 
   @override
   String get errorAmountMustBePositive => 'रक्कम धनात्मक आसची.';
 
   @override
   String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+      'खात्या-चलन रक्कम धनात्मक आसची.';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      'खात्या-चलन रक्कम फक्त परकी-चलन नोंदीखातीर आसा.';
 
   @override
-  String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+  String get errorSplitNeedsTwoLines => 'वाटणेक कमीत कमी दोन वर्ग वळी जाय.';
 
   @override
   String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+      'हरेक वाटणी वळ धनात्मक रक्कम आसची.';
 
   @override
   String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+      'वाटणी वळींची बेरीज व्यवहाराच्या एकूण रकमेइतली आसची.';
 
   @override
-  String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+  String get errorTransferAmountMustBePositive => 'वर्गावळ रक्कम धनात्मक आसची.';
 
   @override
   String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+      'स्रोत आनी लक्ष्य खातीं वेगळीं आसचीं.';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      'परकी-चलन बंद करपाक जाणिल्ली लक्ष्य रक्कम गरजेची.';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      'लक्ष्य रक्कम फक्त परकी-चलन वर्गावळीखातीर आसा.';
 
   @override
   String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+      'लक्ष्य रक्कम धनात्मक आसची.';
 
   @override
   String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+      'ह्या गुंतवणूक खात्याच्या रोखेपरस चड वर्ग करूंक जायना.';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      'ही प्रलंबित वर्गावळ उलटावपाच्या बदला फारीक करात.';
 
   @override
   String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+      'ही नोंद आधीच सारकी केल्या. मूळ वळ जशीच्यातशी उरता.';
 
   @override
-  String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+  String get errorNotActiveExpenseCategory => 'सक्रीय खर्च वर्ग निवडात.';
 
   @override
-  String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+  String get errorNotActiveIncomeCategory => 'सक्रीय उत्पन्न वर्ग निवडात.';
 
   @override
   String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+      'पावल्ली रक्कम ऋण आसूंक जायना.';
 
   @override
-  String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+  String get errorPendingTransferNotFound => 'ती प्रलंबित वर्गावळ मेळ्ळी ना.';
 
   @override
   String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+      'ती प्रलंबित वर्गावळ आधीच फारीक जाल्या.';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      'मूळ स्रोत वा लक्ष्य खातें निवडात.';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      'फी वर्ग फक्त पैसे स्रोत खात्याक परत येतना वापरतात.';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      'पावल्ल्या रकमेखातीर धनात्मक रक्कम भरात.';
 
   @override
   String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+      'ती रक्कम धाडिल्ल्यापरस चड आसा.';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'तें साधन मेळ्ळें ना.';
 
   @override
   String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+      'रोख न्हंय अशा मेळवणेक सक्रीय उत्पन्न वर्ग गरजेचो.';
 
   @override
   String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+      'ह्या गुंतवणूक खात्यांत त्या खरेदीखातीर पुरेशी रोख ना.';
 
   @override
   String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+      'विक्री संख्या आनी एकक दर धनात्मक आसचे.';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return 'विकूंक जायना: कांय एकक $date मेरेन लॉक आसात.';
   }
 
   @override
   String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+      'सद्या लॉक नाशिल्ल्या धारणेपरस चड विकूंक जायना.';
 
   @override
   String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+      'वास्तविक फायद्याक सक्रीय उत्पन्न वर्ग गरजेचो.';
 
   @override
   String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+      'वास्तविक लुकसाणीक सक्रीय खर्च वर्ग गरजेचो.';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return 'खरेदी नोंद जाली, पूण ब्रोकरेज फी अपेशी जाली: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return 'विक्री नोंद जाली, पूण ब्रोकरेज फी अपेशी जाली: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive => 'लाभांश रक्कम धनात्मक आसची.';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'तें गुंतवणूक खातें न्हय.';
 
   @override
   String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+      'ह्या गुंतवणूक खात्याक साठो जोडणी ना.';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'ही खरेदी उलटावंक जायना: फुडलीं विक्री हांच्या एककांचेर आदारीत आसात. आदीं आदारीत विक्री ($sells) उलटावात.';
   }
 
   @override
   String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+      'म्हयन्याची मर्यादा धनात्मक आसची.';
 
   @override
   String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+      'टेम्प्लेट रक्कम धनात्मक आसची.';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized => 'ही फायल OFX म्हूण वळखूंक जायना.';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => 'निवडिल्ली फायल रिकामी आसा.';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => 'ही फायल CSV म्हूण वाचूंक जायना.';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => 'निवडिल्ल्या फायलींत वळी ना.';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'बॅकअप तयार करूंक जायना: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'हो बॅकअप पुनर्स्थापित करूंक जायना - चुकिचो पासफ्रेज, वा स्मारा बॅकअप फायल न्हय.';
 
   @override
   String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+      'रक्कम, खातें, आनी वर्ग गरजेचें.';
 
   @override
-  String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+  String get validationAmountAccountRequired => 'रक्कम आनी खातें गरजेचें.';
 
   @override
   String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+      'हरेक वाटणी वळीक वर्ग आनी रक्कम जाय.';
 
   @override
   String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+      'वाटणी वळींची बेरीज व्यवहाराच्या एकूण रकमेइतली आसची.';
 
   @override
   String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+      'सावन खातें, कडेन खातें, आनी रक्कम गरजेचें.';
 
   @override
-  String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+  String get validationAmountArrivedRequired => 'पावल्ली रक्कम गरजेची.';
 
   @override
   String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+      'कोणत्या खात्यान पैसे मेळ्ळे तें निवडात.';
 
   @override
-  String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+  String get validationAccountCategoryRequired => 'खातें आनी वर्ग गरजेचें.';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => 'ही सुदारणा जतन करूंक जायना.';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'तुमच्या मुखेल खात्याक नाव दियात.';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading =>
+      'अजून लोड जाता - एक क्षणान परत यत्न करात.';
 
   @override
   String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+      'खात्याचें नाव जतन करूंक जायना.';
 
   @override
-  String get validationWrongPin => 'Wrong PIN. Try again.';
+  String get validationWrongPin => 'PIN चुकिचो. परत यत्न करात.';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'वर्ग उत्पन्न वा खर्च आसचो.';
 
   @override
   String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+      'फक्त खर्च वर्गाक म्हयन्याची मर्यादा आसूंक शकता.';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => 'अवैध टेम्प्लेट.';
 
   @override
   String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+      'ह्या कीस्टोअर फायलीचो पासफ्रेज चुकिचो.';
 
   @override
-  String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+  String get validationInvalidKeystoreFile => 'हें वैध कीस्टोअर फायल दिसना.';
 
   @override
   String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+      'त्या पुनर्प्राप्ती वाक्यासावन पुनर्स्थापित करूंक जायना.';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'ह्या साधनार सही किल्ली तयार करूंक जायना: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'हें चलन जतन करूंक जायना: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed =>
+      'स्थलांतर अपेशी जालें. परत यत्न करात.';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile => 'पयलीं बॅकअप फायल निवडात.';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'पासफ्रेज भरात.';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => 'दोन्ही PIN जुळनात.';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      'वर्गावळ फी धनात्मक रक्कम आसची आनी खर्च वर्ग निवडलो आसचो.';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      'वजा-फी वर्गावळींत फी रकमेपरस उणी आसची.';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return 'वर्गावळ जतन जाली, पूण फी नोंद करूंक जायना: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => 'वैध रक्कम भरात.';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return 'उतर $n तुमच्या जतन केल्ल्या वाक्याशी जुळना. तपासून परत यत्न करात.';
   }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+      'खरेदी संख्या आनी एकक दर धनात्मक आसचे.';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived => 'लिपयिल्लें साधन विकत घेवंक जायना.';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      'रोख न्हंय मेळवणेंत ब्रोकरेज सामील करूंक जायना.';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      'ब्रोकरेज धनात्मक आसतना सक्रीय खर्च वर्ग गरजेचो.';
 
   @override
   String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+      'विक्रीची रक्कम कमीत कमी ब्रोकरेज रकमेइतली आसची.';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return 'ह्या म्हयन्यान $limit पैकी $spent';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'स्मारा खातें अनलॉक करात';
 
   @override
   String get searchLabel => 'सोदात';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => 'सुरवेची शिल्लक';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return 'वर्गावळ: $name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => 'वर्गावळ फी';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return '$name कडेन वर्गावळीची फी';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'फायल निवडपी उगडूंक जायना: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return 'कृपया .$extensions फायल निवडात';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => 'चलन कोड (ISO 4217, देखीक USD)';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name + आनीक $count';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => 'तारीख';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'कांयच ना';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return 'मुखार वचचे पयलीं सकयल्यो नोंदी ($count एकूण) तपासात.';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return 'तुमकां $amount मेळ्ळें';
   }
 
   @override
   String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+      'विनिमय दर अजून खबर नासल्यार रिकामें दवरात.';
 
   @override
   String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+      'आदींच घडिल्लो व्यापार नोंद करात. हें अॅप ऑर्डर दिना.';
 
   @override
   String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+      'समाविष्ट: वयली रक्कम ह्या खात्यांतल्यान काडिल्ली एकूण रक्कम, फी तातूंतल्यान वजा जाता.';
 
   @override
   String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+      'तुमच्या बँकेन वा मध्यस्थान आगावू आकारिल्लें कमिशन.';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength => 'PIN कमीत कमी 4 अंकांचो आसचो.';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'हें अॅपांत सद्या आशिल्लें सगळें बॅकअपान बदलता — तें एकठांय करना. बॅकअप फायल निवडात आनी तुमी राखतना वापरिल्लो पासफ्रेज भरात.';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => 'बदलात';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name नव्या व्यवहारांखातीर आतां उपलब्ध आसचें ना.';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return '$name खातीं तयार करतना वा परत नेमतना आतां दिवचें ना.';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return '$name नवे व्यवहार नोंद करतना आतां दिवचें ना.';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      'लिपयिल्लीं साधनां फाटल्या खरेदी आनी विक्रेंचेर उरतात. तुमी तांचोखातीर लाभांश नोंद करूंक शकतात.';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name (लिपयलां)';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => 'चलन सेट ना';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$name आनी ताचे मूळ सेटिंग काडून उडयतले. फाटले व्यवहार परिणाम जायनात.';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$name आतां देणें म्हूण दिवचें ना. आदींच नोंद जाल्ले फाटले व्यवहार परिणाम जायनात.';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return 'जतन केल्लें स्तंभ मॅपिंग \"$name\" काडून उडयतलें. ताका वापरून आदींच आयात केल्ल्या स्टेटमेंटांचेर परिणाम जायना.';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return 'आयातींनी आतां \"$keyword\" वापरून आपसूंक वर्ग जावचें ना. ह्या नेमान आदींच वर्ग जाल्ल्या व्यवहारांचेर परिणाम जायना.';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'आतां वैकल्पिकपणान क्रेडिट कार्ड वा रोख खातें जोडात - फुडें सेटिंग्जांतल्यान तुमी सदांच आनीक खातीं जोडूंक शकतात.';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => 'लक्ष्य खात्याक पावलें';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return '$name कडे पावलें';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return 'तुमकां अपेक्षेपरस $amount $currency उणें मेळ्ळें - फरक भरपाक वर्ग निवडात.';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => 'तारीख व्याप्ती';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'टेम्प्लेट जोडात';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'टेम्प्लेट बदलात';
 
   @override
   String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+      'हरेक फील्डांत वैध रक्कम आनी दीस भरात.';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'CSV एक्सपोर्ट जतन करात';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => 'संदर्भ दर';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'तुमचो दर';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return 'हो व्यवहार खात्याच्या स्वताच्या चलनांत $currency आशिल्ल्यार रिकामें दवरात.';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'मेरेन लॉक (वैकल्पिक)';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return '$date मेरेन लॉक';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      'संशोधन प्रॉम्प्ट कॉपी केलो — उपलब्ध ब्राउझर URL ना, वा तुमी ऑफलायन आसात.';
 
   @override
-  String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+  String get openedFavouriteResearchTool => 'तुमचें आवडतें संशोधन साधन उगडलें.';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'हो फायदो दिसता';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'ही लुकसाण दिसता';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'हें ना-फायदो-ना-लुकसाण दिसता';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name ($qty विकपाजोगी)';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return 'स्तंभ $index';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'आयात जाता...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'आयात निश्चीत करात';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => 'जतन केल्ले वर्ग नेम व्यवस्थापित करात';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'ह्या फायलीचें चलन ($currency) निवडिल्ल्या खात्याच्या चलनाशी जुळना.';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'वर्ग नेम';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => 'शक्य द्विरुक्ती';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => 'अज्ञात वर्ग';
 }

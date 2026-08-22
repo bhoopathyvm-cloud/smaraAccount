@@ -14,7 +14,7 @@ import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/transaction_direction.dart';
 import '../../../core/money_formatter.dart';
 
-class TransferViewModel extends ChangeNotifier {
+class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   TransferViewModel({
     required LedgerRepository ledgerRepository,
     String? initialFromAccountId,
@@ -296,28 +296,21 @@ class TransferViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   Future<bool> submit() async {
     final fromAccountId = _fromAccountId;
     final toAccountId = _toAccountId;
     final amountMinor = _amountMinor;
     if (fromAccountId == null || toAccountId == null || amountMinor == null) {
-      _errorMessage = localizeVmError(
-        const AppFailure(AppErrorCode.validationFromToAmountRequired),
-      );
-      notifyListeners();
+      setFailure(const AppFailure(AppErrorCode.validationFromToAmountRequired));
       return false;
     }
 
     final feeAmountMinor = _feeAmountMinor;
     final hasFee = feeAmountMinor != null;
     if (hasFee && (feeAmountMinor <= 0 || _feeCategoryId == null)) {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationFeePositiveWithCategory),
       );
-      notifyListeners();
       return false;
     }
 
@@ -325,16 +318,15 @@ class TransferViewModel extends ChangeNotifier {
     if (hasFee && _feeDeductedFromAmount) {
       transferAmountMinor = amountMinor - feeAmountMinor;
       if (transferAmountMinor <= 0) {
-        _errorMessage = localizeVmError(
+        setFailure(
           const AppFailure(AppErrorCode.validationFeeMustBeLessThanAmount),
         );
-        notifyListeners();
         return false;
       }
     }
 
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
     try {
       await _ledgerRepository.recordTransfer(
@@ -349,13 +341,11 @@ class TransferViewModel extends ChangeNotifier {
       );
     } on InvalidTransferException catch (error) {
       _isSubmitting = false;
-      _errorMessage = localizeVmError(error);
-      notifyListeners();
+      setFailure(error);
       return false;
     } on AccountGroupException catch (error) {
       _isSubmitting = false;
-      _errorMessage = localizeVmError(error);
-      notifyListeners();
+      setFailure(error);
       return false;
     }
 
@@ -374,23 +364,21 @@ class TransferViewModel extends ChangeNotifier {
         );
       } on InvalidTransactionAmountException catch (error) {
         _isSubmitting = false;
-        _errorMessage = localizeVmError(
+        setFailure(
           AppFailure(
             AppErrorCode.validationTransferSavedFeeFailed,
-            params: {'detail': localizeVmError(error)},
+            params: {'detail': error.toString()},
           ),
         );
-        notifyListeners();
         return false;
       } on AccountGroupException catch (error) {
         _isSubmitting = false;
-        _errorMessage = localizeVmError(
+        setFailure(
           AppFailure(
             AppErrorCode.validationTransferSavedFeeFailed,
-            params: {'detail': localizeVmError(error)},
+            params: {'detail': error.toString()},
           ),
         );
-        notifyListeners();
         return false;
       }
     }

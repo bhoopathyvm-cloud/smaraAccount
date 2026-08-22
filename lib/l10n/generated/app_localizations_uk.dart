@@ -36,139 +36,136 @@ class AppLocalizationsUk extends AppLocalizations {
   String get actionDelete => 'Видалити';
 
   @override
-  String get actionDone => 'Done';
+  String get actionDone => 'Готово';
 
   @override
   String get actionContinue => 'Продовжити';
 
   @override
-  String get actionDismiss => 'Dismiss';
+  String get actionDismiss => 'Закрити';
 
   @override
-  String get actionRetry => 'Retry';
+  String get actionRetry => 'Повторити';
 
   @override
-  String get actionSkip => 'Skip';
+  String get actionSkip => 'Пропустити';
 
   @override
-  String get actionConfirm => 'Confirm';
+  String get actionConfirm => 'Підтвердити';
 
   @override
   String get actionAdd => 'Додати';
 
   @override
-  String get actionEdit => 'Edit';
+  String get actionEdit => 'Редагувати';
 
   @override
-  String get actionRename => 'Rename';
+  String get actionRename => 'Перейменувати';
 
   @override
-  String get actionHide => 'Hide';
+  String get actionHide => 'Приховати';
 
   @override
-  String get actionCreate => 'Create';
+  String get actionCreate => 'Створити';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'Закрити застосунок';
 
   @override
-  String get actionUnlock => 'Unlock';
+  String get actionUnlock => 'Розблокувати';
 
   @override
-  String get actionSettle => 'Settle';
+  String get actionSettle => 'Закрити';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => 'Завершити';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'Попередній перегляд';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'Імпортувати';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'Експортувати CSV';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'Вибрати файл';
 
   @override
-  String get actionRestore => 'Restore';
+  String get actionRestore => 'Відновити';
 
   @override
-  String get actionArchive => 'Hide';
+  String get actionFix => 'Виправити';
 
   @override
-  String get actionFix => 'Fix';
+  String get actionBuy => 'Купити';
 
   @override
-  String get actionBuy => 'Buy';
+  String get actionSell => 'Продати';
 
   @override
-  String get actionSell => 'Sell';
+  String get actionDividend => 'Дивіденд';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionRecordBuy => 'Записати купівлю';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordSell => 'Записати продаж';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordDividend => 'Записати дивіденд';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionPayCard => 'Оплатити картку';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionTransfer => 'Переказати';
 
   @override
-  String get actionTransfer => 'Transfer';
+  String get actionRecordTransaction => 'Записати операцію';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionImportStatement => 'Імпортувати виписку';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionClearDates => 'Очистити дати';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearSearch => 'Очистити пошук і фільтри';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionUseBiometrics => 'Використати біометрію';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionSetPin => 'Встановити PIN';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionChangePin => 'Змінити PIN';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionSaveBackup => 'Зберегти резервну копію';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionRestoreBackup => 'Відновити з резервної копії';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionSaveRule => 'Зберегти правило';
 
   @override
-  String get actionSaveRule => 'Save rule';
+  String get actionConfirmFix => 'Підтвердити виправлення';
 
   @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get captureSpent => 'Витрачено';
 
   @override
-  String get captureSpent => 'Витрата';
+  String get captureReceived => 'Отримано';
 
   @override
-  String get captureReceived => 'Received';
+  String get captureMovedMoney => 'Переказ коштів';
 
   @override
-  String get captureMovedMoney => 'Moved money';
-
-  @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => 'Імпортувати виписку';
 
   @override
   String get settingsTitle => 'Налаштування';
@@ -177,112 +174,116 @@ class AppLocalizationsUk extends AppLocalizations {
   String get settingsLanguage => 'Мова';
 
   @override
-  String get settingsLanguageSystem => 'Device language';
+  String get settingsLanguageSystem => 'Мова пристрою';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => 'Отримувати довідкові курси обміну';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      'Показує орієнтовний ринковий курс поруч із сумою отримання при переказах між валютами — лише для порівняння, ніколи не використовується для заповнення суми.';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'Постачальник курсів';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices =>
+      'Отримувати ринкові ціни для інвестицій';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'Шукає останні ціни для інструментів, що мають тікер або ISIN, щоб оцінити вартість портфеля. Ніколи не використовується для запису угоди і ніколи не надсилає, скільки одиниць ви утримуєте.';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => 'Постачальник ринкових цін';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool =>
+      'Улюблений інструмент для аналізу';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      'Дотик до назви інструмента в активах відкриває цей інструмент у браузері із запитом для аналізу — це не інтеграція і не порада.';
 
   @override
-  String get settingsBackup => 'Backup';
+  String get settingsBackup => 'Резервне копіювання';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      'Збережіть зашифровану копію ваших книг у обране вами місце або відновіть з неї. Це окремо від вашої відновлювальної фрази чи файлу keystore, які резервують ваш ключ підпису, а не ваші книги.';
 
   @override
-  String get settingsLock => 'Lock';
+  String get settingsLock => 'Блокування';
 
   @override
   String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+      'Вимагати PIN-код або біометрію (де доступно) для відкриття застосунку.';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock =>
+      'Вимагати розблокування для відкриття застосунку';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'Блокувати через';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'Одразу';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1 хвилину';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5 хвилин';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15 хвилин';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => 'Також дозволити біометрію';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot =>
+      'Приховувати баланси в перемикачі застосунків';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      'Приховує цей екран, коли ви переходите до іншого застосунку, щоб його не було видно одразу в перемикачі застосунків.';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'Приховування балансів у перемикачі застосунків недоступне на цій платформі.';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => 'Отримувачі';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => 'Керувати отримувачами';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      'Запам\'ятовані імена отримувачів разом із категорією та рахунком за замовчуванням, що пропонуються автозаповненням під час запису операції.';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => 'Регулярні шаблони';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => 'Керувати регулярними шаблонами';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      'Рахунки або дохід, що повторюються щомісяця, наприклад оренда чи зарплата. Шаблон із настанням терміну з\'являється на Головній, щоб ви записали його одним дотиком — ніколи не проводиться автоматично.';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'Про застосунок';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter (курси ЄЦБ)';
 
   @override
   String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq (щоденні котирування)';
 
   @override
   String get providerYahooFinance => 'Yahoo Finance (chart API)';
@@ -300,66 +301,66 @@ class AppLocalizationsUk extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => 'Готівка та її еквіваленти';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => 'Пенсія та пенсійні накопичення';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm =>
+      'Кредит і короткострокова заборгованість';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'Кредити та іпотеки';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => 'Інвестиції';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => 'Готівка та банк';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => 'Зарплата';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'Інший дохід';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => 'Продукти';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => 'Оренда/Іпотека';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => 'Комунальні послуги';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => 'Транспорт';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => 'Харчування поза домом';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => 'Телефон';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => 'Здоров\'я';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'Інші витрати';
 
   @override
   String get homeThisMonth => 'ЦЕЙ МІСЯЦЬ';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => 'КОШТИ В ДОРОЗІ';
 
   @override
-  String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+  String get homeWhatYouHaveMinusWhatYouOwe => 'ВАШІ КОШТИ МІНУС ВАШІ БОРГИ';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return 'У вас є $amount $currency';
   }
 
   @override
@@ -369,1405 +370,1416 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return 'У вас є $haveAmount $currency  •  Ви винні $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return 'Ви надіслали $amount $currency з $name';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return 'Ви надіслали $amount $currency на $name';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => 'Приховано';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'Усі рахунки';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return 'Збережено в $path';
   }
 
   @override
   String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+      'Не вдалося експортувати файл keystore. Цей крок можна пропустити.';
 
   @override
   String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+      'Введіть парольну фразу для захисту файлу.';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => 'Натисніть, коли дізнаєтеся, що надійшло';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return 'Повернено на $name';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => 'СЬОГОДНІ ТЕРМІН';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · натисніть, щоб записати';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => 'Перевищено ліміт';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$spent з $limit';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return 'Залишок: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => 'Немає рахунків';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'Готівкові кошти';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => 'Оцінка за ринком';
 
   @override
-  String get registerTitle => 'Register';
+  String get registerTitle => 'Журнал';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => 'Опис, категорія або сума';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => 'Ще немає операцій';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => 'Ще не записано жодного запису.';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => 'Тільки витрати';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => 'Тільки надходження';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'Усі';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified =>
+      'Не підтверджено - не враховується в підсумках';
 
   @override
   String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+      'Замінено внаслідок міграції ключа - не враховується в підсумках';
 
   @override
-  String get summaryTitle => 'Summary';
+  String get summaryTitle => 'Підсумок';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => 'Загальний дохід';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => 'Загальні витрати';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start — $end';
   }
 
   @override
-  String get accountsTitle => 'Accounts';
+  String get accountsTitle => 'Рахунки';
 
   @override
-  String get categoriesTitle => 'Categories';
+  String get categoriesTitle => 'Категорії';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => 'Назва рахунку';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => 'Створити рахунок';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'Створити групу';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'Редагувати групу';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => 'Перейменувати рахунок';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'Перейменувати категорію';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'Додати категорію';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'Група';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => 'Тип';
 
   @override
-  String get asset => 'Asset';
+  String get asset => 'Актив';
 
   @override
-  String get liability => 'Liability';
+  String get liability => 'Зобов\'язання';
 
   @override
-  String get income => 'Income';
+  String get income => 'Дохід';
 
   @override
-  String get expense => 'Expense';
+  String get expense => 'Витрата';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments => 'Цей рахунок утримує інвестиції';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      'Готівка плюс запаси, які ви записуєте за допомогою Купівлі, Продажу та Дивіденду.';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'Це кредитна картка';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => 'Початковий баланс (необов\'язково)';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => 'Валюта (ISO 4217)';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => 'Валюта (ISO 4217, напр. USD)';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'Приховати рахунок від нових записів?';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'Приховати категорію від нових записів?';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'Приховати групу від нових записів?';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'Змінити групу';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => 'Перевести залишок балансу';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => 'Місячний ліміт';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => 'Ліміт (залиште порожнім, щоб очистити)';
 
   @override
   String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+      'Необов\'язковий орієнтир витрат з початку місяця для цієї категорії витрат.';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'Керувати правилами категорій';
 
   @override
-  String get amount => 'Amount';
+  String get amount => 'Сума';
 
   @override
-  String get category => 'Category';
+  String get category => 'Категорія';
 
   @override
-  String get account => 'Account';
+  String get account => 'Рахунок';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => 'З рахунку';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => 'На рахунок';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => 'Опис (необов\'язково)';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => 'Також запам\'ятати як отримувача';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => 'Розділити на кілька категорій';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return 'Категорія $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => 'Сума отримання';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => 'Сума отримання (необов\'язково)';
 
   @override
   String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+      'Сума у валюті рахунку (необов\'язково)';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => 'Валюта операції (необов\'язково)';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => 'Комісія (необов\'язково)';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => 'Сума комісії';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => 'Категорія комісії';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => 'Опис комісії (необов\'язково)';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => 'Комісія утримується із суми вище';
 
   @override
   String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+      'Створіть щонайменше два активні рахунки, щоб здійснити переказ.';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => 'Що надійшло?';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => 'Повідомте, що саме надійшло.';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => 'Сума, що надійшла';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => 'Категорія комісії / збитку';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'Уже закрито.';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => 'Активи';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => 'Готівка';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => 'ЗАПАСИ';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return 'За обліком (готівка + вартість) $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return 'Оцінка за ринком $amount $currency';
   }
 
   @override
   String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+      'Активів ще немає. Запишіть купівлю, щоб додати інструмент.';
 
   @override
   String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+      'Котирування є оцінковими, а не ціною брокера. Цей застосунок не подає заявки.';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      'Натисніть на назву, щоб дослідити. Котирування є оцінковими, а не порадою.';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => 'Інструмент';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => 'Новий інструмент';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => 'Перейменувати інструмент';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => 'Дії з інструментом';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return 'Приховати $name?';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'Тікер (необов\'язково)';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN (необов\'язково)';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => 'Кількість';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => 'Ціна за одиницю';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => 'Брокерська комісія (необов\'язково)';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory =>
+      'Категорія витрат на брокерську комісію';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => 'Категорія доходу';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => 'Категорія доходу від прибутку';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => 'Категорія витрат від збитку';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => 'Негрошове';
 
   @override
-  String get cash => 'Cash';
+  String get cash => 'Готівка';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'Заблоковано';
 
   @override
   String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+      'Ваша власна нотатка про обмеження, а не правило брокера.';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => 'Акція';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => 'Пайовий фонд';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => 'Облігація';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'Інше';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'Актуальна ціна';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'Кешована ціна';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => 'Застаріла ціна';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => 'Використовується вартість (немає ціни)';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled =>
+      'Котирування вимкнено — використовується вартість/кеш';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch =>
+      'Використовується вартість (валюта ціни відрізняється)';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return 'Нереалізовано $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty од. · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'Ваша відновлювальна фраза';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'Підтвердьте свою фразу';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      'Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. Smara Accounting не має сервера і не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'Запишіть ці слова по порядку та зберігайте їх у безпечному місці окремо від цього пристрою.';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase => 'Я зберіг(ла) свою відновлювальну фразу';
 
   @override
   String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+      'Введіть запитувані слова з фрази, яку ви щойно зберегли.';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return 'Слово №$n';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'Експортувати файл keystore';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'Окрім відновлювальної фрази, ви можете зберегти зашифрований файл keystore, захищений обраною вами парольною фразою. Це необов\'язково - самої відновлювальної фрази завжди достатньо для відновлення ключа підпису.';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'Парольна фраза';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'Експортувати файл keystore';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => 'Виберіть вашу валюту';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      'Кожна група рахунків (Готівка та її еквіваленти, Пенсія та пенсійні накопичення тощо) наразі використовує цю одну валюту. Пізніше ви все ще зможете додати рахунки в іншій валюті, створивши для неї нову групу.';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle => 'Виберіть валюту для наявних груп';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'Цей застосунок тепер підтримує кілька валют. Ваші наявні рахунки та групи рахунків потребують валюти - оскільки всі вони були налаштовані до появи цієї функції, один вибір застосовується до всіх них.';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => 'Назвіть свій рахунок';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'Це рахунок, який уже налаштований для вас - дайте йому назву, яку ви впізнаєте, наприклад назву вашого банку. Далі ви запишете одну операцію Витрачено або Отримано, а потім захистите пристрій своєю відновлювальною фразою.';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => 'Як називається ваш основний рахунок?';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => 'Відновити ключ підпису';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'На цьому пристрої є наявні книги, але немає відповідного ключа підпису. Відновіть його зі збереженої відновлювальної фрази або файлу keystore - ваші дані будуть перевірятися як зазвичай, і ніщо не буде повторно підписано чи змінено.';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'Відновлювальна фраза (усі 24 слова)';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'Файл keystore';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'Вміст файлу keystore';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => 'Необов\'язковий файл резервної копії';
 
   @override
   String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+      'У мене немає моєї відновлювальної фрази або файлу keystore';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => 'Перейти на новий ключ';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'Без вашої відновлювальної фрази або файлу keystore ключ підпису цього пристрою неможливо відновити. Ви можете почати з нового ключа. Старі записи залишаться видимими, але будуть замінені.';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid => 'Я підтверджую, що поточні книги дійсні';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => 'Чому ми не редагуємо старі записи';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      'Коли ви виправляєте помилку, ми зберігаємо старий рядок і додаємо виправлення поруч із ним, замість того щоб змінювати те, що ви вже ввели. Так ваша історія завжди показує, що саме сталося і коли ви це виправили — нічого не змінюється непомітно у вас за спиною.';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'Розблокувати';
 
   @override
   String get lockScreenTitle => 'Заблоковано';
 
   @override
-  String get enterPinToContinue => 'Enter your PIN to continue';
+  String get enterPinToContinue => 'Введіть свій PIN-код, щоб продовжити';
 
   @override
   String get pinLabel => 'PIN';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'Встановити PIN-код';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => 'Поточний PIN-код';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => 'Новий PIN-код';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'Підтвердити PIN-код';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => 'Підтвердити новий PIN-код';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => 'Налаштуйте свої рахунки';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => 'Додати готівковий рахунок';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'Додати кредитну картку';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => 'Назва готівкового рахунку';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'Назва картки';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => 'Оплачено з банку';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'Оплачено з картки';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'Виберіть парольну фразу для захисту цієї резервної копії. Якщо ви її забудете, відновлення неможливе.';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'Замінити ваші локальні книги?';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'Це замінить усе, що зараз є в цьому застосунку, резервною копією. Після цього закрийте і знову відкрийте застосунок.';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => 'Спочатку виберіть файл резервної копії.';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'Резервну копію відновлено';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'Ваші книги відновлено. Закрийте і знову відкрийте застосунок, щоб продовжити.';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'Виправити цей запис';
 
   @override
   String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+      'Старий рядок залишається точно таким, яким він був. Підтвердження додає сторнувальний рядок і виправлений.';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => 'Імпорт виписки';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'Імпортувати OFX';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'Імпортувати файл OFX / QFX';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'Імпортувати файл CSV';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement => 'Який тип файлу виписки у вас є?';
 
   @override
   String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+      'Виберіть, якому рахунку належить цей файл.';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'Імпортувати на рахунок';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => 'Використати збережений профіль';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile =>
+      'Зберегти це зіставлення як профіль (необов\'язково)';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'Перейменувати профіль';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'Видалити профіль?';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'Файл містить рядок заголовка';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => 'Стовпець дати';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => 'Формат дати (напр. дд/ММ/рррр)';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => 'Стовпець суми';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => 'Правило знаку суми';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => 'Стовпець суми зі знаком';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => 'Окремі стовпці дебету / кредиту';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => 'Стовпець дебету';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => 'Стовпець кредиту';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => 'Десятковий роздільник (. або ,)';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => 'Стовпець(-ці) опису';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => 'Стовпець номера посилання (необов\'язково)';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'Пропущені рядки';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return 'Розпізнано $count операцій';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return 'Пропущено або виключено $count';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return 'Проведено $posted, помилок $failed';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'Категорія для всіх';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'Зберегти як правило?';
 
   @override
   String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+      'Майбутні імпорти, опис яких містить це ключове слово, використовуватимуть цю категорію.';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'Ключове слово';
 
   @override
   String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+      'Ще немає збережених правил. Призначте категорію групі рядків, щоб зберегти правило.';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'Видалити правило?';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'Редагувати правило';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count рядків';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return 'Виберіть файл виписки $extensions для імпорту';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => 'Отримувачі';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => 'Додати отримувача';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => 'Перейменувати отримувача';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => 'Видалити отримувача?';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => 'Ще немає отримувачів';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => 'Регулярні шаблони';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => 'Ще немає регулярних шаблонів';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => 'Видалити регулярний шаблон?';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => 'День місяця (1-31)';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote =>
+      'Місяць з меншою кількістю днів використовує свій останній день.';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return '$day-й день місяця - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => 'Назва';
 
   @override
-  String get none => 'None';
+  String get none => 'Немає';
 
   @override
-  String get currency => 'Currency';
+  String get currency => 'Валюта';
 
   @override
   String get errorGeneric => 'Щось пішло не так. Спробуйте ще раз.';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'Ця відновлювальна фраза або файл keystore не відповідає жодному ідентифікатору підпису в цій базі даних.';
 
   @override
   String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+      'Цей файл не є дійсною резервною копією Smara.';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'Ця резервна копія не має ідентифікатора підпису - вона не є дійсною резервною копією Smara.';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'Цю резервну копію не вдалося перевірити як цілісні книги, тому її не було відновлено.';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'Не вдалося відкрити цей файл як резервну копію Smara: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'Ця резервна копія належить іншому ідентифікатору підпису, ніж той, що на цьому пристрої.';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'Це не фінансовий рахунок.';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'Цей рахунок приховано.';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'Цей рахунок не приховано.';
 
   @override
   String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+      'Немає залишку балансу для переказу.';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup => 'Цьому рахунку не призначено групу.';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency =>
+      'Для цієї групи ще не встановлено валюту.';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'Цю групу рахунків не знайдено.';
 
   @override
   String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+      'Лише рахунки активів можуть бути позначені як інвестиційні рахунки.';
 
   @override
   String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+      'Лише рахунки зобов\'язань можуть бути позначені як кредитні картки.';
 
   @override
   String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+      'Початковий баланс повинен бути додатним, якщо вказано.';
 
   @override
   String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+      'Цей тип рахунку не відповідає групі.';
 
   @override
   String get errorLastActiveAccount =>
-      'Cannot hide the last active financial account.';
+      'Неможливо приховати останній активний фінансовий рахунок.';
 
   @override
   String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+      'Для створення групи потрібна валюта.';
 
   @override
   String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+      'Вбудовані групи рахунків не можна приховати.';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'Ця група вже прихована.';
 
   @override
   String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+      'Неможливо приховати групу, яка все ще має активні рахунки.';
 
   @override
   String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+      'Вбудовані групи рахунків ніколи не приховуються.';
 
   @override
   String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+      'Групи рахунків не можна видаляти.';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'Неможливо перемістити цей рахунок до групи з іншою валютою.';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'Неможливо змінити валюту, поки в групі є активні рахунки.';
 
   @override
   String get errorAmountMustBePositive => 'Сума має бути додатною.';
 
   @override
   String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+      'Сума у валюті рахунку має бути додатною.';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      'Сума у валюті рахунку призначена лише для запису в іноземній валюті.';
 
   @override
   String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+      'Розподіл потребує щонайменше двох рядків категорій.';
 
   @override
   String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+      'Кожен рядок розподілу має бути додатною сумою.';
 
   @override
   String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+      'Сума рядків розподілу повинна дорівнювати загальній сумі операції.';
 
   @override
   String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+      'Сума переказу має бути додатною.';
 
   @override
   String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+      'Рахунок джерела та рахунок призначення мають відрізнятися.';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      'Закриття з обміном валют потребує відомої суми отримання.';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      'Сума отримання призначена лише для переказу між валютами.';
 
   @override
   String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+      'Сума отримання має бути додатною.';
 
   @override
   String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+      'Неможливо перевести більше готівки, ніж є на цьому інвестиційному рахунку.';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      'Закрийте цей очікуваний переказ замість сторнування.';
 
   @override
   String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+      'Цей запис уже виправлено. Оригінальний рядок залишається без змін.';
 
   @override
   String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+      'Виберіть активну категорію витрат.';
 
   @override
   String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+      'Виберіть активну категорію доходу.';
 
   @override
   String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+      'Сума, що надійшла, не може бути від\'ємною.';
 
   @override
   String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+      'Цей очікуваний переказ не знайдено.';
 
   @override
   String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+      'Цей очікуваний переказ уже закрито.';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      'Виберіть початковий рахунок джерела або призначення.';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      'Категорія комісії використовується лише тоді, коли кошти повертаються на рахунок джерела.';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      'Введіть додатну суму того, що надійшло.';
 
   @override
   String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+      'Ця сума більша за надіслану.';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'Цей інструмент не знайдено.';
 
   @override
   String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+      'Для негрошового надходження потрібна активна категорія доходу.';
 
   @override
   String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+      'Недостатньо готівки на цьому інвестиційному рахунку для цієї купівлі.';
 
   @override
   String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+      'Кількість продажу та ціна за одиницю мають бути додатними.';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return 'Неможливо продати: деякі одиниці заблоковано до $date.';
   }
 
   @override
   String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+      'Неможливо продати більше, ніж наразі є незаблокованим.';
 
   @override
   String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+      'Для реалізованого прибутку потрібна активна категорія доходу.';
 
   @override
   String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+      'Для реалізованого збитку потрібна активна категорія витрат.';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return 'Купівлю проведено, але брокерську комісію не вдалося записати: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return 'Продаж проведено, але брокерську комісію не вдалося записати: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive => 'Сума дивіденду має бути додатною.';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'Це не інвестиційний рахунок.';
 
   @override
   String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+      'У цього інвестиційного рахунку відсутній супутній рахунок запасів.';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'Неможливо сторнувати цю купівлю: наступні продажі залежать від цих одиниць. Спочатку сторнуйте залежні продажі: $sells.';
   }
 
   @override
   String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+      'Місячний ліміт має бути додатним.';
 
   @override
   String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+      'Сума шаблону має бути додатною.';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized => 'Не вдалося розпізнати цей файл як OFX.';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => 'Вибраний файл порожній.';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => 'Не вдалося прочитати цей файл як CSV.';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => 'У вибраному файлі немає рядків.';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'Не вдалося створити резервну копію: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'Не вдалося відновити цю резервну копію - неправильна парольна фраза або це не файл резервної копії Smara.';
 
   @override
   String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+      'Потрібні сума, рахунок і категорія.';
 
   @override
-  String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+  String get validationAmountAccountRequired => 'Потрібні сума та рахунок.';
 
   @override
   String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+      'Кожен рядок розподілу потребує категорії та суми.';
 
   @override
   String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+      'Сума рядків розподілу повинна дорівнювати загальній сумі операції.';
 
   @override
   String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+      'Потрібні рахунок джерела, рахунок призначення та сума.';
 
   @override
-  String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+  String get validationAmountArrivedRequired => 'Потрібна сума, що надійшла.';
 
   @override
   String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+      'Виберіть, який рахунок отримав кошти.';
 
   @override
   String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+      'Потрібні рахунок і категорія.';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => 'Не вдалося зберегти це виправлення.';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'Назвіть свій основний рахунок.';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading =>
+      'Ще завантажується - спробуйте ще раз за хвилину.';
 
   @override
   String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+      'Не вдалося зберегти назву рахунку.';
 
   @override
-  String get validationWrongPin => 'Wrong PIN. Try again.';
+  String get validationWrongPin => 'Неправильний PIN. Спробуйте ще раз.';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'Категорія має бути Дохід або Витрата.';
 
   @override
   String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+      'Лише категорія Витрата може мати місячний ліміт.';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => 'Недійсний шаблон.';
 
   @override
   String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+      'Неправильна парольна фраза для цього файлу keystore.';
 
   @override
   String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+      'Це не схоже на дійсний файл keystore.';
 
   @override
   String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+      'Не вдалося відновити з цієї відновлювальної фрази.';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'Не вдалося згенерувати ключ підпису на цьому пристрої: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'Не вдалося зберегти цю валюту: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed =>
+      'Міграція не вдалася. Спробуйте ще раз.';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile =>
+      'Спочатку виберіть файл резервної копії.';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'Введіть парольну фразу.';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => 'Два PIN-коди не збігаються.';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      'Комісія за переказ має бути додатною сумою з вибраною категорією витрат.';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      'Комісія має бути меншою за суму для переказу з утриманням комісії.';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return 'Переказ збережено, але комісію не вдалося записати: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => 'Введіть дійсну суму.';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return 'Слово $n не збігається з вашою збереженою фразою. Перевірте і спробуйте ще раз.';
   }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+      'Кількість купівлі та ціна за одиницю мають бути додатними.';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived =>
+      'Неможливо купити прихований інструмент.';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      'Негрошові надходження не можуть містити брокерську комісію.';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      'Коли брокерська комісія додатна, потрібна активна категорія витрат.';
 
   @override
   String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+      'Виручка від продажу має бути не меншою за суму брокерської комісії.';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return '$spent з $limit цього місяця';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'Розблокувати Smara Account';
 
   @override
   String get searchLabel => 'Пошук';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => 'Початковий баланс';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return 'Переказ: $name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => 'Комісія за переказ';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return 'Комісія за переказ на $name';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'Не вдалося відкрити засіб вибору файлів: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return 'Виберіть файл .$extensions';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => 'Код валюти (ISO 4217, напр. USD)';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name і ще $count';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => 'Дата';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'Немає';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return 'Перегляньте записи нижче (усього $count) перед продовженням.';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return 'Ви отримали $amount';
   }
 
   @override
   String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+      'Залиште порожнім, якщо курс обміну ще не відомий.';
 
   @override
   String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+      'Запишіть угоду, яка вже відбулася. Цей застосунок не подає заявки.';
 
   @override
   String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+      'Увімкнено: сума вище — це загальна сума, знята з цього рахунку; комісія утримується з неї.';
 
   @override
   String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+      'Попередня комісія, що стягується вашим банком або посередником.';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength =>
+      'PIN-код має містити щонайменше 4 цифри.';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'Це замінить усе, що зараз є в цьому застосунку, резервною копією — без об\'єднання. Виберіть файл резервної копії та введіть парольну фразу, якою ви його захистили.';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => 'Замінити';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$name більше не буде доступний для нових операцій.';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return '$name більше не пропонуватиметься під час створення або перепризначення рахунків.';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return '$name більше не пропонуватиметься під час запису нових операцій.';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      'Приховані інструменти залишаються в минулих купівлях і продажах. Ви все ще можете записати для них дивіденд.';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name (приховано)';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => 'Валюту не встановлено';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$name та його запам\'ятовані значення за замовчуванням буде видалено. Минулі операції не постраждають.';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$name більше не пропонуватиметься як такий, що настав. Минулі операції, які він уже записав, не постраждають.';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return 'Збережене зіставлення стовпців \"$name\" буде видалено. Виписки, вже імпортовані з ним, не постраждають.';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return 'Імпорти більше не будуть автоматично категоризуватися за \"$keyword\". Операції, вже категоризовані цим правилом, не постраждають.';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      'За бажанням додайте кредитну картку або готівковий рахунок зараз - ви завжди зможете додати більше рахунків пізніше в Налаштуваннях.';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => 'Доставлено на призначення';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return 'Доставлено на $name';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return 'Ви отримали на $amount $currency менше, ніж очікувалося - виберіть категорію, щоб покрити різницю.';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => 'Діапазон дат';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'Додати шаблон';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'Редагувати шаблон';
 
   @override
   String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+      'Заповніть усі поля дійсною сумою та днем.';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'Зберегти експорт CSV';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => 'Довідковий курс';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'Ваш курс';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return 'Залиште порожнім, якщо це було у $currency — власній валюті рахунку.';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'Заблокувати до (необов\'язково)';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return 'Заблоковано до $date';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      'Скопійовано запит для аналізу — немає доступного URL браузера, або ви офлайн.';
 
   @override
   String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+      'Відкрито ваш улюблений інструмент для аналізу.';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'Це схоже на прибуток';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'Це схоже на збиток';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'Це схоже на беззбитковість';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name (доступно для продажу $qty)';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return 'Стовпець $index';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'Імпортування...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'Підтвердити імпорт';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules =>
+      'Керувати збереженими правилами категорій';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'Валюта цього файлу ($currency) не відповідає валюті вибраного рахунку.';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'Правила категорій';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => 'можливий дублікат';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => 'Невідома категорія';
 }

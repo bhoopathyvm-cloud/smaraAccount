@@ -133,7 +133,7 @@ class RecurringTemplateManagementView extends StatelessWidget {
             ? null
             : viewModel.financialAccounts.first.id);
     String? categoryId = existing?.categoryId;
-    var errorMessage = viewModel.errorMessage;
+    var errorMessage = viewModel.errorMessageFor(l10nOf(context));
     var initialAmountSet = false;
 
     await showDialog<void>(
@@ -280,7 +280,9 @@ class RecurringTemplateManagementView extends StatelessWidget {
                   if (ok && dialogContext.mounted) {
                     Navigator.of(dialogContext).pop();
                   } else {
-                    setDialogState(() => errorMessage = viewModel.errorMessage);
+                    setDialogState(
+                      () => errorMessage = viewModel.errorMessageFor(l10n),
+                    );
                   }
                 },
                 child: Text(

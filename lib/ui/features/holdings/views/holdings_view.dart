@@ -75,9 +75,9 @@ class HoldingsView extends StatelessWidget {
           final currency = viewModel.currency;
           return Column(
             children: [
-              if (viewModel.errorMessage != null)
+              if (viewModel.errorMessageFor(l10n) != null)
                 StatusBanner(
-                  message: viewModel.errorMessage!,
+                  message: viewModel.errorMessageFor(l10n)!,
                   isError: true,
                   onDismiss: viewModel.clearError,
                 ),
@@ -670,9 +670,12 @@ class HoldingsView extends StatelessWidget {
 
   Future<void> _showDividendDialog(BuildContext context) async {
     final l10n = l10nOf(context);
-    final instruments = viewModel.heldInstruments.isNotEmpty
-        ? viewModel.heldInstruments
-        : viewModel.instruments;
+    // Only instruments this account has ever held (including fully sold
+    // ones - `heldInstruments` is lot-derived, not filtered by remaining
+    // quantity) are dividend-eligible here; `viewModel.instruments` is the
+    // *global* instrument list and would let a dividend post against an
+    // instrument this account never bought.
+    final instruments = viewModel.heldInstruments;
     if (instruments.isEmpty) return;
     final amountController = TextEditingController();
     final descriptionController = TextEditingController();

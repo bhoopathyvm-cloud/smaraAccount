@@ -1,119 +1,118 @@
 {
   "@@locale": "te",
-  "appTitle": "స్మారా ఖాతా",
+  "appTitle": "స్మారా అకౌంటింగ్",
   "navHome": "హోమ్",
   "navRegister": "రిజిస్టర్",
   "navSummary": "సారాంశం",
   "navAccounts": "ఖాతాలు",
   "navCategories": "వర్గాలు",
-  "actionCancel": "రద్దు",
-  "actionSave": "సేవ్",
-  "actionDelete": "Delete",
-  "actionDone": "Done",
-  "actionContinue": "Continue",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionCancel": "రద్దు చేయి",
+  "actionSave": "సేవ్ చేయి",
+  "actionDelete": "తొలగించు",
+  "actionDone": "పూర్తయింది",
+  "actionContinue": "కొనసాగించు",
+  "actionDismiss": "విస్మరించు",
+  "actionRetry": "మళ్లీ ప్రయత్నించు",
+  "actionSkip": "దాటవేయి",
+  "actionConfirm": "నిర్ధారించు",
   "actionAdd": "జోడించు",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
+  "actionEdit": "సవరించు",
+  "actionRename": "పేరు మార్చు",
   "actionHide": "దాచు",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "ఖర్చు",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionCreate": "సృష్టించు",
+  "actionCloseApp": "యాప్‌ను మూసివేయి",
+  "actionUnlock": "అన్‌లాక్ చేయి",
+  "actionSettle": "సెటిల్ చేయి",
+  "actionFinish": "ముగించు",
+  "actionPreview": "ప్రివ్యూ",
+  "actionImport": "దిగుమతి చేయి",
+  "actionExportCsv": "CSV ఎగుమతి చేయి",
+  "actionChooseFile": "ఫైల్‌ను ఎంచుకోండి",
+  "actionRestore": "పునరుద్ధరించు",
+  "actionFix": "సరిచేయి",
+  "actionBuy": "కొను",
+  "actionSell": "అమ్ము",
+  "actionDividend": "డివిడెండ్",
+  "actionRecordBuy": "కొనుగోలును నమోదు చేయి",
+  "actionRecordSell": "అమ్మకాన్ని నమోదు చేయి",
+  "actionRecordDividend": "డివిడెండ్‌ను నమోదు చేయి",
+  "actionPayCard": "కార్డుకు చెల్లించు",
+  "actionTransfer": "బదిలీ",
+  "actionRecordTransaction": "లావాదేవీని నమోదు చేయి",
+  "actionImportStatement": "స్టేట్‌మెంట్‌ను దిగుమతి చేయి",
+  "actionClearDates": "తేదీలను క్లియర్ చేయి",
+  "actionClearSearch": "శోధన మరియు వడపోతలను క్లియర్ చేయి",
+  "actionUseBiometrics": "బయోమెట్రిక్స్ ఉపయోగించు",
+  "actionSetPin": "PIN సెట్ చేయి",
+  "actionChangePin": "PIN మార్చు",
+  "actionSaveBackup": "బ్యాకప్‌ను సేవ్ చేయి",
+  "actionRestoreBackup": "బ్యాకప్‌ను పునరుద్ధరించు",
+  "actionSaveRule": "నియమాన్ని సేవ్ చేయి",
+  "actionConfirmFix": "సరిదిద్దటాన్ని నిర్ధారించు",
+  "captureSpent": "ఖర్చు చేసింది",
+  "captureReceived": "అందుకున్నది",
+  "captureMovedMoney": "డబ్బు బదిలీ చేయబడింది",
+  "captureImportStatement": "స్టేట్‌మెంట్ దిగుమతి",
   "settingsTitle": "సెట్టింగ్‌లు",
   "settingsLanguage": "భాష",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "పరికర భాష",
+  "settingsFetchFxRates": "సూచన మారకపు రేట్లను పొందు",
+  "settingsFetchFxRatesSubtitle": "క్రాస్-కరెన్సీ బదిలీలలో గమ్యస్థాన మొత్తానికి పక్కన ఒక సూచనాత్మక మార్కెట్ రేటును చూపిస్తుంది, పోలిక కోసమే - మొత్తాన్ని నింపడానికి ఎప్పుడూ ఉపయోగించబడదు.",
+  "settingsRateProvider": "రేటు ప్రొవైడర్",
+  "settingsFetchMarketPrices": "పెట్టుబడుల కోసం మార్కెట్ ధరలను పొందు",
+  "settingsFetchMarketPricesSubtitle": "టికర్ లేదా ISIN ఉన్న సాధనాల కోసం చివరి ధరలను చూస్తుంది, పోర్ట్‌ఫోలియో విలువను అంచనా వేయడానికి. ట్రేడ్‌ను నమోదు చేయడానికి ఎప్పుడూ ఉపయోగించబడదు, మీరు ఎంత కలిగి ఉన్నారో ఎప్పుడూ పంపదు.",
+  "settingsMarketPriceProvider": "మార్కెట్ ధర ప్రొవైడర్",
+  "settingsFavouriteResearchTool": "ఇష్టమైన పరిశోధన సాధనం",
+  "settingsFavouriteResearchToolSubtitle": "హోల్డింగ్‌లలో ఒక సాధనం పేరును నొక్కడం బ్రౌజర్‌లో ఈ సాధనాన్ని పరిశోధన ప్రాంప్ట్‌తో తెరుస్తుంది — ఇది ఇంటిగ్రేషన్ కాదు, సలహా కూడా కాదు.",
+  "settingsBackup": "బ్యాకప్",
+  "settingsBackupBlurb": "మీ ఖాతా పుస్తకాల ఎన్‌క్రిప్టెడ్ కాపీని మీరు ఎంచుకున్న ప్రదేశంలో సేవ్ చేయండి, లేదా దాని నుండి పునరుద్ధరించండి. ఇది మీ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ నుండి వేరు, అవి మీ సైనింగ్ కీని బ్యాకప్ చేస్తాయి, మీ ఖాతా పుస్తకాలను కాదు.",
+  "settingsLock": "లాక్",
+  "settingsLockBlurb": "యాప్‌ను తెరవడానికి PIN లేదా అందుబాటులో ఉన్న చోట బయోమెట్రిక్స్ అవసరం.",
+  "settingsRequireUnlock": "యాప్‌ను తెరవడానికి అన్‌లాక్ అవసరం",
+  "settingsLockAfter": "దీని తర్వాత లాక్ చేయి",
+  "settingsLockImmediately": "వెంటనే",
+  "settingsLock1Minute": "1 నిమిషం",
+  "settingsLock5Minutes": "5 నిమిషాలు",
+  "settingsLock15Minutes": "15 నిమిషాలు",
+  "settingsAllowBiometrics": "బయోమెట్రిక్స్‌ను కూడా అనుమతించు",
+  "settingsHideSnapshot": "యాప్ స్విచర్‌లో బ్యాలెన్స్‌లను దాచు",
+  "settingsHideSnapshotSubtitle": "మీరు వేరే యాప్‌కు మారినప్పుడు ఈ స్క్రీన్‌ను దాచిపెడుతుంది, తద్వారా ఇది యాప్ స్విచర్‌లో ఒక చూపులో కనిపించదు.",
+  "settingsHideSnapshotUnavailable": "యాప్ స్విచర్‌లో బ్యాలెన్స్‌లను దాచడం ఈ ప్లాట్‌ఫారమ్‌లో అందుబాటులో లేదు.",
+  "settingsPayees": "చెల్లింపుదారులు",
+  "settingsManagePayees": "చెల్లింపుదారులను నిర్వహించు",
+  "settingsPayeesBlurb": "గుర్తుంచుకున్న చెల్లింపుదారు పేర్లు మరియు వాటి డిఫాల్ట్ వర్గం మరియు ఖాతా, లావాదేవీని నమోదు చేసేటప్పుడు ఆటోకంప్లీట్ ద్వారా సూచించబడతాయి.",
+  "settingsRecurring": "పునరావృత టెంప్లేట్‌లు",
+  "settingsManageRecurring": "పునరావృత టెంప్లేట్‌లను నిర్వహించు",
+  "settingsRecurringBlurb": "అద్దె లేదా జీతం వంటి ప్రతి నెలా పునరావృతమయ్యే బిల్లులు లేదా ఆదాయం. గడువు ఉన్న టెంప్లేట్ మీరు ఒక ట్యాప్‌తో నమోదు చేయడానికి హోమ్‌లో కనిపిస్తుంది - ఎప్పుడూ స్వయంచాలకంగా పోస్ట్ చేయబడదు.",
+  "settingsAbout": "గురించి",
+  "providerFrankfurter": "Frankfurter (ECB రేట్లు)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
+  "providerStooq": "Stooq (రోజువారీ కోట్‌లు)",
   "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "నగదు & నగదు సమానమైనవి",
+  "systemGroupPensionRetirement": "పెన్షన్ & పదవీ విరమణ",
+  "systemGroupCreditShortTerm": "క్రెడిట్ & స్వల్పకాలిక అప్పు",
+  "systemGroupLoansMortgages": "రుణాలు & తనఖాలు",
+  "systemGroupInvestments": "పెట్టుబడులు",
+  "systemAccountCashBank": "నగదు & బ్యాంక్",
+  "systemCategorySalary": "జీతం",
+  "systemCategoryOtherIncome": "ఇతర ఆదాయం",
+  "systemCategoryGroceries": "కిరాణా సామాను",
+  "systemCategoryRentMortgage": "అద్దె/తనఖా",
+  "systemCategoryUtilities": "యుటిలిటీలు",
+  "systemCategoryTransport": "రవాణా",
+  "systemCategoryFoodOut": "బయట తినడం",
+  "systemCategoryPhone": "ఫోన్",
+  "systemCategoryHealth": "ఆరోగ్యం",
+  "systemCategoryOtherExpense": "ఇతర ఖర్చు",
   "homeThisMonth": "ఈ నెల",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "రవాణాలో ఉన్న డబ్బు",
+  "homeWhatYouHaveMinusWhatYouOwe": "మీ వద్ద ఉన్నది మైనస్ మీరు బాకీ ఉన్నది",
+  "homeWhatYouHave": "మీ వద్ద ఉన్నది {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "మీ వద్ద ఉన్నది {haveAmount} {currency}  •  మీరు బాకీ ఉన్నది {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "మీరు {name} నుండి {amount} {currency} పంపారు",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "మీరు {name}కు {amount} {currency} పంపారు",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "దాచబడింది",
+  "allAccounts": "అన్ని ఖాతాలు",
+  "savedToPath": "{path}కు సేవ్ చేయబడింది",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయలేకపోయాము. మీరు ఈ దశను దాటవేయవచ్చు.",
+  "enterPassphraseToProtect": "ఫైల్‌ను రక్షించడానికి ఒక పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.",
+  "homeTapWhenArrived": "ఏమి వచ్చిందో తెలిసినప్పుడు నొక్కండి",
+  "homeReturnedTo": "{name}కు తిరిగి వచ్చింది",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "ఈరోజు గడువు",
+  "homeDueLine": "{category} · {account} · నమోదు చేయడానికి నొక్కండి",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "పరిమితి మించింది",
+  "homeSpentOfLimit": "{limit}లో {spent}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "మిగిలింది: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "ఖాతాలు లేవు",
+  "homeCashRegister": "నగదు రిజిస్టర్",
+  "homeMarketEstimate": "మార్కెట్ అంచనా",
+  "registerTitle": "రిజిస్టర్",
+  "registerSearchHint": "వివరణ, వర్గం, లేదా మొత్తం",
+  "registerNoTransactions": "ఇంకా లావాదేవీలు లేవు",
+  "registerNoEntries": "ఇంకా ఎంట్రీలు నమోదు కాలేదు.",
+  "registerSpentOnly": "ఖర్చు మాత్రమే",
+  "registerReceivedOnly": "అందుకున్నవి మాత్రమే",
+  "registerAll": "అన్నీ",
+  "registerUnverified": "ధృవీకరించబడలేదు - మొత్తాల నుండి మినహాయించబడింది",
+  "registerSuperseded": "మైగ్రేషన్ ద్వారా భర్తీ చేయబడింది - మొత్తాల నుండి మినహాయించబడింది",
+  "summaryTitle": "సారాంశం",
+  "summaryTotalIncome": "మొత్తం ఆదాయం",
+  "summaryTotalExpense": "మొత్తం ఖర్చు",
+  "summaryDateRange": "{start} నుండి {end} వరకు",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "ఖాతాలు",
+  "categoriesTitle": "వర్గాలు",
+  "accountName": "ఖాతా పేరు",
+  "createAccount": "ఖాతాను సృష్టించు",
+  "createGroup": "గ్రూప్‌ను సృష్టించు",
+  "editGroup": "గ్రూప్‌ను సవరించు",
+  "renameAccount": "ఖాతా పేరు మార్చు",
+  "renameCategory": "వర్గం పేరు మార్చు",
+  "addCategory": "వర్గాన్ని జోడించు",
+  "groupLabel": "గ్రూప్",
+  "kindLabel": "రకం",
+  "asset": "ఆస్తి",
+  "liability": "అప్పు",
+  "income": "ఆదాయం",
+  "expense": "ఖర్చు",
+  "thisAccountHoldsInvestments": "ఈ ఖాతా పెట్టుబడులను కలిగి ఉంది",
+  "thisAccountHoldsInvestmentsSubtitle": "నగదు ప్లస్ మీరు కొను, అమ్ము, డివిడెండ్‌తో నమోదు చేసే ఇన్వెంటరీ.",
+  "thisIsACreditCard": "ఇది ఒక క్రెడిట్ కార్డు",
+  "openingBalanceOptional": "ప్రారంభ నిల్వ (ఐచ్ఛికం)",
+  "currencyIso": "కరెన్సీ (ISO 4217)",
+  "currencyIsoExample": "కరెన్సీ (ISO 4217, ఉదా. USD)",
+  "hideAccountTitle": "కొత్త ఎంట్రీల నుండి ఖాతాను దాచాలా?",
+  "hideCategoryTitle": "కొత్త ఎంట్రీల నుండి వర్గాన్ని దాచాలా?",
+  "hideGroupTitle": "కొత్త ఎంట్రీల నుండి గ్రూప్‌ను దాచాలా?",
+  "reassignGroup": "గ్రూప్‌ను తిరిగి కేటాయించు",
+  "transferRemainingBalance": "మిగిలిన నిల్వను బదిలీ చేయి",
+  "monthlyLimit": "నెలవారీ పరిమితి",
+  "monthlyLimitHint": "పరిమితి (క్లియర్ చేయడానికి ఖాళీగా వదలండి)",
+  "monthlyLimitBlurb": "ఈ ఖర్చు వర్గం కోసం ఐచ్ఛిక నెల-వరకు-తేదీ ఖర్చు మార్గదర్శిని.",
+  "manageCategoryRules": "వర్గ నియమాలను నిర్వహించు",
+  "amount": "మొత్తం",
+  "category": "వర్గం",
+  "account": "ఖాతా",
+  "fromAccount": "పంపే ఖాతా",
+  "toAccount": "అందుకునే ఖాతా",
+  "descriptionOptional": "వివరణ (ఐచ్ఛికం)",
+  "alsoRememberPayee": "చెల్లింపుదారుగా కూడా గుర్తుంచుకో",
+  "splitIntoCategories": "బహుళ వర్గాలుగా విభజించు",
+  "categoryN": "వర్గం {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "గమ్యస్థాన మొత్తం",
+  "destinationAmountOptional": "గమ్యస్థాన మొత్తం (ఐచ్ఛికం)",
+  "accountCurrencyAmountOptional": "ఖాతా-కరెన్సీ మొత్తం (ఐచ్ఛికం)",
+  "transactionCurrencyOptional": "లావాదేవీ కరెన్సీ (ఐచ్ఛికం)",
+  "feeOptional": "రుసుము (ఐచ్ఛికం)",
+  "feeAmount": "రుసుము మొత్తం",
+  "feeCategory": "రుసుము వర్గం",
+  "feeDescriptionOptional": "రుసుము వివరణ (ఐచ్ఛికం)",
+  "feeDeducted": "పైన ఉన్న మొత్తం నుండి రుసుము తీసివేయబడుతుంది",
+  "needTwoAccountsToTransfer": "బదిలీ చేయడానికి కనీసం రెండు యాక్టివ్ ఖాతాలను సృష్టించండి.",
+  "whatArrivedTitle": "ఏమి వచ్చింది?",
+  "whatArrivedBlurb": "నిజంగా ఏమి వచ్చిందో మాకు చెప్పండి.",
+  "amountThatArrived": "వచ్చిన మొత్తం",
+  "feeLossCategory": "రుసుము / నష్టం వర్గం",
+  "alreadySettled": "ఇప్పటికే సెటిల్ చేయబడింది.",
+  "holdingsTitle": "హోల్డింగ్‌లు",
+  "holdingsCash": "నగదు",
+  "holdingsInventory": "ఇన్వెంటరీ",
+  "holdingsBook": "బుక్ విలువ (నగదు + వ్యయం) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "మార్కెట్ అంచనా {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "ఇంకా హోల్డింగ్‌లు లేవు. ఒక సాధనాన్ని జోడించడానికి కొనుగోలును నమోదు చేయండి.",
+  "holdingsQuotesBlurb": "కోట్‌లు అంచనాలు, బ్రోకర్ ధర కాదు. ఈ యాప్ ఆర్డర్‌లను ఉంచదు.",
+  "holdingsTapNameToResearch": "పరిశోధించడానికి పేరును నొక్కండి. కోట్‌లు అంచనాలు, సలహా కాదు.",
+  "instrument": "సాధనం",
+  "newInstrument": "కొత్త సాధనం",
+  "renameInstrument": "సాధనం పేరు మార్చు",
+  "instrumentActions": "సాధనం చర్యలు",
+  "hideInstrumentTitle": "{name}ను దాచాలా?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "టికర్ (ఐచ్ఛికం)",
+  "isinOptional": "ISIN (ఐచ్ఛికం)",
+  "quantity": "పరిమాణం",
+  "unitPrice": "యూనిట్ ధర",
+  "brokerageOptional": "బ్రోకరేజ్ (ఐచ్ఛికం)",
+  "brokerageExpenseCategory": "బ్రోకరేజ్ ఖర్చు వర్గం",
+  "incomeCategory": "ఆదాయ వర్గం",
+  "gainIncomeCategory": "లాభ ఆదాయ వర్గం",
+  "lossExpenseCategory": "నష్ట ఖర్చు వర్గం",
+  "nonCash": "నగదు-రహిత",
+  "cash": "నగదు",
+  "locked": "లాక్ చేయబడింది",
+  "lockUntilHint": "ఇది పరిమితి గురించి మీ స్వంత గమనిక, బ్రోకర్ నియమం కాదు.",
+  "instrumentKindStock": "స్టాక్",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "మ్యూచువల్ ఫండ్",
+  "instrumentKindBond": "బాండ్",
+  "instrumentKindOther": "ఇతర",
+  "quoteUseLive": "లైవ్ ధర",
+  "quoteUseCached": "కాష్ చేసిన ధర",
+  "quoteUseStale": "పాత ధర",
+  "quoteUseMissing": "వ్యయాన్ని ఉపయోగిస్తోంది (ధర లేదు)",
+  "quoteUseDisabled": "కోట్‌లు ఆఫ్ — వ్యయం/కాష్‌ను ఉపయోగిస్తోంది",
+  "quoteUseCurrencyMismatch": "వ్యయాన్ని ఉపయోగిస్తోంది (ధర కరెన్సీ వేరు)",
+  "unrealizedLabel": "అనుభవించని {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} యూనిట్లు · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "మీ రికవరీ పదబంధం",
+  "recoveryPhraseConfirmTitle": "మీ పదబంధాన్ని నిర్ధారించండి",
+  "recoveryPhraseBlurb": "ఈ పరికరం పోగొట్టుకుంటే, రీసెట్ చేయబడితే లేదా భర్తీ చేయబడితే మీ లావాదేవీల చరిత్రను తిరిగి పొందడానికి ఈ 24 పదాలు మాత్రమే మార్గం. స్మారా అకౌంటింగ్‌కు సర్వర్ లేదు మరియు వాటిని మీ కోసం తిరిగి పొందలేము.\n\nమీరు ఈ పరికరాన్ని మరియు ఈ పదబంధాన్ని కలిపి కోల్పోతే, మీరు నమోదు చేసిన ప్రతి లావాదేవీ శాశ్వతంగా ధృవీకరించలేనిదిగా మారుతుంది.",
+  "recoveryPhraseWriteDown": "ఈ పదాలను క్రమంలో రాసి, ఈ పరికరం నుండి వేరుగా సురక్షితమైన చోట భద్రపరచండి.",
+  "iveSavedRecoveryPhrase": "నేను నా రికవరీ పదబంధాన్ని సేవ్ చేసుకున్నాను",
+  "confirmPhraseBlurb": "మీరు ఇప్పుడే సేవ్ చేసిన పదబంధం నుండి అడిగిన పదాలను నమోదు చేయండి.",
+  "wordNumber": "పదం #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
-  "lockScreenTitle": "లాక్",
-  "enterPinToContinue": "Enter your PIN to continue",
+  "keystoreExportTitle": "కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయి",
+  "keystoreExportBlurb": "మీ రికవరీ పదబంధంతో పాటు, మీరు ఎంచుకున్న పాస్‌ఫ్రేజ్‌తో రక్షించబడిన ఎన్‌క్రిప్టెడ్ కీస్టోర్ ఫైల్‌ను కూడా సేవ్ చేయవచ్చు. ఇది ఐచ్ఛికం - మీ సైనింగ్ కీని పునరుద్ధరించడానికి మీ రికవరీ పదబంధం ఒక్కటే ఎల్లప్పుడూ సరిపోతుంది.",
+  "keystorePassphrase": "పాస్‌ఫ్రేజ్",
+  "exportKeystoreFile": "కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయి",
+  "chooseCurrencyTitle": "మీ కరెన్సీని ఎంచుకోండి",
+  "chooseCurrencyBlurb": "ప్రతి ఖాతా గ్రూప్ (నగదు & నగదు సమానమైనవి, పెన్షన్ & పదవీ విరమణ, మొదలైనవి) ప్రస్తుతానికి ఈ ఒక్క కరెన్సీని ఉపయోగిస్తుంది. దాని కోసం కొత్త గ్రూప్‌ను సృష్టించడం ద్వారా మీరు తర్వాత వేరే కరెన్సీలో ఖాతాలను జోడించవచ్చు.",
+  "currencyBackfillTitle": "ఇప్పటికే ఉన్న గ్రూప్‌ల కోసం కరెన్సీని ఎంచుకోండి",
+  "currencyBackfillBlurb": "ఈ యాప్ ఇప్పుడు బహుళ కరెన్సీలకు మద్దతు ఇస్తుంది. మీ ఇప్పటికే ఉన్న ఖాతాలు మరియు ఖాతా గ్రూప్‌లకు కరెన్సీ అవసరం - ఈ ఫీచర్ ఉనికిలోకి రాకముందే అవన్నీ సెటప్ చేయబడినందున, ఒకే ఎంపిక వాటన్నింటికీ వర్తిస్తుంది.",
+  "firstAccountTitle": "మీ ఖాతాకు పేరు పెట్టండి",
+  "firstAccountBlurb": "ఇది మీ కోసం ఇప్పటికే సెటప్ చేయబడిన ఖాతా - మీ బ్యాంక్ లాంటి మీకు తెలిసిన పేరును ఇవ్వండి. తర్వాత మీరు ఒక ఖర్చు లేదా రసీదును నమోదు చేస్తారు, ఆపై మీ రికవరీ పదబంధంతో పరికరాన్ని రక్షిస్తారు.",
+  "whatsMainAccountCalled": "మీ ప్రధాన ఖాతా పేరు ఏమిటి?",
+  "restoreTitle": "సైనింగ్ కీని పునరుద్ధరించు",
+  "restoreBlurb": "ఈ పరికరంలో ఇప్పటికే ఖాతా పుస్తకాలు ఉన్నాయి, కానీ సరిపోలే సైనింగ్ కీ లేదు. మీ సేవ్ చేసిన రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ నుండి దాన్ని పునరుద్ధరించండి - మీ డేటా సాధారణంగా ధృవీకరించబడుతుంది, మరియు ఏదీ మళ్లీ సైన్ చేయబడదు లేదా మార్చబడదు.",
+  "recoveryPhrase24": "రికవరీ పదబంధం (అన్ని 24 పదాలు)",
+  "keystoreFile": "కీస్టోర్ ఫైల్",
+  "keystoreFileContents": "కీస్టోర్ ఫైల్ కంటెంట్‌లు",
+  "optionalBackupFile": "ఐచ్ఛిక బ్యాకప్ ఫైల్",
+  "iDontHavePhrase": "నా వద్ద నా రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ లేదు",
+  "migrationTitle": "కొత్త కీకి మైగ్రేట్ చేయి",
+  "migrationBlurb": "మీ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ లేకుండా, ఈ పరికరం సైనింగ్ కీని పునరుద్ధరించలేము. మీరు కొత్త కీని ప్రారంభించవచ్చు. పాత ఎంట్రీలు కనిపిస్తూనే ఉంటాయి, కానీ భర్తీ చేయబడినట్లు గుర్తించబడతాయి.",
+  "iConfirmBooksValid": "ప్రస్తుత ఖాతా పుస్తకాలు చెల్లుబాటు అవుతాయని నేను నిర్ధారిస్తున్నాను",
+  "whyWeDontEdit": "మేము పాత ఎంట్రీలను ఎందుకు సవరించము",
+  "whyWeDontEditBody": "మీరు ఒక తప్పును సరిదిద్దినప్పుడు, మేము పాత లైన్‌ను ఉంచి, మీరు ఇప్పటికే నమోదు చేసినదాన్ని మార్చడానికి బదులుగా దాని పక్కన ఒక సవరణను జోడిస్తాము. ఆ విధంగా మీ చరిత్ర ఎల్లప్పుడూ ఏమి జరిగిందో మరియు మీరు ఎప్పుడు సరిదిద్దారో ఖచ్చితంగా చూపిస్తుంది — మీకు తెలియకుండా ఏదీ మారదు.",
+  "lockTitle": "అన్‌లాక్",
+  "lockScreenTitle": "లాక్ చేయబడింది",
+  "enterPinToContinue": "కొనసాగించడానికి మీ PIN నమోదు చేయండి",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "PIN సెట్ చేయండి",
+  "currentPin": "ప్రస్తుత PIN",
+  "newPin": "కొత్త PIN",
+  "confirmPin": "PIN నిర్ధారించండి",
+  "confirmNewPin": "కొత్త PIN నిర్ధారించండి",
+  "firstWeekTitle": "మీ ఖాతాలను సెటప్ చేయండి",
+  "addCashAccount": "నగదు ఖాతాను జోడించండి",
+  "addCreditCard": "క్రెడిట్ కార్డును జోడించండి",
+  "cashAccountName": "నగదు ఖాతా పేరు",
+  "cardName": "కార్డు పేరు",
+  "paidFromBank": "బ్యాంక్ నుండి చెల్లించబడింది",
+  "paidFromCard": "కార్డు నుండి చెల్లించబడింది",
+  "choosePassphraseTitle": "ఈ బ్యాకప్‌ను రక్షించడానికి పాస్‌ఫ్రేజ్‌ను ఎంచుకోండి. మీరు దానిని మర్చిపోతే పునరుద్ధరణ ఉండదు.",
+  "replaceBooksTitle": "మీ స్థానిక ఖాతా పుస్తకాలను భర్తీ చేయాలా?",
+  "replaceBooksBody": "ఇది ప్రస్తుతం ఈ యాప్‌లో ఉన్న ప్రతిదాన్ని బ్యాకప్‌తో భర్తీ చేస్తుంది. తర్వాత యాప్‌ను మూసివేసి మళ్లీ తెరవండి.",
+  "chooseBackupFileFirst": "మొదట బ్యాకప్ ఫైల్‌ను ఎంచుకోండి.",
+  "backupRestored": "బ్యాకప్ పునరుద్ధరించబడింది",
+  "backupRestoredBody": "మీ ఖాతా పుస్తకాలు పునరుద్ధరించబడ్డాయి. కొనసాగించడానికి యాప్‌ను మూసివేసి మళ్లీ తెరవండి.",
+  "fixThisEntry": "ఈ ఎంట్రీని సరిచేయండి",
+  "fixBlurb": "పాత లైన్ సరిగ్గా అలాగే ఉంటుంది. నిర్ధారించడం ఒక రివర్సింగ్ లైన్‌ను మరియు సరిదిద్దినదాన్ని జోడిస్తుంది.",
+  "importStatementTitle": "స్టేట్‌మెంట్‌ను దిగుమతి చేయి",
+  "importOfx": "OFXను దిగుమతి చేయి",
+  "importOfxQfxFile": "OFX / QFX ఫైల్‌ను దిగుమతి చేయి",
+  "importCsvFile": "CSV ఫైల్‌ను దిగుమతి చేయి",
+  "whatKindOfStatement": "మీ వద్ద ఎలాంటి స్టేట్‌మెంట్ ఫైల్ ఉంది?",
+  "chooseAccountForFile": "ఈ ఫైల్ ఏ ఖాతాకు చెందినదో ఎంచుకోండి.",
+  "importIntoAccount": "ఖాతాలోకి దిగుమతి చేయి",
+  "useSavedProfile": "సేవ్ చేసిన ప్రొఫైల్‌ను ఉపయోగించు",
+  "saveMappingProfile": "ఈ మ్యాపింగ్‌ను ప్రొఫైల్‌గా సేవ్ చేయి (ఐచ్ఛికం)",
+  "renameProfile": "ప్రొఫైల్ పేరు మార్చు",
+  "deleteProfileTitle": "ప్రొఫైల్‌ను తొలగించాలా?",
+  "fileHasHeader": "ఫైల్‌లో హెడర్ వరుస ఉంది",
+  "dateColumn": "తేదీ కాలమ్",
+  "dateFormatHint": "తేదీ ఫార్మాట్ (ఉదా. dd/MM/yyyy)",
+  "amountColumn": "మొత్తం కాలమ్",
+  "amountConvention": "మొత్తం సంప్రదాయం",
+  "signedAmountColumn": "సైన్ చేసిన మొత్తం కాలమ్",
+  "separateDebitCredit": "వేర్వేరు డెబిట్ / క్రెడిట్ కాలమ్‌లు",
+  "debitColumn": "డెబిట్ కాలమ్",
+  "creditColumn": "క్రెడిట్ కాలమ్",
+  "decimalSeparator": "దశాంశ విభాజకం (. లేదా ,)",
+  "descriptionColumns": "వివరణ కాలమ్(లు)",
+  "referenceIdColumn": "రిఫరెన్స్ ఐడి కాలమ్ (ఐచ్ఛికం)",
+  "skippedRows": "దాటవేసిన వరుసలు",
+  "parsedTransactionCount": "{count} లావాదేవీలు పార్స్ చేయబడ్డాయి",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} దాటవేయబడ్డాయి లేదా మినహాయించబడ్డాయి",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} పోస్ట్ చేయబడ్డాయి, {failed} విఫలమయ్యాయి",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "అన్నింటికీ వర్గం",
+  "saveAsRule": "నియమంగా సేవ్ చేయాలా?",
+  "saveAsRuleBlurb": "ఈ కీవర్డ్‌ను కలిగి ఉన్న వివరణతో భవిష్యత్ దిగుమతులు ఈ వర్గాన్ని ఉపయోగిస్తాయి.",
+  "keyword": "కీవర్డ్",
+  "noSavedRules": "ఇంకా సేవ్ చేసిన నియమాలు లేవు. నియమాన్ని సేవ్ చేయడానికి వరుసల సమూహానికి వర్గాన్ని కేటాయించండి.",
+  "deleteRuleTitle": "నియమాన్ని తొలగించాలా?",
+  "editRule": "నియమాన్ని సవరించు",
+  "rowsGrouped": "{count} వరుసలు",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "దిగుమతి చేయడానికి ఒక {extensions} స్టేట్‌మెంట్ ఫైల్‌ను ఎంచుకోండి",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "చెల్లింపుదారులు",
+  "addPayee": "చెల్లింపుదారుని జోడించు",
+  "renamePayee": "చెల్లింపుదారు పేరు మార్చు",
+  "deletePayeeTitle": "చెల్లింపుదారుని తొలగించాలా?",
+  "noPayeesYet": "ఇంకా చెల్లింపుదారులు లేరు",
+  "recurringTitle": "పునరావృత టెంప్లేట్‌లు",
+  "noRecurringYet": "ఇంకా పునరావృత టెంప్లేట్‌లు లేవు",
+  "deleteTemplateTitle": "పునరావృత టెంప్లేట్‌ను తొలగించాలా?",
+  "dayOfMonth": "నెల రోజు (1-31)",
+  "dayOfMonthNote": "తక్కువ రోజులు ఉన్న నెల దాని స్వంత చివరి రోజును ఉపయోగిస్తుంది.",
+  "dayOfMonthLine": "నెలలో {day}వ రోజు - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
-  "errorGeneric": "ఏదో తప్పు జరిగింది. మళ్లీ ప్రయత్నించండి.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "name": "పేరు",
+  "none": "ఏదీ లేదు",
+  "currency": "కరెన్సీ",
+  "errorGeneric": "ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.",
+  "errorSigningIdentityMismatch": "ఈ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ ఈ డేటాబేస్‌లోని ఏ సైనింగ్ ఐడెంటిటీతోనూ సరిపోలడం లేదు.",
+  "errorInvalidLedgerBackup": "ఈ ఫైల్ చెల్లుబాటు అయ్యే స్మారా బ్యాకప్ కాదు.",
+  "errorInvalidLedgerBackupNoIdentity": "ఈ బ్యాకప్‌కు సైనింగ్ ఐడెంటిటీ లేదు - ఇది చెల్లుబాటు అయ్యే స్మారా బ్యాకప్ కాదు.",
+  "errorInvalidLedgerBackupUnverified": "ఈ బ్యాకప్ చెక్కుచెదరని ఖాతా పుస్తకాలుగా ధృవీకరించబడలేదు, కాబట్టి అది పునరుద్ధరించబడలేదు.",
+  "errorInvalidLedgerBackupUnreadable": "ఈ ఫైల్‌ను స్మారా బ్యాకప్‌గా తెరవలేకపోయాము: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "ఈ బ్యాకప్ ఈ పరికరంలో ఉన్న దానికంటే వేరే సైనింగ్ ఐడెంటిటీకి చెందినది.",
+  "errorAccountNotFinancial": "అది ఆర్థిక ఖాతా కాదు.",
+  "errorAccountArchived": "ఆ ఖాతా దాచబడింది.",
+  "errorAccountNotArchived": "ఆ ఖాతా దాచబడలేదు.",
+  "errorAccountNoPositiveBalanceToCloseOut": "బదిలీ చేయడానికి మిగిలిన నిల్వ ఏదీ లేదు.",
+  "errorAccountHasNoGroup": "ఆ ఖాతాకు గ్రూప్ కేటాయించబడలేదు.",
+  "errorGroupHasNoCurrency": "ఆ గ్రూప్‌కు ఇంకా కరెన్సీ సెట్ చేయబడలేదు.",
+  "errorGroupNotFound": "ఆ ఖాతా గ్రూప్ కనుగొనబడలేదు.",
+  "errorInvestmentAccountsMustBeAssets": "ఆస్తి ఖాతాలను మాత్రమే పెట్టుబడి ఖాతాలుగా గుర్తించవచ్చు.",
+  "errorCreditCardsMustBeLiabilities": "అప్పు ఖాతాలను మాత్రమే క్రెడిట్ కార్డులుగా గుర్తించవచ్చు.",
+  "errorOpeningBalanceMustBePositive": "అందించినప్పుడు ప్రారంభ నిల్వ తప్పనిసరిగా ధనాత్మకంగా ఉండాలి.",
+  "errorAccountTypeDoesNotMatchGroup": "ఆ ఖాతా రకం గ్రూప్‌తో సరిపోలడం లేదు.",
+  "errorLastActiveAccount": "చివరి యాక్టివ్ ఆర్థిక ఖాతాను దాచలేము.",
+  "errorCurrencyRequiredToCreateGroup": "గ్రూప్‌ను సృష్టించడానికి కరెన్సీ అవసరం.",
+  "errorSystemGroupCannotBeArchived": "అంతర్నిర్మిత ఖాతా గ్రూప్‌లను దాచలేము.",
+  "errorGroupAlreadyArchived": "ఆ గ్రూప్ ఇప్పటికే దాచబడింది.",
+  "errorCannotArchiveGroupWithAccounts": "ఇంకా యాక్టివ్ ఖాతాలు ఉన్న గ్రూప్‌ను దాచలేము.",
+  "errorSystemGroupNeverArchived": "అంతర్నిర్మిత ఖాతా గ్రూప్‌లు ఎప్పుడూ దాచబడవు.",
+  "errorAccountGroupsCannotBeDeleted": "ఖాతా గ్రూప్‌లను తొలగించలేము.",
+  "errorCannotReassignDifferentCurrency": "వేరే కరెన్సీ ఉన్న గ్రూప్‌కు ఈ ఖాతాను తరలించలేము.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "గ్రూప్‌లో యాక్టివ్ ఖాతాలు ఉన్నప్పుడు కరెన్సీని మార్చలేము.",
   "errorAmountMustBePositive": "మొత్తం ధనాత్మకంగా ఉండాలి.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "ఖాతా-కరెన్సీ మొత్తం ధనాత్మకంగా ఉండాలి.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "ఖాతా-కరెన్సీ మొత్తం విదేశీ-కరెన్సీ ఎంట్రీ కోసం మాత్రమే.",
+  "errorSplitNeedsTwoLines": "విభజనకు కనీసం రెండు వర్గ లైన్‌లు అవసరం.",
+  "errorSplitLineMustBePositive": "ప్రతి విభజన లైన్ తప్పనిసరిగా ధనాత్మక మొత్తం అయి ఉండాలి.",
+  "errorSplitLinesMustSumToTotal": "విభజన లైన్‌లు లావాదేవీ మొత్తానికి సమానంగా ఉండాలి.",
+  "errorTransferAmountMustBePositive": "బదిలీ మొత్తం ధనాత్మకంగా ఉండాలి.",
+  "errorTransferAccountsMustDiffer": "మూల మరియు గమ్యస్థాన ఖాతాలు వేర్వేరుగా ఉండాలి.",
+  "errorCloseoutRequiresDestinationAmount": "క్రాస్-కరెన్సీ క్లోజ్‌అవుట్‌కు తెలిసిన గమ్యస్థాన మొత్తం అవసరం.",
+  "errorDestinationAmountNotForSameCurrency": "గమ్యస్థాన మొత్తం క్రాస్-కరెన్సీ బదిలీ కోసం మాత్రమే.",
+  "errorDestinationAmountMustBePositive": "గమ్యస్థాన మొత్తం ధనాత్మకంగా ఉండాలి.",
+  "errorInvestmentCashExceeded": "ఈ పెట్టుబడి ఖాతా నగదు కంటే ఎక్కువ బదిలీ చేయలేము.",
+  "errorCannotReverseUnsettledProvisional": "ఈ పెండింగ్ బదిలీని రివర్స్ చేయడానికి బదులుగా సెటిల్ చేయండి.",
+  "errorAlreadyReversed": "ఈ ఎంట్రీ ఇప్పటికే సరిదిద్దబడింది. అసలు లైన్ యథాతథంగా ఉంటుంది.",
+  "errorNotActiveExpenseCategory": "యాక్టివ్ ఖర్చు వర్గాన్ని ఎంచుకోండి.",
+  "errorNotActiveIncomeCategory": "యాక్టివ్ ఆదాయ వర్గాన్ని ఎంచుకోండి.",
+  "errorSettledAmountMustNotBeNegative": "వచ్చిన మొత్తం రుణాత్మకంగా ఉండకూడదు.",
+  "errorPendingTransferNotFound": "ఆ పెండింగ్ బదిలీ కనుగొనబడలేదు.",
+  "errorPendingTransferAlreadySettled": "ఆ పెండింగ్ బదిలీ ఇప్పటికే సెటిల్ చేయబడింది.",
+  "errorSettledToMustBeSourceOrDestination": "అసలు మూల లేదా గమ్యస్థాన ఖాతాను ఎంచుకోండి.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "డబ్బు మూల ఖాతాకు తిరిగి వచ్చినప్పుడు మాత్రమే రుసుము వర్గం ఉపయోగించబడుతుంది.",
+  "errorSettledAmountMustBePositiveForDelivery": "వచ్చినదానికి ధనాత్మక మొత్తాన్ని నమోదు చేయండి.",
+  "errorSettledAmountExceedsProvisional": "ఆ మొత్తం పంపినదానికంటే ఎక్కువగా ఉంది.",
+  "errorInstrumentNotFound": "ఆ సాధనం కనుగొనబడలేదు.",
+  "errorIncomeRequiredForNonCash": "నగదు-రహిత సముపార్జనకు యాక్టివ్ ఆదాయ వర్గం అవసరం.",
+  "errorInsufficientCash": "ఆ కొనుగోలు కోసం ఈ పెట్టుబడి ఖాతాలో తగినంత నగదు లేదు.",
+  "errorSellQuantityAndPriceMustBePositive": "అమ్మకం పరిమాణం మరియు యూనిట్ ధర ధనాత్మకంగా ఉండాలి.",
+  "errorLockedUntil": "అమ్మలేము: కొన్ని యూనిట్లు {date} వరకు లాక్ చేయబడ్డాయి.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "మీరు ప్రస్తుతం అన్‌లాక్ చేసి కలిగి ఉన్నదానికంటే ఎక్కువ అమ్మలేరు.",
+  "errorIncomeRequiredForGain": "వాస్తవీకరించిన లాభానికి యాక్టివ్ ఆదాయ వర్గం అవసరం.",
+  "errorExpenseRequiredForLoss": "వాస్తవీకరించిన నష్టానికి యాక్టివ్ ఖర్చు వర్గం అవసరం.",
+  "errorBrokerageFailedAfterBuy": "కొనుగోలు పోస్ట్ చేయబడింది, కానీ బ్రోకరేజ్ రుసుము విఫలమైంది: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "అమ్మకం పోస్ట్ చేయబడింది, కానీ బ్రోకరేజ్ రుసుము విఫలమైంది: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "డివిడెండ్ మొత్తం ధనాత్మకంగా ఉండాలి.",
+  "errorNotInvestmentAccount": "అది పెట్టుబడి ఖాతా కాదు.",
+  "errorNoInventoryCompanion": "ఈ పెట్టుబడి ఖాతాకు దాని ఇన్వెంటరీ జతకారు లేదు.",
+  "errorInvestmentReversalBlocked": "ఈ కొనుగోలును రివర్స్ చేయలేము: తర్వాతి అమ్మకం(లు) దాని యూనిట్లపై ఆధారపడి ఉన్నాయి. ముందుగా ఆధారిత అమ్మకం(ల)ను రివర్స్ చేయండి: {sells}.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "నెలవారీ పరిమితి ధనాత్మకంగా ఉండాలి.",
+  "errorTemplateAmountMustBePositive": "టెంప్లేట్ మొత్తం ధనాత్మకంగా ఉండాలి.",
+  "errorOfxUnrecognized": "ఈ ఫైల్‌ను OFXగా గుర్తించలేకపోయాము.",
+  "errorCsvEmpty": "ఎంచుకున్న ఫైల్ ఖాళీగా ఉంది.",
+  "errorCsvUnreadable": "ఈ ఫైల్‌ను CSVగా చదవలేకపోయాము.",
+  "errorCsvNoRows": "ఎంచుకున్న ఫైల్‌లో వరుసలు లేవు.",
+  "errorBackupCreateFailed": "బ్యాకప్‌ను సృష్టించలేకపోయాము: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "ఈ బ్యాకప్‌ను పునరుద్ధరించలేకపోయాము - తప్పు పాస్‌ఫ్రేజ్, లేదా ఇది స్మారా బ్యాకప్ ఫైల్ కాదు.",
+  "validationAmountAccountCategoryRequired": "మొత్తం, ఖాతా, మరియు వర్గం అవసరం.",
+  "validationAmountAccountRequired": "మొత్తం మరియు ఖాతా అవసరం.",
+  "validationSplitLineIncomplete": "ప్రతి విభజన లైన్‌కు వర్గం మరియు మొత్తం అవసరం.",
+  "validationSplitSumMismatch": "విభజన లైన్‌లు లావాదేవీ మొత్తానికి సమానంగా ఉండాలి.",
+  "validationFromToAmountRequired": "పంపే ఖాతా, అందుకునే ఖాతా, మరియు మొత్తం అవసరం.",
+  "validationAmountArrivedRequired": "వచ్చిన మొత్తం అవసరం.",
+  "validationChooseReceivingAccount": "నిధులను అందుకున్న ఖాతాను ఎంచుకోండి.",
+  "validationAccountCategoryRequired": "ఖాతా మరియు వర్గం అవసరం.",
+  "validationFixFailed": "ఈ సరిదిద్దటాన్ని సేవ్ చేయలేకపోయాము.",
+  "validationNameRequired": "మీ ప్రధాన ఖాతాకు పేరు పెట్టండి.",
+  "validationStillLoading": "ఇంకా లోడ్ అవుతోంది - కొద్దిసేపటిలో మళ్లీ ప్రయత్నించండి.",
+  "validationSaveAccountNameFailed": "ఖాతా పేరును సేవ్ చేయలేకపోయాము.",
+  "validationWrongPin": "తప్పు PIN. మళ్లీ ప్రయత్నించండి.",
+  "validationCategoryMustBeIncomeOrExpense": "వర్గం ఆదాయం లేదా ఖర్చు అయి ఉండాలి.",
+  "validationOnlyExpenseHasMonthlyLimit": "ఖర్చు వర్గం మాత్రమే నెలవారీ పరిమితిని కలిగి ఉంటుంది.",
+  "validationInvalidTemplate": "చెల్లని టెంప్లేట్.",
+  "validationWrongKeystorePassphrase": "ఈ కీస్టోర్ ఫైల్ కోసం తప్పు పాస్‌ఫ్రేజ్.",
+  "validationInvalidKeystoreFile": "అది చెల్లుబాటు అయ్యే కీస్టోర్ ఫైల్‌లా కనిపించడం లేదు.",
+  "validationRestorePhraseFailed": "ఆ రికవరీ పదబంధం నుండి పునరుద్ధరించలేకపోయాము.",
+  "validationGenerateKeyFailed": "ఈ పరికరంలో సైనింగ్ కీని సృష్టించలేకపోయాము: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "ఈ కరెన్సీని సేవ్ చేయలేకపోయాము: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "మైగ్రేషన్ విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి.",
+  "validationChooseBackupFile": "మొదట బ్యాకప్ ఫైల్‌ను ఎంచుకోండి.",
+  "validationPassphraseRequired": "పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.",
+  "validationPinsDoNotMatch": "రెండు PIN లు సరిపోలడం లేదు.",
+  "validationFeePositiveWithCategory": "బదిలీ రుసుము ఖర్చు వర్గం ఎంచుకున్నప్పుడు ధనాత్మక మొత్తంగా ఉండాలి.",
+  "validationFeeMustBeLessThanAmount": "తీసివేయబడిన-రుసుము బదిలీ కోసం రుసుము మొత్తం కంటే తక్కువగా ఉండాలి.",
+  "validationTransferSavedFeeFailed": "బదిలీ సేవ్ చేయబడింది, కానీ రుసుము నమోదు చేయలేకపోయాము: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "సరైన మొత్తాన్ని నమోదు చేయండి.",
+  "validationConfirmWordMismatch": "పదం {n} మీ సేవ్ చేసిన పదబంధంతో సరిపోలడం లేదు. దాన్ని తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "కొనుగోలు పరిమాణం మరియు యూనిట్ ధర ధనాత్మకంగా ఉండాలి.",
+  "errorInstrumentArchived": "దాచిన సాధనాన్ని కొనలేము.",
+  "errorNonCashCannotIncludeBrokerage": "నగదు-రహిత సముపార్జనలలో బ్రోకరేజ్ చేర్చలేరు.",
+  "errorBrokerageRequiresExpenseCategory": "బ్రోకరేజ్ ధనాత్మకంగా ఉన్నప్పుడు యాక్టివ్ ఖర్చు వర్గం అవసరం.",
+  "errorSellProceedsMustCoverBrokerage": "అమ్మకం ఆదాయం కనీసం బ్రోకరేజ్ మొత్తం అయినా ఉండాలి.",
+  "homeSpentOfLimitThisMonth": "ఈ నెల {limit}లో {spent}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
-  "searchLabel": "వెతుకు",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "unlockBiometricReason": "స్మారా ఖాతాను అన్‌లాక్ చేయండి",
+  "searchLabel": "శోధించు",
+  "openingBalance": "ప్రారంభ నిల్వ",
+  "transferToName": "బదిలీ: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "బదిలీ కోసం రుసుము",
+  "feeForTransferTo": "{name}కు బదిలీ కోసం రుసుము",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "ఫైల్ పికర్‌ను తెరవలేకపోయాము: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "దయచేసి ఒక .{extensions} ఫైల్‌ను ఎంచుకోండి",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "కరెన్సీ కోడ్ (ISO 4217, ఉదా. USD)",
+  "splitCounterpartMore": "{name} +{count} మరిన్ని",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "తేదీ",
+  "noneSelected": "ఏదీ లేదు",
+  "reviewEntriesBeforeContinuing": "కొనసాగించే ముందు దిగువ ఎంట్రీలను (మొత్తం {count}) సమీక్షించండి.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "మీరు {amount} అందుకున్నారు",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "మారకపు రేటు ఇంకా తెలియకపోతే ఖాళీగా వదలండి.",
+  "recordTradeBlurb": "ఇప్పటికే జరిగిన ట్రేడ్‌ను నమోదు చేయండి. ఈ యాప్ ఆర్డర్‌లను ఉంచదు.",
+  "feeOnTopBlurb": "ఆన్: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకున్న మొత్తం; రుసుము దాని నుండి తీసివేయబడుతుంది.",
+  "feeBankBlurb": "మీ బ్యాంక్ లేదా మధ్యవర్తి వసూలు చేసే ముందస్తు కమిషన్.",
+  "validationPinMinLength": "PIN కనీసం 4 అంకెలు ఉండాలి.",
+  "restoreBackupBlurb": "ఇది ప్రస్తుతం ఈ యాప్‌లో ఉన్న ప్రతిదాన్ని బ్యాకప్‌తో భర్తీ చేస్తుంది — ఇది విలీనం చేయదు. బ్యాకప్ ఫైల్‌ను ఎంచుకుని దానిని రక్షించిన పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.",
+  "actionReplace": "భర్తీ చేయి",
+  "hideAccountBody": "{name} కొత్త లావాదేవీలకు ఇక అందుబాటులో ఉండదు.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "ఖాతాలను సృష్టించేటప్పుడు లేదా తిరిగి కేటాయించేటప్పుడు {name} ఇక అందించబడదు.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "కొత్త లావాదేవీలను నమోదు చేసేటప్పుడు {name} ఇక అందించబడదు.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "దాచిన సాధనాలు గత కొనుగోళ్లు మరియు అమ్మకాలపై ఉంటాయి. మీరు వాటి కోసం ఇప్పటికీ డివిడెండ్‌ను నమోదు చేయవచ్చు.",
+  "nameHidden": "{name} (దాచబడింది)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "కరెన్సీ సెట్ చేయబడలేదు",
+  "deletePayeeBody": "{name} మరియు దాని గుర్తుంచుకున్న డిఫాల్ట్‌లు తీసివేయబడతాయి. గత లావాదేవీలు ప్రభావితం కావు.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} ఇక గడువుగా అందించబడదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "సేవ్ చేసిన కాలమ్ మ్యాపింగ్ \"{name}\" తొలగించబడుతుంది. దానితో ఇప్పటికే దిగుమతి చేసిన స్టేట్‌మెంట్‌లు ప్రభావితం కావు.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "దిగుమతులు ఇక \"{keyword}\" ద్వారా స్వయంచాలకంగా వర్గీకరించబడవు. ఈ నియమాన్ని ఉపయోగించి ఇప్పటికే వర్గీకరించిన లావాదేవీలు ప్రభావితం కావు.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "ఐచ్ఛికంగా ఇప్పుడు క్రెడిట్ కార్డు లేదా నగదు ఖాతాను జోడించండి - మీరు ఎల్లప్పుడూ సెట్టింగ్‌ల నుండి తర్వాత మరిన్ని ఖాతాలను జోడించవచ్చు.",
+  "deliveredToDestination": "గమ్యస్థానానికి డెలివర్ చేయబడింది",
+  "deliveredToName": "{name}కు డెలివర్ చేయబడింది",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "మీరు ఆశించిన దానికంటే {amount} {currency} తక్కువ అందుకున్నారు - తేడాను భర్తీ చేయడానికి ఒక వర్గాన్ని ఎంచుకోండి.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "తేదీ పరిధి",
+  "addTemplate": "టెంప్లేట్‌ను జోడించు",
+  "editTemplate": "టెంప్లేట్‌ను సవరించు",
+  "validationFillTemplateFields": "ప్రతి ఫీల్డ్‌లో సరైన మొత్తం మరియు రోజును నింపండి.",
+  "saveCsvExport": "CSV ఎగుమతిని సేవ్ చేయి",
+  "referenceRate": "సూచన రేటు",
+  "yourRate": "మీ రేటు",
+  "leaveBlankIfThisWasAccountCurrency": "ఇది {currency}లో ఉంటే, అంటే ఖాతా స్వంత కరెన్సీలో ఉంటే ఖాళీగా వదలండి.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "వరకు లాక్ (ఐచ్ఛికం)",
+  "lockedUntilDate": "{date} వరకు లాక్ చేయబడింది",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "పరిశోధన ప్రాంప్ట్ కాపీ చేయబడింది — బ్రౌజర్ URL అందుబాటులో లేదు, లేదా మీరు ఆఫ్‌లైన్‌లో ఉన్నారు.",
+  "openedFavouriteResearchTool": "మీ ఇష్టమైన పరిశోధన సాధనం తెరవబడింది.",
+  "looksLikeGain": "ఇది లాభంలా కనిపిస్తోంది",
+  "looksLikeLoss": "ఇది నష్టంలా కనిపిస్తోంది",
+  "looksLikeBreakEven": "ఇది బ్రేక్-ఈవెన్‌లా కనిపిస్తోంది",
+  "sellableQuantity": "{name} ({qty} అమ్మదగినవి)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "కాలమ్ {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "దిగుమతి చేస్తోంది...",
+  "confirmImport": "దిగుమతిని నిర్ధారించు",
+  "manageSavedCategoryRules": "సేవ్ చేసిన వర్గ నియమాలను నిర్వహించు",
+  "statementCurrencyMismatch": "ఈ ఫైల్ కరెన్సీ ({currency}) ఎంచుకున్న ఖాతా కరెన్సీతో సరిపోలడం లేదు.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "వర్గ నియమాలు",
+  "possibleDuplicate": "సాధ్యమైన నకిలీ",
+  "unknownCategory": "తెలియని వర్గం"
 }

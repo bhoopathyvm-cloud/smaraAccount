@@ -30,5 +30,7 @@ mixin LocalizedErrorMixin on ChangeNotifier {
   }
 }
 
-AppFailure validation(AppErrorCode code, [Map<String, String> params = const {}]) =>
-    AppFailure(code, params: params);
+AppFailure validation(
+  AppErrorCode code, [
+  Map<String, String> params = const {},
+]) => AppFailure(code, params: params);

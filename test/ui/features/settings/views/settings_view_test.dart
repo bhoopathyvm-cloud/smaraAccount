@@ -28,9 +28,7 @@ void main() {
     when(
       repository.selectedProvider(),
     ).thenAnswer((_) async => ExchangeRateProvider.frankfurter);
-    when(
-      repository.isMarketPriceFetchEnabled(),
-    ).thenAnswer((_) async => true);
+    when(repository.isMarketPriceFetchEnabled()).thenAnswer((_) async => true);
     when(
       repository.selectedQuoteProvider(),
     ).thenAnswer((_) async => QuoteProvider.stooq);
@@ -43,9 +41,7 @@ void main() {
     when(repository.setSelectedProvider(any)).thenAnswer((_) async {});
     when(repository.isAppLockEnabled()).thenAnswer((_) async => false);
     when(repository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
-    when(
-      repository.isAppLockBiometricEnabled(),
-    ).thenAnswer((_) async => false);
+    when(repository.isAppLockBiometricEnabled()).thenAnswer((_) async => false);
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
   });
 
@@ -75,7 +71,11 @@ void main() {
   }
 
   Future<void> tapScrolled(WidgetTester tester, Finder finder) async {
-    await tester.scrollUntilVisible(finder, 200, scrollable: find.byType(Scrollable).first);
+    await tester.scrollUntilVisible(
+      finder,
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(finder);
   }

@@ -4,13 +4,48 @@ import 'package:flutter/widgets.dart';
 /// here and add matching ARB files; do not invent tags that have no ARB.
 const kSupportedLocaleTags = <String>[
   'en',
-  'ta', 'te', 'ml', 'kn',
-  'hi', 'ur', 'pa', 'ne', 'sa', 'doi', 'ks', 'mai',
-  'mr', 'gu', 'kok', 'sd',
-  'bn', 'as', 'or', 'mni', 'brx', 'sat',
-  'de', 'fr', 'es', 'it', 'pt', 'hu', 'ro',
-  'ja', 'zh', 'ko',
-  'ar', 'ru', 'id', 'tr', 'vi', 'th', 'ms', 'uk', 'pl', 'nl',
+  'ta',
+  'te',
+  'ml',
+  'kn',
+  'hi',
+  'ur',
+  'pa',
+  'ne',
+  'sa',
+  'doi',
+  'ks',
+  'mai',
+  'mr',
+  'gu',
+  'kok',
+  'sd',
+  'bn',
+  'as',
+  'or',
+  'mni',
+  'brx',
+  'sat',
+  'de',
+  'fr',
+  'es',
+  'it',
+  'pt',
+  'hu',
+  'ro',
+  'ja',
+  'zh',
+  'ko',
+  'ar',
+  'ru',
+  'id',
+  'tr',
+  'vi',
+  'th',
+  'ms',
+  'uk',
+  'pl',
+  'nl',
 ];
 
 /// Sentinel stored in preferences when the user wants the device locale
@@ -31,7 +66,10 @@ Locale localeFromTag(String tag) {
 String tagFromLocale(Locale locale) {
   final script = locale.scriptCode;
   final country = locale.countryCode;
-  if (script != null && script.isNotEmpty && country != null && country.isNotEmpty) {
+  if (script != null &&
+      script.isNotEmpty &&
+      country != null &&
+      country.isNotEmpty) {
     return '${locale.languageCode}-$script-$country';
   }
   if (country != null && country.isNotEmpty) {

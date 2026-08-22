@@ -20,100 +20,99 @@
   "actionRename": "重命名",
   "actionHide": "隐藏",
   "actionCreate": "创建",
-  "actionCloseApp": "Close app",
+  "actionCloseApp": "关闭应用",
   "actionUnlock": "解锁",
   "actionSettle": "结清",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
+  "actionFinish": "完成",
+  "actionPreview": "预览",
+  "actionImport": "导入",
+  "actionExportCsv": "导出 CSV",
+  "actionChooseFile": "选择文件",
   "actionRestore": "恢复",
-  "actionArchive": "Hide",
   "actionFix": "更正",
   "actionBuy": "买入",
   "actionSell": "卖出",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
+  "actionDividend": "股息",
+  "actionRecordBuy": "记录买入",
+  "actionRecordSell": "记录卖出",
+  "actionRecordDividend": "记录股息",
+  "actionPayCard": "还款",
   "actionTransfer": "转账",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
+  "actionRecordTransaction": "记录交易",
+  "actionImportStatement": "导入对账单",
+  "actionClearDates": "清除日期",
+  "actionClearSearch": "清除搜索和筛选",
+  "actionUseBiometrics": "使用生物识别",
+  "actionSetPin": "设置 PIN",
+  "actionChangePin": "更改 PIN",
+  "actionSaveBackup": "保存备份",
+  "actionRestoreBackup": "恢复备份",
+  "actionSaveRule": "保存规则",
+  "actionConfirmFix": "确认更正",
   "captureSpent": "支出",
   "captureReceived": "收入",
   "captureMovedMoney": "资金转移",
-  "captureImportStatement": "Import statement",
+  "captureImportStatement": "导入对账单",
   "settingsTitle": "设置",
   "settingsLanguage": "语言",
   "settingsLanguageSystem": "设备语言",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
+  "settingsFetchFxRates": "获取参考汇率",
+  "settingsFetchFxRatesSubtitle": "在跨币种转账时，在目标金额旁显示一个仅供参考的市场汇率，仅用于比较——绝不会用来自动填写金额。",
+  "settingsRateProvider": "汇率提供方",
+  "settingsFetchMarketPrices": "获取投资的市场价格",
+  "settingsFetchMarketPricesSubtitle": "为拥有股票代码或 ISIN 的投资标的查询最新价格，以估算投资组合价值。绝不用于记录交易，也绝不会发送您持有的数量。",
+  "settingsMarketPriceProvider": "市场价格提供方",
+  "settingsFavouriteResearchTool": "常用研究工具",
+  "settingsFavouriteResearchToolSubtitle": "点按持仓中的标的名称，会在浏览器中打开该工具并附带一个研究提示——这不是集成功能，也不构成投资建议。",
   "settingsBackup": "备份",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
+  "settingsBackupBlurb": "将您的账本加密副本保存到您选择的位置，或从中恢复。这与您的恢复短语或密钥库文件不同，后者备份的是您的签名密钥，而不是您的账本。",
   "settingsLock": "锁定",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLockBlurb": "要求输入 PIN，或在可用时使用生物识别，才能打开应用。",
+  "settingsRequireUnlock": "打开应用时需要解锁",
+  "settingsLockAfter": "锁定延迟",
+  "settingsLockImmediately": "立即",
+  "settingsLock1Minute": "1 分钟",
+  "settingsLock5Minutes": "5 分钟",
+  "settingsLock15Minutes": "15 分钟",
+  "settingsAllowBiometrics": "同时允许生物识别",
+  "settingsHideSnapshot": "在应用切换器中隐藏余额",
+  "settingsHideSnapshotSubtitle": "当您切换到其他应用时遮挡此屏幕，使其不会在应用切换器中一眼被看到。",
+  "settingsHideSnapshotUnavailable": "此平台不支持在应用切换器中隐藏余额。",
+  "settingsPayees": "收款人",
+  "settingsManagePayees": "管理收款人",
+  "settingsPayeesBlurb": "已记住的收款人名称及其默认分类和账户，会在记录交易时通过自动完成提示。",
+  "settingsRecurring": "定期模板",
+  "settingsManageRecurring": "管理定期模板",
+  "settingsRecurringBlurb": "每月重复发生的账单或收入，例如房租或工资。到期的模板会显示在首页，供您一键记录——绝不会自动记账。",
+  "settingsAbout": "关于",
+  "providerFrankfurter": "Frankfurter（欧洲央行汇率）",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerStooq": "Stooq（每日报价）",
+  "providerYahooFinance": "Yahoo Finance（图表 API）",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "现金及现金等价物",
+  "systemGroupPensionRetirement": "养老金与退休金",
+  "systemGroupCreditShortTerm": "信贷与短期负债",
+  "systemGroupLoansMortgages": "贷款与按揭",
+  "systemGroupInvestments": "投资",
+  "systemAccountCashBank": "现金与银行",
+  "systemCategorySalary": "工资",
+  "systemCategoryOtherIncome": "其他收入",
+  "systemCategoryGroceries": "日用杂货",
+  "systemCategoryRentMortgage": "房租/按揭",
+  "systemCategoryUtilities": "水电煤气",
+  "systemCategoryTransport": "交通",
+  "systemCategoryFoodOut": "外食",
+  "systemCategoryPhone": "电话",
+  "systemCategoryHealth": "健康",
+  "systemCategoryOtherExpense": "其他支出",
   "homeThisMonth": "本月",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "在途资金",
+  "homeWhatYouHaveMinusWhatYouOwe": "您拥有的减去您所欠的",
+  "homeWhatYouHave": "您拥有 {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "您拥有 {haveAmount} {currency}  •  您所欠 {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "您从 {name} 发送了 {amount} {currency}",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "您向 {name} 发送了 {amount} {currency}",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "已隐藏",
+  "allAccounts": "所有账户",
+  "savedToPath": "已保存到 {path}",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "无法导出密钥库文件。您可以跳过此步骤。",
+  "enterPassphraseToProtect": "输入一个密码短语以保护此文件。",
+  "homeTapWhenArrived": "确认收到内容后点按",
+  "homeReturnedTo": "已退回至 {name}",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "今日到期",
+  "homeDueLine": "{category} · {account} · 点按记录",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "超出限额",
+  "homeSpentOfLimit": "{spent} / {limit}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "剩余：{amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
+  "homeNoAccounts": "没有账户",
+  "homeCashRegister": "现金账户",
+  "homeMarketEstimate": "市值估算",
   "registerTitle": "流水",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
+  "registerSearchHint": "描述、分类或金额",
+  "registerNoTransactions": "尚无交易",
+  "registerNoEntries": "尚未记录任何条目。",
+  "registerSpentOnly": "仅支出",
+  "registerReceivedOnly": "仅收入",
+  "registerAll": "全部",
+  "registerUnverified": "未验证——不计入总计",
+  "registerSuperseded": "已被迁移取代——不计入总计",
   "summaryTitle": "汇总",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "summaryTotalIncome": "总收入",
+  "summaryTotalExpense": "总支出",
+  "summaryDateRange": "{start} 至 {end}",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -258,43 +257,43 @@
   },
   "accountsTitle": "账户",
   "categoriesTitle": "分类",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
+  "accountName": "账户名称",
+  "createAccount": "创建账户",
+  "createGroup": "创建分组",
+  "editGroup": "编辑分组",
+  "renameAccount": "重命名账户",
+  "renameCategory": "重命名分类",
+  "addCategory": "添加分类",
+  "groupLabel": "分组",
+  "kindLabel": "类型",
   "asset": "资产",
   "liability": "负债",
   "income": "收入",
   "expense": "支出",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "thisAccountHoldsInvestments": "此账户持有投资",
+  "thisAccountHoldsInvestmentsSubtitle": "现金加上您通过“买入”“卖出”和“股息”记录的持仓。",
+  "thisIsACreditCard": "这是一张信用卡",
+  "openingBalanceOptional": "期初余额（可选）",
+  "currencyIso": "货币（ISO 4217）",
+  "currencyIsoExample": "货币（ISO 4217，例如 USD）",
+  "hideAccountTitle": "从新条目中隐藏此账户？",
+  "hideCategoryTitle": "从新条目中隐藏此分类？",
+  "hideGroupTitle": "从新条目中隐藏此分组？",
+  "reassignGroup": "重新分配分组",
+  "transferRemainingBalance": "转出剩余余额",
+  "monthlyLimit": "月度限额",
+  "monthlyLimitHint": "限额（留空以清除）",
+  "monthlyLimitBlurb": "该支出分类的可选月度累计支出参考值。",
+  "manageCategoryRules": "管理分类规则",
+  "amount": "金额",
+  "category": "分类",
+  "account": "账户",
+  "fromAccount": "转出账户",
+  "toAccount": "转入账户",
+  "descriptionOptional": "描述（可选）",
+  "alsoRememberPayee": "同时记住为收款人",
+  "splitIntoCategories": "拆分为多个分类",
+  "categoryN": "分类 {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "目标金额",
+  "destinationAmountOptional": "目标金额（可选）",
+  "accountCurrencyAmountOptional": "账户币种金额（可选）",
+  "transactionCurrencyOptional": "交易币种（可选）",
+  "feeOptional": "手续费（可选）",
+  "feeAmount": "手续费金额",
+  "feeCategory": "手续费分类",
+  "feeDescriptionOptional": "手续费描述（可选）",
+  "feeDeducted": "手续费从上方金额中扣除",
+  "needTwoAccountsToTransfer": "至少创建两个有效账户才能进行转账。",
+  "whatArrivedTitle": "实际到账多少？",
+  "whatArrivedBlurb": "请告诉我们实际到账的金额。",
+  "amountThatArrived": "实际到账金额",
+  "feeLossCategory": "手续费/亏损分类",
+  "alreadySettled": "已结清。",
+  "holdingsTitle": "持仓",
+  "holdingsCash": "现金",
+  "holdingsInventory": "持仓明细",
+  "holdingsBook": "账面价值（现金+成本）{amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "市值估算 {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "尚无持仓。记录一笔买入以添加投资标的。",
+  "holdingsQuotesBlurb": "报价仅为估算，并非券商实时价格。此应用不进行下单交易。",
+  "holdingsTapNameToResearch": "点按名称即可查询。报价仅为估算，不构成投资建议。",
+  "instrument": "投资标的",
+  "newInstrument": "新建投资标的",
+  "renameInstrument": "重命名投资标的",
+  "instrumentActions": "投资标的操作",
+  "hideInstrumentTitle": "隐藏 {name}？",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "股票代码（可选）",
+  "isinOptional": "ISIN（可选）",
+  "quantity": "数量",
+  "unitPrice": "单价",
+  "brokerageOptional": "经纪费（可选）",
+  "brokerageExpenseCategory": "经纪费支出分类",
+  "incomeCategory": "收入分类",
+  "gainIncomeCategory": "收益收入分类",
+  "lossExpenseCategory": "亏损支出分类",
+  "nonCash": "非现金",
+  "cash": "现金",
+  "locked": "已锁定",
+  "lockUntilHint": "这是您自己记录的限制说明，并非券商的规则。",
+  "instrumentKindStock": "股票",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "共同基金",
+  "instrumentKindBond": "债券",
+  "instrumentKindOther": "其他",
+  "quoteUseLive": "实时价格",
+  "quoteUseCached": "缓存价格",
+  "quoteUseStale": "过期价格",
+  "quoteUseMissing": "使用成本价（无报价）",
+  "quoteUseDisabled": "报价已关闭——使用成本价/缓存",
+  "quoteUseCurrencyMismatch": "使用成本价（报价币种不同）",
+  "unrealizedLabel": "未实现 {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} 份 · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "您的恢复短语",
+  "recoveryPhraseConfirmTitle": "确认您的恢复短语",
+  "recoveryPhraseBlurb": "如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara Accounting 没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。",
+  "recoveryPhraseWriteDown": "按顺序写下这些单词，并将其存放在与此设备分开的安全地方。",
+  "iveSavedRecoveryPhrase": "我已保存我的恢复短语",
+  "confirmPhraseBlurb": "输入您刚保存的恢复短语中被要求的单词。",
+  "wordNumber": "第 {n} 个单词",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
+  "keystoreExportTitle": "导出密钥库文件",
+  "keystoreExportBlurb": "除了恢复短语外，您还可以保存一个由您选择的密码短语保护的加密密钥库文件。这是可选的——仅凭您的恢复短语始终足以恢复您的签名密钥。",
+  "keystorePassphrase": "密码短语",
+  "exportKeystoreFile": "导出密钥库文件",
+  "chooseCurrencyTitle": "选择您的货币",
+  "chooseCurrencyBlurb": "目前每个账户分组（现金及现金等价物、养老金与退休金等）都使用这一种货币。您以后仍可以通过创建新的分组来添加使用其他货币的账户。",
+  "currencyBackfillTitle": "为现有分组选择货币",
+  "currencyBackfillBlurb": "此应用现已支持多种货币。您现有的账户和账户分组需要指定一种货币——由于它们都是在该功能出现之前创建的，您的选择将统一应用于全部账户和分组。",
+  "firstAccountTitle": "为您的账户命名",
+  "firstAccountBlurb": "这是已为您预先设置好的账户——为它取一个您能认出的名字，比如您的银行名称。接下来您会记录一笔支出或收入，然后用恢复短语保护此设备。",
+  "whatsMainAccountCalled": "您的主要账户叫什么名字？",
+  "restoreTitle": "恢复签名密钥",
+  "restoreBlurb": "此设备已有账本，但没有匹配的签名密钥。请从您保存的恢复短语或密钥库文件中恢复它——您的数据将正常通过验证，不会有任何数据被重新签名或更改。",
+  "recoveryPhrase24": "恢复短语（全部 24 个单词）",
+  "keystoreFile": "密钥库文件",
+  "keystoreFileContents": "密钥库文件内容",
+  "optionalBackupFile": "可选备份文件",
+  "iDontHavePhrase": "我没有恢复短语或密钥库文件",
+  "migrationTitle": "迁移到新密钥",
+  "migrationBlurb": "如果没有恢复短语或密钥库文件，此设备的签名密钥将无法恢复。您可以创建一个新密钥。旧条目仍会显示，但会被标记为已取代。",
+  "iConfirmBooksValid": "我确认当前账本有效",
+  "whyWeDontEdit": "我们为什么不修改旧条目",
+  "whyWeDontEditBody": "当您更正一个错误时，我们会保留原有的记录行，并在旁边添加一条更正记录，而不是改动您已经录入的内容。这样，您的历史记录始终能准确显示实际发生了什么，以及您何时做了更正——不会有任何内容在您不知情的情况下被悄悄改变。",
+  "lockTitle": "解锁",
   "lockScreenTitle": "已锁定",
   "enterPinToContinue": "输入 PIN 以继续",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "设置 PIN",
+  "currentPin": "当前 PIN",
+  "newPin": "新 PIN",
+  "confirmPin": "确认 PIN",
+  "confirmNewPin": "确认新 PIN",
+  "firstWeekTitle": "设置您的账户",
+  "addCashAccount": "添加现金账户",
+  "addCreditCard": "添加信用卡",
+  "cashAccountName": "现金账户名称",
+  "cardName": "卡片名称",
+  "paidFromBank": "从银行支付",
+  "paidFromCard": "从卡片支付",
+  "choosePassphraseTitle": "选择一个密码短语来保护此备份。如果您忘记它，将无法恢复。",
+  "replaceBooksTitle": "替换本机账本？",
+  "replaceBooksBody": "此操作会用备份替换此应用中当前的所有内容。完成后请关闭并重新打开应用。",
+  "chooseBackupFileFirst": "请先选择一个备份文件。",
+  "backupRestored": "备份已恢复",
+  "backupRestoredBody": "您的账本已恢复。请关闭并重新打开应用以继续。",
+  "fixThisEntry": "更正此条目",
+  "fixBlurb": "旧记录行将保持原样不变。确认后会添加一条冲正记录和一条更正后的记录。",
+  "importStatementTitle": "导入对账单",
+  "importOfx": "导入 OFX",
+  "importOfxQfxFile": "导入 OFX / QFX 文件",
+  "importCsvFile": "导入 CSV 文件",
+  "whatKindOfStatement": "您有哪种类型的对账单文件？",
+  "chooseAccountForFile": "选择此文件所属的账户。",
+  "importIntoAccount": "导入到账户",
+  "useSavedProfile": "使用已保存的配置",
+  "saveMappingProfile": "将此映射保存为配置（可选）",
+  "renameProfile": "重命名配置",
+  "deleteProfileTitle": "删除配置？",
+  "fileHasHeader": "文件包含标题行",
+  "dateColumn": "日期列",
+  "dateFormatHint": "日期格式（例如 dd/MM/yyyy）",
+  "amountColumn": "金额列",
+  "amountConvention": "金额约定",
+  "signedAmountColumn": "带符号金额列",
+  "separateDebitCredit": "借方/贷方分列",
+  "debitColumn": "借方列",
+  "creditColumn": "贷方列",
+  "decimalSeparator": "小数分隔符（. 或 ,）",
+  "descriptionColumns": "描述列",
+  "referenceIdColumn": "参考编号列（可选）",
+  "skippedRows": "已跳过的行",
+  "parsedTransactionCount": "已解析 {count} 笔交易",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} 条已跳过或排除",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "已入账 {posted} 条，失败 {failed} 条",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "全部使用此分类",
+  "saveAsRule": "保存为规则？",
+  "saveAsRuleBlurb": "以后描述中包含此关键词的导入记录都将使用此分类。",
+  "keyword": "关键词",
+  "noSavedRules": "尚无已保存的规则。为一组行指定分类即可保存规则。",
+  "deleteRuleTitle": "删除规则？",
+  "editRule": "编辑规则",
+  "rowsGrouped": "{count} 行",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "选择要导入的 {extensions} 对账单文件",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "收款人",
+  "addPayee": "添加收款人",
+  "renamePayee": "重命名收款人",
+  "deletePayeeTitle": "删除收款人？",
+  "noPayeesYet": "尚无收款人",
+  "recurringTitle": "定期模板",
+  "noRecurringYet": "尚无定期模板",
+  "deleteTemplateTitle": "删除定期模板？",
+  "dayOfMonth": "每月日期（1-31）",
+  "dayOfMonthNote": "天数较少的月份将使用该月的最后一天。",
+  "dayOfMonthLine": "每月第 {day} 天 - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
+  "name": "名称",
+  "none": "无",
+  "currency": "货币",
   "errorGeneric": "出错了，请重试。",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "errorSigningIdentityMismatch": "此恢复短语或密钥库文件与此数据库中的任何签名身份都不匹配。",
+  "errorInvalidLedgerBackup": "此文件不是有效的 Smara 备份。",
+  "errorInvalidLedgerBackupNoIdentity": "此备份没有签名身份——它不是有效的 Smara 备份。",
+  "errorInvalidLedgerBackupUnverified": "此备份未能验证为完整的账本，因此未被恢复。",
+  "errorInvalidLedgerBackupUnreadable": "无法将此文件作为 Smara 备份打开：{detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "无法隐藏最后一个有效账户。",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "此备份属于与本设备不同的签名身份。",
+  "errorAccountNotFinancial": "该账户不是财务账户。",
+  "errorAccountArchived": "该账户已被隐藏。",
+  "errorAccountNotArchived": "该账户未被隐藏。",
+  "errorAccountNoPositiveBalanceToCloseOut": "没有剩余余额可供转出。",
+  "errorAccountHasNoGroup": "该账户未分配分组。",
+  "errorGroupHasNoCurrency": "该分组尚未设置货币。",
+  "errorGroupNotFound": "未找到该账户分组。",
+  "errorInvestmentAccountsMustBeAssets": "只有资产账户才能被标记为投资账户。",
+  "errorCreditCardsMustBeLiabilities": "只有负债账户才能被标记为信用卡。",
+  "errorOpeningBalanceMustBePositive": "如果提供期初余额，则必须为正数。",
+  "errorAccountTypeDoesNotMatchGroup": "该账户类型与分组不匹配。",
+  "errorLastActiveAccount": "无法隐藏最后一个有效的财务账户。",
+  "errorCurrencyRequiredToCreateGroup": "创建分组需要指定货币。",
+  "errorSystemGroupCannotBeArchived": "内置账户分组不能被隐藏。",
+  "errorGroupAlreadyArchived": "该分组已被隐藏。",
+  "errorCannotArchiveGroupWithAccounts": "无法隐藏仍有有效账户的分组。",
+  "errorSystemGroupNeverArchived": "内置账户分组永远不会被隐藏。",
+  "errorAccountGroupsCannotBeDeleted": "账户分组不能被删除。",
+  "errorCannotReassignDifferentCurrency": "无法将此账户移动到货币不同的分组。",
+  "errorCannotChangeGroupCurrencyWithAccounts": "分组中仍有有效账户时无法更改货币。",
   "errorAmountMustBePositive": "金额必须为正数。",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "账户币种金额必须为正数。",
+  "errorAccountCurrencyAmountNotForSameCurrency": "账户币种金额仅适用于外币条目。",
+  "errorSplitNeedsTwoLines": "拆分至少需要两条分类记录行。",
+  "errorSplitLineMustBePositive": "每条拆分记录行的金额必须为正数。",
+  "errorSplitLinesMustSumToTotal": "拆分记录行的合计金额必须等于交易总额。",
+  "errorTransferAmountMustBePositive": "转账金额必须为正数。",
+  "errorTransferAccountsMustDiffer": "转出账户和转入账户必须不同。",
+  "errorCloseoutRequiresDestinationAmount": "跨币种账户结清需要已知的目标金额。",
+  "errorDestinationAmountNotForSameCurrency": "目标金额仅适用于跨币种转账。",
+  "errorDestinationAmountMustBePositive": "目标金额必须为正数。",
+  "errorInvestmentCashExceeded": "转出金额不能超过该投资账户的现金余额。",
+  "errorCannotReverseUnsettledProvisional": "请结清此待处理转账，而不要将其冲正。",
+  "errorAlreadyReversed": "此条目已被更正过。原始记录行保持不变。",
+  "errorNotActiveExpenseCategory": "请选择一个有效的支出分类。",
+  "errorNotActiveIncomeCategory": "请选择一个有效的收入分类。",
+  "errorSettledAmountMustNotBeNegative": "实际到账金额不能为负数。",
+  "errorPendingTransferNotFound": "未找到该待处理转账。",
+  "errorPendingTransferAlreadySettled": "该待处理转账已结清。",
+  "errorSettledToMustBeSourceOrDestination": "请选择原始的转出或转入账户。",
+  "errorFeeCategoryOnlyWhenReturningToSource": "手续费分类仅在资金退回转出账户时使用。",
+  "errorSettledAmountMustBePositiveForDelivery": "请为实际到账金额输入一个正数。",
+  "errorSettledAmountExceedsProvisional": "该金额超过了实际发送的金额。",
+  "errorInstrumentNotFound": "未找到该投资标的。",
+  "errorIncomeRequiredForNonCash": "非现金取得需要一个有效的收入分类。",
+  "errorInsufficientCash": "该投资账户中现金不足，无法完成此次买入。",
+  "errorSellQuantityAndPriceMustBePositive": "卖出数量和单价必须为正数。",
+  "errorLockedUntil": "无法卖出：部分份额被锁定至 {date}。",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "卖出数量不能超过您当前持有的未锁定数量。",
+  "errorIncomeRequiredForGain": "已实现收益需要一个有效的收入分类。",
+  "errorExpenseRequiredForLoss": "已实现亏损需要一个有效的支出分类。",
+  "errorBrokerageFailedAfterBuy": "买入已入账，但经纪费记录失败：{detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "卖出已入账，但经纪费记录失败：{detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "股息金额必须为正数。",
+  "errorNotInvestmentAccount": "该账户不是投资账户。",
+  "errorNoInventoryCompanion": "此投资账户缺少与其配对的持仓账户。",
+  "errorInvestmentReversalBlocked": "无法冲正此买入：后续的卖出交易依赖于其份额。请先冲正相关的卖出交易：{sells}。",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "月度限额必须为正数。",
+  "errorTemplateAmountMustBePositive": "模板金额必须为正数。",
+  "errorOfxUnrecognized": "无法将此文件识别为 OFX 格式。",
+  "errorCsvEmpty": "所选文件为空。",
+  "errorCsvUnreadable": "无法将此文件作为 CSV 读取。",
+  "errorCsvNoRows": "所选文件没有任何数据行。",
+  "errorBackupCreateFailed": "无法创建备份：{detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
+  "errorBackupRestoreFailed": "无法恢复此备份——密码短语错误，或该文件不是 Smara 备份文件。",
+  "validationAmountAccountCategoryRequired": "需要填写金额、账户和分类。",
+  "validationAmountAccountRequired": "需要填写金额和账户。",
+  "validationSplitLineIncomplete": "每条拆分记录行都需要分类和金额。",
+  "validationSplitSumMismatch": "拆分记录行的合计金额必须等于交易总额。",
+  "validationFromToAmountRequired": "需要填写转出账户、转入账户和金额。",
+  "validationAmountArrivedRequired": "需要填写实际到账金额。",
+  "validationChooseReceivingAccount": "请选择接收资金的账户。",
+  "validationAccountCategoryRequired": "需要填写账户和分类。",
+  "validationFixFailed": "无法保存此项更正。",
+  "validationNameRequired": "请为您的主要账户命名。",
+  "validationStillLoading": "仍在加载中——请稍后再试。",
+  "validationSaveAccountNameFailed": "无法保存账户名称。",
   "validationWrongPin": "PIN 错误，请重试。",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "validationCategoryMustBeIncomeOrExpense": "分类必须是收入或支出。",
+  "validationOnlyExpenseHasMonthlyLimit": "只有支出分类才能设置月度限额。",
+  "validationInvalidTemplate": "模板无效。",
+  "validationWrongKeystorePassphrase": "此密钥库文件的密码短语错误。",
+  "validationInvalidKeystoreFile": "该文件看起来不是有效的密钥库文件。",
+  "validationRestorePhraseFailed": "无法从该恢复短语恢复。",
+  "validationGenerateKeyFailed": "无法在此设备上生成签名密钥：{detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "无法保存此货币：{detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "迁移失败。请重试。",
+  "validationChooseBackupFile": "请先选择一个备份文件。",
+  "validationPassphraseRequired": "请输入密码短语。",
+  "validationPinsDoNotMatch": "两次输入的 PIN 不一致。",
+  "validationFeePositiveWithCategory": "转账手续费必须为正数，并选择一个支出分类。",
+  "validationFeeMustBeLessThanAmount": "对于内扣手续费的转账，手续费必须小于转账金额。",
+  "validationTransferSavedFeeFailed": "转账已保存，但手续费记录失败：{detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "请输入有效金额。",
+  "validationConfirmWordMismatch": "第 {n} 个单词与您保存的恢复短语不匹配。请检查后重试。",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "买入数量和单价必须为正数。",
+  "errorInstrumentArchived": "无法买入已隐藏的投资标的。",
+  "errorNonCashCannotIncludeBrokerage": "非现金取得不能包含经纪费。",
+  "errorBrokerageRequiresExpenseCategory": "当经纪费大于零时，需要一个有效的支出分类。",
+  "errorSellProceedsMustCoverBrokerage": "卖出所得金额必须至少覆盖经纪费金额。",
+  "homeSpentOfLimitThisMonth": "本月 {spent} / {limit}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "解锁 Smara Account",
   "searchLabel": "搜索",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "期初余额",
+  "transferToName": "转账：{name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "转账手续费",
+  "feeForTransferTo": "转账至 {name} 的手续费",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "无法打开文件选择器：{detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "请选择一个 .{extensions} 文件",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "货币代码（ISO 4217，例如 USD）",
+  "splitCounterpartMore": "{name} 及另外 {count} 项",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "日期",
+  "noneSelected": "无",
+  "reviewEntriesBeforeContinuing": "继续之前请查看下方条目（共 {count} 条）。",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "您收到了 {amount}",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "如果尚不知道汇率，请留空。",
+  "recordTradeBlurb": "记录一笔已经发生的交易。此应用不进行下单交易。",
+  "feeOnTopBlurb": "开启：上方金额是从该账户扣除的总金额；手续费从中扣除。",
+  "feeBankBlurb": "由您的银行或中间机构预先收取的佣金。",
+  "validationPinMinLength": "PIN 必须至少为 4 位数字。",
+  "restoreBackupBlurb": "此操作会用备份替换此应用中当前的所有内容——不会进行合并。请选择一个备份文件，并输入您当初设置的保护密码短语。",
+  "actionReplace": "替换",
+  "hideAccountBody": "{name} 将不再可用于新交易。",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "在创建或重新分配账户时将不再提供 {name}。",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "在记录新交易时将不再提供 {name}。",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "已隐藏的投资标的仍会保留在以往的买入和卖出记录中。您仍可以为它们记录股息。",
+  "nameHidden": "{name}（已隐藏）",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "未设置货币",
+  "deletePayeeBody": "{name} 及其记住的默认设置将被删除。过去的交易不受影响。",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} 将不再显示为到期项目。它此前已记录的交易不受影响。",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "已保存的列映射“{name}”将被删除。此前使用它导入的对账单不受影响。",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "导入记录将不再通过“{keyword}”自动分类。此前已通过该规则分类的交易不受影响。",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "您可以现在选择添加一张信用卡或一个现金账户——以后也可以随时在设置中添加更多账户。",
+  "deliveredToDestination": "已送达目的账户",
+  "deliveredToName": "已送达 {name}",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "您实际收到的金额比预期少 {amount} {currency}——请选择一个分类来处理差额。",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "日期范围",
+  "addTemplate": "添加模板",
+  "editTemplate": "编辑模板",
+  "validationFillTemplateFields": "请为每个字段填写有效的金额和日期。",
+  "saveCsvExport": "保存 CSV 导出",
+  "referenceRate": "参考汇率",
+  "yourRate": "您的汇率",
+  "leaveBlankIfThisWasAccountCurrency": "如果金额本身就是 {currency}（该账户自身的货币），请留空。",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "锁定至（可选）",
+  "lockedUntilDate": "锁定至 {date}",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "已复制研究提示——没有可用的浏览器链接，或您当前处于离线状态。",
+  "openedFavouriteResearchTool": "已打开您常用的研究工具。",
+  "looksLikeGain": "这看起来是一笔收益",
+  "looksLikeLoss": "这看起来是一笔亏损",
+  "looksLikeBreakEven": "这看起来是收支平衡",
+  "sellableQuantity": "{name}（可卖 {qty}）",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "第 {index} 列",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "正在导入…",
+  "confirmImport": "确认导入",
+  "manageSavedCategoryRules": "管理已保存的分类规则",
+  "statementCurrencyMismatch": "此文件的货币（{currency}）与所选账户的货币不一致。",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "分类规则",
+  "possibleDuplicate": "可能重复",
+  "unknownCategory": "未知分类"
 }

@@ -70,10 +70,10 @@ class _LockViewState extends State<LockView> {
                     decoration: InputDecoration(labelText: l10n.pinLabel),
                     onSubmitted: (_) => _submit(),
                   ),
-                  if (widget.viewModel.errorMessage != null) ...[
+                  if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                     const SizedBox(height: AppSpacing.medium),
                     Text(
-                      widget.viewModel.errorMessage!,
+                      widget.viewModel.errorMessageFor(l10n)!,
                       style: AppTypography.body.copyWith(
                         color: AppColors.signal,
                       ),

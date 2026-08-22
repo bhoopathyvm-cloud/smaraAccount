@@ -109,6 +109,42 @@ v1 does **not** reformat ledger amounts to the active UI locale.
 
 Rollback: revert to hardcoded English only if necessary before packs ship; after packs, removing a locale is deleting its ARB + unregistering it.
 
+## Correction, found during a later review
+
+The Risks section's mitigation for Indic/CJK tofu ("font bundling in
+foundation or first Indic pack") was never actually carried out:
+`lib/ui/core/app_theme.dart` declares `kFontFamilyFallback` (17 Noto
+family names) but no font assets are bundled (`pubspec.yaml` has no
+`flutter: fonts:` entry, and no `.ttf`/`.otf` files exist in the repo).
+This works only where the OS already has a system font installed under
+the exact declared family name - true on Android for most of these
+scripts, not guaranteed on iOS/desktop. Documented as a known
+limitation directly on `kFontFamilyFallback` rather than silently left
+implicit; bundling real font assets remains unresolved follow-up work.
+
+Separately: the "[AI quality for accounting terms] → Mitigation: ...
+English fallback" risk mitigation was intended as a visible, tracked
+interim state (via `untranslated-messages-file` in `l10n.yaml`), not a
+silent one. The actual implementation (`tool/l10n/sync_arb_keys.py`)
+pre-fills every locale ARB with the English string for any key missing
+a real overlay translation *before* `flutter gen-l10n` runs its
+untranslated-message report - so the report always showed zero missing
+keys regardless of true translation coverage, defeating the visibility
+this mitigation was meant to provide. A later review pass closed the
+resulting translation gap directly: all 509 ARB keys are now translated
+for all 42 non-English locales (previously only ~15-51 keys per locale
+had a real overlay; the rest silently copied English). Several
+lower-resource languages this review's translators flagged as
+best-effort - Bodo, Dogri, Konkani, Kashmiri, Maithili, Manipuri/Meitei,
+Sanskrit, and Santali - would still benefit from native-speaker review
+before being treated as fully production-quality, particularly their
+longest security-sensitive strings (recovery phrase, backup/restore
+warnings); this is noted directly in `tool/l10n/overlays.py`'s module
+docstring. A new regression test
+(`test/l10n/locale_packs_test.dart`: "every locale pack is
+substantially translated, not mostly English copies") guards against
+this specific failure mode recurring.
+
 ## Open Questions
 
 - Exact prefs storage API (reuse secure storage vs lightweight prefs) — decide during apply from existing patterns.

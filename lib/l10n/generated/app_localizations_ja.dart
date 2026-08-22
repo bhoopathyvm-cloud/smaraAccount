@@ -69,7 +69,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get actionCreate => '作成';
 
   @override
-  String get actionCloseApp => 'Close app';
+  String get actionCloseApp => 'アプリを閉じる';
 
   @override
   String get actionUnlock => 'ロック解除';
@@ -78,25 +78,22 @@ class AppLocalizationsJa extends AppLocalizations {
   String get actionSettle => '確定';
 
   @override
-  String get actionFinish => 'Finish';
+  String get actionFinish => '完了';
 
   @override
-  String get actionPreview => 'Preview';
+  String get actionPreview => 'プレビュー';
 
   @override
-  String get actionImport => 'Import';
+  String get actionImport => 'インポート';
 
   @override
-  String get actionExportCsv => 'Export CSV';
+  String get actionExportCsv => 'CSVを書き出す';
 
   @override
-  String get actionChooseFile => 'Choose file';
+  String get actionChooseFile => 'ファイルを選択';
 
   @override
   String get actionRestore => '復元';
-
-  @override
-  String get actionArchive => 'Hide';
 
   @override
   String get actionFix => '修正';
@@ -108,55 +105,55 @@ class AppLocalizationsJa extends AppLocalizations {
   String get actionSell => '売る';
 
   @override
-  String get actionDividend => 'Dividend';
+  String get actionDividend => '配当';
 
   @override
-  String get actionRecordBuy => 'Record buy';
+  String get actionRecordBuy => '買いを記録';
 
   @override
-  String get actionRecordSell => 'Record sell';
+  String get actionRecordSell => '売りを記録';
 
   @override
-  String get actionRecordDividend => 'Record dividend';
+  String get actionRecordDividend => '配当を記録';
 
   @override
-  String get actionPayCard => 'Pay card';
+  String get actionPayCard => 'カードの支払い';
 
   @override
   String get actionTransfer => '振替';
 
   @override
-  String get actionRecordTransaction => 'Record transaction';
+  String get actionRecordTransaction => '取引を記録';
 
   @override
-  String get actionImportStatement => 'Import statement';
+  String get actionImportStatement => '明細書をインポート';
 
   @override
-  String get actionClearDates => 'Clear dates';
+  String get actionClearDates => '日付をクリア';
 
   @override
-  String get actionClearSearch => 'Clear search and filters';
+  String get actionClearSearch => '検索とフィルターをクリア';
 
   @override
-  String get actionUseBiometrics => 'Use biometrics';
+  String get actionUseBiometrics => '生体認証を使う';
 
   @override
-  String get actionSetPin => 'Set PIN';
+  String get actionSetPin => 'PINを設定';
 
   @override
-  String get actionChangePin => 'Change PIN';
+  String get actionChangePin => 'PINを変更';
 
   @override
-  String get actionSaveBackup => 'Save backup';
+  String get actionSaveBackup => 'バックアップを保存';
 
   @override
-  String get actionRestoreBackup => 'Restore backup';
+  String get actionRestoreBackup => 'バックアップを復元';
 
   @override
-  String get actionSaveRule => 'Save rule';
+  String get actionSaveRule => 'ルールを保存';
 
   @override
-  String get actionConfirmFix => 'Confirm fix';
+  String get actionConfirmFix => '修正を確定';
 
   @override
   String get captureSpent => '支出';
@@ -168,7 +165,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get captureMovedMoney => '資金移動';
 
   @override
-  String get captureImportStatement => 'Import statement';
+  String get captureImportStatement => '明細書をインポート';
 
   @override
   String get settingsTitle => '設定';
@@ -180,112 +177,111 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsLanguageSystem => '端末の言語';
 
   @override
-  String get settingsFetchFxRates => 'Fetch reference exchange rates';
+  String get settingsFetchFxRates => '参考為替レートを取得';
 
   @override
   String get settingsFetchFxRatesSubtitle =>
-      'Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.';
+      '異なる通貨間の振替で、目安となる市場レートを送金先金額の横に表示します。比較目的のみで、金額の入力には一切使用しません。';
 
   @override
-  String get settingsRateProvider => 'Rate provider';
+  String get settingsRateProvider => 'レート提供元';
 
   @override
-  String get settingsFetchMarketPrices => 'Fetch market prices for investments';
+  String get settingsFetchMarketPrices => '投資の市場価格を取得';
 
   @override
   String get settingsFetchMarketPricesSubtitle =>
-      'Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.';
+      'ティッカーまたはISINが設定されている銘柄の最終価格を調べ、ポートフォリオの評価額を見積もります。取引の記録には使用されず、保有数量が送信されることもありません。';
 
   @override
-  String get settingsMarketPriceProvider => 'Market price provider';
+  String get settingsMarketPriceProvider => '市場価格の提供元';
 
   @override
-  String get settingsFavouriteResearchTool => 'Favourite research tool';
+  String get settingsFavouriteResearchTool => 'お気に入りの調査ツール';
 
   @override
   String get settingsFavouriteResearchToolSubtitle =>
-      'Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.';
+      '保有資産の銘柄名をタップすると、このツールがブラウザで調査用のプロンプトとともに開きます — 連携機能ではなく、助言でもありません。';
 
   @override
   String get settingsBackup => 'バックアップ';
 
   @override
   String get settingsBackupBlurb =>
-      'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
+      '選んだ場所に帳簿の暗号化コピーを保存する、またはそこから復元します。これは署名鍵をバックアップするリカバリーフレーズやキーストアファイルとは別のもので、帳簿そのものをバックアップするわけではありません。';
 
   @override
   String get settingsLock => 'ロック';
 
   @override
-  String get settingsLockBlurb =>
-      'Require a PIN, or biometrics where available, to open the app.';
+  String get settingsLockBlurb => 'アプリを開くのにPIN、または利用可能な場合は生体認証を必須にします。';
 
   @override
-  String get settingsRequireUnlock => 'Require unlock to open the app';
+  String get settingsRequireUnlock => 'アプリを開くのにロック解除を必須にする';
 
   @override
-  String get settingsLockAfter => 'Lock after';
+  String get settingsLockAfter => 'ロックまでの時間';
 
   @override
-  String get settingsLockImmediately => 'Immediately';
+  String get settingsLockImmediately => 'すぐに';
 
   @override
-  String get settingsLock1Minute => '1 minute';
+  String get settingsLock1Minute => '1分';
 
   @override
-  String get settingsLock5Minutes => '5 minutes';
+  String get settingsLock5Minutes => '5分';
 
   @override
-  String get settingsLock15Minutes => '15 minutes';
+  String get settingsLock15Minutes => '15分';
 
   @override
-  String get settingsAllowBiometrics => 'Also allow biometrics';
+  String get settingsAllowBiometrics => '生体認証も許可する';
 
   @override
-  String get settingsHideSnapshot => 'Hide balances in the app switcher';
+  String get settingsHideSnapshot => 'アプリ切り替え画面で残高を隠す';
 
   @override
   String get settingsHideSnapshotSubtitle =>
-      'Obscures this screen when you switch to another app, so it isn\'t visible at a glance in the app switcher.';
+      '他のアプリに切り替えたときにこの画面を隠し、アプリ切り替え画面で一目で見えないようにします。';
 
   @override
   String get settingsHideSnapshotUnavailable =>
-      'Hiding balances in the app switcher isn\'t available on this platform.';
+      'このプラットフォームでは、アプリ切り替え画面で残高を隠す機能は利用できません。';
 
   @override
-  String get settingsPayees => 'Payees';
+  String get settingsPayees => '支払先';
 
   @override
-  String get settingsManagePayees => 'Manage payees';
+  String get settingsManagePayees => '支払先を管理';
 
   @override
   String get settingsPayeesBlurb =>
-      'Remembered payee names and their default category and account.';
+      '記憶された支払先の名前と、そのデフォルトのカテゴリ・口座です。取引の記録時にオートコンプリートで候補として表示されます。';
 
   @override
-  String get settingsRecurring => 'Recurring templates';
+  String get settingsRecurring => '定期テンプレート';
 
   @override
-  String get settingsManageRecurring => 'Manage recurring templates';
+  String get settingsManageRecurring => '定期テンプレートを管理';
 
   @override
   String get settingsRecurringBlurb =>
-      'Bills or income that repeat monthly, like rent or a paycheck.';
+      '家賃や給料のように毎月繰り返される支払いや収入です。期日が来たテンプレートはホーム画面に表示され、ワンタップで記録できます - 自動的に記帳されることはありません。';
 
   @override
-  String get settingsAbout => 'About';
+  String get settingsAbout => 'このアプリについて';
 
   @override
-  String get providerFrankfurter => 'Frankfurter (ECB rates)';
+  String get providerFrankfurter => 'Frankfurter（ECBレート）';
 
   @override
-  String get providerOpenErApi => 'ExchangeRate-API (open.er-api.com)';
+  String get providerOpenErApi => 'ExchangeRate-API（open.er-api.com）';
 
   @override
-  String get providerStooq => 'Stooq (daily quotes)';
+  String get providerStooq => 'Stooq（日次相場）';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (chart API)';
+  String get providerYahooFinance => 'Yahoo Finance（チャートAPI）';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -300,66 +296,65 @@ class AppLocalizationsJa extends AppLocalizations {
   String get researchMetaAi => 'Meta AI';
 
   @override
-  String get systemGroupCashEquivalents => 'Cash & cash equivalents';
+  String get systemGroupCashEquivalents => '現金及び現金同等物';
 
   @override
-  String get systemGroupPensionRetirement => 'Pension & retirement';
+  String get systemGroupPensionRetirement => '年金・退職金';
 
   @override
-  String get systemGroupCreditShortTerm => 'Credit & short-term debt';
+  String get systemGroupCreditShortTerm => 'クレジット・短期債務';
 
   @override
-  String get systemGroupLoansMortgages => 'Loans & mortgages';
+  String get systemGroupLoansMortgages => 'ローン・住宅ローン';
 
   @override
-  String get systemGroupInvestments => 'Investments';
+  String get systemGroupInvestments => '投資';
 
   @override
-  String get systemAccountCashBank => 'Cash & Bank';
+  String get systemAccountCashBank => '現金・銀行口座';
 
   @override
-  String get systemCategorySalary => 'Salary';
+  String get systemCategorySalary => '給与';
 
   @override
-  String get systemCategoryOtherIncome => 'Other Income';
+  String get systemCategoryOtherIncome => 'その他の収入';
 
   @override
-  String get systemCategoryGroceries => 'Groceries';
+  String get systemCategoryGroceries => '食料品';
 
   @override
-  String get systemCategoryRentMortgage => 'Rent/Mortgage';
+  String get systemCategoryRentMortgage => '家賃・住宅ローン';
 
   @override
-  String get systemCategoryUtilities => 'Utilities';
+  String get systemCategoryUtilities => '光熱費';
 
   @override
-  String get systemCategoryTransport => 'Transport';
+  String get systemCategoryTransport => '交通費';
 
   @override
-  String get systemCategoryFoodOut => 'Food out';
+  String get systemCategoryFoodOut => '外食';
 
   @override
-  String get systemCategoryPhone => 'Phone';
+  String get systemCategoryPhone => '通信費';
 
   @override
-  String get systemCategoryHealth => 'Health';
+  String get systemCategoryHealth => '医療費';
 
   @override
-  String get systemCategoryOtherExpense => 'Other Expense';
+  String get systemCategoryOtherExpense => 'その他の支出';
 
   @override
   String get homeThisMonth => '今月';
 
   @override
-  String get homeMoneyInTransit => 'MONEY IN TRANSIT';
+  String get homeMoneyInTransit => '送金中の資金';
 
   @override
-  String get homeWhatYouHaveMinusWhatYouOwe =>
-      'WHAT YOU HAVE MINUS WHAT YOU OWE';
+  String get homeWhatYouHaveMinusWhatYouOwe => '資産から負債を引いた額';
 
   @override
   String homeWhatYouHave(String amount, String currency) {
-    return 'What you have $amount $currency';
+    return '保有額 $amount $currency';
   }
 
   @override
@@ -369,116 +364,113 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String homeHaveAndOwe(String haveAmount, String currency, String oweAmount) {
-    return 'What you have $haveAmount $currency  •  What you owe $oweAmount $currency';
+    return '資産 $haveAmount $currency  •  負債 $oweAmount $currency';
   }
 
   @override
   String youSentFrom(String amount, String currency, String name) {
-    return 'You sent $amount $currency from $name';
+    return '$nameから$amount $currencyを送金しました';
   }
 
   @override
   String youSentTo(String amount, String currency, String name) {
-    return 'You sent $amount $currency to $name';
+    return '$nameへ$amount $currencyを送金しました';
   }
 
   @override
-  String get hiddenLabel => 'Hidden';
+  String get hiddenLabel => '非表示';
 
   @override
-  String get allAccounts => 'All accounts';
+  String get allAccounts => 'すべての口座';
 
   @override
   String savedToPath(String path) {
-    return 'Saved to $path';
+    return '$pathに保存しました';
   }
 
   @override
-  String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
+  String get keystoreExportFailed => 'キーストアファイルを書き出せませんでした。この手順はスキップできます。';
 
   @override
-  String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
+  String get enterPassphraseToProtect => 'ファイルを保護するパスフレーズを入力してください。';
 
   @override
-  String get homeTapWhenArrived => 'Tap when you know what arrived';
+  String get homeTapWhenArrived => '何が届いたか分かったらタップしてください';
 
   @override
   String homeReturnedTo(String name) {
-    return 'Returned to $name';
+    return '$nameへ返金されました';
   }
 
   @override
-  String get homeDueToday => 'DUE TODAY';
+  String get homeDueToday => '本日期日';
 
   @override
   String homeDueLine(String category, String account) {
-    return '$category · $account · tap to record';
+    return '$category · $account · タップして記録';
   }
 
   @override
-  String get homeOverLimit => 'Over limit';
+  String get homeOverLimit => '上限超過';
 
   @override
   String homeSpentOfLimit(String spent, String limit) {
-    return '$spent of $limit';
+    return '$limit中$spent';
   }
 
   @override
   String homeRemaining(String amount) {
-    return 'Remaining: $amount';
+    return '残り: $amount';
   }
 
   @override
-  String get homeNoAccounts => 'No accounts';
+  String get homeNoAccounts => '口座がありません';
 
   @override
-  String get homeCashRegister => 'Cash register';
+  String get homeCashRegister => 'レジ';
 
   @override
-  String get homeMarketEstimate => 'Market estimate';
+  String get homeMarketEstimate => '市場推定額';
 
   @override
   String get registerTitle => '明細';
 
   @override
-  String get registerSearchHint => 'Description, category, or amount';
+  String get registerSearchHint => '摘要、カテゴリ、または金額';
 
   @override
-  String get registerNoTransactions => 'No transactions yet';
+  String get registerNoTransactions => '取引がまだありません';
 
   @override
-  String get registerNoEntries => 'No entries recorded yet.';
+  String get registerNoEntries => '記録された項目がまだありません。';
 
   @override
-  String get registerSpentOnly => 'Spent only';
+  String get registerSpentOnly => '支出のみ';
 
   @override
-  String get registerReceivedOnly => 'Received only';
+  String get registerReceivedOnly => '収入のみ';
 
   @override
-  String get registerAll => 'All';
+  String get registerAll => 'すべて';
 
   @override
-  String get registerUnverified => 'Unverified - excluded from totals';
+  String get registerUnverified => '未検証 - 合計から除外';
 
   @override
-  String get registerSuperseded =>
-      'Superseded by migration - excluded from totals';
+  String get registerSuperseded => '移行により置き換え済み - 合計から除外';
 
   @override
   String get summaryTitle => '概要';
 
   @override
-  String get summaryTotalIncome => 'Total income';
+  String get summaryTotalIncome => '総収入';
 
   @override
-  String get summaryTotalExpense => 'Total expense';
+  String get summaryTotalExpense => '総支出';
 
   @override
   String summaryDateRange(String start, String end) {
-    return '$start to $end';
+    return '$start〜$end';
   }
 
   @override
@@ -488,31 +480,31 @@ class AppLocalizationsJa extends AppLocalizations {
   String get categoriesTitle => 'カテゴリ';
 
   @override
-  String get accountName => 'Account name';
+  String get accountName => '口座名';
 
   @override
-  String get createAccount => 'Create account';
+  String get createAccount => '口座を作成';
 
   @override
-  String get createGroup => 'Create group';
+  String get createGroup => 'グループを作成';
 
   @override
-  String get editGroup => 'Edit group';
+  String get editGroup => 'グループを編集';
 
   @override
-  String get renameAccount => 'Rename account';
+  String get renameAccount => '口座名を変更';
 
   @override
-  String get renameCategory => 'Rename category';
+  String get renameCategory => 'カテゴリ名を変更';
 
   @override
-  String get addCategory => 'Add category';
+  String get addCategory => 'カテゴリを追加';
 
   @override
-  String get groupLabel => 'Group';
+  String get groupLabel => 'グループ';
 
   @override
-  String get kindLabel => 'Kind';
+  String get kindLabel => '種類';
 
   @override
   String get asset => '資産';
@@ -527,1246 +519,1177 @@ class AppLocalizationsJa extends AppLocalizations {
   String get expense => '支出';
 
   @override
-  String get thisAccountHoldsInvestments => 'This account holds investments';
+  String get thisAccountHoldsInvestments => 'この口座は投資を保有しています';
 
   @override
   String get thisAccountHoldsInvestmentsSubtitle =>
-      'Cash plus inventory you record with Buy, Sell, and Dividend.';
+      '現金に加え、買い・売り・配当で記録する保有資産です。';
 
   @override
-  String get thisIsACreditCard => 'This is a credit card';
+  String get thisIsACreditCard => 'これはクレジットカードです';
 
   @override
-  String get openingBalanceOptional => 'Opening balance (optional)';
+  String get openingBalanceOptional => '初期残高（任意）';
 
   @override
-  String get currencyIso => 'Currency (ISO 4217)';
+  String get currencyIso => '通貨（ISO 4217）';
 
   @override
-  String get currencyIsoExample => 'Currency (ISO 4217, e.g. USD)';
+  String get currencyIsoExample => '通貨（ISO 4217、例: USD）';
 
   @override
-  String get hideAccountTitle => 'Hide account from new entries?';
+  String get hideAccountTitle => 'この口座を新規取引の対象から外しますか？';
 
   @override
-  String get hideCategoryTitle => 'Hide category from new entries?';
+  String get hideCategoryTitle => 'このカテゴリを新規取引の対象から外しますか？';
 
   @override
-  String get hideGroupTitle => 'Hide group from new entries?';
+  String get hideGroupTitle => 'このグループを新規取引の対象から外しますか？';
 
   @override
-  String get reassignGroup => 'Reassign group';
+  String get reassignGroup => 'グループを再割り当て';
 
   @override
-  String get transferRemainingBalance => 'Transfer remaining balance';
+  String get transferRemainingBalance => '残高を振り替える';
 
   @override
-  String get monthlyLimit => 'Monthly limit';
+  String get monthlyLimit => '月間上限';
 
   @override
-  String get monthlyLimitHint => 'Limit (leave blank to clear)';
+  String get monthlyLimitHint => '上限（空欄でクリア）';
 
   @override
-  String get monthlyLimitBlurb =>
-      'An optional month-to-date spending guide for this expense category.';
+  String get monthlyLimitBlurb => 'この支出カテゴリに対する、月初からの任意の支出目安です。';
 
   @override
-  String get manageCategoryRules => 'Manage category rules';
+  String get manageCategoryRules => 'カテゴリルールを管理';
 
   @override
-  String get amount => 'Amount';
+  String get amount => '金額';
 
   @override
-  String get category => 'Category';
+  String get category => 'カテゴリ';
 
   @override
-  String get account => 'Account';
+  String get account => '口座';
 
   @override
-  String get fromAccount => 'From account';
+  String get fromAccount => '振替元口座';
 
   @override
-  String get toAccount => 'To account';
+  String get toAccount => '振替先口座';
 
   @override
-  String get descriptionOptional => 'Description (optional)';
+  String get descriptionOptional => '摘要（任意）';
 
   @override
-  String get alsoRememberPayee => 'Also remember as a payee';
+  String get alsoRememberPayee => '支払先としても記憶する';
 
   @override
-  String get splitIntoCategories => 'Split into multiple categories';
+  String get splitIntoCategories => '複数のカテゴリに分割';
 
   @override
   String categoryN(String n) {
-    return 'Category $n';
+    return 'カテゴリ $n';
   }
 
   @override
-  String get destinationAmount => 'Destination amount';
+  String get destinationAmount => '振替先金額';
 
   @override
-  String get destinationAmountOptional => 'Destination amount (optional)';
+  String get destinationAmountOptional => '振替先金額（任意）';
 
   @override
-  String get accountCurrencyAmountOptional =>
-      'Account-currency amount (optional)';
+  String get accountCurrencyAmountOptional => '口座通貨での金額（任意）';
 
   @override
-  String get transactionCurrencyOptional => 'Transaction currency (optional)';
+  String get transactionCurrencyOptional => '取引通貨（任意）';
 
   @override
-  String get feeOptional => 'Fee (optional)';
+  String get feeOptional => '手数料（任意）';
 
   @override
-  String get feeAmount => 'Fee amount';
+  String get feeAmount => '手数料額';
 
   @override
-  String get feeCategory => 'Fee category';
+  String get feeCategory => '手数料カテゴリ';
 
   @override
-  String get feeDescriptionOptional => 'Fee description (optional)';
+  String get feeDescriptionOptional => '手数料の摘要（任意）';
 
   @override
-  String get feeDeducted => 'Fee is deducted from the amount above';
+  String get feeDeducted => '手数料は上記の金額から差し引かれます';
 
   @override
-  String get needTwoAccountsToTransfer =>
-      'Create at least two active accounts to make a transfer.';
+  String get needTwoAccountsToTransfer => '振替を行うには、有効な口座を2つ以上作成してください。';
 
   @override
-  String get whatArrivedTitle => 'What arrived?';
+  String get whatArrivedTitle => '何が届きましたか？';
 
   @override
-  String get whatArrivedBlurb => 'Tell us what actually arrived.';
+  String get whatArrivedBlurb => '実際に届いたものを教えてください。';
 
   @override
-  String get amountThatArrived => 'Amount that arrived';
+  String get amountThatArrived => '届いた金額';
 
   @override
-  String get feeLossCategory => 'Fee / loss category';
+  String get feeLossCategory => '手数料／損失カテゴリ';
 
   @override
-  String get alreadySettled => 'Already settled.';
+  String get alreadySettled => 'すでに確定済みです。';
 
   @override
-  String get holdingsTitle => 'Holdings';
+  String get holdingsTitle => '保有資産';
 
   @override
-  String get holdingsCash => 'Cash';
+  String get holdingsCash => '現金';
 
   @override
-  String get holdingsInventory => 'INVENTORY';
+  String get holdingsInventory => '保有銘柄';
 
   @override
   String holdingsBook(String amount, String currency) {
-    return 'Book (cash + cost) $amount $currency';
+    return '帳簿価額（現金＋取得原価） $amount $currency';
   }
 
   @override
   String holdingsMarketEstimate(String amount, String currency) {
-    return 'Market estimate $amount $currency';
+    return '市場推定額 $amount $currency';
   }
 
   @override
-  String get holdingsNoHoldings =>
-      'No holdings yet. Record a buy to add an instrument.';
+  String get holdingsNoHoldings => '保有資産はまだありません。買いを記録して銘柄を追加してください。';
 
   @override
-  String get holdingsQuotesBlurb =>
-      'Quotes are estimates, not a broker price. This app does not place orders.';
+  String get holdingsQuotesBlurb => '相場は推定値であり、証券会社の価格ではありません。このアプリは注文を発注しません。';
 
   @override
   String get holdingsTapNameToResearch =>
-      'Tap the name to research. Quotes are estimates, not advice.';
+      '銘柄名をタップして調べられます。相場は推定値であり、助言ではありません。';
 
   @override
-  String get instrument => 'Instrument';
+  String get instrument => '銘柄';
 
   @override
-  String get newInstrument => 'New instrument';
+  String get newInstrument => '新しい銘柄';
 
   @override
-  String get renameInstrument => 'Rename instrument';
+  String get renameInstrument => '銘柄名を変更';
 
   @override
-  String get instrumentActions => 'Instrument actions';
+  String get instrumentActions => '銘柄の操作';
 
   @override
   String hideInstrumentTitle(String name) {
-    return 'Hide $name?';
+    return '$nameを非表示にしますか？';
   }
 
   @override
-  String get tickerOptional => 'Ticker (optional)';
+  String get tickerOptional => 'ティッカー（任意）';
 
   @override
-  String get isinOptional => 'ISIN (optional)';
+  String get isinOptional => 'ISIN（任意）';
 
   @override
-  String get quantity => 'Quantity';
+  String get quantity => '数量';
 
   @override
-  String get unitPrice => 'Unit price';
+  String get unitPrice => '単価';
 
   @override
-  String get brokerageOptional => 'Brokerage (optional)';
+  String get brokerageOptional => '取引手数料（任意）';
 
   @override
-  String get brokerageExpenseCategory => 'Brokerage expense category';
+  String get brokerageExpenseCategory => '取引手数料の支出カテゴリ';
 
   @override
-  String get incomeCategory => 'Income category';
+  String get incomeCategory => '収入カテゴリ';
 
   @override
-  String get gainIncomeCategory => 'Gain income category';
+  String get gainIncomeCategory => '売却益の収入カテゴリ';
 
   @override
-  String get lossExpenseCategory => 'Loss expense category';
+  String get lossExpenseCategory => '売却損の支出カテゴリ';
 
   @override
-  String get nonCash => 'Non-cash';
+  String get nonCash => '非現金';
 
   @override
-  String get cash => 'Cash';
+  String get cash => '現金';
 
   @override
-  String get locked => 'Locked';
+  String get locked => 'ロック中';
 
   @override
-  String get lockUntilHint =>
-      'Your own note of a restriction, not a broker rule.';
+  String get lockUntilHint => '証券会社のルールではなく、あなた自身が記録する制限メモです。';
 
   @override
-  String get instrumentKindStock => 'Stock';
+  String get instrumentKindStock => '株式';
 
   @override
   String get instrumentKindEtf => 'ETF';
 
   @override
-  String get instrumentKindMutualFund => 'Mutual fund';
+  String get instrumentKindMutualFund => '投資信託';
 
   @override
-  String get instrumentKindBond => 'Bond';
+  String get instrumentKindBond => '債券';
 
   @override
-  String get instrumentKindOther => 'Other';
+  String get instrumentKindOther => 'その他';
 
   @override
-  String get quoteUseLive => 'Live price';
+  String get quoteUseLive => 'リアルタイム価格';
 
   @override
-  String get quoteUseCached => 'Cached price';
+  String get quoteUseCached => 'キャッシュ価格';
 
   @override
-  String get quoteUseStale => 'Stale price';
+  String get quoteUseStale => '古い価格';
 
   @override
-  String get quoteUseMissing => 'Using cost (no price)';
+  String get quoteUseMissing => '価格なし（取得原価を使用）';
 
   @override
-  String get quoteUseDisabled => 'Quotes off — using cost/cache';
+  String get quoteUseDisabled => '相場取得オフ — 取得原価／キャッシュを使用';
 
   @override
-  String get quoteUseCurrencyMismatch => 'Using cost (price currency differs)';
+  String get quoteUseCurrencyMismatch => '取得原価を使用（価格の通貨が異なる）';
 
   @override
   String unrealizedLabel(String amount, String currency) {
-    return 'Unrealized $amount $currency';
+    return '含み損益 $amount $currency';
   }
 
   @override
   String holdingsUnitsCost(String qty) {
-    return '$qty units · ';
+    return '$qty 単位 · ';
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
+  String get recoveryPhraseTitle => 'リカバリーフレーズ';
 
   @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
+  String get recoveryPhraseConfirmTitle => 'フレーズを確認';
 
   @override
   String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.';
+      'この24個の単語は、この端末を紛失・初期化・交換した場合に取引履歴を復元する唯一の方法です。Smara家計簿にはサーバーがなく、代わりに復元することはできません。\n\nこの端末とこのフレーズを両方失うと、記録したすべての取引は永久に検証できなくなります。';
 
   @override
   String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe — nobody else can recover them for you.';
+      'これらの単語を順番に書き留め、この端末とは別の安全な場所に保管してください。';
 
   @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
+  String get iveSavedRecoveryPhrase => 'リカバリーフレーズを保存しました';
 
   @override
-  String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
+  String get confirmPhraseBlurb => '先ほど保存したフレーズから指定された単語を入力してください。';
 
   @override
   String wordNumber(String n) {
-    return 'Word #$n';
+    return '単語 #$n';
   }
 
   @override
-  String get keystoreExportTitle => 'Export keystore file';
+  String get keystoreExportTitle => 'キーストアファイルを書き出す';
 
   @override
   String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.';
+      'リカバリーフレーズに加えて、任意のパスフレーズで保護した暗号化キーストアファイルを保存できます。これは任意です - リカバリーフレーズだけでも常に署名鍵を復元するのに十分です。';
 
   @override
-  String get keystorePassphrase => 'Passphrase';
+  String get keystorePassphrase => 'パスフレーズ';
 
   @override
-  String get exportKeystoreFile => 'Export keystore file';
+  String get exportKeystoreFile => 'キーストアファイルを書き出す';
 
   @override
-  String get chooseCurrencyTitle => 'Choose your currency';
+  String get chooseCurrencyTitle => '通貨を選択してください';
 
   @override
   String get chooseCurrencyBlurb =>
-      'Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.';
+      '現時点では、各口座グループ（現金及び現金同等物、年金・退職金など）はこの1つの通貨を使用します。後で新しいグループを作成すれば、別の通貨の口座を追加することもできます。';
 
   @override
-  String get currencyBackfillTitle => 'Choose a currency for existing groups';
+  String get currencyBackfillTitle => '既存のグループの通貨を選択';
 
   @override
   String get currencyBackfillBlurb =>
-      'This app now supports multiple currencies. Your existing groups need one currency assigned.';
+      'このアプリは複数通貨に対応しました。既存の口座と口座グループには通貨の設定が必要です。この機能が導入される前に作成されたものなので、すべてに同じ選択が適用されます。';
 
   @override
-  String get firstAccountTitle => 'Name your account';
+  String get firstAccountTitle => '口座に名前を付ける';
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you\'ll recognize.';
+      'これはあなたのためにあらかじめ用意された口座です - 銀行名のような、わかりやすい名前を付けてください。次に支出または収入を1件記録し、その後リカバリーフレーズで端末を保護します。';
 
   @override
-  String get whatsMainAccountCalled => 'What\'s your main account called?';
+  String get whatsMainAccountCalled => 'メインの口座の名前は何ですか？';
 
   @override
-  String get restoreTitle => 'Restore signing key';
+  String get restoreTitle => '署名鍵を復元';
 
   @override
   String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.';
+      'この端末には既存の帳簿がありますが、一致する署名鍵がありません。保存したリカバリーフレーズまたはキーストアファイルから復元してください - データは通常どおり検証され、何も再署名や変更はされません。';
 
   @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
+  String get recoveryPhrase24 => 'リカバリーフレーズ（24個すべての単語）';
 
   @override
-  String get keystoreFile => 'Keystore file';
+  String get keystoreFile => 'キーストアファイル';
 
   @override
-  String get keystoreFileContents => 'Keystore file contents';
+  String get keystoreFileContents => 'キーストアファイルの内容';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
+  String get optionalBackupFile => '任意のバックアップファイル';
 
   @override
-  String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
+  String get iDontHavePhrase => 'リカバリーフレーズもキーストアファイルもありません';
 
   @override
-  String get migrationTitle => 'Migrate to a new key';
+  String get migrationTitle => '新しい鍵に移行';
 
   @override
   String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
+      'リカバリーフレーズもキーストアファイルもない場合、この端末の署名鍵は復元できません。新しい鍵を開始できます。古い項目は表示されたままですが、置き換え済みとなります。';
 
   @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
+  String get iConfirmBooksValid => '現在の帳簿が正しいことを確認しました';
 
   @override
-  String get whyWeDontEdit => 'Why we don’t edit old entries';
+  String get whyWeDontEdit => '古い項目を編集しない理由';
 
   @override
   String get whyWeDontEditBody =>
-      'When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.';
+      '誤りを修正するとき、すでに入力した内容を変更するのではなく、古い行をそのまま残し、隣に修正を追加します。こうすることで、何が起きたか、いつ修正したかが履歴に常に正確に表示され、気づかないうちに内容が変わることはありません。';
 
   @override
-  String get lockTitle => 'Unlock';
+  String get lockTitle => 'ロック解除';
 
   @override
   String get lockScreenTitle => 'ロック中';
 
   @override
-  String get enterPinToContinue => '続けるにはPINを入力';
+  String get enterPinToContinue => '続けるにはPINを入力してください';
 
   @override
   String get pinLabel => 'PIN';
 
   @override
-  String get setPinTitle => 'Set a PIN';
+  String get setPinTitle => 'PINを設定';
 
   @override
-  String get currentPin => 'Current PIN';
+  String get currentPin => '現在のPIN';
 
   @override
-  String get newPin => 'New PIN';
+  String get newPin => '新しいPIN';
 
   @override
-  String get confirmPin => 'Confirm PIN';
+  String get confirmPin => 'PINを確認';
 
   @override
-  String get confirmNewPin => 'Confirm new PIN';
+  String get confirmNewPin => '新しいPINを確認';
 
   @override
-  String get firstWeekTitle => 'Set up your accounts';
+  String get firstWeekTitle => '口座を設定する';
 
   @override
-  String get addCashAccount => 'Add a cash account';
+  String get addCashAccount => '現金口座を追加';
 
   @override
-  String get addCreditCard => 'Add a credit card';
+  String get addCreditCard => 'クレジットカードを追加';
 
   @override
-  String get cashAccountName => 'Cash account name';
+  String get cashAccountName => '現金口座名';
 
   @override
-  String get cardName => 'Card name';
+  String get cardName => 'カード名';
 
   @override
-  String get paidFromBank => 'Paid from bank';
+  String get paidFromBank => '銀行から支払い';
 
   @override
-  String get paidFromCard => 'Paid from card';
+  String get paidFromCard => 'カードから支払い';
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'このバックアップを保護するパスフレーズを選んでください。忘れた場合、復元する方法はありません。';
 
   @override
-  String get replaceBooksTitle => 'Replace your local books?';
+  String get replaceBooksTitle => 'この端末の帳簿を置き換えますか？';
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'これにより、現在このアプリにあるすべてのデータがバックアップの内容に置き換わります。その後アプリを閉じて開き直してください。';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => '先にバックアップファイルを選択してください。';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'バックアップを復元しました';
 
   @override
-  String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+  String get backupRestoredBody => '帳簿が復元されました。続けるにはアプリを閉じて開き直してください。';
 
   @override
-  String get fixThisEntry => 'Fix this entry';
+  String get fixThisEntry => 'この項目を修正';
 
   @override
-  String get fixBlurb =>
-      'The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.';
+  String get fixBlurb => '古い行はそのまま残ります。確定すると、取消行と修正後の行が追加されます。';
 
   @override
-  String get importStatementTitle => 'Import Statement';
+  String get importStatementTitle => '明細書をインポート';
 
   @override
-  String get importOfx => 'Import OFX';
+  String get importOfx => 'OFXをインポート';
 
   @override
-  String get importOfxQfxFile => 'Import OFX / QFX file';
+  String get importOfxQfxFile => 'OFX / QFXファイルをインポート';
 
   @override
-  String get importCsvFile => 'Import CSV file';
+  String get importCsvFile => 'CSVファイルをインポート';
 
   @override
-  String get whatKindOfStatement => 'What kind of statement file do you have?';
+  String get whatKindOfStatement => 'お持ちの明細書ファイルの種類は？';
 
   @override
-  String get chooseAccountForFile =>
-      'Choose which account this file belongs to.';
+  String get chooseAccountForFile => 'このファイルがどの口座のものか選択してください。';
 
   @override
-  String get importIntoAccount => 'Import into account';
+  String get importIntoAccount => 'インポート先の口座';
 
   @override
-  String get useSavedProfile => 'Use a saved profile';
+  String get useSavedProfile => '保存済みプロファイルを使う';
 
   @override
-  String get saveMappingProfile => 'Save this mapping as a profile (optional)';
+  String get saveMappingProfile => 'このマッピングをプロファイルとして保存（任意）';
 
   @override
-  String get renameProfile => 'Rename profile';
+  String get renameProfile => 'プロファイル名を変更';
 
   @override
-  String get deleteProfileTitle => 'Delete profile?';
+  String get deleteProfileTitle => 'プロファイルを削除しますか？';
 
   @override
-  String get fileHasHeader => 'File has a header row';
+  String get fileHasHeader => 'ファイルにヘッダー行がある';
 
   @override
-  String get dateColumn => 'Date column';
+  String get dateColumn => '日付の列';
 
   @override
-  String get dateFormatHint => 'Date format (e.g. dd/MM/yyyy)';
+  String get dateFormatHint => '日付形式（例: dd/MM/yyyy）';
 
   @override
-  String get amountColumn => 'Amount column';
+  String get amountColumn => '金額の列';
 
   @override
-  String get amountConvention => 'Amount convention';
+  String get amountConvention => '金額の符号規則';
 
   @override
-  String get signedAmountColumn => 'Signed amount column';
+  String get signedAmountColumn => '符号付き金額の列';
 
   @override
-  String get separateDebitCredit => 'Separate debit / credit columns';
+  String get separateDebitCredit => '借方／貸方の列を分ける';
 
   @override
-  String get debitColumn => 'Debit column';
+  String get debitColumn => '借方の列';
 
   @override
-  String get creditColumn => 'Credit column';
+  String get creditColumn => '貸方の列';
 
   @override
-  String get decimalSeparator => 'Decimal separator (. or ,)';
+  String get decimalSeparator => '小数点の記号（. または ,）';
 
   @override
-  String get descriptionColumns => 'Description column(s)';
+  String get descriptionColumns => '摘要の列';
 
   @override
-  String get referenceIdColumn => 'Reference id column (optional)';
+  String get referenceIdColumn => '参照IDの列（任意）';
 
   @override
-  String get skippedRows => 'Skipped rows';
+  String get skippedRows => 'スキップされた行';
 
   @override
   String parsedTransactionCount(String count) {
-    return '$count transactions parsed';
+    return '$count件の取引を解析しました';
   }
 
   @override
   String skippedOrExcludedCount(String count) {
-    return '$count skipped or excluded';
+    return '$count件をスキップまたは除外';
   }
 
   @override
   String postedFailedCount(String posted, String failed) {
-    return '$posted posted, $failed failed';
+    return '$posted件記帳、$failed件失敗';
   }
 
   @override
-  String get categoryForAll => 'Category for all';
+  String get categoryForAll => 'すべてに適用するカテゴリ';
 
   @override
-  String get saveAsRule => 'Save as a rule?';
+  String get saveAsRule => 'ルールとして保存しますか？';
 
   @override
-  String get saveAsRuleBlurb =>
-      'Future imports whose description contains this keyword will use this category.';
+  String get saveAsRuleBlurb => '今後、摘要にこのキーワードを含むインポートには、このカテゴリが使用されます。';
 
   @override
-  String get keyword => 'Keyword';
+  String get keyword => 'キーワード';
 
   @override
-  String get noSavedRules =>
-      'No saved rules yet. Assign a category to a group of rows to save a rule.';
+  String get noSavedRules => '保存されたルールはまだありません。行のグループにカテゴリを割り当てるとルールを保存できます。';
 
   @override
-  String get deleteRuleTitle => 'Delete rule?';
+  String get deleteRuleTitle => 'ルールを削除しますか？';
 
   @override
-  String get editRule => 'Edit rule';
+  String get editRule => 'ルールを編集';
 
   @override
   String rowsGrouped(String count) {
-    return '$count rows';
+    return '$count行';
   }
 
   @override
   String selectStatementFile(String extensions) {
-    return 'Select a $extensions statement file to import';
+    return 'インポートする$extensions明細書ファイルを選択してください';
   }
 
   @override
-  String get payeesTitle => 'Payees';
+  String get payeesTitle => '支払先';
 
   @override
-  String get addPayee => 'Add payee';
+  String get addPayee => '支払先を追加';
 
   @override
-  String get renamePayee => 'Rename payee';
+  String get renamePayee => '支払先名を変更';
 
   @override
-  String get deletePayeeTitle => 'Delete payee?';
+  String get deletePayeeTitle => '支払先を削除しますか？';
 
   @override
-  String get noPayeesYet => 'No payees yet';
+  String get noPayeesYet => '支払先はまだありません';
 
   @override
-  String get recurringTitle => 'Recurring templates';
+  String get recurringTitle => '定期テンプレート';
 
   @override
-  String get noRecurringYet => 'No recurring templates yet';
+  String get noRecurringYet => '定期テンプレートはまだありません';
 
   @override
-  String get deleteTemplateTitle => 'Delete recurring template?';
+  String get deleteTemplateTitle => '定期テンプレートを削除しますか？';
 
   @override
-  String get dayOfMonth => 'Day of month (1-31)';
+  String get dayOfMonth => '毎月の日（1〜31）';
 
   @override
-  String get dayOfMonthNote => 'A month with fewer days uses its own last day.';
+  String get dayOfMonthNote => '日数が少ない月では、その月の最終日が使用されます。';
 
   @override
   String dayOfMonthLine(String day) {
-    return 'Day $day of the month - ';
+    return '毎月$day日 - ';
   }
 
   @override
-  String get name => 'Name';
+  String get name => '名前';
 
   @override
-  String get none => 'None';
+  String get none => 'なし';
 
   @override
-  String get currency => 'Currency';
+  String get currency => '通貨';
 
   @override
   String get errorGeneric => '問題が発生しました。もう一度お試しください。';
 
   @override
   String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
+      'このリカバリーフレーズまたはキーストアファイルは、このデータベース内のどの署名アイデンティティとも一致しません。';
 
   @override
-  String get errorInvalidLedgerBackup =>
-      'This file is not a valid Smara backup.';
+  String get errorInvalidLedgerBackup => 'このファイルは有効なSmaraのバックアップではありません。';
 
   @override
   String get errorInvalidLedgerBackupNoIdentity =>
-      'This backup has no signing identity - it is not a valid Smara backup.';
+      'このバックアップには署名アイデンティティがありません - 有効なSmaraのバックアップではありません。';
 
   @override
   String get errorInvalidLedgerBackupUnverified =>
-      'This backup did not verify as intact books, so it was not restored.';
+      'このバックアップは正常な帳簿として検証できなかったため、復元されませんでした。';
 
   @override
   String errorInvalidLedgerBackupUnreadable(String detail) {
-    return 'This file could not be opened as a Smara backup: $detail';
+    return 'このファイルをSmaraのバックアップとして開けませんでした: $detail';
   }
 
   @override
   String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
+      'このバックアップは、この端末のものとは異なる署名アイデンティティに属しています。';
 
   @override
-  String get errorAccountNotFinancial => 'That is not a financial account.';
+  String get errorAccountNotFinancial => 'それは財務口座ではありません。';
 
   @override
-  String get errorAccountArchived => 'That account is hidden.';
+  String get errorAccountArchived => 'その口座は非表示になっています。';
 
   @override
-  String get errorAccountNotArchived => 'That account is not hidden.';
+  String get errorAccountNotArchived => 'その口座は非表示になっていません。';
 
   @override
-  String get errorAccountNoPositiveBalanceToCloseOut =>
-      'There is no remaining balance to transfer.';
+  String get errorAccountNoPositiveBalanceToCloseOut => '振り替える残高がありません。';
 
   @override
-  String get errorAccountHasNoGroup => 'That account has no group assigned.';
+  String get errorAccountHasNoGroup => 'その口座にはグループが割り当てられていません。';
 
   @override
-  String get errorGroupHasNoCurrency => 'That group has no currency set yet.';
+  String get errorGroupHasNoCurrency => 'そのグループにはまだ通貨が設定されていません。';
 
   @override
-  String get errorGroupNotFound => 'That account group was not found.';
+  String get errorGroupNotFound => 'その口座グループが見つかりませんでした。';
 
   @override
-  String get errorInvestmentAccountsMustBeAssets =>
-      'Only asset accounts can be marked as investment accounts.';
+  String get errorInvestmentAccountsMustBeAssets => '資産口座のみを投資口座として設定できます。';
 
   @override
-  String get errorCreditCardsMustBeLiabilities =>
-      'Only liability accounts can be marked as credit cards.';
+  String get errorCreditCardsMustBeLiabilities => '負債口座のみをクレジットカードとして設定できます。';
 
   @override
-  String get errorOpeningBalanceMustBePositive =>
-      'Opening balance must be positive when supplied.';
+  String get errorOpeningBalanceMustBePositive => '初期残高を指定する場合は正の値である必要があります。';
 
   @override
-  String get errorAccountTypeDoesNotMatchGroup =>
-      'That account type does not match the group.';
+  String get errorAccountTypeDoesNotMatchGroup => 'その口座の種類はグループと一致しません。';
 
   @override
-  String get errorLastActiveAccount => '最後の有効な口座は非表示にできません。';
+  String get errorLastActiveAccount => '最後の有効な財務口座を非表示にすることはできません。';
 
   @override
-  String get errorCurrencyRequiredToCreateGroup =>
-      'Currency is required to create a group.';
+  String get errorCurrencyRequiredToCreateGroup => 'グループを作成するには通貨が必要です。';
 
   @override
-  String get errorSystemGroupCannotBeArchived =>
-      'Built-in account groups cannot be hidden.';
+  String get errorSystemGroupCannotBeArchived => '組み込みの口座グループは非表示にできません。';
 
   @override
-  String get errorGroupAlreadyArchived => 'That group is already hidden.';
+  String get errorGroupAlreadyArchived => 'そのグループはすでに非表示になっています。';
 
   @override
-  String get errorCannotArchiveGroupWithAccounts =>
-      'Cannot hide a group that still has active accounts.';
+  String get errorCannotArchiveGroupWithAccounts => '有効な口座がまだあるグループは非表示にできません。';
 
   @override
-  String get errorSystemGroupNeverArchived =>
-      'Built-in account groups are never hidden.';
+  String get errorSystemGroupNeverArchived => '組み込みの口座グループが非表示になることはありません。';
 
   @override
-  String get errorAccountGroupsCannotBeDeleted =>
-      'Account groups cannot be deleted.';
+  String get errorAccountGroupsCannotBeDeleted => '口座グループは削除できません。';
 
   @override
   String get errorCannotReassignDifferentCurrency =>
-      'Cannot move this account to a group with a different currency.';
+      'この口座を別の通貨のグループに移動することはできません。';
 
   @override
   String get errorCannotChangeGroupCurrencyWithAccounts =>
-      'Cannot change currency while the group has active accounts.';
+      'グループに有効な口座がある間は通貨を変更できません。';
 
   @override
   String get errorAmountMustBePositive => '金額は正の値にしてください。';
 
   @override
-  String get errorAccountCurrencyAmountMustBePositive =>
-      'Account-currency amount must be positive.';
+  String get errorAccountCurrencyAmountMustBePositive => '口座通貨での金額は正の値にしてください。';
 
   @override
   String get errorAccountCurrencyAmountNotForSameCurrency =>
-      'Account-currency amount is only for a foreign-currency entry.';
+      '口座通貨での金額は、外貨建ての項目にのみ使用します。';
 
   @override
-  String get errorSplitNeedsTwoLines =>
-      'A split needs at least two category lines.';
+  String get errorSplitNeedsTwoLines => '分割には少なくとも2つのカテゴリ行が必要です。';
 
   @override
-  String get errorSplitLineMustBePositive =>
-      'Each split line must be a positive amount.';
+  String get errorSplitLineMustBePositive => '分割した各行の金額は正の値である必要があります。';
 
   @override
-  String get errorSplitLinesMustSumToTotal =>
-      'Split lines must add up to the transaction total.';
+  String get errorSplitLinesMustSumToTotal => '分割した行の合計は取引の総額と一致する必要があります。';
 
   @override
-  String get errorTransferAmountMustBePositive =>
-      'Transfer amount must be positive.';
+  String get errorTransferAmountMustBePositive => '振替金額は正の値にしてください。';
 
   @override
-  String get errorTransferAccountsMustDiffer =>
-      'Source and destination accounts must be different.';
+  String get errorTransferAccountsMustDiffer => '振替元口座と振替先口座は異なる必要があります。';
 
   @override
   String get errorCloseoutRequiresDestinationAmount =>
-      'A cross-currency closeout needs a known destination amount.';
+      '異なる通貨間の決済には、振替先金額が既知である必要があります。';
 
   @override
   String get errorDestinationAmountNotForSameCurrency =>
-      'Destination amount is only for a cross-currency transfer.';
+      '振替先金額は、異なる通貨間の振替にのみ使用します。';
 
   @override
-  String get errorDestinationAmountMustBePositive =>
-      'Destination amount must be positive.';
+  String get errorDestinationAmountMustBePositive => '振替先金額は正の値にしてください。';
 
   @override
-  String get errorInvestmentCashExceeded =>
-      'Cannot transfer more than this investment account\'s cash.';
+  String get errorInvestmentCashExceeded => 'この投資口座の現金を超えて振り替えることはできません。';
 
   @override
   String get errorCannotReverseUnsettledProvisional =>
-      'Settle this pending transfer instead of reversing it.';
+      '取り消す代わりに、この保留中の振替を確定してください。';
 
   @override
-  String get errorAlreadyReversed =>
-      'This entry has already been corrected. The original line stays as it is.';
+  String get errorAlreadyReversed => 'この項目はすでに修正されています。元の行はそのまま残ります。';
 
   @override
-  String get errorNotActiveExpenseCategory =>
-      'Choose an active expense category.';
+  String get errorNotActiveExpenseCategory => '有効な支出カテゴリを選択してください。';
 
   @override
-  String get errorNotActiveIncomeCategory =>
-      'Choose an active income category.';
+  String get errorNotActiveIncomeCategory => '有効な収入カテゴリを選択してください。';
 
   @override
-  String get errorSettledAmountMustNotBeNegative =>
-      'Amount that arrived cannot be negative.';
+  String get errorSettledAmountMustNotBeNegative => '届いた金額を負の値にすることはできません。';
 
   @override
-  String get errorPendingTransferNotFound =>
-      'That pending transfer was not found.';
+  String get errorPendingTransferNotFound => 'その保留中の振替が見つかりませんでした。';
 
   @override
-  String get errorPendingTransferAlreadySettled =>
-      'That pending transfer is already settled.';
+  String get errorPendingTransferAlreadySettled => 'その保留中の振替はすでに確定しています。';
 
   @override
   String get errorSettledToMustBeSourceOrDestination =>
-      'Choose the original source or destination account.';
+      '元の振替元口座または振替先口座を選択してください。';
 
   @override
   String get errorFeeCategoryOnlyWhenReturningToSource =>
-      'A fee category is only used when money is returned to the source account.';
+      '手数料カテゴリは、資金が振替元口座に戻る場合にのみ使用します。';
 
   @override
   String get errorSettledAmountMustBePositiveForDelivery =>
-      'Enter a positive amount for what arrived.';
+      '届いた金額として正の値を入力してください。';
 
   @override
-  String get errorSettledAmountExceedsProvisional =>
-      'That amount is more than was sent.';
+  String get errorSettledAmountExceedsProvisional => 'その金額は送金額を超えています。';
 
   @override
-  String get errorInstrumentNotFound => 'That instrument was not found.';
+  String get errorInstrumentNotFound => 'その銘柄が見つかりませんでした。';
 
   @override
-  String get errorIncomeRequiredForNonCash =>
-      'An active income category is required for a non-cash acquisition.';
+  String get errorIncomeRequiredForNonCash => '非現金での取得には有効な収入カテゴリが必要です。';
 
   @override
-  String get errorInsufficientCash =>
-      'Not enough cash in this investment account for that buy.';
+  String get errorInsufficientCash => 'この投資口座には、その買いを行うための現金が不足しています。';
 
   @override
-  String get errorSellQuantityAndPriceMustBePositive =>
-      'Sell quantity and unit price must be positive.';
+  String get errorSellQuantityAndPriceMustBePositive => '売却数量と単価は正の値にしてください。';
 
   @override
   String errorLockedUntil(String date) {
-    return 'Cannot sell: some units are locked until $date.';
+    return '売却できません: 一部の単位は$dateまでロックされています。';
   }
 
   @override
-  String get errorInsufficientQuantity =>
-      'Cannot sell more than you currently hold unlocked.';
+  String get errorInsufficientQuantity => '現在ロック解除されている保有数を超えて売却することはできません。';
 
   @override
-  String get errorIncomeRequiredForGain =>
-      'An active income category is required for a realized gain.';
+  String get errorIncomeRequiredForGain => '実現利益には有効な収入カテゴリが必要です。';
 
   @override
-  String get errorExpenseRequiredForLoss =>
-      'An active expense category is required for a realized loss.';
+  String get errorExpenseRequiredForLoss => '実現損失には有効な支出カテゴリが必要です。';
 
   @override
   String errorBrokerageFailedAfterBuy(String detail) {
-    return 'Buy posted, but brokerage fee failed: $detail';
+    return '買いは記帳されましたが、取引手数料の記帳に失敗しました: $detail';
   }
 
   @override
   String errorBrokerageFailedAfterSell(String detail) {
-    return 'Sell posted, but brokerage fee failed: $detail';
+    return '売りは記帳されましたが、取引手数料の記帳に失敗しました: $detail';
   }
 
   @override
-  String get errorDividendMustBePositive => 'Dividend amount must be positive.';
+  String get errorDividendMustBePositive => '配当金額は正の値にしてください。';
 
   @override
-  String get errorNotInvestmentAccount => 'That is not an investment account.';
+  String get errorNotInvestmentAccount => 'それは投資口座ではありません。';
 
   @override
-  String get errorNoInventoryCompanion =>
-      'This investment account is missing its inventory companion.';
+  String get errorNoInventoryCompanion => 'この投資口座には対応する保有資産の記録がありません。';
 
   @override
   String errorInvestmentReversalBlocked(String sells) {
-    return 'Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: $sells.';
+    return 'この買いを取り消せません: 後の売り取引がその単位に依存しています。先に依存する売り取引を取り消してください: $sells。';
   }
 
   @override
-  String get errorMonthlyLimitMustBePositive =>
-      'Monthly limit must be positive.';
+  String get errorMonthlyLimitMustBePositive => '月間上限は正の値にしてください。';
 
   @override
-  String get errorTemplateAmountMustBePositive =>
-      'Template amount must be positive.';
+  String get errorTemplateAmountMustBePositive => 'テンプレートの金額は正の値にしてください。';
 
   @override
-  String get errorOfxUnrecognized => 'Could not recognize this file as OFX.';
+  String get errorOfxUnrecognized => 'このファイルをOFXとして認識できませんでした。';
 
   @override
-  String get errorCsvEmpty => 'The selected file is empty.';
+  String get errorCsvEmpty => '選択されたファイルは空です。';
 
   @override
-  String get errorCsvUnreadable => 'Could not read this file as CSV.';
+  String get errorCsvUnreadable => 'このファイルをCSVとして読み取れませんでした。';
 
   @override
-  String get errorCsvNoRows => 'The selected file has no rows.';
+  String get errorCsvNoRows => '選択されたファイルに行がありません。';
 
   @override
   String errorBackupCreateFailed(String detail) {
-    return 'Could not create the backup: $detail';
+    return 'バックアップを作成できませんでした: $detail';
   }
 
   @override
   String get errorBackupRestoreFailed =>
-      'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
+      'このバックアップを復元できませんでした - パスフレーズが間違っているか、Smaraのバックアップファイルではありません。';
 
   @override
-  String get validationAmountAccountCategoryRequired =>
-      'Amount, account, and category are required.';
+  String get validationAmountAccountCategoryRequired => '金額、口座、カテゴリは必須です。';
 
   @override
-  String get validationAmountAccountRequired =>
-      'Amount and account are required.';
+  String get validationAmountAccountRequired => '金額と口座は必須です。';
 
   @override
-  String get validationSplitLineIncomplete =>
-      'Every split line needs a category and an amount.';
+  String get validationSplitLineIncomplete => '分割した各行にはカテゴリと金額が必要です。';
 
   @override
-  String get validationSplitSumMismatch =>
-      'Split lines must add up to the transaction total.';
+  String get validationSplitSumMismatch => '分割した行の合計は取引の総額と一致する必要があります。';
 
   @override
-  String get validationFromToAmountRequired =>
-      'From account, to account, and amount are required.';
+  String get validationFromToAmountRequired => '振替元口座、振替先口座、金額は必須です。';
 
   @override
-  String get validationAmountArrivedRequired =>
-      'Amount that arrived is required.';
+  String get validationAmountArrivedRequired => '届いた金額は必須です。';
 
   @override
-  String get validationChooseReceivingAccount =>
-      'Choose which account received the funds.';
+  String get validationChooseReceivingAccount => '資金を受け取った口座を選択してください。';
 
   @override
-  String get validationAccountCategoryRequired =>
-      'Account and category are required.';
+  String get validationAccountCategoryRequired => '口座とカテゴリは必須です。';
 
   @override
-  String get validationFixFailed => 'Could not save this fix.';
+  String get validationFixFailed => 'この修正を保存できませんでした。';
 
   @override
-  String get validationNameRequired => 'Name your main account.';
+  String get validationNameRequired => 'メインの口座に名前を付けてください。';
 
   @override
-  String get validationStillLoading => 'Still loading - try again in a moment.';
+  String get validationStillLoading => '読み込み中です - しばらくしてからもう一度お試しください。';
 
   @override
-  String get validationSaveAccountNameFailed =>
-      'Could not save the account name.';
+  String get validationSaveAccountNameFailed => '口座名を保存できませんでした。';
 
   @override
-  String get validationWrongPin => 'PINが違います。もう一度入力してください。';
+  String get validationWrongPin => 'PINが違います。もう一度お試しください。';
 
   @override
   String get validationCategoryMustBeIncomeOrExpense =>
-      'Category must be Income or Expense.';
+      'カテゴリは収入または支出である必要があります。';
 
   @override
-  String get validationOnlyExpenseHasMonthlyLimit =>
-      'Only an Expense category can have a monthly limit.';
+  String get validationOnlyExpenseHasMonthlyLimit => '月間上限を設定できるのは支出カテゴリのみです。';
 
   @override
-  String get validationInvalidTemplate => 'Invalid template.';
+  String get validationInvalidTemplate => '無効なテンプレートです。';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
+  String get validationWrongKeystorePassphrase => 'このキーストアファイルのパスフレーズが違います。';
 
   @override
-  String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
+  String get validationInvalidKeystoreFile => 'これは有効なキーストアファイルではないようです。';
 
   @override
-  String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
+  String get validationRestorePhraseFailed => 'そのリカバリーフレーズから復元できませんでした。';
 
   @override
   String validationGenerateKeyFailed(String detail) {
-    return 'Could not generate a signing key on this device: $detail';
+    return 'この端末で署名鍵を生成できませんでした: $detail';
   }
 
   @override
   String validationSaveCurrencyFailed(String detail) {
-    return 'Could not save this currency: $detail';
+    return 'この通貨を保存できませんでした: $detail';
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
+  String get validationMigrationFailed => '移行に失敗しました。もう一度お試しください。';
 
   @override
-  String get validationChooseBackupFile => 'Choose a backup file first.';
+  String get validationChooseBackupFile => '先にバックアップファイルを選択してください。';
 
   @override
-  String get validationPassphraseRequired => 'Enter a passphrase.';
+  String get validationPassphraseRequired => 'パスフレーズを入力してください。';
 
   @override
-  String get validationPinsDoNotMatch => 'The two PINs do not match.';
+  String get validationPinsDoNotMatch => '2つのPINが一致しません。';
 
   @override
   String get validationFeePositiveWithCategory =>
-      'A transfer fee must be a positive amount with an expense category selected.';
+      '振替手数料は、支出カテゴリを選択したうえで正の値にする必要があります。';
 
   @override
   String get validationFeeMustBeLessThanAmount =>
-      'The fee must be less than the amount for a deducted-fee transfer.';
+      '手数料差し引き方式の振替では、手数料は金額より小さくする必要があります。';
 
   @override
   String validationTransferSavedFeeFailed(String detail) {
-    return 'Transfer saved, but the fee could not be recorded: $detail';
+    return '振替は保存されましたが、手数料を記録できませんでした: $detail';
   }
 
   @override
-  String get validationEnterValidAmount => 'Enter a valid amount.';
+  String get validationEnterValidAmount => '有効な金額を入力してください。';
 
   @override
   String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
+    return '単語$nが保存したフレーズと一致しません。確認してもう一度お試しください。';
   }
 
   @override
-  String get errorBuyQuantityAndPriceMustBePositive =>
-      'Buy quantity and unit price must be positive.';
+  String get errorBuyQuantityAndPriceMustBePositive => '買いの数量と単価は正の値にしてください。';
 
   @override
-  String get errorInstrumentArchived => 'Cannot buy an archived instrument.';
+  String get errorInstrumentArchived => '非表示にした銘柄を買うことはできません。';
 
   @override
   String get errorNonCashCannotIncludeBrokerage =>
-      'Non-cash acquisitions cannot include brokerage.';
+      '非現金での取得には取引手数料を含めることはできません。';
 
   @override
   String get errorBrokerageRequiresExpenseCategory =>
-      'An active expense category is required when brokerage is positive.';
+      '取引手数料が正の値の場合、有効な支出カテゴリが必要です。';
 
   @override
-  String get errorSellProceedsMustCoverBrokerage =>
-      'Sell proceeds must be at least the brokerage amount.';
+  String get errorSellProceedsMustCoverBrokerage => '売却代金は取引手数料以上である必要があります。';
 
   @override
   String homeSpentOfLimitThisMonth(String spent, String limit) {
-    return '$spent of $limit this month';
+    return '今月 $limit中$spent';
   }
 
   @override
-  String get unlockBiometricReason => 'Unlock Smara Account';
+  String get unlockBiometricReason => 'Smara家計簿のロックを解除';
 
   @override
   String get searchLabel => '検索';
 
   @override
-  String get openingBalance => 'Opening balance';
+  String get openingBalance => '初期残高';
 
   @override
   String transferToName(String name) {
-    return 'Transfer: $name';
+    return '振替: $name';
   }
 
   @override
-  String get feeForTransfer => 'Fee for transfer';
+  String get feeForTransfer => '振替手数料';
 
   @override
   String feeForTransferTo(String name) {
-    return 'Fee for transfer to $name';
+    return '$nameへの振替手数料';
   }
 
   @override
   String couldNotOpenFilePicker(String detail) {
-    return 'Could not open the file picker: $detail';
+    return 'ファイル選択画面を開けませんでした: $detail';
   }
 
   @override
   String pleaseSelectFile(String extensions) {
-    return 'Please select a .$extensions file';
+    return '.$extensionsファイルを選択してください';
   }
 
   @override
-  String get currencyCodeIso => 'Currency code (ISO 4217, e.g. USD)';
+  String get currencyCodeIso => '通貨コード（ISO 4217、例: USD）';
 
   @override
   String splitCounterpartMore(String name, String count) {
-    return '$name +$count more';
+    return '$name 他$count件';
   }
 
   @override
-  String get dateLabel => 'Date';
+  String get dateLabel => '日付';
 
   @override
-  String get noneSelected => 'None';
+  String get noneSelected => 'なし';
 
   @override
   String reviewEntriesBeforeContinuing(String count) {
-    return 'Review the entries below ($count total) before continuing.';
+    return '続ける前に、以下の項目（合計$count件）を確認してください。';
   }
 
   @override
   String youReceived(String amount) {
-    return 'You received $amount';
+    return '$amountを受け取りました';
   }
 
   @override
-  String get leaveBlankIfRateUnknown =>
-      'Leave blank if the exchange rate isn\'t known yet.';
+  String get leaveBlankIfRateUnknown => '為替レートがまだわからない場合は空欄のままにしてください。';
 
   @override
-  String get recordTradeBlurb =>
-      'Record a trade that already happened. This app does not place orders.';
+  String get recordTradeBlurb => 'すでに行われた取引を記録します。このアプリは注文を発注しません。';
 
   @override
-  String get feeOnTopBlurb =>
-      'On: the amount above is the total taken from this account; the fee comes out of it.';
+  String get feeOnTopBlurb => 'オン: 上記の金額はこの口座から差し引かれる総額で、手数料はそこから差し引かれます。';
 
   @override
-  String get feeBankBlurb =>
-      'An upfront commission charged by your bank or an intermediary.';
+  String get feeBankBlurb => '銀行または仲介業者によって前もって請求される手数料です。';
 
   @override
-  String get validationPinMinLength => 'PIN must be at least 4 digits.';
+  String get validationPinMinLength => 'PINは4桁以上である必要があります。';
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'これは、現在このアプリにあるすべてのデータをバックアップの内容に置き換えます — 結合はされません。バックアップファイルを選択し、保護に使用したパスフレーズを入力してください。';
 
   @override
-  String get actionReplace => 'Replace';
+  String get actionReplace => '置き換える';
 
   @override
   String hideAccountBody(String name) {
-    return '$name will no longer be available for new transactions.';
+    return '$nameは今後、新しい取引には使用できなくなります。';
   }
 
   @override
   String hideGroupBody(String name) {
-    return '$name will no longer be offered when creating or reassigning accounts.';
+    return '$nameは今後、口座の作成や再割り当ての際に候補として表示されなくなります。';
   }
 
   @override
   String hideCategoryBody(String name) {
-    return '$name will no longer be offered when recording new transactions.';
+    return '$nameは今後、新しい取引を記録する際に候補として表示されなくなります。';
   }
 
   @override
   String get hideInstrumentBody =>
-      'Hidden instruments stay on past buys and sells. You can still record a dividend for them.';
+      '非表示にした銘柄は、過去の買い・売りにはそのまま残ります。配当も引き続き記録できます。';
 
   @override
   String nameHidden(String name) {
-    return '$name (hidden)';
+    return '$name（非表示）';
   }
 
   @override
-  String get noCurrencySet => 'No currency set';
+  String get noCurrencySet => '通貨が設定されていません';
 
   @override
   String deletePayeeBody(String name) {
-    return '$name and its remembered defaults will be removed. Past transactions are unaffected.';
+    return '$nameとその記憶されたデフォルト値が削除されます。過去の取引には影響しません。';
   }
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name will no longer be offered as due. Past transactions it already recorded are unaffected.';
+    return '$nameは今後、期日として表示されなくなります。すでに記録された過去の取引には影響しません。';
   }
 
   @override
   String deleteProfileBody(String name) {
-    return 'The saved column mapping \"$name\" will be deleted. Statements already imported with it are unaffected.';
+    return '保存された列マッピング「$name」が削除されます。すでにそれを使ってインポートした明細書には影響しません。';
   }
 
   @override
   String deleteRuleBody(String keyword) {
-    return 'Imports will no longer be auto-categorized by \"$keyword\". Transactions already categorized using this rule are unaffected.';
+    return '今後のインポートは「$keyword」による自動カテゴリ分けの対象外になります。このルールですでにカテゴリ分けされた取引には影響しません。';
   }
 
   @override
   String get firstWeekBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank.';
+      '任意で、今すぐクレジットカードや現金口座を追加できます - 口座は後からいつでも設定画面から追加できます。';
 
   @override
-  String get deliveredToDestination => 'Delivered to destination';
+  String get deliveredToDestination => '振替先に到着済み';
 
   @override
   String deliveredToName(String name) {
-    return 'Delivered to $name';
+    return '$nameに到着済み';
   }
 
   @override
   String youReceivedLessThanExpected(String amount, String currency) {
-    return 'You received $amount $currency less than expected - choose a category to cover the difference.';
+    return '予定より$amount $currency少なく受け取りました - 差額を計上するカテゴリを選択してください。';
   }
 
   @override
-  String get dateRangeLabel => 'Date range';
+  String get dateRangeLabel => '日付範囲';
 
   @override
-  String get addTemplate => 'Add template';
+  String get addTemplate => 'テンプレートを追加';
 
   @override
-  String get editTemplate => 'Edit template';
+  String get editTemplate => 'テンプレートを編集';
 
   @override
-  String get validationFillTemplateFields =>
-      'Fill in every field with a valid amount and day.';
+  String get validationFillTemplateFields => 'すべての項目に有効な金額と日を入力してください。';
 
   @override
-  String get saveCsvExport => 'Save CSV export';
+  String get saveCsvExport => 'CSVの書き出しを保存';
 
   @override
-  String get referenceRate => 'Reference rate';
+  String get referenceRate => '参考レート';
 
   @override
-  String get yourRate => 'Your rate';
+  String get yourRate => 'あなたのレート';
 
   @override
   String leaveBlankIfThisWasAccountCurrency(String currency) {
-    return 'Leave blank if this was in $currency, the account\'s own currency.';
+    return '口座自体の通貨である$currencyだった場合は空欄のままにしてください。';
   }
 
   @override
-  String get lockUntilOptional => 'Lock until (optional)';
+  String get lockUntilOptional => 'ロック期限（任意）';
 
   @override
   String lockedUntilDate(String date) {
-    return 'Locked until $date';
+    return '$dateまでロック中';
   }
 
   @override
   String get copiedResearchPrompt =>
-      'Copied a research prompt — no browser URL available, or you are offline.';
+      '調査用プロンプトをコピーしました — ブラウザのURLが利用できないか、オフラインです。';
 
   @override
-  String get openedFavouriteResearchTool =>
-      'Opened your favourite research tool.';
+  String get openedFavouriteResearchTool => 'お気に入りの調査ツールを開きました。';
 
   @override
-  String get looksLikeGain => 'This looks like a gain';
+  String get looksLikeGain => 'これは利益のようです';
 
   @override
-  String get looksLikeLoss => 'This looks like a loss';
+  String get looksLikeLoss => 'これは損失のようです';
 
   @override
-  String get looksLikeBreakEven => 'This looks like break-even';
+  String get looksLikeBreakEven => 'これは損益ゼロのようです';
 
   @override
   String sellableQuantity(String name, String qty) {
-    return '$name ($qty sellable)';
+    return '$name（売却可能 $qty）';
   }
 
   @override
   String columnN(String index) {
-    return 'Column $index';
+    return '列 $index';
   }
 
   @override
-  String get importingLabel => 'Importing...';
+  String get importingLabel => 'インポート中...';
 
   @override
-  String get confirmImport => 'Confirm import';
+  String get confirmImport => 'インポートを確定';
 
   @override
-  String get manageSavedCategoryRules => 'Manage Saved Category Rules';
+  String get manageSavedCategoryRules => '保存済みカテゴリルールを管理';
 
   @override
   String statementCurrencyMismatch(String currency) {
-    return 'This file\'s currency ($currency) doesn\'t match the selected account\'s currency.';
+    return 'このファイルの通貨（$currency）は選択した口座の通貨と一致しません。';
   }
 
   @override
-  String get categoryRulesTitle => 'Category rules';
+  String get categoryRulesTitle => 'カテゴリルール';
 
   @override
-  String get possibleDuplicate => 'possible duplicate';
+  String get possibleDuplicate => '重複の可能性';
 
   @override
-  String get unknownCategory => 'Unknown category';
+  String get unknownCategory => '不明なカテゴリ';
 }

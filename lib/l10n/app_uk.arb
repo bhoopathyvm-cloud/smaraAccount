@@ -9,111 +9,110 @@
   "actionCancel": "Скасувати",
   "actionSave": "Зберегти",
   "actionDelete": "Видалити",
-  "actionDone": "Done",
+  "actionDone": "Готово",
   "actionContinue": "Продовжити",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDismiss": "Закрити",
+  "actionRetry": "Повторити",
+  "actionSkip": "Пропустити",
+  "actionConfirm": "Підтвердити",
   "actionAdd": "Додати",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "Витрата",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionEdit": "Редагувати",
+  "actionRename": "Перейменувати",
+  "actionHide": "Приховати",
+  "actionCreate": "Створити",
+  "actionCloseApp": "Закрити застосунок",
+  "actionUnlock": "Розблокувати",
+  "actionSettle": "Закрити",
+  "actionFinish": "Завершити",
+  "actionPreview": "Попередній перегляд",
+  "actionImport": "Імпортувати",
+  "actionExportCsv": "Експортувати CSV",
+  "actionChooseFile": "Вибрати файл",
+  "actionRestore": "Відновити",
+  "actionFix": "Виправити",
+  "actionBuy": "Купити",
+  "actionSell": "Продати",
+  "actionDividend": "Дивіденд",
+  "actionRecordBuy": "Записати купівлю",
+  "actionRecordSell": "Записати продаж",
+  "actionRecordDividend": "Записати дивіденд",
+  "actionPayCard": "Оплатити картку",
+  "actionTransfer": "Переказати",
+  "actionRecordTransaction": "Записати операцію",
+  "actionImportStatement": "Імпортувати виписку",
+  "actionClearDates": "Очистити дати",
+  "actionClearSearch": "Очистити пошук і фільтри",
+  "actionUseBiometrics": "Використати біометрію",
+  "actionSetPin": "Встановити PIN",
+  "actionChangePin": "Змінити PIN",
+  "actionSaveBackup": "Зберегти резервну копію",
+  "actionRestoreBackup": "Відновити з резервної копії",
+  "actionSaveRule": "Зберегти правило",
+  "actionConfirmFix": "Підтвердити виправлення",
+  "captureSpent": "Витрачено",
+  "captureReceived": "Отримано",
+  "captureMovedMoney": "Переказ коштів",
+  "captureImportStatement": "Імпортувати виписку",
   "settingsTitle": "Налаштування",
   "settingsLanguage": "Мова",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "Мова пристрою",
+  "settingsFetchFxRates": "Отримувати довідкові курси обміну",
+  "settingsFetchFxRatesSubtitle": "Показує орієнтовний ринковий курс поруч із сумою отримання при переказах між валютами — лише для порівняння, ніколи не використовується для заповнення суми.",
+  "settingsRateProvider": "Постачальник курсів",
+  "settingsFetchMarketPrices": "Отримувати ринкові ціни для інвестицій",
+  "settingsFetchMarketPricesSubtitle": "Шукає останні ціни для інструментів, що мають тікер або ISIN, щоб оцінити вартість портфеля. Ніколи не використовується для запису угоди і ніколи не надсилає, скільки одиниць ви утримуєте.",
+  "settingsMarketPriceProvider": "Постачальник ринкових цін",
+  "settingsFavouriteResearchTool": "Улюблений інструмент для аналізу",
+  "settingsFavouriteResearchToolSubtitle": "Дотик до назви інструмента в активах відкриває цей інструмент у браузері із запитом для аналізу — це не інтеграція і не порада.",
+  "settingsBackup": "Резервне копіювання",
+  "settingsBackupBlurb": "Збережіть зашифровану копію ваших книг у обране вами місце або відновіть з неї. Це окремо від вашої відновлювальної фрази чи файлу keystore, які резервують ваш ключ підпису, а не ваші книги.",
+  "settingsLock": "Блокування",
+  "settingsLockBlurb": "Вимагати PIN-код або біометрію (де доступно) для відкриття застосунку.",
+  "settingsRequireUnlock": "Вимагати розблокування для відкриття застосунку",
+  "settingsLockAfter": "Блокувати через",
+  "settingsLockImmediately": "Одразу",
+  "settingsLock1Minute": "1 хвилину",
+  "settingsLock5Minutes": "5 хвилин",
+  "settingsLock15Minutes": "15 хвилин",
+  "settingsAllowBiometrics": "Також дозволити біометрію",
+  "settingsHideSnapshot": "Приховувати баланси в перемикачі застосунків",
+  "settingsHideSnapshotSubtitle": "Приховує цей екран, коли ви переходите до іншого застосунку, щоб його не було видно одразу в перемикачі застосунків.",
+  "settingsHideSnapshotUnavailable": "Приховування балансів у перемикачі застосунків недоступне на цій платформі.",
+  "settingsPayees": "Отримувачі",
+  "settingsManagePayees": "Керувати отримувачами",
+  "settingsPayeesBlurb": "Запам''ятовані імена отримувачів разом із категорією та рахунком за замовчуванням, що пропонуються автозаповненням під час запису операції.",
+  "settingsRecurring": "Регулярні шаблони",
+  "settingsManageRecurring": "Керувати регулярними шаблонами",
+  "settingsRecurringBlurb": "Рахунки або дохід, що повторюються щомісяця, наприклад оренда чи зарплата. Шаблон із настанням терміну з''являється на Головній, щоб ви записали його одним дотиком — ніколи не проводиться автоматично.",
+  "settingsAbout": "Про застосунок",
+  "providerFrankfurter": "Frankfurter (курси ЄЦБ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
+  "providerStooq": "Stooq (щоденні котирування)",
   "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "Готівка та її еквіваленти",
+  "systemGroupPensionRetirement": "Пенсія та пенсійні накопичення",
+  "systemGroupCreditShortTerm": "Кредит і короткострокова заборгованість",
+  "systemGroupLoansMortgages": "Кредити та іпотеки",
+  "systemGroupInvestments": "Інвестиції",
+  "systemAccountCashBank": "Готівка та банк",
+  "systemCategorySalary": "Зарплата",
+  "systemCategoryOtherIncome": "Інший дохід",
+  "systemCategoryGroceries": "Продукти",
+  "systemCategoryRentMortgage": "Оренда/Іпотека",
+  "systemCategoryUtilities": "Комунальні послуги",
+  "systemCategoryTransport": "Транспорт",
+  "systemCategoryFoodOut": "Харчування поза домом",
+  "systemCategoryPhone": "Телефон",
+  "systemCategoryHealth": "Здоров''я",
+  "systemCategoryOtherExpense": "Інші витрати",
   "homeThisMonth": "ЦЕЙ МІСЯЦЬ",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "КОШТИ В ДОРОЗІ",
+  "homeWhatYouHaveMinusWhatYouOwe": "ВАШІ КОШТИ МІНУС ВАШІ БОРГИ",
+  "homeWhatYouHave": "У вас є {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "У вас є {haveAmount} {currency}  •  Ви винні {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "Ви надіслали {amount} {currency} з {name}",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "Ви надіслали {amount} {currency} на {name}",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "Приховано",
+  "allAccounts": "Усі рахунки",
+  "savedToPath": "Збережено в {path}",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "Не вдалося експортувати файл keystore. Цей крок можна пропустити.",
+  "enterPassphraseToProtect": "Введіть парольну фразу для захисту файлу.",
+  "homeTapWhenArrived": "Натисніть, коли дізнаєтеся, що надійшло",
+  "homeReturnedTo": "Повернено на {name}",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "СЬОГОДНІ ТЕРМІН",
+  "homeDueLine": "{category} · {account} · натисніть, щоб записати",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "Перевищено ліміт",
+  "homeSpentOfLimit": "{spent} з {limit}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "Залишок: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "Немає рахунків",
+  "homeCashRegister": "Готівкові кошти",
+  "homeMarketEstimate": "Оцінка за ринком",
+  "registerTitle": "Журнал",
+  "registerSearchHint": "Опис, категорія або сума",
+  "registerNoTransactions": "Ще немає операцій",
+  "registerNoEntries": "Ще не записано жодного запису.",
+  "registerSpentOnly": "Тільки витрати",
+  "registerReceivedOnly": "Тільки надходження",
+  "registerAll": "Усі",
+  "registerUnverified": "Не підтверджено - не враховується в підсумках",
+  "registerSuperseded": "Замінено внаслідок міграції ключа - не враховується в підсумках",
+  "summaryTitle": "Підсумок",
+  "summaryTotalIncome": "Загальний дохід",
+  "summaryTotalExpense": "Загальні витрати",
+  "summaryDateRange": "{start} — {end}",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "Рахунки",
+  "categoriesTitle": "Категорії",
+  "accountName": "Назва рахунку",
+  "createAccount": "Створити рахунок",
+  "createGroup": "Створити групу",
+  "editGroup": "Редагувати групу",
+  "renameAccount": "Перейменувати рахунок",
+  "renameCategory": "Перейменувати категорію",
+  "addCategory": "Додати категорію",
+  "groupLabel": "Група",
+  "kindLabel": "Тип",
+  "asset": "Актив",
+  "liability": "Зобов''язання",
+  "income": "Дохід",
+  "expense": "Витрата",
+  "thisAccountHoldsInvestments": "Цей рахунок утримує інвестиції",
+  "thisAccountHoldsInvestmentsSubtitle": "Готівка плюс запаси, які ви записуєте за допомогою Купівлі, Продажу та Дивіденду.",
+  "thisIsACreditCard": "Це кредитна картка",
+  "openingBalanceOptional": "Початковий баланс (необов''язково)",
+  "currencyIso": "Валюта (ISO 4217)",
+  "currencyIsoExample": "Валюта (ISO 4217, напр. USD)",
+  "hideAccountTitle": "Приховати рахунок від нових записів?",
+  "hideCategoryTitle": "Приховати категорію від нових записів?",
+  "hideGroupTitle": "Приховати групу від нових записів?",
+  "reassignGroup": "Змінити групу",
+  "transferRemainingBalance": "Перевести залишок балансу",
+  "monthlyLimit": "Місячний ліміт",
+  "monthlyLimitHint": "Ліміт (залиште порожнім, щоб очистити)",
+  "monthlyLimitBlurb": "Необов''язковий орієнтир витрат з початку місяця для цієї категорії витрат.",
+  "manageCategoryRules": "Керувати правилами категорій",
+  "amount": "Сума",
+  "category": "Категорія",
+  "account": "Рахунок",
+  "fromAccount": "З рахунку",
+  "toAccount": "На рахунок",
+  "descriptionOptional": "Опис (необов''язково)",
+  "alsoRememberPayee": "Також запам''ятати як отримувача",
+  "splitIntoCategories": "Розділити на кілька категорій",
+  "categoryN": "Категорія {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "Сума отримання",
+  "destinationAmountOptional": "Сума отримання (необов''язково)",
+  "accountCurrencyAmountOptional": "Сума у валюті рахунку (необов''язково)",
+  "transactionCurrencyOptional": "Валюта операції (необов''язково)",
+  "feeOptional": "Комісія (необов''язково)",
+  "feeAmount": "Сума комісії",
+  "feeCategory": "Категорія комісії",
+  "feeDescriptionOptional": "Опис комісії (необов''язково)",
+  "feeDeducted": "Комісія утримується із суми вище",
+  "needTwoAccountsToTransfer": "Створіть щонайменше два активні рахунки, щоб здійснити переказ.",
+  "whatArrivedTitle": "Що надійшло?",
+  "whatArrivedBlurb": "Повідомте, що саме надійшло.",
+  "amountThatArrived": "Сума, що надійшла",
+  "feeLossCategory": "Категорія комісії / збитку",
+  "alreadySettled": "Уже закрито.",
+  "holdingsTitle": "Активи",
+  "holdingsCash": "Готівка",
+  "holdingsInventory": "ЗАПАСИ",
+  "holdingsBook": "За обліком (готівка + вартість) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "Оцінка за ринком {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "Активів ще немає. Запишіть купівлю, щоб додати інструмент.",
+  "holdingsQuotesBlurb": "Котирування є оцінковими, а не ціною брокера. Цей застосунок не подає заявки.",
+  "holdingsTapNameToResearch": "Натисніть на назву, щоб дослідити. Котирування є оцінковими, а не порадою.",
+  "instrument": "Інструмент",
+  "newInstrument": "Новий інструмент",
+  "renameInstrument": "Перейменувати інструмент",
+  "instrumentActions": "Дії з інструментом",
+  "hideInstrumentTitle": "Приховати {name}?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "Тікер (необов''язково)",
+  "isinOptional": "ISIN (необов''язково)",
+  "quantity": "Кількість",
+  "unitPrice": "Ціна за одиницю",
+  "brokerageOptional": "Брокерська комісія (необов''язково)",
+  "brokerageExpenseCategory": "Категорія витрат на брокерську комісію",
+  "incomeCategory": "Категорія доходу",
+  "gainIncomeCategory": "Категорія доходу від прибутку",
+  "lossExpenseCategory": "Категорія витрат від збитку",
+  "nonCash": "Негрошове",
+  "cash": "Готівка",
+  "locked": "Заблоковано",
+  "lockUntilHint": "Ваша власна нотатка про обмеження, а не правило брокера.",
+  "instrumentKindStock": "Акція",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "Пайовий фонд",
+  "instrumentKindBond": "Облігація",
+  "instrumentKindOther": "Інше",
+  "quoteUseLive": "Актуальна ціна",
+  "quoteUseCached": "Кешована ціна",
+  "quoteUseStale": "Застаріла ціна",
+  "quoteUseMissing": "Використовується вартість (немає ціни)",
+  "quoteUseDisabled": "Котирування вимкнено — використовується вартість/кеш",
+  "quoteUseCurrencyMismatch": "Використовується вартість (валюта ціни відрізняється)",
+  "unrealizedLabel": "Нереалізовано {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} од. · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "Ваша відновлювальна фраза",
+  "recoveryPhraseConfirmTitle": "Підтвердьте свою фразу",
+  "recoveryPhraseBlurb": "Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. Smara Accounting не має сервера і не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.",
+  "recoveryPhraseWriteDown": "Запишіть ці слова по порядку та зберігайте їх у безпечному місці окремо від цього пристрою.",
+  "iveSavedRecoveryPhrase": "Я зберіг(ла) свою відновлювальну фразу",
+  "confirmPhraseBlurb": "Введіть запитувані слова з фрази, яку ви щойно зберегли.",
+  "wordNumber": "Слово №{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
+  "keystoreExportTitle": "Експортувати файл keystore",
+  "keystoreExportBlurb": "Окрім відновлювальної фрази, ви можете зберегти зашифрований файл keystore, захищений обраною вами парольною фразою. Це необов''язково - самої відновлювальної фрази завжди достатньо для відновлення ключа підпису.",
+  "keystorePassphrase": "Парольна фраза",
+  "exportKeystoreFile": "Експортувати файл keystore",
+  "chooseCurrencyTitle": "Виберіть вашу валюту",
+  "chooseCurrencyBlurb": "Кожна група рахунків (Готівка та її еквіваленти, Пенсія та пенсійні накопичення тощо) наразі використовує цю одну валюту. Пізніше ви все ще зможете додати рахунки в іншій валюті, створивши для неї нову групу.",
+  "currencyBackfillTitle": "Виберіть валюту для наявних груп",
+  "currencyBackfillBlurb": "Цей застосунок тепер підтримує кілька валют. Ваші наявні рахунки та групи рахунків потребують валюти - оскільки всі вони були налаштовані до появи цієї функції, один вибір застосовується до всіх них.",
+  "firstAccountTitle": "Назвіть свій рахунок",
+  "firstAccountBlurb": "Це рахунок, який уже налаштований для вас - дайте йому назву, яку ви впізнаєте, наприклад назву вашого банку. Далі ви запишете одну операцію Витрачено або Отримано, а потім захистите пристрій своєю відновлювальною фразою.",
+  "whatsMainAccountCalled": "Як називається ваш основний рахунок?",
+  "restoreTitle": "Відновити ключ підпису",
+  "restoreBlurb": "На цьому пристрої є наявні книги, але немає відповідного ключа підпису. Відновіть його зі збереженої відновлювальної фрази або файлу keystore - ваші дані будуть перевірятися як зазвичай, і ніщо не буде повторно підписано чи змінено.",
+  "recoveryPhrase24": "Відновлювальна фраза (усі 24 слова)",
+  "keystoreFile": "Файл keystore",
+  "keystoreFileContents": "Вміст файлу keystore",
+  "optionalBackupFile": "Необов''язковий файл резервної копії",
+  "iDontHavePhrase": "У мене немає моєї відновлювальної фрази або файлу keystore",
+  "migrationTitle": "Перейти на новий ключ",
+  "migrationBlurb": "Без вашої відновлювальної фрази або файлу keystore ключ підпису цього пристрою неможливо відновити. Ви можете почати з нового ключа. Старі записи залишаться видимими, але будуть замінені.",
+  "iConfirmBooksValid": "Я підтверджую, що поточні книги дійсні",
+  "whyWeDontEdit": "Чому ми не редагуємо старі записи",
+  "whyWeDontEditBody": "Коли ви виправляєте помилку, ми зберігаємо старий рядок і додаємо виправлення поруч із ним, замість того щоб змінювати те, що ви вже ввели. Так ваша історія завжди показує, що саме сталося і коли ви це виправили — нічого не змінюється непомітно у вас за спиною.",
+  "lockTitle": "Розблокувати",
   "lockScreenTitle": "Заблоковано",
-  "enterPinToContinue": "Enter your PIN to continue",
+  "enterPinToContinue": "Введіть свій PIN-код, щоб продовжити",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "Встановити PIN-код",
+  "currentPin": "Поточний PIN-код",
+  "newPin": "Новий PIN-код",
+  "confirmPin": "Підтвердити PIN-код",
+  "confirmNewPin": "Підтвердити новий PIN-код",
+  "firstWeekTitle": "Налаштуйте свої рахунки",
+  "addCashAccount": "Додати готівковий рахунок",
+  "addCreditCard": "Додати кредитну картку",
+  "cashAccountName": "Назва готівкового рахунку",
+  "cardName": "Назва картки",
+  "paidFromBank": "Оплачено з банку",
+  "paidFromCard": "Оплачено з картки",
+  "choosePassphraseTitle": "Виберіть парольну фразу для захисту цієї резервної копії. Якщо ви її забудете, відновлення неможливе.",
+  "replaceBooksTitle": "Замінити ваші локальні книги?",
+  "replaceBooksBody": "Це замінить усе, що зараз є в цьому застосунку, резервною копією. Після цього закрийте і знову відкрийте застосунок.",
+  "chooseBackupFileFirst": "Спочатку виберіть файл резервної копії.",
+  "backupRestored": "Резервну копію відновлено",
+  "backupRestoredBody": "Ваші книги відновлено. Закрийте і знову відкрийте застосунок, щоб продовжити.",
+  "fixThisEntry": "Виправити цей запис",
+  "fixBlurb": "Старий рядок залишається точно таким, яким він був. Підтвердження додає сторнувальний рядок і виправлений.",
+  "importStatementTitle": "Імпорт виписки",
+  "importOfx": "Імпортувати OFX",
+  "importOfxQfxFile": "Імпортувати файл OFX / QFX",
+  "importCsvFile": "Імпортувати файл CSV",
+  "whatKindOfStatement": "Який тип файлу виписки у вас є?",
+  "chooseAccountForFile": "Виберіть, якому рахунку належить цей файл.",
+  "importIntoAccount": "Імпортувати на рахунок",
+  "useSavedProfile": "Використати збережений профіль",
+  "saveMappingProfile": "Зберегти це зіставлення як профіль (необов''язково)",
+  "renameProfile": "Перейменувати профіль",
+  "deleteProfileTitle": "Видалити профіль?",
+  "fileHasHeader": "Файл містить рядок заголовка",
+  "dateColumn": "Стовпець дати",
+  "dateFormatHint": "Формат дати (напр. дд/ММ/рррр)",
+  "amountColumn": "Стовпець суми",
+  "amountConvention": "Правило знаку суми",
+  "signedAmountColumn": "Стовпець суми зі знаком",
+  "separateDebitCredit": "Окремі стовпці дебету / кредиту",
+  "debitColumn": "Стовпець дебету",
+  "creditColumn": "Стовпець кредиту",
+  "decimalSeparator": "Десятковий роздільник (. або ,)",
+  "descriptionColumns": "Стовпець(-ці) опису",
+  "referenceIdColumn": "Стовпець номера посилання (необов''язково)",
+  "skippedRows": "Пропущені рядки",
+  "parsedTransactionCount": "Розпізнано {count} операцій",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "Пропущено або виключено {count}",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "Проведено {posted}, помилок {failed}",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "Категорія для всіх",
+  "saveAsRule": "Зберегти як правило?",
+  "saveAsRuleBlurb": "Майбутні імпорти, опис яких містить це ключове слово, використовуватимуть цю категорію.",
+  "keyword": "Ключове слово",
+  "noSavedRules": "Ще немає збережених правил. Призначте категорію групі рядків, щоб зберегти правило.",
+  "deleteRuleTitle": "Видалити правило?",
+  "editRule": "Редагувати правило",
+  "rowsGrouped": "{count} рядків",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "Виберіть файл виписки {extensions} для імпорту",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "Отримувачі",
+  "addPayee": "Додати отримувача",
+  "renamePayee": "Перейменувати отримувача",
+  "deletePayeeTitle": "Видалити отримувача?",
+  "noPayeesYet": "Ще немає отримувачів",
+  "recurringTitle": "Регулярні шаблони",
+  "noRecurringYet": "Ще немає регулярних шаблонів",
+  "deleteTemplateTitle": "Видалити регулярний шаблон?",
+  "dayOfMonth": "День місяця (1-31)",
+  "dayOfMonthNote": "Місяць з меншою кількістю днів використовує свій останній день.",
+  "dayOfMonthLine": "{day}-й день місяця - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
+  "name": "Назва",
+  "none": "Немає",
+  "currency": "Валюта",
   "errorGeneric": "Щось пішло не так. Спробуйте ще раз.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "errorSigningIdentityMismatch": "Ця відновлювальна фраза або файл keystore не відповідає жодному ідентифікатору підпису в цій базі даних.",
+  "errorInvalidLedgerBackup": "Цей файл не є дійсною резервною копією Smara.",
+  "errorInvalidLedgerBackupNoIdentity": "Ця резервна копія не має ідентифікатора підпису - вона не є дійсною резервною копією Smara.",
+  "errorInvalidLedgerBackupUnverified": "Цю резервну копію не вдалося перевірити як цілісні книги, тому її не було відновлено.",
+  "errorInvalidLedgerBackupUnreadable": "Не вдалося відкрити цей файл як резервну копію Smara: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "Ця резервна копія належить іншому ідентифікатору підпису, ніж той, що на цьому пристрої.",
+  "errorAccountNotFinancial": "Це не фінансовий рахунок.",
+  "errorAccountArchived": "Цей рахунок приховано.",
+  "errorAccountNotArchived": "Цей рахунок не приховано.",
+  "errorAccountNoPositiveBalanceToCloseOut": "Немає залишку балансу для переказу.",
+  "errorAccountHasNoGroup": "Цьому рахунку не призначено групу.",
+  "errorGroupHasNoCurrency": "Для цієї групи ще не встановлено валюту.",
+  "errorGroupNotFound": "Цю групу рахунків не знайдено.",
+  "errorInvestmentAccountsMustBeAssets": "Лише рахунки активів можуть бути позначені як інвестиційні рахунки.",
+  "errorCreditCardsMustBeLiabilities": "Лише рахунки зобов''язань можуть бути позначені як кредитні картки.",
+  "errorOpeningBalanceMustBePositive": "Початковий баланс повинен бути додатним, якщо вказано.",
+  "errorAccountTypeDoesNotMatchGroup": "Цей тип рахунку не відповідає групі.",
+  "errorLastActiveAccount": "Неможливо приховати останній активний фінансовий рахунок.",
+  "errorCurrencyRequiredToCreateGroup": "Для створення групи потрібна валюта.",
+  "errorSystemGroupCannotBeArchived": "Вбудовані групи рахунків не можна приховати.",
+  "errorGroupAlreadyArchived": "Ця група вже прихована.",
+  "errorCannotArchiveGroupWithAccounts": "Неможливо приховати групу, яка все ще має активні рахунки.",
+  "errorSystemGroupNeverArchived": "Вбудовані групи рахунків ніколи не приховуються.",
+  "errorAccountGroupsCannotBeDeleted": "Групи рахунків не можна видаляти.",
+  "errorCannotReassignDifferentCurrency": "Неможливо перемістити цей рахунок до групи з іншою валютою.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "Неможливо змінити валюту, поки в групі є активні рахунки.",
   "errorAmountMustBePositive": "Сума має бути додатною.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "Сума у валюті рахунку має бути додатною.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "Сума у валюті рахунку призначена лише для запису в іноземній валюті.",
+  "errorSplitNeedsTwoLines": "Розподіл потребує щонайменше двох рядків категорій.",
+  "errorSplitLineMustBePositive": "Кожен рядок розподілу має бути додатною сумою.",
+  "errorSplitLinesMustSumToTotal": "Сума рядків розподілу повинна дорівнювати загальній сумі операції.",
+  "errorTransferAmountMustBePositive": "Сума переказу має бути додатною.",
+  "errorTransferAccountsMustDiffer": "Рахунок джерела та рахунок призначення мають відрізнятися.",
+  "errorCloseoutRequiresDestinationAmount": "Закриття з обміном валют потребує відомої суми отримання.",
+  "errorDestinationAmountNotForSameCurrency": "Сума отримання призначена лише для переказу між валютами.",
+  "errorDestinationAmountMustBePositive": "Сума отримання має бути додатною.",
+  "errorInvestmentCashExceeded": "Неможливо перевести більше готівки, ніж є на цьому інвестиційному рахунку.",
+  "errorCannotReverseUnsettledProvisional": "Закрийте цей очікуваний переказ замість сторнування.",
+  "errorAlreadyReversed": "Цей запис уже виправлено. Оригінальний рядок залишається без змін.",
+  "errorNotActiveExpenseCategory": "Виберіть активну категорію витрат.",
+  "errorNotActiveIncomeCategory": "Виберіть активну категорію доходу.",
+  "errorSettledAmountMustNotBeNegative": "Сума, що надійшла, не може бути від''ємною.",
+  "errorPendingTransferNotFound": "Цей очікуваний переказ не знайдено.",
+  "errorPendingTransferAlreadySettled": "Цей очікуваний переказ уже закрито.",
+  "errorSettledToMustBeSourceOrDestination": "Виберіть початковий рахунок джерела або призначення.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "Категорія комісії використовується лише тоді, коли кошти повертаються на рахунок джерела.",
+  "errorSettledAmountMustBePositiveForDelivery": "Введіть додатну суму того, що надійшло.",
+  "errorSettledAmountExceedsProvisional": "Ця сума більша за надіслану.",
+  "errorInstrumentNotFound": "Цей інструмент не знайдено.",
+  "errorIncomeRequiredForNonCash": "Для негрошового надходження потрібна активна категорія доходу.",
+  "errorInsufficientCash": "Недостатньо готівки на цьому інвестиційному рахунку для цієї купівлі.",
+  "errorSellQuantityAndPriceMustBePositive": "Кількість продажу та ціна за одиницю мають бути додатними.",
+  "errorLockedUntil": "Неможливо продати: деякі одиниці заблоковано до {date}.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "Неможливо продати більше, ніж наразі є незаблокованим.",
+  "errorIncomeRequiredForGain": "Для реалізованого прибутку потрібна активна категорія доходу.",
+  "errorExpenseRequiredForLoss": "Для реалізованого збитку потрібна активна категорія витрат.",
+  "errorBrokerageFailedAfterBuy": "Купівлю проведено, але брокерську комісію не вдалося записати: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "Продаж проведено, але брокерську комісію не вдалося записати: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "Сума дивіденду має бути додатною.",
+  "errorNotInvestmentAccount": "Це не інвестиційний рахунок.",
+  "errorNoInventoryCompanion": "У цього інвестиційного рахунку відсутній супутній рахунок запасів.",
+  "errorInvestmentReversalBlocked": "Неможливо сторнувати цю купівлю: наступні продажі залежать від цих одиниць. Спочатку сторнуйте залежні продажі: {sells}.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "Місячний ліміт має бути додатним.",
+  "errorTemplateAmountMustBePositive": "Сума шаблону має бути додатною.",
+  "errorOfxUnrecognized": "Не вдалося розпізнати цей файл як OFX.",
+  "errorCsvEmpty": "Вибраний файл порожній.",
+  "errorCsvUnreadable": "Не вдалося прочитати цей файл як CSV.",
+  "errorCsvNoRows": "У вибраному файлі немає рядків.",
+  "errorBackupCreateFailed": "Не вдалося створити резервну копію: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "Не вдалося відновити цю резервну копію - неправильна парольна фраза або це не файл резервної копії Smara.",
+  "validationAmountAccountCategoryRequired": "Потрібні сума, рахунок і категорія.",
+  "validationAmountAccountRequired": "Потрібні сума та рахунок.",
+  "validationSplitLineIncomplete": "Кожен рядок розподілу потребує категорії та суми.",
+  "validationSplitSumMismatch": "Сума рядків розподілу повинна дорівнювати загальній сумі операції.",
+  "validationFromToAmountRequired": "Потрібні рахунок джерела, рахунок призначення та сума.",
+  "validationAmountArrivedRequired": "Потрібна сума, що надійшла.",
+  "validationChooseReceivingAccount": "Виберіть, який рахунок отримав кошти.",
+  "validationAccountCategoryRequired": "Потрібні рахунок і категорія.",
+  "validationFixFailed": "Не вдалося зберегти це виправлення.",
+  "validationNameRequired": "Назвіть свій основний рахунок.",
+  "validationStillLoading": "Ще завантажується - спробуйте ще раз за хвилину.",
+  "validationSaveAccountNameFailed": "Не вдалося зберегти назву рахунку.",
+  "validationWrongPin": "Неправильний PIN. Спробуйте ще раз.",
+  "validationCategoryMustBeIncomeOrExpense": "Категорія має бути Дохід або Витрата.",
+  "validationOnlyExpenseHasMonthlyLimit": "Лише категорія Витрата може мати місячний ліміт.",
+  "validationInvalidTemplate": "Недійсний шаблон.",
+  "validationWrongKeystorePassphrase": "Неправильна парольна фраза для цього файлу keystore.",
+  "validationInvalidKeystoreFile": "Це не схоже на дійсний файл keystore.",
+  "validationRestorePhraseFailed": "Не вдалося відновити з цієї відновлювальної фрази.",
+  "validationGenerateKeyFailed": "Не вдалося згенерувати ключ підпису на цьому пристрої: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "Не вдалося зберегти цю валюту: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "Міграція не вдалася. Спробуйте ще раз.",
+  "validationChooseBackupFile": "Спочатку виберіть файл резервної копії.",
+  "validationPassphraseRequired": "Введіть парольну фразу.",
+  "validationPinsDoNotMatch": "Два PIN-коди не збігаються.",
+  "validationFeePositiveWithCategory": "Комісія за переказ має бути додатною сумою з вибраною категорією витрат.",
+  "validationFeeMustBeLessThanAmount": "Комісія має бути меншою за суму для переказу з утриманням комісії.",
+  "validationTransferSavedFeeFailed": "Переказ збережено, але комісію не вдалося записати: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "Введіть дійсну суму.",
+  "validationConfirmWordMismatch": "Слово {n} не збігається з вашою збереженою фразою. Перевірте і спробуйте ще раз.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "Кількість купівлі та ціна за одиницю мають бути додатними.",
+  "errorInstrumentArchived": "Неможливо купити прихований інструмент.",
+  "errorNonCashCannotIncludeBrokerage": "Негрошові надходження не можуть містити брокерську комісію.",
+  "errorBrokerageRequiresExpenseCategory": "Коли брокерська комісія додатна, потрібна активна категорія витрат.",
+  "errorSellProceedsMustCoverBrokerage": "Виручка від продажу має бути не меншою за суму брокерської комісії.",
+  "homeSpentOfLimitThisMonth": "{spent} з {limit} цього місяця",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "Розблокувати Smara Account",
   "searchLabel": "Пошук",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "Початковий баланс",
+  "transferToName": "Переказ: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "Комісія за переказ",
+  "feeForTransferTo": "Комісія за переказ на {name}",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "Не вдалося відкрити засіб вибору файлів: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "Виберіть файл .{extensions}",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "Код валюти (ISO 4217, напр. USD)",
+  "splitCounterpartMore": "{name} і ще {count}",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "Дата",
+  "noneSelected": "Немає",
+  "reviewEntriesBeforeContinuing": "Перегляньте записи нижче (усього {count}) перед продовженням.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "Ви отримали {amount}",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "Залиште порожнім, якщо курс обміну ще не відомий.",
+  "recordTradeBlurb": "Запишіть угоду, яка вже відбулася. Цей застосунок не подає заявки.",
+  "feeOnTopBlurb": "Увімкнено: сума вище — це загальна сума, знята з цього рахунку; комісія утримується з неї.",
+  "feeBankBlurb": "Попередня комісія, що стягується вашим банком або посередником.",
+  "validationPinMinLength": "PIN-код має містити щонайменше 4 цифри.",
+  "restoreBackupBlurb": "Це замінить усе, що зараз є в цьому застосунку, резервною копією — без об''єднання. Виберіть файл резервної копії та введіть парольну фразу, якою ви його захистили.",
+  "actionReplace": "Замінити",
+  "hideAccountBody": "{name} більше не буде доступний для нових операцій.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "{name} більше не пропонуватиметься під час створення або перепризначення рахунків.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "{name} більше не пропонуватиметься під час запису нових операцій.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "Приховані інструменти залишаються в минулих купівлях і продажах. Ви все ще можете записати для них дивіденд.",
+  "nameHidden": "{name} (приховано)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "Валюту не встановлено",
+  "deletePayeeBody": "{name} та його запам''ятовані значення за замовчуванням буде видалено. Минулі операції не постраждають.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} більше не пропонуватиметься як такий, що настав. Минулі операції, які він уже записав, не постраждають.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "Збережене зіставлення стовпців \"{name}\" буде видалено. Виписки, вже імпортовані з ним, не постраждають.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "Імпорти більше не будуть автоматично категоризуватися за \"{keyword}\". Операції, вже категоризовані цим правилом, не постраждають.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "За бажанням додайте кредитну картку або готівковий рахунок зараз - ви завжди зможете додати більше рахунків пізніше в Налаштуваннях.",
+  "deliveredToDestination": "Доставлено на призначення",
+  "deliveredToName": "Доставлено на {name}",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "Ви отримали на {amount} {currency} менше, ніж очікувалося - виберіть категорію, щоб покрити різницю.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "Діапазон дат",
+  "addTemplate": "Додати шаблон",
+  "editTemplate": "Редагувати шаблон",
+  "validationFillTemplateFields": "Заповніть усі поля дійсною сумою та днем.",
+  "saveCsvExport": "Зберегти експорт CSV",
+  "referenceRate": "Довідковий курс",
+  "yourRate": "Ваш курс",
+  "leaveBlankIfThisWasAccountCurrency": "Залиште порожнім, якщо це було у {currency} — власній валюті рахунку.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "Заблокувати до (необов''язково)",
+  "lockedUntilDate": "Заблоковано до {date}",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "Скопійовано запит для аналізу — немає доступного URL браузера, або ви офлайн.",
+  "openedFavouriteResearchTool": "Відкрито ваш улюблений інструмент для аналізу.",
+  "looksLikeGain": "Це схоже на прибуток",
+  "looksLikeLoss": "Це схоже на збиток",
+  "looksLikeBreakEven": "Це схоже на беззбитковість",
+  "sellableQuantity": "{name} (доступно для продажу {qty})",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "Стовпець {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "Імпортування...",
+  "confirmImport": "Підтвердити імпорт",
+  "manageSavedCategoryRules": "Керувати збереженими правилами категорій",
+  "statementCurrencyMismatch": "Валюта цього файлу ({currency}) не відповідає валюті вибраного рахунку.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "Правила категорій",
+  "possibleDuplicate": "можливий дублікат",
+  "unknownCategory": "Невідома категорія"
 }

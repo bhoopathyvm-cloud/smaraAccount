@@ -46,5 +46,4 @@ const kLocaleEndonyms = <String, String>{
   'nl': 'Nederlands',
 };
 
-String endonymForLocaleTag(String tag) =>
-    kLocaleEndonyms[tag] ?? tag;
+String endonymForLocaleTag(String tag) => kLocaleEndonyms[tag] ?? tag;

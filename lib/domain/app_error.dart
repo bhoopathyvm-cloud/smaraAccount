@@ -113,11 +113,7 @@ enum AppErrorCode {
 
 /// Structured failure the UI can localize without parsing English prose.
 class AppFailure implements Exception {
-  const AppFailure(
-    this.code, {
-    this.params = const {},
-    this.debugMessage,
-  });
+  const AppFailure(this.code, {this.params = const {}, this.debugMessage});
 
   final AppErrorCode code;
   final Map<String, String> params;

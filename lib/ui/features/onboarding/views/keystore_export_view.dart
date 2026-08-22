@@ -41,9 +41,7 @@ class _KeystoreExportViewState extends State<KeystoreExportView> {
   Future<void> _export() async {
     final passphrase = _passphraseController.text;
     if (passphrase.trim().isEmpty) {
-      setState(
-        () => _statusMessage = l10nOf(context).enterPassphraseToProtect,
-      );
+      setState(() => _statusMessage = l10nOf(context).enterPassphraseToProtect);
       return;
     }
 
@@ -89,10 +87,7 @@ class _KeystoreExportViewState extends State<KeystoreExportView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              l10n.keystoreExportBlurb,
-              style: AppTypography.body,
-            ),
+            Text(l10n.keystoreExportBlurb, style: AppTypography.body),
             const SizedBox(height: AppSpacing.large),
             TextField(
               controller: _passphraseController,

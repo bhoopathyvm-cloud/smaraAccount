@@ -14,14 +14,7 @@ class InstrumentQuote {
 }
 
 /// How a holding's market contribution was chosen.
-enum QuoteUse {
-  live,
-  cached,
-  stale,
-  missing,
-  disabled,
-  currencyMismatch,
-}
+enum QuoteUse { live, cached, stale, missing, disabled, currencyMismatch }
 
 /// One instrument's book vs market figures for holdings / Home.
 class HoldingValuation {

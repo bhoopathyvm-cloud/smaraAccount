@@ -15,7 +15,8 @@ import '../../../../domain/models/summary.dart';
 ///
 /// Also the primary, always-available home for monthly-category-limits'
 /// month-to-date spent-vs-limit progress (design.md Decision 2).
-class CategoryManagementViewModel extends ChangeNotifier {
+class CategoryManagementViewModel extends ChangeNotifier
+    with LocalizedErrorMixin {
   CategoryManagementViewModel({required LedgerRepository ledgerRepository})
     : _ledgerRepository = ledgerRepository {
     _subscription = _ledgerRepository
@@ -48,9 +49,6 @@ class CategoryManagementViewModel extends ChangeNotifier {
   int monthToDateSpentFor(String categoryId) =>
       _spentByCategoryId[categoryId] ?? 0;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   void _onCategories(List<Account> categories) {
     _categories = categories;
     notifyListeners();
@@ -62,13 +60,12 @@ class CategoryManagementViewModel extends ChangeNotifier {
   }) async {
     try {
       await _ledgerRepository.addCategory(name: name, type: type);
-      _errorMessage = null;
+      clearFailure();
     } on ArgumentError {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationCategoryMustBeIncomeOrExpense),
       );
     }
-    notifyListeners();
   }
 
   Future<void> renameCategory({required String id, required String newName}) {
@@ -93,18 +90,15 @@ class CategoryManagementViewModel extends ChangeNotifier {
         id: id,
         monthlyLimitMinor: monthlyLimitMinor,
       );
-      _errorMessage = null;
-      notifyListeners();
+      clearFailure();
       return true;
     } on InvalidTransactionAmountException catch (e) {
-      _errorMessage = localizeVmError(e);
-      notifyListeners();
+      setFailure(e);
       return false;
     } on ArgumentError {
-      _errorMessage = localizeVmError(
+      setFailure(
         const AppFailure(AppErrorCode.validationOnlyExpenseHasMonthlyLimit),
       );
-      notifyListeners();
       return false;
     }
   }

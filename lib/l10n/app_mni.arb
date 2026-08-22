@@ -8,112 +8,111 @@
   "navCategories": "ꯃꯆꯦꯠ",
   "actionCancel": "ꯀꯛꯊꯠ",
   "actionSave": "ꯊꯝꯂꯨ",
-  "actionDelete": "Delete",
-  "actionDone": "Done",
-  "actionContinue": "Continue",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDelete": "ꯃꯨꯠꯍꯟꯕ",
+  "actionDone": "ꯂꯣꯏꯔꯦ",
+  "actionContinue": "ꯆꯠꯂꯨ",
+  "actionDismiss": "ꯊꯤꯉꯨ",
+  "actionRetry": "ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ",
+  "actionSkip": "ꯆꯠꯊꯣꯀꯄꯨ",
+  "actionConfirm": "ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯎ",
   "actionAdd": "ꯍꯥꯞꯆꯤꯟ",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
-  "captureSpent": "ꯀꯥꯔꯤ",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "actionEdit": "ꯁꯦꯝꯒꯠꯂꯨ",
+  "actionRename": "ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ",
+  "actionHide": "ꯂꯣꯠꯂꯨ",
+  "actionCreate": "ꯁꯦꯝꯒꯠꯂꯨ",
+  "actionCloseApp": "ꯑꯦꯞ ꯅꯛꯇꯔꯨ",
+  "actionUnlock": "ꯂꯣꯛ ꯍꯥꯡꯗꯣꯛꯎ",
+  "actionSettle": "ꯂꯣꯏꯅ ꯁꯤꯟꯗꯣꯛꯎ",
+  "actionFinish": "ꯂꯣꯏꯁꯤꯟꯗꯣꯛꯎ",
+  "actionPreview": "ꯁꯤꯖꯤꯟꯅ ꯌꯦꯡꯎ",
+  "actionImport": "ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯨ",
+  "actionExportCsv": "CSV ꯊꯥꯗꯣꯛꯎ",
+  "actionChooseFile": "ꯐꯥꯏꯂ ꯈꯪꯗꯣꯛꯎ",
+  "actionRestore": "ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯎ",
+  "actionFix": "ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯎ",
+  "actionBuy": "ꯂꯩꯕꯤꯔꯨ",
+  "actionSell": "ꯌꯣꯟꯗꯣꯛꯎ",
+  "actionDividend": "ꯗꯤꯕꯤꯗꯦꯟꯗ",
+  "actionRecordBuy": "ꯂꯩꯕꯤꯕ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯂꯨ",
+  "actionRecordSell": "ꯌꯣꯟꯕ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯂꯨ",
+  "actionRecordDividend": "ꯗꯤꯕꯤꯗꯦꯟꯗ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯂꯨ",
+  "actionPayCard": "ꯀꯥꯔꯗꯗ ꯂꯧꯕ ꯄꯤꯔꯨ",
+  "actionTransfer": "ꯇ꯭ꯔꯥꯟꯁꯐꯔ",
+  "actionRecordTransaction": "ꯂꯦꯟꯗꯦꯟ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯂꯨ",
+  "actionImportStatement": "ꯁ꯭ꯇꯦꯠꯃꯦꯟꯠ ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯨ",
+  "actionClearDates": "ꯅꯨꯃꯤꯠ ꯁꯦꯡꯗꯣꯛꯎ",
+  "actionClearSearch": "ꯊꯤꯕ ꯑꯃꯁꯨꯡ ꯐꯤꯜꯇꯔ ꯁꯦꯡꯗꯣꯛꯎ",
+  "actionUseBiometrics": "ꯕꯥꯏꯑꯣꯃꯦꯇ꯭ꯔꯤꯛꯁ ꯁꯤꯖꯤꯟꯅꯧ",
+  "actionSetPin": "PIN ꯊꯝꯂꯨ",
+  "actionChangePin": "PIN ꯑꯣꯡꯗꯣꯛꯎ",
+  "actionSaveBackup": "ꯕꯦꯀꯑꯞ ꯊꯝꯂꯨ",
+  "actionRestoreBackup": "ꯕꯦꯀꯑꯞ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯎ",
+  "actionSaveRule": "ꯑꯌꯥꯝꯕ ꯊꯝꯂꯨ",
+  "actionConfirmFix": "ꯆꯦꯛꯁꯤꯟꯕ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯎ",
+  "captureSpent": "ꯆꯥꯗꯤꯡꯈꯤ",
+  "captureReceived": "ꯐꯪꯈꯤ",
+  "captureMovedMoney": "ꯁꯦꯟꯐꯝ ꯄꯤꯈꯤ",
+  "captureImportStatement": "ꯁ꯭ꯇꯦꯠꯃꯦꯟꯠ ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯨ",
   "settingsTitle": "ꯁꯦꯇꯤꯡ",
   "settingsLanguage": "ꯂꯣꯟ",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "ꯗꯤꯚꯥꯏꯁꯀꯤ ꯂꯣꯟ",
+  "settingsFetchFxRates": "ꯔꯦꯐꯔꯦꯟꯁ ꯑꯦꯛꯆꯦꯟꯖ ꯔꯦꯠ ꯄꯨꯔꯛꯎ",
+  "settingsFetchFxRatesSubtitle": "ꯆꯪꯅꯕꯒꯤꯗꯃꯛ ꯀꯩꯊꯦꯜ ꯔꯦꯠ ꯑꯃ ꯎꯠꯂꯤ, ꯁꯦꯟꯐꯝ ꯊꯝꯅꯕꯗ ꯀꯩꯗꯧꯉꯩ ꯁꯤꯖꯤꯟꯅꯗꯦ.",
+  "settingsRateProvider": "ꯔꯦꯠ ꯄ꯭ꯔꯣꯚꯥꯏꯗꯔ",
+  "settingsFetchMarketPrices": "ꯏꯟꯚꯦꯁꯇꯃꯦꯟꯠꯀꯤ ꯀꯩꯊꯦꯜ ꯗꯥꯝ ꯄꯨꯔꯛꯎ",
+  "settingsFetchMarketPricesSubtitle": "ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠꯀꯤ ꯗꯥꯝ ꯌꯦꯡꯂꯤ ꯆꯪꯗꯣꯛꯅꯕꯒꯤꯗꯃꯛ. ꯇ꯭ꯔꯦꯗ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯅꯕꯗ ꯀꯩꯗꯧꯉꯩ ꯁꯤꯖꯤꯟꯅꯗꯦ.",
+  "settingsMarketPriceProvider": "ꯀꯩꯊꯦꯜ ꯗꯥꯝ ꯄ꯭ꯔꯣꯚꯥꯏꯗꯔ",
+  "settingsFavouriteResearchTool": "ꯅꯨꯡꯉꯥꯏꯕ ꯔꯤꯁꯔꯆ ꯇꯨꯜ",
+  "settingsFavouriteResearchToolSubtitle": "ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠꯀꯤ ꯃꯤꯡ ꯇꯦꯞ ꯇꯧꯔꯕ ꯑꯃꯗꯤ ꯇꯨꯜ ꯑꯁꯤ ꯕ꯭ꯔꯥꯎꯖꯔꯗ ꯍꯥꯡꯂꯤ — ꯏꯟꯇꯦꯒ꯭ꯔꯦꯁꯟ ꯅꯠꯇꯦ, ꯑꯗꯚꯥꯏꯁ ꯁꯨ ꯅꯠꯇꯦ.",
+  "settingsBackup": "ꯕꯦꯀꯑꯞ",
+  "settingsBackupBlurb": "ꯅꯍꯥꯛꯀꯤ ꯂꯦꯈꯥꯒꯤ ꯑꯦꯅꯆ꯭ꯔꯤꯞꯇꯦꯗ ꯀꯣꯄꯤ ꯑꯃ ꯊꯝꯂꯨ, ꯅꯠꯇ꯭ꯔꯒ ꯃꯗꯨꯗꯒꯤ ꯔꯤꯁꯇꯣꯔ ꯇꯧꯔꯣ. ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖꯗꯒꯤ ꯇꯣꯛꯅ ꯂꯩ, ꯃꯁꯤꯅ ꯅꯍꯥꯛꯀꯤ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯕꯦꯀꯑꯞ ꯇꯧꯔꯤ, ꯂꯦꯈꯥ ꯅꯠꯇꯦ.",
+  "settingsLock": "ꯂꯣꯛ",
+  "settingsLockBlurb": "ꯑꯦꯞ ꯍꯥꯡꯗꯣꯀꯅꯕꯒꯤꯗꯃꯛ PIN ꯅꯠꯇ꯭ꯔꯒ ꯂꯩꯔꯕꯗꯤ ꯕꯥꯏꯑꯣꯃꯦꯇ꯭ꯔꯤꯛꯁ ꯃꯊꯧ ꯇꯥꯏ.",
+  "settingsRequireUnlock": "ꯑꯦꯞ ꯍꯥꯡꯗꯣꯀꯅꯕꯒꯤꯗꯃꯛ ꯑꯟꯂꯣꯛ ꯃꯊꯧ ꯇꯥꯏ",
+  "settingsLockAfter": "ꯃꯇꯨꯡꯗ ꯂꯣꯛ ꯇꯧꯕ",
+  "settingsLockImmediately": "ꯈꯨꯗꯛ ꯑꯗꯨꯗ",
+  "settingsLock1Minute": "ꯃꯤꯅꯤꯠ 1",
+  "settingsLock5Minutes": "ꯃꯤꯅꯤꯠ 5",
+  "settingsLock15Minutes": "ꯃꯤꯅꯤꯠ 15",
+  "settingsAllowBiometrics": "ꯕꯥꯏꯑꯣꯃꯦꯇ꯭ꯔꯤꯛꯁ ꯁꯨ ꯌꯥꯍꯟꯕꯤꯌꯨ",
+  "settingsHideSnapshot": "ꯑꯦꯞ ꯁꯨꯏꯆꯔꯗ ꯕꯦꯂꯦꯟꯁ ꯂꯣꯠꯂꯨ",
+  "settingsHideSnapshotSubtitle": "ꯑꯇꯣꯞꯄ ꯑꯦꯞꯗ ꯍꯥꯜꯂꯛꯄ ꯃꯇꯃꯗ ꯁ꯭ꯀ꯭ꯔꯤꯟ ꯑꯁꯤ ꯂꯣꯠꯂꯤ, ꯃꯗꯨꯅ ꯑꯦꯞ ꯁꯨꯏꯆꯔꯗ ꯎꯗꯦ.",
+  "settingsHideSnapshotUnavailable": "ꯄ꯭ꯂꯦꯠꯐꯣꯔꯃ ꯑꯁꯤꯗ ꯑꯦꯞ ꯁꯨꯏꯆꯔꯗ ꯕꯦꯂꯦꯟꯁ ꯂꯣꯠꯄ ꯌꯥꯗꯦ.",
+  "settingsPayees": "ꯄꯦꯑꯤꯁꯤꯡ",
+  "settingsManagePayees": "ꯄꯦꯑꯤꯁꯤꯡ ꯃꯦꯅꯦꯖ ꯇꯧ",
+  "settingsPayeesBlurb": "ꯅꯤꯡꯁꯤꯡꯂꯤꯕ ꯄꯦꯑꯤꯒꯤ ꯃꯤꯡ ꯑꯃꯁꯨꯡ ꯃꯆꯦꯠ/ꯑꯦꯀꯥꯎꯟꯠ, ꯂꯦꯟꯗꯦꯟ ꯇꯧꯕꯗ ꯑꯣꯇꯣꯀꯝꯄ꯭ꯂꯤꯠꯅ ꯁꯖꯦꯁꯠ ꯇꯧꯔꯤ.",
+  "settingsRecurring": "ꯍꯟꯗꯣꯛꯄ ꯇꯦꯝꯄ꯭ꯂꯦꯠ",
+  "settingsManageRecurring": "ꯍꯟꯗꯣꯛꯄ ꯇꯦꯝꯄ꯭ꯂꯦꯠ ꯃꯦꯅꯦꯖ ꯇꯧ",
+  "settingsRecurringBlurb": "ꯊꯥ ꯈꯨꯗꯤꯡꯒꯤ ꯍꯟꯗꯣꯛꯄ ꯕꯤꯜ ꯅꯠꯇ꯭ꯔꯒ ꯏꯅꯀꯝ, ꯆꯗ ꯅꯠꯇ꯭ꯔꯒ ꯁꯦꯂꯦꯔꯤ ꯒꯨꯝꯅ. ꯌꯨꯝꯗ ꯎꯠꯂꯤ, ꯇꯦꯞ ꯑꯃꯅ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯕ ꯌꯥꯏ - ꯀꯩꯗꯧꯉꯩ ꯑꯣꯇꯣꯃꯦꯇꯤꯛꯅ ꯄꯣꯁꯇ ꯇꯧꯗꯦ.",
+  "settingsAbout": "ꯃꯁꯤꯒꯤ ꯃꯔꯃꯗ",
+  "providerFrankfurter": "Frankfurter (ECB ꯔꯦꯠ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
+  "providerStooq": "Stooq (ꯅꯨꯃꯤꯠ ꯈꯨꯗꯤꯡꯒꯤ ꯗꯥꯝ)",
   "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "ꯁꯦꯟ ꯑꯃꯁꯨꯡ ꯁꯦꯟꯒꯨꯝꯕ",
+  "systemGroupPensionRetirement": "ꯄꯦꯟꯁꯟ ꯑꯃꯁꯨꯡ ꯔꯤꯇꯥꯏꯔꯃꯦꯟꯠ",
+  "systemGroupCreditShortTerm": "ꯀ꯭ꯔꯦꯗꯤꯠ ꯑꯃꯁꯨꯡ ꯑꯍꯦꯟꯕ ꯃꯇꯃꯒꯤ ꯗꯦꯕꯠ",
+  "systemGroupLoansMortgages": "ꯂꯣꯅ ꯑꯃꯁꯨꯡ ꯃꯣꯔꯇꯒꯦꯖ",
+  "systemGroupInvestments": "ꯏꯟꯚꯦꯁꯇꯃꯦꯟꯠ",
+  "systemAccountCashBank": "ꯁꯦꯟ ꯑꯃꯁꯨꯡ ꯕꯦꯡꯛ",
+  "systemCategorySalary": "ꯁꯦꯂꯦꯔꯤ",
+  "systemCategoryOtherIncome": "ꯑꯇꯣꯞꯄ ꯏꯅꯀꯝ",
+  "systemCategoryGroceries": "ꯆꯥꯛꯊꯥꯛ ꯄꯣꯠꯊꯥꯔ",
+  "systemCategoryRentMortgage": "ꯔꯦꯟꯠ/ꯃꯣꯔꯇꯒꯦꯖ",
+  "systemCategoryUtilities": "ꯌꯨꯇꯤꯂꯤꯇꯤ",
+  "systemCategoryTransport": "ꯇ꯭ꯔꯥꯟꯁꯄꯣꯔꯠ",
+  "systemCategoryFoodOut": "ꯃꯄꯥꯟꯗ ꯆꯥꯛꯄ",
+  "systemCategoryPhone": "ꯐꯣꯟ",
+  "systemCategoryHealth": "ꯍꯀꯆꯥꯡ",
+  "systemCategoryOtherExpense": "ꯑꯇꯣꯞꯄ ꯑꯦꯛꯁꯄꯦꯟꯁ",
   "homeThisMonth": "ꯃꯁꯤꯒꯤ ꯊꯥ",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "ꯆꯠꯂꯤꯕ ꯁꯦꯟꯐꯝ",
+  "homeWhatYouHaveMinusWhatYouOwe": "ꯅꯍꯥꯛꯀꯤ ꯂꯩꯕꯗꯒꯤ ꯗꯦꯕꯠ ꯂꯧꯊꯣꯀꯄ",
+  "homeWhatYouHave": "ꯅꯍꯥꯛꯀꯤ ꯂꯩ {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "ꯅꯍꯥꯛꯀꯤ ꯂꯩ {haveAmount} {currency}  •  ꯅꯍꯥꯛꯀꯤ ꯗꯦꯕꯠ {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "ꯅꯍꯥꯛꯅ {name} ꯗꯒꯤ {amount} {currency} ꯊꯥꯗꯣꯛꯈꯤ",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "ꯅꯍꯥꯛꯅ {name} ꯗ {amount} {currency} ꯊꯥꯗꯣꯛꯈꯤ",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "ꯂꯣꯠꯂꯦ",
+  "allAccounts": "ꯑꯦꯀꯥꯎꯟꯠ ꯄꯨꯝꯅꯃꯛ",
+  "savedToPath": "{path} ꯗ ꯊꯝꯈꯤ",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯊꯥꯗꯣꯛꯄ ꯉꯝꯗꯦ. ꯑꯍꯥꯟꯕ ꯑꯁꯤ ꯆꯠꯊꯣꯀꯄꯨ ꯌꯥꯏ.",
+  "enterPassphraseToProtect": "ꯐꯥꯏꯂ ꯀꯤ ꯁꯦꯀꯤꯎꯔ ꯇꯧꯅꯕꯒꯤꯗꯃꯛ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.",
+  "homeTapWhenArrived": "ꯀꯔꯤ ꯑꯃ ꯌꯧꯈꯤꯕꯒꯦ ꯍꯥꯏꯕ ꯈꯪꯕ ꯃꯇꯃꯗ ꯇꯦꯞ ꯇꯧ",
+  "homeReturnedTo": "{name} ꯗ ꯍꯜꯂꯛꯈꯤ",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "ꯅꯣꯉꯃ ꯄꯤꯒꯗꯕꯅꯤ",
+  "homeDueLine": "{category} · {account} · ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯅꯕ ꯇꯦꯞ ꯇꯧ",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "ꯂꯤꯃꯤꯠ ꯂꯪꯗꯣꯛꯈꯤ",
+  "homeSpentOfLimit": "{limit} ꯒꯤ ꯃꯅꯨꯡꯗ {spent}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "ꯍꯦꯜꯂꯤꯕ: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "ꯑꯦꯀꯥꯎꯟꯠ ꯂꯩꯇꯦ",
+  "homeCashRegister": "ꯀꯦꯁ ꯔꯦꯖꯤꯁꯇꯔ",
+  "homeMarketEstimate": "ꯀꯩꯊꯦꯜ ꯗꯥꯝꯒꯤ ꯁꯦꯡꯗꯣꯛꯄ",
+  "registerTitle": "ꯔꯦꯖꯤꯁꯇꯔ",
+  "registerSearchHint": "ꯗꯤꯁ꯭ꯀ꯭ꯔꯤꯞꯁꯟ, ꯃꯆꯦꯠ, ꯅꯠꯇ꯭ꯔꯒ ꯁꯦꯟꯐꯝ",
+  "registerNoTransactions": "ꯍꯧꯖꯤꯛ ꯐꯥꯎꯕ ꯂꯦꯟꯗꯦꯟ ꯑꯃꯐꯥꯎꯕ ꯂꯩꯇꯦ",
+  "registerNoEntries": "ꯍꯧꯖꯤꯛ ꯐꯥꯎꯕ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯑꯃꯐꯥꯎꯕ ꯊꯝꯗꯦ.",
+  "registerSpentOnly": "ꯆꯥꯗꯤꯡꯈꯤꯕ ꯈꯛꯇ",
+  "registerReceivedOnly": "ꯐꯪꯈꯤꯕ ꯈꯛꯇ",
+  "registerAll": "ꯄꯨꯝꯅꯃꯛ",
+  "registerUnverified": "ꯀꯅꯐꯔꯃ ꯇꯧꯗꯦ - ꯄꯨꯝꯅꯃꯛꯗ ꯌꯥꯎꯗꯦ",
+  "registerSuperseded": "ꯃꯥꯏꯒ꯭ꯔꯦꯁꯟꯅ ꯍꯣꯡꯗꯣꯛꯈꯤ - ꯄꯨꯝꯅꯃꯛꯗ ꯌꯥꯎꯗꯦ",
+  "summaryTitle": "ꯑꯄꯤꯛꯄ",
+  "summaryTotalIncome": "ꯄꯨꯝꯅꯃꯛꯀꯤ ꯏꯅꯀꯝ",
+  "summaryTotalExpense": "ꯄꯨꯝꯅꯃꯛꯀꯤ ꯑꯦꯛꯁꯄꯦꯟꯁ",
+  "summaryDateRange": "{start} ꯗꯒꯤ {end} ꯐꯥꯎꯕ",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "ꯑꯦꯀꯥꯎꯟꯠ",
+  "categoriesTitle": "ꯃꯆꯦꯠ",
+  "accountName": "ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ",
+  "createAccount": "ꯑꯦꯀꯥꯎꯟꯠ ꯁꯦꯝꯒꯠꯂꯨ",
+  "createGroup": "ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ",
+  "editGroup": "ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ",
+  "renameAccount": "ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ",
+  "renameCategory": "ꯃꯆꯦꯠꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ",
+  "addCategory": "ꯃꯆꯦꯠ ꯍꯥꯞꯆꯤꯟ",
+  "groupLabel": "ꯒ꯭ꯔꯨꯞ",
+  "kindLabel": "ꯃꯈꯜ",
+  "asset": "ꯑꯦꯁꯦꯠ",
+  "liability": "ꯗꯦꯕꯠ",
+  "income": "ꯏꯅꯀꯝ",
+  "expense": "ꯑꯦꯛꯁꯄꯦꯟꯁ",
+  "thisAccountHoldsInvestments": "ꯑꯦꯀꯥꯎꯟꯠ ꯑꯁꯤꯗ ꯏꯟꯚꯦꯁꯇꯃꯦꯟꯠ ꯊꯝꯉꯤ",
+  "thisAccountHoldsInvestmentsSubtitle": "ꯀꯦꯁ ꯑꯃꯁꯨꯡ ꯂꯩꯕꯤꯕ, ꯌꯣꯟꯕ, ꯗꯤꯕꯤꯗꯦꯟꯗꯒꯤ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯕ ꯏꯅꯚꯦꯟꯇꯔꯤ.",
+  "thisIsACreditCard": "ꯃꯁꯤ ꯀ꯭ꯔꯦꯗꯤꯠ ꯀꯥꯔꯗ ꯑꯃꯅꯤ",
+  "openingBalanceOptional": "ꯍꯧꯖꯤꯛ ꯂꯩꯕ ꯕꯦꯂꯦꯟꯁ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "currencyIso": "ꯀꯔꯦꯟꯁꯤ (ISO 4217)",
+  "currencyIsoExample": "ꯀꯔꯦꯟꯁꯤ (ISO 4217, ꯈꯨꯗꯝꯅ USD)",
+  "hideAccountTitle": "ꯑꯅꯧꯕ ꯏꯔꯤꯛꯀꯣꯔꯗꯗꯒꯤ ꯑꯦꯀꯥꯎꯟꯠ ꯂꯣꯠꯂꯤꯒꯗ꯭ꯔꯥ?",
+  "hideCategoryTitle": "ꯑꯅꯧꯕ ꯏꯔꯤꯛꯀꯣꯔꯗꯗꯒꯤ ꯃꯆꯦꯠ ꯂꯣꯠꯂꯤꯒꯗ꯭ꯔꯥ?",
+  "hideGroupTitle": "ꯑꯅꯧꯕ ꯏꯔꯤꯛꯀꯣꯔꯗꯗꯒꯤ ꯒ꯭ꯔꯨꯞ ꯂꯣꯠꯂꯤꯒꯗ꯭ꯔꯥ?",
+  "reassignGroup": "ꯒ꯭ꯔꯨꯞ ꯑꯃꯨꯛ ꯍꯟꯅ ꯄꯤꯔꯨ",
+  "transferRemainingBalance": "ꯍꯦꯜꯂꯤꯕ ꯕꯦꯂꯦꯟꯁ ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯇꯧ",
+  "monthlyLimit": "ꯊꯥ ꯈꯨꯗꯤꯡꯒꯤ ꯂꯤꯃꯤꯠ",
+  "monthlyLimitHint": "ꯂꯤꯃꯤꯠ (ꯁꯦꯡꯗꯣꯛꯅꯕ ꯑꯍꯨꯝꯕ ꯊꯝꯎ)",
+  "monthlyLimitBlurb": "ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ ꯑꯁꯤꯒꯤꯗꯃꯛ ꯑꯣꯞꯁꯟꯦꯜ ꯊꯥꯒꯤ ꯆꯥꯗꯤꯡꯒꯤ ꯃꯥꯔꯤ.",
+  "manageCategoryRules": "ꯃꯆꯦꯠꯀꯤ ꯑꯌꯥꯝꯕ ꯃꯦꯅꯦꯖ ꯇꯧ",
+  "amount": "ꯁꯦꯟꯐꯝ",
+  "category": "ꯃꯆꯦꯠ",
+  "account": "ꯑꯦꯀꯥꯎꯟꯠ",
+  "fromAccount": "ꯑꯦꯀꯥꯎꯟꯠ ꯗꯒꯤ",
+  "toAccount": "ꯑꯦꯀꯥꯎꯟꯠ ꯗ",
+  "descriptionOptional": "ꯗꯤꯁ꯭ꯀ꯭ꯔꯤꯞꯁꯟ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "alsoRememberPayee": "ꯄꯦꯑꯤ ꯑꯣꯏꯅꯁꯨ ꯅꯤꯡꯁꯤꯡꯗꯣꯛꯎ",
+  "splitIntoCategories": "ꯃꯆꯦꯠ ꯈꯨꯗꯤꯡꯒꯤ ꯇꯦꯟꯅ ꯇꯦꯟꯅ ꯄꯤꯒꯠꯂꯨ",
+  "categoryN": "ꯃꯆꯦꯠ {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "ꯆꯠꯀꯗꯕ ꯁꯦꯟꯐꯝ",
+  "destinationAmountOptional": "ꯆꯠꯀꯗꯕ ꯁꯦꯟꯐꯝ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "accountCurrencyAmountOptional": "ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯀꯔꯦꯟꯁꯤꯒꯤ ꯁꯦꯟꯐꯝ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "transactionCurrencyOptional": "ꯂꯦꯟꯗꯦꯟꯒꯤ ꯀꯔꯦꯟꯁꯤ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "feeOptional": "ꯐꯤ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "feeAmount": "ꯐꯤ ꯁꯦꯟꯐꯝ",
+  "feeCategory": "ꯐꯤ ꯃꯆꯦꯠ",
+  "feeDescriptionOptional": "ꯐꯤ ꯗꯤꯁ꯭ꯀ꯭ꯔꯤꯞꯁꯟ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "feeDeducted": "ꯃꯊꯛꯀꯤ ꯁꯦꯟꯐꯝꯗꯒꯤ ꯐꯤ ꯂꯧꯊꯣꯛꯏ",
+  "needTwoAccountsToTransfer": "ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯇꯧꯅꯕꯒꯤꯗꯃꯛ ꯑꯍꯨꯃꯨꯛ ꯑꯍꯨꯃꯨꯛ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯅꯤ ꯁꯦꯝꯒꯠꯂꯨ.",
+  "whatArrivedTitle": "ꯀꯔꯤ ꯌꯧꯈꯤꯕꯒꯦ?",
+  "whatArrivedBlurb": "ꯑꯆꯨꯝꯕꯗ ꯀꯔꯤ ꯌꯧꯈꯤꯕꯒꯦ ꯍꯥꯌꯕ ꯄꯤꯌꯨ.",
+  "amountThatArrived": "ꯌꯧꯈꯤꯕ ꯁꯦꯟꯐꯝ",
+  "feeLossCategory": "ꯐꯤ / ꯃꯥꯏꯅꯕ ꯃꯆꯦꯠ",
+  "alreadySettled": "ꯍꯧꯖꯤꯛ ꯂꯣꯏꯅ ꯁꯤꯟꯗꯣꯛꯈꯦ.",
+  "holdingsTitle": "ꯍꯣꯜꯗꯤꯡ",
+  "holdingsCash": "ꯀꯦꯁ",
+  "holdingsInventory": "ꯏꯅꯚꯦꯟꯇꯔꯤ",
+  "holdingsBook": "ꯕꯨꯛ (ꯀꯦꯁ + ꯀꯣꯁꯠ) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "ꯀꯩꯊꯦꯜ ꯗꯥꯝꯒꯤ ꯁꯦꯡꯗꯣꯛꯄ {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "ꯍꯧꯖꯤꯛ ꯐꯥꯎꯕ ꯍꯣꯜꯗꯤꯡ ꯂꯩꯇꯦ. ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠ ꯑꯃ ꯍꯥꯞꯆꯤꯟꯅꯕꯒꯤꯗꯃꯛ ꯂꯩꯕꯤꯕ ꯑꯃ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯎ.",
+  "holdingsQuotesBlurb": "ꯗꯥꯝꯁꯤꯡ ꯑꯁꯤ ꯁꯦꯡꯗꯣꯛꯄꯅꯤ, ꯕ꯭ꯔꯣꯀꯔꯒꯤ ꯗꯥꯝ ꯅꯠꯇꯦ. ꯑꯦꯞ ꯑꯁꯤꯅ ꯑꯣꯔꯗꯔ ꯄꯤꯗꯦ.",
+  "holdingsTapNameToResearch": "ꯔꯤꯁꯔꯆ ꯇꯧꯅꯕ ꯃꯤꯡ ꯗ ꯇꯦꯞ ꯇꯧ. ꯗꯥꯝꯁꯤꯡ ꯑꯁꯤ ꯁꯦꯡꯗꯣꯛꯄꯅꯤ, ꯑꯗꯚꯥꯏꯁ ꯅꯠꯇꯦ.",
+  "instrument": "ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠ",
+  "newInstrument": "ꯑꯅꯧꯕ ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠ",
+  "renameInstrument": "ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ",
+  "instrumentActions": "ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠꯀꯤ ꯑꯦꯛꯁꯟ",
+  "hideInstrumentTitle": "{name} ꯂꯣꯠꯂꯤꯒꯗ꯭ꯔꯥ?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "ꯇꯤꯀꯔ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "isinOptional": "ISIN (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "quantity": "ꯆꯪ",
+  "unitPrice": "ꯏꯨꯅꯤꯠ ꯗꯥꯝ",
+  "brokerageOptional": "ꯕ꯭ꯔꯣꯀꯔꯦꯖ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "brokerageExpenseCategory": "ꯕ꯭ꯔꯣꯀꯔꯦꯖ ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ",
+  "incomeCategory": "ꯏꯅꯀꯝ ꯃꯆꯦꯠ",
+  "gainIncomeCategory": "ꯐꯪꯕ ꯏꯅꯀꯝ ꯃꯆꯦꯠ",
+  "lossExpenseCategory": "ꯃꯥꯏꯅꯕ ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ",
+  "nonCash": "ꯀꯦꯁ ꯅꯠꯇ꯭ꯔꯕ",
+  "cash": "ꯀꯦꯁ",
+  "locked": "ꯂꯣꯛ ꯇꯧꯔꯦ",
+  "lockUntilHint": "ꯅꯍꯥꯛꯀꯤ ꯃꯁꯥꯒꯤ ꯃꯔꯦꯡꯒꯤ ꯅꯣꯠ, ꯕ꯭ꯔꯣꯀꯔꯒꯤ ꯑꯌꯥꯝꯕ ꯅꯠꯇꯦ.",
+  "instrumentKindStock": "ꯁ꯭ꯇꯣꯛ",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "ꯃ꯭ꯌꯨꯆꯨꯋꯦꯜ ꯐꯟꯗ",
+  "instrumentKindBond": "ꯕꯣꯟꯗ",
+  "instrumentKindOther": "ꯑꯇꯣꯞꯄ",
+  "quoteUseLive": "ꯂꯥꯏꯚ ꯗꯥꯝ",
+  "quoteUseCached": "ꯀꯦꯁꯗ ꯗꯥꯝ",
+  "quoteUseStale": "ꯑꯔꯤꯕ ꯗꯥꯝ",
+  "quoteUseMissing": "ꯀꯣꯁꯠ ꯁꯤꯖꯤꯟꯅꯔꯤ (ꯗꯥꯝ ꯂꯩꯇꯦ)",
+  "quoteUseDisabled": "ꯗꯥꯝ ꯑꯣꯐ — ꯀꯣꯁꯠ/ꯀꯦꯁ ꯁꯤꯖꯤꯟꯅꯔꯤ",
+  "quoteUseCurrencyMismatch": "ꯀꯣꯁꯠ ꯁꯤꯖꯤꯟꯅꯔꯤ (ꯗꯥꯝꯀꯤ ꯀꯔꯦꯟꯁꯤ ꯇꯣꯛꯅꯅꯦ)",
+  "unrealizedLabel": "ꯐꯪꯗ꯭ꯔꯤꯕ {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} ꯏꯨꯅꯤꯠ · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "ꯅꯍꯥꯛꯀꯤ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ",
+  "recoveryPhraseConfirmTitle": "ꯅꯍꯥꯛꯀꯤ ꯐ꯭ꯔꯦꯖ ꯀꯅꯐꯔꯃ ꯇꯧ",
+  "recoveryPhraseBlurb": "ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤ ꯃꯥꯡꯈ꯭ꯔꯕ, ꯔꯤꯁꯦꯠ ꯇꯧꯔꯕ, ꯅꯠꯇ꯭ꯔꯒ ꯑꯣꯡꯗꯣꯛꯄ ꯑꯣꯏꯔꯕꯗꯤ, ꯃꯁꯤꯒꯤ ꯋꯥꯍꯩ 24 ꯑꯁꯤꯅ ꯈꯛꯇꯅ ꯅꯍꯥꯛꯀꯤ ꯂꯦꯟꯗꯦꯟꯒꯤ ꯍꯤꯁꯇꯔꯤ ꯑꯃꯨꯛ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯅꯕ ꯂꯝꯅꯤ. ꯁ꯭ꯃꯥꯔꯥ ꯑꯦꯀꯥꯎꯟꯠꯇ ꯁꯔꯚꯔ ꯂꯩꯇꯦ, ꯅꯍꯥꯛꯀꯤꯗꯃꯛ ꯃꯗꯨ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗꯦ.\n\nꯗꯤꯚꯥꯏꯁ ꯑꯃꯁꯨꯡ ꯐ꯭ꯔꯦꯖ ꯑꯁꯤ ꯑꯃꯨꯛꯇ ꯃꯥꯡꯈ꯭ꯔꯕꯗꯤ, ꯅꯍꯥꯛꯅ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯈꯤꯕ ꯂꯦꯟꯗꯦꯟ ꯈꯨꯗꯤꯡꯃꯛ ꯀꯅꯐꯔꯃ ꯇꯧꯕ ꯑꯃꯨꯛ ꯍꯟꯅ ꯉꯝꯗꯅ ꯂꯩꯒꯅꯤ.",
+  "recoveryPhraseWriteDown": "ꯋꯥꯍꯩ ꯑꯁꯤꯁꯤꯡ ꯃꯊꯧ ꯄꯨꯟꯅ ꯏꯔꯤꯕꯤꯔꯨ ꯑꯃꯁꯨꯡ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗꯒꯤ ꯇꯣꯛꯅꯕ ꯅꯤꯡꯊꯤꯖꯔꯕ ꯃꯐꯝ ꯑꯃꯗ ꯊꯝꯕꯤꯔꯨ.",
+  "iveSavedRecoveryPhrase": "ꯑꯩꯒꯤ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯊꯝꯖꯔꯦ",
+  "confirmPhraseBlurb": "ꯅꯍꯥꯛꯅ ꯍꯧꯖꯤꯛ ꯊꯝꯖꯔꯕ ꯐ꯭ꯔꯦꯖꯗꯒꯤ ꯍꯥꯌꯈꯤꯕ ꯋꯥꯍꯩꯁꯤꯡ ꯆꯪꯗꯣꯛꯎ.",
+  "wordNumber": "ꯋꯥꯍꯩ #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
-  "lockScreenTitle": "Locked",
-  "enterPinToContinue": "Enter your PIN to continue",
+  "keystoreExportTitle": "ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯊꯥꯗꯣꯛꯎ",
+  "keystoreExportBlurb": "ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖꯒꯤ ꯃꯊꯛꯇ, ꯅꯍꯥꯛꯅ ꯈꯪꯗꯣꯛꯄ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯃꯅ ꯁꯦꯀꯤꯎꯔ ꯇꯧꯔꯕ ꯑꯦꯅꯆ꯭ꯔꯤꯞꯇꯦꯗ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯁꯨ ꯊꯝꯕ ꯌꯥꯏ. ꯃꯁꯤ ꯑꯣꯞꯁꯟꯦꯜꯅꯤ - ꯅꯍꯥꯛꯀꯤ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯅꯕ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯈꯛꯇꯅ ꯍꯧꯖꯤꯛ ꯍꯧꯖꯤꯛ ꯃꯥꯟꯅꯩ.",
+  "keystorePassphrase": "ꯄꯥꯁꯐ꯭ꯔꯦꯖ",
+  "exportKeystoreFile": "ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯊꯥꯗꯣꯛꯎ",
+  "chooseCurrencyTitle": "ꯅꯍꯥꯛꯀꯤ ꯀꯔꯦꯟꯁꯤ ꯈꯪꯗꯣꯛꯎ",
+  "chooseCurrencyBlurb": "ꯑꯦꯀꯥꯎꯟꯠ ꯒ꯭ꯔꯨꯞ ꯈꯨꯗꯤꯡꯃꯛꯅ (ꯁꯦꯟ ꯑꯃꯁꯨꯡ ꯁꯦꯟꯒꯨꯝꯕ, ꯄꯦꯟꯁꯟ ꯑꯃꯁꯨꯡ ꯔꯤꯇꯥꯏꯔꯃꯦꯟꯠ, ꯑꯗꯨꯒꯥ ꯑꯇꯩꯁꯨ) ꯍꯧꯖꯤꯛ ꯀꯔꯦꯟꯁꯤ ꯑꯃꯈꯛꯇ ꯁꯤꯖꯤꯟꯅꯔꯤ. ꯃꯇꯨꯡꯗ ꯒ꯭ꯔꯨꯞ ꯑꯅꯧꯕ ꯁꯦꯝꯒꯠꯂꯒ ꯇꯣꯛꯅꯕ ꯀꯔꯦꯟꯁꯤꯗ ꯑꯦꯀꯥꯎꯟꯠ ꯍꯥꯞꯆꯤꯟꯕ ꯌꯥꯏ.",
+  "currencyBackfillTitle": "ꯍꯧꯖꯤꯛ ꯂꯩꯕ ꯒ꯭ꯔꯨꯞꯁꯤꯡꯒꯤꯗꯃꯛ ꯀꯔꯦꯟꯁꯤ ꯑꯃ ꯈꯪꯗꯣꯛꯎ",
+  "currencyBackfillBlurb": "ꯑꯦꯞ ꯑꯁꯤꯅ ꯍꯧꯖꯤꯛ ꯀꯔꯦꯟꯁꯤ ꯈꯨꯗꯤꯡꯒꯤ ꯁꯄꯣꯔꯠ ꯇꯧꯔꯤ. ꯅꯍꯥꯛꯀꯤ ꯍꯧꯖꯤꯛ ꯂꯩꯕ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯃꯁꯨꯡ ꯒ꯭ꯔꯨꯞꯗ ꯀꯔꯦꯟꯁꯤ ꯑꯃ ꯆꯪꯏ - ꯐꯤꯆꯔ ꯑꯁꯤ ꯂꯩꯗ꯭ꯔꯤꯡꯉꯩꯗ ꯃꯈꯣꯏ ꯄꯨꯝꯅꯃꯛ ꯁꯦꯝꯖꯔꯕꯅꯤ ꯃꯔꯝꯗ, ꯈꯪꯗꯣꯛꯄ ꯑꯃꯈꯛꯅ ꯃꯈꯣꯏ ꯄꯨꯝꯅꯃꯛꯗ ꯆꯪꯒꯅꯤ.",
+  "firstAccountTitle": "ꯅꯍꯥꯛꯀꯤ ꯑꯦꯀꯥꯎꯟꯠꯗ ꯃꯤꯡ ꯄꯤꯎ",
+  "firstAccountBlurb": "ꯃꯁꯤ ꯅꯍꯥꯛꯀꯤꯗꯃꯛ ꯍꯧꯖꯤꯛ ꯁꯦꯝꯖꯔꯕ ꯑꯦꯀꯥꯎꯟꯠꯅꯤ - ꯅꯍꯥꯛꯀꯤ ꯕꯦꯡꯛ ꯒꯨꯝꯅ ꯈꯪꯅꯕ ꯃꯤꯡ ꯑꯃ ꯄꯤꯎ. ꯃꯇꯨꯡꯗ ꯆꯥꯗꯤꯡꯈꯤꯕ ꯅꯠꯇ꯭ꯔꯒ ꯐꯪꯈꯤꯕ ꯑꯃꯈꯛ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯒꯅꯤ, ꯃꯗꯨꯒꯤ ꯃꯇꯨꯡꯗ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖꯅ ꯗꯤꯚꯥꯏꯁ ꯁꯦꯀꯤꯎꯔ ꯇꯧꯒꯅꯤ.",
+  "whatsMainAccountCalled": "ꯅꯍꯥꯛꯀꯤ ꯃꯄꯨꯡ ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ ꯀꯔꯤꯅꯣ?",
+  "restoreTitle": "ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯎ",
+  "restoreBlurb": "ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗ ꯍꯧꯖꯤꯛ ꯂꯩꯕ ꯂꯦꯈꯥ ꯂꯩ, ꯑꯗꯨꯕꯨ ꯃꯅꯅꯕ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯂꯩꯇꯦ. ꯅꯍꯥꯛꯀꯤ ꯊꯝꯖꯔꯕ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂꯗꯒꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯎ - ꯅꯍꯥꯛꯀꯤ ꯗꯥꯇꯥ ꯑꯁꯤ ꯀꯅꯐꯔꯃ ꯇꯧꯒꯅꯤ, ꯑꯃꯨꯛ ꯍꯟꯅ ꯁꯥꯏꯟ ꯇꯧꯗ꯭ꯔꯒ ꯑꯣꯡꯗꯣꯛꯗ.",
+  "recoveryPhrase24": "ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ (ꯋꯥꯍꯩ 24 ꯄꯨꯝꯅꯃꯛ)",
+  "keystoreFile": "ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ",
+  "keystoreFileContents": "ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂꯒꯤ ꯃꯅꯨꯡꯆꯥ",
+  "optionalBackupFile": "ꯑꯣꯞꯁꯟꯦꯜ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ",
+  "iDontHavePhrase": "ꯑꯩꯒꯤ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯂꯩꯇꯦ",
+  "migrationTitle": "ꯀꯤ ꯑꯅꯧꯕꯗ ꯃꯥꯏꯒ꯭ꯔꯦꯠ ꯇꯧ",
+  "migrationBlurb": "ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯌꯥꯎꯗꯅ, ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯒꯤ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯑꯃꯨꯛ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗꯦ. ꯀꯤ ꯑꯅꯧꯕ ꯑꯃ ꯍꯧꯔꯛꯄ ꯌꯥꯏ. ꯏꯔꯤꯛꯀꯣꯔꯗ ꯑꯔꯤꯕꯁꯤꯡ ꯎꯗ꯭ꯔꯒꯗꯨꯅꯗꯒꯤ ꯍꯣꯡꯗꯣꯛꯈ꯭ꯔꯦ ꯍꯥꯌꯅ ꯂꯧꯒꯅꯤ.",
+  "iConfirmBooksValid": "ꯍꯧꯖꯤꯛꯀꯤ ꯂꯦꯈꯥ ꯑꯁꯤ ꯆꯨꯝꯅꯩ ꯍꯥꯌꯅ ꯑꯩ ꯀꯅꯐꯔꯃ ꯇꯧꯏ",
+  "whyWeDontEdit": "ꯑꯔꯤꯕ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯀꯔꯤꯅ ꯑꯩꯈꯣꯏꯅ ꯁꯦꯝꯒꯠꯂꯗꯦ",
+  "whyWeDontEditBody": "ꯑꯍꯨꯃ ꯑꯃ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯄ ꯃꯇꯃꯗ, ꯅꯍꯥꯛꯅ ꯍꯥꯞꯆꯤꯟꯈꯤꯕ ꯑꯗꯨ ꯑꯣꯡꯗꯣꯛꯗꯅ ꯑꯩꯈꯣꯏꯅ ꯑꯔꯤꯕ ꯂꯥꯏꯅ ꯑꯗꯨ ꯊꯝꯏ ꯑꯃꯁꯨꯡ ꯃꯅꯨꯡꯗ ꯆꯦꯛꯁꯤꯟꯕ ꯑꯃ ꯍꯥꯞꯆꯤꯟꯏ. ꯃꯗꯨꯅ ꯀꯔꯤ ꯊꯣꯛꯈꯤꯕꯗ ꯑꯃꯁꯨꯡ ꯀꯔꯃꯗ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯄ ꯅꯍꯥꯛꯀꯤ ꯍꯤꯁꯇꯔꯤꯅ ꯃꯇꯝ ꯄꯨꯝꯅꯃꯛ ꯑꯆꯨꯝꯅ ꯎꯠꯂꯤ — ꯅꯍꯥꯛ ꯈꯪꯗꯕ ꯑꯃꯇꯥ ꯂꯣꯠꯅ ꯑꯣꯡꯗꯣꯛꯗꯦ.",
+  "lockTitle": "ꯑꯟꯂꯣꯛ",
+  "lockScreenTitle": "ꯂꯣꯛ ꯇꯧꯔꯦ",
+  "enterPinToContinue": "ꯆꯠꯅꯕꯒꯤꯗꯃꯛ ꯅꯍꯥꯛꯀꯤ PIN ꯆꯪꯗꯣꯛꯎ",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "PIN ꯑꯃ ꯊꯝꯂꯨ",
+  "currentPin": "ꯍꯧꯖꯤꯛꯀꯤ PIN",
+  "newPin": "ꯑꯅꯧꯕ PIN",
+  "confirmPin": "PIN ꯀꯅꯐꯔꯃ ꯇꯧ",
+  "confirmNewPin": "ꯑꯅꯧꯕ PIN ꯀꯅꯐꯔꯃ ꯇꯧ",
+  "firstWeekTitle": "ꯅꯍꯥꯛꯀꯤ ꯑꯦꯀꯥꯎꯟꯠ ꯁꯦꯝꯒꯠꯂꯨ",
+  "addCashAccount": "ꯀꯦꯁ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯃ ꯍꯥꯞꯆꯤꯟ",
+  "addCreditCard": "ꯀ꯭ꯔꯦꯗꯤꯠ ꯀꯥꯔꯗ ꯑꯃ ꯍꯥꯞꯆꯤꯟ",
+  "cashAccountName": "ꯀꯦꯁ ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ",
+  "cardName": "ꯀꯥꯔꯗꯀꯤ ꯃꯤꯡ",
+  "paidFromBank": "ꯕꯦꯡꯛꯇꯒꯤ ꯄꯤꯈꯤ",
+  "paidFromCard": "ꯀꯥꯔꯗꯇꯒꯤ ꯄꯤꯈꯤ",
+  "choosePassphraseTitle": "ꯕꯦꯀꯑꯞ ꯑꯁꯤ ꯁꯦꯀꯤꯎꯔ ꯇꯧꯅꯕꯒꯤꯗꯃꯛ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯃ ꯈꯪꯗꯣꯛꯎ. ꯃꯁꯤ ꯀꯥꯎꯗ꯭ꯔꯕꯗꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯌꯥꯗꯦ.",
+  "replaceBooksTitle": "ꯅꯍꯥꯛꯀꯤ ꯂꯣꯀꯦꯜ ꯂꯦꯈꯥ ꯍꯣꯡꯗꯣꯛꯀꯗ꯭ꯔꯥ?",
+  "replaceBooksBody": "ꯃꯁꯤꯅ ꯑꯦꯞ ꯑꯁꯤꯗ ꯍꯧꯖꯤꯛ ꯂꯩꯔꯤꯕ ꯄꯨꯝꯅꯃꯛ ꯕꯦꯀꯑꯞꯅ ꯍꯣꯡꯗꯣꯛꯒꯅꯤ. ꯃꯇꯨꯡꯗ ꯑꯦꯞ ꯅꯛꯇꯗꯨꯅ ꯑꯃꯨꯛ ꯍꯥꯡꯗꯣꯛꯎ.",
+  "chooseBackupFileFirst": "ꯍꯟꯖꯤꯛ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ ꯑꯃ ꯈꯪꯗꯣꯛꯎ.",
+  "backupRestored": "ꯕꯦꯀꯑꯞ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯈ꯭ꯔꯦ",
+  "backupRestoredBody": "ꯅꯍꯥꯛꯀꯤ ꯂꯦꯈꯥ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯈ꯭ꯔꯦ. ꯆꯠꯅꯕꯒꯤꯗꯃꯛ ꯑꯦꯞ ꯅꯛꯇꯗꯨꯅ ꯑꯃꯨꯛ ꯍꯥꯡꯗꯣꯛꯎ.",
+  "fixThisEntry": "ꯏꯔꯤꯛꯀꯣꯔꯗ ꯑꯁꯤ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯎ",
+  "fixBlurb": "ꯑꯔꯤꯕ ꯂꯥꯏꯅ ꯑꯗꯨ ꯃꯁꯤꯡ ꯑꯗꯨꯃꯛ ꯂꯩꯒꯅꯤ. ꯀꯅꯐꯔꯃ ꯇꯧꯕꯗ ꯍꯟꯒꯤꯕ ꯂꯥꯏꯅ ꯑꯃꯁꯨꯡ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯈꯤꯕ ꯑꯗꯨ ꯍꯥꯞꯆꯤꯟꯒꯅꯤ.",
+  "importStatementTitle": "ꯁ꯭ꯇꯦꯠꯃꯦꯟꯠ ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯨ",
+  "importOfx": "OFX ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯨ",
+  "importOfxQfxFile": "OFX / QFX ꯐꯥꯏꯂ ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯨ",
+  "importCsvFile": "CSV ꯐꯥꯏꯂ ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯨ",
+  "whatKindOfStatement": "ꯅꯍꯥꯛꯀꯤ ꯃꯐꯝꯗ ꯃꯈꯜ ꯀꯔꯤꯒꯤ ꯁ꯭ꯇꯦꯠꯃꯦꯟꯠ ꯐꯥꯏꯂ ꯂꯩꯕꯒꯦ?",
+  "chooseAccountForFile": "ꯐꯥꯏꯂ ꯑꯁꯤ ꯑꯦꯀꯥꯎꯟꯠ ꯀꯔꯤꯒꯤꯅꯣ ꯈꯪꯗꯣꯛꯎ.",
+  "importIntoAccount": "ꯑꯦꯀꯥꯎꯟꯠꯇ ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯨ",
+  "useSavedProfile": "ꯊꯝꯖꯔꯕ ꯄ꯭ꯔꯣꯐꯥꯏꯜ ꯑꯃ ꯁꯤꯖꯤꯟꯅꯧ",
+  "saveMappingProfile": "ꯃꯦꯄꯤꯡ ꯑꯁꯤ ꯄ꯭ꯔꯣꯐꯥꯏꯜ ꯑꯣꯏꯅ ꯊꯝꯂꯨ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "renameProfile": "ꯄ꯭ꯔꯣꯐꯥꯏꯜꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ",
+  "deleteProfileTitle": "ꯄ꯭ꯔꯣꯐꯥꯏꯜ ꯃꯨꯠꯍꯟꯒꯗ꯭ꯔꯥ?",
+  "fileHasHeader": "ꯐꯥꯏꯂꯗ ꯍꯦꯗꯔ ꯂꯥꯏꯅ ꯑꯃ ꯂꯩ",
+  "dateColumn": "ꯅꯨꯃꯤꯠꯀꯤ ꯀꯣꯂꯝ",
+  "dateFormatHint": "ꯅꯨꯃꯤꯠꯀꯤ ꯐꯣꯔꯃꯦꯠ (ꯈꯨꯗꯝꯅ dd/MM/yyyy)",
+  "amountColumn": "ꯁꯦꯟꯐꯝ ꯀꯣꯂꯝ",
+  "amountConvention": "ꯁꯦꯟꯐꯝꯒꯤ ꯀꯟꯚꯦꯟꯁꯟ",
+  "signedAmountColumn": "ꯁꯥꯏꯟ ꯇꯧꯔꯕ ꯁꯦꯟꯐꯝ ꯀꯣꯂꯝ",
+  "separateDebitCredit": "ꯗꯦꯕꯤꯠ / ꯀ꯭ꯔꯦꯗꯤꯠ ꯀꯣꯂꯝ ꯈꯥꯏꯗꯣꯛꯎ",
+  "debitColumn": "ꯗꯦꯕꯤꯠ ꯀꯣꯂꯝ",
+  "creditColumn": "ꯀ꯭ꯔꯦꯗꯤꯠ ꯀꯣꯂꯝ",
+  "decimalSeparator": "ꯗꯦꯁꯤꯃꯦꯜ ꯈꯥꯏꯗꯣꯛꯄ (. ꯅꯠꯇ꯭ꯔꯒ ,)",
+  "descriptionColumns": "ꯗꯤꯁ꯭ꯀ꯭ꯔꯤꯞꯁꯟ ꯀꯣꯂꯝ",
+  "referenceIdColumn": "ꯔꯦꯐꯔꯦꯟꯁ ID ꯀꯣꯂꯝ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "skippedRows": "ꯆꯠꯊꯣꯀꯈꯤꯕ ꯔꯣ",
+  "parsedTransactionCount": "{count} ꯂꯦꯟꯗꯦꯟ ꯄꯥꯔꯁ ꯇꯧꯔꯦ",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} ꯆꯠꯊꯣꯛꯈꯤ ꯅꯠꯇ꯭ꯔꯒ ꯂꯧꯗꯦ",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} ꯄꯣꯁꯇ ꯇꯧꯔꯦ, {failed} ꯉꯝꯗ꯭ꯔꯦ",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "ꯄꯨꯝꯅꯃꯛꯀꯤꯗꯃꯛ ꯃꯆꯦꯠ",
+  "saveAsRule": "ꯑꯌꯥꯝꯕ ꯑꯣꯏꯅ ꯊꯝꯒꯗ꯭ꯔꯥ?",
+  "saveAsRuleBlurb": "ꯀꯤꯋꯔꯗ ꯑꯁꯤ ꯌꯥꯎꯔꯤꯕ ꯃꯇꯨꯡꯗ ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯕ ꯗꯤꯁ꯭ꯀ꯭ꯔꯤꯞꯁꯟꯅ ꯃꯆꯦꯠ ꯑꯁꯤ ꯁꯤꯖꯤꯟꯅꯒꯅꯤ.",
+  "keyword": "ꯀꯤꯋꯔꯗ",
+  "noSavedRules": "ꯍꯧꯖꯤꯛ ꯐꯥꯎꯕ ꯊꯝꯖꯔꯕ ꯑꯌꯥꯝꯕ ꯂꯩꯇꯦ. ꯑꯌꯥꯝꯕ ꯊꯝꯅꯕꯒꯤꯗꯃꯛ ꯔꯣ ꯀꯣꯄꯤ ꯑꯃꯗ ꯃꯆꯦꯠ ꯑꯃ ꯄꯤꯎ.",
+  "deleteRuleTitle": "ꯑꯌꯥꯝꯕ ꯃꯨꯠꯍꯟꯒꯗ꯭ꯔꯥ?",
+  "editRule": "ꯑꯌꯥꯝꯕ ꯁꯦꯝꯒꯠꯂꯨ",
+  "rowsGrouped": "{count} ꯔꯣ",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯕꯒꯤꯗꯃꯛ {extensions} ꯁ꯭ꯇꯦꯠꯃꯦꯟꯠ ꯐꯥꯏꯂ ꯑꯃ ꯈꯪꯗꯣꯛꯎ",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "ꯄꯦꯑꯤꯁꯤꯡ",
+  "addPayee": "ꯄꯦꯑꯤ ꯍꯥꯞꯆꯤꯟ",
+  "renamePayee": "ꯄꯦꯑꯤꯒꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ",
+  "deletePayeeTitle": "ꯄꯦꯑꯤ ꯃꯨꯠꯍꯟꯒꯗ꯭ꯔꯥ?",
+  "noPayeesYet": "ꯍꯧꯖꯤꯛ ꯐꯥꯎꯕ ꯄꯦꯑꯤ ꯂꯩꯇꯦ",
+  "recurringTitle": "ꯍꯟꯗꯣꯛꯄ ꯇꯦꯝꯄ꯭ꯂꯦꯠ",
+  "noRecurringYet": "ꯍꯧꯖꯤꯛ ꯐꯥꯎꯕ ꯍꯟꯗꯣꯛꯄ ꯇꯦꯝꯄ꯭ꯂꯦꯠ ꯂꯩꯇꯦ",
+  "deleteTemplateTitle": "ꯍꯟꯗꯣꯛꯄ ꯇꯦꯝꯄ꯭ꯂꯦꯠ ꯃꯨꯠꯍꯟꯒꯗ꯭ꯔꯥ?",
+  "dayOfMonth": "ꯊꯥꯒꯤ ꯅꯨꯃꯤꯠ (1-31)",
+  "dayOfMonthNote": "ꯅꯨꯃꯤꯠ ꯍꯦꯟꯅ ꯍꯦꯟꯅ ꯂꯩꯕ ꯊꯥꯅ ꯃꯁꯒꯤ ꯑꯔꯣꯏꯕ ꯅꯨꯃꯤꯠ ꯁꯤꯖꯤꯟꯅꯒꯅꯤ.",
+  "dayOfMonthLine": "ꯊꯥꯒꯤ ꯅꯨꯃꯤꯠ {day} - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
+  "name": "ꯃꯤꯡ",
+  "none": "ꯑꯃꯇꯥ ꯂꯩꯇꯦ",
+  "currency": "ꯀꯔꯦꯟꯁꯤ",
   "errorGeneric": "ꯑꯔꯥꯟꯕ ꯊꯣꯛꯈꯤ. ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "errorSigningIdentityMismatch": "ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯑꯁꯤ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯑꯁꯤ ꯗꯥꯇꯥꯕꯦꯁ ꯑꯁꯤꯗ ꯁꯥꯏꯅꯤꯡ ꯑꯥꯏꯗꯦꯟꯇꯤꯇꯤ ꯑꯃꯒꯤꯗꯒꯤꯅ ꯆꯨꯝꯗꯦ.",
+  "errorInvalidLedgerBackup": "ꯐꯥꯏꯂ ꯑꯁꯤ ꯆꯨꯝꯅꯕ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯅꯠꯇꯦ.",
+  "errorInvalidLedgerBackupNoIdentity": "ꯕꯦꯀꯑꯞ ꯑꯁꯤꯗ ꯁꯥꯏꯅꯤꯡ ꯑꯥꯏꯗꯦꯟꯇꯤꯇꯤ ꯂꯩꯇꯦ - ꯃꯁꯤ ꯆꯨꯝꯅꯕ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯅꯠꯇꯦ.",
+  "errorInvalidLedgerBackupUnverified": "ꯕꯦꯀꯑꯞ ꯑꯁꯤ ꯑꯆꯨꯝꯕ ꯂꯦꯈꯥ ꯑꯣꯏꯅ ꯀꯅꯐꯔꯃ ꯇꯧꯗ꯭ꯔꯦ, ꯃꯔꯝꯗ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯗ꯭ꯔꯦ.",
+  "errorInvalidLedgerBackupUnreadable": "ꯐꯥꯏꯂ ꯑꯁꯤ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯑꯣꯏꯅ ꯍꯥꯡꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "ꯕꯦꯀꯑꯞ ꯑꯁꯤ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯒꯤ ꯅꯠꯇ꯭ꯔꯕ ꯑꯇꯣꯞꯄ ꯁꯥꯏꯅꯤꯡ ꯑꯥꯏꯗꯦꯟꯇꯤꯇꯤ ꯑꯃꯒꯤꯅꯤ.",
+  "errorAccountNotFinancial": "ꯑꯗꯨ ꯐꯤꯅꯦꯟꯁꯤꯌꯦꯜ ꯑꯦꯀꯥꯎꯟꯠ ꯅꯠꯇꯦ.",
+  "errorAccountArchived": "ꯑꯦꯀꯥꯎꯟꯠ ꯑꯗꯨ ꯂꯣꯠꯂꯦ.",
+  "errorAccountNotArchived": "ꯑꯦꯀꯥꯎꯟꯠ ꯑꯗꯨ ꯂꯣꯠꯗ꯭ꯔꯦ.",
+  "errorAccountNoPositiveBalanceToCloseOut": "ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯇꯧꯅꯕ ꯍꯦꯜꯂꯤꯕ ꯕꯦꯂꯦꯟꯁ ꯂꯩꯇꯦ.",
+  "errorAccountHasNoGroup": "ꯑꯦꯀꯥꯎꯟꯠ ꯑꯗꯨꯗ ꯒ꯭ꯔꯨꯞ ꯍꯥꯞꯗ꯭ꯔꯦ.",
+  "errorGroupHasNoCurrency": "ꯒ꯭ꯔꯨꯞ ꯑꯗꯨꯗ ꯍꯧꯖꯤꯛ ꯀꯔꯦꯟꯁꯤ ꯊꯝꯗ꯭ꯔꯦ.",
+  "errorGroupNotFound": "ꯑꯦꯀꯥꯎꯟꯠ ꯒ꯭ꯔꯨꯞ ꯑꯗꯨ ꯐꯪꯗꯦ.",
+  "errorInvestmentAccountsMustBeAssets": "ꯑꯦꯁꯦꯠ ꯑꯦꯀꯥꯎꯟꯠ ꯈꯛꯇꯅ ꯏꯟꯚꯦꯁꯇꯃꯦꯟꯠ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯣꯏꯅ ꯁꯤꯃꯈꯤꯤꯗꯣꯛꯄ ꯌꯥꯏ.",
+  "errorCreditCardsMustBeLiabilities": "ꯗꯦꯕꯠ ꯑꯦꯀꯥꯎꯟꯠ ꯈꯛꯇꯅ ꯀ꯭ꯔꯦꯗꯤꯠ ꯀꯥꯔꯗ ꯑꯣꯏꯅ ꯁꯤꯃꯈꯤꯗꯣꯛꯄ ꯌꯥꯏ.",
+  "errorOpeningBalanceMustBePositive": "ꯄꯤꯔꯕꯗꯤ ꯍꯧꯖꯤꯛ ꯂꯩꯕ ꯕꯦꯂꯦꯟꯁ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorAccountTypeDoesNotMatchGroup": "ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯈꯜ ꯑꯗꯨ ꯒ꯭ꯔꯨꯞ ꯒ ꯆꯨꯝꯗꯦ.",
+  "errorLastActiveAccount": "ꯑꯔꯣꯏꯕ ꯑꯦꯛꯇꯤꯚ ꯐꯤꯅꯦꯟꯁꯤꯌꯦꯜ ꯑꯦꯀꯥꯎꯟꯠ ꯂꯣꯠꯄ ꯌꯥꯗꯦ.",
+  "errorCurrencyRequiredToCreateGroup": "ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯅꯕ ꯀꯔꯦꯟꯁꯤ ꯃꯊꯧ ꯇꯥꯏ.",
+  "errorSystemGroupCannotBeArchived": "ꯕꯤꯜꯇ-ꯏꯟ ꯑꯦꯀꯥꯎꯟꯠ ꯒ꯭ꯔꯨꯞ ꯂꯣꯠꯄ ꯌꯥꯗꯦ.",
+  "errorGroupAlreadyArchived": "ꯒ꯭ꯔꯨꯞ ꯑꯗꯨ ꯍꯧꯖꯤꯛ ꯂꯣꯠꯂꯦ.",
+  "errorCannotArchiveGroupWithAccounts": "ꯑꯦꯛꯇꯤꯚ ꯑꯦꯀꯥꯎꯟꯠ ꯌꯥꯎꯔꯤꯕ ꯒ꯭ꯔꯨꯞ ꯂꯣꯠꯄ ꯌꯥꯗꯦ.",
+  "errorSystemGroupNeverArchived": "ꯕꯤꯜꯇ-ꯏꯟ ꯑꯦꯀꯥꯎꯟꯠ ꯒ꯭ꯔꯨꯞ ꯀꯩꯗꯧꯉꯩ ꯂꯣꯠꯗꯦ.",
+  "errorAccountGroupsCannotBeDeleted": "ꯑꯦꯀꯥꯎꯟꯠ ꯒ꯭ꯔꯨꯞ ꯃꯨꯠꯍꯟꯕ ꯌꯥꯗꯦ.",
+  "errorCannotReassignDifferentCurrency": "ꯑꯦꯀꯥꯎꯟꯠ ꯑꯁꯤ ꯀꯔꯦꯟꯁꯤ ꯇꯣꯛꯅꯕ ꯒ꯭ꯔꯨꯞꯗ ꯆꯪꯍꯟꯕ ꯌꯥꯗꯦ.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "ꯒ꯭ꯔꯨꯞꯗ ꯑꯦꯛꯇꯤꯚ ꯑꯦꯀꯥꯎꯟꯠ ꯌꯥꯎꯔꯤꯕ ꯃꯇꯃꯗ ꯀꯔꯦꯟꯁꯤ ꯑꯣꯡꯗꯣꯛꯄ ꯌꯥꯗꯦ.",
   "errorAmountMustBePositive": "ꯁꯦꯟꯐꯝ ꯑꯁꯤ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "ꯑꯦꯀꯥꯎꯟꯠ-ꯀꯔꯦꯟꯁꯤ ꯁꯦꯟꯐꯝ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "ꯑꯦꯀꯥꯎꯟꯠ-ꯀꯔꯦꯟꯁꯤ ꯁꯦꯟꯐꯝ ꯑꯁꯤ ꯑꯇꯣꯞꯄ ꯀꯔꯦꯟꯁꯤꯒꯤ ꯏꯔꯤꯛꯀꯣꯔꯗꯀꯤꯗꯃꯛ ꯈꯛꯇꯅꯤ.",
+  "errorSplitNeedsTwoLines": "ꯁ꯭ꯄ꯭ꯂꯤꯠ ꯑꯃꯗ ꯑꯍꯨꯃꯨꯛ ꯑꯍꯨꯃꯨꯛ ꯃꯆꯦꯠ ꯂꯥꯏꯅ ꯑꯅꯤ ꯃꯊꯧ ꯇꯥꯏ.",
+  "errorSplitLineMustBePositive": "ꯁ꯭ꯄ꯭ꯂꯤꯠ ꯂꯥꯏꯅ ꯈꯨꯗꯤꯡꯃꯛ ꯄꯣꯖꯤꯇꯤꯕ ꯁꯦꯟꯐꯝ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorSplitLinesMustSumToTotal": "ꯁ꯭ꯄ꯭ꯂꯤꯠ ꯂꯥꯏꯅꯁꯤꯡ ꯄꯨꯝꯅꯃꯛ ꯂꯦꯟꯗꯦꯟꯒꯤ ꯄꯨꯝꯅꯃꯛ ꯁꯦꯟꯐꯝꯗ ꯆꯨꯝꯅꯒꯗꯕꯅꯤ.",
+  "errorTransferAmountMustBePositive": "ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯁꯦꯟꯐꯝ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorTransferAccountsMustDiffer": "ꯁꯣꯔꯆ ꯑꯃꯁꯨꯡ ꯆꯠꯀꯗꯕ ꯑꯦꯀꯥꯎꯟꯠ ꯇꯣꯛꯅ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorCloseoutRequiresDestinationAmount": "ꯀ꯭ꯔꯣꯁ-ꯀꯔꯦꯟꯁꯤ ꯀ꯭ꯂꯣꯖꯑꯎꯠꯀꯤꯗꯃꯛ ꯈꯉꯕ ꯆꯠꯀꯗꯕ ꯁꯦꯟꯐꯝ ꯃꯊꯧ ꯇꯥꯏ.",
+  "errorDestinationAmountNotForSameCurrency": "ꯆꯠꯀꯗꯕ ꯁꯦꯟꯐꯝ ꯑꯁꯤ ꯀ꯭ꯔꯣꯁ-ꯀꯔꯦꯟꯁꯤ ꯇ꯭ꯔꯥꯟꯁꯐꯔꯀꯤꯗꯃꯛ ꯈꯛꯇꯅꯤ.",
+  "errorDestinationAmountMustBePositive": "ꯆꯠꯀꯗꯕ ꯁꯦꯟꯐꯝ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorInvestmentCashExceeded": "ꯏꯟꯚꯦꯁꯇꯃꯦꯟꯠ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯁꯤꯒꯤ ꯀꯦꯁꯇꯒꯤ ꯍꯦꯟꯅ ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯇꯧꯕ ꯌꯥꯗꯦ.",
+  "errorCannotReverseUnsettledProvisional": "ꯍꯟꯒꯤꯕꯀꯤ ꯃꯍꯨꯠꯇ ꯄꯦꯟꯗꯤꯡ ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯑꯁꯤ ꯂꯣꯏꯅ ꯁꯤꯟꯗꯣꯛꯎ.",
+  "errorAlreadyReversed": "ꯏꯔꯤꯛꯀꯣꯔꯗ ꯑꯁꯤ ꯍꯧꯖꯤꯛ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯈ꯭ꯔꯦ. ꯑꯣꯔꯤꯖꯤꯅꯦꯜ ꯂꯥꯏꯅ ꯑꯗꯨ ꯃꯁꯤꯡ ꯑꯗꯨꯃꯛ ꯂꯩꯒꯅꯤ.",
+  "errorNotActiveExpenseCategory": "ꯑꯦꯛꯇꯤꯚ ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ ꯑꯃ ꯈꯪꯗꯣꯛꯎ.",
+  "errorNotActiveIncomeCategory": "ꯑꯦꯛꯇꯤꯚ ꯏꯅꯀꯝ ꯃꯆꯦꯠ ꯑꯃ ꯈꯪꯗꯣꯛꯎ.",
+  "errorSettledAmountMustNotBeNegative": "ꯌꯧꯈꯤꯕ ꯁꯦꯟꯐꯝ ꯅꯦꯒꯦꯇꯤꯚ ꯑꯣꯏꯕ ꯌꯥꯗꯦ.",
+  "errorPendingTransferNotFound": "ꯄꯦꯟꯗꯤꯡ ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯑꯗꯨ ꯐꯪꯗꯦ.",
+  "errorPendingTransferAlreadySettled": "ꯄꯦꯟꯗꯤꯡ ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯑꯗꯨ ꯍꯧꯖꯤꯛ ꯂꯣꯏꯅ ꯁꯤꯟꯗꯣꯛꯈ꯭ꯔꯦ.",
+  "errorSettledToMustBeSourceOrDestination": "ꯑꯣꯔꯤꯖꯤꯅꯦꯜ ꯁꯣꯔꯆ ꯅꯠꯇ꯭ꯔꯒ ꯆꯠꯀꯗꯕ ꯑꯦꯀꯥꯎꯟꯠ ꯈꯪꯗꯣꯛꯎ.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "ꯁꯦꯟꯐꯝ ꯁꯣꯔꯆ ꯑꯦꯀꯥꯎꯟꯠꯇ ꯍꯜꯂꯛꯄ ꯃꯇꯃꯗ ꯈꯛꯇ ꯐꯤ ꯃꯆꯦꯠ ꯁꯤꯖꯤꯟꯅꯏ.",
+  "errorSettledAmountMustBePositiveForDelivery": "ꯌꯧꯈꯤꯕꯒꯤꯗꯃꯛ ꯄꯣꯖꯤꯇꯤꯕ ꯁꯦꯟꯐꯝ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.",
+  "errorSettledAmountExceedsProvisional": "ꯁꯦꯟꯐꯝ ꯑꯗꯨ ꯊꯥꯗꯣꯛꯈꯤꯕꯒꯤ ꯍꯦꯟꯅ ꯍꯦꯟꯅꯩ.",
+  "errorInstrumentNotFound": "ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠ ꯑꯗꯨ ꯐꯪꯗꯦ.",
+  "errorIncomeRequiredForNonCash": "ꯀꯦꯁ ꯅꯠꯇ꯭ꯔꯕ ꯂꯧꯕꯀꯤꯗꯃꯛ ꯑꯦꯛꯇꯤꯚ ꯏꯅꯀꯝ ꯃꯆꯦꯠ ꯑꯃ ꯃꯊꯧ ꯇꯥꯏ.",
+  "errorInsufficientCash": "ꯂꯩꯕꯤꯕ ꯑꯗꯨꯒꯤꯗꯃꯛ ꯏꯟꯚꯦꯁꯇꯃꯦꯟꯠ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯁꯤꯗ ꯀꯦꯁ ꯆꯥꯗꯦ.",
+  "errorSellQuantityAndPriceMustBePositive": "ꯌꯣꯟꯕꯒꯤ ꯆꯪ ꯑꯃꯁꯨꯡ ꯏꯨꯅꯤꯠ ꯗꯥꯝ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorLockedUntil": "ꯌꯣꯟꯕ ꯌꯥꯗꯦ: ꯏꯨꯅꯤꯠ ꯈꯔ {date} ꯐꯥꯎꯕ ꯂꯣꯛ ꯇꯧꯔꯦ.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "ꯍꯧꯖꯤꯛ ꯑꯟꯂꯣꯛ ꯇꯧꯔꯤꯕꯒꯤ ꯍꯦꯟꯅ ꯌꯣꯟꯕ ꯌꯥꯗꯦ.",
+  "errorIncomeRequiredForGain": "ꯐꯪꯈ꯭ꯔꯕ ꯐꯪꯕꯀꯤꯗꯃꯛ ꯑꯦꯛꯇꯤꯚ ꯏꯅꯀꯝ ꯃꯆꯦꯠ ꯑꯃ ꯃꯊꯧ ꯇꯥꯏ.",
+  "errorExpenseRequiredForLoss": "ꯐꯪꯈ꯭ꯔꯕ ꯃꯥꯏꯅꯕꯀꯤꯗꯃꯛ ꯑꯦꯛꯇꯤꯚ ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ ꯑꯃ ꯃꯊꯧ ꯇꯥꯏ.",
+  "errorBrokerageFailedAfterBuy": "ꯂꯩꯕꯤꯕ ꯄꯣꯁꯇ ꯇꯧꯔꯦ, ꯑꯗꯨꯕꯨ ꯕ꯭ꯔꯣꯀꯔꯦꯖ ꯐꯤ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "ꯌꯣꯟꯕ ꯄꯣꯁꯇ ꯇꯧꯔꯦ, ꯑꯗꯨꯕꯨ ꯕ꯭ꯔꯣꯀꯔꯦꯖ ꯐꯤ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "ꯗꯤꯕꯤꯗꯦꯟꯗ ꯁꯦꯟꯐꯝ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorNotInvestmentAccount": "ꯑꯗꯨ ꯏꯟꯚꯦꯁꯇꯃꯦꯟꯠ ꯑꯦꯀꯥꯎꯟꯠ ꯅꯠꯇꯦ.",
+  "errorNoInventoryCompanion": "ꯏꯟꯚꯦꯁꯇꯃꯦꯟꯠ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯁꯤꯗ ꯏꯟꯚꯦꯟꯇꯔꯤ ꯃꯄꯥꯡ ꯂꯩꯇꯦ.",
+  "errorInvestmentReversalBlocked": "ꯂꯩꯕꯤꯕ ꯑꯁꯤ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯄ ꯌꯥꯗꯦ: ꯃꯇꯨꯡꯗ ꯌꯣꯟꯕꯁꯤꯡꯅ ꯏꯨꯅꯤꯠ ꯑꯁꯤ ꯗꯦꯄꯦꯟꯗ ꯇꯧꯏ. ꯍꯟꯖꯤꯛ {sells} ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯎ.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "ꯊꯥ ꯈꯨꯗꯤꯡꯒꯤ ꯂꯤꯃꯤꯠ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorTemplateAmountMustBePositive": "ꯇꯦꯝꯄ꯭ꯂꯦꯠꯀꯤ ꯁꯦꯟꯐꯝ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorOfxUnrecognized": "ꯐꯥꯏꯂ ꯑꯁꯤ OFX ꯑꯣꯏꯅ ꯈꯪꯕ ꯉꯝꯗ꯭ꯔꯦ.",
+  "errorCsvEmpty": "ꯈꯪꯗꯣꯛꯈꯤꯕ ꯐꯥꯏꯂ ꯑꯁꯤ ꯑꯍꯨ ꯑꯍꯨꯅ ꯂꯩ.",
+  "errorCsvUnreadable": "ꯐꯥꯏꯂ ꯑꯁꯤ CSV ꯑꯣꯏꯅ ꯄꯥꯕ ꯉꯝꯗ꯭ꯔꯦ.",
+  "errorCsvNoRows": "ꯈꯪꯗꯣꯛꯈꯤꯕ ꯐꯥꯏꯂꯗ ꯔꯣ ꯂꯩꯇꯦ.",
+  "errorBackupCreateFailed": "ꯕꯦꯀꯑꯞ ꯁꯦꯝꯒꯠꯄ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "ꯕꯦꯀꯑꯞ ꯑꯁꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ - ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯁꯤ ꯑꯔꯥꯟꯕ, ꯅꯠꯇ꯭ꯔꯒ ꯃꯁꯤ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ ꯅꯠꯇꯦ.",
+  "validationAmountAccountCategoryRequired": "ꯁꯦꯟꯐꯝ, ꯑꯦꯀꯥꯎꯟꯠ, ꯑꯃꯁꯨꯡ ꯃꯆꯦꯠ ꯃꯊꯧ ꯇꯥꯏ.",
+  "validationAmountAccountRequired": "ꯁꯦꯟꯐꯝ ꯑꯃꯁꯨꯡ ꯑꯦꯀꯥꯎꯟꯠ ꯃꯊꯧ ꯇꯥꯏ.",
+  "validationSplitLineIncomplete": "ꯁ꯭ꯄ꯭ꯂꯤꯠ ꯂꯥꯏꯅ ꯈꯨꯗꯤꯡꯃꯛꯗ ꯃꯆꯦꯠ ꯑꯃꯁꯨꯡ ꯁꯦꯟꯐꯝ ꯃꯊꯧ ꯇꯥꯏ.",
+  "validationSplitSumMismatch": "ꯁ꯭ꯄ꯭ꯂꯤꯠ ꯂꯥꯏꯅꯁꯤꯡ ꯄꯨꯝꯅꯃꯛ ꯂꯦꯟꯗꯦꯟꯒꯤ ꯄꯨꯝꯅꯃꯛ ꯁꯦꯟꯐꯝꯗ ꯆꯨꯝꯅꯒꯗꯕꯅꯤ.",
+  "validationFromToAmountRequired": "ꯑꯦꯀꯥꯎꯟꯠ ꯗꯒꯤ, ꯑꯦꯀꯥꯎꯟꯠ ꯗ, ꯑꯃꯁꯨꯡ ꯁꯦꯟꯐꯝ ꯃꯊꯧ ꯇꯥꯏ.",
+  "validationAmountArrivedRequired": "ꯌꯧꯈꯤꯕ ꯁꯦꯟꯐꯝ ꯃꯊꯧ ꯇꯥꯏ.",
+  "validationChooseReceivingAccount": "ꯀꯔꯤ ꯑꯦꯀꯥꯎꯟꯠꯅ ꯐꯪꯈꯤꯕꯒꯦ ꯈꯪꯗꯣꯛꯎ.",
+  "validationAccountCategoryRequired": "ꯑꯦꯀꯥꯎꯟꯠ ꯑꯃꯁꯨꯡ ꯃꯆꯦꯠ ꯃꯊꯧ ꯇꯥꯏ.",
+  "validationFixFailed": "ꯆꯦꯛꯁꯤꯟꯕ ꯑꯁꯤ ꯊꯝꯕ ꯉꯝꯗ꯭ꯔꯦ.",
+  "validationNameRequired": "ꯅꯍꯥꯛꯀꯤ ꯃꯄꯨꯡ ꯑꯦꯀꯥꯎꯟꯠꯗ ꯃꯤꯡ ꯄꯤꯎ.",
+  "validationStillLoading": "ꯍꯧꯖꯤꯛꯅꯤ ꯂꯣꯗ ꯇꯧꯔꯤ - ꯃꯇꯝ ꯅꯦꯄ ꯑꯃꯗ ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.",
+  "validationSaveAccountNameFailed": "ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ ꯊꯝꯕ ꯉꯝꯗ꯭ꯔꯦ.",
+  "validationWrongPin": "PIN ꯑꯔꯥꯟꯕ. ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.",
+  "validationCategoryMustBeIncomeOrExpense": "ꯃꯆꯦꯠ ꯑꯁꯤ ꯏꯅꯀꯝ ꯅꯠꯇ꯭ꯔꯒ ꯑꯦꯛꯁꯄꯦꯟꯁ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "validationOnlyExpenseHasMonthlyLimit": "ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ ꯈꯛꯇꯅ ꯊꯥ ꯈꯨꯗꯤꯡꯒꯤ ꯂꯤꯃꯤꯠ ꯂꯩꯕ ꯌꯥꯏ.",
+  "validationInvalidTemplate": "ꯇꯦꯝꯄ꯭ꯂꯦꯠ ꯑꯔꯥꯟꯕ.",
+  "validationWrongKeystorePassphrase": "ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯑꯁꯤꯒꯤꯗꯃꯛ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯔꯥꯟꯕ.",
+  "validationInvalidKeystoreFile": "ꯃꯁꯤ ꯆꯨꯝꯅꯕ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯒꯨꯝꯅ ꯎꯗꯦ.",
+  "validationRestorePhraseFailed": "ꯐ꯭ꯔꯦꯖ ꯑꯗꯨꯗꯒꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ.",
+  "validationGenerateKeyFailed": "ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯁꯦꯝꯒꯠꯄ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "ꯀꯔꯦꯟꯁꯤ ꯑꯁꯤ ꯊꯝꯕ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "ꯃꯥꯏꯒ꯭ꯔꯦꯁꯟ ꯉꯝꯗ꯭ꯔꯦ. ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.",
+  "validationChooseBackupFile": "ꯍꯟꯖꯤꯛ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ ꯑꯃ ꯈꯪꯗꯣꯛꯎ.",
+  "validationPassphraseRequired": "ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.",
+  "validationPinsDoNotMatch": "PIN ꯑꯅꯤꯃꯛ ꯆꯨꯝꯗꯦ.",
+  "validationFeePositiveWithCategory": "ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯐꯤ ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ ꯈꯪꯗꯣꯛꯈꯤꯕ ꯄꯣꯖꯤꯇꯤꯕ ꯁꯦꯟꯐꯝ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "validationFeeMustBeLessThanAmount": "ꯐꯤ ꯂꯧꯊꯣꯛꯄ ꯇ꯭ꯔꯥꯟꯁꯐꯔꯀꯤꯗꯃꯛ ꯐꯤ ꯑꯁꯤ ꯁꯦꯟꯐꯝꯗꯒꯤ ꯍꯦꯟꯅ ꯍꯟꯗꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "validationTransferSavedFeeFailed": "ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯊꯝꯖꯔꯦ, ꯑꯗꯨꯕꯨ ꯐꯤ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯕ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "ꯆꯨꯝꯅꯕ ꯁꯦꯟꯐꯝ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.",
+  "validationConfirmWordMismatch": "ꯋꯥꯍꯩ {n} ꯅꯍꯥꯛꯀꯤ ꯊꯝꯖꯔꯕ ꯐ꯭ꯔꯦꯖ ꯒ ꯆꯨꯝꯗꯦ. ꯌꯦꯡꯁꯤꯟꯗꯨꯅ ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "ꯂꯩꯕꯤꯕꯒꯤ ꯆꯪ ꯑꯃꯁꯨꯡ ꯏꯨꯅꯤꯠ ꯗꯥꯝ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "errorInstrumentArchived": "ꯂꯣꯠꯂꯕ ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠ ꯂꯩꯕꯤꯕ ꯌꯥꯗꯦ.",
+  "errorNonCashCannotIncludeBrokerage": "ꯀꯦꯁ ꯅꯠꯇ꯭ꯕ ꯂꯧꯕꯗ ꯕ꯭ꯔꯣꯀꯔꯦꯖ ꯌꯥꯎꯅꯕ ꯌꯥꯗꯦ.",
+  "errorBrokerageRequiresExpenseCategory": "ꯕ꯭ꯔꯣꯀꯔꯦꯖ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯔꯕꯗ ꯑꯦꯛꯇꯤꯚ ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ ꯑꯃ ꯃꯊꯧ ꯇꯥꯏ.",
+  "errorSellProceedsMustCoverBrokerage": "ꯌꯣꯟꯕꯒꯤ ꯁꯦꯟꯐꯝ ꯕ꯭ꯔꯣꯀꯔꯦꯖ ꯁꯦꯟꯐꯝꯒꯤ ꯃꯊꯛꯇ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "homeSpentOfLimitThisMonth": "ꯃꯁꯤꯒꯤ ꯊꯥ {limit} ꯒꯤ ꯃꯅꯨꯡꯗ {spent}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "ꯁ꯭ꯃꯥꯔꯥ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯟꯂꯣꯛ ꯇꯧ",
   "searchLabel": "ꯊꯤ",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "ꯍꯧꯖꯤꯛ ꯂꯩꯕ ꯕꯦꯂꯦꯟꯁ",
+  "transferToName": "ꯇ꯭ꯔꯥꯟꯁꯐꯔ: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "ꯇ꯭ꯔꯥꯟꯁꯐꯔꯀꯤ ꯐꯤ",
+  "feeForTransferTo": "{name} ꯗ ꯇ꯭ꯔꯥꯟꯁꯐꯔ ꯇꯧꯅꯕꯒꯤ ꯐꯤ",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "ꯐꯥꯏꯂ ꯄꯤꯀꯔ ꯍꯥꯡꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "ꯆꯥꯡꯅ .{extensions} ꯐꯥꯏꯂ ꯑꯃ ꯈꯪꯗꯣꯛꯎ",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "ꯀꯔꯦꯟꯁꯤ ꯀꯣꯗ (ISO 4217, ꯈꯨꯗꯝꯅ USD)",
+  "splitCounterpartMore": "{name} +{count} ꯍꯦꯟꯅ",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "ꯅꯨꯃꯤꯠ",
+  "noneSelected": "ꯑꯃꯇꯥ ꯂꯩꯇꯦ",
+  "reviewEntriesBeforeContinuing": "ꯆꯠꯅꯗ꯭ꯔꯤꯡꯉꯩ ꯃꯈꯥꯗ ꯏꯔꯤꯛꯀꯣꯔꯗ ({count} ꯄꯨꯝꯅꯃꯛ) ꯌꯦꯡꯁꯤꯟꯗꯨꯅ ꯆꯠꯂꯨ.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "ꯅꯍꯥꯛꯅ {amount} ꯐꯪꯈꯤ",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "ꯑꯦꯛꯆꯦꯟꯖ ꯔꯦꯠ ꯈꯪꯗꯅ ꯂꯩꯔꯕꯗꯤ ꯑꯍꯨꯝꯕ ꯊꯝꯎ.",
+  "recordTradeBlurb": "ꯍꯧꯖꯤꯛ ꯐꯥꯎꯕ ꯊꯣꯛꯈ꯭ꯔꯕ ꯇ꯭ꯔꯦꯗ ꯑꯃ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯎ. ꯑꯦꯞ ꯑꯁꯤꯅ ꯑꯣꯔꯗꯔ ꯄꯤꯗꯦ.",
+  "feeOnTopBlurb": "ꯑꯣꯟ: ꯃꯊꯛꯀꯤ ꯁꯦꯟꯐꯝ ꯑꯁꯤ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯁꯤꯗꯒꯤ ꯂꯧꯊꯣꯛꯄ ꯄꯨꯝꯅꯃꯛꯅꯤ; ꯐꯤ ꯑꯗꯨ ꯃꯗꯨꯗꯒꯤ ꯂꯧꯊꯣꯛꯏ.",
+  "feeBankBlurb": "ꯅꯍꯥꯛꯀꯤ ꯕꯦꯡꯛ ꯅꯠꯇ꯭ꯔꯒ ꯃꯐꯝ ꯑꯃꯅ ꯂꯧꯔꯤꯕ ꯃꯃꯥꯡꯗ ꯂꯧꯕ ꯀꯃꯤꯁꯟ.",
+  "validationPinMinLength": "PIN ꯑꯁꯤ ꯑꯍꯨꯃꯨꯛ ꯑꯍꯨꯃꯨꯛ ꯅꯝꯕꯔ 4 ꯑꯣꯏꯒꯗꯕꯅꯤ.",
+  "restoreBackupBlurb": "ꯃꯁꯤꯅ ꯑꯦꯞ ꯑꯁꯤꯗ ꯍꯧꯖꯤꯛ ꯂꯩꯔꯤꯕ ꯄꯨꯝꯅꯃꯛ ꯕꯦꯀꯑꯞꯅ ꯍꯣꯡꯗꯣꯛꯒꯅꯤ — ꯃꯆꯦꯠ ꯈꯪꯗꯦ. ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ ꯑꯃ ꯈꯪꯗꯣꯛꯎ ꯑꯃꯁꯨꯡ ꯃꯗꯨ ꯁꯦꯀꯤꯎꯔ ꯇꯧꯔꯕ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯆꯪꯗꯣꯛꯎ.",
+  "actionReplace": "ꯍꯣꯡꯗꯣꯛꯎ",
+  "hideAccountBody": "{name} ꯑꯅꯧꯕ ꯂꯦꯟꯗꯦꯟꯗ ꯍꯧꯖꯤꯛꯇꯒꯤ ꯄꯥꯡꯒꯗꯦ.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "ꯑꯦꯀꯥꯎꯟꯠ ꯁꯦꯝꯒꯠꯄ ꯅꯠꯇ꯭ꯔꯒ ꯑꯣꯡꯗꯣꯛꯄ ꯃꯇꯃꯗ {name} ꯄꯤꯗꯦ.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "ꯑꯅꯧꯕ ꯂꯦꯟꯗꯦꯟ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯕ ꯃꯇꯃꯗ {name} ꯄꯤꯗꯦ.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "ꯂꯣꯠꯂꯕ ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠ ꯑꯔꯤꯕ ꯂꯩꯕꯤꯕ ꯑꯃꯁꯨꯡ ꯌꯣꯟꯕꯗ ꯂꯩꯒꯅꯤ. ꯅꯍꯥꯛꯅ ꯃꯈꯣꯏꯒꯤꯗꯃꯛ ꯗꯤꯕꯤꯗꯦꯟꯗ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯕ ꯌꯥꯏ.",
+  "nameHidden": "{name} (ꯂꯣꯠꯂꯦ)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "ꯀꯔꯦꯟꯁꯤ ꯊꯝꯗ꯭ꯔꯦ",
+  "deletePayeeBody": "{name} ꯑꯃꯁꯨꯡ ꯃꯗꯨꯒꯤ ꯅꯤꯡꯁꯤꯡꯂꯤꯕ ꯗꯤꯐꯣꯜꯠ ꯂꯧꯊꯣꯛꯀꯅꯤ. ꯑꯔꯤꯕ ꯂꯦꯟꯗꯦꯟꯗ ꯄꯥꯡꯗꯦ.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} ꯄꯤꯒꯗꯕ ꯑꯣꯏꯅ ꯑꯅꯧꯕꯗ ꯄꯤꯗꯦ. ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯖꯔꯕ ꯑꯔꯤꯕ ꯂꯦꯟꯗꯦꯟꯗ ꯄꯥꯡꯗꯦ.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "ꯊꯝꯖꯔꯕ ꯀꯣꯂꯝ ꯃꯦꯄꯤꯡ \"{name}\" ꯃꯨꯠꯍꯟꯒꯅꯤ. ꯃꯗꯨꯅ ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯈ꯭ꯔꯕ ꯁ꯭ꯇꯦꯠꯃꯦꯟꯠꯗ ꯄꯥꯡꯗꯦ.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯕꯁꯤꯡ ꯑꯅꯧꯕꯗ \"{keyword}\" ꯅ ꯑꯣꯇꯣꯀꯝ ꯃꯆꯦꯠ ꯄꯤꯗꯦ. ꯑꯌꯥꯝꯕ ꯑꯁꯤ ꯁꯤꯖꯤꯟꯅꯗꯨꯅ ꯃꯆꯦꯠ ꯄꯤꯖꯔꯕ ꯂꯦꯟꯗꯦꯟꯗ ꯄꯥꯡꯗꯦ.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "ꯑꯣꯞꯁꯟꯦꯜ ꯑꯣꯏꯅ ꯍꯧꯖꯤꯛ ꯀ꯭ꯔꯦꯗꯤꯠ ꯀꯥꯔꯗ ꯅꯠꯇ꯭ꯔꯒ ꯀꯦꯁ ꯑꯦꯀꯥꯎꯟꯠ ꯑꯃ ꯍꯥꯞꯆꯤꯟꯎ - ꯃꯇꯨꯡꯗ ꯁꯦꯇꯤꯡꯗꯒꯤ ꯑꯦꯀꯥꯎꯟꯠ ꯍꯦꯟꯒꯠꯅ ꯍꯥꯞꯆꯤꯟꯕ ꯌꯥꯏ.",
+  "deliveredToDestination": "ꯆꯠꯀꯗꯕ ꯃꯐꯝꯗ ꯌꯧꯈ꯭ꯔꯦ",
+  "deliveredToName": "{name} ꯗ ꯌꯧꯈ꯭ꯔꯦ",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "ꯅꯍꯥꯛꯅ ꯊꯧꯔꯕꯒꯤ ꯍꯦꯟꯅ ꯍꯟꯅ {amount} {currency} ꯐꯪꯈꯤ - ꯃꯔꯤ ꯈꯥꯏꯗꯣꯛꯅꯕ ꯃꯆꯦꯠ ꯑꯃ ꯈꯪꯗꯣꯛꯎ.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "ꯅꯨꯃꯤꯠꯀꯤ ꯔꯦꯟꯖ",
+  "addTemplate": "ꯇꯦꯝꯄ꯭ꯂꯦꯠ ꯍꯥꯞꯆꯤꯟ",
+  "editTemplate": "ꯇꯦꯝꯄ꯭ꯂꯦꯠ ꯁꯦꯝꯒꯠꯂꯨ",
+  "validationFillTemplateFields": "ꯐꯤꯜꯗ ꯄꯨꯝꯅꯃꯛꯗ ꯆꯨꯝꯅꯕ ꯁꯦꯟꯐꯝ ꯑꯃꯁꯨꯡ ꯅꯨꯃꯤꯠ ꯊꯝꯎ.",
+  "saveCsvExport": "CSV ꯊꯥꯗꯣꯛꯄ ꯊꯝꯂꯨ",
+  "referenceRate": "ꯔꯦꯐꯔꯦꯟꯁ ꯔꯦꯠ",
+  "yourRate": "ꯅꯍꯥꯛꯀꯤ ꯔꯦꯠ",
+  "leaveBlankIfThisWasAccountCurrency": "ꯃꯁꯤ ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯁꯥꯒꯤ ꯀꯔꯦꯟꯁꯤ {currency} ꯗ ꯑꯣꯏꯔꯕꯗꯤ ꯑꯍꯨꯝꯕ ꯊꯝꯎ.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "ꯀꯗꯥꯏꯐꯥꯎꯕ ꯂꯣꯛ (ꯑꯣꯞꯁꯟꯦꯜ)",
+  "lockedUntilDate": "{date} ꯐꯥꯎꯕ ꯂꯣꯛ ꯇꯧꯔꯦ",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "ꯔꯤꯁꯔꯆ ꯄ꯭ꯔꯣꯝꯄꯠ ꯀꯣꯄꯤ ꯇꯧꯔꯦ — ꯕ꯭ꯔꯥꯎꯖꯔ URL ꯂꯩꯇꯦ, ꯅꯠꯇ꯭ꯔꯒ ꯅꯍꯥꯛ ꯑꯣꯐꯂꯥꯏꯟꯗ ꯂꯩ.",
+  "openedFavouriteResearchTool": "ꯅꯍꯥꯛꯀꯤ ꯅꯨꯡꯉꯥꯏꯕ ꯔꯤꯁꯔꯆ ꯇꯨꯜ ꯍꯥꯡꯈ꯭ꯔꯦ.",
+  "looksLikeGain": "ꯃꯁꯤ ꯐꯪꯕ ꯒꯨꯝꯅ ꯎꯏ",
+  "looksLikeLoss": "ꯃꯁꯤ ꯃꯥꯏꯅꯕ ꯒꯨꯝꯅ ꯎꯏ",
+  "looksLikeBreakEven": "ꯃꯁꯤ ꯃꯥꯏꯅꯕ ꯐꯪꯕ ꯂꯩꯇꯦ ꯒꯨꯝꯅ ꯎꯏ",
+  "sellableQuantity": "{name} ({qty} ꯌꯣꯟꯕ ꯌꯥꯕ)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "ꯀꯣꯂꯝ {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯅꯔꯤ...",
+  "confirmImport": "ꯄꯨꯟꯁꯤꯟꯖꯤꯟꯕ ꯀꯅꯐꯔꯃ ꯇꯧ",
+  "manageSavedCategoryRules": "ꯊꯝꯖꯔꯕ ꯃꯆꯦꯠ ꯑꯌꯥꯝꯕ ꯃꯦꯅꯦꯖ ꯇꯧ",
+  "statementCurrencyMismatch": "ꯐꯥꯏꯂ ꯑꯁꯤꯒꯤ ꯀꯔꯦꯟꯁꯤ ({currency}) ꯈꯪꯗꯣꯛꯈꯤꯕ ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯀꯔꯦꯟꯁꯤ ꯒ ꯆꯨꯝꯗꯦ.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "ꯃꯆꯦꯠꯀꯤ ꯑꯌꯥꯝꯕ",
+  "possibleDuplicate": "ꯗꯨꯄ꯭ꯂꯤꯀꯦꯠ ꯑꯣꯏꯕ ꯌꯥꯏ",
+  "unknownCategory": "ꯈꯪꯗꯕ ꯉꯝꯗꯕ ꯃꯆꯦꯠ"
 }

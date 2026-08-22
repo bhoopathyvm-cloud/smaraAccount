@@ -1001,10 +1001,16 @@ class LedgerRepository {
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null ||
         (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
+      throw AccountGroupException(
+        'Account $id is not a financial account.',
+        code: AppErrorCode.accountNotFinancial,
+      );
     }
     if (row.archivedAt != null) {
-      throw AccountGroupException('Account $id is archived.', code: AppErrorCode.accountArchived);
+      throw AccountGroupException(
+        'Account $id is archived.',
+        code: AppErrorCode.accountArchived,
+      );
     }
     return row;
   }
@@ -1020,10 +1026,16 @@ class LedgerRepository {
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null ||
         (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
+      throw AccountGroupException(
+        'Account $id is not a financial account.',
+        code: AppErrorCode.accountNotFinancial,
+      );
     }
     if (row.archivedAt == null) {
-      throw AccountGroupException('Account $id is not archived.', code: AppErrorCode.accountNotArchived);
+      throw AccountGroupException(
+        'Account $id is not archived.',
+        code: AppErrorCode.accountNotArchived,
+      );
     }
     final balance = await displayBalanceMinor(id);
     if (balance <= 0) {
@@ -1096,7 +1108,10 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(groupId))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $groupId not found.', code: AppErrorCode.groupNotFound);
+      throw AccountGroupException(
+        'Account group $groupId not found.',
+        code: AppErrorCode.groupNotFound,
+      );
     }
     final expectedKind = type == AccountType.asset
         ? AccountGroupKind.assetGroup
@@ -1188,7 +1203,10 @@ class LedgerRepository {
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null ||
         (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
+      throw AccountGroupException(
+        'Account $id is not a financial account.',
+        code: AppErrorCode.accountNotFinancial,
+      );
     }
     await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
       AccountsCompanion(name: Value(newName)),
@@ -1205,13 +1223,19 @@ class LedgerRepository {
     if (account == null ||
         (account.type != AccountType.asset &&
             account.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
+      throw AccountGroupException(
+        'Account $id is not a financial account.',
+        code: AppErrorCode.accountNotFinancial,
+      );
     }
     final group = await (_db.select(
       _db.accountGroups,
     )..where((g) => g.id.equals(groupId))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $groupId not found.', code: AppErrorCode.groupNotFound);
+      throw AccountGroupException(
+        'Account group $groupId not found.',
+        code: AppErrorCode.groupNotFound,
+      );
     }
     final expectedKind = account.type == AccountType.asset
         ? AccountGroupKind.assetGroup
@@ -1255,7 +1279,10 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(groupId))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $groupId not found.', code: AppErrorCode.groupNotFound);
+      throw AccountGroupException(
+        'Account group $groupId not found.',
+        code: AppErrorCode.groupNotFound,
+      );
     }
     final activeMembers =
         await (_db.select(_db.accounts)..where(
@@ -1310,7 +1337,10 @@ class LedgerRepository {
     if (account == null ||
         (account.type != AccountType.asset &&
             account.type != AccountType.liability)) {
-      throw AccountGroupException('Account $id is not a financial account.', code: AppErrorCode.accountNotFinancial);
+      throw AccountGroupException(
+        'Account $id is not a financial account.',
+        code: AppErrorCode.accountNotFinancial,
+      );
     }
     await _db.transaction(() async {
       await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
@@ -1337,7 +1367,10 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(id))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $id not found.', code: AppErrorCode.groupNotFound);
+      throw AccountGroupException(
+        'Account group $id not found.',
+        code: AppErrorCode.groupNotFound,
+      );
     }
     await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
       AccountGroupsCompanion(name: Value(newName)),
@@ -1357,7 +1390,10 @@ class LedgerRepository {
     required String currency,
   }) async {
     if (currency.trim().isEmpty) {
-      throw AccountGroupException('Currency is required to create a group.', code: AppErrorCode.currencyRequiredToCreateGroup);
+      throw AccountGroupException(
+        'Currency is required to create a group.',
+        code: AppErrorCode.currencyRequiredToCreateGroup,
+      );
     }
     final existing = await _db.select(_db.accountGroups).get();
     final nextSortOrder =
@@ -1392,13 +1428,22 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(id))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $id not found.', code: AppErrorCode.groupNotFound);
+      throw AccountGroupException(
+        'Account group $id not found.',
+        code: AppErrorCode.groupNotFound,
+      );
     }
     if (group.isSystem) {
-      throw AccountGroupException('System account groups cannot be archived.', code: AppErrorCode.systemGroupCannotBeArchived);
+      throw AccountGroupException(
+        'System account groups cannot be archived.',
+        code: AppErrorCode.systemGroupCannotBeArchived,
+      );
     }
     if (group.archivedAt != null) {
-      throw AccountGroupException('Account group $id is already archived.', code: AppErrorCode.groupAlreadyArchived);
+      throw AccountGroupException(
+        'Account group $id is already archived.',
+        code: AppErrorCode.groupAlreadyArchived,
+      );
     }
     final activeMembers =
         await (_db.select(_db.accounts)..where(
@@ -1432,10 +1477,16 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(id))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $id not found.', code: AppErrorCode.groupNotFound);
+      throw AccountGroupException(
+        'Account group $id not found.',
+        code: AppErrorCode.groupNotFound,
+      );
     }
     if (group.isSystem) {
-      throw AccountGroupException('System account groups are never archived.', code: AppErrorCode.systemGroupNeverArchived);
+      throw AccountGroupException(
+        'System account groups are never archived.',
+        code: AppErrorCode.systemGroupNeverArchived,
+      );
     }
     await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
       const AccountGroupsCompanion(archivedAt: Value(null)),
@@ -1450,9 +1501,15 @@ class LedgerRepository {
       _db.accountGroups,
     )..where((g) => g.id.equals(id))).getSingleOrNull();
     if (group == null) {
-      throw AccountGroupException('Account group $id not found.', code: AppErrorCode.groupNotFound);
+      throw AccountGroupException(
+        'Account group $id not found.',
+        code: AppErrorCode.groupNotFound,
+      );
     }
-    throw AccountGroupException('Account groups cannot be deleted.', code: AppErrorCode.accountGroupsCannotBeDeleted);
+    throw AccountGroupException(
+      'Account groups cannot be deleted.',
+      code: AppErrorCode.accountGroupsCannotBeDeleted,
+    );
   }
 
   /// Validates `amountMinor > 0`, derives the two postings, stamps
@@ -1924,53 +1981,62 @@ class LedgerRepository {
   /// Decision 4) - settle it instead, which achieves the same economic
   /// outcome without leaving `pending_transfers` pointing at a reversed
   /// entry while still reporting status pending.
-  Future<void> reverseEntry(String entryId) async {
-    final stillPending =
-        await (_db.select(_db.pendingTransfers)..where(
-              (p) =>
-                  p.provisionalEntryId.equals(entryId) &
-                  p.status.equalsValue(PendingTransferStatus.pending),
-            ))
-            .getSingleOrNull();
-    if (stillPending != null) {
-      throw PendingTransferException(
-        'Cannot reverse a provisional entry while its pending transfer is '
-        'still unsettled. Settle it instead.',
-        code: AppErrorCode.cannotReverseUnsettledProvisional,
+  Future<void> reverseEntry(String entryId) {
+    // The already-reversed guard below must not be a separate check-then-act
+    // against the insert in `_appendSignedEntry` - two overlapping callers
+    // could both pass the guard before either has inserted, posting two
+    // reversals for one original. Wrapping the whole method in one
+    // transaction closes that window; Drift's transactions nest cleanly
+    // (this already composes with `fixPostedTransaction`'s outer
+    // transaction, which calls this method internally).
+    return _db.transaction(() async {
+      final stillPending =
+          await (_db.select(_db.pendingTransfers)..where(
+                (p) =>
+                    p.provisionalEntryId.equals(entryId) &
+                    p.status.equalsValue(PendingTransferStatus.pending),
+              ))
+              .getSingleOrNull();
+      if (stillPending != null) {
+        throw PendingTransferException(
+          'Cannot reverse a provisional entry while its pending transfer is '
+          'still unsettled. Settle it instead.',
+          code: AppErrorCode.cannotReverseUnsettledProvisional,
+        );
+      }
+
+      await _guardInvestmentBuyReversal(entryId);
+
+      final alreadyReversed = await (_db.select(
+        _db.journalEntries,
+      )..where((e) => e.reversesEntryId.equals(entryId))).get();
+      if (alreadyReversed.isNotEmpty) {
+        throw AlreadyReversedException(
+          'This entry has already been corrected. The original line stays '
+          'as it is.',
+        );
+      }
+
+      final original = await (_db.select(
+        _db.journalEntries,
+      )..where((e) => e.id.equals(entryId))).getSingle();
+      final originalPostings = await (_db.select(
+        _db.postings,
+      )..where((p) => p.entryId.equals(entryId))).get();
+
+      await _appendSignedEntry(
+        transactionDate: _dateOnly(DateTime.now()),
+        reversesEntryId: original.id,
+        postings: [
+          for (final p in originalPostings)
+            (
+              accountId: p.accountId,
+              amountMinor: -p.amountMinor,
+              lineNumber: p.lineNumber,
+            ),
+        ],
       );
-    }
-
-    await _guardInvestmentBuyReversal(entryId);
-
-    final alreadyReversed = await (_db.select(
-      _db.journalEntries,
-    )..where((e) => e.reversesEntryId.equals(entryId))).get();
-    if (alreadyReversed.isNotEmpty) {
-      throw AlreadyReversedException(
-        'This entry has already been corrected. The original line stays '
-        'as it is.',
-      );
-    }
-
-    final original = await (_db.select(
-      _db.journalEntries,
-    )..where((e) => e.id.equals(entryId))).getSingle();
-    final originalPostings = await (_db.select(
-      _db.postings,
-    )..where((p) => p.entryId.equals(entryId))).get();
-
-    await _appendSignedEntry(
-      transactionDate: _dateOnly(DateTime.now()),
-      reversesEntryId: original.id,
-      postings: [
-        for (final p in originalPostings)
-          (
-            accountId: p.accountId,
-            amountMinor: -p.amountMinor,
-            lineNumber: p.lineNumber,
-          ),
-      ],
-    );
+    });
   }
 
   /// One user action, two new signed entries: a reversal of [entryId]
@@ -2037,10 +2103,16 @@ class LedgerRepository {
       _db.accounts,
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null || row.type != AccountType.expense) {
-      throw PendingTransferException('$id is not an active Expense category.', code: AppErrorCode.notActiveExpenseCategory);
+      throw PendingTransferException(
+        '$id is not an active Expense category.',
+        code: AppErrorCode.notActiveExpenseCategory,
+      );
     }
     if (row.archivedAt != null) {
-      throw PendingTransferException('$id is not an active Expense category.', code: AppErrorCode.notActiveExpenseCategory);
+      throw PendingTransferException(
+        '$id is not an active Expense category.',
+        code: AppErrorCode.notActiveExpenseCategory,
+      );
     }
   }
 
@@ -2329,18 +2401,21 @@ class LedgerRepository {
   }
 
   Stream<List<InstrumentQuote>> watchInstrumentQuotes() {
-    return _db.select(_db.instrumentQuotes).watch().map(
-      (rows) => rows
-          .map(
-            (row) => InstrumentQuote(
-              instrumentId: row.instrumentId,
-              priceMinor: row.priceMinor,
-              currency: row.currency,
-              fetchedAt: row.fetchedAt,
-            ),
-          )
-          .toList(),
-    );
+    return _db
+        .select(_db.instrumentQuotes)
+        .watch()
+        .map(
+          (rows) => rows
+              .map(
+                (row) => InstrumentQuote(
+                  instrumentId: row.instrumentId,
+                  priceMinor: row.priceMinor,
+                  currency: row.currency,
+                  fetchedAt: row.fetchedAt,
+                ),
+              )
+              .toList(),
+        );
   }
 
   Future<void> cacheInstrumentQuote({
@@ -2364,15 +2439,15 @@ class LedgerRepository {
           );
       return;
     }
-    await (_db.update(_db.instrumentQuotes)
-          ..where((q) => q.instrumentId.equals(instrumentId)))
-        .write(
-          InstrumentQuotesCompanion(
-            priceMinor: Value(priceMinor),
-            currency: Value(currency),
-            fetchedAt: Value(DateTime.now()),
-          ),
-        );
+    await (_db.update(
+      _db.instrumentQuotes,
+    )..where((q) => q.instrumentId.equals(instrumentId))).write(
+      InstrumentQuotesCompanion(
+        priceMinor: Value(priceMinor),
+        currency: Value(currency),
+        fetchedAt: Value(DateTime.now()),
+      ),
+    );
   }
 
   Future<List<InstrumentHolding>> computeHoldingsForAccount(
@@ -2495,7 +2570,10 @@ class LedgerRepository {
       _db.instruments,
     )..where((i) => i.id.equals(instrumentId))).getSingleOrNull();
     if (instrument == null) {
-      throw InvestmentException('Instrument $instrumentId not found.', code: AppErrorCode.instrumentNotFound);
+      throw InvestmentException(
+        'Instrument $instrumentId not found.',
+        code: AppErrorCode.instrumentNotFound,
+      );
     }
     if (instrument.archivedAt != null) {
       throw const InvestmentException(
@@ -2669,9 +2747,7 @@ class LedgerRepository {
       final locked = metricsBeforeSell.lockedQuantityScaled;
       if (locked > 0) {
         final until = metricsBeforeSell.earliestLockedUntil;
-        final untilLabel = until == null
-            ? 'a later date'
-            : _dateOnly(until);
+        final untilLabel = until == null ? 'a later date' : _dateOnly(until);
         throw LockedQuantityException(
           'Cannot sell: some units are locked until $untilLabel.',
           params: {'date': untilLabel},
@@ -2790,7 +2866,10 @@ class LedgerRepository {
     String? description,
   }) async {
     if (amountMinor <= 0) {
-      throw const InvestmentException('Dividend amount must be positive.', code: AppErrorCode.dividendMustBePositive);
+      throw const InvestmentException(
+        'Dividend amount must be positive.',
+        code: AppErrorCode.dividendMustBePositive,
+      );
     }
     await _requireInvestmentCashAccount(accountId, allowArchived: true);
     await _requireActiveIncomeCategory(incomeCategoryId);
@@ -2798,7 +2877,10 @@ class LedgerRepository {
       _db.instruments,
     )..where((i) => i.id.equals(instrumentId))).getSingleOrNull();
     if (instrument == null) {
-      throw InvestmentException('Instrument $instrumentId not found.', code: AppErrorCode.instrumentNotFound);
+      throw InvestmentException(
+        'Instrument $instrumentId not found.',
+        code: AppErrorCode.instrumentNotFound,
+      );
     }
 
     return _appendSignedEntry(
@@ -2817,10 +2899,16 @@ class LedgerRepository {
       _db.accounts,
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null || row.type != AccountType.income) {
-      throw InvestmentException('$id is not an active Income category.', code: AppErrorCode.notActiveIncomeCategory);
+      throw InvestmentException(
+        '$id is not an active Income category.',
+        code: AppErrorCode.notActiveIncomeCategory,
+      );
     }
     if (row.archivedAt != null) {
-      throw InvestmentException('$id is not an active Income category.', code: AppErrorCode.notActiveIncomeCategory);
+      throw InvestmentException(
+        '$id is not an active Income category.',
+        code: AppErrorCode.notActiveIncomeCategory,
+      );
     }
   }
 
@@ -2832,10 +2920,16 @@ class LedgerRepository {
       _db.accounts,
     )..where((a) => a.id.equals(id))).getSingleOrNull();
     if (row == null || row.type != AccountType.asset || !row.holdsInvestments) {
-      throw InvestmentException('Account $id is not an investment account.', code: AppErrorCode.notInvestmentAccount);
+      throw InvestmentException(
+        'Account $id is not an investment account.',
+        code: AppErrorCode.notInvestmentAccount,
+      );
     }
     if (row.archivedAt != null && !allowArchived) {
-      throw AccountGroupException('Account $id is archived.', code: AppErrorCode.accountArchived);
+      throw AccountGroupException(
+        'Account $id is archived.',
+        code: AppErrorCode.accountArchived,
+      );
     }
     return row;
   }

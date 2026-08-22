@@ -6,10 +6,12 @@ import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../view_models/first_week_setup_view_model.dart';
 
-/// A short post-onboarding wizard: name the main account, optionally add
-/// a credit card and/or cash account (spec: "First-Week Setup Wizard").
-/// Reachable exactly once - the app router only shows this route while
+/// A short post-onboarding wizard: optionally add a credit card and/or
+/// cash account (spec: "First-Week Setup Wizard"). Reachable exactly
+/// once - the app router only shows this route while
 /// `SettingsRepository.isFirstWeekSetupCompleted()` is still false.
+/// Naming the seeded main account happens earlier, via
+/// `FirstAccountNameView` - see this view model's doc comment.
 class FirstWeekSetupView extends StatefulWidget {
   const FirstWeekSetupView({
     super.key,
@@ -25,14 +27,11 @@ class FirstWeekSetupView extends StatefulWidget {
 }
 
 class _FirstWeekSetupViewState extends State<FirstWeekSetupView> {
-  final _mainAccountController = TextEditingController();
   final _creditCardController = TextEditingController();
   final _cashAccountController = TextEditingController();
-  var _syncedInitialName = false;
 
   @override
   void dispose() {
-    _mainAccountController.dispose();
     _creditCardController.dispose();
     _cashAccountController.dispose();
     super.dispose();
@@ -51,36 +50,12 @@ class _FirstWeekSetupViewState extends State<FirstWeekSetupView> {
       body: ListenableBuilder(
         listenable: widget.viewModel,
         builder: (context, _) {
-          if (widget.viewModel.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          // Prefill once, when the seeded account's name first becomes
-          // known - not on every rebuild, or the user's own typing would
-          // keep getting overwritten.
-          if (!_syncedInitialName) {
-            _syncedInitialName = true;
-            _mainAccountController.text = widget.viewModel.mainAccountName;
-          }
           return SingleChildScrollView(
             padding: const EdgeInsets.all(AppSpacing.large),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  l10n.whatsMainAccountCalled,
-                  style: AppTypography.sectionLabel,
-                ),
-                const SizedBox(height: AppSpacing.small),
-                Text(
-                  l10n.firstWeekBlurb,
-                  style: AppTypography.metadata,
-                ),
-                const SizedBox(height: AppSpacing.medium),
-                TextField(
-                  controller: _mainAccountController,
-                  decoration: InputDecoration(labelText: l10n.accountName),
-                  onChanged: widget.viewModel.setMainAccountName,
-                ),
+                Text(l10n.firstWeekBlurb, style: AppTypography.metadata),
                 const SizedBox(height: AppSpacing.xLarge),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,

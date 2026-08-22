@@ -1,6 +1,6 @@
 {
   "@@locale": "ko",
-  "appTitle": "Smara 가계부",
+  "appTitle": "Smara 회계",
   "navHome": "홈",
   "navRegister": "내역",
   "navSummary": "요약",
@@ -20,100 +20,99 @@
   "actionRename": "이름 변경",
   "actionHide": "숨기기",
   "actionCreate": "만들기",
-  "actionCloseApp": "Close app",
+  "actionCloseApp": "앱 종료",
   "actionUnlock": "잠금 해제",
   "actionSettle": "정산",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
+  "actionFinish": "마침",
+  "actionPreview": "미리보기",
+  "actionImport": "가져오기",
+  "actionExportCsv": "CSV 내보내기",
+  "actionChooseFile": "파일 선택",
   "actionRestore": "복원",
-  "actionArchive": "Hide",
   "actionFix": "수정",
   "actionBuy": "매수",
   "actionSell": "매도",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
+  "actionDividend": "배당금",
+  "actionRecordBuy": "매수 기록",
+  "actionRecordSell": "매도 기록",
+  "actionRecordDividend": "배당금 기록",
+  "actionPayCard": "카드 결제",
   "actionTransfer": "이체",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
+  "actionRecordTransaction": "거래 기록",
+  "actionImportStatement": "명세서 가져오기",
+  "actionClearDates": "날짜 지우기",
+  "actionClearSearch": "검색 및 필터 지우기",
+  "actionUseBiometrics": "생체 인증 사용",
+  "actionSetPin": "PIN 설정",
+  "actionChangePin": "PIN 변경",
+  "actionSaveBackup": "백업 저장",
+  "actionRestoreBackup": "백업 복원",
+  "actionSaveRule": "규칙 저장",
+  "actionConfirmFix": "수정 확인",
   "captureSpent": "지출",
   "captureReceived": "수입",
   "captureMovedMoney": "자금 이동",
-  "captureImportStatement": "Import statement",
+  "captureImportStatement": "명세서 가져오기",
   "settingsTitle": "설정",
   "settingsLanguage": "언어",
   "settingsLanguageSystem": "기기 언어",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
+  "settingsFetchFxRates": "참고 환율 가져오기",
+  "settingsFetchFxRatesSubtitle": "해외 통화 이체 시 목적지 금액 옆에 참고용 시장 환율을 표시합니다. 비교 용도로만 사용되며, 금액을 자동으로 채우는 데는 절대 사용되지 않습니다.",
+  "settingsRateProvider": "환율 제공자",
+  "settingsFetchMarketPrices": "투자 상품의 시장 가격 가져오기",
+  "settingsFetchMarketPricesSubtitle": "티커나 ISIN이 있는 상품의 최근 가격을 조회하여 포트폴리오 가치를 추정합니다. 거래를 기록하는 데는 사용되지 않으며, 보유 수량을 전송하지도 않습니다.",
+  "settingsMarketPriceProvider": "시장 가격 제공자",
+  "settingsFavouriteResearchTool": "즐겨찾는 리서치 도구",
+  "settingsFavouriteResearchToolSubtitle": "보유 종목에서 상품명을 탭하면 이 도구가 브라우저에서 리서치 프롬프트와 함께 열립니다 — 연동이 아니며 투자 조언도 아닙니다.",
   "settingsBackup": "백업",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
+  "settingsBackupBlurb": "장부의 암호화된 사본을 원하는 위치에 저장하거나 그로부터 복원할 수 있습니다. 이는 서명 키를 백업하는 복구 구문이나 키스토어 파일과는 별개이며, 장부가 아닌 키를 백업합니다.",
   "settingsLock": "잠금",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLockBlurb": "앱을 열 때 PIN 또는 (가능한 경우) 생체 인증을 요구합니다.",
+  "settingsRequireUnlock": "앱을 열 때 잠금 해제 요구",
+  "settingsLockAfter": "다음 시간 후 잠금",
+  "settingsLockImmediately": "즉시",
+  "settingsLock1Minute": "1분",
+  "settingsLock5Minutes": "5분",
+  "settingsLock15Minutes": "15분",
+  "settingsAllowBiometrics": "생체 인증도 허용",
+  "settingsHideSnapshot": "앱 전환 화면에서 잔액 숨기기",
+  "settingsHideSnapshotSubtitle": "다른 앱으로 전환할 때 이 화면을 가려서 앱 전환기에서 한눈에 보이지 않도록 합니다.",
+  "settingsHideSnapshotUnavailable": "이 플랫폼에서는 앱 전환 화면에서 잔액을 숨길 수 없습니다.",
+  "settingsPayees": "수취인",
+  "settingsManagePayees": "수취인 관리",
+  "settingsPayeesBlurb": "저장된 수취인 이름과 기본 분류·계좌로, 거래를 기록할 때 자동완성으로 제안됩니다.",
+  "settingsRecurring": "정기 템플릿",
+  "settingsManageRecurring": "정기 템플릿 관리",
+  "settingsRecurringBlurb": "임대료나 급여처럼 매달 반복되는 청구서나 수입입니다. 예정된 템플릿은 홈 화면에 표시되어 탭 한 번으로 기록할 수 있으며, 자동으로 등록되지 않습니다.",
+  "settingsAbout": "정보",
+  "providerFrankfurter": "Frankfurter (ECB 환율)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerStooq": "Stooq (일일 시세)",
+  "providerYahooFinance": "Yahoo Finance (차트 API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "현금 및 현금성 자산",
+  "systemGroupPensionRetirement": "연금 및 퇴직",
+  "systemGroupCreditShortTerm": "신용 및 단기 부채",
+  "systemGroupLoansMortgages": "대출 및 담보대출",
+  "systemGroupInvestments": "투자",
+  "systemAccountCashBank": "현금 및 은행",
+  "systemCategorySalary": "급여",
+  "systemCategoryOtherIncome": "기타 수입",
+  "systemCategoryGroceries": "식료품",
+  "systemCategoryRentMortgage": "임대료/담보대출",
+  "systemCategoryUtilities": "공과금",
+  "systemCategoryTransport": "교통",
+  "systemCategoryFoodOut": "외식",
+  "systemCategoryPhone": "통신비",
+  "systemCategoryHealth": "건강",
+  "systemCategoryOtherExpense": "기타 지출",
   "homeThisMonth": "이번 달",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "이동 중인 자금",
+  "homeWhatYouHaveMinusWhatYouOwe": "보유 자산에서 부채를 뺀 금액",
+  "homeWhatYouHave": "보유 금액 {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "보유 금액 {haveAmount} {currency}  •  부채 금액 {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "{name}에서 {amount} {currency}를 보냈습니다",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "{name}에게 {amount} {currency}를 보냈습니다",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "숨김",
+  "allAccounts": "모든 계좌",
+  "savedToPath": "{path}에 저장됨",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "키스토어 파일을 내보낼 수 없습니다. 이 단계는 건너뛸 수 있습니다.",
+  "enterPassphraseToProtect": "파일을 보호할 암호를 입력하세요.",
+  "homeTapWhenArrived": "도착한 금액을 알게 되면 탭하세요",
+  "homeReturnedTo": "{name}(으)로 반환됨",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "오늘 예정",
+  "homeDueLine": "{category} · {account} · 탭하여 기록",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "한도 초과",
+  "homeSpentOfLimit": "{limit} 중 {spent} 지출",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "남은 금액: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
+  "homeNoAccounts": "계좌 없음",
+  "homeCashRegister": "현금 계좌",
+  "homeMarketEstimate": "시장 추정가",
   "registerTitle": "내역",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
+  "registerSearchHint": "설명, 분류 또는 금액",
+  "registerNoTransactions": "아직 거래가 없습니다",
+  "registerNoEntries": "아직 기록된 항목이 없습니다.",
+  "registerSpentOnly": "지출만",
+  "registerReceivedOnly": "수입만",
+  "registerAll": "전체",
+  "registerUnverified": "미검증 - 합계에서 제외됨",
+  "registerSuperseded": "마이그레이션으로 대체됨 - 합계에서 제외됨",
   "summaryTitle": "요약",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "summaryTotalIncome": "총 수입",
+  "summaryTotalExpense": "총 지출",
+  "summaryDateRange": "{start} ~ {end}",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -258,43 +257,43 @@
   },
   "accountsTitle": "계좌",
   "categoriesTitle": "분류",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
+  "accountName": "계좌 이름",
+  "createAccount": "계좌 만들기",
+  "createGroup": "그룹 만들기",
+  "editGroup": "그룹 편집",
+  "renameAccount": "계좌 이름 변경",
+  "renameCategory": "분류 이름 변경",
+  "addCategory": "분류 추가",
+  "groupLabel": "그룹",
+  "kindLabel": "종류",
   "asset": "자산",
   "liability": "부채",
   "income": "수입",
   "expense": "지출",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "thisAccountHoldsInvestments": "이 계좌는 투자 자산을 보유합니다",
+  "thisAccountHoldsInvestmentsSubtitle": "현금에 매수·매도·배당금으로 기록하는 보유 종목을 더한 것입니다.",
+  "thisIsACreditCard": "이것은 신용카드입니다",
+  "openingBalanceOptional": "기초 잔액 (선택)",
+  "currencyIso": "통화 (ISO 4217)",
+  "currencyIsoExample": "통화 (ISO 4217, 예: USD)",
+  "hideAccountTitle": "새 항목에서 이 계좌를 숨길까요?",
+  "hideCategoryTitle": "새 항목에서 이 분류를 숨길까요?",
+  "hideGroupTitle": "새 항목에서 이 그룹을 숨길까요?",
+  "reassignGroup": "그룹 재지정",
+  "transferRemainingBalance": "남은 잔액 이체",
+  "monthlyLimit": "월 한도",
+  "monthlyLimitHint": "한도 (비워두면 해제)",
+  "monthlyLimitBlurb": "이 지출 분류에 대한 이번 달 누적 지출 가이드로, 선택 사항입니다.",
+  "manageCategoryRules": "분류 규칙 관리",
+  "amount": "금액",
+  "category": "분류",
+  "account": "계좌",
+  "fromAccount": "출금 계좌",
+  "toAccount": "입금 계좌",
+  "descriptionOptional": "설명 (선택)",
+  "alsoRememberPayee": "수취인으로도 저장",
+  "splitIntoCategories": "여러 분류로 나누기",
+  "categoryN": "분류 {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "도착 금액",
+  "destinationAmountOptional": "도착 금액 (선택)",
+  "accountCurrencyAmountOptional": "계좌 통화 금액 (선택)",
+  "transactionCurrencyOptional": "거래 통화 (선택)",
+  "feeOptional": "수수료 (선택)",
+  "feeAmount": "수수료 금액",
+  "feeCategory": "수수료 분류",
+  "feeDescriptionOptional": "수수료 설명 (선택)",
+  "feeDeducted": "수수료는 위 금액에서 차감됩니다",
+  "needTwoAccountsToTransfer": "이체하려면 활성 계좌가 최소 두 개 필요합니다.",
+  "whatArrivedTitle": "무엇이 도착했나요?",
+  "whatArrivedBlurb": "실제로 도착한 금액을 알려주세요.",
+  "amountThatArrived": "도착한 금액",
+  "feeLossCategory": "수수료/손실 분류",
+  "alreadySettled": "이미 정산되었습니다.",
+  "holdingsTitle": "보유 종목",
+  "holdingsCash": "현금",
+  "holdingsInventory": "보유 자산",
+  "holdingsBook": "장부가 (현금 + 취득원가) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "시장 추정가 {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "아직 보유 종목이 없습니다. 매수를 기록하여 종목을 추가하세요.",
+  "holdingsQuotesBlurb": "시세는 추정치이며 증권사 가격이 아닙니다. 이 앱은 주문을 실행하지 않습니다.",
+  "holdingsTapNameToResearch": "이름을 탭하여 리서치하세요. 시세는 추정치이며 투자 조언이 아닙니다.",
+  "instrument": "종목",
+  "newInstrument": "새 종목",
+  "renameInstrument": "종목 이름 변경",
+  "instrumentActions": "종목 작업",
+  "hideInstrumentTitle": "{name}을(를) 숨길까요?",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "티커 (선택)",
+  "isinOptional": "ISIN (선택)",
+  "quantity": "수량",
+  "unitPrice": "단가",
+  "brokerageOptional": "수수료 (선택)",
+  "brokerageExpenseCategory": "매매 수수료 분류",
+  "incomeCategory": "수입 분류",
+  "gainIncomeCategory": "이익 수입 분류",
+  "lossExpenseCategory": "손실 지출 분류",
+  "nonCash": "비현금",
+  "cash": "현금",
+  "locked": "잠김",
+  "lockUntilHint": "증권사 규칙이 아닌, 본인이 남기는 제한 메모입니다.",
+  "instrumentKindStock": "주식",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "뮤추얼 펀드",
+  "instrumentKindBond": "채권",
+  "instrumentKindOther": "기타",
+  "quoteUseLive": "실시간 가격",
+  "quoteUseCached": "캐시된 가격",
+  "quoteUseStale": "오래된 가격",
+  "quoteUseMissing": "취득원가 사용 (가격 없음)",
+  "quoteUseDisabled": "시세 꺼짐 — 취득원가/캐시 사용",
+  "quoteUseCurrencyMismatch": "취득원가 사용 (가격 통화가 다름)",
+  "unrealizedLabel": "미실현 {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} 주 · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "복구 구문",
+  "recoveryPhraseConfirmTitle": "구문 확인",
+  "recoveryPhraseBlurb": "이 24개의 단어는 이 기기를 분실, 초기화 또는 교체했을 때 거래 내역을 복구할 수 있는 유일한 방법입니다. Smara 회계는 서버가 없으며 이를 대신 복구해 드릴 수 없습니다.\n\n이 기기와 이 구문을 함께 잃어버리면 지금까지 기록한 모든 거래를 영구적으로 검증할 수 없게 됩니다.",
+  "recoveryPhraseWriteDown": "이 단어들을 순서대로 적어 이 기기와 분리된 안전한 곳에 보관하세요.",
+  "iveSavedRecoveryPhrase": "복구 구문을 저장했습니다",
+  "confirmPhraseBlurb": "방금 저장한 구문에서 요청된 단어를 입력하세요.",
+  "wordNumber": "단어 #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
+  "keystoreExportTitle": "키스토어 파일 내보내기",
+  "keystoreExportBlurb": "복구 구문 외에도, 직접 정한 암호로 보호되는 암호화된 키스토어 파일을 저장할 수 있습니다. 이는 선택 사항입니다 — 복구 구문만으로도 항상 서명 키를 복원하기에 충분합니다.",
+  "keystorePassphrase": "암호",
+  "exportKeystoreFile": "키스토어 파일 내보내기",
+  "chooseCurrencyTitle": "통화 선택",
+  "chooseCurrencyBlurb": "현재 모든 계좌 그룹(현금 및 현금성 자산, 연금 및 퇴직 등)은 이 하나의 통화를 사용합니다. 나중에 새 그룹을 만들어 다른 통화의 계좌를 추가할 수 있습니다.",
+  "currencyBackfillTitle": "기존 그룹의 통화 선택",
+  "currencyBackfillBlurb": "이 앱은 이제 여러 통화를 지원합니다. 기존 계좌와 계좌 그룹은 이 기능이 있기 전에 설정되었으므로 통화가 필요하며 — 모두에 동일한 선택이 적용됩니다.",
+  "firstAccountTitle": "계좌 이름 지정",
+  "firstAccountBlurb": "이미 설정된 계좌입니다 — 은행처럼 알아볼 수 있는 이름을 지정하세요. 다음으로 지출 또는 수입을 하나 기록한 뒤 복구 구문으로 기기를 보호합니다.",
+  "whatsMainAccountCalled": "주 계좌의 이름은 무엇인가요?",
+  "restoreTitle": "서명 키 복원",
+  "restoreBlurb": "이 기기에는 기존 장부가 있지만 일치하는 서명 키가 없습니다. 저장된 복구 구문이나 키스토어 파일로 복원하세요 — 데이터는 정상적으로 검증되며, 다시 서명되거나 변경되지 않습니다.",
+  "recoveryPhrase24": "복구 구문 (24개 단어 전체)",
+  "keystoreFile": "키스토어 파일",
+  "keystoreFileContents": "키스토어 파일 내용",
+  "optionalBackupFile": "선택적 백업 파일",
+  "iDontHavePhrase": "복구 구문이나 키스토어 파일이 없습니다",
+  "migrationTitle": "새 키로 마이그레이션",
+  "migrationBlurb": "복구 구문이나 키스토어 파일이 없으면 이 기기의 서명 키를 복구할 수 없습니다. 새 키를 시작할 수 있습니다. 기존 항목은 계속 표시되지만 대체됨으로 표시됩니다.",
+  "iConfirmBooksValid": "현재 장부가 유효함을 확인합니다",
+  "whyWeDontEdit": "기존 항목을 수정하지 않는 이유",
+  "whyWeDontEditBody": "실수를 바로잡을 때 이미 입력한 내용을 바꾸는 대신 기존 줄은 그대로 두고 그 옆에 정정 항목을 추가합니다. 이렇게 하면 이력이 항상 실제로 일어난 일과 언제 수정했는지를 정확히 보여주며, 뒤에서 몰래 바뀌는 일이 없습니다.",
+  "lockTitle": "잠금 해제",
   "lockScreenTitle": "잠김",
   "enterPinToContinue": "계속하려면 PIN을 입력하세요",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "PIN 설정",
+  "currentPin": "현재 PIN",
+  "newPin": "새 PIN",
+  "confirmPin": "PIN 확인",
+  "confirmNewPin": "새 PIN 확인",
+  "firstWeekTitle": "계좌 설정",
+  "addCashAccount": "현금 계좌 추가",
+  "addCreditCard": "신용카드 추가",
+  "cashAccountName": "현금 계좌 이름",
+  "cardName": "카드 이름",
+  "paidFromBank": "은행에서 결제",
+  "paidFromCard": "카드로 결제",
+  "choosePassphraseTitle": "이 백업을 보호할 암호를 선택하세요. 잊어버리면 복구할 수 없습니다.",
+  "replaceBooksTitle": "로컬 장부를 교체할까요?",
+  "replaceBooksBody": "이 앱에 현재 있는 모든 내용을 백업으로 교체합니다. 완료 후 앱을 종료했다가 다시 여세요.",
+  "chooseBackupFileFirst": "먼저 백업 파일을 선택하세요.",
+  "backupRestored": "백업이 복원되었습니다",
+  "backupRestoredBody": "장부가 복원되었습니다. 계속하려면 앱을 종료했다가 다시 여세요.",
+  "fixThisEntry": "이 항목 수정",
+  "fixBlurb": "기존 줄은 그대로 유지됩니다. 확인하면 정정 줄과 수정된 줄이 추가됩니다.",
+  "importStatementTitle": "명세서 가져오기",
+  "importOfx": "OFX 가져오기",
+  "importOfxQfxFile": "OFX / QFX 파일 가져오기",
+  "importCsvFile": "CSV 파일 가져오기",
+  "whatKindOfStatement": "어떤 종류의 명세서 파일을 가지고 계신가요?",
+  "chooseAccountForFile": "이 파일이 속한 계좌를 선택하세요.",
+  "importIntoAccount": "가져올 계좌",
+  "useSavedProfile": "저장된 프로필 사용",
+  "saveMappingProfile": "이 매핑을 프로필로 저장 (선택)",
+  "renameProfile": "프로필 이름 변경",
+  "deleteProfileTitle": "프로필을 삭제할까요?",
+  "fileHasHeader": "파일에 머리글 행이 있음",
+  "dateColumn": "날짜 열",
+  "dateFormatHint": "날짜 형식 (예: dd/MM/yyyy)",
+  "amountColumn": "금액 열",
+  "amountConvention": "금액 표기 방식",
+  "signedAmountColumn": "부호 있는 금액 열",
+  "separateDebitCredit": "차변/대변 열 구분",
+  "debitColumn": "차변 열",
+  "creditColumn": "대변 열",
+  "decimalSeparator": "소수점 구분 기호 (. 또는 ,)",
+  "descriptionColumns": "설명 열",
+  "referenceIdColumn": "참조 ID 열 (선택)",
+  "skippedRows": "건너뛴 행",
+  "parsedTransactionCount": "{count}건의 거래를 분석했습니다",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count}건 건너뜀 또는 제외됨",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted}건 등록, {failed}건 실패",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "전체에 적용할 분류",
+  "saveAsRule": "규칙으로 저장할까요?",
+  "saveAsRuleBlurb": "설명에 이 키워드가 포함된 향후 가져오기는 이 분류를 사용합니다.",
+  "keyword": "키워드",
+  "noSavedRules": "아직 저장된 규칙이 없습니다. 행 그룹에 분류를 지정하면 규칙으로 저장됩니다.",
+  "deleteRuleTitle": "규칙을 삭제할까요?",
+  "editRule": "규칙 편집",
+  "rowsGrouped": "{count}개 행",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "가져올 {extensions} 명세서 파일을 선택하세요",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "수취인",
+  "addPayee": "수취인 추가",
+  "renamePayee": "수취인 이름 변경",
+  "deletePayeeTitle": "수취인을 삭제할까요?",
+  "noPayeesYet": "아직 수취인이 없습니다",
+  "recurringTitle": "정기 템플릿",
+  "noRecurringYet": "아직 정기 템플릿이 없습니다",
+  "deleteTemplateTitle": "정기 템플릿을 삭제할까요?",
+  "dayOfMonth": "매월 일자 (1-31)",
+  "dayOfMonthNote": "일수가 적은 달에는 해당 달의 마지막 날을 사용합니다.",
+  "dayOfMonthLine": "매월 {day}일 - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
+  "name": "이름",
+  "none": "없음",
+  "currency": "통화",
   "errorGeneric": "문제가 발생했습니다. 다시 시도하세요.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "errorSigningIdentityMismatch": "이 복구 구문 또는 키스토어 파일은 이 데이터베이스의 서명 신원과 일치하지 않습니다.",
+  "errorInvalidLedgerBackup": "이 파일은 유효한 Smara 백업이 아닙니다.",
+  "errorInvalidLedgerBackupNoIdentity": "이 백업에는 서명 신원이 없습니다 - 유효한 Smara 백업이 아닙니다.",
+  "errorInvalidLedgerBackupUnverified": "이 백업은 온전한 장부로 검증되지 않아 복원되지 않았습니다.",
+  "errorInvalidLedgerBackupUnreadable": "이 파일을 Smara 백업으로 열 수 없습니다: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "마지막 활성 계좌는 숨길 수 없습니다.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
+  "errorForeignBackupIdentity": "이 백업은 이 기기의 서명 신원과 다른 신원에 속합니다.",
+  "errorAccountNotFinancial": "이는 재무 계좌가 아닙니다.",
+  "errorAccountArchived": "그 계좌는 숨겨져 있습니다.",
+  "errorAccountNotArchived": "그 계좌는 숨겨져 있지 않습니다.",
+  "errorAccountNoPositiveBalanceToCloseOut": "이체할 남은 잔액이 없습니다.",
+  "errorAccountHasNoGroup": "그 계좌에는 지정된 그룹이 없습니다.",
+  "errorGroupHasNoCurrency": "그 그룹에는 아직 통화가 설정되지 않았습니다.",
+  "errorGroupNotFound": "그 계좌 그룹을 찾을 수 없습니다.",
+  "errorInvestmentAccountsMustBeAssets": "자산 계좌만 투자 계좌로 지정할 수 있습니다.",
+  "errorCreditCardsMustBeLiabilities": "부채 계좌만 신용카드로 지정할 수 있습니다.",
+  "errorOpeningBalanceMustBePositive": "기초 잔액을 입력하는 경우 양수여야 합니다.",
+  "errorAccountTypeDoesNotMatchGroup": "그 계좌 유형은 그룹과 일치하지 않습니다.",
+  "errorLastActiveAccount": "마지막 활성 재무 계좌는 숨길 수 없습니다.",
+  "errorCurrencyRequiredToCreateGroup": "그룹을 만들려면 통화가 필요합니다.",
+  "errorSystemGroupCannotBeArchived": "기본 제공 계좌 그룹은 숨길 수 없습니다.",
+  "errorGroupAlreadyArchived": "그 그룹은 이미 숨겨져 있습니다.",
+  "errorCannotArchiveGroupWithAccounts": "활성 계좌가 있는 그룹은 숨길 수 없습니다.",
+  "errorSystemGroupNeverArchived": "기본 제공 계좌 그룹은 결코 숨겨지지 않습니다.",
+  "errorAccountGroupsCannotBeDeleted": "계좌 그룹은 삭제할 수 없습니다.",
+  "errorCannotReassignDifferentCurrency": "이 계좌를 다른 통화의 그룹으로 옮길 수 없습니다.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "그룹에 활성 계좌가 있는 동안에는 통화를 변경할 수 없습니다.",
   "errorAmountMustBePositive": "금액은 양수여야 합니다.",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorAccountCurrencyAmountMustBePositive": "계좌 통화 금액은 양수여야 합니다.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "계좌 통화 금액은 외화 항목에만 사용됩니다.",
+  "errorSplitNeedsTwoLines": "분할하려면 분류 항목이 최소 두 개 필요합니다.",
+  "errorSplitLineMustBePositive": "각 분할 항목은 양수 금액이어야 합니다.",
+  "errorSplitLinesMustSumToTotal": "분할 항목의 합계는 거래 총액과 일치해야 합니다.",
+  "errorTransferAmountMustBePositive": "이체 금액은 양수여야 합니다.",
+  "errorTransferAccountsMustDiffer": "출발 계좌와 도착 계좌는 서로 달라야 합니다.",
+  "errorCloseoutRequiresDestinationAmount": "외화 청산에는 알려진 도착 금액이 필요합니다.",
+  "errorDestinationAmountNotForSameCurrency": "도착 금액은 외화 이체에만 사용됩니다.",
+  "errorDestinationAmountMustBePositive": "도착 금액은 양수여야 합니다.",
+  "errorInvestmentCashExceeded": "이 투자 계좌의 현금보다 많이 이체할 수 없습니다.",
+  "errorCannotReverseUnsettledProvisional": "이 대기 중인 이체는 취소하는 대신 정산하세요.",
+  "errorAlreadyReversed": "이 항목은 이미 정정되었습니다. 원본 줄은 그대로 유지됩니다.",
+  "errorNotActiveExpenseCategory": "활성 지출 분류를 선택하세요.",
+  "errorNotActiveIncomeCategory": "활성 수입 분류를 선택하세요.",
+  "errorSettledAmountMustNotBeNegative": "도착한 금액은 음수일 수 없습니다.",
+  "errorPendingTransferNotFound": "그 대기 중인 이체를 찾을 수 없습니다.",
+  "errorPendingTransferAlreadySettled": "그 대기 중인 이체는 이미 정산되었습니다.",
+  "errorSettledToMustBeSourceOrDestination": "원래의 출발 또는 도착 계좌를 선택하세요.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "수수료 분류는 자금이 출발 계좌로 반환될 때만 사용됩니다.",
+  "errorSettledAmountMustBePositiveForDelivery": "도착한 금액에 양수를 입력하세요.",
+  "errorSettledAmountExceedsProvisional": "그 금액은 보낸 금액보다 많습니다.",
+  "errorInstrumentNotFound": "그 종목을 찾을 수 없습니다.",
+  "errorIncomeRequiredForNonCash": "비현금 취득에는 활성 수입 분류가 필요합니다.",
+  "errorInsufficientCash": "이 투자 계좌에 그 매수를 위한 현금이 부족합니다.",
+  "errorSellQuantityAndPriceMustBePositive": "매도 수량과 단가는 양수여야 합니다.",
+  "errorLockedUntil": "매도할 수 없습니다: 일부 수량이 {date}까지 잠겨 있습니다.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "현재 잠기지 않은 보유 수량보다 많이 매도할 수 없습니다.",
+  "errorIncomeRequiredForGain": "실현 이익에는 활성 수입 분류가 필요합니다.",
+  "errorExpenseRequiredForLoss": "실현 손실에는 활성 지출 분류가 필요합니다.",
+  "errorBrokerageFailedAfterBuy": "매수는 등록되었지만 수수료 처리에 실패했습니다: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "매도는 등록되었지만 수수료 처리에 실패했습니다: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "배당금 금액은 양수여야 합니다.",
+  "errorNotInvestmentAccount": "이는 투자 계좌가 아닙니다.",
+  "errorNoInventoryCompanion": "이 투자 계좌에는 연결된 보유 자산 계좌가 없습니다.",
+  "errorInvestmentReversalBlocked": "이 매수를 취소할 수 없습니다: 이후 매도 건이 이 수량에 의존합니다. 종속된 매도({sells})를 먼저 취소하세요.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "월 한도는 양수여야 합니다.",
+  "errorTemplateAmountMustBePositive": "템플릿 금액은 양수여야 합니다.",
+  "errorOfxUnrecognized": "이 파일을 OFX로 인식할 수 없습니다.",
+  "errorCsvEmpty": "선택한 파일이 비어 있습니다.",
+  "errorCsvUnreadable": "이 파일을 CSV로 읽을 수 없습니다.",
+  "errorCsvNoRows": "선택한 파일에 행이 없습니다.",
+  "errorBackupCreateFailed": "백업을 만들 수 없습니다: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
+  "errorBackupRestoreFailed": "이 백업을 복원할 수 없습니다 - 암호가 틀렸거나 Smara 백업 파일이 아닙니다.",
+  "validationAmountAccountCategoryRequired": "금액, 계좌, 분류가 필요합니다.",
+  "validationAmountAccountRequired": "금액과 계좌가 필요합니다.",
+  "validationSplitLineIncomplete": "모든 분할 항목에는 분류와 금액이 필요합니다.",
+  "validationSplitSumMismatch": "분할 항목의 합계는 거래 총액과 일치해야 합니다.",
+  "validationFromToAmountRequired": "출발 계좌, 도착 계좌, 금액이 필요합니다.",
+  "validationAmountArrivedRequired": "도착한 금액이 필요합니다.",
+  "validationChooseReceivingAccount": "자금을 받은 계좌를 선택하세요.",
+  "validationAccountCategoryRequired": "계좌와 분류가 필요합니다.",
+  "validationFixFailed": "이 수정 사항을 저장할 수 없습니다.",
+  "validationNameRequired": "주 계좌의 이름을 지정하세요.",
+  "validationStillLoading": "아직 불러오는 중입니다 - 잠시 후 다시 시도하세요.",
+  "validationSaveAccountNameFailed": "계좌 이름을 저장할 수 없습니다.",
   "validationWrongPin": "PIN이 올바르지 않습니다. 다시 시도하세요.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "validationCategoryMustBeIncomeOrExpense": "분류는 수입 또는 지출이어야 합니다.",
+  "validationOnlyExpenseHasMonthlyLimit": "지출 분류만 월 한도를 가질 수 있습니다.",
+  "validationInvalidTemplate": "유효하지 않은 템플릿입니다.",
+  "validationWrongKeystorePassphrase": "이 키스토어 파일의 암호가 틀렸습니다.",
+  "validationInvalidKeystoreFile": "유효한 키스토어 파일이 아닌 것 같습니다.",
+  "validationRestorePhraseFailed": "그 복구 구문으로 복원할 수 없습니다.",
+  "validationGenerateKeyFailed": "이 기기에서 서명 키를 생성할 수 없습니다: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "이 통화를 저장할 수 없습니다: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "마이그레이션에 실패했습니다. 다시 시도하세요.",
+  "validationChooseBackupFile": "먼저 백업 파일을 선택하세요.",
+  "validationPassphraseRequired": "암호를 입력하세요.",
+  "validationPinsDoNotMatch": "두 PIN이 일치하지 않습니다.",
+  "validationFeePositiveWithCategory": "이체 수수료는 양수 금액이어야 하며 지출 분류가 선택되어야 합니다.",
+  "validationFeeMustBeLessThanAmount": "차감 방식 이체에서 수수료는 금액보다 작아야 합니다.",
+  "validationTransferSavedFeeFailed": "이체는 저장되었지만 수수료를 기록할 수 없습니다: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "유효한 금액을 입력하세요.",
+  "validationConfirmWordMismatch": "단어 {n}이(가) 저장된 구문과 일치하지 않습니다. 확인 후 다시 시도하세요.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "매수 수량과 단가는 양수여야 합니다.",
+  "errorInstrumentArchived": "숨겨진 종목은 매수할 수 없습니다.",
+  "errorNonCashCannotIncludeBrokerage": "비현금 취득에는 매매 수수료를 포함할 수 없습니다.",
+  "errorBrokerageRequiresExpenseCategory": "매매 수수료가 양수인 경우 활성 지출 분류가 필요합니다.",
+  "errorSellProceedsMustCoverBrokerage": "매도 대금은 최소한 매매 수수료 금액 이상이어야 합니다.",
+  "homeSpentOfLimitThisMonth": "이번 달 {limit} 중 {spent} 지출",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "Smara 계좌 잠금 해제",
   "searchLabel": "검색",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "기초 잔액",
+  "transferToName": "이체: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "이체 수수료",
+  "feeForTransferTo": "{name}(으)로의 이체 수수료",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "파일 선택기를 열 수 없습니다: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": ".{extensions} 파일을 선택하세요",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "통화 코드 (ISO 4217, 예: USD)",
+  "splitCounterpartMore": "{name} 외 {count}건",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "날짜",
+  "noneSelected": "없음",
+  "reviewEntriesBeforeContinuing": "계속하기 전에 아래 항목({count}건)을 검토하세요.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "{amount}을(를) 받았습니다",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "환율을 아직 모른다면 비워두세요.",
+  "recordTradeBlurb": "이미 발생한 거래를 기록합니다. 이 앱은 주문을 실행하지 않습니다.",
+  "feeOnTopBlurb": "포함: 위 금액은 이 계좌에서 차감되는 총액이며, 수수료는 그 안에서 공제됩니다.",
+  "feeBankBlurb": "은행이나 중개기관이 선불로 청구하는 수수료입니다.",
+  "validationPinMinLength": "PIN은 최소 4자리여야 합니다.",
+  "restoreBackupBlurb": "이 앱에 현재 있는 모든 내용을 백업으로 교체합니다 — 병합되지 않습니다. 백업 파일을 선택하고 보호에 사용한 암호를 입력하세요.",
+  "actionReplace": "교체",
+  "hideAccountBody": "{name}은(는) 더 이상 새 거래에 사용할 수 없게 됩니다.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "{name}은(는) 계좌를 만들거나 재지정할 때 더 이상 제공되지 않습니다.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "{name}은(는) 새 거래를 기록할 때 더 이상 제공되지 않습니다.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "숨겨진 종목은 과거 매수·매도 내역에 남아 있습니다. 배당금은 계속 기록할 수 있습니다.",
+  "nameHidden": "{name} (숨김)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "설정된 통화 없음",
+  "deletePayeeBody": "{name}과(와) 그 기본 설정이 삭제됩니다. 과거 거래에는 영향이 없습니다.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name}은(는) 더 이상 예정 항목으로 제공되지 않습니다. 이미 기록된 과거 거래에는 영향이 없습니다.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "저장된 열 매핑 \"{name}\"이(가) 삭제됩니다. 이미 이 매핑으로 가져온 명세서에는 영향이 없습니다.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "가져오기 시 더 이상 \"{keyword}\"(으)로 자동 분류되지 않습니다. 이 규칙으로 이미 분류된 거래에는 영향이 없습니다.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "지금 신용카드나 현금 계좌를 선택적으로 추가할 수 있습니다 - 나중에 설정에서 언제든 계좌를 더 추가할 수 있습니다.",
+  "deliveredToDestination": "도착 계좌로 전달됨",
+  "deliveredToName": "{name}(으)로 전달됨",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "예상보다 {amount} {currency} 적게 받았습니다 - 차액을 처리할 분류를 선택하세요.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "날짜 범위",
+  "addTemplate": "템플릿 추가",
+  "editTemplate": "템플릿 편집",
+  "validationFillTemplateFields": "모든 필드에 유효한 금액과 날짜를 입력하세요.",
+  "saveCsvExport": "CSV 내보내기 저장",
+  "referenceRate": "참고 환율",
+  "yourRate": "적용 환율",
+  "leaveBlankIfThisWasAccountCurrency": "이 거래가 계좌 고유 통화인 {currency}였다면 비워두세요.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "잠금 해제일 (선택)",
+  "lockedUntilDate": "{date}까지 잠김",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "리서치 프롬프트를 복사했습니다 — 사용 가능한 브라우저 URL이 없거나 오프라인 상태입니다.",
+  "openedFavouriteResearchTool": "즐겨찾는 리서치 도구를 열었습니다.",
+  "looksLikeGain": "이익으로 보입니다",
+  "looksLikeLoss": "손실로 보입니다",
+  "looksLikeBreakEven": "손익 없음으로 보입니다",
+  "sellableQuantity": "{name} (매도 가능 {qty})",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "열 {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "가져오는 중...",
+  "confirmImport": "가져오기 확인",
+  "manageSavedCategoryRules": "저장된 분류 규칙 관리",
+  "statementCurrencyMismatch": "이 파일의 통화({currency})가 선택한 계좌의 통화와 일치하지 않습니다.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "분류 규칙",
+  "possibleDuplicate": "중복 가능성",
+  "unknownCategory": "알 수 없는 분류"
 }

@@ -8,112 +8,111 @@
   "navCategories": "زمرٕ",
   "actionCancel": "رد",
   "actionSave": "محفوظ",
-  "actionDelete": "Delete",
-  "actionDone": "Done",
-  "actionContinue": "Continue",
-  "actionDismiss": "Dismiss",
-  "actionRetry": "Retry",
-  "actionSkip": "Skip",
-  "actionConfirm": "Confirm",
+  "actionDelete": "خارج",
+  "actionDone": "مکمل",
+  "actionContinue": "جاری",
+  "actionDismiss": "بند",
+  "actionRetry": "دوبارہ کوشش",
+  "actionSkip": "نظر انداز",
+  "actionConfirm": "تصدیق",
   "actionAdd": "شامل",
-  "actionEdit": "Edit",
-  "actionRename": "Rename",
-  "actionHide": "Hide",
-  "actionCreate": "Create",
-  "actionCloseApp": "Close app",
-  "actionUnlock": "Unlock",
-  "actionSettle": "Settle",
-  "actionFinish": "Finish",
-  "actionPreview": "Preview",
-  "actionImport": "Import",
-  "actionExportCsv": "Export CSV",
-  "actionChooseFile": "Choose file",
-  "actionRestore": "Restore",
-  "actionArchive": "Hide",
-  "actionFix": "Fix",
-  "actionBuy": "Buy",
-  "actionSell": "Sell",
-  "actionDividend": "Dividend",
-  "actionRecordBuy": "Record buy",
-  "actionRecordSell": "Record sell",
-  "actionRecordDividend": "Record dividend",
-  "actionPayCard": "Pay card",
-  "actionTransfer": "Transfer",
-  "actionRecordTransaction": "Record transaction",
-  "actionImportStatement": "Import statement",
-  "actionClearDates": "Clear dates",
-  "actionClearSearch": "Clear search and filters",
-  "actionUseBiometrics": "Use biometrics",
-  "actionSetPin": "Set PIN",
-  "actionChangePin": "Change PIN",
-  "actionSaveBackup": "Save backup",
-  "actionRestoreBackup": "Restore backup",
-  "actionSaveRule": "Save rule",
-  "actionConfirmFix": "Confirm fix",
+  "actionEdit": "تبدیل",
+  "actionRename": "ناو بدلاو",
+  "actionHide": "پوشیو",
+  "actionCreate": "تیار",
+  "actionCloseApp": "ایپ بند کریو",
+  "actionUnlock": "کھولیو",
+  "actionSettle": "تصفیہ",
+  "actionFinish": "ختم",
+  "actionPreview": "پیش منظرٕ",
+  "actionImport": "درآمد",
+  "actionExportCsv": "CSV برآمد",
+  "actionChooseFile": "فایل ژارٕو",
+  "actionRestore": "بحال",
+  "actionFix": "درست",
+  "actionBuy": "خرید",
+  "actionSell": "فروخت",
+  "actionDividend": "منافع",
+  "actionRecordBuy": "خرید درج",
+  "actionRecordSell": "فروخت درج",
+  "actionRecordDividend": "منافع درج",
+  "actionPayCard": "کارڈ تصفیہ",
+  "actionTransfer": "منتقلی",
+  "actionRecordTransaction": "واردات درج",
+  "actionImportStatement": "بیان درآمد",
+  "actionClearDates": "تاریخہٕ صاف",
+  "actionClearSearch": "ژھانڈ تہٕ فلٹر صاف",
+  "actionUseBiometrics": "بایومیٹرک استعمال",
+  "actionSetPin": "PIN مقرر",
+  "actionChangePin": "PIN تبدیل",
+  "actionSaveBackup": "بیک اپ محفوظ",
+  "actionRestoreBackup": "بیک اپ بحال",
+  "actionSaveRule": "اصول محفوظ",
+  "actionConfirmFix": "درستی تصدیق",
   "captureSpent": "خرچ",
-  "captureReceived": "Received",
-  "captureMovedMoney": "Moved money",
-  "captureImportStatement": "Import statement",
+  "captureReceived": "وصول",
+  "captureMovedMoney": "زَر منتقل",
+  "captureImportStatement": "بیان درآمد",
   "settingsTitle": "ترتیبات",
   "settingsLanguage": "زبان",
-  "settingsLanguageSystem": "Device language",
-  "settingsFetchFxRates": "Fetch reference exchange rates",
-  "settingsFetchFxRatesSubtitle": "Shows an indicative market rate next to the destination amount on cross-currency transfers, for comparison only - never used to fill in the amount.",
-  "settingsRateProvider": "Rate provider",
-  "settingsFetchMarketPrices": "Fetch market prices for investments",
-  "settingsFetchMarketPricesSubtitle": "Looks up last prices for instruments that have a ticker or ISIN, to estimate portfolio value. Never used to record a trade, and never sends how many you hold.",
-  "settingsMarketPriceProvider": "Market price provider",
-  "settingsFavouriteResearchTool": "Favourite research tool",
-  "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
-  "settingsBackup": "Backup",
-  "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
-  "settingsLock": "Lock",
-  "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
-  "settingsRequireUnlock": "Require unlock to open the app",
-  "settingsLockAfter": "Lock after",
-  "settingsLockImmediately": "Immediately",
-  "settingsLock1Minute": "1 minute",
-  "settingsLock5Minutes": "5 minutes",
-  "settingsLock15Minutes": "15 minutes",
-  "settingsAllowBiometrics": "Also allow biometrics",
-  "settingsHideSnapshot": "Hide balances in the app switcher",
-  "settingsHideSnapshotSubtitle": "Obscures this screen when you switch to another app, so it isn''t visible at a glance in the app switcher.",
-  "settingsHideSnapshotUnavailable": "Hiding balances in the app switcher isn''t available on this platform.",
-  "settingsPayees": "Payees",
-  "settingsManagePayees": "Manage payees",
-  "settingsPayeesBlurb": "Remembered payee names and their default category and account.",
-  "settingsRecurring": "Recurring templates",
-  "settingsManageRecurring": "Manage recurring templates",
-  "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck.",
-  "settingsAbout": "About",
-  "providerFrankfurter": "Frankfurter (ECB rates)",
+  "settingsLanguageSystem": "ڈیوایس زبان",
+  "settingsFetchFxRates": "حوالہٕ شرح تبادلہٕ حٲصل کریو",
+  "settingsFetchFxRatesSubtitle": "زری تبادلہٕ ہند واردات منز منزل رقم برابر اکھ اندازیٕ بازار شرح ہاونہٕ آسان، فقط مقابلہٕ خٲطرٕ - رقم بھرنہٕ خٲطرٕ کدہٕ کہ استعمال نہٕ چھ۔",
+  "settingsRateProvider": "شرح فراہم کار",
+  "settingsFetchMarketPrices": "سرمایہ کاری ہند بازار قیمت حٲصل کریو",
+  "settingsFetchMarketPricesSubtitle": "تہٕ آلاتہٕ ہند تازٕ قیمت ژھانڈان یم ٹکر یا ISIN راوان، پورٹفولیو ہند قیمت اندازہٕ خٲطرٕ. واردات درج کرنہٕ خٲطرٕ کدہٕ کہ استعمال نہٕ چھ، تہٕ کدہٕ کہ نہٕ چھ ژاننٕ ہاوان زِ تُہند کتہٕ چھ۔",
+  "settingsMarketPriceProvider": "بازار قیمت فراہم کار",
+  "settingsFavouriteResearchTool": "پسندیدٕ تحقیق آلہٕ",
+  "settingsFavouriteResearchToolSubtitle": "ہولڈنگس منز آلہٕ ہند ناو ٹیپ کرنس پؠٹھ یہ آلہٕ براؤزر منز اکھ تحقیق پرامپٹ سٟتی کھلہٕ چھ — یہ انٹیگریشن نہٕ چھ، تہٕ نہٕ چھ صلاح۔",
+  "settingsBackup": "بیک اپ",
+  "settingsBackupBlurb": "تُہند حساب ہند اکھ محفوظ نقل تُہند پسند کرنہٕ آمت جایہٕ پؠٹھ محفوظ کریو، یا تِتھی بحال کریو۔ یہ چھ تُہند بازیابی فقرہٕ یا کی سٹور فایلہٕ کِنٕ الگ، یُس تُہند سائننگ کی محفوظ کران، حساب نہٕ۔",
+  "settingsLock": "لاک",
+  "settingsLockBlurb": "ایپ کھولنس خٲطرٕ PIN، یا موجود آسنس پؠٹھ بایومیٹرک، ضروری کران۔",
+  "settingsRequireUnlock": "ایپ کھولنس خٲطرٕ کھولون ضروری کریو",
+  "settingsLockAfter": "ییمن وقتہٕ پتہٕ لاک",
+  "settingsLockImmediately": "فوری",
+  "settingsLock1Minute": "1 منٹ",
+  "settingsLock5Minutes": "5 منٹ",
+  "settingsLock15Minutes": "15 منٹ",
+  "settingsAllowBiometrics": "بایومیٹرک ہم اجازت دِیو",
+  "settingsHideSnapshot": "ایپ سوئچر منز بیلنس پوشیو",
+  "settingsHideSnapshotSubtitle": "یہ سکرین پوشہٕ چھ زٕ تُہی دوہٕ ایپس منز وڑاو، تاکہٕ یہ ایپ سوئچر منز اکہ نظرَس منز نظر نہٕ اِیہ۔",
+  "settingsHideSnapshotUnavailable": "یتھ پلیٹ فارمس پؠٹھ ایپ سوئچر منز بیلنس پوشون ممکن نہٕ چھ۔",
+  "settingsPayees": "وصول کار",
+  "settingsManagePayees": "وصول کار منظم کریو",
+  "settingsPayeesBlurb": "یاد آمت وصول کارَن ہند ناو تہٕ تِمن ہند اصلی زمرٕ تہٕ حساب، واردات درج کرنہٕ ویلہٕ آٹو مکمل سٟتی پیش کران۔",
+  "settingsRecurring": "منظم ٹیمپلیٹ",
+  "settingsManageRecurring": "منظم ٹیمپلیٹ منظم کریو",
+  "settingsRecurringBlurb": "کرایہٕ یا تنخواہ ہیوند ہر مہینہٕ دوہراونہٕ آمت بل یا آمدنی. باقی ٹیمپلیٹ گَرٕ صفحس پؠٹھ ظٲہر چھ، اکہ ٹیپَس سٟتی درج کرنہٕ خٲطرٕ - کدہٕ کہ خودکار درج نہٕ چھ گژھان۔",
+  "settingsAbout": "بارٕ منز",
+  "providerFrankfurter": "Frankfurter (ECB شرح)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
-  "providerStooq": "Stooq (daily quotes)",
-  "providerYahooFinance": "Yahoo Finance (chart API)",
+  "providerStooq": "Stooq (روزانہٕ نرخ)",
+  "providerYahooFinance": "Yahoo Finance (چارٹ API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
   "researchMetaAi": "Meta AI",
-  "systemGroupCashEquivalents": "Cash & cash equivalents",
-  "systemGroupPensionRetirement": "Pension & retirement",
-  "systemGroupCreditShortTerm": "Credit & short-term debt",
-  "systemGroupLoansMortgages": "Loans & mortgages",
-  "systemGroupInvestments": "Investments",
-  "systemAccountCashBank": "Cash & Bank",
-  "systemCategorySalary": "Salary",
-  "systemCategoryOtherIncome": "Other Income",
-  "systemCategoryGroceries": "Groceries",
-  "systemCategoryRentMortgage": "Rent/Mortgage",
-  "systemCategoryUtilities": "Utilities",
-  "systemCategoryTransport": "Transport",
-  "systemCategoryFoodOut": "Food out",
-  "systemCategoryPhone": "Phone",
-  "systemCategoryHealth": "Health",
-  "systemCategoryOtherExpense": "Other Expense",
+  "systemGroupCashEquivalents": "نقد تہٕ نقد برابر",
+  "systemGroupPensionRetirement": "پنشن تہٕ ریٹائرمنٹ",
+  "systemGroupCreditShortTerm": "کریڈٹ تہٕ مختصر مدتی قرض",
+  "systemGroupLoansMortgages": "قرض تہٕ گروی",
+  "systemGroupInvestments": "سرمایہ کاری",
+  "systemAccountCashBank": "نقد تہٕ بینک",
+  "systemCategorySalary": "تنخواہ",
+  "systemCategoryOtherIncome": "بیٕ آمدنی",
+  "systemCategoryGroceries": "راشن",
+  "systemCategoryRentMortgage": "کرایہٕ/گروی",
+  "systemCategoryUtilities": "سہولیات",
+  "systemCategoryTransport": "سفر",
+  "systemCategoryFoodOut": "باہر ہٕ کھانہٕ",
+  "systemCategoryPhone": "فون",
+  "systemCategoryHealth": "صحت",
+  "systemCategoryOtherExpense": "بیٕ خرچ",
   "homeThisMonth": "یِم رؠتھ",
-  "homeMoneyInTransit": "MONEY IN TRANSIT",
-  "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
-  "homeWhatYouHave": "What you have {amount} {currency}",
+  "homeMoneyInTransit": "سفرس منز زَر",
+  "homeWhatYouHaveMinusWhatYouOwe": "یہ تُہند آسہٕ تہٕ یہ تُہی گژھِو دِنہٕ اُس فرق",
+  "homeWhatYouHave": "تُہند آسہٕ {amount} {currency}",
   "@homeWhatYouHave": {
     "placeholders": {
       "amount": {
@@ -135,7 +134,7 @@
       }
     }
   },
-  "homeHaveAndOwe": "What you have {haveAmount} {currency}  •  What you owe {oweAmount} {currency}",
+  "homeHaveAndOwe": "تُہند آسہٕ {haveAmount} {currency}  •  تُہی گژھِو دِنہٕ {oweAmount} {currency}",
   "@homeHaveAndOwe": {
     "placeholders": {
       "haveAmount": {
@@ -149,7 +148,7 @@
       }
     }
   },
-  "youSentFrom": "You sent {amount} {currency} from {name}",
+  "youSentFrom": "تُہی رٲوَتھ {name} پؠٹھسٕ {amount} {currency}",
   "@youSentFrom": {
     "placeholders": {
       "amount": {
@@ -163,7 +162,7 @@
       }
     }
   },
-  "youSentTo": "You sent {amount} {currency} to {name}",
+  "youSentTo": "تُہی رٲوَتھ {name} خٲطرٕ {amount} {currency}",
   "@youSentTo": {
     "placeholders": {
       "amount": {
@@ -177,9 +176,9 @@
       }
     }
   },
-  "hiddenLabel": "Hidden",
-  "allAccounts": "All accounts",
-  "savedToPath": "Saved to {path}",
+  "hiddenLabel": "پوشیدہ",
+  "allAccounts": "سٲری حساب",
+  "savedToPath": "{path} منز محفوظ",
   "@savedToPath": {
     "placeholders": {
       "path": {
@@ -187,10 +186,10 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
-  "homeTapWhenArrived": "Tap when you know what arrived",
-  "homeReturnedTo": "Returned to {name}",
+  "keystoreExportFailed": "کی سٹور فایل برآمد کرِتھ نہٕ آو. تُہی ہیہ قدم نظر انداز کرِتھ ہیکو.",
+  "enterPassphraseToProtect": "فایل محفوظ کرنہٕ خٲطرٕ اکھ پاس فریز درج کریو.",
+  "homeTapWhenArrived": "کیازِ پہنچ، یہ زٲنتھ ٹیپ کریو",
+  "homeReturnedTo": "{name} پؠٹھ واپس",
   "@homeReturnedTo": {
     "placeholders": {
       "name": {
@@ -198,8 +197,8 @@
       }
     }
   },
-  "homeDueToday": "DUE TODAY",
-  "homeDueLine": "{category} · {account} · tap to record",
+  "homeDueToday": "اَز باقی",
+  "homeDueLine": "{category} · {account} · درج کرنہٕ خٲطرٕ ٹیپ کریو",
   "@homeDueLine": {
     "placeholders": {
       "category": {
@@ -210,8 +209,8 @@
       }
     }
   },
-  "homeOverLimit": "Over limit",
-  "homeSpentOfLimit": "{spent} of {limit}",
+  "homeOverLimit": "حد نہٕ پار",
+  "homeSpentOfLimit": "{limit} منز {spent}",
   "@homeSpentOfLimit": {
     "placeholders": {
       "spent": {
@@ -222,7 +221,7 @@
       }
     }
   },
-  "homeRemaining": "Remaining: {amount}",
+  "homeRemaining": "باقی: {amount}",
   "@homeRemaining": {
     "placeholders": {
       "amount": {
@@ -230,22 +229,22 @@
       }
     }
   },
-  "homeNoAccounts": "No accounts",
-  "homeCashRegister": "Cash register",
-  "homeMarketEstimate": "Market estimate",
-  "registerTitle": "Register",
-  "registerSearchHint": "Description, category, or amount",
-  "registerNoTransactions": "No transactions yet",
-  "registerNoEntries": "No entries recorded yet.",
-  "registerSpentOnly": "Spent only",
-  "registerReceivedOnly": "Received only",
-  "registerAll": "All",
-  "registerUnverified": "Unverified - excluded from totals",
-  "registerSuperseded": "Superseded by migration - excluded from totals",
-  "summaryTitle": "Summary",
-  "summaryTotalIncome": "Total income",
-  "summaryTotalExpense": "Total expense",
-  "summaryDateRange": "{start} to {end}",
+  "homeNoAccounts": "حساب چھہ نہٕ",
+  "homeCashRegister": "نقد حساب",
+  "homeMarketEstimate": "بازار اندازہٕ",
+  "registerTitle": "رجسٹر",
+  "registerSearchHint": "تفصیل، زمرٕ، یا رقم",
+  "registerNoTransactions": "وننہٕ تام واردات چھہ نہٕ",
+  "registerNoEntries": "وننہٕ تام کانہہ اندراج درج چھہ نہٕ.",
+  "registerSpentOnly": "فقط خرچ",
+  "registerReceivedOnly": "فقط وصول",
+  "registerAll": "سٲری",
+  "registerUnverified": "غیرتصدیق شُدہٕ - مجموعہٕ منز شامل نہٕ",
+  "registerSuperseded": "منتقلی سٟتی تبدیل - مجموعہٕ منز شامل نہٕ",
+  "summaryTitle": "خلاصہٕ",
+  "summaryTotalIncome": "کل آمدنی",
+  "summaryTotalExpense": "کل خرچ",
+  "summaryDateRange": "{start} تام {end}",
   "@summaryDateRange": {
     "placeholders": {
       "start": {
@@ -256,45 +255,45 @@
       }
     }
   },
-  "accountsTitle": "Accounts",
-  "categoriesTitle": "Categories",
-  "accountName": "Account name",
-  "createAccount": "Create account",
-  "createGroup": "Create group",
-  "editGroup": "Edit group",
-  "renameAccount": "Rename account",
-  "renameCategory": "Rename category",
-  "addCategory": "Add category",
-  "groupLabel": "Group",
-  "kindLabel": "Kind",
-  "asset": "Asset",
-  "liability": "Liability",
-  "income": "Income",
-  "expense": "Expense",
-  "thisAccountHoldsInvestments": "This account holds investments",
-  "thisAccountHoldsInvestmentsSubtitle": "Cash plus inventory you record with Buy, Sell, and Dividend.",
-  "thisIsACreditCard": "This is a credit card",
-  "openingBalanceOptional": "Opening balance (optional)",
-  "currencyIso": "Currency (ISO 4217)",
-  "currencyIsoExample": "Currency (ISO 4217, e.g. USD)",
-  "hideAccountTitle": "Hide account from new entries?",
-  "hideCategoryTitle": "Hide category from new entries?",
-  "hideGroupTitle": "Hide group from new entries?",
-  "reassignGroup": "Reassign group",
-  "transferRemainingBalance": "Transfer remaining balance",
-  "monthlyLimit": "Monthly limit",
-  "monthlyLimitHint": "Limit (leave blank to clear)",
-  "monthlyLimitBlurb": "An optional month-to-date spending guide for this expense category.",
-  "manageCategoryRules": "Manage category rules",
-  "amount": "Amount",
-  "category": "Category",
-  "account": "Account",
-  "fromAccount": "From account",
-  "toAccount": "To account",
-  "descriptionOptional": "Description (optional)",
-  "alsoRememberPayee": "Also remember as a payee",
-  "splitIntoCategories": "Split into multiple categories",
-  "categoryN": "Category {n}",
+  "accountsTitle": "حساب",
+  "categoriesTitle": "زمرٕ",
+  "accountName": "حساب ہند ناو",
+  "createAccount": "حساب تیار کریو",
+  "createGroup": "گروپ تیار کریو",
+  "editGroup": "گروپ تبدیل کریو",
+  "renameAccount": "حساب ہند ناو بدلاو",
+  "renameCategory": "زمرٕ ہند ناو بدلاو",
+  "addCategory": "زمرٕ شامل کریو",
+  "groupLabel": "گروپ",
+  "kindLabel": "قسم",
+  "asset": "اثاثہ",
+  "liability": "ذمہ داری",
+  "income": "آمدنی",
+  "expense": "خرچ",
+  "thisAccountHoldsInvestments": "یہ حساب سرمایہ کاری رکھان چھ",
+  "thisAccountHoldsInvestmentsSubtitle": "نقد تہٕ خرید، فروخت، منافع سٟتی درج کرنہٕ آمت آلاتہٕ.",
+  "thisIsACreditCard": "یہ چھ اکھ کریڈٹ کارڈ",
+  "openingBalanceOptional": "ابتدائی بیلنس (اختیاری)",
+  "currencyIso": "کرنسی (ISO 4217)",
+  "currencyIsoExample": "کرنسی (ISO 4217، مثلن USD)",
+  "hideAccountTitle": "نو واردات پؠٹھسٕ یہ حساب پوشیو؟",
+  "hideCategoryTitle": "نو واردات پؠٹھسٕ یہ زمرٕ پوشیو؟",
+  "hideGroupTitle": "نو واردات پؠٹھسٕ یہ گروپ پوشیو؟",
+  "reassignGroup": "گروپ دوبارہ مقرر کریو",
+  "transferRemainingBalance": "باقی بیلنس منتقل کریو",
+  "monthlyLimit": "ماہانہٕ حد",
+  "monthlyLimitHint": "حد (صاف کرنہٕ خٲطرٕ خالی)",
+  "monthlyLimitBlurb": "یتھ خرچ زمرٕس خٲطرٕ اکھ اختیاری ماہانہٕ خرچ ہند رہنما حد.",
+  "manageCategoryRules": "زمرٕ اصول منظم کریو",
+  "amount": "رقم",
+  "category": "زمرٕ",
+  "account": "حساب",
+  "fromAccount": "منز حساب",
+  "toAccount": "خٲطرٕ حساب",
+  "descriptionOptional": "تفصیل (اختیاری)",
+  "alsoRememberPayee": "وصول کار وأنی یاد رکھیو",
+  "splitIntoCategories": "کیٚنہہ زمرن منز ونڈیو",
+  "categoryN": "زمرٕ {n}",
   "@categoryN": {
     "placeholders": {
       "n": {
@@ -302,25 +301,25 @@
       }
     }
   },
-  "destinationAmount": "Destination amount",
-  "destinationAmountOptional": "Destination amount (optional)",
-  "accountCurrencyAmountOptional": "Account-currency amount (optional)",
-  "transactionCurrencyOptional": "Transaction currency (optional)",
-  "feeOptional": "Fee (optional)",
-  "feeAmount": "Fee amount",
-  "feeCategory": "Fee category",
-  "feeDescriptionOptional": "Fee description (optional)",
-  "feeDeducted": "Fee is deducted from the amount above",
-  "needTwoAccountsToTransfer": "Create at least two active accounts to make a transfer.",
-  "whatArrivedTitle": "What arrived?",
-  "whatArrivedBlurb": "Tell us what actually arrived.",
-  "amountThatArrived": "Amount that arrived",
-  "feeLossCategory": "Fee / loss category",
-  "alreadySettled": "Already settled.",
-  "holdingsTitle": "Holdings",
-  "holdingsCash": "Cash",
-  "holdingsInventory": "INVENTORY",
-  "holdingsBook": "Book (cash + cost) {amount} {currency}",
+  "destinationAmount": "منزل رقم",
+  "destinationAmountOptional": "منزل رقم (اختیاری)",
+  "accountCurrencyAmountOptional": "حساب-کرنسی رقم (اختیاری)",
+  "transactionCurrencyOptional": "واردات کرنسی (اختیاری)",
+  "feeOptional": "فیس (اختیاری)",
+  "feeAmount": "فیس رقم",
+  "feeCategory": "فیس زمرٕ",
+  "feeDescriptionOptional": "فیس تفصیل (اختیاری)",
+  "feeDeducted": "فیس چھ اپرین رقمہٕ منز نیرمژٕ آمژٕ",
+  "needTwoAccountsToTransfer": "منتقلی کرنہٕ خٲطرٕ کمہٕ کمہٕ دُو فعال حساب تیار کریو.",
+  "whatArrivedTitle": "کیا پہنچ؟",
+  "whatArrivedBlurb": "اصل منز کیا پہنچ، یہ بتاو.",
+  "amountThatArrived": "پہٟچمژٕ رقم",
+  "feeLossCategory": "فیس / نقصان زمرٕ",
+  "alreadySettled": "پہلہٕ تام تصفیہ.",
+  "holdingsTitle": "ہولڈنگس",
+  "holdingsCash": "نقد",
+  "holdingsInventory": "ذخیرہٕ",
+  "holdingsBook": "بوہک (نقد + قیمت) {amount} {currency}",
   "@holdingsBook": {
     "placeholders": {
       "amount": {
@@ -331,7 +330,7 @@
       }
     }
   },
-  "holdingsMarketEstimate": "Market estimate {amount} {currency}",
+  "holdingsMarketEstimate": "بازار اندازہٕ {amount} {currency}",
   "@holdingsMarketEstimate": {
     "placeholders": {
       "amount": {
@@ -342,14 +341,14 @@
       }
     }
   },
-  "holdingsNoHoldings": "No holdings yet. Record a buy to add an instrument.",
-  "holdingsQuotesBlurb": "Quotes are estimates, not a broker price. This app does not place orders.",
-  "holdingsTapNameToResearch": "Tap the name to research. Quotes are estimates, not advice.",
-  "instrument": "Instrument",
-  "newInstrument": "New instrument",
-  "renameInstrument": "Rename instrument",
-  "instrumentActions": "Instrument actions",
-  "hideInstrumentTitle": "Hide {name}?",
+  "holdingsNoHoldings": "وننہٕ تام ہولڈنگس چھہ نہٕ. آلہٕ شامل کرنہٕ خٲطرٕ خرید درج کریو.",
+  "holdingsQuotesBlurb": "نرخ چھ اندازہٕ، بروکر ہند نرخ نہٕ. یہ ایپ آرڈر نہٕ چھ دیوان.",
+  "holdingsTapNameToResearch": "تحقیق خٲطرٕ ناو پؠٹھ ٹیپ کریو. نرخ چھ اندازہٕ، صلاح نہٕ.",
+  "instrument": "آلہٕ",
+  "newInstrument": "نو آلہٕ",
+  "renameInstrument": "آلہٕ ہند ناو بدلاو",
+  "instrumentActions": "آلہٕ ہند کارروائیاں",
+  "hideInstrumentTitle": "{name} پوشیو؟",
   "@hideInstrumentTitle": {
     "placeholders": {
       "name": {
@@ -357,31 +356,31 @@
       }
     }
   },
-  "tickerOptional": "Ticker (optional)",
-  "isinOptional": "ISIN (optional)",
-  "quantity": "Quantity",
-  "unitPrice": "Unit price",
-  "brokerageOptional": "Brokerage (optional)",
-  "brokerageExpenseCategory": "Brokerage expense category",
-  "incomeCategory": "Income category",
-  "gainIncomeCategory": "Gain income category",
-  "lossExpenseCategory": "Loss expense category",
-  "nonCash": "Non-cash",
-  "cash": "Cash",
-  "locked": "Locked",
-  "lockUntilHint": "Your own note of a restriction, not a broker rule.",
-  "instrumentKindStock": "Stock",
+  "tickerOptional": "ٹکر (اختیاری)",
+  "isinOptional": "ISIN (اختیاری)",
+  "quantity": "تعداد",
+  "unitPrice": "اکائی قیمت",
+  "brokerageOptional": "بروکریج (اختیاری)",
+  "brokerageExpenseCategory": "بروکریج خرچ زمرٕ",
+  "incomeCategory": "آمدنی زمرٕ",
+  "gainIncomeCategory": "منافع آمدنی زمرٕ",
+  "lossExpenseCategory": "نقصان خرچ زمرٕ",
+  "nonCash": "غیر نقد",
+  "cash": "نقد",
+  "locked": "لاک",
+  "lockUntilHint": "بروکر ہند اصول نہٕ، تُہند خود ہند حد ہند یادداشت.",
+  "instrumentKindStock": "سٹاک",
   "instrumentKindEtf": "ETF",
-  "instrumentKindMutualFund": "Mutual fund",
-  "instrumentKindBond": "Bond",
-  "instrumentKindOther": "Other",
-  "quoteUseLive": "Live price",
-  "quoteUseCached": "Cached price",
-  "quoteUseStale": "Stale price",
-  "quoteUseMissing": "Using cost (no price)",
-  "quoteUseDisabled": "Quotes off — using cost/cache",
-  "quoteUseCurrencyMismatch": "Using cost (price currency differs)",
-  "unrealizedLabel": "Unrealized {amount} {currency}",
+  "instrumentKindMutualFund": "میوچل فنڈ",
+  "instrumentKindBond": "بانڈ",
+  "instrumentKindOther": "بیٕ",
+  "quoteUseLive": "لایو نرخ",
+  "quoteUseCached": "کیشڈ نرخ",
+  "quoteUseStale": "پُرٕنٕ نرخ",
+  "quoteUseMissing": "قیمت استعمال (نرخ چھہ نہٕ)",
+  "quoteUseDisabled": "نرخ بند — قیمت/کیش استعمال",
+  "quoteUseCurrencyMismatch": "قیمت استعمال (نرخ ہند کرنسی جدا)",
+  "unrealizedLabel": "غیر حاصل شُدہٕ {amount} {currency}",
   "@unrealizedLabel": {
     "placeholders": {
       "amount": {
@@ -392,7 +391,7 @@
       }
     }
   },
-  "holdingsUnitsCost": "{qty} units · ",
+  "holdingsUnitsCost": "{qty} اکائی · ",
   "@holdingsUnitsCost": {
     "placeholders": {
       "qty": {
@@ -400,13 +399,13 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost. Write them down in order and store them somewhere safe — we cannot show them again.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe — nobody else can recover them for you.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
-  "wordNumber": "Word #{n}",
+  "recoveryPhraseTitle": "تُہند بازیابی فقرہٕ",
+  "recoveryPhraseConfirmTitle": "فقرہٕ تصدیق کریو",
+  "recoveryPhraseBlurb": "یم 24 لفظ چھ یگانہٕ طریقہٕ تُہند واردات ہند تاریخ بازیابی کرنہٕ ہند، اگر یہ ڈیوایس گم گژھی، ری سیٹ گژھی، یا بدلاو۔ سمارا حساب چھہ نہٕ سرور تہٕ نہٕ چھ ہیکان یِمن تُہند خٲطرٕ بازیابی کرِتھ۔\n\nاگر تُہی یہ ڈیوایس تہٕ یہ فقرہٕ اکھٹہٕ گم کریو، تہِ تُہند درج کرنہٕ آمژٕ ہر واردات ہمیشہٕ خٲطرٕ غیرتصدیق گژھہٕ.",
+  "recoveryPhraseWriteDown": "یم لفظ ترتیبس منز لِکھیو تہٕ اکہ محفوظ تہٕ ڈیوایسہٕ کِنٕ جدا جایہٕ منز رکھیو.",
+  "iveSavedRecoveryPhrase": "بہٕ چھس می ہند بازیابی فقرہٕ محفوظ کریتھ",
+  "confirmPhraseBlurb": "یم لفظ تُہی مطلوب چھ، یم فقرس منز آسان یم تُہی ہاتہٕ محفوظ کریتھ، یم درج کریو.",
+  "wordNumber": "لفظ #{n}",
   "@wordNumber": {
     "placeholders": {
       "n": {
@@ -414,78 +413,78 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file. It is another way to restore your signing key, not a backup of your books.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "chooseCurrencyTitle": "Choose your currency",
-  "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, and the others) will use this currency until you add more groups.",
-  "currencyBackfillTitle": "Choose a currency for existing groups",
-  "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing groups need one currency assigned.",
-  "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you''ll recognize.",
-  "whatsMainAccountCalled": "What''s your main account called?",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore from your recovery phrase or keystore file.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
-  "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
-  "iConfirmBooksValid": "I confirm the current books are valid",
-  "whyWeDontEdit": "Why we don’t edit old entries",
-  "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a new one. The history cannot quietly rewrite itself.",
-  "lockTitle": "Unlock",
-  "lockScreenTitle": "Locked",
-  "enterPinToContinue": "Enter your PIN to continue",
+  "keystoreExportTitle": "کی سٹور فایل برآمد کریو",
+  "keystoreExportBlurb": "تُہند بازیابی فقرہٕ ہٕ علاوہٕ، تُہی ہیکو اکھ اِنکرپٹڈ کی سٹور فایل محفوظ کرِتھ یُس تُہند مقرر کرمژٕ پاس فریزہٕ سٟتی محفوظ چھ۔ یہ چھ اختیاری - اکلہٕ بازیابی فقرہٕ چھ ہمیشٕ تُہند سائننگ کی بحال کرنہٕ خٲطرٕ کافی.",
+  "keystorePassphrase": "پاس فریز",
+  "exportKeystoreFile": "کی سٹور فایل برآمد کریو",
+  "chooseCurrencyTitle": "تُہند کرنسی ژارٕو",
+  "chooseCurrencyBlurb": "ہر حساب گروپ (نقد تہٕ نقد برابر، پنشن تہٕ ریٹائرمنٹ، وغیرہ) چھ فی الحال یہ اکہ کرنسی استعمال کران۔ تُہی پتہٕ ہیکو بیٕ کرنسی منز حساب شامل کرِتھ نو گروپ تیار کرِتھ.",
+  "currencyBackfillTitle": "موجودٕ گروپن خٲطرٕ کرنسی ژارٕو",
+  "currencyBackfillBlurb": "یہ ایپ چھ اوس فراہم کران کیٚنہہ کرنسیاں۔ تُہند موجودٕ حساب تہٕ حساب گروپن چھ کرنسی ضروری - کیازِ یم سٲری یہ خصوصیت آنس برونٹھ تیار گژھمژٕ، اکہٕ ژار سٲری خٲطرٕ لاگو چھ.",
+  "firstAccountTitle": "تُہند حساب ناو دِیو",
+  "firstAccountBlurb": "یہ چھ اوس تُہند خٲطرٕ برونٹھ تیار حساب - تُہند بینکہ ہیوند وننہٕ اکھ ناو دِیو۔ تُہی پتہٕ اکھ خرچ یا وصول درج کریو، تہِ پتہٕ ڈیوایس بازیابی فقرہٕ سٟتی محفوظ کریو.",
+  "whatsMainAccountCalled": "تُہند اصلی حساب ہند ناو کیا چھ؟",
+  "restoreTitle": "سائننگ کی بحال کریو",
+  "restoreBlurb": "یتھ ڈیوایسہٕ چھ موجودٕ حساب، مگر برابر سائننگ کی چھہ نہٕ. تُہند محفوظ کرمژٕ بازیابی فقرہٕ یا کی سٹور فایلہٕ سٟتی یہ بحال کریو - تُہند ڈیٹا چھ عام طرحٕ تصدیق گژھان، تہٕ کانہہ چھ نہٕ دوبارہ سائن یا تبدیل گژھان.",
+  "recoveryPhrase24": "بازیابی فقرہٕ (سٲری 24 لفظ)",
+  "keystoreFile": "کی سٹور فایل",
+  "keystoreFileContents": "کی سٹور فایل ہند مواد",
+  "optionalBackupFile": "اختیاری بیک اپ فایل",
+  "iDontHavePhrase": "می پؠٹھ چھہ نہٕ بازیابی فقرہٕ یا کی سٹور فایل",
+  "migrationTitle": "نوی کی خٲطرٕ منتقلی",
+  "migrationBlurb": "بازیابی فقرہٕ یا کی سٹور فایلہٕ بغیر، یتھ ڈیوایسہٕ ہند سائننگ کی چھہ نہٕ بحال گژھنہٕ ہیکان. تُہی ہیکو نوی کی شروع کرِتھ. پُرٲنہٕ اندراج چھ نظر آسان مگر چھ بدلمژٕ ظٲہر.",
+  "iConfirmBooksValid": "بہٕ چھس تصدیق کران زِ موجودٕ حساب چھ صحیح",
+  "whyWeDontEdit": "اسہٕ کیازِ پُرٲنہٕ اندراج نہٕ چھ بدلان",
+  "whyWeDontEditBody": "یتھ تُہی اکھ غلطی درست کریو، اسہٕ چھ پُرٲنہٕ لکیر ہمترین رکھان تہٕ اکہ اصلاح شامل کران، تُہند درج کرمژٕ بدلنہٕ ہند بدلہٕ. یتھ طرحٕ تُہند تاریخ چھ ہمیشہٕ اصل واقعہٕ تہٕ کریتھ تُہی گژھِو درست کریتھ یہ دِوان — پتہٕ کانہہ چوری چوری نہٕ بدلان.",
+  "lockTitle": "کھولیو",
+  "lockScreenTitle": "لاک",
+  "enterPinToContinue": "جاری رکھنہٕ خٲطرٕ تُہند PIN درج کریو",
   "pinLabel": "PIN",
-  "setPinTitle": "Set a PIN",
-  "currentPin": "Current PIN",
-  "newPin": "New PIN",
-  "confirmPin": "Confirm PIN",
-  "confirmNewPin": "Confirm new PIN",
-  "firstWeekTitle": "Set up your accounts",
-  "addCashAccount": "Add a cash account",
-  "addCreditCard": "Add a credit card",
-  "cashAccountName": "Cash account name",
-  "cardName": "Card name",
-  "paidFromBank": "Paid from bank",
-  "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
-  "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
-  "fixThisEntry": "Fix this entry",
-  "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
-  "importStatementTitle": "Import Statement",
-  "importOfx": "Import OFX",
-  "importOfxQfxFile": "Import OFX / QFX file",
-  "importCsvFile": "Import CSV file",
-  "whatKindOfStatement": "What kind of statement file do you have?",
-  "chooseAccountForFile": "Choose which account this file belongs to.",
-  "importIntoAccount": "Import into account",
-  "useSavedProfile": "Use a saved profile",
-  "saveMappingProfile": "Save this mapping as a profile (optional)",
-  "renameProfile": "Rename profile",
-  "deleteProfileTitle": "Delete profile?",
-  "fileHasHeader": "File has a header row",
-  "dateColumn": "Date column",
-  "dateFormatHint": "Date format (e.g. dd/MM/yyyy)",
-  "amountColumn": "Amount column",
-  "amountConvention": "Amount convention",
-  "signedAmountColumn": "Signed amount column",
-  "separateDebitCredit": "Separate debit / credit columns",
-  "debitColumn": "Debit column",
-  "creditColumn": "Credit column",
-  "decimalSeparator": "Decimal separator (. or ,)",
-  "descriptionColumns": "Description column(s)",
-  "referenceIdColumn": "Reference id column (optional)",
-  "skippedRows": "Skipped rows",
-  "parsedTransactionCount": "{count} transactions parsed",
+  "setPinTitle": "PIN مقرر کریو",
+  "currentPin": "موجودٕ PIN",
+  "newPin": "نو PIN",
+  "confirmPin": "PIN تصدیق کریو",
+  "confirmNewPin": "نو PIN تصدیق کریو",
+  "firstWeekTitle": "تُہند حساب سیٹ کریو",
+  "addCashAccount": "نقد حساب شامل کریو",
+  "addCreditCard": "کریڈٹ کارڈ شامل کریو",
+  "cashAccountName": "نقد حساب ہند ناو",
+  "cardName": "کارڈ ہند ناو",
+  "paidFromBank": "بینکہٕ منز تصفیہ",
+  "paidFromCard": "کارڈہٕ منز تصفیہ",
+  "choosePassphraseTitle": "یہ بیک اپ محفوظ کرنہٕ خٲطرٕ پاس فریز ژارٕو. اگر تُہی بہٕ گژھِو، تہِ بحالی ممکن نہٕ چھ.",
+  "replaceBooksTitle": "تُہند مقامی حساب بدلاو؟",
+  "replaceBooksBody": "یہ ایپہٕ منز موجودٕ سٲری کانہہ بیک اپہٕ سٟتی بدلاو. پتہٕ ایپ بند کریو تہٕ دوبارہ کھولیو.",
+  "chooseBackupFileFirst": "برونٹھ بیک اپ فایل ژارٕو.",
+  "backupRestored": "بیک اپ بحال",
+  "backupRestoredBody": "تُہند حساب چھ بحال گژھمژٕ. جاری رکھنہٕ خٲطرٕ ایپ بند کریو تہٕ دوبارہ کھولیو.",
+  "fixThisEntry": "یہ اندراج درست کریو",
+  "fixBlurb": "پُرٲنہٕ لکیر چھ ہمترین رکھمژٕ. تصدیق کرنس پؠٹھ اکھ اصلاحی لکیر تہٕ درست لکیر شامل گژھہٕ.",
+  "importStatementTitle": "بیان درآمد کریو",
+  "importOfx": "OFX درآمد کریو",
+  "importOfxQfxFile": "OFX / QFX فایل درآمد کریو",
+  "importCsvFile": "CSV فایل درآمد کریو",
+  "whatKindOfStatement": "تُہند پؠٹھ کینٛہٕ قسمہٕ بیان فایل چھ؟",
+  "chooseAccountForFile": "یہ فایل کوس حسابس تعلق چھ، یہ ژارٕو.",
+  "importIntoAccount": "یتھ حسابس منز درآمد کریو",
+  "useSavedProfile": "محفوظ کرمژٕ پروفایل استعمال کریو",
+  "saveMappingProfile": "یہ میپنگ پروفایلہٕ ہیوند محفوظ کریو (اختیاری)",
+  "renameProfile": "پروفایل ہند ناو بدلاو",
+  "deleteProfileTitle": "پروفایل خارج کریو؟",
+  "fileHasHeader": "فایلہٕ منز اکھ ہیڈر لکیر چھ",
+  "dateColumn": "تاریخ کالم",
+  "dateFormatHint": "تاریخ فارمیٹ (مثلن dd/MM/yyyy)",
+  "amountColumn": "رقم کالم",
+  "amountConvention": "رقم قاعدہٕ",
+  "signedAmountColumn": "نشان دار رقم کالم",
+  "separateDebitCredit": "جدا ڈیبٹ / کریڈٹ کالم",
+  "debitColumn": "ڈیبٹ کالم",
+  "creditColumn": "کریڈٹ کالم",
+  "decimalSeparator": "اعشاری علیحدہٕ کار (. یا ,)",
+  "descriptionColumns": "تفصیل کالم",
+  "referenceIdColumn": "حوالہٕ ID کالم (اختیاری)",
+  "skippedRows": "نظر انداز کرمژٕ قطاریں",
+  "parsedTransactionCount": "{count} واردات تجزیہٕ گژھمژٕ",
   "@parsedTransactionCount": {
     "placeholders": {
       "count": {
@@ -493,7 +492,7 @@
       }
     }
   },
-  "skippedOrExcludedCount": "{count} skipped or excluded",
+  "skippedOrExcludedCount": "{count} نظر انداز یا خارج",
   "@skippedOrExcludedCount": {
     "placeholders": {
       "count": {
@@ -501,7 +500,7 @@
       }
     }
   },
-  "postedFailedCount": "{posted} posted, {failed} failed",
+  "postedFailedCount": "{posted} درج، {failed} ناکام",
   "@postedFailedCount": {
     "placeholders": {
       "posted": {
@@ -512,14 +511,14 @@
       }
     }
   },
-  "categoryForAll": "Category for all",
-  "saveAsRule": "Save as a rule?",
-  "saveAsRuleBlurb": "Future imports whose description contains this keyword will use this category.",
-  "keyword": "Keyword",
-  "noSavedRules": "No saved rules yet. Assign a category to a group of rows to save a rule.",
-  "deleteRuleTitle": "Delete rule?",
-  "editRule": "Edit rule",
-  "rowsGrouped": "{count} rows",
+  "categoryForAll": "سٲری خٲطرٕ زمرٕ",
+  "saveAsRule": "اصولہٕ ہیوند محفوظ کریو؟",
+  "saveAsRuleBlurb": "آیندٕ درآمد یِمن ہند تفصیل منز یہ کی ورڈ چھ، تِم چھ یہ زمرٕ استعمال کران.",
+  "keyword": "کی ورڈ",
+  "noSavedRules": "وننہٕ تام محفوظ اصول چھہ نہٕ. قطارن ہند اکہ گروپس زمرٕ مقرر کرنس پؠٹھ اصول محفوظ گژھہٕ.",
+  "deleteRuleTitle": "اصول خارج کریو؟",
+  "editRule": "اصول تبدیل کریو",
+  "rowsGrouped": "{count} قطاریں",
   "@rowsGrouped": {
     "placeholders": {
       "count": {
@@ -527,7 +526,7 @@
       }
     }
   },
-  "selectStatementFile": "Select a {extensions} statement file to import",
+  "selectStatementFile": "درآمد کرنہٕ خٲطرٕ {extensions} بیان فایل ژارٕو",
   "@selectStatementFile": {
     "placeholders": {
       "extensions": {
@@ -535,17 +534,17 @@
       }
     }
   },
-  "payeesTitle": "Payees",
-  "addPayee": "Add payee",
-  "renamePayee": "Rename payee",
-  "deletePayeeTitle": "Delete payee?",
-  "noPayeesYet": "No payees yet",
-  "recurringTitle": "Recurring templates",
-  "noRecurringYet": "No recurring templates yet",
-  "deleteTemplateTitle": "Delete recurring template?",
-  "dayOfMonth": "Day of month (1-31)",
-  "dayOfMonthNote": "A month with fewer days uses its own last day.",
-  "dayOfMonthLine": "Day {day} of the month - ",
+  "payeesTitle": "وصول کار",
+  "addPayee": "وصول کار شامل کریو",
+  "renamePayee": "وصول کار ہند ناو بدلاو",
+  "deletePayeeTitle": "وصول کار خارج کریو؟",
+  "noPayeesYet": "وننہٕ تام وصول کار چھہ نہٕ",
+  "recurringTitle": "منظم ٹیمپلیٹ",
+  "noRecurringYet": "وننہٕ تام منظم ٹیمپلیٹ چھہ نہٕ",
+  "deleteTemplateTitle": "منظم ٹیمپلیٹ خارج کریو؟",
+  "dayOfMonth": "مہینہٕ ہند دوہ (1-31)",
+  "dayOfMonthNote": "کم دوہن ہیوند مہینہٕ چھ اپنہٕ آخری دوہ استعمال کران.",
+  "dayOfMonthLine": "مہینہٕ ہند {day} دوہ - ",
   "@dayOfMonthLine": {
     "placeholders": {
       "day": {
@@ -553,15 +552,15 @@
       }
     }
   },
-  "name": "Name",
-  "none": "None",
-  "currency": "Currency",
-  "errorGeneric": "کانٛہہ غلطی۔ دوبارہ کوشش۔",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
-  "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
-  "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
-  "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
-  "errorInvalidLedgerBackupUnreadable": "This file could not be opened as a Smara backup: {detail}",
+  "name": "ناو",
+  "none": "کانہہ نہٕ",
+  "currency": "کرنسی",
+  "errorGeneric": "کانٛہہ غلطی۔ دوبارہ کوشش.",
+  "errorSigningIdentityMismatch": "یہ بازیابی فقرہٕ یا کی سٹور فایل چھ نہٕ یتھ ڈیٹابیسہٕ ہند کانہہ سائننگ شناخت سٟتی برابر.",
+  "errorInvalidLedgerBackup": "یہ فایل چھ نہٕ صحیح سمارا بیک اپ.",
+  "errorInvalidLedgerBackupNoIdentity": "یتھ بیک اپس چھ نہٕ سائننگ شناخت - یہ چھ نہٕ صحیح سمارا بیک اپ.",
+  "errorInvalidLedgerBackupUnverified": "یہ بیک اپ چھ نہٕ مکمل حسابہٕ ہیوند تصدیق گژھمژٕ، سو یہ چھ نہٕ بحال گژھمژٕ.",
+  "errorInvalidLedgerBackupUnreadable": "یہ فایل چھ نہٕ سمارا بیک اپہٕ ہیوند کھولنہٕ ہیکان: {detail}",
   "@errorInvalidLedgerBackupUnreadable": {
     "placeholders": {
       "detail": {
@@ -569,55 +568,55 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorAccountNotFinancial": "That is not a financial account.",
-  "errorAccountArchived": "That account is hidden.",
-  "errorAccountNotArchived": "That account is not hidden.",
-  "errorAccountNoPositiveBalanceToCloseOut": "There is no remaining balance to transfer.",
-  "errorAccountHasNoGroup": "That account has no group assigned.",
-  "errorGroupHasNoCurrency": "That group has no currency set yet.",
-  "errorGroupNotFound": "That account group was not found.",
-  "errorInvestmentAccountsMustBeAssets": "Only asset accounts can be marked as investment accounts.",
-  "errorCreditCardsMustBeLiabilities": "Only liability accounts can be marked as credit cards.",
-  "errorOpeningBalanceMustBePositive": "Opening balance must be positive when supplied.",
-  "errorAccountTypeDoesNotMatchGroup": "That account type does not match the group.",
-  "errorLastActiveAccount": "Cannot hide the last active financial account.",
-  "errorCurrencyRequiredToCreateGroup": "Currency is required to create a group.",
-  "errorSystemGroupCannotBeArchived": "Built-in account groups cannot be hidden.",
-  "errorGroupAlreadyArchived": "That group is already hidden.",
-  "errorCannotArchiveGroupWithAccounts": "Cannot hide a group that still has active accounts.",
-  "errorSystemGroupNeverArchived": "Built-in account groups are never hidden.",
-  "errorAccountGroupsCannotBeDeleted": "Account groups cannot be deleted.",
-  "errorCannotReassignDifferentCurrency": "Cannot move this account to a group with a different currency.",
-  "errorCannotChangeGroupCurrencyWithAccounts": "Cannot change currency while the group has active accounts.",
-  "errorAmountMustBePositive": "رقم گژھ مثبت ٲسِتھ۔",
-  "errorAccountCurrencyAmountMustBePositive": "Account-currency amount must be positive.",
-  "errorAccountCurrencyAmountNotForSameCurrency": "Account-currency amount is only for a foreign-currency entry.",
-  "errorSplitNeedsTwoLines": "A split needs at least two category lines.",
-  "errorSplitLineMustBePositive": "Each split line must be a positive amount.",
-  "errorSplitLinesMustSumToTotal": "Split lines must add up to the transaction total.",
-  "errorTransferAmountMustBePositive": "Transfer amount must be positive.",
-  "errorTransferAccountsMustDiffer": "Source and destination accounts must be different.",
-  "errorCloseoutRequiresDestinationAmount": "A cross-currency closeout needs a known destination amount.",
-  "errorDestinationAmountNotForSameCurrency": "Destination amount is only for a cross-currency transfer.",
-  "errorDestinationAmountMustBePositive": "Destination amount must be positive.",
-  "errorInvestmentCashExceeded": "Cannot transfer more than this investment account''s cash.",
-  "errorCannotReverseUnsettledProvisional": "Settle this pending transfer instead of reversing it.",
-  "errorAlreadyReversed": "This entry has already been corrected. The original line stays as it is.",
-  "errorNotActiveExpenseCategory": "Choose an active expense category.",
-  "errorNotActiveIncomeCategory": "Choose an active income category.",
-  "errorSettledAmountMustNotBeNegative": "Amount that arrived cannot be negative.",
-  "errorPendingTransferNotFound": "That pending transfer was not found.",
-  "errorPendingTransferAlreadySettled": "That pending transfer is already settled.",
-  "errorSettledToMustBeSourceOrDestination": "Choose the original source or destination account.",
-  "errorFeeCategoryOnlyWhenReturningToSource": "A fee category is only used when money is returned to the source account.",
-  "errorSettledAmountMustBePositiveForDelivery": "Enter a positive amount for what arrived.",
-  "errorSettledAmountExceedsProvisional": "That amount is more than was sent.",
-  "errorInstrumentNotFound": "That instrument was not found.",
-  "errorIncomeRequiredForNonCash": "An active income category is required for a non-cash acquisition.",
-  "errorInsufficientCash": "Not enough cash in this investment account for that buy.",
-  "errorSellQuantityAndPriceMustBePositive": "Sell quantity and unit price must be positive.",
-  "errorLockedUntil": "Cannot sell: some units are locked until {date}.",
+  "errorForeignBackupIdentity": "یہ بیک اپ چھ یتھ ڈیوایسہٕ ہند سائننگ شناختہٕ کِنٕ جدا شناختہٕ تعلق.",
+  "errorAccountNotFinancial": "یہ چھ نہٕ مالی حساب.",
+  "errorAccountArchived": "یہ حساب چھ پوشیدہ.",
+  "errorAccountNotArchived": "یہ حساب چھ نہٕ پوشیدہ.",
+  "errorAccountNoPositiveBalanceToCloseOut": "منتقل کرنہٕ خٲطرٕ باقی بیلنس چھہ نہٕ.",
+  "errorAccountHasNoGroup": "یتھ حسابس چھہ نہٕ کانہہ گروپ مقرر.",
+  "errorGroupHasNoCurrency": "یتھ گروپس چھہ نہٕ وننہٕ تام کرنسی سیٹ.",
+  "errorGroupNotFound": "یہ حساب گروپ چھہ نہٕ ملمژٕ.",
+  "errorInvestmentAccountsMustBeAssets": "فقط اثاثہ حساب چھ ہیکان سرمایہ کاری حساب ہیوند مقرر گژھنہٕ.",
+  "errorCreditCardsMustBeLiabilities": "فقط ذمہ داری حساب چھ ہیکان کریڈٹ کارڈ ہیوند مقرر گژھنہٕ.",
+  "errorOpeningBalanceMustBePositive": "دیوان صورتہٕ منز ابتدائی بیلنس گژھ مثبت ٲسِتھ.",
+  "errorAccountTypeDoesNotMatchGroup": "یتھ حسابس ہند قسم چھ نہٕ گروپہٕ سٟتی برابر.",
+  "errorLastActiveAccount": "آخری فعال حساب چھ نہٕ پوشنہٕ ہیکان.",
+  "errorCurrencyRequiredToCreateGroup": "گروپ تیار کرنہٕ خٲطرٕ کرنسی ضروری چھ.",
+  "errorSystemGroupCannotBeArchived": "بلٹ-اِن حساب گروپ چھ نہٕ پوشنہٕ ہیکان.",
+  "errorGroupAlreadyArchived": "یہ گروپ چھ پہلہٕ تام پوشیدہ.",
+  "errorCannotArchiveGroupWithAccounts": "فعال حساب آسنس آمت گروپ چھ نہٕ پوشنہٕ ہیکان.",
+  "errorSystemGroupNeverArchived": "بلٹ-اِن حساب گروپ چھ کدہٕ کہ نہٕ پوشیدہ گژھان.",
+  "errorAccountGroupsCannotBeDeleted": "حساب گروپ چھ نہٕ خارج گژھنہٕ ہیکان.",
+  "errorCannotReassignDifferentCurrency": "یہ حساب چھ نہٕ ہیکان جدا کرنسی ہند گروپس منز نیرنہٕ.",
+  "errorCannotChangeGroupCurrencyWithAccounts": "گروپس منز فعال حساب آسنس تام کرنسی چھ نہٕ بدلنہٕ ہیکان.",
+  "errorAmountMustBePositive": "رقم گژھ مثبت ٲسِتھ.",
+  "errorAccountCurrencyAmountMustBePositive": "حساب-کرنسی رقم گژھ مثبت ٲسِتھ.",
+  "errorAccountCurrencyAmountNotForSameCurrency": "حساب-کرنسی رقم چھ فقط غیر-ملکی کرنسی اندراج خٲطرٕ.",
+  "errorSplitNeedsTwoLines": "ونڈنہٕ خٲطرٕ کمہٕ کمہٕ دُو زمرٕ لکیر ضروری چھ.",
+  "errorSplitLineMustBePositive": "ہر ونڈی لکیر گژھ مثبت رقم ٲسِتھ.",
+  "errorSplitLinesMustSumToTotal": "ونڈی لکیرن ہند مجموعہٕ گژھ واردات ہند کل رقمہٕ سٟتی برابر ٲسِتھ.",
+  "errorTransferAmountMustBePositive": "منتقلی رقم گژھ مثبت ٲسِتھ.",
+  "errorTransferAccountsMustDiffer": "ماخذ تہٕ منزل حساب گژھِ جدا ٲسِتھ.",
+  "errorCloseoutRequiresDestinationAmount": "غیر-ملکی کرنسی بند کرنہٕ خٲطرٕ معلوم منزل رقم ضروری چھ.",
+  "errorDestinationAmountNotForSameCurrency": "منزل رقم چھ فقط غیر-ملکی کرنسی منتقلی خٲطرٕ.",
+  "errorDestinationAmountMustBePositive": "منزل رقم گژھ مثبت ٲسِتھ.",
+  "errorInvestmentCashExceeded": "یتھ سرمایہ کاری حسابہٕ ہند نقدہٕ کِنٕ زیادٕ منتقل کرنہٕ ہیکان نہٕ.",
+  "errorCannotReverseUnsettledProvisional": "یہ باقی منتقلی الٹنہٕ ہند بدلہٕ تصفیہ کریو.",
+  "errorAlreadyReversed": "یہ اندراج چھ پہلہٕ تام درست گژھمژٕ. اصل لکیر چھ ہمترین.",
+  "errorNotActiveExpenseCategory": "فعال خرچ زمرٕ ژارٕو.",
+  "errorNotActiveIncomeCategory": "فعال آمدنی زمرٕ ژارٕو.",
+  "errorSettledAmountMustNotBeNegative": "پہٟچمژٕ رقم چھ نہٕ ہیکان منفی.",
+  "errorPendingTransferNotFound": "یہ باقی منتقلی چھہ نہٕ ملمژٕ.",
+  "errorPendingTransferAlreadySettled": "یہ باقی منتقلی چھ پہلہٕ تام تصفیہ گژھمژٕ.",
+  "errorSettledToMustBeSourceOrDestination": "اصل ماخذ یا منزل حساب ژارٕو.",
+  "errorFeeCategoryOnlyWhenReturningToSource": "فیس زمرٕ چھ فقط ییلہٕ زَر ماخذ حسابس واپس گژھان استعمال.",
+  "errorSettledAmountMustBePositiveForDelivery": "پہٟچمژٕ رقمہٕ خٲطرٕ مثبت رقم درج کریو.",
+  "errorSettledAmountExceedsProvisional": "یہ رقم چھ رٲومژٕ رقمہٕ کِنٕ زیادٕ.",
+  "errorInstrumentNotFound": "یہ آلہٕ چھہ نہٕ ملمژٕ.",
+  "errorIncomeRequiredForNonCash": "غیر نقد حاصلاتہٕ خٲطرٕ فعال آمدنی زمرٕ ضروری چھ.",
+  "errorInsufficientCash": "یتھ سرمایہ کاری حسابس منز اتھ خریدہٕ خٲطرٕ کافی نقد چھہ نہٕ.",
+  "errorSellQuantityAndPriceMustBePositive": "فروخت تعداد تہٕ اکائی قیمت گژھِ مثبت ٲسِتھ.",
+  "errorLockedUntil": "فروخت کرنہٕ ہیکان نہٕ: کیٚنہہ اکائی چھ {date} تام لاک.",
   "@errorLockedUntil": {
     "placeholders": {
       "date": {
@@ -625,10 +624,10 @@
       }
     }
   },
-  "errorInsufficientQuantity": "Cannot sell more than you currently hold unlocked.",
-  "errorIncomeRequiredForGain": "An active income category is required for a realized gain.",
-  "errorExpenseRequiredForLoss": "An active expense category is required for a realized loss.",
-  "errorBrokerageFailedAfterBuy": "Buy posted, but brokerage fee failed: {detail}",
+  "errorInsufficientQuantity": "موجودٕ غیر-لاک تعداد کِنٕ زیادٕ فروخت کرنہٕ ہیکان نہٕ.",
+  "errorIncomeRequiredForGain": "حاصل شُدہٕ منافعہٕ خٲطرٕ فعال آمدنی زمرٕ ضروری چھ.",
+  "errorExpenseRequiredForLoss": "حاصل شُدہٕ نقصانہٕ خٲطرٕ فعال خرچ زمرٕ ضروری چھ.",
+  "errorBrokerageFailedAfterBuy": "خرید درج گژھی، مگر بروکریج فیس ناکام گژھی: {detail}",
   "@errorBrokerageFailedAfterBuy": {
     "placeholders": {
       "detail": {
@@ -636,7 +635,7 @@
       }
     }
   },
-  "errorBrokerageFailedAfterSell": "Sell posted, but brokerage fee failed: {detail}",
+  "errorBrokerageFailedAfterSell": "فروخت درج گژھی، مگر بروکریج فیس ناکام گژھی: {detail}",
   "@errorBrokerageFailedAfterSell": {
     "placeholders": {
       "detail": {
@@ -644,10 +643,10 @@
       }
     }
   },
-  "errorDividendMustBePositive": "Dividend amount must be positive.",
-  "errorNotInvestmentAccount": "That is not an investment account.",
-  "errorNoInventoryCompanion": "This investment account is missing its inventory companion.",
-  "errorInvestmentReversalBlocked": "Cannot reverse this buy: later sell(s) depend on its units. Reverse dependent sell(s) first: {sells}.",
+  "errorDividendMustBePositive": "منافع رقم گژھ مثبت ٲسِتھ.",
+  "errorNotInvestmentAccount": "یہ چھ نہٕ سرمایہ کاری حساب.",
+  "errorNoInventoryCompanion": "یتھ سرمایہ کاری حسابس چھہ نہٕ ذخیرٕ ہند ساتھی.",
+  "errorInvestmentReversalBlocked": "یہ خرید الٹنہٕ ہیکان نہٕ: پتمژٕ فروخت چھ ییمن اکائین پؠٹھ منحصر. برونٹھ منحصر فروخت ({sells}) الٹاو.",
   "@errorInvestmentReversalBlocked": {
     "placeholders": {
       "sells": {
@@ -655,13 +654,13 @@
       }
     }
   },
-  "errorMonthlyLimitMustBePositive": "Monthly limit must be positive.",
-  "errorTemplateAmountMustBePositive": "Template amount must be positive.",
-  "errorOfxUnrecognized": "Could not recognize this file as OFX.",
-  "errorCsvEmpty": "The selected file is empty.",
-  "errorCsvUnreadable": "Could not read this file as CSV.",
-  "errorCsvNoRows": "The selected file has no rows.",
-  "errorBackupCreateFailed": "Could not create the backup: {detail}",
+  "errorMonthlyLimitMustBePositive": "ماہانہٕ حد گژھ مثبت ٲسِتھ.",
+  "errorTemplateAmountMustBePositive": "ٹیمپلیٹ رقم گژھ مثبت ٲسِتھ.",
+  "errorOfxUnrecognized": "یہ فایل چھ نہٕ OFX ہیوند پہٟچانہٕ ہیکان.",
+  "errorCsvEmpty": "ژارٕمژٕ فایل چھ خالی.",
+  "errorCsvUnreadable": "یہ فایل چھ نہٕ CSV ہیوند پرنہٕ ہیکان.",
+  "errorCsvNoRows": "ژارٕمژٕ فایلہٕ منز چھہ نہٕ قطاریں.",
+  "errorBackupCreateFailed": "بیک اپ تیار کرنہٕ ہیکان نہٕ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
       "detail": {
@@ -669,27 +668,27 @@
       }
     }
   },
-  "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
-  "validationAmountAccountRequired": "Amount and account are required.",
-  "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
-  "validationSplitSumMismatch": "Split lines must add up to the transaction total.",
-  "validationFromToAmountRequired": "From account, to account, and amount are required.",
-  "validationAmountArrivedRequired": "Amount that arrived is required.",
-  "validationChooseReceivingAccount": "Choose which account received the funds.",
-  "validationAccountCategoryRequired": "Account and category are required.",
-  "validationFixFailed": "Could not save this fix.",
-  "validationNameRequired": "Name your main account.",
-  "validationStillLoading": "Still loading - try again in a moment.",
-  "validationSaveAccountNameFailed": "Could not save the account name.",
-  "validationWrongPin": "Wrong PIN. Try again.",
-  "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
-  "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
-  "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
-  "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
+  "errorBackupRestoreFailed": "یہ بیک اپ بحال کرنہٕ ہیکان نہٕ - غلط پاس فریز، یا سمارا بیک اپ فایل نہٕ.",
+  "validationAmountAccountCategoryRequired": "رقم، حساب، تہٕ زمرٕ ضروری چھ.",
+  "validationAmountAccountRequired": "رقم تہٕ حساب ضروری چھ.",
+  "validationSplitLineIncomplete": "ہر ونڈی لکیرس زمرٕ تہٕ رقم ضروری چھ.",
+  "validationSplitSumMismatch": "ونڈی لکیرن ہند مجموعہٕ گژھ واردات ہند کل رقمہٕ سٟتی برابر ٲسِتھ.",
+  "validationFromToAmountRequired": "منز حساب، خٲطرٕ حساب، تہٕ رقم ضروری چھ.",
+  "validationAmountArrivedRequired": "پہٟچمژٕ رقم ضروری چھ.",
+  "validationChooseReceivingAccount": "کوس حسابس زَر پہٟچ، یہ ژارٕو.",
+  "validationAccountCategoryRequired": "حساب تہٕ زمرٕ ضروری چھ.",
+  "validationFixFailed": "یہ اصلاح محفوظ کرنہٕ ہیکان نہٕ.",
+  "validationNameRequired": "تُہند اصلی حساب ناو دِیو.",
+  "validationStillLoading": "وننہٕ تام لوڈ گژھان چھ - اکہ لمحہٕ پتہٕ دوبارہ کوشش کریو.",
+  "validationSaveAccountNameFailed": "حساب ہند ناو محفوظ کرنہٕ ہیکان نہٕ.",
+  "validationWrongPin": "غلط PIN. دوبارہ کوشش کریو.",
+  "validationCategoryMustBeIncomeOrExpense": "زمرٕ گژھ آمدنی یا خرچ ٲسِتھ.",
+  "validationOnlyExpenseHasMonthlyLimit": "فقط خرچ زمرٕ چھ ہیکان ماہانہٕ حد رکھنہٕ.",
+  "validationInvalidTemplate": "غلط ٹیمپلیٹ.",
+  "validationWrongKeystorePassphrase": "یتھ کی سٹور فایلہٕ خٲطرٕ غلط پاس فریز.",
+  "validationInvalidKeystoreFile": "یہ چھ نہٕ صحیح کی سٹور فایل ظٲہر گژھان.",
+  "validationRestorePhraseFailed": "تِتھ بازیابی فقرٕس سٟتی بحال کرنہٕ ہیکان نہٕ.",
+  "validationGenerateKeyFailed": "یتھ ڈیوایسہٕ پؠٹھ سائننگ کی تیار کرنہٕ ہیکان نہٕ: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
       "detail": {
@@ -697,7 +696,7 @@
       }
     }
   },
-  "validationSaveCurrencyFailed": "Could not save this currency: {detail}",
+  "validationSaveCurrencyFailed": "یہ کرنسی محفوظ کرنہٕ ہیکان نہٕ: {detail}",
   "@validationSaveCurrencyFailed": {
     "placeholders": {
       "detail": {
@@ -705,13 +704,13 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
-  "validationChooseBackupFile": "Choose a backup file first.",
-  "validationPassphraseRequired": "Enter a passphrase.",
-  "validationPinsDoNotMatch": "The two PINs do not match.",
-  "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
-  "validationFeeMustBeLessThanAmount": "The fee must be less than the amount for a deducted-fee transfer.",
-  "validationTransferSavedFeeFailed": "Transfer saved, but the fee could not be recorded: {detail}",
+  "validationMigrationFailed": "منتقلی ناکام گژھی. دوبارہ کوشش کریو.",
+  "validationChooseBackupFile": "برونٹھ بیک اپ فایل ژارٕو.",
+  "validationPassphraseRequired": "پاس فریز درج کریو.",
+  "validationPinsDoNotMatch": "دُوہٕ PIN چھ نہٕ برابر.",
+  "validationFeePositiveWithCategory": "منتقلی فیس گژھ مثبت رقم ٲسِتھ تہٕ خرچ زمرٕ ژارٕمژٕ ٲسِتھ.",
+  "validationFeeMustBeLessThanAmount": "منہا-فیس منتقلیس منز فیس گژھ رقمہٕ کِنٕ کم ٲسِتھ.",
+  "validationTransferSavedFeeFailed": "منتقلی محفوظ گژھی، مگر فیس درج کرنہٕ ہیکان نہٕ: {detail}",
   "@validationTransferSavedFeeFailed": {
     "placeholders": {
       "detail": {
@@ -719,8 +718,8 @@
       }
     }
   },
-  "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
+  "validationEnterValidAmount": "صحیح رقم درج کریو.",
+  "validationConfirmWordMismatch": "لفظ {n} چھ نہٕ تُہند محفوظ کرمژٕ فقرٕ سٟتی برابر. چیک کریو تہٕ دوبارہ کوشش کریو.",
   "@validationConfirmWordMismatch": {
     "placeholders": {
       "n": {
@@ -728,12 +727,12 @@
       }
     }
   },
-  "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
-  "errorInstrumentArchived": "Cannot buy an archived instrument.",
-  "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
-  "errorBrokerageRequiresExpenseCategory": "An active expense category is required when brokerage is positive.",
-  "errorSellProceedsMustCoverBrokerage": "Sell proceeds must be at least the brokerage amount.",
-  "homeSpentOfLimitThisMonth": "{spent} of {limit} this month",
+  "errorBuyQuantityAndPriceMustBePositive": "خرید تعداد تہٕ اکائی قیمت گژھِ مثبت ٲسِتھ.",
+  "errorInstrumentArchived": "پوشیدہ آلہٕ خریدنہٕ ہیکان نہٕ.",
+  "errorNonCashCannotIncludeBrokerage": "غیر نقد حاصلاتس منز بروکریج شامل کرنہٕ ہیکان نہٕ.",
+  "errorBrokerageRequiresExpenseCategory": "ییلہٕ بروکریج مثبت چھ، تہِ فعال خرچ زمرٕ ضروری چھ.",
+  "errorSellProceedsMustCoverBrokerage": "فروخت ہند رقم گژھ کمہٕ کمہٕ بروکریج رقمہٕ برابر ٲسِتھ.",
+  "homeSpentOfLimitThisMonth": "یِم رؠتھ {limit} منز {spent}",
   "@homeSpentOfLimitThisMonth": {
     "placeholders": {
       "spent": {
@@ -744,10 +743,10 @@
       }
     }
   },
-  "unlockBiometricReason": "Unlock Smara Account",
+  "unlockBiometricReason": "سمارا حساب کھولیو",
   "searchLabel": "ژھانڈ",
-  "openingBalance": "Opening balance",
-  "transferToName": "Transfer: {name}",
+  "openingBalance": "ابتدائی بیلنس",
+  "transferToName": "منتقلی: {name}",
   "@transferToName": {
     "placeholders": {
       "name": {
@@ -755,8 +754,8 @@
       }
     }
   },
-  "feeForTransfer": "Fee for transfer",
-  "feeForTransferTo": "Fee for transfer to {name}",
+  "feeForTransfer": "منتقلی فیس",
+  "feeForTransferTo": "{name} خٲطرٕ منتقلی فیس",
   "@feeForTransferTo": {
     "placeholders": {
       "name": {
@@ -764,7 +763,7 @@
       }
     }
   },
-  "couldNotOpenFilePicker": "Could not open the file picker: {detail}",
+  "couldNotOpenFilePicker": "فایل ژارنہٕ آلہٕ کھولنہٕ ہیکان نہٕ: {detail}",
   "@couldNotOpenFilePicker": {
     "placeholders": {
       "detail": {
@@ -772,7 +771,7 @@
       }
     }
   },
-  "pleaseSelectFile": "Please select a .{extensions} file",
+  "pleaseSelectFile": "مہربانی کریتھ .{extensions} فایل ژارٕو",
   "@pleaseSelectFile": {
     "placeholders": {
       "extensions": {
@@ -780,8 +779,8 @@
       }
     }
   },
-  "currencyCodeIso": "Currency code (ISO 4217, e.g. USD)",
-  "splitCounterpartMore": "{name} +{count} more",
+  "currencyCodeIso": "کرنسی کوڈ (ISO 4217، مثلن USD)",
+  "splitCounterpartMore": "{name} + {count} بیٕ",
   "@splitCounterpartMore": {
     "placeholders": {
       "name": {
@@ -792,9 +791,9 @@
       }
     }
   },
-  "dateLabel": "Date",
-  "noneSelected": "None",
-  "reviewEntriesBeforeContinuing": "Review the entries below ({count} total) before continuing.",
+  "dateLabel": "تاریخ",
+  "noneSelected": "کانہہ نہٕ",
+  "reviewEntriesBeforeContinuing": "جاری رکھنس برونٹھ ہیٹھ اندراج ({count} کل) نظر ثانی کریو.",
   "@reviewEntriesBeforeContinuing": {
     "placeholders": {
       "count": {
@@ -802,7 +801,7 @@
       }
     }
   },
-  "youReceived": "You received {amount}",
+  "youReceived": "تُہی وصول کریو {amount}",
   "@youReceived": {
     "placeholders": {
       "amount": {
@@ -810,14 +809,14 @@
       }
     }
   },
-  "leaveBlankIfRateUnknown": "Leave blank if the exchange rate isn''t known yet.",
-  "recordTradeBlurb": "Record a trade that already happened. This app does not place orders.",
-  "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
-  "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
-  "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
-  "actionReplace": "Replace",
-  "hideAccountBody": "{name} will no longer be available for new transactions.",
+  "leaveBlankIfRateUnknown": "اگر شرح تبادلہٕ وننہٕ تام معلوم نہٕ چھ، خالی ژٲریو.",
+  "recordTradeBlurb": "پہلہٕ گژھمژٕ سودا درج کریو. یہ ایپ آرڈر نہٕ چھ دیوان.",
+  "feeOnTopBlurb": "شامل: اپرین رقم چھ اتھ حسابہٕ منز نیرمژٕ کل رقم، فیس چھ تِتھ منز نیران.",
+  "feeBankBlurb": "تُہند بینکہٕ یا واسطٕ ادارٕ کریمژٕ اکھ اگاؤ کمیشن.",
+  "validationPinMinLength": "PIN گژھ کمہٕ کمہٕ 4 عدد ٲسِتھ.",
+  "restoreBackupBlurb": "یہ ایپہٕ منز موجودٕ سٲری کانہہ بیک اپہٕ سٟتی بدلاو — یہ چھ نہٕ ضم کران. بیک اپ فایل ژارٕو تہٕ تُہی محفوظ کرنس ویلہٕ استعمال کرمژٕ پاس فریز درج کریو.",
+  "actionReplace": "بدلاو",
+  "hideAccountBody": "{name} چھ نو واردات خٲطرٕ اوس دستیاب نہٕ گژھان.",
   "@hideAccountBody": {
     "placeholders": {
       "name": {
@@ -825,7 +824,7 @@
       }
     }
   },
-  "hideGroupBody": "{name} will no longer be offered when creating or reassigning accounts.",
+  "hideGroupBody": "{name} چھ حساب تیار یا دوبارہ مقرر کرنس ویلہٕ اوس نہٕ پیش گژھان.",
   "@hideGroupBody": {
     "placeholders": {
       "name": {
@@ -833,7 +832,7 @@
       }
     }
   },
-  "hideCategoryBody": "{name} will no longer be offered when recording new transactions.",
+  "hideCategoryBody": "{name} چھ نو واردات درج کرنس ویلہٕ اوس نہٕ پیش گژھان.",
   "@hideCategoryBody": {
     "placeholders": {
       "name": {
@@ -841,8 +840,8 @@
       }
     }
   },
-  "hideInstrumentBody": "Hidden instruments stay on past buys and sells. You can still record a dividend for them.",
-  "nameHidden": "{name} (hidden)",
+  "hideInstrumentBody": "پوشیدہ آلاتہٕ چھ پُرٲنہٕ خرید تہٕ فروختن پؠٹھ رٲہان. تُہی ہیکو تِمن خٲطرٕ منافع درج کرِتھ.",
+  "nameHidden": "{name} (پوشیدہ)",
   "@nameHidden": {
     "placeholders": {
       "name": {
@@ -850,8 +849,8 @@
       }
     }
   },
-  "noCurrencySet": "No currency set",
-  "deletePayeeBody": "{name} and its remembered defaults will be removed. Past transactions are unaffected.",
+  "noCurrencySet": "کرنسی سیٹ چھہ نہٕ",
+  "deletePayeeBody": "{name} تہٕ تِمن ہند اصلی سیٹنگ چھ خارج گژھان. پُرٲنہٕ واردات پؠٹھ اثر نہٕ چھ.",
   "@deletePayeeBody": {
     "placeholders": {
       "name": {
@@ -859,7 +858,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} will no longer be offered as due. Past transactions it already recorded are unaffected.",
+  "deleteTemplateBody": "{name} چھ آسنٕ باقی ہیوند اوس نہٕ پیش گژھان. پہلہٕ تام درج گژھمژٕ پُرٲنہٕ واردات پؠٹھ اثر نہٕ چھ.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -867,7 +866,7 @@
       }
     }
   },
-  "deleteProfileBody": "The saved column mapping \"{name}\" will be deleted. Statements already imported with it are unaffected.",
+  "deleteProfileBody": "محفوظ کرمژٕ کالم میپنگ \"{name}\" چھ خارج گژھان. تِتھ سٟتی پہلہٕ تام درآمد گژھمژٕ بیانن پؠٹھ اثر نہٕ چھ.",
   "@deleteProfileBody": {
     "placeholders": {
       "name": {
@@ -875,7 +874,7 @@
       }
     }
   },
-  "deleteRuleBody": "Imports will no longer be auto-categorized by \"{keyword}\". Transactions already categorized using this rule are unaffected.",
+  "deleteRuleBody": "درآمد چھ اوس نہٕ \"{keyword}\" استعمال کرِتھ خودکار زمرٕ بندی گژھان. یتھ اصولہٕ سٟتی پہلہٕ تام زمرٕ بندی گژھمژٕ واردات پؠٹھ اثر نہٕ چھ.",
   "@deleteRuleBody": {
     "placeholders": {
       "keyword": {
@@ -883,9 +882,9 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
-  "deliveredToDestination": "Delivered to destination",
-  "deliveredToName": "Delivered to {name}",
+  "firstWeekBlurb": "اوس اختیاری طور پؠٹھ کریڈٹ کارڈ یا نقد حساب شامل کریو - تُہی ہیکو ہمیشہٕ پتہٕ سیٹنگزہٕ منز زیادٕ حساب شامل کرِتھ.",
+  "deliveredToDestination": "منزل حسابس تام پہنچ",
+  "deliveredToName": "{name} تام پہنچ",
   "@deliveredToName": {
     "placeholders": {
       "name": {
@@ -893,7 +892,7 @@
       }
     }
   },
-  "youReceivedLessThanExpected": "You received {amount} {currency} less than expected - choose a category to cover the difference.",
+  "youReceivedLessThanExpected": "تُہی وصول کریو توقع کِنٕ {amount} {currency} کم - فرق پُورن خٲطرٕ زمرٕ ژارٕو.",
   "@youReceivedLessThanExpected": {
     "placeholders": {
       "amount": {
@@ -904,14 +903,14 @@
       }
     }
   },
-  "dateRangeLabel": "Date range",
-  "addTemplate": "Add template",
-  "editTemplate": "Edit template",
-  "validationFillTemplateFields": "Fill in every field with a valid amount and day.",
-  "saveCsvExport": "Save CSV export",
-  "referenceRate": "Reference rate",
-  "yourRate": "Your rate",
-  "leaveBlankIfThisWasAccountCurrency": "Leave blank if this was in {currency}, the account''s own currency.",
+  "dateRangeLabel": "تاریخ حد",
+  "addTemplate": "ٹیمپلیٹ شامل کریو",
+  "editTemplate": "ٹیمپلیٹ تبدیل کریو",
+  "validationFillTemplateFields": "ہر فیلڈس منز صحیح رقم تہٕ دوہ درج کریو.",
+  "saveCsvExport": "CSV برآمد محفوظ کریو",
+  "referenceRate": "حوالہٕ شرح",
+  "yourRate": "تُہند شرح",
+  "leaveBlankIfThisWasAccountCurrency": "اگر یہ واردات حسابہٕ ہند خودی کرنسی {currency} منز اوس، خالی ژٲریو.",
   "@leaveBlankIfThisWasAccountCurrency": {
     "placeholders": {
       "currency": {
@@ -919,8 +918,8 @@
       }
     }
   },
-  "lockUntilOptional": "Lock until (optional)",
-  "lockedUntilDate": "Locked until {date}",
+  "lockUntilOptional": "تام لاک (اختیاری)",
+  "lockedUntilDate": "{date} تام لاک",
   "@lockedUntilDate": {
     "placeholders": {
       "date": {
@@ -928,12 +927,12 @@
       }
     }
   },
-  "copiedResearchPrompt": "Copied a research prompt — no browser URL available, or you are offline.",
-  "openedFavouriteResearchTool": "Opened your favourite research tool.",
-  "looksLikeGain": "This looks like a gain",
-  "looksLikeLoss": "This looks like a loss",
-  "looksLikeBreakEven": "This looks like break-even",
-  "sellableQuantity": "{name} ({qty} sellable)",
+  "copiedResearchPrompt": "تحقیق پرامپٹ کاپی گژھی — دستیاب براؤزر URL چھہ نہٕ، یا تُہی چھِو آف لایِن.",
+  "openedFavouriteResearchTool": "تُہند پسندیدٕ تحقیق آلہٕ کھلمژٕ.",
+  "looksLikeGain": "یہ چھ منافع ظٲہر گژھان",
+  "looksLikeLoss": "یہ چھ نقصان ظٲہر گژھان",
+  "looksLikeBreakEven": "یہ چھ نہٕ منافع نہٕ نقصان ظٲہر گژھان",
+  "sellableQuantity": "{name} ({qty} فروختہٕ لایق)",
   "@sellableQuantity": {
     "placeholders": {
       "name": {
@@ -944,7 +943,7 @@
       }
     }
   },
-  "columnN": "Column {index}",
+  "columnN": "کالم {index}",
   "@columnN": {
     "placeholders": {
       "index": {
@@ -952,10 +951,10 @@
       }
     }
   },
-  "importingLabel": "Importing...",
-  "confirmImport": "Confirm import",
-  "manageSavedCategoryRules": "Manage Saved Category Rules",
-  "statementCurrencyMismatch": "This file''s currency ({currency}) doesn''t match the selected account''s currency.",
+  "importingLabel": "درآمد گژھان...",
+  "confirmImport": "درآمد تصدیق کریو",
+  "manageSavedCategoryRules": "محفوظ زمرٕ اصول منظم کریو",
+  "statementCurrencyMismatch": "یتھ فایلہٕ ہند کرنسی ({currency}) چھ نہٕ ژارٕمژٕ حسابہٕ ہند کرنسی سٟتی برابر.",
   "@statementCurrencyMismatch": {
     "placeholders": {
       "currency": {
@@ -963,7 +962,7 @@
       }
     }
   },
-  "categoryRulesTitle": "Category rules",
-  "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "categoryRulesTitle": "زمرٕ اصول",
+  "possibleDuplicate": "ممکن نقل",
+  "unknownCategory": "نامعلوم زمرٕ"
 }

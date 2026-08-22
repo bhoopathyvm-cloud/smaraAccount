@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:http/http.dart' as http;
 
 import '../domain/models/quote_provider.dart';
+import '../domain/money/currency_minor_units.dart';
 
 /// A last-trade price in minor units plus the quote's ISO currency.
 class FetchedQuote {
@@ -65,14 +67,14 @@ class InstrumentQuoteService {
     if (parts.length < 7) return null;
     final close = double.tryParse(parts[6]);
     if (close == null || close <= 0) return null;
-    return FetchedQuote(
-      priceMinor: (close * 100).round(),
-      currency: 'USD',
-    );
+    return FetchedQuote(priceMinor: (close * 100).round(), currency: 'USD');
   }
 
   Future<FetchedQuote?> _fetchYahoo(String symbol) async {
-    final uri = Uri.https('query1.finance.yahoo.com', '/v8/finance/chart/$symbol');
+    final uri = Uri.https(
+      'query1.finance.yahoo.com',
+      '/v8/finance/chart/$symbol',
+    );
     final response = await _client.get(uri).timeout(_timeout);
     if (response.statusCode != 200) return null;
     final decoded = jsonDecode(response.body);
@@ -89,9 +91,11 @@ class InstrumentQuoteService {
     final currency = meta['currency'];
     if (price is! num || price <= 0) return null;
     if (currency is! String || currency.isEmpty) return null;
+    final upperCurrency = currency.toUpperCase();
+    final digits = minorUnitDigitsForCurrency(upperCurrency);
     return FetchedQuote(
-      priceMinor: (price.toDouble() * 100).round(),
-      currency: currency.toUpperCase(),
+      priceMinor: (price.toDouble() * pow(10, digits)).round(),
+      currency: upperCurrency,
     );
   }
 }

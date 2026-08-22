@@ -75,10 +75,7 @@ class _RestoreIdentityViewState extends State<RestoreIdentityView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  l10n.restoreBlurb,
-                  style: AppTypography.body,
-                ),
+                Text(l10n.restoreBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 SegmentedButton<_RestoreMode>(
                   segments: [
@@ -116,13 +113,15 @@ class _RestoreIdentityViewState extends State<RestoreIdentityView> {
                   TextField(
                     controller: _passphraseController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: l10n.keystorePassphrase),
+                    decoration: InputDecoration(
+                      labelText: l10n.keystorePassphrase,
+                    ),
                   ),
                 ],
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.medium),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

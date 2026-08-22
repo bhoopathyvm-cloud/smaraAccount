@@ -41,6 +41,5 @@ class InstrumentHolding {
   double get sellableQuantity => sellableQuantityScaled / 10000;
 
   int get displayMarketValueMinor => marketValueMinor ?? totalCostMinor;
-  int get displayUnrealizedMinor =>
-      unrealizedGainLossMinor ?? 0;
+  int get displayUnrealizedMinor => unrealizedGainLossMinor ?? 0;
 }

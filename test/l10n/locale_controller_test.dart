@@ -17,10 +17,7 @@ void main() {
     );
     await controller.load();
     expect(controller.overrideLocale, isNull);
-    expect(
-      controller.resolve(const Locale('xx')),
-      equals(const Locale('en')),
-    );
+    expect(controller.resolve(const Locale('xx')), equals(const Locale('en')));
   });
 
   test('persists a manual language override', () async {

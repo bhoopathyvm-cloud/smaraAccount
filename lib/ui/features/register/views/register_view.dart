@@ -100,9 +100,9 @@ class RegisterView extends StatelessWidget {
           final l10n = l10nOf(context);
           return Column(
             children: [
-              if (viewModel.errorMessage != null)
+              if (viewModel.errorMessageFor(l10n) != null)
                 StatusBanner(
-                  message: viewModel.errorMessage!,
+                  message: viewModel.errorMessageFor(l10n)!,
                   isError: true,
                   onDismiss: viewModel.clearError,
                 ),
@@ -113,9 +113,7 @@ class RegisterView extends StatelessWidget {
                   items: viewModel.accounts,
                   idOf: (account) => account.id,
                   labelOf: (account) => account.archived
-                      ? l10n.nameHidden(
-                          localizeStoredName(l10n, account.name),
-                        )
+                      ? l10n.nameHidden(localizeStoredName(l10n, account.name))
                       : localizeStoredName(l10n, account.name),
                   value: viewModel.selectedAccountId,
                   onChanged: (accountId) {
@@ -213,7 +211,7 @@ class RegisterView extends StatelessWidget {
         '${accountName ?? 'register'}-'
         '${_isoDate(range.start)}-to-${_isoDate(range.end)}.csv';
     await FilePicker.platform.saveFile(
-        dialogTitle: l10n.saveCsvExport,
+      dialogTitle: l10n.saveCsvExport,
       fileName: fileName,
       bytes: Uint8List.fromList(utf8.encode(csv)),
     );
@@ -259,10 +257,8 @@ class RegisterView extends StatelessWidget {
                     labelText: l10nOf(context).toAccount,
                     items: viewModel.closeoutDestinationCandidates,
                     idOf: (account) => account.id,
-                    labelOf: (account) => localizeStoredName(
-                      l10nOf(context),
-                      account.name,
-                    ),
+                    labelOf: (account) =>
+                        localizeStoredName(l10nOf(context), account.name),
                     value: toAccountId,
                     onChanged: (accountId) {
                       setDialogState(() {

@@ -26,20 +26,26 @@ void main() {
 
       final repository = MockSettingsRepository();
       final appLockController = MockAppLockController();
-      when(repository.isReferenceRateLookupEnabled()).thenAnswer((_) async => false);
-      when(repository.selectedProvider()).thenAnswer(
-        (_) async => ExchangeRateProvider.frankfurter,
-      );
-      when(repository.isMarketPriceFetchEnabled()).thenAnswer((_) async => true);
-      when(repository.selectedQuoteProvider()).thenAnswer(
-        (_) async => QuoteProvider.stooq,
-      );
-      when(repository.selectedResearchTool()).thenAnswer(
-        (_) async => ResearchTool.chatGpt,
-      );
+      when(
+        repository.isReferenceRateLookupEnabled(),
+      ).thenAnswer((_) async => false);
+      when(
+        repository.selectedProvider(),
+      ).thenAnswer((_) async => ExchangeRateProvider.frankfurter);
+      when(
+        repository.isMarketPriceFetchEnabled(),
+      ).thenAnswer((_) async => true);
+      when(
+        repository.selectedQuoteProvider(),
+      ).thenAnswer((_) async => QuoteProvider.stooq);
+      when(
+        repository.selectedResearchTool(),
+      ).thenAnswer((_) async => ResearchTool.chatGpt);
       when(repository.isAppLockEnabled()).thenAnswer((_) async => false);
       when(repository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
-      when(repository.isAppLockBiometricEnabled()).thenAnswer((_) async => false);
+      when(
+        repository.isAppLockBiometricEnabled(),
+      ).thenAnswer((_) async => false);
       when(appLockController.isSnapshotHidingEnabled).thenReturn(false);
 
       final biometric = MockBiometricAuthenticator();

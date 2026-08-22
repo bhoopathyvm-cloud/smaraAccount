@@ -10,86 +10,27 @@ void main() {
   late MockLedgerRepository ledgerRepository;
   late MockSettingsRepository settingsRepository;
 
-  const seededAccount = Account(
-    id: 'asset-seed',
-    name: 'Cash & Bank',
-    type: AccountType.asset,
-    archived: false,
-    groupId: 'group_cash_equivalents',
-  );
-
   setUp(() {
     ledgerRepository = MockLedgerRepository();
     settingsRepository = MockSettingsRepository();
-    when(
-      ledgerRepository.watchFinancialAccounts(),
-    ).thenAnswer((_) => Stream.value(const [seededAccount]));
   });
 
-  Future<FirstWeekSetupViewModel> viewModelAfterLoad() async {
-    final viewModel = FirstWeekSetupViewModel(
-      ledgerRepository: ledgerRepository,
-      settingsRepository: settingsRepository,
-    );
-    await Future<void>.delayed(Duration.zero);
-    return viewModel;
-  }
-
-  test(
-    'loads with the seeded account\'s current name prefilled, not loading',
-    () async {
-      final viewModel = await viewModelAfterLoad();
-      addTearDown(viewModel.dispose);
-
-      expect(viewModel.isLoading, isFalse);
-      expect(viewModel.mainAccountName, equals('Cash & Bank'));
-    },
+  FirstWeekSetupViewModel viewModel() => FirstWeekSetupViewModel(
+    ledgerRepository: ledgerRepository,
+    settingsRepository: settingsRepository,
   );
 
-  test(
-    'finish fails with an errorMessage when the main account name is blank',
-    () async {
-      final viewModel = await viewModelAfterLoad();
-      addTearDown(viewModel.dispose);
-      viewModel.setMainAccountName('   ');
-
-      final result = await viewModel.finish();
-
-      expect(result, isFalse);
-      expect(viewModel.errorMessage, isNotEmpty);
-      verifyNever(
-        ledgerRepository.renameFinancialAccount(
-          id: anyNamed('id'),
-          newName: anyNamed('newName'),
-        ),
-      );
-    },
-  );
-
-  test('finish renames the seeded account and marks setup complete when both '
-      'optional steps are skipped', () async {
-    final viewModel = await viewModelAfterLoad();
-    addTearDown(viewModel.dispose);
-    viewModel.setMainAccountName('Chase Checking');
-    when(
-      ledgerRepository.renameFinancialAccount(
-        id: anyNamed('id'),
-        newName: anyNamed('newName'),
-      ),
-    ).thenAnswer((_) async {});
+  test('finish marks setup complete and creates nothing when both optional '
+      'steps are skipped', () async {
+    final vm = viewModel();
+    addTearDown(vm.dispose);
     when(
       settingsRepository.setFirstWeekSetupCompleted(true),
     ).thenAnswer((_) async {});
 
-    final result = await viewModel.finish();
+    final result = await vm.finish();
 
     expect(result, isTrue);
-    verify(
-      ledgerRepository.renameFinancialAccount(
-        id: 'asset-seed',
-        newName: 'Chase Checking',
-      ),
-    ).called(1);
     verifyNever(
       ledgerRepository.createFinancialAccount(
         name: anyNamed('name'),
@@ -102,19 +43,12 @@ void main() {
 
   test('finish creates a credit card and a cash account when both optional '
       'steps are filled in', () async {
-    final viewModel = await viewModelAfterLoad();
-    addTearDown(viewModel.dispose);
-    viewModel.setMainAccountName('Chase Checking');
-    viewModel.setHasCreditCard(true);
-    viewModel.setCreditCardName('Chase Sapphire');
-    viewModel.setHasCashAccount(true);
-    viewModel.setCashAccountName('Wallet cash');
-    when(
-      ledgerRepository.renameFinancialAccount(
-        id: anyNamed('id'),
-        newName: anyNamed('newName'),
-      ),
-    ).thenAnswer((_) async {});
+    final vm = viewModel();
+    addTearDown(vm.dispose);
+    vm.setHasCreditCard(true);
+    vm.setCreditCardName('Chase Sapphire');
+    vm.setHasCashAccount(true);
+    vm.setCashAccountName('Wallet cash');
     when(
       ledgerRepository.createFinancialAccount(
         name: anyNamed('name'),
@@ -133,7 +67,7 @@ void main() {
       settingsRepository.setFirstWeekSetupCompleted(true),
     ).thenAnswer((_) async {});
 
-    final result = await viewModel.finish();
+    final result = await vm.finish();
 
     expect(result, isTrue);
     verify(
@@ -154,22 +88,15 @@ void main() {
 
   test('toggling an optional step on without naming it creates no account for '
       'that step', () async {
-    final viewModel = await viewModelAfterLoad();
-    addTearDown(viewModel.dispose);
-    viewModel.setMainAccountName('Chase Checking');
-    viewModel.setHasCreditCard(true);
+    final vm = viewModel();
+    addTearDown(vm.dispose);
+    vm.setHasCreditCard(true);
     // No card name entered - the toggle alone doesn't create anything.
-    when(
-      ledgerRepository.renameFinancialAccount(
-        id: anyNamed('id'),
-        newName: anyNamed('newName'),
-      ),
-    ).thenAnswer((_) async {});
     when(
       settingsRepository.setFirstWeekSetupCompleted(true),
     ).thenAnswer((_) async {});
 
-    final result = await viewModel.finish();
+    final result = await vm.finish();
 
     expect(result, isTrue);
     verifyNever(

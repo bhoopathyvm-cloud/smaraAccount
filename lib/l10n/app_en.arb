@@ -29,7 +29,6 @@
   "actionExportCsv": "Export CSV",
   "actionChooseFile": "Choose file",
   "actionRestore": "Restore",
-  "actionArchive": "Hide",
   "actionFix": "Fix",
   "actionBuy": "Buy",
   "actionSell": "Sell",
@@ -883,7 +882,7 @@
       }
     }
   },
-  "firstWeekBlurb": "This is the account already set up for you - give it a name you recognize, like your bank.",
+  "firstWeekBlurb": "Optionally add a credit card or a cash account now - you can always add more accounts later from Settings.",
   "deliveredToDestination": "Delivered to destination",
   "deliveredToName": "Delivered to {name}",
   "@deliveredToName": {

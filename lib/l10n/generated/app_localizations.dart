@@ -354,12 +354,6 @@ abstract class AppLocalizations {
   /// **'Restore'**
   String get actionRestore;
 
-  /// No description provided for @actionArchive.
-  ///
-  /// In en, this message translates to:
-  /// **'Hide'**
-  String get actionArchive;
-
   /// No description provided for @actionFix.
   ///
   /// In en, this message translates to:
@@ -3075,7 +3069,7 @@ abstract class AppLocalizations {
   /// No description provided for @firstWeekBlurb.
   ///
   /// In en, this message translates to:
-  /// **'This is the account already set up for you - give it a name you recognize, like your bank.'**
+  /// **'Optionally add a credit card or a cash account now - you can always add more accounts later from Settings.'**
   String get firstWeekBlurb;
 
   /// No description provided for @deliveredToDestination.

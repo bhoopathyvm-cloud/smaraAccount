@@ -85,8 +85,9 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      final qtyAfterBuy =
-          (await repository.computeHoldingsForAccount(accountId)).first.quantityScaled;
+      final qtyAfterBuy = (await repository.computeHoldingsForAccount(
+        accountId,
+      )).first.quantityScaled;
       await repository.recordTransfer(
         fromAccountId: await cashAccountId(),
         toAccountId: accountId,
@@ -95,55 +96,65 @@ void main() {
       );
       expect(await repository.displayBalanceMinor(accountId), equals(60000));
       expect(
-        (await repository.computeHoldingsForAccount(accountId)).first.quantityScaled,
+        (await repository.computeHoldingsForAccount(
+          accountId,
+        )).first.quantityScaled,
         equals(qtyAfterBuy),
       );
     });
 
-    test('cash-out exceeding cash is rejected and inventory is unchanged', () async {
-      final accountId = await createInvestmentAccount();
-      await fund(accountId, amountMinor: 10000);
-      final dest = await cashAccountId();
-      await expectLater(
-        () => repository.recordTransfer(
-          fromAccountId: accountId,
-          toAccountId: dest,
-          amountMinor: 20000,
-          transactionDate: DateTime(2026, 1, 2),
-        ),
-        throwsA(isA<InvalidTransferException>()),
-      );
-      expect(await repository.displayBalanceMinor(accountId), equals(10000));
-    });
+    test(
+      'cash-out exceeding cash is rejected and inventory is unchanged',
+      () async {
+        final accountId = await createInvestmentAccount();
+        await fund(accountId, amountMinor: 10000);
+        final dest = await cashAccountId();
+        await expectLater(
+          () => repository.recordTransfer(
+            fromAccountId: accountId,
+            toAccountId: dest,
+            amountMinor: 20000,
+            transactionDate: DateTime(2026, 1, 2),
+          ),
+          throwsA(isA<InvalidTransferException>()),
+        );
+        expect(await repository.displayBalanceMinor(accountId), equals(10000));
+      },
+    );
 
-    test('ordinary expense against investment cash does not touch inventory', () async {
-      final accountId = await createInvestmentAccount();
-      await fund(accountId, amountMinor: 50000);
-      final instrument = await repository.createInstrument(
-        name: 'Apple',
-        kind: InstrumentKind.stock,
-      );
-      await repository.recordBuy(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        quantityScaled: 10000,
-        unitPriceMinor: 10000,
-        transactionDate: DateTime(2026, 1, 2),
-        fundingSource: BuyFundingSource.cash,
-      );
-      await repository.recordTransaction(
-        amountMinor: 500,
-        direction: TransactionDirection.moneyOut,
-        categoryId: await expenseId(),
-        financialAccountId: accountId,
-        transactionDate: DateTime(2026, 1, 3),
-      );
-      expect(await repository.displayBalanceMinor(accountId), equals(39500));
-      expect(
-        (await repository.computeHoldingsForAccount(accountId)).first.quantityScaled,
-        equals(10000),
-      );
-    });
+    test(
+      'ordinary expense against investment cash does not touch inventory',
+      () async {
+        final accountId = await createInvestmentAccount();
+        await fund(accountId, amountMinor: 50000);
+        final instrument = await repository.createInstrument(
+          name: 'Apple',
+          kind: InstrumentKind.stock,
+        );
+        await repository.recordBuy(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          quantityScaled: 10000,
+          unitPriceMinor: 10000,
+          transactionDate: DateTime(2026, 1, 2),
+          fundingSource: BuyFundingSource.cash,
+        );
+        await repository.recordTransaction(
+          amountMinor: 500,
+          direction: TransactionDirection.moneyOut,
+          categoryId: await expenseId(),
+          financialAccountId: accountId,
+          transactionDate: DateTime(2026, 1, 3),
+        );
+        expect(await repository.displayBalanceMinor(accountId), equals(39500));
+        expect(
+          (await repository.computeHoldingsForAccount(
+            accountId,
+          )).first.quantityScaled,
+          equals(10000),
+        );
+      },
+    );
   });
 
   group('buy', () {
@@ -397,7 +408,9 @@ void main() {
       );
       expect(await repository.displayBalanceMinor(accountId), equals(40250));
       expect(
-        (await repository.computeHoldingsForAccount(accountId)).single.quantityScaled,
+        (await repository.computeHoldingsForAccount(
+          accountId,
+        )).single.quantityScaled,
         equals(10000),
       );
     });
@@ -508,45 +521,48 @@ void main() {
   });
 
   group('backdated buy immutability', () {
-    test('already-posted sell gain is unchanged after a backdated buy', () async {
-      final accountId = await createInvestmentAccount();
-      await fund(accountId, amountMinor: 500000);
-      final instrument = await repository.createInstrument(
-        name: 'Apple',
-        kind: InstrumentKind.stock,
-      );
-      await repository.recordBuy(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        quantityScaled: 10000,
-        unitPriceMinor: 10000,
-        transactionDate: DateTime(2026, 2, 1),
-        fundingSource: BuyFundingSource.cash,
-      );
-      await repository.recordSell(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        quantityScaled: 10000,
-        unitPriceMinor: 15000,
-        transactionDate: DateTime(2026, 3, 1),
-        gainIncomeCategoryId: await incomeId(),
-      );
-      final cashAfterSell = await repository.displayBalanceMinor(accountId);
-      await repository.recordBuy(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        quantityScaled: 10000,
-        unitPriceMinor: 5000,
-        transactionDate: DateTime(2026, 1, 15),
-        fundingSource: BuyFundingSource.cash,
-      );
-      // The posted sell still credited 15000 proceeds; cash change from
-      // the backdated buy is only the new buy's cash outflow.
-      expect(
-        await repository.displayBalanceMinor(accountId),
-        equals(cashAfterSell - 5000),
-      );
-    });
+    test(
+      'already-posted sell gain is unchanged after a backdated buy',
+      () async {
+        final accountId = await createInvestmentAccount();
+        await fund(accountId, amountMinor: 500000);
+        final instrument = await repository.createInstrument(
+          name: 'Apple',
+          kind: InstrumentKind.stock,
+        );
+        await repository.recordBuy(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          quantityScaled: 10000,
+          unitPriceMinor: 10000,
+          transactionDate: DateTime(2026, 2, 1),
+          fundingSource: BuyFundingSource.cash,
+        );
+        await repository.recordSell(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          quantityScaled: 10000,
+          unitPriceMinor: 15000,
+          transactionDate: DateTime(2026, 3, 1),
+          gainIncomeCategoryId: await incomeId(),
+        );
+        final cashAfterSell = await repository.displayBalanceMinor(accountId);
+        await repository.recordBuy(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          quantityScaled: 10000,
+          unitPriceMinor: 5000,
+          transactionDate: DateTime(2026, 1, 15),
+          fundingSource: BuyFundingSource.cash,
+        );
+        // The posted sell still credited 15000 proceeds; cash change from
+        // the backdated buy is only the new buy's cash outflow.
+        expect(
+          await repository.displayBalanceMinor(accountId),
+          equals(cashAfterSell - 5000),
+        );
+      },
+    );
   });
 
   group('reversal', () {
@@ -599,107 +615,117 @@ void main() {
       );
     });
 
-    test('reversing a sell restores units and reversing a dividend does not', () async {
-      final accountId = await createInvestmentAccount();
-      await fund(accountId);
-      final instrument = await repository.createInstrument(
-        name: 'Apple',
-        kind: InstrumentKind.stock,
-      );
-      await repository.recordBuy(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        quantityScaled: 10000,
-        unitPriceMinor: 10000,
-        transactionDate: DateTime(2026, 1, 2),
-        fundingSource: BuyFundingSource.cash,
-      );
-      final sellId = await repository.recordSell(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        quantityScaled: 10000,
-        unitPriceMinor: 12000,
-        transactionDate: DateTime(2026, 2, 1),
-        gainIncomeCategoryId: await incomeId(),
-      );
-      await repository.reverseEntry(sellId);
-      expect(
-        (await repository.computeHoldingsForAccount(accountId)).single.quantityScaled,
-        equals(10000),
-      );
-      final dividendId = await repository.recordDividend(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        amountMinor: 100,
-        transactionDate: DateTime(2026, 3, 1),
-        incomeCategoryId: await incomeId(),
-      );
-      await repository.reverseEntry(dividendId);
-      expect(
-        (await repository.computeHoldingsForAccount(accountId)).single.quantityScaled,
-        equals(10000),
-      );
-    });
-  });
-
-  group('archive and closeout', () {
-    test('archive with cash, sell, and a second closeout all succeed', () async {
-      final accountId = await createInvestmentAccount();
-      await fund(accountId, amountMinor: 50000);
-      final instrument = await repository.createInstrument(
-        name: 'Apple',
-        kind: InstrumentKind.stock,
-      );
-      await repository.recordBuy(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        quantityScaled: 10000,
-        unitPriceMinor: 10000,
-        transactionDate: DateTime(2026, 1, 2),
-        fundingSource: BuyFundingSource.cash,
-      );
-      await repository.archiveFinancialAccount(accountId);
-      await expectLater(
-        () => repository.recordBuy(
+    test(
+      'reversing a sell restores units and reversing a dividend does not',
+      () async {
+        final accountId = await createInvestmentAccount();
+        await fund(accountId);
+        final instrument = await repository.createInstrument(
+          name: 'Apple',
+          kind: InstrumentKind.stock,
+        );
+        await repository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
           unitPriceMinor: 10000,
-          transactionDate: DateTime(2026, 4, 1),
+          transactionDate: DateTime(2026, 1, 2),
           fundingSource: BuyFundingSource.cash,
-        ),
-        throwsA(isA<AccountGroupException>()),
-      );
-      final dest = await cashAccountId();
-      await repository.recordArchivedAccountCloseoutTransfer(
-        fromAccountId: accountId,
-        toAccountId: dest,
-        transactionDate: DateTime(2026, 4, 2),
-      );
-      expect(await repository.displayBalanceMinor(accountId), equals(0));
-      await repository.recordSell(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        quantityScaled: 10000,
-        unitPriceMinor: 12000,
-        transactionDate: DateTime(2026, 4, 3),
-        gainIncomeCategoryId: await incomeId(),
-      );
-      expect(await repository.displayBalanceMinor(accountId), greaterThan(0));
-      await repository.recordArchivedAccountCloseoutTransfer(
-        fromAccountId: accountId,
-        toAccountId: dest,
-        transactionDate: DateTime(2026, 4, 4),
-      );
-      expect(await repository.displayBalanceMinor(accountId), equals(0));
-      await repository.recordDividend(
-        accountId: accountId,
-        instrumentId: instrument.id,
-        amountMinor: 50,
-        transactionDate: DateTime(2026, 4, 5),
-        incomeCategoryId: await incomeId(),
-      );
-    });
+        );
+        final sellId = await repository.recordSell(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          quantityScaled: 10000,
+          unitPriceMinor: 12000,
+          transactionDate: DateTime(2026, 2, 1),
+          gainIncomeCategoryId: await incomeId(),
+        );
+        await repository.reverseEntry(sellId);
+        expect(
+          (await repository.computeHoldingsForAccount(
+            accountId,
+          )).single.quantityScaled,
+          equals(10000),
+        );
+        final dividendId = await repository.recordDividend(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          amountMinor: 100,
+          transactionDate: DateTime(2026, 3, 1),
+          incomeCategoryId: await incomeId(),
+        );
+        await repository.reverseEntry(dividendId);
+        expect(
+          (await repository.computeHoldingsForAccount(
+            accountId,
+          )).single.quantityScaled,
+          equals(10000),
+        );
+      },
+    );
+  });
+
+  group('archive and closeout', () {
+    test(
+      'archive with cash, sell, and a second closeout all succeed',
+      () async {
+        final accountId = await createInvestmentAccount();
+        await fund(accountId, amountMinor: 50000);
+        final instrument = await repository.createInstrument(
+          name: 'Apple',
+          kind: InstrumentKind.stock,
+        );
+        await repository.recordBuy(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          quantityScaled: 10000,
+          unitPriceMinor: 10000,
+          transactionDate: DateTime(2026, 1, 2),
+          fundingSource: BuyFundingSource.cash,
+        );
+        await repository.archiveFinancialAccount(accountId);
+        await expectLater(
+          () => repository.recordBuy(
+            accountId: accountId,
+            instrumentId: instrument.id,
+            quantityScaled: 10000,
+            unitPriceMinor: 10000,
+            transactionDate: DateTime(2026, 4, 1),
+            fundingSource: BuyFundingSource.cash,
+          ),
+          throwsA(isA<AccountGroupException>()),
+        );
+        final dest = await cashAccountId();
+        await repository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: accountId,
+          toAccountId: dest,
+          transactionDate: DateTime(2026, 4, 2),
+        );
+        expect(await repository.displayBalanceMinor(accountId), equals(0));
+        await repository.recordSell(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          quantityScaled: 10000,
+          unitPriceMinor: 12000,
+          transactionDate: DateTime(2026, 4, 3),
+          gainIncomeCategoryId: await incomeId(),
+        );
+        expect(await repository.displayBalanceMinor(accountId), greaterThan(0));
+        await repository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: accountId,
+          toAccountId: dest,
+          transactionDate: DateTime(2026, 4, 4),
+        );
+        expect(await repository.displayBalanceMinor(accountId), equals(0));
+        await repository.recordDividend(
+          accountId: accountId,
+          instrumentId: instrument.id,
+          amountMinor: 50,
+          transactionDate: DateTime(2026, 4, 5),
+          incomeCategoryId: await incomeId(),
+        );
+      },
+    );
   });
 
   group('quotes and unrealized', () {
