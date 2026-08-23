@@ -1,6 +1,8 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart'
+    hide WindowsOptions, LinuxOptions, WebOptions, AndroidOptions;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
@@ -79,6 +81,35 @@ Future<void> _deleteDatabaseDirectory() async {
   if (dir.existsSync()) {
     dir.deleteSync(recursive: true);
   }
+}
+
+/// Simulates "this device lost its signing key but kept its books" - the
+/// exact precondition `RestoreIdentityView`'s router gate checks
+/// (`identity != null && !hasMatchingStoredKey`, app_router.dart's
+/// redirect logic). Deliberately narrower than [resetToFreshDevice]: the
+/// on-disk database is left untouched. `LedgerRepository.restoreIdentity`
+/// looks up a pre-existing `signing_identities` row matching the derived
+/// public key and throws if none is found - it never recreates ledger
+/// data, so wiping the database here (as [resetToFreshDevice] does) would
+/// send the router to fresh onboarding instead of `/restore`, not what
+/// "restore onto this device" scenarios need.
+Future<void> resetSigningKeyOnly(WidgetTester tester) async {
+  // See resetToFreshDevice's matching comment: settle any in-flight
+  // redirect before tearing down the widget tree.
+  await tester.pump(const Duration(seconds: 2));
+  await tester.pumpWidget(const SizedBox.shrink());
+  await tester.pump();
+  for (final key in _secureStorageKeys) {
+    try {
+      await _secureStorage.delete(key: key);
+    } on PlatformException {
+      // See resetToFreshDevice's matching catch: deleting an
+      // already-absent key throws errSecMissingEntitlement on this
+      // ad-hoc signed macOS build's legacy Keychain fallback.
+    }
+  }
+  await tester.pumpWidget(const SmaraAccountingApp());
+  await tester.pump();
 }
 
 /// Pumps until [finder] resolves to at least one widget, or gives up after
@@ -1350,4 +1381,345 @@ Future<void> closeoutArchivedAccountThroughGui(
     () => find.text(l10n.transferRemainingBalance).evaluate().isEmpty,
     innerTries: 150,
   );
+}
+
+/// A fake [FilePickerPlatform] that `settings_view.dart`'s real
+/// `FilePicker.saveFile`/`FilePicker.pickFiles` calls delegate to once
+/// installed as [FilePickerPlatform.instance] - design.md rejected
+/// Patrol/Maestro/Appium, so no real native file-picker dialog is ever
+/// driven here. `FilePicker`'s own static methods are a thin wrapper over
+/// `FilePickerPlatform.instance`, itself a swappable `PlatformInterface`
+/// singleton (the same seam every federated Flutter plugin exposes for
+/// exactly this purpose) - intercepting there means the app's real
+/// export/import code paths still run for real, only the native OS dialog
+/// is replaced.
+class FakeFilePickerPlatform extends FilePickerPlatform {
+  /// The bytes most recently passed to [saveFile] - what a Save Backup
+  /// dialog actually produced. Null until a save happens; helpers that
+  /// watch this field for a save to complete reset it to null first.
+  Uint8List? lastSavedBytes;
+
+  /// What the next [pickFiles] call resolves to - set before driving the
+  /// "Choose file" button to simulate the user picking that file.
+  List<PlatformFile> filesToReturn = const [];
+
+  @override
+  Future<Uri?> saveFile({
+    required String fileName,
+    required Uint8List bytes,
+    required String mimeType,
+    String? dialogTitle,
+    String? initialDirectory,
+    Function(FilePickerStatus)? onFileSaving,
+    WindowsOptions windowsOptions = const WindowsOptions(),
+    LinuxOptions linuxOptions = const LinuxOptions(),
+    WebOptions webOptions = const WebOptions(),
+  }) async {
+    lastSavedBytes = bytes;
+    return Uri.file(fileName);
+  }
+
+  @override
+  Future<List<PlatformFile>> pickFiles({
+    String? dialogTitle,
+    String? initialDirectory,
+    FileType type = FileType.any,
+    List<String>? allowedExtensions,
+    Function(FilePickerStatus)? onFileLoading,
+    int compressionQuality = 0,
+    AndroidOptions androidOptions = const AndroidOptions(),
+    WindowsOptions windowsOptions = const WindowsOptions(),
+    LinuxOptions linuxOptions = const LinuxOptions(),
+    WebOptions webOptions = const WebOptions(),
+  }) async {
+    return filesToReturn;
+  }
+}
+
+/// A [PlatformFile] wrapping in-memory [bytes] - what
+/// [FakeFilePickerPlatform.pickFiles] hands back. Only [name] and
+/// [readAsBytes] are exercised by this app's real restore-backup code
+/// path (`settings_view.dart`'s `file?.readAsBytes()`); every other
+/// member throws, since nothing in this suite calls them. `PlatformFile`
+/// is an `abstract base class`, not `final`/`sealed`, so it can be
+/// `extends`-ed from outside its own package (only `implements` is
+/// restricted) - the same mechanism used to fake any other federated
+/// plugin's platform interface.
+base class InMemoryPlatformFile extends PlatformFile {
+  InMemoryPlatformFile({required this.name, required Uint8List bytes})
+    : _bytes = bytes;
+
+  @override
+  final String name;
+  final Uint8List _bytes;
+
+  @override
+  Future<Uint8List> readAsBytes() async => _bytes;
+
+  @override
+  Future<int> length() async => _bytes.length;
+
+  @override
+  Stream<Uint8List> readAsByteStream() => Stream.value(_bytes);
+
+  @override
+  Uri get uri => Uri.file(name);
+
+  // Return type deliberately omitted (inferred from the overridden
+  // getter) so this file doesn't need to import cross_file's XFile just
+  // to name a type this suite never actually constructs or calls.
+  @override
+  get xFile => throw UnimplementedError('unused in acceptance tests');
+}
+
+/// Opens Settings from wherever the bottom nav is reachable - the app's
+/// only entry point (`home_view.dart`'s settings-gear tooltip on Home's
+/// AppBar). Lands with the Settings screen's Backup section visible.
+Future<void> openSettings(WidgetTester tester) async {
+  final l10n = AppLocalizationsEn();
+
+  // The bottom-nav/rail branches (`AppShell`'s `StatefulNavigationShell`)
+  // are backed by an IndexedStack, not per-branch Offstage/Route
+  // wrapping - `find.text`'s default skipOffstage only excludes Offstage
+  // widgets and inactive Routes (flutter_test's own doc comment), neither
+  // of which IndexedStack's non-selected children are. Confirmed directly
+  // during this change's own implementation: once Home has been visited
+  // once, both its overview text AND its settings-gear tooltip keep
+  // resolving via `find` even while a different branch (e.g. Register) is
+  // the one actually on screen - so a "does this text exist" check can
+  // never distinguish "Home is active" from "Home was merely visited
+  // earlier and IndexedStack kept it alive offstage". A single direct tap
+  // + settle is used instead, exactly like this harness's Create-dialog
+  // helpers - final success is verified only once, at the real
+  // destination (Settings actually reached), not at this intermediate
+  // step.
+  // Scoped to the NavigationRail specifically (not a bare find.text) -
+  // when already on Home, its own AppBar title is *also* literally
+  // Text(l10n.navHome) (home_view.dart), so an unscoped finder matches
+  // both and ensureVisible's ".single" throws "Too many elements". This
+  // suite's live macOS window (800x600, > the 600 breakpoint in
+  // app_shell.dart) always renders the NavigationRail layout, never the
+  // narrow-screen BottomNavigationBar.
+  final homeTab = find.descendant(
+    of: find.byType(NavigationRail),
+    matching: find.text(l10n.navHome),
+  );
+  await tester.ensureVisible(homeTab);
+  await tester.pump(const Duration(milliseconds: 100));
+  await tester.tap(homeTab);
+  await tester.pumpAndSettle();
+
+  final gearIcon = find.byTooltip(l10n.settingsTitle);
+  await tester.ensureVisible(gearIcon);
+  await tester.pump(const Duration(milliseconds: 100));
+  await tester.tap(gearIcon);
+  await pumpUntilFound(tester, find.text(l10n.settingsBackup), maxTries: 300);
+  if (find.text(l10n.settingsBackup).evaluate().isEmpty) {
+    fail(
+      'openSettings: Settings screen never appeared after tapping Home '
+      'then the settings gear.\n${_visibleTextsDump()}',
+    );
+  }
+}
+
+/// Scrolls the nearest `Scrollable` until [finder] is built and visible.
+/// Needed before interacting with anything the Settings screen's long
+/// `ListView` hasn't built yet - the live macOS window's fixed 800x600
+/// size (design.md Risks) means most of that screen's content starts out
+/// virtualized away entirely, not just scrolled off-screen, so a bare
+/// `ensureVisible` (which needs the target to already be in the tree)
+/// isn't enough on its own. Tries both scroll directions since this
+/// suite has never definitively pinned down `scrollUntilVisible`'s sign
+/// convention here (matching `currency_transfers_test.dart`'s own
+/// account-currency scenario, which hit the same thing).
+Future<void> scrollUntilVisibleBidirectional(
+  WidgetTester tester,
+  Finder finder,
+) async {
+  try {
+    await tester.scrollUntilVisible(
+      finder,
+      -300.0,
+      scrollable: find.byType(Scrollable).first,
+      maxScrolls: 20,
+    );
+  } catch (_) {
+    await tester.scrollUntilVisible(
+      finder,
+      300.0,
+      scrollable: find.byType(Scrollable).first,
+      maxScrolls: 20,
+    );
+  }
+}
+
+/// Saves a backup through the real Settings -> "Save backup" dialog with
+/// [passphrase], via [filePicker] (already installed as
+/// [FilePickerPlatform.instance]) intercepting the real
+/// `FilePicker.saveFile` call. Returns the exported ciphertext bytes.
+///
+/// Success is checked via [filePicker]'s own captured state
+/// (`lastSavedBytes` becoming non-null) rather than "the dialog closed" -
+/// unlike the Create-group/Create-account dialogs elsewhere in this
+/// harness, this dialog's real work (AES-256-GCM/PBKDF2 export, then the
+/// save call) gives an unambiguous, non-racy success signal to poll for
+/// directly, so there's no barrier-dismiss-vs-real-success ambiguity to
+/// work around here.
+Future<Uint8List> saveBackupThroughGui(
+  WidgetTester tester, {
+  required String passphrase,
+  required FakeFilePickerPlatform filePicker,
+}) async {
+  final l10n = AppLocalizationsEn();
+  await openSettings(tester);
+
+  final saveBackupButton = find.widgetWithText(
+    ElevatedButton,
+    l10n.actionSaveBackup,
+  );
+  await scrollUntilVisibleBidirectional(tester, saveBackupButton);
+  await tapReliably(
+    tester,
+    () => saveBackupButton,
+    () => find.text(l10n.choosePassphraseTitle).evaluate().isNotEmpty,
+  );
+
+  Finder passphraseField() => find.descendant(
+    of: find.byType(AlertDialog),
+    matching: find.byType(TextField),
+  );
+  await enterTextReliably(tester, passphraseField, passphrase, () {
+    final elements = passphraseField().evaluate();
+    if (elements.isEmpty) return false;
+    final field = elements.first.widget as TextField;
+    return field.controller?.text == passphrase;
+  });
+
+  filePicker.lastSavedBytes = null;
+  final saveButton = find.widgetWithText(ElevatedButton, l10n.actionSave);
+  await tester.ensureVisible(saveButton);
+  await tester.pump(const Duration(milliseconds: 100));
+  await tester.tap(saveButton);
+  for (var i = 0; i < 300 && filePicker.lastSavedBytes == null; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+  if (filePicker.lastSavedBytes == null) {
+    fail(
+      'saveBackupThroughGui: FilePicker.saveFile was never called after '
+      'tapping Save.\n${_visibleTextsDump()}',
+    );
+  }
+  await tester.pumpAndSettle();
+  return filePicker.lastSavedBytes!;
+}
+
+/// Restores a backup through the real Settings -> "Restore backup"
+/// dialog: simulates picking a file containing [fileBytes] (via
+/// [filePicker], already installed as [FilePickerPlatform.instance]),
+/// enters [passphrase], then confirms the destructive "Replace your local
+/// books?" dialog.
+///
+/// Deliberately does NOT tap the post-restore "Close app" button -
+/// `settings_view.dart`'s `_showRestoredSuccessDialog` wires that to
+/// `exit(0)` on desktop, which would kill this very test process rather
+/// than just the widget tree. Instead, once `l10n.backupRestored`
+/// appears, unmounts/remounts [SmaraAccountingApp] the same way this
+/// suite's tamper-detection restart scenario does, so a fresh database
+/// connection reads the just-replaced file - literally what
+/// `backupRestoredBody`'s "close and reopen the app" means here.
+///
+/// If [expectRejection] is true, asserts the restore is instead rejected
+/// (foreign-identity backup onto a device with its own active identity):
+/// the Restore Backup dialog stays open showing
+/// `l10n.errorForeignBackupIdentity`, nothing was written to disk, and no
+/// unmount/remount happens - the dialog is left open for the caller to
+/// dismiss.
+Future<void> restoreBackupThroughGui(
+  WidgetTester tester, {
+  required Uint8List fileBytes,
+  required String passphrase,
+  required FakeFilePickerPlatform filePicker,
+  String fileName = 'restored.smarabackup',
+  bool expectRejection = false,
+}) async {
+  final l10n = AppLocalizationsEn();
+  await openSettings(tester);
+
+  final restoreBackupButton = find.widgetWithText(
+    OutlinedButton,
+    l10n.actionRestoreBackup,
+  );
+  await scrollUntilVisibleBidirectional(tester, restoreBackupButton);
+  await tapReliably(
+    tester,
+    () => restoreBackupButton,
+    () => find.text(l10n.restoreBackupBlurb).evaluate().isNotEmpty,
+  );
+
+  filePicker.filesToReturn = [
+    InMemoryPlatformFile(name: fileName, bytes: fileBytes),
+  ];
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(OutlinedButton, l10n.actionChooseFile),
+    () => find.text(fileName).evaluate().isNotEmpty,
+  );
+
+  Finder passphraseField() => find.descendant(
+    of: find.byType(AlertDialog),
+    matching: find.byType(TextField),
+  );
+  await enterTextReliably(tester, passphraseField, passphrase, () {
+    final elements = passphraseField().evaluate();
+    if (elements.isEmpty) return false;
+    final field = elements.first.widget as TextField;
+    return field.controller?.text == passphrase;
+  });
+
+  final restoreButton = find.widgetWithText(ElevatedButton, l10n.actionRestore);
+  await tester.ensureVisible(restoreButton);
+  await tester.pump(const Duration(milliseconds: 100));
+  await tester.tap(restoreButton);
+  await pumpUntilFound(tester, find.text(l10n.replaceBooksTitle));
+  if (find.text(l10n.replaceBooksTitle).evaluate().isEmpty) {
+    fail(
+      'restoreBackupThroughGui: the destructive confirmation dialog never '
+      'appeared after tapping Restore.\n${_visibleTextsDump()}',
+    );
+  }
+
+  final replaceButton = find.widgetWithText(OutlinedButton, l10n.actionReplace);
+  await tester.ensureVisible(replaceButton);
+  await tester.pump(const Duration(milliseconds: 100));
+  await tester.tap(replaceButton);
+
+  if (expectRejection) {
+    await pumpUntilFound(
+      tester,
+      find.text(l10n.errorForeignBackupIdentity),
+      maxTries: 300,
+    );
+    if (find.text(l10n.errorForeignBackupIdentity).evaluate().isEmpty) {
+      fail(
+        'restoreBackupThroughGui: expected rejection '
+        '("${l10n.errorForeignBackupIdentity}") never appeared.\n'
+        '${_visibleTextsDump()}',
+      );
+    }
+    return;
+  }
+
+  await pumpUntilFound(tester, find.text(l10n.backupRestored), maxTries: 300);
+  if (find.text(l10n.backupRestored).evaluate().isEmpty) {
+    fail(
+      'restoreBackupThroughGui: "${l10n.backupRestored}" never appeared '
+      'after confirming replace.\n${_visibleTextsDump()}',
+    );
+  }
+
+  await tester.pumpWidget(const SizedBox.shrink());
+  await tester.pump(const Duration(seconds: 1));
+  await tester.pumpWidget(const SmaraAccountingApp());
+  await tester.pump();
+  await pumpUntilFound(tester, find.text(l10n.homeWhatYouHaveMinusWhatYouOwe));
 }

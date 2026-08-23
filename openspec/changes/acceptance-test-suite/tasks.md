@@ -103,10 +103,77 @@
 
 ## 5. Capability group: identity and backup
 
-- [ ] 5.1 Write the record → capture phrase → reset → restore scenario (proposal's original flow), using `resetToFreshDevice()` from Task 1.
-- [ ] 5.2 Write the wrong-recovery-phrase negative scenario.
-- [ ] 5.3 Add a scenario exporting an encrypted `ledger-backup` file through the real GUI, resetting to a fresh device, and restoring from that file, asserting entries match.
-- [ ] 5.4 Add a scenario restoring a foreign identity's backup onto a device that already has an active identity, asserting the real UI rejects it with an explanation (per `ledger-backup` spec).
+- [x] 5.1 Write the record → capture phrase → reset → restore scenario (proposal's original flow), using `resetToFreshDevice()` from Task 1.
+- [x] 5.2 Write the wrong-recovery-phrase negative scenario.
+- [x] 5.3 Add a scenario exporting an encrypted `ledger-backup` file through the real GUI, resetting to a fresh device, and restoring from that file, asserting entries match.
+- [x] 5.4 Add a scenario restoring a foreign identity's backup onto a device that already has an active identity, asserting the real UI rejects it with an explanation (per `ledger-backup` spec).
+
+  All four landed in `integration_test/acceptance/identity_backup_test.dart`,
+  passing individually and as a full-file run. Two design deviations from
+  the literal task wording, both forced by how the real GUI actually
+  gates these screens (confirmed by reading `app_router.dart`'s redirect
+  logic and `ledger_repository.dart`'s restore/backup methods, not
+  assumed):
+
+  - 5.1 does NOT use `resetToFreshDevice()` for its own "reset" step.
+    That helper wipes the database too, and `RestoreIdentityView` is only
+    reachable when `identity != null && !hasMatchingStoredKey` - wiping
+    the DB makes `identity` null, sending a fresh device to onboarding,
+    never to `/restore`. Added a new, narrower `resetSigningKeyOnly()`
+    helper (same file) that clears only the two secure-storage keys and
+    leaves the database file alone - the actual "reinstall, same books"
+    precondition the restore screen expects. `resetToFreshDevice()` is
+    still used for every test's teardown and for 5.4's two-distinct-
+    identity setup, where a full wipe is exactly what's needed.
+  - 5.3's "reset to a fresh device" is reinterpreted as "restore back
+    onto the same still-onboarded device": a truly identity-less device
+    can never reach Settings at all (the router forces `identity == null`
+    through onboarding first, before Settings is ever reachable), so
+    there is no GUI path that reaches the backup-restore dialog on a
+    "fresh" device in the literal sense. The scenario instead exports a
+    backup, records more activity, then restores that backup back over
+    the same device and asserts the post-backup activity is gone -
+    exercising the same encrypt/decrypt/replace-the-database-file code
+    path, just without an impossible intermediate state.
+
+  Also confirmed real native file-picker dialogs are NOT a blocker for
+  this tier, contrary to earlier suspicion: `file_picker`'s `FilePicker`
+  static class is a thin wrapper over a swappable `FilePickerPlatform.
+  instance` (a standard federated-plugin platform interface). Added
+  `FakeFilePickerPlatform`/`InMemoryPlatformFile` (acceptance_harness.dart)
+  that intercept `saveFile`/`pickFiles` at that pure-Dart boundary - no
+  native OS dialog ever opens, the app's real export/import/encryption
+  code still runs for real. The same technique should carry over
+  directly to group 7's CSV/OFX import file picking.
+
+  Never taps the post-restore "Close app" button
+  (`_showRestoredSuccessDialog`'s `ElevatedButton`) - it calls `exit(0)`
+  on desktop, which would kill the test process itself, not just the
+  widget tree. `restoreBackupThroughGui` instead unmounts/remounts
+  `SmaraAccountingApp` once `l10n.backupRestored` appears, the same
+  restart technique group 3's tamper-detection scenario already uses.
+
+  Two reusable bugs/fixes surfaced and fixed once in the shared harness,
+  not just worked around locally:
+  - The bottom-nav/rail (`AppShell`'s `StatefulNavigationShell`) keeps
+    every visited branch's screen alive in an `IndexedStack`, not
+    Offstage/Route-wrapped - `find.text`/`find.byTooltip`'s default
+    `skipOffstage` only excludes actual `Offstage` widgets and inactive
+    `Route`s, neither of which apply here, so a "does this text exist"
+    check can resolve true for a branch that was merely visited earlier,
+    not the one currently on screen. `openSettings` (new helper) works
+    around this with a single direct tap + settle, verifying success only
+    at the real destination, plus scopes its "Home" tap to
+    `find.byType(NavigationRail)` specifically (an unscoped
+    `find.text(l10n.navHome)` is ambiguous whenever already on Home,
+    since Home's own AppBar title is the same string).
+  - The Settings screen's long `ListView` leaves most of its content
+    (including the Save/Restore backup buttons) virtualized away
+    entirely under this suite's fixed 800x600 window, not just
+    scrolled off-screen - `ensureVisible` alone can't reveal what was
+    never built. Added `scrollUntilVisibleBidirectional` (generalizing
+    the bidirectional-scroll fix already proven in
+    `currency_transfers_test.dart`'s account-currency scenario).
 
 ## 6. Capability group: onboarding
 
