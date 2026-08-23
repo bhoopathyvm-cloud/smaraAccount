@@ -109,6 +109,8 @@
   "systemCategoryPhone": "फोन",
   "systemCategoryHealth": "सेह्त",
   "systemCategoryOtherExpense": "होर खर्च",
+  "systemDescriptionCsvImport": "CSV आयात",
+  "systemDescriptionOfxImport": "OFX आयात",
   "homeThisMonth": "इस म्हीने",
   "homeMoneyInTransit": "पैसा रस्ते च्च",
   "homeWhatYouHaveMinusWhatYouOwe": "तुंदे कोल जो ऐ माइनस तुसें जो देना ऐ",
@@ -482,7 +484,7 @@
   "creditColumn": "क्रेडिट कॉलम",
   "decimalSeparator": "दशमलव चिह्न (. जां ,)",
   "descriptionColumns": "विवरण कॉलम",
-  "referenceIdColumn": "संदर्भ ID कॉलम (वैकल्पिक)",
+  "referenceIdColumn": "संदर्भ id कॉलम (वैकल्पिक)",
   "skippedRows": "छोड़े गे रो",
   "parsedTransactionCount": "{count} लेन-देन पार्स होए",
   "@parsedTransactionCount": {
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "चुणी गेदी फाइल खाली ऐ।",
   "errorCsvUnreadable": "एह् फाइल CSV दे रूप च्च नेईं पढ़ी जाई सकी।",
   "errorCsvNoRows": "चुणी गेदी फाइल च्च कोई रो नेईं ऐ।",
+  "skipMissingDate": "तारीख गैहर ऐ।",
+  "skipUnparseableDate": "\"{pattern}\" पैटर्न कन्नै तारीख \"{raw}\" पढ़ी नेईं गेई।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "लेनदेन दी तारीख गैहर ऐ जां गलत ऐ।",
+  "skipOfxUnparseableDate": "लेनदेन दी तारीख \"{raw}\" पढ़ी नेईं गेई।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "रकम गैहर ऐ।",
+  "skipUnparseableAmount": "रकम \"{raw}\" पढ़ी नेईं गेई।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "रकम जीरो ऐ।",
+  "skipUnparseableDebitCreditAmount": "डेबिट जां क्रेडिट रकम पढ़ी नेईं गेई।",
+  "skipBothDebitAndCreditNonZero": "डेबिट कन्नै क्रेडिट दोनें कालमें च रकम ऐ।",
+  "skipBothDebitAndCreditZero": "डेबिट कन्नै क्रेडिट दोनें कालम जीरो न।",
   "errorBackupCreateFailed": "बैकअप नेईं बणाया जाई सकेआ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "अगर विनिमय दर हाले पता नेईं तां खाली छोड़ो।",
   "recordTradeBlurb": "इक ओह्ला होआ सौदा दर्ज करो। एह् एप कोई ऑर्डर नेईं दिन्दा।",
-  "feeOnTopBlurb": "चालू होने पर: उप्पर दित्ती रकम इस खाते थमां लेआ कुल रकम ऐ; फीस इसदे च्चा ही कटदी ऐ।",
+  "feeOnTopBlurb": "उप्पर: उप्पर दित्ती रकम इस खाते थमां लेआ कुल रकम ऐ; फीस इसदे च्चा ही निकलदी ऐ।",
   "feeBankBlurb": "तुंदे बैंक जां कुसी बिचोलिए दुआरा लित्ता अगाऊं कमीशन।",
   "validationPinMinLength": "पिन घट्टोघट्ट 4 अंकां दी होणी चाहिदी।",
   "restoreBackupBlurb": "एह् बैकअप कन्नै इस एप च्च मौजूदा सब्भ केह् बदली दिंदा ऐ — एह् मर्ज नेईं करदा। इक बैकअप फाइल चुनो कने जिस पासफ्रेज कन्नै तुसें इसजो सुरक्षित कीता उ पाओ।",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "श्रेणी नियम",
   "possibleDuplicate": "संभावित नकल",
-  "unknownCategory": "अज्ञात श्रेणी"
+  "unknownCategory": "अज्ञात श्रेणी",
+  "researchPromptIntro": "इक घरेलू निवेशक आस्तै एह् सार्वजनिक रूपै च सूचीबद्ध साधन दी खोज करो। जारीकर्ता दी पछयाण करो, जेकर पता होऐ तां तारीखें सुद्धा हाल दियां खबरें दा सार दिओ, ते गिरावट दे खतरे ते तेजी दे कारण दस्सो। तथें गी कयासें कोला अलग रक्खो। खरीदने, बेचने जां रक्खने दी सलाह मत्त दिओ। एह् वित्तीय सलाह नेईं ऐ।",
+  "researchPromptNameLine": "नां: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "टिकर: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "टिकर: (दित्ता नेईं गेआ)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (दित्ता नेईं गेआ)"
 }

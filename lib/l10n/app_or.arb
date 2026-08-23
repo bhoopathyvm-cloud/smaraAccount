@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (ECB ହାର)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ଦୈନିକ ମୂଲ୍ୟ)",
-  "providerYahooFinance": "Yahoo Finance (ଚାର୍ଟ API)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -109,6 +109,8 @@
   "systemCategoryPhone": "ଫୋନ୍",
   "systemCategoryHealth": "ସ୍ୱାସ୍ଥ୍ୟ",
   "systemCategoryOtherExpense": "ଅନ୍ୟ ଖର୍ଚ୍ଚ",
+  "systemDescriptionCsvImport": "CSV ଆମଦାନୀ",
+  "systemDescriptionOfxImport": "OFX ଆମଦାନୀ",
   "homeThisMonth": "ଏହି ମାସ",
   "homeMoneyInTransit": "ଟଙ୍କା ପଠାଯାଉଛି",
   "homeWhatYouHaveMinusWhatYouOwe": "ଆପଣଙ୍କ ପାଖରେ ଥିବା ଓ ଦେୟ ମଧ୍ୟରେ ଫରକ",
@@ -482,7 +484,7 @@
   "creditColumn": "କ୍ରେଡିଟ୍ ସ୍ତମ୍ଭ",
   "decimalSeparator": "ଦଶମିକ ବିଭାଜକ (. କିମ୍ବା ,)",
   "descriptionColumns": "ବର୍ଣ୍ଣନା ସ୍ତମ୍ଭ(ଗୁଡ଼ିକ)",
-  "referenceIdColumn": "ରେଫରେନ୍ସ ID ସ୍ତମ୍ଭ (ଇଚ୍ଛାଧୀନ)",
+  "referenceIdColumn": "ରେଫରେନ୍ସ id ସ୍ତମ୍ଭ (ଇଚ୍ଛାଧୀନ)",
   "skippedRows": "ଛାଡ଼ିଥିବା ଧାଡ଼ି",
   "parsedTransactionCount": "{count} କାରବାର ପ୍ରକ୍ରିୟାକରଣ ହେଲା",
   "@parsedTransactionCount": {
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "ଚୟନିତ ଫାଇଲ୍ ଖାଲି ଅଛି।",
   "errorCsvUnreadable": "ଏହି ଫାଇଲ୍‌କୁ CSV ଭାବେ ପଢ଼ାଯାଇପାରିଲା ନାହିଁ।",
   "errorCsvNoRows": "ଚୟନିତ ଫାଇଲ୍‌ରେ କୌଣସି ଧାଡ଼ି ନାହିଁ।",
+  "skipMissingDate": "ତାରିଖ ନାହିଁ।",
+  "skipUnparseableDate": "\"{pattern}\" ପାଟର୍ନ ସହିତ ତାରିଖ \"{raw}\" ପାର୍ସ କରାଯାଇପାରିଲା ନାହିଁ।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "କାରବାର ତାରିଖ ନାହିଁ କିମ୍ବା ଅବୈଧ ଅଟେ।",
+  "skipOfxUnparseableDate": "କାରବାର ତାରିଖ \"{raw}\" ପାର୍ସ କରାଯାଇପାରିଲା ନାହିଁ।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "ପରିମାଣ ନାହିଁ।",
+  "skipUnparseableAmount": "ପରିମାଣ \"{raw}\" ପାର୍ସ କରାଯାଇପାରିଲା ନାହିଁ।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "ପରିମାଣ ଶୂନ୍ୟ ଅଟେ।",
+  "skipUnparseableDebitCreditAmount": "ଡେବିଟ୍ କିମ୍ବା କ୍ରେଡିଟ୍ ପରିମାଣ ପାର୍ସ କରାଯାଇପାରିଲା ନାହିଁ।",
+  "skipBothDebitAndCreditNonZero": "ଡେବିଟ୍ ଏବଂ କ୍ରେଡିଟ୍ ଉଭୟ ସ୍ତମ୍ଭରେ ପରିମାଣ ଅଛି।",
+  "skipBothDebitAndCreditZero": "ଡେବିଟ୍ ଏବଂ କ୍ରେଡିଟ୍ ଉଭୟ ସ୍ତମ୍ଭ ଶୂନ୍ୟ ଅଟେ।",
   "errorBackupCreateFailed": "ବ୍ୟାକଅପ୍ ସୃଷ୍ଟି କରାଯାଇପାରିଲା ନାହିଁ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "ବର୍ଗ ନିୟମ",
   "possibleDuplicate": "ସମ୍ଭାବିତ ନକଲ",
-  "unknownCategory": "ଅଜଣା ବର୍ଗ"
+  "unknownCategory": "ଅଜଣା ବର୍ଗ",
+  "researchPromptIntro": "ଏକ ଘରୋଇ ବିନିଯୋଗକାରୀଙ୍କ ପାଇଁ ଏହି ସର୍ବସାଧାରଣ ତାଲିକାଭୁକ୍ତ ଉପକରଣକୁ ଅନୁସନ୍ଧାନ କରନ୍ତୁ। ଜାରୀକାରୀଙ୍କୁ ଚିହ୍ନଟ କରନ୍ତୁ, ଜଣା ଥିଲେ ତାରିଖ ସହିତ ସାମ୍ପ୍ରତିକ ଖବରର ସାରାଂଶ ଦିଅନ୍ତୁ, ଏବଂ ପତନର ବିପଦ ଓ ବୃଦ୍ଧିର କାରକଗୁଡ଼ିକୁ ରୂପରେଖ ଦିଅନ୍ତୁ। ତଥ୍ୟକୁ ଅନୁମାନରୁ ପୃଥକ ରଖନ୍ତୁ। କିଣିବା, ବିକ୍ରି କରିବା କିମ୍ବା ରଖିବା ପାଇଁ ପରାମର୍ଶ ଦିଅନ୍ତୁ ନାହିଁ। ଏହା ଆର୍ଥିକ ପରାମର୍ଶ ନୁହେଁ।",
+  "researchPromptNameLine": "ନାମ: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "ଟିକର: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "ଟିକର: (ପ୍ରଦାନ କରାଯାଇ ନାହିଁ)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (ପ୍ରଦାନ କରାଯାଇ ନାହିଁ)"
 }

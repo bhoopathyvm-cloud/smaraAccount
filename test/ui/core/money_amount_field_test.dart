@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/core/money_amount_field.dart';
 
 void main() {
@@ -54,7 +55,7 @@ void main() {
     await tester.enterText(find.byType(TextField), '');
     await tester.pump();
     expect(reported, isNull);
-    expect(find.text('Enter a valid amount'), findsNothing);
+    expect(find.text('Enter a valid amount.'), findsNothing);
   });
 
   testWidgets(
@@ -82,7 +83,7 @@ void main() {
       await tester.pump();
 
       expect(reported, isNull);
-      expect(find.text('Enter a valid amount'), findsOneWidget);
+      expect(find.text('Enter a valid amount.'), findsOneWidget);
     },
   );
 
@@ -110,7 +111,7 @@ void main() {
       await tester.pump();
 
       expect(reported, equals(1250));
-      expect(find.text('Enter a valid amount'), findsNothing);
+      expect(find.text('Enter a valid amount.'), findsNothing);
     },
   );
 
@@ -144,7 +145,39 @@ void main() {
       await tester.pump();
 
       expect(reported, equals(123450));
-      expect(find.text('Enter a valid amount'), findsNothing);
+      expect(find.text('Enter a valid amount.'), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'in Tamil, an unparseable value shows the Tamil error, not the English '
+    'literal',
+    (tester) async {
+      final controller = TextEditingController();
+      addTearDown(controller.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('ta'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: supportedAppLocales,
+          home: Scaffold(
+            body: MoneyAmountField(
+              controller: controller,
+              labelText: 'Amount',
+              currency: 'USD',
+              onChangedMinor: (_) {},
+            ),
+          ),
+        ),
+      );
+
+      await tester.enterText(find.byType(TextField), 'abc');
+      await tester.pump();
+
+      final ta = lookupAppLocalizations(const Locale('ta'));
+      expect(find.text(ta.validationEnterValidAmount), findsOneWidget);
+      expect(find.text('Enter a valid amount.'), findsNothing);
     },
   );
 }

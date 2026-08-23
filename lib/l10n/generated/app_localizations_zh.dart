@@ -342,6 +342,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get systemCategoryOtherExpense => '其他支出';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV 导入';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX 导入';
+
+  @override
   String get homeThisMonth => '本月';
 
   @override
@@ -771,7 +777,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      '如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara记账没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。';
+      '如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara Accounting 没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。';
 
   @override
   String get recoveryPhraseWriteDown => '按顺序写下这些单词，并将其存放在与此设备分开的安全地方。';
@@ -1319,6 +1325,42 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorCsvNoRows => '所选文件没有任何数据行。';
 
   @override
+  String get skipMissingDate => '缺少日期。';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '无法使用格式“$pattern”解析日期“$raw”。';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => '交易日期缺失或无效。';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return '无法解析交易日期“$raw”。';
+  }
+
+  @override
+  String get skipMissingAmount => '缺少金额。';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return '无法解析金额“$raw”。';
+  }
+
+  @override
+  String get skipZeroAmount => '金额为零。';
+
+  @override
+  String get skipUnparseableDebitCreditAmount => '无法解析借方或贷方金额。';
+
+  @override
+  String get skipBothDebitAndCreditNonZero => '借方和贷方两列都有金额。';
+
+  @override
+  String get skipBothDebitAndCreditZero => '借方和贷方两列均为零。';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return '无法创建备份：$detail';
   }
@@ -1445,7 +1487,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => '解锁 Smara记账';
+  String get unlockBiometricReason => '解锁 Smara Account';
 
   @override
   String get searchLabel => '搜索';
@@ -1665,4 +1707,29 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get unknownCategory => '未知分类';
+
+  @override
+  String get researchPromptIntro =>
+      '为家庭投资者研究这只公开上市的证券。识别发行方，如有已知日期请总结近期新闻，并概述下行风险与上行驱动因素。将事实与推测区分开来。不要给出买入、卖出或持有的建议。这不是财务建议。';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return '名称：$name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return '股票代码：$ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => '股票代码：（未提供）';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN：$isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN：（未提供）';
 }

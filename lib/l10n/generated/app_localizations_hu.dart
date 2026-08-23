@@ -286,7 +286,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get providerStooq => 'Stooq (napi árfolyamok)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (grafikon API)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -348,6 +348,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'Egyéb kiadás';
+
+  @override
+  String get systemDescriptionCsvImport => 'CSV-importálás';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX-importálás';
 
   @override
   String get homeThisMonth => 'EZ A HÓNAP';
@@ -794,7 +800,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara könyvelésnek nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.';
+      'Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara Accountingnak nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1410,6 +1416,46 @@ class AppLocalizationsHu extends AppLocalizations {
   String get errorCsvNoRows => 'A kiválasztott fájlban nincsenek sorok.';
 
   @override
+  String get skipMissingDate => 'Hiányzó dátum.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'A(z) \"$raw\" dátum nem értelmezhető a(z) \"$pattern\" mintával.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Hiányzó vagy érvénytelen tranzakciódátum.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'A(z) \"$raw\" tranzakciódátum nem értelmezhető.';
+  }
+
+  @override
+  String get skipMissingAmount => 'Hiányzó összeg.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'A(z) \"$raw\" összeg nem értelmezhető.';
+  }
+
+  @override
+  String get skipZeroAmount => 'Az összeg nulla.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'A terhelési vagy jóváírási összeg nem értelmezhető.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'A terhelés és a jóváírás oszlopa is tartalmaz összeget.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'A terhelés és a jóváírás oszlopa is nulla.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Nem sikerült létrehozni a biztonsági mentést: $detail';
   }
@@ -1560,7 +1606,7 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara könyvelés feloldása';
+  String get unlockBiometricReason => 'Smara Account feloldása';
 
   @override
   String get searchLabel => 'Keresés';
@@ -1789,4 +1835,29 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Ismeretlen kategória';
+
+  @override
+  String get researchPromptIntro =>
+      'Kutasd fel ezt a tőzsdén jegyzett eszközt egy magánbefektető számára. Azonosítsd a kibocsátót, foglald össze a friss híreket dátummal, ha ismert, és vázold fel a lefelé mutató kockázatokat és a felfelé mutató tényezőket. Válaszd külön a tényeket a feltételezésektől. Ne adj vételi, eladási vagy tartási ajánlást. Ez nem befektetési tanácsadás.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Név: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Ticker: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Ticker: (nincs megadva)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (nincs megadva)';
 }

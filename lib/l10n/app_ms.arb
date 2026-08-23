@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telefon",
   "systemCategoryHealth": "Kesihatan",
   "systemCategoryOtherExpense": "Perbelanjaan Lain",
+  "systemDescriptionCsvImport": "Import CSV",
+  "systemDescriptionOfxImport": "Import OFX",
   "homeThisMonth": "BULAN INI",
   "homeMoneyInTransit": "WANG DALAM PERJALANAN",
   "homeWhatYouHaveMinusWhatYouOwe": "APA YANG ANDA ADA TOLAK APA YANG ANDA HUTANG",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Fail yang dipilih kosong.",
   "errorCsvUnreadable": "Tidak dapat membaca fail ini sebagai CSV.",
   "errorCsvNoRows": "Fail yang dipilih tiada baris.",
+  "skipMissingDate": "Tarikh tiada.",
+  "skipUnparseableDate": "Tidak dapat menghurai tarikh \"{raw}\" dengan corak \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Tarikh transaksi tiada atau tidak sah.",
+  "skipOfxUnparseableDate": "Tidak dapat menghurai tarikh transaksi \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Jumlah tiada.",
+  "skipUnparseableAmount": "Tidak dapat menghurai jumlah \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Jumlah adalah sifar.",
+  "skipUnparseableDebitCreditAmount": "Tidak dapat menghurai jumlah debit atau kredit.",
+  "skipBothDebitAndCreditNonZero": "Kedua-dua lajur debit dan kredit mempunyai jumlah.",
+  "skipBothDebitAndCreditZero": "Kedua-dua lajur debit dan kredit adalah sifar.",
   "errorBackupCreateFailed": "Tidak dapat mencipta sandaran: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Peraturan kategori",
   "possibleDuplicate": "kemungkinan pendua",
-  "unknownCategory": "Kategori tidak diketahui"
+  "unknownCategory": "Kategori tidak diketahui",
+  "researchPromptIntro": "Selidik instrumen tersenarai secara awam ini untuk pelabur isi rumah. Kenal pasti penerbit, ringkaskan berita terkini berserta tarikh jika diketahui, dan gariskan risiko penurunan serta pendorong kenaikan. Pisahkan fakta daripada spekulasi. Jangan berikan cadangan beli, jual, atau pegang. Ini bukan nasihat kewangan.",
+  "researchPromptNameLine": "Nama: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Ticker: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Ticker: (tidak disediakan)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (tidak disediakan)"
 }

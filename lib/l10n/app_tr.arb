@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telefon",
   "systemCategoryHealth": "Sağlık",
   "systemCategoryOtherExpense": "Diğer Gider",
+  "systemDescriptionCsvImport": "CSV içe aktarımı",
+  "systemDescriptionOfxImport": "OFX içe aktarımı",
   "homeThisMonth": "BU AY",
   "homeMoneyInTransit": "TRANSFERDEKİ PARA",
   "homeWhatYouHaveMinusWhatYouOwe": "SAHİP OLDUĞUNUZ EKSİ BORCUNUZ",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Kurtarma ifadeniz",
   "recoveryPhraseConfirmTitle": "İfadenizi onaylayın",
-  "recoveryPhraseBlurb": "Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Muhasebe''nin bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.",
+  "recoveryPhraseBlurb": "Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Accounting''in bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.",
   "recoveryPhraseWriteDown": "Bu kelimeleri sırasıyla yazın ve bu cihazdan ayrı, güvenli bir yerde saklayın.",
   "iveSavedRecoveryPhrase": "Kurtarma ifademi kaydettim",
   "confirmPhraseBlurb": "Az önce kaydettiğiniz ifadeden istenen kelimeleri girin.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Seçilen dosya boş.",
   "errorCsvUnreadable": "Bu dosya CSV olarak okunamadı.",
   "errorCsvNoRows": "Seçilen dosyada satır yok.",
+  "skipMissingDate": "Tarih eksik.",
+  "skipUnparseableDate": "\"{pattern}\" deseniyle \"{raw}\" tarihi ayrıştırılamadı.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "İşlem tarihi eksik veya geçersiz.",
+  "skipOfxUnparseableDate": "\"{raw}\" işlem tarihi ayrıştırılamadı.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Tutar eksik.",
+  "skipUnparseableAmount": "\"{raw}\" tutarı ayrıştırılamadı.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Tutar sıfır.",
+  "skipUnparseableDebitCreditAmount": "Borç veya alacak tutarı ayrıştırılamadı.",
+  "skipBothDebitAndCreditNonZero": "Borç ve alacak sütunlarının ikisinde de tutar var.",
+  "skipBothDebitAndCreditZero": "Borç ve alacak sütunlarının ikisi de sıfır.",
   "errorBackupCreateFailed": "Yedek oluşturulamadı: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Smara Muhasebe''nin kilidini aç",
+  "unlockBiometricReason": "Smara Account''un kilidini aç",
   "searchLabel": "Ara",
   "openingBalance": "Açılış bakiyesi",
   "transferToName": "Transfer: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Kategori kuralları",
   "possibleDuplicate": "olası yinelenen",
-  "unknownCategory": "Bilinmeyen kategori"
+  "unknownCategory": "Bilinmeyen kategori",
+  "researchPromptIntro": "Bireysel bir yatırımcı için halka açık olarak işlem gören bu aracı araştırın. İhraççıyı belirleyin, biliniyorsa tarihleriyle birlikte son haberleri özetleyin ve düşüş risklerini ile yükseliş etkenlerini ortaya koyun. Gerçekleri spekülasyondan ayırın. Alım, satım veya elde tutma tavsiyesi vermeyin. Bu finansal tavsiye değildir.",
+  "researchPromptNameLine": "Ad: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Sembol: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Sembol: (belirtilmedi)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (belirtilmedi)"
 }

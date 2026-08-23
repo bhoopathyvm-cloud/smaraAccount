@@ -109,6 +109,8 @@
   "systemCategoryPhone": "电话",
   "systemCategoryHealth": "健康",
   "systemCategoryOtherExpense": "其他支出",
+  "systemDescriptionCsvImport": "CSV 导入",
+  "systemDescriptionOfxImport": "OFX 导入",
   "homeThisMonth": "本月",
   "homeMoneyInTransit": "在途资金",
   "homeWhatYouHaveMinusWhatYouOwe": "您拥有的减去您所欠的",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "您的恢复短语",
   "recoveryPhraseConfirmTitle": "确认您的恢复短语",
-  "recoveryPhraseBlurb": "如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara记账没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。",
+  "recoveryPhraseBlurb": "如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara Accounting 没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。",
   "recoveryPhraseWriteDown": "按顺序写下这些单词，并将其存放在与此设备分开的安全地方。",
   "iveSavedRecoveryPhrase": "我已保存我的恢复短语",
   "confirmPhraseBlurb": "输入您刚保存的恢复短语中被要求的单词。",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "所选文件为空。",
   "errorCsvUnreadable": "无法将此文件作为 CSV 读取。",
   "errorCsvNoRows": "所选文件没有任何数据行。",
+  "skipMissingDate": "缺少日期。",
+  "skipUnparseableDate": "无法使用格式“{pattern}”解析日期“{raw}”。",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "交易日期缺失或无效。",
+  "skipOfxUnparseableDate": "无法解析交易日期“{raw}”。",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "缺少金额。",
+  "skipUnparseableAmount": "无法解析金额“{raw}”。",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "金额为零。",
+  "skipUnparseableDebitCreditAmount": "无法解析借方或贷方金额。",
+  "skipBothDebitAndCreditNonZero": "借方和贷方两列都有金额。",
+  "skipBothDebitAndCreditZero": "借方和贷方两列均为零。",
   "errorBackupCreateFailed": "无法创建备份：{detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "解锁 Smara记账",
+  "unlockBiometricReason": "解锁 Smara Account",
   "searchLabel": "搜索",
   "openingBalance": "期初余额",
   "transferToName": "转账：{name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "分类规则",
   "possibleDuplicate": "可能重复",
-  "unknownCategory": "未知分类"
+  "unknownCategory": "未知分类",
+  "researchPromptIntro": "为家庭投资者研究这只公开上市的证券。识别发行方，如有已知日期请总结近期新闻，并概述下行风险与上行驱动因素。将事实与推测区分开来。不要给出买入、卖出或持有的建议。这不是财务建议。",
+  "researchPromptNameLine": "名称：{name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "股票代码：{ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "股票代码：（未提供）",
+  "researchPromptIsinLine": "ISIN：{isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN：（未提供）"
 }

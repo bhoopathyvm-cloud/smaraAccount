@@ -346,6 +346,12 @@ class AppLocalizationsNe extends AppLocalizations {
   String get systemCategoryOtherExpense => 'अन्य खर्च';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV आयात';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX आयात';
+
+  @override
   String get homeThisMonth => 'यो महिना';
 
   @override
@@ -1395,6 +1401,45 @@ class AppLocalizationsNe extends AppLocalizations {
   String get errorCsvNoRows => 'छानिएको फाइलमा कुनै पङ्क्ति छैन।';
 
   @override
+  String get skipMissingDate => 'मिति छैन।';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" ढाँचाले मिति \"$raw\" पद वर्णन गर्न सकिएन।';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => 'कारोबारको मिति छैन वा अमान्य छ।';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'कारोबारको मिति \"$raw\" पद वर्णन गर्न सकिएन।';
+  }
+
+  @override
+  String get skipMissingAmount => 'रकम छैन।';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'रकम \"$raw\" पद वर्णन गर्न सकिएन।';
+  }
+
+  @override
+  String get skipZeroAmount => 'रकम शून्य छ।';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'डेबिट वा क्रेडिट रकम पद वर्णन गर्न सकिएन।';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'डेबिट र क्रेडिट दुवै स्तम्भमा रकम छ।';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'डेबिट र क्रेडिट दुवै स्तम्भ शून्य छन्।';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'ब्याकअप सिर्जना गर्न सकिएन: $detail';
   }
@@ -1607,7 +1652,7 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'सक्रिय हुँदा: माथिको रकम यो खाताबाट काटिएको कुल रकम हो; शुल्क त्यहीबाट कटाइन्छ।';
+      'सक्रिय: माथिको रकम यो खाताबाट लिइएको कुल रकम हो; शुल्क त्यसैबाट कटौती हुन्छ।';
 
   @override
   String get feeBankBlurb => 'तपाईंको बैंक वा बिचौलियाले लिने अग्रिम कमिसन।';
@@ -1656,7 +1701,7 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name अब म्याद पुगेको रूपमा देखिने छैन। यसले पहिले नै रेकर्ड गरेका कारोबारहरू प्रभावित हुनेछैनन्।';
+    return '$name अब तिर्नुपर्नेको रूपमा प्रस्ताव गरिनेछैन। यसले पहिले नै रेकर्ड गरेका विगतका कारोबारमा असर पर्दैन।';
   }
 
   @override
@@ -1736,7 +1781,7 @@ class AppLocalizationsNe extends AppLocalizations {
   String get looksLikeLoss => 'यो नोक्सान जस्तो देखिन्छ';
 
   @override
-  String get looksLikeBreakEven => 'यो नाफा-नोक्सान बराबर जस्तो देखिन्छ';
+  String get looksLikeBreakEven => 'यो ब्रेक-इभन जस्तो देखिन्छ';
 
   @override
   String sellableQuantity(String name, String qty) {
@@ -1771,4 +1816,29 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get unknownCategory => 'अज्ञात श्रेणी';
+
+  @override
+  String get researchPromptIntro =>
+      'घरेलु लगानीकर्ताको लागि सार्वजनिक रूपमा सूचीबद्ध यो उपकरणको अनुसन्धान गर्नुहोस्। जारीकर्ता पहिचान गर्नुहोस्, थाहा भएमा मितिसहित हालसालैका समाचारको सारांश दिनुहोस्, र गिरावटको जोखिम र वृद्धिका कारकहरू उल्लेख गर्नुहोस्। तथ्यलाई अनुमानबाट छुट्याउनुहोस्। किन्ने, बेच्ने वा राख्ने सिफारिस नदिनुहोस्। यो वित्तीय सल्लाह होइन।';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'नाम: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'टिकर: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'टिकर: (उपलब्ध छैन)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (उपलब्ध छैन)';
 }

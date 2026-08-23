@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n.dart';
 import 'money_formatter.dart';
 
 /// A text field for entering a monetary amount in [currency]'s own
@@ -56,7 +57,9 @@ class _MoneyAmountFieldState extends State<MoneyAmountField> {
         suffixText: widget.suffixText,
         helperText: _isInvalid ? null : widget.helperText,
         helperMaxLines: widget.helperMaxLines,
-        errorText: _isInvalid ? 'Enter a valid amount' : null,
+        errorText: _isInvalid
+            ? l10nOf(context).validationEnterValidAmount
+            : null,
       ),
       onChanged: _handleChanged,
     );

@@ -344,6 +344,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get systemCategoryOtherExpense => '기타 지출';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV 가져오기';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX 가져오기';
+
+  @override
   String get homeThisMonth => '이번 달';
 
   @override
@@ -1336,6 +1342,42 @@ class AppLocalizationsKo extends AppLocalizations {
   String get errorCsvNoRows => '선택한 파일에 행이 없습니다.';
 
   @override
+  String get skipMissingDate => '날짜가 없습니다.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '패턴 \"$pattern\"으로 날짜 \"$raw\"을(를) 분석할 수 없습니다.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => '거래 날짜가 없거나 유효하지 않습니다.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return '거래 날짜 \"$raw\"을(를) 분석할 수 없습니다.';
+  }
+
+  @override
+  String get skipMissingAmount => '금액이 없습니다.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return '금액 \"$raw\"을(를) 분석할 수 없습니다.';
+  }
+
+  @override
+  String get skipZeroAmount => '금액이 0입니다.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount => '차변 또는 대변 금액을 분석할 수 없습니다.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero => '차변과 대변 열 모두에 금액이 있습니다.';
+
+  @override
+  String get skipBothDebitAndCreditZero => '차변과 대변 열이 모두 0입니다.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return '백업을 만들 수 없습니다: $detail';
   }
@@ -1468,7 +1510,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara 회계 잠금 해제';
+  String get unlockBiometricReason => 'Smara 계좌 잠금 해제';
 
   @override
   String get searchLabel => '검색';
@@ -1691,4 +1733,29 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get unknownCategory => '알 수 없는 분류';
+
+  @override
+  String get researchPromptIntro =>
+      '가계 투자자를 위해 이 공개 상장 종목을 조사하세요. 발행사를 확인하고, 알려진 경우 날짜와 함께 최근 뉴스를 요약하며, 하락 위험과 상승 요인을 정리하세요. 사실과 추측을 구분하세요. 매수, 매도, 보유 추천은 하지 마세요. 이는 투자 자문이 아닙니다.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return '이름: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return '티커: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => '티커: (제공되지 않음)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (제공되지 않음)';
 }

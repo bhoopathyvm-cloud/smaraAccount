@@ -347,6 +347,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Прочие расходы';
 
   @override
+  String get systemDescriptionCsvImport => 'Импорт CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'Импорт OFX';
+
+  @override
   String get homeThisMonth => 'ЭТОТ МЕСЯЦ';
 
   @override
@@ -789,7 +795,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Эти 24 слова — единственный способ восстановить историю ваших операций, если это устройство будет утеряно, сброшено или заменено. У Smara учёта нет сервера, и он не может восстановить их за вас.\n\nЕсли вы потеряете это устройство и эту фразу вместе, каждая записанная вами операция станет навсегда непроверяемой.';
+      'Эти 24 слова — единственный способ восстановить историю ваших операций, если это устройство будет утеряно, сброшено или заменено. У Smara Accounting нет сервера, и он не может восстановить их за вас.\n\nЕсли вы потеряете это устройство и эту фразу вместе, каждая записанная вами операция станет навсегда непроверяемой.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1399,6 +1405,46 @@ class AppLocalizationsRu extends AppLocalizations {
   String get errorCsvNoRows => 'В выбранном файле нет строк.';
 
   @override
+  String get skipMissingDate => 'Дата отсутствует.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Не удалось разобрать дату \"$raw\" по шаблону \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Дата операции отсутствует или недействительна.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Не удалось разобрать дату операции \"$raw\".';
+  }
+
+  @override
+  String get skipMissingAmount => 'Сумма отсутствует.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Не удалось разобрать сумму \"$raw\".';
+  }
+
+  @override
+  String get skipZeroAmount => 'Сумма равна нулю.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Не удалось разобрать сумму дебета или кредита.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'В столбцах дебета и кредита указаны обе суммы.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Столбцы дебета и кредита оба равны нулю.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Не удалось создать резервную копию: $detail';
   }
@@ -1779,4 +1825,29 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Неизвестная категория';
+
+  @override
+  String get researchPromptIntro =>
+      'Изучите этот публично торгуемый инструмент для частного инвестора. Определите эмитента, кратко изложите последние новости с датами, если они известны, и опишите риски снижения и факторы роста. Отделяйте факты от домыслов. Не давайте рекомендацию покупать, продавать или удерживать. Это не является финансовой консультацией.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Название: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Тикер: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Тикер: (не указан)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (не указан)';
 }

@@ -282,7 +282,7 @@ class AppLocalizationsMni extends AppLocalizations {
   String get providerStooq => 'Stooq (ꯅꯨꯃꯤꯠ ꯈꯨꯗꯤꯡꯒꯤ ꯗꯥꯝ)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (ꯆꯥꯔꯠ API)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -343,6 +343,12 @@ class AppLocalizationsMni extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'ꯑꯇꯣꯞꯄ ꯑꯦꯛꯁꯄꯦꯟꯁ';
+
+  @override
+  String get systemDescriptionCsvImport => 'CSV পুথোকপা';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX পুথোকপা';
 
   @override
   String get homeThisMonth => 'ꯃꯁꯤꯒꯤ ꯊꯥ';
@@ -1383,6 +1389,46 @@ class AppLocalizationsMni extends AppLocalizations {
   String get errorCsvNoRows => 'ꯈꯪꯗꯣꯛꯈꯤꯕ ꯐꯥꯏꯂꯗ ꯔꯣ ꯂꯩꯇꯦ.';
 
   @override
+  String get skipMissingDate => 'তারিখ লৈতে।';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" পেটার্নগী মতুং ইন্না তারিখ \"$raw\" পার্স তৌবা ঙমদে।';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'ট্রাঞ্জেক্সনগী তারিখ লৈতে নত্রগা চাংদাবা ওইরি।';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'ট্রাঞ্জেক্সনগী তারিখ \"$raw\" পার্স তৌবা ঙমদে।';
+  }
+
+  @override
+  String get skipMissingAmount => 'অমাউন্ত লৈতে।';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'অমাউন্ত \"$raw\" পার্স তৌবা ঙমদে।';
+  }
+
+  @override
+  String get skipZeroAmount => 'অমাউন্তনা জিরো ওই।';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ডেবিত নত্রগা ক্রেদিত অমাউন্ত পার্স তৌবা ঙমদে।';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'ডেবিত অমসুং ক্রেদিত কলম অনিমকপুম্নমক্তা অমাউন্ত লৈ।';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'ডেবিত অমসুং ক্রেদিত কলম অনিমক জিরো ওই।';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'ꯕꯦꯀꯑꯞ ꯁꯦꯝꯒꯠꯄ ꯉꯝꯗ꯭ꯔꯦ: $detail';
   }
@@ -1752,4 +1798,29 @@ class AppLocalizationsMni extends AppLocalizations {
 
   @override
   String get unknownCategory => 'ꯈꯪꯗꯕ ꯉꯝꯗꯕ ꯃꯆꯦꯠ';
+
+  @override
+  String get researchPromptIntro =>
+      'য়ুমগী ইনবেস্তরকীগীদমক্তা মিওই পুম্নমকনা উবা পাবলিকলি লিস্ত তৌরবা ইন্স্ত্রুমেন্ত অসিদা থীবা তৌবিয়ু। ইস্যুয়র অদু খংদোকপিয়ু, খংলবদি তারিখগা লোয়ননা নৌবা পাউ অদুগী চুমথোক পীবিয়ু, অমসুং কুম্থাবগী ঈশাল অমসুং কাখৎপগী ফংদোকপিবা মরুওইবা মরুওংশিং অদু ফোংদোকপিয়ু। ফজবা অসিবু খন্নবাগী মখাদা লৈতনা থমবিয়ু। লৈবা, য়োনবা, নত্রগা পাইখৎপগী তম্বিবা য়াদে। মসি ফিনান্সগী তম্বিবা ওইদে।';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'মিং: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'তিকর: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'তিকর: (পীদ্রে)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (পীদ্রে)';
 }

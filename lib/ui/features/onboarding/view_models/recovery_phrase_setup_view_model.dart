@@ -66,7 +66,7 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
       setFailure(
         AppFailure(
           AppErrorCode.validationGenerateKeyFailed,
-          params: {'detail': '$e'},
+          debugMessage: '$e',
         ),
       );
     }

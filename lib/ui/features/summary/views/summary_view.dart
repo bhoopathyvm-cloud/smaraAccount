@@ -5,6 +5,7 @@ import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/date_formatter.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_formatter.dart';
 import '../view_models/summary_view_model.dart';
@@ -64,8 +65,8 @@ class SummaryView extends StatelessWidget {
                   onPressed: () => _pickRange(context),
                   child: Text(
                     l10n.summaryDateRange(
-                      _formatDate(viewModel.start),
-                      _formatDate(viewModel.end),
+                      formatLocalDate(context, viewModel.start),
+                      formatLocalDate(context, viewModel.end),
                     ),
                   ),
                 ),
@@ -87,9 +88,6 @@ class SummaryView extends StatelessWidget {
     );
   }
 }
-
-String _formatDate(DateTime date) =>
-    '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
 class _SummaryCard extends StatelessWidget {
   const _SummaryCard({required this.label, required this.amountMinor});

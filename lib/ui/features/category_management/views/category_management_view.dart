@@ -5,6 +5,7 @@ import '../../../../domain/models/account.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../../../core/money_formatter.dart';
@@ -88,12 +89,14 @@ class CategoryManagementView extends StatelessWidget {
 
   Future<void> _showRenameDialog(BuildContext context, Account category) async {
     final l10n = l10nOf(context);
-    final controller = TextEditingController(text: category.name);
+    final controller = TextEditingController(
+      text: editingNameFor(l10n, category.name),
+    );
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n.renameCategory),
-        content: TextField(controller: controller, autofocus: true),
+        content: AppTextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -101,11 +104,13 @@ class CategoryManagementView extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              if (controller.text.trim().isEmpty) return;
-              viewModel.renameCategory(
-                id: category.id,
-                newName: controller.text.trim(),
+              final name = canonicalNameToPersist(
+                l10n,
+                category.name,
+                controller.text,
               );
+              if (name.isEmpty) return;
+              viewModel.renameCategory(id: category.id, newName: name);
               Navigator.of(context).pop();
             },
             child: Text(l10n.actionSave),

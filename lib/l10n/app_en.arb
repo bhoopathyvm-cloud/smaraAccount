@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Phone",
   "systemCategoryHealth": "Health",
   "systemCategoryOtherExpense": "Other Expense",
+  "systemDescriptionCsvImport": "CSV import",
+  "systemDescriptionOfxImport": "OFX import",
   "homeThisMonth": "THIS MONTH",
   "homeMoneyInTransit": "MONEY IN TRANSIT",
   "homeWhatYouHaveMinusWhatYouOwe": "WHAT YOU HAVE MINUS WHAT YOU OWE",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "The selected file is empty.",
   "errorCsvUnreadable": "Could not read this file as CSV.",
   "errorCsvNoRows": "The selected file has no rows.",
+  "skipMissingDate": "Missing date.",
+  "skipUnparseableDate": "Could not parse date \"{raw}\" with pattern \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Missing or invalid transaction date.",
+  "skipOfxUnparseableDate": "Could not parse transaction date \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Missing amount.",
+  "skipUnparseableAmount": "Could not parse amount \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Amount is zero.",
+  "skipUnparseableDebitCreditAmount": "Could not parse the debit or credit amount.",
+  "skipBothDebitAndCreditNonZero": "Both debit and credit columns have an amount.",
+  "skipBothDebitAndCreditZero": "Both debit and credit columns are zero.",
   "errorBackupCreateFailed": "Could not create the backup: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Category rules",
   "possibleDuplicate": "possible duplicate",
-  "unknownCategory": "Unknown category"
+  "unknownCategory": "Unknown category",
+  "researchPromptIntro": "Research this publicly listed instrument for a household investor. Identify the issuer, summarize recent news with dates if known, and outline downside risks and upside drivers. Separate facts from speculation. Do not give buy, sell, or hold advice. This is not financial advice.",
+  "researchPromptNameLine": "Name: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Ticker: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Ticker: (none provided)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (none provided)"
 }

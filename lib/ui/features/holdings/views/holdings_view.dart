@@ -9,7 +9,9 @@ import '../../../../domain/models/instrument_quote.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/date_formatter.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
@@ -164,7 +166,10 @@ class HoldingsView extends StatelessWidget {
   }
 
   Future<void> _research(BuildContext context, Instrument instrument) async {
-    final result = await viewModel.researchInstrument(instrument);
+    final result = await viewModel.researchInstrument(
+      l10nOf(context),
+      instrument,
+    );
     if (!context.mounted) return;
     final l10n = l10nOf(context);
     final message = result == ResearchLaunchResult.copied
@@ -201,7 +206,7 @@ class HoldingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(l10n.renameInstrument),
-        content: TextField(controller: controller, autofocus: true),
+        content: AppTextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
@@ -295,9 +300,9 @@ class HoldingsView extends StatelessWidget {
                         child: Text(l10n.newInstrument),
                       ),
                     ] else ...[
-                      TextField(
+                      AppTextField(
                         controller: newNameController,
-                        decoration: InputDecoration(labelText: l10n.name),
+                        labelText: l10n.name,
                       ),
                       const SizedBox(height: AppSpacing.medium),
                       DropdownButtonFormField<InstrumentKind>(
@@ -352,7 +357,7 @@ class HoldingsView extends StatelessWidget {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        '${l10n.dateLabel} ${transactionDate.toIso8601String().substring(0, 10)}',
+                        '${l10n.dateLabel} ${formatLocalDate(context, transactionDate)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
@@ -373,7 +378,7 @@ class HoldingsView extends StatelessWidget {
                         lockedUntil == null
                             ? l10n.lockUntilOptional
                             : l10n.lockedUntilDate(
-                                lockedUntil!.toIso8601String().substring(0, 10),
+                                formatLocalDate(context, lockedUntil!),
                               ),
                       ),
                       subtitle: Text(l10n.lockUntilHint),
@@ -417,11 +422,9 @@ class HoldingsView extends StatelessWidget {
                       ),
                     ],
                     const SizedBox(height: AppSpacing.medium),
-                    TextField(
+                    AppTextField(
                       controller: descriptionController,
-                      decoration: InputDecoration(
-                        labelText: l10n.descriptionOptional,
-                      ),
+                      labelText: l10n.descriptionOptional,
                     ),
                   ],
                 ),
@@ -591,7 +594,7 @@ class HoldingsView extends StatelessWidget {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        '${l10n.dateLabel} ${transactionDate.toIso8601String().substring(0, 10)}',
+                        '${l10n.dateLabel} ${formatLocalDate(context, transactionDate)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
@@ -622,11 +625,9 @@ class HoldingsView extends StatelessWidget {
                       onChanged: (value) => brokerageCategoryId = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
-                    TextField(
+                    AppTextField(
                       controller: descriptionController,
-                      decoration: InputDecoration(
-                        labelText: l10n.descriptionOptional,
-                      ),
+                      labelText: l10n.descriptionOptional,
                     ),
                   ],
                 ),
@@ -724,7 +725,7 @@ class HoldingsView extends StatelessWidget {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        '${l10n.dateLabel} ${transactionDate.toIso8601String().substring(0, 10)}',
+                        '${l10n.dateLabel} ${formatLocalDate(context, transactionDate)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
@@ -739,11 +740,9 @@ class HoldingsView extends StatelessWidget {
                         }
                       },
                     ),
-                    TextField(
+                    AppTextField(
                       controller: descriptionController,
-                      decoration: InputDecoration(
-                        labelText: l10n.descriptionOptional,
-                      ),
+                      labelText: l10n.descriptionOptional,
                     ),
                   ],
                 ),

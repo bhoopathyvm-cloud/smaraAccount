@@ -189,7 +189,8 @@ void main() {
           skippedRows: const [
             StatementSkippedRow(
               rawFragment: '<STMTTRN>...</STMTTRN>',
-              reason: 'Missing transaction amount',
+              reason: 'Missing TRNAMT.',
+              code: StatementSkipCode.missingAmount,
             ),
           ],
           statementCurrency: 'USD',
@@ -201,7 +202,10 @@ void main() {
       await viewModel.loadFile(name: 'statement.ofx', bytes: const [1, 2, 3]);
 
       expect(viewModel.skippedRows, hasLength(1));
-      expect(viewModel.skippedRows.single.reason, 'Missing transaction amount');
+      expect(
+        viewModel.skippedRows.single.code,
+        StatementSkipCode.missingAmount,
+      );
       expect(viewModel.parsedTransactionCount, 1);
 
       await tester.pumpWidget(
@@ -212,7 +216,7 @@ void main() {
       expect(find.text('1 transactions parsed'), findsOneWidget);
       expect(find.text('1 skipped or excluded'), findsOneWidget);
       expect(find.text('Skipped rows'), findsOneWidget);
-      expect(find.text('Missing transaction amount'), findsOneWidget);
+      expect(find.text('Missing amount.'), findsOneWidget);
       expect(find.text('Import into account'), findsOneWidget);
     },
   );
@@ -227,7 +231,8 @@ void main() {
           skippedRows: const [
             StatementSkippedRow(
               rawFragment: '<STMTTRN>...</STMTTRN>',
-              reason: 'Missing transaction amount',
+              reason: 'Missing TRNAMT.',
+              code: StatementSkipCode.missingAmount,
             ),
           ],
           statementCurrency: 'USD',
@@ -273,7 +278,7 @@ void main() {
       expect(viewModel.rows, hasLength(1));
 
       expect(find.text('Skipped rows'), findsOneWidget);
-      expect(find.text('Missing transaction amount'), findsOneWidget);
+      expect(find.text('Missing amount.'), findsOneWidget);
       expect(find.text('Row A'), findsOneWidget);
       expect(find.text('Confirm import'), findsOneWidget);
       expect(find.text('Import into account'), findsNothing);
@@ -759,7 +764,9 @@ void main() {
             skippedRows: const [
               StatementSkippedRow(
                 rawFragment: '01/02/2026,Bad,-not-a-number',
-                reason: 'Could not parse amount',
+                reason: 'Could not parse amount "-not-a-number".',
+                code: StatementSkipCode.unparseableAmount,
+                params: {'raw': '-not-a-number'},
               ),
             ],
             statementCurrency: 'USD',
@@ -773,11 +780,17 @@ void main() {
 
         expect(viewModel.step, StatementImportStep.preview);
         expect(viewModel.skippedRows, hasLength(1));
-        expect(viewModel.skippedRows.single.reason, 'Could not parse amount');
+        expect(
+          viewModel.skippedRows.single.code,
+          StatementSkipCode.unparseableAmount,
+        );
         expect(viewModel.rows, hasLength(1));
 
         expect(find.text('Skipped rows'), findsOneWidget);
-        expect(find.text('Could not parse amount'), findsOneWidget);
+        expect(
+          find.text('Could not parse amount "-not-a-number".'),
+          findsOneWidget,
+        );
         expect(find.text('Row A'), findsOneWidget);
         expect(find.text('Confirm import'), findsOneWidget);
       },

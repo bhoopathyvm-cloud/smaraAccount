@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (อัตราจาก ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ราคารายวัน)",
-  "providerYahooFinance": "Yahoo Finance (API กราฟ)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -109,6 +109,8 @@
   "systemCategoryPhone": "โทรศัพท์",
   "systemCategoryHealth": "สุขภาพ",
   "systemCategoryOtherExpense": "ค่าใช้จ่ายอื่น",
+  "systemDescriptionCsvImport": "นำเข้า CSV",
+  "systemDescriptionOfxImport": "นำเข้า OFX",
   "homeThisMonth": "เดือนนี้",
   "homeMoneyInTransit": "เงินระหว่างโอน",
   "homeWhatYouHaveMinusWhatYouOwe": "สิ่งที่คุณมี ลบ สิ่งที่คุณเป็นหนี้",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "วลีกู้คืนของคุณ",
   "recoveryPhraseConfirmTitle": "ยืนยันวลีของคุณ",
-  "recoveryPhraseBlurb": "24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน สมุดบัญชี Smara ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร",
+  "recoveryPhraseBlurb": "24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน Smara Accounting ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร",
   "recoveryPhraseWriteDown": "จดคำเหล่านี้ตามลำดับและเก็บไว้ในที่ปลอดภัยแยกจากอุปกรณ์นี้",
   "iveSavedRecoveryPhrase": "ฉันได้บันทึกวลีกู้คืนของฉันแล้ว",
   "confirmPhraseBlurb": "ป้อนคำที่ระบบขอจากวลีที่คุณเพิ่งบันทึกไว้",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "ไฟล์ที่เลือกว่างเปล่า",
   "errorCsvUnreadable": "ไม่สามารถอ่านไฟล์นี้เป็น CSV ได้",
   "errorCsvNoRows": "ไฟล์ที่เลือกไม่มีข้อมูล",
+  "skipMissingDate": "ไม่มีวันที่",
+  "skipUnparseableDate": "ไม่สามารถแยกวิเคราะห์วันที่ \"{raw}\" ด้วยรูปแบบ \"{pattern}\" ได้",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "ไม่มีวันที่ทำรายการหรือไม่ถูกต้อง",
+  "skipOfxUnparseableDate": "ไม่สามารถแยกวิเคราะห์วันที่ทำรายการ \"{raw}\" ได้",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "ไม่มีจำนวนเงิน",
+  "skipUnparseableAmount": "ไม่สามารถแยกวิเคราะห์จำนวนเงิน \"{raw}\" ได้",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "จำนวนเงินเป็นศูนย์",
+  "skipUnparseableDebitCreditAmount": "ไม่สามารถแยกวิเคราะห์จำนวนเงินฝั่งเดบิตหรือเครดิตได้",
+  "skipBothDebitAndCreditNonZero": "คอลัมน์เดบิตและเครดิตมีจำนวนเงินทั้งคู่",
+  "skipBothDebitAndCreditZero": "คอลัมน์เดบิตและเครดิตเป็นศูนย์ทั้งคู่",
   "errorBackupCreateFailed": "ไม่สามารถสร้างข้อมูลสำรองได้: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "ปลดล็อกสมุดบัญชี Smara",
+  "unlockBiometricReason": "ปลดล็อกบัญชี Smara",
   "searchLabel": "ค้นหา",
   "openingBalance": "ยอดยกมา",
   "transferToName": "โอนเงิน: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "กฎหมวดหมู่",
   "possibleDuplicate": "อาจซ้ำกับรายการอื่น",
-  "unknownCategory": "หมวดหมู่ที่ไม่ทราบ"
+  "unknownCategory": "หมวดหมู่ที่ไม่ทราบ",
+  "researchPromptIntro": "ค้นคว้าตราสารที่จดทะเบียนในตลาดหลักทรัพย์นี้สำหรับนักลงทุนรายย่อยในครัวเรือน ระบุผู้ออกตราสาร สรุปข่าวล่าสุดพร้อมวันที่หากทราบ และสรุปความเสี่ยงด้านลบและปัจจัยขับเคลื่อนด้านบวก แยกข้อเท็จจริงออกจากการคาดเดา อย่าให้คำแนะนำซื้อ ขาย หรือถือครอง นี่ไม่ใช่คำแนะนำทางการเงิน",
+  "researchPromptNameLine": "ชื่อ: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "สัญลักษณ์หลักทรัพย์: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "สัญลักษณ์หลักทรัพย์: (ไม่ได้ระบุ)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (ไม่ได้ระบุ)"
 }

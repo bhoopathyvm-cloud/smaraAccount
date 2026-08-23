@@ -109,6 +109,8 @@
   "systemCategoryPhone": "ഫോൺ",
   "systemCategoryHealth": "ആരോഗ്യം",
   "systemCategoryOtherExpense": "മറ്റ് ചെലവ്",
+  "systemDescriptionCsvImport": "CSV ഇറക്കുമതി",
+  "systemDescriptionOfxImport": "OFX ഇറക്കുമതി",
   "homeThisMonth": "ഈ മാസം",
   "homeMoneyInTransit": "കൈമാറ്റത്തിലുള്ള പണം",
   "homeWhatYouHaveMinusWhatYouOwe": "നിങ്ങൾക്കുള്ളത് കുറയ്ക്കുക നിങ്ങൾ കൊടുക്കാനുള്ളത്",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "തിരഞ്ഞെടുത്ത ഫയൽ ശൂന്യമാണ്.",
   "errorCsvUnreadable": "ഈ ഫയൽ CSV ആയി വായിക്കാൻ കഴിഞ്ഞില്ല.",
   "errorCsvNoRows": "തിരഞ്ഞെടുത്ത ഫയലിൽ വരികളില്ല.",
+  "skipMissingDate": "തീയതി ഇല്ല.",
+  "skipUnparseableDate": "\"{pattern}\" പാറ്റേൺ ഉപയോഗിച്ച് \"{raw}\" തീയതി വിശകലനം ചെയ്യാനായില്ല.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "ഇടപാട് തീയതി ഇല്ല അല്ലെങ്കിൽ അസാധുവാണ്.",
+  "skipOfxUnparseableDate": "ഇടപാട് തീയതി \"{raw}\" വിശകലനം ചെയ്യാനായില്ല.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "തുക ഇല്ല.",
+  "skipUnparseableAmount": "തുക \"{raw}\" വിശകലനം ചെയ്യാനായില്ല.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "തുക പൂജ്യമാണ്.",
+  "skipUnparseableDebitCreditAmount": "ഡെബിറ്റ് അല്ലെങ്കിൽ ക്രെഡിറ്റ് തുക വിശകലനം ചെയ്യാനായില്ല.",
+  "skipBothDebitAndCreditNonZero": "ഡെബിറ്റ്, ക്രെഡിറ്റ് കോളങ്ങളിൽ രണ്ടിലും തുകയുണ്ട്.",
+  "skipBothDebitAndCreditZero": "ഡെബിറ്റ്, ക്രെഡിറ്റ് കോളങ്ങൾ രണ്ടും പൂജ്യമാണ്.",
   "errorBackupCreateFailed": "ബാക്കപ്പ് സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "വിഭാഗ നിയമങ്ങൾ",
   "possibleDuplicate": "ആവർത്തനമാകാൻ സാധ്യത",
-  "unknownCategory": "അജ്ഞാത വിഭാഗം"
+  "unknownCategory": "അജ്ഞാത വിഭാഗം",
+  "researchPromptIntro": "ഒരു കുടുംബ നിക്ഷേപകനുവേണ്ടി പരസ്യമായി ലിസ്റ്റ് ചെയ്ത ഈ ഉപകരണത്തെക്കുറിച്ച് ഗവേഷണം ചെയ്യുക. ഇഷ്യൂവറെ തിരിച്ചറിയുക, അറിയാമെങ്കിൽ തീയതികളോടെ സമീപകാല വാർത്തകൾ സംഗ്രഹിക്കുക, ഇടിവിന്റെ അപകടസാധ്യതകളും ഉയർച്ചയുടെ ഘടകങ്ങളും വിവരിക്കുക. വസ്തുതകളെ ഊഹാപോഹങ്ങളിൽ നിന്ന് വേർതിരിക്കുക. വാങ്ങുക, വിൽക്കുക, കൈവശം വയ്ക്കുക എന്നിവയ്ക്കുള്ള ശുപാർശ നൽകരുത്. ഇത് സാമ്പത്തിക ഉപദേശമല്ല.",
+  "researchPromptNameLine": "പേര്: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "ടിക്കർ: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "ടിക്കർ: (നൽകിയിട്ടില്ല)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (നൽകിയിട്ടില്ല)"
 }

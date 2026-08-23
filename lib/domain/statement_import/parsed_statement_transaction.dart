@@ -37,13 +37,42 @@ class ParsedStatementTransaction {
   }
 }
 
+/// Stable, locale-agnostic reason a row could not be parsed. Parsers only
+/// ever report a code (+ raw values as [StatementSkippedRow.params]); the
+/// import UI maps it to localized copy via `localizeSkipReason` instead of
+/// requiring parsers to produce English sentences
+/// (i18n-full-ui-and-input-language design.md Decision 3).
+enum StatementSkipCode {
+  missingDate,
+  unparseableDate,
+  ofxMissingOrInvalidDate,
+  ofxUnparseableDate,
+  missingAmount,
+  unparseableAmount,
+  zeroAmount,
+  unparseableDebitCreditAmount,
+  bothDebitAndCreditNonZero,
+  bothDebitAndCreditZero,
+}
+
 /// A transaction row that failed to parse; the row is skipped rather than
 /// aborting the rest of the file.
 class StatementSkippedRow {
-  const StatementSkippedRow({required this.rawFragment, required this.reason});
+  const StatementSkippedRow({
+    required this.rawFragment,
+    required this.reason,
+    required this.code,
+    this.params = const {},
+  });
 
   final String rawFragment;
+
+  /// English debug text for logs, matching the exception convention in
+  /// `domain/exceptions.dart` - not the UI localization source. The UI maps
+  /// [code]/[params] via `localizeSkipReason` instead.
   final String reason;
+  final StatementSkipCode code;
+  final Map<String, String> params;
 }
 
 /// Result of parsing one statement file: successfully parsed transactions

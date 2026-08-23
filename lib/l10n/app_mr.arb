@@ -109,6 +109,8 @@
   "systemCategoryPhone": "फोन",
   "systemCategoryHealth": "आरोग्य",
   "systemCategoryOtherExpense": "इतर खर्च",
+  "systemDescriptionCsvImport": "CSV आयात",
+  "systemDescriptionOfxImport": "OFX आयात",
   "homeThisMonth": "या महिन्यात",
   "homeMoneyInTransit": "पैसे मार्गात",
   "homeWhatYouHaveMinusWhatYouOwe": "तुमच्याकडे आहे वजा तुम्ही देणे आहे",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "निवडलेली फाइल रिकामी आहे.",
   "errorCsvUnreadable": "ही फाइल CSV म्हणून वाचता आली नाही.",
   "errorCsvNoRows": "निवडलेल्या फाइलमध्ये कोणत्याही ओळी नाहीत.",
+  "skipMissingDate": "तारीख गहाळ आहे.",
+  "skipUnparseableDate": "\"{pattern}\" नमुन्यासह तारीख \"{raw}\" पार्स करता आली नाही.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "व्यवहाराची तारीख गहाळ आहे किंवा अवैध आहे.",
+  "skipOfxUnparseableDate": "व्यवहाराची तारीख \"{raw}\" पार्स करता आली नाही.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "रक्कम गहाळ आहे.",
+  "skipUnparseableAmount": "रक्कम \"{raw}\" पार्स करता आली नाही.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "रक्कम शून्य आहे.",
+  "skipUnparseableDebitCreditAmount": "डेबिट किंवा क्रेडिट रक्कम पार्स करता आली नाही.",
+  "skipBothDebitAndCreditNonZero": "डेबिट आणि क्रेडिट दोन्ही स्तंभांमध्ये रक्कम आहे.",
+  "skipBothDebitAndCreditZero": "डेबिट आणि क्रेडिट दोन्ही स्तंभ शून्य आहेत.",
   "errorBackupCreateFailed": "बॅकअप तयार करता आला नाही: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "विनिमय दर अद्याप माहीत नसल्यास रिकामे सोडा.",
   "recordTradeBlurb": "आधीच झालेला व्यवहार नोंदवा. हे अ‍ॅप ऑर्डर देत नाही.",
-  "feeOnTopBlurb": "चालू असल्यास: वरील रक्कम या खात्यातून घेतलेली एकूण रक्कम आहे; शुल्क त्यातूनच वजा होते.",
+  "feeOnTopBlurb": "चालू: वरील रक्कम या खात्यातून घेतलेली एकूण रक्कम आहे; त्यातूनच शुल्क वजा होते.",
   "feeBankBlurb": "तुमच्या बँकेने किंवा मध्यस्थाने आकारलेले आगाऊ कमिशन.",
   "validationPinMinLength": "पिन किमान ४ अंकी असावा.",
   "restoreBackupBlurb": "हे या अ‍ॅपमधील सध्याचे सर्वकाही बॅकअपने बदलते — ते विलीन करत नाही. बॅकअप फाइल निवडा आणि तुम्ही ती सुरक्षित करताना वापरलेला पासफ्रेज प्रविष्ट करा.",
@@ -858,7 +894,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} यापुढे देय झाल्यावर दिसणार नाही. त्याने आधीच नोंदवलेल्या व्यवहारांवर परिणाम होणार नाही.",
+  "deleteTemplateBody": "{name} यापुढे देय म्हणून दिले जाणार नाही. त्याने आधीच नोंदवलेल्या मागील व्यवहारांवर परिणाम होणार नाही.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "तुमचे आवडते संशोधन साधन उघडले.",
   "looksLikeGain": "हा नफा दिसत आहे",
   "looksLikeLoss": "हा तोटा दिसत आहे",
-  "looksLikeBreakEven": "हे ना नफा ना तोटा असे दिसते",
+  "looksLikeBreakEven": "हे ब्रेक-इव्हन दिसत आहे",
   "sellableQuantity": "{name} ({qty} विक्रीयोग्य)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "श्रेणी नियम",
   "possibleDuplicate": "संभाव्य डुप्लिकेट",
-  "unknownCategory": "अज्ञात श्रेणी"
+  "unknownCategory": "अज्ञात श्रेणी",
+  "researchPromptIntro": "घरगुती गुंतवणूकदारासाठी सार्वजनिकरित्या सूचीबद्ध असलेल्या या साधनाचे संशोधन करा. जारीकर्ता ओळखा, माहीत असल्यास तारखांसह अलीकडील बातम्यांचा सारांश द्या, आणि घसरणीचे धोके व वाढीचे घटक मांडा. तथ्ये अंदाजांपासून वेगळी ठेवा. खरेदी, विक्री किंवा धारण करण्याची शिफारस देऊ नका. हा आर्थिक सल्ला नाही.",
+  "researchPromptNameLine": "नाव: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "टिकर: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "टिकर: (दिलेले नाही)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (दिलेले नाही)"
 }

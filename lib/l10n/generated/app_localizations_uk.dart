@@ -286,7 +286,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get providerStooq => 'Stooq (щоденні котирування)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (API графіків)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -348,6 +348,12 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'Інші витрати';
+
+  @override
+  String get systemDescriptionCsvImport => 'Імпорт CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'Імпорт OFX';
 
   @override
   String get homeThisMonth => 'ЦЕЙ МІСЯЦЬ';
@@ -793,7 +799,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. У Smara обліку немає сервера, і він не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.';
+      'Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. Smara Accounting не має сервера і не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1402,6 +1408,46 @@ class AppLocalizationsUk extends AppLocalizations {
   String get errorCsvNoRows => 'У вибраному файлі немає рядків.';
 
   @override
+  String get skipMissingDate => 'Дата відсутня.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Не вдалося розпізнати дату \"$raw\" за шаблоном \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Дата операції відсутня або недійсна.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Не вдалося розпізнати дату операції \"$raw\".';
+  }
+
+  @override
+  String get skipMissingAmount => 'Сума відсутня.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Не вдалося розпізнати суму \"$raw\".';
+  }
+
+  @override
+  String get skipZeroAmount => 'Сума дорівнює нулю.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Не вдалося розпізнати суму дебету або кредиту.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'У стовпцях дебету та кредиту вказано суму в обох.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Стовпці дебету та кредиту обидва дорівнюють нулю.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Не вдалося створити резервну копію: $detail';
   }
@@ -1551,7 +1597,7 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Розблокувати Smara облік';
+  String get unlockBiometricReason => 'Розблокувати Smara Account';
 
   @override
   String get searchLabel => 'Пошук';
@@ -1782,4 +1828,29 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Невідома категорія';
+
+  @override
+  String get researchPromptIntro =>
+      'Дослідіть цей публічно котирований інструмент для приватного інвестора. Визначте емітента, підсумуйте останні новини з датами, якщо вони відомі, і окресліть ризики зниження та фактори зростання. Відокремлюйте факти від припущень. Не давайте рекомендацію купувати, продавати чи утримувати. Це не є фінансовою консультацією.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Назва: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Тікер: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Тікер: (не вказано)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (не вказано)';
 }

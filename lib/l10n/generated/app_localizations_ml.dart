@@ -347,6 +347,12 @@ class AppLocalizationsMl extends AppLocalizations {
   String get systemCategoryOtherExpense => 'മറ്റ് ചെലവ്';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV ഇറക്കുമതി';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX ഇറക്കുമതി';
+
+  @override
   String get homeThisMonth => 'ഈ മാസം';
 
   @override
@@ -1409,6 +1415,46 @@ class AppLocalizationsMl extends AppLocalizations {
   String get errorCsvNoRows => 'തിരഞ്ഞെടുത്ത ഫയലിൽ വരികളില്ല.';
 
   @override
+  String get skipMissingDate => 'തീയതി ഇല്ല.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" പാറ്റേൺ ഉപയോഗിച്ച് \"$raw\" തീയതി വിശകലനം ചെയ്യാനായില്ല.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'ഇടപാട് തീയതി ഇല്ല അല്ലെങ്കിൽ അസാധുവാണ്.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'ഇടപാട് തീയതി \"$raw\" വിശകലനം ചെയ്യാനായില്ല.';
+  }
+
+  @override
+  String get skipMissingAmount => 'തുക ഇല്ല.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'തുക \"$raw\" വിശകലനം ചെയ്യാനായില്ല.';
+  }
+
+  @override
+  String get skipZeroAmount => 'തുക പൂജ്യമാണ്.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ഡെബിറ്റ് അല്ലെങ്കിൽ ക്രെഡിറ്റ് തുക വിശകലനം ചെയ്യാനായില്ല.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'ഡെബിറ്റ്, ക്രെഡിറ്റ് കോളങ്ങളിൽ രണ്ടിലും തുകയുണ്ട്.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'ഡെബിറ്റ്, ക്രെഡിറ്റ് കോളങ്ങൾ രണ്ടും പൂജ്യമാണ്.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'ബാക്കപ്പ് സൃഷ്ടിക്കാൻ കഴിഞ്ഞില്ല: $detail';
   }
@@ -1789,4 +1835,29 @@ class AppLocalizationsMl extends AppLocalizations {
 
   @override
   String get unknownCategory => 'അജ്ഞാത വിഭാഗം';
+
+  @override
+  String get researchPromptIntro =>
+      'ഒരു കുടുംബ നിക്ഷേപകനുവേണ്ടി പരസ്യമായി ലിസ്റ്റ് ചെയ്ത ഈ ഉപകരണത്തെക്കുറിച്ച് ഗവേഷണം ചെയ്യുക. ഇഷ്യൂവറെ തിരിച്ചറിയുക, അറിയാമെങ്കിൽ തീയതികളോടെ സമീപകാല വാർത്തകൾ സംഗ്രഹിക്കുക, ഇടിവിന്റെ അപകടസാധ്യതകളും ഉയർച്ചയുടെ ഘടകങ്ങളും വിവരിക്കുക. വസ്തുതകളെ ഊഹാപോഹങ്ങളിൽ നിന്ന് വേർതിരിക്കുക. വാങ്ങുക, വിൽക്കുക, കൈവശം വയ്ക്കുക എന്നിവയ്ക്കുള്ള ശുപാർശ നൽകരുത്. ഇത് സാമ്പത്തിക ഉപദേശമല്ല.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'പേര്: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'ടിക്കർ: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'ടിക്കർ: (നൽകിയിട്ടില്ല)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (നൽകിയിട്ടില്ല)';
 }

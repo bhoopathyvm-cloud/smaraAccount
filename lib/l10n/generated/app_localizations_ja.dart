@@ -344,6 +344,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get systemCategoryOtherExpense => 'その他の支出';
 
   @override
+  String get systemDescriptionCsvImport => 'CSVインポート';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFXインポート';
+
+  @override
   String get homeThisMonth => '今月';
 
   @override
@@ -1337,6 +1343,42 @@ class AppLocalizationsJa extends AppLocalizations {
   String get errorCsvNoRows => '選択されたファイルに行がありません。';
 
   @override
+  String get skipMissingDate => '日付がありません。';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'パターン「$pattern」で日付「$raw」を解析できませんでした。';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => '取引日がないか、無効です。';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return '取引日「$raw」を解析できませんでした。';
+  }
+
+  @override
+  String get skipMissingAmount => '金額がありません。';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return '金額「$raw」を解析できませんでした。';
+  }
+
+  @override
+  String get skipZeroAmount => '金額がゼロです。';
+
+  @override
+  String get skipUnparseableDebitCreditAmount => '借方または貸方の金額を解析できませんでした。';
+
+  @override
+  String get skipBothDebitAndCreditNonZero => '借方列と貸方列の両方に金額があります。';
+
+  @override
+  String get skipBothDebitAndCreditZero => '借方列と貸方列が両方ともゼロです。';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'バックアップを作成できませんでした: $detail';
   }
@@ -1692,4 +1734,29 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get unknownCategory => '不明なカテゴリ';
+
+  @override
+  String get researchPromptIntro =>
+      '家庭の投資家のために、この公開上場銘柄を調べてください。発行体を特定し、判明していれば日付付きで最近のニュースを要約し、下落リスクと上昇要因を整理してください。事実と推測を区別してください。買い、売り、保有の推奨はしないでください。これは投資助言ではありません。';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return '名称: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'ティッカー: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'ティッカー: (未指定)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (未指定)';
 }

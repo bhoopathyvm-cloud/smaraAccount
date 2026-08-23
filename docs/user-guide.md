@@ -455,6 +455,37 @@ period-over-period read on where money went.
 
 ## Settings
 
+- **Language**: choose your language, or leave it on "Device language" to
+  follow your phone or computer's own setting. Choosing a language covers
+  more than labels and buttons:
+  - **Typing**: name, payee, memo, and description fields accept your
+    language's script, and hint the on-screen keyboard toward it where the
+    operating system honors that hint (Android; iOS and desktop keep
+    whatever keyboard you already have active — you may still need to
+    switch it yourself in your OS's own keyboard picker). Fields that must
+    stay Latin or digits only — currency codes, PIN, recovery-phrase
+    words, ticker/ISIN — never carry this hint, on purpose.
+  - **Default names in fields**: the app's built-in starting names (like
+    "Cash & Bank" or "Groceries") show in your chosen language wherever
+    you edit them — renaming an account, naming your first account, and
+    so on — not just in lists. Leaving one of these fields exactly as
+    shown keeps it tied to the built-in name, so switching languages
+    again still translates it correctly; typing something different
+    saves your own text instead, in whatever language you typed it.
+  - **Errors and skipped rows**: validation messages, the reasons a bank
+    statement row was skipped during import, and other in-app messages
+    follow your language too.
+  - **What still stays in English**: your 24-word recovery phrase is
+    always English words, by design — do not expect or attempt a
+    translated recovery phrase. Ledger amounts follow the *currency's*
+    own formatting convention, not your chosen language (a rupee amount
+    formats the same way regardless of your language setting). Payee
+    names, memos, and descriptions you've already typed are kept exactly
+    as you typed them and are never auto-translated when you change
+    languages. On iOS/macOS/desktop, your operating system's own keyboard
+    and system dialogs (like the Face ID prompt) follow your *device's*
+    language setting, which may differ from the language you've chosen
+    inside the app.
 - **Manage payees**: add, rename, or delete a payee and its remembered
   default category/account (see Recording a transaction above). Deleting a
   payee only removes the memory aid — past transactions are unaffected.

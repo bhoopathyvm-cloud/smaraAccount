@@ -345,6 +345,12 @@ class AppLocalizationsGu extends AppLocalizations {
   String get systemCategoryOtherExpense => 'અન્ય ખર્ચ';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV આયાત';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX આયાત';
+
+  @override
   String get homeThisMonth => 'આ મહિને';
 
   @override
@@ -784,7 +790,7 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'જો આ ડિવાઇસ ખોવાઈ જાય, રીસેટ થાય અથવા બદલાય, તો તમારો વ્યવહાર ઇતિહાસ પુનઃપ્રાપ્ત કરવાનો આ 24 શબ્દો જ એકમાત્ર માર્ગ છે. સ્મારા ખાતા પાસે કોઈ સર્વર નથી અને તે તમારા માટે તેમને પુનઃપ્રાપ્ત કરી શકતું નથી.\n\nજો તમે આ ડિવાઇસ અને આ ફ્રેઝ બંને ગુમાવો, તો તમે નોંધેલો દરેક વ્યવહાર કાયમ માટે અચકાસી ન શકાય તેવો બની જાય છે.';
+      'જો આ ડિવાઇસ ખોવાઈ જાય, રીસેટ થાય અથવા બદલાય, તો તમારો વ્યવહાર ઇતિહાસ પુનઃપ્રાપ્ત કરવાનો આ 24 શબ્દો જ એકમાત્ર માર્ગ છે. Smara Accounting પાસે કોઈ સર્વર નથી અને તે તમારા માટે તેમને પુનઃપ્રાપ્ત કરી શકતું નથી.\n\nજો તમે આ ડિવાઇસ અને આ ફ્રેઝ બંને ગુમાવો, તો તમે નોંધેલો દરેક વ્યવહાર કાયમ માટે અચકાસી ન શકાય તેવો બની જાય છે.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1388,6 +1394,46 @@ class AppLocalizationsGu extends AppLocalizations {
   String get errorCsvNoRows => 'પસંદ કરેલી ફાઇલમાં કોઈ પંક્તિ નથી.';
 
   @override
+  String get skipMissingDate => 'તારીખ ખૂટે છે.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" પેટર્ન સાથે તારીખ \"$raw\" પાર્સ કરી શકાઈ નહીં.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'વ્યવહારની તારીખ ખૂટે છે અથવા અમાન્ય છે.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'વ્યવહારની તારીખ \"$raw\" પાર્સ કરી શકાઈ નહીં.';
+  }
+
+  @override
+  String get skipMissingAmount => 'રકમ ખૂટે છે.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'રકમ \"$raw\" પાર્સ કરી શકાઈ નહીં.';
+  }
+
+  @override
+  String get skipZeroAmount => 'રકમ શૂન્ય છે.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ડેબિટ અથવા ક્રેડિટ રકમ પાર્સ કરી શકાઈ નહીં.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'ડેબિટ અને ક્રેડિટ બંને કૉલમમાં રકમ છે.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'ડેબિટ અને ક્રેડિટ બંને કૉલમ શૂન્ય છે.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'બેકઅપ બનાવી શકાયું નહીં: $detail';
   }
@@ -1535,7 +1581,7 @@ class AppLocalizationsGu extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'સ્મારા ખાતું અનલૉક કરો';
+  String get unlockBiometricReason => 'Smara Account અનલૉક કરો';
 
   @override
   String get searchLabel => 'શોધો';
@@ -1600,7 +1646,7 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'ચાલુ હોય ત્યારે: ઉપરની રકમ આ ખાતામાંથી લેવામાં આવેલ કુલ રકમ છે; ફી તેમાંથી જ કપાય છે.';
+      'ચાલુ: ઉપરની રકમ આ ખાતામાંથી લેવાયેલી કુલ રકમ છે; ફી તેમાંથી બાદ થાય છે.';
 
   @override
   String get feeBankBlurb =>
@@ -1650,7 +1696,7 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name હવે બાકી હોય ત્યારે દેખાશે નહીં. તેના દ્વારા પહેલેથી નોંધાયેલા વ્યવહારો પર અસર નહીં થાય.';
+    return '$name હવે બાકી તરીકે ઓફર થશે નહીં. તેણે પહેલેથી નોંધેલા ભૂતકાળના વ્યવહારો પર અસર થશે નહીં.';
   }
 
   @override
@@ -1730,7 +1776,7 @@ class AppLocalizationsGu extends AppLocalizations {
   String get looksLikeLoss => 'આ નુકસાન જેવું લાગે છે';
 
   @override
-  String get looksLikeBreakEven => 'આ નફો-નુકસાન સરખું લાગે છે';
+  String get looksLikeBreakEven => 'આ બ્રેક-ઇવન જેવું લાગે છે';
 
   @override
   String sellableQuantity(String name, String qty) {
@@ -1764,4 +1810,29 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String get unknownCategory => 'અજ્ઞાત શ્રેણી';
+
+  @override
+  String get researchPromptIntro =>
+      'ઘરેલુ રોકાણકાર માટે આ જાહેરમાં સૂચિબદ્ધ સાધન વિશે સંશોધન કરો. જારીકર્તાને ઓળખો, જો જાણીતું હોય તો તારીખો સાથે તાજેતરના સમાચારનો સારાંશ આપો, અને ઘટાડાના જોખમો અને વધારાના પરિબળોની રૂપરેખા આપો. હકીકતોને અટકળોથી અલગ કરો. ખરીદી, વેચાણ અથવા હોલ્ડની સલાહ ન આપો. આ નાણાકીય સલાહ નથી.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'નામ: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'ટિકર: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'ટિકર: (આપેલ નથી)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (આપેલ નથી)';
 }

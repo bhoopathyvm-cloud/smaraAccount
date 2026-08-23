@@ -169,10 +169,12 @@ class SmaraAccountingApp extends StatelessWidget {
           return SnapshotHidingOverlay(
             appLockController: appLockController,
             child: MaterialApp.router(
-              title: 'Smara Accounting',
+              onGenerateTitle: (context) =>
+                  AppLocalizations.of(context)!.appTitle,
               theme: buildAppTheme(),
               locale: localeController.overrideLocale,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              localizationsDelegates:
+                  appLocalizationsDelegatesWithMaterialFallback,
               supportedLocales: supportedAppLocales,
               localeListResolutionCallback: (locales, supported) {
                 final device = locales?.isNotEmpty == true

@@ -345,6 +345,12 @@ class AppLocalizationsKok extends AppLocalizations {
   String get systemCategoryOtherExpense => 'हेर खर्च';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV आयात';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX आयात';
+
+  @override
   String get homeThisMonth => 'ह्या म्हयन्यान';
 
   @override
@@ -1381,6 +1387,45 @@ class AppLocalizationsKok extends AppLocalizations {
   String get errorCsvNoRows => 'निवडिल्ल्या फायलींत वळी ना.';
 
   @override
+  String get skipMissingDate => 'तारीख ना.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" नमुन्या वरवीं \"$raw\" तारीख वाचूंक जावंक ना.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => 'व्यवहाराची तारीख ना वा अवैध आसा.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'व्यवहाराची तारीख \"$raw\" वाचूंक जावंक ना.';
+  }
+
+  @override
+  String get skipMissingAmount => 'रक्कम ना.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'रक्कम \"$raw\" वाचूंक जावंक ना.';
+  }
+
+  @override
+  String get skipZeroAmount => 'रक्कम शून्य आसा.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'डेबिट वा क्रेडिट रक्कम वाचूंक जावंक ना.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'डेबिट आनी क्रेडिट दोन्ही स्तंभांनी रक्कम आसा.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'डेबिट आनी क्रेडिट दोन्ही स्तंभ शून्य आसात.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'बॅकअप तयार करूंक जायना: $detail';
   }
@@ -1754,4 +1799,29 @@ class AppLocalizationsKok extends AppLocalizations {
 
   @override
   String get unknownCategory => 'अज्ञात वर्ग';
+
+  @override
+  String get researchPromptIntro =>
+      'घरगुती गुंतवणूकदारा खातीर हें सार्वजनिकपणान वळेरेंत आशिल्लें साधन संशोधन करात. जारीकर्ता वळखात, खबर आशिल्ल्यार तारखेसयत ताजी बातमी सारांशित करात, आनी देंवपाचो धोको आनी वयर वचपाचे घटक सांगात. सत्यां अटकळींपसून वेगळीं दवरात. विकत घेवपाचो, विकपाचो वा दवरपाचो सल्लो दिनाकात. हो आर्थीक सल्लो न्हय.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'नांव: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'टिकर: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'टिकर: (दिवंक ना)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (दिवंक ना)';
 }

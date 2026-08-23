@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (kurs ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (kuotasi harian)",
-  "providerYahooFinance": "Yahoo Finance (API grafik)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telepon",
   "systemCategoryHealth": "Kesehatan",
   "systemCategoryOtherExpense": "Pengeluaran lainnya",
+  "systemDescriptionCsvImport": "Impor CSV",
+  "systemDescriptionOfxImport": "Impor OFX",
   "homeThisMonth": "BULAN INI",
   "homeMoneyInTransit": "UANG DALAM PERJALANAN",
   "homeWhatYouHaveMinusWhatYouOwe": "YANG ANDA MILIKI DIKURANGI YANG ANDA UTANG",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Frasa pemulihan Anda",
   "recoveryPhraseConfirmTitle": "Konfirmasi frasa Anda",
-  "recoveryPhraseBlurb": "24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Pembukuan tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.",
+  "recoveryPhraseBlurb": "24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Accounting tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.",
   "recoveryPhraseWriteDown": "Tuliskan kata-kata ini secara berurutan dan simpan di tempat yang aman, terpisah dari perangkat ini.",
   "iveSavedRecoveryPhrase": "Saya telah menyimpan frasa pemulihan saya",
   "confirmPhraseBlurb": "Masukkan kata-kata yang diminta dari frasa yang baru saja Anda simpan.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "File yang dipilih kosong.",
   "errorCsvUnreadable": "File ini tidak dapat dibaca sebagai CSV.",
   "errorCsvNoRows": "File yang dipilih tidak memiliki baris.",
+  "skipMissingDate": "Tanggal tidak ada.",
+  "skipUnparseableDate": "Tidak dapat mengurai tanggal \"{raw}\" dengan pola \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Tanggal transaksi tidak ada atau tidak valid.",
+  "skipOfxUnparseableDate": "Tidak dapat mengurai tanggal transaksi \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Jumlah tidak ada.",
+  "skipUnparseableAmount": "Tidak dapat mengurai jumlah \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Jumlah nol.",
+  "skipUnparseableDebitCreditAmount": "Tidak dapat mengurai jumlah debit atau kredit.",
+  "skipBothDebitAndCreditNonZero": "Kolom debit dan kredit sama-sama memiliki jumlah.",
+  "skipBothDebitAndCreditZero": "Kolom debit dan kredit sama-sama nol.",
   "errorBackupCreateFailed": "Tidak dapat membuat cadangan: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Buka kunci Smara Pembukuan",
+  "unlockBiometricReason": "Buka kunci Smara Account",
   "searchLabel": "Cari",
   "openingBalance": "Saldo awal",
   "transferToName": "Transfer: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Aturan kategori",
   "possibleDuplicate": "kemungkinan duplikat",
-  "unknownCategory": "Kategori tidak diketahui"
+  "unknownCategory": "Kategori tidak diketahui",
+  "researchPromptIntro": "Riset instrumen yang terdaftar secara publik ini untuk investor rumah tangga. Identifikasi penerbitnya, ringkas berita terbaru beserta tanggalnya jika diketahui, dan uraikan risiko penurunan serta pendorong kenaikan. Pisahkan fakta dari spekulasi. Jangan berikan rekomendasi beli, jual, atau tahan. Ini bukan nasihat keuangan.",
+  "researchPromptNameLine": "Nama: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Kode saham: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Kode saham: (tidak disediakan)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (tidak disediakan)"
 }

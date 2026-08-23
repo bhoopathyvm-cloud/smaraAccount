@@ -345,6 +345,12 @@ class AppLocalizationsSat extends AppLocalizations {
   String get systemCategoryOtherExpense => 'ᱮᱴᱟᱜ ᱠᱷᱚᱨᱚᱪ';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV ᱟᱲᱟᱹᱭ';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX ᱟᱲᱟᱹᱭ';
+
+  @override
   String get homeThisMonth => 'ᱱᱚᱣᱟ ᱪᱟᱸᱫᱚ';
 
   @override
@@ -1389,6 +1395,46 @@ class AppLocalizationsSat extends AppLocalizations {
   String get errorCsvNoRows => 'ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱷᱟᱭᱞ ᱨᱮ ᱞᱟᱭᱤᱱ ᱵᱟᱭᱟ᱾';
 
   @override
+  String get skipMissingDate => 'ᱢᱟᱦᱟᱸ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" ᱯᱟᱴᱚᱨᱚᱱ ᱛᱮ ᱢᱟᱦᱟᱸ \"$raw\" ᱯᱟᱨᱥ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'ᱞᱮᱱᱫᱮᱱ ᱨᱮᱭᱟᱜ ᱢᱟᱦᱟᱸ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱟᱨᱵᱟᱝ ᱵᱟᱹᱭᱟ ᱾';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'ᱞᱮᱱᱫᱮᱱ ᱨᱮᱭᱟᱜ ᱢᱟᱦᱟᱸ \"$raw\" ᱯᱟᱨᱥ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾';
+  }
+
+  @override
+  String get skipMissingAmount => 'ᱴᱟᱠᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'ᱴᱟᱠᱟ \"$raw\" ᱯᱟᱨᱥ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾';
+  }
+
+  @override
+  String get skipZeroAmount => 'ᱴᱟᱠᱟ ᱥᱩᱱᱭᱟ ᱠᱟᱱᱟ ᱾';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ᱰᱮᱵᱤᱴ ᱟᱨᱵᱟᱝ ᱠᱨᱮᱰᱤᱴ ᱴᱟᱠᱟ ᱯᱟᱨᱥ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'ᱰᱮᱵᱤᱴ ᱟᱨ ᱠᱨᱮᱰᱤᱴ ᱵᱟᱨᱟᱭᱚᱜ ᱠᱚᱞᱚᱢ ᱨᱮ ᱴᱟᱠᱟ ᱢᱮᱱᱟᱜᱼᱟ ᱾';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'ᱰᱮᱵᱤᱴ ᱟᱨ ᱠᱨᱮᱰᱤᱴ ᱵᱟᱨᱟᱭᱚᱜ ᱠᱚᱞᱚᱢ ᱥᱩᱱᱭᱟ ᱠᱟᱱᱟ ᱾';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'ᱵᱮᱠᱟᱯ ᱵᱮᱱᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: $detail';
   }
@@ -1764,4 +1810,29 @@ class AppLocalizationsSat extends AppLocalizations {
 
   @override
   String get unknownCategory => 'ᱵᱟᱭ ᱵᱟᱰᱟᱭ ᱡᱟᱹᱛ';
+
+  @override
+  String get researchPromptIntro =>
+      'ᱚᱨᱟᱜ ᱛᱮᱭᱟᱜ ᱮᱦᱚᱵ ᱟᱠᱟᱱ ᱟᱰᱮᱨ ᱮᱛᱦᱚᱵ ᱠᱚᱨᱮᱭᱟᱜ ᱞᱟᱹᱜᱤᱛ ᱱᱚᱶᱟ ᱮᱢᱚᱨ ᱥᱟᱸᱣᱫᱟᱜ ᱞᱤᱥᱴᱤ ᱠᱟᱱ ᱴᱷᱩᱨᱟᱹᱠ ᱨᱮ ᱯᱟᱱᱛᱮ ᱠᱟᱛᱮ ᱦᱟᱛᱟᱣᱢᱮ ᱾ ᱮᱢᱚᱨ ᱮᱢᱟᱠᱚᱣᱟᱜ ᱧᱩᱛᱩᱢ ᱦᱟᱛᱟᱣᱢᱮ ᱚᱠᱛᱚ ᱵᱟᱰᱟᱭᱟ ᱠᱷᱚᱱ ᱢᱟᱦᱟᱸ ᱥᱟᱶᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱚᱵᱚᱨ ᱠᱚᱨᱮᱭᱟᱜ ᱡᱚᱠᱷᱟ ᱮᱢᱮ, ᱟᱨ ᱡᱟᱦᱟᱱ ᱚᱛᱮᱛ ᱟᱨ ᱥᱮᱡᱚᱶ ᱟᱭᱚᱛ ᱠᱚᱨᱮᱭᱟᱜ ᱠᱟᱨᱚᱱ ᱠᱚ ᱡᱟᱦᱟᱸ ᱠᱟᱛᱮᱢᱮ ᱾ ᱥᱟᱨᱤ ᱠᱚ ᱟᱨ ᱟᱸᱫᱟᱡᱟ ᱠᱚᱦᱚᱸ ᱛᱟᱲᱟᱨ ᱫᱚᱦᱚᱭᱢᱮ ᱾ ᱠᱤᱨᱤᱧ, ᱟᱲᱟᱹᱜ ᱟᱨᱵᱟᱝ ᱫᱚᱦᱚᱣ ᱦᱚᱨᱟᱹᱭ ᱟᱠᱟᱱ ᱛᱟᱦᱮᱸᱱᱟ ᱚᱰᱚᱠ ᱟᱞᱚᱢᱮ ᱾ ᱱᱚᱶᱟ ᱰᱷᱚᱱ ᱚᱰᱚᱠ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'ᱧᱩᱛᱩᱢ: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'ᱴᱤᱠᱚᱨ: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'ᱴᱤᱠᱚᱨ: (ᱵᱟᱭ ᱮᱢᱟᱠᱟᱱᱟ)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (ᱵᱟᱭ ᱮᱢᱟᱠᱟᱱᱟ)';
 }
