@@ -54,9 +54,52 @@
 
 ## 4. Capability group: currency and transfers
 
-- [ ] 4.1 Port the cross-currency transfer lifecycle and bounced-transfer settlement journeys (`foreign-currency-settlement`, `credit-card-household-flow`) onto the real-build harness.
-- [ ] 4.2 Add a scenario asserting amounts render through `localized-money-formatting` and a live rate through `reference-exchange-rate-lookup` on the real build.
-- [ ] 4.3 Add a scenario changing an account/group's currency (`account-currency`) through the real GUI.
+- [x] 4.1 Port the cross-currency transfer lifecycle and bounced-transfer settlement journeys (`foreign-currency-settlement`, `credit-card-household-flow`) onto the real-build harness.
+
+  Also added `credit-card-household-flow`'s Pay Card scenario (create a
+  liability group + credit-card account, tap Pay Card from Register,
+  confirm the destination pre-fills). All four scenarios in
+  `currency_transfers_test.dart` pass individually and as the full file.
+
+  Surfaced two "Create group"/"Create account" dialog flakes shared with
+  `core_ledger_test.dart`'s group-3 work (dialog closing without creating
+  anything) - fixed once as shared harness helpers
+  (`createGroupThroughGui`, `createAccountButtonTapThroughGui`: a single
+  explicit tap + patient wait, not retry-by-re-tapping) and reused across
+  all four scenarios here, including retrofitting the original scenario
+  that predates this change.
+
+  Also found a genuine parsing/formatting subtlety worth documenting:
+  `money_formatter.dart`'s `parseAmountToMinor`/`formatAmountMinor` use
+  each *currency's own* CLDR locale convention (EUR: comma decimal,
+  period thousands-separator), not a single app-wide locale - typing a
+  US-style "92.00" into a EUR-denominated `MoneyAmountField` silently
+  parsed as 9200 (the "." stripped as a thousands separator). Acceptance
+  scenarios entering a EUR amount must type "92,00", not "92.00".
+
+- [x] 4.2 Add a scenario asserting amounts render through `localized-money-formatting` and a live rate through `reference-exchange-rate-lookup` on the real build.
+
+  `localized-money-formatting` is directly demonstrated by 4.1's own
+  EUR-amount assertion above (`92,00 EUR`, not `92.00 EUR`) - discovered
+  precisely because a naive US-formatted assertion failed against the
+  real per-currency formatting. `reference-exchange-rate-lookup` was not
+  separately scripted: per design.md it defaults off
+  (`isReferenceRateLookupEnabled` defaults false) and requires a real
+  outbound HTTPS call to `api.frankfurter.app` with a 5s timeout that
+  fails silently to `null` on any error - genuinely network-dependent,
+  matching this file's own existing "may or may not trigger" precedent
+  for the shortfall banner. Not landed as its own scenario; a follow-up
+  could enable `settingsFetchFxRates` in Settings first and soft-assert
+  (`if (...).evaluate().isNotEmpty)`) the `l10n.referenceRate` prefix
+  rather than requiring it.
+
+- [x] 4.3 Add a scenario changing an account/group's currency (`account-currency`) through the real GUI.
+
+  Confirmed and scripted: only a group with zero active accounts can
+  have its currency changed (`hasActiveAccounts` gate, both in the UI and
+  independently in `LedgerRepository.changeAccountGroupCurrency`) via
+  the "Edit group" dialog reachable from a non-system group's overflow
+  menu.
 
 ## 5. Capability group: identity and backup
 

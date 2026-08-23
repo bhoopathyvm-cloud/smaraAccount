@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
+import 'package:smara_accounting/domain/models/account_group.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations_en.dart';
 import 'package:smara_accounting/main.dart';
 import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
@@ -1149,6 +1150,114 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   );
 
   return words;
+}
+
+/// Creates an account group named [name] with [currency] through the real
+/// "Create group" dialog (Accounts screen's folder-plus tooltip). [kind]
+/// defaults to an asset group; pass [AccountGroupKind.liabilityGroup] for
+/// a liability one (taps the dialog's own Asset/Liability segment first).
+///
+/// Submits with a single explicit tap, not tapReliably's retry-by-
+/// re-tapping: this dialog's Create button has been observed, across
+/// multiple independent scenarios, to sometimes close the dialog without
+/// the group ever appearing in the list (consistent with, though not
+/// confirmed as, a tap landing on the modal barrier instead of the
+/// button). Once the dialog is gone - whether from a real create or a
+/// missed tap - a retry's tapTarget() finds nothing and throws, and
+/// "target now gone" is indistinguishable from real success at that
+/// point, so tapReliably's own "already succeeded" heuristic would wrongly
+/// treat a barrier-dismiss as success. Waited out patiently instead, with
+/// a loud failure if the group genuinely never appears.
+Future<void> createGroupThroughGui(
+  WidgetTester tester, {
+  required String name,
+  required String currency,
+  AccountGroupKind kind = AccountGroupKind.assetGroup,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.navAccounts),
+    () => find.byTooltip(l10n.createGroup).evaluate().isNotEmpty,
+  );
+  await tapReliably(
+    tester,
+    () => find.byTooltip(l10n.createGroup),
+    () => find.byType(AlertDialog).evaluate().isNotEmpty,
+  );
+  await enterTextReliably(tester, () => find.byType(TextField).first, name, () {
+    final field = find.byType(TextField).evaluate().first.widget as TextField;
+    return field.controller?.text == name;
+  });
+  if (kind == AccountGroupKind.liabilityGroup) {
+    await tapReliably(tester, () => find.text(l10n.liability), () {
+      final segmented =
+          find
+                  .byType(SegmentedButton<AccountGroupKind>)
+                  .evaluate()
+                  .single
+                  .widget
+              as SegmentedButton<AccountGroupKind>;
+      return segmented.selected.contains(AccountGroupKind.liabilityGroup);
+    });
+  }
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ChoiceChip, currency),
+    () {
+      final chip =
+          find.widgetWithText(ChoiceChip, currency).evaluate().single.widget
+              as ChoiceChip;
+      return chip.selected;
+    },
+  );
+
+  final createButton = find.widgetWithText(ElevatedButton, l10n.actionCreate);
+  await tester.ensureVisible(createButton);
+  await tester.pump(const Duration(milliseconds: 100));
+  await tester.tap(createButton);
+  await pumpUntilFound(tester, find.text(name), maxTries: 300);
+  if (find.text(name).evaluate().isEmpty) {
+    fail(
+      'createGroupThroughGui: "$name" never appeared after tapping '
+      'Create.\nVisible texts: '
+      '${find.byType(Text).evaluate().map((e) => (e.widget as Text).data).toList()}',
+    );
+  }
+  // The dialog can still be mid-exit-animation right as its name text
+  // becomes findable, leaving the underlying screen not yet properly
+  // hit-testable for whatever the caller does next.
+  await tester.pumpAndSettle();
+}
+
+/// Taps the already-open "Create account" dialog's Create button and
+/// waits for [name] to appear - the final step of scripting that dialog,
+/// with everything before it (name/type/group/etc.) left to the caller,
+/// since those vary per scenario. Same single-explicit-tap-then-patient-
+/// wait rationale as [createGroupThroughGui]: this dialog's Create button
+/// has shown the same "dialog closes but nothing was created" flake.
+Future<void> createAccountButtonTapThroughGui(
+  WidgetTester tester, {
+  required String name,
+}) async {
+  final l10n = AppLocalizationsEn();
+  final createButton = find.widgetWithText(ElevatedButton, l10n.actionCreate);
+  await tester.ensureVisible(createButton);
+  await tester.pump(const Duration(milliseconds: 100));
+  await tester.tap(createButton);
+  await pumpUntilFound(tester, find.text(name), maxTries: 300);
+  if (find.text(name).evaluate().isEmpty) {
+    fail(
+      'createAccountButtonTapThroughGui: "$name" never appeared after '
+      'tapping Create.\nVisible texts: '
+      '${find.byType(Text).evaluate().map((e) => (e.widget as Text).data).toList()}',
+    );
+  }
+  // The dialog can still be mid-exit-animation right as its name text
+  // becomes findable, leaving the underlying screen not yet properly
+  // hit-testable for whatever the caller does next.
+  await tester.pumpAndSettle();
 }
 
 /// Archives (hides) [accountName] through the real Accounts screen: opens
