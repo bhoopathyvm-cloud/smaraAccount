@@ -398,10 +398,18 @@ Future<void> createInvestmentAccountThroughGui(
 /// renders on `HoldingsView`.
 Future<void> openHoldingsFor(WidgetTester tester, String accountName) async {
   final l10n = AppLocalizationsEn();
+  // find.text(accountName) alone is a collision-prone "landed on Home"
+  // signal - a caller arriving here straight from the Accounts screen
+  // (e.g. right after createInvestmentAccountThroughGui) already has that
+  // same name visible there, so the check could be trivially satisfied
+  // even if this tap's gesture itself silently missed. Requiring Home's
+  // own always-present net-position text too rules that out.
   await tapReliably(
     tester,
     () => find.text(l10n.navHome),
-    () => find.text(accountName).evaluate().isNotEmpty,
+    () =>
+        find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty &&
+        find.text(accountName).evaluate().isNotEmpty,
   );
   // The account name can transiently satisfy the check above from the
   // outgoing screen's still-mounted widgets mid-transition, before Home
@@ -437,6 +445,12 @@ Future<void> recordCashFundedBuyThroughGui(
   bool expectSuccess = true,
 }) async {
   final l10n = AppLocalizationsEn();
+
+  // Settles any still-running exit transition from whatever dialog the
+  // caller's previous action just closed - tapping this button one frame
+  // too early has been observed to throw "Bad state: No element" even
+  // though its own text/success signal had already reported done.
+  await tester.pumpAndSettle();
 
   await tapReliably(
     tester,
@@ -524,6 +538,280 @@ Future<void> recordCashFundedBuyThroughGui(
     await tester.tap(submit);
     await pumpUntilFound(tester, find.text(l10n.errorInsufficientCash));
   }
+}
+
+const _weekdayAbbr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const _monthAbbr = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
+/// The `showDatePicker` header's "EEE, MMM d" label for [date] (e.g. "Mon,
+/// Sep 21") - what the dialog echoes once its input-mode text field has
+/// successfully parsed a typed date.
+String _datePickerHeaderLabel(DateTime date) =>
+    '${_weekdayAbbr[date.weekday - 1]}, ${_monthAbbr[date.month - 1]} ${date.day}';
+
+/// Sets a date in whichever real `showDatePicker` dialog is currently
+/// open, via its "Switch to input" text-entry mode (a plain `mm/dd/yyyy`
+/// TextField labelled "Enter Date") rather than the calendar day grid -
+/// reachable regardless of which month the calendar happens to be
+/// showing, unlike tapping a specific day number would be.
+Future<void> pickDateViaTextEntry(WidgetTester tester, DateTime date) async {
+  Finder dateField() => find.byWidgetPredicate(
+    (widget) =>
+        widget is TextField && widget.decoration?.labelText == 'Enter Date',
+  );
+  await tapReliably(
+    tester,
+    () => find.byTooltip('Switch to input'),
+    () => dateField().evaluate().isNotEmpty,
+  );
+  final dateText =
+      '${date.month.toString().padLeft(2, '0')}/'
+      '${date.day.toString().padLeft(2, '0')}/'
+      '${date.year}';
+  // This field's TextField has no exposed `controller` (InputDatePickerFormField
+  // manages its own internal state), so `field.controller?.text` is always
+  // null - the header's parsed-date echo is the only readable success
+  // signal that the typed text was actually accepted.
+  await enterTextReliably(
+    tester,
+    dateField,
+    dateText,
+    () => find.text(_datePickerHeaderLabel(date)).evaluate().isNotEmpty,
+  );
+  await tapReliably(
+    tester,
+    () => find.text('OK').last,
+    () => dateField().evaluate().isEmpty,
+  );
+}
+
+/// Taps the Buy/Sell dialog's "Lock until (optional)" row and sets it to
+/// [date] via [pickDateViaTextEntry]. Assumes the dialog is already open.
+Future<void> setLockUntilDate(WidgetTester tester, DateTime date) async {
+  final l10n = AppLocalizationsEn();
+  await tapReliably(
+    tester,
+    () => find.text(l10n.lockUntilOptional),
+    () => find.byTooltip('Switch to input').evaluate().isNotEmpty,
+  );
+  await pickDateViaTextEntry(tester, date);
+}
+
+/// Records a non-cash-funded Buy of an *existing* instrument (selected by
+/// name from the Instrument picker, unlike [recordCashFundedBuyThroughGui]
+/// which always creates a new one) through the real Buy dialog. Assumes
+/// the app is already on that account's holdings screen. If [lockUntil]
+/// is given, sets it via [setLockUntilDate] before submitting.
+Future<void> recordNonCashBuyThroughGui(
+  WidgetTester tester, {
+  required String instrumentName,
+  required String quantityText,
+  required String unitPriceText,
+  required String incomeCategory,
+  DateTime? lockUntil,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tester.pumpAndSettle();
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionBuy),
+    () => find.text(l10n.newInstrument).evaluate().isNotEmpty,
+    innerTries: 150,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.nonCash),
+    () => find.text(l10n.incomeCategory).evaluate().isNotEmpty,
+  );
+
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.instrument,
+    optionText: instrumentName,
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.quantity),
+    quantityText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.quantity).evaluate().single.widget
+              as TextField;
+      return field.controller?.text == quantityText;
+    },
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.unitPrice),
+    unitPriceText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.unitPrice).evaluate().single.widget
+              as TextField;
+      return field.controller?.text == unitPriceText;
+    },
+  );
+
+  if (lockUntil != null) {
+    await setLockUntilDate(tester, lockUntil);
+  }
+
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.incomeCategory,
+    optionText: incomeCategory,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionRecordBuy),
+    () => find.text(l10n.actionRecordBuy).evaluate().isEmpty,
+    innerTries: 150,
+  );
+}
+
+/// Records a Sell through the real Sell dialog. Assumes the app is
+/// already on the holdings screen and that the instrument to sell is
+/// `viewModel.holdings.first` (true whenever a scenario has bought only
+/// one instrument, which is all this suite's Sell scenarios do) - the
+/// Sell dialog's own instrument picker is left at that default rather
+/// than driven explicitly. If [expectSuccess] is false, submits once and
+/// leaves the dialog open (a rejected Sell doesn't pop it) for the caller
+/// to assert its own expected error text against.
+Future<void> recordSellThroughGui(
+  WidgetTester tester, {
+  required String quantityText,
+  required String unitPriceText,
+  String? gainIncomeCategory,
+  String? lossExpenseCategory,
+  bool expectSuccess = true,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tester.pumpAndSettle();
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(OutlinedButton, l10n.actionSell),
+    () => find.text(l10n.recordTradeBlurb).evaluate().isNotEmpty,
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.quantity),
+    quantityText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.quantity).evaluate().single.widget
+              as TextField;
+      return field.controller?.text == quantityText;
+    },
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.unitPrice),
+    unitPriceText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.unitPrice).evaluate().single.widget
+              as TextField;
+      return field.controller?.text == unitPriceText;
+    },
+  );
+
+  if (gainIncomeCategory != null) {
+    await selectDropdownOption(
+      tester,
+      fieldLabel: l10n.gainIncomeCategory,
+      optionText: gainIncomeCategory,
+    );
+  }
+  if (lossExpenseCategory != null) {
+    await selectDropdownOption(
+      tester,
+      fieldLabel: l10n.lossExpenseCategory,
+      optionText: lossExpenseCategory,
+    );
+  }
+
+  final submit = find.widgetWithText(ElevatedButton, l10n.actionRecordSell);
+  if (expectSuccess) {
+    await tapReliably(
+      tester,
+      () => submit,
+      () => find.text(l10n.actionRecordSell).evaluate().isEmpty,
+      innerTries: 150,
+    );
+  } else {
+    await tester.ensureVisible(submit);
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.tap(submit);
+    await tester.pumpAndSettle();
+  }
+}
+
+/// Records a Dividend through the real Dividend dialog. Assumes the app
+/// is already on the holdings screen and that [instrumentName] is
+/// `heldInstruments.first` (true whenever a scenario has ever bought only
+/// one instrument for that account) - the dialog's own instrument picker
+/// is left at that default rather than driven explicitly.
+Future<void> recordDividendThroughGui(
+  WidgetTester tester, {
+  required String amountText,
+  required String incomeCategory,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tester.pumpAndSettle();
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(OutlinedButton, l10n.actionDividend),
+    () => textFieldWithLabel(l10n.amount).evaluate().isNotEmpty,
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.amount),
+    amountText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.amount).evaluate().single.widget as TextField;
+      return field.controller?.text == amountText;
+    },
+  );
+
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.incomeCategory,
+    optionText: incomeCategory,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionRecordDividend),
+    () => find.text(l10n.actionRecordDividend).evaluate().isEmpty,
+    innerTries: 150,
+  );
 }
 
 /// Navigates Accounts tab -> the app-bar Transfer icon (`l10n.actionTransfer`
@@ -838,4 +1126,96 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   );
 
   return words;
+}
+
+/// Archives (hides) [accountName] through the real Accounts screen: opens
+/// its row's overflow menu, taps Hide, then confirms the destructive
+/// dialog. `PopupMenuButton<_AccountAction>`'s type argument is private to
+/// account_management_view.dart, so it's matched with a raw `is
+/// PopupMenuButton` predicate (which - unlike `find.byType`, an exact
+/// runtimeType match - matches any generic instantiation) rather than by
+/// type argument.
+Future<void> archiveAccountThroughGui(
+  WidgetTester tester,
+  String accountName,
+) async {
+  final l10n = AppLocalizationsEn();
+
+  Finder accountTile() => find.ancestor(
+    of: find.text(accountName),
+    matching: find.byType(ListTile),
+  );
+
+  // accountTile() alone is collision-prone as an "on Accounts now" signal
+  // - Home shows the same account inside its own ListTile too, so that
+  // check could already be trivially true before this tap ever lands.
+  // The Transfer tooltip only exists on the Accounts screen's app bar.
+  await tapReliably(
+    tester,
+    () => find.text(l10n.navAccounts),
+    () => find.byTooltip(l10n.actionTransfer).evaluate().isNotEmpty,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.descendant(
+      of: accountTile(),
+      matching: find.byWidgetPredicate((widget) => widget is PopupMenuButton),
+    ),
+    () => find.text(l10n.actionHide).evaluate().isNotEmpty,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.actionHide).last,
+    () => find.text(l10n.hideAccountTitle).evaluate().isNotEmpty,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(OutlinedButton, l10n.actionHide),
+    () => find.text(l10n.hideAccountTitle).evaluate().isEmpty,
+  );
+}
+
+/// Closes out [accountName] (already archived - selected in Register via
+/// its `l10n.nameHidden` label) to [toAccountName] through the real
+/// "Transfer remaining balance" flow. Assumes `toAccountName` is already
+/// `closeoutDestinationCandidates.first`, the dialog's default - true
+/// whenever it's the only other eligible account, as in this suite's
+/// scenarios. Waits for the trigger button itself to disappear on success
+/// (it's gated on the account's balance being positive, so a successful
+/// zero-out hides it, not just the dialog closing).
+Future<void> closeoutArchivedAccountThroughGui(
+  WidgetTester tester, {
+  required String accountName,
+  required String toAccountName,
+}) async {
+  final l10n = AppLocalizationsEn();
+  final hiddenName = l10n.nameHidden(accountName);
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.navRegister),
+    () => find.text(l10n.account).evaluate().isNotEmpty,
+  );
+
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.account,
+    optionText: hiddenName,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(OutlinedButton, l10n.transferRemainingBalance),
+    () => find.text(l10n.transferRemainingBalance).evaluate().length > 1,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionTransfer),
+    () => find.text(l10n.transferRemainingBalance).evaluate().isEmpty,
+    innerTries: 150,
+  );
 }

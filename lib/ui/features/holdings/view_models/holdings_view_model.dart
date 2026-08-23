@@ -48,39 +48,51 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
         .listen((accounts) {
           _account = accounts.where((a) => a.id == accountId).firstOrNull;
           notifyListeners();
-        });
+        }, onError: _ignoreError);
     _holdingsSub = _ledgerRepository.watchHoldingsForAccount(accountId).listen((
       holdings,
     ) async {
       _holdings = holdings;
-      _cashMinor = await _ledgerRepository.displayBalanceMinor(accountId);
-      notifyListeners();
-      await _refreshQuotes();
-    });
+      try {
+        final cashMinor = await _ledgerRepository.displayBalanceMinor(
+          accountId,
+        );
+        if (_disposed) return;
+        _cashMinor = cashMinor;
+        notifyListeners();
+        await _refreshQuotes();
+      } catch (_) {
+        // The account/database this awaited call reads from can already
+        // be gone by the time it resolves - a subscription in-flight when
+        // dispose() runs isn't abortable mid-await, only prevented from
+        // firing again. Nothing to recover to once the view is gone.
+        if (!_disposed) rethrow;
+      }
+    }, onError: _ignoreError);
     _instrumentsSub = _ledgerRepository.watchInstruments().listen((
       instruments,
     ) {
       _instruments = instruments;
       notifyListeners();
-    });
+    }, onError: _ignoreError);
     _heldInstrumentsSub = _ledgerRepository
         .watchInstrumentsHeldInAccount(accountId)
         .listen((instruments) {
           _heldInstruments = instruments;
           notifyListeners();
-        });
+        }, onError: _ignoreError);
     _categoriesSub = _ledgerRepository.watchCategories().listen((categories) {
       _categories = categories;
       notifyListeners();
-    });
+    }, onError: _ignoreError);
     _groupsSub = _ledgerRepository.watchAccountGroups().listen((groups) {
       _groups = groups;
       notifyListeners();
-    });
+    }, onError: _ignoreError);
     _settingsRepository.isMarketPriceFetchEnabled().then((enabled) {
       _quotesEnabled = enabled;
       notifyListeners();
-    });
+    }, onError: _ignoreError);
     _quoteTimer = Timer.periodic(const Duration(minutes: 5), (_) {
       unawaited(_refreshQuotes());
     });
@@ -100,6 +112,20 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   late final StreamSubscription<List<Account>> _categoriesSub;
   late final StreamSubscription<List<AccountGroup>> _groupsSub;
   Timer? _quoteTimer;
+  // `_holdingsSub`'s listener below is async and awaits a database call
+  // mid-callback - cancelling a subscription doesn't abort an
+  // already-running invocation of its listener, so a value emitted just
+  // before dispose can still resolve afterward and touch a closed
+  // database connection. Checked after every await in that listener.
+  bool _disposed = false;
+
+  // Every watch stream above is subscribed with this as its `onError` -
+  // a query mid-flight when the database connection closes (this view's
+  // own teardown, or - in the acceptance test suite - the next test's
+  // fresh-device reset) surfaces as a stream error, not a call into the
+  // data callback, so the try/catch there never sees it. There's nothing
+  // a torn-down ViewModel could do with it besides crash the caller.
+  void _ignoreError(Object error, [StackTrace? stackTrace]) {}
 
   Account? _account;
   Account? get account => _account;
@@ -151,8 +177,16 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   bool get isArchived => _account?.archived ?? false;
 
-  Future<void> _refreshQuotes() {
-    return _quoteRefresh.refresh(_instruments);
+  Future<void> _refreshQuotes() async {
+    try {
+      await _quoteRefresh.refresh(_instruments);
+    } catch (_) {
+      // A refresh that started before dispose can still be in flight
+      // against a since-closed database connection - nothing to recover
+      // to once the view is gone, so this is deliberately swallowed
+      // rather than surfaced as an unhandled async error.
+      if (!_disposed) rethrow;
+    }
   }
 
   Future<bool> _run(Future<void> Function() action) async {
@@ -326,6 +360,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   @override
   void dispose() {
+    _disposed = true;
     _quoteTimer?.cancel();
     _accountsSub.cancel();
     _holdingsSub.cancel();
