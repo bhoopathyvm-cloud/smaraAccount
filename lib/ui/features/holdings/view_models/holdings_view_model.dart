@@ -19,6 +19,20 @@ import '../../../../domain/models/instrument_quote.dart';
 
 enum ResearchLaunchResult { opened, copied }
 
+/// Test-only observation hook for the real research-launch path. Null in
+/// production and in every other build. `app_router.dart` constructs
+/// `HoldingsViewModel` without a `launchUrlFn` override, so the
+/// acceptance-investment-research suite (which runs the real, unmodified
+/// app - no ViewModel-construction backdoors) has no other way to see the
+/// launched URI: the real `url_launcher` genuinely opens a system browser
+/// on a live macOS run, which steals window focus and hangs the test
+/// indefinitely (confirmed empirically - design.md Decision 2's
+/// "capture hook" fallback). When set, `HoldingsViewModel`'s default
+/// launcher calls this instead of `url_launcher`, so the suite can assert
+/// on the prompt without ever opening a real browser.
+@visibleForTesting
+Future<bool> Function(Uri uri)? debugResearchLaunchInterceptor;
+
 /// Holdings screen for one investment account: cash, inventory, buy/sell/
 /// dividend, instrument housekeeping, and quote refresh while visible.
 class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
@@ -39,7 +53,10 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
            ),
        _launchUrl =
            launchUrlFn ??
-           ((uri) => launchUrl(uri, mode: LaunchMode.externalApplication)),
+           ((uri) =>
+               (debugResearchLaunchInterceptor ??
+               (uri) =>
+                   launchUrl(uri, mode: LaunchMode.externalApplication))(uri)),
        _copyText =
            copyTextFn ??
            ((text) => Clipboard.setData(ClipboardData(text: text))) {

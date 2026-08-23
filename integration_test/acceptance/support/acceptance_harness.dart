@@ -242,14 +242,22 @@ Finder textFieldWithLabel(String label) {
 /// label rather than position for the same reason [textFieldWithLabel]
 /// is - these dialogs have several dropdowns whose presence/order is
 /// conditional.
-Future<void> selectDropdownOption(
+Future<void> selectDropdownOption<T>(
   WidgetTester tester, {
   required String fieldLabel,
   required String optionText,
 }) async {
+  // T defaults to dynamic when unspecified (as it is at every existing
+  // call site) - `is DropdownButtonFormField<dynamic>` still matches any
+  // instantiation, since Dart's `is` checks are covariant in the type
+  // argument. Callers only need to pass a concrete T (e.g.
+  // `selectDropdownOption<ResearchTool>`) when a screen has more than one
+  // DropdownButtonFormField of different value types sharing this label -
+  // not needed anywhere in this suite yet, but kept general since this
+  // helper is otherwise agnostic to the dropdown's value type.
   Finder dropdown() => find.byWidgetPredicate(
     (widget) =>
-        widget is DropdownButtonFormField<String> &&
+        widget is DropdownButtonFormField<T> &&
         widget.decoration.labelText == fieldLabel,
   );
   // [optionText] can already be visible elsewhere on screen (e.g. a
@@ -440,6 +448,7 @@ Future<void> recordCashFundedBuyThroughGui(
   required String instrumentName,
   required String quantityText,
   required String unitPriceText,
+  String? ticker,
   String? brokerageText,
   String? brokerageExpenseCategory,
   bool expectSuccess = true,
@@ -478,6 +487,20 @@ Future<void> recordCashFundedBuyThroughGui(
 
   // Kind defaults to Stock - no picker interaction needed for the
   // common case this helper covers.
+
+  if (ticker != null) {
+    await enterTextReliably(
+      tester,
+      () => textFieldWithLabel(l10n.tickerOptional),
+      ticker,
+      () {
+        final field =
+            textFieldWithLabel(l10n.tickerOptional).evaluate().single.widget
+                as TextField;
+        return field.controller?.text == ticker;
+      },
+    );
+  }
 
   await enterTextReliably(
     tester,
