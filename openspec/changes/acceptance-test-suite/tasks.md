@@ -13,7 +13,44 @@
 
 ## 3. Capability group: core ledger journeys
 
-- [~] 3.1 Port the existing INTEGRATION-tier journeys — record transaction, reverse a posted entry, archive a category, tamper detection and re-anchoring, user-created group archive lifecycle (`core-ledger-single-account`, `multi-account-ledger`, `ledger-integrity-signing`) — onto the real-build harness in `integration_test/acceptance/core_ledger_test.dart`. **Record-transaction, hide-category, and tamper-detection-on-restart scenarios DONE, all three passing reliably and reproducibly against a real macOS build (3/3 clean runs). Reverse-entry has no GUI affordance in the app at all (ViewModel/Repository-only — see design.md note) so it's excluded from this GUI-only tier, not deferred. `completeOnboardingWithGuidedEntry` extracted into the shared harness so every remaining scenario (here and in other groups) reuses it instead of duplicating the onboarding walk. Two follow-ups intentionally scoped out rather than silently dropped: (1) re-anchoring - recording a second, clean entry after quarantine and confirming only the tampered one keeps the lock badge - hit a still-unexplained "no FAB found" failure distinct from every other issue in this change; (2) group-archive-lifecycle not yet started.**
+- [~] 3.1 Port the existing INTEGRATION-tier journeys — record transaction, reverse a posted entry, archive a category, tamper detection and re-anchoring, user-created group archive lifecycle (`core-ledger-single-account`, `multi-account-ledger`, `ledger-integrity-signing`) — onto the real-build harness in `integration_test/acceptance/core_ledger_test.dart`. **Record-transaction, hide-category, tamper-detection-on-restart, and re-anchoring scenarios DONE, all passing reliably and reproducibly against a real macOS build (multiple clean full-file runs). Reverse-entry has no GUI affordance in the app at all (ViewModel/Repository-only — see design.md note) so it's excluded from this GUI-only tier, not deferred. `completeOnboardingWithGuidedEntry` extracted into the shared harness so every remaining scenario (here and in other groups) reuses it instead of duplicating the onboarding walk.**
+
+  **Re-anchoring resolved**: the original "no FAB found" mystery was
+  chased down and does NOT reproduce - the FAB renders fine. It was
+  masked by two real bugs found while scripting the flow: (1)
+  `find.byType(TextField).first` for the amount field can resolve to
+  Register's own search bar instead of `RecordTransactionView`'s field -
+  Register's shell stays mounted (offstage) underneath a pushed route, so
+  an unscoped `.first` isn't safe (matches this file's own documented
+  "Register's search bar is already a TextField" risk, just a variant of
+  it); fixed by scoping to `find.descendant(of:
+  find.byType(RecordTransactionView), ...)`. (2) The register list shows
+  newest first, so after adding a second entry the tampered row's lock
+  badge needs `find.textContaining`/no fixed scroll assumptions rather
+  than a bare positional check.
+
+  **Group-archive-lifecycle: attempted, not landed.** Creating a new
+  account group through the real "Create group" dialog (name + currency
+  chip + Create) was intermittently unreliable across ~10 iterations in
+  this environment - sometimes the dialog closed without the group ever
+  appearing in the list (consistent with a tap landing on the modal
+  barrier rather than the Create button, though not confirmed), and
+  once the dialog visibly stayed open with no group created and no
+  in-app error surfaced. `tapReliably`'s own "target now gone means
+  already succeeded" heuristic (documented in its own doc comment as a
+  deliberate design choice for retriable submits) makes a dialog dismiss
+  and a dialog *use* indistinguishable purely from "is the dialog still
+  there" - a genuinely different problem class than any other flake in
+  this file, which is why it's called out here rather than silently
+  retried away. Not resolved; scoped out per this task's own precedent
+  for re-anchoring, not silently dropped. Whoever picks this up next:
+  start by confirming with a screen-recording or `flutter run -d macos`
+  by hand whether Create's tap coordinate is actually landing inside the
+  button's bounds in this dialog's specific layout (it has more content -
+  a `SegmentedButton`, a `Wrap` of 7 currency chips, and a second manual
+  currency-code `TextField` - than the account-creation dialog this
+  pattern already works reliably for), before assuming it's the same
+  class of I/O-timing flake as everything else here.**
 
 ## 4. Capability group: currency and transfers
 

@@ -4,6 +4,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations_en.dart';
 import 'package:smara_accounting/main.dart';
+import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -169,10 +170,75 @@ void main() {
     );
     expect(find.byIcon(TablerIcons.lock), findsOneWidget);
 
-    // Re-anchoring (recording a second, clean entry after quarantine and
-    // confirming only the tampered one still shows the lock badge) is
-    // not yet covered here - tracked as its own follow-up task
-    // (tasks.md), not silently dropped.
+    // Re-anchoring: record a second, clean entry after quarantine and
+    // confirm only the tampered one keeps the lock badge.
+    await tapReliably(
+      tester,
+      () => find.byIcon(TablerIcons.plus),
+      () => find.text(l10n.captureReceived).evaluate().isNotEmpty,
+    );
+    await tapReliably(
+      tester,
+      () => find.text(l10n.captureReceived),
+      () => find.byType(RecordTransactionView).evaluate().isNotEmpty,
+    );
+    // RecordTransactionView can report mounted before its own amount
+    // TextField has actually rendered - settle before the first
+    // interaction rather than let enterTextReliably's first attempt hit
+    // an empty finder.
+    await tester.pumpAndSettle();
+
+    var reanchored = false;
+    for (var attempt = 0; attempt < 3 && !reanchored; attempt++) {
+      // Register's own search bar is a TextField too, and the shell
+      // that hosts it can stay mounted (offstage) underneath a pushed
+      // RecordTransactionView - an unscoped find.byType(TextField).first
+      // can resolve to it instead of the amount field (design.md's own
+      // documented risk for exactly this pattern). Scope to the screen.
+      Finder amountField() => find.descendant(
+        of: find.byType(RecordTransactionView),
+        matching: find.byType(TextField).first,
+      );
+      await enterTextReliably(tester, amountField, '15', () {
+        final elements = amountField().evaluate();
+        if (elements.isEmpty) return false;
+        final field = elements.first.widget as TextField;
+        return field.controller?.text == '15';
+      });
+      await tapReliably(
+        tester,
+        () => find.byType(DropdownButtonFormField<String>).last,
+        () => find.text('Salary').evaluate().isNotEmpty,
+      );
+      await tapReliably(
+        tester,
+        () => find.text('Salary').last,
+        () => find.text('Salary').evaluate().length == 1,
+      );
+      await tester.tap(
+        find.descendant(
+          of: find.byType(RecordTransactionView),
+          matching: find.text(l10n.actionSave),
+        ),
+      );
+      for (var i = 0; i < 20 && !reanchored; i++) {
+        if (find.byType(RecordTransactionView).evaluate().isEmpty) {
+          reanchored = true;
+        } else {
+          await tester.pump(const Duration(milliseconds: 100));
+        }
+      }
+    }
+    if (!reanchored) {
+      fail('re-anchoring: Save never returned to Register after 3 attempts.');
+    }
+
+    // The register shows newest first - the new entry is on top, the
+    // tampered one now second. Only the tampered entry keeps the lock
+    // badge - the new clean entry doesn't add a second one.
+    expect(find.text('15.00'), findsOneWidget);
+    expect(find.byIcon(TablerIcons.lock), findsOneWidget);
+    expect(find.textContaining('10.00'), findsWidgets);
 
     await tester.pump(const Duration(seconds: 2));
   }, timeout: const Timeout(Duration(minutes: 5)));
