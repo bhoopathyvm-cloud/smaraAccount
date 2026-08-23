@@ -231,9 +231,9 @@ void main() {
 
     await tester.enterText(find.byType(TextField).first, '10.00');
     await tester.ensureVisible(
-      find.widgetWithText(ElevatedButton, 'நகர்த்தப்பட்ட பணம்'),
+      find.widgetWithText(ElevatedButton, 'பணம் மாற்றப்பட்டது'),
     );
-    await tester.tap(find.widgetWithText(ElevatedButton, 'நகர்த்தப்பட்ட பணம்'));
+    await tester.tap(find.widgetWithText(ElevatedButton, 'பணம் மாற்றப்பட்டது'));
     await tester.pump();
     await tester.pump();
 
