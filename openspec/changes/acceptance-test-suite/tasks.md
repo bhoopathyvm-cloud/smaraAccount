@@ -177,8 +177,51 @@
 
 ## 6. Capability group: onboarding
 
-- [ ] 6.1 Add a scenario walking first-run setup end to end through the real GUI (`first-week-setup`).
-- [ ] 6.2 Add a scenario exercising the deferred-setup path (`deferred-onboarding`).
+- [x] 6.1 Add a scenario walking first-run setup end to end through the real GUI (`first-week-setup`).
+- [x] 6.2 Add a scenario exercising the deferred-setup path (`deferred-onboarding`).
+
+  Both landed in `integration_test/acceptance/onboarding_test.dart`,
+  passing individually and as a full-file run.
+
+  6.1 confirmed `FirstWeekSetupView` has no main-account-name field
+  (naming happens earlier, at `FirstAccountNameView`, part of onboarding
+  itself) - it's scoped to just the optional credit-card/cash-account
+  toggles. Since `completeOnboardingWithGuidedEntry` pre-completes the
+  wizard's flag so its own final step lands on Home (not the wizard),
+  reaching the wizard for this scenario required flipping
+  `SettingsRepository.isFirstWeekSetupCompleted` back to false and then
+  forcing a fresh router redirect via the same unmount/remount "restart"
+  technique group 3's tamper-detection scenario uses -
+  `SettingsRepository` isn't a `Listenable`, so flipping the flag alone
+  doesn't itself trigger go_router's redirect chain.
+
+  6.2 targets the `deferred-onboarding` spec's third scenario
+  specifically ("Acknowledgment is required before anything else"), not
+  its first two (already implicitly covered by every other scenario in
+  this whole suite via `completeOnboardingWithGuidedEntry`). Confirmed by
+  reading every acknowledgment-window screen's source that there is no
+  other reachable widget to attempt a stray navigation with while
+  mid-acknowledgment - the only way to exercise "can't escape" as a
+  GUI-observable behavior is the kill/restart angle: kill the app right
+  after the guided first entry posts (before acknowledgment completes),
+  restart, and confirm the router forces `RecoveryPhraseView` again
+  rather than Home. Then completes acknowledgment normally afterward with
+  the same (unregenerated) words, confirming the restart didn't corrupt
+  anything - not just that the redirect held.
+
+  Extracted `completeGuidedFirstEntryAndReachRecoveryPhraseView` out of
+  `completeOnboardingWithGuidedEntry` (acceptance_harness.dart) - the
+  exact same "hard-won" sequence through the guided first entry, now
+  reusable by 6.2 without duplicating it by hand. Pure extraction, no
+  logic changed; re-verified `core_ledger_test.dart`'s first scenario
+  still passes unmodified after the refactor.
+
+  One new EditableText-collision instance confirmed and worked around
+  (this suite's existing documented bug class, not a new one): right
+  after the wizard's Finish navigates to Home then Accounts, the
+  wizard's own now-unmounting `TextField` can still resolve alongside
+  the real `Text` row for the same account name - asserted with
+  `findsWidgets` instead of `findsOneWidget`.
 
 ## 7. Capability group: data import
 

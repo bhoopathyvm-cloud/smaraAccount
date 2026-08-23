@@ -1018,22 +1018,22 @@ Future<void> recordSpentThroughGui(
   );
 }
 
-/// Pumps the real app from a completely fresh device
-/// (`resetToFreshDevice` must already have run) all the way through the
-/// real onboarding GUI and its mandatory guided first entry, landing on
-/// Home with a real recovery phrase captured - the starting point every
-/// acceptance scenario needs (design.md Decision 5), since there is no
-/// pre-seeded identity to skip ahead with on this tier. Returns the 24
-/// recovery-phrase words.
+/// Pumps the real app from a completely fresh device (`resetToFreshDevice`
+/// must already have run) through the real onboarding GUI and its
+/// mandatory guided first entry, stopping once `RecoveryPhraseView` is
+/// showing - i.e. everything [completeOnboardingWithGuidedEntry] does
+/// *before* acknowledgment (the recovery-phrase-save/export/confirm
+/// screens). Returns the 24 recovery-phrase words, extracted directly off
+/// the live `RecoveryPhraseView` widget instance the same way
+/// [completeOnboardingWithGuidedEntry] always has.
 ///
-/// Walks: CurrencySelectionView (defaults to USD) -> FirstAccountNameView
-/// (defaults to a starter name) -> RecordTransactionView (the guided first
-/// entry, recording [amountText] against [categoryName]) ->
-/// RecoveryPhraseView -> KeystoreExportView (Skip) ->
-/// RecoveryPhraseConfirmView -> Home. Every step's ordering and the fixes
-/// applied here were hard-won against a real macOS build - see design.md
-/// Risks before changing this sequence.
-Future<List<String>> completeOnboardingWithGuidedEntry(
+/// Extracted as its own helper (deferred-onboarding's "acknowledgment is
+/// required before anything else" scenario needs to interrupt onboarding
+/// right at this exact point, before acknowledgment ever runs) rather than
+/// duplicated - every step here is the same hard-won sequence documented
+/// on [completeOnboardingWithGuidedEntry] itself; see design.md Risks
+/// before changing it.
+Future<List<String>> completeGuidedFirstEntryAndReachRecoveryPhraseView(
   WidgetTester tester, {
   required String amountText,
   required String categoryName,
@@ -1120,8 +1120,8 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   }
   if (!saved) {
     fail(
-      'completeOnboardingWithGuidedEntry: Save never succeeded after 3 '
-      'full re-entry attempts.\n${_visibleTextsDump()}',
+      'completeGuidedFirstEntryAndReachRecoveryPhraseView: Save never '
+      'succeeded after 3 full re-entry attempts.\n${_visibleTextsDump()}',
     );
   }
 
@@ -1141,10 +1141,40 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   }
   if (words == null) {
     fail(
-      'completeOnboardingWithGuidedEntry: RecoveryPhraseView never stably '
-      'found.\n${_visibleTextsDump()}',
+      'completeGuidedFirstEntryAndReachRecoveryPhraseView: RecoveryPhraseView '
+      'never stably found.\n${_visibleTextsDump()}',
     );
   }
+  return words;
+}
+
+/// Pumps the real app from a completely fresh device
+/// (`resetToFreshDevice` must already have run) all the way through the
+/// real onboarding GUI and its mandatory guided first entry, landing on
+/// Home with a real recovery phrase captured - the starting point every
+/// acceptance scenario needs (design.md Decision 5), since there is no
+/// pre-seeded identity to skip ahead with on this tier. Returns the 24
+/// recovery-phrase words.
+///
+/// Walks: CurrencySelectionView (defaults to USD) -> FirstAccountNameView
+/// (defaults to a starter name) -> RecordTransactionView (the guided first
+/// entry, recording [amountText] against [categoryName]) ->
+/// RecoveryPhraseView -> KeystoreExportView (Skip) ->
+/// RecoveryPhraseConfirmView -> Home. Every step's ordering and the fixes
+/// applied here were hard-won against a real macOS build - see design.md
+/// Risks before changing this sequence.
+Future<List<String>> completeOnboardingWithGuidedEntry(
+  WidgetTester tester, {
+  required String amountText,
+  required String categoryName,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  final words = await completeGuidedFirstEntryAndReachRecoveryPhraseView(
+    tester,
+    amountText: amountText,
+    categoryName: categoryName,
+  );
 
   await tapReliably(
     tester,
