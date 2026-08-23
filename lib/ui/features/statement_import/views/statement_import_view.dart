@@ -37,10 +37,9 @@ class StatementImportView extends StatelessWidget {
       // filter file_picker builds from them ends up greying those files
       // out in the dialog instead of narrowing it to them. Allow any
       // file and validate the extension ourselves once one is picked.
-      final result = await FilePicker.platform.pickFiles(withData: true);
-      final file = result?.files.single;
-      final bytes = file?.bytes;
-      if (file == null || bytes == null) return;
+      final file = await FilePicker.pickFile();
+      if (file == null) return;
+      final bytes = await file.readAsBytes();
 
       final extension = file.name.split('.').last.toLowerCase();
       final allowed = viewModel.source == StatementSource.csv

@@ -22,12 +22,20 @@ The repository SHALL contain a static website under `pages/` whose home page int
 - **WHEN** a visitor opens the Open Source section
 - **THEN** it lists Smara Account as the first project and leaves the structure open for more projects later
 
+#### Scenario: Open Source page welcomes requests and contributors
+- **WHEN** a visitor wants to request a feature or contribute
+- **THEN** the Open Source section invites issues and contributions, suggests describing the real problem and desired outcome, allows optional AI-assisted issue refinement, and states that issues are picked up as time permits
+
 ### Requirement: Smara Account Project Page States the Name, Problem, Approach, and User Benefit
 The Smara Account project page SHALL explain the Sanskrit meaning of "Smara" as remembrance, memory, or recollection, and connect that meaning to the project's goal of preserving financial history. It SHALL then state, in visitor-facing terms, the problem Smara Account solves (existing accounting tools require trusting a cloud provider, or don't make tampering with recorded history genuinely difficult), how this project solves it (a local-first, tamper-evident, double-entry ledger with no server), and what a non-technical user gets from that design (verified history, warnings instead of silently wrong totals, safer backup/export review, and an honest correction trail). A separate page under the Smara Account project SHALL describe how the project was built: the AI spec-driven development approach via OpenSpec, and the propose → apply → archive workflow.
 
 #### Scenario: Smara project page explains the project
 - **WHEN** a visitor opens the Smara Account project overview
 - **THEN** it explains what the name means, what problem the project solves, how, and why that helps an ordinary user, without requiring the visitor to already know the codebase
+
+#### Scenario: Smara project page explains how to request or contribute
+- **WHEN** a visitor reads the Smara Account project overview
+- **THEN** it links to the repository issues, welcomes feature requests and contributions, suggests using AI tools to improve a request if helpful, and explains that larger contributions normally start with an OpenSpec proposal
 
 #### Scenario: Site gives background references without requiring them
 - **WHEN** a visitor reads the public site

@@ -36,7 +36,17 @@ See the [user guide](docs/user-guide.md) for how to use the app — onboarding a
 
 ## Contributing
 
-Contributions are welcome, but keep in mind this project follows a spec-first workflow via [OpenSpec](https://github.com/Fission-AI/OpenSpec) — changes are expected to be driven by a spec, not just a patch. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full workflow, branching convention, and architecture/engineering guidelines.
+Feature requests are welcome as GitHub issues. Please describe the real
+problem first: what you were trying to do, what felt missing, and what
+outcome would help. Using AI tools to make the request clearer before
+submitting is fine, especially for turning an idea into examples or
+acceptance criteria. I will pick up issues as time permits.
+
+Contributions are welcome too, but keep in mind this project follows a
+spec-first workflow via [OpenSpec](https://github.com/Fission-AI/OpenSpec)
+— changes are expected to be driven by a spec, not just a patch. See
+[`CONTRIBUTING.md`](CONTRIBUTING.md) for the full workflow, branching
+convention, and architecture/engineering guidelines.
 
 ## License
 

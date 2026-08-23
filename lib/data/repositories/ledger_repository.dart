@@ -3482,6 +3482,7 @@ class LedgerRepository {
   Stream<HomeOverview> watchHomeOverview() {
     return _tickOn([
       watchEntries(),
+      watchFinancialAccounts(includeArchived: true),
       _db.select(_db.instrumentQuotes).watch(),
     ]).asyncMap((_) => _buildHomeOverview());
   }

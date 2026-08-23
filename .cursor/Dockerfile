@@ -9,7 +9,7 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 # Keep in sync with .github/workflows/flutter-ci.yml and pubspec.yaml.
-ENV FLUTTER_VERSION=3.44.6
+ENV FLUTTER_VERSION=3.47.1
 ENV FLUTTER_HOME=/opt/flutter
 ENV PATH=/opt/flutter/bin:/opt/flutter/bin/cache/dart-sdk/bin:$PATH
 
