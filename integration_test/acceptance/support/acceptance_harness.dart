@@ -12,6 +12,7 @@ import 'package:smara_accounting/ui/features/onboarding/views/first_account_name
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_confirm_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
+import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 /// Real OS keychain access, matching the options
 /// `FlutterSecureKeyStorage` (lib/domain/crypto/secure_key_storage.dart)
@@ -75,8 +76,20 @@ Future<void> resetToFreshDevice([WidgetTester? tester]) async {
 
 Future<void> _deleteDatabaseDirectory() async {
   final dir = await getApplicationSupportDirectory();
-  if (dir.existsSync()) {
-    dir.deleteSync(recursive: true);
+  Object? lastError;
+  for (var attempt = 0; attempt < 5; attempt++) {
+    try {
+      if (dir.existsSync()) {
+        dir.deleteSync(recursive: true);
+      }
+      return;
+    } catch (error) {
+      lastError = error;
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+    }
+  }
+  if (lastError != null) {
+    throw lastError;
   }
 }
 
@@ -174,6 +187,7 @@ Future<void> tapReliably(
   bool Function() succeeded, {
   int maxAttempts = 3,
   int innerTries = 40,
+  bool scrollIntoView = true,
 }) async {
   for (var attempt = 0; attempt < maxAttempts; attempt++) {
     // A previous attempt's tap can have actually worked and already
@@ -183,10 +197,22 @@ Future<void> tapReliably(
     // legitimately gone, not because anything is actually wrong. Treat
     // that as success-already-happened rather than a real failure.
     try {
-      final target = tapTarget();
-      await tester.ensureVisible(target);
-      await tester.pump(const Duration(milliseconds: 100));
-      await tester.tap(target);
+      var target = tapTarget();
+      for (var i = 0; i < innerTries && target.evaluate().isEmpty; i++) {
+        if (succeeded()) return;
+        await tester.pump(const Duration(milliseconds: 100));
+        target = tapTarget();
+      }
+      if (scrollIntoView && target.hitTestable().evaluate().isEmpty) {
+        await tester.ensureVisible(target);
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+      await tester.tap(
+        target.hitTestable().evaluate().isNotEmpty
+            ? target.hitTestable()
+            : target,
+        warnIfMissed: false,
+      );
     } catch (e) {
       if (succeeded()) return;
       // ignore: avoid_print
@@ -222,6 +248,23 @@ String _visibleTextsDump() {
   return 'Visible texts at failure: $texts';
 }
 
+/// Shell destinations on a wide window are a [NavigationRail] whose
+/// unselected labels are not hit-testable (`labelType: selected`). Tap the
+/// rail/bar icon instead of [find.text].
+Finder shellNavIcon(IconData icon) {
+  final inRail = find.descendant(
+    of: find.byType(NavigationRail),
+    matching: find.byIcon(icon),
+  );
+  if (inRail.evaluate().isNotEmpty) return inRail;
+  final inBar = find.descendant(
+    of: find.byType(BottomNavigationBar),
+    matching: find.byIcon(icon),
+  );
+  if (inBar.evaluate().isNotEmpty) return inBar;
+  return find.byIcon(icon);
+}
+
 /// Pumps the real app from a completely fresh device
 /// (`resetToFreshDevice` must already have run) all the way through the
 /// real onboarding GUI and its mandatory guided first entry, landing on
@@ -253,6 +296,12 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   await tester.pumpWidget(const SmaraAccountingApp());
   await tester.pump();
   await pumpUntilFound(tester, find.byType(CurrencySelectionView));
+  if (find.byType(CurrencySelectionView).evaluate().isEmpty) {
+    fail(
+      'completeOnboardingWithGuidedEntry: CurrencySelectionView never '
+      'appeared (device may not have been reset).\n$_visibleTextsDump()',
+    );
+  }
 
   await tapReliably(
     tester,
@@ -380,9 +429,273 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   // already committed back at CurrencySelectionView.
   await tapReliably(
     tester,
-    () => find.text(l10n.actionConfirm),
-    () => find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
+    () => find.text(l10n.actionConfirm).hitTestable(),
+    () =>
+        find.byType(RecoveryPhraseConfirmView).evaluate().isEmpty &&
+        find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
+    innerTries: 150,
   );
 
   return words;
+}
+
+Finder textFieldWithLabel(String label) {
+  return find.byWidgetPredicate(
+    (widget) => widget is TextField && widget.decoration?.labelText == label,
+  );
+}
+
+Finder dropdownWithLabel(String label) {
+  return find.byWidgetPredicate((widget) {
+    if (widget is! DropdownButtonFormField<String>) return false;
+    return widget.decoration.labelText == label;
+  });
+}
+
+/// Closed [DropdownButton]s keep every [DropdownMenuItem] in an offstage
+/// [IndexedStack], so counting mounted items is not an "open" signal.
+/// The overlay route's private `_DropdownMenu<T>` exists only while the
+/// menu is showing.
+bool dropdownOverlayOpen() => find
+    .byWidgetPredicate(
+      (widget) => widget.runtimeType.toString().startsWith('_DropdownMenu<'),
+    )
+    .evaluate()
+    .isNotEmpty;
+
+Finder dropdownMenu() => find.byWidgetPredicate(
+  (widget) => widget.runtimeType.toString().startsWith('_DropdownMenu<'),
+);
+
+Future<void> selectDropdownOption(
+  WidgetTester tester, {
+  required String fieldLabel,
+  required String optionText,
+}) async {
+  final visibleInField = find
+      .descendant(
+        of: dropdownWithLabel(fieldLabel),
+        matching: find.text(optionText),
+      )
+      .hitTestable();
+  if (visibleInField.evaluate().isNotEmpty && !dropdownOverlayOpen()) {
+    return;
+  }
+
+  if (!dropdownOverlayOpen()) {
+    await tapReliably(
+      tester,
+      () => dropdownWithLabel(fieldLabel).hitTestable(),
+      dropdownOverlayOpen,
+    );
+  }
+  await tester.pump(const Duration(milliseconds: 400));
+
+  await tapReliably(
+    tester,
+    () => find.descendant(of: dropdownMenu(), matching: find.text(optionText)),
+    () => !dropdownOverlayOpen(),
+    scrollIntoView: false,
+  );
+}
+
+/// Accounts tab → Create → investment checkbox → Investments group →
+/// optional opening cash. Leaves the tester on the Accounts screen with
+/// [name] visible.
+Future<void> createInvestmentAccountThroughGui(
+  WidgetTester tester, {
+  required String name,
+  String? openingBalanceText,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tapReliably(
+    tester,
+    () => shellNavIcon(TablerIcons.wallet),
+    () => find
+        .byWidgetPredicate(
+          (widget) =>
+              widget is FloatingActionButton &&
+              widget.heroTag == 'accounts-fab',
+        )
+        .hitTestable()
+        .evaluate()
+        .isNotEmpty,
+  );
+
+  await tapReliably(
+    tester,
+    () => find
+        .byWidgetPredicate(
+          (widget) =>
+              widget is FloatingActionButton &&
+              widget.heroTag == 'accounts-fab',
+        )
+        .hitTestable(),
+    () => find.text(l10n.createAccount).evaluate().isNotEmpty,
+  );
+
+  await enterTextReliably(tester, () => find.byType(TextField).first, name, () {
+    final field = find.byType(TextField).evaluate().first.widget as TextField;
+    return field.controller?.text == name;
+  });
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.thisAccountHoldsInvestments).hitTestable(),
+    () {
+      final tiles = find.byType(CheckboxListTile).evaluate();
+      if (tiles.isEmpty) return false;
+      return (tiles.first.widget as CheckboxListTile).value == true;
+    },
+  );
+
+  await selectDropdownOption(
+    tester,
+    fieldLabel: l10n.groupLabel,
+    optionText: l10n.systemGroupInvestments,
+  );
+
+  if (openingBalanceText != null) {
+    await enterTextReliably(
+      tester,
+      () => textFieldWithLabel(l10n.openingBalanceOptional),
+      openingBalanceText,
+      () {
+        final field =
+            textFieldWithLabel(
+                  l10n.openingBalanceOptional,
+                ).evaluate().single.widget
+                as TextField;
+        return field.controller?.text == openingBalanceText;
+      },
+    );
+  }
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionCreate),
+    () =>
+        find.text(l10n.createAccount).evaluate().isEmpty &&
+        find.widgetWithText(ListTile, name).evaluate().isNotEmpty,
+    innerTries: 150,
+  );
+}
+
+/// Home → tap the investment account (pushes `/holdings/:id`).
+Future<void> openHoldingsFor(WidgetTester tester, String accountName) async {
+  final l10n = AppLocalizationsEn();
+  if (find.text(l10n.holdingsCash).evaluate().isNotEmpty &&
+      find.text(accountName).evaluate().isNotEmpty) {
+    return;
+  }
+
+  await tapReliably(
+    tester,
+    () => shellNavIcon(TablerIcons.home),
+    () => find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ListTile, accountName).hitTestable(),
+    () => find.text(l10n.holdingsCash).evaluate().isNotEmpty,
+    innerTries: 150,
+  );
+}
+
+/// Holdings → Buy dialog → new instrument (Stock) → Record buy.
+Future<void> recordCashFundedBuyThroughGui(
+  WidgetTester tester, {
+  required String instrumentName,
+  required String quantityText,
+  required String unitPriceText,
+  String? brokerageText,
+  String? brokerageExpenseCategory,
+  bool expectSuccess = true,
+}) async {
+  final l10n = AppLocalizationsEn();
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionBuy).hitTestable(),
+    () => find.text(l10n.actionRecordBuy).evaluate().isNotEmpty,
+  );
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.newInstrument).hitTestable(),
+    () => textFieldWithLabel(l10n.name).evaluate().isNotEmpty,
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.name),
+    instrumentName,
+    () {
+      final field =
+          textFieldWithLabel(l10n.name).evaluate().single.widget as TextField;
+      return field.controller?.text == instrumentName;
+    },
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.quantity),
+    quantityText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.quantity).evaluate().single.widget
+              as TextField;
+      return field.controller?.text == quantityText;
+    },
+  );
+
+  await enterTextReliably(
+    tester,
+    () => textFieldWithLabel(l10n.unitPrice),
+    unitPriceText,
+    () {
+      final field =
+          textFieldWithLabel(l10n.unitPrice).evaluate().single.widget
+              as TextField;
+      return field.controller?.text == unitPriceText;
+    },
+  );
+
+  if (brokerageText != null && brokerageExpenseCategory != null) {
+    await enterTextReliably(
+      tester,
+      () => textFieldWithLabel(l10n.brokerageOptional),
+      brokerageText,
+      () {
+        final field =
+            textFieldWithLabel(l10n.brokerageOptional).evaluate().single.widget
+                as TextField;
+        return field.controller?.text == brokerageText;
+      },
+    );
+    await selectDropdownOption(
+      tester,
+      fieldLabel: l10n.brokerageExpenseCategory,
+      optionText: brokerageExpenseCategory,
+    );
+  }
+
+  if (expectSuccess) {
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(ElevatedButton, l10n.actionRecordBuy),
+      () =>
+          find.text(instrumentName).evaluate().isNotEmpty &&
+          find.text(l10n.actionRecordBuy).evaluate().isEmpty,
+      innerTries: 150,
+    );
+  } else {
+    await tester.ensureVisible(
+      find.widgetWithText(ElevatedButton, l10n.actionRecordBuy),
+    );
+    await tester.tap(find.widgetWithText(ElevatedButton, l10n.actionRecordBuy));
+    await pumpUntilFound(tester, find.text(l10n.errorInsufficientCash));
+  }
 }

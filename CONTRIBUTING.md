@@ -20,6 +20,25 @@ Before writing any code, read:
 This document doesn't repeat those rules — it covers the *process* around
 them.
 
+## Feature requests
+
+Feature requests are welcome as issues. A useful issue does not need to be
+technical, but it should explain the real need:
+
+- What were you trying to do?
+- What felt missing, confusing, or too slow?
+- What would a better flow let you accomplish?
+- Are there examples, screenshots, files, or edge cases that explain the
+  request?
+
+Using AI tools to refine an issue before submitting is welcome. They can
+help turn a rough idea into a clearer problem statement, user story,
+workflow, examples, or acceptance criteria. This is optional; a plain
+human explanation is also fine.
+
+There is no support or implementation SLA. Clear issues are easier to
+review and may be picked up as time permits.
+
 ## The OpenSpec workflow
 
 Every change goes through four stages:

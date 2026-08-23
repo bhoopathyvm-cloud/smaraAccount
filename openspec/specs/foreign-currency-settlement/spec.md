@@ -32,7 +32,7 @@ When a cross-currency transfer or foreign-currency transaction is recorded witho
 - **AND** creates a pending transfer with status pending
 
 ### Requirement: Known-Rate Cross-Currency Movement Posts as a Single Entry
-When the exact amount in the destination or account currency is known at the time a cross-currency transfer or foreign-currency transaction is recorded, the system SHALL post one complete journal entry covering both currencies immediately, and SHALL NOT create a pending transfer.
+When the exact amount in the destination or account currency is known at the time a cross-currency transfer or foreign-currency transaction is recorded, the system SHALL post one complete journal entry covering both currencies immediately, and SHALL NOT create a pending transfer. An investment account's cash leg participates in cross-currency transfers exactly as any other financial account's balance does; there is no investment-specific variant of this behavior.
 
 #### Scenario: Transfer with a known upfront rate
 - **WHEN** the user records a cross-currency transfer and supplies both the source-currency amount and the exact destination-currency amount
@@ -47,6 +47,10 @@ When the exact amount in the destination or account currency is known at the tim
 #### Scenario: A non-positive amount in either currency is rejected
 - **WHEN** the user records a known-rate cross-currency transfer or transaction with a zero or negative amount in either currency
 - **THEN** the system rejects the entry and nothing is posted
+
+#### Scenario: Cash funding an investment account across currencies
+- **WHEN** the user transfers cash into or out of an investment account whose group currency differs from the source or destination account's currency
+- **THEN** the transfer follows the same known-rate or provisional-and-settled path already defined for any other cross-currency transfer
 
 ### Requirement: Settle a Pending Transfer or Transaction
 The user SHALL be able to settle a pending transfer or foreign-currency transaction by specifying which account actually received funds and the real settled amount. Settling to the original destination account posts the received amount in the destination currency and closes the pending transfer on its own, with no shortfall comparison — the destination-currency amount was never a promised figure to compare against. Settling back to the original source account posts the returned amount in the same currency as the provisional entry; if that amount is less than the provisional amount, the system SHALL post the shortfall as a fee or loss entry against a user-selected expense category. Either way, the Transfers-in-transit position opened by the provisional entry is always left fully closed. For a pending item of kind foreign-currency transaction, the account that receives the settled amount SHALL always be the transaction's own financial account, and settlement SHALL follow the same no-shortfall path as settling a transfer to its destination: the provisional clearing leg is in the transaction's native currency while the settled amount is in the account's currency, so there is no shared-currency figure to compare a shortfall against. There is no alternate destination to choose. A fee category SHALL be rejected for a foreign-currency transaction settlement. A zero settled amount SHALL be rejected for a foreign-currency transaction settlement, the same way a zero destination-delivery settlement is rejected.

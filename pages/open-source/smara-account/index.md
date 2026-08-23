@@ -91,6 +91,25 @@ for the development approach, or head straight to the
 [repository](https://github.com/bhoopathyvm-cloud/smaraAccount) to read
 the code, file an issue, or open a pull request.
 
+## Feature Requests And Contributions
+
+If Smara Account is missing something useful for your real bookkeeping
+workflow, please open an issue in the
+[repository](https://github.com/bhoopathyvm-cloud/smaraAccount/issues).
+The best feature requests explain the problem first: what you were trying
+to do, why the current app did not fit, and what a better flow might look
+like.
+
+Using AI tools to improve a request before submitting is welcome. A good
+prompt can turn a rough idea into a clearer issue with user story,
+examples, edge cases, and acceptance criteria. It does not need to be
+perfect; it only needs to make the need understandable.
+
+Contributions are also welcome. For larger changes, please start with an
+issue before opening a pull request. The project follows a spec-first
+workflow, so accepted changes normally need a small OpenSpec proposal
+before implementation. I will review and implement issues as time permits.
+
 ## Background Reading
 
 The design uses common integrity and audit-trail ideas, translated into a
