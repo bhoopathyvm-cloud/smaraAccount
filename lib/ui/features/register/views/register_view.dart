@@ -210,7 +210,7 @@ class RegisterView extends StatelessWidget {
     final fileName =
         '${accountName ?? 'register'}-'
         '${_isoDate(range.start)}-to-${_isoDate(range.end)}.csv';
-    await FilePicker.platform.saveFile(
+    await FilePicker.saveFile(
       dialogTitle: l10n.saveCsvExport,
       fileName: fileName,
       bytes: Uint8List.fromList(utf8.encode(csv)),
