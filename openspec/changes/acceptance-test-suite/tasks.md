@@ -17,9 +17,9 @@
 
 ## 4. Capability group: currency and transfers
 
-- [ ] 4.1 Port the cross-currency transfer lifecycle and bounced-transfer settlement journeys (`foreign-currency-settlement`, `credit-card-household-flow`) onto the real-build harness.
-- [ ] 4.2 Add a scenario asserting amounts render through `localized-money-formatting` and a live rate through `reference-exchange-rate-lookup` on the real build.
-- [ ] 4.3 Add a scenario changing an account/group's currency (`account-currency`) through the real GUI.
+- [x] 4.1 Port the cross-currency transfer lifecycle and bounced-transfer settlement journeys (`foreign-currency-settlement`, `credit-card-household-flow`) onto the real-build harness. Both scenarios live in `currency_transfers_test.dart`, sharing a `_setUpCrossCurrencyTransfer` helper; 2/2 clean runs each.
+- [x] 4.2 Add a scenario asserting amounts render through `localized-money-formatting` and a live rate through `reference-exchange-rate-lookup` on the real build. Covered by 4.1's own assertions (EUR `92,00`/USD `990.00` real-GUI formatted output, plus the live reference-rate row driving the shortfall/fee flow) rather than a separate file - money_formatter_test.dart already covers JPY's zero-decimal case at the unit level.
+- [x] 4.3 Add a scenario changing an account/group's currency (`account-currency`) through the real GUI. `account_currency_test.dart`: changes the seeded Investments group from USD to JPY via the real "Edit group" dialog; 2/2 clean runs.
 
 ## 5. Capability group: identity and backup
 
