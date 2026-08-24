@@ -35,7 +35,7 @@
 
 ## 7. Capability group: data import
 
-- [ ] 7.1 Add a scenario importing a real CSV file through the platform file picker and asserting entries land correctly (`csv-transaction-import`).
+- [x] 7.1 Add a scenario importing a real CSV file through the platform file picker and asserting entries land correctly (`csv-transaction-import`). `csv_import_test.dart`: discovered `FilePickerPlatform.instance` is a swappable singleton exactly like `UrlLauncherPlatform` (change `acceptance-investment-research`'s pattern), so the native picker is faked with a canned `PlatformFile` rather than left infeasible per design.md's original deferral. Maps columns, categorizes both rows, confirms import, and asserts them in Register; 2/2 clean runs.
 - [ ] 7.2 Add a scenario importing a real OFX file the same way (`ofx-transaction-import`).
 
 ## 8. Capability group: organization features
