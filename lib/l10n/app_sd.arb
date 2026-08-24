@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (ECB شرحون)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (روزاني قيمتون)",
-  "providerYahooFinance": "Yahoo Finance (چارٽ API)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -109,6 +109,8 @@
   "systemCategoryPhone": "فون",
   "systemCategoryHealth": "صحت",
   "systemCategoryOtherExpense": "ٻيو خرچ",
+  "systemDescriptionCsvImport": "CSV درآمد",
+  "systemDescriptionOfxImport": "OFX درآمد",
   "homeThisMonth": "هن مهيني",
   "homeMoneyInTransit": "منتقلي ۾ پئسا",
   "homeWhatYouHaveMinusWhatYouOwe": "جيڪو توهان وٽ آهي گھٽ جيڪو توهان تي قرض آهي",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "چونڊيل فائل خالي آهي.",
   "errorCsvUnreadable": "هن فائل کي CSV طور پڙهي نه سگهياسين.",
   "errorCsvNoRows": "چونڊيل فائل ۾ ڪا به قطار ناهي.",
+  "skipMissingDate": "تاريخ غائب آهي.",
+  "skipUnparseableDate": "\"{pattern}\" نموني سان تاريخ \"{raw}\" پارس ٿي نه سگهي.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "ٽرانزيڪشن جي تاريخ غائب يا غلط آهي.",
+  "skipOfxUnparseableDate": "ٽرانزيڪشن جي تاريخ \"{raw}\" پارس ٿي نه سگهي.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "رقم غائب آهي.",
+  "skipUnparseableAmount": "رقم \"{raw}\" پارس ٿي نه سگهي.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "رقم صفر آهي.",
+  "skipUnparseableDebitCreditAmount": "ڊيبٽ يا ڪريڊٽ رقم پارس ٿي نه سگهي.",
+  "skipBothDebitAndCreditNonZero": "ڊيبٽ ۽ ڪريڊٽ ٻنهي ڪالمن ۾ رقم آهي.",
+  "skipBothDebitAndCreditZero": "ڊيبٽ ۽ ڪريڊٽ ٻئي ڪالم صفر آهن.",
   "errorBackupCreateFailed": "بيڪ اپ ٺاهي نه سگهياسين: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "سمارا اڪائونٽنگ اڻلاڪ ڪريو",
+  "unlockBiometricReason": "سمارا کاتو اڻلاڪ ڪريو",
   "searchLabel": "ڳوليو",
   "openingBalance": "شروعاتي بيلنس",
   "transferToName": "منتقلي: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "زمري جا قاعدا",
   "possibleDuplicate": "ممڪن نقل",
-  "unknownCategory": "اڻڄاتل زمرو"
+  "unknownCategory": "اڻڄاتل زمرو",
+  "researchPromptIntro": "گھرو سرمائيڪار لاءِ هي عوامي طور تي درج ٿيل اوزار جي تحقيق ڪريو. جاري ڪندڙ کي سڃاڻو، جيڪڏهن معلوم هجي ته تاريخن سان گڏ تازين خبرن جو خلاصو ڏيو، ۽ گھٽتائيءَ جا خطرا ۽ واڌاري جا سبب بيان ڪريو. حقيقتن کي اندازن کان الڳ رکو. خريد، وڪرو يا رکڻ جي صلاح نه ڏيو. هي مالي صلاح ناهي.",
+  "researchPromptNameLine": "نالو: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "ٽڪر: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "ٽڪر: (فراهم نه ٿيل)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (فراهم نه ٿيل)"
 }

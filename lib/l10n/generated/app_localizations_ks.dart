@@ -346,6 +346,12 @@ class AppLocalizationsKs extends AppLocalizations {
   String get systemCategoryOtherExpense => 'بیٕ خرچ';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV درآمد';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX درآمد';
+
+  @override
   String get homeThisMonth => 'یِم رؠتھ';
 
   @override
@@ -1382,6 +1388,45 @@ class AppLocalizationsKs extends AppLocalizations {
   String get errorCsvNoRows => 'ژارٕمژٕ فایلہٕ منز چھہ نہٕ قطاریں.';
 
   @override
+  String get skipMissingDate => 'تاریخ چھُنہ موجود۔';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" پیٹرن سیتؠ تاریخ \"$raw\" پارس کرنس منٛز ناکام۔';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'ٹرانزیکشن تاریخ چھُنہ موجود یا غلط چھُ۔';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'ٹرانزیکشن تاریخ \"$raw\" پارس کرنس منٛز ناکام۔';
+  }
+
+  @override
+  String get skipMissingAmount => 'رقم چھُنہ موجود۔';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'رقم \"$raw\" پارس کرنس منٛز ناکام۔';
+  }
+
+  @override
+  String get skipZeroAmount => 'رقم چھِ صفر۔';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ڈیبٹ یا کریڈٹ رقم پارس کرنس منٛز ناکام۔';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'ڈیبٹ تہٕ کریڈٹ دۏشہٕ کالمن منٛز رقم چھِ۔';
+
+  @override
+  String get skipBothDebitAndCreditZero => 'ڈیبٹ تہٕ کریڈٹ دۏشہٕ کالم چھِ صفر۔';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'بیک اپ تیار کرنہٕ ہیکان نہٕ: $detail';
   }
@@ -1756,4 +1801,29 @@ class AppLocalizationsKs extends AppLocalizations {
 
   @override
   String get unknownCategory => 'نامعلوم زمرٕ';
+
+  @override
+  String get researchPromptIntro =>
+      'گھریلی سرمایہ کار خٲطرٕ یہ عوامی طور پؠ درج شُدہ آلہٕ تحقیق کریو۔ جاری کُنندہٕ شناخت کریو، اگر معلوم چھُ تہ تاریخن سیتؠ تازٕ خبرن ہنٛز خلاصہٕ دیو، تہٕ نشیبی خطرہٕ تہٕ ترقی ہنٛدِ عاملن بیان کریو۔ حقیقتن اندازن کھۄتہٕ الگ رکھیو۔ خرید، فروخت یا رکھنہٕ ہنٛز صلاح مہ دِیو۔ یہ مالی صلاح نہٕ چھِ۔';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'ناو: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'ٹکر: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'ٹکر: (فراہم نہٕ کرنہٕ آمت)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (فراہم نہٕ کرنہٕ آمت)';
 }

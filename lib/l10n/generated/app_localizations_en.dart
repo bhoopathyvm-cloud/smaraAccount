@@ -345,6 +345,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Other Expense';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV import';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX import';
+
+  @override
   String get homeThisMonth => 'THIS MONTH';
 
   @override
@@ -1391,6 +1397,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorCsvNoRows => 'The selected file has no rows.';
 
   @override
+  String get skipMissingDate => 'Missing date.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Could not parse date \"$raw\" with pattern \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Missing or invalid transaction date.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Could not parse transaction date \"$raw\".';
+  }
+
+  @override
+  String get skipMissingAmount => 'Missing amount.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Could not parse amount \"$raw\".';
+  }
+
+  @override
+  String get skipZeroAmount => 'Amount is zero.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Could not parse the debit or credit amount.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Both debit and credit columns have an amount.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Both debit and credit columns are zero.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Could not create the backup: $detail';
   }
@@ -1767,4 +1813,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Unknown category';
+
+  @override
+  String get researchPromptIntro =>
+      'Research this publicly listed instrument for a household investor. Identify the issuer, summarize recent news with dates if known, and outline downside risks and upside drivers. Separate facts from speculation. Do not give buy, sell, or hold advice. This is not financial advice.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Name: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Ticker: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Ticker: (none provided)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (none provided)';
 }

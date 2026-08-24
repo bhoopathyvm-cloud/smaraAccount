@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../view_models/first_week_setup_view_model.dart';
 
@@ -64,9 +65,9 @@ class _FirstWeekSetupViewState extends State<FirstWeekSetupView> {
                   onChanged: widget.viewModel.setHasCreditCard,
                 ),
                 if (widget.viewModel.hasCreditCard)
-                  TextField(
+                  AppTextField(
                     controller: _creditCardController,
-                    decoration: InputDecoration(labelText: l10n.cardName),
+                    labelText: l10n.cardName,
                     onChanged: widget.viewModel.setCreditCardName,
                   ),
                 const SizedBox(height: AppSpacing.large),
@@ -77,17 +78,15 @@ class _FirstWeekSetupViewState extends State<FirstWeekSetupView> {
                   onChanged: widget.viewModel.setHasCashAccount,
                 ),
                 if (widget.viewModel.hasCashAccount)
-                  TextField(
+                  AppTextField(
                     controller: _cashAccountController,
-                    decoration: InputDecoration(
-                      labelText: l10n.cashAccountName,
-                    ),
+                    labelText: l10n.cashAccountName,
                     onChanged: widget.viewModel.setCashAccountName,
                   ),
-                if (widget.viewModel.errorMessage != null) ...[
+                if (widget.viewModel.errorMessageFor(l10n) != null) ...[
                   const SizedBox(height: AppSpacing.large),
                   Text(
-                    widget.viewModel.errorMessage!,
+                    widget.viewModel.errorMessageFor(l10n)!,
                     style: AppTypography.body.copyWith(color: AppColors.signal),
                   ),
                 ],

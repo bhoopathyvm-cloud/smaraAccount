@@ -347,6 +347,12 @@ class AppLocalizationsMs extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Perbelanjaan Lain';
 
   @override
+  String get systemDescriptionCsvImport => 'Import CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'Import OFX';
+
+  @override
   String get homeThisMonth => 'BULAN INI';
 
   @override
@@ -1399,6 +1405,46 @@ class AppLocalizationsMs extends AppLocalizations {
   String get errorCsvNoRows => 'Fail yang dipilih tiada baris.';
 
   @override
+  String get skipMissingDate => 'Tarikh tiada.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Tidak dapat menghurai tarikh \"$raw\" dengan corak \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Tarikh transaksi tiada atau tidak sah.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Tidak dapat menghurai tarikh transaksi \"$raw\".';
+  }
+
+  @override
+  String get skipMissingAmount => 'Jumlah tiada.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Tidak dapat menghurai jumlah \"$raw\".';
+  }
+
+  @override
+  String get skipZeroAmount => 'Jumlah adalah sifar.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Tidak dapat menghurai jumlah debit atau kredit.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Kedua-dua lajur debit dan kredit mempunyai jumlah.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Kedua-dua lajur debit dan kredit adalah sifar.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Tidak dapat mencipta sandaran: $detail';
   }
@@ -1774,4 +1820,29 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Kategori tidak diketahui';
+
+  @override
+  String get researchPromptIntro =>
+      'Selidik instrumen tersenarai secara awam ini untuk pelabur isi rumah. Kenal pasti penerbit, ringkaskan berita terkini berserta tarikh jika diketahui, dan gariskan risiko penurunan serta pendorong kenaikan. Pisahkan fakta daripada spekulasi. Jangan berikan cadangan beli, jual, atau pegang. Ini bukan nasihat kewangan.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Nama: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Ticker: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Ticker: (tidak disediakan)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (tidak disediakan)';
 }

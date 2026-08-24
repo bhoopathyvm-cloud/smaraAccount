@@ -6,6 +6,7 @@ import 'package:smara_accounting/domain/models/account_group.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
 import 'package:smara_accounting/domain/models/instrument_holding.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
+import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/features/holdings/view_models/holdings_view_model.dart';
 import 'package:smara_accounting/ui/features/holdings/views/holdings_view.dart';
 
@@ -106,6 +107,47 @@ void main() {
     );
     viewModel.dispose();
   });
+
+  testWidgets(
+    'in Tamil, the tap-to-research hint and the research prompt itself '
+    'follow the active locale',
+    (tester) async {
+      Uri? launched;
+      final viewModel = HoldingsViewModel(
+        ledgerRepository: ledger,
+        settingsRepository: settings,
+        accountId: 'inv-1',
+        launchUrlFn: (uri) async {
+          launched = uri;
+          return true;
+        },
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('ta'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: supportedAppLocales,
+          home: HoldingsView(viewModel: viewModel),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      final ta = lookupAppLocalizations(const Locale('ta'));
+      expect(find.text(ta.holdingsTapNameToResearch), findsOneWidget);
+
+      await tester.tap(find.text('Apple Inc'));
+      await tester.pump();
+      await tester.pump();
+
+      expect(launched, isNotNull);
+      final prompt = launched!.queryParameters['q']!;
+      expect(prompt, contains('Apple Inc'));
+      expect(prompt, contains(ta.researchPromptIntro));
+      viewModel.dispose();
+    },
+  );
 
   testWidgets(
     'dividend dialog only offers instruments this account has held, not every global instrument',

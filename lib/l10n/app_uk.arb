@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (курси ЄЦБ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (щоденні котирування)",
-  "providerYahooFinance": "Yahoo Finance (API графіків)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Телефон",
   "systemCategoryHealth": "Здоров''я",
   "systemCategoryOtherExpense": "Інші витрати",
+  "systemDescriptionCsvImport": "Імпорт CSV",
+  "systemDescriptionOfxImport": "Імпорт OFX",
   "homeThisMonth": "ЦЕЙ МІСЯЦЬ",
   "homeMoneyInTransit": "КОШТИ В ДОРОЗІ",
   "homeWhatYouHaveMinusWhatYouOwe": "ВАШІ КОШТИ МІНУС ВАШІ БОРГИ",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Ваша відновлювальна фраза",
   "recoveryPhraseConfirmTitle": "Підтвердьте свою фразу",
-  "recoveryPhraseBlurb": "Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. У Smara обліку немає сервера, і він не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.",
+  "recoveryPhraseBlurb": "Ці 24 слова — єдиний спосіб відновити історію ваших операцій, якщо цей пристрій буде втрачено, скинуто або замінено. Smara Accounting не має сервера і не може відновити їх за вас.\n\nЯкщо ви втратите цей пристрій і цю фразу одночасно, кожна записана вами операція стане назавжди неможливою для перевірки.",
   "recoveryPhraseWriteDown": "Запишіть ці слова по порядку та зберігайте їх у безпечному місці окремо від цього пристрою.",
   "iveSavedRecoveryPhrase": "Я зберіг(ла) свою відновлювальну фразу",
   "confirmPhraseBlurb": "Введіть запитувані слова з фрази, яку ви щойно зберегли.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Вибраний файл порожній.",
   "errorCsvUnreadable": "Не вдалося прочитати цей файл як CSV.",
   "errorCsvNoRows": "У вибраному файлі немає рядків.",
+  "skipMissingDate": "Дата відсутня.",
+  "skipUnparseableDate": "Не вдалося розпізнати дату \"{raw}\" за шаблоном \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Дата операції відсутня або недійсна.",
+  "skipOfxUnparseableDate": "Не вдалося розпізнати дату операції \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Сума відсутня.",
+  "skipUnparseableAmount": "Не вдалося розпізнати суму \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Сума дорівнює нулю.",
+  "skipUnparseableDebitCreditAmount": "Не вдалося розпізнати суму дебету або кредиту.",
+  "skipBothDebitAndCreditNonZero": "У стовпцях дебету та кредиту вказано суму в обох.",
+  "skipBothDebitAndCreditZero": "Стовпці дебету та кредиту обидва дорівнюють нулю.",
   "errorBackupCreateFailed": "Не вдалося створити резервну копію: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Розблокувати Smara облік",
+  "unlockBiometricReason": "Розблокувати Smara Account",
   "searchLabel": "Пошук",
   "openingBalance": "Початковий баланс",
   "transferToName": "Переказ: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Правила категорій",
   "possibleDuplicate": "можливий дублікат",
-  "unknownCategory": "Невідома категорія"
+  "unknownCategory": "Невідома категорія",
+  "researchPromptIntro": "Дослідіть цей публічно котирований інструмент для приватного інвестора. Визначте емітента, підсумуйте останні новини з датами, якщо вони відомі, і окресліть ризики зниження та фактори зростання. Відокремлюйте факти від припущень. Не давайте рекомендацію купувати, продавати чи утримувати. Це не є фінансовою консультацією.",
+  "researchPromptNameLine": "Назва: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Тікер: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Тікер: (не вказано)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (не вказано)"
 }

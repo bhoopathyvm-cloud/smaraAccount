@@ -10,8 +10,10 @@ import '../../../../domain/models/transaction_direction.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/capture_action_sheet.dart';
+import '../../../core/date_formatter.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
 import '../../../core/money_formatter.dart';
@@ -287,11 +289,9 @@ class RegisterView extends StatelessWidget {
                     ),
                   if (isCrossCurrency)
                     const SizedBox(height: AppSpacing.medium),
-                  TextField(
+                  AppTextField(
                     controller: descriptionController,
-                    decoration: InputDecoration(
-                      labelText: l10nOf(context).descriptionOptional,
-                    ),
+                    labelText: l10nOf(context).descriptionOptional,
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   TextButton(
@@ -307,9 +307,8 @@ class RegisterView extends StatelessWidget {
                       }
                     },
                     child: Text(
-                      '${l10nOf(context).dateLabel}: ${transactionDate.year}-'
-                      '${transactionDate.month.toString().padLeft(2, '0')}-'
-                      '${transactionDate.day.toString().padLeft(2, '0')}',
+                      '${l10nOf(context).dateLabel}: '
+                      '${formatLocalDate(context, transactionDate)}',
                     ),
                   ),
                 ],
@@ -397,10 +396,6 @@ class _RegisterSearchBarState extends State<_RegisterSearchBar> {
     }
   }
 
-  String _formatDate(DateTime date) =>
-      '${date.year}-${date.month.toString().padLeft(2, '0')}-'
-      '${date.day.toString().padLeft(2, '0')}';
-
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -468,8 +463,8 @@ class _RegisterSearchBarState extends State<_RegisterSearchBar> {
                     avatar: const Icon(TablerIcons.calendar, size: 16),
                     label: Text(
                       hasDateRange
-                          ? '${_formatDate(viewModel.filterStartDate!)} – '
-                                '${_formatDate(viewModel.filterEndDate!)}'
+                          ? '${formatLocalDate(context, viewModel.filterStartDate!)} – '
+                                '${formatLocalDate(context, viewModel.filterEndDate!)}'
                           : l10n.dateRangeLabel,
                     ),
                     onPressed: () => _pickDateRange(context),

@@ -5,6 +5,7 @@ import '../../../../domain/models/payee.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../view_models/payee_management_view_model.dart';
@@ -36,10 +37,10 @@ class PayeeManagementView extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n.addPayee),
-        content: TextField(
+        content: AppTextField(
           controller: nameController,
           autofocus: true,
-          decoration: InputDecoration(labelText: l10n.name),
+          labelText: l10n.name,
         ),
         actions: [
           TextButton(
@@ -66,7 +67,7 @@ class PayeeManagementView extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n.renamePayee),
-        content: TextField(controller: controller, autofocus: true),
+        content: AppTextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

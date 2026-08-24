@@ -109,6 +109,8 @@
   "systemCategoryPhone": "通信費",
   "systemCategoryHealth": "医療費",
   "systemCategoryOtherExpense": "その他の支出",
+  "systemDescriptionCsvImport": "CSVインポート",
+  "systemDescriptionOfxImport": "OFXインポート",
   "homeThisMonth": "今月",
   "homeMoneyInTransit": "送金中の資金",
   "homeWhatYouHaveMinusWhatYouOwe": "資産から負債を引いた額",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "選択されたファイルは空です。",
   "errorCsvUnreadable": "このファイルをCSVとして読み取れませんでした。",
   "errorCsvNoRows": "選択されたファイルに行がありません。",
+  "skipMissingDate": "日付がありません。",
+  "skipUnparseableDate": "パターン「{pattern}」で日付「{raw}」を解析できませんでした。",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "取引日がないか、無効です。",
+  "skipOfxUnparseableDate": "取引日「{raw}」を解析できませんでした。",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "金額がありません。",
+  "skipUnparseableAmount": "金額「{raw}」を解析できませんでした。",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "金額がゼロです。",
+  "skipUnparseableDebitCreditAmount": "借方または貸方の金額を解析できませんでした。",
+  "skipBothDebitAndCreditNonZero": "借方列と貸方列の両方に金額があります。",
+  "skipBothDebitAndCreditZero": "借方列と貸方列が両方ともゼロです。",
   "errorBackupCreateFailed": "バックアップを作成できませんでした: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "カテゴリルール",
   "possibleDuplicate": "重複の可能性",
-  "unknownCategory": "不明なカテゴリ"
+  "unknownCategory": "不明なカテゴリ",
+  "researchPromptIntro": "家庭の投資家のために、この公開上場銘柄を調べてください。発行体を特定し、判明していれば日付付きで最近のニュースを要約し、下落リスクと上昇要因を整理してください。事実と推測を区別してください。買い、売り、保有の推奨はしないでください。これは投資助言ではありません。",
+  "researchPromptNameLine": "名称: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "ティッカー: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "ティッカー: (未指定)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (未指定)"
 }

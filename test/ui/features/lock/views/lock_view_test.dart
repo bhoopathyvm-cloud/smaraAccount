@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:smara_accounting/l10n/locale_controller.dart';
 import 'package:smara_accounting/ui/features/lock/view_models/lock_view_model.dart';
 import 'package:smara_accounting/ui/features/lock/views/lock_view.dart';
 
@@ -11,12 +12,14 @@ void main() {
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockSettingsRepository settingsRepository;
   late MockAppLockController lockController;
+  late LocaleController localeController;
 
   setUp(() {
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     settingsRepository = MockSettingsRepository();
     lockController = MockAppLockController();
+    localeController = LocaleController(settingsRepository: settingsRepository);
     when(
       settingsRepository.isAppLockBiometricEnabled(),
     ).thenAnswer((_) async => false);
@@ -28,6 +31,7 @@ void main() {
       biometricAuthenticator: biometricAuthenticator,
       settingsRepository: settingsRepository,
       lockController: lockController,
+      localeController: localeController,
     );
     addTearDown(viewModel.dispose);
     await tester.pumpWidget(MaterialApp(home: LockView(viewModel: viewModel)));

@@ -282,7 +282,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get providerStooq => 'Stooq (ราคารายวัน)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (API กราฟ)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -343,6 +343,12 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'ค่าใช้จ่ายอื่น';
+
+  @override
+  String get systemDescriptionCsvImport => 'นำเข้า CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'นำเข้า OFX';
 
   @override
   String get homeThisMonth => 'เดือนนี้';
@@ -782,7 +788,7 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      '24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน สมุดบัญชี Smara ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร';
+      '24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน Smara Accounting ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1380,6 +1386,45 @@ class AppLocalizationsTh extends AppLocalizations {
   String get errorCsvNoRows => 'ไฟล์ที่เลือกไม่มีข้อมูล';
 
   @override
+  String get skipMissingDate => 'ไม่มีวันที่';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'ไม่สามารถแยกวิเคราะห์วันที่ \"$raw\" ด้วยรูปแบบ \"$pattern\" ได้';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => 'ไม่มีวันที่ทำรายการหรือไม่ถูกต้อง';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'ไม่สามารถแยกวิเคราะห์วันที่ทำรายการ \"$raw\" ได้';
+  }
+
+  @override
+  String get skipMissingAmount => 'ไม่มีจำนวนเงิน';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'ไม่สามารถแยกวิเคราะห์จำนวนเงิน \"$raw\" ได้';
+  }
+
+  @override
+  String get skipZeroAmount => 'จำนวนเงินเป็นศูนย์';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ไม่สามารถแยกวิเคราะห์จำนวนเงินฝั่งเดบิตหรือเครดิตได้';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'คอลัมน์เดบิตและเครดิตมีจำนวนเงินทั้งคู่';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'คอลัมน์เดบิตและเครดิตเป็นศูนย์ทั้งคู่';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'ไม่สามารถสร้างข้อมูลสำรองได้: $detail';
   }
@@ -1523,7 +1568,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'ปลดล็อกสมุดบัญชี Smara';
+  String get unlockBiometricReason => 'ปลดล็อกบัญชี Smara';
 
   @override
   String get searchLabel => 'ค้นหา';
@@ -1752,4 +1797,30 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get unknownCategory => 'หมวดหมู่ที่ไม่ทราบ';
+
+  @override
+  String get researchPromptIntro =>
+      'ค้นคว้าตราสารที่จดทะเบียนในตลาดหลักทรัพย์นี้สำหรับนักลงทุนรายย่อยในครัวเรือน ระบุผู้ออกตราสาร สรุปข่าวล่าสุดพร้อมวันที่หากทราบ และสรุปความเสี่ยงด้านลบและปัจจัยขับเคลื่อนด้านบวก แยกข้อเท็จจริงออกจากการคาดเดา อย่าให้คำแนะนำซื้อ ขาย หรือถือครอง นี่ไม่ใช่คำแนะนำทางการเงิน';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'ชื่อ: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'สัญลักษณ์หลักทรัพย์: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided =>
+      'สัญลักษณ์หลักทรัพย์: (ไม่ได้ระบุ)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (ไม่ได้ระบุ)';
 }

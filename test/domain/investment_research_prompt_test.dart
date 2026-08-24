@@ -1,9 +1,12 @@
+import 'package:flutter/widgets.dart';
 import 'package:smara_accounting/domain/investment_research_prompt.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
+import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:test/test.dart';
 
 void main() {
+  final en = lookupAppLocalizations(const Locale('en'));
   const apple = Instrument(
     id: 'i1',
     name: 'Apple Inc',
@@ -14,7 +17,7 @@ void main() {
   );
 
   test('prompt includes identifiers and research asks, not advice', () {
-    final prompt = buildInvestmentResearchPrompt(apple);
+    final prompt = buildInvestmentResearchPrompt(en, apple);
     expect(prompt, contains('Apple Inc'));
     expect(prompt, contains('AAPL'));
     expect(prompt, contains('US0378331005'));
@@ -25,7 +28,7 @@ void main() {
   });
 
   test('prompt omits quantity, cost, and account name', () {
-    final prompt = buildInvestmentResearchPrompt(apple);
+    final prompt = buildInvestmentResearchPrompt(en, apple);
     expect(prompt.toLowerCase(), isNot(contains('quantity')));
     expect(prompt.toLowerCase(), isNot(contains('cost')));
     expect(prompt.toLowerCase(), isNot(contains('brokerage')));
@@ -33,10 +36,19 @@ void main() {
   });
 
   test('chatgpt query url encodes the prompt', () {
-    final prompt = buildInvestmentResearchPrompt(apple);
+    final prompt = buildInvestmentResearchPrompt(en, apple);
     final uri = researchQueryUri(ResearchTool.chatGpt, prompt);
     expect(uri, isNotNull);
     expect(uri!.host, equals('chatgpt.com'));
     expect(uri.queryParameters['q'], equals(prompt));
+  });
+
+  test('a non-English locale produces the prompt in that language', () {
+    final ta = lookupAppLocalizations(const Locale('ta'));
+    final prompt = buildInvestmentResearchPrompt(ta, apple);
+    expect(prompt, contains('Apple Inc'));
+    expect(prompt, contains('AAPL'));
+    expect(prompt, contains(ta.researchPromptIntro));
+    expect(prompt, isNot(contains(en.researchPromptIntro)));
   });
 }

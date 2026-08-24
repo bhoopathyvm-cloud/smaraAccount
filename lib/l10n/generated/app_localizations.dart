@@ -834,6 +834,18 @@ abstract class AppLocalizations {
   /// **'Other Expense'**
   String get systemCategoryOtherExpense;
 
+  /// No description provided for @systemDescriptionCsvImport.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV import'**
+  String get systemDescriptionCsvImport;
+
+  /// No description provided for @systemDescriptionOfxImport.
+  ///
+  /// In en, this message translates to:
+  /// **'OFX import'**
+  String get systemDescriptionOfxImport;
+
   /// No description provided for @homeThisMonth.
   ///
   /// In en, this message translates to:
@@ -2652,6 +2664,66 @@ abstract class AppLocalizations {
   /// **'The selected file has no rows.'**
   String get errorCsvNoRows;
 
+  /// No description provided for @skipMissingDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing date.'**
+  String get skipMissingDate;
+
+  /// No description provided for @skipUnparseableDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not parse date \"{raw}\" with pattern \"{pattern}\".'**
+  String skipUnparseableDate(String raw, String pattern);
+
+  /// No description provided for @skipOfxMissingOrInvalidDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing or invalid transaction date.'**
+  String get skipOfxMissingOrInvalidDate;
+
+  /// No description provided for @skipOfxUnparseableDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not parse transaction date \"{raw}\".'**
+  String skipOfxUnparseableDate(String raw);
+
+  /// No description provided for @skipMissingAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing amount.'**
+  String get skipMissingAmount;
+
+  /// No description provided for @skipUnparseableAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not parse amount \"{raw}\".'**
+  String skipUnparseableAmount(String raw);
+
+  /// No description provided for @skipZeroAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount is zero.'**
+  String get skipZeroAmount;
+
+  /// No description provided for @skipUnparseableDebitCreditAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not parse the debit or credit amount.'**
+  String get skipUnparseableDebitCreditAmount;
+
+  /// No description provided for @skipBothDebitAndCreditNonZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Both debit and credit columns have an amount.'**
+  String get skipBothDebitAndCreditNonZero;
+
+  /// No description provided for @skipBothDebitAndCreditZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Both debit and credit columns are zero.'**
+  String get skipBothDebitAndCreditZero;
+
   /// No description provided for @errorBackupCreateFailed.
   ///
   /// In en, this message translates to:
@@ -3233,6 +3305,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown category'**
   String get unknownCategory;
+
+  /// No description provided for @researchPromptIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Research this publicly listed instrument for a household investor. Identify the issuer, summarize recent news with dates if known, and outline downside risks and upside drivers. Separate facts from speculation. Do not give buy, sell, or hold advice. This is not financial advice.'**
+  String get researchPromptIntro;
+
+  /// No description provided for @researchPromptNameLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Name: {name}'**
+  String researchPromptNameLine(String name);
+
+  /// No description provided for @researchPromptTickerLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticker: {ticker}'**
+  String researchPromptTickerLine(String ticker);
+
+  /// No description provided for @researchPromptTickerNoneProvided.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticker: (none provided)'**
+  String get researchPromptTickerNoneProvided;
+
+  /// No description provided for @researchPromptIsinLine.
+  ///
+  /// In en, this message translates to:
+  /// **'ISIN: {isin}'**
+  String researchPromptIsinLine(String isin);
+
+  /// No description provided for @researchPromptIsinNoneProvided.
+  ///
+  /// In en, this message translates to:
+  /// **'ISIN: (none provided)'**
+  String get researchPromptIsinNoneProvided;
 }
 
 class _AppLocalizationsDelegate

@@ -283,7 +283,7 @@ class AppLocalizationsSd extends AppLocalizations {
   String get providerStooq => 'Stooq (روزاني قيمتون)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (چارٽ API)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -344,6 +344,12 @@ class AppLocalizationsSd extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'ٻيو خرچ';
+
+  @override
+  String get systemDescriptionCsvImport => 'CSV درآمد';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX درآمد';
 
   @override
   String get homeThisMonth => 'هن مهيني';
@@ -1387,6 +1393,45 @@ class AppLocalizationsSd extends AppLocalizations {
   String get errorCsvNoRows => 'چونڊيل فائل ۾ ڪا به قطار ناهي.';
 
   @override
+  String get skipMissingDate => 'تاريخ غائب آهي.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" نموني سان تاريخ \"$raw\" پارس ٿي نه سگهي.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'ٽرانزيڪشن جي تاريخ غائب يا غلط آهي.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'ٽرانزيڪشن جي تاريخ \"$raw\" پارس ٿي نه سگهي.';
+  }
+
+  @override
+  String get skipMissingAmount => 'رقم غائب آهي.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'رقم \"$raw\" پارس ٿي نه سگهي.';
+  }
+
+  @override
+  String get skipZeroAmount => 'رقم صفر آهي.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ڊيبٽ يا ڪريڊٽ رقم پارس ٿي نه سگهي.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'ڊيبٽ ۽ ڪريڊٽ ٻنهي ڪالمن ۾ رقم آهي.';
+
+  @override
+  String get skipBothDebitAndCreditZero => 'ڊيبٽ ۽ ڪريڊٽ ٻئي ڪالم صفر آهن.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'بيڪ اپ ٺاهي نه سگهياسين: $detail';
   }
@@ -1532,7 +1577,7 @@ class AppLocalizationsSd extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'سمارا اڪائونٽنگ اڻلاڪ ڪريو';
+  String get unlockBiometricReason => 'سمارا کاتو اڻلاڪ ڪريو';
 
   @override
   String get searchLabel => 'ڳوليو';
@@ -1761,4 +1806,29 @@ class AppLocalizationsSd extends AppLocalizations {
 
   @override
   String get unknownCategory => 'اڻڄاتل زمرو';
+
+  @override
+  String get researchPromptIntro =>
+      'گھرو سرمائيڪار لاءِ هي عوامي طور تي درج ٿيل اوزار جي تحقيق ڪريو. جاري ڪندڙ کي سڃاڻو، جيڪڏهن معلوم هجي ته تاريخن سان گڏ تازين خبرن جو خلاصو ڏيو، ۽ گھٽتائيءَ جا خطرا ۽ واڌاري جا سبب بيان ڪريو. حقيقتن کي اندازن کان الڳ رکو. خريد، وڪرو يا رکڻ جي صلاح نه ڏيو. هي مالي صلاح ناهي.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'نالو: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'ٽڪر: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'ٽڪر: (فراهم نه ٿيل)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (فراهم نه ٿيل)';
 }

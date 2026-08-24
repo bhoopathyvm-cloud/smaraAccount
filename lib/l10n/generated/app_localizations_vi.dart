@@ -346,6 +346,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Chi phí khác';
 
   @override
+  String get systemDescriptionCsvImport => 'Nhập CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'Nhập OFX';
+
+  @override
   String get homeThisMonth => 'THÁNG NÀY';
 
   @override
@@ -790,7 +796,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      '24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Sổ kế toán Smara không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.';
+      '24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Smara Accounting không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1401,6 +1407,46 @@ class AppLocalizationsVi extends AppLocalizations {
   String get errorCsvNoRows => 'Tệp đã chọn không có hàng dữ liệu nào.';
 
   @override
+  String get skipMissingDate => 'Thiếu ngày.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Không thể phân tích ngày \"$raw\" với mẫu \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Thiếu ngày giao dịch hoặc ngày không hợp lệ.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Không thể phân tích ngày giao dịch \"$raw\".';
+  }
+
+  @override
+  String get skipMissingAmount => 'Thiếu số tiền.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Không thể phân tích số tiền \"$raw\".';
+  }
+
+  @override
+  String get skipZeroAmount => 'Số tiền bằng không.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Không thể phân tích số tiền ghi nợ hoặc ghi có.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Cả cột ghi nợ và ghi có đều có số tiền.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Cả cột ghi nợ và ghi có đều bằng không.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Không thể tạo bản sao lưu: $detail';
   }
@@ -1549,7 +1595,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Mở khóa Sổ kế toán Smara';
+  String get unlockBiometricReason => 'Mở khóa Smara Account';
 
   @override
   String get searchLabel => 'Tìm';
@@ -1778,4 +1824,29 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Danh mục không xác định';
+
+  @override
+  String get researchPromptIntro =>
+      'Nghiên cứu công cụ niêm yết công khai này cho một nhà đầu tư cá nhân. Xác định tổ chức phát hành, tóm tắt tin tức gần đây kèm ngày tháng nếu biết, và nêu ra các rủi ro giảm giá và động lực tăng giá. Tách biệt sự thật khỏi suy đoán. Không đưa ra khuyến nghị mua, bán hoặc giữ. Đây không phải là lời khuyên tài chính.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Tên: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Mã: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Mã: (không cung cấp)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (không cung cấp)';
 }

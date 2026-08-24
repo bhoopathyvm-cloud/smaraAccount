@@ -282,7 +282,7 @@ class AppLocalizationsPa extends AppLocalizations {
   String get providerStooq => 'Stooq (ਰੋਜ਼ਾਨਾ ਕੀਮਤਾਂ)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (ਚਾਰਟ API)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -343,6 +343,12 @@ class AppLocalizationsPa extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'ਹੋਰ ਖਰਚ';
+
+  @override
+  String get systemDescriptionCsvImport => 'CSV ਆਯਾਤ';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX ਆਯਾਤ';
 
   @override
   String get homeThisMonth => 'ਇਸ ਮਹੀਨੇ';
@@ -1025,7 +1031,7 @@ class AppLocalizationsPa extends AppLocalizations {
   String get descriptionColumns => 'ਵੇਰਵਾ ਕਾਲਮ(ਾਂ)';
 
   @override
-  String get referenceIdColumn => 'ਹਵਾਲਾ ID ਕਾਲਮ (ਵਿਕਲਪਿਕ)';
+  String get referenceIdColumn => 'ਹਵਾਲਾ id ਕਾਲਮ (ਵਿਕਲਪਿਕ)';
 
   @override
   String get skippedRows => 'ਛੱਡੀਆਂ ਗਈਆਂ ਰੋਆਂ';
@@ -1390,6 +1396,46 @@ class AppLocalizationsPa extends AppLocalizations {
 
   @override
   String get errorCsvNoRows => 'ਚੁਣੀ ਗਈ ਫਾਈਲ ਵਿੱਚ ਕੋਈ ਰੋ ਨਹੀਂ ਹੈ।';
+
+  @override
+  String get skipMissingDate => 'ਮਿਤੀ ਗੁੰਮ ਹੈ।';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" ਪੈਟਰਨ ਨਾਲ ਮਿਤੀ \"$raw\" ਪਾਰਸ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ।';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'ਲੈਣ-ਦੇਣ ਦੀ ਮਿਤੀ ਗੁੰਮ ਹੈ ਜਾਂ ਅਵੈਧ ਹੈ।';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'ਲੈਣ-ਦੇਣ ਦੀ ਮਿਤੀ \"$raw\" ਪਾਰਸ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ।';
+  }
+
+  @override
+  String get skipMissingAmount => 'ਰਕਮ ਗੁੰਮ ਹੈ।';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'ਰਕਮ \"$raw\" ਪਾਰਸ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ।';
+  }
+
+  @override
+  String get skipZeroAmount => 'ਰਕਮ ਜ਼ੀਰੋ ਹੈ।';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ਡੈਬਿਟ ਜਾਂ ਕ੍ਰੈਡਿਟ ਰਕਮ ਪਾਰਸ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ।';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'ਡੈਬਿਟ ਅਤੇ ਕ੍ਰੈਡਿਟ ਦੋਵੇਂ ਕਾਲਮਾਂ ਵਿੱਚ ਰਕਮ ਹੈ।';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'ਡੈਬਿਟ ਅਤੇ ਕ੍ਰੈਡਿਟ ਦੋਵੇਂ ਕਾਲਮ ਜ਼ੀਰੋ ਹਨ।';
 
   @override
   String errorBackupCreateFailed(String detail) {
@@ -1770,4 +1816,29 @@ class AppLocalizationsPa extends AppLocalizations {
 
   @override
   String get unknownCategory => 'ਅਣਜਾਣ ਸ਼੍ਰੇਣੀ';
+
+  @override
+  String get researchPromptIntro =>
+      'ਇੱਕ ਘਰੇਲੂ ਨਿਵੇਸ਼ਕ ਲਈ ਇਸ ਜਨਤਕ ਤੌਰ ਤੇ ਸੂਚੀਬੱਧ ਯੰਤਰ ਦੀ ਖੋਜ ਕਰੋ। ਜਾਰੀਕਰਤਾ ਦੀ ਪਛਾਣ ਕਰੋ, ਜੇ ਪਤਾ ਹੋਵੇ ਤਾਂ ਮਿਤੀਆਂ ਸਮੇਤ ਤਾਜ਼ਾ ਖ਼ਬਰਾਂ ਦਾ ਸਾਰ ਦਿਓ, ਅਤੇ ਗਿਰਾਵਟ ਦੇ ਖ਼ਤਰੇ ਅਤੇ ਵਾਧੇ ਦੇ ਕਾਰਕਾਂ ਦੀ ਰੂਪਰੇਖਾ ਦਿਓ। ਤੱਥਾਂ ਨੂੰ ਅਟਕਲਾਂ ਤੋਂ ਵੱਖ ਰੱਖੋ। ਖਰੀਦਣ, ਵੇਚਣ ਜਾਂ ਰੱਖਣ ਦੀ ਸਿਫ਼ਾਰਸ਼ ਨਾ ਦਿਓ। ਇਹ ਵਿੱਤੀ ਸਲਾਹ ਨਹੀਂ ਹੈ।';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'ਨਾਮ: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'ਟਿਕਰ: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'ਟਿਕਰ: (ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤਾ)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤਾ)';
 }

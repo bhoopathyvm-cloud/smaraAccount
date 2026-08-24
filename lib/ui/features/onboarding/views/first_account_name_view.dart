@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../view_models/first_account_name_view_model.dart';
 
@@ -26,6 +27,12 @@ class FirstAccountNameView extends StatefulWidget {
 class _FirstAccountNameViewState extends State<FirstAccountNameView> {
   final _controller = TextEditingController();
   var _syncedInitialName = false;
+
+  /// The seeded English name, captured once so a save that leaves the
+  /// editor's localized display text untouched can canonicalize back to
+  /// it (system_name_localizer.dart's `canonicalNameToPersist`) instead of
+  /// persisting the display language into the database.
+  String _originalSeedName = '';
 
   @override
   void dispose() {
@@ -51,7 +58,9 @@ class _FirstAccountNameViewState extends State<FirstAccountNameView> {
           }
           if (!_syncedInitialName) {
             _syncedInitialName = true;
-            _controller.text = widget.viewModel.name;
+            _originalSeedName = widget.viewModel.name;
+            _controller.text = editingNameFor(l10n, widget.viewModel.name);
+            widget.viewModel.setName(_controller.text);
           }
           return SingleChildScrollView(
             padding: const EdgeInsets.all(AppSpacing.large),
@@ -65,9 +74,9 @@ class _FirstAccountNameViewState extends State<FirstAccountNameView> {
                 const SizedBox(height: AppSpacing.small),
                 Text(l10n.firstAccountBlurb, style: AppTypography.metadata),
                 const SizedBox(height: AppSpacing.medium),
-                TextField(
+                AppTextField(
                   controller: _controller,
-                  decoration: InputDecoration(labelText: l10n.accountName),
+                  labelText: l10n.accountName,
                   onChanged: widget.viewModel.setName,
                 ),
                 if (widget.viewModel.errorMessageFor(l10n) != null) ...[
@@ -82,6 +91,13 @@ class _FirstAccountNameViewState extends State<FirstAccountNameView> {
                   onPressed: widget.viewModel.isSubmitting
                       ? null
                       : () async {
+                          widget.viewModel.setName(
+                            canonicalNameToPersist(
+                              l10n,
+                              _originalSeedName,
+                              _controller.text,
+                            ),
+                          );
                           final success = await widget.viewModel.submit();
                           if (success) widget.onFinished();
                         },

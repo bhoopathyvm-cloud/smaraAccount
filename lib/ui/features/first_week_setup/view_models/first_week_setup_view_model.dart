@@ -3,7 +3,9 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/database/tables/account_groups_table.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
+import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/account.dart';
+import '../../../../l10n/l10n.dart';
 
 /// first-week-setup-wizard: optionally add a credit card and/or cash
 /// account, each created via the existing financial-account creation path
@@ -16,7 +18,7 @@ import '../../../../domain/models/account.dart';
 /// the one account's name added a redundant screen with no purpose, so
 /// naming stays solely in the earlier step and this wizard is scoped to
 /// just the optional credit-card and cash-account sub-steps.
-class FirstWeekSetupViewModel extends ChangeNotifier {
+class FirstWeekSetupViewModel extends ChangeNotifier with LocalizedErrorMixin {
   FirstWeekSetupViewModel({
     required LedgerRepository ledgerRepository,
     required SettingsRepository settingsRepository,
@@ -57,33 +59,39 @@ class FirstWeekSetupViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
-
   /// Creates the optional credit card and/or cash account if the user
   /// asked for one and named it, then marks the wizard complete either
   /// way, so it's never shown again (spec: "First-Week Setup Wizard").
   Future<bool> finish() async {
     _isSubmitting = true;
-    _errorMessage = null;
+    clearFailure();
     notifyListeners();
 
-    final cardName = _creditCardName.trim();
-    if (_hasCreditCard && cardName.isNotEmpty) {
-      await _ledgerRepository.createFinancialAccount(
-        name: cardName,
-        type: AccountType.liability,
-        groupId: groupCreditShortTermId,
-      );
-    }
+    try {
+      final cardName = _creditCardName.trim();
+      if (_hasCreditCard && cardName.isNotEmpty) {
+        await _ledgerRepository.createFinancialAccount(
+          name: cardName,
+          type: AccountType.liability,
+          groupId: groupCreditShortTermId,
+        );
+      }
 
-    final cashName = _cashAccountName.trim();
-    if (_hasCashAccount && cashName.isNotEmpty) {
-      await _ledgerRepository.createFinancialAccount(
-        name: cashName,
-        type: AccountType.asset,
-        groupId: groupCashEquivalentsId,
+      final cashName = _cashAccountName.trim();
+      if (_hasCashAccount && cashName.isNotEmpty) {
+        await _ledgerRepository.createFinancialAccount(
+          name: cashName,
+          type: AccountType.asset,
+          groupId: groupCashEquivalentsId,
+        );
+      }
+    } catch (e) {
+      setFailure(
+        const AppFailure(AppErrorCode.validationSaveAccountNameFailed),
       );
+      _isSubmitting = false;
+      notifyListeners();
+      return false;
     }
 
     await _settingsRepository.setFirstWeekSetupCompleted(true);

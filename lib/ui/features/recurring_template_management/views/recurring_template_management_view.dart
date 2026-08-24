@@ -7,6 +7,7 @@ import '../../../../domain/models/transaction_direction.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../../../core/entity_picker_field.dart';
@@ -158,9 +159,9 @@ class RecurringTemplateManagementView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  TextField(
+                  AppTextField(
                     controller: nameController,
-                    decoration: InputDecoration(labelText: l10n.name),
+                    labelText: l10n.name,
                   ),
                   const SizedBox(height: AppSpacing.medium),
                   SegmentedButton<TransactionDirection>(

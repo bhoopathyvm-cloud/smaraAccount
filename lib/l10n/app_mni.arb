@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (ECB ꯔꯦꯠ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ꯅꯨꯃꯤꯠ ꯈꯨꯗꯤꯡꯒꯤ ꯗꯥꯝ)",
-  "providerYahooFinance": "Yahoo Finance (ꯆꯥꯔꯠ API)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -109,6 +109,8 @@
   "systemCategoryPhone": "ꯐꯣꯟ",
   "systemCategoryHealth": "ꯍꯀꯆꯥꯡ",
   "systemCategoryOtherExpense": "ꯑꯇꯣꯞꯄ ꯑꯦꯛꯁꯄꯦꯟꯁ",
+  "systemDescriptionCsvImport": "CSV পুথোকপা",
+  "systemDescriptionOfxImport": "OFX পুথোকপা",
   "homeThisMonth": "ꯃꯁꯤꯒꯤ ꯊꯥ",
   "homeMoneyInTransit": "ꯆꯠꯂꯤꯕ ꯁꯦꯟꯐꯝ",
   "homeWhatYouHaveMinusWhatYouOwe": "ꯅꯍꯥꯛꯀꯤ ꯂꯩꯕꯗꯒꯤ ꯗꯦꯕꯠ ꯂꯧꯊꯣꯀꯄ",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "ꯈꯪꯗꯣꯛꯈꯤꯕ ꯐꯥꯏꯂ ꯑꯁꯤ ꯑꯍꯨ ꯑꯍꯨꯅ ꯂꯩ.",
   "errorCsvUnreadable": "ꯐꯥꯏꯂ ꯑꯁꯤ CSV ꯑꯣꯏꯅ ꯄꯥꯕ ꯉꯝꯗ꯭ꯔꯦ.",
   "errorCsvNoRows": "ꯈꯪꯗꯣꯛꯈꯤꯕ ꯐꯥꯏꯂꯗ ꯔꯣ ꯂꯩꯇꯦ.",
+  "skipMissingDate": "তারিখ লৈতে।",
+  "skipUnparseableDate": "\"{pattern}\" পেটার্নগী মতুং ইন্না তারিখ \"{raw}\" পার্স তৌবা ঙমদে।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "ট্রাঞ্জেক্সনগী তারিখ লৈতে নত্রগা চাংদাবা ওইরি।",
+  "skipOfxUnparseableDate": "ট্রাঞ্জেক্সনগী তারিখ \"{raw}\" পার্স তৌবা ঙমদে।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "অমাউন্ত লৈতে।",
+  "skipUnparseableAmount": "অমাউন্ত \"{raw}\" পার্স তৌবা ঙমদে।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "অমাউন্তনা জিরো ওই।",
+  "skipUnparseableDebitCreditAmount": "ডেবিত নত্রগা ক্রেদিত অমাউন্ত পার্স তৌবা ঙমদে।",
+  "skipBothDebitAndCreditNonZero": "ডেবিত অমসুং ক্রেদিত কলম অনিমকপুম্নমক্তা অমাউন্ত লৈ।",
+  "skipBothDebitAndCreditZero": "ডেবিত অমসুং ক্রেদিত কলম অনিমক জিরো ওই।",
   "errorBackupCreateFailed": "ꯕꯦꯀꯑꯞ ꯁꯦꯝꯒꯠꯄ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "ꯃꯆꯦꯠꯀꯤ ꯑꯌꯥꯝꯕ",
   "possibleDuplicate": "ꯗꯨꯄ꯭ꯂꯤꯀꯦꯠ ꯑꯣꯏꯕ ꯌꯥꯏ",
-  "unknownCategory": "ꯈꯪꯗꯕ ꯉꯝꯗꯕ ꯃꯆꯦꯠ"
+  "unknownCategory": "ꯈꯪꯗꯕ ꯉꯝꯗꯕ ꯃꯆꯦꯠ",
+  "researchPromptIntro": "য়ুমগী ইনবেস্তরকীগীদমক্তা মিওই পুম্নমকনা উবা পাবলিকলি লিস্ত তৌরবা ইন্স্ত্রুমেন্ত অসিদা থীবা তৌবিয়ু। ইস্যুয়র অদু খংদোকপিয়ু, খংলবদি তারিখগা লোয়ননা নৌবা পাউ অদুগী চুমথোক পীবিয়ু, অমসুং কুম্থাবগী ঈশাল অমসুং কাখৎপগী ফংদোকপিবা মরুওইবা মরুওংশিং অদু ফোংদোকপিয়ু। ফজবা অসিবু খন্নবাগী মখাদা লৈতনা থমবিয়ু। লৈবা, য়োনবা, নত্রগা পাইখৎপগী তম্বিবা য়াদে। মসি ফিনান্সগী তম্বিবা ওইদে।",
+  "researchPromptNameLine": "মিং: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "তিকর: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "তিকর: (পীদ্রে)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (পীদ্রে)"
 }

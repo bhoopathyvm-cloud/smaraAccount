@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:smara_accounting/l10n/locale_controller.dart';
 import 'package:smara_accounting/ui/features/lock/view_models/lock_view_model.dart';
 
 import '../../../../mocks.mocks.dart';
@@ -9,12 +10,14 @@ void main() {
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockSettingsRepository settingsRepository;
   late MockAppLockController lockController;
+  late LocaleController localeController;
 
   setUp(() {
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     settingsRepository = MockSettingsRepository();
     lockController = MockAppLockController();
+    localeController = LocaleController(settingsRepository: settingsRepository);
   });
 
   LockViewModel buildViewModel() {
@@ -23,6 +26,7 @@ void main() {
       biometricAuthenticator: biometricAuthenticator,
       settingsRepository: settingsRepository,
       lockController: lockController,
+      localeController: localeController,
     );
   }
 

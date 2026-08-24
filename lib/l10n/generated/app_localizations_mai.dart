@@ -345,6 +345,12 @@ class AppLocalizationsMai extends AppLocalizations {
   String get systemCategoryOtherExpense => 'अन्य व्यय';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV आयात';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX आयात';
+
+  @override
   String get homeThisMonth => 'एहि मास';
 
   @override
@@ -1390,6 +1396,46 @@ class AppLocalizationsMai extends AppLocalizations {
   String get errorCsvNoRows => 'चुनल फाइल मे कोनो पंक्ति नहि अछि।';
 
   @override
+  String get skipMissingDate => 'तारीख नहि अछि।';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" पैटर्न सँ तारीख \"$raw\" पार्स नहि भ सकल।';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'लेनदेनक तारीख नहि अछि वा अमान्य अछि।';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'लेनदेनक तारीख \"$raw\" पार्स नहि भ सकल।';
+  }
+
+  @override
+  String get skipMissingAmount => 'राशि नहि अछि।';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'राशि \"$raw\" पार्स नहि भ सकल।';
+  }
+
+  @override
+  String get skipZeroAmount => 'राशि शून्य अछि।';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'डेबिट वा क्रेडिट राशि पार्स नहि भ सकल।';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'डेबिट आ क्रेडिट दुनू स्तम्भमे राशि अछि।';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'डेबिट आ क्रेडिट दुनू स्तम्भ शून्य अछि।';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'बैकअप नहि बनाओल जा सकल: $detail';
   }
@@ -1601,7 +1647,7 @@ class AppLocalizationsMai extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'चालू रहला पर: ऊपरक राशि एहि खाता सँ काटल गेल कुल रकम अछि; शुल्क ओही मे सँ कटैत अछि।';
+      'ऊपर सँ: उपरका राशि एहि खाता सँ कुल कटौती अछि; शुल्क ओहि सँ निकलैत अछि।';
 
   @override
   String get feeBankBlurb =>
@@ -1730,7 +1776,7 @@ class AppLocalizationsMai extends AppLocalizations {
   String get looksLikeLoss => 'ई एकटा हानि जेहन लगैत अछि';
 
   @override
-  String get looksLikeBreakEven => 'ई न लाभ न हानि जकाँ लगैत अछि';
+  String get looksLikeBreakEven => 'ई ब्रेक-इवन जेहन लगैत अछि';
 
   @override
   String sellableQuantity(String name, String qty) {
@@ -1764,4 +1810,29 @@ class AppLocalizationsMai extends AppLocalizations {
 
   @override
   String get unknownCategory => 'अज्ञात श्रेणी';
+
+  @override
+  String get researchPromptIntro =>
+      'एकटा घरेलू निवेशकक लेल ई सार्वजनिक रूपसँ सूचीबद्ध साधन पर शोध करू। जारीकर्ताक पहिचान करू, जँ ज्ञात होअय त तारीखक संग हालक खबरिक सारांश दिअ, आ गिरावटक जोखिम आ बढ़तिक कारकक रूपरेखा बनाउ। तथ्यकेँ अनुमानसँ अलग राखू। खरीदय, बेचय वा राखय के सलाह नहि दिअ। ई वित्तीय सलाह नहि अछि।';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'नाम: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'टिकर: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'टिकर: (उपलब्ध नहि)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (उपलब्ध नहि)';
 }

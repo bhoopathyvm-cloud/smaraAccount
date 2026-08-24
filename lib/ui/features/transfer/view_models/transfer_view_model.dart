@@ -367,7 +367,7 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
         setFailure(
           AppFailure(
             AppErrorCode.validationTransferSavedFeeFailed,
-            params: {'detail': error.toString()},
+            params: {'innerCode': error.code.name, ...error.params},
           ),
         );
         return false;
@@ -376,7 +376,7 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
         setFailure(
           AppFailure(
             AppErrorCode.validationTransferSavedFeeFailed,
-            params: {'detail': error.toString()},
+            params: {'innerCode': error.code.name, ...error.params},
           ),
         );
         return false;

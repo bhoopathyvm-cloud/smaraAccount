@@ -109,6 +109,8 @@
   "systemCategoryPhone": "फोन",
   "systemCategoryHealth": "हेल्थ",
   "systemCategoryOtherExpense": "गुबुन फोरजाब",
+  "systemDescriptionCsvImport": "CSV हाबफान",
+  "systemDescriptionOfxImport": "OFX हाबफान",
   "homeThisMonth": "बे दान",
   "homeMoneyInTransit": "रां रस्तायाव दं",
   "homeWhatYouHaveMinusWhatYouOwe": "नोंथांनि दंनाय बाद नोंथांनि रिन",
@@ -482,7 +484,7 @@
   "creditColumn": "क्रेडिट कलम",
   "decimalSeparator": "दशमलव चिन (. एबा ,)",
   "descriptionColumns": "बर्नना कलम(फोर)",
-  "referenceIdColumn": "रेफरेंस ID कलम (जरूरी नङा)",
+  "referenceIdColumn": "रेफरेंस id कलम (जरूरी नङा)",
   "skippedRows": "आगजाबबाय रो",
   "parsedTransactionCount": "{count} लेनदेन पार्स खालामबाय",
   "@parsedTransactionCount": {
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "सायखबाय फाइला गुबै दं।",
   "errorCsvUnreadable": "बे फाइलखौ CSV बादि फोरनो हायाखै।",
   "errorCsvNoRows": "सायखबाय फाइलआव रो जायेंगा।",
+  "skipMissingDate": "था'' गैया।",
+  "skipUnparseableDate": "\"{pattern}\" पैटाननि साथे \"{raw}\" थाखौ बुझिनो हायाखै।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "लेनदेननि था'' गैया एबा गोरोबथाव नङा।",
+  "skipOfxUnparseableDate": "लेनदेननि था'' \"{raw}\" बुझिनो हायाखै।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "रां गैया।",
+  "skipUnparseableAmount": "रां \"{raw}\" बुझिनो हायाखै।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "रां शून्य।",
+  "skipUnparseableDebitCreditAmount": "डेबिट एबा क्रेडिट रां बुझिनो हायाखै।",
+  "skipBothDebitAndCreditNonZero": "डेबिट आरो क्रेडिट गोख्रोफोरनो रां दं।",
+  "skipBothDebitAndCreditZero": "डेबिट आरो क्रेडिट गोख्रोफोर शून्य।",
   "errorBackupCreateFailed": "बैकअप सोरजिनो हायाखै: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "थाखो नियमफोर",
   "possibleDuplicate": "जायो हागोन डुप्लिकेट",
-  "unknownCategory": "मोनोबथि थाखो"
+  "unknownCategory": "मोनोबथि थाखो",
+  "researchPromptIntro": "नखरनि निवेशकनि थाखाय बे सार्वजनिकनि लिस्टि जायोगाव इंस्ट्रुमेन्टखौ मोनथिफुंनाय। जारीकर्ताखौ मोनथिफुं, सायखा जाल्ले तारिखसाथे बादि खौरां सारजों बुझाव, आरो गोहोमनि बिजोंखौ आरो सोलोंनि खामानिखौ फोरमायबाय। बुंलायखौ अनुमाननि सोरनिफ्राय बाथ्राबाय। बिजिनि, सोरनिनि एबा दिनथिनायनि सल्लाय होनो हायाखै। बेयो बित्तीय सल्लाय नङा।",
+  "researchPromptNameLine": "मुं: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "टिकार: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "टिकार: (होबाखै)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (होबाखै)"
 }

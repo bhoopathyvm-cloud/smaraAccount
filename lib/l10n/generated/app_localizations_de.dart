@@ -348,6 +348,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Sonstige Ausgaben';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV-Import';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX-Import';
+
+  @override
   String get homeThisMonth => 'DIESER MONAT';
 
   @override
@@ -1415,6 +1421,46 @@ class AppLocalizationsDe extends AppLocalizations {
   String get errorCsvNoRows => 'Die ausgewählte Datei hat keine Zeilen.';
 
   @override
+  String get skipMissingDate => 'Datum fehlt.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Datum \"$raw\" konnte mit dem Muster \"$pattern\" nicht gelesen werden.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Transaktionsdatum fehlt oder ist ungültig.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Transaktionsdatum \"$raw\" konnte nicht gelesen werden.';
+  }
+
+  @override
+  String get skipMissingAmount => 'Betrag fehlt.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Betrag \"$raw\" konnte nicht gelesen werden.';
+  }
+
+  @override
+  String get skipZeroAmount => 'Betrag ist null.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Soll- oder Habenbetrag konnte nicht gelesen werden.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Soll- und Habenspalte enthalten beide einen Betrag.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Soll- und Habenspalte sind beide null.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Die Sicherung konnte nicht erstellt werden: $detail';
   }
@@ -1800,4 +1846,29 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Unbekannte Kategorie';
+
+  @override
+  String get researchPromptIntro =>
+      'Recherchiere dieses börsennotierte Wertpapier für einen privaten Anleger. Nenne den Emittenten, fasse aktuelle Nachrichten mit Datum zusammen, sofern bekannt, und skizziere Abwärtsrisiken und Aufwärtstreiber. Trenne Fakten von Spekulation. Gib keine Kauf-, Verkaufs- oder Halteempfehlung ab. Dies ist keine Finanzberatung.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Name: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Ticker: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Ticker: (nicht angegeben)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (nicht angegeben)';
 }

@@ -109,6 +109,8 @@
   "systemCategoryPhone": "ಫೋನ್",
   "systemCategoryHealth": "ಆರೋಗ್ಯ",
   "systemCategoryOtherExpense": "ಇತರ ಖರ್ಚು",
+  "systemDescriptionCsvImport": "CSV ಆಮದು",
+  "systemDescriptionOfxImport": "OFX ಆಮದು",
   "homeThisMonth": "ಈ ತಿಂಗಳು",
   "homeMoneyInTransit": "ಸಾಗಣೆಯಲ್ಲಿರುವ ಹಣ",
   "homeWhatYouHaveMinusWhatYouOwe": "ನಿಮ್ಮ ಬಳಿ ಇರುವುದು ಮೈನಸ್ ನೀವು ಬಾಕಿ ಇರುವುದು",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "ಆಯ್ಕೆಮಾಡಿದ ಫೈಲ್ ಖಾಲಿಯಾಗಿದೆ.",
   "errorCsvUnreadable": "ಈ ಫೈಲ್ ಅನ್ನು CSV ಆಗಿ ಓದಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
   "errorCsvNoRows": "ಆಯ್ಕೆಮಾಡಿದ ಫೈಲ್‌ಗೆ ಸಾಲುಗಳಿಲ್ಲ.",
+  "skipMissingDate": "ದಿನಾಂಕ ಕಾಣೆಯಾಗಿದೆ.",
+  "skipUnparseableDate": "\"{pattern}\" ಮಾದರಿಯೊಂದಿಗೆ \"{raw}\" ದಿನಾಂಕವನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "ವಹಿವಾಟಿನ ದಿನಾಂಕ ಕಾಣೆಯಾಗಿದೆ ಅಥವಾ ಅಮಾನ್ಯವಾಗಿದೆ.",
+  "skipOfxUnparseableDate": "ವಹಿವಾಟಿನ ದಿನಾಂಕ \"{raw}\" ಅನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "ಮೊತ್ತ ಕಾಣೆಯಾಗಿದೆ.",
+  "skipUnparseableAmount": "ಮೊತ್ತ \"{raw}\" ಅನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "ಮೊತ್ತ ಶೂನ್ಯವಾಗಿದೆ.",
+  "skipUnparseableDebitCreditAmount": "ಡೆಬಿಟ್ ಅಥವಾ ಕ್ರೆಡಿಟ್ ಮೊತ್ತವನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.",
+  "skipBothDebitAndCreditNonZero": "ಡೆಬಿಟ್ ಮತ್ತು ಕ್ರೆಡಿಟ್ ಎರಡೂ ಕಾಲಂಗಳಲ್ಲಿ ಮೊತ್ತವಿದೆ.",
+  "skipBothDebitAndCreditZero": "ಡೆಬಿಟ್ ಮತ್ತು ಕ್ರೆಡಿಟ್ ಎರಡೂ ಕಾಲಂಗಳು ಶೂನ್ಯವಾಗಿವೆ.",
   "errorBackupCreateFailed": "ಬ್ಯಾಕಪ್ ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "ವರ್ಗ ನಿಯಮಗಳು",
   "possibleDuplicate": "ಸಂಭವನೀಯ ನಕಲಿ",
-  "unknownCategory": "ಅಜ್ಞಾತ ವರ್ಗ"
+  "unknownCategory": "ಅಜ್ಞಾತ ವರ್ಗ",
+  "researchPromptIntro": "ಮನೆಯ ಹೂಡಿಕೆದಾರರಿಗಾಗಿ ಸಾರ್ವಜನಿಕವಾಗಿ ಪಟ್ಟಿ ಮಾಡಲಾದ ಈ ಸಾಧನವನ್ನು ಸಂಶೋಧಿಸಿ. ವಿತರಕರನ್ನು ಗುರುತಿಸಿ, ತಿಳಿದಿದ್ದರೆ ದಿನಾಂಕಗಳೊಂದಿಗೆ ಇತ್ತೀಚಿನ ಸುದ್ದಿಗಳನ್ನು ಸಾರಾಂಶಿಸಿ, ಮತ್ತು ಕುಸಿತದ ಅಪಾಯಗಳು ಹಾಗೂ ಏರಿಕೆಯ ಅಂಶಗಳನ್ನು ವಿವರಿಸಿ. ಸತ್ಯಗಳನ್ನು ಊಹಾಪೋಹದಿಂದ ಬೇರ್ಪಡಿಸಿ. ಖರೀದಿ, ಮಾರಾಟ ಅಥವಾ ಹಿಡಿದಿಟ್ಟುಕೊಳ್ಳುವ ಶಿಫಾರಸನ್ನು ನೀಡಬೇಡಿ. ಇದು ಹಣಕಾಸಿನ ಸಲಹೆಯಲ್ಲ.",
+  "researchPromptNameLine": "ಹೆಸರು: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "ಟಿಕರ್: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "ಟಿಕರ್: (ನೀಡಿಲ್ಲ)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (ನೀಡಿಲ್ಲ)"
 }

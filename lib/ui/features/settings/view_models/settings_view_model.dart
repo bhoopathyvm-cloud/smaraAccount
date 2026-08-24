@@ -156,11 +156,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     } catch (e) {
       _isBackingUp = false;
       setFailure(
-        AppFailure(
-          AppErrorCode.backupCreateFailed,
-          params: {'detail': '$e'},
-          debugMessage: '$e',
-        ),
+        AppFailure(AppErrorCode.backupCreateFailed, debugMessage: '$e'),
       );
       return null;
     }

@@ -347,6 +347,12 @@ class AppLocalizationsSa extends AppLocalizations {
   String get systemCategoryOtherExpense => 'अन्यव्ययः';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV आयातः';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX आयातः';
+
+  @override
   String get homeThisMonth => 'अस्मिन् मासे';
 
   @override
@@ -1392,6 +1398,46 @@ class AppLocalizationsSa extends AppLocalizations {
   String get errorCsvNoRows => 'चयितायां सञ्चिकायां पङ्क्तयः न सन्ति।';
 
   @override
+  String get skipMissingDate => 'तिथिः नास्ति।';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" रीत्या तिथिः \"$raw\" पार्स्यितुं न शक्यते स्म।';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'व्यवहारस्य तिथिः नास्ति अथवा अवैधा अस्ति।';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'व्यवहारस्य तिथिः \"$raw\" पार्स्यितुं न शक्यते स्म।';
+  }
+
+  @override
+  String get skipMissingAmount => 'राशिः नास्ति।';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'राशिः \"$raw\" पार्स्यितुं न शक्यते स्म।';
+  }
+
+  @override
+  String get skipZeroAmount => 'राशिः शून्यम् अस्ति।';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'डेबिट् अथवा क्रेडिट् राशिः पार्स्यितुं न शक्यते स्म।';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'डेबिट् क्रेडिट् च उभयोः स्तम्भयोः राशिः अस्ति।';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'डेबिट् क्रेडिट् च उभयोः स्तम्भयोः शून्यम् अस्ति।';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'प्रतिलिपिं निर्मातुं न शक्यते स्म: $detail';
   }
@@ -1767,4 +1813,29 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get unknownCategory => 'अज्ञातवर्गः';
+
+  @override
+  String get researchPromptIntro =>
+      'गृहस्थ-निवेशकस्य कृते एतत् सार्वजनिकरूपेण सूचीबद्धं साधनं अन्वेषयतु। जारीकर्तारं ज्ञातुं, ज्ञातं चेत् तिथिभिः सह नूतनवृत्तान्तस्य सारं ददातु, तथा च पतनस्य आपदः वृद्धेः च कारकान् वर्णयतु। तथ्यानि अनुमानात् पृथक् कुर्वन्तु। क्रय-विक्रय-धारण-सम्बद्धं सुझावं मा ददातु। इदं वित्तीयं परामर्शं नास्ति।';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'नाम: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'टिकर्: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'टिकर्: (न दत्तम्)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (न दत्तम्)';
 }

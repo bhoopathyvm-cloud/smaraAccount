@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (EKB árfolyamok)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (napi árfolyamok)",
-  "providerYahooFinance": "Yahoo Finance (grafikon API)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telefon",
   "systemCategoryHealth": "Egészség",
   "systemCategoryOtherExpense": "Egyéb kiadás",
+  "systemDescriptionCsvImport": "CSV-importálás",
+  "systemDescriptionOfxImport": "OFX-importálás",
   "homeThisMonth": "EZ A HÓNAP",
   "homeMoneyInTransit": "ÚTON LÉVŐ PÉNZ",
   "homeWhatYouHaveMinusWhatYouOwe": "AMI ÖNNÉL VAN MÍNUSZ AMIVEL TARTOZIK",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Az Ön helyreállítási kifejezése",
   "recoveryPhraseConfirmTitle": "Erősítse meg a kifejezését",
-  "recoveryPhraseBlurb": "Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara könyvelésnek nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.",
+  "recoveryPhraseBlurb": "Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara Accountingnak nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.",
   "recoveryPhraseWriteDown": "Írja le ezeket a szavakat sorrendben, és tárolja őket biztonságos helyen, ettől az eszköztől elkülönítve.",
   "iveSavedRecoveryPhrase": "Elmentettem a helyreállítási kifejezésemet",
   "confirmPhraseBlurb": "Adja meg a kért szavakat az imént elmentett kifejezésből.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "A kiválasztott fájl üres.",
   "errorCsvUnreadable": "Ez a fájl nem olvasható CSV-ként.",
   "errorCsvNoRows": "A kiválasztott fájlban nincsenek sorok.",
+  "skipMissingDate": "Hiányzó dátum.",
+  "skipUnparseableDate": "A(z) \"{raw}\" dátum nem értelmezhető a(z) \"{pattern}\" mintával.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Hiányzó vagy érvénytelen tranzakciódátum.",
+  "skipOfxUnparseableDate": "A(z) \"{raw}\" tranzakciódátum nem értelmezhető.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Hiányzó összeg.",
+  "skipUnparseableAmount": "A(z) \"{raw}\" összeg nem értelmezhető.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Az összeg nulla.",
+  "skipUnparseableDebitCreditAmount": "A terhelési vagy jóváírási összeg nem értelmezhető.",
+  "skipBothDebitAndCreditNonZero": "A terhelés és a jóváírás oszlopa is tartalmaz összeget.",
+  "skipBothDebitAndCreditZero": "A terhelés és a jóváírás oszlopa is nulla.",
   "errorBackupCreateFailed": "Nem sikerült létrehozni a biztonsági mentést: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Smara könyvelés feloldása",
+  "unlockBiometricReason": "Smara Account feloldása",
   "searchLabel": "Keresés",
   "openingBalance": "Nyitóegyenleg",
   "transferToName": "Átutalás: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Kategóriaszabályok",
   "possibleDuplicate": "lehetséges duplikátum",
-  "unknownCategory": "Ismeretlen kategória"
+  "unknownCategory": "Ismeretlen kategória",
+  "researchPromptIntro": "Kutasd fel ezt a tőzsdén jegyzett eszközt egy magánbefektető számára. Azonosítsd a kibocsátót, foglald össze a friss híreket dátummal, ha ismert, és vázold fel a lefelé mutató kockázatokat és a felfelé mutató tényezőket. Válaszd külön a tényeket a feltételezésektől. Ne adj vételi, eladási vagy tartási ajánlást. Ez nem befektetési tanácsadás.",
+  "researchPromptNameLine": "Név: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Ticker: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Ticker: (nincs megadva)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (nincs megadva)"
 }

@@ -109,6 +109,8 @@
   "systemCategoryPhone": "فون",
   "systemCategoryHealth": "صحت",
   "systemCategoryOtherExpense": "دیگر اخراجات",
+  "systemDescriptionCsvImport": "CSV درآمد",
+  "systemDescriptionOfxImport": "OFX درآمد",
   "homeThisMonth": "اس مہینے",
   "homeMoneyInTransit": "راستے میں رقم",
   "homeWhatYouHaveMinusWhatYouOwe": "آپ کے پاس جو ہے مائنس آپ پر جو واجب ہے",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "منتخب کردہ فائل خالی ہے۔",
   "errorCsvUnreadable": "اس فائل کو CSV کے طور پر پڑھا نہیں جا سکا۔",
   "errorCsvNoRows": "منتخب کردہ فائل میں کوئی قطار نہیں ہے۔",
+  "skipMissingDate": "تاریخ موجود نہیں ہے۔",
+  "skipUnparseableDate": "\"{pattern}\" پیٹرن کے ساتھ تاریخ \"{raw}\" پارس نہیں کی جا سکی۔",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "ٹرانزیکشن کی تاریخ موجود نہیں یا غلط ہے۔",
+  "skipOfxUnparseableDate": "ٹرانزیکشن کی تاریخ \"{raw}\" پارس نہیں کی جا سکی۔",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "رقم موجود نہیں ہے۔",
+  "skipUnparseableAmount": "رقم \"{raw}\" پارس نہیں کی جا سکی۔",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "رقم صفر ہے۔",
+  "skipUnparseableDebitCreditAmount": "ڈیبٹ یا کریڈٹ رقم پارس نہیں کی جا سکی۔",
+  "skipBothDebitAndCreditNonZero": "ڈیبٹ اور کریڈٹ دونوں کالموں میں رقم موجود ہے۔",
+  "skipBothDebitAndCreditZero": "ڈیبٹ اور کریڈٹ دونوں کالم صفر ہیں۔",
   "errorBackupCreateFailed": "بیک اپ نہیں بن سکا: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "اگر شرح مبادلہ ابھی معلوم نہیں تو خالی چھوڑیں۔",
   "recordTradeBlurb": "پہلے سے ہو چکے سودے کو ریکارڈ کریں۔ یہ ایپ آرڈرز نہیں دیتی۔",
-  "feeOnTopBlurb": "چالو ہونے پر: اوپر دی گئی رقم اس اکاؤنٹ سے لی گئی کل رقم ہے؛ فیس اسی میں سے کاٹی جاتی ہے۔",
+  "feeOnTopBlurb": "آن: اوپر دی گئی رقم اس اکاؤنٹ سے لی گئی کل رقم ہے؛ فیس اسی میں سے کاٹی جاتی ہے۔",
   "feeBankBlurb": "آپ کے بینک یا کسی درمیانی فریق کی طرف سے وصول کیا جانے والا پیشگی کمیشن۔",
   "validationPinMinLength": "PIN کم از کم 4 ہندسوں کا ہونا چاہیے۔",
   "restoreBackupBlurb": "یہ اس ایپ میں موجود ہر چیز کو بیک اپ سے تبدیل کر دے گا — یہ ضم نہیں کرتا۔ ایک بیک اپ فائل منتخب کریں اور وہ پاس فریز درج کریں جس سے آپ نے اسے محفوظ کیا تھا۔",
@@ -858,7 +894,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} اب واجب الادا ہونے پر ظاہر نہیں ہوگا۔ اس سے پہلے سے ریکارڈ شدہ ٹرانزیکشنز متاثر نہیں ہوں گی۔",
+  "deleteTemplateBody": "{name} کو مزید واجب الادا کے طور پر پیش نہیں کیا جائے گا۔ اس کی پہلے سے ریکارڈ شدہ ٹرانزیکشنز متاثر نہیں ہوں گی۔",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "آپ کا پسندیدہ ریسرچ ٹول کھل گیا۔",
   "looksLikeGain": "یہ منافع لگتا ہے",
   "looksLikeLoss": "یہ نقصان لگتا ہے",
-  "looksLikeBreakEven": "یہ نہ نفع نہ نقصان لگتا ہے",
+  "looksLikeBreakEven": "یہ برابر سرابر لگتا ہے",
   "sellableQuantity": "{name} ({qty} قابل فروخت)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "زمرہ اصول",
   "possibleDuplicate": "ممکنہ نقل",
-  "unknownCategory": "نامعلوم زمرہ"
+  "unknownCategory": "نامعلوم زمرہ",
+  "researchPromptIntro": "گھریلو سرمایہ کار کے لیے اس عوامی طور پر درج فہرست آلے پر تحقیق کریں۔ جاری کنندہ کی شناخت کریں، اگر معلوم ہو تو تاریخوں کے ساتھ حالیہ خبروں کا خلاصہ دیں، اور نیچے جانے کے خطرات اور اوپر جانے کے عوامل بیان کریں۔ حقائق کو قیاس آرائیوں سے الگ رکھیں۔ خریدنے، بیچنے یا رکھنے کی سفارش نہ دیں۔ یہ مالی مشورہ نہیں ہے۔",
+  "researchPromptNameLine": "نام: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "ٹکر: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "ٹکر: (فراہم نہیں کیا گیا)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (فراہم نہیں کیا گیا)"
 }

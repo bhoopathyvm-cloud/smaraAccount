@@ -345,6 +345,12 @@ class AppLocalizationsBrx extends AppLocalizations {
   String get systemCategoryOtherExpense => 'गुबुन फोरजाब';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV हाबफान';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX हाबफान';
+
+  @override
   String get homeThisMonth => 'बे दान';
 
   @override
@@ -1021,7 +1027,7 @@ class AppLocalizationsBrx extends AppLocalizations {
   String get descriptionColumns => 'बर्नना कलम(फोर)';
 
   @override
-  String get referenceIdColumn => 'रेफरेंस ID कलम (जरूरी नङा)';
+  String get referenceIdColumn => 'रेफरेंस id कलम (जरूरी नङा)';
 
   @override
   String get skippedRows => 'आगजाबबाय रो';
@@ -1382,6 +1388,45 @@ class AppLocalizationsBrx extends AppLocalizations {
 
   @override
   String get errorCsvNoRows => 'सायखबाय फाइलआव रो जायेंगा।';
+
+  @override
+  String get skipMissingDate => 'था\' गैया।';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" पैटाननि साथे \"$raw\" थाखौ बुझिनो हायाखै।';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'लेनदेननि था\' गैया एबा गोरोबथाव नङा।';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'लेनदेननि था\' \"$raw\" बुझिनो हायाखै।';
+  }
+
+  @override
+  String get skipMissingAmount => 'रां गैया।';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'रां \"$raw\" बुझिनो हायाखै।';
+  }
+
+  @override
+  String get skipZeroAmount => 'रां शून्य।';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'डेबिट एबा क्रेडिट रां बुझिनो हायाखै।';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'डेबिट आरो क्रेडिट गोख्रोफोरनो रां दं।';
+
+  @override
+  String get skipBothDebitAndCreditZero => 'डेबिट आरो क्रेडिट गोख्रोफोर शून्य।';
 
   @override
   String errorBackupCreateFailed(String detail) {
@@ -1756,4 +1801,29 @@ class AppLocalizationsBrx extends AppLocalizations {
 
   @override
   String get unknownCategory => 'मोनोबथि थाखो';
+
+  @override
+  String get researchPromptIntro =>
+      'नखरनि निवेशकनि थाखाय बे सार्वजनिकनि लिस्टि जायोगाव इंस्ट्रुमेन्टखौ मोनथिफुंनाय। जारीकर्ताखौ मोनथिफुं, सायखा जाल्ले तारिखसाथे बादि खौरां सारजों बुझाव, आरो गोहोमनि बिजोंखौ आरो सोलोंनि खामानिखौ फोरमायबाय। बुंलायखौ अनुमाननि सोरनिफ्राय बाथ्राबाय। बिजिनि, सोरनिनि एबा दिनथिनायनि सल्लाय होनो हायाखै। बेयो बित्तीय सल्लाय नङा।';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'मुं: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'टिकार: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'टिकार: (होबाखै)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (होबाखै)';
 }

@@ -606,7 +606,6 @@ class LedgerRepository {
       throw InvalidLedgerBackupException(
         'This file could not be opened as a Smara backup: $e',
         code: AppErrorCode.invalidLedgerBackupUnreadable,
-        params: {'detail': '$e'},
       );
     }
 
@@ -2681,13 +2680,13 @@ class LedgerRepository {
         throw InvestmentException(
           'Buy posted, but brokerage fee failed: ${e.message}',
           code: AppErrorCode.brokerageFailedAfterBuy,
-          params: {'detail': e.message},
+          params: {'innerCode': e.code.name, ...e.params},
         );
       } on AccountGroupException catch (e) {
         throw InvestmentException(
           'Buy posted, but brokerage fee failed: ${e.message}',
           code: AppErrorCode.brokerageFailedAfterBuy,
-          params: {'detail': e.message},
+          params: {'innerCode': e.code.name, ...e.params},
         );
       }
     }
@@ -2843,13 +2842,13 @@ class LedgerRepository {
         throw InvestmentException(
           'Sell posted, but brokerage fee failed: ${e.message}',
           code: AppErrorCode.brokerageFailedAfterSell,
-          params: {'detail': e.message},
+          params: {'innerCode': e.code.name, ...e.params},
         );
       } on AccountGroupException catch (e) {
         throw InvestmentException(
           'Sell posted, but brokerage fee failed: ${e.message}',
           code: AppErrorCode.brokerageFailedAfterSell,
-          params: {'detail': e.message},
+          params: {'innerCode': e.code.name, ...e.params},
         );
       }
     }

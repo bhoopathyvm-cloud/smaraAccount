@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telefoon",
   "systemCategoryHealth": "Gezondheid",
   "systemCategoryOtherExpense": "Overige uitgaven",
+  "systemDescriptionCsvImport": "CSV-import",
+  "systemDescriptionOfxImport": "OFX-import",
   "homeThisMonth": "DEZE MAAND",
   "homeMoneyInTransit": "GELD ONDERWEG",
   "homeWhatYouHaveMinusWhatYouOwe": "WAT JE HEBT MIN WAT JE SCHULDIG BENT",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Je herstelzin",
   "recoveryPhraseConfirmTitle": "Bevestig je zin",
-  "recoveryPhraseBlurb": "Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Boekhouding heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.",
+  "recoveryPhraseBlurb": "Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.",
   "recoveryPhraseWriteDown": "Schrijf deze woorden in volgorde op en bewaar ze op een veilige plek, gescheiden van dit toestel.",
   "iveSavedRecoveryPhrase": "Ik heb mijn herstelzin opgeslagen",
   "confirmPhraseBlurb": "Voer de gevraagde woorden in uit de zin die je zojuist hebt opgeslagen.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Het geselecteerde bestand is leeg.",
   "errorCsvUnreadable": "Dit bestand kon niet worden gelezen als CSV.",
   "errorCsvNoRows": "Het geselecteerde bestand heeft geen rijen.",
+  "skipMissingDate": "Datum ontbreekt.",
+  "skipUnparseableDate": "Datum \"{raw}\" kon niet worden geïnterpreteerd met patroon \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Transactiedatum ontbreekt of is ongeldig.",
+  "skipOfxUnparseableDate": "Transactiedatum \"{raw}\" kon niet worden geïnterpreteerd.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Bedrag ontbreekt.",
+  "skipUnparseableAmount": "Bedrag \"{raw}\" kon niet worden geïnterpreteerd.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Bedrag is nul.",
+  "skipUnparseableDebitCreditAmount": "Debet- of creditbedrag kon niet worden geïnterpreteerd.",
+  "skipBothDebitAndCreditNonZero": "Debet- en creditkolom hebben beide een bedrag.",
+  "skipBothDebitAndCreditZero": "Debet- en creditkolom zijn beide nul.",
   "errorBackupCreateFailed": "De back-up kon niet worden gemaakt: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Smara Boekhouding ontgrendelen",
+  "unlockBiometricReason": "Smara Account ontgrendelen",
   "searchLabel": "Zoeken",
   "openingBalance": "Beginsaldo",
   "transferToName": "Overboeking: {name}",
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "Je favoriete onderzoekstool geopend.",
   "looksLikeGain": "Dit lijkt een winst",
   "looksLikeLoss": "Dit lijkt een verlies",
-  "looksLikeBreakEven": "Dit lijkt quitte",
+  "looksLikeBreakEven": "Dit lijkt break-even",
   "sellableQuantity": "{name} ({qty} verkoopbaar)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Categorieregels",
   "possibleDuplicate": "mogelijk duplicaat",
-  "unknownCategory": "Onbekende categorie"
+  "unknownCategory": "Onbekende categorie",
+  "researchPromptIntro": "Onderzoek dit publiek genoteerde instrument voor een particuliere belegger. Identificeer de uitgevende instelling, vat recent nieuws samen met data indien bekend, en schets neerwaartse risico''s en opwaartse drijfveren. Scheid feiten van speculatie. Geef geen koop-, verkoop- of houdadvies. Dit is geen financieel advies.",
+  "researchPromptNameLine": "Naam: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Ticker: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Ticker: (niet opgegeven)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (niet opgegeven)"
 }

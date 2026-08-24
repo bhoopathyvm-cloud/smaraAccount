@@ -109,6 +109,8 @@
   "systemCategoryPhone": "फ़ोन",
   "systemCategoryHealth": "स्वास्थ्य",
   "systemCategoryOtherExpense": "अन्य व्यय",
+  "systemDescriptionCsvImport": "CSV आयात",
+  "systemDescriptionOfxImport": "OFX आयात",
   "homeThisMonth": "इस महीने",
   "homeMoneyInTransit": "ट्रांज़िट में पैसा",
   "homeWhatYouHaveMinusWhatYouOwe": "आपके पास जो है घटा आप जो देते हैं",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "आपका रिकवरी फ्रेज़",
   "recoveryPhraseConfirmTitle": "अपना फ्रेज़ पुष्ट करें",
-  "recoveryPhraseBlurb": "ये 24 शब्द इस डिवाइस के खो जाने, रीसेट होने, या बदले जाने पर आपके लेनदेन इतिहास को पुनर्प्राप्त करने का एकमात्र तरीका हैं। स्मारा खाता का कोई सर्वर नहीं है और यह इन्हें आपके लिए पुनर्प्राप्त नहीं कर सकता।\n\nयदि आप इस डिवाइस और इस फ्रेज़ दोनों को खो देते हैं, तो आपके द्वारा दर्ज किया गया हर लेनदेन स्थायी रूप से असत्यापन योग्य हो जाता है।",
+  "recoveryPhraseBlurb": "ये 24 शब्द इस डिवाइस के खो जाने, रीसेट होने, या बदले जाने पर आपके लेनदेन इतिहास को पुनर्प्राप्त करने का एकमात्र तरीका हैं। Smara Accounting का कोई सर्वर नहीं है और यह इन्हें आपके लिए पुनर्प्राप्त नहीं कर सकता।\n\nयदि आप इस डिवाइस और इस फ्रेज़ दोनों को खो देते हैं, तो आपके द्वारा दर्ज किया गया हर लेनदेन स्थायी रूप से असत्यापन योग्य हो जाता है।",
   "recoveryPhraseWriteDown": "इन शब्दों को क्रम में लिख लें और इन्हें इस डिवाइस से अलग किसी सुरक्षित जगह पर रखें।",
   "iveSavedRecoveryPhrase": "मैंने अपना रिकवरी फ्रेज़ सहेज लिया है",
   "confirmPhraseBlurb": "अभी सहेजे गए फ्रेज़ से मांगे गए शब्द दर्ज करें।",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "चयनित फ़ाइल खाली है।",
   "errorCsvUnreadable": "इस फ़ाइल को CSV के रूप में नहीं पढ़ा जा सका।",
   "errorCsvNoRows": "चयनित फ़ाइल में कोई पंक्ति नहीं है।",
+  "skipMissingDate": "तारीख गायब है।",
+  "skipUnparseableDate": "\"{pattern}\" पैटर्न से तारीख \"{raw}\" पार्स नहीं की जा सकी।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "लेनदेन की तारीख गायब है या अमान्य है।",
+  "skipOfxUnparseableDate": "लेनदेन की तारीख \"{raw}\" पार्स नहीं की जा सकी।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "राशि गायब है।",
+  "skipUnparseableAmount": "राशि \"{raw}\" पार्स नहीं की जा सकी।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "राशि शून्य है।",
+  "skipUnparseableDebitCreditAmount": "डेबिट या क्रेडिट राशि पार्स नहीं की जा सकी।",
+  "skipBothDebitAndCreditNonZero": "डेबिट और क्रेडिट दोनों कॉलम में राशि है।",
+  "skipBothDebitAndCreditZero": "डेबिट और क्रेडिट दोनों कॉलम शून्य हैं।",
   "errorBackupCreateFailed": "बैकअप नहीं बनाया जा सका: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "स्मारा खाता अनलॉक करें",
+  "unlockBiometricReason": "Smara Account अनलॉक करें",
   "searchLabel": "खोज",
   "openingBalance": "शुरुआती बैलेंस",
   "transferToName": "स्थानांतरण: {name}",
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "यदि विनिमय दर अभी ज्ञात नहीं है तो खाली छोड़ दें।",
   "recordTradeBlurb": "पहले से हो चुके ट्रेड को दर्ज करें। यह ऐप ऑर्डर नहीं देता।",
-  "feeOnTopBlurb": "चालू होने पर: ऊपर दी गई राशि इस खाते से ली गई कुल राशि है; शुल्क उसी में से कटता है।",
+  "feeOnTopBlurb": "चालू: ऊपर दी गई राशि इस खाते से ली गई कुल राशि है; शुल्क इसी में से निकाला जाता है।",
   "feeBankBlurb": "आपके बैंक या किसी मध्यस्थ द्वारा ली गई एक अग्रिम कमीशन।",
   "validationPinMinLength": "PIN कम से कम 4 अंकों का होना चाहिए।",
   "restoreBackupBlurb": "यह इस ऐप में वर्तमान में मौजूद सब कुछ बैकअप से बदल देता है — यह मर्ज नहीं करता। एक बैकअप फ़ाइल चुनें और वह पासफ्रेज़ दर्ज करें जिससे आपने इसे सुरक्षित किया था।",
@@ -858,7 +894,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} अब देय होने पर नहीं दिखेगा। इससे पहले दर्ज किए गए लेनदेन प्रभावित नहीं होंगे।",
+  "deleteTemplateBody": "{name} अब देय के रूप में पेश नहीं किया जाएगा। इसके द्वारा पहले से दर्ज किए गए लेनदेन प्रभावित नहीं होंगे।",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "आपका पसंदीदा रिसर्च टूल खोला गया।",
   "looksLikeGain": "यह लाभ जैसा लगता है",
   "looksLikeLoss": "यह हानि जैसा लगता है",
-  "looksLikeBreakEven": "यह न लाभ न हानि जैसा लगता है",
+  "looksLikeBreakEven": "यह ब्रेक-ईवन जैसा लगता है",
   "sellableQuantity": "{name} ({qty} बिकने योग्य)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "श्रेणी नियम",
   "possibleDuplicate": "संभावित डुप्लिकेट",
-  "unknownCategory": "अज्ञात श्रेणी"
+  "unknownCategory": "अज्ञात श्रेणी",
+  "researchPromptIntro": "एक घरेलू निवेशक के लिए इस सार्वजनिक रूप से सूचीबद्ध साधन पर शोध करें। जारीकर्ता की पहचान करें, यदि ज्ञात हो तो तारीखों सहित हाल की खबरों का सारांश दें, और गिरावट के जोखिम व बढ़त के कारकों को रेखांकित करें। तथ्यों को अटकलों से अलग रखें। खरीदने, बेचने या बनाए रखने की सलाह न दें। यह वित्तीय सलाह नहीं है।",
+  "researchPromptNameLine": "नाम: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "टिकर: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "टिकर: (उपलब्ध नहीं)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (उपलब्ध नहीं)"
 }

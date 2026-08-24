@@ -53,14 +53,16 @@ StatementParseResult parseOfxDocument(String content) {
       currency: statementCurrency.isEmpty ? '' : statementCurrency,
     );
     final transaction = parsed.transaction;
-    final skipReason = parsed.skipReason;
+    final skip = parsed.skip;
     if (transaction != null) {
       transactions.add(transaction);
-    } else if (skipReason != null) {
+    } else if (skip != null) {
       skippedRows.add(
         StatementSkippedRow(
           rawFragment: element.toXmlString(),
-          reason: skipReason,
+          reason: skip.reason,
+          code: skip.code,
+          params: skip.params,
         ),
       );
     }
@@ -73,12 +75,20 @@ StatementParseResult parseOfxDocument(String content) {
   );
 }
 
+class _Skip {
+  const _Skip(this.reason, this.code, [this.params = const {}]);
+
+  final String reason;
+  final StatementSkipCode code;
+  final Map<String, String> params;
+}
+
 class _ParsedRow {
-  const _ParsedRow.ok(this.transaction) : skipReason = null;
-  const _ParsedRow.skip(this.skipReason) : transaction = null;
+  const _ParsedRow.ok(this.transaction) : skip = null;
+  const _ParsedRow.skip(this.skip) : transaction = null;
 
   final ParsedStatementTransaction? transaction;
-  final String? skipReason;
+  final _Skip? skip;
 }
 
 _ParsedRow _parseTransactionElement(
@@ -87,23 +97,44 @@ _ParsedRow _parseTransactionElement(
 }) {
   final dtPosted = _childText(element, 'dtposted');
   if (dtPosted == null || dtPosted.length < 8) {
-    return const _ParsedRow.skip('Missing or invalid DTPOSTED.');
+    return const _ParsedRow.skip(
+      _Skip(
+        'Missing or invalid DTPOSTED.',
+        StatementSkipCode.ofxMissingOrInvalidDate,
+      ),
+    );
   }
   final transactionDate = _parseOfxDate(dtPosted);
   if (transactionDate == null) {
-    return _ParsedRow.skip('Could not parse DTPOSTED "$dtPosted".');
+    return _ParsedRow.skip(
+      _Skip(
+        'Could not parse DTPOSTED "$dtPosted".',
+        StatementSkipCode.ofxUnparseableDate,
+        {'raw': dtPosted},
+      ),
+    );
   }
 
   final trnAmt = _childText(element, 'trnamt');
   if (trnAmt == null || trnAmt.isEmpty) {
-    return const _ParsedRow.skip('Missing TRNAMT.');
+    return const _ParsedRow.skip(
+      _Skip('Missing TRNAMT.', StatementSkipCode.missingAmount),
+    );
   }
   final amountMinor = _parseDecimalToMinorUnits(trnAmt);
   if (amountMinor == null) {
-    return _ParsedRow.skip('Could not parse TRNAMT "$trnAmt".');
+    return _ParsedRow.skip(
+      _Skip(
+        'Could not parse TRNAMT "$trnAmt".',
+        StatementSkipCode.unparseableAmount,
+        {'raw': trnAmt},
+      ),
+    );
   }
   if (amountMinor == 0) {
-    return const _ParsedRow.skip('TRNAMT is zero.');
+    return const _ParsedRow.skip(
+      _Skip('TRNAMT is zero.', StatementSkipCode.zeroAmount),
+    );
   }
 
   final direction = amountMinor > 0

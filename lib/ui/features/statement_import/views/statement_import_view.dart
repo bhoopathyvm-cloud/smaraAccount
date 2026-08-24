@@ -10,6 +10,7 @@ import '../../../../domain/statement_import/parsed_statement_transaction.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../../../core/entity_picker_field.dart';
@@ -287,7 +288,7 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(l10n.renameProfile),
-        content: TextField(controller: controller, autofocus: true),
+        content: AppTextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
@@ -532,7 +533,7 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
             ListTile(
               contentPadding: EdgeInsets.zero,
               dense: true,
-              title: Text(row.description),
+              title: Text(localizeStoredName(l10n, row.description)),
               subtitle: Text(
                 '${row.transactionDate.year}-'
                 '${row.transactionDate.month.toString().padLeft(2, '0')}-'
@@ -546,9 +547,9 @@ class _MapColumnsStepState extends State<_MapColumnsStep> {
               ),
             ),
           const SizedBox(height: AppSpacing.large),
-          TextField(
+          AppTextField(
             controller: _profileNameController,
-            decoration: InputDecoration(labelText: l10n.saveMappingProfile),
+            labelText: l10n.saveMappingProfile,
           ),
           const SizedBox(height: AppSpacing.large),
           ElevatedButton(
@@ -626,10 +627,10 @@ class _PreviewStep extends StatelessWidget {
             children: [
               Text(l10n.saveAsRuleBlurb, style: AppTypography.metadata),
               const SizedBox(height: AppSpacing.medium),
-              TextField(
+              AppTextField(
                 controller: keywordController,
                 autofocus: group.isSingleRow,
-                decoration: InputDecoration(labelText: l10n.keyword),
+                labelText: l10n.keyword,
               ),
               // payees-and-spending-memory: "Saving a rule offers to link a
               // payee too" - opt-in, pre-checked; declining still saves the
@@ -813,7 +814,14 @@ class _SkippedRowsSection extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(skipped.reason, style: AppTypography.body),
+                    Text(
+                      localizeSkipReason(
+                        l10nOf(context),
+                        skipped.code,
+                        skipped.params,
+                      ),
+                      style: AppTypography.body,
+                    ),
                     Text(
                       skipped.rawFragment,
                       style: AppTypography.metadata,
@@ -860,7 +868,7 @@ class _PreviewRow extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      row.transaction.description,
+                      localizeStoredName(l10n, row.transaction.description),
                       style: AppTypography.cardTitle,
                     ),
                   ),
@@ -941,7 +949,9 @@ class _SummaryStep extends StatelessWidget {
                         TablerIcons.alertCircle,
                         color: AppColors.signal,
                       ),
-                      title: Text(row.transaction.description),
+                      title: Text(
+                        localizeStoredName(l10n, row.transaction.description),
+                      ),
                       subtitle: Text(row.error ?? ''),
                     ),
               ],
@@ -995,10 +1005,10 @@ class _CategoryRuleManagementView extends StatelessWidget {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
+                AppTextField(
                   controller: keywordController,
                   autofocus: true,
-                  decoration: InputDecoration(labelText: l10n.keyword),
+                  labelText: l10n.keyword,
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 EntityPickerField<Account>(

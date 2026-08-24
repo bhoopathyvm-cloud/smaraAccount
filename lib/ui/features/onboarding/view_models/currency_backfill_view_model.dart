@@ -32,7 +32,7 @@ class CurrencyBackfillViewModel extends ChangeNotifier
       setFailure(
         AppFailure(
           AppErrorCode.validationSaveCurrencyFailed,
-          params: {'detail': '$e'},
+          debugMessage: '$e',
         ),
       );
       return false;

@@ -66,12 +66,17 @@ StatementParseResult parseCsvDocument(
   for (final row in dataRows) {
     final parsed = _parseRow(row, mapping);
     final transaction = parsed.transaction;
-    final skipReason = parsed.skipReason;
+    final skip = parsed.skip;
     if (transaction != null) {
       transactions.add(transaction);
-    } else if (skipReason != null) {
+    } else if (skip != null) {
       skippedRows.add(
-        StatementSkippedRow(rawFragment: row.join(','), reason: skipReason),
+        StatementSkippedRow(
+          rawFragment: row.join(','),
+          reason: skip.reason,
+          code: skip.code,
+          params: skip.params,
+        ),
       );
     }
   }
@@ -96,12 +101,20 @@ String _decode(List<int> bytes) {
   return utf8.decode(withoutBom, allowMalformed: true);
 }
 
+class _Skip {
+  const _Skip(this.reason, this.code, [this.params = const {}]);
+
+  final String reason;
+  final StatementSkipCode code;
+  final Map<String, String> params;
+}
+
 class _ParsedRow {
-  const _ParsedRow.ok(this.transaction) : skipReason = null;
-  const _ParsedRow.skip(this.skipReason) : transaction = null;
+  const _ParsedRow.ok(this.transaction) : skip = null;
+  const _ParsedRow.skip(this.skip) : transaction = null;
 
   final ParsedStatementTransaction? transaction;
-  final String? skipReason;
+  final _Skip? skip;
 }
 
 _ParsedRow _parseRow(List<String> row, CsvColumnMapping mapping) {
@@ -112,12 +125,18 @@ _ParsedRow _parseRow(List<String> row, CsvColumnMapping mapping) {
 
   final dateRaw = field(mapping.dateColumnIndex);
   if (dateRaw.isEmpty) {
-    return const _ParsedRow.skip('Missing date.');
+    return const _ParsedRow.skip(
+      _Skip('Missing date.', StatementSkipCode.missingDate),
+    );
   }
   final date = _parseDateWithPattern(dateRaw, mapping.datePattern);
   if (date == null) {
     return _ParsedRow.skip(
-      'Could not parse date "$dateRaw" with pattern "${mapping.datePattern}".',
+      _Skip(
+        'Could not parse date "$dateRaw" with pattern "${mapping.datePattern}".',
+        StatementSkipCode.unparseableDate,
+        {'raw': dateRaw, 'pattern': mapping.datePattern},
+      ),
     );
   }
 
@@ -128,10 +147,18 @@ _ParsedRow _parseRow(List<String> row, CsvColumnMapping mapping) {
       final raw = field(mapping.signedAmountColumnIndex!);
       final parsed = _parseAmount(raw, mapping.decimalSeparator);
       if (parsed == null) {
-        return _ParsedRow.skip('Could not parse amount "$raw".');
+        return _ParsedRow.skip(
+          _Skip(
+            'Could not parse amount "$raw".',
+            StatementSkipCode.unparseableAmount,
+            {'raw': raw},
+          ),
+        );
       }
       if (parsed == 0) {
-        return const _ParsedRow.skip('Amount is zero.');
+        return const _ParsedRow.skip(
+          _Skip('Amount is zero.', StatementSkipCode.zeroAmount),
+        );
       }
       amountMinor = parsed.abs();
       direction = parsed > 0
@@ -148,15 +175,28 @@ _ParsedRow _parseRow(List<String> row, CsvColumnMapping mapping) {
           ? 0
           : _parseAmount(creditRaw, mapping.decimalSeparator)?.abs();
       if (debit == null || credit == null) {
-        return const _ParsedRow.skip('Could not parse debit/credit amount.');
+        return const _ParsedRow.skip(
+          _Skip(
+            'Could not parse debit/credit amount.',
+            StatementSkipCode.unparseableDebitCreditAmount,
+          ),
+        );
       }
       if (debit > 0 && credit > 0) {
         return const _ParsedRow.skip(
-          'Both debit and credit columns are non-zero.',
+          _Skip(
+            'Both debit and credit columns are non-zero.',
+            StatementSkipCode.bothDebitAndCreditNonZero,
+          ),
         );
       }
       if (debit == 0 && credit == 0) {
-        return const _ParsedRow.skip('Both debit and credit columns are zero.');
+        return const _ParsedRow.skip(
+          _Skip(
+            'Both debit and credit columns are zero.',
+            StatementSkipCode.bothDebitAndCreditZero,
+          ),
+        );
       }
       amountMinor = debit > 0 ? debit : credit;
       direction = debit > 0

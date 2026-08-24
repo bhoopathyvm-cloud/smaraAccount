@@ -346,6 +346,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get systemCategoryOtherExpense => 'مصروف آخر';
 
   @override
+  String get systemDescriptionCsvImport => 'استيراد CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'استيراد OFX';
+
+  @override
   String get homeThisMonth => 'هذا الشهر';
 
   @override
@@ -1384,6 +1390,44 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errorCsvNoRows => 'الملف المحدد لا يحتوي على صفوف.';
 
   @override
+  String get skipMissingDate => 'التاريخ مفقود.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'تعذر تحليل التاريخ \"$raw\" باستخدام النمط \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => 'تاريخ المعاملة مفقود أو غير صالح.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'تعذر تحليل تاريخ المعاملة \"$raw\".';
+  }
+
+  @override
+  String get skipMissingAmount => 'المبلغ مفقود.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'تعذر تحليل المبلغ \"$raw\".';
+  }
+
+  @override
+  String get skipZeroAmount => 'المبلغ صفر.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'تعذر تحليل مبلغ المدين أو الدائن.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'يحتوي عمودا المدين والدائن كلاهما على مبلغ.';
+
+  @override
+  String get skipBothDebitAndCreditZero => 'عمودا المدين والدائن كلاهما صفر.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'تعذر إنشاء النسخة الاحتياطية: $detail';
   }
@@ -1593,7 +1637,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'عند التفعيل: المبلغ أعلاه هو الإجمالي المخصوم من هذا الحساب؛ وتُقتطع الرسوم منه.';
+      'مضافة: المبلغ أعلاه هو الإجمالي المأخوذ من هذا الحساب؛ وتُخصم الرسوم منه.';
 
   @override
   String get feeBankBlurb => 'عمولة مقدّمة يفرضها بنكك أو وسيط.';
@@ -1643,7 +1687,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name لن يظهر بعد الآن كقالب مستحق. المعاملات السابقة التي سجّلها لا تتأثر.';
+    return '$name لن يُعرض بعد الآن كمستحق. المعاملات السابقة التي سجّلها بالفعل لا تتأثر.';
   }
 
   @override
@@ -1721,7 +1765,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get looksLikeLoss => 'يبدو هذا خسارة';
 
   @override
-  String get looksLikeBreakEven => 'يبدو هذا بلا ربح أو خسارة';
+  String get looksLikeBreakEven => 'يبدو هذا تعادلاً';
 
   @override
   String sellableQuantity(String name, String qty) {
@@ -1755,4 +1799,29 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get unknownCategory => 'فئة غير معروفة';
+
+  @override
+  String get researchPromptIntro =>
+      'ابحث عن هذه الأداة المالية المدرجة علنًا لصالح مستثمر منزلي. حدد الجهة المصدرة، ولخّص الأخبار الأخيرة مع التواريخ إن كانت معروفة، وبيّن مخاطر الهبوط ودوافع الصعود. افصل الحقائق عن التكهنات. لا تقدم نصيحة بالشراء أو البيع أو الاحتفاظ. هذه ليست نصيحة مالية.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'الاسم: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'الرمز: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'الرمز: (غير متوفر)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (غير متوفر)';
 }

@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telefon",
   "systemCategoryHealth": "Gesundheit",
   "systemCategoryOtherExpense": "Sonstige Ausgaben",
+  "systemDescriptionCsvImport": "CSV-Import",
+  "systemDescriptionOfxImport": "OFX-Import",
   "homeThisMonth": "DIESER MONAT",
   "homeMoneyInTransit": "GELD UNTERWEGS",
   "homeWhatYouHaveMinusWhatYouOwe": "WAS SIE HABEN MINUS WAS SIE SCHULDEN",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Die ausgewählte Datei ist leer.",
   "errorCsvUnreadable": "Diese Datei konnte nicht als CSV gelesen werden.",
   "errorCsvNoRows": "Die ausgewählte Datei hat keine Zeilen.",
+  "skipMissingDate": "Datum fehlt.",
+  "skipUnparseableDate": "Datum \"{raw}\" konnte mit dem Muster \"{pattern}\" nicht gelesen werden.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Transaktionsdatum fehlt oder ist ungültig.",
+  "skipOfxUnparseableDate": "Transaktionsdatum \"{raw}\" konnte nicht gelesen werden.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Betrag fehlt.",
+  "skipUnparseableAmount": "Betrag \"{raw}\" konnte nicht gelesen werden.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Betrag ist null.",
+  "skipUnparseableDebitCreditAmount": "Soll- oder Habenbetrag konnte nicht gelesen werden.",
+  "skipBothDebitAndCreditNonZero": "Soll- und Habenspalte enthalten beide einen Betrag.",
+  "skipBothDebitAndCreditZero": "Soll- und Habenspalte sind beide null.",
   "errorBackupCreateFailed": "Die Sicherung konnte nicht erstellt werden: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Kategorieregeln",
   "possibleDuplicate": "mögliches Duplikat",
-  "unknownCategory": "Unbekannte Kategorie"
+  "unknownCategory": "Unbekannte Kategorie",
+  "researchPromptIntro": "Recherchiere dieses börsennotierte Wertpapier für einen privaten Anleger. Nenne den Emittenten, fasse aktuelle Nachrichten mit Datum zusammen, sofern bekannt, und skizziere Abwärtsrisiken und Aufwärtstreiber. Trenne Fakten von Spekulation. Gib keine Kauf-, Verkaufs- oder Halteempfehlung ab. Dies ist keine Finanzberatung.",
+  "researchPromptNameLine": "Name: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Ticker: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Ticker: (nicht angegeben)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (nicht angegeben)"
 }

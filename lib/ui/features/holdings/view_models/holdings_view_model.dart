@@ -298,9 +298,12 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     );
   }
 
-  Future<ResearchLaunchResult> researchInstrument(Instrument instrument) async {
+  Future<ResearchLaunchResult> researchInstrument(
+    AppLocalizations l10n,
+    Instrument instrument,
+  ) async {
     final tool = await _settingsRepository.selectedResearchTool();
-    final prompt = buildInvestmentResearchPrompt(instrument);
+    final prompt = buildInvestmentResearchPrompt(l10n, instrument);
     final uri = researchQueryUri(tool, prompt);
     if (uri != null) {
       try {

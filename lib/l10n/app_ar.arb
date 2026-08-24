@@ -109,6 +109,8 @@
   "systemCategoryPhone": "الهاتف",
   "systemCategoryHealth": "الصحة",
   "systemCategoryOtherExpense": "مصروف آخر",
+  "systemDescriptionCsvImport": "استيراد CSV",
+  "systemDescriptionOfxImport": "استيراد OFX",
   "homeThisMonth": "هذا الشهر",
   "homeMoneyInTransit": "أموال قيد التحويل",
   "homeWhatYouHaveMinusWhatYouOwe": "ما تملكه ناقص ما عليك",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "الملف المحدد فارغ.",
   "errorCsvUnreadable": "تعذر قراءة هذا الملف كملف CSV.",
   "errorCsvNoRows": "الملف المحدد لا يحتوي على صفوف.",
+  "skipMissingDate": "التاريخ مفقود.",
+  "skipUnparseableDate": "تعذر تحليل التاريخ \"{raw}\" باستخدام النمط \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "تاريخ المعاملة مفقود أو غير صالح.",
+  "skipOfxUnparseableDate": "تعذر تحليل تاريخ المعاملة \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "المبلغ مفقود.",
+  "skipUnparseableAmount": "تعذر تحليل المبلغ \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "المبلغ صفر.",
+  "skipUnparseableDebitCreditAmount": "تعذر تحليل مبلغ المدين أو الدائن.",
+  "skipBothDebitAndCreditNonZero": "يحتوي عمودا المدين والدائن كلاهما على مبلغ.",
+  "skipBothDebitAndCreditZero": "عمودا المدين والدائن كلاهما صفر.",
   "errorBackupCreateFailed": "تعذر إنشاء النسخة الاحتياطية: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "اتركه فارغاً إذا لم يكن سعر الصرف معروفاً بعد.",
   "recordTradeBlurb": "سجّل صفقة حدثت بالفعل. هذا التطبيق لا ينفذ أوامر تداول.",
-  "feeOnTopBlurb": "عند التفعيل: المبلغ أعلاه هو الإجمالي المخصوم من هذا الحساب؛ وتُقتطع الرسوم منه.",
+  "feeOnTopBlurb": "مضافة: المبلغ أعلاه هو الإجمالي المأخوذ من هذا الحساب؛ وتُخصم الرسوم منه.",
   "feeBankBlurb": "عمولة مقدّمة يفرضها بنكك أو وسيط.",
   "validationPinMinLength": "يجب أن يتكون الرمز من 4 أرقام على الأقل.",
   "restoreBackupBlurb": "هذا يستبدل كل ما هو موجود حالياً في هذا التطبيق بالنسخة الاحتياطية — ولا يدمجه. اختر ملف نسخة احتياطية وأدخل عبارة المرور التي حميته بها.",
@@ -858,7 +894,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} لن يظهر بعد الآن كقالب مستحق. المعاملات السابقة التي سجّلها لا تتأثر.",
+  "deleteTemplateBody": "{name} لن يُعرض بعد الآن كمستحق. المعاملات السابقة التي سجّلها بالفعل لا تتأثر.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "تم فتح أداة البحث المفضلة لديك.",
   "looksLikeGain": "يبدو هذا ربحاً",
   "looksLikeLoss": "يبدو هذا خسارة",
-  "looksLikeBreakEven": "يبدو هذا بلا ربح أو خسارة",
+  "looksLikeBreakEven": "يبدو هذا تعادلاً",
   "sellableQuantity": "{name} ({qty} قابل للبيع)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "قواعد الفئات",
   "possibleDuplicate": "تكرار محتمل",
-  "unknownCategory": "فئة غير معروفة"
+  "unknownCategory": "فئة غير معروفة",
+  "researchPromptIntro": "ابحث عن هذه الأداة المالية المدرجة علنًا لصالح مستثمر منزلي. حدد الجهة المصدرة، ولخّص الأخبار الأخيرة مع التواريخ إن كانت معروفة، وبيّن مخاطر الهبوط ودوافع الصعود. افصل الحقائق عن التكهنات. لا تقدم نصيحة بالشراء أو البيع أو الاحتفاظ. هذه ليست نصيحة مالية.",
+  "researchPromptNameLine": "الاسم: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "الرمز: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "الرمز: (غير متوفر)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (غير متوفر)"
 }

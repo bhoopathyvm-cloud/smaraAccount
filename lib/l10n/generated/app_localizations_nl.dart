@@ -347,6 +347,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Overige uitgaven';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV-import';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX-import';
+
+  @override
   String get homeThisMonth => 'DEZE MAAND';
 
   @override
@@ -789,7 +795,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Boekhouding heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.';
+      'Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1403,6 +1409,46 @@ class AppLocalizationsNl extends AppLocalizations {
   String get errorCsvNoRows => 'Het geselecteerde bestand heeft geen rijen.';
 
   @override
+  String get skipMissingDate => 'Datum ontbreekt.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Datum \"$raw\" kon niet worden geïnterpreteerd met patroon \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Transactiedatum ontbreekt of is ongeldig.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Transactiedatum \"$raw\" kon niet worden geïnterpreteerd.';
+  }
+
+  @override
+  String get skipMissingAmount => 'Bedrag ontbreekt.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Bedrag \"$raw\" kon niet worden geïnterpreteerd.';
+  }
+
+  @override
+  String get skipZeroAmount => 'Bedrag is nul.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Debet- of creditbedrag kon niet worden geïnterpreteerd.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Debet- en creditkolom hebben beide een bedrag.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Debet- en creditkolom zijn beide nul.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'De back-up kon niet worden gemaakt: $detail';
   }
@@ -1554,7 +1600,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara Boekhouding ontgrendelen';
+  String get unlockBiometricReason => 'Smara Account ontgrendelen';
 
   @override
   String get searchLabel => 'Zoeken';
@@ -1750,7 +1796,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get looksLikeLoss => 'Dit lijkt een verlies';
 
   @override
-  String get looksLikeBreakEven => 'Dit lijkt quitte';
+  String get looksLikeBreakEven => 'Dit lijkt break-even';
 
   @override
   String sellableQuantity(String name, String qty) {
@@ -1784,4 +1830,29 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Onbekende categorie';
+
+  @override
+  String get researchPromptIntro =>
+      'Onderzoek dit publiek genoteerde instrument voor een particuliere belegger. Identificeer de uitgevende instelling, vat recent nieuws samen met data indien bekend, en schets neerwaartse risico\'s en opwaartse drijfveren. Scheid feiten van speculatie. Geef geen koop-, verkoop- of houdadvies. Dit is geen financieel advies.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Naam: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Ticker: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Ticker: (niet opgegeven)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (niet opgegeven)';
 }

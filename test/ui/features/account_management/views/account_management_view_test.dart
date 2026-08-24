@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/account_group.dart';
+import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/features/account_management/view_models/account_management_view_model.dart';
 import 'package:smara_accounting/ui/features/account_management/views/account_management_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
@@ -285,6 +286,67 @@ void main() {
         ),
       ).called(1);
       expect(find.text('Rename account'), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'in Tamil, the rename dialog prefills the localized seed name for a '
+    'system account, and saving without an edit persists the English seed',
+    (tester) async {
+      const seededCashBank = Account(
+        id: 'asset-1',
+        name: 'Cash & Bank',
+        type: AccountType.asset,
+        archived: false,
+        groupId: 'group-cash',
+      );
+      when(
+        repository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([seededCashBank, savings]));
+      when(
+        repository.renameFinancialAccount(
+          id: anyNamed('id'),
+          newName: anyNamed('newName'),
+        ),
+      ).thenAnswer((_) async {});
+
+      final viewModel = AccountManagementViewModel(
+        ledgerRepository: repository,
+      );
+      addTearDown(viewModel.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: const Locale('ta'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: supportedAppLocales,
+          home: AccountManagementView(viewModel: viewModel),
+        ),
+      );
+      await tester.pump();
+
+      final ta = lookupAppLocalizations(const Locale('ta'));
+      await tester.tap(find.byIcon(Icons.more_vert).first);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(ta.actionRename));
+      await tester.pumpAndSettle();
+
+      final field = tester.widget<TextField>(find.byType(TextField).last);
+      expect(field.controller?.text, equals(ta.systemAccountCashBank));
+      expect(field.controller?.text, isNot(equals('Cash & Bank')));
+
+      await tester.tap(find.widgetWithText(ElevatedButton, ta.actionSave));
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+      verify(
+        repository.renameFinancialAccount(
+          id: 'asset-1',
+          newName: 'Cash & Bank',
+        ),
+      ).called(1);
     },
   );
 
