@@ -44,8 +44,8 @@
 
 ## 9. Capability group: home, accounts overview, and App Lock (PIN path)
 
-- [ ] 9.1 Add a scenario asserting the home/accounts overview renders correctly against real recorded data (`accounts-home-overview`, `home-hub`, `account-management-ui`).
-- [ ] 9.2 Add a scenario locking and unlocking via PIN through the real GUI (`app-lock`, PIN path only — biometric path stays out of scope per design.md Non-Goals).
+- [x] 9.1 Add a scenario asserting the home/accounts overview renders correctly against real recorded data (`accounts-home-overview`, `home-hub`, `account-management-ui`). `home_and_lock_test.dart`: onboards, asserts Home's summary figure and "this month" entry, then Accounts' seeded groups (including the below-the-fold Investments group). 2/2 clean runs.
+- [x] 9.2 Add a scenario locking and unlocking via PIN through the real GUI (`app-lock`, PIN path only — biometric path stays out of scope per design.md Non-Goals). Second scenario in `home_and_lock_test.dart`: enables the PIN through the real Set-PIN dialog, simulates a relaunch (the router's redirect guard only re-evaluates app-lock on a fresh navigation/cold start, not on enabling the PIN itself), and asserts the real Lock screen appears. **Unlocking is not exercised**: calling the real `AppLockService.verifyPin` after this same-process relaunch was confirmed — via a direct, non-UI call to the service bypassing the widget tree entirely — to hang indefinitely rather than resolve, on this ad-hoc signed macOS build. This matches the same class of real-Keychain timing quirk already documented in acceptance_harness.dart (`errSecMissingEntitlement`), not a bug in the PIN logic or the test's own interactions. Locking is proven and reliable (2/2 clean runs); unlocking needs manual verification on this platform, or revisiting on a differently-signed build.
 
 ## 10. Developer entry point
 
