@@ -32,14 +32,30 @@ One repository per cluster, named after the domain concept, confirmed by which m
 |---|---|---|
 | `IdentityRepository` | `acknowledgeIdentity`, `confirmFirstIdentity`, `currentIdentity`, `generateFirstIdentity`, `hasMatchingStoredKey`, `migrateToNewIdentityAfterKeyLoss`, `restoreIdentity`, `resumePendingIdentity`, `stashPendingPhraseWords`, `verifyChain`, `exportKeystoreFile` | `RecoveryPhraseSetupViewModel`, `RestoreIdentityViewModel` — confirmed to call only this cluster (plus `verifyChain`) |
 | `LedgerBackupRepository` | `exportLedgerBackup`, `restoreLedgerBackup` | Settings' backup/restore dialogs. Operates on the raw SQLite file (`AppDatabase.resolveDatabaseFile()` + WAL checkpoint), not through any other repository — a true leaf |
-| `AccountRepository` | `createAccountGroup`, `renameAccountGroup`, `archiveAccountGroup`, `unarchiveAccountGroup`, `deleteAccountGroup`, `changeAccountGroupCurrency`, `backfillGroupCurrencies`, `needsCurrencyBackfill`, `reassignFinancialAccountGroup`, `createFinancialAccount`, `renameFinancialAccount`, `archiveFinancialAccount`, `unarchiveFinancialAccount`, `watchFinancialAccounts`, `recordArchivedAccountCloseoutTransfer` | `AccountManagementViewModel` calls both the account-group *and* financial-account methods together — one repository, not two, contrary to the review's looser sketch |
-| `CategoryRepository` | `addCategory`, `archiveCategory`, `renameCategory`, `unarchiveCategory`, `setCategoryMonthlyLimit`, `watchCategories` | `CategoryManagementViewModel` |
-| `PayeeRepository` | `createPayee`, `deletePayee`, `findOrCreatePayeeByName`, `renamePayee`, `recordPayeeUsage`, `watchPayees` | `PayeeManagementViewModel` |
-| `RecurringTemplateRepository` | `createRecurringTemplate`, `deleteRecurringTemplate`, `updateRecurringTemplate`, `recordDueTemplate`, `watchRecurringTemplates` | `RecurringTemplateManagementViewModel`, `HomeViewModel` |
-| `InvestmentRepository` | `createInstrument`, `archiveInstrument`, `renameInstrument`, `cacheInstrumentQuote`, `recordBuy`, `recordSell`, `recordDividend`, `watchInstruments` | Holdings feature (not exhaustively traced here; grouping follows the review's method-name clustering, confirmed self-consistent by `recordBuy`'s own dependencies below) |
-| `LedgerRepository` (slimmed) | `recordTransaction`, `recordSplitTransaction`, `recordTransfer`, `settlePendingTransfer`, `reverseEntry`, `fixPostedTransaction`, `hasAnyJournalEntries`, `displayBalanceMinor`, `exportLedgerCsv`, `watchHomeOverview`, `watchSummary`, `watchEntriesForAccount`, `close` | `RegisterViewModel`, `SummaryViewModel`, `HomeViewModel` |
+| `AccountRepository` | `createAccountGroup`, `renameAccountGroup`, `archiveAccountGroup`, `unarchiveAccountGroup`, `deleteAccountGroup`, `changeAccountGroupCurrency`, `backfillGroupCurrencies`, `needsCurrencyBackfill`, `reassignFinancialAccountGroup`, `createFinancialAccount`, `renameFinancialAccount`, `archiveFinancialAccount`, `unarchiveFinancialAccount`, `watchFinancialAccounts`, `watchAccountGroups`, `recordArchivedAccountCloseoutTransfer` | `AccountManagementViewModel` calls both the account-group *and* financial-account methods together — one repository, not two, contrary to the review's looser sketch. **Corrected caller audit** (see note below the table): also `RegisterViewModel`, `StatementImportViewModel`, `RecurringTemplateManagementViewModel`, `RecordTransactionViewModel`, `CorrectionViewModel`, `SettlePendingTransferViewModel`, `TransferViewModel`, `HoldingsViewModel`, `SummaryViewModel`, `FirstAccountNameViewModel`, `CurrencyBackfillViewModel`, `StatementImportRepository`, and `app_router.dart` directly (`needsCurrencyBackfill`) |
+| `CategoryRepository` | `addCategory`, `archiveCategory`, `renameCategory`, `unarchiveCategory`, `setCategoryMonthlyLimit`, `watchCategories`, `watchCategoryTotals` | `CategoryManagementViewModel`. Corrected: also `StatementImportViewModel`, `RecurringTemplateManagementViewModel`, `RecordTransactionViewModel`, `CorrectionViewModel`, `SettlePendingTransferViewModel`, `TransferViewModel`, `HomeViewModel`, `HoldingsViewModel`, `StatementImportRepository` |
+| `PayeeRepository` | `createPayee`, `deletePayee`, `findOrCreatePayeeByName`, `renamePayee`, `recordPayeeUsage`, `watchPayees` | `PayeeManagementViewModel`. Corrected: also `RecordTransactionViewModel`, `StatementImportViewModel` |
+| `RecurringTemplateRepository` | `createRecurringTemplate`, `deleteRecurringTemplate`, `updateRecurringTemplate`, `recordDueTemplate`, `watchRecurringTemplates`, `watchDueRecurringTemplates` | `RecurringTemplateManagementViewModel`, `HomeViewModel` |
+| `InvestmentRepository` | `createInstrument`, `archiveInstrument`, `renameInstrument`, `cacheInstrumentQuote`, `recordBuy`, `recordSell`, `recordDividend`, `watchInstruments`, `watchHoldingsForAccount`, `watchInstrumentsHeldInAccount` | `HoldingsViewModel` (also needs `AccountRepository` and core `LedgerRepository` directly — see corrected caller note), `HomeViewModel` (`watchInstruments` only) |
+| `LedgerRepository` (slimmed) | `recordTransaction`, `recordSplitTransaction`, `recordTransfer`, `settlePendingTransfer`, `reverseEntry`, `fixPostedTransaction`, `hasAnyJournalEntries`, `displayBalanceMinor`, `exportLedgerCsv`, `watchHomeOverview`, `watchSummary`, `watchEntries`, `watchEntriesForAccount`, `close` | `RegisterViewModel`, `SummaryViewModel`, `HomeViewModel`. Corrected: also `TransferViewModel`, `RecordTransactionViewModel`, `CorrectionViewModel`, `SettlePendingTransferViewModel`, `KeyLossMigrationViewModel` (`watchEntries`), `HoldingsViewModel` (`displayBalanceMinor`), `StatementImportRepository`, and `app_router.dart` directly (`hasAnyJournalEntries`) |
 
 `recordArchivedAccountCloseoutTransfer` moves to `AccountRepository`, not the core repository, despite posting a transfer entry: closing out an *archived account* is fundamentally an account-lifecycle operation (it only exists to let `AccountRepository`'s own archive flow finish cleanly), and `RegisterViewModel` already calls it alongside other register-scoped account operations. It composes the core `LedgerRepository`'s transfer-posting for the entry itself (see D2), the same way `RecurringTemplateRepository.recordDueTemplate` does.
+
+**Corrected caller audit (found during group 1's implementation).** The table above was originally built from a regex that missed multiline `_ledgerRepository\n  .method()` calls — a real gap, not a stylistic one. A full, multiline-safe re-audit of all 23 consumer files found:
+- Six methods missing from every cluster's list above: `watchAccountGroups` (Account — turns out to be one of the most-called methods in the app), `watchCategoryTotals` (Category), `watchDueRecurringTemplates` (RecurringTemplate), `watchHoldingsForAccount` + `watchInstrumentsHeldInAccount` (Investment), `watchEntries` (Core).
+- Two consumers not accounted for anywhere in the original design: `lib/ui/app_router.dart` calls `LedgerRepository` methods directly for its redirect guard (`currentIdentity`, `hasMatchingStoredKey`, `verifyChain` — Identity; `needsCurrencyBackfill` — Account; `hasAnyJournalEntries` — Core), so `buildAppRouter(...)`'s signature grows to accept `IdentityRepository` and `AccountRepository` alongside the existing `LedgerRepository`, cascading into `main.dart`'s call site. `lib/data/repositories/statement_import_repository.dart` — itself a repository, not a ViewModel — needs `AccountRepository` (`watchAccountGroups`, `watchFinancialAccounts`), `CategoryRepository` (`watchCategories`), and core `LedgerRepository` (`watchEntriesForAccount`, `recordTransaction`), growing from one dependency to four, the same cross-repository composition pattern already designed for `RecurringTemplateRepository`/`InvestmentRepository`.
+- `HoldingsViewModel` needs `AccountRepository` (`watchFinancialAccounts`, `watchAccountGroups`) and core `LedgerRepository` (`displayBalanceMinor`) in addition to `InvestmentRepository` — three repositories, not one.
+
+### D1a — Newly-public cross-repository helpers (found during group 1)
+
+Two previously-private helpers turned out to be needed by a sibling repository across a file boundary and had to become public (no leading underscore) — Dart's leading-underscore privacy is per-*file*, not per-*class*, so a helper only `LedgerRepository`'s own methods used before now needs a real public name once a caller in a different file needs it:
+
+- `LedgerRepository.appendSignedEntry` (was `_appendSignedEntry`) — the core signing/chaining/write primitive every posting method calls; stays in `LedgerRepository`, called by `AccountRepository`'s opening-balance posting through its `ledgerRepository` dependency.
+- `LedgerRepository.postTransferEntry` (was `_postTransfer`) — stays in `LedgerRepository`, shared by `recordTransfer` (direct call, same class) and `AccountRepository.recordArchivedAccountCloseoutTransfer` (through its `ledgerRepository` dependency, per task 1.2).
+
+**`_requireActiveFinancialAccount` and `_groupCurrencyFor` are duplicated, not moved or shared.** The obvious move — relocate both to `AccountRepository`, public, called by `LedgerRepository` through a new dependency — would make `LedgerRepository` depend on `AccountRepository` *and* `AccountRepository` depend on `LedgerRepository` (for `appendSignedEntry`/`postTransferEntry` above): a circular constructor dependency Dart cannot construct, since each class's constructor would require an already-built instance of the other. Found and corrected during task 1.4's implementation, not anticipated when D2 first called this graph one-directional. Each repository keeps its own private copy of these two small, read-only validation queries instead — the pragmatic trade against introducing a cycle, given both are read-only lookups with no risk of write-behavior divergence between the two copies.
+
+`_requireCloseoutEligibleFinancialAccount` and `_postOpeningBalance` move to `AccountRepository` and stay private there — each has exactly one caller, both now inside the same file. The tiny pure `_dateOnly` formatter (used by nearly every posting method across every cluster) moves to a new shared `lib/data/repositories/repository_date_utils.dart` as a public top-level `dateOnly` function, rather than being duplicated per file — pure formatting with zero dependencies, unlike the two validation helpers above, so sharing it introduces no cycle risk.
 
 ### D2 — Cross-repository dependencies: a fixed, one-directional graph
 
@@ -47,22 +63,38 @@ Traced from what each cluster's own methods actually call today (`_require*` pri
 
 ```
 Leaves (depend only on AppDatabase):
-  AccountRepository, CategoryRepository, PayeeRepository, LedgerBackupRepository
+  CategoryRepository, PayeeRepository, LedgerBackupRepository, LedgerRepository (core)
+    (LedgerRepository keeps its own private copies of the two validation
+    helpers AccountRepository also needs - see D1a - rather than depending
+    on AccountRepository, which would create a cycle)
 
 One level up:
-  IdentityRepository        -> AccountRepository
+  AccountRepository -> LedgerRepository (core)
+    (recordArchivedAccountCloseoutTransfer and the opening-balance post
+    both call LedgerRepository's posting primitives - D1a)
+
+Two levels up:
+  IdentityRepository   -> AccountRepository
     (confirmFirstIdentity seeds the starter account groups)
-  InvestmentRepository      -> AccountRepository, CategoryRepository
+  InvestmentRepository -> AccountRepository, CategoryRepository
     (recordBuy validates the cash account and the buy/sell category)
-  LedgerRepository (core)   -> AccountRepository
-    (recordTransaction validates the financial account)
 
 Top:
   RecurringTemplateRepository -> LedgerRepository (core)
     (recordDueTemplate posts through recordTransaction directly)
+  StatementImportRepository   -> AccountRepository, CategoryRepository, LedgerRepository (core)
+    (corrected caller audit: CSV/OFX import needs account/category pickers
+    and posts through recordTransaction, same as it needs LedgerRepository
+    today)
+
+Not a repository, but the same graph applies:
+  app_router.dart (buildAppRouter) -> IdentityRepository, AccountRepository, LedgerRepository (core)
+    (its redirect guard reads currentIdentity/hasMatchingStoredKey/verifyChain,
+    needsCurrencyBackfill, and hasAnyJournalEntries directly - corrected
+    caller audit)
 ```
 
-No cluster depends on `RecurringTemplateRepository`, `InvestmentRepository`, `IdentityRepository`, or `LedgerBackupRepository` — nothing sits above them, so this graph has no cycle by construction. A repository takes its dependency the same way `StatementImportRepository` already takes `LedgerRepository` today: a constructor parameter, wired by a `ProxyProvider2`/`ProxyProvider3` in `main.dart`.
+No cluster depends on `RecurringTemplateRepository`, `InvestmentRepository`, `IdentityRepository`, or `LedgerBackupRepository` — nothing sits above them, so this graph has no cycle by construction, and `LedgerRepository` never depends on `AccountRepository` (D1a explains why: it would close a cycle, since `AccountRepository` already depends on `LedgerRepository`). A repository takes its dependency the same way `StatementImportRepository` already takes `LedgerRepository` today: a constructor parameter, wired by a `ProxyProvider2`/`ProxyProvider3` in `main.dart`. `app_router.dart` isn't a class with a constructor — it takes the three repositories as extra positional parameters to `buildAppRouter(...)`, same as it already takes `LedgerRepository` and `StatementImportRepository` today.
 
 ### D3 — DI wiring stays inside `provider`'s existing `ProxyProvider` pattern
 
