@@ -80,16 +80,29 @@ echo "Running acceptance tests on device '$device_id':"
 echo "$test_files" | sed "s#^#  #"
 echo
 
-# shellcheck disable=SC2086
-if flutter test $test_files -d "$device_id"; then
-  status=0
-else
-  status=$?
-fi
+# One `flutter test` invocation per file, not all files passed to a single
+# invocation: batching them was observed, on macOS, to leave every file
+# after the first unable to launch at all ("log reader stopped
+# unexpectedly, or never started") - the app-foreground mechanism a
+# fresh build+launch depends on doesn't recover within one `flutter test`
+# process after the first launch. Each file gets a clean process instead.
+overall_status=0
+failed_files=""
+for test_file in $test_files; do
+  echo "── $test_file ──"
+  if flutter test "$test_file" -d "$device_id"; then
+    :
+  else
+    overall_status=1
+    failed_files="$failed_files
+  $test_file"
+  fi
+  echo
+done
 
-if [ "$status" -eq 0 ]; then
+if [ "$overall_status" -eq 0 ]; then
   echo "Acceptance suite passed."
 else
-  echo "Acceptance suite failed (exit $status)." >&2
+  echo "Acceptance suite failed. Failing files:$failed_files" >&2
 fi
-exit "$status"
+exit "$overall_status"

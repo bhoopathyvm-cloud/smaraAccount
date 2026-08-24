@@ -50,7 +50,7 @@
 ## 10. Developer entry point
 
 - [x] 10.1 Add `tool/run_acceptance_tests.sh`, requiring a `-d <device-id>` argument (failing fast with a clear message if omitted, per spec.md's "No device specified" scenario) and an optional group argument to run a single capability group's file instead of the full suite. Group is a filename substring match against `integration_test/acceptance/*_test.dart` (e.g. `csv_import`, `core_ledger`) rather than a hardcoded list, so it can't go stale as groups are added.
-- [x] 10.2 The script runs pre-run cleanup, then `flutter test` against the chosen file(s) and device, and reports pass/fail clearly. Pre-run cleanup already happens per test file via `resetToFreshDevice()` in each file's own `setUpAll` (task 1.5) - the script's own job is selecting file(s)/device and reporting the `flutter test` exit status clearly, which it does.
+- [x] 10.2 The script runs pre-run cleanup, then `flutter test` against the chosen file(s) and device, and reports pass/fail clearly. Pre-run cleanup already happens per test file via `resetToFreshDevice()` in each file's own `setUpAll` (task 1.5) - the script's own job is selecting file(s)/device and reporting the `flutter test` exit status clearly, which it does. **Correction found while running the full suite for real**: passing every matched file to one `flutter test file1 file2 ...` invocation left every file after the first unable to launch on macOS ("log reader stopped unexpectedly, or never started") - the app-foreground mechanism a fresh build+launch depends on doesn't recover within one `flutter test` process after the first launch. Fixed by running one `flutter test <file>` invocation per file in a loop, aggregating pass/fail and printing which files failed. Verified against the full 10-file suite on macOS: 27/27 scenarios pass, ~8 minutes wall-clock.
 - [x] 10.3 Make the script executable and document its usage (including the per-platform device-id discovery from Task 2.2) at the top of the script itself.
 - [x] 10.4 Confirm no `.github/workflows/*.yml` file invokes this script or any `integration_test/acceptance/` file. Confirmed via `grep -l "integration_test\|acceptance\|run_acceptance" .github/workflows/*.yml` - no match in any of the four workflows (`codeql.yml`, `flutter-ci.yml`, `pages.yml`, `security.yml`); `flutter-ci.yml`'s `flutter test` step only picks up `test/`, never `integration_test/`.
 
@@ -61,7 +61,7 @@
 
 ## 12. Verification
 
-- [ ] 12.1 Run the full suite locally against `-d macos` and confirm every capability group passes.
+- [x] 12.1 Run the full suite locally against `-d macos` and confirm every capability group passes. Run via `tool/run_acceptance_tests.sh -d macos`: all 10 files / 27 scenarios pass cleanly (this same run surfaced and fixed the script's multi-file batching bug - see task 10.2's note).
 - [ ] 12.2 Repeat against an iOS simulator and an Android emulator, confirming the same test code passes unmodified on each.
 - [ ] 12.3 Inspect each target's real storage location and keychain/keystore afterward and confirm no acceptance-test artifacts remain.
 - [ ] 12.4 Force-kill a run mid-test, then run again, and confirm pre-run cleanup removes the leftover state before the second run's assertions execute.
