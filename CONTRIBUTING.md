@@ -75,6 +75,27 @@ scenario for it, it's not specified precisely enough to implement yet.
   merged or reviewed promptly, feel free to fork and continue
   independently.
 
+## Acceptance testing
+
+Beyond unit/widget/integration tests (all run in CI), the repo has a
+manual-only ACCEPTANCE tier under `integration_test/acceptance/`: it
+drives a real, launched build of the app through its GUI against a real
+on-disk database and real OS keychain/keystore, organized into capability
+groups (core ledger, currency/transfers, identity/backup, onboarding,
+data import, organization features, home/accounts overview, App Lock).
+Run it via:
+
+```sh
+tool/run_acceptance_tests.sh -d <device-id> [group]
+```
+
+Run the full suite (omit `[group]`) once per target platform you want
+confidence on — macOS, an iOS simulator, an Android emulator — after
+finishing a large change and before opening a PR. See the script's own
+header comments for device-id discovery per platform. No CI workflow
+invokes this script or any file under `integration_test/acceptance/`; it
+stays a manual, developer-triggered tool by design.
+
 ## Definition of done
 
 Before opening a PR, run through

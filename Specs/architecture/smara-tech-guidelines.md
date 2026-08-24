@@ -255,6 +255,21 @@ INTEGRATION (flutter-add-integration-test):
     - archive a category → disappears from picker, stays visible in
       historical entries
 
+ACCEPTANCE (integration_test/acceptance/):
+  Manual-only, developer-triggered - not part of any CI workflow.
+  Drives a real, launched build of the app (SmaraAccountingApp from
+  main.dart, not a hand-rebuilt widget tree) through its GUI against a
+  real on-disk database and real OS keychain/keystore. Organized into
+  capability groups (core ledger, currency/transfers, identity/backup,
+  onboarding, data import, organization features, home/accounts
+  overview, App Lock PIN path), each sharing the same real-build
+  harness and resetToFreshDevice() cleanup (integration_test/
+  acceptance/support/acceptance_harness.dart). Every run requires an
+  explicit target device (macOS, an iOS simulator, or an Android
+  emulator/device) - never defaults, never runs more than one target
+  per invocation. Run via tool/run_acceptance_tests.sh -d <device-id>
+  [group] after finishing a large change, before opening a PR.
+
 COVERAGE (dart-collect-coverage):
   Generate an LCOV report. No fixed percentage gate yet — track the
   trend; don't let it silently drop.
