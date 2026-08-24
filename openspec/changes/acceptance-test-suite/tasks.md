@@ -23,8 +23,8 @@
 
 ## 5. Capability group: identity and backup
 
-- [ ] 5.1 Write the record → capture phrase → reset → restore scenario (proposal's original flow), using `resetToFreshDevice()` from Task 1.
-- [ ] 5.2 Write the wrong-recovery-phrase negative scenario.
+- [x] 5.1 Write the record → capture phrase → reset → restore scenario (proposal's original flow), using `resetToFreshDevice()` from Task 1. `identity_restore_test.dart`: restoring from a recovery phrase only re-derives and matches the private key (`RestoreIdentityViewModel`'s own doc comment - it never alters or restores entry data), matching the existing INTEGRATION-tier reference test's own mechanics, so this clears only the real keychain's signing-key entries (not the on-disk database) between phases rather than full `resetToFreshDevice()`, which would leave no data for the phrase to have anything to restore onto. 2/2 clean runs.
+- [x] 5.2 Write the wrong-recovery-phrase negative scenario. Combined into `identity_restore_test.dart` (same phase-2 setup): a reversed-word-order phrase is rejected before the correct phrase is tried, asserting the Restore screen stays put and nothing is restored.
 - [ ] 5.3 Add a scenario exporting an encrypted `ledger-backup` file through the real GUI, resetting to a fresh device, and restoring from that file, asserting entries match.
 - [ ] 5.4 Add a scenario restoring a foreign identity's backup onto a device that already has an active identity, asserting the real UI rejects it with an explanation (per `ledger-backup` spec).
 
