@@ -30,8 +30,8 @@
 
 ## 6. Capability group: onboarding
 
-- [ ] 6.1 Add a scenario walking first-run setup end to end through the real GUI (`first-week-setup`).
-- [ ] 6.2 Add a scenario exercising the deferred-setup path (`deferred-onboarding`).
+- [x] 6.1 Add a scenario walking first-run setup end to end through the real GUI (`first-week-setup`). `onboarding_test.dart`: walks the wizard with both optional steps taken (credit card + cash account), asserting both land in their respective seeded groups. Required adding an optional `skipFirstWeekSetup` param to `completeOnboardingWithGuidedEntry` (default `true`, every existing caller unaffected) so this one scenario can reach the wizard instead of skipping past it. Also found and fixed a real gap in `resetToFreshDevice()`: it never cleared `SharedPreferences`, so the first-week-setup-completed flag (and other settings) silently leaked across every acceptance test file in the same run - now cleared alongside the database and keychain. 2/2 clean runs.
+- [x] 6.2 Add a scenario exercising the deferred-setup path (`deferred-onboarding`). Second scenario in `onboarding_test.dart`, testing the requirement every other test's use of `completeOnboardingWithGuidedEntry` only exercises implicitly: walks onboarding up to the guided first entry's Save (posted, unacknowledged), simulates the app being closed and reopened (no `resetToFreshDevice` - same database/keychain), and asserts the recovery-phrase acknowledgment screen is shown again rather than skipped to Home. 2/2 clean runs.
 
 ## 7. Capability group: data import
 

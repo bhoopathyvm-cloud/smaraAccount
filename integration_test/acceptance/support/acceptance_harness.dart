@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations_en.dart';
 import 'package:smara_accounting/main.dart';
@@ -35,12 +36,16 @@ const _secureStorageKeys = [
 
 /// Wipes every artifact a run of the real app leaves on this host: its
 /// Application Support directory (home to the real Drift database file,
-/// matching `app_database.dart`'s `_openConnection`) and every real OS
-/// keychain entry it wrote. This is what "a fresh device" (design.md
-/// Decision 2) means for this suite - the same reset simulates a
-/// reinstall/new-device restore and, run before every test file's first
-/// test, guarantees a crashed prior run's leftovers never contaminate the
-/// next one (design.md Decision 3).
+/// matching `app_database.dart`'s `_openConnection`), every real OS
+/// keychain entry it wrote, and every real `SharedPreferences` key
+/// (`SettingsRepository`'s first-week-setup flag, app-lock/locale/FX
+/// toggles, and so on - these persist to a real on-disk store exactly
+/// like the database and keychain do, so leaving them alone would let one
+/// test's settings silently leak into the next). This is what "a fresh
+/// device" (design.md Decision 2) means for this suite - the same reset
+/// simulates a reinstall/new-device restore and, run before every test
+/// file's first test, guarantees a crashed prior run's leftovers never
+/// contaminate the next one (design.md Decision 3).
 ///
 /// If [tester] is given, the currently-pumped widget tree is unmounted
 /// first (`pumpWidget` an empty tree) so any open database connection is
@@ -72,6 +77,7 @@ Future<void> resetToFreshDevice([WidgetTester? tester]) async {
       // goal here - the key doesn't exist - already holds either way.
     }
   }
+  await SharedPreferencesAsync().clear();
 }
 
 Future<void> _deleteDatabaseDirectory() async {
@@ -284,6 +290,7 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   WidgetTester tester, {
   required String amountText,
   required String categoryName,
+  bool skipFirstWeekSetup = true,
 }) async {
   final l10n = AppLocalizationsEn();
 
@@ -291,7 +298,11 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   // Decision 5, group 4) - skipped here the same way
   // integration_test/app_test.dart skips it for tests that aren't about the
   // wizard itself, so the confirm step below lands straight on Home.
-  await SettingsRepository().setFirstWeekSetupCompleted(true);
+  // [skipFirstWeekSetup] false (the wizard's own acceptance coverage) lands
+  // on FirstWeekSetupView instead - see the final success check below.
+  if (skipFirstWeekSetup) {
+    await SettingsRepository().setFirstWeekSetupCompleted(true);
+  }
 
   await tester.pumpWidget(const SmaraAccountingApp());
   await tester.pump();
@@ -425,14 +436,21 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
     );
   }
   await tester.pump();
-  // Confirming goes straight to Home - the identity (and its currency) was
-  // already committed back at CurrencySelectionView.
+  // Confirming goes straight to Home when the wizard is pre-skipped - the
+  // identity (and its currency) was already committed back at
+  // CurrencySelectionView. With [skipFirstWeekSetup] false, it lands on
+  // FirstWeekSetupView instead (app_router.dart's redirect chain).
   await tapReliably(
     tester,
     () => find.text(l10n.actionConfirm).hitTestable(),
     () =>
         find.byType(RecoveryPhraseConfirmView).evaluate().isEmpty &&
-        find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
+        (skipFirstWeekSetup
+            ? find
+                  .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
+                  .evaluate()
+                  .isNotEmpty
+            : find.text(l10n.firstWeekTitle).evaluate().isNotEmpty),
     innerTries: 150,
   );
 
