@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/exchange_rate_service.dart';
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
@@ -17,14 +18,16 @@ import '../../../core/money_formatter.dart';
 class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   TransferViewModel({
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
     String? initialFromAccountId,
     String? initialToAccountId,
     ExchangeRateService? exchangeRateService,
     SettingsRepository? settingsRepository,
   }) : _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository,
        _exchangeRateService = exchangeRateService ?? ExchangeRateService(),
        _settingsRepository = settingsRepository ?? SettingsRepository() {
-    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+    _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
       _accounts = accounts;
@@ -60,7 +63,7 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _maybeFetchReferenceRate();
       notifyListeners();
     });
-    _groupsSubscription = _ledgerRepository
+    _groupsSubscription = _accountRepository
         .watchAccountGroups(includeArchived: true)
         .listen((groups) {
           _groups = groups;
@@ -79,6 +82,7 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   final ExchangeRateService _exchangeRateService;
   final SettingsRepository _settingsRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;

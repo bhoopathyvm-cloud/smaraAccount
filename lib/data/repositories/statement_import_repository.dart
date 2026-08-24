@@ -12,6 +12,7 @@ import '../../domain/statement_import/parsed_statement_transaction.dart';
 import '../../domain/statement_import/statement_import_batch.dart';
 import '../database/app_database.dart';
 import '../database/tables/ofx_import_records_table.dart' show ImportSource;
+import 'account_repository.dart';
 import 'ledger_repository.dart';
 
 /// Repository for the statement import flow (ofx-transaction-import,
@@ -27,11 +28,14 @@ class StatementImportRepository {
   StatementImportRepository({
     required AppDatabase database,
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
   }) : _db = database,
-       _ledgerRepository = ledgerRepository;
+       _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository;
 
   final AppDatabase _db;
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
 
   /// Throws [OfxParseException] (via [parseOfxDocument]) when the file
   /// isn't recognizable as OFX at all.
@@ -50,11 +54,11 @@ class StatementImportRepository {
   /// `statementCurrency` (ofx-transaction-import design.md Decision 3:
   /// mismatch is a warning, not a block).
   Future<String?> groupCurrencyFor(String financialAccountId) async {
-    final accounts = await _ledgerRepository
+    final accounts = await _accountRepository
         .watchFinancialAccounts(includeArchived: true)
         .first;
     final account = accounts.firstWhere((a) => a.id == financialAccountId);
-    final groups = await _ledgerRepository
+    final groups = await _accountRepository
         .watchAccountGroups(includeArchived: true)
         .first;
     final group = groups.firstWhere((g) => g.id == account.groupId);

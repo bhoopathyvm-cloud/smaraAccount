@@ -10,11 +10,16 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
   late RecordTransactionViewModel viewModel;
 
   setUp(() {
     repository = MockLedgerRepository();
-    viewModel = RecordTransactionViewModel(ledgerRepository: repository);
+    accountRepository = MockAccountRepository();
+    viewModel = RecordTransactionViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+    );
   });
 
   test(
@@ -39,6 +44,7 @@ void main() {
       );
       final categorizedViewModel = RecordTransactionViewModel(
         ledgerRepository: withCategories,
+        accountRepository: MockAccountRepository(),
       );
       addTearDown(categorizedViewModel.dispose);
       // Stream.value(...) emits asynchronously (via a microtask), not
@@ -59,6 +65,7 @@ void main() {
 
     final spentViewModel = RecordTransactionViewModel(
       ledgerRepository: repository,
+      accountRepository: accountRepository,
       initialDirection: TransactionDirection.moneyOut,
     );
     addTearDown(spentViewModel.dispose);
@@ -138,11 +145,12 @@ void main() {
     >
     viewModelWithPayees() async {
       final withPayees = MockLedgerRepository();
+      final withPayeesAccounts = MockAccountRepository();
       when(
-        withPayees.watchFinancialAccounts(),
+        withPayeesAccounts.watchFinancialAccounts(),
       ).thenAnswer((_) => Stream.value(const []));
       when(
-        withPayees.watchAccountGroups(
+        withPayeesAccounts.watchAccountGroups(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value(const []));
@@ -152,7 +160,10 @@ void main() {
       when(
         withPayees.watchPayees(),
       ).thenAnswer((_) => Stream.value(const [starbucks]));
-      final vm = RecordTransactionViewModel(ledgerRepository: withPayees);
+      final vm = RecordTransactionViewModel(
+        ledgerRepository: withPayees,
+        accountRepository: withPayeesAccounts,
+      );
       await Future<void>.delayed(Duration.zero);
       return (viewModel: vm, repository: withPayees);
     }
@@ -518,10 +529,14 @@ void main() {
 
     Future<RecordTransactionViewModel> viewModelWithCardAndBank() async {
       final withAccounts = MockLedgerRepository();
+      final withAccountsRepository = MockAccountRepository();
       when(
-        withAccounts.watchFinancialAccounts(),
+        withAccountsRepository.watchFinancialAccounts(),
       ).thenAnswer((_) => Stream.value(const [checking, visaCard]));
-      final vm = RecordTransactionViewModel(ledgerRepository: withAccounts);
+      final vm = RecordTransactionViewModel(
+        ledgerRepository: withAccounts,
+        accountRepository: withAccountsRepository,
+      );
       await Future<void>.delayed(Duration.zero);
       return vm;
     }

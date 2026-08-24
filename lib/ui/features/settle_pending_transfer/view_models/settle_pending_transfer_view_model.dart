@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -24,8 +25,10 @@ class SettlePendingTransferViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
   SettlePendingTransferViewModel({
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
     required PendingTransferSummary summary,
   }) : _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository,
        _summary = summary {
     if (isTransfer) {
       _settledToAccountId = summary.pendingTransfer.destinationAccountId;
@@ -38,13 +41,13 @@ class SettlePendingTransferViewModel extends ChangeNotifier
           .toList();
       notifyListeners();
     });
-    _accountsSubscription = _ledgerRepository
+    _accountsSubscription = _accountRepository
         .watchFinancialAccounts(includeArchived: true)
         .listen((accounts) {
           _accounts = accounts;
           notifyListeners();
         });
-    _groupsSubscription = _ledgerRepository
+    _groupsSubscription = _accountRepository
         .watchAccountGroups(includeArchived: true)
         .listen((groups) {
           _groups = groups;
@@ -53,6 +56,7 @@ class SettlePendingTransferViewModel extends ChangeNotifier
   }
 
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   final PendingTransferSummary _summary;
   PendingTransferSummary get summary => _summary;
 

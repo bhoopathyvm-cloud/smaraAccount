@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../data/instrument_quote_refresh.dart';
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/investment_holdings_logic.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
@@ -24,12 +25,14 @@ enum ResearchLaunchResult { opened, copied }
 class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   HoldingsViewModel({
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
     required SettingsRepository settingsRepository,
     required this.accountId,
     InstrumentQuoteRefresh? quoteRefresh,
     Future<bool> Function(Uri url)? launchUrlFn,
     Future<void> Function(String text)? copyTextFn,
   }) : _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository,
        _settingsRepository = settingsRepository,
        _quoteRefresh =
            quoteRefresh ??
@@ -43,7 +46,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
        _copyText =
            copyTextFn ??
            ((text) => Clipboard.setData(ClipboardData(text: text))) {
-    _accountsSub = _ledgerRepository
+    _accountsSub = _accountRepository
         .watchFinancialAccounts(includeArchived: true)
         .listen((accounts) {
           _account = accounts.where((a) => a.id == accountId).firstOrNull;
@@ -73,7 +76,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _categories = categories;
       notifyListeners();
     });
-    _groupsSub = _ledgerRepository.watchAccountGroups().listen((groups) {
+    _groupsSub = _accountRepository.watchAccountGroups().listen((groups) {
       _groups = groups;
       notifyListeners();
     });
@@ -87,6 +90,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   final SettingsRepository _settingsRepository;
   final InstrumentQuoteRefresh _quoteRefresh;
   final Future<bool> Function(Uri url) _launchUrl;

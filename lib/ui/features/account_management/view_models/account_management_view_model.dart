@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
@@ -10,15 +10,15 @@ import '../../../../domain/models/account_group.dart';
 
 class AccountManagementViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  AccountManagementViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository {
-    _accountsSubscription = _ledgerRepository
+  AccountManagementViewModel({required AccountRepository accountRepository})
+    : _accountRepository = accountRepository {
+    _accountsSubscription = _accountRepository
         .watchFinancialAccounts(includeArchived: true)
         .listen((accounts) {
           _accounts = accounts;
           notifyListeners();
         });
-    _groupsSubscription = _ledgerRepository
+    _groupsSubscription = _accountRepository
         .watchAccountGroups(includeArchived: true)
         .listen((groups) {
           _groups = groups;
@@ -26,7 +26,7 @@ class AccountManagementViewModel extends ChangeNotifier
         });
   }
 
-  final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
 
@@ -47,7 +47,7 @@ class AccountManagementViewModel extends ChangeNotifier
     bool holdsInvestments = false,
   }) {
     return _run(() async {
-      await _ledgerRepository.createFinancialAccount(
+      await _accountRepository.createFinancialAccount(
         name: name,
         type: type,
         groupId: groupId,
@@ -60,16 +60,16 @@ class AccountManagementViewModel extends ChangeNotifier
 
   Future<bool> renameAccount({required String id, required String newName}) {
     return _run(
-      () => _ledgerRepository.renameFinancialAccount(id: id, newName: newName),
+      () => _accountRepository.renameFinancialAccount(id: id, newName: newName),
     );
   }
 
   Future<bool> archiveAccount(String id) {
-    return _run(() => _ledgerRepository.archiveFinancialAccount(id));
+    return _run(() => _accountRepository.archiveFinancialAccount(id));
   }
 
   Future<bool> unarchiveAccount(String id) {
-    return _run(() => _ledgerRepository.unarchiveFinancialAccount(id));
+    return _run(() => _accountRepository.unarchiveFinancialAccount(id));
   }
 
   Future<bool> reassignAccountGroup({
@@ -77,7 +77,7 @@ class AccountManagementViewModel extends ChangeNotifier
     required String groupId,
   }) {
     return _run(
-      () => _ledgerRepository.reassignFinancialAccountGroup(
+      () => _accountRepository.reassignFinancialAccountGroup(
         id: id,
         groupId: groupId,
       ),
@@ -86,7 +86,7 @@ class AccountManagementViewModel extends ChangeNotifier
 
   Future<bool> renameGroup({required String id, required String newName}) {
     return _run(
-      () => _ledgerRepository.renameAccountGroup(id: id, newName: newName),
+      () => _accountRepository.renameAccountGroup(id: id, newName: newName),
     );
   }
 
@@ -95,7 +95,7 @@ class AccountManagementViewModel extends ChangeNotifier
     required String currency,
   }) {
     return _run(
-      () => _ledgerRepository.changeAccountGroupCurrency(
+      () => _accountRepository.changeAccountGroupCurrency(
         groupId: id,
         currency: currency,
       ),
@@ -108,7 +108,7 @@ class AccountManagementViewModel extends ChangeNotifier
     required String currency,
   }) {
     return _run(
-      () => _ledgerRepository.createAccountGroup(
+      () => _accountRepository.createAccountGroup(
         name: name,
         kind: kind,
         currency: currency,
@@ -117,11 +117,11 @@ class AccountManagementViewModel extends ChangeNotifier
   }
 
   Future<bool> archiveGroup(String id) {
-    return _run(() => _ledgerRepository.archiveAccountGroup(id));
+    return _run(() => _accountRepository.archiveAccountGroup(id));
   }
 
   Future<bool> unarchiveGroup(String id) {
-    return _run(() => _ledgerRepository.unarchiveAccountGroup(id));
+    return _run(() => _accountRepository.unarchiveAccountGroup(id));
   }
 
   Future<bool> _run(Future<void> Function() action) async {

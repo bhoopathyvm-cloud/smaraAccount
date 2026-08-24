@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -33,11 +34,13 @@ class RecordTransactionViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
   RecordTransactionViewModel({
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
     String? initialFinancialAccountId,
     TransactionDirection initialDirection = TransactionDirection.moneyIn,
   }) : _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository,
        _direction = initialDirection {
-    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+    _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
       _financialAccounts = accounts;
@@ -46,7 +49,7 @@ class RecordTransactionViewModel extends ChangeNotifier
       }
       notifyListeners();
     });
-    _groupsSubscription = _ledgerRepository
+    _groupsSubscription = _accountRepository
         .watchAccountGroups(includeArchived: true)
         .listen((groups) {
           _groups = groups;
@@ -65,6 +68,7 @@ class RecordTransactionViewModel extends ChangeNotifier
   }
 
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;

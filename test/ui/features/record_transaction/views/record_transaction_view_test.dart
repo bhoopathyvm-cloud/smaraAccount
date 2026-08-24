@@ -23,6 +23,7 @@ void main() {
     // ledger_repository_test.dart's "archived category is excluded"
     // test).
     final repository = MockLedgerRepository();
+    final accountRepository = MockAccountRepository();
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer(
@@ -36,7 +37,10 @@ void main() {
       ]),
     );
 
-    final viewModel = RecordTransactionViewModel(ledgerRepository: repository);
+    final viewModel = RecordTransactionViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -57,6 +61,7 @@ void main() {
   testWidgets('typing a payee name offers a suggestion; selecting it fills the '
       'description field and applies its default category', (tester) async {
     final repository = MockLedgerRepository();
+    final accountRepository = MockAccountRepository();
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer(
@@ -75,7 +80,10 @@ void main() {
       ]),
     );
 
-    final viewModel = RecordTransactionViewModel(ledgerRepository: repository);
+    final viewModel = RecordTransactionViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -98,9 +106,11 @@ void main() {
   });
 
   group('split-transactions', () {
-    MockLedgerRepository repositoryWithTwoExpenseCategories() {
+    ({MockLedgerRepository repository, MockAccountRepository accountRepository})
+    repositoryWithTwoExpenseCategories() {
       final repository = MockLedgerRepository();
-      when(repository.watchFinancialAccounts()).thenAnswer(
+      final accountRepository = MockAccountRepository();
+      when(accountRepository.watchFinancialAccounts()).thenAnswer(
         (_) => Stream.value(const [
           Account(
             id: 'account-1',
@@ -130,14 +140,16 @@ void main() {
           ),
         ]),
       );
-      return repository;
+      return (repository: repository, accountRepository: accountRepository);
     }
 
     testWidgets('tapping "Split into multiple categories" replaces the single '
         'category picker with two category lines', (tester) async {
-      final repository = repositoryWithTwoExpenseCategories();
+      final (:repository, :accountRepository) =
+          repositoryWithTwoExpenseCategories();
       final viewModel = RecordTransactionViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
         initialDirection: TransactionDirection.moneyOut,
       );
       addTearDown(viewModel.dispose);
@@ -160,7 +172,8 @@ void main() {
 
     testWidgets('the remainder updates as line amounts are entered; Save is '
         'disabled until it reaches zero, then posts a split', (tester) async {
-      final repository = repositoryWithTwoExpenseCategories();
+      final (:repository, :accountRepository) =
+          repositoryWithTwoExpenseCategories();
       when(
         repository.recordSplitTransaction(
           totalAmountMinor: anyNamed('totalAmountMinor'),
@@ -174,6 +187,7 @@ void main() {
 
       final viewModel = RecordTransactionViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
         initialDirection: TransactionDirection.moneyOut,
       );
       addTearDown(viewModel.dispose);
@@ -250,9 +264,11 @@ void main() {
     testWidgets(
       'removing a line down to one collapses back to the single category picker',
       (tester) async {
-        final repository = repositoryWithTwoExpenseCategories();
+        final (:repository, :accountRepository) =
+            repositoryWithTwoExpenseCategories();
         final viewModel = RecordTransactionViewModel(
           ledgerRepository: repository,
+          accountRepository: accountRepository,
           initialDirection: TransactionDirection.moneyOut,
         );
         addTearDown(viewModel.dispose);
@@ -295,12 +311,15 @@ void main() {
       'and narrow the Account picker',
       (tester) async {
         final repository = MockLedgerRepository();
+
+        final accountRepository = MockAccountRepository();
         when(
-          repository.watchFinancialAccounts(),
+          accountRepository.watchFinancialAccounts(),
         ).thenAnswer((_) => Stream.value(const [checking, visaCard]));
 
         final viewModel = RecordTransactionViewModel(
           ledgerRepository: repository,
+          accountRepository: accountRepository,
           initialDirection: TransactionDirection.moneyOut,
         );
         addTearDown(viewModel.dispose);
@@ -330,12 +349,14 @@ void main() {
       tester,
     ) async {
       final repository = MockLedgerRepository();
+      final accountRepository = MockAccountRepository();
       when(
-        repository.watchFinancialAccounts(),
+        accountRepository.watchFinancialAccounts(),
       ).thenAnswer((_) => Stream.value(const [checking]));
 
       final viewModel = RecordTransactionViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
         initialDirection: TransactionDirection.moneyOut,
       );
       addTearDown(viewModel.dispose);

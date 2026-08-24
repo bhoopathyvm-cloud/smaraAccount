@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:path/path.dart' as p;
 import 'package:smara_accounting/data/database/app_database.dart';
+import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
@@ -27,20 +28,32 @@ void main() {
 
   File fileNamed(String name) => File(p.join(tempDir.path, name));
 
-  Future<LedgerRepository> openRepository(File file) async {
-    return LedgerRepository(
-      database: AppDatabase.openFile(file),
+  Future<({LedgerRepository repository, AccountRepository accountRepository})>
+  openRepository(File file) async {
+    final db = AppDatabase.openFile(file);
+    final repository = LedgerRepository(
+      database: db,
       signingKeyService: SigningKeyService(
         secureStorage: InMemorySecureKeyStorage(),
       ),
     );
+    return (
+      repository: repository,
+      accountRepository: AccountRepository(
+        database: db,
+        ledgerRepository: repository,
+      ),
+    );
   }
 
-  Future<LedgerRepository> seedRepository(File file) async {
-    final repository = await openRepository(file);
+  Future<({LedgerRepository repository, AccountRepository accountRepository})>
+  seedRepository(File file) async {
+    final opened = await openRepository(file);
+    final repository = opened.repository;
     final generated = await repository.generateFirstIdentity();
     await repository.confirmFirstIdentity(generated, currency: 'USD');
-    final account = (await repository.watchFinancialAccounts().first).first;
+    final account =
+        (await opened.accountRepository.watchFinancialAccounts().first).first;
     final category = (await repository.watchCategories().first).first;
     await repository.recordTransaction(
       amountMinor: 5000,
@@ -49,7 +62,7 @@ void main() {
       financialAccountId: account.id,
       transactionDate: DateTime(2026, 1, 1),
     );
-    return repository;
+    return opened;
   }
 
   test(
@@ -57,7 +70,7 @@ void main() {
     'state, fully verified, but not writable until the key is also restored',
     () async {
       final sourceFile = fileNamed('source.sqlite');
-      final source = await seedRepository(sourceFile);
+      final source = (await seedRepository(sourceFile)).repository;
 
       final backupContents = await source.exportLedgerBackup(
         passphrase: 'correct horse battery staple',
@@ -66,7 +79,7 @@ void main() {
       await source.close();
 
       final targetFile = fileNamed('target.sqlite');
-      final freshDevice = await openRepository(targetFile);
+      final freshDevice = (await openRepository(targetFile)).repository;
       await freshDevice.restoreLedgerBackup(
         fileContents: backupContents,
         passphrase: 'correct horse battery staple',
@@ -76,10 +89,15 @@ void main() {
       // open a brand new one against the replaced file, exactly as the
       // app would do on the next launch.
 
-      final restored = await openRepository(targetFile);
+      final restoredOpened = await openRepository(targetFile);
+      final restored = restoredOpened.repository;
       final entries = await restored
           .watchEntriesForAccount(
-            (await restored.watchFinancialAccounts().first).first.id,
+            (await restoredOpened.accountRepository
+                    .watchFinancialAccounts()
+                    .first)
+                .first
+                .id,
           )
           .first;
       expect(entries, hasLength(1));
@@ -90,7 +108,11 @@ void main() {
 
       // No matching private key was restored on this "device" - only the
       // ledger backup was. Reading/verifying works; recording does not.
-      final account = (await restored.watchFinancialAccounts().first).first;
+      final account =
+          (await restoredOpened.accountRepository
+                  .watchFinancialAccounts()
+                  .first)
+              .first;
       final category = (await restored.watchCategories().first).first;
       await expectLater(
         restored.recordTransaction(
@@ -110,7 +132,7 @@ void main() {
     "device's own active identity, and the target file is left untouched",
     () async {
       final sourceFile = fileNamed('source.sqlite');
-      final source = await seedRepository(sourceFile);
+      final source = (await seedRepository(sourceFile)).repository;
       final backupContents = await source.exportLedgerBackup(
         passphrase: 'passphrase-a',
         databaseFile: sourceFile,
@@ -118,7 +140,7 @@ void main() {
       await source.close();
 
       final targetFile = fileNamed('target.sqlite');
-      final alreadySetUp = await seedRepository(targetFile);
+      final alreadySetUp = (await seedRepository(targetFile)).repository;
       final targetBytesBefore = await targetFile.readAsBytes();
 
       await expectLater(
@@ -138,7 +160,7 @@ void main() {
   test('restore fails cleanly on the wrong passphrase, with no partial '
       'replacement', () async {
     final sourceFile = fileNamed('source.sqlite');
-    final source = await seedRepository(sourceFile);
+    final source = (await seedRepository(sourceFile)).repository;
     final backupContents = await source.exportLedgerBackup(
       passphrase: 'the-real-passphrase',
       databaseFile: sourceFile,
@@ -146,7 +168,7 @@ void main() {
     await source.close();
 
     final targetFile = fileNamed('target.sqlite');
-    final freshDevice = await openRepository(targetFile);
+    final freshDevice = (await openRepository(targetFile)).repository;
 
     await expectLater(
       freshDevice.restoreLedgerBackup(
@@ -160,14 +182,14 @@ void main() {
     // Nothing was ever written to targetFile - it's still whatever
     // onCreate produced for a never-restored fresh database (no
     // signing identity of its own).
-    final stillFresh = await openRepository(targetFile);
+    final stillFresh = (await openRepository(targetFile)).repository;
     expect(await stillFresh.currentIdentity(), isNull);
   });
 
   test('restore is rejected when the backup chain does not fully verify, '
       'and the target file is left untouched', () async {
     final sourceFile = fileNamed('source.sqlite');
-    final source = await seedRepository(sourceFile);
+    final source = (await seedRepository(sourceFile)).repository;
     await source.close();
 
     final tamperDb = AppDatabase.openFile(sourceFile);
@@ -177,7 +199,7 @@ void main() {
     );
     await tamperDb.close();
 
-    final tampered = await openRepository(sourceFile);
+    final tampered = (await openRepository(sourceFile)).repository;
     final backupContents = await tampered.exportLedgerBackup(
       passphrase: 'passphrase-a',
       databaseFile: sourceFile,
@@ -185,7 +207,7 @@ void main() {
     await tampered.close();
 
     final targetFile = fileNamed('target.sqlite');
-    final alreadySetUp = await seedRepository(targetFile);
+    final alreadySetUp = (await seedRepository(targetFile)).repository;
     final targetBytesBefore = await targetFile.readAsBytes();
 
     await expectLater(
@@ -203,7 +225,7 @@ void main() {
 
   test('exportLedgerBackup never includes the private key material', () async {
     final sourceFile = fileNamed('source.sqlite');
-    final source = await seedRepository(sourceFile);
+    final source = (await seedRepository(sourceFile)).repository;
     final backupContents = await source.exportLedgerBackup(
       passphrase: 'p',
       databaseFile: sourceFile,

@@ -11,6 +11,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
 
   const checking = Account(
     id: 'account-1',
@@ -43,11 +44,12 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
     when(
-      repository.watchFinancialAccounts(),
+      accountRepository.watchFinancialAccounts(),
     ).thenAnswer((_) => Stream.value(const [checking]));
     when(
-      repository.watchAccountGroups(
+      accountRepository.watchAccountGroups(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value(const [usdGroup]));
@@ -59,6 +61,7 @@ void main() {
   Future<RecurringTemplateManagementViewModel> viewModelAfterLoad() async {
     final viewModel = RecurringTemplateManagementViewModel(
       ledgerRepository: repository,
+      accountRepository: accountRepository,
     );
     await Future<void>.delayed(Duration.zero);
     return viewModel;

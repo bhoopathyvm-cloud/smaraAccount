@@ -7,6 +7,7 @@ import 'package:smara_accounting/data/database/tables/account_groups_table.dart'
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
     show ImportSource;
+import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -22,6 +23,7 @@ import '../../domain/crypto/in_memory_secure_key_storage.dart';
 void main() {
   late AppDatabase db;
   late LedgerRepository ledgerRepository;
+  late AccountRepository accountRepository;
   late StatementImportRepository importRepository;
   late String accountId;
   late String otherAccountId;
@@ -35,19 +37,24 @@ void main() {
         secureStorage: InMemorySecureKeyStorage(),
       ),
     );
+    accountRepository = AccountRepository(
+      database: db,
+      ledgerRepository: ledgerRepository,
+    );
     importRepository = StatementImportRepository(
       database: db,
       ledgerRepository: ledgerRepository,
+      accountRepository: accountRepository,
     );
 
     final generated = await ledgerRepository.generateFirstIdentity();
     await ledgerRepository.confirmFirstIdentity(generated, currency: 'USD');
     accountId =
-        (await ledgerRepository.watchFinancialAccounts().first).first.id;
+        (await accountRepository.watchFinancialAccounts().first).first.id;
 
-    final assetGroup = (await ledgerRepository.watchAccountGroups().first)
+    final assetGroup = (await accountRepository.watchAccountGroups().first)
         .firstWhere((g) => g.kind == AccountGroupKind.assetGroup);
-    final otherAccount = await ledgerRepository.createFinancialAccount(
+    final otherAccount = await accountRepository.createFinancialAccount(
       name: 'Savings',
       type: AccountType.asset,
       groupId: assetGroup.id,

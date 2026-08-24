@@ -8,6 +8,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
@@ -81,6 +82,7 @@ void main() {
 
   late AppDatabase db;
   late LedgerRepository repository;
+  late AccountRepository accountRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -89,6 +91,10 @@ void main() {
       signingKeyService: SigningKeyService(
         secureStorage: InMemorySecureKeyStorage(),
       ),
+    );
+    accountRepository = AccountRepository(
+      database: db,
+      ledgerRepository: repository,
     );
     // app_router.dart's redirect requires a confirmed AND acknowledged
     // signing identity, plus a completed first-week-setup wizard, before
@@ -153,7 +159,7 @@ void main() {
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
@@ -162,7 +168,10 @@ void main() {
         transactionDate: DateTime.now(),
       );
 
-      final registerViewModel = RegisterViewModel(ledgerRepository: repository);
+      final registerViewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(registerViewModel.dispose);
       await Future<void>.delayed(Duration.zero);
       final entryId = registerViewModel.rows.single.entryId;
@@ -184,7 +193,7 @@ void main() {
     (tester) async {
       final categories = await repository.watchCategories().first;
       final salary = categories.firstWhere((a) => a.name == 'Salary');
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 500,
         direction: TransactionDirection.moneyIn,
@@ -197,7 +206,10 @@ void main() {
       final pickerCategories = await repository.watchCategories().first;
       expect(pickerCategories.any((a) => a.id == salary.id), isFalse);
 
-      final registerViewModel = RegisterViewModel(ledgerRepository: repository);
+      final registerViewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(registerViewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -237,7 +249,7 @@ void main() {
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
@@ -311,7 +323,7 @@ void main() {
           .firstWhere((a) => a.type == AccountType.income)
           .id;
       final checkingId =
-          (await repository.watchFinancialAccounts().first).first.id;
+          (await accountRepository.watchFinancialAccounts().first).first.id;
       await repository.recordTransaction(
         amountMinor: 100000,
         direction: TransactionDirection.moneyIn,
@@ -319,11 +331,11 @@ void main() {
         financialAccountId: checkingId,
         transactionDate: DateTime(2026, 1, 15),
       );
-      await repository.changeAccountGroupCurrency(
+      await accountRepository.changeAccountGroupCurrency(
         groupId: groupPensionRetirementId,
         currency: 'EUR',
       );
-      await repository.createFinancialAccount(
+      await accountRepository.createFinancialAccount(
         name: 'Euro Savings',
         type: AccountType.asset,
         groupId: groupPensionRetirementId,
@@ -370,7 +382,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(await repository.watchPendingTransfers().first, isEmpty);
-      final euroAccounts = await repository.watchFinancialAccounts().first;
+      final euroAccounts = await accountRepository
+          .watchFinancialAccounts()
+          .first;
       final euroId = euroAccounts
           .firstWhere((a) => a.name == 'Euro Savings')
           .id;
@@ -388,7 +402,7 @@ void main() {
         .firstWhere((a) => a.type == AccountType.income)
         .id;
     final checkingId =
-        (await repository.watchFinancialAccounts().first).first.id;
+        (await accountRepository.watchFinancialAccounts().first).first.id;
     await repository.recordTransaction(
       amountMinor: 100000,
       direction: TransactionDirection.moneyIn,
@@ -396,18 +410,18 @@ void main() {
       financialAccountId: checkingId,
       transactionDate: DateTime(2026, 1, 15),
     );
-    await repository.changeAccountGroupCurrency(
+    await accountRepository.changeAccountGroupCurrency(
       groupId: groupPensionRetirementId,
       currency: 'EUR',
     );
-    await repository.createFinancialAccount(
+    await accountRepository.createFinancialAccount(
       name: 'Euro Savings',
       type: AccountType.asset,
       groupId: groupPensionRetirementId,
     );
     await repository.recordTransfer(
       fromAccountId: checkingId,
-      toAccountId: (await repository.watchFinancialAccounts().first)
+      toAccountId: (await accountRepository.watchFinancialAccounts().first)
           .firstWhere((a) => a.name == 'Euro Savings')
           .id,
       amountMinor: 10000,
@@ -601,7 +615,7 @@ void main() {
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
@@ -688,7 +702,7 @@ void main() {
   testWidgets(
     'tapping Transfer from an account\'s register opens Transfer with that account pre-selected',
     (tester) async {
-      await repository.createFinancialAccount(
+      await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
@@ -744,7 +758,7 @@ void main() {
       // ListenableBuilder is already mounted (as it is here, thanks to
       // StatefulShellRoute keeping every branch alive) and the user taps a
       // different account, that becomes a rebuild-during-build.
-      await repository.createFinancialAccount(
+      await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
@@ -787,12 +801,12 @@ void main() {
       // account/group setup (e.g. "Euro Savings" above); this test's focus
       // is the archive lifecycle and its effect on pickers, not the create
       // dialog itself.
-      final group = await repository.createAccountGroup(
+      final group = await accountRepository.createAccountGroup(
         name: 'Business',
         kind: AccountGroupKind.assetGroup,
         currency: 'USD',
       );
-      await repository.createFinancialAccount(
+      await accountRepository.createFinancialAccount(
         name: 'Business Checking',
         type: AccountType.asset,
         groupId: group.id,
@@ -838,13 +852,13 @@ void main() {
       // Archive the account (via Repository - the account's own archive
       // flow is already covered elsewhere), then the group archives
       // successfully through the UI.
-      final businessAccounts = await repository
+      final businessAccounts = await accountRepository
           .watchFinancialAccounts(includeArchived: true)
           .first;
       final businessAccountId = businessAccounts
           .firstWhere((a) => a.name == 'Business Checking')
           .id;
-      await repository.archiveFinancialAccount(businessAccountId);
+      await accountRepository.archiveFinancialAccount(businessAccountId);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
@@ -887,18 +901,30 @@ void main() {
 }
 
 Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
+  final accountRepository = AccountRepository(
+    database: database,
+    ledgerRepository: repository,
+  );
   final statementImportRepository = StatementImportRepository(
     database: database,
     ledgerRepository: repository,
+    accountRepository: accountRepository,
   );
   return MultiProvider(
     providers: [
       Provider<LedgerRepository>.value(value: repository),
+      Provider<AccountRepository>.value(value: accountRepository),
       ChangeNotifierProvider(
-        create: (_) => RegisterViewModel(ledgerRepository: repository),
+        create: (_) => RegisterViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+        ),
       ),
       ChangeNotifierProvider(
-        create: (_) => SummaryViewModel(ledgerRepository: repository),
+        create: (_) => SummaryViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+        ),
       ),
       ChangeNotifierProvider(
         create: (_) =>
@@ -915,7 +941,8 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
         create: (_) => HomeViewModel(ledgerRepository: repository),
       ),
       ChangeNotifierProvider(
-        create: (_) => AccountManagementViewModel(ledgerRepository: repository),
+        create: (_) =>
+            AccountManagementViewModel(accountRepository: accountRepository),
       ),
     ],
     child: Builder(
@@ -925,6 +952,7 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
           theme: buildAppTheme(),
           routerConfig: buildAppRouter(
             repository,
+            accountRepository,
             statementImportRepository,
             settingsRepository,
             AppLockController(settingsRepository: settingsRepository),

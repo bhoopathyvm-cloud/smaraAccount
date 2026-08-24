@@ -13,6 +13,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
 
   const income = Account(
     id: 'income-1',
@@ -30,8 +31,9 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([asset]));
@@ -112,7 +114,10 @@ void main() {
       ]),
     );
 
-    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+    );
     addTearDown(viewModel.dispose);
     // Stream.value(...) emits asynchronously (via a microtask), not
     // synchronously on listen - let it deliver before asserting.
@@ -181,7 +186,10 @@ void main() {
         ]),
       );
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -246,7 +254,10 @@ void main() {
       ]),
     );
 
-    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+    );
     addTearDown(viewModel.dispose);
     await Future<void>.delayed(Duration.zero);
 
@@ -274,7 +285,10 @@ void main() {
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => entriesController.stream);
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(viewModel.dispose);
 
       final existing = testEntry(
@@ -376,7 +390,10 @@ void main() {
           ]),
         );
 
-        final viewModel = RegisterViewModel(ledgerRepository: repository);
+        final viewModel = RegisterViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+        );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
 
@@ -388,7 +405,7 @@ void main() {
       'false for a transfer row (counterpart is another financial account)',
       () async {
         when(
-          repository.watchFinancialAccounts(
+          accountRepository.watchFinancialAccounts(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value([asset, otherAsset]));
@@ -422,7 +439,10 @@ void main() {
           ]),
         );
 
-        final viewModel = RegisterViewModel(ledgerRepository: repository);
+        final viewModel = RegisterViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+        );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
 
@@ -462,7 +482,10 @@ void main() {
         ]),
       );
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -521,7 +544,10 @@ void main() {
         ]),
       );
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -615,7 +641,10 @@ void main() {
         ]),
       );
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       await Future<void>.delayed(Duration.zero);
       return viewModel;
     }
@@ -746,7 +775,10 @@ void main() {
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value([splitEntry()]));
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -769,7 +801,10 @@ void main() {
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value([splitEntry()]));
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -809,7 +844,10 @@ void main() {
           ]),
         );
 
-        final viewModel = RegisterViewModel(ledgerRepository: repository);
+        final viewModel = RegisterViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+        );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
 
@@ -830,7 +868,10 @@ void main() {
     ).thenAnswer((_) => Stream.value(const []));
     when(repository.reverseEntry(any)).thenAnswer((_) async {});
 
-    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await viewModel.reverseEntry('e1');
@@ -855,7 +896,7 @@ void main() {
       groupId: 'group-1',
     );
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([archivedAsset, other]));
@@ -866,7 +907,7 @@ void main() {
       repository.watchEntriesForAccount(any),
     ).thenAnswer((_) => Stream.value(const []));
     when(
-      repository.recordArchivedAccountCloseoutTransfer(
+      accountRepository.recordArchivedAccountCloseoutTransfer(
         fromAccountId: anyNamed('fromAccountId'),
         toAccountId: anyNamed('toAccountId'),
         transactionDate: anyNamed('transactionDate'),
@@ -877,6 +918,7 @@ void main() {
 
     final viewModel = RegisterViewModel(
       ledgerRepository: repository,
+      accountRepository: accountRepository,
       initialAccountId: archivedAsset.id,
     );
     addTearDown(viewModel.dispose);
@@ -895,7 +937,7 @@ void main() {
     expect(viewModel.errorMessage, isNull);
 
     when(
-      repository.recordArchivedAccountCloseoutTransfer(
+      accountRepository.recordArchivedAccountCloseoutTransfer(
         fromAccountId: anyNamed('fromAccountId'),
         toAccountId: anyNamed('toAccountId'),
         transactionDate: anyNamed('transactionDate'),
@@ -940,6 +982,7 @@ void main() {
 
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
+          accountRepository: accountRepository,
           initialAccountId: 'asset-1',
         );
         addTearDown(viewModel.dispose);
@@ -986,6 +1029,7 @@ void main() {
 
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
+          accountRepository: accountRepository,
           initialAccountId: 'asset-1',
         );
         addTearDown(viewModel.dispose);

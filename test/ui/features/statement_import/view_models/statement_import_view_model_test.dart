@@ -4,6 +4,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -138,6 +139,7 @@ const _duplicateDescriptionFixture = '''
 void main() {
   late AppDatabase db;
   late LedgerRepository ledgerRepository;
+  late AccountRepository accountRepository;
   late StatementImportRepository importRepository;
   late String accountId;
 
@@ -149,14 +151,19 @@ void main() {
         secureStorage: InMemorySecureKeyStorage(),
       ),
     );
+    accountRepository = AccountRepository(
+      database: db,
+      ledgerRepository: ledgerRepository,
+    );
     importRepository = StatementImportRepository(
       database: db,
       ledgerRepository: ledgerRepository,
+      accountRepository: accountRepository,
     );
     final generated = await ledgerRepository.generateFirstIdentity();
     await ledgerRepository.confirmFirstIdentity(generated, currency: 'USD');
     accountId =
-        (await ledgerRepository.watchFinancialAccounts().first).first.id;
+        (await accountRepository.watchFinancialAccounts().first).first.id;
   });
 
   tearDown(() async {
@@ -199,6 +206,7 @@ void main() {
       final firstImport = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
       );
       addTearDown(firstImport.dispose);
       await importFileAndCategorizeAllRows(firstImport);
@@ -230,6 +238,7 @@ void main() {
       final secondImport = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
       );
       addTearDown(secondImport.dispose);
       await importFileAndCategorizeAllRows(secondImport);
@@ -258,6 +267,7 @@ void main() {
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
         initialFinancialAccountId: accountId,
       );
       addTearDown(viewModel.dispose);
@@ -292,6 +302,7 @@ void main() {
       final firstImport = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
       );
       addTearDown(firstImport.dispose);
       firstImport.chooseSource(StatementSource.csv);
@@ -351,6 +362,7 @@ void main() {
       final secondImport = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
       );
       addTearDown(secondImport.dispose);
       secondImport.chooseSource(StatementSource.csv);
@@ -414,6 +426,7 @@ void main() {
         final viewModel = StatementImportViewModel(
           importRepository: importRepository,
           ledgerRepository: ledgerRepository,
+          accountRepository: accountRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -448,6 +461,7 @@ void main() {
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -469,6 +483,7 @@ void main() {
         final viewModel = StatementImportViewModel(
           importRepository: importRepository,
           ledgerRepository: ledgerRepository,
+          accountRepository: accountRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -492,6 +507,7 @@ void main() {
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -530,6 +546,7 @@ void main() {
         final viewModel = StatementImportViewModel(
           importRepository: importRepository,
           ledgerRepository: ledgerRepository,
+          accountRepository: accountRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -562,6 +579,7 @@ void main() {
       final firstImport = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
       );
       addTearDown(firstImport.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -573,6 +591,7 @@ void main() {
       final secondImport = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
       );
       addTearDown(secondImport.dispose);
       await Future<void>.delayed(Duration.zero);

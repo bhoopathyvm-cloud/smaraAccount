@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/database/tables/ofx_import_records_table.dart'
     show ImportSource;
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/statement_import_repository.dart';
 import '../../../../domain/csv/csv_column_mapping.dart';
@@ -70,11 +71,13 @@ class StatementImportViewModel extends ChangeNotifier {
   StatementImportViewModel({
     required StatementImportRepository importRepository,
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
     String? initialFinancialAccountId,
   }) : _importRepository = importRepository,
        _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository,
        _initialFinancialAccountId = initialFinancialAccountId {
-    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+    _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
       _accounts = accounts;
@@ -102,6 +105,7 @@ class StatementImportViewModel extends ChangeNotifier {
 
   final StatementImportRepository _importRepository;
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   final String? _initialFinancialAccountId;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;

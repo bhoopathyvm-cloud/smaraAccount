@@ -13,12 +13,14 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
   late MockExchangeRateService exchangeRateService;
   late MockSettingsRepository settingsRepository;
 
   TransferViewModel buildViewModel({String? initialFromAccountId}) {
     return TransferViewModel(
       ledgerRepository: repository,
+      accountRepository: accountRepository,
       exchangeRateService: exchangeRateService,
       settingsRepository: settingsRepository,
       initialFromAccountId: initialFromAccountId,
@@ -67,13 +69,14 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([checking, savings]));
     when(
-      repository.watchAccountGroups(
+      accountRepository.watchAccountGroups(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
@@ -95,7 +98,7 @@ void main() {
     tester,
   ) async {
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([checking]));
@@ -285,7 +288,7 @@ void main() {
   group('cross-currency branching', () {
     setUp(() {
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, euroSavings]));

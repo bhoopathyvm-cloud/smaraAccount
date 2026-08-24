@@ -7,16 +7,16 @@ import 'package:smara_accounting/ui/features/first_week_setup/view_models/first_
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository ledgerRepository;
+  late MockAccountRepository accountRepository;
   late MockSettingsRepository settingsRepository;
 
   setUp(() {
-    ledgerRepository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
     settingsRepository = MockSettingsRepository();
   });
 
   FirstWeekSetupViewModel viewModel() => FirstWeekSetupViewModel(
-    ledgerRepository: ledgerRepository,
+    accountRepository: accountRepository,
     settingsRepository: settingsRepository,
   );
 
@@ -32,7 +32,7 @@ void main() {
 
     expect(result, isTrue);
     verifyNever(
-      ledgerRepository.createFinancialAccount(
+      accountRepository.createFinancialAccount(
         name: anyNamed('name'),
         type: anyNamed('type'),
         groupId: anyNamed('groupId'),
@@ -50,7 +50,7 @@ void main() {
     vm.setHasCashAccount(true);
     vm.setCashAccountName('Wallet cash');
     when(
-      ledgerRepository.createFinancialAccount(
+      accountRepository.createFinancialAccount(
         name: anyNamed('name'),
         type: anyNamed('type'),
         groupId: anyNamed('groupId'),
@@ -71,14 +71,14 @@ void main() {
 
     expect(result, isTrue);
     verify(
-      ledgerRepository.createFinancialAccount(
+      accountRepository.createFinancialAccount(
         name: 'Chase Sapphire',
         type: AccountType.liability,
         groupId: groupCreditShortTermId,
       ),
     ).called(1);
     verify(
-      ledgerRepository.createFinancialAccount(
+      accountRepository.createFinancialAccount(
         name: 'Wallet cash',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
@@ -100,7 +100,7 @@ void main() {
 
     expect(result, isTrue);
     verifyNever(
-      ledgerRepository.createFinancialAccount(
+      accountRepository.createFinancialAccount(
         name: anyNamed('name'),
         type: anyNamed('type'),
         groupId: anyNamed('groupId'),

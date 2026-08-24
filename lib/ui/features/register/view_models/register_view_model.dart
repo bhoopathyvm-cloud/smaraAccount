@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/database/tables/accounts_table.dart';
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -18,12 +19,14 @@ import 'register_row.dart';
 class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   RegisterViewModel({
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
     String? initialAccountId,
-  }) : _ledgerRepository = ledgerRepository {
-    _accountsSubscription = _ledgerRepository
+  }) : _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository {
+    _accountsSubscription = _accountRepository
         .watchFinancialAccounts(includeArchived: true)
         .listen(_onAccounts);
-    _groupsSubscription = _ledgerRepository
+    _groupsSubscription = _accountRepository
         .watchAccountGroups(includeArchived: true)
         .listen((groups) {
           _groups = groups;
@@ -36,6 +39,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
   StreamSubscription<List<JournalEntry>>? _entriesSubscription;
@@ -354,7 +358,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
     clearFailure();
     notifyListeners();
     try {
-      await _ledgerRepository.recordArchivedAccountCloseoutTransfer(
+      await _accountRepository.recordArchivedAccountCloseoutTransfer(
         fromAccountId: fromAccountId,
         toAccountId: toAccountId,
         transactionDate: transactionDate,

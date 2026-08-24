@@ -5,6 +5,7 @@ import 'package:smara_accounting/data/database/tables/account_groups_table.dart'
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
     show ImportSource;
+import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
@@ -447,10 +448,14 @@ void main() {
           secureStorage: InMemorySecureKeyStorage(),
         ),
       );
+      final accountRepository = AccountRepository(
+        database: db,
+        ledgerRepository: repository,
+      );
       final generated = await repository.generateFirstIdentity();
       await repository.confirmFirstIdentity(generated, currency: 'USD');
 
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Visa',
         type: AccountType.liability,
         groupId: groupCreditShortTermId,
@@ -509,10 +514,14 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
         final accountId =
-            (await repository.watchFinancialAccounts().first).first.id;
+            (await accountRepository.watchFinancialAccounts().first).first.id;
         final expenseId = (await repository.watchCategories().first)
             .firstWhere((a) => a.type == AccountType.expense)
             .id;
@@ -589,7 +598,6 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
-
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
 
@@ -681,9 +689,14 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
-        final account = (await repository.watchFinancialAccounts().first).first;
+        final account =
+            (await accountRepository.watchFinancialAccounts().first).first;
         final category = (await repository.watchCategories().first).first;
         await repository.recordTransaction(
           amountMinor: 100,
@@ -725,9 +738,14 @@ void main() {
           secureStorage: InMemorySecureKeyStorage(),
         ),
       );
+      final accountRepository = AccountRepository(
+        database: db,
+        ledgerRepository: repository,
+      );
       final generated = await repository.generateFirstIdentity();
       await repository.confirmFirstIdentity(generated, currency: 'USD');
-      final account = (await repository.watchFinancialAccounts().first).first;
+      final account =
+          (await accountRepository.watchFinancialAccounts().first).first;
       final category = (await repository.watchCategories().first).first;
       await repository.recordTransaction(
         amountMinor: 100,
@@ -783,9 +801,14 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
-        final account = (await repository.watchFinancialAccounts().first).first;
+        final account =
+            (await accountRepository.watchFinancialAccounts().first).first;
         final category = (await repository.watchCategories().first).first;
         await repository.recordTransaction(
           amountMinor: 100,
@@ -838,9 +861,14 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
-        final account = (await repository.watchFinancialAccounts().first).first;
+        final account =
+            (await accountRepository.watchFinancialAccounts().first).first;
         final category = (await repository.watchCategories().first).first;
         await repository.recordTransaction(
           amountMinor: 100,
@@ -894,8 +922,12 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
 
-        final groups = await repository.watchAccountGroups().first;
+        final groups = await accountRepository.watchAccountGroups().first;
         expect(groups, isNotEmpty);
         expect(groups.every((g) => !g.archived), isTrue);
       },
@@ -913,15 +945,19 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
 
-        final created = await repository.createAccountGroup(
+        final created = await accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: 'USD',
         );
-        await repository.archiveAccountGroup(created.id);
+        await accountRepository.archiveAccountGroup(created.id);
 
-        final groups = await repository
+        final groups = await accountRepository
             .watchAccountGroups(includeArchived: true)
             .first;
         expect(groups.firstWhere((g) => g.id == created.id).archived, isTrue);
@@ -941,14 +977,18 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
 
-        final groups = await repository.watchAccountGroups().first;
+        final groups = await accountRepository.watchAccountGroups().first;
         expect(groups, isNotEmpty);
         expect(groups.every((g) => !g.archived), isTrue);
 
-        final created = await repository.createAccountGroup(
+        final created = await accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: 'USD',
@@ -971,11 +1011,15 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
 
         final groups = await db.select(db.accountGroups).get();
         expect(groups, isNotEmpty);
         expect(groups.every((g) => g.currency == null), isTrue);
-        expect(await repository.needsCurrencyBackfill(), isTrue);
+        expect(await accountRepository.needsCurrencyBackfill(), isTrue);
       },
     );
 
@@ -998,7 +1042,11 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
-        final financialAccounts = await repository
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
+        final financialAccounts = await accountRepository
             .watchFinancialAccounts(includeArchived: true)
             .first;
         expect(
@@ -1020,10 +1068,14 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
 
-        expect(await repository.needsCurrencyBackfill(), isTrue);
-        await repository.backfillGroupCurrencies('EUR');
-        expect(await repository.needsCurrencyBackfill(), isFalse);
+        expect(await accountRepository.needsCurrencyBackfill(), isTrue);
+        await accountRepository.backfillGroupCurrencies('EUR');
+        expect(await accountRepository.needsCurrencyBackfill(), isFalse);
 
         final groups = await db.select(db.accountGroups).get();
         expect(groups.every((g) => g.currency == 'EUR'), isTrue);
@@ -1125,8 +1177,12 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
 
-        final accounts = await repository.watchFinancialAccounts().first;
+        final accounts = await accountRepository.watchFinancialAccounts().first;
         final legacy = accounts.firstWhere((a) => a.id == 'legacy-asset');
         expect(legacy.groupId, equals(groupCashEquivalentsId));
         expect(await repository.displayBalanceMinor('legacy-asset'), equals(0));
@@ -1147,6 +1203,10 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final accountRepository = AccountRepository(
+          database: db,
+          ledgerRepository: repository,
+        );
 
         // The migration itself succeeds simply by opening the database
         // without throwing - exercised by this first query.
@@ -1159,7 +1219,7 @@ void main() {
         final incomeId = categories
             .firstWhere((a) => a.type.name == 'income')
             .id;
-        final accounts = await repository.watchFinancialAccounts().first;
+        final accounts = await accountRepository.watchFinancialAccounts().first;
         await repository.recordTransaction(
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,

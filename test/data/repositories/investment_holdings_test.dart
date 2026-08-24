@@ -2,6 +2,7 @@ import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -16,6 +17,7 @@ import '../../domain/crypto/in_memory_secure_key_storage.dart';
 void main() {
   late AppDatabase db;
   late LedgerRepository repository;
+  late AccountRepository accountRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -24,6 +26,10 @@ void main() {
       signingKeyService: SigningKeyService(
         secureStorage: InMemorySecureKeyStorage(),
       ),
+    );
+    accountRepository = AccountRepository(
+      database: db,
+      ledgerRepository: repository,
     );
     final generated = await repository.generateFirstIdentity();
     await repository.confirmFirstIdentity(generated, currency: 'USD');
@@ -34,7 +40,7 @@ void main() {
   });
 
   Future<String> cashAccountId() async {
-    final accounts = await repository.watchFinancialAccounts().first;
+    final accounts = await accountRepository.watchFinancialAccounts().first;
     return accounts.firstWhere((a) => !a.isInvestmentAccount).id;
   }
 
@@ -49,7 +55,7 @@ void main() {
   }
 
   Future<String> createInvestmentAccount({String name = 'Brokerage'}) async {
-    return (await repository.createFinancialAccount(
+    return (await accountRepository.createFinancialAccount(
       name: name,
       type: AccountType.asset,
       groupId: groupInvestmentsId,
@@ -683,7 +689,7 @@ void main() {
           transactionDate: DateTime(2026, 1, 2),
           fundingSource: BuyFundingSource.cash,
         );
-        await repository.archiveFinancialAccount(accountId);
+        await accountRepository.archiveFinancialAccount(accountId);
         await expectLater(
           () => repository.recordBuy(
             accountId: accountId,
@@ -696,7 +702,7 @@ void main() {
           throwsA(isA<AccountGroupException>()),
         );
         final dest = await cashAccountId();
-        await repository.recordArchivedAccountCloseoutTransfer(
+        await accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: accountId,
           toAccountId: dest,
           transactionDate: DateTime(2026, 4, 2),
@@ -711,7 +717,7 @@ void main() {
           gainIncomeCategoryId: await incomeId(),
         );
         expect(await repository.displayBalanceMinor(accountId), greaterThan(0));
-        await repository.recordArchivedAccountCloseoutTransfer(
+        await accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: accountId,
           toAccountId: dest,
           transactionDate: DateTime(2026, 4, 4),

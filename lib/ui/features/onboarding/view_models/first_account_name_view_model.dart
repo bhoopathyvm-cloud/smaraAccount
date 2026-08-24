@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../l10n/l10n.dart';
@@ -11,9 +11,9 @@ import '../../../../l10n/l10n.dart';
 /// before the guided first Spent/Received and before the recovery phrase.
 class FirstAccountNameViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  FirstAccountNameViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository {
-    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+  FirstAccountNameViewModel({required AccountRepository accountRepository})
+    : _accountRepository = accountRepository {
+    _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
       if (_seededAccount == null && accounts.isNotEmpty) {
@@ -24,7 +24,7 @@ class FirstAccountNameViewModel extends ChangeNotifier
     });
   }
 
-  final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
 
   Account? _seededAccount;
@@ -57,7 +57,7 @@ class FirstAccountNameViewModel extends ChangeNotifier
     notifyListeners();
 
     try {
-      await _ledgerRepository.renameFinancialAccount(
+      await _accountRepository.renameFinancialAccount(
         id: account.id,
         newName: trimmed,
       );

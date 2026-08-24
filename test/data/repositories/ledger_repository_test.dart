@@ -3,6 +3,7 @@ import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
@@ -21,6 +22,7 @@ void main() {
   late AppDatabase db;
   late SigningKeyService signingKeyService;
   late LedgerRepository repository;
+  late AccountRepository accountRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -30,6 +32,10 @@ void main() {
     repository = LedgerRepository(
       database: db,
       signingKeyService: signingKeyService,
+    );
+    accountRepository = AccountRepository(
+      database: db,
+      ledgerRepository: repository,
     );
     // Every test starts past onboarding - identity lifecycle itself is
     // covered by its own group below, using a fresh Repository/service.
@@ -42,7 +48,7 @@ void main() {
   });
 
   Future<String> firstFinancialAccountId() async {
-    final accounts = await repository.watchFinancialAccounts().first;
+    final accounts = await accountRepository.watchFinancialAccounts().first;
     return accounts.first.id;
   }
 
@@ -57,11 +63,11 @@ void main() {
   // financial account) so cross-currency scenarios have a real second
   // account to work with.
   Future<String> secondCurrencyAssetAccountId({String currency = 'EUR'}) async {
-    await repository.changeAccountGroupCurrency(
+    await accountRepository.changeAccountGroupCurrency(
       groupId: groupPensionRetirementId,
       currency: currency,
     );
-    final account = await repository.createFinancialAccount(
+    final account = await accountRepository.createFinancialAccount(
       name: 'Euro Savings',
       type: AccountType.asset,
       groupId: groupPensionRetirementId,
@@ -72,11 +78,11 @@ void main() {
   Future<String> secondCurrencyLiabilityAccountId({
     String currency = 'EUR',
   }) async {
-    await repository.changeAccountGroupCurrency(
+    await accountRepository.changeAccountGroupCurrency(
       groupId: groupLoansMortgagesId,
       currency: currency,
     );
-    final account = await repository.createFinancialAccount(
+    final account = await accountRepository.createFinancialAccount(
       name: 'Euro Loan',
       type: AccountType.liability,
       groupId: groupLoansMortgagesId,
@@ -947,13 +953,13 @@ void main() {
 
   group('financial account management', () {
     test('creates an asset account in a matching group', () async {
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
       );
 
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       expect(
         accounts.any((a) => a.id == account.id && a.name == 'Savings'),
         isTrue,
@@ -961,7 +967,7 @@ void main() {
     });
 
     test('creates a liability account in a matching group', () async {
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Credit Card',
         type: AccountType.liability,
         groupId: groupCreditShortTermId,
@@ -971,7 +977,7 @@ void main() {
     });
 
     test('creates a credit-card-flagged liability account', () async {
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Visa',
         type: AccountType.liability,
         groupId: groupCreditShortTermId,
@@ -979,7 +985,7 @@ void main() {
       );
 
       expect(account.isCreditCard, isTrue);
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       expect(
         accounts.firstWhere((a) => a.id == account.id).isCreditCard,
         isTrue,
@@ -987,7 +993,7 @@ void main() {
     });
 
     test('a liability account defaults to not a credit card', () async {
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Mortgage',
         type: AccountType.liability,
         groupId: groupCreditShortTermId,
@@ -998,7 +1004,7 @@ void main() {
 
     test('rejects isCreditCard on an asset account', () async {
       expect(
-        () => repository.createFinancialAccount(
+        () => accountRepository.createFinancialAccount(
           name: 'Checking',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
@@ -1011,19 +1017,19 @@ void main() {
     test(
       'the credit-card flag is immutable - renaming never changes it',
       () async {
-        final account = await repository.createFinancialAccount(
+        final account = await accountRepository.createFinancialAccount(
           name: 'Visa',
           type: AccountType.liability,
           groupId: groupCreditShortTermId,
           isCreditCard: true,
         );
 
-        await repository.renameFinancialAccount(
+        await accountRepository.renameFinancialAccount(
           id: account.id,
           newName: 'Visa Platinum',
         );
 
-        final accounts = await repository.watchFinancialAccounts().first;
+        final accounts = await accountRepository.watchFinancialAccounts().first;
         final renamed = accounts.firstWhere((a) => a.id == account.id);
         expect(renamed.name, equals('Visa Platinum'));
         expect(renamed.isCreditCard, isTrue);
@@ -1032,7 +1038,7 @@ void main() {
 
     test('rejects a group-kind mismatch on create', () async {
       expect(
-        () => repository.createFinancialAccount(
+        () => accountRepository.createFinancialAccount(
           name: 'Bad',
           type: AccountType.asset,
           groupId: groupCreditShortTermId,
@@ -1043,7 +1049,7 @@ void main() {
 
     test('rejects an unknown group on create', () async {
       expect(
-        () => repository.createFinancialAccount(
+        () => accountRepository.createFinancialAccount(
           name: 'Bad',
           type: AccountType.asset,
           groupId: 'no-such-group',
@@ -1055,7 +1061,7 @@ void main() {
     test(
       'watchCategories never returns liability, asset, or equity rows',
       () async {
-        await repository.createFinancialAccount(
+        await accountRepository.createFinancialAccount(
           name: 'Credit Card',
           type: AccountType.liability,
           groupId: groupCreditShortTermId,
@@ -1077,18 +1083,18 @@ void main() {
     test(
       'archiveFinancialAccount hides the account from the picker but keeps history',
       () async {
-        final second = await repository.createFinancialAccount(
+        final second = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
         );
 
-        await repository.archiveFinancialAccount(second.id);
+        await accountRepository.archiveFinancialAccount(second.id);
 
-        final active = await repository.watchFinancialAccounts().first;
+        final active = await accountRepository.watchFinancialAccounts().first;
         expect(active.any((a) => a.id == second.id), isFalse);
 
-        final all = await repository
+        final all = await accountRepository
             .watchFinancialAccounts(includeArchived: true)
             .first;
         expect(all.any((a) => a.id == second.id), isTrue);
@@ -1099,7 +1105,7 @@ void main() {
       final onlyAccountId = await firstFinancialAccountId();
 
       expect(
-        () => repository.archiveFinancialAccount(onlyAccountId),
+        () => accountRepository.archiveFinancialAccount(onlyAccountId),
         throwsA(isA<LastActiveAccountException>()),
       );
     });
@@ -1109,12 +1115,12 @@ void main() {
       () async {
         final accountId = await firstFinancialAccountId();
 
-        await repository.reassignFinancialAccountGroup(
+        await accountRepository.reassignFinancialAccountGroup(
           id: accountId,
           groupId: groupPensionRetirementId,
         );
 
-        final accounts = await repository.watchFinancialAccounts().first;
+        final accounts = await accountRepository.watchFinancialAccounts().first;
         expect(
           accounts.firstWhere((a) => a.id == accountId).groupId,
           equals(groupPensionRetirementId),
@@ -1126,7 +1132,7 @@ void main() {
       final accountId = await firstFinancialAccountId();
 
       expect(
-        () => repository.reassignFinancialAccountGroup(
+        () => accountRepository.reassignFinancialAccountGroup(
           id: accountId,
           groupId: groupCreditShortTermId,
         ),
@@ -1140,7 +1146,7 @@ void main() {
       'moves value between two accounts without affecting income/expense totals',
       () async {
         final source = await firstFinancialAccountId();
-        final destination = await repository.createFinancialAccount(
+        final destination = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
@@ -1174,7 +1180,7 @@ void main() {
       'a payment from an asset account reduces a liability balance owed',
       () async {
         final checking = await firstFinancialAccountId();
-        final card = await repository.createFinancialAccount(
+        final card = await accountRepository.createFinancialAccount(
           name: 'Credit Card',
           type: AccountType.liability,
           groupId: groupCreditShortTermId,
@@ -1208,7 +1214,7 @@ void main() {
 
     test('rejects a non-positive transfer amount', () async {
       final source = await firstFinancialAccountId();
-      final destination = await repository.createFinancialAccount(
+      final destination = await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
@@ -1229,7 +1235,7 @@ void main() {
       'a reversed transfer restores both accounts to their prior balance',
       () async {
         final source = await firstFinancialAccountId();
-        final destination = await repository.createFinancialAccount(
+        final destination = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
@@ -1254,7 +1260,7 @@ void main() {
     test(
       'sets an asset account balance without affecting income/expense totals',
       () async {
-        final account = await repository.createFinancialAccount(
+        final account = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
@@ -1274,7 +1280,7 @@ void main() {
     );
 
     test('sets a liability account amount owed', () async {
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Credit Card',
         type: AccountType.liability,
         groupId: groupCreditShortTermId,
@@ -1286,7 +1292,7 @@ void main() {
 
     test('rejects a zero or negative opening balance', () async {
       expect(
-        () => repository.createFinancialAccount(
+        () => accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
@@ -1295,7 +1301,7 @@ void main() {
         throwsA(isA<InvalidOpeningBalanceException>()),
       );
       expect(
-        () => repository.createFinancialAccount(
+        () => accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
@@ -1308,14 +1314,14 @@ void main() {
     test(
       'the equity offset account never appears in the financial-account picker',
       () async {
-        await repository.createFinancialAccount(
+        await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
           openingBalanceMinor: 1000,
         );
 
-        final accounts = await repository
+        final accounts = await accountRepository
             .watchFinancialAccounts(includeArchived: true)
             .first;
         expect(
@@ -1337,7 +1343,7 @@ void main() {
         financialAccountId: checkingId,
         transactionDate: DateTime(2026, 1, 15),
       );
-      final card = await repository.createFinancialAccount(
+      final card = await accountRepository.createFinancialAccount(
         name: 'Credit Card',
         type: AccountType.liability,
         groupId: groupCreditShortTermId,
@@ -1370,13 +1376,13 @@ void main() {
     test(
       'an archived account still contributes to its group total and net position',
       () async {
-        final second = await repository.createFinancialAccount(
+        final second = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
           openingBalanceMinor: 5000,
         );
-        await repository.archiveFinancialAccount(second.id);
+        await accountRepository.archiveFinancialAccount(second.id);
 
         final overview = await repository.watchHomeOverview().first;
         expect(
@@ -1916,7 +1922,7 @@ void main() {
     test(
       'every starter group has a currency; an account\'s display currency comes from its group',
       () async {
-        final groups = await repository.watchAccountGroups().first;
+        final groups = await accountRepository.watchAccountGroups().first;
         expect(groups, isNotEmpty);
         expect(groups.every((g) => g.currency == 'USD'), isTrue);
       },
@@ -1933,7 +1939,7 @@ void main() {
             .write(const AccountGroupsCompanion(currency: Value(null)));
 
         expect(
-          () => repository.createFinancialAccount(
+          () => accountRepository.createFinancialAccount(
             name: 'Savings',
             type: AccountType.asset,
             groupId: groupPensionRetirementId,
@@ -1947,7 +1953,7 @@ void main() {
   group('group currency changes', () {
     test('rejected while the group has an active financial account', () {
       expect(
-        () => repository.changeAccountGroupCurrency(
+        () => accountRepository.changeAccountGroupCurrency(
           groupId: groupCashEquivalentsId,
           currency: 'EUR',
         ),
@@ -1956,11 +1962,11 @@ void main() {
     });
 
     test('allowed when the group has zero active accounts', () async {
-      await repository.changeAccountGroupCurrency(
+      await accountRepository.changeAccountGroupCurrency(
         groupId: groupPensionRetirementId,
         currency: 'EUR',
       );
-      final groups = await repository.watchAccountGroups().first;
+      final groups = await accountRepository.watchAccountGroups().first;
       expect(
         groups.firstWhere((g) => g.id == groupPensionRetirementId).currency,
         equals('EUR'),
@@ -1970,7 +1976,7 @@ void main() {
 
   group('createAccountGroup', () {
     test('creates a non-system group with the next sortOrder', () async {
-      final created = await repository.createAccountGroup(
+      final created = await accountRepository.createAccountGroup(
         name: 'Business',
         kind: AccountGroupKind.assetGroup,
         currency: 'GBP',
@@ -1984,13 +1990,13 @@ void main() {
       // The five seeded system groups occupy sortOrder 0-4.
       expect(created.sortOrder, equals(5));
 
-      final groups = await repository.watchAccountGroups().first;
+      final groups = await accountRepository.watchAccountGroups().first;
       expect(groups.map((g) => g.id), contains(created.id));
     });
 
     test('rejects a blank currency', () {
       expect(
-        () => repository.createAccountGroup(
+        () => accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: '   ',
@@ -2003,7 +2009,7 @@ void main() {
   group('archiveAccountGroup', () {
     test('rejected for a system group regardless of member accounts', () {
       expect(
-        () => repository.archiveAccountGroup(groupPensionRetirementId),
+        () => accountRepository.archiveAccountGroup(groupPensionRetirementId),
         throwsA(isA<AccountGroupException>()),
       );
     });
@@ -2011,19 +2017,19 @@ void main() {
     test(
       'rejected for a user-created group with an active member account',
       () async {
-        final group = await repository.createAccountGroup(
+        final group = await accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: 'USD',
         );
-        await repository.createFinancialAccount(
+        await accountRepository.createFinancialAccount(
           name: 'Business Checking',
           type: AccountType.asset,
           groupId: group.id,
         );
 
         expect(
-          () => repository.archiveAccountGroup(group.id),
+          () => accountRepository.archiveAccountGroup(group.id),
           throwsA(isA<AccountGroupException>()),
         );
       },
@@ -2032,15 +2038,15 @@ void main() {
     test(
       'succeeds for an empty user-created group and sets archived',
       () async {
-        final group = await repository.createAccountGroup(
+        final group = await accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: 'USD',
         );
 
-        await repository.archiveAccountGroup(group.id);
+        await accountRepository.archiveAccountGroup(group.id);
 
-        final groups = await repository
+        final groups = await accountRepository
             .watchAccountGroups(includeArchived: true)
             .first;
         expect(groups.firstWhere((g) => g.id == group.id).archived, isTrue);
@@ -2048,15 +2054,15 @@ void main() {
     );
 
     test('rejected for a group that is already archived', () async {
-      final group = await repository.createAccountGroup(
+      final group = await accountRepository.createAccountGroup(
         name: 'Business',
         kind: AccountGroupKind.assetGroup,
         currency: 'USD',
       );
-      await repository.archiveAccountGroup(group.id);
+      await accountRepository.archiveAccountGroup(group.id);
 
       expect(
-        () => repository.archiveAccountGroup(group.id),
+        () => accountRepository.archiveAccountGroup(group.id),
         throwsA(isA<AccountGroupException>()),
       );
     });
@@ -2064,7 +2070,7 @@ void main() {
     test(
       'a group with only an archived member account can be archived',
       () async {
-        final group = await repository.createAccountGroup(
+        final group = await accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: 'USD',
@@ -2072,16 +2078,16 @@ void main() {
         // A financial account requires at least one other active account
         // to remain to be archivable - use the seeded Cash & cash
         // equivalents account as that "other" account.
-        final account = await repository.createFinancialAccount(
+        final account = await accountRepository.createFinancialAccount(
           name: 'Business Checking',
           type: AccountType.asset,
           groupId: group.id,
         );
-        await repository.archiveFinancialAccount(account.id);
+        await accountRepository.archiveFinancialAccount(account.id);
 
-        await repository.archiveAccountGroup(group.id);
+        await accountRepository.archiveAccountGroup(group.id);
 
-        final groups = await repository
+        final groups = await accountRepository
             .watchAccountGroups(includeArchived: true)
             .first;
         expect(groups.firstWhere((g) => g.id == group.id).archived, isTrue);
@@ -2091,21 +2097,21 @@ void main() {
 
   group('unarchive-accounts-categories', () {
     test('unarchiveFinancialAccount clears archivedAt', () async {
-      final group = await repository.createAccountGroup(
+      final group = await accountRepository.createAccountGroup(
         name: 'Business',
         kind: AccountGroupKind.assetGroup,
         currency: 'USD',
       );
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Business Checking',
         type: AccountType.asset,
         groupId: group.id,
       );
-      await repository.archiveFinancialAccount(account.id);
+      await accountRepository.archiveFinancialAccount(account.id);
 
-      await repository.unarchiveFinancialAccount(account.id);
+      await accountRepository.unarchiveFinancialAccount(account.id);
 
-      final accounts = await repository
+      final accounts = await accountRepository
           .watchFinancialAccounts(includeArchived: true)
           .first;
       expect(accounts.firstWhere((a) => a.id == account.id).archived, isFalse);
@@ -2113,7 +2119,7 @@ void main() {
 
     test('unarchiving an account whose group is itself archived unarchives '
         'both, in the same action', () async {
-      final group = await repository.createAccountGroup(
+      final group = await accountRepository.createAccountGroup(
         name: 'Business',
         kind: AccountGroupKind.assetGroup,
         currency: 'USD',
@@ -2121,24 +2127,24 @@ void main() {
       // A financial account requires at least one other active account
       // to remain to be archivable - the seeded Cash & cash equivalents
       // account is that "other" account throughout this test.
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Business Checking',
         type: AccountType.asset,
         groupId: group.id,
       );
-      await repository.archiveFinancialAccount(account.id);
+      await accountRepository.archiveFinancialAccount(account.id);
       // Now that the group has zero active members, it too can be
       // archived - the only way a group ever reaches this state
       // (design.md Context).
-      await repository.archiveAccountGroup(group.id);
+      await accountRepository.archiveAccountGroup(group.id);
 
-      await repository.unarchiveFinancialAccount(account.id);
+      await accountRepository.unarchiveFinancialAccount(account.id);
 
-      final accounts = await repository
+      final accounts = await accountRepository
           .watchFinancialAccounts(includeArchived: true)
           .first;
       expect(accounts.firstWhere((a) => a.id == account.id).archived, isFalse);
-      final groups = await repository
+      final groups = await accountRepository
           .watchAccountGroups(includeArchived: true)
           .first;
       expect(groups.firstWhere((g) => g.id == group.id).archived, isFalse);
@@ -2146,26 +2152,26 @@ void main() {
 
     test('unarchiveAccountGroup clears archivedAt but does not touch its '
         'former (already-archived) member accounts', () async {
-      final group = await repository.createAccountGroup(
+      final group = await accountRepository.createAccountGroup(
         name: 'Business',
         kind: AccountGroupKind.assetGroup,
         currency: 'USD',
       );
-      final account = await repository.createFinancialAccount(
+      final account = await accountRepository.createFinancialAccount(
         name: 'Business Checking',
         type: AccountType.asset,
         groupId: group.id,
       );
-      await repository.archiveFinancialAccount(account.id);
-      await repository.archiveAccountGroup(group.id);
+      await accountRepository.archiveFinancialAccount(account.id);
+      await accountRepository.archiveAccountGroup(group.id);
 
-      await repository.unarchiveAccountGroup(group.id);
+      await accountRepository.unarchiveAccountGroup(group.id);
 
-      final groups = await repository
+      final groups = await accountRepository
           .watchAccountGroups(includeArchived: true)
           .first;
       expect(groups.firstWhere((g) => g.id == group.id).archived, isFalse);
-      final accounts = await repository
+      final accounts = await accountRepository
           .watchFinancialAccounts(includeArchived: true)
           .first;
       expect(
@@ -2177,7 +2183,7 @@ void main() {
 
     test('unarchiveAccountGroup rejects a system group', () {
       expect(
-        () => repository.unarchiveAccountGroup(groupPensionRetirementId),
+        () => accountRepository.unarchiveAccountGroup(groupPensionRetirementId),
         throwsA(isA<AccountGroupException>()),
       );
     });
@@ -2201,17 +2207,19 @@ void main() {
     test(
       'an archived group is excluded by default but included with includeArchived: true',
       () async {
-        final group = await repository.createAccountGroup(
+        final group = await accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: 'USD',
         );
-        await repository.archiveAccountGroup(group.id);
+        await accountRepository.archiveAccountGroup(group.id);
 
-        final defaultGroups = await repository.watchAccountGroups().first;
+        final defaultGroups = await accountRepository
+            .watchAccountGroups()
+            .first;
         expect(defaultGroups.map((g) => g.id), isNot(contains(group.id)));
 
-        final allGroups = await repository
+        final allGroups = await accountRepository
             .watchAccountGroups(includeArchived: true)
             .first;
         expect(allGroups.map((g) => g.id), contains(group.id));
@@ -2221,18 +2229,18 @@ void main() {
     test(
       'an account still assigned to an archived group continues to resolve its name and currency',
       () async {
-        final group = await repository.createAccountGroup(
+        final group = await accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: 'GBP',
         );
-        final account = await repository.createFinancialAccount(
+        final account = await accountRepository.createFinancialAccount(
           name: 'Business Checking',
           type: AccountType.asset,
           groupId: group.id,
         );
-        await repository.archiveFinancialAccount(account.id);
-        await repository.archiveAccountGroup(group.id);
+        await accountRepository.archiveFinancialAccount(account.id);
+        await accountRepository.archiveAccountGroup(group.id);
 
         final overview = await repository.watchHomeOverview().first;
         final section = overview.sections.firstWhere(
@@ -2248,7 +2256,7 @@ void main() {
   group('deleteAccountGroup', () {
     test('unconditionally rejects a system group', () {
       expect(
-        () => repository.deleteAccountGroup(groupCashEquivalentsId),
+        () => accountRepository.deleteAccountGroup(groupCashEquivalentsId),
         throwsA(isA<AccountGroupException>()),
       );
     });
@@ -2256,19 +2264,19 @@ void main() {
     test(
       'unconditionally rejects a user-created group, archived or not',
       () async {
-        final group = await repository.createAccountGroup(
+        final group = await accountRepository.createAccountGroup(
           name: 'Business',
           kind: AccountGroupKind.assetGroup,
           currency: 'USD',
         );
         expect(
-          () => repository.deleteAccountGroup(group.id),
+          () => accountRepository.deleteAccountGroup(group.id),
           throwsA(isA<AccountGroupException>()),
         );
 
-        await repository.archiveAccountGroup(group.id);
+        await accountRepository.archiveAccountGroup(group.id);
         expect(
-          () => repository.deleteAccountGroup(group.id),
+          () => accountRepository.deleteAccountGroup(group.id),
           throwsA(isA<AccountGroupException>()),
         );
       },
@@ -2278,7 +2286,7 @@ void main() {
   group('recordTransfer: same-currency (regression)', () {
     test('unchanged behavior - single entry, no pending transfer', () async {
       final checkingId = await firstFinancialAccountId();
-      final card = await repository.createFinancialAccount(
+      final card = await accountRepository.createFinancialAccount(
         name: 'Credit Card',
         type: AccountType.liability,
         groupId: groupCreditShortTermId,
@@ -2378,15 +2386,15 @@ void main() {
       'posts from an archived account with a positive balance and zeroes the source',
       () async {
         final checkingId = await firstFinancialAccountId();
-        final savings = await repository.createFinancialAccount(
+        final savings = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
           openingBalanceMinor: 10000,
         );
-        await repository.archiveFinancialAccount(savings.id);
+        await accountRepository.archiveFinancialAccount(savings.id);
 
-        await repository.recordArchivedAccountCloseoutTransfer(
+        await accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: savings.id,
           toAccountId: checkingId,
           transactionDate: DateTime(2026, 1, 15),
@@ -2401,14 +2409,14 @@ void main() {
       'is rejected when the archived account\'s balance is zero or negative',
       () async {
         final checkingId = await firstFinancialAccountId();
-        final zeroAccount = await repository.createFinancialAccount(
+        final zeroAccount = await accountRepository.createFinancialAccount(
           name: 'Empty',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
         );
-        await repository.archiveFinancialAccount(zeroAccount.id);
+        await accountRepository.archiveFinancialAccount(zeroAccount.id);
         expect(
-          () => repository.recordArchivedAccountCloseoutTransfer(
+          () => accountRepository.recordArchivedAccountCloseoutTransfer(
             fromAccountId: zeroAccount.id,
             toAccountId: checkingId,
             transactionDate: DateTime(2026, 1, 15),
@@ -2416,7 +2424,7 @@ void main() {
           throwsA(isA<AccountGroupException>()),
         );
 
-        final overdrawn = await repository.createFinancialAccount(
+        final overdrawn = await accountRepository.createFinancialAccount(
           name: 'Overdrawn',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
@@ -2429,9 +2437,9 @@ void main() {
           financialAccountId: overdrawn.id,
           transactionDate: DateTime(2026, 1, 15),
         );
-        await repository.archiveFinancialAccount(overdrawn.id);
+        await accountRepository.archiveFinancialAccount(overdrawn.id);
         expect(
-          () => repository.recordArchivedAccountCloseoutTransfer(
+          () => accountRepository.recordArchivedAccountCloseoutTransfer(
             fromAccountId: overdrawn.id,
             toAccountId: checkingId,
             transactionDate: DateTime(2026, 1, 15),
@@ -2443,22 +2451,22 @@ void main() {
 
     test('is rejected when the destination is also archived', () async {
       final checkingId = await firstFinancialAccountId();
-      final savings = await repository.createFinancialAccount(
+      final savings = await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
         openingBalanceMinor: 10000,
       );
-      final other = await repository.createFinancialAccount(
+      final other = await accountRepository.createFinancialAccount(
         name: 'Other',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
       );
-      await repository.archiveFinancialAccount(savings.id);
-      await repository.archiveFinancialAccount(other.id);
+      await accountRepository.archiveFinancialAccount(savings.id);
+      await accountRepository.archiveFinancialAccount(other.id);
 
       expect(
-        () => repository.recordArchivedAccountCloseoutTransfer(
+        () => accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: savings.id,
           toAccountId: other.id,
           transactionDate: DateTime(2026, 1, 15),
@@ -2469,16 +2477,16 @@ void main() {
     });
 
     test('is rejected when fromAccountId equals toAccountId', () async {
-      final savings = await repository.createFinancialAccount(
+      final savings = await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
         openingBalanceMinor: 10000,
       );
-      await repository.archiveFinancialAccount(savings.id);
+      await accountRepository.archiveFinancialAccount(savings.id);
 
       expect(
-        () => repository.recordArchivedAccountCloseoutTransfer(
+        () => accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: savings.id,
           toAccountId: savings.id,
           transactionDate: DateTime(2026, 1, 15),
@@ -2489,21 +2497,21 @@ void main() {
 
     test('a second closeout after a successful first is rejected', () async {
       final checkingId = await firstFinancialAccountId();
-      final savings = await repository.createFinancialAccount(
+      final savings = await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
         openingBalanceMinor: 10000,
       );
-      await repository.archiveFinancialAccount(savings.id);
-      await repository.recordArchivedAccountCloseoutTransfer(
+      await accountRepository.archiveFinancialAccount(savings.id);
+      await accountRepository.recordArchivedAccountCloseoutTransfer(
         fromAccountId: savings.id,
         toAccountId: checkingId,
         transactionDate: DateTime(2026, 1, 15),
       );
 
       expect(
-        () => repository.recordArchivedAccountCloseoutTransfer(
+        () => accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: savings.id,
           toAccountId: checkingId,
           transactionDate: DateTime(2026, 1, 16),
@@ -2515,13 +2523,13 @@ void main() {
     test(
       'recordTransaction against an archived account is still rejected',
       () async {
-        final savings = await repository.createFinancialAccount(
+        final savings = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
           openingBalanceMinor: 10000,
         );
-        await repository.archiveFinancialAccount(savings.id);
+        await accountRepository.archiveFinancialAccount(savings.id);
         final incomeId = await firstCategoryId(AccountType.income);
 
         expect(
@@ -2541,13 +2549,13 @@ void main() {
       'recordTransfer still rejects an archived account as source or destination',
       () async {
         final checkingId = await firstFinancialAccountId();
-        final savings = await repository.createFinancialAccount(
+        final savings = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
           openingBalanceMinor: 10000,
         );
-        await repository.archiveFinancialAccount(savings.id);
+        await accountRepository.archiveFinancialAccount(savings.id);
 
         expect(
           () => repository.recordTransfer(
@@ -2574,16 +2582,16 @@ void main() {
       'cross-currency closeout without destinationAmountMinor is rejected; with it, one complete entry and no pending row',
       () async {
         final euroId = await secondCurrencyAssetAccountId();
-        final savings = await repository.createFinancialAccount(
+        final savings = await accountRepository.createFinancialAccount(
           name: 'Savings',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
           openingBalanceMinor: 10000,
         );
-        await repository.archiveFinancialAccount(savings.id);
+        await accountRepository.archiveFinancialAccount(savings.id);
 
         expect(
-          () => repository.recordArchivedAccountCloseoutTransfer(
+          () => accountRepository.recordArchivedAccountCloseoutTransfer(
             fromAccountId: savings.id,
             toAccountId: euroId,
             transactionDate: DateTime(2026, 1, 15),
@@ -2593,7 +2601,7 @@ void main() {
         expect(await repository.watchPendingTransfers().first, isEmpty);
         expect(await repository.displayBalanceMinor(savings.id), equals(10000));
 
-        await repository.recordArchivedAccountCloseoutTransfer(
+        await accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: savings.id,
           toAccountId: euroId,
           transactionDate: DateTime(2026, 1, 15),
@@ -2818,7 +2826,7 @@ void main() {
         final euroId = await secondCurrencyAssetAccountId();
         // A third account so archiving euroId doesn't hit the
         // last-active-account guard.
-        await repository.createFinancialAccount(
+        await accountRepository.createFinancialAccount(
           name: 'Spare',
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,
@@ -2831,7 +2839,7 @@ void main() {
           transactionDate: DateTime(2026, 1, 15),
         );
         final pending = (await repository.watchPendingTransfers().first).single;
-        await repository.archiveFinancialAccount(euroId);
+        await accountRepository.archiveFinancialAccount(euroId);
 
         await repository.settlePendingTransfer(
           pendingTransferId: pending.id,
@@ -3005,7 +3013,7 @@ void main() {
 
   group('Transfers-in-transit exclusion', () {
     test('never appears in the financial-account picker', () async {
-      final accounts = await repository
+      final accounts = await accountRepository
           .watchFinancialAccounts(includeArchived: true)
           .first;
       expect(accounts.any((a) => a.id == transfersInTransitAccountId), isFalse);
@@ -3166,13 +3174,13 @@ void main() {
   group('reassignFinancialAccountGroup: currency constraint', () {
     test('rejects reassigning to a different-currency group', () async {
       final checkingId = await firstFinancialAccountId();
-      await repository.changeAccountGroupCurrency(
+      await accountRepository.changeAccountGroupCurrency(
         groupId: groupPensionRetirementId,
         currency: 'EUR',
       );
 
       expect(
-        () => repository.reassignFinancialAccountGroup(
+        () => accountRepository.reassignFinancialAccountGroup(
           id: checkingId,
           groupId: groupPensionRetirementId,
         ),
@@ -3183,12 +3191,12 @@ void main() {
     test('reassigning within the same currency still works', () async {
       final checkingId = await firstFinancialAccountId();
 
-      await repository.reassignFinancialAccountGroup(
+      await accountRepository.reassignFinancialAccountGroup(
         id: checkingId,
         groupId: groupPensionRetirementId,
       );
 
-      final accounts = await repository
+      final accounts = await accountRepository
           .watchFinancialAccounts(includeArchived: true)
           .first;
       expect(
@@ -3254,7 +3262,7 @@ void main() {
 
   group('investment holdings', () {
     Future<String> createInvestmentAccount() async {
-      return (await repository.createFinancialAccount(
+      return (await accountRepository.createFinancialAccount(
         name: 'Brokerage',
         type: AccountType.asset,
         groupId: groupInvestmentsId,
@@ -3263,7 +3271,7 @@ void main() {
     }
 
     Future<String> nonInvestmentCashAccountId() async {
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       return accounts.firstWhere((a) => !a.isInvestmentAccount).id;
     }
 
@@ -3703,7 +3711,7 @@ void main() {
 
     test('a transfer exports the counterparty account as its label', () async {
       final fromId = await firstFinancialAccountId();
-      final toAccount = await repository.createFinancialAccount(
+      final toAccount = await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
@@ -3758,11 +3766,11 @@ void main() {
     test(
       'JPY (0 decimal digits) formats amounts with no decimal point',
       () async {
-        await repository.changeAccountGroupCurrency(
+        await accountRepository.changeAccountGroupCurrency(
           groupId: groupPensionRetirementId,
           currency: 'JPY',
         );
-        final jpyAccount = await repository.createFinancialAccount(
+        final jpyAccount = await accountRepository.createFinancialAccount(
           name: 'Yen Account',
           type: AccountType.asset,
           groupId: groupPensionRetirementId,

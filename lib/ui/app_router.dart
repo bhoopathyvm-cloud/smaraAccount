@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../data/repositories/account_repository.dart';
 import '../data/repositories/ledger_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/statement_import_repository.dart';
@@ -108,6 +109,7 @@ const _lockPath = '/lock';
 
 GoRouter buildAppRouter(
   LedgerRepository ledgerRepository,
+  AccountRepository accountRepository,
   StatementImportRepository statementImportRepository,
   SettingsRepository settingsRepository,
   AppLockController appLockController,
@@ -165,7 +167,7 @@ GoRouter buildAppRouter(
 
       final isCurrencyBackfillRoute =
           state.matchedLocation == _currencyBackfillPath;
-      if (await ledgerRepository.needsCurrencyBackfill()) {
+      if (await accountRepository.needsCurrencyBackfill()) {
         return isCurrencyBackfillRoute ? null : _currencyBackfillPath;
       }
 
@@ -206,7 +208,7 @@ GoRouter buildAppRouter(
         path: _firstAccountPath,
         builder: (context, state) => FirstAccountNameView(
           viewModel: FirstAccountNameViewModel(
-            ledgerRepository: ledgerRepository,
+            accountRepository: accountRepository,
           ),
           onFinished: () => context.go(_firstEntryPath),
         ),
@@ -216,6 +218,7 @@ GoRouter buildAppRouter(
         builder: (context, state) => RecordTransactionView(
           viewModel: RecordTransactionViewModel(
             ledgerRepository: ledgerRepository,
+            accountRepository: accountRepository,
           ),
           onSaved: () => context.go('/onboarding/recovery-phrase'),
         ),
@@ -245,7 +248,7 @@ GoRouter buildAppRouter(
         path: _setupWizardPath,
         builder: (context, state) => FirstWeekSetupView(
           viewModel: FirstWeekSetupViewModel(
-            ledgerRepository: ledgerRepository,
+            accountRepository: accountRepository,
             settingsRepository: settingsRepository,
           ),
           onFinished: () => context.go('/home'),
@@ -255,7 +258,7 @@ GoRouter buildAppRouter(
         path: _currencyBackfillPath,
         builder: (context, state) => CurrencyBackfillView(
           viewModel: CurrencyBackfillViewModel(
-            ledgerRepository: ledgerRepository,
+            accountRepository: accountRepository,
           ),
           onFinished: () => context.go('/home'),
         ),
@@ -282,6 +285,7 @@ GoRouter buildAppRouter(
         builder: (context, state) => RecordTransactionView(
           viewModel: RecordTransactionViewModel(
             ledgerRepository: ledgerRepository,
+            accountRepository: accountRepository,
             initialFinancialAccountId: state.uri.queryParameters['accountId'],
             initialDirection: _directionFromQueryParam(
               state.uri.queryParameters['direction'],
@@ -295,6 +299,7 @@ GoRouter buildAppRouter(
         builder: (context, state) => TransferView(
           viewModel: TransferViewModel(
             ledgerRepository: ledgerRepository,
+            accountRepository: accountRepository,
             initialFromAccountId: state.uri.queryParameters['fromAccountId'],
             // credit-card-household-flow: "Pay card" pre-fills the
             // destination via this query param; the ordinary transfer
@@ -310,6 +315,7 @@ GoRouter buildAppRouter(
           viewModel: StatementImportViewModel(
             importRepository: statementImportRepository,
             ledgerRepository: ledgerRepository,
+            accountRepository: accountRepository,
             initialFinancialAccountId: state.uri.queryParameters['accountId'],
           ),
           onFinished: () => context.pop(),
@@ -317,8 +323,12 @@ GoRouter buildAppRouter(
       ),
       GoRoute(
         path: '/settle-pending-transfer/:pendingTransferId',
-        builder: (context, state) =>
-            _buildSettlePendingTransfer(context, state, ledgerRepository),
+        builder: (context, state) => _buildSettlePendingTransfer(
+          context,
+          state,
+          ledgerRepository,
+          accountRepository,
+        ),
       ),
       GoRoute(
         path: _lockPath,
@@ -344,6 +354,7 @@ GoRouter buildAppRouter(
           return HoldingsView(
             viewModel: HoldingsViewModel(
               ledgerRepository: ledgerRepository,
+              accountRepository: accountRepository,
               settingsRepository: settingsRepository,
               accountId: accountId,
             ),
@@ -535,10 +546,12 @@ CorrectionView _buildFixEntry(
   GoRouterState state,
   LedgerRepository ledgerRepository,
 ) {
+  final accountRepository = context.read<AccountRepository>();
   final extra = state.extra! as ({RegisterRow row, String financialAccountId});
   return CorrectionView(
     viewModel: CorrectionViewModel(
       ledgerRepository: ledgerRepository,
+      accountRepository: accountRepository,
       entryId: extra.row.entryId,
       initialAmountMinor: extra.row.amountMinor,
       initialDirection: extra.row.direction,
@@ -560,6 +573,7 @@ Widget _buildSettlePendingTransfer(
   BuildContext context,
   GoRouterState state,
   LedgerRepository ledgerRepository,
+  AccountRepository accountRepository,
 ) {
   final pendingTransferId = state.pathParameters['pendingTransferId'];
   final pendingTransfers =
@@ -577,6 +591,7 @@ Widget _buildSettlePendingTransfer(
   return SettlePendingTransferView(
     viewModel: SettlePendingTransferViewModel(
       ledgerRepository: ledgerRepository,
+      accountRepository: accountRepository,
       summary: summary,
     ),
     onSaved: () => context.pop(),

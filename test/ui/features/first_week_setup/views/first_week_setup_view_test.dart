@@ -7,11 +7,11 @@ import 'package:smara_accounting/ui/features/first_week_setup/views/first_week_s
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository ledgerRepository;
+  late MockAccountRepository accountRepository;
   late MockSettingsRepository settingsRepository;
 
   setUp(() {
-    ledgerRepository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
     settingsRepository = MockSettingsRepository();
   });
 
@@ -23,7 +23,7 @@ void main() {
     ).thenAnswer((_) async {});
 
     final viewModel = FirstWeekSetupViewModel(
-      ledgerRepository: ledgerRepository,
+      accountRepository: accountRepository,
       settingsRepository: settingsRepository,
     );
     addTearDown(viewModel.dispose);
@@ -45,7 +45,7 @@ void main() {
     await tester.pump();
 
     verifyNever(
-      ledgerRepository.createFinancialAccount(
+      accountRepository.createFinancialAccount(
         name: anyNamed('name'),
         type: anyNamed('type'),
         groupId: anyNamed('groupId'),
@@ -58,7 +58,7 @@ void main() {
     tester,
   ) async {
     final viewModel = FirstWeekSetupViewModel(
-      ledgerRepository: ledgerRepository,
+      accountRepository: accountRepository,
       settingsRepository: settingsRepository,
     );
     addTearDown(viewModel.dispose);

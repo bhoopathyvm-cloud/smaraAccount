@@ -14,6 +14,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository ledger;
+  late MockAccountRepository accountRepository;
   late MockSettingsRepository settings;
 
   const apple = Instrument(
@@ -55,9 +56,10 @@ void main() {
 
   setUp(() {
     ledger = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
     settings = MockSettingsRepository();
     when(
-      ledger.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([account]));
@@ -69,7 +71,9 @@ void main() {
       ledger.watchInstrumentsHeldInAccount(any),
     ).thenAnswer((_) => Stream.value([apple]));
     when(ledger.watchCategories()).thenAnswer((_) => Stream.value(const []));
-    when(ledger.watchAccountGroups()).thenAnswer((_) => Stream.value([group]));
+    when(
+      accountRepository.watchAccountGroups(),
+    ).thenAnswer((_) => Stream.value([group]));
     when(ledger.displayBalanceMinor(any)).thenAnswer((_) async => 40000);
     when(settings.isMarketPriceFetchEnabled()).thenAnswer((_) async => false);
     when(
@@ -81,6 +85,7 @@ void main() {
     Uri? launched;
     final viewModel = HoldingsViewModel(
       ledgerRepository: ledger,
+      accountRepository: accountRepository,
       settingsRepository: settings,
       accountId: 'inv-1',
       launchUrlFn: (uri) async {
@@ -115,6 +120,7 @@ void main() {
       Uri? launched;
       final viewModel = HoldingsViewModel(
         ledgerRepository: ledger,
+        accountRepository: accountRepository,
         settingsRepository: settings,
         accountId: 'inv-1',
         launchUrlFn: (uri) async {
@@ -168,6 +174,7 @@ void main() {
 
       final viewModel = HoldingsViewModel(
         ledgerRepository: ledger,
+        accountRepository: accountRepository,
         settingsRepository: settings,
         accountId: 'inv-1',
       );

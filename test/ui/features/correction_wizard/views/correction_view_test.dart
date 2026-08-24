@@ -12,6 +12,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
 
   const yenGroup = AccountGroup(
     id: 'group-cash',
@@ -40,14 +41,15 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
     when(
-      repository.watchFinancialAccounts(),
+      accountRepository.watchFinancialAccounts(),
     ).thenAnswer((_) => Stream.value([yenAccount]));
     when(
       repository.watchCategories(),
     ).thenAnswer((_) => Stream.value([groceries]));
     when(
-      repository.watchAccountGroups(),
+      accountRepository.watchAccountGroups(),
     ).thenAnswer((_) => Stream.value([yenGroup]));
   });
 
@@ -56,6 +58,7 @@ void main() {
     (tester) async {
       final viewModel = CorrectionViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
         entryId: 'entry-1',
         initialAmountMinor: 10000,
         initialDirection: TransactionDirection.moneyOut,

@@ -20,6 +20,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository ledgerRepository;
+  late MockAccountRepository accountRepository;
   late MockStatementImportRepository importRepository;
 
   const checking = Account(
@@ -72,10 +73,11 @@ void main() {
 
   setUp(() {
     ledgerRepository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
     importRepository = MockStatementImportRepository();
 
     when(
-      ledgerRepository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([checking]));
@@ -94,6 +96,7 @@ void main() {
     return StatementImportViewModel(
       importRepository: importRepository,
       ledgerRepository: ledgerRepository,
+      accountRepository: accountRepository,
     );
   }
 
@@ -257,6 +260,7 @@ void main() {
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
         ledgerRepository: ledgerRepository,
+        accountRepository: accountRepository,
         initialFinancialAccountId: checking.id,
       );
       addTearDown(viewModel.dispose);
