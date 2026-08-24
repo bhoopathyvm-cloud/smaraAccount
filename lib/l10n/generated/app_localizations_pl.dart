@@ -347,6 +347,12 @@ class AppLocalizationsPl extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Inne wydatki';
 
   @override
+  String get systemDescriptionCsvImport => 'Import CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'Import OFX';
+
+  @override
   String get homeThisMonth => 'TEN MIESIĄC';
 
   @override
@@ -787,7 +793,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Te 24 słowa to jedyny sposób na odzyskanie historii transakcji, jeśli to urządzenie zostanie zgubione, zresetowane lub wymienione. Smara Księgowość nie ma serwera i nie może ich odzyskać za Ciebie.\n\nJeśli zgubisz to urządzenie razem z tą frazą, każda zapisana przez Ciebie transakcja stanie się trwale niemożliwa do zweryfikowania.';
+      'Te 24 słowa to jedyny sposób na odzyskanie historii transakcji, jeśli to urządzenie zostanie zgubione, zresetowane lub wymienione. Smara Accounting nie ma serwera i nie może ich odzyskać za Ciebie.\n\nJeśli zgubisz to urządzenie razem z tą frazą, każda zapisana przez Ciebie transakcja stanie się trwale niemożliwa do zweryfikowania.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1398,6 +1404,46 @@ class AppLocalizationsPl extends AppLocalizations {
   String get errorCsvNoRows => 'Wybrany plik nie zawiera wierszy.';
 
   @override
+  String get skipMissingDate => 'Brak daty.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Nie można odczytać daty \"$raw\" przy użyciu wzorca \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Brak daty transakcji lub jest nieprawidłowa.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Nie można odczytać daty transakcji \"$raw\".';
+  }
+
+  @override
+  String get skipMissingAmount => 'Brak kwoty.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Nie można odczytać kwoty \"$raw\".';
+  }
+
+  @override
+  String get skipZeroAmount => 'Kwota wynosi zero.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Nie można odczytać kwoty winien lub ma.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Kolumny winien i ma zawierają obie kwotę.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Kolumny winien i ma wynoszą obie zero.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Nie udało się utworzyć kopii zapasowej: $detail';
   }
@@ -1548,7 +1594,7 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Odblokuj Smara Księgowość';
+  String get unlockBiometricReason => 'Odblokuj Smara Accounting';
 
   @override
   String get searchLabel => 'Szukaj';
@@ -1778,4 +1824,29 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Nieznana kategoria';
+
+  @override
+  String get researchPromptIntro =>
+      'Zbadaj ten notowany publicznie instrument dla inwestora indywidualnego. Zidentyfikuj emitenta, podsumuj najnowsze wiadomości z datami, jeśli są znane, i przedstaw ryzyka spadku oraz czynniki wzrostu. Oddziel fakty od spekulacji. Nie udzielaj rekomendacji kupna, sprzedaży ani utrzymania. To nie jest porada finansowa.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Nazwa: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Ticker: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Ticker: (nie podano)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (nie podano)';
 }

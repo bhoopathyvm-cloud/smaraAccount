@@ -9,6 +9,7 @@ import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/date_formatter.dart';
 import '../../../core/money_formatter.dart';
 import '../view_models/register_row.dart';
 
@@ -113,7 +114,7 @@ class RegisterRowTile extends StatelessWidget {
                         ),
                       ),
                     Text(
-                      '${row.transactionDate.year}-${row.transactionDate.month.toString().padLeft(2, '0')}-${row.transactionDate.day.toString().padLeft(2, '0')}'
+                      '${formatLocalDate(context, row.transactionDate)}'
                       '${row.description != null ? ' · ${row.description}' : ''}',
                       style: AppTypography.metadata,
                     ),

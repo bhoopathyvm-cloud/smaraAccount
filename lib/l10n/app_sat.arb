@@ -109,6 +109,8 @@
   "systemCategoryPhone": "ᱯᱷᱳᱱ",
   "systemCategoryHealth": "ᱥᱟᱥᱛᱷᱚ",
   "systemCategoryOtherExpense": "ᱮᱴᱟᱜ ᱠᱷᱚᱨᱚᱪ",
+  "systemDescriptionCsvImport": "CSV ᱟᱲᱟᱹᱭ",
+  "systemDescriptionOfxImport": "OFX ᱟᱲᱟᱹᱭ",
   "homeThisMonth": "ᱱᱚᱣᱟ ᱪᱟᱸᱫᱚ",
   "homeMoneyInTransit": "ᱴᱚᱠᱟ ᱨᱟᱥᱛᱟ ᱨᱮ",
   "homeWhatYouHaveMinusWhatYouOwe": "ᱟᱢ ᱛᱟᱭᱚᱢ ᱠᱷᱚᱱ ᱟᱢ ᱫᱮᱱᱟ ᱟᱲᱟᱜ",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱷᱟᱭᱞ ᱫᱚ ᱠᱷᱟᱹᱞᱤ ᱠᱟᱱᱟ᱾",
   "errorCsvUnreadable": "ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ CSV ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱯᱟᱲᱦᱟᱣ ᱮᱱᱟ᱾",
   "errorCsvNoRows": "ᱵᱟᱪᱷᱟᱣ ᱠᱟᱱ ᱯᱷᱟᱭᱞ ᱨᱮ ᱞᱟᱭᱤᱱ ᱵᱟᱭᱟ᱾",
+  "skipMissingDate": "ᱢᱟᱦᱟᱸ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾",
+  "skipUnparseableDate": "\"{pattern}\" ᱯᱟᱴᱚᱨᱚᱱ ᱛᱮ ᱢᱟᱦᱟᱸ \"{raw}\" ᱯᱟᱨᱥ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "ᱞᱮᱱᱫᱮᱱ ᱨᱮᱭᱟᱜ ᱢᱟᱦᱟᱸ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱟᱨᱵᱟᱝ ᱵᱟᱹᱭᱟ ᱾",
+  "skipOfxUnparseableDate": "ᱞᱮᱱᱫᱮᱱ ᱨᱮᱭᱟᱜ ᱢᱟᱦᱟᱸ \"{raw}\" ᱯᱟᱨᱥ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "ᱴᱟᱠᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾",
+  "skipUnparseableAmount": "ᱴᱟᱠᱟ \"{raw}\" ᱯᱟᱨᱥ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "ᱴᱟᱠᱟ ᱥᱩᱱᱭᱟ ᱠᱟᱱᱟ ᱾",
+  "skipUnparseableDebitCreditAmount": "ᱰᱮᱵᱤᱴ ᱟᱨᱵᱟᱝ ᱠᱨᱮᱰᱤᱴ ᱴᱟᱠᱟ ᱯᱟᱨᱥ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾",
+  "skipBothDebitAndCreditNonZero": "ᱰᱮᱵᱤᱴ ᱟᱨ ᱠᱨᱮᱰᱤᱴ ᱵᱟᱨᱟᱭᱚᱜ ᱠᱚᱞᱚᱢ ᱨᱮ ᱴᱟᱠᱟ ᱢᱮᱱᱟᱜᱼᱟ ᱾",
+  "skipBothDebitAndCreditZero": "ᱰᱮᱵᱤᱴ ᱟᱨ ᱠᱨᱮᱰᱤᱴ ᱵᱟᱨᱟᱭᱚᱜ ᱠᱚᱞᱚᱢ ᱥᱩᱱᱭᱟ ᱠᱟᱱᱟ ᱾",
   "errorBackupCreateFailed": "ᱵᱮᱠᱟᱯ ᱵᱮᱱᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "ᱡᱟᱹᱛ ᱱᱤᱭᱚᱢ",
   "possibleDuplicate": "ᱫᱩᱠᱞᱤᱠᱮᱴ ᱦᱩᱭ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ",
-  "unknownCategory": "ᱵᱟᱭ ᱵᱟᱰᱟᱭ ᱡᱟᱹᱛ"
+  "unknownCategory": "ᱵᱟᱭ ᱵᱟᱰᱟᱭ ᱡᱟᱹᱛ",
+  "researchPromptIntro": "ᱚᱨᱟᱜ ᱛᱮᱭᱟᱜ ᱮᱦᱚᱵ ᱟᱠᱟᱱ ᱟᱰᱮᱨ ᱮᱛᱦᱚᱵ ᱠᱚᱨᱮᱭᱟᱜ ᱞᱟᱹᱜᱤᱛ ᱱᱚᱶᱟ ᱮᱢᱚᱨ ᱥᱟᱸᱣᱫᱟᱜ ᱞᱤᱥᱴᱤ ᱠᱟᱱ ᱴᱷᱩᱨᱟᱹᱠ ᱨᱮ ᱯᱟᱱᱛᱮ ᱠᱟᱛᱮ ᱦᱟᱛᱟᱣᱢᱮ ᱾ ᱮᱢᱚᱨ ᱮᱢᱟᱠᱚᱣᱟᱜ ᱧᱩᱛᱩᱢ ᱦᱟᱛᱟᱣᱢᱮ ᱚᱠᱛᱚ ᱵᱟᱰᱟᱭᱟ ᱠᱷᱚᱱ ᱢᱟᱦᱟᱸ ᱥᱟᱶᱛᱮ ᱱᱟᱶᱟ ᱠᱷᱚᱵᱚᱨ ᱠᱚᱨᱮᱭᱟᱜ ᱡᱚᱠᱷᱟ ᱮᱢᱮ, ᱟᱨ ᱡᱟᱦᱟᱱ ᱚᱛᱮᱛ ᱟᱨ ᱥᱮᱡᱚᱶ ᱟᱭᱚᱛ ᱠᱚᱨᱮᱭᱟᱜ ᱠᱟᱨᱚᱱ ᱠᱚ ᱡᱟᱦᱟᱸ ᱠᱟᱛᱮᱢᱮ ᱾ ᱥᱟᱨᱤ ᱠᱚ ᱟᱨ ᱟᱸᱫᱟᱡᱟ ᱠᱚᱦᱚᱸ ᱛᱟᱲᱟᱨ ᱫᱚᱦᱚᱭᱢᱮ ᱾ ᱠᱤᱨᱤᱧ, ᱟᱲᱟᱹᱜ ᱟᱨᱵᱟᱝ ᱫᱚᱦᱚᱣ ᱦᱚᱨᱟᱹᱭ ᱟᱠᱟᱱ ᱛᱟᱦᱮᱸᱱᱟ ᱚᱰᱚᱠ ᱟᱞᱚᱢᱮ ᱾ ᱱᱚᱶᱟ ᱰᱷᱚᱱ ᱚᱰᱚᱠ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾",
+  "researchPromptNameLine": "ᱧᱩᱛᱩᱢ: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "ᱴᱤᱠᱚᱨ: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "ᱴᱤᱠᱚᱨ: (ᱵᱟᱭ ᱮᱢᱟᱠᱟᱱᱟ)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (ᱵᱟᱭ ᱮᱢᱟᱠᱟᱱᱟ)"
 }

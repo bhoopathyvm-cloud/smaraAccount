@@ -5,6 +5,7 @@ import 'package:smara_accounting/domain/csv/csv_column_mapping.dart';
 import 'package:smara_accounting/domain/csv/csv_parser.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
+import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart';
 
 void main() {
   group('readCsvRows', () {
@@ -79,7 +80,11 @@ void main() {
         expect(result.transactions, hasLength(1));
         expect(result.transactions.single.description, 'Good Row');
         expect(result.skippedRows, hasLength(1));
-        expect(result.skippedRows.single.reason, contains('amount'));
+        expect(
+          result.skippedRows.single.code,
+          StatementSkipCode.unparseableAmount,
+        );
+        expect(result.skippedRows.single.params['raw'], 'notanumber');
       },
     );
 
@@ -92,7 +97,8 @@ void main() {
 
       expect(result.transactions, hasLength(1));
       expect(result.skippedRows, hasLength(1));
-      expect(result.skippedRows.single.reason, contains('date'));
+      expect(result.skippedRows.single.code, StatementSkipCode.unparseableDate);
+      expect(result.skippedRows.single.params['raw'], 'not-a-date');
     });
   });
 

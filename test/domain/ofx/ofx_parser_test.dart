@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/domain/ofx/ofx_parser.dart';
+import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart';
 
 const _ofx2Fixture = '''
 <?xml version="1.0" encoding="UTF-8"?>
@@ -234,7 +235,7 @@ void main() {
         expect(result.transactions, hasLength(1));
         expect(result.transactions.single.externalReferenceId, 'GOOD0001');
         expect(result.skippedRows, hasLength(1));
-        expect(result.skippedRows.single.reason, contains('TRNAMT'));
+        expect(result.skippedRows.single.code, StatementSkipCode.missingAmount);
       },
     );
 

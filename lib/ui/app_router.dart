@@ -328,6 +328,7 @@ GoRouter buildAppRouter(
             biometricAuthenticator: LocalAuthBiometricAuthenticator(),
             settingsRepository: settingsRepository,
             lockController: appLockController,
+            localeController: context.read<LocaleController>(),
           ),
         ),
       ),

@@ -283,7 +283,7 @@ class AppLocalizationsTa extends AppLocalizations {
   String get providerStooq => 'Stooq (தினசரி விலைகள்)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (வரைபட API)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -344,6 +344,12 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'பிற செலவு';
+
+  @override
+  String get systemDescriptionCsvImport => 'CSV இறக்குமதி';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX இறக்குமதி';
 
   @override
   String get homeThisMonth => 'இந்த மாதம்';
@@ -1408,6 +1414,46 @@ class AppLocalizationsTa extends AppLocalizations {
   String get errorCsvNoRows => 'தேர்ந்தெடுக்கப்பட்ட கோப்பில் வரிசைகள் இல்லை.';
 
   @override
+  String get skipMissingDate => 'தேதி இல்லை.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" முறைமையுடன் தேதி \"$raw\" ஐப் பகுப்பாய்வு செய்ய முடியவில்லை.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'பரிவர்த்தனை தேதி இல்லை அல்லது தவறானது.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'பரிவர்த்தனை தேதி \"$raw\" ஐப் பகுப்பாய்வு செய்ய முடியவில்லை.';
+  }
+
+  @override
+  String get skipMissingAmount => 'தொகை இல்லை.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'தொகை \"$raw\" ஐப் பகுப்பாய்வு செய்ய முடியவில்லை.';
+  }
+
+  @override
+  String get skipZeroAmount => 'தொகை பூஜ்ஜியமாக உள்ளது.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'டெபிட் அல்லது கிரெடிட் தொகையைப் பகுப்பாய்வு செய்ய முடியவில்லை.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'டெபிட் மற்றும் கிரெடிட் இரண்டு நெடுவரிசைகளிலும் தொகை உள்ளது.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'டெபிட் மற்றும் கிரெடிட் இரண்டு நெடுவரிசைகளும் பூஜ்ஜியமாக உள்ளன.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'காப்புப்பிரதியை உருவாக்க முடியவில்லை: $detail';
   }
@@ -1556,7 +1602,7 @@ class AppLocalizationsTa extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'ஸ்மாரா கணக்கியலைத் திறக்கவும்';
+  String get unlockBiometricReason => 'ஸ்மாரா கணக்கைத் திற';
 
   @override
   String get searchLabel => 'தேடு';
@@ -1621,7 +1667,7 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'இயக்கப்பட்டால்: மேலே உள்ள தொகை இந்தக் கணக்கிலிருந்து எடுக்கப்படும் மொத்தத் தொகை; கட்டணம் அதிலிருந்தே கழிக்கப்படும்.';
+      'மேலே: மேலே உள்ள தொகை இந்த கணக்கிலிருந்து எடுக்கப்படும் மொத்தம்; கட்டணம் அதிலிருந்து வெளியேறும்.';
 
   @override
   String get feeBankBlurb =>
@@ -1672,7 +1718,7 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name இனி நிலுவை வந்தபோது காட்டப்படாது. அது ஏற்கனவே பதிவு செய்த பரிவர்த்தனைகள் பாதிக்கப்படாது.';
+    return '$name இனி நிலுவையில் உள்ளதாக வழங்கப்படாது. அது ஏற்கனவே பதிவு செய்த கடந்த பரிவர்த்தனைகள் பாதிக்கப்படாது.';
   }
 
   @override
@@ -1752,7 +1798,7 @@ class AppLocalizationsTa extends AppLocalizations {
   String get looksLikeLoss => 'இது ஒரு இழப்பு போல் தெரிகிறது';
 
   @override
-  String get looksLikeBreakEven => 'இது லாபமோ நஷ்டமோ இல்லாததாகத் தெரிகிறது';
+  String get looksLikeBreakEven => 'இது சம நிலை போல் தெரிகிறது';
 
   @override
   String sellableQuantity(String name, String qty) {
@@ -1786,4 +1832,29 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get unknownCategory => 'தெரியாத வகை';
+
+  @override
+  String get researchPromptIntro =>
+      'ஒரு வீட்டு முதலீட்டாளருக்காக பொதுவில் பட்டியலிடப்பட்ட இந்த கருவியை ஆராயுங்கள். வழங்குநரை அடையாளம் காணுங்கள், தெரிந்திருந்தால் தேதிகளுடன் சமீபத்திய செய்திகளைச் சுருக்கமாகக் கூறுங்கள், மேலும் வீழ்ச்சி அபாயங்களையும் உயர்வு காரணிகளையும் விவரிக்கவும். உண்மைகளை ஊகங்களிலிருந்து பிரிக்கவும். வாங்க, விற்க அல்லது வைத்திருக்க பரிந்துரை வழங்க வேண்டாம். இது நிதி ஆலோசனை அல்ல.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'பெயர்: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'டிக்கர்: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'டிக்கர்: (வழங்கப்படவில்லை)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (வழங்கப்படவில்லை)';
 }

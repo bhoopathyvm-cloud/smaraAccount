@@ -345,6 +345,12 @@ class AppLocalizationsDoi extends AppLocalizations {
   String get systemCategoryOtherExpense => 'होर खर्च';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV आयात';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX आयात';
+
+  @override
   String get homeThisMonth => 'इस म्हीने';
 
   @override
@@ -1023,7 +1029,7 @@ class AppLocalizationsDoi extends AppLocalizations {
   String get descriptionColumns => 'विवरण कॉलम';
 
   @override
-  String get referenceIdColumn => 'संदर्भ ID कॉलम (वैकल्पिक)';
+  String get referenceIdColumn => 'संदर्भ id कॉलम (वैकल्पिक)';
 
   @override
   String get skippedRows => 'छोड़े गे रो';
@@ -1390,6 +1396,45 @@ class AppLocalizationsDoi extends AppLocalizations {
   String get errorCsvNoRows => 'चुणी गेदी फाइल च्च कोई रो नेईं ऐ।';
 
   @override
+  String get skipMissingDate => 'तारीख गैहर ऐ।';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" पैटर्न कन्नै तारीख \"$raw\" पढ़ी नेईं गेई।';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => 'लेनदेन दी तारीख गैहर ऐ जां गलत ऐ।';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'लेनदेन दी तारीख \"$raw\" पढ़ी नेईं गेई।';
+  }
+
+  @override
+  String get skipMissingAmount => 'रकम गैहर ऐ।';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'रकम \"$raw\" पढ़ी नेईं गेई।';
+  }
+
+  @override
+  String get skipZeroAmount => 'रकम जीरो ऐ।';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'डेबिट जां क्रेडिट रकम पढ़ी नेईं गेई।';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'डेबिट कन्नै क्रेडिट दोनें कालमें च रकम ऐ।';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'डेबिट कन्नै क्रेडिट दोनें कालम जीरो न।';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'बैकअप नेईं बणाया जाई सकेआ: $detail';
   }
@@ -1601,7 +1646,7 @@ class AppLocalizationsDoi extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'चालू होने पर: उप्पर दित्ती रकम इस खाते थमां लेआ कुल रकम ऐ; फीस इसदे च्चा ही कटदी ऐ।';
+      'उप्पर: उप्पर दित्ती रकम इस खाते थमां लेआ कुल रकम ऐ; फीस इसदे च्चा ही निकलदी ऐ।';
 
   @override
   String get feeBankBlurb =>
@@ -1765,4 +1810,29 @@ class AppLocalizationsDoi extends AppLocalizations {
 
   @override
   String get unknownCategory => 'अज्ञात श्रेणी';
+
+  @override
+  String get researchPromptIntro =>
+      'इक घरेलू निवेशक आस्तै एह् सार्वजनिक रूपै च सूचीबद्ध साधन दी खोज करो। जारीकर्ता दी पछयाण करो, जेकर पता होऐ तां तारीखें सुद्धा हाल दियां खबरें दा सार दिओ, ते गिरावट दे खतरे ते तेजी दे कारण दस्सो। तथें गी कयासें कोला अलग रक्खो। खरीदने, बेचने जां रक्खने दी सलाह मत्त दिओ। एह् वित्तीय सलाह नेईं ऐ।';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'नां: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'टिकर: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'टिकर: (दित्ता नेईं गेआ)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (दित्ता नेईं गेआ)';
 }

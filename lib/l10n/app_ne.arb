@@ -109,6 +109,8 @@
   "systemCategoryPhone": "फोन",
   "systemCategoryHealth": "स्वास्थ्य",
   "systemCategoryOtherExpense": "अन्य खर्च",
+  "systemDescriptionCsvImport": "CSV आयात",
+  "systemDescriptionOfxImport": "OFX आयात",
   "homeThisMonth": "यो महिना",
   "homeMoneyInTransit": "यात्रामा रहेको पैसा",
   "homeWhatYouHaveMinusWhatYouOwe": "तपाईंसँग भएको घटाउ तपाईंले तिर्नुपर्ने",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "छानिएको फाइल खाली छ।",
   "errorCsvUnreadable": "यो फाइल CSV को रूपमा पढ्न सकिएन।",
   "errorCsvNoRows": "छानिएको फाइलमा कुनै पङ्क्ति छैन।",
+  "skipMissingDate": "मिति छैन।",
+  "skipUnparseableDate": "\"{pattern}\" ढाँचाले मिति \"{raw}\" पद वर्णन गर्न सकिएन।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "कारोबारको मिति छैन वा अमान्य छ।",
+  "skipOfxUnparseableDate": "कारोबारको मिति \"{raw}\" पद वर्णन गर्न सकिएन।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "रकम छैन।",
+  "skipUnparseableAmount": "रकम \"{raw}\" पद वर्णन गर्न सकिएन।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "रकम शून्य छ।",
+  "skipUnparseableDebitCreditAmount": "डेबिट वा क्रेडिट रकम पद वर्णन गर्न सकिएन।",
+  "skipBothDebitAndCreditNonZero": "डेबिट र क्रेडिट दुवै स्तम्भमा रकम छ।",
+  "skipBothDebitAndCreditZero": "डेबिट र क्रेडिट दुवै स्तम्भ शून्य छन्।",
   "errorBackupCreateFailed": "ब्याकअप सिर्जना गर्न सकिएन: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "विनिमय दर अझै थाहा नभए खाली छोड्नुहोस्।",
   "recordTradeBlurb": "पहिले नै भइसकेको कारोबार रेकर्ड गर्नुहोस्। यो एपले अर्डर राख्दैन।",
-  "feeOnTopBlurb": "सक्रिय हुँदा: माथिको रकम यो खाताबाट काटिएको कुल रकम हो; शुल्क त्यहीबाट कटाइन्छ।",
+  "feeOnTopBlurb": "सक्रिय: माथिको रकम यो खाताबाट लिइएको कुल रकम हो; शुल्क त्यसैबाट कटौती हुन्छ।",
   "feeBankBlurb": "तपाईंको बैंक वा बिचौलियाले लिने अग्रिम कमिसन।",
   "validationPinMinLength": "PIN कम्तीमा ४ अंकको हुनुपर्छ।",
   "restoreBackupBlurb": "यसले यस एपमा भएको सबै कुरा ब्याकअपले बदल्छ — यसले मिलाउँदैन। ब्याकअप फाइल छान्नुहोस् र तपाईंले यसलाई सुरक्षित गर्दा प्रयोग गर्नुभएको पासफ्रेज प्रविष्ट गर्नुहोस्।",
@@ -858,7 +894,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} अब म्याद पुगेको रूपमा देखिने छैन। यसले पहिले नै रेकर्ड गरेका कारोबारहरू प्रभावित हुनेछैनन्।",
+  "deleteTemplateBody": "{name} अब तिर्नुपर्नेको रूपमा प्रस्ताव गरिनेछैन। यसले पहिले नै रेकर्ड गरेका विगतका कारोबारमा असर पर्दैन।",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "तपाईंको मनपर्ने अनुसन्धान उपकरण खोलियो।",
   "looksLikeGain": "यो मुनाफा जस्तो देखिन्छ",
   "looksLikeLoss": "यो नोक्सान जस्तो देखिन्छ",
-  "looksLikeBreakEven": "यो नाफा-नोक्सान बराबर जस्तो देखिन्छ",
+  "looksLikeBreakEven": "यो ब्रेक-इभन जस्तो देखिन्छ",
   "sellableQuantity": "{name} ({qty} बिक्रीयोग्य)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "श्रेणी नियमहरू",
   "possibleDuplicate": "सम्भावित नक्कल",
-  "unknownCategory": "अज्ञात श्रेणी"
+  "unknownCategory": "अज्ञात श्रेणी",
+  "researchPromptIntro": "घरेलु लगानीकर्ताको लागि सार्वजनिक रूपमा सूचीबद्ध यो उपकरणको अनुसन्धान गर्नुहोस्। जारीकर्ता पहिचान गर्नुहोस्, थाहा भएमा मितिसहित हालसालैका समाचारको सारांश दिनुहोस्, र गिरावटको जोखिम र वृद्धिका कारकहरू उल्लेख गर्नुहोस्। तथ्यलाई अनुमानबाट छुट्याउनुहोस्। किन्ने, बेच्ने वा राख्ने सिफारिस नदिनुहोस्। यो वित्तीय सल्लाह होइन।",
+  "researchPromptNameLine": "नाम: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "टिकर: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "टिकर: (उपलब्ध छैन)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (उपलब्ध छैन)"
 }

@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Điện thoại",
   "systemCategoryHealth": "Sức khỏe",
   "systemCategoryOtherExpense": "Chi phí khác",
+  "systemDescriptionCsvImport": "Nhập CSV",
+  "systemDescriptionOfxImport": "Nhập OFX",
   "homeThisMonth": "THÁNG NÀY",
   "homeMoneyInTransit": "TIỀN ĐANG CHUYỂN",
   "homeWhatYouHaveMinusWhatYouOwe": "NHỮNG GÌ BẠN CÓ TRỪ NHỮNG GÌ BẠN NỢ",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Cụm từ khôi phục của bạn",
   "recoveryPhraseConfirmTitle": "Xác nhận cụm từ của bạn",
-  "recoveryPhraseBlurb": "24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Sổ kế toán Smara không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.",
+  "recoveryPhraseBlurb": "24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Smara Accounting không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.",
   "recoveryPhraseWriteDown": "Ghi lại các từ này theo đúng thứ tự và cất giữ ở nơi an toàn, tách biệt với thiết bị này.",
   "iveSavedRecoveryPhrase": "Tôi đã lưu cụm từ khôi phục của mình",
   "confirmPhraseBlurb": "Nhập các từ được yêu cầu từ cụm từ bạn vừa lưu.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Tệp đã chọn trống rỗng.",
   "errorCsvUnreadable": "Không thể đọc tệp này dưới dạng CSV.",
   "errorCsvNoRows": "Tệp đã chọn không có hàng dữ liệu nào.",
+  "skipMissingDate": "Thiếu ngày.",
+  "skipUnparseableDate": "Không thể phân tích ngày \"{raw}\" với mẫu \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Thiếu ngày giao dịch hoặc ngày không hợp lệ.",
+  "skipOfxUnparseableDate": "Không thể phân tích ngày giao dịch \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Thiếu số tiền.",
+  "skipUnparseableAmount": "Không thể phân tích số tiền \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Số tiền bằng không.",
+  "skipUnparseableDebitCreditAmount": "Không thể phân tích số tiền ghi nợ hoặc ghi có.",
+  "skipBothDebitAndCreditNonZero": "Cả cột ghi nợ và ghi có đều có số tiền.",
+  "skipBothDebitAndCreditZero": "Cả cột ghi nợ và ghi có đều bằng không.",
   "errorBackupCreateFailed": "Không thể tạo bản sao lưu: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Mở khóa Sổ kế toán Smara",
+  "unlockBiometricReason": "Mở khóa Smara Account",
   "searchLabel": "Tìm",
   "openingBalance": "Số dư đầu kỳ",
   "transferToName": "Chuyển khoản: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Quy tắc danh mục",
   "possibleDuplicate": "có thể trùng lặp",
-  "unknownCategory": "Danh mục không xác định"
+  "unknownCategory": "Danh mục không xác định",
+  "researchPromptIntro": "Nghiên cứu công cụ niêm yết công khai này cho một nhà đầu tư cá nhân. Xác định tổ chức phát hành, tóm tắt tin tức gần đây kèm ngày tháng nếu biết, và nêu ra các rủi ro giảm giá và động lực tăng giá. Tách biệt sự thật khỏi suy đoán. Không đưa ra khuyến nghị mua, bán hoặc giữ. Đây không phải là lời khuyên tài chính.",
+  "researchPromptNameLine": "Tên: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Mã: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Mã: (không cung cấp)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (không cung cấp)"
 }

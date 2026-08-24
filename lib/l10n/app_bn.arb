@@ -109,6 +109,8 @@
   "systemCategoryPhone": "ফোন",
   "systemCategoryHealth": "স্বাস্থ্য",
   "systemCategoryOtherExpense": "অন্যান্য খরচ",
+  "systemDescriptionCsvImport": "CSV আমদানি",
+  "systemDescriptionOfxImport": "OFX আমদানি",
   "homeThisMonth": "এই মাস",
   "homeMoneyInTransit": "চলমান অর্থ",
   "homeWhatYouHaveMinusWhatYouOwe": "আপনার যা আছে বিয়োগ আপনি যা দেনা",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "নির্বাচিত ফাইলটি খালি।",
   "errorCsvUnreadable": "এই ফাইলটি CSV হিসেবে পড়া যায়নি।",
   "errorCsvNoRows": "নির্বাচিত ফাইলে কোনো সারি নেই।",
+  "skipMissingDate": "তারিখ নেই।",
+  "skipUnparseableDate": "\"{pattern}\" প্যাটার্ন দিয়ে \"{raw}\" তারিখটি পার্স করা যায়নি।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "লেনদেনের তারিখ নেই বা অবৈধ।",
+  "skipOfxUnparseableDate": "লেনদেনের তারিখ \"{raw}\" পার্স করা যায়নি।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "পরিমাণ নেই।",
+  "skipUnparseableAmount": "পরিমাণ \"{raw}\" পার্স করা যায়নি।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "পরিমাণ শূন্য।",
+  "skipUnparseableDebitCreditAmount": "ডেবিট বা ক্রেডিট পরিমাণ পার্স করা যায়নি।",
+  "skipBothDebitAndCreditNonZero": "ডেবিট এবং ক্রেডিট উভয় কলামেই পরিমাণ আছে।",
+  "skipBothDebitAndCreditZero": "ডেবিট এবং ক্রেডিট উভয় কলামই শূন্য।",
   "errorBackupCreateFailed": "ব্যাকআপ তৈরি করা যায়নি: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "বিনিময় হার এখনও জানা না থাকলে খালি রাখুন।",
   "recordTradeBlurb": "ইতিমধ্যে ঘটে যাওয়া একটি ট্রেড রেকর্ড করুন। এই অ্যাপ কোনো অর্ডার দেয় না।",
-  "feeOnTopBlurb": "চালু থাকলে: উপরের অঙ্কটি এই হিসাব থেকে নেওয়া মোট টাকা; ফি সেই টাকার মধ্য থেকেই কাটা হয়।",
+  "feeOnTopBlurb": "উপরে: উপরের পরিমাণটি এই হিসাব থেকে নেওয়া মোট; ফি এর মধ্যে থেকে বের হয়।",
   "feeBankBlurb": "আপনার ব্যাংক বা একজন মধ্যস্থতাকারী দ্বারা ধার্য করা একটি অগ্রিম কমিশন।",
   "validationPinMinLength": "পিন অন্তত ৪ সংখ্যার হতে হবে।",
   "restoreBackupBlurb": "এটি এই অ্যাপে বর্তমানে থাকা সবকিছু ব্যাকআপ দিয়ে প্রতিস্থাপন করে — এটি একত্র করে না। একটি ব্যাকআপ ফাইল বেছে নিন এবং আপনি এটি সুরক্ষিত করা পাসফ্রেজটি লিখুন।",
@@ -858,7 +894,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} আর বকেয়া টেমপ্লেট হিসেবে দেখানো হবে না। এটি আগেই যে লেনদেনগুলো রেকর্ড করেছে, সেগুলো প্রভাবিত হবে না।",
+  "deleteTemplateBody": "{name} আর বকেয়া হিসেবে প্রস্তাব করা হবে না। এটি ইতিমধ্যে রেকর্ড করা অতীতের লেনদেনে প্রভাব পড়বে না।",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "আপনার প্রিয় গবেষণা সরঞ্জাম খোলা হয়েছে।",
   "looksLikeGain": "এটি লাভের মতো মনে হচ্ছে",
   "looksLikeLoss": "এটি ক্ষতির মতো মনে হচ্ছে",
-  "looksLikeBreakEven": "এটি লাভ-ক্ষতি সমান মনে হচ্ছে",
+  "looksLikeBreakEven": "এটি সমান-সমানের মতো মনে হচ্ছে",
   "sellableQuantity": "{name} ({qty} বিক্রয়যোগ্য)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "বিভাগের নিয়ম",
   "possibleDuplicate": "সম্ভাব্য নকল",
-  "unknownCategory": "অজানা বিভাগ"
+  "unknownCategory": "অজানা বিভাগ",
+  "researchPromptIntro": "একজন পারিবারিক বিনিয়োগকারীর জন্য এই প্রকাশ্যে তালিকাভুক্ত ইনস্ট্রুমেন্টটি নিয়ে গবেষণা করুন। প্রদানকারী প্রতিষ্ঠান চিহ্নিত করুন, জানা থাকলে তারিখসহ সাম্প্রতিক খবরের সারসংক্ষেপ দিন, এবং পতনের ঝুঁকি ও উত্থানের কারণগুলি তুলে ধরুন। তথ্যকে অনুমান থেকে আলাদা করুন। কেনা, বেচা বা ধরে রাখার পরামর্শ দেবেন না। এটি আর্থিক পরামর্শ নয়।",
+  "researchPromptNameLine": "নাম: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "টিকার: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "টিকার: (দেওয়া হয়নি)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (দেওয়া হয়নি)"
 }

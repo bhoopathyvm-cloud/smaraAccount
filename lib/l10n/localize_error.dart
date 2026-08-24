@@ -21,6 +21,35 @@ import 'generated/app_localizations.dart';
   };
 }
 
+/// Resolves the `{detail}` placeholder some codes below embed. Repositories
+/// and ViewModels must never forward a caught exception's raw
+/// `toString()`/message as this placeholder's value - that would be
+/// unlocalized English inside an otherwise-translated sentence
+/// (i18n-full-ui-and-input-language design.md Risk: "Detail params still
+/// English"). Two shapes are supported instead:
+///
+/// - `params['innerCode']` names another [AppErrorCode] (set when the
+///   catch site wrapped a domain exception that already carries its own
+///   stable code, e.g. a brokerage-fee post failing with an
+///   [InvalidTransactionAmountException] mid-buy) - resolved recursively
+///   through [localizeError] in the caller's active locale, so the nested
+///   failure reads as a real translated sentence, not raw debug text.
+/// - Otherwise (a genuinely unpredictable platform/I-O exception with no
+///   stable code of its own, e.g. a failed file write), falls back to
+///   [AppLocalizations.errorGeneric] - a translated "something went
+///   wrong" rather than the exception's untranslatable English text.
+String _detailFor(AppLocalizations l10n, Map<String, String> params) {
+  final innerCodeName = params['innerCode'];
+  if (innerCodeName != null) {
+    for (final candidate in AppErrorCode.values) {
+      if (candidate.name == innerCodeName) {
+        return localizeError(l10n, candidate, params);
+      }
+    }
+  }
+  return l10n.errorGeneric;
+}
+
 /// Maps a stable error code (and optional placeholders) to localized copy.
 String localizeError(
   AppLocalizations l10n,
@@ -37,7 +66,7 @@ String localizeError(
     AppErrorCode.invalidLedgerBackupUnverified =>
       l10n.errorInvalidLedgerBackupUnverified,
     AppErrorCode.invalidLedgerBackupUnreadable =>
-      l10n.errorInvalidLedgerBackupUnreadable(p('detail')),
+      l10n.errorInvalidLedgerBackupUnreadable(_detailFor(l10n, params)),
     AppErrorCode.foreignBackupIdentity => l10n.errorForeignBackupIdentity,
     AppErrorCode.accountNotFinancial => l10n.errorAccountNotFinancial,
     AppErrorCode.accountArchived => l10n.errorAccountArchived,
@@ -126,10 +155,10 @@ String localizeError(
     AppErrorCode.incomeRequiredForGain => l10n.errorIncomeRequiredForGain,
     AppErrorCode.expenseRequiredForLoss => l10n.errorExpenseRequiredForLoss,
     AppErrorCode.brokerageFailedAfterBuy => l10n.errorBrokerageFailedAfterBuy(
-      p('detail'),
+      _detailFor(l10n, params),
     ),
     AppErrorCode.brokerageFailedAfterSell => l10n.errorBrokerageFailedAfterSell(
-      p('detail'),
+      _detailFor(l10n, params),
     ),
     AppErrorCode.dividendMustBePositive => l10n.errorDividendMustBePositive,
     AppErrorCode.notInvestmentAccount => l10n.errorNotInvestmentAccount,
@@ -145,7 +174,7 @@ String localizeError(
     AppErrorCode.csvUnreadable => l10n.errorCsvUnreadable,
     AppErrorCode.csvNoRows => l10n.errorCsvNoRows,
     AppErrorCode.backupCreateFailed => l10n.errorBackupCreateFailed(
-      p('detail'),
+      _detailFor(l10n, params),
     ),
     AppErrorCode.backupRestoreFailed => l10n.errorBackupRestoreFailed,
     AppErrorCode.validationAmountAccountCategoryRequired =>
@@ -181,9 +210,9 @@ String localizeError(
     AppErrorCode.validationRestorePhraseFailed =>
       l10n.validationRestorePhraseFailed,
     AppErrorCode.validationGenerateKeyFailed =>
-      l10n.validationGenerateKeyFailed(p('detail')),
+      l10n.validationGenerateKeyFailed(_detailFor(l10n, params)),
     AppErrorCode.validationSaveCurrencyFailed =>
-      l10n.validationSaveCurrencyFailed(p('detail')),
+      l10n.validationSaveCurrencyFailed(_detailFor(l10n, params)),
     AppErrorCode.validationMigrationFailed => l10n.validationMigrationFailed,
     AppErrorCode.validationChooseBackupFile => l10n.validationChooseBackupFile,
     AppErrorCode.validationPassphraseRequired =>
@@ -194,7 +223,7 @@ String localizeError(
     AppErrorCode.validationFeeMustBeLessThanAmount =>
       l10n.validationFeeMustBeLessThanAmount,
     AppErrorCode.validationTransferSavedFeeFailed =>
-      l10n.validationTransferSavedFeeFailed(p('detail')),
+      l10n.validationTransferSavedFeeFailed(_detailFor(l10n, params)),
     AppErrorCode.validationEnterValidAmount => l10n.validationEnterValidAmount,
     AppErrorCode.validationConfirmWordMismatch =>
       l10n.validationConfirmWordMismatch(p('n')),

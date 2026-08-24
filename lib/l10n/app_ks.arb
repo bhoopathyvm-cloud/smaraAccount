@@ -109,6 +109,8 @@
   "systemCategoryPhone": "فون",
   "systemCategoryHealth": "صحت",
   "systemCategoryOtherExpense": "بیٕ خرچ",
+  "systemDescriptionCsvImport": "CSV درآمد",
+  "systemDescriptionOfxImport": "OFX درآمد",
   "homeThisMonth": "یِم رؠتھ",
   "homeMoneyInTransit": "سفرس منز زَر",
   "homeWhatYouHaveMinusWhatYouOwe": "یہ تُہند آسہٕ تہٕ یہ تُہی گژھِو دِنہٕ اُس فرق",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "ژارٕمژٕ فایل چھ خالی.",
   "errorCsvUnreadable": "یہ فایل چھ نہٕ CSV ہیوند پرنہٕ ہیکان.",
   "errorCsvNoRows": "ژارٕمژٕ فایلہٕ منز چھہ نہٕ قطاریں.",
+  "skipMissingDate": "تاریخ چھُنہ موجود۔",
+  "skipUnparseableDate": "\"{pattern}\" پیٹرن سیتؠ تاریخ \"{raw}\" پارس کرنس منٛز ناکام۔",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "ٹرانزیکشن تاریخ چھُنہ موجود یا غلط چھُ۔",
+  "skipOfxUnparseableDate": "ٹرانزیکشن تاریخ \"{raw}\" پارس کرنس منٛز ناکام۔",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "رقم چھُنہ موجود۔",
+  "skipUnparseableAmount": "رقم \"{raw}\" پارس کرنس منٛز ناکام۔",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "رقم چھِ صفر۔",
+  "skipUnparseableDebitCreditAmount": "ڈیبٹ یا کریڈٹ رقم پارس کرنس منٛز ناکام۔",
+  "skipBothDebitAndCreditNonZero": "ڈیبٹ تہٕ کریڈٹ دۏشہٕ کالمن منٛز رقم چھِ۔",
+  "skipBothDebitAndCreditZero": "ڈیبٹ تہٕ کریڈٹ دۏشہٕ کالم چھِ صفر۔",
   "errorBackupCreateFailed": "بیک اپ تیار کرنہٕ ہیکان نہٕ: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "زمرٕ اصول",
   "possibleDuplicate": "ممکن نقل",
-  "unknownCategory": "نامعلوم زمرٕ"
+  "unknownCategory": "نامعلوم زمرٕ",
+  "researchPromptIntro": "گھریلی سرمایہ کار خٲطرٕ یہ عوامی طور پؠ درج شُدہ آلہٕ تحقیق کریو۔ جاری کُنندہٕ شناخت کریو، اگر معلوم چھُ تہ تاریخن سیتؠ تازٕ خبرن ہنٛز خلاصہٕ دیو، تہٕ نشیبی خطرہٕ تہٕ ترقی ہنٛدِ عاملن بیان کریو۔ حقیقتن اندازن کھۄتہٕ الگ رکھیو۔ خرید، فروخت یا رکھنہٕ ہنٛز صلاح مہ دِیو۔ یہ مالی صلاح نہٕ چھِ۔",
+  "researchPromptNameLine": "ناو: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "ٹکر: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "ٹکر: (فراہم نہٕ کرنہٕ آمت)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (فراہم نہٕ کرنہٕ آمت)"
 }

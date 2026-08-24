@@ -349,6 +349,12 @@ class AppLocalizationsRo extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Alte cheltuieli';
 
   @override
+  String get systemDescriptionCsvImport => 'Import CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'Import OFX';
+
+  @override
   String get homeThisMonth => 'LUNA ACEASTA';
 
   @override
@@ -790,7 +796,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Contabilitate nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.';
+      'Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Accounting nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1404,6 +1410,46 @@ class AppLocalizationsRo extends AppLocalizations {
   String get errorCsvNoRows => 'Fișierul selectat nu are rânduri.';
 
   @override
+  String get skipMissingDate => 'Dată lipsă.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Data \"$raw\" nu a putut fi interpretată cu modelul \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Data tranzacției lipsește sau este nevalidă.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Data tranzacției \"$raw\" nu a putut fi interpretată.';
+  }
+
+  @override
+  String get skipMissingAmount => 'Sumă lipsă.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Suma \"$raw\" nu a putut fi interpretată.';
+  }
+
+  @override
+  String get skipZeroAmount => 'Suma este zero.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Suma debit sau credit nu a putut fi interpretată.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Coloanele debit și credit au amândouă o sumă.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Coloanele debit și credit sunt amândouă zero.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Copia de rezervă nu a putut fi creată: $detail';
   }
@@ -1556,7 +1602,7 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Deblocați Smara Contabilitate';
+  String get unlockBiometricReason => 'Deblocați Smara Accounting';
 
   @override
   String get searchLabel => 'Căutare';
@@ -1787,4 +1833,29 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Categorie necunoscută';
+
+  @override
+  String get researchPromptIntro =>
+      'Cercetează acest instrument listat public pentru un investitor casnic. Identifică emitentul, rezumă știrile recente cu date dacă sunt cunoscute și schițează riscurile de scădere și factorii de creștere. Separă faptele de speculații. Nu oferi o recomandare de cumpărare, vânzare sau păstrare. Acesta nu este un sfat financiar.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Nume: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Simbol: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Simbol: (nefurnizat)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (nefurnizat)';
 }

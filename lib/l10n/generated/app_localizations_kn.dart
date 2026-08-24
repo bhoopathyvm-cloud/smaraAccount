@@ -347,6 +347,12 @@ class AppLocalizationsKn extends AppLocalizations {
   String get systemCategoryOtherExpense => 'ಇತರ ಖರ್ಚು';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV ಆಮದು';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX ಆಮದು';
+
+  @override
   String get homeThisMonth => 'ಈ ತಿಂಗಳು';
 
   @override
@@ -1399,6 +1405,46 @@ class AppLocalizationsKn extends AppLocalizations {
   String get errorCsvNoRows => 'ಆಯ್ಕೆಮಾಡಿದ ಫೈಲ್‌ಗೆ ಸಾಲುಗಳಿಲ್ಲ.';
 
   @override
+  String get skipMissingDate => 'ದಿನಾಂಕ ಕಾಣೆಯಾಗಿದೆ.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" ಮಾದರಿಯೊಂದಿಗೆ \"$raw\" ದಿನಾಂಕವನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'ವಹಿವಾಟಿನ ದಿನಾಂಕ ಕಾಣೆಯಾಗಿದೆ ಅಥವಾ ಅಮಾನ್ಯವಾಗಿದೆ.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'ವಹಿವಾಟಿನ ದಿನಾಂಕ \"$raw\" ಅನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
+  }
+
+  @override
+  String get skipMissingAmount => 'ಮೊತ್ತ ಕಾಣೆಯಾಗಿದೆ.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'ಮೊತ್ತ \"$raw\" ಅನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
+  }
+
+  @override
+  String get skipZeroAmount => 'ಮೊತ್ತ ಶೂನ್ಯವಾಗಿದೆ.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'ಡೆಬಿಟ್ ಅಥವಾ ಕ್ರೆಡಿಟ್ ಮೊತ್ತವನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'ಡೆಬಿಟ್ ಮತ್ತು ಕ್ರೆಡಿಟ್ ಎರಡೂ ಕಾಲಂಗಳಲ್ಲಿ ಮೊತ್ತವಿದೆ.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'ಡೆಬಿಟ್ ಮತ್ತು ಕ್ರೆಡಿಟ್ ಎರಡೂ ಕಾಲಂಗಳು ಶೂನ್ಯವಾಗಿವೆ.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'ಬ್ಯಾಕಪ್ ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: $detail';
   }
@@ -1775,4 +1821,29 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get unknownCategory => 'ಅಜ್ಞಾತ ವರ್ಗ';
+
+  @override
+  String get researchPromptIntro =>
+      'ಮನೆಯ ಹೂಡಿಕೆದಾರರಿಗಾಗಿ ಸಾರ್ವಜನಿಕವಾಗಿ ಪಟ್ಟಿ ಮಾಡಲಾದ ಈ ಸಾಧನವನ್ನು ಸಂಶೋಧಿಸಿ. ವಿತರಕರನ್ನು ಗುರುತಿಸಿ, ತಿಳಿದಿದ್ದರೆ ದಿನಾಂಕಗಳೊಂದಿಗೆ ಇತ್ತೀಚಿನ ಸುದ್ದಿಗಳನ್ನು ಸಾರಾಂಶಿಸಿ, ಮತ್ತು ಕುಸಿತದ ಅಪಾಯಗಳು ಹಾಗೂ ಏರಿಕೆಯ ಅಂಶಗಳನ್ನು ವಿವರಿಸಿ. ಸತ್ಯಗಳನ್ನು ಊಹಾಪೋಹದಿಂದ ಬೇರ್ಪಡಿಸಿ. ಖರೀದಿ, ಮಾರಾಟ ಅಥವಾ ಹಿಡಿದಿಟ್ಟುಕೊಳ್ಳುವ ಶಿಫಾರಸನ್ನು ನೀಡಬೇಡಿ. ಇದು ಹಣಕಾಸಿನ ಸಲಹೆಯಲ್ಲ.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'ಹೆಸರು: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'ಟಿಕರ್: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'ಟಿಕರ್: (ನೀಡಿಲ್ಲ)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (ನೀಡಿಲ್ಲ)';
 }

@@ -283,7 +283,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get providerStooq => 'Stooq (kuotasi harian)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (API grafik)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -344,6 +344,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'Pengeluaran lainnya';
+
+  @override
+  String get systemDescriptionCsvImport => 'Impor CSV';
+
+  @override
+  String get systemDescriptionOfxImport => 'Impor OFX';
 
   @override
   String get homeThisMonth => 'BULAN INI';
@@ -788,7 +794,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      '24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Pembukuan tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.';
+      '24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Accounting tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1402,6 +1408,46 @@ class AppLocalizationsId extends AppLocalizations {
   String get errorCsvNoRows => 'File yang dipilih tidak memiliki baris.';
 
   @override
+  String get skipMissingDate => 'Tanggal tidak ada.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return 'Tidak dapat mengurai tanggal \"$raw\" dengan pola \"$pattern\".';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate =>
+      'Tanggal transaksi tidak ada atau tidak valid.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'Tidak dapat mengurai tanggal transaksi \"$raw\".';
+  }
+
+  @override
+  String get skipMissingAmount => 'Jumlah tidak ada.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'Tidak dapat mengurai jumlah \"$raw\".';
+  }
+
+  @override
+  String get skipZeroAmount => 'Jumlah nol.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Tidak dapat mengurai jumlah debit atau kredit.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Kolom debit dan kredit sama-sama memiliki jumlah.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Kolom debit dan kredit sama-sama nol.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Tidak dapat membuat cadangan: $detail';
   }
@@ -1549,7 +1595,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Buka kunci Smara Pembukuan';
+  String get unlockBiometricReason => 'Buka kunci Smara Account';
 
   @override
   String get searchLabel => 'Cari';
@@ -1778,4 +1824,30 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Kategori tidak diketahui';
+
+  @override
+  String get researchPromptIntro =>
+      'Riset instrumen yang terdaftar secara publik ini untuk investor rumah tangga. Identifikasi penerbitnya, ringkas berita terbaru beserta tanggalnya jika diketahui, dan uraikan risiko penurunan serta pendorong kenaikan. Pisahkan fakta dari spekulasi. Jangan berikan rekomendasi beli, jual, atau tahan. Ini bukan nasihat keuangan.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Nama: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Kode saham: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided =>
+      'Kode saham: (tidak disediakan)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (tidak disediakan)';
 }

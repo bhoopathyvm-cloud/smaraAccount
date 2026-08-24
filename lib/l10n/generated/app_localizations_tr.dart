@@ -348,6 +348,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get systemCategoryOtherExpense => 'Diğer Gider';
 
   @override
+  String get systemDescriptionCsvImport => 'CSV içe aktarımı';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX içe aktarımı';
+
+  @override
   String get homeThisMonth => 'BU AY';
 
   @override
@@ -789,7 +795,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get recoveryPhraseBlurb =>
-      'Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Muhasebe\'nin bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.';
+      'Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Accounting\'in bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.';
 
   @override
   String get recoveryPhraseWriteDown =>
@@ -1396,6 +1402,45 @@ class AppLocalizationsTr extends AppLocalizations {
   String get errorCsvNoRows => 'Seçilen dosyada satır yok.';
 
   @override
+  String get skipMissingDate => 'Tarih eksik.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" deseniyle \"$raw\" tarihi ayrıştırılamadı.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => 'İşlem tarihi eksik veya geçersiz.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return '\"$raw\" işlem tarihi ayrıştırılamadı.';
+  }
+
+  @override
+  String get skipMissingAmount => 'Tutar eksik.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return '\"$raw\" tutarı ayrıştırılamadı.';
+  }
+
+  @override
+  String get skipZeroAmount => 'Tutar sıfır.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'Borç veya alacak tutarı ayrıştırılamadı.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'Borç ve alacak sütunlarının ikisinde de tutar var.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'Borç ve alacak sütunlarının ikisi de sıfır.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'Yedek oluşturulamadı: $detail';
   }
@@ -1543,7 +1588,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'Smara Muhasebe\'nin kilidini aç';
+  String get unlockBiometricReason => 'Smara Account\'un kilidini aç';
 
   @override
   String get searchLabel => 'Ara';
@@ -1771,4 +1816,29 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get unknownCategory => 'Bilinmeyen kategori';
+
+  @override
+  String get researchPromptIntro =>
+      'Bireysel bir yatırımcı için halka açık olarak işlem gören bu aracı araştırın. İhraççıyı belirleyin, biliniyorsa tarihleriyle birlikte son haberleri özetleyin ve düşüş risklerini ile yükseliş etkenlerini ortaya koyun. Gerçekleri spekülasyondan ayırın. Alım, satım veya elde tutma tavsiyesi vermeyin. Bu finansal tavsiye değildir.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'Ad: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'Sembol: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'Sembol: (belirtilmedi)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (belirtilmedi)';
 }

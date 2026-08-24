@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telefono",
   "systemCategoryHealth": "Salute",
   "systemCategoryOtherExpense": "Altre spese",
+  "systemDescriptionCsvImport": "Importazione CSV",
+  "systemDescriptionOfxImport": "Importazione OFX",
   "homeThisMonth": "QUESTO MESE",
   "homeMoneyInTransit": "DENARO IN TRANSITO",
   "homeWhatYouHaveMinusWhatYouOwe": "QUELLO CHE HAI MENO QUELLO CHE DEVI",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "La tua frase di recupero",
   "recoveryPhraseConfirmTitle": "Conferma la tua frase",
-  "recoveryPhraseBlurb": "Queste 24 parole sono l''unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Contabilità non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.",
+  "recoveryPhraseBlurb": "Queste 24 parole sono l''unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Accounting non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.",
   "recoveryPhraseWriteDown": "Scrivi queste parole in ordine e conservale in un luogo sicuro, separato da questo dispositivo.",
   "iveSavedRecoveryPhrase": "Ho salvato la mia frase di recupero",
   "confirmPhraseBlurb": "Inserisci le parole richieste dalla frase che hai appena salvato.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Il file selezionato è vuoto.",
   "errorCsvUnreadable": "Non è stato possibile leggere questo file come CSV.",
   "errorCsvNoRows": "Il file selezionato non ha righe.",
+  "skipMissingDate": "Data mancante.",
+  "skipUnparseableDate": "Impossibile interpretare la data \"{raw}\" con il modello \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Data della transazione mancante o non valida.",
+  "skipOfxUnparseableDate": "Impossibile interpretare la data della transazione \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Importo mancante.",
+  "skipUnparseableAmount": "Impossibile interpretare l''importo \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "L''importo è zero.",
+  "skipUnparseableDebitCreditAmount": "Impossibile interpretare l''importo di addebito o accredito.",
+  "skipBothDebitAndCreditNonZero": "Le colonne addebito e accredito hanno entrambe un importo.",
+  "skipBothDebitAndCreditZero": "Le colonne addebito e accredito sono entrambe zero.",
   "errorBackupCreateFailed": "Non è stato possibile creare il backup: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Regole di categoria",
   "possibleDuplicate": "possibile duplicato",
-  "unknownCategory": "Categoria sconosciuta"
+  "unknownCategory": "Categoria sconosciuta",
+  "researchPromptIntro": "Ricerca questo strumento quotato pubblicamente per un investitore privato. Identifica l''emittente, riassumi le notizie recenti con le date se note, e delinea i rischi al ribasso e i fattori al rialzo. Separa i fatti dalle speculazioni. Non fornire una raccomandazione di acquisto, vendita o mantenimento. Questo non è un consiglio finanziario.",
+  "researchPromptNameLine": "Nome: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Ticker: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Ticker: (non fornito)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (non fornito)"
 }

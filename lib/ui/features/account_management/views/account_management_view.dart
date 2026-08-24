@@ -7,6 +7,7 @@ import '../../../../domain/models/account_group.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../../../core/entity_picker_field.dart';
@@ -179,12 +180,14 @@ class AccountManagementView extends StatelessWidget {
     Account account,
   ) async {
     final l10n = l10nOf(context);
-    final controller = TextEditingController(text: account.name);
+    final controller = TextEditingController(
+      text: editingNameFor(l10n, account.name),
+    );
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(l10n.renameAccount),
-        content: TextField(controller: controller, autofocus: true),
+        content: AppTextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
@@ -192,7 +195,11 @@ class AccountManagementView extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-              final name = controller.text.trim();
+              final name = canonicalNameToPersist(
+                l10n,
+                account.name,
+                controller.text,
+              );
               if (name.isEmpty) return;
               final renamed = await viewModel.renameAccount(
                 id: account.id,
@@ -214,7 +221,9 @@ class AccountManagementView extends StatelessWidget {
     AccountGroup group,
   ) async {
     final l10n = l10nOf(context);
-    final controller = TextEditingController(text: group.name);
+    final controller = TextEditingController(
+      text: editingNameFor(l10n, group.name),
+    );
     final currencyController = TextEditingController(text: group.currency);
     final hasActiveAccounts = viewModel.accounts.any(
       (account) => account.groupId == group.id && !account.archived,
@@ -226,7 +235,7 @@ class AccountManagementView extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: controller, autofocus: true),
+            AppTextField(controller: controller, autofocus: true),
             const SizedBox(height: AppSpacing.medium),
             TextField(
               controller: currencyController,
@@ -257,7 +266,11 @@ class AccountManagementView extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-              final name = controller.text.trim();
+              final name = canonicalNameToPersist(
+                l10n,
+                group.name,
+                controller.text,
+              );
               if (name.isEmpty) return;
               if (name != group.name) {
                 final renamed = await viewModel.renameGroup(

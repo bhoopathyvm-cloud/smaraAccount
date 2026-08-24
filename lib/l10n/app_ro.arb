@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telefon",
   "systemCategoryHealth": "Sănătate",
   "systemCategoryOtherExpense": "Alte cheltuieli",
+  "systemDescriptionCsvImport": "Import CSV",
+  "systemDescriptionOfxImport": "Import OFX",
   "homeThisMonth": "LUNA ACEASTA",
   "homeMoneyInTransit": "BANI ÎN TRANZIT",
   "homeWhatYouHaveMinusWhatYouOwe": "CE AVEȚI MINUS CE DATORAȚI",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Fraza dvs. de recuperare",
   "recoveryPhraseConfirmTitle": "Confirmați fraza",
-  "recoveryPhraseBlurb": "Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Contabilitate nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.",
+  "recoveryPhraseBlurb": "Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Accounting nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.",
   "recoveryPhraseWriteDown": "Notați aceste cuvinte în ordine și păstrați-le într-un loc sigur, separat de acest dispozitiv.",
   "iveSavedRecoveryPhrase": "Mi-am salvat fraza de recuperare",
   "confirmPhraseBlurb": "Introduceți cuvintele solicitate din fraza pe care tocmai ați salvat-o.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Fișierul selectat este gol.",
   "errorCsvUnreadable": "Acest fișier nu a putut fi citit ca CSV.",
   "errorCsvNoRows": "Fișierul selectat nu are rânduri.",
+  "skipMissingDate": "Dată lipsă.",
+  "skipUnparseableDate": "Data \"{raw}\" nu a putut fi interpretată cu modelul \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Data tranzacției lipsește sau este nevalidă.",
+  "skipOfxUnparseableDate": "Data tranzacției \"{raw}\" nu a putut fi interpretată.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Sumă lipsă.",
+  "skipUnparseableAmount": "Suma \"{raw}\" nu a putut fi interpretată.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Suma este zero.",
+  "skipUnparseableDebitCreditAmount": "Suma debit sau credit nu a putut fi interpretată.",
+  "skipBothDebitAndCreditNonZero": "Coloanele debit și credit au amândouă o sumă.",
+  "skipBothDebitAndCreditZero": "Coloanele debit și credit sunt amândouă zero.",
   "errorBackupCreateFailed": "Copia de rezervă nu a putut fi creată: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Deblocați Smara Contabilitate",
+  "unlockBiometricReason": "Deblocați Smara Accounting",
   "searchLabel": "Căutare",
   "openingBalance": "Sold inițial",
   "transferToName": "Transfer: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Reguli de categorii",
   "possibleDuplicate": "posibil duplicat",
-  "unknownCategory": "Categorie necunoscută"
+  "unknownCategory": "Categorie necunoscută",
+  "researchPromptIntro": "Cercetează acest instrument listat public pentru un investitor casnic. Identifică emitentul, rezumă știrile recente cu date dacă sunt cunoscute și schițează riscurile de scădere și factorii de creștere. Separă faptele de speculații. Nu oferi o recomandare de cumpărare, vânzare sau păstrare. Acesta nu este un sfat financiar.",
+  "researchPromptNameLine": "Nume: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Simbol: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Simbol: (nefurnizat)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (nefurnizat)"
 }

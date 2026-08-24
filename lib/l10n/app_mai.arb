@@ -109,6 +109,8 @@
   "systemCategoryPhone": "फोन",
   "systemCategoryHealth": "स्वास्थ्य",
   "systemCategoryOtherExpense": "अन्य व्यय",
+  "systemDescriptionCsvImport": "CSV आयात",
+  "systemDescriptionOfxImport": "OFX आयात",
   "homeThisMonth": "एहि मास",
   "homeMoneyInTransit": "पाइ मार्ग मे",
   "homeWhatYouHaveMinusWhatYouOwe": "अहाँक लग जे अछि ओहि सँ अहाँ पर जे बाकी अछि से घटा कऽ",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "चुनल फाइल खाली अछि।",
   "errorCsvUnreadable": "एहि फाइलकेँ CSV क रूप मे पढ़ल नहि जा सकल।",
   "errorCsvNoRows": "चुनल फाइल मे कोनो पंक्ति नहि अछि।",
+  "skipMissingDate": "तारीख नहि अछि।",
+  "skipUnparseableDate": "\"{pattern}\" पैटर्न सँ तारीख \"{raw}\" पार्स नहि भ सकल।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "लेनदेनक तारीख नहि अछि वा अमान्य अछि।",
+  "skipOfxUnparseableDate": "लेनदेनक तारीख \"{raw}\" पार्स नहि भ सकल।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "राशि नहि अछि।",
+  "skipUnparseableAmount": "राशि \"{raw}\" पार्स नहि भ सकल।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "राशि शून्य अछि।",
+  "skipUnparseableDebitCreditAmount": "डेबिट वा क्रेडिट राशि पार्स नहि भ सकल।",
+  "skipBothDebitAndCreditNonZero": "डेबिट आ क्रेडिट दुनू स्तम्भमे राशि अछि।",
+  "skipBothDebitAndCreditZero": "डेबिट आ क्रेडिट दुनू स्तम्भ शून्य अछि।",
   "errorBackupCreateFailed": "बैकअप नहि बनाओल जा सकल: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "जँ विनिमय दर अखनो ज्ञात नहि अछि तँ खाली छोड़ू।",
   "recordTradeBlurb": "एकटा व्यापार दर्ज करू जे पहिने सँ भऽ चुकल अछि। ई एप्प ऑर्डर नहि लगबैत अछि।",
-  "feeOnTopBlurb": "चालू रहला पर: ऊपरक राशि एहि खाता सँ काटल गेल कुल रकम अछि; शुल्क ओही मे सँ कटैत अछि।",
+  "feeOnTopBlurb": "ऊपर सँ: उपरका राशि एहि खाता सँ कुल कटौती अछि; शुल्क ओहि सँ निकलैत अछि।",
   "feeBankBlurb": "अहाँक बैंक वा एकटा बिचौलिया द्वारा लगाओल गेल अग्रिम कमीशन।",
   "validationPinMinLength": "PIN कम सँ कम 4 अंकक होएबाक चाही।",
   "restoreBackupBlurb": "ई एहि एप्प मे अखन जे किछु अछि से सभटा बैकअप सँ बदलि देत — ई मिलाबैत नहि अछि। एकटा बैकअप फाइल चुनू आ जकर सँ ई सुरक्षित कएल गेल छल ओ पासफ्रेज दर्ज करू।",
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "अहाँक पसंदीदा शोध उपकरण खुजल।",
   "looksLikeGain": "ई एकटा लाभ जेहन लगैत अछि",
   "looksLikeLoss": "ई एकटा हानि जेहन लगैत अछि",
-  "looksLikeBreakEven": "ई न लाभ न हानि जकाँ लगैत अछि",
+  "looksLikeBreakEven": "ई ब्रेक-इवन जेहन लगैत अछि",
   "sellableQuantity": "{name} ({qty} बेचबा योग्य)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "श्रेणी नियम",
   "possibleDuplicate": "संभावित डुप्लीकेट",
-  "unknownCategory": "अज्ञात श्रेणी"
+  "unknownCategory": "अज्ञात श्रेणी",
+  "researchPromptIntro": "एकटा घरेलू निवेशकक लेल ई सार्वजनिक रूपसँ सूचीबद्ध साधन पर शोध करू। जारीकर्ताक पहिचान करू, जँ ज्ञात होअय त तारीखक संग हालक खबरिक सारांश दिअ, आ गिरावटक जोखिम आ बढ़तिक कारकक रूपरेखा बनाउ। तथ्यकेँ अनुमानसँ अलग राखू। खरीदय, बेचय वा राखय के सलाह नहि दिअ। ई वित्तीय सलाह नहि अछि।",
+  "researchPromptNameLine": "नाम: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "टिकर: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "टिकर: (उपलब्ध नहि)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (उपलब्ध नहि)"
 }

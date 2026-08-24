@@ -8,6 +8,7 @@ import '../../../../domain/models/transaction_direction.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
@@ -260,13 +261,12 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
                   onSelected: widget.viewModel.selectPayee,
                   fieldViewBuilder:
                       (context, controller, focusNode, onFieldSubmitted) {
-                        return TextField(
+                        return AppTextField(
                           controller: controller,
                           focusNode: focusNode,
-                          decoration: InputDecoration(
-                            labelText: l10n.descriptionOptional,
-                          ),
+                          labelText: l10n.descriptionOptional,
                           onChanged: widget.viewModel.setDescription,
+                          onSubmitted: (_) => onFieldSubmitted(),
                         );
                       },
                 ),

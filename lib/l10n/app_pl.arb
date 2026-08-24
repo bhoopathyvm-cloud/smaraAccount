@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Telefon",
   "systemCategoryHealth": "Zdrowie",
   "systemCategoryOtherExpense": "Inne wydatki",
+  "systemDescriptionCsvImport": "Import CSV",
+  "systemDescriptionOfxImport": "Import OFX",
   "homeThisMonth": "TEN MIESIĄC",
   "homeMoneyInTransit": "ŚRODKI W DRODZE",
   "homeWhatYouHaveMinusWhatYouOwe": "TO, CO MASZ MINUS TO, CO JESTEŚ WINIEN",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Twoja fraza odzyskiwania",
   "recoveryPhraseConfirmTitle": "Potwierdź swoją frazę",
-  "recoveryPhraseBlurb": "Te 24 słowa to jedyny sposób na odzyskanie historii transakcji, jeśli to urządzenie zostanie zgubione, zresetowane lub wymienione. Smara Księgowość nie ma serwera i nie może ich odzyskać za Ciebie.\n\nJeśli zgubisz to urządzenie razem z tą frazą, każda zapisana przez Ciebie transakcja stanie się trwale niemożliwa do zweryfikowania.",
+  "recoveryPhraseBlurb": "Te 24 słowa to jedyny sposób na odzyskanie historii transakcji, jeśli to urządzenie zostanie zgubione, zresetowane lub wymienione. Smara Accounting nie ma serwera i nie może ich odzyskać za Ciebie.\n\nJeśli zgubisz to urządzenie razem z tą frazą, każda zapisana przez Ciebie transakcja stanie się trwale niemożliwa do zweryfikowania.",
   "recoveryPhraseWriteDown": "Zapisz te słowa w podanej kolejności i przechowuj je w bezpiecznym miejscu, osobno od tego urządzenia.",
   "iveSavedRecoveryPhrase": "Zapisałem/-am moją frazę odzyskiwania",
   "confirmPhraseBlurb": "Wprowadź żądane słowa z frazy, którą właśnie zapisałeś/-aś.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Wybrany plik jest pusty.",
   "errorCsvUnreadable": "Nie można odczytać tego pliku jako CSV.",
   "errorCsvNoRows": "Wybrany plik nie zawiera wierszy.",
+  "skipMissingDate": "Brak daty.",
+  "skipUnparseableDate": "Nie można odczytać daty \"{raw}\" przy użyciu wzorca \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Brak daty transakcji lub jest nieprawidłowa.",
+  "skipOfxUnparseableDate": "Nie można odczytać daty transakcji \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Brak kwoty.",
+  "skipUnparseableAmount": "Nie można odczytać kwoty \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Kwota wynosi zero.",
+  "skipUnparseableDebitCreditAmount": "Nie można odczytać kwoty winien lub ma.",
+  "skipBothDebitAndCreditNonZero": "Kolumny winien i ma zawierają obie kwotę.",
+  "skipBothDebitAndCreditZero": "Kolumny winien i ma wynoszą obie zero.",
   "errorBackupCreateFailed": "Nie udało się utworzyć kopii zapasowej: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "Odblokuj Smara Księgowość",
+  "unlockBiometricReason": "Odblokuj Smara Accounting",
   "searchLabel": "Szukaj",
   "openingBalance": "Saldo początkowe",
   "transferToName": "Przelew: {name}",
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Reguły kategorii",
   "possibleDuplicate": "możliwy duplikat",
-  "unknownCategory": "Nieznana kategoria"
+  "unknownCategory": "Nieznana kategoria",
+  "researchPromptIntro": "Zbadaj ten notowany publicznie instrument dla inwestora indywidualnego. Zidentyfikuj emitenta, podsumuj najnowsze wiadomości z datami, jeśli są znane, i przedstaw ryzyka spadku oraz czynniki wzrostu. Oddziel fakty od spekulacji. Nie udzielaj rekomendacji kupna, sprzedaży ani utrzymania. To nie jest porada finansowa.",
+  "researchPromptNameLine": "Nazwa: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Ticker: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Ticker: (nie podano)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (nie podano)"
 }

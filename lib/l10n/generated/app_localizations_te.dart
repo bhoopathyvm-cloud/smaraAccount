@@ -283,7 +283,7 @@ class AppLocalizationsTe extends AppLocalizations {
   String get providerStooq => 'Stooq (రోజువారీ కోట్‌లు)';
 
   @override
-  String get providerYahooFinance => 'Yahoo Finance (చార్ట్ API)';
+  String get providerYahooFinance => 'Yahoo Finance (chart API)';
 
   @override
   String get researchChatGpt => 'ChatGPT';
@@ -344,6 +344,12 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get systemCategoryOtherExpense => 'ఇతర ఖర్చు';
+
+  @override
+  String get systemDescriptionCsvImport => 'CSV దిగుమతి';
+
+  @override
+  String get systemDescriptionOfxImport => 'OFX దిగుమతి';
 
   @override
   String get homeThisMonth => 'ఈ నెల';
@@ -1397,6 +1403,45 @@ class AppLocalizationsTe extends AppLocalizations {
   String get errorCsvNoRows => 'ఎంచుకున్న ఫైల్‌లో వరుసలు లేవు.';
 
   @override
+  String get skipMissingDate => 'తేదీ లేదు.';
+
+  @override
+  String skipUnparseableDate(String raw, String pattern) {
+    return '\"$pattern\" నమూనాతో తేదీ \"$raw\" ను పార్స్ చేయలేకపోయాము.';
+  }
+
+  @override
+  String get skipOfxMissingOrInvalidDate => 'లావాదేవీ తేదీ లేదు లేదా చెల్లదు.';
+
+  @override
+  String skipOfxUnparseableDate(String raw) {
+    return 'లావాదేవీ తేదీ \"$raw\" ను పార్స్ చేయలేకపోయాము.';
+  }
+
+  @override
+  String get skipMissingAmount => 'మొత్తం లేదు.';
+
+  @override
+  String skipUnparseableAmount(String raw) {
+    return 'మొత్తం \"$raw\" ను పార్స్ చేయలేకపోయాము.';
+  }
+
+  @override
+  String get skipZeroAmount => 'మొత్తం సున్నా.';
+
+  @override
+  String get skipUnparseableDebitCreditAmount =>
+      'డెబిట్ లేదా క్రెడిట్ మొత్తాన్ని పార్స్ చేయలేకపోయాము.';
+
+  @override
+  String get skipBothDebitAndCreditNonZero =>
+      'డెబిట్ మరియు క్రెడిట్ రెండు నిలువు వరుసల్లోనూ మొత్తం ఉంది.';
+
+  @override
+  String get skipBothDebitAndCreditZero =>
+      'డెబిట్ మరియు క్రెడిట్ రెండు నిలువు వరుసలూ సున్నా.';
+
+  @override
   String errorBackupCreateFailed(String detail) {
     return 'బ్యాకప్‌ను సృష్టించలేకపోయాము: $detail';
   }
@@ -1543,7 +1588,7 @@ class AppLocalizationsTe extends AppLocalizations {
   }
 
   @override
-  String get unlockBiometricReason => 'స్మారా అకౌంటింగ్‌ను అన్‌లాక్ చేయండి';
+  String get unlockBiometricReason => 'స్మారా ఖాతాను అన్‌లాక్ చేయండి';
 
   @override
   String get searchLabel => 'శోధించు';
@@ -1608,7 +1653,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get feeOnTopBlurb =>
-      'ఆన్‌లో ఉంటే: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకునే మొత్తం; రుసుము దానిలోనుంచే తీసివేయబడుతుంది.';
+      'ఆన్: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకున్న మొత్తం; రుసుము దాని నుండి తీసివేయబడుతుంది.';
 
   @override
   String get feeBankBlurb =>
@@ -1658,7 +1703,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String deleteTemplateBody(String name) {
-    return '$name ఇక గడువు వచ్చినప్పుడు కనిపించదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.';
+    return '$name ఇక గడువుగా అందించబడదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.';
   }
 
   @override
@@ -1738,7 +1783,7 @@ class AppLocalizationsTe extends AppLocalizations {
   String get looksLikeLoss => 'ఇది నష్టంలా కనిపిస్తోంది';
 
   @override
-  String get looksLikeBreakEven => 'ఇది లాభనష్టాల్లేనట్టుగా కనిపిస్తోంది';
+  String get looksLikeBreakEven => 'ఇది బ్రేక్-ఈవెన్‌లా కనిపిస్తోంది';
 
   @override
   String sellableQuantity(String name, String qty) {
@@ -1772,4 +1817,29 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get unknownCategory => 'తెలియని వర్గం';
+
+  @override
+  String get researchPromptIntro =>
+      'ఇంటి పెట్టుబడిదారు కోసం బహిరంగంగా జాబితా చేయబడిన ఈ సాధనాన్ని పరిశోధించండి. జారీచేసినవారిని గుర్తించండి, తెలిస్తే తేదీలతో సహా ఇటీవలి వార్తలను సంగ్రహించండి, మరియు పతనం ప్రమాదాలు మరియు పెరుగుదల కారకాలను వివరించండి. వాస్తవాలను ఊహాగానాల నుండి వేరు చేయండి. కొనుగోలు, అమ్మకం లేదా కలిగి ఉండాలనే సిఫార్సు ఇవ్వవద్దు. ఇది ఆర్థిక సలహా కాదు.';
+
+  @override
+  String researchPromptNameLine(String name) {
+    return 'పేరు: $name';
+  }
+
+  @override
+  String researchPromptTickerLine(String ticker) {
+    return 'టికర్: $ticker';
+  }
+
+  @override
+  String get researchPromptTickerNoneProvided => 'టికర్: (ఇవ్వలేదు)';
+
+  @override
+  String researchPromptIsinLine(String isin) {
+    return 'ISIN: $isin';
+  }
+
+  @override
+  String get researchPromptIsinNoneProvided => 'ISIN: (ఇవ్వలేదు)';
 }

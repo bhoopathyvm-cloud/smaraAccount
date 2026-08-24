@@ -4,7 +4,9 @@ import '../../../../domain/models/account.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
+import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/date_formatter.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
 import '../view_models/transfer_view_model.dart';
@@ -135,15 +137,13 @@ class _TransferViewState extends State<TransferView> {
                 OutlinedButton(
                   onPressed: _pickDate,
                   child: Text(
-                    '${l10n.dateLabel}: ${_formatDate(viewModel.transactionDate)}',
+                    '${l10n.dateLabel}: ${formatLocalDate(context, viewModel.transactionDate)}',
                   ),
                 ),
                 const SizedBox(height: AppSpacing.large),
-                TextField(
+                AppTextField(
                   controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: l10n.descriptionOptional,
-                  ),
+                  labelText: l10n.descriptionOptional,
                   onChanged: viewModel.setDescription,
                 ),
                 const SizedBox(height: AppSpacing.xLarge),
@@ -171,11 +171,9 @@ class _TransferViewState extends State<TransferView> {
                     onChanged: viewModel.setFeeCategoryId,
                   ),
                   const SizedBox(height: AppSpacing.large),
-                  TextField(
+                  AppTextField(
                     controller: _feeDescriptionController,
-                    decoration: InputDecoration(
-                      labelText: l10n.feeDescriptionOptional,
-                    ),
+                    labelText: l10n.feeDescriptionOptional,
                     onChanged: viewModel.setFeeDescription,
                   ),
                   CheckboxListTile(
@@ -224,10 +222,6 @@ class _TransferViewState extends State<TransferView> {
     );
   }
 }
-
-String _formatDate(DateTime date) =>
-    '${date.year}-${date.month.toString().padLeft(2, '0')}-'
-    '${date.day.toString().padLeft(2, '0')}';
 
 /// e.g. "Reference rate: 1 USD ≈ 0.92 EUR" - display-only, never fed back
 /// into any field.

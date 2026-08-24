@@ -109,6 +109,8 @@
   "systemCategoryPhone": "Телефон",
   "systemCategoryHealth": "Здоровье",
   "systemCategoryOtherExpense": "Прочие расходы",
+  "systemDescriptionCsvImport": "Импорт CSV",
+  "systemDescriptionOfxImport": "Импорт OFX",
   "homeThisMonth": "ЭТОТ МЕСЯЦ",
   "homeMoneyInTransit": "ДЕНЬГИ В ПУТИ",
   "homeWhatYouHaveMinusWhatYouOwe": "ЧТО У ВАС ЕСТЬ МИНУС ЧТО ВЫ ДОЛЖНЫ",
@@ -401,7 +403,7 @@
   },
   "recoveryPhraseTitle": "Ваша фраза восстановления",
   "recoveryPhraseConfirmTitle": "Подтвердите вашу фразу",
-  "recoveryPhraseBlurb": "Эти 24 слова — единственный способ восстановить историю ваших операций, если это устройство будет утеряно, сброшено или заменено. У Smara учёта нет сервера, и он не может восстановить их за вас.\n\nЕсли вы потеряете это устройство и эту фразу вместе, каждая записанная вами операция станет навсегда непроверяемой.",
+  "recoveryPhraseBlurb": "Эти 24 слова — единственный способ восстановить историю ваших операций, если это устройство будет утеряно, сброшено или заменено. У Smara Accounting нет сервера, и он не может восстановить их за вас.\n\nЕсли вы потеряете это устройство и эту фразу вместе, каждая записанная вами операция станет навсегда непроверяемой.",
   "recoveryPhraseWriteDown": "Запишите эти слова по порядку и храните их в безопасном месте отдельно от этого устройства.",
   "iveSavedRecoveryPhrase": "Я сохранил свою фразу восстановления",
   "confirmPhraseBlurb": "Введите запрошенные слова из фразы, которую вы только что сохранили.",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "Выбранный файл пуст.",
   "errorCsvUnreadable": "Не удалось прочитать этот файл как CSV.",
   "errorCsvNoRows": "В выбранном файле нет строк.",
+  "skipMissingDate": "Дата отсутствует.",
+  "skipUnparseableDate": "Не удалось разобрать дату \"{raw}\" по шаблону \"{pattern}\".",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "Дата операции отсутствует или недействительна.",
+  "skipOfxUnparseableDate": "Не удалось разобрать дату операции \"{raw}\".",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "Сумма отсутствует.",
+  "skipUnparseableAmount": "Не удалось разобрать сумму \"{raw}\".",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "Сумма равна нулю.",
+  "skipUnparseableDebitCreditAmount": "Не удалось разобрать сумму дебета или кредита.",
+  "skipBothDebitAndCreditNonZero": "В столбцах дебета и кредита указаны обе суммы.",
+  "skipBothDebitAndCreditZero": "Столбцы дебета и кредита оба равны нулю.",
   "errorBackupCreateFailed": "Не удалось создать резервную копию: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "Правила категорий",
   "possibleDuplicate": "возможный дубликат",
-  "unknownCategory": "Неизвестная категория"
+  "unknownCategory": "Неизвестная категория",
+  "researchPromptIntro": "Изучите этот публично торгуемый инструмент для частного инвестора. Определите эмитента, кратко изложите последние новости с датами, если они известны, и опишите риски снижения и факторы роста. Отделяйте факты от домыслов. Не давайте рекомендацию покупать, продавать или удерживать. Это не является финансовой консультацией.",
+  "researchPromptNameLine": "Название: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "Тикер: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "Тикер: (не указан)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (не указан)"
 }

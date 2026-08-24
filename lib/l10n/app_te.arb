@@ -88,7 +88,7 @@
   "providerFrankfurter": "Frankfurter (ECB రేట్లు)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (రోజువారీ కోట్‌లు)",
-  "providerYahooFinance": "Yahoo Finance (చార్ట్ API)",
+  "providerYahooFinance": "Yahoo Finance (chart API)",
   "researchChatGpt": "ChatGPT",
   "researchClaude": "Claude",
   "researchGemini": "Gemini",
@@ -109,6 +109,8 @@
   "systemCategoryPhone": "ఫోన్",
   "systemCategoryHealth": "ఆరోగ్యం",
   "systemCategoryOtherExpense": "ఇతర ఖర్చు",
+  "systemDescriptionCsvImport": "CSV దిగుమతి",
+  "systemDescriptionOfxImport": "OFX దిగుమతి",
   "homeThisMonth": "ఈ నెల",
   "homeMoneyInTransit": "రవాణాలో ఉన్న డబ్బు",
   "homeWhatYouHaveMinusWhatYouOwe": "మీ వద్ద ఉన్నది మైనస్ మీరు బాకీ ఉన్నది",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "ఎంచుకున్న ఫైల్ ఖాళీగా ఉంది.",
   "errorCsvUnreadable": "ఈ ఫైల్‌ను CSVగా చదవలేకపోయాము.",
   "errorCsvNoRows": "ఎంచుకున్న ఫైల్‌లో వరుసలు లేవు.",
+  "skipMissingDate": "తేదీ లేదు.",
+  "skipUnparseableDate": "\"{pattern}\" నమూనాతో తేదీ \"{raw}\" ను పార్స్ చేయలేకపోయాము.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "లావాదేవీ తేదీ లేదు లేదా చెల్లదు.",
+  "skipOfxUnparseableDate": "లావాదేవీ తేదీ \"{raw}\" ను పార్స్ చేయలేకపోయాము.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "మొత్తం లేదు.",
+  "skipUnparseableAmount": "మొత్తం \"{raw}\" ను పార్స్ చేయలేకపోయాము.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "మొత్తం సున్నా.",
+  "skipUnparseableDebitCreditAmount": "డెబిట్ లేదా క్రెడిట్ మొత్తాన్ని పార్స్ చేయలేకపోయాము.",
+  "skipBothDebitAndCreditNonZero": "డెబిట్ మరియు క్రెడిట్ రెండు నిలువు వరుసల్లోనూ మొత్తం ఉంది.",
+  "skipBothDebitAndCreditZero": "డెబిట్ మరియు క్రెడిట్ రెండు నిలువు వరుసలూ సున్నా.",
   "errorBackupCreateFailed": "బ్యాకప్‌ను సృష్టించలేకపోయాము: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -743,7 +779,7 @@
       }
     }
   },
-  "unlockBiometricReason": "స్మారా అకౌంటింగ్‌ను అన్‌లాక్ చేయండి",
+  "unlockBiometricReason": "స్మారా ఖాతాను అన్‌లాక్ చేయండి",
   "searchLabel": "శోధించు",
   "openingBalance": "ప్రారంభ నిల్వ",
   "transferToName": "బదిలీ: {name}",
@@ -811,7 +847,7 @@
   },
   "leaveBlankIfRateUnknown": "మారకపు రేటు ఇంకా తెలియకపోతే ఖాళీగా వదలండి.",
   "recordTradeBlurb": "ఇప్పటికే జరిగిన ట్రేడ్‌ను నమోదు చేయండి. ఈ యాప్ ఆర్డర్‌లను ఉంచదు.",
-  "feeOnTopBlurb": "ఆన్‌లో ఉంటే: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకునే మొత్తం; రుసుము దానిలోనుంచే తీసివేయబడుతుంది.",
+  "feeOnTopBlurb": "ఆన్: పైన ఉన్న మొత్తం ఈ ఖాతా నుండి తీసుకున్న మొత్తం; రుసుము దాని నుండి తీసివేయబడుతుంది.",
   "feeBankBlurb": "మీ బ్యాంక్ లేదా మధ్యవర్తి వసూలు చేసే ముందస్తు కమిషన్.",
   "validationPinMinLength": "PIN కనీసం 4 అంకెలు ఉండాలి.",
   "restoreBackupBlurb": "ఇది ప్రస్తుతం ఈ యాప్‌లో ఉన్న ప్రతిదాన్ని బ్యాకప్‌తో భర్తీ చేస్తుంది — ఇది విలీనం చేయదు. బ్యాకప్ ఫైల్‌ను ఎంచుకుని దానిని రక్షించిన పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.",
@@ -858,7 +894,7 @@
       }
     }
   },
-  "deleteTemplateBody": "{name} ఇక గడువు వచ్చినప్పుడు కనిపించదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.",
+  "deleteTemplateBody": "{name} ఇక గడువుగా అందించబడదు. అది ఇప్పటికే నమోదు చేసిన గత లావాదేవీలు ప్రభావితం కావు.",
   "@deleteTemplateBody": {
     "placeholders": {
       "name": {
@@ -931,7 +967,7 @@
   "openedFavouriteResearchTool": "మీ ఇష్టమైన పరిశోధన సాధనం తెరవబడింది.",
   "looksLikeGain": "ఇది లాభంలా కనిపిస్తోంది",
   "looksLikeLoss": "ఇది నష్టంలా కనిపిస్తోంది",
-  "looksLikeBreakEven": "ఇది లాభనష్టాల్లేనట్టుగా కనిపిస్తోంది",
+  "looksLikeBreakEven": "ఇది బ్రేక్-ఈవెన్‌లా కనిపిస్తోంది",
   "sellableQuantity": "{name} ({qty} అమ్మదగినవి)",
   "@sellableQuantity": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "వర్గ నియమాలు",
   "possibleDuplicate": "సాధ్యమైన నకిలీ",
-  "unknownCategory": "తెలియని వర్గం"
+  "unknownCategory": "తెలియని వర్గం",
+  "researchPromptIntro": "ఇంటి పెట్టుబడిదారు కోసం బహిరంగంగా జాబితా చేయబడిన ఈ సాధనాన్ని పరిశోధించండి. జారీచేసినవారిని గుర్తించండి, తెలిస్తే తేదీలతో సహా ఇటీవలి వార్తలను సంగ్రహించండి, మరియు పతనం ప్రమాదాలు మరియు పెరుగుదల కారకాలను వివరించండి. వాస్తవాలను ఊహాగానాల నుండి వేరు చేయండి. కొనుగోలు, అమ్మకం లేదా కలిగి ఉండాలనే సిఫార్సు ఇవ్వవద్దు. ఇది ఆర్థిక సలహా కాదు.",
+  "researchPromptNameLine": "పేరు: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "టికర్: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "టికర్: (ఇవ్వలేదు)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (ఇవ్వలేదు)"
 }

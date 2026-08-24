@@ -109,6 +109,8 @@
   "systemCategoryPhone": "दूरभाषः",
   "systemCategoryHealth": "आरोग्यम्",
   "systemCategoryOtherExpense": "अन्यव्ययः",
+  "systemDescriptionCsvImport": "CSV आयातः",
+  "systemDescriptionOfxImport": "OFX आयातः",
   "homeThisMonth": "अस्मिन् मासे",
   "homeMoneyInTransit": "मार्गस्थं धनम्",
   "homeWhatYouHaveMinusWhatYouOwe": "भवतः सम्पत्तिः न्यूना भवतः देयम्",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "चयिता सञ्चिका रिक्ता अस्ति।",
   "errorCsvUnreadable": "इयं सञ्चिका CSV रूपेण पठितुं न शक्यते स्म।",
   "errorCsvNoRows": "चयितायां सञ्चिकायां पङ्क्तयः न सन्ति।",
+  "skipMissingDate": "तिथिः नास्ति।",
+  "skipUnparseableDate": "\"{pattern}\" रीत्या तिथिः \"{raw}\" पार्स्यितुं न शक्यते स्म।",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "व्यवहारस्य तिथिः नास्ति अथवा अवैधा अस्ति।",
+  "skipOfxUnparseableDate": "व्यवहारस्य तिथिः \"{raw}\" पार्स्यितुं न शक्यते स्म।",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "राशिः नास्ति।",
+  "skipUnparseableAmount": "राशिः \"{raw}\" पार्स्यितुं न शक्यते स्म।",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "राशिः शून्यम् अस्ति।",
+  "skipUnparseableDebitCreditAmount": "डेबिट् अथवा क्रेडिट् राशिः पार्स्यितुं न शक्यते स्म।",
+  "skipBothDebitAndCreditNonZero": "डेबिट् क्रेडिट् च उभयोः स्तम्भयोः राशिः अस्ति।",
+  "skipBothDebitAndCreditZero": "डेबिट् क्रेडिट् च उभयोः स्तम्भयोः शून्यम् अस्ति।",
   "errorBackupCreateFailed": "प्रतिलिपिं निर्मातुं न शक्यते स्म: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "वर्गनियमाः",
   "possibleDuplicate": "सम्भाव्यद्विरुक्तिः",
-  "unknownCategory": "अज्ञातवर्गः"
+  "unknownCategory": "अज्ञातवर्गः",
+  "researchPromptIntro": "गृहस्थ-निवेशकस्य कृते एतत् सार्वजनिकरूपेण सूचीबद्धं साधनं अन्वेषयतु। जारीकर्तारं ज्ञातुं, ज्ञातं चेत् तिथिभिः सह नूतनवृत्तान्तस्य सारं ददातु, तथा च पतनस्य आपदः वृद्धेः च कारकान् वर्णयतु। तथ्यानि अनुमानात् पृथक् कुर्वन्तु। क्रय-विक्रय-धारण-सम्बद्धं सुझावं मा ददातु। इदं वित्तीयं परामर्शं नास्ति।",
+  "researchPromptNameLine": "नाम: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "टिकर्: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "टिकर्: (न दत्तम्)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (न दत्तम्)"
 }

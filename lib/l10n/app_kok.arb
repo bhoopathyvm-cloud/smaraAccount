@@ -109,6 +109,8 @@
   "systemCategoryPhone": "फोन",
   "systemCategoryHealth": "भलायकी",
   "systemCategoryOtherExpense": "हेर खर्च",
+  "systemDescriptionCsvImport": "CSV आयात",
+  "systemDescriptionOfxImport": "OFX आयात",
   "homeThisMonth": "ह्या म्हयन्यान",
   "homeMoneyInTransit": "प्रवासांत आशिल्ले पैसे",
   "homeWhatYouHaveMinusWhatYouOwe": "तुमच्याकडे आशिल्लें उणें तुमी देवचें",
@@ -660,6 +662,40 @@
   "errorCsvEmpty": "निवडिल्ली फायल रिकामी आसा.",
   "errorCsvUnreadable": "ही फायल CSV म्हूण वाचूंक जायना.",
   "errorCsvNoRows": "निवडिल्ल्या फायलींत वळी ना.",
+  "skipMissingDate": "तारीख ना.",
+  "skipUnparseableDate": "\"{pattern}\" नमुन्या वरवीं \"{raw}\" तारीख वाचूंक जावंक ना.",
+  "@skipUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      },
+      "pattern": {
+        "type": "String"
+      }
+    }
+  },
+  "skipOfxMissingOrInvalidDate": "व्यवहाराची तारीख ना वा अवैध आसा.",
+  "skipOfxUnparseableDate": "व्यवहाराची तारीख \"{raw}\" वाचूंक जावंक ना.",
+  "@skipOfxUnparseableDate": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipMissingAmount": "रक्कम ना.",
+  "skipUnparseableAmount": "रक्कम \"{raw}\" वाचूंक जावंक ना.",
+  "@skipUnparseableAmount": {
+    "placeholders": {
+      "raw": {
+        "type": "String"
+      }
+    }
+  },
+  "skipZeroAmount": "रक्कम शून्य आसा.",
+  "skipUnparseableDebitCreditAmount": "डेबिट वा क्रेडिट रक्कम वाचूंक जावंक ना.",
+  "skipBothDebitAndCreditNonZero": "डेबिट आनी क्रेडिट दोन्ही स्तंभांनी रक्कम आसा.",
+  "skipBothDebitAndCreditZero": "डेबिट आनी क्रेडिट दोन्ही स्तंभ शून्य आसात.",
   "errorBackupCreateFailed": "बॅकअप तयार करूंक जायना: {detail}",
   "@errorBackupCreateFailed": {
     "placeholders": {
@@ -964,5 +1000,32 @@
   },
   "categoryRulesTitle": "वर्ग नेम",
   "possibleDuplicate": "शक्य द्विरुक्ती",
-  "unknownCategory": "अज्ञात वर्ग"
+  "unknownCategory": "अज्ञात वर्ग",
+  "researchPromptIntro": "घरगुती गुंतवणूकदारा खातीर हें सार्वजनिकपणान वळेरेंत आशिल्लें साधन संशोधन करात. जारीकर्ता वळखात, खबर आशिल्ल्यार तारखेसयत ताजी बातमी सारांशित करात, आनी देंवपाचो धोको आनी वयर वचपाचे घटक सांगात. सत्यां अटकळींपसून वेगळीं दवरात. विकत घेवपाचो, विकपाचो वा दवरपाचो सल्लो दिनाकात. हो आर्थीक सल्लो न्हय.",
+  "researchPromptNameLine": "नांव: {name}",
+  "@researchPromptNameLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerLine": "टिकर: {ticker}",
+  "@researchPromptTickerLine": {
+    "placeholders": {
+      "ticker": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptTickerNoneProvided": "टिकर: (दिवंक ना)",
+  "researchPromptIsinLine": "ISIN: {isin}",
+  "@researchPromptIsinLine": {
+    "placeholders": {
+      "isin": {
+        "type": "String"
+      }
+    }
+  },
+  "researchPromptIsinNoneProvided": "ISIN: (दिवंक ना)"
 }

@@ -16,10 +16,12 @@ class LockViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required BiometricAuthenticator biometricAuthenticator,
     required SettingsRepository settingsRepository,
     required AppLockController lockController,
+    required LocaleController localeController,
   }) : _appLockService = appLockService,
        _biometricAuthenticator = biometricAuthenticator,
        _settingsRepository = settingsRepository,
-       _lockController = lockController {
+       _lockController = lockController,
+       _localeController = localeController {
     _init();
   }
 
@@ -27,6 +29,15 @@ class LockViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final BiometricAuthenticator _biometricAuthenticator;
   final SettingsRepository _settingsRepository;
   final AppLockController _lockController;
+  final LocaleController _localeController;
+
+  /// The active locale's [AppLocalizations] - not [englishAppLocalizations]
+  /// - so the OS biometric prompt's reason text follows the user's chosen
+  /// language even though this ViewModel has no `BuildContext` of its own
+  /// (i18n-full-ui-and-input-language design.md Decision 6).
+  AppLocalizations get _activeL10n => lookupAppLocalizations(
+    _localeController.resolve(PlatformDispatcher.instance.locale),
+  );
 
   bool _biometricEnabled = false;
   bool get biometricEnabled => _biometricEnabled;
@@ -48,7 +59,7 @@ class LockViewModel extends ChangeNotifier with LocalizedErrorMixin {
     _isVerifying = true;
     notifyListeners();
     final success = await _biometricAuthenticator.authenticate(
-      reason: englishAppLocalizations.unlockBiometricReason,
+      reason: _activeL10n.unlockBiometricReason,
     );
     _isVerifying = false;
     notifyListeners();
