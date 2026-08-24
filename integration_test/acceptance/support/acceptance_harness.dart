@@ -610,6 +610,7 @@ Future<void> recordCashFundedBuyThroughGui(
   required String instrumentName,
   required String quantityText,
   required String unitPriceText,
+  String? tickerText,
   String? brokerageText,
   String? brokerageExpenseCategory,
   bool expectSuccess = true,
@@ -638,6 +639,20 @@ Future<void> recordCashFundedBuyThroughGui(
       return field.controller?.text == instrumentName;
     },
   );
+
+  if (tickerText != null) {
+    await enterTextReliably(
+      tester,
+      () => textFieldWithLabel(l10n.tickerOptional),
+      tickerText,
+      () {
+        final field =
+            textFieldWithLabel(l10n.tickerOptional).evaluate().single.widget
+                as TextField;
+        return field.controller?.text == tickerText;
+      },
+    );
+  }
 
   await enterTextReliably(
     tester,
