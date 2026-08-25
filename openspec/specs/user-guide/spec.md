@@ -105,6 +105,14 @@ The user guide SHALL explain that tapping an instrument name opens the user's fa
 - **WHEN** tap-to-browser research is reachable from inventory
 - **THEN** the user guide contains a section describing the favourite-tool setting, what the prompt asks, and that SMARA does not log into the AI tool
 
+### Requirement: User Guide Documents Language, Typing, And What Stays English
+The user guide SHALL include a Settings language section that explains: same-as-the-phone vs picking a language; that labels, errors, date chrome, and default account/category names in fields follow the chosen language; that the user can type names and notes in that language; that on some devices they still switch the OS keyboard; and that recovery words, money amounts, and notes they already typed are not translated.
+
+#### Scenario: Language and typing are documented
+- **WHEN** a user reads the Settings section of the user guide
+- **THEN** it explains choosing a language, that default names in fields follow that language, and that they can type in that language
+- **AND** it states that recovery words stay English, amounts keep each currency's formatting, and existing typed notes are not rewritten
+
 ### Requirement: User Guide Explains the Signing-Key Tradeoff
 The user guide SHALL clearly explain, before or alongside the onboarding instructions, that the device signing key cannot be recovered if lost, what a lost key means in practice (all entries must be re-created from scratch), and the two ways to preserve access to an existing identity (the recovery phrase and the optional keystore export) — consistent with the tradeoff already stated in `README.md`.
 
