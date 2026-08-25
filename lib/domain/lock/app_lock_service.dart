@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 import 'dart:math';
 
 import 'package:cryptography/cryptography.dart';
@@ -66,12 +67,18 @@ class AppLockService {
     required String pin,
     required List<int> salt,
     required int iterations,
-  }) async {
-    final secretKey = await Pbkdf2.hmacSha256(
-      iterations: iterations,
-      bits: 256,
-    ).deriveKeyFromPassword(password: pin, nonce: salt);
-    return secretKey.extractBytes();
+  }) {
+    // Run PBKDF2 off the platform/UI isolate. On macOS, a long sync derive
+    // on the same isolate that services flutter_secure_storage's method
+    // channel has been observed to interact badly with Keychain reads
+    // after a same-process app relaunch (acceptance-app-lock-unlock).
+    return Isolate.run(() async {
+      final secretKey = await Pbkdf2.hmacSha256(
+        iterations: iterations,
+        bits: 256,
+      ).deriveKeyFromPassword(password: pin, nonce: salt);
+      return secretKey.extractBytes();
+    });
   }
 }
 

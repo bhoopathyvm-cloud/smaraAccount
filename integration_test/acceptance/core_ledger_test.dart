@@ -4,6 +4,8 @@ import 'package:integration_test/integration_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations_en.dart';
 import 'package:smara_accounting/main.dart';
+import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
+import 'package:smara_accounting/ui/features/register/views/register_view.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -169,10 +171,74 @@ void main() {
     );
     expect(find.byIcon(TablerIcons.lock), findsOneWidget);
 
-    // Re-anchoring (recording a second, clean entry after quarantine and
-    // confirming only the tampered one still shows the lock badge) is
-    // not yet covered here - tracked as its own follow-up task
-    // (tasks.md), not silently dropped.
+    // Re-anchoring (acceptance-re-anchoring): record a second clean entry
+    // through the Register FAB / capture sheet and assert only the
+    // tampered row keeps the quarantine lock badge.
+    await tapReliably(
+      tester,
+      () => find.byType(FloatingActionButton).hitTestable(),
+      () => find.text(l10n.captureReceived).evaluate().isNotEmpty,
+    );
+    await tapReliably(
+      tester,
+      () => find.text(l10n.captureReceived),
+      () => find.byType(RecordTransactionView).evaluate().isNotEmpty,
+    );
+    await pumpUntilFound(tester, find.text('Cash & Bank'));
+    // Scope amount entry to RecordTransactionView: Register stays under the
+    // capture route and its search TextField is earlier in the tree — typing
+    // into find.byType(TextField).first was filtering the register to "5.00"
+    // and hiding the quarantined Salary row.
+    Finder amountField() => find
+        .descendant(
+          of: find.byType(RecordTransactionView),
+          matching: find.byType(TextField),
+        )
+        .first;
+    var saved = false;
+    for (var attempt = 0; attempt < 3 && !saved; attempt++) {
+      await enterTextReliably(tester, amountField, '5.00', () {
+        final field = amountField().evaluate().single.widget as TextField;
+        return field.controller?.text == '5.00';
+      });
+      await selectDropdownOption(
+        tester,
+        fieldLabel: l10n.category,
+        optionText: 'Other Income',
+      );
+      try {
+        await tapReliably(
+          tester,
+          () => find.descendant(
+            of: find.byType(RecordTransactionView),
+            matching: find.text(l10n.actionSave),
+          ),
+          () => find.byType(RecordTransactionView).evaluate().isEmpty,
+          innerTries: 60,
+        );
+        saved = true;
+      } catch (_) {
+        if (attempt == 2) rethrow;
+      }
+    }
+    await tapReliably(
+      tester,
+      () => find.text(l10n.navRegister),
+      () => find.byType(RegisterView).evaluate().isNotEmpty,
+    );
+    await pumpUntilFound(tester, find.text('Other Income'));
+    // Quarantined Salary can sit below the fold on the live 800x600 window.
+    for (var i = 0; i < 8; i++) {
+      if (find.byIcon(TablerIcons.lock).evaluate().isNotEmpty &&
+          find.text('Salary').evaluate().isNotEmpty) {
+        break;
+      }
+      await tester.drag(find.byType(ListView).first, const Offset(0, -200));
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+    expect(find.byIcon(TablerIcons.lock), findsOneWidget);
+    expect(find.text('Other Income'), findsOneWidget);
+    expect(find.text('Salary'), findsOneWidget);
 
     await tester.pump(const Duration(seconds: 2));
   }, timeout: const Timeout(Duration(minutes: 5)));

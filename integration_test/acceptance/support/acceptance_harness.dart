@@ -32,6 +32,9 @@ const _secureStorage = FlutterSecureStorage(
 const _secureStorageKeys = [
   'ledger_signing_private_key_seed',
   'ledger_pending_recovery_phrase_words',
+  // app-lock PIN hash (acceptance-app-lock-unlock) - must clear between
+  // runs or a leftover PIN leaks into the next scenario's lock state.
+  'app_lock_pin_record',
 ];
 
 /// Wipes every artifact a run of the real app leaves on this host: its
@@ -368,19 +371,21 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
       () => find.text(categoryName).last,
       () => find.text(categoryName).evaluate().length == 1,
     );
-    await tester.tap(
-      find.descendant(
+    // Save is often below the live 800x600 fold (design.md Risks) - a raw
+    // tap() hits whatever sits at that offset instead of the button, and
+    // the miss is silent enough that the 2s recovery-phrase poll just
+    // retries the whole entry forever on a wedged run. tapReliably scrolls
+    // it into view and re-taps until the phrase screen appears.
+    await tapReliably(
+      tester,
+      () => find.descendant(
         of: find.byType(RecordTransactionView),
         matching: find.text(l10n.actionSave),
       ),
+      () => find.text(l10n.iveSavedRecoveryPhrase).evaluate().isNotEmpty,
+      innerTries: 150,
     );
-    for (var i = 0; i < 20 && !saved; i++) {
-      if (find.text(l10n.iveSavedRecoveryPhrase).evaluate().isNotEmpty) {
-        saved = true;
-      } else {
-        await tester.pump(const Duration(milliseconds: 100));
-      }
-    }
+    saved = true;
   }
   if (!saved) {
     fail(
