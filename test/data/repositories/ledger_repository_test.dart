@@ -7,6 +7,9 @@ import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
+import 'package:smara_accounting/data/repositories/investment_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -27,6 +30,9 @@ void main() {
   late AccountRepository accountRepository;
   late CategoryRepository categoryRepository;
   late PayeeRepository payeeRepository;
+  late IdentityRepository identityRepository;
+  late InvestmentRepository investmentRepository;
+  late RecurringTemplateRepository recurringTemplateRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -43,10 +49,25 @@ void main() {
     );
     categoryRepository = CategoryRepository(database: db);
     payeeRepository = PayeeRepository(database: db);
+    identityRepository = IdentityRepository(
+      database: db,
+      accountRepository: accountRepository,
+      signingKeyService: signingKeyService,
+    );
+    investmentRepository = InvestmentRepository(
+      database: db,
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+    );
+    recurringTemplateRepository = RecurringTemplateRepository(
+      database: db,
+      ledgerRepository: repository,
+    );
     // Every test starts past onboarding - identity lifecycle itself is
     // covered by its own group below, using a fresh Repository/service.
-    final generated = await repository.generateFirstIdentity();
-    await repository.confirmFirstIdentity(generated, currency: 'USD');
+    final generated = await identityRepository.generateFirstIdentity();
+    await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
   });
 
   tearDown(() async {
@@ -96,6 +117,21 @@ void main() {
     return account.id;
   }
 
+  IdentityRepository identityFor(
+    AppDatabase database,
+    SigningKeyService keys,
+    LedgerRepository ledger,
+  ) {
+    return IdentityRepository(
+      database: database,
+      accountRepository: AccountRepository(
+        database: database,
+        ledgerRepository: ledger,
+      ),
+      signingKeyService: keys,
+    );
+  }
+
   group('starter account seeding', () {
     test(
       'confirmFirstIdentity seeds the single asset account and starter categories',
@@ -114,20 +150,22 @@ void main() {
       () async {
         final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
         addTearDown(freshDb.close);
+        final freshKeys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final freshRepository = LedgerRepository(
           database: freshDb,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: freshKeys,
         );
+        final freshIdentity = identityFor(freshDb, freshKeys, freshRepository);
         final freshCategoryRepository = CategoryRepository(database: freshDb);
 
         expect(await freshCategoryRepository.watchCategories().first, isEmpty);
 
-        final generated = await freshRepository.generateFirstIdentity();
+        final generated = await freshIdentity.generateFirstIdentity();
         expect(await freshCategoryRepository.watchCategories().first, isEmpty);
 
-        await freshRepository.confirmFirstIdentity(generated, currency: 'USD');
+        await freshIdentity.confirmFirstIdentity(generated, currency: 'USD');
         final categories = await freshCategoryRepository
             .watchCategories()
             .first;
@@ -171,32 +209,34 @@ void main() {
 
     test('currentIdentity is null until confirmFirstIdentity runs', () async {
       final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+      final freshKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
+      );
       final freshRepository = LedgerRepository(
         database: freshDb,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        ),
+        signingKeyService: freshKeys,
       );
+      final freshIdentity = identityFor(freshDb, freshKeys, freshRepository);
       addTearDown(freshDb.close);
 
-      expect(await freshRepository.currentIdentity(), isNull);
+      expect(await freshIdentity.currentIdentity(), isNull);
 
-      final generated = await freshRepository.generateFirstIdentity();
-      expect(await freshRepository.currentIdentity(), isNull);
+      final generated = await freshIdentity.generateFirstIdentity();
+      expect(await freshIdentity.currentIdentity(), isNull);
 
-      final confirmed = await freshRepository.confirmFirstIdentity(
+      final confirmed = await freshIdentity.confirmFirstIdentity(
         generated,
         currency: 'USD',
       );
       expect(
-        (await freshRepository.currentIdentity())!.identityId,
+        (await freshIdentity.currentIdentity())!.identityId,
         equals(confirmed.identityId),
       );
     });
 
     test('hasMatchingStoredKey is true right after confirmation', () async {
-      final identity = (await repository.currentIdentity())!;
-      expect(await repository.hasMatchingStoredKey(identity), isTrue);
+      final identity = (await identityRepository.currentIdentity())!;
+      expect(await identityRepository.hasMatchingStoredKey(identity), isTrue);
     });
 
     test(
@@ -207,33 +247,45 @@ void main() {
         // onboarding would have shown it to the user.
         final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
         addTearDown(freshDb.close);
+        final firstKeys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final firstInstallRepository = LedgerRepository(
           database: freshDb,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: firstKeys,
         );
-        final generated = await firstInstallRepository.generateFirstIdentity();
-        final originalIdentity = await firstInstallRepository
+        final firstInstallIdentity = identityFor(
+          freshDb,
+          firstKeys,
+          firstInstallRepository,
+        );
+        final generated = await firstInstallIdentity.generateFirstIdentity();
+        final originalIdentity = await firstInstallIdentity
             .confirmFirstIdentity(generated, currency: 'USD');
 
         // Reinstall: same database file, fresh secure storage (a new
         // SigningKeyService with empty InMemorySecureKeyStorage), same
         // Repository pointed at the same underlying db.
+        final reinstalledKeys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final reinstalledRepository = LedgerRepository(
           database: freshDb,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: reinstalledKeys,
+        );
+        final reinstalledIdentity = identityFor(
+          freshDb,
+          reinstalledKeys,
+          reinstalledRepository,
         );
 
-        final restored = await reinstalledRepository.restoreIdentity(
+        final restored = await reinstalledIdentity.restoreIdentity(
           recoveryPhraseWords: generated.phrase.words,
         );
 
         expect(restored.identityId, equals(originalIdentity.identityId));
         expect(
-          await reinstalledRepository.hasMatchingStoredKey(restored),
+          await reinstalledIdentity.hasMatchingStoredKey(restored),
           isTrue,
         );
       },
@@ -244,34 +296,46 @@ void main() {
       () async {
         final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
         addTearDown(freshDb.close);
+        final firstKeys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final firstInstallRepository = LedgerRepository(
           database: freshDb,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: firstKeys,
         );
-        final generated = await firstInstallRepository.generateFirstIdentity();
-        final originalIdentity = await firstInstallRepository
+        final firstInstallIdentity = identityFor(
+          freshDb,
+          firstKeys,
+          firstInstallRepository,
+        );
+        final generated = await firstInstallIdentity.generateFirstIdentity();
+        final originalIdentity = await firstInstallIdentity
             .confirmFirstIdentity(generated, currency: 'USD');
-        final keystoreFile = await firstInstallRepository.exportKeystoreFile(
+        final keystoreFile = await firstInstallIdentity.exportKeystoreFile(
           passphrase: 'hunter2-hunter2',
         );
 
+        final reinstalledKeys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final reinstalledRepository = LedgerRepository(
           database: freshDb,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: reinstalledKeys,
+        );
+        final reinstalledIdentity = identityFor(
+          freshDb,
+          reinstalledKeys,
+          reinstalledRepository,
         );
 
-        final restored = await reinstalledRepository.restoreIdentity(
+        final restored = await reinstalledIdentity.restoreIdentity(
           keystoreFileContents: keystoreFile,
           keystorePassphrase: 'hunter2-hunter2',
         );
 
         expect(restored.identityId, equals(originalIdentity.identityId));
         expect(
-          await reinstalledRepository.hasMatchingStoredKey(restored),
+          await reinstalledIdentity.hasMatchingStoredKey(restored),
           isTrue,
         );
       },
@@ -280,18 +344,18 @@ void main() {
     test(
       'restoreIdentity throws when the phrase does not belong to this database',
       () async {
-        final identity = (await repository.currentIdentity())!;
-        final unrelated = await repository.generateFirstIdentity();
+        final identity = (await identityRepository.currentIdentity())!;
+        final unrelated = await identityRepository.generateFirstIdentity();
 
         expect(
-          () => repository.restoreIdentity(
+          () => identityRepository.restoreIdentity(
             recoveryPhraseWords: unrelated.phrase.words,
           ),
           throwsA(isA<SigningIdentityMismatchException>()),
         );
         // Sanity: the original identity is still on record, untouched.
         expect(
-          (await repository.currentIdentity())!.identityId,
+          (await identityRepository.currentIdentity())!.identityId,
           equals(identity.identityId),
         );
       },
@@ -747,7 +811,7 @@ void main() {
         expect(reversal.entryHash, isNotEmpty);
         expect(reversal.isVerified, isTrue);
 
-        final result = await repository.verifyChain();
+        final result = await identityRepository.verifyChain();
         expect(result.isFullyVerified, isTrue);
       },
     );
@@ -1437,7 +1501,7 @@ void main() {
             description: Value('tampered outside the app'),
           ),
         );
-        await repository.verifyChain();
+        await identityRepository.verifyChain();
 
         expect(await repository.displayBalanceMinor(checkingId), equals(0));
         final overview = await repository.watchHomeOverview().first;
@@ -1534,7 +1598,7 @@ void main() {
       )..where((e) => e.id.equals(entry.id))).write(
         JournalEntriesCompanion(description: Value('tampered outside the app')),
       );
-      await repository.verifyChain();
+      await identityRepository.verifyChain();
 
       final summary = await repository
           .watchSummary(
@@ -1640,7 +1704,7 @@ void main() {
       )..where((e) => e.id.equals(entry.id))).write(
         JournalEntriesCompanion(description: Value('tampered outside the app')),
       );
-      await repository.verifyChain();
+      await identityRepository.verifyChain();
 
       final totals = await categoryRepository
           .watchCategoryTotals(
@@ -1671,7 +1735,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 16),
       );
 
-      final result = await repository.verifyChain();
+      final result = await identityRepository.verifyChain();
 
       expect(result.isFullyVerified, isTrue);
       expect(result.totalEntries, equals(2));
@@ -1711,7 +1775,7 @@ void main() {
           ),
         );
 
-        final result = await repository.verifyChain();
+        final result = await identityRepository.verifyChain();
 
         expect(result.isFullyVerified, isFalse);
         expect(result.breakEntryId, equals(firstEntry.id));
@@ -1750,7 +1814,7 @@ void main() {
           ),
         );
 
-        final result = await repository.verifyChain();
+        final result = await identityRepository.verifyChain();
         expect(result.breakEntryId, equals(middleEntry.id));
 
         final afterVerification = await repository.watchEntries().first;
@@ -1787,7 +1851,7 @@ void main() {
             description: Value('tampered outside the app'),
           ),
         );
-        await repository.verifyChain();
+        await identityRepository.verifyChain();
 
         await repository.recordTransaction(
           amountMinor: 200,
@@ -1830,11 +1894,11 @@ void main() {
           transactionDate: DateTime(2026, 1, 15),
         );
         final legacy = (await repository.watchEntries().first).single;
-        final oldIdentity = (await repository.currentIdentity())!;
+        final oldIdentity = (await identityRepository.currentIdentity())!;
 
-        await repository.migrateToNewIdentityAfterKeyLoss();
+        await identityRepository.migrateToNewIdentityAfterKeyLoss();
 
-        final newIdentity = (await repository.currentIdentity())!;
+        final newIdentity = (await identityRepository.currentIdentity())!;
         expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
         expect(
           newIdentity.supersedesIdentityId,
@@ -1874,7 +1938,7 @@ void main() {
           transactionDate: DateTime(2026, 1, 15),
         );
 
-        await repository.migrateToNewIdentityAfterKeyLoss();
+        await identityRepository.migrateToNewIdentityAfterKeyLoss();
 
         final summary = await repository
             .watchSummary(
@@ -1909,8 +1973,8 @@ void main() {
           transactionDate: DateTime(2026, 1, 15),
         );
 
-        await repository.migrateToNewIdentityAfterKeyLoss();
-        final result = await repository.verifyChain();
+        await identityRepository.migrateToNewIdentityAfterKeyLoss();
+        final result = await identityRepository.verifyChain();
 
         expect(result.isFullyVerified, isTrue);
 
@@ -3165,7 +3229,7 @@ void main() {
             description: Value('tampered outside the app'),
           ),
         );
-        await repository.verifyChain();
+        await identityRepository.verifyChain();
 
         final overview = await repository.watchHomeOverview().first;
         final usd = overview.netPositionsByCurrency.firstWhere(
@@ -3296,11 +3360,11 @@ void main() {
         amountMinor: 100000,
         transactionDate: DateTime(2026, 1, 1),
       );
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple Inc',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -3309,7 +3373,9 @@ void main() {
         fundingSource: BuyFundingSource.cash,
       );
       expect(await repository.displayBalanceMinor(accountId), equals(90000));
-      final holdings = await repository.computeHoldingsForAccount(accountId);
+      final holdings = await investmentRepository.computeHoldingsForAccount(
+        accountId,
+      );
       expect(holdings.length, equals(1));
       expect(holdings.first.quantityScaled, equals(10000));
       expect(holdings.first.totalCostMinor, equals(10000));
@@ -3317,12 +3383,12 @@ void main() {
 
     test('cash-funded buy rejected when cash insufficient', () async {
       final accountId = await createInvestmentAccount();
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Tesla',
         kind: InstrumentKind.stock,
       );
       await expectLater(
-        () => repository.recordBuy(
+        () => investmentRepository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -3342,11 +3408,11 @@ void main() {
         amountMinor: 100000,
         transactionDate: DateTime(2026, 1, 1),
       );
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'MSFT',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -3355,7 +3421,7 @@ void main() {
         fundingSource: BuyFundingSource.cash,
       );
       final incomeId = await firstCategoryId(AccountType.income);
-      await repository.recordSell(
+      await investmentRepository.recordSell(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -3364,7 +3430,9 @@ void main() {
         gainIncomeCategoryId: incomeId,
       );
       expect(await repository.displayBalanceMinor(accountId), equals(102000));
-      final holdings = await repository.computeHoldingsForAccount(accountId);
+      final holdings = await investmentRepository.computeHoldingsForAccount(
+        accountId,
+      );
       expect(holdings, isEmpty);
     });
   });
@@ -3473,21 +3541,24 @@ void main() {
         final expenseId = await firstCategoryId(AccountType.expense);
         final incomeId = await firstCategoryId(AccountType.income);
 
-        final created = await repository.createRecurringTemplate(
-          name: 'Rent',
-          direction: TransactionDirection.moneyOut,
-          financialAccountId: accountId,
-          categoryId: expenseId,
-          amountMinor: 150000,
-          dayOfMonth: 1,
-        );
+        final created = await recurringTemplateRepository
+            .createRecurringTemplate(
+              name: 'Rent',
+              direction: TransactionDirection.moneyOut,
+              financialAccountId: accountId,
+              categoryId: expenseId,
+              amountMinor: 150000,
+              dayOfMonth: 1,
+            );
         expect(created.name, equals('Rent'));
 
-        var templates = await repository.watchRecurringTemplates().first;
+        var templates = await recurringTemplateRepository
+            .watchRecurringTemplates()
+            .first;
         expect(templates, hasLength(1));
         expect(templates.single.dayOfMonth, equals(1));
 
-        await repository.updateRecurringTemplate(
+        await recurringTemplateRepository.updateRecurringTemplate(
           id: created.id,
           name: 'Rent (updated)',
           direction: TransactionDirection.moneyIn,
@@ -3496,7 +3567,9 @@ void main() {
           amountMinor: 200000,
           dayOfMonth: 5,
         );
-        templates = await repository.watchRecurringTemplates().first;
+        templates = await recurringTemplateRepository
+            .watchRecurringTemplates()
+            .first;
         expect(templates.single.name, equals('Rent (updated)'));
         expect(
           templates.single.direction,
@@ -3505,8 +3578,10 @@ void main() {
         expect(templates.single.amountMinor, equals(200000));
         expect(templates.single.dayOfMonth, equals(5));
 
-        await repository.deleteRecurringTemplate(created.id);
-        templates = await repository.watchRecurringTemplates().first;
+        await recurringTemplateRepository.deleteRecurringTemplate(created.id);
+        templates = await recurringTemplateRepository
+            .watchRecurringTemplates()
+            .first;
         expect(templates, isEmpty);
       },
     );
@@ -3516,7 +3591,7 @@ void main() {
       final expenseId = await firstCategoryId(AccountType.expense);
 
       expect(
-        () => repository.createRecurringTemplate(
+        () => recurringTemplateRepository.createRecurringTemplate(
           name: 'Rent',
           direction: TransactionDirection.moneyOut,
           financialAccountId: accountId,
@@ -3535,7 +3610,7 @@ void main() {
         final expenseId = await firstCategoryId(AccountType.expense);
 
         expect(
-          () => repository.createRecurringTemplate(
+          () => recurringTemplateRepository.createRecurringTemplate(
             name: 'Rent',
             direction: TransactionDirection.moneyOut,
             financialAccountId: accountId,
@@ -3556,7 +3631,7 @@ void main() {
         final expenseId = await firstCategoryId(AccountType.expense);
         final today = DateTime.now();
 
-        final due = await repository.createRecurringTemplate(
+        final due = await recurringTemplateRepository.createRecurringTemplate(
           name: 'Rent',
           direction: TransactionDirection.moneyOut,
           financialAccountId: accountId,
@@ -3564,20 +3639,23 @@ void main() {
           amountMinor: 150000,
           dayOfMonth: today.day,
         );
-        final notDue = await repository.createRecurringTemplate(
-          name: 'Already paid',
-          direction: TransactionDirection.moneyOut,
-          financialAccountId: accountId,
-          categoryId: expenseId,
-          amountMinor: 5000,
-          dayOfMonth: today.day,
-        );
+        final notDue = await recurringTemplateRepository
+            .createRecurringTemplate(
+              name: 'Already paid',
+              direction: TransactionDirection.moneyOut,
+              financialAccountId: accountId,
+              categoryId: expenseId,
+              amountMinor: 5000,
+              dayOfMonth: today.day,
+            );
         // Mark as already recorded this month via the same path
         // recordDueTemplate uses, so it's excluded from "due" going
         // forward this month.
-        await repository.recordDueTemplate(notDue.id);
+        await recurringTemplateRepository.recordDueTemplate(notDue.id);
 
-        final dueList = await repository.watchDueRecurringTemplates().first;
+        final dueList = await recurringTemplateRepository
+            .watchDueRecurringTemplates()
+            .first;
 
         expect(dueList, hasLength(1));
         expect(dueList.single.template.id, equals(due.id));
@@ -3594,19 +3672,24 @@ void main() {
       final today = DateTime.now();
       final startingBalance = await repository.displayBalanceMinor(accountId);
 
-      final template = await repository.createRecurringTemplate(
-        name: 'Rent',
-        direction: TransactionDirection.moneyOut,
-        financialAccountId: accountId,
-        categoryId: expenseId,
-        amountMinor: 150000,
-        dayOfMonth: today.day,
-      );
+      final template = await recurringTemplateRepository
+          .createRecurringTemplate(
+            name: 'Rent',
+            direction: TransactionDirection.moneyOut,
+            financialAccountId: accountId,
+            categoryId: expenseId,
+            amountMinor: 150000,
+            dayOfMonth: today.day,
+          );
 
-      var dueList = await repository.watchDueRecurringTemplates().first;
+      var dueList = await recurringTemplateRepository
+          .watchDueRecurringTemplates()
+          .first;
       expect(dueList, hasLength(1));
 
-      final entryId = await repository.recordDueTemplate(template.id);
+      final entryId = await recurringTemplateRepository.recordDueTemplate(
+        template.id,
+      );
       expect(entryId, isNotEmpty);
 
       expect(
@@ -3614,10 +3697,14 @@ void main() {
         equals(startingBalance - 150000),
       );
 
-      dueList = await repository.watchDueRecurringTemplates().first;
+      dueList = await recurringTemplateRepository
+          .watchDueRecurringTemplates()
+          .first;
       expect(dueList, isEmpty);
 
-      final templates = await repository.watchRecurringTemplates().first;
+      final templates = await recurringTemplateRepository
+          .watchRecurringTemplates()
+          .first;
       expect(
         templates.single.lastRecordedYearMonth,
         equals(yearMonthOf(today)),
@@ -3766,7 +3853,7 @@ void main() {
       )..where((e) => e.id.equals(entryId))).write(
         JournalEntriesCompanion(description: Value('tampered outside the app')),
       );
-      await repository.verifyChain();
+      await identityRepository.verifyChain();
 
       final csv = await repository.exportLedgerCsv(
         financialAccountId: accountId,

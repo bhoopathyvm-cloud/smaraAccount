@@ -10,9 +10,12 @@ import 'package:smara_accounting/data/database/tables/account_groups_table.dart'
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/investment_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
+import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -84,23 +87,31 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   late AppDatabase db;
+  late SigningKeyService signingKeyService;
   late LedgerRepository repository;
   late AccountRepository accountRepository;
   late CategoryRepository categoryRepository;
+  late IdentityRepository identityRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
+    signingKeyService = SigningKeyService(
+      secureStorage: InMemorySecureKeyStorage(),
+    );
     repository = LedgerRepository(
       database: db,
-      signingKeyService: SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      ),
+      signingKeyService: signingKeyService,
     );
     accountRepository = AccountRepository(
       database: db,
       ledgerRepository: repository,
     );
     categoryRepository = CategoryRepository(database: db);
+    identityRepository = IdentityRepository(
+      database: db,
+      accountRepository: accountRepository,
+      signingKeyService: signingKeyService,
+    );
     // app_router.dart's redirect requires a confirmed AND acknowledged
     // signing identity, plus a completed first-week-setup wizard, before
     // /register (or any other main route) is reachable - these tests
@@ -108,9 +119,9 @@ void main() {
     // (deferred-onboarding-first-entry otherwise sends every fresh
     // identity through first-account-name -> first-entry -> the
     // recovery-phrase screens before Home is ever reachable.)
-    final generated = await repository.generateFirstIdentity();
-    await repository.confirmFirstIdentity(generated, currency: 'USD');
-    await repository.acknowledgeIdentity();
+    final generated = await identityRepository.generateFirstIdentity();
+    await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
+    await identityRepository.acknowledgeIdentity();
     await SettingsRepository().setFirstWeekSetupCompleted(true);
   });
 
@@ -118,7 +129,7 @@ void main() {
     await db.close();
   });
 
-  Widget buildApp() => buildAppFor(repository, db);
+  Widget buildApp() => buildAppFor(repository, db, signingKeyService);
 
   testWidgets('record money in updates the register and running balance', (
     tester,
@@ -481,11 +492,12 @@ void main() {
     (tester) async {
       final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
       addTearDown(freshDb.close);
+      final firstKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
+      );
       final firstInstallRepository = LedgerRepository(
         database: freshDb,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        ),
+        signingKeyService: firstKeys,
       );
 
       // Skip the first-week-setup wizard gate (unrelated to what this test
@@ -498,7 +510,10 @@ void main() {
       // commits the identity), then the starter account's name, then a
       // guided first entry, and only then the recovery-phrase
       // acknowledgment screens (app_router.dart's _onboardingPaths).
-      await pumpApp(tester, buildAppFor(firstInstallRepository, freshDb));
+      await pumpApp(
+        tester,
+        buildAppFor(firstInstallRepository, freshDb, firstKeys),
+      );
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
 
@@ -589,13 +604,17 @@ void main() {
 
       // Reinstall: same database file, fresh secure storage (the private
       // key is gone from this "device").
+      final reinstalledKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
+      );
       final reinstalledRepository = LedgerRepository(
         database: freshDb,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        ),
+        signingKeyService: reinstalledKeys,
       );
-      await pumpApp(tester, buildAppFor(reinstalledRepository, freshDb));
+      await pumpApp(
+        tester,
+        buildAppFor(reinstalledRepository, freshDb, reinstalledKeys),
+      );
       await pumpUntilFound(tester, find.text('Restore signing key'));
       expect(find.text('Restore signing key'), findsOneWidget);
 
@@ -631,17 +650,18 @@ void main() {
         transactionDate: DateTime(2026, 1, 15),
       );
       final legacy = (await repository.watchEntries().first).single;
-      final oldIdentity = (await repository.currentIdentity())!;
+      final oldIdentity = (await identityRepository.currentIdentity())!;
 
       // Simulate true key loss: same database, brand new secure storage,
       // and no recovery phrase or keystore file to restore from.
+      final postLossKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
+      );
       final postLossRepository = LedgerRepository(
         database: db,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        ),
+        signingKeyService: postLossKeys,
       );
-      await pumpApp(tester, buildAppFor(postLossRepository, db));
+      await pumpApp(tester, buildAppFor(postLossRepository, db, postLossKeys));
       await pumpUntilFound(tester, find.text('Restore signing key'));
       expect(find.text('Restore signing key'), findsOneWidget);
 
@@ -672,7 +692,15 @@ void main() {
       );
       expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
 
-      final newIdentity = (await postLossRepository.currentIdentity())!;
+      final postLossIdentity = IdentityRepository(
+        database: db,
+        accountRepository: AccountRepository(
+          database: db,
+          ledgerRepository: postLossRepository,
+        ),
+        signingKeyService: postLossKeys,
+      );
+      final newIdentity = (await postLossIdentity.currentIdentity())!;
       expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
       expect(newIdentity.supersedesIdentityId, equals(oldIdentity.identityId));
 
@@ -907,16 +935,36 @@ void main() {
   );
 }
 
-Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
+Widget buildAppFor(
+  LedgerRepository repository,
+  AppDatabase database,
+  SigningKeyService signingKeyService,
+) {
   final accountRepository = AccountRepository(
     database: database,
     ledgerRepository: repository,
   );
   final categoryRepository = CategoryRepository(database: database);
   final payeeRepository = PayeeRepository(database: database);
-  final ledgerBackupRepository = LedgerBackupRepository(
+  final identityRepository = IdentityRepository(
+    database: database,
+    accountRepository: accountRepository,
+    signingKeyService: signingKeyService,
+  );
+  final investmentRepository = InvestmentRepository(
     database: database,
     ledgerRepository: repository,
+    accountRepository: accountRepository,
+    categoryRepository: categoryRepository,
+  );
+  final recurringTemplateRepository = RecurringTemplateRepository(
+    database: database,
+    ledgerRepository: repository,
+  );
+  final ledgerBackupRepository = LedgerBackupRepository(
+    database: database,
+    identityRepository: identityRepository,
+    signingKeyService: signingKeyService,
   );
   final statementImportRepository = StatementImportRepository(
     database: database,
@@ -930,6 +978,11 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
       Provider<AccountRepository>.value(value: accountRepository),
       Provider<CategoryRepository>.value(value: categoryRepository),
       Provider<PayeeRepository>.value(value: payeeRepository),
+      Provider<IdentityRepository>.value(value: identityRepository),
+      Provider<InvestmentRepository>.value(value: investmentRepository),
+      Provider<RecurringTemplateRepository>.value(
+        value: recurringTemplateRepository,
+      ),
       Provider<LedgerBackupRepository>.value(value: ledgerBackupRepository),
       ChangeNotifierProvider(
         create: (_) => RegisterViewModel(
@@ -949,16 +1002,20 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
             CategoryManagementViewModel(categoryRepository: categoryRepository),
       ),
       ChangeNotifierProvider(
-        create: (_) =>
-            RecoveryPhraseSetupViewModel(ledgerRepository: repository),
+        create: (_) => RecoveryPhraseSetupViewModel(
+          identityRepository: identityRepository,
+        ),
       ),
       ChangeNotifierProvider(
-        create: (_) => RestoreIdentityViewModel(ledgerRepository: repository),
+        create: (_) =>
+            RestoreIdentityViewModel(identityRepository: identityRepository),
       ),
       ChangeNotifierProvider(
         create: (_) => HomeViewModel(
           ledgerRepository: repository,
           categoryRepository: categoryRepository,
+          recurringTemplateRepository: recurringTemplateRepository,
+          investmentRepository: investmentRepository,
         ),
       ),
       ChangeNotifierProvider(
@@ -976,6 +1033,8 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
             accountRepository,
             categoryRepository,
             payeeRepository,
+            identityRepository,
+            investmentRepository,
             ledgerBackupRepository,
             statementImportRepository,
             settingsRepository,

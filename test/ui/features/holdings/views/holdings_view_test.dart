@@ -14,6 +14,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository ledger;
+  late MockInvestmentRepository investment;
   late MockAccountRepository accountRepository;
   late MockCategoryRepository categoryRepository;
   late MockSettingsRepository settings;
@@ -57,6 +58,7 @@ void main() {
 
   setUp(() {
     ledger = MockLedgerRepository();
+    investment = MockInvestmentRepository();
     accountRepository = MockAccountRepository();
     categoryRepository = MockCategoryRepository();
     settings = MockSettingsRepository();
@@ -66,11 +68,13 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([account]));
     when(
-      ledger.watchHoldingsForAccount(any),
+      investment.watchHoldingsForAccount(any),
     ).thenAnswer((_) => Stream.value([holding]));
-    when(ledger.watchInstruments()).thenAnswer((_) => Stream.value([apple]));
     when(
-      ledger.watchInstrumentsHeldInAccount(any),
+      investment.watchInstruments(),
+    ).thenAnswer((_) => Stream.value([apple]));
+    when(
+      investment.watchInstrumentsHeldInAccount(any),
     ).thenAnswer((_) => Stream.value([apple]));
     when(
       categoryRepository.watchCategories(),
@@ -91,6 +95,7 @@ void main() {
       ledgerRepository: ledger,
       accountRepository: accountRepository,
       categoryRepository: categoryRepository,
+      investmentRepository: investment,
       settingsRepository: settings,
       accountId: 'inv-1',
       launchUrlFn: (uri) async {
@@ -127,6 +132,7 @@ void main() {
         ledgerRepository: ledger,
         accountRepository: accountRepository,
         categoryRepository: categoryRepository,
+        investmentRepository: investment,
         settingsRepository: settings,
         accountId: 'inv-1',
         launchUrlFn: (uri) async {
@@ -175,13 +181,14 @@ void main() {
       // never held in THIS account - watchInstrumentsHeldInAccount excludes
       // it from setUp()'s stubbed [apple] stream.
       when(
-        ledger.watchInstruments(),
+        investment.watchInstruments(),
       ).thenAnswer((_) => Stream.value([apple, microsoft]));
 
       final viewModel = HoldingsViewModel(
         ledgerRepository: ledger,
         accountRepository: accountRepository,
         categoryRepository: categoryRepository,
+        investmentRepository: investment,
         settingsRepository: settings,
         accountId: 'inv-1',
       );

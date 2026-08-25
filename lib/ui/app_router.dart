@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../data/repositories/account_repository.dart';
 import '../data/repositories/category_repository.dart';
+import '../data/repositories/identity_repository.dart';
+import '../data/repositories/investment_repository.dart';
 import '../data/repositories/ledger_backup_repository.dart';
 import '../data/repositories/ledger_repository.dart';
 import '../data/repositories/payee_repository.dart';
@@ -115,6 +117,8 @@ GoRouter buildAppRouter(
   AccountRepository accountRepository,
   CategoryRepository categoryRepository,
   PayeeRepository payeeRepository,
+  IdentityRepository identityRepository,
+  InvestmentRepository investmentRepository,
   LedgerBackupRepository ledgerBackupRepository,
   StatementImportRepository statementImportRepository,
   SettingsRepository settingsRepository,
@@ -134,7 +138,7 @@ GoRouter buildAppRouter(
       );
       final isLockRoute = state.matchedLocation == _lockPath;
 
-      final identity = await ledgerRepository.currentIdentity();
+      final identity = await identityRepository.currentIdentity();
       if (identity == null) {
         return state.matchedLocation == _currencyPath ? null : _currencyPath;
       }
@@ -159,7 +163,7 @@ GoRouter buildAppRouter(
             : '/onboarding/recovery-phrase';
       }
 
-      final hasMatchingKey = await ledgerRepository.hasMatchingStoredKey(
+      final hasMatchingKey = await identityRepository.hasMatchingStoredKey(
         identity,
       );
       if (!hasMatchingKey) {
@@ -167,7 +171,7 @@ GoRouter buildAppRouter(
       }
 
       if (!hasVerifiedThisSession) {
-        await ledgerRepository.verifyChain();
+        await identityRepository.verifyChain();
         hasVerifiedThisSession = true;
       }
 
@@ -284,6 +288,7 @@ GoRouter buildAppRouter(
         builder: (context, state) => KeyLossMigrationView(
           viewModel: KeyLossMigrationViewModel(
             ledgerRepository: ledgerRepository,
+            identityRepository: identityRepository,
           ),
           onMigrated: () => context.go('/home'),
         ),
@@ -369,6 +374,7 @@ GoRouter buildAppRouter(
               ledgerRepository: ledgerRepository,
               accountRepository: accountRepository,
               categoryRepository: categoryRepository,
+              investmentRepository: investmentRepository,
               settingsRepository: settingsRepository,
               accountId: accountId,
             ),

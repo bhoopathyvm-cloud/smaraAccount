@@ -4,6 +4,7 @@ import 'package:path/path.dart' as p;
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -35,27 +36,32 @@ void main() {
       LedgerRepository repository,
       AccountRepository accountRepository,
       CategoryRepository categoryRepository,
+      IdentityRepository identityRepository,
       LedgerBackupRepository ledgerBackupRepository,
     })
   >
   openRepository(File file) async {
     final db = AppDatabase.openFile(file);
-    final repository = LedgerRepository(
+    final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
+    final repository = LedgerRepository(database: db, signingKeyService: keys);
+    final accountRepository = AccountRepository(
       database: db,
-      signingKeyService: SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      ),
+      ledgerRepository: repository,
+    );
+    final identityRepository = IdentityRepository(
+      database: db,
+      accountRepository: accountRepository,
+      signingKeyService: keys,
     );
     return (
       repository: repository,
-      accountRepository: AccountRepository(
-        database: db,
-        ledgerRepository: repository,
-      ),
+      accountRepository: accountRepository,
       categoryRepository: CategoryRepository(database: db),
+      identityRepository: identityRepository,
       ledgerBackupRepository: LedgerBackupRepository(
         database: db,
-        ledgerRepository: repository,
+        identityRepository: identityRepository,
+        signingKeyService: keys,
       ),
     );
   }
@@ -65,14 +71,18 @@ void main() {
       LedgerRepository repository,
       AccountRepository accountRepository,
       CategoryRepository categoryRepository,
+      IdentityRepository identityRepository,
       LedgerBackupRepository ledgerBackupRepository,
     })
   >
   seedRepository(File file) async {
     final opened = await openRepository(file);
     final repository = opened.repository;
-    final generated = await repository.generateFirstIdentity();
-    await repository.confirmFirstIdentity(generated, currency: 'USD');
+    final generated = await opened.identityRepository.generateFirstIdentity();
+    await opened.identityRepository.confirmFirstIdentity(
+      generated,
+      currency: 'USD',
+    );
     final account =
         (await opened.accountRepository.watchFinancialAccounts().first).first;
     final category =
@@ -127,7 +137,8 @@ void main() {
       expect(entries, hasLength(1));
       expect(entries.single.postings, hasLength(2));
 
-      final verification = await restored.verifyChain();
+      final verification = await restoredOpened.identityRepository
+          .verifyChain();
       expect(verification.isFullyVerified, isTrue);
 
       // No matching private key was restored on this "device" - only the
@@ -210,7 +221,7 @@ void main() {
     // Nothing was ever written to targetFile - it's still whatever
     // onCreate produced for a never-restored fresh database (no
     // signing identity of its own).
-    final stillFresh = (await openRepository(targetFile)).repository;
+    final stillFresh = (await openRepository(targetFile)).identityRepository;
     expect(await stillFresh.currentIdentity(), isNull);
   });
 

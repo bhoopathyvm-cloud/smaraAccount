@@ -10,12 +10,12 @@ import '../../../../mocks.mocks.dart';
 // without one: initial render, the empty-passphrase validation message,
 // and Skip always being available to continue past this optional step.
 void main() {
-  late MockLedgerRepository repository;
+  late MockIdentityRepository repository;
   late RecoveryPhraseSetupViewModel viewModel;
 
   setUp(() {
-    repository = MockLedgerRepository();
-    viewModel = RecoveryPhraseSetupViewModel(ledgerRepository: repository);
+    repository = MockIdentityRepository();
+    viewModel = RecoveryPhraseSetupViewModel(identityRepository: repository);
   });
 
   testWidgets('Skip always continues, regardless of passphrase state', (

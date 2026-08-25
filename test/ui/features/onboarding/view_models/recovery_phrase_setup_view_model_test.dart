@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/domain/crypto/ed25519_signing.dart';
 import 'package:smara_accounting/domain/crypto/recovery_phrase.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -10,7 +10,7 @@ import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phr
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository repository;
+  late MockIdentityRepository repository;
   late RecoveryPhraseSetupViewModel viewModel;
   late GeneratedIdentity generated;
 
@@ -23,8 +23,8 @@ void main() {
   });
 
   setUp(() {
-    repository = MockLedgerRepository();
-    viewModel = RecoveryPhraseSetupViewModel(ledgerRepository: repository);
+    repository = MockIdentityRepository();
+    viewModel = RecoveryPhraseSetupViewModel(identityRepository: repository);
     // deferred-onboarding-first-entry: ensureGenerated() always checks for
     // a resumable (crash-interrupted) phrase first. Default to "nothing
     // pending" so existing true-first-generation tests don't need to know

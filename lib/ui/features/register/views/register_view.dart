@@ -17,6 +17,7 @@ import '../../../core/date_formatter.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
 import '../../../core/money_formatter.dart';
+import '../../../core/show_managed_dialog.dart';
 import '../../../core/status_banner.dart';
 import '../view_models/register_row.dart';
 import '../view_models/register_view_model.dart';
@@ -223,125 +224,128 @@ class RegisterView extends StatelessWidget {
       '${date.year}-${date.month.toString().padLeft(2, '0')}-'
       '${date.day.toString().padLeft(2, '0')}';
 
-  /// Controllers are intentionally not disposed after [showDialog] returns:
-  /// the dialog route's exit animation still rebuilds its TextFields.
   Future<void> _showCloseoutDialog(
     BuildContext context,
     RegisterViewModel viewModel,
   ) async {
-    final descriptionController = TextEditingController();
-    final destinationAmountController = TextEditingController();
     String? toAccountId = viewModel.closeoutDestinationCandidates.isEmpty
         ? null
         : viewModel.closeoutDestinationCandidates.first.id;
     var transactionDate = DateTime.now();
     int? destinationAmountMinor;
 
-    await showDialog<void>(
+    await showManagedDialog<void>(
       context: context,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setDialogState) {
-          final isCrossCurrency = viewModel.isCloseoutCrossCurrency(
-            toAccountId,
-          );
-          final sourceCurrency = viewModel.currencyFor(
-            viewModel.selectedAccountId,
-          );
-          final destCurrency = viewModel.currencyFor(toAccountId);
-          return AlertDialog(
-            title: Text(l10nOf(context).transferRemainingBalance),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  EntityPickerField<Account>(
-                    labelText: l10nOf(context).toAccount,
-                    items: viewModel.closeoutDestinationCandidates,
-                    idOf: (account) => account.id,
-                    labelOf: (account) =>
-                        localizeStoredName(l10nOf(context), account.name),
-                    value: toAccountId,
-                    onChanged: (accountId) {
-                      setDialogState(() {
-                        toAccountId = accountId;
-                        destinationAmountMinor = null;
-                        destinationAmountController.clear();
-                      });
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  Text(
-                    '${l10nOf(context).amount}: ${formatAmountMinor(viewModel.selectedAccountBalanceMinor, sourceCurrency ?? 'USD')}'
-                    '${sourceCurrency == null ? '' : ' $sourceCurrency'}',
-                    style: AppTypography.body,
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  if (isCrossCurrency)
-                    MoneyAmountField(
-                      controller: destinationAmountController,
-                      labelText: l10nOf(context).destinationAmount,
-                      currency: destCurrency!,
-                      suffixText: destCurrency,
-                      onChangedMinor: (value) {
-                        setDialogState(() => destinationAmountMinor = value);
+      controllerCount: 2,
+      builder: (dialogContext, controllers) {
+        final descriptionController = controllers[0];
+        final destinationAmountController = controllers[1];
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            final isCrossCurrency = viewModel.isCloseoutCrossCurrency(
+              toAccountId,
+            );
+            final sourceCurrency = viewModel.currencyFor(
+              viewModel.selectedAccountId,
+            );
+            final destCurrency = viewModel.currencyFor(toAccountId);
+            return AlertDialog(
+              title: Text(l10nOf(context).transferRemainingBalance),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    EntityPickerField<Account>(
+                      labelText: l10nOf(context).toAccount,
+                      items: viewModel.closeoutDestinationCandidates,
+                      idOf: (account) => account.id,
+                      labelOf: (account) =>
+                          localizeStoredName(l10nOf(context), account.name),
+                      value: toAccountId,
+                      onChanged: (accountId) {
+                        setDialogState(() {
+                          toAccountId = accountId;
+                          destinationAmountMinor = null;
+                          destinationAmountController.clear();
+                        });
                       },
                     ),
-                  if (isCrossCurrency)
                     const SizedBox(height: AppSpacing.medium),
-                  AppTextField(
-                    controller: descriptionController,
-                    labelText: l10nOf(context).descriptionOptional,
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  TextButton(
-                    onPressed: () async {
-                      final picked = await showDatePicker(
-                        context: context,
-                        initialDate: transactionDate,
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                      );
-                      if (picked != null) {
-                        setDialogState(() => transactionDate = picked);
-                      }
-                    },
-                    child: Text(
-                      '${l10nOf(context).dateLabel}: '
-                      '${formatLocalDate(context, transactionDate)}',
+                    Text(
+                      '${l10nOf(context).amount}: ${formatAmountMinor(viewModel.selectedAccountBalanceMinor, sourceCurrency ?? 'USD')}'
+                      '${sourceCurrency == null ? '' : ' $sourceCurrency'}',
+                      style: AppTypography.body,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(dialogContext).pop(),
-                child: Text(l10nOf(context).actionCancel),
-              ),
-              ElevatedButton(
-                onPressed: toAccountId == null
-                    ? null
-                    : () async {
-                        final description = descriptionController.text.trim();
-                        final ok = await viewModel.closeoutSelectedAccount(
-                          toAccountId: toAccountId!,
-                          transactionDate: transactionDate,
-                          description: description.isEmpty ? null : description,
-                          destinationAmountMinor: isCrossCurrency
-                              ? destinationAmountMinor
-                              : null,
+                    const SizedBox(height: AppSpacing.medium),
+                    if (isCrossCurrency)
+                      MoneyAmountField(
+                        controller: destinationAmountController,
+                        labelText: l10nOf(context).destinationAmount,
+                        currency: destCurrency!,
+                        suffixText: destCurrency,
+                        onChangedMinor: (value) {
+                          setDialogState(() => destinationAmountMinor = value);
+                        },
+                      ),
+                    if (isCrossCurrency)
+                      const SizedBox(height: AppSpacing.medium),
+                    AppTextField(
+                      controller: descriptionController,
+                      labelText: l10nOf(context).descriptionOptional,
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    TextButton(
+                      onPressed: () async {
+                        final picked = await showDatePicker(
+                          context: context,
+                          initialDate: transactionDate,
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
                         );
-                        if (ok && dialogContext.mounted) {
-                          Navigator.of(dialogContext).pop();
+                        if (picked != null) {
+                          setDialogState(() => transactionDate = picked);
                         }
                       },
-                child: Text(l10nOf(context).actionTransfer),
+                      child: Text(
+                        '${l10nOf(context).dateLabel}: '
+                        '${formatLocalDate(context, transactionDate)}',
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          );
-        },
-      ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: Text(l10nOf(context).actionCancel),
+                ),
+                ElevatedButton(
+                  onPressed: toAccountId == null
+                      ? null
+                      : () async {
+                          final description = descriptionController.text.trim();
+                          final ok = await viewModel.closeoutSelectedAccount(
+                            toAccountId: toAccountId!,
+                            transactionDate: transactionDate,
+                            description: description.isEmpty
+                                ? null
+                                : description,
+                            destinationAmountMinor: isCrossCurrency
+                                ? destinationAmountMinor
+                                : null,
+                          );
+                          if (ok && dialogContext.mounted) {
+                            Navigator.of(dialogContext).pop();
+                          }
+                        },
+                  child: Text(l10nOf(context).actionTransfer),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/category_repository.dart';
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/recurring_template_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
@@ -19,18 +19,18 @@ import '../../../../domain/models/transaction_direction.dart';
 class RecurringTemplateManagementViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
   RecurringTemplateManagementViewModel({
-    required LedgerRepository ledgerRepository,
+    required RecurringTemplateRepository recurringTemplateRepository,
     required AccountRepository accountRepository,
     required CategoryRepository categoryRepository,
-  }) : _ledgerRepository = ledgerRepository,
+  }) : _recurringTemplateRepository = recurringTemplateRepository,
        _accountRepository = accountRepository,
        _categoryRepository = categoryRepository {
-    _templatesSubscription = _ledgerRepository.watchRecurringTemplates().listen(
-      (templates) {
-        _templates = templates;
-        notifyListeners();
-      },
-    );
+    _templatesSubscription = _recurringTemplateRepository
+        .watchRecurringTemplates()
+        .listen((templates) {
+          _templates = templates;
+          notifyListeners();
+        });
     _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
@@ -51,7 +51,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
     });
   }
 
-  final LedgerRepository _ledgerRepository;
+  final RecurringTemplateRepository _recurringTemplateRepository;
   final AccountRepository _accountRepository;
   final CategoryRepository _categoryRepository;
   late final StreamSubscription<List<RecurringTemplate>> _templatesSubscription;
@@ -103,7 +103,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
     required int amountMinor,
     required int dayOfMonth,
   }) => _save(
-    () => _ledgerRepository.createRecurringTemplate(
+    () => _recurringTemplateRepository.createRecurringTemplate(
       name: name,
       direction: direction,
       financialAccountId: financialAccountId,
@@ -122,7 +122,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
     required int amountMinor,
     required int dayOfMonth,
   }) => _save(
-    () => _ledgerRepository.updateRecurringTemplate(
+    () => _recurringTemplateRepository.updateRecurringTemplate(
       id: id,
       name: name,
       direction: direction,
@@ -148,7 +148,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
   }
 
   Future<void> deleteTemplate(String id) =>
-      _ledgerRepository.deleteRecurringTemplate(id);
+      _recurringTemplateRepository.deleteRecurringTemplate(id);
 
   @override
   void dispose() {

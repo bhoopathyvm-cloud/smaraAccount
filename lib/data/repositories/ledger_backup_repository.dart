@@ -7,28 +7,28 @@ import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
 import '../../domain/models/signing_identity.dart';
 import '../database/app_database.dart';
-import 'ledger_repository.dart';
+import 'identity_repository.dart';
+import 'repository_date_utils.dart';
 
 /// Encrypted export/restore of the whole ledger database file. Split out
-/// of `LedgerRepository` (architecture-deepening design.md D1); not a
-/// true leaf despite the original review sketch - `restoreLedgerBackup`
-/// depends on [LedgerRepository] for [LedgerRepository.currentIdentity]
-/// (comparing the device's active identity against the backup's) and
-/// constructs its own throwaway [LedgerRepository] (via its own
-/// [SigningKeyService], defaulted the same way [LedgerRepository] itself
-/// defaults one - this class cannot reach that private field) to validate
-/// the backup file before replacing the real database (design.md D2).
+/// of `LedgerRepository` (architecture-deepening design.md D1); depends on
+/// [IdentityRepository] for [IdentityRepository.currentIdentity] (comparing
+/// the device's active identity against the backup's) and constructs its
+/// own throwaway [IdentityRepository] (via its own [SigningKeyService])
+/// wrapping a temp file to validate the backup before replacing the real
+/// database (design.md D2). The throwaway instance omits AccountRepository
+/// because it only reads identity and verifies the chain.
 class LedgerBackupRepository {
   LedgerBackupRepository({
     required AppDatabase database,
-    required LedgerRepository ledgerRepository,
+    required IdentityRepository identityRepository,
     SigningKeyService? signingKeyService,
   }) : _db = database,
-       _ledgerRepository = ledgerRepository,
+       _identityRepository = identityRepository,
        _signingKeyService = signingKeyService ?? SigningKeyService();
 
   final AppDatabase _db;
-  final LedgerRepository _ledgerRepository;
+  final IdentityRepository _identityRepository;
   final SigningKeyService _signingKeyService;
 
   /// Encrypts the raw local database file under [passphrase] and returns
@@ -102,7 +102,7 @@ class LedgerBackupRepository {
     try {
       final backupDb = AppDatabase.openFile(tempFile);
       try {
-        final backupRepository = LedgerRepository(
+        final backupRepository = IdentityRepository(
           database: backupDb,
           signingKeyService: _signingKeyService,
         );
@@ -137,9 +137,9 @@ class LedgerBackupRepository {
       );
     }
 
-    final deviceIdentity = await _ledgerRepository.currentIdentity();
+    final deviceIdentity = await _identityRepository.currentIdentity();
     if (deviceIdentity != null &&
-        !_bytesEqual(deviceIdentity.publicKey, backupIdentity.publicKey)) {
+        !bytesEqual(deviceIdentity.publicKey, backupIdentity.publicKey)) {
       await tempFile.delete();
       throw ForeignBackupIdentityException(
         'This backup belongs to a different signing identity than the one '
@@ -161,12 +161,4 @@ class LedgerBackupRepository {
       if (await sidecar.exists()) await sidecar.delete();
     }
   }
-}
-
-bool _bytesEqual(List<int> a, List<int> b) {
-  if (a.length != b.length) return false;
-  for (var i = 0; i < a.length; i++) {
-    if (a[i] != b[i]) return false;
-  }
-  return true;
 }

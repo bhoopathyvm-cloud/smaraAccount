@@ -8,6 +8,7 @@ import '../../../../data/instrument_quote_refresh.dart';
 import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/investment_holdings_logic.dart';
+import '../../../../data/repositories/investment_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
@@ -28,6 +29,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
     required CategoryRepository categoryRepository,
+    required InvestmentRepository investmentRepository,
     required SettingsRepository settingsRepository,
     required this.accountId,
     InstrumentQuoteRefresh? quoteRefresh,
@@ -36,12 +38,13 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }) : _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
        _categoryRepository = categoryRepository,
+       _investmentRepository = investmentRepository,
        _settingsRepository = settingsRepository,
        _quoteRefresh =
            quoteRefresh ??
            InstrumentQuoteRefresh(
              settingsRepository: settingsRepository,
-             ledgerRepository: ledgerRepository,
+             investmentRepository: investmentRepository,
            ),
        _launchUrl =
            launchUrlFn ??
@@ -55,21 +58,21 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
           _account = accounts.where((a) => a.id == accountId).firstOrNull;
           notifyListeners();
         });
-    _holdingsSub = _ledgerRepository.watchHoldingsForAccount(accountId).listen((
-      holdings,
-    ) async {
-      _holdings = holdings;
-      _cashMinor = await _ledgerRepository.displayBalanceMinor(accountId);
-      notifyListeners();
-      await _refreshQuotes();
-    });
-    _instrumentsSub = _ledgerRepository.watchInstruments().listen((
+    _holdingsSub = _investmentRepository
+        .watchHoldingsForAccount(accountId)
+        .listen((holdings) async {
+          _holdings = holdings;
+          _cashMinor = await _ledgerRepository.displayBalanceMinor(accountId);
+          notifyListeners();
+          await _refreshQuotes();
+        });
+    _instrumentsSub = _investmentRepository.watchInstruments().listen((
       instruments,
     ) {
       _instruments = instruments;
       notifyListeners();
     });
-    _heldInstrumentsSub = _ledgerRepository
+    _heldInstrumentsSub = _investmentRepository
         .watchInstrumentsHeldInAccount(accountId)
         .listen((instruments) {
           _heldInstruments = instruments;
@@ -95,6 +98,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
   final CategoryRepository _categoryRepository;
+  final InvestmentRepository _investmentRepository;
   final SettingsRepository _settingsRepository;
   final InstrumentQuoteRefresh _quoteRefresh;
   final Future<bool> Function(Uri url) _launchUrl;
@@ -190,7 +194,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     String? isin,
   }) async {
     try {
-      final created = await _ledgerRepository.createInstrument(
+      final created = await _investmentRepository.createInstrument(
         name: name,
         kind: kind,
         ticker: ticker,
@@ -206,12 +210,12 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   Future<bool> renameInstrument({required String id, required String newName}) {
     return _run(
-      () => _ledgerRepository.renameInstrument(id: id, newName: newName),
+      () => _investmentRepository.renameInstrument(id: id, newName: newName),
     );
   }
 
   Future<bool> archiveInstrument(String id) {
-    return _run(() => _ledgerRepository.archiveInstrument(id));
+    return _run(() => _investmentRepository.archiveInstrument(id));
   }
 
   int? sellGainLossMinor({
@@ -244,7 +248,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     String? brokerageExpenseCategoryId,
   }) {
     return _run(
-      () => _ledgerRepository.recordBuy(
+      () => _investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrumentId,
         quantityScaled: quantityScaled,
@@ -272,7 +276,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     String? brokerageExpenseCategoryId,
   }) {
     return _run(
-      () => _ledgerRepository.recordSell(
+      () => _investmentRepository.recordSell(
         accountId: accountId,
         instrumentId: instrumentId,
         quantityScaled: quantityScaled,
@@ -295,7 +299,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     String? description,
   }) {
     return _run(
-      () => _ledgerRepository.recordDividend(
+      () => _investmentRepository.recordDividend(
         accountId: accountId,
         instrumentId: instrumentId,
         amountMinor: amountMinor,

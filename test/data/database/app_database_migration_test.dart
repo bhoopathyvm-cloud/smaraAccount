@@ -7,8 +7,10 @@ import 'package:smara_accounting/data/database/tables/ofx_import_records_table.d
     show ImportSource;
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
+import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:sqlite3/sqlite3.dart' as sqlite3;
@@ -444,18 +446,25 @@ void main() {
       final db = AppDatabase.forTesting(NativeDatabase.opened(v15));
       addTearDown(db.close);
 
+      final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
       final repository = LedgerRepository(
         database: db,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
+        signingKeyService: keys,
+      );
+      final identityRepository = IdentityRepository(
+        database: db,
+        accountRepository: AccountRepository(
+          database: db,
+          ledgerRepository: repository,
         ),
+        signingKeyService: keys,
       );
       final accountRepository = AccountRepository(
         database: db,
         ledgerRepository: repository,
       );
-      final generated = await repository.generateFirstIdentity();
-      await repository.confirmFirstIdentity(generated, currency: 'USD');
+      final generated = await identityRepository.generateFirstIdentity();
+      await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
 
       final account = await accountRepository.createFinancialAccount(
         name: 'Visa',
@@ -475,15 +484,27 @@ void main() {
         final db = AppDatabase.forTesting(NativeDatabase.opened(v14));
         addTearDown(db.close);
 
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
+          signingKeyService: keys,
+        );
+        final identityRepository = IdentityRepository(
+          database: db,
+          accountRepository: AccountRepository(
+            database: db,
+            ledgerRepository: repository,
           ),
+          signingKeyService: keys,
         );
         final categoryRepository = CategoryRepository(database: db);
-        final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final generated = await identityRepository.generateFirstIdentity();
+        await identityRepository.confirmFirstIdentity(
+          generated,
+          currency: 'USD',
+        );
         final expenseId = (await categoryRepository.watchCategories().first)
             .firstWhere((a) => a.type == AccountType.expense)
             .id;
@@ -510,33 +531,49 @@ void main() {
         final templates = await db.select(db.recurringTemplates).get();
         expect(templates, isEmpty);
 
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
+          signingKeyService: keys,
+        );
+        final identityRepository = IdentityRepository(
+          database: db,
+          accountRepository: AccountRepository(
+            database: db,
+            ledgerRepository: repository,
           ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
           ledgerRepository: repository,
         );
         final categoryRepository = CategoryRepository(database: db);
-        final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final generated = await identityRepository.generateFirstIdentity();
+        await identityRepository.confirmFirstIdentity(
+          generated,
+          currency: 'USD',
+        );
         final accountId =
             (await accountRepository.watchFinancialAccounts().first).first.id;
         final expenseId = (await categoryRepository.watchCategories().first)
             .firstWhere((a) => a.type == AccountType.expense)
             .id;
 
-        final created = await repository.createRecurringTemplate(
-          name: 'Rent',
-          direction: TransactionDirection.moneyOut,
-          financialAccountId: accountId,
-          categoryId: expenseId,
-          amountMinor: 150000,
-          dayOfMonth: 1,
-        );
+        final created =
+            await RecurringTemplateRepository(
+              database: db,
+              ledgerRepository: repository,
+            ).createRecurringTemplate(
+              name: 'Rent',
+              direction: TransactionDirection.moneyOut,
+              financialAccountId: accountId,
+              categoryId: expenseId,
+              amountMinor: 150000,
+              dayOfMonth: 1,
+            );
         expect(created.name, equals('Rent'));
       },
     );
@@ -590,16 +627,28 @@ void main() {
         final v11 = _openV11Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v11));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: keys,
         );
-        final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final identityRepository = IdentityRepository(
+          database: db,
+          accountRepository: AccountRepository(
+            database: db,
+            ledgerRepository: repository,
+          ),
+          signingKeyService: keys,
+        );
+        final generated = await identityRepository.generateFirstIdentity();
+        await identityRepository.confirmFirstIdentity(
+          generated,
+          currency: 'USD',
+        );
 
-        final identity = await repository.currentIdentity();
+        final identity = await identityRepository.currentIdentity();
         expect(identity!.acknowledgedAt, isNull);
       },
     );
@@ -681,19 +730,31 @@ void main() {
         final v6 = _openV6Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v6));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
+          signingKeyService: keys,
+        );
+        final identityRepository = IdentityRepository(
+          database: db,
+          accountRepository: AccountRepository(
+            database: db,
+            ledgerRepository: repository,
           ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
           ledgerRepository: repository,
         );
         final categoryRepository = CategoryRepository(database: db);
-        final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final generated = await identityRepository.generateFirstIdentity();
+        await identityRepository.confirmFirstIdentity(
+          generated,
+          currency: 'USD',
+        );
         final account =
             (await accountRepository.watchFinancialAccounts().first).first;
         final category =
@@ -732,19 +793,26 @@ void main() {
       final v6 = _openV6Database();
       final db = AppDatabase.forTesting(NativeDatabase.opened(v6));
       addTearDown(db.close);
+      final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
       final repository = LedgerRepository(
         database: db,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
+        signingKeyService: keys,
+      );
+      final identityRepository = IdentityRepository(
+        database: db,
+        accountRepository: AccountRepository(
+          database: db,
+          ledgerRepository: repository,
         ),
+        signingKeyService: keys,
       );
       final accountRepository = AccountRepository(
         database: db,
         ledgerRepository: repository,
       );
       final categoryRepository = CategoryRepository(database: db);
-      final generated = await repository.generateFirstIdentity();
-      await repository.confirmFirstIdentity(generated, currency: 'USD');
+      final generated = await identityRepository.generateFirstIdentity();
+      await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
       final account =
           (await accountRepository.watchFinancialAccounts().first).first;
       final category = (await categoryRepository.watchCategories().first).first;
@@ -796,19 +864,31 @@ void main() {
         final v5 = _openV5Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v5));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
+          signingKeyService: keys,
+        );
+        final identityRepository = IdentityRepository(
+          database: db,
+          accountRepository: AccountRepository(
+            database: db,
+            ledgerRepository: repository,
           ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
           ledgerRepository: repository,
         );
         final categoryRepository = CategoryRepository(database: db);
-        final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final generated = await identityRepository.generateFirstIdentity();
+        await identityRepository.confirmFirstIdentity(
+          generated,
+          currency: 'USD',
+        );
         final account =
             (await accountRepository.watchFinancialAccounts().first).first;
         final category =
@@ -858,19 +938,31 @@ void main() {
         final v5 = _openV5Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v5));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
+          signingKeyService: keys,
+        );
+        final identityRepository = IdentityRepository(
+          database: db,
+          accountRepository: AccountRepository(
+            database: db,
+            ledgerRepository: repository,
           ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
           ledgerRepository: repository,
         );
         final categoryRepository = CategoryRepository(database: db);
-        final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final generated = await identityRepository.generateFirstIdentity();
+        await identityRepository.confirmFirstIdentity(
+          generated,
+          currency: 'USD',
+        );
         final account =
             (await accountRepository.watchFinancialAccounts().first).first;
         final category =
@@ -921,11 +1013,12 @@ void main() {
         final v4 = _openV4Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v4));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
@@ -944,11 +1037,12 @@ void main() {
         final v4 = _openV4Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v4));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
@@ -976,18 +1070,30 @@ void main() {
       () async {
         final db = AppDatabase.forTesting(NativeDatabase.memory());
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
+          signingKeyService: keys,
+        );
+        final identityRepository = IdentityRepository(
+          database: db,
+          accountRepository: AccountRepository(
+            database: db,
+            ledgerRepository: repository,
           ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
           ledgerRepository: repository,
         );
-        final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final generated = await identityRepository.generateFirstIdentity();
+        await identityRepository.confirmFirstIdentity(
+          generated,
+          currency: 'USD',
+        );
 
         final groups = await accountRepository.watchAccountGroups().first;
         expect(groups, isNotEmpty);
@@ -1010,11 +1116,12 @@ void main() {
         final v3 = _openV3Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v3));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
@@ -1041,11 +1148,12 @@ void main() {
         expect(clearing.type, equals(AccountType.clearing));
         expect(clearing.groupId, isNull);
 
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
@@ -1067,11 +1175,12 @@ void main() {
         final v3 = _openV3Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v3));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
@@ -1176,11 +1285,12 @@ void main() {
 
         final db = AppDatabase.forTesting(NativeDatabase.opened(v2));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
@@ -1202,11 +1312,20 @@ void main() {
         final v1 = _openV1Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v1));
         addTearDown(db.close);
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final repository = LedgerRepository(
           database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
+          signingKeyService: keys,
+        );
+        final identityRepository = IdentityRepository(
+          database: db,
+          accountRepository: AccountRepository(
+            database: db,
+            ledgerRepository: repository,
           ),
+          signingKeyService: keys,
         );
         final accountRepository = AccountRepository(
           database: db,
@@ -1218,8 +1337,11 @@ void main() {
         // without throwing - exercised by this first query.
         expect(await categoryRepository.watchCategories().first, isEmpty);
 
-        final generated = await repository.generateFirstIdentity();
-        await repository.confirmFirstIdentity(generated, currency: 'USD');
+        final generated = await identityRepository.generateFirstIdentity();
+        await identityRepository.confirmFirstIdentity(
+          generated,
+          currency: 'USD',
+        );
 
         final categories = await categoryRepository.watchCategories().first;
         final incomeId = categories
@@ -1234,7 +1356,7 @@ void main() {
           transactionDate: DateTime(2026, 1, 15),
         );
 
-        final result = await repository.verifyChain();
+        final result = await identityRepository.verifyChain();
         expect(result.isFullyVerified, isTrue);
       },
     );

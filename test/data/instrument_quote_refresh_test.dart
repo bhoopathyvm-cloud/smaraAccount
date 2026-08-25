@@ -8,6 +8,10 @@ import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/instrument_quote_refresh.dart';
 import 'package:smara_accounting/data/instrument_quote_service.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/investment_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
+import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
@@ -17,21 +21,33 @@ import '../domain/crypto/in_memory_secure_key_storage.dart';
 void main() {
   late AppDatabase db;
   late LedgerRepository ledger;
+  late InvestmentRepository investment;
   late Instrument instrument;
 
   setUp(() async {
     SharedPreferencesAsyncPlatform.instance =
         InMemorySharedPreferencesAsync.empty();
     db = AppDatabase.forTesting(NativeDatabase.memory());
-    ledger = LedgerRepository(
+    final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
+    ledger = LedgerRepository(database: db, signingKeyService: keys);
+    final accountRepository = AccountRepository(
       database: db,
-      signingKeyService: SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      ),
+      ledgerRepository: ledger,
     );
-    final generated = await ledger.generateFirstIdentity();
-    await ledger.confirmFirstIdentity(generated, currency: 'USD');
-    instrument = await ledger.createInstrument(
+    final identityRepository = IdentityRepository(
+      database: db,
+      accountRepository: accountRepository,
+      signingKeyService: keys,
+    );
+    investment = InvestmentRepository(
+      database: db,
+      ledgerRepository: ledger,
+      accountRepository: accountRepository,
+      categoryRepository: CategoryRepository(database: db),
+    );
+    final generated = await identityRepository.generateFirstIdentity();
+    await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
+    instrument = await investment.createInstrument(
       name: 'Apple',
       kind: InstrumentKind.stock,
       ticker: 'AAPL.US',
@@ -48,7 +64,7 @@ void main() {
     var requested = false;
     final refresh = InstrumentQuoteRefresh(
       settingsRepository: settings,
-      ledgerRepository: ledger,
+      investmentRepository: investment,
       quoteService: InstrumentQuoteService(
         client: MockClient((request) async {
           requested = true;
@@ -65,7 +81,7 @@ void main() {
     Uri? captured;
     final refresh = InstrumentQuoteRefresh(
       settingsRepository: SettingsRepository(),
-      ledgerRepository: ledger,
+      investmentRepository: investment,
       quoteService: InstrumentQuoteService(
         client: MockClient((request) async {
           captured = request.url;
@@ -82,7 +98,7 @@ void main() {
     expect(captured, isNotNull);
     expect(captured!.toString().toLowerCase(), isNot(contains('quantity')));
     expect(
-      (await ledger.watchInstrumentQuotes().first).single.priceMinor,
+      (await investment.watchInstrumentQuotes().first).single.priceMinor,
       equals(1000),
     );
   });

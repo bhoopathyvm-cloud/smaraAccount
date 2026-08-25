@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/instrument_quote_refresh.dart';
 import '../../../../data/repositories/category_repository.dart';
+import '../../../../data/repositories/investment_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/recurring_template_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/home_overview.dart';
@@ -16,17 +18,21 @@ class HomeViewModel extends ChangeNotifier {
   HomeViewModel({
     required LedgerRepository ledgerRepository,
     required CategoryRepository categoryRepository,
+    required RecurringTemplateRepository recurringTemplateRepository,
+    required InvestmentRepository investmentRepository,
     SettingsRepository? settingsRepository,
     InstrumentQuoteRefresh? quoteRefresh,
   }) : _ledgerRepository = ledgerRepository,
        _categoryRepository = categoryRepository,
+       _recurringTemplateRepository = recurringTemplateRepository,
+       _investmentRepository = investmentRepository,
        _quoteRefresh =
            quoteRefresh ??
            (settingsRepository == null
                ? null
                : InstrumentQuoteRefresh(
                    settingsRepository: settingsRepository,
-                   ledgerRepository: ledgerRepository,
+                   investmentRepository: investmentRepository,
                  )) {
     _subscription = _ledgerRepository.watchHomeOverview().listen((overview) {
       _overview = overview;
@@ -42,7 +48,7 @@ class HomeViewModel extends ChangeNotifier {
           _categoryTotals = totals;
           notifyListeners();
         });
-    _dueTemplatesSubscription = _ledgerRepository
+    _dueTemplatesSubscription = _recurringTemplateRepository
         .watchDueRecurringTemplates()
         .listen((due) {
           _dueTemplates = due;
@@ -62,12 +68,12 @@ class HomeViewModel extends ChangeNotifier {
       notifyListeners();
     });
     if (_quoteRefresh != null) {
-      _instrumentsSubscription = _ledgerRepository.watchInstruments().listen((
-        instruments,
-      ) {
-        _instruments = instruments;
-        unawaited(_refreshQuotes());
-      });
+      _instrumentsSubscription = _investmentRepository
+          .watchInstruments()
+          .listen((instruments) {
+            _instruments = instruments;
+            unawaited(_refreshQuotes());
+          });
       _quoteTimer = Timer.periodic(const Duration(minutes: 5), (_) {
         unawaited(_refreshQuotes());
       });
@@ -76,6 +82,8 @@ class HomeViewModel extends ChangeNotifier {
 
   final LedgerRepository _ledgerRepository;
   final CategoryRepository _categoryRepository;
+  final RecurringTemplateRepository _recurringTemplateRepository;
+  final InvestmentRepository _investmentRepository;
   final InstrumentQuoteRefresh? _quoteRefresh;
   late final StreamSubscription<HomeOverview> _subscription;
   late final StreamSubscription<List<CategoryTotal>>
@@ -107,7 +115,7 @@ class HomeViewModel extends ChangeNotifier {
   List<DueRecurringTemplate> get dueTemplates => _dueTemplates;
 
   Future<void> recordDueTemplate(String templateId) {
-    return _ledgerRepository.recordDueTemplate(templateId);
+    return _recurringTemplateRepository.recordDueTemplate(templateId);
   }
 
   HomeOverview? _overview;

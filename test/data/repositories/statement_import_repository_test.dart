@@ -10,6 +10,7 @@ import 'package:smara_accounting/data/database/tables/ofx_import_records_table.d
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/csv/csv_column_mapping.dart';
@@ -25,6 +26,7 @@ void main() {
   late AppDatabase db;
   late LedgerRepository ledgerRepository;
   late AccountRepository accountRepository;
+  late IdentityRepository identityRepository;
   late CategoryRepository categoryRepository;
   late StatementImportRepository importRepository;
   late String accountId;
@@ -33,15 +35,16 @@ void main() {
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
-    ledgerRepository = LedgerRepository(
-      database: db,
-      signingKeyService: SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      ),
-    );
+    final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
+    ledgerRepository = LedgerRepository(database: db, signingKeyService: keys);
     accountRepository = AccountRepository(
       database: db,
       ledgerRepository: ledgerRepository,
+    );
+    identityRepository = IdentityRepository(
+      database: db,
+      accountRepository: accountRepository,
+      signingKeyService: keys,
     );
     categoryRepository = CategoryRepository(database: db);
     importRepository = StatementImportRepository(
@@ -51,8 +54,8 @@ void main() {
       categoryRepository: categoryRepository,
     );
 
-    final generated = await ledgerRepository.generateFirstIdentity();
-    await ledgerRepository.confirmFirstIdentity(generated, currency: 'USD');
+    final generated = await identityRepository.generateFirstIdentity();
+    await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
     accountId =
         (await accountRepository.watchFinancialAccounts().first).first.id;
 

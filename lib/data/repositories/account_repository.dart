@@ -4,6 +4,7 @@ import '../../domain/exceptions.dart';
 import '../../domain/models/account.dart';
 import '../../domain/models/account_group.dart';
 import '../database/app_database.dart';
+import '../database/tables/account_groups_table.dart';
 import '../database/tables/accounts_table.dart';
 import 'ledger_repository.dart';
 import 'repository_date_utils.dart';
@@ -678,5 +679,95 @@ class AccountRepository {
       description: description,
       destinationAmountMinor: destinationAmountMinor,
     );
+  }
+
+  /// Seeds the five system groups, Opening Balance Equity, Transfers in
+  /// transit, the first cash account, and starter income/expense
+  /// categories. Called from [IdentityRepository.confirmFirstIdentity]
+  /// after the signing identity exists (architecture-deepening design.md
+  /// D1a) — starter books must not exist before that identity.
+  Future<void> seedOnboardingBooks({required String currency}) async {
+    final seeds = <(String id, String name, AccountGroupKind kind, int order)>[
+      (
+        groupCashEquivalentsId,
+        'Cash & cash equivalents',
+        AccountGroupKind.assetGroup,
+        0,
+      ),
+      (
+        groupPensionRetirementId,
+        'Pension & retirement',
+        AccountGroupKind.assetGroup,
+        1,
+      ),
+      (
+        groupCreditShortTermId,
+        'Credit & short-term debt',
+        AccountGroupKind.liabilityGroup,
+        2,
+      ),
+      (
+        groupLoansMortgagesId,
+        'Loans & mortgages',
+        AccountGroupKind.liabilityGroup,
+        3,
+      ),
+      (groupInvestmentsId, 'Investments', AccountGroupKind.assetGroup, 4),
+    ];
+    for (final (id, name, kind, order) in seeds) {
+      await _db
+          .into(_db.accountGroups)
+          .insertOnConflictUpdate(
+            AccountGroupsCompanion.insert(
+              id: Value(id),
+              name: name,
+              kind: kind,
+              sortOrder: order,
+              isSystem: true,
+              currency: Value(currency),
+            ),
+          );
+    }
+    await _db
+        .into(_db.accounts)
+        .insertOnConflictUpdate(
+          AccountsCompanion.insert(
+            id: const Value(openingBalanceEquityAccountId),
+            name: openingBalanceEquityAccountName,
+            type: AccountType.equity,
+          ),
+        );
+    await _db
+        .into(_db.accounts)
+        .insertOnConflictUpdate(
+          AccountsCompanion.insert(
+            id: const Value(transfersInTransitAccountId),
+            name: transfersInTransitAccountName,
+            type: AccountType.clearing,
+          ),
+        );
+    await _db
+        .into(_db.accounts)
+        .insert(
+          AccountsCompanion.insert(
+            name: financialAccountName,
+            type: AccountType.asset,
+            groupId: const Value(groupCashEquivalentsId),
+          ),
+        );
+    for (final name in starterIncomeCategories) {
+      await _db
+          .into(_db.accounts)
+          .insert(
+            AccountsCompanion.insert(name: name, type: AccountType.income),
+          );
+    }
+    for (final name in starterExpenseCategories) {
+      await _db
+          .into(_db.accounts)
+          .insert(
+            AccountsCompanion.insert(name: name, type: AccountType.expense),
+          );
+    }
   }
 }

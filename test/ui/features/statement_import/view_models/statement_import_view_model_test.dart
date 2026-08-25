@@ -7,6 +7,7 @@ import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -149,12 +150,8 @@ void main() {
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
-    ledgerRepository = LedgerRepository(
-      database: db,
-      signingKeyService: SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      ),
-    );
+    final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
+    ledgerRepository = LedgerRepository(database: db, signingKeyService: keys);
     accountRepository = AccountRepository(
       database: db,
       ledgerRepository: ledgerRepository,
@@ -167,8 +164,13 @@ void main() {
       accountRepository: accountRepository,
       categoryRepository: categoryRepository,
     );
-    final generated = await ledgerRepository.generateFirstIdentity();
-    await ledgerRepository.confirmFirstIdentity(generated, currency: 'USD');
+    final identityRepository = IdentityRepository(
+      database: db,
+      accountRepository: accountRepository,
+      signingKeyService: keys,
+    );
+    final generated = await identityRepository.generateFirstIdentity();
+    await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
     accountId =
         (await accountRepository.watchFinancialAccounts().first).first.id;
   });

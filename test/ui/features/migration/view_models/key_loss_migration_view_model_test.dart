@@ -9,12 +9,17 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockIdentityRepository identityRepository;
   late KeyLossMigrationViewModel viewModel;
 
   setUp(() {
     repository = MockLedgerRepository();
+    identityRepository = MockIdentityRepository();
     when(repository.watchEntries()).thenAnswer((_) => Stream.value(const []));
-    viewModel = KeyLossMigrationViewModel(ledgerRepository: repository);
+    viewModel = KeyLossMigrationViewModel(
+      ledgerRepository: repository,
+      identityRepository: identityRepository,
+    );
     addTearDown(viewModel.dispose);
   });
 
@@ -29,7 +34,7 @@ void main() {
       final result = await viewModel.confirmAndMigrate();
 
       expect(result, isFalse);
-      verifyNever(repository.migrateToNewIdentityAfterKeyLoss());
+      verifyNever(identityRepository.migrateToNewIdentityAfterKeyLoss());
     });
 
     test('migrates once confirmed', () async {
@@ -37,7 +42,7 @@ void main() {
       final keyMaterial = await const Ed25519Signing().keyPairFromSeed(
         phrase.seed,
       );
-      when(repository.migrateToNewIdentityAfterKeyLoss()).thenAnswer(
+      when(identityRepository.migrateToNewIdentityAfterKeyLoss()).thenAnswer(
         (_) async =>
             GeneratedIdentity(phrase: phrase, keyMaterial: keyMaterial),
       );
@@ -48,12 +53,12 @@ void main() {
       expect(result, isTrue);
       expect(viewModel.isMigrating, isFalse);
       expect(viewModel.errorMessage, isNull);
-      verify(repository.migrateToNewIdentityAfterKeyLoss()).called(1);
+      verify(identityRepository.migrateToNewIdentityAfterKeyLoss()).called(1);
     });
 
     test('surfaces a failure as errorMessage without rethrowing', () async {
       when(
-        repository.migrateToNewIdentityAfterKeyLoss(),
+        identityRepository.migrateToNewIdentityAfterKeyLoss(),
       ).thenThrow(Exception('boom'));
 
       viewModel.setConfirmed(true);

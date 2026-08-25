@@ -12,10 +12,14 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockLedgerRepository repository;
   late MockCategoryRepository categoryRepository;
+  late MockRecurringTemplateRepository recurring;
+  late MockInvestmentRepository investment;
 
   setUp(() {
     repository = MockLedgerRepository();
     categoryRepository = MockCategoryRepository();
+    recurring = MockRecurringTemplateRepository();
+    investment = MockInvestmentRepository();
     when(repository.watchHomeOverview()).thenAnswer(
       (_) => Stream.value(
         const HomeOverview(
@@ -60,6 +64,8 @@ void main() {
     final viewModel = HomeViewModel(
       ledgerRepository: repository,
       categoryRepository: categoryRepository,
+      recurringTemplateRepository: recurring,
+      investmentRepository: investment,
     );
     addTearDown(viewModel.dispose);
     await Future<void>.delayed(Duration.zero);
@@ -92,6 +98,8 @@ void main() {
     final viewModel = HomeViewModel(
       ledgerRepository: repository,
       categoryRepository: categoryRepository,
+      recurringTemplateRepository: recurring,
+      investmentRepository: investment,
     );
     addTearDown(viewModel.dispose);
     await Future<void>.delayed(Duration.zero);
@@ -114,6 +122,8 @@ void main() {
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
         categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -148,12 +158,14 @@ void main() {
         ),
       ).thenAnswer((_) => Stream.value(const []));
       when(
-        repository.watchDueRecurringTemplates(),
+        recurring.watchDueRecurringTemplates(),
       ).thenAnswer((_) => Stream.value(const [due]));
 
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
         categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -170,21 +182,23 @@ void main() {
         ),
       ).thenAnswer((_) => Stream.value(const []));
       when(
-        repository.watchDueRecurringTemplates(),
+        recurring.watchDueRecurringTemplates(),
       ).thenAnswer((_) => Stream.value(const []));
       when(
-        repository.recordDueTemplate('template-1'),
+        recurring.recordDueTemplate('template-1'),
       ).thenAnswer((_) async => 'entry-1');
 
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
         categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
       );
       addTearDown(viewModel.dispose);
 
       await viewModel.recordDueTemplate('template-1');
 
-      verify(repository.recordDueTemplate('template-1')).called(1);
+      verify(recurring.recordDueTemplate('template-1')).called(1);
     });
   });
 
@@ -217,6 +231,8 @@ void main() {
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
         categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);

@@ -1,7 +1,7 @@
 import '../domain/models/instrument.dart';
 import '../domain/models/quote_provider.dart';
 import 'instrument_quote_service.dart';
-import 'repositories/ledger_repository.dart';
+import 'repositories/investment_repository.dart';
 import 'repositories/settings_repository.dart';
 
 /// Fetches quotes for instruments that have a ticker or ISIN and writes
@@ -9,12 +9,12 @@ import 'repositories/settings_repository.dart';
 class InstrumentQuoteRefresh {
   InstrumentQuoteRefresh({
     required this.settingsRepository,
-    required this.ledgerRepository,
+    required this.investmentRepository,
     InstrumentQuoteService? quoteService,
   }) : _quoteService = quoteService ?? InstrumentQuoteService();
 
   final SettingsRepository settingsRepository;
-  final LedgerRepository ledgerRepository;
+  final InvestmentRepository investmentRepository;
   final InstrumentQuoteService _quoteService;
 
   Future<void> refresh(List<Instrument> instruments) async {
@@ -34,7 +34,7 @@ class InstrumentQuoteRefresh {
         isin: isin,
       );
       if (fetched == null) continue;
-      await ledgerRepository.cacheInstrumentQuote(
+      await investmentRepository.cacheInstrumentQuote(
         instrumentId: instrument.id,
         priceMinor: fetched.priceMinor,
         currency: fetched.currency,

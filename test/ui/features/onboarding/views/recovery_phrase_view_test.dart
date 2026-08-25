@@ -13,12 +13,12 @@ import '../../../../mocks.mocks.dart';
 // real Drift database, matching register_view_test.dart's established
 // pattern for this project.
 void main() {
-  late MockLedgerRepository repository;
+  late MockIdentityRepository repository;
   late RecoveryPhraseSetupViewModel viewModel;
 
   setUp(() {
-    repository = MockLedgerRepository();
-    viewModel = RecoveryPhraseSetupViewModel(ledgerRepository: repository);
+    repository = MockIdentityRepository();
+    viewModel = RecoveryPhraseSetupViewModel(identityRepository: repository);
   });
 
   testWidgets(

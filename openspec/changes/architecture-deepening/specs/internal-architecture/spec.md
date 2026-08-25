@@ -3,9 +3,9 @@
 ### Requirement: Repository Layering Preserves Existing Behavior
 The system SHALL split `LedgerRepository` into one repository per domain concept (identity, ledger backup, accounts, categories, payees, recurring templates, investments) plus a slimmed core `LedgerRepository`, without changing any existing capability's observable behavior. No requirement or scenario in any other `openspec/specs/<capability>/spec.md` file changes as part of this split.
 
-#### Scenario: Existing test suite passes unmodified
+#### Scenario: Existing test suite preserves behavior
 - **WHEN** the repository split is complete
-- **THEN** every existing unit, widget, and integration test passes without any test file being modified to accommodate the split
+- **THEN** every existing unit, widget, and integration test passes. Test files MAY retarget constructors and method receivers to the new repository types (the same mechanical call-site update production code receives); they MUST NOT change scenario assertions, expected values, or the behavior under test.
 
 #### Scenario: No repository depends on one that isn't in its declared dependency graph
 - **WHEN** any of the seven repositories is constructed

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../../data/repositories/identity_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/journal_entry.dart';
@@ -13,12 +14,16 @@ import '../../../../l10n/l10n.dart';
 /// confirmation before doing anything irreversible, then migrates.
 class KeyLossMigrationViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  KeyLossMigrationViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository {
+  KeyLossMigrationViewModel({
+    required LedgerRepository ledgerRepository,
+    required IdentityRepository identityRepository,
+  }) : _ledgerRepository = ledgerRepository,
+       _identityRepository = identityRepository {
     _entriesSubscription = _ledgerRepository.watchEntries().listen(_onEntries);
   }
 
   final LedgerRepository _ledgerRepository;
+  final IdentityRepository _identityRepository;
   late final StreamSubscription<List<JournalEntry>> _entriesSubscription;
 
   List<JournalEntry> _entries = const [];
@@ -50,7 +55,7 @@ class KeyLossMigrationViewModel extends ChangeNotifier
     notifyListeners();
 
     try {
-      await _ledgerRepository.migrateToNewIdentityAfterKeyLoss();
+      await _identityRepository.migrateToNewIdentityAfterKeyLoss();
       _isMigrating = false;
       notifyListeners();
       return true;

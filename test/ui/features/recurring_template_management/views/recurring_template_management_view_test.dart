@@ -11,7 +11,7 @@ import 'package:smara_accounting/ui/features/recurring_template_management/views
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository repository;
+  late MockRecurringTemplateRepository repository;
   late MockAccountRepository accountRepository;
   late MockCategoryRepository categoryRepository;
 
@@ -48,7 +48,7 @@ void main() {
   );
 
   setUp(() {
-    repository = MockLedgerRepository();
+    repository = MockRecurringTemplateRepository();
     accountRepository = MockAccountRepository();
     categoryRepository = MockCategoryRepository();
     when(
@@ -72,7 +72,7 @@ void main() {
     ).thenAnswer((_) => Stream.value(const [rentTemplate]));
 
     final viewModel = RecurringTemplateManagementViewModel(
-      ledgerRepository: repository,
+      recurringTemplateRepository: repository,
       accountRepository: accountRepository,
       categoryRepository: categoryRepository,
     );
@@ -106,7 +106,7 @@ void main() {
     ).thenAnswer((_) async => rentTemplate);
 
     final viewModel = RecurringTemplateManagementViewModel(
-      ledgerRepository: repository,
+      recurringTemplateRepository: repository,
       accountRepository: accountRepository,
       categoryRepository: categoryRepository,
     );
@@ -161,7 +161,7 @@ void main() {
       ).thenAnswer((_) async {});
 
       final viewModel = RecurringTemplateManagementViewModel(
-        ledgerRepository: repository,
+        recurringTemplateRepository: repository,
         accountRepository: accountRepository,
         categoryRepository: categoryRepository,
       );

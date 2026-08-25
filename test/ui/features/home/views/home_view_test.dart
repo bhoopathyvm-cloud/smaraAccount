@@ -16,6 +16,8 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockLedgerRepository repository;
   late MockCategoryRepository categoryRepository;
+  late MockRecurringTemplateRepository recurring;
+  late MockInvestmentRepository investment;
 
   const cashGroup = AccountGroup(
     id: 'group-cash',
@@ -38,6 +40,8 @@ void main() {
   setUp(() {
     repository = MockLedgerRepository();
     categoryRepository = MockCategoryRepository();
+    recurring = MockRecurringTemplateRepository();
+    investment = MockInvestmentRepository();
   });
 
   testWidgets(
@@ -73,6 +77,8 @@ void main() {
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
         categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
       );
       addTearDown(viewModel.dispose);
 
@@ -119,6 +125,8 @@ void main() {
     final viewModel = HomeViewModel(
       ledgerRepository: repository,
       categoryRepository: categoryRepository,
+      recurringTemplateRepository: recurring,
+      investmentRepository: investment,
     );
     addTearDown(viewModel.dispose);
     String? tappedAccountId;
@@ -179,6 +187,8 @@ void main() {
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
         categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
       );
       addTearDown(viewModel.dispose);
       String? settledId;
@@ -221,6 +231,8 @@ void main() {
     final viewModel = HomeViewModel(
       ledgerRepository: repository,
       categoryRepository: categoryRepository,
+      recurringTemplateRepository: recurring,
+      investmentRepository: investment,
     );
     addTearDown(viewModel.dispose);
     var spentTapped = false;
@@ -286,6 +298,8 @@ void main() {
     final viewModel = HomeViewModel(
       ledgerRepository: repository,
       categoryRepository: categoryRepository,
+      recurringTemplateRepository: recurring,
+      investmentRepository: investment,
     );
     addTearDown(viewModel.dispose);
 
@@ -323,6 +337,8 @@ void main() {
     final viewModel = HomeViewModel(
       ledgerRepository: repository,
       categoryRepository: categoryRepository,
+      recurringTemplateRepository: recurring,
+      investmentRepository: investment,
     );
     addTearDown(viewModel.dispose);
 
@@ -357,7 +373,7 @@ void main() {
         amountMinor: 150000,
         dayOfMonth: 1,
       );
-      when(repository.watchDueRecurringTemplates()).thenAnswer(
+      when(recurring.watchDueRecurringTemplates()).thenAnswer(
         (_) => Stream.value(const [
           DueRecurringTemplate(
             template: dueTemplate,
@@ -368,12 +384,14 @@ void main() {
         ]),
       );
       when(
-        repository.recordDueTemplate('template-1'),
+        recurring.recordDueTemplate('template-1'),
       ).thenAnswer((_) async => 'entry-1');
 
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
         categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
       );
       addTearDown(viewModel.dispose);
 
@@ -390,7 +408,7 @@ void main() {
       await tester.tap(find.text('Rent'));
       await tester.pump();
 
-      verify(repository.recordDueTemplate('template-1')).called(1);
+      verify(recurring.recordDueTemplate('template-1')).called(1);
     },
   );
 
@@ -405,12 +423,14 @@ void main() {
       ),
     );
     when(
-      repository.watchDueRecurringTemplates(),
+      recurring.watchDueRecurringTemplates(),
     ).thenAnswer((_) => Stream.value(const []));
 
     final viewModel = HomeViewModel(
       ledgerRepository: repository,
       categoryRepository: categoryRepository,
+      recurringTemplateRepository: recurring,
+      investmentRepository: investment,
     );
     addTearDown(viewModel.dispose);
 
@@ -467,6 +487,8 @@ void main() {
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
         categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
       );
       addTearDown(viewModel.dispose);
 
