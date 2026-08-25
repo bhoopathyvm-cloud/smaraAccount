@@ -31,9 +31,9 @@ One repository per cluster, named after the domain concept, confirmed by which m
 | New class | Owns (from `LedgerRepository`) | Confirmed sole caller cluster |
 |---|---|---|
 | `IdentityRepository` | `acknowledgeIdentity`, `confirmFirstIdentity`, `currentIdentity`, `generateFirstIdentity`, `hasMatchingStoredKey`, `migrateToNewIdentityAfterKeyLoss`, `restoreIdentity`, `resumePendingIdentity`, `stashPendingPhraseWords`, `verifyChain`, `exportKeystoreFile` | `RecoveryPhraseSetupViewModel`, `RestoreIdentityViewModel` — confirmed to call only this cluster (plus `verifyChain`) |
-| `LedgerBackupRepository` | `exportLedgerBackup`, `restoreLedgerBackup` | Settings' backup/restore dialogs. Operates on the raw SQLite file (`AppDatabase.resolveDatabaseFile()` + WAL checkpoint), not through any other repository — a true leaf |
+| `LedgerBackupRepository` | `exportLedgerBackup`, `restoreLedgerBackup` | Settings' backup/restore dialogs. **Corrected, not a true leaf** (caught during group 2 implementation): `restoreLedgerBackup` calls `LedgerRepository.currentIdentity()` to compare the device's active identity against the backup's, and constructs its own throwaway `LedgerRepository` (needing its own `SigningKeyService`, defaulted the same way `LedgerRepository` itself defaults one) wrapping a temp file to validate the backup's identity/chain before replacing the real database. Depends on `LedgerRepository` (core) — see D2 |
 | `AccountRepository` | `createAccountGroup`, `renameAccountGroup`, `archiveAccountGroup`, `unarchiveAccountGroup`, `deleteAccountGroup`, `changeAccountGroupCurrency`, `backfillGroupCurrencies`, `needsCurrencyBackfill`, `reassignFinancialAccountGroup`, `createFinancialAccount`, `renameFinancialAccount`, `archiveFinancialAccount`, `unarchiveFinancialAccount`, `watchFinancialAccounts`, `watchAccountGroups`, `recordArchivedAccountCloseoutTransfer` | `AccountManagementViewModel` calls both the account-group *and* financial-account methods together — one repository, not two, contrary to the review's looser sketch. **Corrected caller audit** (see note below the table): also `RegisterViewModel`, `StatementImportViewModel`, `RecurringTemplateManagementViewModel`, `RecordTransactionViewModel`, `CorrectionViewModel`, `SettlePendingTransferViewModel`, `TransferViewModel`, `HoldingsViewModel`, `SummaryViewModel`, `FirstAccountNameViewModel`, `CurrencyBackfillViewModel`, `StatementImportRepository`, and `app_router.dart` directly (`needsCurrencyBackfill`) |
-| `CategoryRepository` | `addCategory`, `archiveCategory`, `renameCategory`, `unarchiveCategory`, `setCategoryMonthlyLimit`, `watchCategories`, `watchCategoryTotals` | `CategoryManagementViewModel`. Corrected: also `StatementImportViewModel`, `RecurringTemplateManagementViewModel`, `RecordTransactionViewModel`, `CorrectionViewModel`, `SettlePendingTransferViewModel`, `TransferViewModel`, `HomeViewModel`, `HoldingsViewModel`, `StatementImportRepository` |
+| `CategoryRepository` | `addCategory`, `archiveCategory`, `renameCategory`, `unarchiveCategory`, `setCategoryMonthlyLimit`, `watchCategories`, `watchCategoryTotals` | `CategoryManagementViewModel`. Corrected (re-audited via a multiline-safe grep sweep during group 2 implementation, which also caught `RegisterViewModel` missing from the original corrected list): also `RegisterViewModel`, `StatementImportViewModel`, `RecurringTemplateManagementViewModel`, `RecordTransactionViewModel`, `CorrectionViewModel`, `SettlePendingTransferViewModel`, `TransferViewModel`, `HomeViewModel`, `HoldingsViewModel`, `StatementImportRepository` |
 | `PayeeRepository` | `createPayee`, `deletePayee`, `findOrCreatePayeeByName`, `renamePayee`, `recordPayeeUsage`, `watchPayees` | `PayeeManagementViewModel`. Corrected: also `RecordTransactionViewModel`, `StatementImportViewModel` |
 | `RecurringTemplateRepository` | `createRecurringTemplate`, `deleteRecurringTemplate`, `updateRecurringTemplate`, `recordDueTemplate`, `watchRecurringTemplates`, `watchDueRecurringTemplates` | `RecurringTemplateManagementViewModel`, `HomeViewModel` |
 | `InvestmentRepository` | `createInstrument`, `archiveInstrument`, `renameInstrument`, `cacheInstrumentQuote`, `recordBuy`, `recordSell`, `recordDividend`, `watchInstruments`, `watchHoldingsForAccount`, `watchInstrumentsHeldInAccount` | `HoldingsViewModel` (also needs `AccountRepository` and core `LedgerRepository` directly — see corrected caller note), `HomeViewModel` (`watchInstruments` only) |
@@ -63,7 +63,7 @@ Traced from what each cluster's own methods actually call today (`_require*` pri
 
 ```
 Leaves (depend only on AppDatabase):
-  CategoryRepository, PayeeRepository, LedgerBackupRepository, LedgerRepository (core)
+  CategoryRepository, PayeeRepository, LedgerRepository (core)
     (LedgerRepository keeps its own private copies of the two validation
     helpers AccountRepository also needs - see D1a - rather than depending
     on AccountRepository, which would create a cycle)
@@ -72,6 +72,10 @@ One level up:
   AccountRepository -> LedgerRepository (core)
     (recordArchivedAccountCloseoutTransfer and the opening-balance post
     both call LedgerRepository's posting primitives - D1a)
+  LedgerBackupRepository -> LedgerRepository (core)
+    (restoreLedgerBackup compares against currentIdentity() - corrected,
+    see the LedgerBackupRepository table row above; not the true leaf
+    the original review sketch assumed)
 
 Two levels up:
   IdentityRepository   -> AccountRepository
@@ -108,7 +112,7 @@ Given the size (23 dependent files, ~76 methods), this lands as one task group p
 
 Order (leaves first, matching D2's dependency graph, so nothing is extracted before what it depends on):
 1. `AccountRepository` (leaf, and the most-depended-on by other new repositories)
-2. `CategoryRepository`, `PayeeRepository`, `LedgerBackupRepository` (leaves, independent of each other and of step 1)
+2. `CategoryRepository`, `PayeeRepository` (leaves), `LedgerBackupRepository` (depends only on the core `LedgerRepository`, which has existed unslimmed since before step 1) — all three independent of each other and of step 1's `AccountRepository`
 3. `IdentityRepository`, `InvestmentRepository` (depend on step 1, and step 2's `CategoryRepository` for Investment)
 4. Slim `LedgerRepository` down to the core cluster, wiring in its new `AccountRepository` dependency
 5. `RecurringTemplateRepository` (depends on the now-slimmed core repository from step 4)

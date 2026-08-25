@@ -3,6 +3,7 @@ import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -18,6 +19,7 @@ void main() {
   late AppDatabase db;
   late LedgerRepository repository;
   late AccountRepository accountRepository;
+  late CategoryRepository categoryRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -31,6 +33,7 @@ void main() {
       database: db,
       ledgerRepository: repository,
     );
+    categoryRepository = CategoryRepository(database: db);
     final generated = await repository.generateFirstIdentity();
     await repository.confirmFirstIdentity(generated, currency: 'USD');
   });
@@ -45,12 +48,12 @@ void main() {
   }
 
   Future<String> expenseId() async {
-    final categories = await repository.watchCategories().first;
+    final categories = await categoryRepository.watchCategories().first;
     return categories.firstWhere((a) => a.type == AccountType.expense).id;
   }
 
   Future<String> incomeId() async {
-    final categories = await repository.watchCategories().first;
+    final categories = await categoryRepository.watchCategories().first;
     return categories.firstWhere((a) => a.type == AccountType.income).id;
   }
 

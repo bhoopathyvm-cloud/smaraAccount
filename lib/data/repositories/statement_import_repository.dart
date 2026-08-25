@@ -13,6 +13,7 @@ import '../../domain/statement_import/statement_import_batch.dart';
 import '../database/app_database.dart';
 import '../database/tables/ofx_import_records_table.dart' show ImportSource;
 import 'account_repository.dart';
+import 'category_repository.dart';
 import 'ledger_repository.dart';
 
 /// Repository for the statement import flow (ofx-transaction-import,
@@ -29,13 +30,16 @@ class StatementImportRepository {
     required AppDatabase database,
     required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
+    required CategoryRepository categoryRepository,
   }) : _db = database,
        _ledgerRepository = ledgerRepository,
-       _accountRepository = accountRepository;
+       _accountRepository = accountRepository,
+       _categoryRepository = categoryRepository;
 
   final AppDatabase _db;
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
+  final CategoryRepository _categoryRepository;
 
   /// Throws [OfxParseException] (via [parseOfxDocument]) when the file
   /// isn't recognizable as OFX at all.
@@ -124,7 +128,7 @@ class StatementImportRepository {
         .watchEntriesForAccount(financialAccountId)
         .first;
     final categoryIds =
-        (await _ledgerRepository.watchCategories(includeArchived: true).first)
+        (await _categoryRepository.watchCategories(includeArchived: true).first)
             .map((c) => c.id)
             .toSet();
 

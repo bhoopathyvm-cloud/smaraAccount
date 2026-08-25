@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../../data/database/tables/accounts_table.dart';
 import '../../../../data/repositories/account_repository.dart';
+import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -20,9 +21,11 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   RegisterViewModel({
     required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
+    required CategoryRepository categoryRepository,
     String? initialAccountId,
   }) : _ledgerRepository = ledgerRepository,
-       _accountRepository = accountRepository {
+       _accountRepository = accountRepository,
+       _categoryRepository = categoryRepository {
     _accountsSubscription = _accountRepository
         .watchFinancialAccounts(includeArchived: true)
         .listen(_onAccounts);
@@ -40,6 +43,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
+  final CategoryRepository _categoryRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
   StreamSubscription<List<JournalEntry>>? _entriesSubscription;
@@ -194,7 +198,9 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _selectedAccountId = (active.isNotEmpty ? active : accounts).first.id;
       _resubscribeEntries();
     }
-    _ledgerRepository.watchCategories(includeArchived: true).first.then((cats) {
+    _categoryRepository.watchCategories(includeArchived: true).first.then((
+      cats,
+    ) {
       _categoriesById = {for (final c in cats) c.id: c};
       _recompute(_lastEntries);
     });

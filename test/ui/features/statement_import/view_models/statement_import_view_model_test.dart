@@ -5,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/csv/csv_column_mapping.dart';
@@ -140,6 +142,8 @@ void main() {
   late AppDatabase db;
   late LedgerRepository ledgerRepository;
   late AccountRepository accountRepository;
+  late CategoryRepository categoryRepository;
+  late PayeeRepository payeeRepository;
   late StatementImportRepository importRepository;
   late String accountId;
 
@@ -155,10 +159,13 @@ void main() {
       database: db,
       ledgerRepository: ledgerRepository,
     );
+    categoryRepository = CategoryRepository(database: db);
+    payeeRepository = PayeeRepository(database: db);
     importRepository = StatementImportRepository(
       database: db,
       ledgerRepository: ledgerRepository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
     );
     final generated = await ledgerRepository.generateFirstIdentity();
     await ledgerRepository.confirmFirstIdentity(generated, currency: 'USD');
@@ -179,7 +186,7 @@ void main() {
     );
     await viewModel.selectAccount(accountId);
 
-    final categories = await ledgerRepository.watchCategories().first;
+    final categories = await categoryRepository.watchCategories().first;
     final expenseCategoryId = categories
         .firstWhere((c) => c.type == AccountType.expense)
         .id;
@@ -205,8 +212,9 @@ void main() {
       // First import: three fresh rows, none flagged as duplicates.
       final firstImport = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
       );
       addTearDown(firstImport.dispose);
       await importFileAndCategorizeAllRows(firstImport);
@@ -237,8 +245,9 @@ void main() {
       // default (spec: "Preview and Duplicate Detection Before Posting").
       final secondImport = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
       );
       addTearDown(secondImport.dispose);
       await importFileAndCategorizeAllRows(secondImport);
@@ -266,8 +275,9 @@ void main() {
     () async {
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
         initialFinancialAccountId: accountId,
       );
       addTearDown(viewModel.dispose);
@@ -290,7 +300,7 @@ void main() {
     'in the register, and re-importing the same file auto-offers the saved '
     'profile and flags every row as a duplicate',
     () async {
-      final categories = await ledgerRepository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final expenseCategoryId = categories
           .firstWhere((c) => c.type == AccountType.expense)
           .id;
@@ -301,8 +311,9 @@ void main() {
       // First import: no saved profile yet, so mapping columns by hand.
       final firstImport = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
       );
       addTearDown(firstImport.dispose);
       firstImport.chooseSource(StatementSource.csv);
@@ -361,8 +372,9 @@ void main() {
       // no reference-id column).
       final secondImport = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
       );
       addTearDown(secondImport.dispose);
       secondImport.chooseSource(StatementSource.csv);
@@ -399,7 +411,7 @@ void main() {
     test(
       'a saved rule wins over an exact-memo match to a different category',
       () async {
-        final categories = await ledgerRepository.watchCategories().first;
+        final categories = await categoryRepository.watchCategories().first;
         final groceries = categories.firstWhere(
           (c) => c.type == AccountType.expense && c.name == 'Groceries',
         );
@@ -425,8 +437,9 @@ void main() {
 
         final viewModel = StatementImportViewModel(
           importRepository: importRepository,
-          ledgerRepository: ledgerRepository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
+          payeeRepository: payeeRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -444,7 +457,7 @@ void main() {
     );
 
     test('falls back to the exact-memo match when no rule matches', () async {
-      final categories = await ledgerRepository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final groceries = categories.firstWhere(
         (c) => c.type == AccountType.expense && c.name == 'Groceries',
       );
@@ -460,8 +473,9 @@ void main() {
 
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -482,8 +496,9 @@ void main() {
       () async {
         final viewModel = StatementImportViewModel(
           importRepository: importRepository,
-          ledgerRepository: ledgerRepository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
+          payeeRepository: payeeRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -506,8 +521,9 @@ void main() {
         'unique description gets its own single-row group', () async {
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -538,15 +554,16 @@ void main() {
     test(
       'setCategoryForGroup sets the category on every row in the group',
       () async {
-        final categories = await ledgerRepository.watchCategories().first;
+        final categories = await categoryRepository.watchCategories().first;
         final groceries = categories.firstWhere(
           (c) => c.type == AccountType.expense && c.name == 'Groceries',
         );
 
         final viewModel = StatementImportViewModel(
           importRepository: importRepository,
-          ledgerRepository: ledgerRepository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
+          payeeRepository: payeeRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -571,15 +588,16 @@ void main() {
 
   group('saving a category rule from the view model', () {
     test('a saved rule is picked up by a later import', () async {
-      final categories = await ledgerRepository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final groceries = categories.firstWhere(
         (c) => c.type == AccountType.expense && c.name == 'Groceries',
       );
 
       final firstImport = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
       );
       addTearDown(firstImport.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -590,8 +608,9 @@ void main() {
 
       final secondImport = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
       );
       addTearDown(secondImport.dispose);
       await Future<void>.delayed(Duration.zero);

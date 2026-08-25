@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../data/instrument_quote_refresh.dart';
 import '../../../../data/repositories/account_repository.dart';
+import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/investment_holdings_logic.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
@@ -26,6 +27,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   HoldingsViewModel({
     required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
+    required CategoryRepository categoryRepository,
     required SettingsRepository settingsRepository,
     required this.accountId,
     InstrumentQuoteRefresh? quoteRefresh,
@@ -33,6 +35,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     Future<void> Function(String text)? copyTextFn,
   }) : _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
+       _categoryRepository = categoryRepository,
        _settingsRepository = settingsRepository,
        _quoteRefresh =
            quoteRefresh ??
@@ -72,7 +75,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
           _heldInstruments = instruments;
           notifyListeners();
         });
-    _categoriesSub = _ledgerRepository.watchCategories().listen((categories) {
+    _categoriesSub = _categoryRepository.watchCategories().listen((categories) {
       _categories = categories;
       notifyListeners();
     });
@@ -91,6 +94,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
+  final CategoryRepository _categoryRepository;
   final SettingsRepository _settingsRepository;
   final InstrumentQuoteRefresh _quoteRefresh;
   final Future<bool> Function(Uri url) _launchUrl;

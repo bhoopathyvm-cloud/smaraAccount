@@ -8,6 +8,7 @@ import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
     show ImportSource;
 import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -24,6 +25,7 @@ void main() {
   late AppDatabase db;
   late LedgerRepository ledgerRepository;
   late AccountRepository accountRepository;
+  late CategoryRepository categoryRepository;
   late StatementImportRepository importRepository;
   late String accountId;
   late String otherAccountId;
@@ -41,10 +43,12 @@ void main() {
       database: db,
       ledgerRepository: ledgerRepository,
     );
+    categoryRepository = CategoryRepository(database: db);
     importRepository = StatementImportRepository(
       database: db,
       ledgerRepository: ledgerRepository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
     );
 
     final generated = await ledgerRepository.generateFirstIdentity();
@@ -61,7 +65,7 @@ void main() {
     );
     otherAccountId = otherAccount.id;
 
-    final category = (await ledgerRepository.watchCategories().first).first;
+    final category = (await categoryRepository.watchCategories().first).first;
     await ledgerRepository.recordTransaction(
       amountMinor: 100,
       direction: TransactionDirection.moneyOut,
@@ -218,7 +222,8 @@ void main() {
     test(
       'returns the category most recently used for an exact-memo match',
       () async {
-        final category = (await ledgerRepository.watchCategories().first).first;
+        final category =
+            (await categoryRepository.watchCategories().first).first;
         await ledgerRepository.recordTransaction(
           amountMinor: 250,
           direction: TransactionDirection.moneyOut,
@@ -251,7 +256,8 @@ void main() {
     test(
       'posts a valid row and records it for future duplicate detection',
       () async {
-        final category = (await ledgerRepository.watchCategories().first).first;
+        final category =
+            (await categoryRepository.watchCategories().first).first;
         final row = transaction(fitid: 'POST-1', description: 'New Row');
 
         final result = await importRepository.postAcceptedRows(
@@ -276,7 +282,8 @@ void main() {
     test(
       'one row failing to post does not block the others, and the failed row is not recorded',
       () async {
-        final category = (await ledgerRepository.watchCategories().first).first;
+        final category =
+            (await categoryRepository.watchCategories().first).first;
         final badRow = ParsedStatementTransaction(
           transactionDate: DateTime(2026, 1, 6),
           amountMinor: 0,
@@ -312,7 +319,8 @@ void main() {
     test(
       'a same-currency row posts one complete entry with no pending transfer',
       () async {
-        final category = (await ledgerRepository.watchCategories().first).first;
+        final category =
+            (await categoryRepository.watchCategories().first).first;
         final row = transaction(
           fitid: 'SAME-CCY',
           description: 'Same currency row',
@@ -338,7 +346,8 @@ void main() {
     test(
       'a foreign-currency row posts through the existing provisional-entry path',
       () async {
-        final category = (await ledgerRepository.watchCategories().first).first;
+        final category =
+            (await categoryRepository.watchCategories().first).first;
         final row = ParsedStatementTransaction(
           transactionDate: DateTime(2026, 1, 7),
           amountMinor: 4321,
@@ -446,7 +455,7 @@ void main() {
 
   group('category rules', () {
     test('a saved rule appears in watchCategoryRules()', () async {
-      final category = (await ledgerRepository.watchCategories().first).first;
+      final category = (await categoryRepository.watchCategories().first).first;
 
       await importRepository.saveCategoryRule(
         keyword: 'AMAZON',
@@ -460,7 +469,7 @@ void main() {
     });
 
     test('update changes the keyword and category', () async {
-      final categories = await ledgerRepository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final originalCategory = categories.first;
       final newCategory = categories.last;
       await importRepository.saveCategoryRule(
@@ -482,7 +491,7 @@ void main() {
     });
 
     test('delete removes the rule', () async {
-      final category = (await ledgerRepository.watchCategories().first).first;
+      final category = (await categoryRepository.watchCategories().first).first;
       await importRepository.saveCategoryRule(
         keyword: 'AMAZON',
         categoryId: category.id,

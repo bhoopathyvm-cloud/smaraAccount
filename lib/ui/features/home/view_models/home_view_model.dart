@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/instrument_quote_refresh.dart';
+import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/models/account.dart';
@@ -14,9 +15,11 @@ import '../../../../domain/models/summary.dart';
 class HomeViewModel extends ChangeNotifier {
   HomeViewModel({
     required LedgerRepository ledgerRepository,
+    required CategoryRepository categoryRepository,
     SettingsRepository? settingsRepository,
     InstrumentQuoteRefresh? quoteRefresh,
   }) : _ledgerRepository = ledgerRepository,
+       _categoryRepository = categoryRepository,
        _quoteRefresh =
            quoteRefresh ??
            (settingsRepository == null
@@ -33,7 +36,7 @@ class HomeViewModel extends ChangeNotifier {
     final now = DateTime.now();
     final firstOfMonth = DateTime(now.year, now.month, 1);
     final lastOfMonth = DateTime(now.year, now.month + 1, 0);
-    _categoryTotalsSubscription = _ledgerRepository
+    _categoryTotalsSubscription = _categoryRepository
         .watchCategoryTotals(start: firstOfMonth, end: lastOfMonth)
         .listen((totals) {
           _categoryTotals = totals;
@@ -48,7 +51,7 @@ class HomeViewModel extends ChangeNotifier {
     // monthly-category-limits: additive surfacing on this section, if it
     // exists (design.md Decision 2) - just enough of watchCategories to
     // look up a limited Expense category's limit by id.
-    _categoriesSubscription = _ledgerRepository.watchCategories().listen((
+    _categoriesSubscription = _categoryRepository.watchCategories().listen((
       categories,
     ) {
       _limitByCategoryId = {
@@ -72,6 +75,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   final LedgerRepository _ledgerRepository;
+  final CategoryRepository _categoryRepository;
   final InstrumentQuoteRefresh? _quoteRefresh;
   late final StreamSubscription<HomeOverview> _subscription;
   late final StreamSubscription<List<CategoryTotal>>

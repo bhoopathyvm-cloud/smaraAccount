@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
@@ -28,7 +30,14 @@ void main() {
 
   File fileNamed(String name) => File(p.join(tempDir.path, name));
 
-  Future<({LedgerRepository repository, AccountRepository accountRepository})>
+  Future<
+    ({
+      LedgerRepository repository,
+      AccountRepository accountRepository,
+      CategoryRepository categoryRepository,
+      LedgerBackupRepository ledgerBackupRepository,
+    })
+  >
   openRepository(File file) async {
     final db = AppDatabase.openFile(file);
     final repository = LedgerRepository(
@@ -43,10 +52,22 @@ void main() {
         database: db,
         ledgerRepository: repository,
       ),
+      categoryRepository: CategoryRepository(database: db),
+      ledgerBackupRepository: LedgerBackupRepository(
+        database: db,
+        ledgerRepository: repository,
+      ),
     );
   }
 
-  Future<({LedgerRepository repository, AccountRepository accountRepository})>
+  Future<
+    ({
+      LedgerRepository repository,
+      AccountRepository accountRepository,
+      CategoryRepository categoryRepository,
+      LedgerBackupRepository ledgerBackupRepository,
+    })
+  >
   seedRepository(File file) async {
     final opened = await openRepository(file);
     final repository = opened.repository;
@@ -54,7 +75,8 @@ void main() {
     await repository.confirmFirstIdentity(generated, currency: 'USD');
     final account =
         (await opened.accountRepository.watchFinancialAccounts().first).first;
-    final category = (await repository.watchCategories().first).first;
+    final category =
+        (await opened.categoryRepository.watchCategories().first).first;
     await repository.recordTransaction(
       amountMinor: 5000,
       direction: TransactionDirection.moneyIn,
@@ -70,17 +92,19 @@ void main() {
     'state, fully verified, but not writable until the key is also restored',
     () async {
       final sourceFile = fileNamed('source.sqlite');
-      final source = (await seedRepository(sourceFile)).repository;
+      final sourceOpened = await seedRepository(sourceFile);
+      final source = sourceOpened.repository;
 
-      final backupContents = await source.exportLedgerBackup(
-        passphrase: 'correct horse battery staple',
-        databaseFile: sourceFile,
-      );
+      final backupContents = await sourceOpened.ledgerBackupRepository
+          .exportLedgerBackup(
+            passphrase: 'correct horse battery staple',
+            databaseFile: sourceFile,
+          );
       await source.close();
 
       final targetFile = fileNamed('target.sqlite');
-      final freshDevice = (await openRepository(targetFile)).repository;
-      await freshDevice.restoreLedgerBackup(
+      final freshDeviceOpened = await openRepository(targetFile);
+      await freshDeviceOpened.ledgerBackupRepository.restoreLedgerBackup(
         fileContents: backupContents,
         passphrase: 'correct horse battery staple',
         targetFile: targetFile,
@@ -113,7 +137,9 @@ void main() {
                   .watchFinancialAccounts()
                   .first)
               .first;
-      final category = (await restored.watchCategories().first).first;
+      final category =
+          (await restoredOpened.categoryRepository.watchCategories().first)
+              .first;
       await expectLater(
         restored.recordTransaction(
           amountMinor: 100,
@@ -132,19 +158,20 @@ void main() {
     "device's own active identity, and the target file is left untouched",
     () async {
       final sourceFile = fileNamed('source.sqlite');
-      final source = (await seedRepository(sourceFile)).repository;
-      final backupContents = await source.exportLedgerBackup(
-        passphrase: 'passphrase-a',
-        databaseFile: sourceFile,
-      );
-      await source.close();
+      final sourceOpened = await seedRepository(sourceFile);
+      final backupContents = await sourceOpened.ledgerBackupRepository
+          .exportLedgerBackup(
+            passphrase: 'passphrase-a',
+            databaseFile: sourceFile,
+          );
+      await sourceOpened.repository.close();
 
       final targetFile = fileNamed('target.sqlite');
-      final alreadySetUp = (await seedRepository(targetFile)).repository;
+      final alreadySetUpOpened = await seedRepository(targetFile);
       final targetBytesBefore = await targetFile.readAsBytes();
 
       await expectLater(
-        alreadySetUp.restoreLedgerBackup(
+        alreadySetUpOpened.ledgerBackupRepository.restoreLedgerBackup(
           fileContents: backupContents,
           passphrase: 'passphrase-a',
           targetFile: targetFile,
@@ -160,18 +187,19 @@ void main() {
   test('restore fails cleanly on the wrong passphrase, with no partial '
       'replacement', () async {
     final sourceFile = fileNamed('source.sqlite');
-    final source = (await seedRepository(sourceFile)).repository;
-    final backupContents = await source.exportLedgerBackup(
-      passphrase: 'the-real-passphrase',
-      databaseFile: sourceFile,
-    );
-    await source.close();
+    final sourceOpened = await seedRepository(sourceFile);
+    final backupContents = await sourceOpened.ledgerBackupRepository
+        .exportLedgerBackup(
+          passphrase: 'the-real-passphrase',
+          databaseFile: sourceFile,
+        );
+    await sourceOpened.repository.close();
 
     final targetFile = fileNamed('target.sqlite');
-    final freshDevice = (await openRepository(targetFile)).repository;
+    final freshDeviceOpened = await openRepository(targetFile);
 
     await expectLater(
-      freshDevice.restoreLedgerBackup(
+      freshDeviceOpened.ledgerBackupRepository.restoreLedgerBackup(
         fileContents: backupContents,
         passphrase: 'a-wrong-passphrase',
         targetFile: targetFile,
@@ -199,19 +227,20 @@ void main() {
     );
     await tamperDb.close();
 
-    final tampered = (await openRepository(sourceFile)).repository;
-    final backupContents = await tampered.exportLedgerBackup(
-      passphrase: 'passphrase-a',
-      databaseFile: sourceFile,
-    );
-    await tampered.close();
+    final tamperedOpened = await openRepository(sourceFile);
+    final backupContents = await tamperedOpened.ledgerBackupRepository
+        .exportLedgerBackup(
+          passphrase: 'passphrase-a',
+          databaseFile: sourceFile,
+        );
+    await tamperedOpened.repository.close();
 
     final targetFile = fileNamed('target.sqlite');
-    final alreadySetUp = (await seedRepository(targetFile)).repository;
+    final alreadySetUpOpened = await seedRepository(targetFile);
     final targetBytesBefore = await targetFile.readAsBytes();
 
     await expectLater(
-      alreadySetUp.restoreLedgerBackup(
+      alreadySetUpOpened.ledgerBackupRepository.restoreLedgerBackup(
         fileContents: backupContents,
         passphrase: 'passphrase-a',
         targetFile: targetFile,
@@ -225,12 +254,10 @@ void main() {
 
   test('exportLedgerBackup never includes the private key material', () async {
     final sourceFile = fileNamed('source.sqlite');
-    final source = (await seedRepository(sourceFile)).repository;
-    final backupContents = await source.exportLedgerBackup(
-      passphrase: 'p',
-      databaseFile: sourceFile,
-    );
-    await source.close();
+    final sourceOpened = await seedRepository(sourceFile);
+    final backupContents = await sourceOpened.ledgerBackupRepository
+        .exportLedgerBackup(passphrase: 'p', databaseFile: sourceFile);
+    await sourceOpened.repository.close();
 
     // The backup's ciphertext is opaque without the passphrase, but the
     // JSON envelope around it must never itself carry key material -

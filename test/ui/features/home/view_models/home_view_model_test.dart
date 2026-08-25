@@ -11,9 +11,11 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockCategoryRepository categoryRepository;
 
   setUp(() {
     repository = MockLedgerRepository();
+    categoryRepository = MockCategoryRepository();
     when(repository.watchHomeOverview()).thenAnswer(
       (_) => Stream.value(
         const HomeOverview(
@@ -28,7 +30,7 @@ void main() {
   test('splits category totals into expense (Spent) and income (Received), '
       'each sorted highest total first', () async {
     when(
-      repository.watchCategoryTotals(
+      categoryRepository.watchCategoryTotals(
         start: anyNamed('start'),
         end: anyNamed('end'),
       ),
@@ -55,7 +57,10 @@ void main() {
       ]),
     );
 
-    final viewModel = HomeViewModel(ledgerRepository: repository);
+    final viewModel = HomeViewModel(
+      ledgerRepository: repository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
     await Future<void>.delayed(Duration.zero);
 
@@ -74,7 +79,7 @@ void main() {
     DateTime? capturedStart;
     DateTime? capturedEnd;
     when(
-      repository.watchCategoryTotals(
+      categoryRepository.watchCategoryTotals(
         start: anyNamed('start'),
         end: anyNamed('end'),
       ),
@@ -84,7 +89,10 @@ void main() {
       return Stream.value(const []);
     });
 
-    final viewModel = HomeViewModel(ledgerRepository: repository);
+    final viewModel = HomeViewModel(
+      ledgerRepository: repository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
     await Future<void>.delayed(Duration.zero);
 
@@ -97,13 +105,16 @@ void main() {
     'no categories with activity this month means both lists are empty',
     () async {
       when(
-        repository.watchCategoryTotals(
+        categoryRepository.watchCategoryTotals(
           start: anyNamed('start'),
           end: anyNamed('end'),
         ),
       ).thenAnswer((_) => Stream.value(const []));
 
-      final viewModel = HomeViewModel(ledgerRepository: repository);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -131,7 +142,7 @@ void main() {
 
     test('exposes due templates from the repository', () async {
       when(
-        repository.watchCategoryTotals(
+        categoryRepository.watchCategoryTotals(
           start: anyNamed('start'),
           end: anyNamed('end'),
         ),
@@ -140,7 +151,10 @@ void main() {
         repository.watchDueRecurringTemplates(),
       ).thenAnswer((_) => Stream.value(const [due]));
 
-      final viewModel = HomeViewModel(ledgerRepository: repository);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -150,7 +164,7 @@ void main() {
 
     test('recordDueTemplate delegates to the Repository', () async {
       when(
-        repository.watchCategoryTotals(
+        categoryRepository.watchCategoryTotals(
           start: anyNamed('start'),
           end: anyNamed('end'),
         ),
@@ -162,7 +176,10 @@ void main() {
         repository.recordDueTemplate('template-1'),
       ).thenAnswer((_) async => 'entry-1');
 
-      final viewModel = HomeViewModel(ledgerRepository: repository);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
 
       await viewModel.recordDueTemplate('template-1');
@@ -174,12 +191,12 @@ void main() {
   group('monthly-category-limits', () {
     test('monthlyLimitFor reads a limited Expense category\'s limit', () async {
       when(
-        repository.watchCategoryTotals(
+        categoryRepository.watchCategoryTotals(
           start: anyNamed('start'),
           end: anyNamed('end'),
         ),
       ).thenAnswer((_) => Stream.value(const []));
-      when(repository.watchCategories()).thenAnswer(
+      when(categoryRepository.watchCategories()).thenAnswer(
         (_) => Stream.value(const [
           Account(
             id: 'expense-1',
@@ -197,7 +214,10 @@ void main() {
         ]),
       );
 
-      final viewModel = HomeViewModel(ledgerRepository: repository);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 

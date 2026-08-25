@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/account_repository.dart';
+import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -20,8 +21,10 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
   RecurringTemplateManagementViewModel({
     required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
+    required CategoryRepository categoryRepository,
   }) : _ledgerRepository = ledgerRepository,
-       _accountRepository = accountRepository {
+       _accountRepository = accountRepository,
+       _categoryRepository = categoryRepository {
     _templatesSubscription = _ledgerRepository.watchRecurringTemplates().listen(
       (templates) {
         _templates = templates;
@@ -40,7 +43,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
           _groups = groups;
           notifyListeners();
         });
-    _categoriesSubscription = _ledgerRepository.watchCategories().listen((
+    _categoriesSubscription = _categoryRepository.watchCategories().listen((
       categories,
     ) {
       _categories = categories;
@@ -50,6 +53,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
 
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
+  final CategoryRepository _categoryRepository;
   late final StreamSubscription<List<RecurringTemplate>> _templatesSubscription;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<AccountGroup>> _groupsSubscription;

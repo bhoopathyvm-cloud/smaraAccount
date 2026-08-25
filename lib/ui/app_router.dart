@@ -3,7 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/repositories/account_repository.dart';
+import '../data/repositories/category_repository.dart';
+import '../data/repositories/ledger_backup_repository.dart';
 import '../data/repositories/ledger_repository.dart';
+import '../data/repositories/payee_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/statement_import_repository.dart';
 import '../l10n/l10n.dart';
@@ -110,6 +113,9 @@ const _lockPath = '/lock';
 GoRouter buildAppRouter(
   LedgerRepository ledgerRepository,
   AccountRepository accountRepository,
+  CategoryRepository categoryRepository,
+  PayeeRepository payeeRepository,
+  LedgerBackupRepository ledgerBackupRepository,
   StatementImportRepository statementImportRepository,
   SettingsRepository settingsRepository,
   AppLockController appLockController,
@@ -219,6 +225,8 @@ GoRouter buildAppRouter(
           viewModel: RecordTransactionViewModel(
             ledgerRepository: ledgerRepository,
             accountRepository: accountRepository,
+            categoryRepository: categoryRepository,
+            payeeRepository: payeeRepository,
           ),
           onSaved: () => context.go('/onboarding/recovery-phrase'),
         ),
@@ -286,6 +294,8 @@ GoRouter buildAppRouter(
           viewModel: RecordTransactionViewModel(
             ledgerRepository: ledgerRepository,
             accountRepository: accountRepository,
+            categoryRepository: categoryRepository,
+            payeeRepository: payeeRepository,
             initialFinancialAccountId: state.uri.queryParameters['accountId'],
             initialDirection: _directionFromQueryParam(
               state.uri.queryParameters['direction'],
@@ -300,6 +310,7 @@ GoRouter buildAppRouter(
           viewModel: TransferViewModel(
             ledgerRepository: ledgerRepository,
             accountRepository: accountRepository,
+            categoryRepository: categoryRepository,
             initialFromAccountId: state.uri.queryParameters['fromAccountId'],
             // credit-card-household-flow: "Pay card" pre-fills the
             // destination via this query param; the ordinary transfer
@@ -314,8 +325,9 @@ GoRouter buildAppRouter(
         builder: (context, state) => StatementImportView(
           viewModel: StatementImportViewModel(
             importRepository: statementImportRepository,
-            ledgerRepository: ledgerRepository,
             accountRepository: accountRepository,
+            categoryRepository: categoryRepository,
+            payeeRepository: payeeRepository,
             initialFinancialAccountId: state.uri.queryParameters['accountId'],
           ),
           onFinished: () => context.pop(),
@@ -328,6 +340,7 @@ GoRouter buildAppRouter(
           state,
           ledgerRepository,
           accountRepository,
+          categoryRepository,
         ),
       ),
       GoRoute(
@@ -355,6 +368,7 @@ GoRouter buildAppRouter(
             viewModel: HoldingsViewModel(
               ledgerRepository: ledgerRepository,
               accountRepository: accountRepository,
+              categoryRepository: categoryRepository,
               settingsRepository: settingsRepository,
               accountId: accountId,
             ),
@@ -369,7 +383,7 @@ GoRouter buildAppRouter(
         builder: (context, state) => SettingsView(
           viewModel: SettingsViewModel(
             settingsRepository: settingsRepository,
-            ledgerRepository: ledgerRepository,
+            ledgerBackupRepository: ledgerBackupRepository,
             appLockService: AppLockService(),
             biometricAuthenticator: LocalAuthBiometricAuthenticator(),
             appLockController: appLockController,
@@ -547,11 +561,13 @@ CorrectionView _buildFixEntry(
   LedgerRepository ledgerRepository,
 ) {
   final accountRepository = context.read<AccountRepository>();
+  final categoryRepository = context.read<CategoryRepository>();
   final extra = state.extra! as ({RegisterRow row, String financialAccountId});
   return CorrectionView(
     viewModel: CorrectionViewModel(
       ledgerRepository: ledgerRepository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       entryId: extra.row.entryId,
       initialAmountMinor: extra.row.amountMinor,
       initialDirection: extra.row.direction,
@@ -574,6 +590,7 @@ Widget _buildSettlePendingTransfer(
   GoRouterState state,
   LedgerRepository ledgerRepository,
   AccountRepository accountRepository,
+  CategoryRepository categoryRepository,
 ) {
   final pendingTransferId = state.pathParameters['pendingTransferId'];
   final pendingTransfers =
@@ -592,6 +609,7 @@ Widget _buildSettlePendingTransfer(
     viewModel: SettlePendingTransferViewModel(
       ledgerRepository: ledgerRepository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       summary: summary,
     ),
     onSaved: () => context.pop(),

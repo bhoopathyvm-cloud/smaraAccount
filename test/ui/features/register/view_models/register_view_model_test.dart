@@ -14,6 +14,7 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockLedgerRepository repository;
   late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
 
   const income = Account(
     id: 'income-1',
@@ -32,6 +33,7 @@ void main() {
   setUp(() {
     repository = MockLedgerRepository();
     accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     when(
       accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
@@ -67,7 +69,9 @@ void main() {
 
   test('computes rows with running balance, newest entry first', () async {
     when(
-      repository.watchCategories(includeArchived: anyNamed('includeArchived')),
+      categoryRepository.watchCategories(
+        includeArchived: anyNamed('includeArchived'),
+      ),
     ).thenAnswer((_) => Stream.value([income]));
     when(repository.watchEntriesForAccount(any)).thenAnswer(
       (_) => Stream.value([
@@ -117,6 +121,7 @@ void main() {
     final viewModel = RegisterViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
     );
     addTearDown(viewModel.dispose);
     // Stream.value(...) emits asynchronously (via a microtask), not
@@ -136,7 +141,7 @@ void main() {
     'a quarantined entry is shown but excluded from the running balance',
     () async {
       when(
-        repository.watchCategories(
+        categoryRepository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([income]));
@@ -189,6 +194,7 @@ void main() {
       final viewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -206,7 +212,9 @@ void main() {
   test('a migration-superseded entry is shown, labeled, and excluded from the '
       'running balance', () async {
     when(
-      repository.watchCategories(includeArchived: anyNamed('includeArchived')),
+      categoryRepository.watchCategories(
+        includeArchived: anyNamed('includeArchived'),
+      ),
     ).thenAnswer((_) => Stream.value([income]));
     when(repository.watchEntriesForAccount(any)).thenAnswer(
       (_) => Stream.value([
@@ -257,6 +265,7 @@ void main() {
     final viewModel = RegisterViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
     );
     addTearDown(viewModel.dispose);
     await Future<void>.delayed(Duration.zero);
@@ -275,7 +284,7 @@ void main() {
     'a newly recorded entry appears first, with the account\'s current balance',
     () async {
       when(
-        repository.watchCategories(
+        categoryRepository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([income]));
@@ -288,6 +297,7 @@ void main() {
       final viewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(viewModel.dispose);
 
@@ -361,7 +371,7 @@ void main() {
       'true for an ordinary, verified, non-reversal category transaction',
       () async {
         when(
-          repository.watchCategories(
+          categoryRepository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value([income]));
@@ -393,6 +403,7 @@ void main() {
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -410,7 +421,7 @@ void main() {
           ),
         ).thenAnswer((_) => Stream.value([asset, otherAsset]));
         when(
-          repository.watchCategories(
+          categoryRepository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value([income]));
@@ -442,6 +453,7 @@ void main() {
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -452,7 +464,7 @@ void main() {
 
     test('false for a quarantined (unverified) entry', () async {
       when(
-        repository.watchCategories(
+        categoryRepository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([income]));
@@ -485,6 +497,7 @@ void main() {
       final viewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -494,7 +507,7 @@ void main() {
 
     test('false for an original that already has a reversal posted', () async {
       when(
-        repository.watchCategories(
+        categoryRepository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([income]));
@@ -547,6 +560,7 @@ void main() {
       final viewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -572,7 +586,7 @@ void main() {
 
     Future<RegisterViewModel> viewModelWithThreeRows() async {
       when(
-        repository.watchCategories(
+        categoryRepository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([income, groceries, rent]));
@@ -644,6 +658,7 @@ void main() {
       final viewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       await Future<void>.delayed(Duration.zero);
       return viewModel;
@@ -767,7 +782,7 @@ void main() {
     test('the row label summarizes every category, and counterpartAccountIds '
         'lists all of them', () async {
       when(
-        repository.watchCategories(
+        categoryRepository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([groceries, household]));
@@ -778,6 +793,7 @@ void main() {
       final viewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -793,7 +809,7 @@ void main() {
 
     test('a split row is not offered a Fix tap target', () async {
       when(
-        repository.watchCategories(
+        categoryRepository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([groceries, household]));
@@ -804,6 +820,7 @@ void main() {
       final viewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -815,7 +832,7 @@ void main() {
       'an ordinary single-category row is unaffected: full name, one id, fixable',
       () async {
         when(
-          repository.watchCategories(
+          categoryRepository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value([income]));
@@ -847,6 +864,7 @@ void main() {
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
         );
         addTearDown(viewModel.dispose);
         await Future<void>.delayed(Duration.zero);
@@ -861,7 +879,9 @@ void main() {
 
   test('reverseEntry delegates to the Repository', () async {
     when(
-      repository.watchCategories(includeArchived: anyNamed('includeArchived')),
+      categoryRepository.watchCategories(
+        includeArchived: anyNamed('includeArchived'),
+      ),
     ).thenAnswer((_) => Stream.value([income]));
     when(
       repository.watchEntriesForAccount(any),
@@ -871,6 +891,7 @@ void main() {
     final viewModel = RegisterViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
     );
     addTearDown(viewModel.dispose);
 
@@ -901,7 +922,9 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([archivedAsset, other]));
     when(
-      repository.watchCategories(includeArchived: anyNamed('includeArchived')),
+      categoryRepository.watchCategories(
+        includeArchived: anyNamed('includeArchived'),
+      ),
     ).thenAnswer((_) => Stream.value([income]));
     when(
       repository.watchEntriesForAccount(any),
@@ -919,6 +942,7 @@ void main() {
     final viewModel = RegisterViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       initialAccountId: archivedAsset.id,
     );
     addTearDown(viewModel.dispose);
@@ -962,7 +986,7 @@ void main() {
       'exportCsv delegates to the Repository for the selected account',
       () async {
         when(
-          repository.watchCategories(
+          categoryRepository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value(const []));
@@ -983,6 +1007,7 @@ void main() {
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
           initialAccountId: 'asset-1',
         );
         addTearDown(viewModel.dispose);
@@ -1007,7 +1032,7 @@ void main() {
       'exportCsv surfaces an AccountGroupException as errorMessage',
       () async {
         when(
-          repository.watchCategories(
+          categoryRepository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value(const []));
@@ -1030,6 +1055,7 @@ void main() {
         final viewModel = RegisterViewModel(
           ledgerRepository: repository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
           initialAccountId: 'asset-1',
         );
         addTearDown(viewModel.dispose);

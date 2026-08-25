@@ -14,6 +14,7 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockLedgerRepository repository;
   late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
   late MockExchangeRateService exchangeRateService;
   late MockSettingsRepository settingsRepository;
 
@@ -21,6 +22,7 @@ void main() {
     return TransferViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       exchangeRateService: exchangeRateService,
       settingsRepository: settingsRepository,
       initialFromAccountId: initialFromAccountId,
@@ -70,6 +72,7 @@ void main() {
   setUp(() {
     repository = MockLedgerRepository();
     accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     when(
       accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
@@ -81,7 +84,7 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
     when(
-      repository.watchCategories(),
+      categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value(const []));
 
     exchangeRateService = MockExchangeRateService();

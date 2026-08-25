@@ -15,6 +15,7 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockLedgerRepository ledger;
   late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
   late MockSettingsRepository settings;
 
   const apple = Instrument(
@@ -57,6 +58,7 @@ void main() {
   setUp(() {
     ledger = MockLedgerRepository();
     accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     settings = MockSettingsRepository();
     when(
       accountRepository.watchFinancialAccounts(
@@ -70,7 +72,9 @@ void main() {
     when(
       ledger.watchInstrumentsHeldInAccount(any),
     ).thenAnswer((_) => Stream.value([apple]));
-    when(ledger.watchCategories()).thenAnswer((_) => Stream.value(const []));
+    when(
+      categoryRepository.watchCategories(),
+    ).thenAnswer((_) => Stream.value(const []));
     when(
       accountRepository.watchAccountGroups(),
     ).thenAnswer((_) => Stream.value([group]));
@@ -86,6 +90,7 @@ void main() {
     final viewModel = HoldingsViewModel(
       ledgerRepository: ledger,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       settingsRepository: settings,
       accountId: 'inv-1',
       launchUrlFn: (uri) async {
@@ -121,6 +126,7 @@ void main() {
       final viewModel = HoldingsViewModel(
         ledgerRepository: ledger,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
         settingsRepository: settings,
         accountId: 'inv-1',
         launchUrlFn: (uri) async {
@@ -175,6 +181,7 @@ void main() {
       final viewModel = HoldingsViewModel(
         ledgerRepository: ledger,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
         settingsRepository: settings,
         accountId: 'inv-1',
       );

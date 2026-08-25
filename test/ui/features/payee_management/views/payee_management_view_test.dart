@@ -8,12 +8,12 @@ import 'package:smara_accounting/ui/features/payee_management/views/payee_manage
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository repository;
+  late MockPayeeRepository repository;
 
   const starbucks = Payee(id: 'payee-1', name: 'Starbucks');
 
   setUp(() {
-    repository = MockLedgerRepository();
+    repository = MockPayeeRepository();
   });
 
   testWidgets('lists every payee; add opens a dialog that calls through', (
@@ -26,7 +26,7 @@ void main() {
       repository.createPayee(name: anyNamed('name')),
     ).thenAnswer((_) async => const Payee(id: 'payee-2', name: 'Landlord'));
 
-    final viewModel = PayeeManagementViewModel(ledgerRepository: repository);
+    final viewModel = PayeeManagementViewModel(payeeRepository: repository);
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -55,7 +55,7 @@ void main() {
       repository.renamePayee(id: anyNamed('id'), newName: anyNamed('newName')),
     ).thenAnswer((_) async {});
 
-    final viewModel = PayeeManagementViewModel(ledgerRepository: repository);
+    final viewModel = PayeeManagementViewModel(payeeRepository: repository);
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -85,7 +85,7 @@ void main() {
       ).thenAnswer((_) => Stream.value(const [starbucks]));
       when(repository.deletePayee(any)).thenAnswer((_) async {});
 
-      final viewModel = PayeeManagementViewModel(ledgerRepository: repository);
+      final viewModel = PayeeManagementViewModel(payeeRepository: repository);
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(
@@ -108,7 +108,7 @@ void main() {
   testWidgets('empty state when there are no payees', (tester) async {
     when(repository.watchPayees()).thenAnswer((_) => Stream.value(const []));
 
-    final viewModel = PayeeManagementViewModel(ledgerRepository: repository);
+    final viewModel = PayeeManagementViewModel(payeeRepository: repository);
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(

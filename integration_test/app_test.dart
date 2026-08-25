@@ -9,7 +9,10 @@ import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -83,6 +86,7 @@ void main() {
   late AppDatabase db;
   late LedgerRepository repository;
   late AccountRepository accountRepository;
+  late CategoryRepository categoryRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -96,6 +100,7 @@ void main() {
       database: db,
       ledgerRepository: repository,
     );
+    categoryRepository = CategoryRepository(database: db);
     // app_router.dart's redirect requires a confirmed AND acknowledged
     // signing identity, plus a completed first-week-setup wizard, before
     // /register (or any other main route) is reachable - these tests
@@ -155,7 +160,7 @@ void main() {
   testWidgets(
     'reversing a posted entry keeps the original and adds a new entry',
     (tester) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
@@ -171,6 +176,7 @@ void main() {
       final registerViewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(registerViewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -191,7 +197,7 @@ void main() {
   testWidgets(
     'archiving a category hides it from the picker but keeps history visible',
     (tester) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final salary = categories.firstWhere((a) => a.name == 'Salary');
       final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
@@ -201,14 +207,15 @@ void main() {
         financialAccountId: accounts.first.id,
         transactionDate: DateTime.now(),
       );
-      await repository.archiveCategory(salary.id);
+      await categoryRepository.archiveCategory(salary.id);
 
-      final pickerCategories = await repository.watchCategories().first;
+      final pickerCategories = await categoryRepository.watchCategories().first;
       expect(pickerCategories.any((a) => a.id == salary.id), isFalse);
 
       final registerViewModel = RegisterViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(registerViewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -245,7 +252,7 @@ void main() {
   testWidgets(
     'tamper detection: a mutated row is quarantined on restart and new activity re-anchors',
     (tester) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
@@ -319,7 +326,7 @@ void main() {
   testWidgets(
     'full cross-currency transfer lifecycle: provisional, pending on Home, then settled',
     (tester) async {
-      final incomeId = (await repository.watchCategories().first)
+      final incomeId = (await categoryRepository.watchCategories().first)
           .firstWhere((a) => a.type == AccountType.income)
           .id;
       final checkingId =
@@ -398,7 +405,7 @@ void main() {
   testWidgets('bounced transfer settled back to source with a retained fee', (
     tester,
   ) async {
-    final incomeId = (await repository.watchCategories().first)
+    final incomeId = (await categoryRepository.watchCategories().first)
         .firstWhere((a) => a.type == AccountType.income)
         .id;
     final checkingId =
@@ -611,7 +618,7 @@ void main() {
   testWidgets(
     'true key loss: migrating re-signs history under a new identity end to end',
     (tester) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
@@ -905,19 +912,30 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
     database: database,
     ledgerRepository: repository,
   );
+  final categoryRepository = CategoryRepository(database: database);
+  final payeeRepository = PayeeRepository(database: database);
+  final ledgerBackupRepository = LedgerBackupRepository(
+    database: database,
+    ledgerRepository: repository,
+  );
   final statementImportRepository = StatementImportRepository(
     database: database,
     ledgerRepository: repository,
     accountRepository: accountRepository,
+    categoryRepository: categoryRepository,
   );
   return MultiProvider(
     providers: [
       Provider<LedgerRepository>.value(value: repository),
       Provider<AccountRepository>.value(value: accountRepository),
+      Provider<CategoryRepository>.value(value: categoryRepository),
+      Provider<PayeeRepository>.value(value: payeeRepository),
+      Provider<LedgerBackupRepository>.value(value: ledgerBackupRepository),
       ChangeNotifierProvider(
         create: (_) => RegisterViewModel(
           ledgerRepository: repository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
         ),
       ),
       ChangeNotifierProvider(
@@ -928,7 +946,7 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
       ),
       ChangeNotifierProvider(
         create: (_) =>
-            CategoryManagementViewModel(ledgerRepository: repository),
+            CategoryManagementViewModel(categoryRepository: categoryRepository),
       ),
       ChangeNotifierProvider(
         create: (_) =>
@@ -938,7 +956,10 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
         create: (_) => RestoreIdentityViewModel(ledgerRepository: repository),
       ),
       ChangeNotifierProvider(
-        create: (_) => HomeViewModel(ledgerRepository: repository),
+        create: (_) => HomeViewModel(
+          ledgerRepository: repository,
+          categoryRepository: categoryRepository,
+        ),
       ),
       ChangeNotifierProvider(
         create: (_) =>
@@ -953,6 +974,9 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
           routerConfig: buildAppRouter(
             repository,
             accountRepository,
+            categoryRepository,
+            payeeRepository,
+            ledgerBackupRepository,
             statementImportRepository,
             settingsRepository,
             AppLockController(settingsRepository: settingsRepository),

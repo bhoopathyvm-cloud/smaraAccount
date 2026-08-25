@@ -16,6 +16,7 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockLedgerRepository repository;
   late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
   late MockExchangeRateService exchangeRateService;
   late MockSettingsRepository settingsRepository;
 
@@ -85,6 +86,7 @@ void main() {
     return TransferViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       exchangeRateService: exchangeRateService,
       settingsRepository: settingsRepository,
     );
@@ -93,6 +95,7 @@ void main() {
   setUp(() {
     repository = MockLedgerRepository();
     accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     when(
       accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
@@ -104,7 +107,7 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([usdGroup]));
     when(
-      repository.watchCategories(),
+      categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value([bankFees]));
 
     exchangeRateService = MockExchangeRateService();
@@ -667,6 +670,7 @@ void main() {
         final viewModel = TransferViewModel(
           ledgerRepository: repository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
           exchangeRateService: exchangeRateService,
           settingsRepository: settingsRepository,
           initialToAccountId: 'liability-1',
@@ -691,6 +695,7 @@ void main() {
         final viewModel = TransferViewModel(
           ledgerRepository: repository,
           accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
           exchangeRateService: exchangeRateService,
           settingsRepository: settingsRepository,
           initialToAccountId: 'no-such-account',

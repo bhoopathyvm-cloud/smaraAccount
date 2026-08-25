@@ -15,7 +15,7 @@ void main() {
   testWidgets(
     'archived categories stay visible without rename/archive actions',
     (tester) async {
-      final repository = MockLedgerRepository();
+      final repository = MockCategoryRepository();
       when(
         repository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
@@ -38,7 +38,7 @@ void main() {
       );
 
       final viewModel = CategoryManagementViewModel(
-        ledgerRepository: repository,
+        categoryRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -69,7 +69,7 @@ void main() {
   testWidgets('cancelling the archive confirmation does not archive', (
     tester,
   ) async {
-    final repository = MockLedgerRepository();
+    final repository = MockCategoryRepository();
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer(
@@ -83,7 +83,9 @@ void main() {
       ]),
     );
 
-    final viewModel = CategoryManagementViewModel(ledgerRepository: repository);
+    final viewModel = CategoryManagementViewModel(
+      categoryRepository: repository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -104,7 +106,7 @@ void main() {
   testWidgets('confirming the archive confirmation archives the category', (
     tester,
   ) async {
-    final repository = MockLedgerRepository();
+    final repository = MockCategoryRepository();
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer(
@@ -119,7 +121,9 @@ void main() {
     );
     when(repository.archiveCategory('income-1')).thenAnswer((_) async {});
 
-    final viewModel = CategoryManagementViewModel(ledgerRepository: repository);
+    final viewModel = CategoryManagementViewModel(
+      categoryRepository: repository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -154,7 +158,7 @@ void main() {
       'a limited category shows month-to-date progress; an unlimited one '
       'shows none',
       (tester) async {
-        final repository = MockLedgerRepository();
+        final repository = MockCategoryRepository();
         when(
           repository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
@@ -187,7 +191,7 @@ void main() {
         );
 
         final viewModel = CategoryManagementViewModel(
-          ledgerRepository: repository,
+          categoryRepository: repository,
         );
         addTearDown(viewModel.dispose);
 
@@ -204,7 +208,7 @@ void main() {
     testWidgets('spending past the limit shows a calm over-limit indication', (
       tester,
     ) async {
-      final repository = MockLedgerRepository();
+      final repository = MockCategoryRepository();
       when(
         repository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
@@ -227,7 +231,7 @@ void main() {
       );
 
       final viewModel = CategoryManagementViewModel(
-        ledgerRepository: repository,
+        categoryRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -242,7 +246,7 @@ void main() {
     testWidgets(
       'setting a limit through the dialog calls through to the repository',
       (tester) async {
-        final repository = MockLedgerRepository();
+        final repository = MockCategoryRepository();
         when(
           repository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
@@ -256,7 +260,7 @@ void main() {
         ).thenAnswer((_) async {});
 
         final viewModel = CategoryManagementViewModel(
-          ledgerRepository: repository,
+          categoryRepository: repository,
         );
         addTearDown(viewModel.dispose);
 
@@ -283,7 +287,7 @@ void main() {
     testWidgets('an Income category is never offered the limit action', (
       tester,
     ) async {
-      final repository = MockLedgerRepository();
+      final repository = MockCategoryRepository();
       when(
         repository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
@@ -300,7 +304,7 @@ void main() {
       );
 
       final viewModel = CategoryManagementViewModel(
-        ledgerRepository: repository,
+        categoryRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -318,7 +322,7 @@ void main() {
       'an archived category shows Restore, which calls through to the '
       'repository',
       (tester) async {
-        final repository = MockLedgerRepository();
+        final repository = MockCategoryRepository();
         when(
           repository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
@@ -336,7 +340,7 @@ void main() {
         when(repository.unarchiveCategory('income-2')).thenAnswer((_) async {});
 
         final viewModel = CategoryManagementViewModel(
-          ledgerRepository: repository,
+          categoryRepository: repository,
         );
         addTearDown(viewModel.dispose);
 

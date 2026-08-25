@@ -10,6 +10,7 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockLedgerRepository repository;
   late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
 
   const asset = Account(
     id: 'asset-1',
@@ -35,11 +36,12 @@ void main() {
       accountRepository.watchFinancialAccounts(),
     ).thenAnswer((_) => Stream.value([asset]));
     when(
-      repository.watchCategories(),
+      categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value([groceries, salary]));
     return CorrectionViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       entryId: 'entry-1',
       initialAmountMinor: 4500,
       initialDirection: TransactionDirection.moneyOut,
@@ -53,6 +55,7 @@ void main() {
   setUp(() {
     repository = MockLedgerRepository();
     accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
   });
 
   test('prefills every field from the original entry', () {

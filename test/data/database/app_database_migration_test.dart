@@ -6,7 +6,9 @@ import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
     show ImportSource;
 import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:sqlite3/sqlite3.dart' as sqlite3;
@@ -479,19 +481,19 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final categoryRepository = CategoryRepository(database: db);
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
-        final expenseId = (await repository.watchCategories().first)
+        final expenseId = (await categoryRepository.watchCategories().first)
             .firstWhere((a) => a.type == AccountType.expense)
             .id;
 
-        await repository.setCategoryMonthlyLimit(
+        await categoryRepository.setCategoryMonthlyLimit(
           id: expenseId,
           monthlyLimitMinor: 15000,
         );
-        final category = (await repository.watchCategories().first).firstWhere(
-          (a) => a.id == expenseId,
-        );
+        final category = (await categoryRepository.watchCategories().first)
+            .firstWhere((a) => a.id == expenseId);
         expect(category.monthlyLimitMinor, equals(15000));
       },
     );
@@ -518,11 +520,12 @@ void main() {
           database: db,
           ledgerRepository: repository,
         );
+        final categoryRepository = CategoryRepository(database: db);
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
         final accountId =
             (await accountRepository.watchFinancialAccounts().first).first.id;
-        final expenseId = (await repository.watchCategories().first)
+        final expenseId = (await categoryRepository.watchCategories().first)
             .firstWhere((a) => a.type == AccountType.expense)
             .id;
 
@@ -550,13 +553,8 @@ void main() {
         final payees = await db.select(db.payees).get();
         expect(payees, isEmpty);
 
-        final repository = LedgerRepository(
-          database: db,
-          signingKeyService: SigningKeyService(
-            secureStorage: InMemorySecureKeyStorage(),
-          ),
-        );
-        final created = await repository.createPayee(name: 'Starbucks');
+        final payeeRepository = PayeeRepository(database: db);
+        final created = await payeeRepository.createPayee(name: 'Starbucks');
         expect(created.name, equals('Starbucks'));
       },
     );
@@ -693,11 +691,13 @@ void main() {
           database: db,
           ledgerRepository: repository,
         );
+        final categoryRepository = CategoryRepository(database: db);
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
         final account =
             (await accountRepository.watchFinancialAccounts().first).first;
-        final category = (await repository.watchCategories().first).first;
+        final category =
+            (await categoryRepository.watchCategories().first).first;
         await repository.recordTransaction(
           amountMinor: 100,
           direction: TransactionDirection.moneyOut,
@@ -742,11 +742,12 @@ void main() {
         database: db,
         ledgerRepository: repository,
       );
+      final categoryRepository = CategoryRepository(database: db);
       final generated = await repository.generateFirstIdentity();
       await repository.confirmFirstIdentity(generated, currency: 'USD');
       final account =
           (await accountRepository.watchFinancialAccounts().first).first;
-      final category = (await repository.watchCategories().first).first;
+      final category = (await categoryRepository.watchCategories().first).first;
       await repository.recordTransaction(
         amountMinor: 100,
         direction: TransactionDirection.moneyOut,
@@ -805,11 +806,13 @@ void main() {
           database: db,
           ledgerRepository: repository,
         );
+        final categoryRepository = CategoryRepository(database: db);
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
         final account =
             (await accountRepository.watchFinancialAccounts().first).first;
-        final category = (await repository.watchCategories().first).first;
+        final category =
+            (await categoryRepository.watchCategories().first).first;
         await repository.recordTransaction(
           amountMinor: 100,
           direction: TransactionDirection.moneyOut,
@@ -865,11 +868,13 @@ void main() {
           database: db,
           ledgerRepository: repository,
         );
+        final categoryRepository = CategoryRepository(database: db);
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
         final account =
             (await accountRepository.watchFinancialAccounts().first).first;
-        final category = (await repository.watchCategories().first).first;
+        final category =
+            (await categoryRepository.watchCategories().first).first;
         await repository.recordTransaction(
           amountMinor: 100,
           direction: TransactionDirection.moneyOut,
@@ -1207,15 +1212,16 @@ void main() {
           database: db,
           ledgerRepository: repository,
         );
+        final categoryRepository = CategoryRepository(database: db);
 
         // The migration itself succeeds simply by opening the database
         // without throwing - exercised by this first query.
-        expect(await repository.watchCategories().first, isEmpty);
+        expect(await categoryRepository.watchCategories().first, isEmpty);
 
         final generated = await repository.generateFirstIdentity();
         await repository.confirmFirstIdentity(generated, currency: 'USD');
 
-        final categories = await repository.watchCategories().first;
+        final categories = await categoryRepository.watchCategories().first;
         final incomeId = categories
             .firstWhere((a) => a.type.name == 'income')
             .id;

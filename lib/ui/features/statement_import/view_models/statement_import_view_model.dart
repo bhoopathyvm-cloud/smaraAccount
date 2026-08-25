@@ -5,7 +5,8 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/database/tables/ofx_import_records_table.dart'
     show ImportSource;
 import '../../../../data/repositories/account_repository.dart';
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/category_repository.dart';
+import '../../../../data/repositories/payee_repository.dart';
 import '../../../../data/repositories/statement_import_repository.dart';
 import '../../../../domain/csv/csv_column_mapping.dart';
 import '../../../../domain/csv/csv_import_profile.dart';
@@ -70,12 +71,14 @@ class StatementImportRowGroup {
 class StatementImportViewModel extends ChangeNotifier {
   StatementImportViewModel({
     required StatementImportRepository importRepository,
-    required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
+    required CategoryRepository categoryRepository,
+    required PayeeRepository payeeRepository,
     String? initialFinancialAccountId,
   }) : _importRepository = importRepository,
-       _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
+       _categoryRepository = categoryRepository,
+       _payeeRepository = payeeRepository,
        _initialFinancialAccountId = initialFinancialAccountId {
     _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
@@ -83,7 +86,7 @@ class StatementImportViewModel extends ChangeNotifier {
       _accounts = accounts;
       notifyListeners();
     });
-    _categoriesSubscription = _ledgerRepository.watchCategories().listen((
+    _categoriesSubscription = _categoryRepository.watchCategories().listen((
       categories,
     ) {
       _categories = categories;
@@ -104,8 +107,9 @@ class StatementImportViewModel extends ChangeNotifier {
   }
 
   final StatementImportRepository _importRepository;
-  final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
+  final CategoryRepository _categoryRepository;
+  final PayeeRepository _payeeRepository;
   final String? _initialFinancialAccountId;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
@@ -556,7 +560,7 @@ class StatementImportViewModel extends ChangeNotifier {
     required String keyword,
     required String categoryId,
   }) {
-    return _ledgerRepository.findOrCreatePayeeByName(
+    return _payeeRepository.findOrCreatePayeeByName(
       name: keyword,
       defaultCategoryId: categoryId,
     );

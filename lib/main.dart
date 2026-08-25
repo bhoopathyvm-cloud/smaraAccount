@@ -3,7 +3,10 @@ import 'package:provider/provider.dart';
 
 import 'data/database/app_database.dart';
 import 'data/repositories/account_repository.dart';
+import 'data/repositories/category_repository.dart';
+import 'data/repositories/ledger_backup_repository.dart';
 import 'data/repositories/ledger_repository.dart';
+import 'data/repositories/payee_repository.dart';
 import 'data/repositories/settings_repository.dart';
 import 'data/repositories/statement_import_repository.dart';
 import 'l10n/l10n.dart';
@@ -45,6 +48,18 @@ class SmaraAccountingApp extends StatelessWidget {
             ledgerRepository: ledgerRepository,
           ),
         ),
+        ProxyProvider<AppDatabase, CategoryRepository>(
+          update: (_, db, _) => CategoryRepository(database: db),
+        ),
+        ProxyProvider<AppDatabase, PayeeRepository>(
+          update: (_, db, _) => PayeeRepository(database: db),
+        ),
+        ProxyProvider2<AppDatabase, LedgerRepository, LedgerBackupRepository>(
+          update: (_, db, ledgerRepository, _) => LedgerBackupRepository(
+            database: db,
+            ledgerRepository: ledgerRepository,
+          ),
+        ),
         Provider<SettingsRepository>(create: (_) => SettingsRepository()),
         ChangeNotifierProvider<LocaleController>(
           create: (context) {
@@ -60,34 +75,53 @@ class SmaraAccountingApp extends StatelessWidget {
             settingsRepository: context.read<SettingsRepository>(),
           ),
         ),
-        ProxyProvider3<
+        ProxyProvider4<
           AppDatabase,
           LedgerRepository,
           AccountRepository,
+          CategoryRepository,
           StatementImportRepository
         >(
-          update: (_, db, ledgerRepository, accountRepository, _) =>
-              StatementImportRepository(
+          update:
+              (
+                _,
+                db,
+                ledgerRepository,
+                accountRepository,
+                categoryRepository,
+                _,
+              ) => StatementImportRepository(
                 database: db,
                 ledgerRepository: ledgerRepository,
                 accountRepository: accountRepository,
+                categoryRepository: categoryRepository,
               ),
         ),
-        ChangeNotifierProxyProvider2<
+        ChangeNotifierProxyProvider3<
           LedgerRepository,
           AccountRepository,
+          CategoryRepository,
           RegisterViewModel
         >(
           create: (context) => RegisterViewModel(
             ledgerRepository: context.read<LedgerRepository>(),
             accountRepository: context.read<AccountRepository>(),
+            categoryRepository: context.read<CategoryRepository>(),
           ),
-          update: (_, repository, accountRepository, previous) =>
-              previous ??
-              RegisterViewModel(
-                ledgerRepository: repository,
-                accountRepository: accountRepository,
-              ),
+          update:
+              (
+                _,
+                repository,
+                accountRepository,
+                categoryRepository,
+                previous,
+              ) =>
+                  previous ??
+                  RegisterViewModel(
+                    ledgerRepository: repository,
+                    accountRepository: accountRepository,
+                    categoryRepository: categoryRepository,
+                  ),
         ),
         ChangeNotifierProxyProvider2<
           LedgerRepository,
@@ -106,15 +140,15 @@ class SmaraAccountingApp extends StatelessWidget {
               ),
         ),
         ChangeNotifierProxyProvider<
-          LedgerRepository,
+          CategoryRepository,
           CategoryManagementViewModel
         >(
           create: (context) => CategoryManagementViewModel(
-            ledgerRepository: context.read<LedgerRepository>(),
+            categoryRepository: context.read<CategoryRepository>(),
           ),
           update: (_, repository, previous) =>
               previous ??
-              CategoryManagementViewModel(ledgerRepository: repository),
+              CategoryManagementViewModel(categoryRepository: repository),
         ),
         ChangeNotifierProxyProvider<
           LedgerRepository,
@@ -135,20 +169,23 @@ class SmaraAccountingApp extends StatelessWidget {
               previous ??
               RestoreIdentityViewModel(ledgerRepository: repository),
         ),
-        ChangeNotifierProxyProvider2<
+        ChangeNotifierProxyProvider3<
           LedgerRepository,
           SettingsRepository,
+          CategoryRepository,
           HomeViewModel
         >(
           create: (context) => HomeViewModel(
             ledgerRepository: context.read<LedgerRepository>(),
             settingsRepository: context.read<SettingsRepository>(),
+            categoryRepository: context.read<CategoryRepository>(),
           ),
-          update: (_, repository, settings, previous) =>
+          update: (_, repository, settings, categoryRepository, previous) =>
               previous ??
               HomeViewModel(
                 ledgerRepository: repository,
                 settingsRepository: settings,
+                categoryRepository: categoryRepository,
               ),
         ),
         ChangeNotifierProxyProvider<
@@ -162,29 +199,38 @@ class SmaraAccountingApp extends StatelessWidget {
               previous ??
               AccountManagementViewModel(accountRepository: accountRepository),
         ),
-        ChangeNotifierProxyProvider<LedgerRepository, PayeeManagementViewModel>(
+        ChangeNotifierProxyProvider<PayeeRepository, PayeeManagementViewModel>(
           create: (context) => PayeeManagementViewModel(
-            ledgerRepository: context.read<LedgerRepository>(),
+            payeeRepository: context.read<PayeeRepository>(),
           ),
           update: (_, repository, previous) =>
-              previous ??
-              PayeeManagementViewModel(ledgerRepository: repository),
+              previous ?? PayeeManagementViewModel(payeeRepository: repository),
         ),
-        ChangeNotifierProxyProvider2<
+        ChangeNotifierProxyProvider3<
           LedgerRepository,
           AccountRepository,
+          CategoryRepository,
           RecurringTemplateManagementViewModel
         >(
           create: (context) => RecurringTemplateManagementViewModel(
             ledgerRepository: context.read<LedgerRepository>(),
             accountRepository: context.read<AccountRepository>(),
+            categoryRepository: context.read<CategoryRepository>(),
           ),
-          update: (_, repository, accountRepository, previous) =>
-              previous ??
-              RecurringTemplateManagementViewModel(
-                ledgerRepository: repository,
-                accountRepository: accountRepository,
-              ),
+          update:
+              (
+                _,
+                repository,
+                accountRepository,
+                categoryRepository,
+                previous,
+              ) =>
+                  previous ??
+                  RecurringTemplateManagementViewModel(
+                    ledgerRepository: repository,
+                    accountRepository: accountRepository,
+                    categoryRepository: categoryRepository,
+                  ),
         ),
       ],
       child: Builder(
@@ -194,6 +240,9 @@ class SmaraAccountingApp extends StatelessWidget {
           final router = buildAppRouter(
             context.read<LedgerRepository>(),
             context.read<AccountRepository>(),
+            context.read<CategoryRepository>(),
+            context.read<PayeeRepository>(),
+            context.read<LedgerBackupRepository>(),
             context.read<StatementImportRepository>(),
             context.read<SettingsRepository>(),
             appLockController,

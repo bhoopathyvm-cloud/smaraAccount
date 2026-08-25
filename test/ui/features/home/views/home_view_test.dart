@@ -15,6 +15,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockCategoryRepository categoryRepository;
 
   const cashGroup = AccountGroup(
     id: 'group-cash',
@@ -36,6 +37,7 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    categoryRepository = MockCategoryRepository();
   });
 
   testWidgets(
@@ -68,7 +70,10 @@ void main() {
         ),
       );
 
-      final viewModel = HomeViewModel(ledgerRepository: repository);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(
@@ -111,7 +116,10 @@ void main() {
       ),
     );
 
-    final viewModel = HomeViewModel(ledgerRepository: repository);
+    final viewModel = HomeViewModel(
+      ledgerRepository: repository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
     String? tappedAccountId;
 
@@ -168,7 +176,10 @@ void main() {
         ),
       );
 
-      final viewModel = HomeViewModel(ledgerRepository: repository);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
       String? settledId;
 
@@ -207,7 +218,10 @@ void main() {
       ),
     );
 
-    final viewModel = HomeViewModel(ledgerRepository: repository);
+    final viewModel = HomeViewModel(
+      ledgerRepository: repository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
     var spentTapped = false;
 
@@ -248,7 +262,7 @@ void main() {
       ),
     );
     when(
-      repository.watchCategoryTotals(
+      categoryRepository.watchCategoryTotals(
         start: anyNamed('start'),
         end: anyNamed('end'),
       ),
@@ -269,7 +283,10 @@ void main() {
       ]),
     );
 
-    final viewModel = HomeViewModel(ledgerRepository: repository);
+    final viewModel = HomeViewModel(
+      ledgerRepository: repository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -297,13 +314,16 @@ void main() {
       ),
     );
     when(
-      repository.watchCategoryTotals(
+      categoryRepository.watchCategoryTotals(
         start: anyNamed('start'),
         end: anyNamed('end'),
       ),
     ).thenAnswer((_) => Stream.value(const []));
 
-    final viewModel = HomeViewModel(ledgerRepository: repository);
+    final viewModel = HomeViewModel(
+      ledgerRepository: repository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -351,7 +371,10 @@ void main() {
         repository.recordDueTemplate('template-1'),
       ).thenAnswer((_) async => 'entry-1');
 
-      final viewModel = HomeViewModel(ledgerRepository: repository);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(
@@ -385,7 +408,10 @@ void main() {
       repository.watchDueRecurringTemplates(),
     ).thenAnswer((_) => Stream.value(const []));
 
-    final viewModel = HomeViewModel(ledgerRepository: repository);
+    final viewModel = HomeViewModel(
+      ledgerRepository: repository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -412,7 +438,7 @@ void main() {
         ),
       );
       when(
-        repository.watchCategoryTotals(
+        categoryRepository.watchCategoryTotals(
           start: anyNamed('start'),
           end: anyNamed('end'),
         ),
@@ -426,7 +452,7 @@ void main() {
           ),
         ]),
       );
-      when(repository.watchCategories()).thenAnswer(
+      when(categoryRepository.watchCategories()).thenAnswer(
         (_) => Stream.value(const [
           Account(
             id: 'expense-1',
@@ -438,7 +464,10 @@ void main() {
         ]),
       );
 
-      final viewModel = HomeViewModel(ledgerRepository: repository);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(

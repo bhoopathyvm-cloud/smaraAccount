@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:drift/drift.dart';
-import 'package:path/path.dart' as p;
 import 'package:uuid/uuid.dart';
 
-import '../../domain/backup/ledger_backup_file.dart';
 import '../../domain/crypto/entry_canonical_hash.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
@@ -18,15 +15,12 @@ import '../../domain/models/home_overview.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/journal_entry.dart';
 import '../../domain/money/currency_minor_units.dart';
-import '../../domain/models/payee.dart';
 import '../../domain/models/pending_transfer.dart';
 import '../../domain/models/recurring_template.dart';
 import '../../domain/models/posting.dart';
 import '../../domain/models/signing_identity.dart';
 import '../../domain/models/summary.dart';
 import '../../domain/models/transaction_direction.dart';
-import '../../domain/statement_import/category_rule.dart'
-    show normalizeDescription;
 import '../database/app_database.dart';
 import '../database/tables/account_groups_table.dart';
 import '../database/tables/accounts_table.dart';
@@ -477,146 +471,10 @@ class LedgerRepository {
     return row != null;
   }
 
-  // ---------------------------------------------------------------------
-  // Ledger backup/restore (spec: "User-Controlled Ledger Backup",
-  // "Restoring a Backup Replaces the Local Ledger").
-  // ---------------------------------------------------------------------
-
-  /// Encrypts the raw local database file under [passphrase] and returns
-  /// the backup file's contents, ready to write wherever the user chooses.
-  /// Includes `signing_identities` (public keys/metadata only - the
-  /// private key never leaves OS secure storage and is never part of this
-  /// file) alongside every ledger table, so a restored backup can be
-  /// fully signature-verified with no private key needed.
-  ///
-  /// [databaseFile] defaults to the real on-disk database
-  /// ([AppDatabase.resolveDatabaseFile]) - overridable so this method is
-  /// testable without a platform path_provider plugin available.
-  Future<String> exportLedgerBackup({
-    required String passphrase,
-    File? databaseFile,
-  }) async {
-    // Flush any writes still only in a WAL/rollback-journal sidecar file
-    // into the main database file, so reading that one file below is a
-    // complete, self-contained snapshot - harmless (and fast) if the
-    // database isn't in WAL mode at all.
-    await _db.customStatement('PRAGMA wal_checkpoint(TRUNCATE)');
-    final file = databaseFile ?? await AppDatabase.resolveDatabaseFile();
-    final bytes = await file.readAsBytes();
-    return LedgerBackupFile.encrypt(
-      databaseBytes: bytes,
-      passphrase: passphrase,
-    );
-  }
-
-  /// Decrypts [fileContents] under [passphrase], validates it opens as a
-  /// genuine ledger database with an active signing identity, rejects it
-  /// if that identity differs from this device's own active identity
-  /// (design.md Decision 4), and - only once every check passes - closes
-  /// this repository's database connection and replaces the real database
-  /// file on disk with the validated backup.
-  ///
-  /// After this returns successfully, this [LedgerRepository] instance
-  /// (and the [AppDatabase] it wraps) is closed and must not be used
-  /// again - the caller is responsible for restarting the app so a fresh
-  /// connection opens against the replaced file. Throws
-  /// [InvalidLedgerBackupException] or [ForeignBackupIdentityException]
-  /// (or a [SecretBoxAuthenticationError]/[FormatException] from a wrong
-  /// passphrase or non-backup file) without touching the real database
-  /// file at all - every failure path is a no-op on disk.
-  ///
-  /// [targetFile] defaults to the real on-disk database
-  /// ([AppDatabase.resolveDatabaseFile]), same testability reasoning as
-  /// [exportLedgerBackup]'s [databaseFile] parameter.
-  Future<void> restoreLedgerBackup({
-    required String fileContents,
-    required String passphrase,
-    File? targetFile,
-  }) async {
-    final decryptedBytes = await LedgerBackupFile.decrypt(
-      fileContents: fileContents,
-      passphrase: passphrase,
-    );
-
-    // Directory.systemTemp is pure `dart:io` (no path_provider platform
-    // channel needed) - appropriate here since this file is an internal
-    // scratch copy for validation only, never user-facing.
-    final tempFile = File(
-      p.join(
-        Directory.systemTemp.path,
-        'smara-backup-validate-${DateTime.now().microsecondsSinceEpoch}.sqlite',
-      ),
-    );
-    await tempFile.writeAsBytes(decryptedBytes);
-
-    late final SigningIdentity backupIdentity;
-    try {
-      final backupDb = AppDatabase.openFile(tempFile);
-      try {
-        final backupRepository = LedgerRepository(
-          database: backupDb,
-          signingKeyService: _signingKeyService,
-        );
-        final identity = await backupRepository.currentIdentity();
-        if (identity == null) {
-          throw InvalidLedgerBackupException(
-            'This backup has no signing identity - it is not a valid '
-            'Smara backup.',
-            code: AppErrorCode.invalidLedgerBackupNoIdentity,
-          );
-        }
-        backupIdentity = identity;
-        final verification = await backupRepository.verifyChain();
-        if (!verification.isFullyVerified) {
-          throw InvalidLedgerBackupException(
-            'This backup did not verify as intact books, so it was not '
-            'restored.',
-            code: AppErrorCode.invalidLedgerBackupUnverified,
-          );
-        }
-      } finally {
-        await backupDb.close();
-      }
-    } on InvalidLedgerBackupException {
-      await tempFile.delete();
-      rethrow;
-    } catch (e) {
-      await tempFile.delete();
-      throw InvalidLedgerBackupException(
-        'This file could not be opened as a Smara backup: $e',
-        code: AppErrorCode.invalidLedgerBackupUnreadable,
-      );
-    }
-
-    final deviceIdentity = await currentIdentity();
-    if (deviceIdentity != null &&
-        !_bytesEqual(deviceIdentity.publicKey, backupIdentity.publicKey)) {
-      await tempFile.delete();
-      throw ForeignBackupIdentityException(
-        'This backup belongs to a different signing identity than the one '
-        'already set up on this device. Restoring it would combine two '
-        "different identities' books, not restore your own.",
-      );
-    }
-
-    final resolvedTargetFile =
-        targetFile ?? await AppDatabase.resolveDatabaseFile();
-    await close();
-    await tempFile.copy(resolvedTargetFile.path);
-    await tempFile.delete();
-    // A fresh connection on next launch should never try to replay a
-    // stale WAL/rollback-journal sidecar left over from the *previous*
-    // database file at this same path.
-    for (final suffix in ['-wal', '-shm', '-journal']) {
-      final sidecar = File('${resolvedTargetFile.path}$suffix');
-      if (await sidecar.exists()) await sidecar.delete();
-    }
-  }
-
   /// Closes the underlying database connection. Only meaningful
   /// immediately before replacing the database file out from under it
-  /// (see [restoreLedgerBackup]) - this repository instance is unusable
-  /// afterward.
+  /// (see [LedgerBackupRepository.restoreLedgerBackup]) - this repository
+  /// instance is unusable afterward.
   Future<void> close() => _db.close();
 
   // ---------------------------------------------------------------------
@@ -890,23 +748,6 @@ class LedgerRepository {
     );
   }
 
-  /// Categories for pickers ([includeArchived] false, the default) or
-  /// historical views ([includeArchived] true). Allowlist: income/expense
-  /// only — never liability/equity/asset.
-  Stream<List<Account>> watchCategories({bool includeArchived = false}) {
-    final query = _db.select(_db.accounts)
-      ..where(
-        (a) =>
-            a.type.equalsValue(AccountType.income) |
-            a.type.equalsValue(AccountType.expense),
-      )
-      ..orderBy([(a) => OrderingTerm.asc(a.name)]);
-    if (!includeArchived) {
-      query.where((a) => a.archivedAt.isNull());
-    }
-    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
-  }
-
   Account _toDomainAccount(AccountRow row) {
     return Account(
       id: row.id,
@@ -991,6 +832,25 @@ class LedgerRepository {
         (a) => OrderingTerm.asc(a.sortOrder),
         (a) => OrderingTerm.asc(a.name),
       ]);
+    if (!includeArchived) {
+      query.where((a) => a.archivedAt.isNull());
+    }
+    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
+  }
+
+  /// Internal duplicate of [CategoryRepository.watchCategories], kept
+  /// private here so [exportLedgerCsv] doesn't need a dependency on
+  /// CategoryRepository - design.md D2 keeps this class dependency-free
+  /// until group 4 adds AccountRepository, so no new repository
+  /// dependency is introduced a group early just for this one read.
+  Stream<List<Account>> _watchCategories({bool includeArchived = false}) {
+    final query = _db.select(_db.accounts)
+      ..where(
+        (a) =>
+            a.type.equalsValue(AccountType.income) |
+            a.type.equalsValue(AccountType.expense),
+      )
+      ..orderBy([(a) => OrderingTerm.asc(a.name)]);
     if (!includeArchived) {
       query.where((a) => a.archivedAt.isNull());
     }
@@ -2694,75 +2554,6 @@ class LedgerRepository {
         );
   }
 
-  /// [type] must be [AccountType.income] or [AccountType.expense].
-  Future<void> addCategory({
-    required String name,
-    required AccountType type,
-  }) async {
-    if (type != AccountType.income && type != AccountType.expense) {
-      throw ArgumentError.value(type, 'type', 'must be income or expense');
-    }
-    await _db
-        .into(_db.accounts)
-        .insert(AccountsCompanion.insert(name: name, type: type));
-  }
-
-  Future<void> renameCategory({
-    required String id,
-    required String newName,
-  }) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(name: Value(newName)),
-    );
-  }
-
-  Future<void> archiveCategory(String id) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(archivedAt: Value(DateTime.now())),
-    );
-  }
-
-  /// Restores an archived income or expense category to active status
-  /// (unarchive-accounts-categories spec: "Unarchive Income or Expense
-  /// Category").
-  Future<void> unarchiveCategory(String id) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      const AccountsCompanion(archivedAt: Value(null)),
-    );
-  }
-
-  /// Sets or clears (`null`) an Expense category's optional monthly
-  /// spending limit (spec: "Category Management" - "An Income category
-  /// SHALL NOT have a monthly limit"). Informational only - never
-  /// enforced against posting (monthly-category-limits design.md
-  /// Decision 3).
-  Future<void> setCategoryMonthlyLimit({
-    required String id,
-    required int? monthlyLimitMinor,
-  }) async {
-    if (monthlyLimitMinor != null) {
-      if (monthlyLimitMinor <= 0) {
-        throw InvalidTransactionAmountException(
-          'Monthly limit must be positive and non-zero, got $monthlyLimitMinor.',
-          code: AppErrorCode.monthlyLimitMustBePositive,
-        );
-      }
-      final row = await (_db.select(
-        _db.accounts,
-      )..where((a) => a.id.equals(id))).getSingleOrNull();
-      if (row == null || row.type != AccountType.expense) {
-        throw ArgumentError.value(
-          id,
-          'id',
-          'must be an Expense category to set a monthly limit',
-        );
-      }
-    }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(monthlyLimitMinor: Value(monthlyLimitMinor)),
-    );
-  }
-
   /// Reactive stream of entries that post to [financialAccountId], ordered
   /// chronologically. Includes verification status; running balance should
   /// be computed by the ViewModel using [displayBalanceDeltaFor].
@@ -2855,7 +2646,7 @@ class LedgerRepository {
           entryDate.compareTo(endDate) <= 0;
     }).toList()..sort((a, b) => a.transactionDate.compareTo(b.transactionDate));
 
-    final categories = await watchCategories(includeArchived: true).first;
+    final categories = await _watchCategories(includeArchived: true).first;
     final categoriesById = {for (final c in categories) c.id: c};
     final allAccounts = await _watchFinancialAccounts(
       includeArchived: true,
@@ -3191,92 +2982,6 @@ class LedgerRepository {
     });
   }
 
-  /// Per-category totals within a date range (home-hub-capture: "this
-  /// calendar month's spent totals grouped by expense category and
-  /// received totals by income category") - same exclusions as
-  /// [watchSummary] (quarantined entries, migration-superseded entries,
-  /// non-income/expense account types), but grouped by category instead
-  /// of collapsed into two totals. A category with no postings in range
-  /// is simply absent, not returned as zero.
-  Stream<List<CategoryTotal>> watchCategoryTotals({
-    required DateTime start,
-    required DateTime end,
-  }) {
-    final startDate = dateOnly(start);
-    final endDate = dateOnly(end);
-
-    final query =
-        _db.select(_db.postings).join([
-          innerJoin(
-            _db.journalEntries,
-            _db.journalEntries.id.equalsExp(_db.postings.entryId),
-          ),
-          innerJoin(
-            _db.accounts,
-            _db.accounts.id.equalsExp(_db.postings.accountId),
-          ),
-          leftOuterJoin(
-            _db.entryVerificationCache,
-            _db.entryVerificationCache.entryId.equalsExp(_db.postings.entryId),
-          ),
-        ])..where(
-          _db.journalEntries.transactionDate.isBiggerOrEqualValue(startDate) &
-              _db.journalEntries.transactionDate.isSmallerOrEqualValue(endDate),
-        );
-
-    return query.watch().asyncMap((rows) async {
-      final supersededEntryIds = <String>{
-        for (final row in rows)
-          ?row.readTable(_db.journalEntries).migratedFromEntryId,
-      };
-
-      final totalsById = <String, ({String name, bool isIncome, int total})>{};
-      for (final row in rows) {
-        final entry = row.readTable(_db.journalEntries);
-        if (supersededEntryIds.contains(entry.id)) continue;
-
-        final verification = row.readTableOrNull(_db.entryVerificationCache);
-        if (verification != null && !verification.isVerified) continue;
-
-        final account = row.readTable(_db.accounts);
-        final posting = row.readTable(_db.postings);
-        int magnitude;
-        bool isIncome;
-        switch (account.type) {
-          case AccountType.income:
-            magnitude = -posting.amountMinor;
-            isIncome = true;
-          case AccountType.expense:
-            magnitude = posting.amountMinor;
-            isIncome = false;
-          case AccountType.asset:
-          case AccountType.liability:
-          case AccountType.equity:
-          case AccountType.clearing:
-          case AccountType.inventory:
-            continue;
-        }
-
-        final existing = totalsById[account.id];
-        totalsById[account.id] = (
-          name: account.name,
-          isIncome: isIncome,
-          total: (existing?.total ?? 0) + magnitude,
-        );
-      }
-
-      return [
-        for (final entry in totalsById.entries)
-          CategoryTotal(
-            categoryId: entry.key,
-            categoryName: entry.value.name,
-            isIncome: entry.value.isIncome,
-            totalMinor: entry.value.total,
-          ),
-      ];
-    });
-  }
-
   /// The append-only audit log of chain breaks, re-anchors, and key
   /// migrations, newest first.
   Stream<List<IntegrityEvent>> watchIntegrityEvents() {
@@ -3304,100 +3009,6 @@ class LedgerRepository {
   /// touched.
   Future<String> exportKeystoreFile({required String passphrase}) {
     return _signingKeyService.exportKeystoreFile(passphrase: passphrase);
-  }
-
-  // ---------------------------------------------------------------------
-  // Payees and spending memory (payees-and-spending-memory design.md
-  // Decision 1). No FK/link column on journal_entries - a payee is matched
-  // against a typed description at query time, not stored per-entry.
-  // ---------------------------------------------------------------------
-
-  Stream<List<Payee>> watchPayees() {
-    final query = _db.select(_db.payees)
-      ..orderBy([(p) => OrderingTerm.asc(p.name)]);
-    return query.watch().map((rows) => rows.map(_toDomainPayee).toList());
-  }
-
-  Future<Payee> createPayee({
-    required String name,
-    String? defaultCategoryId,
-    String? defaultFinancialAccountId,
-  }) async {
-    final id = await _db
-        .into(_db.payees)
-        .insertReturning(
-          PayeesCompanion.insert(
-            name: name,
-            defaultCategoryId: Value(defaultCategoryId),
-            defaultFinancialAccountId: Value(defaultFinancialAccountId),
-            createdAt: DateTime.now(),
-          ),
-        );
-    return _toDomainPayee(id);
-  }
-
-  /// Links an existing payee whose normalized [name] matches, or creates
-  /// one, updating its default category to [defaultCategoryId] either way
-  /// (import-category-rules "Saving a rule offers to link a payee too"
-  /// scenario: saving a rule always applies the rule's category as the
-  /// linked payee's default, whether the payee already existed or not).
-  Future<Payee> findOrCreatePayeeByName({
-    required String name,
-    String? defaultCategoryId,
-  }) async {
-    final normalized = normalizeDescription(name);
-    final allPayees = await _db.select(_db.payees).get();
-    final existing = allPayees.cast<PayeeRow?>().firstWhere(
-      (p) => normalizeDescription(p!.name) == normalized,
-      orElse: () => null,
-    );
-    if (existing != null) {
-      if (defaultCategoryId != null) {
-        await (_db.update(
-          _db.payees,
-        )..where((p) => p.id.equals(existing.id))).write(
-          PayeesCompanion(defaultCategoryId: Value(defaultCategoryId)),
-        );
-      }
-      return _toDomainPayee(existing);
-    }
-    return createPayee(name: name, defaultCategoryId: defaultCategoryId);
-  }
-
-  Future<void> renamePayee({required String id, required String newName}) {
-    return (_db.update(_db.payees)..where((p) => p.id.equals(id))).write(
-      PayeesCompanion(name: Value(newName)),
-    );
-  }
-
-  Future<void> deletePayee(String id) async {
-    await (_db.delete(_db.payees)..where((p) => p.id.equals(id))).go();
-  }
-
-  /// Updates [payeeId]'s remembered defaults to whatever was just used -
-  /// called after a successful [recordTransaction] for a matched payee, so
-  /// the next entry for the same payee suggests the most recent choice
-  /// (design.md Decisions: defaults double as "last used").
-  Future<void> recordPayeeUsage({
-    required String payeeId,
-    required String categoryId,
-    required String financialAccountId,
-  }) {
-    return (_db.update(_db.payees)..where((p) => p.id.equals(payeeId))).write(
-      PayeesCompanion(
-        defaultCategoryId: Value(categoryId),
-        defaultFinancialAccountId: Value(financialAccountId),
-      ),
-    );
-  }
-
-  Payee _toDomainPayee(PayeeRow row) {
-    return Payee(
-      id: row.id,
-      name: row.name,
-      defaultCategoryId: row.defaultCategoryId,
-      defaultFinancialAccountId: row.defaultFinancialAccountId,
-    );
   }
 
   // ---------------------------------------------------------------------

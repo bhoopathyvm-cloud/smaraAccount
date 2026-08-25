@@ -13,6 +13,7 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockLedgerRepository repository;
   late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
 
   const checking = Account(
     id: 'account-1',
@@ -49,6 +50,7 @@ void main() {
   setUp(() {
     repository = MockLedgerRepository();
     accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     when(
       accountRepository.watchFinancialAccounts(),
     ).thenAnswer((_) => Stream.value(const [checking]));
@@ -58,7 +60,7 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value(const [usdGroup]));
     when(
-      repository.watchCategories(),
+      categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value(const [groceries]));
   });
 
@@ -72,6 +74,7 @@ void main() {
     final viewModel = RecurringTemplateManagementViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
     );
     addTearDown(viewModel.dispose);
 
@@ -105,6 +108,7 @@ void main() {
     final viewModel = RecurringTemplateManagementViewModel(
       ledgerRepository: repository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
     );
     addTearDown(viewModel.dispose);
 
@@ -159,6 +163,7 @@ void main() {
       final viewModel = RecurringTemplateManagementViewModel(
         ledgerRepository: repository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
       );
       addTearDown(viewModel.dispose);
 

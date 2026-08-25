@@ -19,8 +19,9 @@ import 'package:smara_accounting/ui/features/statement_import/views/statement_im
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository ledgerRepository;
   late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
+  late MockPayeeRepository payeeRepository;
   late MockStatementImportRepository importRepository;
 
   const checking = Account(
@@ -72,8 +73,9 @@ void main() {
   );
 
   setUp(() {
-    ledgerRepository = MockLedgerRepository();
     accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
+    payeeRepository = MockPayeeRepository();
     importRepository = MockStatementImportRepository();
 
     when(
@@ -82,7 +84,7 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([checking]));
     when(
-      ledgerRepository.watchCategories(),
+      categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value([groceries, transport]));
     when(
       importRepository.watchProfiles(),
@@ -95,8 +97,9 @@ void main() {
   StatementImportViewModel buildViewModel() {
     return StatementImportViewModel(
       importRepository: importRepository,
-      ledgerRepository: ledgerRepository,
       accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+      payeeRepository: payeeRepository,
     );
   }
 
@@ -259,8 +262,9 @@ void main() {
 
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
-        ledgerRepository: ledgerRepository,
         accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        payeeRepository: payeeRepository,
         initialFinancialAccountId: checking.id,
       );
       addTearDown(viewModel.dispose);
@@ -479,7 +483,7 @@ void main() {
           await tester.pumpAndSettle();
 
           when(
-            ledgerRepository.findOrCreatePayeeByName(
+            payeeRepository.findOrCreatePayeeByName(
               name: anyNamed('name'),
               defaultCategoryId: anyNamed('defaultCategoryId'),
             ),
@@ -496,7 +500,7 @@ void main() {
           await tester.pumpAndSettle();
 
           verify(
-            ledgerRepository.findOrCreatePayeeByName(
+            payeeRepository.findOrCreatePayeeByName(
               name: 'row a',
               defaultCategoryId: groceries.id,
             ),
@@ -526,7 +530,7 @@ void main() {
             ),
           ).called(1);
           verifyNever(
-            ledgerRepository.findOrCreatePayeeByName(
+            payeeRepository.findOrCreatePayeeByName(
               name: anyNamed('name'),
               defaultCategoryId: anyNamed('defaultCategoryId'),
             ),
@@ -554,7 +558,7 @@ void main() {
           ),
         );
         verifyNever(
-          ledgerRepository.findOrCreatePayeeByName(
+          payeeRepository.findOrCreatePayeeByName(
             name: anyNamed('name'),
             defaultCategoryId: anyNamed('defaultCategoryId'),
           ),

@@ -11,14 +11,14 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockSettingsRepository repository;
-  late MockLedgerRepository ledgerRepository;
+  late MockLedgerBackupRepository ledgerBackupRepository;
   late MockAppLockService appLockService;
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockAppLockController appLockController;
 
   setUp(() {
     repository = MockSettingsRepository();
-    ledgerRepository = MockLedgerRepository();
+    ledgerBackupRepository = MockLedgerBackupRepository();
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     appLockController = MockAppLockController();
@@ -48,7 +48,7 @@ void main() {
   Future<SettingsViewModel> pumpSettings(WidgetTester tester) async {
     final viewModel = SettingsViewModel(
       settingsRepository: repository,
-      ledgerRepository: ledgerRepository,
+      ledgerBackupRepository: ledgerBackupRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -198,7 +198,9 @@ void main() {
 
       expect(find.text('Enter a passphrase.'), findsOneWidget);
       verifyNever(
-        ledgerRepository.exportLedgerBackup(passphrase: anyNamed('passphrase')),
+        ledgerBackupRepository.exportLedgerBackup(
+          passphrase: anyNamed('passphrase'),
+        ),
       );
     },
   );
@@ -219,7 +221,7 @@ void main() {
 
       expect(find.text('Choose a backup file first.'), findsOneWidget);
       verifyNever(
-        ledgerRepository.restoreLedgerBackup(
+        ledgerBackupRepository.restoreLedgerBackup(
           fileContents: anyNamed('fileContents'),
           passphrase: anyNamed('passphrase'),
         ),

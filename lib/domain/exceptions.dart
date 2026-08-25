@@ -158,7 +158,7 @@ class CsvParseException implements Exception {
   String toString() => message;
 }
 
-/// Thrown by [LedgerRepository.restoreLedgerBackup] when the decrypted
+/// Thrown by [LedgerBackupRepository.restoreLedgerBackup] when the decrypted
 /// bytes don't open as a valid Smara ledger database at all (wrong file
 /// selected, corrupted, or the passphrase decrypted garbage that happened
 /// to pass the AEAD tag on some other file format - the open-as-database
@@ -178,7 +178,7 @@ class InvalidLedgerBackupException implements Exception {
   String toString() => message;
 }
 
-/// Thrown by [LedgerRepository.restoreLedgerBackup] when the backup's
+/// Thrown by [LedgerBackupRepository.restoreLedgerBackup] when the backup's
 /// active signing identity differs from this device's own active identity
 /// (ledger-backup-restore design.md Decision 4) - restoring it would
 /// combine two different identities' books, not restore the user's own.

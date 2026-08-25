@@ -4,8 +4,10 @@ import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
@@ -23,6 +25,8 @@ void main() {
   late SigningKeyService signingKeyService;
   late LedgerRepository repository;
   late AccountRepository accountRepository;
+  late CategoryRepository categoryRepository;
+  late PayeeRepository payeeRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -37,6 +41,8 @@ void main() {
       database: db,
       ledgerRepository: repository,
     );
+    categoryRepository = CategoryRepository(database: db);
+    payeeRepository = PayeeRepository(database: db);
     // Every test starts past onboarding - identity lifecycle itself is
     // covered by its own group below, using a fresh Repository/service.
     final generated = await repository.generateFirstIdentity();
@@ -53,7 +59,7 @@ void main() {
   }
 
   Future<String> firstCategoryId(AccountType type) async {
-    final categories = await repository.watchCategories().first;
+    final categories = await categoryRepository.watchCategories().first;
     return categories.firstWhere((a) => a.type == type).id;
   }
 
@@ -94,7 +100,7 @@ void main() {
     test(
       'confirmFirstIdentity seeds the single asset account and starter categories',
       () async {
-        final categories = await repository.watchCategories().first;
+        final categories = await categoryRepository.watchCategories().first;
         expect(
           categories.map((a) => a.name),
           containsAll(starterIncomeCategories + starterExpenseCategories),
@@ -114,14 +120,17 @@ void main() {
             secureStorage: InMemorySecureKeyStorage(),
           ),
         );
+        final freshCategoryRepository = CategoryRepository(database: freshDb);
 
-        expect(await freshRepository.watchCategories().first, isEmpty);
+        expect(await freshCategoryRepository.watchCategories().first, isEmpty);
 
         final generated = await freshRepository.generateFirstIdentity();
-        expect(await freshRepository.watchCategories().first, isEmpty);
+        expect(await freshCategoryRepository.watchCategories().first, isEmpty);
 
         await freshRepository.confirmFirstIdentity(generated, currency: 'USD');
-        final categories = await freshRepository.watchCategories().first;
+        final categories = await freshCategoryRepository
+            .watchCategories()
+            .first;
         expect(
           categories.map((a) => a.name),
           containsAll(starterIncomeCategories + starterExpenseCategories),
@@ -438,7 +447,7 @@ void main() {
 
   group('recordSplitTransaction', () {
     Future<List<String>> categoryIds(AccountType type, int count) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       return categories
           .where((c) => c.type == type)
           .take(count)
@@ -593,7 +602,7 @@ void main() {
     test('rejects a line with an archived category', () async {
       final categories = await categoryIds(AccountType.expense, 2);
       final financialAccountId = await firstFinancialAccountId();
-      await repository.archiveCategory(categories[1]);
+      await categoryRepository.archiveCategory(categories[1]);
 
       expect(
         () => repository.recordSplitTransaction(
@@ -658,7 +667,7 @@ void main() {
           transactionDate: DateTime(2026, 1, 15),
         );
 
-        final totals = await repository
+        final totals = await categoryRepository
             .watchCategoryTotals(
               start: DateTime(2026, 1, 1),
               end: DateTime(2026, 1, 31),
@@ -860,12 +869,12 @@ void main() {
       'archived category is excluded from watchCategories() by default',
       () async {
         final incomeId = await firstCategoryId(AccountType.income);
-        await repository.archiveCategory(incomeId);
+        await categoryRepository.archiveCategory(incomeId);
 
-        final active = await repository.watchCategories().first;
+        final active = await categoryRepository.watchCategories().first;
         expect(active.any((a) => a.id == incomeId), isFalse);
 
-        final all = await repository
+        final all = await categoryRepository
             .watchCategories(includeArchived: true)
             .first;
         expect(all.any((a) => a.id == incomeId), isTrue);
@@ -875,12 +884,12 @@ void main() {
     test(
       'addCategory makes the new category available for selection',
       () async {
-        await repository.addCategory(
+        await categoryRepository.addCategory(
           name: 'Freelance',
           type: AccountType.income,
         );
 
-        final categories = await repository.watchCategories().first;
+        final categories = await categoryRepository.watchCategories().first;
         expect(
           categories.any(
             (a) => a.name == 'Freelance' && a.type == AccountType.income,
@@ -892,15 +901,21 @@ void main() {
 
     test('addCategory rejects AccountType.asset', () async {
       expect(
-        () => repository.addCategory(name: 'Nope', type: AccountType.asset),
+        () => categoryRepository.addCategory(
+          name: 'Nope',
+          type: AccountType.asset,
+        ),
         throwsA(isA<ArgumentError>()),
       );
     });
 
     test('renameCategory updates the name', () async {
       final incomeId = await firstCategoryId(AccountType.income);
-      await repository.renameCategory(id: incomeId, newName: 'Freelance');
-      final categories = await repository.watchCategories().first;
+      await categoryRepository.renameCategory(
+        id: incomeId,
+        newName: 'Freelance',
+      );
+      final categories = await categoryRepository.watchCategories().first;
       expect(categories.firstWhere((a) => a.id == incomeId).name, 'Freelance');
     });
 
@@ -908,29 +923,27 @@ void main() {
       test('sets and then clears a limit on an Expense category', () async {
         final expenseId = await firstCategoryId(AccountType.expense);
 
-        await repository.setCategoryMonthlyLimit(
+        await categoryRepository.setCategoryMonthlyLimit(
           id: expenseId,
           monthlyLimitMinor: 15000,
         );
-        var category = (await repository.watchCategories().first).firstWhere(
-          (a) => a.id == expenseId,
-        );
+        var category = (await categoryRepository.watchCategories().first)
+            .firstWhere((a) => a.id == expenseId);
         expect(category.monthlyLimitMinor, equals(15000));
 
-        await repository.setCategoryMonthlyLimit(
+        await categoryRepository.setCategoryMonthlyLimit(
           id: expenseId,
           monthlyLimitMinor: null,
         );
-        category = (await repository.watchCategories().first).firstWhere(
-          (a) => a.id == expenseId,
-        );
+        category = (await categoryRepository.watchCategories().first)
+            .firstWhere((a) => a.id == expenseId);
         expect(category.monthlyLimitMinor, isNull);
       });
 
       test('rejects setting a limit on an Income category', () async {
         final incomeId = await firstCategoryId(AccountType.income);
         expect(
-          () => repository.setCategoryMonthlyLimit(
+          () => categoryRepository.setCategoryMonthlyLimit(
             id: incomeId,
             monthlyLimitMinor: 15000,
           ),
@@ -941,7 +954,7 @@ void main() {
       test('rejects a non-positive limit', () async {
         final expenseId = await firstCategoryId(AccountType.expense);
         expect(
-          () => repository.setCategoryMonthlyLimit(
+          () => categoryRepository.setCategoryMonthlyLimit(
             id: expenseId,
             monthlyLimitMinor: 0,
           ),
@@ -1067,7 +1080,7 @@ void main() {
           groupId: groupCreditShortTermId,
         );
 
-        final categories = await repository
+        final categories = await categoryRepository
             .watchCategories(includeArchived: true)
             .first;
         expect(
@@ -1535,7 +1548,7 @@ void main() {
 
   group('watchCategoryTotals', () {
     Future<String> categoryIdNamed(String name) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       return categories.firstWhere((a) => a.name == name).id;
     }
 
@@ -1575,7 +1588,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 1),
       );
 
-      final totals = await repository
+      final totals = await categoryRepository
           .watchCategoryTotals(
             start: DateTime(2026, 1, 1),
             end: DateTime(2026, 1, 31),
@@ -1602,7 +1615,7 @@ void main() {
         transactionDate: DateTime(2026, 2, 1),
       );
 
-      final totals = await repository
+      final totals = await categoryRepository
           .watchCategoryTotals(
             start: DateTime(2026, 1, 1),
             end: DateTime(2026, 1, 31),
@@ -1629,7 +1642,7 @@ void main() {
       );
       await repository.verifyChain();
 
-      final totals = await repository
+      final totals = await categoryRepository
           .watchCategoryTotals(
             start: DateTime(2026, 1, 1),
             end: DateTime(2026, 1, 31),
@@ -2190,15 +2203,15 @@ void main() {
 
     test('unarchiveCategory clears archivedAt', () async {
       final incomeId = await firstCategoryId(AccountType.income);
-      await repository.archiveCategory(incomeId);
+      await categoryRepository.archiveCategory(incomeId);
 
-      await repository.unarchiveCategory(incomeId);
+      await categoryRepository.unarchiveCategory(incomeId);
 
-      final categories = await repository
+      final categories = await categoryRepository
           .watchCategories(includeArchived: true)
           .first;
       expect(categories.firstWhere((a) => a.id == incomeId).archived, isFalse);
-      final active = await repository.watchCategories().first;
+      final active = await categoryRepository.watchCategories().first;
       expect(active.any((a) => a.id == incomeId), isTrue);
     });
   });
@@ -3359,22 +3372,25 @@ void main() {
   group('payees', () {
     test('createPayee, watchPayees, renamePayee, deletePayee', () async {
       final expenseCategoryId = await firstCategoryId(AccountType.expense);
-      final created = await repository.createPayee(
+      final created = await payeeRepository.createPayee(
         name: 'Starbucks',
         defaultCategoryId: expenseCategoryId,
       );
       expect(created.name, equals('Starbucks'));
       expect(created.defaultCategoryId, equals(expenseCategoryId));
 
-      var payees = await repository.watchPayees().first;
+      var payees = await payeeRepository.watchPayees().first;
       expect(payees.map((p) => p.name), equals(['Starbucks']));
 
-      await repository.renamePayee(id: created.id, newName: 'Starbucks Coffee');
-      payees = await repository.watchPayees().first;
+      await payeeRepository.renamePayee(
+        id: created.id,
+        newName: 'Starbucks Coffee',
+      );
+      payees = await payeeRepository.watchPayees().first;
       expect(payees.single.name, equals('Starbucks Coffee'));
 
-      await repository.deletePayee(created.id);
-      payees = await repository.watchPayees().first;
+      await payeeRepository.deletePayee(created.id);
+      payees = await payeeRepository.watchPayees().first;
       expect(payees, isEmpty);
     });
 
@@ -3384,24 +3400,24 @@ void main() {
         final groceriesId = await firstCategoryId(AccountType.expense);
         final incomeId = await firstCategoryId(AccountType.income);
         final accountId = await firstFinancialAccountId();
-        final created = await repository.createPayee(name: 'Landlord');
+        final created = await payeeRepository.createPayee(name: 'Landlord');
 
-        await repository.recordPayeeUsage(
+        await payeeRepository.recordPayeeUsage(
           payeeId: created.id,
           categoryId: groceriesId,
           financialAccountId: accountId,
         );
-        var payee = (await repository.watchPayees().first).single;
+        var payee = (await payeeRepository.watchPayees().first).single;
         expect(payee.defaultCategoryId, equals(groceriesId));
         expect(payee.defaultFinancialAccountId, equals(accountId));
 
         // A later recording updates the default again, to the newest usage.
-        await repository.recordPayeeUsage(
+        await payeeRepository.recordPayeeUsage(
           payeeId: created.id,
           categoryId: incomeId,
           financialAccountId: accountId,
         );
-        payee = (await repository.watchPayees().first).single;
+        payee = (await payeeRepository.watchPayees().first).single;
         expect(payee.defaultCategoryId, equals(incomeId));
       },
     );
@@ -3411,13 +3427,13 @@ void main() {
         'creates a new payee when no normalized-name match exists',
         () async {
           final categoryId = await firstCategoryId(AccountType.expense);
-          final payee = await repository.findOrCreatePayeeByName(
+          final payee = await payeeRepository.findOrCreatePayeeByName(
             name: 'Amazon',
             defaultCategoryId: categoryId,
           );
           expect(payee.name, equals('Amazon'));
           expect(payee.defaultCategoryId, equals(categoryId));
-          final all = await repository.watchPayees().first;
+          final all = await payeeRepository.watchPayees().first;
           expect(all, hasLength(1));
         },
       );
@@ -3429,19 +3445,19 @@ void main() {
           final firstCategoryIdValue = await firstCategoryId(
             AccountType.expense,
           );
-          final existing = await repository.createPayee(
+          final existing = await payeeRepository.createPayee(
             name: '  amazon  ',
             defaultCategoryId: firstCategoryIdValue,
           );
 
           final incomeId = await firstCategoryId(AccountType.income);
-          final linked = await repository.findOrCreatePayeeByName(
+          final linked = await payeeRepository.findOrCreatePayeeByName(
             name: 'Amazon',
             defaultCategoryId: incomeId,
           );
 
           expect(linked.id, equals(existing.id));
-          final all = await repository.watchPayees().first;
+          final all = await payeeRepository.watchPayees().first;
           expect(all, hasLength(1));
           expect(all.single.defaultCategoryId, equals(incomeId));
         },
@@ -3680,7 +3696,7 @@ void main() {
 
     test('a split entry exports one row per category leg', () async {
       final accountId = await firstFinancialAccountId();
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final expenseIds = categories
           .where((c) => c.type == AccountType.expense)
           .take(2)
