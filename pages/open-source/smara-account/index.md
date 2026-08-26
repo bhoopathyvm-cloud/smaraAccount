@@ -78,11 +78,15 @@ not a promise that every recorded transaction is true.
 
 ## What It Does Today
 
-Recording income and expenses, multiple accounts and account groups
-(including different currencies), transfers between accounts, importing
-bank statements from OFX and CSV files with saved category rules, a
-running register, and a summary view. See [What's built](whats-built.md)
-for the full, current list.
+Recording income and expenses (including split-category and recurring
+entries), multiple accounts and account groups across different
+currencies, credit-card capture shortcuts, investment accounts with
+buy/sell/dividend tracking and AI-assisted research, transfers between
+accounts, importing bank statements from OFX and CSV files with saved
+category rules, a searchable running register with a guided correction
+flow, encrypted backup/restore and CSV export, an optional PIN/biometric
+app lock, and a fully localized interface in dozens of languages. See
+[What's built](whats-built.md) for the full, current list.
 
 ## Try It Or Contribute
 
