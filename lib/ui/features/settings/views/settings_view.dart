@@ -338,10 +338,14 @@ class SettingsView extends StatelessWidget {
                   ? null
                   : () async {
                       final passphrase = passphraseController.text;
-                      if (passphrase.trim().isEmpty) {
+                      final passphraseError = viewModel
+                          .passphraseValidationError(passphrase);
+                      if (passphraseError != null) {
                         setDialogState(
-                          () =>
-                              statusMessage = l10n.validationPassphraseRequired,
+                          () => statusMessage = localizeError(
+                            l10n,
+                            passphraseError,
+                          ),
                         );
                         return;
                       }
@@ -461,10 +465,14 @@ class SettingsView extends StatelessWidget {
                       }
                       final bytes = await file.readAsBytes();
                       if (!dialogContext.mounted) return;
-                      if (passphrase.trim().isEmpty) {
+                      final passphraseError = viewModel
+                          .passphraseValidationError(passphrase);
+                      if (passphraseError != null) {
                         setDialogState(
-                          () =>
-                              statusMessage = l10n.validationPassphraseRequired,
+                          () => statusMessage = localizeError(
+                            l10n,
+                            passphraseError,
+                          ),
                         );
                         return;
                       }
@@ -552,15 +560,13 @@ class SettingsView extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 final pin = pinController.text;
-                if (pin.length < 4) {
+                final pinError = viewModel.pinValidationError(
+                  pin,
+                  confirmController.text,
+                );
+                if (pinError != null) {
                   setDialogState(
-                    () => statusMessage = l10n.validationPinMinLength,
-                  );
-                  return;
-                }
-                if (pin != confirmController.text) {
-                  setDialogState(
-                    () => statusMessage = l10n.validationPinsDoNotMatch,
+                    () => statusMessage = localizeError(l10n, pinError),
                   );
                   return;
                 }
@@ -633,15 +639,13 @@ class SettingsView extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 final newPin = newPinController.text;
-                if (newPin.length < 4) {
+                final pinError = viewModel.pinValidationError(
+                  newPin,
+                  confirmController.text,
+                );
+                if (pinError != null) {
                   setDialogState(
-                    () => statusMessage = l10n.validationPinMinLength,
-                  );
-                  return;
-                }
-                if (newPin != confirmController.text) {
-                  setDialogState(
-                    () => statusMessage = l10n.validationPinsDoNotMatch,
+                    () => statusMessage = localizeError(l10n, pinError),
                   );
                   return;
                 }

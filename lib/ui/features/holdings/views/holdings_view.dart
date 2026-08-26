@@ -233,22 +233,12 @@ class HoldingsView extends StatelessWidget {
 
   Future<void> _showBuyDialog(BuildContext context) async {
     final l10n = l10nOf(context);
+    final draft = viewModel.newBuyDraft();
     final quantityController = TextEditingController();
     final priceController = TextEditingController();
     final brokerageController = TextEditingController();
     final descriptionController = TextEditingController();
-    var funding = BuyFundingSource.cash;
-    String? instrumentId;
-    String? incomeCategoryId;
-    String? brokerageCategoryId;
-    int? quantityScaled;
-    int? unitPriceMinor;
-    int? brokerageMinor;
-    DateTime transactionDate = DateTime.now();
-    DateTime? lockedUntil;
-    var creatingNew = false;
     final newNameController = TextEditingController();
-    var newKind = InstrumentKind.stock;
     final tickerController = TextEditingController();
     final isinController = TextEditingController();
 
@@ -278,12 +268,12 @@ class HoldingsView extends StatelessWidget {
                           label: Text(l10n.nonCash),
                         ),
                       ],
-                      selected: {funding},
+                      selected: {draft.funding},
                       onSelectionChanged: (selection) =>
-                          setDialogState(() => funding = selection.first),
+                          setDialogState(() => draft.funding = selection.first),
                     ),
                     const SizedBox(height: AppSpacing.medium),
-                    if (!creatingNew) ...[
+                    if (!draft.creatingNew) ...[
                       EntityPickerField<Instrument>(
                         labelText: l10n.instrument,
                         items: viewModel.instruments
@@ -291,12 +281,12 @@ class HoldingsView extends StatelessWidget {
                             .toList(),
                         idOf: (i) => i.id,
                         labelOf: (i) => i.name,
-                        value: instrumentId,
-                        onChanged: (value) => instrumentId = value,
+                        value: draft.instrumentId,
+                        onChanged: (value) => draft.instrumentId = value,
                       ),
                       TextButton(
                         onPressed: () =>
-                            setDialogState(() => creatingNew = true),
+                            setDialogState(() => draft.creatingNew = true),
                         child: Text(l10n.newInstrument),
                       ),
                     ] else ...[
@@ -306,7 +296,7 @@ class HoldingsView extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.medium),
                       DropdownButtonFormField<InstrumentKind>(
-                        initialValue: newKind,
+                        initialValue: draft.newKind,
                         decoration: InputDecoration(labelText: l10n.kindLabel),
                         items: [
                           for (final kind in InstrumentKind.values)
@@ -317,7 +307,7 @@ class HoldingsView extends StatelessWidget {
                         ],
                         onChanged: (kind) {
                           if (kind != null) {
-                            setDialogState(() => newKind = kind);
+                            setDialogState(() => draft.newKind = kind);
                           }
                         },
                       ),
@@ -344,41 +334,41 @@ class HoldingsView extends StatelessWidget {
                       ),
                       decoration: InputDecoration(labelText: l10n.quantity),
                       onChanged: (text) =>
-                          quantityScaled = parseQuantityScaled(text),
+                          draft.quantityScaled = parseQuantityScaled(text),
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     MoneyAmountField(
                       controller: priceController,
                       labelText: l10n.unitPrice,
                       currency: currency,
-                      onChangedMinor: (value) => unitPriceMinor = value,
+                      onChangedMinor: (value) => draft.unitPriceMinor = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        '${l10n.dateLabel} ${formatLocalDate(context, transactionDate)}',
+                        '${l10n.dateLabel} ${formatLocalDate(context, draft.transactionDate)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
                         final picked = await showDatePicker(
                           context: context,
-                          initialDate: transactionDate,
+                          initialDate: draft.transactionDate,
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                         );
                         if (picked != null) {
-                          setDialogState(() => transactionDate = picked);
+                          setDialogState(() => draft.transactionDate = picked);
                         }
                       },
                     ),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        lockedUntil == null
+                        draft.lockedUntil == null
                             ? l10n.lockUntilOptional
                             : l10n.lockedUntilDate(
-                                formatLocalDate(context, lockedUntil!),
+                                formatLocalDate(context, draft.lockedUntil!),
                               ),
                       ),
                       subtitle: Text(l10n.lockUntilHint),
@@ -386,30 +376,31 @@ class HoldingsView extends StatelessWidget {
                       onTap: () async {
                         final picked = await showDatePicker(
                           context: context,
-                          initialDate: lockedUntil ?? transactionDate,
+                          initialDate:
+                              draft.lockedUntil ?? draft.transactionDate,
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                         );
                         if (picked != null) {
-                          setDialogState(() => lockedUntil = picked);
+                          setDialogState(() => draft.lockedUntil = picked);
                         }
                       },
                     ),
-                    if (funding == BuyFundingSource.nonCash)
+                    if (draft.requiresIncomeCategory)
                       EntityPickerField<Account>(
                         labelText: l10n.incomeCategory,
                         items: viewModel.incomeCategories,
                         idOf: (c) => c.id,
                         labelOf: (c) => localizeStoredName(l10n, c.name),
-                        value: incomeCategoryId,
-                        onChanged: (value) => incomeCategoryId = value,
+                        value: draft.incomeCategoryId,
+                        onChanged: (value) => draft.incomeCategoryId = value,
                       ),
-                    if (funding == BuyFundingSource.cash) ...[
+                    if (draft.requiresBrokerageCategory) ...[
                       MoneyAmountField(
                         controller: brokerageController,
                         labelText: l10n.brokerageOptional,
                         currency: currency,
-                        onChangedMinor: (value) => brokerageMinor = value,
+                        onChangedMinor: (value) => draft.brokerageMinor = value,
                       ),
                       const SizedBox(height: AppSpacing.medium),
                       EntityPickerField<Account>(
@@ -417,8 +408,8 @@ class HoldingsView extends StatelessWidget {
                         items: viewModel.expenseCategories,
                         idOf: (c) => c.id,
                         labelOf: (c) => localizeStoredName(l10n, c.name),
-                        value: brokerageCategoryId,
-                        onChanged: (value) => brokerageCategoryId = value,
+                        value: draft.brokerageCategoryId,
+                        onChanged: (value) => draft.brokerageCategoryId = value,
                       ),
                     ],
                     const SizedBox(height: AppSpacing.medium),
@@ -437,42 +428,23 @@ class HoldingsView extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  var id = instrumentId;
-                  if (creatingNew) {
-                    final name = newNameController.text.trim();
-                    if (name.isEmpty) return;
+                  draft.newInstrumentName = newNameController.text;
+                  draft.ticker = tickerController.text;
+                  draft.isin = isinController.text;
+                  draft.description = descriptionController.text;
+                  if (draft.creatingNew) {
+                    if (!draft.canSubmit) return;
                     final created = await viewModel.createInstrument(
-                      name: name,
-                      kind: newKind,
-                      ticker: tickerController.text.trim().isEmpty
-                          ? null
-                          : tickerController.text.trim(),
-                      isin: isinController.text.trim().isEmpty
-                          ? null
-                          : isinController.text.trim(),
+                      name: draft.newInstrumentName.trim(),
+                      kind: draft.newKind,
+                      ticker: draft.tickerOrNull,
+                      isin: draft.isinOrNull,
                     );
                     if (created == null) return;
-                    id = created.id;
+                    draft.instrumentId = created.id;
                   }
-                  if (id == null ||
-                      quantityScaled == null ||
-                      unitPriceMinor == null) {
-                    return;
-                  }
-                  final ok = await viewModel.recordBuy(
-                    instrumentId: id,
-                    quantityScaled: quantityScaled!,
-                    unitPriceMinor: unitPriceMinor!,
-                    transactionDate: transactionDate,
-                    fundingSource: funding,
-                    incomeCategoryId: incomeCategoryId,
-                    lockedUntil: lockedUntil,
-                    description: descriptionController.text.trim().isEmpty
-                        ? null
-                        : descriptionController.text.trim(),
-                    brokerageMinor: brokerageMinor,
-                    brokerageExpenseCategoryId: brokerageCategoryId,
-                  );
+                  if (!draft.canSubmit) return;
+                  final ok = await viewModel.submitBuy(draft);
                   if (ok && dialogContext.mounted) {
                     Navigator.of(dialogContext).pop();
                   }
@@ -489,31 +461,18 @@ class HoldingsView extends StatelessWidget {
   Future<void> _showSellDialog(BuildContext context) async {
     final l10n = l10nOf(context);
     if (viewModel.holdings.isEmpty) return;
+    final draft = viewModel.newSellDraft();
     final quantityController = TextEditingController();
     final priceController = TextEditingController();
     final brokerageController = TextEditingController();
     final descriptionController = TextEditingController();
-    var holding = viewModel.holdings.first;
-    String? gainIncomeCategoryId;
-    String? lossExpenseCategoryId;
-    String? brokerageCategoryId;
-    int? quantityScaled;
-    int? unitPriceMinor;
-    int? brokerageMinor;
-    DateTime transactionDate = DateTime.now();
 
     await showDialog<void>(
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) {
           final currency = viewModel.currency;
-          final gainLoss = quantityScaled != null && unitPriceMinor != null
-              ? viewModel.sellGainLossMinor(
-                  holding: holding,
-                  quantityScaled: quantityScaled!,
-                  unitPriceMinor: unitPriceMinor!,
-                )
-              : null;
+          final gainLoss = draft.gainLossMinor;
           return AlertDialog(
             title: Text(l10n.actionSell),
             content: SingleChildScrollView(
@@ -532,13 +491,13 @@ class HoldingsView extends StatelessWidget {
                         h.instrument.name,
                         formatQuantityScaled(h.sellableQuantityScaled),
                       ),
-                      value: holding.instrument.id,
+                      value: draft.holding.instrument.id,
                       onChanged: (id) {
                         final next = viewModel.holdings
                             .where((h) => h.instrument.id == id)
                             .firstOrNull;
                         if (next != null) {
-                          setDialogState(() => holding = next);
+                          setDialogState(() => draft.holding = next);
                         }
                       },
                     ),
@@ -550,7 +509,7 @@ class HoldingsView extends StatelessWidget {
                       ),
                       decoration: InputDecoration(labelText: l10n.quantity),
                       onChanged: (text) => setDialogState(
-                        () => quantityScaled = parseQuantityScaled(text),
+                        () => draft.quantityScaled = parseQuantityScaled(text),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.medium),
@@ -559,7 +518,7 @@ class HoldingsView extends StatelessWidget {
                       labelText: l10n.unitPrice,
                       currency: currency,
                       onChangedMinor: (value) =>
-                          setDialogState(() => unitPriceMinor = value),
+                          setDialogState(() => draft.unitPriceMinor = value),
                     ),
                     if (gainLoss != null) ...[
                       const SizedBox(height: AppSpacing.medium),
@@ -571,41 +530,43 @@ class HoldingsView extends StatelessWidget {
                             : l10n.looksLikeBreakEven,
                         style: AppTypography.body,
                       ),
-                      if (gainLoss > 0)
+                      if (draft.requiresIncomeCategory)
                         EntityPickerField<Account>(
                           labelText: l10n.gainIncomeCategory,
                           items: viewModel.incomeCategories,
                           idOf: (c) => c.id,
                           labelOf: (c) => localizeStoredName(l10n, c.name),
-                          value: gainIncomeCategoryId,
-                          onChanged: (value) => gainIncomeCategoryId = value,
+                          value: draft.gainIncomeCategoryId,
+                          onChanged: (value) =>
+                              draft.gainIncomeCategoryId = value,
                         ),
-                      if (gainLoss < 0)
+                      if (draft.requiresExpenseCategory)
                         EntityPickerField<Account>(
                           labelText: l10n.lossExpenseCategory,
                           items: viewModel.expenseCategories,
                           idOf: (c) => c.id,
                           labelOf: (c) => localizeStoredName(l10n, c.name),
-                          value: lossExpenseCategoryId,
-                          onChanged: (value) => lossExpenseCategoryId = value,
+                          value: draft.lossExpenseCategoryId,
+                          onChanged: (value) =>
+                              draft.lossExpenseCategoryId = value,
                         ),
                     ],
                     const SizedBox(height: AppSpacing.medium),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        '${l10n.dateLabel} ${formatLocalDate(context, transactionDate)}',
+                        '${l10n.dateLabel} ${formatLocalDate(context, draft.transactionDate)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
                         final picked = await showDatePicker(
                           context: context,
-                          initialDate: transactionDate,
+                          initialDate: draft.transactionDate,
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                         );
                         if (picked != null) {
-                          setDialogState(() => transactionDate = picked);
+                          setDialogState(() => draft.transactionDate = picked);
                         }
                       },
                     ),
@@ -613,7 +574,7 @@ class HoldingsView extends StatelessWidget {
                       controller: brokerageController,
                       labelText: l10n.brokerageOptional,
                       currency: currency,
-                      onChangedMinor: (value) => brokerageMinor = value,
+                      onChangedMinor: (value) => draft.brokerageMinor = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     EntityPickerField<Account>(
@@ -621,8 +582,8 @@ class HoldingsView extends StatelessWidget {
                       items: viewModel.expenseCategories,
                       idOf: (c) => c.id,
                       labelOf: (c) => localizeStoredName(l10n, c.name),
-                      value: brokerageCategoryId,
-                      onChanged: (value) => brokerageCategoryId = value,
+                      value: draft.brokerageCategoryId,
+                      onChanged: (value) => draft.brokerageCategoryId = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     AppTextField(
@@ -640,22 +601,9 @@ class HoldingsView extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  if (quantityScaled == null || unitPriceMinor == null) {
-                    return;
-                  }
-                  final ok = await viewModel.recordSell(
-                    instrumentId: holding.instrument.id,
-                    quantityScaled: quantityScaled!,
-                    unitPriceMinor: unitPriceMinor!,
-                    transactionDate: transactionDate,
-                    gainIncomeCategoryId: gainIncomeCategoryId,
-                    lossExpenseCategoryId: lossExpenseCategoryId,
-                    description: descriptionController.text.trim().isEmpty
-                        ? null
-                        : descriptionController.text.trim(),
-                    brokerageMinor: brokerageMinor,
-                    brokerageExpenseCategoryId: brokerageCategoryId,
-                  );
+                  draft.description = descriptionController.text;
+                  if (!draft.canSubmit) return;
+                  final ok = await viewModel.submitSell(draft);
                   if (ok && dialogContext.mounted) {
                     Navigator.of(dialogContext).pop();
                   }
@@ -676,14 +624,10 @@ class HoldingsView extends StatelessWidget {
     // quantity) are dividend-eligible here; `viewModel.instruments` is the
     // *global* instrument list and would let a dividend post against an
     // instrument this account never bought.
-    final instruments = viewModel.heldInstruments;
-    if (instruments.isEmpty) return;
+    if (viewModel.heldInstruments.isEmpty) return;
+    final draft = viewModel.newDividendDraft();
     final amountController = TextEditingController();
     final descriptionController = TextEditingController();
-    String? instrumentId = instruments.first.id;
-    String? incomeCategoryId;
-    int? amountMinor;
-    DateTime transactionDate = DateTime.now();
 
     await showDialog<void>(
       context: context,
@@ -699,18 +643,18 @@ class HoldingsView extends StatelessWidget {
                   children: [
                     EntityPickerField<Instrument>(
                       labelText: l10n.instrument,
-                      items: instruments,
+                      items: draft.eligibleInstruments,
                       idOf: (i) => i.id,
                       labelOf: (i) => i.name,
-                      value: instrumentId,
-                      onChanged: (value) => instrumentId = value,
+                      value: draft.instrumentId,
+                      onChanged: (value) => draft.instrumentId = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     MoneyAmountField(
                       controller: amountController,
                       labelText: l10n.amount,
                       currency: viewModel.currency,
-                      onChangedMinor: (value) => amountMinor = value,
+                      onChangedMinor: (value) => draft.amountMinor = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     EntityPickerField<Account>(
@@ -718,25 +662,25 @@ class HoldingsView extends StatelessWidget {
                       items: viewModel.incomeCategories,
                       idOf: (c) => c.id,
                       labelOf: (c) => localizeStoredName(l10n, c.name),
-                      value: incomeCategoryId,
-                      onChanged: (value) => incomeCategoryId = value,
+                      value: draft.incomeCategoryId,
+                      onChanged: (value) => draft.incomeCategoryId = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
-                        '${l10n.dateLabel} ${formatLocalDate(context, transactionDate)}',
+                        '${l10n.dateLabel} ${formatLocalDate(context, draft.transactionDate)}',
                       ),
                       trailing: const Icon(TablerIcons.calendar),
                       onTap: () async {
                         final picked = await showDatePicker(
                           context: context,
-                          initialDate: transactionDate,
+                          initialDate: draft.transactionDate,
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                         );
                         if (picked != null) {
-                          setDialogState(() => transactionDate = picked);
+                          setDialogState(() => draft.transactionDate = picked);
                         }
                       },
                     ),
@@ -755,20 +699,9 @@ class HoldingsView extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  if (instrumentId == null ||
-                      amountMinor == null ||
-                      incomeCategoryId == null) {
-                    return;
-                  }
-                  final ok = await viewModel.recordDividend(
-                    instrumentId: instrumentId!,
-                    amountMinor: amountMinor!,
-                    transactionDate: transactionDate,
-                    incomeCategoryId: incomeCategoryId!,
-                    description: descriptionController.text.trim().isEmpty
-                        ? null
-                        : descriptionController.text.trim(),
-                  );
+                  draft.description = descriptionController.text;
+                  if (!draft.canSubmit) return;
+                  final ok = await viewModel.submitDividend(draft);
                   if (ok && dialogContext.mounted) {
                     Navigator.of(dialogContext).pop();
                   }

@@ -540,23 +540,15 @@ class InvestmentRepository {
     );
   }
 
-  Future<void> _requireActiveIncomeCategory(String id) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null || row.type != AccountType.income) {
-      throw InvestmentException(
-        '$id is not an active Income category.',
-        code: AppErrorCode.notActiveIncomeCategory,
+  Future<void> _requireActiveIncomeCategory(String id) =>
+      _chart.requireActiveCategoryOfType(
+        id,
+        AccountType.income,
+        onInvalid: (id) => InvestmentException(
+          '$id is not an active Income category.',
+          code: AppErrorCode.notActiveIncomeCategory,
+        ),
       );
-    }
-    if (row.archivedAt != null) {
-      throw InvestmentException(
-        '$id is not an active Income category.',
-        code: AppErrorCode.notActiveIncomeCategory,
-      );
-    }
-  }
 
   Future<AccountRow> _requireInvestmentCashAccount(
     String id, {

@@ -196,6 +196,21 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     }
   }
 
+  /// Null when [pin] is at least 4 characters and matches [confirm].
+  AppErrorCode? pinValidationError(String pin, String confirm) {
+    if (pin.length < 4) return AppErrorCode.validationPinTooShort;
+    if (pin != confirm) return AppErrorCode.validationPinsDoNotMatch;
+    return null;
+  }
+
+  /// Null when [passphrase] is non-blank after trim.
+  AppErrorCode? passphraseValidationError(String passphrase) {
+    if (passphrase.trim().isEmpty) {
+      return AppErrorCode.validationPassphraseRequired;
+    }
+    return null;
+  }
+
   Future<bool> hasPinSet() => _appLockService.hasPinSet();
 
   /// Sets [pin] as the app-lock PIN and turns app lock on. Call only

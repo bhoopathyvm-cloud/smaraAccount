@@ -218,6 +218,7 @@ String localizeError(
     AppErrorCode.validationPassphraseRequired =>
       l10n.validationPassphraseRequired,
     AppErrorCode.validationPinsDoNotMatch => l10n.validationPinsDoNotMatch,
+    AppErrorCode.validationPinTooShort => l10n.validationPinMinLength,
     AppErrorCode.validationFeePositiveWithCategory =>
       l10n.validationFeePositiveWithCategory,
     AppErrorCode.validationFeeMustBeLessThanAmount =>
