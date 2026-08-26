@@ -3,6 +3,7 @@ import '../models/journal_entry.dart';
 import '../models/transaction_direction.dart';
 import 'display_balance.dart';
 import 'register_row.dart';
+import 'active_balance.dart';
 
 /// Counterpart / split labels the projection needs without depending on
 /// Flutter l10n. Register UI passes [AppLocalizations]; CSV export passes
@@ -98,7 +99,7 @@ List<RegisterProjectedEntry> projectRegisterEntries({
       postingAmountMinor: ownPosting.amountMinor,
     );
 
-    if (entry.isVerified && !entry.isSupersededByMigration) {
+    if (entryCountsTowardDisplayBalance(entry)) {
       runningBalance += delta;
     }
 

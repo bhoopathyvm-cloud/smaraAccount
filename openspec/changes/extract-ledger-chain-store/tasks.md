@@ -11,5 +11,5 @@
 
 ## 3. Verify
 
-- [ ] 3.1 `dart analyze` clean; verify-chain / re-anchor / key-loss unit tests green
+- [x] 3.1 `dart analyze` clean; verify-chain / re-anchor / key-loss unit tests green
 - [ ] 3.2 Spot-check integrity acceptance on macOS if chain writes moved

@@ -15,6 +15,8 @@ import 'data/repositories/recurring_template_repository.dart';
 import 'data/repositories/settings_repository.dart';
 import 'data/repositories/statement_import_repository.dart';
 import 'l10n/l10n.dart';
+import 'domain/lock/app_lock_service.dart';
+import 'domain/lock/biometric_authenticator.dart';
 import 'ui/app_router.dart';
 import 'ui/core/app_lock_controller.dart';
 import 'ui/core/app_theme.dart';
@@ -96,30 +98,17 @@ class SmaraAccountingApp extends StatelessWidget {
             identityRepository: identityRepository,
           ),
         ),
-        ProxyProvider5<
+        ProxyProvider3<
           AppDatabase,
           LedgerRepository,
-          AccountRepository,
-          CategoryRepository,
           AccountChartReader,
           InvestmentRepository
         >(
-          update:
-              (
-                _,
-                db,
-                ledgerRepository,
-                accountRepository,
-                categoryRepository,
-                chart,
-                _,
-              ) => InvestmentRepository(
-                database: db,
-                ledgerRepository: ledgerRepository,
-                accountRepository: accountRepository,
-                categoryRepository: categoryRepository,
-                chart: chart,
-              ),
+          update: (_, db, ledgerRepository, chart, _) => InvestmentRepository(
+            database: db,
+            ledgerRepository: ledgerRepository,
+            chart: chart,
+          ),
         ),
         ProxyProvider2<
           AppDatabase,
@@ -132,6 +121,10 @@ class SmaraAccountingApp extends StatelessWidget {
           ),
         ),
         Provider<SettingsRepository>(create: (_) => SettingsRepository()),
+        Provider<AppLockService>(create: (_) => AppLockService()),
+        Provider<BiometricAuthenticator>(
+          create: (_) => LocalAuthBiometricAuthenticator(),
+        ),
         ChangeNotifierProvider<LocaleController>(
           create: (context) {
             final controller = LocaleController(

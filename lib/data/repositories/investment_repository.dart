@@ -11,8 +11,6 @@ import '../../domain/models/transaction_direction.dart';
 import '../database/app_database.dart';
 import '../database/tables/investment_lots_table.dart';
 import 'account_chart_reader.dart';
-import 'account_repository.dart';
-import 'category_repository.dart';
 import 'investment_holdings_logic.dart';
 import 'ledger_repository.dart';
 import 'repository_date_utils.dart';
@@ -25,24 +23,14 @@ class InvestmentRepository {
   InvestmentRepository({
     required AppDatabase database,
     required LedgerRepository ledgerRepository,
-    required AccountRepository accountRepository,
-    required CategoryRepository categoryRepository,
     AccountChartReader? chart,
   }) : _db = database,
        _ledgerRepository = ledgerRepository,
-       _accountRepository = accountRepository,
-       _categoryRepository = categoryRepository,
        _chart = chart ?? AccountChartReader(database);
 
   final AppDatabase _db;
   final LedgerRepository _ledgerRepository;
   final AccountChartReader _chart;
-  // Unused by posting (validation is private copies, design.md D1a) but
-  // required in the constructor so DI matches the declared D2 graph.
-  // ignore: unused_field
-  final AccountRepository _accountRepository;
-  // ignore: unused_field
-  final CategoryRepository _categoryRepository;
 
   Stream<List<Instrument>> watchInstruments({bool includeArchived = false}) {
     final query = _db.select(_db.instruments)
@@ -592,26 +580,8 @@ class InvestmentRepository {
     return row;
   }
 
-  /// Copied from [LedgerRepository] rather than routed through
-  /// [CategoryRepository]: this validator throws [PendingTransferException]
-  /// even on a buy (observable behavior that must not change — design.md D1a).
-  Future<void> _requireActiveExpenseCategory(String id) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null || row.type != AccountType.expense) {
-      throw PendingTransferException(
-        '$id is not an active Expense category.',
-        code: AppErrorCode.notActiveExpenseCategory,
-      );
-    }
-    if (row.archivedAt != null) {
-      throw PendingTransferException(
-        '$id is not an active Expense category.',
-        code: AppErrorCode.notActiveExpenseCategory,
-      );
-    }
-  }
+  Future<void> _requireActiveExpenseCategory(String id) =>
+      _chart.requireActiveExpenseCategory(id);
 
   Future<String> _inventoryAccountIdFor(String cashAccountId) async {
     final row =

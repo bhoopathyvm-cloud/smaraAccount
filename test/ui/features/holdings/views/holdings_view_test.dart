@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/models/account.dart';
-import 'package:smara_accounting/domain/models/account_group.dart';
+import 'package:smara_accounting/domain/models/account_currency_catalog.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
 import 'package:smara_accounting/domain/models/instrument_holding.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
@@ -46,16 +46,6 @@ void main() {
     holdsInvestments: true,
   );
 
-  const group = AccountGroup(
-    id: 'group_investments',
-    name: 'Investments',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 4,
-    isSystem: true,
-    currency: 'USD',
-    archived: false,
-  );
-
   setUp(() {
     ledger = MockLedgerRepository();
     investment = MockInvestmentRepository();
@@ -80,8 +70,12 @@ void main() {
       categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value(const []));
     when(
-      accountRepository.watchAccountGroups(),
-    ).thenAnswer((_) => Stream.value([group]));
+      accountRepository.watchAccountCurrencies(
+        includeArchived: anyNamed('includeArchived'),
+      ),
+    ).thenAnswer(
+      (_) => Stream.value(const AccountCurrencyCatalog({'inv-1': 'USD'})),
+    );
     when(ledger.displayBalanceMinor(any)).thenAnswer((_) async => 40000);
     when(settings.isMarketPriceFetchEnabled()).thenAnswer((_) async => false);
     when(

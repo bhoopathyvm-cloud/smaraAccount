@@ -1,4 +1,4 @@
-import 'package:drift/drift.dart' hide isNull;
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
@@ -57,8 +57,6 @@ void main() {
     investmentRepository = InvestmentRepository(
       database: db,
       ledgerRepository: repository,
-      accountRepository: accountRepository,
-      categoryRepository: categoryRepository,
     );
     recurringTemplateRepository = RecurringTemplateRepository(
       database: db,
@@ -3206,6 +3204,39 @@ void main() {
 
         overview = await repository.watchHomeOverview().first;
         expect(overview.pendingTransfers, isEmpty);
+      },
+    );
+
+    test(
+      'pendingTransferSummary matches Home and is null after settle',
+      () async {
+        final checkingId = await firstFinancialAccountId();
+        final euroId = await secondCurrencyAssetAccountId();
+        await repository.recordTransfer(
+          fromAccountId: checkingId,
+          toAccountId: euroId,
+          amountMinor: 10000,
+          transactionDate: DateTime(2026, 1, 15),
+        );
+        final pending = (await repository.watchPendingTransfers().first).single;
+        final overview = await repository.watchHomeOverview().first;
+        final listed = overview.pendingTransfers.single;
+
+        final byId = await repository.pendingTransferSummary(pending.id);
+        expect(byId, isNotNull);
+        expect(byId!.pendingTransfer.id, listed.pendingTransfer.id);
+        expect(byId.sourceAccountName, listed.sourceAccountName);
+        expect(byId.destinationLabel, listed.destinationLabel);
+        expect(byId.currency, listed.currency);
+        expect(byId.amountMinor, listed.amountMinor);
+
+        await repository.settlePendingTransfer(
+          pendingTransferId: pending.id,
+          settledToAccountId: euroId,
+          settledAmountMinor: 9200,
+        );
+        expect(await repository.pendingTransferSummary(pending.id), isNull);
+        expect(await repository.pendingTransferSummary('missing'), isNull);
       },
     );
 

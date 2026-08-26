@@ -48,8 +48,6 @@ void main() {
     investmentRepository = InvestmentRepository(
       database: db,
       ledgerRepository: repository,
-      accountRepository: accountRepository,
-      categoryRepository: categoryRepository,
     );
     final generated = await identityRepository.generateFirstIdentity();
     await identityRepository.confirmFirstIdentity(generated, currency: 'USD');

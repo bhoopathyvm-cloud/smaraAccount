@@ -10,7 +10,6 @@ import 'package:smara_accounting/data/instrument_quote_service.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
-import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -39,12 +38,7 @@ void main() {
       accountRepository: accountRepository,
       signingKeyService: keys,
     );
-    investment = InvestmentRepository(
-      database: db,
-      ledgerRepository: ledger,
-      accountRepository: accountRepository,
-      categoryRepository: CategoryRepository(database: db),
-    );
+    investment = InvestmentRepository(database: db, ledgerRepository: ledger);
     final generated = await identityRepository.generateFirstIdentity();
     await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
     instrument = await investment.createInstrument(

@@ -13,6 +13,8 @@ import 'account_chart_reader.dart';
 import 'investment_holdings_logic.dart';
 import 'ledger_chain_store.dart';
 import 'repository_date_utils.dart';
+import '../../domain/models/journal_entry.dart';
+import '../../domain/register/active_balance.dart';
 
 /// Deep posting/signing module: record, reverse, fix, pending-transfer
 /// writes, and [appendSignedEntry]. Chart reads go through
@@ -27,19 +29,20 @@ class LedgerPosting {
     required AppDatabase database,
     required AccountChartReader chart,
     required LedgerChainStore chain,
-    required Future<int> Function(String financialAccountId)
-    displayBalanceMinor,
+    required Future<List<JournalEntry>> Function(String financialAccountId)
+    entriesForAccount,
     SigningKeyService? signingKeyService,
   }) : _db = database,
        _chart = chart,
        _chain = chain,
-       _displayBalanceMinor = displayBalanceMinor,
+       _entriesForAccount = entriesForAccount,
        _signingKeyService = signingKeyService ?? SigningKeyService();
 
   final AppDatabase _db;
   final AccountChartReader _chart;
   final LedgerChainStore _chain;
-  final Future<int> Function(String financialAccountId) _displayBalanceMinor;
+  final Future<List<JournalEntry>> Function(String financialAccountId)
+  _entriesForAccount;
   final SigningKeyService _signingKeyService;
 
   /// Validates `amountMinor > 0`, derives the two postings, stamps
@@ -337,7 +340,11 @@ class LedgerPosting {
         );
       }
       if (fromAccount.holdsInvestments) {
-        final cashBalance = await _displayBalanceMinor(fromAccount.id);
+        final cashBalance = displayBalanceForAccount(
+          entries: await _entriesForAccount(fromAccount.id),
+          accountId: fromAccount.id,
+          accountType: fromAccount.type,
+        );
         if (amountMinor > cashBalance) {
           throw InvalidTransferException(
             'Cannot transfer more than the investment account cash balance '
@@ -367,7 +374,11 @@ class LedgerPosting {
         );
       }
       if (fromAccount.holdsInvestments) {
-        final cashBalance = await _displayBalanceMinor(fromAccount.id);
+        final cashBalance = displayBalanceForAccount(
+          entries: await _entriesForAccount(fromAccount.id),
+          accountId: fromAccount.id,
+          accountType: fromAccount.type,
+        );
         if (amountMinor > cashBalance) {
           throw InvalidTransferException(
             'Cannot transfer more than the investment account cash balance '
@@ -554,23 +565,8 @@ class LedgerPosting {
     });
   }
 
-  Future<void> _requireActiveExpenseCategory(String id) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null || row.type != AccountType.expense) {
-      throw PendingTransferException(
-        '$id is not an active Expense category.',
-        code: AppErrorCode.notActiveExpenseCategory,
-      );
-    }
-    if (row.archivedAt != null) {
-      throw PendingTransferException(
-        '$id is not an active Expense category.',
-        code: AppErrorCode.notActiveExpenseCategory,
-      );
-    }
-  }
+  Future<void> _requireActiveExpenseCategory(String id) =>
+      _chart.requireActiveExpenseCategory(id);
 
   /// Settles a pending transfer or foreign-currency transaction
   /// (multi-currency-support design.md Decision 5).
