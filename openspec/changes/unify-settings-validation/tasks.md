@@ -17,5 +17,5 @@
 
 ## 4. Verify
 
-- [ ] 4.1 `dart analyze` clean; new `SettingsViewModel` unit tests green
-- [ ] 4.2 Existing `settings_view_test.dart` and `settings_view_model_test.dart` widget/unit tests still green, no assertions weakened
+- [x] 4.1 `dart analyze` clean; new `SettingsViewModel` unit tests green
+- [x] 4.2 Existing `settings_view_test.dart` and `settings_view_model_test.dart` widget/unit tests still green, no assertions weakened

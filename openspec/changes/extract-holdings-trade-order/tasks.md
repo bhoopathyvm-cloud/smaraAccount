@@ -19,6 +19,6 @@
 
 ## 4. Verify
 
-- [ ] 4.1 `dart analyze` clean; new draft unit tests green
-- [ ] 4.2 Existing `holdings_view_test.dart` widget tests still green; add a widget test that opens the Buy dialog and asserts brokerage fields hide for non-cash funding (closes the current coverage gap)
+- [x] 4.1 `dart analyze` clean; new draft unit tests green
+- [x] 4.2 Existing `holdings_view_test.dart` widget tests still green; add a widget test that opens the Buy dialog and asserts brokerage fields hide for non-cash funding (closes the current coverage gap)
 - [ ] 4.3 Spot-check acceptance-investment-holdings on macOS

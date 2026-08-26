@@ -95,7 +95,7 @@ void main() {
     await Future<void>.delayed(Duration.zero);
   });
 
-  tearDown(viewModel.dispose);
+  tearDown(() => viewModel.dispose());
 
   group('canChangeGroupCurrency', () {
     test('is false when the group has an active account', () {

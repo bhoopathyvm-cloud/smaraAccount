@@ -13,5 +13,5 @@
 
 ## 3. Verify
 
-- [ ] 3.1 `dart analyze` clean; new ViewModel unit tests green
-- [ ] 3.2 Existing `account_management_view_test.dart` widget tests still green, no assertions weakened
+- [x] 3.1 `dart analyze` clean; new ViewModel unit tests green
+- [x] 3.2 Existing `account_management_view_test.dart` widget tests still green, no assertions weakened
