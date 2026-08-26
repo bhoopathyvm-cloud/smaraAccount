@@ -1,9 +1,7 @@
-import '../../data/database/tables/entry_verification_cache_table.dart'
-    show VerificationBreakReason;
 import 'posting.dart';
+import 'verification_break_reason.dart';
 
-export '../../data/database/tables/entry_verification_cache_table.dart'
-    show VerificationBreakReason;
+export 'verification_break_reason.dart';
 
 /// A posted, immutable double-entry journal entry and its postings. Once
 /// posted, no code path updates or deletes this row or its postings

@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/account.dart';
-import 'package:smara_accounting/domain/models/account_group.dart';
+import 'package:smara_accounting/domain/models/account_currency_catalog.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/features/transfer/view_models/transfer_view_model.dart';
@@ -47,24 +47,6 @@ void main() {
     archived: false,
     groupId: 'group-eur',
   );
-  const usdGroup = AccountGroup(
-    id: 'group-usd',
-    name: 'Cash & cash equivalents',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 0,
-    isSystem: true,
-    currency: 'USD',
-    archived: false,
-  );
-  const eurGroup = AccountGroup(
-    id: 'group-eur',
-    name: 'Pension & retirement',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 1,
-    isSystem: true,
-    currency: 'EUR',
-    archived: false,
-  );
   const jpySavings = Account(
     id: 'asset-4',
     name: 'Yen Savings',
@@ -72,15 +54,21 @@ void main() {
     archived: false,
     groupId: 'group-jpy',
   );
-  const jpyGroup = AccountGroup(
-    id: 'group-jpy',
-    name: 'Investments',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 4,
-    isSystem: true,
-    currency: 'JPY',
-    archived: false,
-  );
+
+  const usdCatalog = AccountCurrencyCatalog({
+    'asset-1': 'USD',
+    'asset-2': 'USD',
+  });
+  const usdEurCatalog = AccountCurrencyCatalog({
+    'asset-1': 'USD',
+    'asset-2': 'USD',
+    'asset-3': 'EUR',
+  });
+  const usdJpyCatalog = AccountCurrencyCatalog({
+    'asset-1': 'USD',
+    'asset-2': 'USD',
+    'asset-4': 'JPY',
+  });
 
   TransferViewModel buildViewModel() {
     return TransferViewModel(
@@ -102,10 +90,10 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([checking, savings]));
     when(
-      accountRepository.watchAccountGroups(
+      accountRepository.watchAccountCurrencies(
         includeArchived: anyNamed('includeArchived'),
       ),
-    ).thenAnswer((_) => Stream.value([usdGroup]));
+    ).thenAnswer((_) => Stream.value(usdCatalog));
     when(
       categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value([bankFees]));
@@ -354,10 +342,10 @@ void main() {
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, eurSavings]));
       when(
-        accountRepository.watchAccountGroups(
+        accountRepository.watchAccountCurrencies(
           includeArchived: anyNamed('includeArchived'),
         ),
-      ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
+      ).thenAnswer((_) => Stream.value(usdEurCatalog));
       // isReferenceRateLookupEnabled already stubbed to false in setUp.
 
       final viewModel = buildViewModel();
@@ -444,10 +432,10 @@ void main() {
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, eurSavings]));
       when(
-        accountRepository.watchAccountGroups(
+        accountRepository.watchAccountCurrencies(
           includeArchived: anyNamed('includeArchived'),
         ),
-      ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
+      ).thenAnswer((_) => Stream.value(usdEurCatalog));
       when(
         repository.recordTransfer(
           fromAccountId: anyNamed('fromAccountId'),
@@ -544,10 +532,10 @@ void main() {
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, eurSavings]));
       when(
-        accountRepository.watchAccountGroups(
+        accountRepository.watchAccountCurrencies(
           includeArchived: anyNamed('includeArchived'),
         ),
-      ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
+      ).thenAnswer((_) => Stream.value(usdEurCatalog));
 
       final viewModel = buildViewModel();
       await Future<void>.delayed(Duration.zero);
@@ -626,10 +614,10 @@ void main() {
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, jpySavings]));
       when(
-        accountRepository.watchAccountGroups(
+        accountRepository.watchAccountCurrencies(
           includeArchived: anyNamed('includeArchived'),
         ),
-      ).thenAnswer((_) => Stream.value([usdGroup, jpyGroup]));
+      ).thenAnswer((_) => Stream.value(usdJpyCatalog));
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);

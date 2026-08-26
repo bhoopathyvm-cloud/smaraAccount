@@ -232,7 +232,7 @@ void main() {
   testWidgets('turning on Require unlock opens a set-PIN dialog; matching PINs '
       'enable app lock', (tester) async {
     when(appLockService.setPin(any)).thenAnswer((_) async {});
-    when(repository.setAppLockEnabled(true)).thenAnswer((_) async {});
+    when(appLockController.setLockEnabled(true)).thenAnswer((_) async {});
     await pumpSettings(tester);
 
     await tapScrolled(tester, find.text('Require unlock to open the app'));
@@ -246,7 +246,7 @@ void main() {
     await tester.pumpAndSettle();
 
     verify(appLockService.setPin('4242')).called(1);
-    verify(repository.setAppLockEnabled(true)).called(1);
+    verify(appLockController.setLockEnabled(true)).called(1);
     expect(find.text('Set a PIN'), findsNothing);
   });
 
@@ -274,7 +274,7 @@ void main() {
     (tester) async {
       when(repository.isAppLockEnabled()).thenAnswer((_) async => true);
       when(appLockService.clearPin()).thenAnswer((_) async {});
-      when(repository.setAppLockEnabled(false)).thenAnswer((_) async {});
+      when(appLockController.setLockEnabled(false)).thenAnswer((_) async {});
       when(
         repository.setAppLockBiometricEnabled(false),
       ).thenAnswer((_) async {});
@@ -284,7 +284,7 @@ void main() {
       await tester.pump();
 
       verify(appLockService.clearPin()).called(1);
-      verify(repository.setAppLockEnabled(false)).called(1);
+      verify(appLockController.setLockEnabled(false)).called(1);
       expect(find.text('Set a PIN'), findsNothing);
     },
   );

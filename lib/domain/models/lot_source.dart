@@ -1,0 +1,1 @@
+enum LotSource { cashPurchase, nonCashAcquisition }

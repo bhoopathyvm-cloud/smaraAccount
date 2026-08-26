@@ -449,37 +449,25 @@ class StatementImportViewModel extends ChangeNotifier {
   }
 
   Future<void> _checkCurrencyAndBuildPreview(String accountId) async {
-    final accountCurrency = await _importRepository.groupCurrencyFor(accountId);
+    final preview = await _importRepository.buildPreviewRows(
+      financialAccountId: accountId,
+      transactions: _transactions,
+      rules: _categoryRules,
+    );
     final statementCurrency = _statementCurrency;
     _currencyMismatch =
         statementCurrency != null &&
-        accountCurrency != null &&
-        statementCurrency != accountCurrency;
+        preview.accountCurrency != null &&
+        statementCurrency != preview.accountCurrency;
 
-    final duplicateIndexes = await _importRepository.findDuplicateIndexes(
-      financialAccountId: accountId,
-      transactions: _transactions,
-    );
-
-    final rows = <StatementImportPreviewRow>[];
-    for (var i = 0; i < _transactions.length; i++) {
-      final transaction = _transactions[i];
-      // A saved category rule takes priority over the exact-memo fallback
-      // (import-category-rules design.md Decision: "Rule priority").
-      final suggestedCategoryId =
-          matchCategoryRule(transaction.description, _categoryRules) ??
-          await _importRepository.suggestCategoryFor(
-            financialAccountId: accountId,
-            description: transaction.description,
-          );
-      rows.add(
+    final rows = <StatementImportPreviewRow>[
+      for (final draft in preview.rows)
         StatementImportPreviewRow(
-          transaction: transaction,
-          isDuplicate: duplicateIndexes.contains(i),
-          categoryId: suggestedCategoryId,
+          transaction: draft.transaction,
+          isDuplicate: draft.isDuplicate,
+          categoryId: draft.suggestedCategoryId,
         ),
-      );
-    }
+    ];
 
     if (_isDisposed) return;
     _rows = rows;

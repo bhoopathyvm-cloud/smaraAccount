@@ -1,11 +1,12 @@
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../domain/models/lot_source.dart';
 import 'accounts_table.dart';
 import 'instruments_table.dart';
 import 'journal_entries_table.dart';
 
-enum LotSource { cashPurchase, nonCashAcquisition }
+export '../../../domain/models/lot_source.dart';
 
 @DataClassName('InvestmentLotRow')
 class InvestmentLots extends Table {

@@ -10,6 +10,7 @@ import '../../domain/models/instrument_quote.dart';
 import '../../domain/models/transaction_direction.dart';
 import '../database/app_database.dart';
 import '../database/tables/investment_lots_table.dart';
+import 'account_chart_reader.dart';
 import 'account_repository.dart';
 import 'category_repository.dart';
 import 'investment_holdings_logic.dart';
@@ -26,13 +27,16 @@ class InvestmentRepository {
     required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
     required CategoryRepository categoryRepository,
+    AccountChartReader? chart,
   }) : _db = database,
        _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
-       _categoryRepository = categoryRepository;
+       _categoryRepository = categoryRepository,
+       _chart = chart ?? AccountChartReader(database);
 
   final AppDatabase _db;
   final LedgerRepository _ledgerRepository;
+  final AccountChartReader _chart;
   // Unused by posting (validation is private copies, design.md D1a) but
   // required in the constructor so DI matches the declared D2 graph.
   // ignore: unused_field
@@ -646,29 +650,6 @@ class InvestmentRepository {
     );
   }
 
-  /// The ISO 4217 currency of [accountRow]'s group - never null in
-  /// practice for a reachable financial account (the currency-backfill
-  /// gate runs before any account-creation UI, and group assignment is
-  /// mandatory), but defensively rejected rather than silently treating a
-  /// backfill-pending group as some default currency.
-  Future<String> _groupCurrencyFor(AccountRow accountRow) async {
-    final groupId = accountRow.groupId;
-    if (groupId == null) {
-      throw AccountGroupException(
-        'Account ${accountRow.id} has no group assigned.',
-        code: AppErrorCode.accountHasNoGroup,
-      );
-    }
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
-    final currency = group?.currency;
-    if (currency == null) {
-      throw AccountGroupException(
-        'Account group $groupId has no currency set yet.',
-        code: AppErrorCode.groupHasNoCurrency,
-      );
-    }
-    return currency;
-  }
+  Future<String> _groupCurrencyFor(AccountRow accountRow) =>
+      _chart.groupCurrencyFor(accountRow);
 }

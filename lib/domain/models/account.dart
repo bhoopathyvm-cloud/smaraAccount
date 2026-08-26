@@ -1,6 +1,6 @@
-import '../../data/database/tables/accounts_table.dart' show AccountType;
+import 'account_type.dart';
 
-export '../../data/database/tables/accounts_table.dart' show AccountType;
+export 'account_type.dart';
 
 /// Domain-facing view of an `accounts` row — a financial account,
 /// Income/Expense category, or the internal equity offset.

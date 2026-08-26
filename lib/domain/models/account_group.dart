@@ -1,8 +1,6 @@
-import '../../data/database/tables/account_groups_table.dart'
-    show AccountGroupKind;
+import 'account_group_kind.dart';
 
-export '../../data/database/tables/account_groups_table.dart'
-    show AccountGroupKind;
+export 'account_group_kind.dart';
 
 /// Domain-facing view of an `account_groups` row.
 class AccountGroup {
