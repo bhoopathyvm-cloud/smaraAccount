@@ -10,5 +10,5 @@
 
 ## 3. Verify
 
-- [ ] 3.1 Settle widget tests do not require a loaded Home overview
-- [ ] 3.2 Home pending-transfer unit coverage still green
+- [x] 3.1 Settle widget tests do not require a loaded Home overview
+- [x] 3.2 Home pending-transfer unit coverage still green

@@ -11,5 +11,5 @@
 
 ## 3. Verify
 
-- [ ] 3.1 Ledger, register-projection, and posting-related unit tests green
-- [ ] 3.2 `dart analyze` clean
+- [x] 3.1 Ledger, register-projection, and posting-related unit tests green
+- [x] 3.2 `dart analyze` clean

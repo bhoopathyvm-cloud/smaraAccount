@@ -11,5 +11,5 @@
 
 ## 3. Verify
 
-- [ ] 3.1 Holdings, correction, investment, and posting unit tests green
-- [ ] 3.2 `dart analyze` clean
+- [x] 3.1 Holdings, correction, investment, and posting unit tests green
+- [x] 3.2 `dart analyze` clean

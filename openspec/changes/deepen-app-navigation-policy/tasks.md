@@ -10,5 +10,5 @@
 
 ## 3. Verify
 
-- [ ] 3.1 Router/widget tests still green; policy unit tests cover gate order
+- [x] 3.1 Router/widget tests still green; policy unit tests cover gate order
 - [ ] 3.2 Spot-check onboarding + app-lock acceptance on macOS
