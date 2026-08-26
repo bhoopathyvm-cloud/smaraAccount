@@ -9,7 +9,7 @@ import '../../../../data/repositories/payee_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
-import '../../../../domain/models/account_group.dart';
+import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/payee.dart';
 import '../../../../domain/models/transaction_direction.dart';
 import '../../../../domain/statement_import/category_rule.dart'
@@ -55,10 +55,10 @@ class RecordTransactionViewModel extends ChangeNotifier
       }
       notifyListeners();
     });
-    _groupsSubscription = _accountRepository
-        .watchAccountGroups(includeArchived: true)
-        .listen((groups) {
-          _groups = groups;
+    _currenciesSubscription = _accountRepository
+        .watchAccountCurrencies(includeArchived: true)
+        .listen((catalog) {
+          _currencies = catalog;
           notifyListeners();
         });
     _categoriesSubscription = _categoryRepository.watchCategories().listen((
@@ -78,14 +78,14 @@ class RecordTransactionViewModel extends ChangeNotifier
   final CategoryRepository _categoryRepository;
   final PayeeRepository _payeeRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
-  late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
+  late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
   late final StreamSubscription<List<Payee>> _payeesSubscription;
 
   List<Account> _financialAccounts = const [];
   List<Account> get financialAccounts => _financialAccounts;
 
-  List<AccountGroup> _groups = const [];
+  AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
   List<Account> _categories = const [];
 
@@ -100,18 +100,7 @@ class RecordTransactionViewModel extends ChangeNotifier
 
   /// The ISO 4217 currency of [accountId]'s group, or null if either
   /// can't be resolved yet.
-  String? currencyFor(String? accountId) {
-    final account = _financialAccounts
-        .where((a) => a.id == accountId)
-        .cast<Account?>()
-        .firstWhere((a) => a != null, orElse: () => null);
-    if (account?.groupId == null) return null;
-    return _groups
-        .where((g) => g.id == account!.groupId)
-        .cast<AccountGroup?>()
-        .firstWhere((g) => g != null, orElse: () => null)
-        ?.currency;
-  }
+  String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);
 
   /// The selected financial account's own currency.
   String? get accountCurrency => currencyFor(_financialAccountId);
@@ -482,7 +471,7 @@ class RecordTransactionViewModel extends ChangeNotifier
   @override
   void dispose() {
     _accountsSubscription.cancel();
-    _groupsSubscription.cancel();
+    _currenciesSubscription.cancel();
     _categoriesSubscription.cancel();
     _payeesSubscription.cancel();
     super.dispose();

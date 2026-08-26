@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/account.dart';
-import 'package:smara_accounting/domain/models/account_group.dart';
+import 'package:smara_accounting/domain/models/account_currency_catalog.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/features/transfer/view_models/transfer_view_model.dart';
@@ -50,24 +50,11 @@ void main() {
     archived: false,
     groupId: 'group-eur',
   );
-  const usdGroup = AccountGroup(
-    id: 'group-usd',
-    name: 'Cash & cash equivalents',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 0,
-    isSystem: true,
-    currency: 'USD',
-    archived: false,
-  );
-  const eurGroup = AccountGroup(
-    id: 'group-eur',
-    name: 'Pension & retirement',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 1,
-    isSystem: true,
-    currency: 'EUR',
-    archived: false,
-  );
+  const usdEurCatalog = AccountCurrencyCatalog({
+    'asset-1': 'USD',
+    'asset-2': 'USD',
+    'asset-3': 'EUR',
+  });
 
   setUp(() {
     repository = MockLedgerRepository();
@@ -79,10 +66,10 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([checking, savings]));
     when(
-      accountRepository.watchAccountGroups(
+      accountRepository.watchAccountCurrencies(
         includeArchived: anyNamed('includeArchived'),
       ),
-    ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
+    ).thenAnswer((_) => Stream.value(usdEurCatalog));
     when(
       categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value(const []));

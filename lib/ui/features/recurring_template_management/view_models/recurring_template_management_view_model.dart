@@ -8,7 +8,7 @@ import '../../../../data/repositories/recurring_template_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
-import '../../../../domain/models/account_group.dart';
+import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/transaction_direction.dart';
 
@@ -37,10 +37,10 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
       _financialAccounts = accounts;
       notifyListeners();
     });
-    _groupsSubscription = _accountRepository
-        .watchAccountGroups(includeArchived: true)
-        .listen((groups) {
-          _groups = groups;
+    _currenciesSubscription = _accountRepository
+        .watchAccountCurrencies(includeArchived: true)
+        .listen((catalog) {
+          _currencies = catalog;
           notifyListeners();
         });
     _categoriesSubscription = _categoryRepository.watchCategories().listen((
@@ -56,7 +56,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
   final CategoryRepository _categoryRepository;
   late final StreamSubscription<List<RecurringTemplate>> _templatesSubscription;
   late final StreamSubscription<List<Account>> _accountsSubscription;
-  late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
+  late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
 
   List<RecurringTemplate> _templates = const [];
@@ -65,7 +65,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
   List<Account> _financialAccounts = const [];
   List<Account> get financialAccounts => _financialAccounts;
 
-  List<AccountGroup> _groups = const [];
+  AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
   List<Account> _categories = const [];
 
@@ -80,18 +80,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
   }
 
   /// The ISO 4217 currency of [accountId]'s group, for the amount field.
-  String? currencyFor(String? accountId) {
-    final account = _financialAccounts
-        .where((a) => a.id == accountId)
-        .cast<Account?>()
-        .firstWhere((a) => a != null, orElse: () => null);
-    if (account?.groupId == null) return null;
-    return _groups
-        .where((g) => g.id == account!.groupId)
-        .cast<AccountGroup?>()
-        .firstWhere((g) => g != null, orElse: () => null)
-        ?.currency;
-  }
+  String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);
 
   void clearError() => clearFailure();
 
@@ -154,7 +143,7 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
   void dispose() {
     _templatesSubscription.cancel();
     _accountsSubscription.cancel();
-    _groupsSubscription.cancel();
+    _currenciesSubscription.cancel();
     _categoriesSubscription.cancel();
     super.dispose();
   }

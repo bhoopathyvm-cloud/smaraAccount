@@ -13,6 +13,7 @@ import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/domain/statement_import/category_rule.dart';
 import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart';
 import 'package:smara_accounting/domain/statement_import/statement_import_batch.dart';
+import 'package:smara_accounting/domain/statement_import/statement_import_preview.dart';
 import 'package:smara_accounting/ui/features/statement_import/view_models/statement_import_view_model.dart';
 import 'package:smara_accounting/ui/features/statement_import/views/statement_import_view.dart';
 
@@ -103,6 +104,30 @@ void main() {
     );
   }
 
+  void stubPreview({Set<int> duplicateIndexes = const {}}) {
+    when(
+      importRepository.buildPreviewRows(
+        financialAccountId: anyNamed('financialAccountId'),
+        transactions: anyNamed('transactions'),
+        rules: anyNamed('rules'),
+      ),
+    ).thenAnswer((invocation) async {
+      final txs =
+          invocation.namedArguments[#transactions]
+              as List<ParsedStatementTransaction>;
+      return StatementImportPreview(
+        accountCurrency: 'USD',
+        rows: [
+          for (var i = 0; i < txs.length; i++)
+            StatementImportPreviewDraft(
+              transaction: txs[i],
+              isDuplicate: duplicateIndexes.contains(i),
+            ),
+        ],
+      );
+    });
+  }
+
   Future<StatementImportViewModel> pumpAtPreview(
     WidgetTester tester, {
     Set<int> duplicateIndexes = const {},
@@ -114,19 +139,7 @@ void main() {
         statementCurrency: 'USD',
       ),
     );
-    when(importRepository.groupCurrencyFor(any)).thenAnswer((_) async => 'USD');
-    when(
-      importRepository.findDuplicateIndexes(
-        financialAccountId: anyNamed('financialAccountId'),
-        transactions: anyNamed('transactions'),
-      ),
-    ).thenAnswer((_) async => duplicateIndexes);
-    when(
-      importRepository.suggestCategoryFor(
-        financialAccountId: anyNamed('financialAccountId'),
-        description: anyNamed('description'),
-      ),
-    ).thenAnswer((_) async => null);
+    stubPreview(duplicateIndexes: duplicateIndexes);
 
     final viewModel = buildViewModel();
     addTearDown(viewModel.dispose);
@@ -153,19 +166,7 @@ void main() {
         statementCurrency: 'USD',
       ),
     );
-    when(importRepository.groupCurrencyFor(any)).thenAnswer((_) async => 'USD');
-    when(
-      importRepository.findDuplicateIndexes(
-        financialAccountId: anyNamed('financialAccountId'),
-        transactions: anyNamed('transactions'),
-      ),
-    ).thenAnswer((_) async => const {});
-    when(
-      importRepository.suggestCategoryFor(
-        financialAccountId: anyNamed('financialAccountId'),
-        description: anyNamed('description'),
-      ),
-    ).thenAnswer((_) async => null);
+    stubPreview();
     when(
       importRepository.saveCategoryRule(
         keyword: anyNamed('keyword'),
@@ -228,6 +229,41 @@ void main() {
   );
 
   testWidgets(
+    'preview flags a currency mismatch when the statement currency differs',
+    (tester) async {
+      when(importRepository.parseOfxFile(any)).thenReturn(
+        StatementParseResult(
+          transactions: [rowA],
+          skippedRows: const [],
+          statementCurrency: 'EUR',
+        ),
+      );
+      when(
+        importRepository.buildPreviewRows(
+          financialAccountId: anyNamed('financialAccountId'),
+          transactions: anyNamed('transactions'),
+          rules: anyNamed('rules'),
+        ),
+      ).thenAnswer(
+        (_) async => StatementImportPreview(
+          accountCurrency: 'USD',
+          rows: [
+            StatementImportPreviewDraft(transaction: rowA, isDuplicate: false),
+          ],
+        ),
+      );
+
+      final viewModel = buildViewModel();
+      addTearDown(viewModel.dispose);
+      await viewModel.loadFile(name: 'statement.ofx', bytes: const [1, 2, 3]);
+      await viewModel.selectAccount(checking.id);
+
+      expect(viewModel.currencyMismatch, isTrue);
+      expect(viewModel.statementCurrency, 'EUR');
+    },
+  );
+
+  testWidgets(
     'register-launched OFX with a skipped row shows the reason on preview '
     'alongside the good rows (account-select is auto-skipped)',
     (tester) async {
@@ -244,21 +280,7 @@ void main() {
           statementCurrency: 'USD',
         ),
       );
-      when(
-        importRepository.groupCurrencyFor(any),
-      ).thenAnswer((_) async => 'USD');
-      when(
-        importRepository.findDuplicateIndexes(
-          financialAccountId: anyNamed('financialAccountId'),
-          transactions: anyNamed('transactions'),
-        ),
-      ).thenAnswer((_) async => const {});
-      when(
-        importRepository.suggestCategoryFor(
-          financialAccountId: anyNamed('financialAccountId'),
-          description: anyNamed('description'),
-        ),
-      ).thenAnswer((_) async => null);
+      stubPreview();
 
       final viewModel = StatementImportViewModel(
         importRepository: importRepository,
@@ -661,18 +683,7 @@ void main() {
           statementCurrency: 'USD',
         ),
       );
-      when(
-        importRepository.findDuplicateIndexes(
-          financialAccountId: anyNamed('financialAccountId'),
-          transactions: anyNamed('transactions'),
-        ),
-      ).thenAnswer((_) async => const {});
-      when(
-        importRepository.suggestCategoryFor(
-          financialAccountId: anyNamed('financialAccountId'),
-          description: anyNamed('description'),
-        ),
-      ).thenAnswer((_) async => null);
+      stubPreview();
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);

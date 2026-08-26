@@ -1,8 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
-/// Kind of an [AccountGroups] row — asset rollups vs liability rollups.
-enum AccountGroupKind { assetGroup, liabilityGroup }
+import '../../../domain/models/account_group_kind.dart';
+
+export '../../../domain/models/account_group_kind.dart';
 
 /// Stable well-known ids for the five seeded system groups (design.md).
 const groupCashEquivalentsId = 'group_cash_equivalents';

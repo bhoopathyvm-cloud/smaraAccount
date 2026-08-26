@@ -1,6 +1,6 @@
-import '../../data/database/tables/investment_lots_table.dart' show LotSource;
+import 'lot_source.dart';
 
-export '../../data/database/tables/investment_lots_table.dart' show LotSource;
+export 'lot_source.dart';
 
 /// A single acquisition lot for an instrument in one investment account.
 class InvestmentLot {

@@ -1,7 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
-enum InstrumentKind { stock, etf, mutualFund, bond, other }
+import '../../../domain/models/instrument_kind.dart';
+
+export '../../../domain/models/instrument_kind.dart';
 
 @DataClassName('InstrumentRow')
 class Instruments extends Table {

@@ -10,6 +10,7 @@ import '../../domain/ofx/ofx_parser.dart';
 import '../../domain/statement_import/category_rule.dart';
 import '../../domain/statement_import/parsed_statement_transaction.dart';
 import '../../domain/statement_import/statement_import_batch.dart';
+import '../../domain/statement_import/statement_import_preview.dart';
 import '../database/app_database.dart';
 import '../database/tables/ofx_import_records_table.dart' show ImportSource;
 import 'account_repository.dart';
@@ -56,17 +57,11 @@ class StatementImportRepository {
 
   /// The account's group currency, for comparing against a parsed file's
   /// `statementCurrency` (ofx-transaction-import design.md Decision 3:
-  /// mismatch is a warning, not a block).
-  Future<String?> groupCurrencyFor(String financialAccountId) async {
-    final accounts = await _accountRepository
-        .watchFinancialAccounts(includeArchived: true)
-        .first;
-    final account = accounts.firstWhere((a) => a.id == financialAccountId);
-    final groups = await _accountRepository
-        .watchAccountGroups(includeArchived: true)
-        .first;
-    final group = groups.firstWhere((g) => g.id == account.groupId);
-    return group.currency;
+  /// mismatch is a warning, not a block). Delegates to
+  /// [AccountRepository.groupCurrencyFor] so import does not keep a
+  /// third join of accounts and groups (account-group-currency-lookup).
+  Future<String?> groupCurrencyFor(String financialAccountId) {
+    return _accountRepository.groupCurrencyFor(financialAccountId);
   }
 
   /// Returns the positions (indexes into [transactions]) of rows that
@@ -114,6 +109,35 @@ class StatementImportRepository {
     return duplicateIndexes;
   }
 
+  /// Builds the full preview in one call: currency for the mismatch gate,
+  /// duplicate flags, rule matches, and memo-suggestion fallbacks. Loads
+  /// the account's entries once for every unique description rather than
+  /// awaiting [suggestCategoryFor] per row (statement-import-preview).
+  Future<StatementImportPreview> buildPreviewRows({
+    required String financialAccountId,
+    required List<ParsedStatementTransaction> transactions,
+    required List<CategoryRule> rules,
+  }) async {
+    final accountCurrency = await groupCurrencyFor(financialAccountId);
+    final duplicateIndexes = await findDuplicateIndexes(
+      financialAccountId: financialAccountId,
+      transactions: transactions,
+    );
+    final suggestions = await _suggestCategoriesBatched(
+      financialAccountId: financialAccountId,
+      descriptions: {for (final t in transactions) t.description},
+    );
+    return StatementImportPreview(
+      accountCurrency: accountCurrency,
+      rows: buildStatementImportPreviewDrafts(
+        transactions: transactions,
+        duplicateIndexes: duplicateIndexes,
+        rules: rules,
+        suggestionsByDescription: suggestions,
+      ),
+    );
+  }
+
   /// The category most recently posted (by device-chain order, not
   /// transaction date, so backdated statement rows don't skew "most
   /// recent") against an entry whose description exactly matches
@@ -122,7 +146,20 @@ class StatementImportRepository {
     required String financialAccountId,
     required String description,
   }) async {
-    if (description.isEmpty) return null;
+    final suggestions = await _suggestCategoriesBatched(
+      financialAccountId: financialAccountId,
+      descriptions: {description},
+    );
+    return suggestions[description];
+  }
+
+  Future<Map<String, String?>> _suggestCategoriesBatched({
+    required String financialAccountId,
+    required Set<String> descriptions,
+  }) async {
+    final result = <String, String?>{for (final d in descriptions) d: null};
+    final needed = descriptions.where((d) => d.isNotEmpty).toSet();
+    if (needed.isEmpty) return result;
 
     final entries = await _ledgerRepository
         .watchEntriesForAccount(financialAccountId)
@@ -132,23 +169,27 @@ class StatementImportRepository {
             .map((c) => c.id)
             .toSet();
 
-    JournalEntry? mostRecentMatch;
+    final mostRecentByDescription = <String, JournalEntry>{};
     for (final entry in entries) {
-      if (entry.description != description) continue;
-      if (mostRecentMatch == null ||
-          entry.deviceChainSequence > mostRecentMatch.deviceChainSequence) {
-        mostRecentMatch = entry;
+      final description = entry.description;
+      if (description == null || !needed.contains(description)) continue;
+      final previous = mostRecentByDescription[description];
+      if (previous == null ||
+          entry.deviceChainSequence > previous.deviceChainSequence) {
+        mostRecentByDescription[description] = entry;
       }
     }
-    if (mostRecentMatch == null) return null;
 
-    for (final posting in mostRecentMatch.postings) {
-      if (posting.accountId != financialAccountId &&
-          categoryIds.contains(posting.accountId)) {
-        return posting.accountId;
+    for (final MapEntry(:key, :value) in mostRecentByDescription.entries) {
+      for (final posting in value.postings) {
+        if (posting.accountId != financialAccountId &&
+            categoryIds.contains(posting.accountId)) {
+          result[key] = posting.accountId;
+          break;
+        }
       }
     }
-    return null;
+    return result;
   }
 
   /// Posts each accepted row through [LedgerRepository.recordTransaction],

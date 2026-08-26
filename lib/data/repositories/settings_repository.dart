@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../domain/lock/app_lock_settings_store.dart';
 import '../../domain/models/exchange_rate_provider.dart';
 import '../../domain/models/quote_provider.dart';
 import '../../domain/models/research_tool.dart';
@@ -9,7 +10,7 @@ import '../../domain/models/research_tool.dart';
 /// Deliberately not `flutter_secure_storage` - that's reserved for actual
 /// secret material (recovery phrase / signing key), and these values
 /// aren't secrets.
-class SettingsRepository {
+class SettingsRepository implements AppLockSettingsStore {
   SettingsRepository({SharedPreferencesAsync? preferences})
     : _preferences = preferences ?? SharedPreferencesAsync();
 
@@ -57,10 +58,12 @@ class SettingsRepository {
   /// Off by default (app-lock spec: "Lock is off by default" - opens
   /// without a lock screen exactly as it always has, unless the user
   /// opts in).
+  @override
   Future<bool> isAppLockEnabled() async {
     return await _preferences.getBool(_appLockEnabledKey) ?? false;
   }
 
+  @override
   Future<void> setAppLockEnabled(bool value) {
     return _preferences.setBool(_appLockEnabledKey, value);
   }
@@ -68,10 +71,12 @@ class SettingsRepository {
   /// Minutes the app can sit backgrounded before the next resume requires
   /// unlocking again. 0 means "immediately" - re-lock on every
   /// backgrounding, however brief.
+  @override
   Future<int> appLockTimeoutMinutes() async {
     return await _preferences.getInt(_appLockTimeoutMinutesKey) ?? 0;
   }
 
+  @override
   Future<void> setAppLockTimeoutMinutes(int minutes) {
     return _preferences.setInt(_appLockTimeoutMinutesKey, minutes);
   }
@@ -92,10 +97,12 @@ class SettingsRepository {
   /// Works Independently Of App Lock"). Off by default, and only ever
   /// meaningful on a platform with a real mechanism (iOS/Android) - the
   /// Settings UI is what keeps this from being offered anywhere else.
+  @override
   Future<bool> isAppSwitcherSnapshotHidingEnabled() async {
     return await _preferences.getBool(_hideAppSwitcherSnapshotKey) ?? false;
   }
 
+  @override
   Future<void> setAppSwitcherSnapshotHidingEnabled(bool value) {
     return _preferences.setBool(_hideAppSwitcherSnapshotKey, value);
   }

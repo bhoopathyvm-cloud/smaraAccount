@@ -255,6 +255,53 @@ void main() {
     });
   });
 
+  group('buildPreviewRows', () {
+    test(
+      'returns currency, duplicate flags, and memo suggestions in one call',
+      () async {
+        final category =
+            (await categoryRepository.watchCategories().first).first;
+        await ledgerRepository.recordTransaction(
+          amountMinor: 250,
+          direction: TransactionDirection.moneyOut,
+          categoryId: category.id,
+          financialAccountId: accountId,
+          transactionDate: DateTime(2026, 1, 10),
+          description: 'Coffee Shop',
+        );
+
+        final coffee = ParsedStatementTransaction(
+          transactionDate: DateTime(2026, 2, 2),
+          amountMinor: 450,
+          direction: TransactionDirection.moneyOut,
+          description: 'Coffee Shop',
+          currency: 'USD',
+          externalReferenceId: 'FIT-NEW',
+        );
+        final other = ParsedStatementTransaction(
+          transactionDate: DateTime(2026, 2, 3),
+          amountMinor: 100,
+          direction: TransactionDirection.moneyOut,
+          description: 'Unknown Payee',
+          currency: 'USD',
+          externalReferenceId: 'FIT-OTHER',
+        );
+
+        final preview = await importRepository.buildPreviewRows(
+          financialAccountId: accountId,
+          transactions: [coffee, other],
+          rules: const [],
+        );
+
+        expect(preview.accountCurrency, 'USD');
+        expect(preview.rows, hasLength(2));
+        expect(preview.rows[0].suggestedCategoryId, category.id);
+        expect(preview.rows[1].suggestedCategoryId, isNull);
+        expect(preview.rows.every((r) => !r.isDuplicate), isTrue);
+      },
+    );
+  });
+
   group('postAcceptedRows', () {
     test(
       'posts a valid row and records it for future duplicate detection',

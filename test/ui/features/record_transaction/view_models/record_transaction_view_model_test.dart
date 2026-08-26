@@ -166,11 +166,6 @@ void main() {
         withPayeesAccounts.watchFinancialAccounts(),
       ).thenAnswer((_) => Stream.value(const []));
       when(
-        withPayeesAccounts.watchAccountGroups(
-          includeArchived: anyNamed('includeArchived'),
-        ),
-      ).thenAnswer((_) => Stream.value(const []));
-      when(
         withPayeesCategories.watchCategories(),
       ).thenAnswer((_) => Stream.value(const []));
       when(

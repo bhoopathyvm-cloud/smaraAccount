@@ -2,10 +2,12 @@ import 'package:drift/drift.dart';
 
 import '../../domain/exceptions.dart';
 import '../../domain/models/account.dart';
+import '../../domain/models/account_currency_catalog.dart';
 import '../../domain/models/account_group.dart';
 import '../database/app_database.dart';
 import '../database/tables/account_groups_table.dart';
 import '../database/tables/accounts_table.dart';
+import 'account_chart_reader.dart';
 import 'ledger_repository.dart';
 import 'repository_date_utils.dart';
 
@@ -26,11 +28,14 @@ class AccountRepository {
   AccountRepository({
     required AppDatabase database,
     required LedgerRepository ledgerRepository,
+    AccountChartReader? chart,
   }) : _db = database,
-       _ledgerRepository = ledgerRepository;
+       _ledgerRepository = ledgerRepository,
+       _chart = chart ?? AccountChartReader(database);
 
   final AppDatabase _db;
   final LedgerRepository _ledgerRepository;
+  final AccountChartReader _chart;
 
   /// Whether any `account_groups` row still has no currency - the signal
   /// for a database migrated from schemaVersion 3 that needs the one-time
@@ -57,22 +62,9 @@ class AccountRepository {
   }
 
   /// Active financial accounts only (`asset` / `liability` allowlist).
-  Stream<List<Account>> watchFinancialAccounts({bool includeArchived = false}) {
-    final query = _db.select(_db.accounts)
-      ..where(
-        (a) =>
-            a.type.equalsValue(AccountType.asset) |
-            a.type.equalsValue(AccountType.liability),
-      )
-      ..orderBy([
-        (a) => OrderingTerm.asc(a.sortOrder),
-        (a) => OrderingTerm.asc(a.name),
-      ]);
-    if (!includeArchived) {
-      query.where((a) => a.archivedAt.isNull());
-    }
-    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
-  }
+  Stream<List<Account>> watchFinancialAccounts({
+    bool includeArchived = false,
+  }) => _chart.watchFinancialAccounts(includeArchived: includeArchived);
 
   /// Account-group pickers ([includeArchived] false, the default) or
   /// callers resolving an existing account's own group, which may since
@@ -80,67 +72,55 @@ class AccountRepository {
   /// [watchFinancialAccounts]'s convention.
   Stream<List<AccountGroup>> watchAccountGroups({
     bool includeArchived = false,
+  }) => _chart.watchAccountGroups(includeArchived: includeArchived);
+
+  /// Reactive account-id → group-currency catalog. Derived once here so
+  /// record/register/transfer/settle/recurring view models do not each
+  /// join [watchFinancialAccounts] and [watchAccountGroups]
+  /// (account-group-currency-lookup).
+  Stream<AccountCurrencyCatalog> watchAccountCurrencies({
+    bool includeArchived = false,
   }) {
-    final query = _db.select(_db.accountGroups)
-      ..orderBy([(g) => OrderingTerm.asc(g.sortOrder)]);
+    final query =
+        _db.select(_db.accounts).join([
+          innerJoin(
+            _db.accountGroups,
+            _db.accountGroups.id.equalsExp(_db.accounts.groupId),
+          ),
+        ])..where(
+          _db.accounts.type.equalsValue(AccountType.asset) |
+              _db.accounts.type.equalsValue(AccountType.liability),
+        );
     if (!includeArchived) {
-      query.where((g) => g.archivedAt.isNull());
+      query.where(_db.accounts.archivedAt.isNull());
     }
-    return query.watch().map((rows) => rows.map(_toDomainGroup).toList());
+    return query.watch().map((rows) {
+      final byAccountId = <String, String>{};
+      for (final row in rows) {
+        final account = row.readTable(_db.accounts);
+        final currency = row.readTable(_db.accountGroups).currency;
+        if (currency != null) {
+          byAccountId[account.id] = currency;
+        }
+      }
+      return AccountCurrencyCatalog(byAccountId);
+    });
   }
 
-  Account _toDomainAccount(AccountRow row) {
-    return Account(
-      id: row.id,
-      name: row.name,
-      type: row.type,
-      archived: row.archivedAt != null,
-      groupId: row.groupId,
-      sortOrder: row.sortOrder,
-      holdsInvestments: row.holdsInvestments,
-      investmentOwnerAccountId: row.investmentOwnerAccountId,
-      monthlyLimitMinor: row.monthlyLimitMinor,
-      isCreditCard: row.isCreditCard,
-    );
+  /// Snapshot of [watchAccountCurrencies] for one account, including
+  /// archived accounts. Null when the account is missing, has no group,
+  /// or the group has no currency yet.
+  Future<String?> groupCurrencyFor(String financialAccountId) async {
+    final catalog = await watchAccountCurrencies(includeArchived: true).first;
+    return catalog.currencyFor(financialAccountId);
   }
 
-  AccountGroup _toDomainGroup(AccountGroupRow row) {
-    return AccountGroup(
-      id: row.id,
-      name: row.name,
-      kind: row.kind,
-      sortOrder: row.sortOrder,
-      isSystem: row.isSystem,
-      currency: row.currency,
-      archived: row.archivedAt != null,
-    );
-  }
+  Account _toDomainAccount(AccountRow row) => _chart.toDomainAccount(row);
 
-  /// Also kept, private and unchanged, on `LedgerRepository` itself
-  /// (architecture-deepening design.md D1a) - duplicated rather than
-  /// shared, since sharing it would require a dependency in the direction
-  /// that closes a cycle with this class's own `LedgerRepository`
-  /// dependency above. Read-only, so the two copies can't drift into
-  /// different write behavior.
-  Future<AccountRow> _requireActiveFinancialAccount(String id) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null ||
-        (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException(
-        'Account $id is not a financial account.',
-        code: AppErrorCode.accountNotFinancial,
-      );
-    }
-    if (row.archivedAt != null) {
-      throw AccountGroupException(
-        'Account $id is archived.',
-        code: AppErrorCode.accountArchived,
-      );
-    }
-    return row;
-  }
+  AccountGroup _toDomainGroup(AccountGroupRow row) => _chart.toDomainGroup(row);
+
+  Future<AccountRow> _requireActiveFinancialAccount(String id) =>
+      _chart.requireActiveFinancialAccount(id);
 
   /// Sibling of [_requireActiveFinancialAccount] for the one write that
   /// *must* start from an archived account: closeout of its remaining
@@ -174,28 +154,8 @@ class AccountRepository {
     return row;
   }
 
-  /// Also kept, private and unchanged, on `LedgerRepository` itself - see
-  /// [_requireActiveFinancialAccount]'s own doc comment for why.
-  Future<String> _groupCurrencyFor(AccountRow accountRow) async {
-    final groupId = accountRow.groupId;
-    if (groupId == null) {
-      throw AccountGroupException(
-        'Account ${accountRow.id} has no group assigned.',
-        code: AppErrorCode.accountHasNoGroup,
-      );
-    }
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
-    final currency = group?.currency;
-    if (currency == null) {
-      throw AccountGroupException(
-        'Account group $groupId has no currency set yet.',
-        code: AppErrorCode.groupHasNoCurrency,
-      );
-    }
-    return currency;
-  }
+  Future<String> _groupCurrencyFor(AccountRow accountRow) =>
+      _chart.groupCurrencyFor(accountRow);
 
   /// Creates a financial account. [openingBalanceMinor] if supplied must be
   /// positive; for liabilities it means amount owed.

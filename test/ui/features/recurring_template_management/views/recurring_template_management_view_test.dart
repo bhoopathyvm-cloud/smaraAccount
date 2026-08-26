@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/models/account.dart';
-import 'package:smara_accounting/domain/models/account_group.dart';
+import 'package:smara_accounting/domain/models/account_currency_catalog.dart';
 import 'package:smara_accounting/domain/models/recurring_template.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/features/recurring_template_management/view_models/recurring_template_management_view_model.dart';
@@ -22,15 +22,7 @@ void main() {
     archived: false,
     groupId: 'group-1',
   );
-  const usdGroup = AccountGroup(
-    id: 'group-1',
-    name: 'Cash & cash equivalents',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 0,
-    isSystem: true,
-    currency: 'USD',
-    archived: false,
-  );
+  const currencies = AccountCurrencyCatalog({'account-1': 'USD'});
   const groceries = Account(
     id: 'expense-1',
     name: 'Groceries',
@@ -55,10 +47,10 @@ void main() {
       accountRepository.watchFinancialAccounts(),
     ).thenAnswer((_) => Stream.value(const [checking]));
     when(
-      accountRepository.watchAccountGroups(
+      accountRepository.watchAccountCurrencies(
         includeArchived: anyNamed('includeArchived'),
       ),
-    ).thenAnswer((_) => Stream.value(const [usdGroup]));
+    ).thenAnswer((_) => Stream.value(currencies));
     when(
       categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value(const [groceries]));

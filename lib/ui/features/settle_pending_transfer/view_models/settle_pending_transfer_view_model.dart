@@ -8,7 +8,7 @@ import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
-import '../../../../domain/models/account_group.dart';
+import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/home_overview.dart';
 import '../../../../domain/models/pending_transfer.dart';
 
@@ -44,16 +44,10 @@ class SettlePendingTransferViewModel extends ChangeNotifier
           .toList();
       notifyListeners();
     });
-    _accountsSubscription = _accountRepository
-        .watchFinancialAccounts(includeArchived: true)
-        .listen((accounts) {
-          _accounts = accounts;
-          notifyListeners();
-        });
-    _groupsSubscription = _accountRepository
-        .watchAccountGroups(includeArchived: true)
-        .listen((groups) {
-          _groups = groups;
+    _currenciesSubscription = _accountRepository
+        .watchAccountCurrencies(includeArchived: true)
+        .listen((catalog) {
+          _currencies = catalog;
           notifyListeners();
         });
   }
@@ -68,26 +62,12 @@ class SettlePendingTransferViewModel extends ChangeNotifier
   List<Account> _expenseCategories = const [];
   List<Account> get expenseCategories => _expenseCategories;
 
-  late final StreamSubscription<List<Account>> _accountsSubscription;
-  List<Account> _accounts = const [];
-
-  late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
-  List<AccountGroup> _groups = const [];
+  late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
+  AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
   /// The ISO 4217 currency of [accountId]'s group, or null if either
   /// can't be resolved yet.
-  String? currencyFor(String? accountId) {
-    final account = _accounts
-        .where((a) => a.id == accountId)
-        .cast<Account?>()
-        .firstWhere((a) => a != null, orElse: () => null);
-    if (account?.groupId == null) return null;
-    return _groups
-        .where((g) => g.id == account!.groupId)
-        .cast<AccountGroup?>()
-        .firstWhere((g) => g != null, orElse: () => null)
-        ?.currency;
-  }
+  String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);
 
   /// The currency [settledAmountMinor] should be entered in, given the
   /// current settlement target.
@@ -185,8 +165,7 @@ class SettlePendingTransferViewModel extends ChangeNotifier
   @override
   void dispose() {
     _categoriesSubscription.cancel();
-    _accountsSubscription.cancel();
-    _groupsSubscription.cancel();
+    _currenciesSubscription.cancel();
     super.dispose();
   }
 }

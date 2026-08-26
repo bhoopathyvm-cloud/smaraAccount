@@ -4,6 +4,7 @@ import '../../domain/exceptions.dart';
 import '../../domain/models/account.dart';
 import '../../domain/models/summary.dart';
 import '../database/app_database.dart';
+import 'account_chart_reader.dart';
 import 'repository_date_utils.dart';
 
 /// Income/expense categories - creation, renaming, archive/unarchive
@@ -11,40 +12,18 @@ import 'repository_date_utils.dart';
 /// `LedgerRepository` (architecture-deepening design.md D1); a leaf with
 /// no dependency on any other repository.
 class CategoryRepository {
-  CategoryRepository({required AppDatabase database}) : _db = database;
+  CategoryRepository({required AppDatabase database, AccountChartReader? chart})
+    : _db = database,
+      _chart = chart ?? AccountChartReader(database);
 
   final AppDatabase _db;
+  final AccountChartReader _chart;
 
   /// Categories for pickers ([includeArchived] false, the default) or
   /// historical views ([includeArchived] true). Allowlist: income/expense
   /// only — never liability/equity/asset.
   Stream<List<Account>> watchCategories({bool includeArchived = false}) {
-    final query = _db.select(_db.accounts)
-      ..where(
-        (a) =>
-            a.type.equalsValue(AccountType.income) |
-            a.type.equalsValue(AccountType.expense),
-      )
-      ..orderBy([(a) => OrderingTerm.asc(a.name)]);
-    if (!includeArchived) {
-      query.where((a) => a.archivedAt.isNull());
-    }
-    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
-  }
-
-  Account _toDomainAccount(AccountRow row) {
-    return Account(
-      id: row.id,
-      name: row.name,
-      type: row.type,
-      archived: row.archivedAt != null,
-      groupId: row.groupId,
-      sortOrder: row.sortOrder,
-      holdsInvestments: row.holdsInvestments,
-      investmentOwnerAccountId: row.investmentOwnerAccountId,
-      monthlyLimitMinor: row.monthlyLimitMinor,
-      isCreditCard: row.isCreditCard,
-    );
+    return _chart.watchCategories(includeArchived: includeArchived);
   }
 
   /// [type] must be [AccountType.income] or [AccountType.expense].

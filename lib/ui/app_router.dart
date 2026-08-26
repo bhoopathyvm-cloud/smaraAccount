@@ -192,8 +192,8 @@ GoRouter buildAppRouter(
       // on every navigation via refreshListenable, so a background-then-
       // resume relock (AppLockController.didChangeAppLifecycleState)
       // takes effect immediately, not just on the next explicit navigation.
-      if (await settingsRepository.isAppLockEnabled() &&
-          !appLockController.isUnlocked) {
+      await appLockController.policy.ensureLoaded();
+      if (appLockController.policy.requiresLockScreen) {
         return isLockRoute ? null : _lockPath;
       }
 

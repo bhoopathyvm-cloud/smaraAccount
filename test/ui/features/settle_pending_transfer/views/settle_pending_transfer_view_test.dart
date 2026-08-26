@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/models/account.dart';
-import 'package:smara_accounting/domain/models/account_group.dart';
+import 'package:smara_accounting/domain/models/account_currency_catalog.dart';
 import 'package:smara_accounting/domain/models/home_overview.dart';
 import 'package:smara_accounting/domain/models/pending_transfer.dart';
 import 'package:smara_accounting/ui/features/settle_pending_transfer/view_models/settle_pending_transfer_view_model.dart';
@@ -29,24 +29,10 @@ void main() {
     archived: false,
     groupId: 'group-eur',
   );
-  const usdGroup = AccountGroup(
-    id: 'group-usd',
-    name: 'Cash & cash equivalents',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 0,
-    isSystem: true,
-    currency: 'USD',
-    archived: false,
-  );
-  const eurGroup = AccountGroup(
-    id: 'group-eur',
-    name: 'Pension & retirement',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 1,
-    isSystem: true,
-    currency: 'EUR',
-    archived: false,
-  );
+  const currencies = AccountCurrencyCatalog({
+    'asset-1': 'USD',
+    'asset-2': 'EUR',
+  });
   const expenseCategory = Account(
     id: 'expense-1',
     name: 'Bank Fees',
@@ -64,10 +50,10 @@ void main() {
       ),
     ).thenAnswer((_) => Stream.value([checking, euroSavings]));
     when(
-      accountRepository.watchAccountGroups(
+      accountRepository.watchAccountCurrencies(
         includeArchived: anyNamed('includeArchived'),
       ),
-    ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
+    ).thenAnswer((_) => Stream.value(currencies));
     when(
       categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value([expenseCategory]));
