@@ -27,3 +27,7 @@ Default five canonical labels (needs-triage, needs-info, ready-for-agent, ready-
 ### Domain docs
 
 Single-context (root `CONTEXT.md` + `docs/adr/`). See `docs/agents/domain.md`.
+
+### Architecture deepening
+
+Conventions for `extract-`/`deepen-`/`unify-`/`finish-` OpenSpec changes (seam placement, naming, DI wiring, sequencing, testing). See `docs/agents/architecture-deepening.md` and ADR 0002.
