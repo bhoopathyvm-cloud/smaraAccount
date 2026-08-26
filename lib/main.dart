@@ -8,6 +8,7 @@ import 'data/repositories/category_repository.dart';
 import 'data/repositories/identity_repository.dart';
 import 'data/repositories/investment_repository.dart';
 import 'data/repositories/ledger_backup_repository.dart';
+import 'data/repositories/ledger_chain_store.dart';
 import 'data/repositories/ledger_repository.dart';
 import 'data/repositories/payee_repository.dart';
 import 'data/repositories/recurring_template_repository.dart';
@@ -46,9 +47,17 @@ class SmaraAccountingApp extends StatelessWidget {
         ProxyProvider<AppDatabase, AccountChartReader>(
           update: (_, db, _) => AccountChartReader(db),
         ),
-        ProxyProvider2<AppDatabase, AccountChartReader, LedgerRepository>(
-          update: (_, db, chart, _) =>
-              LedgerRepository(database: db, chart: chart),
+        ProxyProvider<AppDatabase, LedgerChainStore>(
+          update: (_, db, _) => LedgerChainStore(db),
+        ),
+        ProxyProvider3<
+          AppDatabase,
+          AccountChartReader,
+          LedgerChainStore,
+          LedgerRepository
+        >(
+          update: (_, db, chart, chain, _) =>
+              LedgerRepository(database: db, chart: chart, chain: chain),
         ),
         ProxyProvider3<
           AppDatabase,
@@ -69,10 +78,16 @@ class SmaraAccountingApp extends StatelessWidget {
         ProxyProvider<AppDatabase, PayeeRepository>(
           update: (_, db, _) => PayeeRepository(database: db),
         ),
-        ProxyProvider2<AppDatabase, AccountRepository, IdentityRepository>(
-          update: (_, db, accountRepository, _) => IdentityRepository(
+        ProxyProvider3<
+          AppDatabase,
+          AccountRepository,
+          LedgerChainStore,
+          IdentityRepository
+        >(
+          update: (_, db, accountRepository, chain, _) => IdentityRepository(
             database: db,
             accountRepository: accountRepository,
+            chain: chain,
           ),
         ),
         ProxyProvider2<AppDatabase, IdentityRepository, LedgerBackupRepository>(

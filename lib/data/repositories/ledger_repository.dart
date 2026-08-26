@@ -19,6 +19,7 @@ import '../database/app_database.dart';
 import '../database/tables/accounts_table.dart';
 import 'account_chart_reader.dart';
 import 'investment_holdings_logic.dart';
+import 'ledger_chain_store.dart';
 import 'ledger_posting.dart';
 import 'repository_date_utils.dart';
 
@@ -33,11 +34,14 @@ class LedgerRepository {
     required AppDatabase database,
     SigningKeyService? signingKeyService,
     AccountChartReader? chart,
+    LedgerChainStore? chain,
   }) : _db = database {
     _chart = chart ?? AccountChartReader(database);
+    final resolvedChain = chain ?? LedgerChainStore(database);
     _posting = LedgerPosting(
       database: database,
       chart: _chart,
+      chain: resolvedChain,
       displayBalanceMinor: displayBalanceMinor,
       signingKeyService: signingKeyService,
     );
