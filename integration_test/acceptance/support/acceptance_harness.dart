@@ -343,49 +343,57 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   // "Amount, account, and category are required." (design.md Risks).
   await pumpUntilFound(tester, find.text('Cash & Bank'));
 
+  // Amount field must be keyed by label: the form also has the optional
+  // transaction-currency TextField (and a description field), so
+  // find.byType(TextField).first is not stably the amount.
+  Finder amountField() => textFieldWithLabel(l10n.amount);
+
   // The whole entry retries as a unit, not just the Save tap: `enterText`
   // updating the controller's raw text is a weak proxy for its `onChanged`
   // having actually reached the ViewModel (design.md Risks) - observed to
   // pass its own check yet still leave `_amountMinor` null, surfacing only
   // downstream as Save's validation failing. Retrying Save alone can't fix
   // that; re-entering the amount can.
+  //
+  // Category selection must go through [selectDropdownOption]: closed
+  // DropdownButtonFormFields keep every DropdownMenuItem mounted offstage,
+  // so `find.text(categoryName).isNotEmpty` is true before any pick and a
+  // naive tap "succeeds" without setting categoryId - then Save fails with
+  // "Amount, account, and category are required." That false-positive is
+  // much more likely on the second scenario in a file (categories already
+  // warmed), which is how home_and_lock_test flakes after a full suite.
   var saved = false;
   for (var attempt = 0; attempt < 3 && !saved; attempt++) {
-    await enterTextReliably(
+    await enterTextReliably(tester, amountField, amountText, () {
+      final field = amountField().evaluate().single.widget as TextField;
+      return field.controller?.text == amountText;
+    });
+    await selectDropdownOption(
       tester,
-      () => find.byType(TextField).first,
-      amountText,
-      () {
-        final field =
-            find.byType(TextField).evaluate().first.widget as TextField;
-        return field.controller?.text == amountText;
-      },
-    );
-    await tapReliably(
-      tester,
-      () => find.byType(DropdownButtonFormField<String>).last,
-      () => find.text(categoryName).evaluate().isNotEmpty,
-    );
-    await tapReliably(
-      tester,
-      () => find.text(categoryName).last,
-      () => find.text(categoryName).evaluate().length == 1,
+      fieldLabel: l10n.category,
+      optionText: categoryName,
     );
     // Save is often below the live 800x600 fold (design.md Risks) - a raw
     // tap() hits whatever sits at that offset instead of the button, and
     // the miss is silent enough that the 2s recovery-phrase poll just
     // retries the whole entry forever on a wedged run. tapReliably scrolls
     // it into view and re-taps until the phrase screen appears.
-    await tapReliably(
-      tester,
-      () => find.descendant(
-        of: find.byType(RecordTransactionView),
-        matching: find.text(l10n.actionSave),
-      ),
-      () => find.text(l10n.iveSavedRecoveryPhrase).evaluate().isNotEmpty,
-      innerTries: 150,
-    );
-    saved = true;
+    // Catch so a failed Save attempt can re-enter amount/category (same
+    // pattern as core_ledger_test's re-anchoring Save loop).
+    try {
+      await tapReliably(
+        tester,
+        () => find.descendant(
+          of: find.byType(RecordTransactionView),
+          matching: find.text(l10n.actionSave),
+        ),
+        () => find.text(l10n.iveSavedRecoveryPhrase).evaluate().isNotEmpty,
+        innerTries: 150,
+      );
+      saved = true;
+    } catch (_) {
+      if (attempt == 2) rethrow;
+    }
   }
   if (!saved) {
     fail(
