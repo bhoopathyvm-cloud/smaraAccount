@@ -1,7 +1,7 @@
 ## 1. Finish the seam
 
-- [ ] 1.1 Replace `InvestmentRepository._requireActiveIncomeCategory`'s hand-rolled check with a call to `_chart.requireActiveCategoryOfType(id, AccountType.income, onInvalid: ...)`, preserving the existing `InvestmentException` message and `AppErrorCode.notActiveIncomeCategory` code
-- [ ] 1.2 Delete the now-unused private Drift select
+- [x] 1.1 Replace `InvestmentRepository._requireActiveIncomeCategory`'s hand-rolled check with a call to `_chart.requireActiveCategoryOfType(id, AccountType.income, onInvalid: ...)`, preserving the existing `InvestmentException` message and `AppErrorCode.notActiveIncomeCategory` code
+- [x] 1.2 Delete the now-unused private Drift select
 
 ## 2. Verify
 

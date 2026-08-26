@@ -7,11 +7,11 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../data/instrument_quote_refresh.dart';
 import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/category_repository.dart';
-import '../../../../data/repositories/investment_holdings_logic.dart';
 import '../../../../data/repositories/investment_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../domain/investment/trade_order_draft.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/investment_research_prompt.dart';
 import '../../../../domain/models/account.dart';
@@ -211,94 +211,61 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     return _run(() => _investmentRepository.archiveInstrument(id));
   }
 
-  int? sellGainLossMinor({
-    required InstrumentHolding holding,
-    required int quantityScaled,
-    required int unitPriceMinor,
-  }) {
-    if (quantityScaled <= 0 || unitPriceMinor <= 0) return null;
-    final proceeds = multiplyScaledQuantityPrice(
-      quantityScaled,
-      unitPriceMinor,
+  BuyOrderDraft newBuyDraft() => BuyOrderDraft();
+
+  SellOrderDraft newSellDraft() => SellOrderDraft(holding: holdings.first);
+
+  DividendOrderDraft newDividendDraft() {
+    return DividendOrderDraft(
+      eligibleInstruments: heldInstruments,
+      instrumentId: heldInstruments.first.id,
     );
-    final cost = multiplyScaledQuantityPrice(
-      quantityScaled,
-      holding.averageCostMinor,
-    );
-    return proceeds - cost;
   }
 
-  Future<bool> recordBuy({
-    required String instrumentId,
-    required int quantityScaled,
-    required int unitPriceMinor,
-    required DateTime transactionDate,
-    required BuyFundingSource fundingSource,
-    String? incomeCategoryId,
-    DateTime? lockedUntil,
-    String? description,
-    int? brokerageMinor,
-    String? brokerageExpenseCategoryId,
-  }) {
+  Future<bool> submitBuy(BuyOrderDraft draft) {
     return _run(
       () => _investmentRepository.recordBuy(
         accountId: accountId,
-        instrumentId: instrumentId,
-        quantityScaled: quantityScaled,
-        unitPriceMinor: unitPriceMinor,
-        transactionDate: transactionDate,
-        fundingSource: fundingSource,
-        incomeCategoryId: incomeCategoryId,
-        lockedUntil: lockedUntil,
-        description: description,
-        brokerageMinor: brokerageMinor,
-        brokerageExpenseCategoryId: brokerageExpenseCategoryId,
+        instrumentId: draft.instrumentId!,
+        quantityScaled: draft.quantityScaled!,
+        unitPriceMinor: draft.unitPriceMinor!,
+        transactionDate: draft.transactionDate,
+        fundingSource: draft.funding,
+        incomeCategoryId: draft.incomeCategoryId,
+        lockedUntil: draft.lockedUntil,
+        description: draft.descriptionOrNull,
+        brokerageMinor: draft.brokerageMinor,
+        brokerageExpenseCategoryId: draft.brokerageCategoryId,
       ),
     );
   }
 
-  Future<bool> recordSell({
-    required String instrumentId,
-    required int quantityScaled,
-    required int unitPriceMinor,
-    required DateTime transactionDate,
-    String? gainIncomeCategoryId,
-    String? lossExpenseCategoryId,
-    String? description,
-    int? brokerageMinor,
-    String? brokerageExpenseCategoryId,
-  }) {
+  Future<bool> submitSell(SellOrderDraft draft) {
     return _run(
       () => _investmentRepository.recordSell(
         accountId: accountId,
-        instrumentId: instrumentId,
-        quantityScaled: quantityScaled,
-        unitPriceMinor: unitPriceMinor,
-        transactionDate: transactionDate,
-        gainIncomeCategoryId: gainIncomeCategoryId,
-        lossExpenseCategoryId: lossExpenseCategoryId,
-        description: description,
-        brokerageMinor: brokerageMinor,
-        brokerageExpenseCategoryId: brokerageExpenseCategoryId,
+        instrumentId: draft.holding.instrument.id,
+        quantityScaled: draft.quantityScaled!,
+        unitPriceMinor: draft.unitPriceMinor!,
+        transactionDate: draft.transactionDate,
+        gainIncomeCategoryId: draft.gainIncomeCategoryId,
+        lossExpenseCategoryId: draft.lossExpenseCategoryId,
+        description: draft.descriptionOrNull,
+        brokerageMinor: draft.brokerageMinor,
+        brokerageExpenseCategoryId: draft.brokerageCategoryId,
       ),
     );
   }
 
-  Future<bool> recordDividend({
-    required String instrumentId,
-    required int amountMinor,
-    required DateTime transactionDate,
-    required String incomeCategoryId,
-    String? description,
-  }) {
+  Future<bool> submitDividend(DividendOrderDraft draft) {
     return _run(
       () => _investmentRepository.recordDividend(
         accountId: accountId,
-        instrumentId: instrumentId,
-        amountMinor: amountMinor,
-        transactionDate: transactionDate,
-        incomeCategoryId: incomeCategoryId,
-        description: description,
+        instrumentId: draft.instrumentId!,
+        amountMinor: draft.amountMinor!,
+        transactionDate: draft.transactionDate,
+        incomeCategoryId: draft.incomeCategoryId!,
+        description: draft.descriptionOrNull,
       ),
     );
   }

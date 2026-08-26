@@ -211,4 +211,39 @@ void main() {
       viewModel.dispose();
     },
   );
+
+  testWidgets('buy dialog hides brokerage fields when funding is non-cash', (
+    tester,
+  ) async {
+    final viewModel = HoldingsViewModel(
+      ledgerRepository: ledger,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+      investmentRepository: investment,
+      settingsRepository: settings,
+      accountId: 'inv-1',
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(home: HoldingsView(viewModel: viewModel)),
+    );
+    await tester.pump();
+    await tester.pump();
+
+    await tester.tap(find.text('Buy'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Brokerage (optional)'), findsOneWidget);
+    expect(find.text('Brokerage expense category'), findsOneWidget);
+    expect(find.text('Income category'), findsNothing);
+
+    await tester.tap(find.text('Non-cash'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Brokerage (optional)'), findsNothing);
+    expect(find.text('Brokerage expense category'), findsNothing);
+    expect(find.text('Income category'), findsOneWidget);
+
+    viewModel.dispose();
+  });
 }

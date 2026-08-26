@@ -167,4 +167,41 @@ void main() {
       },
     );
   });
+
+  group('pinValidationError', () {
+    test('rejects a PIN shorter than 4 characters', () {
+      expect(
+        viewModel.pinValidationError('123', '123'),
+        AppErrorCode.validationPinTooShort,
+      );
+    });
+
+    test('rejects a mismatched confirmation', () {
+      expect(
+        viewModel.pinValidationError('1234', '4321'),
+        AppErrorCode.validationPinsDoNotMatch,
+      );
+    });
+
+    test('accepts a matching PIN of at least 4 characters', () {
+      expect(viewModel.pinValidationError('1234', '1234'), isNull);
+    });
+  });
+
+  group('passphraseValidationError', () {
+    test('rejects blank and whitespace-only passphrases', () {
+      expect(
+        viewModel.passphraseValidationError(''),
+        AppErrorCode.validationPassphraseRequired,
+      );
+      expect(
+        viewModel.passphraseValidationError('   '),
+        AppErrorCode.validationPassphraseRequired,
+      );
+    });
+
+    test('accepts a non-blank passphrase', () {
+      expect(viewModel.passphraseValidationError('hunter2'), isNull);
+    });
+  });
 }

@@ -36,6 +36,46 @@ class AccountManagementViewModel extends ChangeNotifier
   List<AccountGroup> _groups = const [];
   List<AccountGroup> get groups => _groups;
 
+  /// Whether this group's currency may change. Must match
+  /// [AccountRepository.changeAccountGroupCurrency]'s guard: lock while any
+  /// active (non-archived) account still belongs to the group.
+  bool canChangeGroupCurrency(AccountGroup group) {
+    return !accounts.any(
+      (account) => account.groupId == group.id && !account.archived,
+    );
+  }
+
+  /// Active groups whose kind matches [type] (asset vs liability).
+  List<AccountGroup> groupsAvailableForType(AccountType type) {
+    final kind = type == AccountType.asset
+        ? AccountGroupKind.assetGroup
+        : AccountGroupKind.liabilityGroup;
+    return groups
+        .where((group) => group.kind == kind && !group.archived)
+        .toList();
+  }
+
+  /// Active same-kind, same-currency groups as [account]'s current group.
+  /// Moving across currencies would retroactively reinterpret historical
+  /// balances (multi-currency-support).
+  List<AccountGroup> groupsAvailableForReassignment(Account account) {
+    final kind = account.type == AccountType.asset
+        ? AccountGroupKind.assetGroup
+        : AccountGroupKind.liabilityGroup;
+    final currentCurrency = groups
+        .cast<AccountGroup?>()
+        .firstWhere((g) => g?.id == account.groupId, orElse: () => null)
+        ?.currency;
+    return groups
+        .where(
+          (group) =>
+              group.kind == kind &&
+              group.currency == currentCurrency &&
+              !group.archived,
+        )
+        .toList();
+  }
+
   void clearError() => clearFailure();
 
   Future<bool> createAccount({

@@ -104,6 +104,7 @@ enum AppErrorCode {
   validationChooseBackupFile,
   validationPassphraseRequired,
   validationPinsDoNotMatch,
+  validationPinTooShort,
   validationFeePositiveWithCategory,
   validationFeeMustBeLessThanAmount,
   validationTransferSavedFeeFailed,

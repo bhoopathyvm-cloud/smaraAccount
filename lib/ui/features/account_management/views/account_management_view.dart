@@ -49,12 +49,7 @@ class AccountManagementView extends StatelessWidget {
         final balanceController = controllers[1];
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            final kind = type == AccountType.asset
-                ? AccountGroupKind.assetGroup
-                : AccountGroupKind.liabilityGroup;
-            final groups = viewModel.groups
-                .where((group) => group.kind == kind && !group.archived)
-                .toList();
+            final groups = viewModel.groupsAvailableForType(type);
             if (!groups.any((group) => group.id == groupId)) {
               groupId = groups.isEmpty ? null : groups.first.id;
             }
@@ -225,9 +220,7 @@ class AccountManagementView extends StatelessWidget {
     AccountGroup group,
   ) async {
     final l10n = l10nOf(context);
-    final hasActiveAccounts = viewModel.accounts.any(
-      (account) => account.groupId == group.id && !account.archived,
-    );
+    final canChangeCurrency = viewModel.canChangeGroupCurrency(group);
     await showManagedDialog<void>(
       context: context,
       controllerCount: 2,
@@ -244,7 +237,7 @@ class AccountManagementView extends StatelessWidget {
               const SizedBox(height: AppSpacing.medium),
               TextField(
                 controller: currencyController,
-                enabled: !hasActiveAccounts,
+                enabled: canChangeCurrency,
                 textCapitalization: TextCapitalization.characters,
                 maxLength: 3,
                 inputFormatters: [
@@ -256,9 +249,9 @@ class AccountManagementView extends StatelessWidget {
                 ],
                 decoration: InputDecoration(
                   labelText: l10n.currencyIso,
-                  helperText: hasActiveAccounts
-                      ? l10n.errorCannotChangeGroupCurrencyWithAccounts
-                      : null,
+                  helperText: canChangeCurrency
+                      ? null
+                      : l10n.errorCannotChangeGroupCurrencyWithAccounts,
                   helperMaxLines: 2,
                 ),
               ),
@@ -285,7 +278,7 @@ class AccountManagementView extends StatelessWidget {
                   if (!renamed) return;
                 }
                 final currency = currencyController.text.trim();
-                if (!hasActiveAccounts &&
+                if (canChangeCurrency &&
                     currency.isNotEmpty &&
                     currency != group.currency) {
                   final changed = await viewModel.changeGroupCurrency(
@@ -427,25 +420,7 @@ class AccountManagementView extends StatelessWidget {
     Account account,
   ) async {
     final l10n = l10nOf(context);
-    final kind = account.type == AccountType.asset
-        ? AccountGroupKind.assetGroup
-        : AccountGroupKind.liabilityGroup;
-    final currentCurrency = viewModel.groups
-        .cast<AccountGroup?>()
-        .firstWhere((g) => g?.id == account.groupId, orElse: () => null)
-        ?.currency;
-    // Only same-currency groups are valid reassignment targets - moving an
-    // account to a different-currency group would retroactively reinterpret
-    // its historical balances (multi-currency-support design.md, extending
-    // multi-account-support's Decision 1/2.9).
-    final groups = viewModel.groups
-        .where(
-          (group) =>
-              group.kind == kind &&
-              group.currency == currentCurrency &&
-              !group.archived,
-        )
-        .toList();
+    final groups = viewModel.groupsAvailableForReassignment(account);
     var groupId = account.groupId;
     await showDialog<void>(
       context: context,
