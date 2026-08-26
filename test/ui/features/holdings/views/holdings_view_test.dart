@@ -246,4 +246,104 @@ void main() {
 
     viewModel.dispose();
   });
+
+  testWidgets(
+    'buy dialog does not create the new instrument until quantity and '
+    'price are set',
+    (tester) async {
+      final viewModel = HoldingsViewModel(
+        ledgerRepository: ledger,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        investmentRepository: investment,
+        settingsRepository: settings,
+        accountId: 'inv-1',
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(home: HoldingsView(viewModel: viewModel)),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      await tester.tap(find.text('Buy'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('New instrument'));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.widgetWithText(TextField, 'Name'), 'New Co');
+      await tester.pump();
+
+      // Quantity and unit price are still empty - submitting must not
+      // create the instrument as a side effect (BuyOrderDraft.canSubmit
+      // gates instrument creation on them, unlike the pre-draft dialog
+      // code, which created the instrument before checking quantity/price
+      // and could leave an orphaned instrument behind).
+      await tester.tap(find.text('Record buy'));
+      await tester.pumpAndSettle();
+
+      verifyNever(
+        investment.createInstrument(
+          name: anyNamed('name'),
+          kind: anyNamed('kind'),
+          ticker: anyNamed('ticker'),
+          isin: anyNamed('isin'),
+        ),
+      );
+      // Dialog stayed open - the new-instrument name field is still there.
+      expect(find.widgetWithText(TextField, 'Name'), findsOneWidget);
+
+      const created = Instrument(
+        id: 'inst-new',
+        name: 'New Co',
+        kind: InstrumentKind.stock,
+        archived: false,
+      );
+      when(
+        investment.createInstrument(
+          name: anyNamed('name'),
+          kind: anyNamed('kind'),
+          ticker: anyNamed('ticker'),
+          isin: anyNamed('isin'),
+        ),
+      ).thenAnswer((_) async => created);
+      when(
+        investment.recordBuy(
+          accountId: anyNamed('accountId'),
+          instrumentId: anyNamed('instrumentId'),
+          quantityScaled: anyNamed('quantityScaled'),
+          unitPriceMinor: anyNamed('unitPriceMinor'),
+          transactionDate: anyNamed('transactionDate'),
+          fundingSource: anyNamed('fundingSource'),
+          incomeCategoryId: anyNamed('incomeCategoryId'),
+          lockedUntil: anyNamed('lockedUntil'),
+          description: anyNamed('description'),
+          brokerageMinor: anyNamed('brokerageMinor'),
+          brokerageExpenseCategoryId: anyNamed('brokerageExpenseCategoryId'),
+        ),
+      ).thenAnswer((_) async => 'entry-1');
+
+      await tester.enterText(find.widgetWithText(TextField, 'Quantity'), '10');
+      await tester.enterText(
+        find.widgetWithText(TextField, 'Unit price'),
+        '150',
+      );
+      await tester.pump();
+
+      await tester.tap(find.text('Record buy'));
+      await tester.pumpAndSettle();
+
+      verify(
+        investment.createInstrument(
+          name: 'New Co',
+          kind: InstrumentKind.stock,
+          ticker: null,
+          isin: null,
+        ),
+      ).called(1);
+
+      viewModel.dispose();
+    },
+  );
 }

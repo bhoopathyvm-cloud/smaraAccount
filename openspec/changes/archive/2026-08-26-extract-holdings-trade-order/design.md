@@ -52,3 +52,9 @@ Migrate `_showBuyDialog` first (largest, most branching), verify widget tests st
 ## Open Questions
 
 - Whether `DividendOrderDraft` is worth a dedicated class given it has almost no branching (only "instrument required, amount required, income category required") — keep it for symmetry with the other two, or fold it into a plain validation function. Default to the class for now; simplify during grilling if it proves to be a pure pass-through.
+
+## Post-implementation note
+
+The implementation did not achieve byte-for-byte behavior preservation (Goals, above) in one spot, discovered during architecture review of the merged diff: in `_showBuyDialog`'s submit handler, `BuyOrderDraft.canSubmit` requires `quantityScaled`/`unitPriceMinor` to be set *before* the "create new instrument" side effect runs (`if (draft.creatingNew) { if (!draft.canSubmit) return; ... createInstrument(...); }`). The pre-draft dialog only checked the new-instrument name before calling `createInstrument`, then checked quantity/price *after* — so a user who filled in a new-instrument name but left quantity or price blank would have the instrument created (a real write) and then silently abort the buy, leaving an orphaned instrument behind.
+
+This is a latent-bug fix, not a regression, and is the more correct behavior — kept as-is rather than reverted. Neither the old nor the new behavior at this specific edge had a test either direction; added `holdings_view_test.dart`'s `'buy dialog does not create the new instrument until quantity and price are set'` to cover it going forward (asserts `InvestmentRepository.createInstrument` is never called while quantity/price are unset, then that it is called once both are filled).
