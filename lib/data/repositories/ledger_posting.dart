@@ -5,21 +5,22 @@ import '../../domain/crypto/entry_canonical_hash.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
 import '../../domain/models/integrity_event.dart';
-import '../../domain/models/journal_entry.dart';
 import '../../domain/models/pending_transfer.dart';
-import '../../domain/models/signing_identity.dart';
 import '../../domain/models/transaction_direction.dart';
 import '../database/app_database.dart';
 import '../database/tables/accounts_table.dart';
-import '../database/tables/ledger_chain_state_table.dart';
 import 'account_chart_reader.dart';
 import 'investment_holdings_logic.dart';
+import 'ledger_chain_store.dart';
 import 'repository_date_utils.dart';
+import '../../domain/models/journal_entry.dart';
+import '../../domain/register/active_balance.dart';
 
 /// Deep posting/signing module: record, reverse, fix, pending-transfer
 /// writes, and [appendSignedEntry]. Chart reads go through
 /// [AccountChartReader] so this class never depends on AccountRepository
-/// (architecture-deepening D1a).
+/// (architecture-deepening D1a). Chain tip and identity lookup go through
+/// [LedgerChainStore] so posting does not copy IdentityRepository helpers.
 ///
 /// [LedgerRepository] constructs this and delegates its public write
 /// methods so existing tests keep building the facade.
@@ -27,42 +28,22 @@ class LedgerPosting {
   LedgerPosting({
     required AppDatabase database,
     required AccountChartReader chart,
-    required Future<int> Function(String financialAccountId)
-    displayBalanceMinor,
+    required LedgerChainStore chain,
+    required Future<List<JournalEntry>> Function(String financialAccountId)
+    entriesForAccount,
     SigningKeyService? signingKeyService,
   }) : _db = database,
        _chart = chart,
-       _displayBalanceMinor = displayBalanceMinor,
+       _chain = chain,
+       _entriesForAccount = entriesForAccount,
        _signingKeyService = signingKeyService ?? SigningKeyService();
 
   final AppDatabase _db;
   final AccountChartReader _chart;
-  final Future<int> Function(String financialAccountId) _displayBalanceMinor;
+  final LedgerChainStore _chain;
+  final Future<List<JournalEntry>> Function(String financialAccountId)
+  _entriesForAccount;
   final SigningKeyService _signingKeyService;
-
-  /// Private copy of IdentityRepository.currentIdentity for
-  /// [appendSignedEntry]. Ledger cannot depend on IdentityRepository
-  /// (Identity → Account → Ledger would cycle — design.md D1a).
-  Future<SigningIdentity?> _currentSigningIdentity() async {
-    final row =
-        await (_db.select(_db.signingIdentities)
-              ..where((t) => t.supersededAt.isNull())
-              ..orderBy([(t) => OrderingTerm.desc(t.createdAt)])
-              ..limit(1))
-            .getSingleOrNull();
-    return row == null ? null : _toDomainIdentity(row);
-  }
-
-  SigningIdentity _toDomainIdentity(IdentityRow row) {
-    return SigningIdentity(
-      identityId: row.identityId,
-      publicKey: row.publicKey,
-      createdAt: row.createdAt,
-      supersedesIdentityId: row.supersedesIdentityId,
-      supersededAt: row.supersededAt,
-      acknowledgedAt: row.acknowledgedAt,
-    );
-  }
 
   /// Validates `amountMinor > 0`, derives the two postings, stamps
   /// recorded_at automatically via DateTime.now() (never user-supplied),
@@ -359,7 +340,11 @@ class LedgerPosting {
         );
       }
       if (fromAccount.holdsInvestments) {
-        final cashBalance = await _displayBalanceMinor(fromAccount.id);
+        final cashBalance = displayBalanceForAccount(
+          entries: await _entriesForAccount(fromAccount.id),
+          accountId: fromAccount.id,
+          accountType: fromAccount.type,
+        );
         if (amountMinor > cashBalance) {
           throw InvalidTransferException(
             'Cannot transfer more than the investment account cash balance '
@@ -389,7 +374,11 @@ class LedgerPosting {
         );
       }
       if (fromAccount.holdsInvestments) {
-        final cashBalance = await _displayBalanceMinor(fromAccount.id);
+        final cashBalance = displayBalanceForAccount(
+          entries: await _entriesForAccount(fromAccount.id),
+          accountId: fromAccount.id,
+          accountType: fromAccount.type,
+        );
         if (amountMinor > cashBalance) {
           throw InvalidTransferException(
             'Cannot transfer more than the investment account cash balance '
@@ -576,23 +565,8 @@ class LedgerPosting {
     });
   }
 
-  Future<void> _requireActiveExpenseCategory(String id) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null || row.type != AccountType.expense) {
-      throw PendingTransferException(
-        '$id is not an active Expense category.',
-        code: AppErrorCode.notActiveExpenseCategory,
-      );
-    }
-    if (row.archivedAt != null) {
-      throw PendingTransferException(
-        '$id is not an active Expense category.',
-        code: AppErrorCode.notActiveExpenseCategory,
-      );
-    }
-  }
+  Future<void> _requireActiveExpenseCategory(String id) =>
+      _chart.requireActiveExpenseCategory(id);
 
   /// Settles a pending transfer or foreign-currency transaction
   /// (multi-currency-support design.md Decision 5).
@@ -819,7 +793,7 @@ class LedgerPosting {
     required List<({String accountId, int amountMinor, int lineNumber})>
     postings,
   }) async {
-    final identity = await _currentSigningIdentity();
+    final identity = await _chain.currentSigningIdentity();
     if (identity == null) {
       throw StateError(
         'No signing identity is set up on this device - '
@@ -828,7 +802,7 @@ class LedgerPosting {
     }
 
     return _db.transaction(() async {
-      final chainState = await _chainState();
+      final chainState = await _chain.loadState();
       final priorLastEntry =
           await (_db.select(_db.journalEntries)
                 ..orderBy([(e) => OrderingTerm.desc(e.deviceChainSequence)])
@@ -899,7 +873,7 @@ class LedgerPosting {
             );
       }
 
-      await _upsertVerificationCache(
+      await _chain.upsertVerificationCache(
         entryId: id,
         isVerified: true,
         breakReason: null,
@@ -920,7 +894,7 @@ class LedgerPosting {
             );
       }
 
-      await _updateChainState(
+      await _chain.updateState(
         trustedTipEntryId: id,
         trustedTipHash: entryHash,
         nextDeviceChainSequence: sequence + 1,
@@ -928,55 +902,5 @@ class LedgerPosting {
 
       return id;
     });
-  }
-
-  Future<ChainStateRow> _chainState() async {
-    final existing =
-        await (_db.select(_db.ledgerChainState)
-              ..where((t) => t.id.equals(ledgerChainStateSingletonId)))
-            .getSingleOrNull();
-    if (existing != null) return existing;
-    return _db
-        .into(_db.ledgerChainState)
-        .insertReturning(
-          LedgerChainStateCompanion.insert(
-            id: ledgerChainStateSingletonId,
-            nextDeviceChainSequence: 0,
-          ),
-        );
-  }
-
-  Future<void> _updateChainState({
-    required String? trustedTipEntryId,
-    required Uint8List? trustedTipHash,
-    required int nextDeviceChainSequence,
-  }) {
-    return _db
-        .into(_db.ledgerChainState)
-        .insertOnConflictUpdate(
-          LedgerChainStateCompanion(
-            id: const Value(ledgerChainStateSingletonId),
-            trustedTipEntryId: Value(trustedTipEntryId),
-            trustedTipHash: Value(trustedTipHash),
-            nextDeviceChainSequence: Value(nextDeviceChainSequence),
-          ),
-        );
-  }
-
-  Future<void> _upsertVerificationCache({
-    required String entryId,
-    required bool isVerified,
-    required VerificationBreakReason? breakReason,
-  }) {
-    return _db
-        .into(_db.entryVerificationCache)
-        .insertOnConflictUpdate(
-          EntryVerificationCacheCompanion.insert(
-            entryId: entryId,
-            isVerified: isVerified,
-            breakReason: Value(breakReason),
-            checkedAt: DateTime.now(),
-          ),
-        );
   }
 }

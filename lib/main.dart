@@ -8,12 +8,15 @@ import 'data/repositories/category_repository.dart';
 import 'data/repositories/identity_repository.dart';
 import 'data/repositories/investment_repository.dart';
 import 'data/repositories/ledger_backup_repository.dart';
+import 'data/repositories/ledger_chain_store.dart';
 import 'data/repositories/ledger_repository.dart';
 import 'data/repositories/payee_repository.dart';
 import 'data/repositories/recurring_template_repository.dart';
 import 'data/repositories/settings_repository.dart';
 import 'data/repositories/statement_import_repository.dart';
 import 'l10n/l10n.dart';
+import 'domain/lock/app_lock_service.dart';
+import 'domain/lock/biometric_authenticator.dart';
 import 'ui/app_router.dart';
 import 'ui/core/app_lock_controller.dart';
 import 'ui/core/app_theme.dart';
@@ -46,9 +49,17 @@ class SmaraAccountingApp extends StatelessWidget {
         ProxyProvider<AppDatabase, AccountChartReader>(
           update: (_, db, _) => AccountChartReader(db),
         ),
-        ProxyProvider2<AppDatabase, AccountChartReader, LedgerRepository>(
-          update: (_, db, chart, _) =>
-              LedgerRepository(database: db, chart: chart),
+        ProxyProvider<AppDatabase, LedgerChainStore>(
+          update: (_, db, _) => LedgerChainStore(db),
+        ),
+        ProxyProvider3<
+          AppDatabase,
+          AccountChartReader,
+          LedgerChainStore,
+          LedgerRepository
+        >(
+          update: (_, db, chart, chain, _) =>
+              LedgerRepository(database: db, chart: chart, chain: chain),
         ),
         ProxyProvider3<
           AppDatabase,
@@ -69,10 +80,16 @@ class SmaraAccountingApp extends StatelessWidget {
         ProxyProvider<AppDatabase, PayeeRepository>(
           update: (_, db, _) => PayeeRepository(database: db),
         ),
-        ProxyProvider2<AppDatabase, AccountRepository, IdentityRepository>(
-          update: (_, db, accountRepository, _) => IdentityRepository(
+        ProxyProvider3<
+          AppDatabase,
+          AccountRepository,
+          LedgerChainStore,
+          IdentityRepository
+        >(
+          update: (_, db, accountRepository, chain, _) => IdentityRepository(
             database: db,
             accountRepository: accountRepository,
+            chain: chain,
           ),
         ),
         ProxyProvider2<AppDatabase, IdentityRepository, LedgerBackupRepository>(
@@ -81,30 +98,17 @@ class SmaraAccountingApp extends StatelessWidget {
             identityRepository: identityRepository,
           ),
         ),
-        ProxyProvider5<
+        ProxyProvider3<
           AppDatabase,
           LedgerRepository,
-          AccountRepository,
-          CategoryRepository,
           AccountChartReader,
           InvestmentRepository
         >(
-          update:
-              (
-                _,
-                db,
-                ledgerRepository,
-                accountRepository,
-                categoryRepository,
-                chart,
-                _,
-              ) => InvestmentRepository(
-                database: db,
-                ledgerRepository: ledgerRepository,
-                accountRepository: accountRepository,
-                categoryRepository: categoryRepository,
-                chart: chart,
-              ),
+          update: (_, db, ledgerRepository, chart, _) => InvestmentRepository(
+            database: db,
+            ledgerRepository: ledgerRepository,
+            chart: chart,
+          ),
         ),
         ProxyProvider2<
           AppDatabase,
@@ -117,6 +121,10 @@ class SmaraAccountingApp extends StatelessWidget {
           ),
         ),
         Provider<SettingsRepository>(create: (_) => SettingsRepository()),
+        Provider<AppLockService>(create: (_) => AppLockService()),
+        Provider<BiometricAuthenticator>(
+          create: (_) => LocalAuthBiometricAuthenticator(),
+        ),
         ChangeNotifierProvider<LocaleController>(
           create: (context) {
             final controller = LocaleController(

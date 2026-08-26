@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/models/account.dart';
-import 'package:smara_accounting/domain/models/account_group.dart';
+import 'package:smara_accounting/domain/models/account_currency_catalog.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/core/money_amount_field.dart';
 import 'package:smara_accounting/ui/features/correction_wizard/view_models/correction_view_model.dart';
@@ -14,16 +14,6 @@ void main() {
   late MockLedgerRepository repository;
   late MockAccountRepository accountRepository;
   late MockCategoryRepository categoryRepository;
-
-  const yenGroup = AccountGroup(
-    id: 'group-cash',
-    name: 'Cash',
-    kind: AccountGroupKind.assetGroup,
-    sortOrder: 0,
-    isSystem: true,
-    currency: 'JPY',
-    archived: false,
-  );
 
   const yenAccount = Account(
     id: 'asset-1',
@@ -51,8 +41,12 @@ void main() {
       categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value([groceries]));
     when(
-      accountRepository.watchAccountGroups(),
-    ).thenAnswer((_) => Stream.value([yenGroup]));
+      accountRepository.watchAccountCurrencies(
+        includeArchived: anyNamed('includeArchived'),
+      ),
+    ).thenAnswer(
+      (_) => Stream.value(const AccountCurrencyCatalog({'asset-1': 'JPY'})),
+    );
   });
 
   testWidgets(

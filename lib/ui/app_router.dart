@@ -14,8 +14,8 @@ import '../data/repositories/statement_import_repository.dart';
 import '../l10n/l10n.dart';
 import '../domain/lock/app_lock_service.dart';
 import '../domain/lock/biometric_authenticator.dart';
-import '../domain/models/home_overview.dart';
 import '../domain/models/transaction_direction.dart';
+import '../domain/navigation/app_navigation_policy.dart';
 import 'core/app_lock_controller.dart';
 import 'core/app_shell.dart';
 import 'features/account_management/view_models/account_management_view_model.dart';
@@ -56,8 +56,7 @@ import 'features/restore/view_models/restore_identity_view_model.dart';
 import 'features/restore/views/restore_identity_view.dart';
 import 'features/settings/view_models/settings_view_model.dart';
 import 'features/settings/views/settings_view.dart';
-import 'features/settle_pending_transfer/view_models/settle_pending_transfer_view_model.dart';
-import 'features/settle_pending_transfer/views/settle_pending_transfer_view.dart';
+import 'features/settle_pending_transfer/views/settle_pending_transfer_route.dart';
 import 'features/statement_import/view_models/statement_import_view_model.dart';
 import 'features/statement_import/views/statement_import_view.dart';
 import 'features/summary/view_models/summary_view_model.dart';
@@ -65,53 +64,12 @@ import 'features/summary/views/summary_view.dart';
 import 'features/transfer/view_models/transfer_view_model.dart';
 import 'features/transfer/views/transfer_view.dart';
 
-// deferred-onboarding-first-entry: onboarding now runs currency selection
-// first (which commits the signing identity and seeds starter accounts),
-// then names the first account, then a guided first entry, and only then
-// the mandatory recovery-phrase acknowledgment screens - see the redirect
-// logic below.
-const _currencyPath = '/onboarding/currency';
-const _firstAccountPath = '/onboarding/first-account';
-const _firstEntryPath = '/onboarding/first-entry';
-const _acknowledgmentPaths = {
-  '/onboarding/recovery-phrase',
-  '/onboarding/keystore-export',
-  '/onboarding/confirm',
-};
-const _onboardingPaths = {
-  _currencyPath,
-  _firstAccountPath,
-  _firstEntryPath,
-  ..._acknowledgmentPaths,
-};
-const _restorePath = '/restore';
-const _migrationPath = '/restore/migrate';
-const _restoreRelatedPaths = {_restorePath, _migrationPath};
-const _currencyBackfillPath = '/currency-backfill';
-// first-week-setup-wizard: shown exactly once, gated on
-// SettingsRepository.isFirstWeekSetupCompleted() - see the redirect logic
-// below, checked right after the currency-backfill gate (same reasoning:
-// no financial content exists to lock or show before this).
-const _setupWizardPath = '/onboarding/first-week-setup';
-
 /// Gates every navigation on the device signing identity's state (spec:
 /// "Device Signing Identity", "Mandatory Recovery Phrase Acknowledgment",
 /// "Recoverable Reinstall or Device Migration", "Startup Integrity
 /// Verification", and deferred-onboarding-first-entry's "Guided First
-/// Entry Before Acknowledgment"):
-///
-///  - no identity yet -> pick a currency (commits the identity + starter
-///    accounts automatically, before the phrase is ever shown)
-///  - identity committed but not yet acknowledged, no entry recorded yet
-///    -> name the first account, then guided first entry
-///  - identity committed but not yet acknowledged, first entry recorded
-///    -> the mandatory recovery-phrase acknowledgment screens
-///  - identity exists but this device's secure storage has no matching
-///    key -> restore (recovery phrase / keystore file)
-///  - identity exists and matches -> run verifyChain() once per app
-///    session, then the app shell is reachable
-const _lockPath = '/lock';
-
+/// Entry Before Acknowledgment"). Redirect decisions live in
+/// [AppNavigationPolicy]; this function registers routes and forwards.
 GoRouter buildAppRouter(
   LedgerRepository ledgerRepository,
   AccountRepository accountRepository,
@@ -124,107 +82,45 @@ GoRouter buildAppRouter(
   SettingsRepository settingsRepository,
   AppLockController appLockController,
 ) {
-  var hasVerifiedThisSession = false;
+  final navigationPolicy = AppNavigationPolicy(
+    currentIdentity: identityRepository.currentIdentity,
+    hasAnyJournalEntries: ledgerRepository.hasAnyJournalEntries,
+    hasMatchingStoredKey: identityRepository.hasMatchingStoredKey,
+    verifyChain: () async {
+      await identityRepository.verifyChain();
+    },
+    needsCurrencyBackfill: accountRepository.needsCurrencyBackfill,
+    isFirstWeekSetupCompleted: settingsRepository.isFirstWeekSetupCompleted,
+    lockScreenRequired: () async {
+      await appLockController.policy.ensureLoaded();
+      return appLockController.policy.requiresLockScreen;
+    },
+  );
 
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: AppNavPaths.home,
     refreshListenable: appLockController,
-    redirect: (context, state) async {
-      final isOnboardingRoute = _onboardingPaths.contains(
-        state.matchedLocation,
-      );
-      final isRestoreRoute = _restoreRelatedPaths.contains(
-        state.matchedLocation,
-      );
-      final isLockRoute = state.matchedLocation == _lockPath;
-
-      final identity = await identityRepository.currentIdentity();
-      if (identity == null) {
-        return state.matchedLocation == _currencyPath ? null : _currencyPath;
-      }
-
-      if (identity.acknowledgedAt == null) {
-        // Committed but not yet acknowledged: deferred-onboarding-first-entry's
-        // window between currency selection and the mandatory recovery-phrase
-        // acknowledgment screens. Exactly one guided entry is allowed through
-        // before acknowledgment is forced - re-checked on every navigation
-        // (including app resume after backgrounding/kill), so it's never
-        // bypassable.
-        final hasRecordedFirstEntry = await ledgerRepository
-            .hasAnyJournalEntries();
-        if (!hasRecordedFirstEntry) {
-          return state.matchedLocation == _firstAccountPath ||
-                  state.matchedLocation == _firstEntryPath
-              ? null
-              : _firstAccountPath;
-        }
-        return _acknowledgmentPaths.contains(state.matchedLocation)
-            ? null
-            : '/onboarding/recovery-phrase';
-      }
-
-      final hasMatchingKey = await identityRepository.hasMatchingStoredKey(
-        identity,
-      );
-      if (!hasMatchingKey) {
-        return isRestoreRoute ? null : _restorePath;
-      }
-
-      if (!hasVerifiedThisSession) {
-        await identityRepository.verifyChain();
-        hasVerifiedThisSession = true;
-      }
-
-      final isCurrencyBackfillRoute =
-          state.matchedLocation == _currencyBackfillPath;
-      if (await accountRepository.needsCurrencyBackfill()) {
-        return isCurrencyBackfillRoute ? null : _currencyBackfillPath;
-      }
-
-      final isSetupWizardRoute = state.matchedLocation == _setupWizardPath;
-      if (!await settingsRepository.isFirstWeekSetupCompleted()) {
-        return isSetupWizardRoute ? null : _setupWizardPath;
-      }
-
-      // app-lock: checked only once the ledger itself is reachable -
-      // onboarding/restore/currency-backfill screens show no financial
-      // content yet, so there's nothing to lock behind them. Re-evaluated
-      // on every navigation via refreshListenable, so a background-then-
-      // resume relock (AppLockController.didChangeAppLifecycleState)
-      // takes effect immediately, not just on the next explicit navigation.
-      await appLockController.policy.ensureLoaded();
-      if (appLockController.policy.requiresLockScreen) {
-        return isLockRoute ? null : _lockPath;
-      }
-
-      if (isOnboardingRoute ||
-          isRestoreRoute ||
-          isCurrencyBackfillRoute ||
-          isSetupWizardRoute ||
-          isLockRoute) {
-        return '/home';
-      }
-      return null;
-    },
+    redirect: (context, state) =>
+        navigationPolicy.resolve(state.matchedLocation),
     routes: [
       GoRoute(
-        path: _currencyPath,
+        path: AppNavPaths.currency,
         builder: (context, state) => CurrencySelectionView(
           viewModel: context.read<RecoveryPhraseSetupViewModel>(),
-          onFinished: () => context.go(_firstAccountPath),
+          onFinished: () => context.go(AppNavPaths.firstAccount),
         ),
       ),
       GoRoute(
-        path: _firstAccountPath,
+        path: AppNavPaths.firstAccount,
         builder: (context, state) => FirstAccountNameView(
           viewModel: FirstAccountNameViewModel(
             accountRepository: accountRepository,
           ),
-          onFinished: () => context.go(_firstEntryPath),
+          onFinished: () => context.go(AppNavPaths.firstEntry),
         ),
       ),
       GoRoute(
-        path: _firstEntryPath,
+        path: AppNavPaths.firstEntry,
         builder: (context, state) => RecordTransactionView(
           viewModel: RecordTransactionViewModel(
             ledgerRepository: ledgerRepository,
@@ -232,65 +128,65 @@ GoRouter buildAppRouter(
             categoryRepository: categoryRepository,
             payeeRepository: payeeRepository,
           ),
-          onSaved: () => context.go('/onboarding/recovery-phrase'),
+          onSaved: () => context.go(AppNavPaths.recoveryPhrase),
         ),
       ),
       GoRoute(
-        path: '/onboarding/recovery-phrase',
+        path: AppNavPaths.recoveryPhrase,
         builder: (context, state) => RecoveryPhraseView(
           viewModel: context.read<RecoveryPhraseSetupViewModel>(),
-          onContinue: () => context.go('/onboarding/keystore-export'),
+          onContinue: () => context.go(AppNavPaths.keystoreExport),
         ),
       ),
       GoRoute(
-        path: '/onboarding/keystore-export',
+        path: AppNavPaths.keystoreExport,
         builder: (context, state) => KeystoreExportView(
           viewModel: context.read<RecoveryPhraseSetupViewModel>(),
-          onContinue: () => context.go('/onboarding/confirm'),
+          onContinue: () => context.go(AppNavPaths.confirm),
         ),
       ),
       GoRoute(
-        path: '/onboarding/confirm',
+        path: AppNavPaths.confirm,
         builder: (context, state) => RecoveryPhraseConfirmView(
           viewModel: context.read<RecoveryPhraseSetupViewModel>(),
-          onConfirmed: () => context.go('/home'),
+          onConfirmed: () => context.go(AppNavPaths.home),
         ),
       ),
       GoRoute(
-        path: _setupWizardPath,
+        path: AppNavPaths.setupWizard,
         builder: (context, state) => FirstWeekSetupView(
           viewModel: FirstWeekSetupViewModel(
             accountRepository: accountRepository,
             settingsRepository: settingsRepository,
           ),
-          onFinished: () => context.go('/home'),
+          onFinished: () => context.go(AppNavPaths.home),
         ),
       ),
       GoRoute(
-        path: _currencyBackfillPath,
+        path: AppNavPaths.currencyBackfill,
         builder: (context, state) => CurrencyBackfillView(
           viewModel: CurrencyBackfillViewModel(
             accountRepository: accountRepository,
           ),
-          onFinished: () => context.go('/home'),
+          onFinished: () => context.go(AppNavPaths.home),
         ),
       ),
       GoRoute(
-        path: _restorePath,
+        path: AppNavPaths.restore,
         builder: (context, state) => RestoreIdentityView(
           viewModel: context.read<RestoreIdentityViewModel>(),
-          onRestored: () => context.go('/home'),
-          onNoRecoveryMaterial: () => context.push(_migrationPath),
+          onRestored: () => context.go(AppNavPaths.home),
+          onNoRecoveryMaterial: () => context.push(AppNavPaths.migrate),
         ),
       ),
       GoRoute(
-        path: _migrationPath,
+        path: AppNavPaths.migrate,
         builder: (context, state) => KeyLossMigrationView(
           viewModel: KeyLossMigrationViewModel(
             ledgerRepository: ledgerRepository,
             identityRepository: identityRepository,
           ),
-          onMigrated: () => context.go('/home'),
+          onMigrated: () => context.go(AppNavPaths.home),
         ),
       ),
       GoRoute(
@@ -340,20 +236,20 @@ GoRouter buildAppRouter(
       ),
       GoRoute(
         path: '/settle-pending-transfer/:pendingTransferId',
-        builder: (context, state) => _buildSettlePendingTransfer(
-          context,
-          state,
-          ledgerRepository,
-          accountRepository,
-          categoryRepository,
+        builder: (context, state) => SettlePendingTransferRoute(
+          pendingTransferId: state.pathParameters['pendingTransferId']!,
+          ledgerRepository: ledgerRepository,
+          accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
+          onSaved: () => context.pop(),
         ),
       ),
       GoRoute(
-        path: _lockPath,
+        path: AppNavPaths.lock,
         builder: (context, state) => LockView(
           viewModel: LockViewModel(
-            appLockService: AppLockService(),
-            biometricAuthenticator: LocalAuthBiometricAuthenticator(),
+            appLockService: context.read<AppLockService>(),
+            biometricAuthenticator: context.read<BiometricAuthenticator>(),
             settingsRepository: settingsRepository,
             lockController: appLockController,
             localeController: context.read<LocaleController>(),
@@ -390,8 +286,8 @@ GoRouter buildAppRouter(
           viewModel: SettingsViewModel(
             settingsRepository: settingsRepository,
             ledgerBackupRepository: ledgerBackupRepository,
-            appLockService: AppLockService(),
-            biometricAuthenticator: LocalAuthBiometricAuthenticator(),
+            appLockService: context.read<AppLockService>(),
+            biometricAuthenticator: context.read<BiometricAuthenticator>(),
             appLockController: appLockController,
             localeController: context.read<LocaleController>(),
           ),
@@ -418,7 +314,7 @@ GoRouter buildAppRouter(
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/home',
+                path: AppNavPaths.home,
                 builder: (context, state) => HomeView(
                   viewModel: context.read<HomeViewModel>(),
                   onAccountTap: (accountId) => context.go(
@@ -585,39 +481,5 @@ CorrectionView _buildFixEntry(
       initialDescription: extra.row.description,
     ),
     onFixed: () => context.pop(),
-  );
-}
-
-/// Looks up the tapped pending transfer's [PendingTransferSummary] from the
-/// already-loaded Home overview (the only place that summary - names,
-/// currency, amount - is computed) rather than re-deriving it here.
-Widget _buildSettlePendingTransfer(
-  BuildContext context,
-  GoRouterState state,
-  LedgerRepository ledgerRepository,
-  AccountRepository accountRepository,
-  CategoryRepository categoryRepository,
-) {
-  final pendingTransferId = state.pathParameters['pendingTransferId'];
-  final pendingTransfers =
-      context.read<HomeViewModel>().overview?.pendingTransfers ?? const [];
-  PendingTransferSummary? summary;
-  for (final candidate in pendingTransfers) {
-    if (candidate.pendingTransfer.id == pendingTransferId) {
-      summary = candidate;
-      break;
-    }
-  }
-  if (summary == null) {
-    return Center(child: Text(l10nOf(context).alreadySettled));
-  }
-  return SettlePendingTransferView(
-    viewModel: SettlePendingTransferViewModel(
-      ledgerRepository: ledgerRepository,
-      accountRepository: accountRepository,
-      categoryRepository: categoryRepository,
-      summary: summary,
-    ),
-    onSaved: () => context.pop(),
   );
 }

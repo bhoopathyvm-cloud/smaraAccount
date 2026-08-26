@@ -102,6 +102,34 @@ class AccountChartReader {
     return currency;
   }
 
+  /// Active category of [type], or [onInvalid].
+  Future<AccountRow> requireActiveCategoryOfType(
+    String id,
+    AccountType type, {
+    required Exception Function(String id) onInvalid,
+  }) async {
+    final row = await (_db.select(
+      _db.accounts,
+    )..where((a) => a.id.equals(id))).getSingleOrNull();
+    if (row == null || row.type != type || row.archivedAt != null) {
+      throw onInvalid(id);
+    }
+    return row;
+  }
+
+  /// Active expense category, or [PendingTransferException] (posting and
+  /// investment share this exception even on buy — chart-catalog follow-through).
+  Future<AccountRow> requireActiveExpenseCategory(String id) {
+    return requireActiveCategoryOfType(
+      id,
+      AccountType.expense,
+      onInvalid: (id) => PendingTransferException(
+        '$id is not an active Expense category.',
+        code: AppErrorCode.notActiveExpenseCategory,
+      ),
+    );
+  }
+
   Account toDomainAccount(AccountRow row) {
     return Account(
       id: row.id,

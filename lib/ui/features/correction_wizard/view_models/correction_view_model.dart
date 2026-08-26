@@ -8,7 +8,7 @@ import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
-import '../../../../domain/models/account_group.dart';
+import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/transaction_direction.dart';
 
 /// Form state for fixing a posted transaction (fix-this-correction-wizard):
@@ -48,12 +48,12 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _categories = categories;
       notifyListeners();
     });
-    _groupsSubscription = _accountRepository.watchAccountGroups().listen((
-      groups,
-    ) {
-      _groups = groups;
-      notifyListeners();
-    });
+    _currenciesSubscription = _accountRepository
+        .watchAccountCurrencies(includeArchived: true)
+        .listen((catalog) {
+          _currencies = catalog;
+          notifyListeners();
+        });
   }
 
   final LedgerRepository _ledgerRepository;
@@ -65,27 +65,16 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
-  late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
+  late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
 
   List<Account> _financialAccounts = const [];
   List<Account> get financialAccounts => _financialAccounts;
 
-  List<AccountGroup> _groups = const [];
+  AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
   /// The selected account's own currency (localized-money-formatting), or
   /// null until accounts/groups have loaded.
-  String? get currency {
-    final account = _financialAccounts
-        .where((a) => a.id == _financialAccountId)
-        .cast<Account?>()
-        .firstWhere((a) => a != null, orElse: () => null);
-    if (account?.groupId == null) return null;
-    return _groups
-        .where((g) => g.id == account!.groupId)
-        .cast<AccountGroup?>()
-        .firstWhere((g) => g != null, orElse: () => null)
-        ?.currency;
-  }
+  String? get currency => _currencies.currencyFor(_financialAccountId);
 
   List<Account> _categories = const [];
 
@@ -206,7 +195,7 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   void dispose() {
     _accountsSubscription.cancel();
     _categoriesSubscription.cancel();
-    _groupsSubscription.cancel();
+    _currenciesSubscription.cancel();
     super.dispose();
   }
 }

@@ -14,11 +14,13 @@ import '../../domain/models/posting.dart';
 import '../../domain/models/summary.dart';
 import '../../domain/models/transaction_direction.dart';
 import '../../domain/register/display_balance.dart' as display_balance;
+import '../../domain/register/active_balance.dart';
 import '../../domain/register/register_projection.dart';
 import '../database/app_database.dart';
 import '../database/tables/accounts_table.dart';
 import 'account_chart_reader.dart';
 import 'investment_holdings_logic.dart';
+import 'ledger_chain_store.dart';
 import 'ledger_posting.dart';
 import 'repository_date_utils.dart';
 
@@ -33,12 +35,15 @@ class LedgerRepository {
     required AppDatabase database,
     SigningKeyService? signingKeyService,
     AccountChartReader? chart,
+    LedgerChainStore? chain,
   }) : _db = database {
     _chart = chart ?? AccountChartReader(database);
+    final resolvedChain = chain ?? LedgerChainStore(database);
     _posting = LedgerPosting(
       database: database,
       chart: _chart,
-      displayBalanceMinor: displayBalanceMinor,
+      chain: resolvedChain,
+      entriesForAccount: (id) => watchEntriesForAccount(id).first,
       signingKeyService: signingKeyService,
     );
   }
@@ -285,6 +290,51 @@ class LedgerRepository {
     );
   }
 
+  /// Joined settle-screen summary for [pendingTransferId], independent of
+  /// Home overview state. Null when the id is unknown or already settled.
+  Future<PendingTransferSummary?> pendingTransferSummary(
+    String pendingTransferId,
+  ) async {
+    final row = await (_db.select(
+      _db.pendingTransfers,
+    )..where((p) => p.id.equals(pendingTransferId))).getSingleOrNull();
+    if (row == null || row.status != PendingTransferStatus.pending) {
+      return null;
+    }
+    final entries = await watchEntries().first;
+    final entryById = {for (final e in entries) e.id: e};
+    return _pendingTransferSummary(
+      row: row,
+      provisionalEntry: entryById[row.provisionalEntryId],
+      nameById: await _accountNameById(),
+    );
+  }
+
+  Future<Map<String, String>> _accountNameById() async {
+    final allAccountRows = await _db.select(_db.accounts).get();
+    return {for (final a in allAccountRows) a.id: a.name};
+  }
+
+  PendingTransferSummary? _pendingTransferSummary({
+    required PendingTransferRow row,
+    required JournalEntry? provisionalEntry,
+    required Map<String, String> nameById,
+  }) {
+    if (provisionalEntry == null) return null;
+    final clearingPosting = provisionalEntry.postings.firstWhere(
+      (p) => p.accountId == transfersInTransitAccountId,
+      orElse: () => provisionalEntry.postings.first,
+    );
+    return PendingTransferSummary(
+      pendingTransfer: _toDomainPendingTransfer(row),
+      sourceAccountName: nameById[row.sourceAccountId] ?? row.sourceAccountId,
+      destinationLabel:
+          nameById[row.destinationAccountId] ?? nameById[row.categoryId],
+      currency: row.currency,
+      amountMinor: clearingPosting.amountMinor.abs(),
+    );
+  }
+
   Future<void> settlePendingTransfer({
     required String pendingTransferId,
     required String settledToAccountId,
@@ -381,18 +431,11 @@ class LedgerRepository {
       _db.accounts,
     )..where((a) => a.id.equals(financialAccountId))).getSingle();
     final entries = await watchEntriesForAccount(financialAccountId).first;
-    var balance = 0;
-    for (final entry in entries) {
-      if (!entry.isVerified || entry.isSupersededByMigration) continue;
-      for (final posting in entry.postings) {
-        if (posting.accountId != financialAccountId) continue;
-        balance += displayBalanceDeltaFor(
-          accountType: account.type,
-          postingAmountMinor: posting.amountMinor,
-        );
-      }
-    }
-    return balance;
+    return displayBalanceForAccount(
+      entries: entries,
+      accountId: financialAccountId,
+      accountType: account.type,
+    );
   }
 
   /// A CSV of [financialAccountId]'s transactions between [start] and
@@ -526,14 +569,7 @@ class LedgerRepository {
       _db.pendingTransfers,
     )..where((p) => p.status.equalsValue(PendingTransferStatus.pending))).get();
 
-    final rawSumByAccount = <String, int>{};
-    for (final entry in entries) {
-      if (!entry.isVerified || entry.isSupersededByMigration) continue;
-      for (final posting in entry.postings) {
-        rawSumByAccount[posting.accountId] =
-            (rawSumByAccount[posting.accountId] ?? 0) + posting.amountMinor;
-      }
-    }
+    final rawSumByAccount = rawPostingSumsByAccount(entries);
 
     int displayFor(Account account) {
       final raw = rawSumByAccount[account.id] ?? 0;
@@ -609,45 +645,25 @@ class LedgerRepository {
     // design.md Decision 2 / spec "A quarantined or superseded provisional
     // entry does not distort net worth").
     final entryById = {for (final e in entries) e.id: e};
-    final allAccountRows = await _db.select(_db.accounts).get();
-    final nameById = {for (final a in allAccountRows) a.id: a.name};
+    final nameById = await _accountNameById();
     final pendingSummaries = <PendingTransferSummary>[];
 
     for (final row in pendingRows) {
-      final provisionalEntry = entryById[row.provisionalEntryId];
-      if (provisionalEntry == null) continue;
-      final clearingPosting = provisionalEntry.postings.firstWhere(
-        (p) => p.accountId == transfersInTransitAccountId,
-        orElse: () => provisionalEntry.postings.first,
+      final summary = _pendingTransferSummary(
+        row: row,
+        provisionalEntry: entryById[row.provisionalEntryId],
+        nameById: nameById,
       );
-      final amountAbs = clearingPosting.amountMinor.abs();
-      // The currency the clearing leg was actually posted in - the source
-      // account's own currency for a transfer, but the transaction's
-      // *native* currency for a foreignTransaction, which can differ from
-      // the financial account's own group currency (never re-derive this
-      // from the source account's group - that mislabels a
-      // foreignTransaction's amount with the wrong currency).
-      final currency = row.currency;
-      final destinationLabel =
-          nameById[row.destinationAccountId] ?? nameById[row.categoryId];
+      if (summary == null) continue;
+      pendingSummaries.add(summary);
 
-      pendingSummaries.add(
-        PendingTransferSummary(
-          pendingTransfer: _toDomainPendingTransfer(row),
-          sourceAccountName:
-              nameById[row.sourceAccountId] ?? row.sourceAccountId,
-          destinationLabel: destinationLabel,
-          currency: currency,
-          amountMinor: amountAbs,
-        ),
-      );
-
+      final provisionalEntry = entryById[row.provisionalEntryId]!;
       final isExcluded =
           !provisionalEntry.isVerified ||
           provisionalEntry.isSupersededByMigration;
       if (!isExcluded) {
-        assetsByCurrency[currency] =
-            (assetsByCurrency[currency] ?? 0) + amountAbs;
+        assetsByCurrency[summary.currency] =
+            (assetsByCurrency[summary.currency] ?? 0) + summary.amountMinor;
       }
     }
 

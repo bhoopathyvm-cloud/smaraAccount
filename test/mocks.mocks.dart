@@ -414,6 +414,18 @@ class MockLedgerRepository extends _i1.Mock implements _i14.LedgerRepository {
           as _i15.Stream<List<_i20.PendingTransfer>>);
 
   @override
+  _i15.Future<_i21.PendingTransferSummary?> pendingTransferSummary(
+    String? pendingTransferId,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#pendingTransferSummary, [pendingTransferId]),
+            returnValue: _i15.Future<_i21.PendingTransferSummary?>.value(),
+            returnValueForMissingStub:
+                _i15.Future<_i21.PendingTransferSummary?>.value(),
+          )
+          as _i15.Future<_i21.PendingTransferSummary?>);
+
+  @override
   _i15.Future<void> settlePendingTransfer({
     required String? pendingTransferId,
     required String? settledToAccountId,

@@ -16,52 +16,9 @@ import '../../../../domain/models/account.dart';
 import '../../../../domain/statement_import/category_rule.dart';
 import '../../../../domain/statement_import/parsed_statement_transaction.dart';
 import '../../../../domain/statement_import/statement_import_batch.dart';
+import '../../../../domain/statement_import/statement_import_session.dart';
 
-/// Which statement source the user is importing - chosen first, since CSV
-/// needs a column-mapping step OFX never does (csv-transaction-import
-/// design.md).
-enum StatementSource { ofx, csv }
-
-enum StatementImportStep {
-  chooseSource,
-  pickFile,
-  selectAccount,
-  mapColumns, // CSV only
-  preview,
-  summary,
-}
-
-/// One previewed row's mutable review state - selection and category are
-/// edited in place by the view, not replaced wholesale, so a single row
-/// edit doesn't require rebuilding the whole list.
-class StatementImportPreviewRow {
-  StatementImportPreviewRow({
-    required this.transaction,
-    required this.isDuplicate,
-    String? categoryId,
-  }) : selected = !isDuplicate, // duplicates default excluded from posting
-       categoryId = categoryId;
-
-  final ParsedStatementTransaction transaction;
-  final bool isDuplicate;
-  bool selected;
-  String? categoryId;
-}
-
-/// A set of preview rows sharing the same normalized description
-/// (import-category-rules spec: "Group Preview Rows by Matching
-/// Description"). [rowIndexes] indexes into
-/// [StatementImportViewModel.rows]/`_rows` - never copies row data, so
-/// group membership always reflects the current row list.
-class StatementImportRowGroup {
-  const StatementImportRowGroup({required this.key, required this.rowIndexes});
-
-  /// The group's normalized (trimmed, case-folded) shared description.
-  final String key;
-  final List<int> rowIndexes;
-
-  bool get isSingleRow => rowIndexes.length == 1;
-}
+export '../../../../domain/statement_import/statement_import_session.dart';
 
 /// Drives the whole statement import flow as one screen with internal
 /// steps (ofx-transaction-import design.md, extended by
@@ -129,15 +86,14 @@ class StatementImportViewModel extends ChangeNotifier {
   List<CategoryRule> _categoryRules = const [];
   List<CategoryRule> get categoryRules => _categoryRules;
 
-  StatementImportStep _step = StatementImportStep.chooseSource;
-  StatementImportStep get step => _step;
+  final _session = StatementImportSession();
 
-  StatementSource? _source;
-  StatementSource? get source => _source;
+  StatementImportStep get step => _session.step;
+
+  StatementSource? get source => _session.source;
 
   void chooseSource(StatementSource source) {
-    _source = source;
-    _step = StatementImportStep.pickFile;
+    _session.chooseSource(source);
     notifyListeners();
   }
 
@@ -193,17 +149,21 @@ class StatementImportViewModel extends ChangeNotifier {
   List<String>? get csvHeaderRow => _csvHeaderRow;
   int get csvColumnCount => _csvHeaderRow?.length ?? 0;
 
-  bool csvHasHeaderRow = true;
-  int? csvDateColumnIndex;
-  String csvDatePattern = 'dd/MM/yyyy';
-  List<int> csvDescriptionColumnIndexes = [];
-  CsvAmountConvention csvAmountConvention = CsvAmountConvention.signedColumn;
-  int? csvSignedAmountColumnIndex;
-  int? csvDebitColumnIndex;
-  int? csvCreditColumnIndex;
-  int? csvReferenceIdColumnIndex;
-  String csvDecimalSeparator = '.';
-  String? csvCurrency;
+  bool get csvHasHeaderRow => _session.csvMapping.hasHeaderRow;
+  int? get csvDateColumnIndex => _session.csvMapping.dateColumnIndex;
+  String get csvDatePattern => _session.csvMapping.datePattern;
+  List<int> get csvDescriptionColumnIndexes =>
+      _session.csvMapping.descriptionColumnIndexes;
+  CsvAmountConvention get csvAmountConvention =>
+      _session.csvMapping.amountConvention;
+  int? get csvSignedAmountColumnIndex =>
+      _session.csvMapping.signedAmountColumnIndex;
+  int? get csvDebitColumnIndex => _session.csvMapping.debitColumnIndex;
+  int? get csvCreditColumnIndex => _session.csvMapping.creditColumnIndex;
+  int? get csvReferenceIdColumnIndex =>
+      _session.csvMapping.referenceIdColumnIndex;
+  String get csvDecimalSeparator => _session.csvMapping.decimalSeparator;
+  String? get csvCurrency => _session.csvMapping.currency;
 
   /// A matched profile pre-fills the mapping screen so the user can jump
   /// straight to preview without re-mapping (design.md Decision 6); still
@@ -212,18 +172,7 @@ class StatementImportViewModel extends ChangeNotifier {
   CsvImportProfile? matchedProfile;
 
   void applyProfile(CsvImportProfile profile) {
-    final mapping = profile.mapping;
-    csvHasHeaderRow = mapping.hasHeaderRow;
-    csvDateColumnIndex = mapping.dateColumnIndex;
-    csvDatePattern = mapping.datePattern;
-    csvDescriptionColumnIndexes = List.of(mapping.descriptionColumnIndexes);
-    csvAmountConvention = mapping.amountConvention;
-    csvSignedAmountColumnIndex = mapping.signedAmountColumnIndex;
-    csvDebitColumnIndex = mapping.debitColumnIndex;
-    csvCreditColumnIndex = mapping.creditColumnIndex;
-    csvReferenceIdColumnIndex = mapping.referenceIdColumnIndex;
-    csvDecimalSeparator = mapping.decimalSeparator;
-    csvCurrency = mapping.currency;
+    _session.csvMapping.applyProfile(profile);
     notifyListeners();
   }
 
@@ -240,62 +189,32 @@ class StatementImportViewModel extends ChangeNotifier {
     String? decimalSeparator,
     String? currency,
   }) {
-    if (hasHeaderRow != null) csvHasHeaderRow = hasHeaderRow;
-    if (dateColumnIndex != null) csvDateColumnIndex = dateColumnIndex;
-    if (datePattern != null) csvDatePattern = datePattern;
+    final mapping = _session.csvMapping;
+    if (hasHeaderRow != null) mapping.hasHeaderRow = hasHeaderRow;
+    if (dateColumnIndex != null) mapping.dateColumnIndex = dateColumnIndex;
+    if (datePattern != null) mapping.datePattern = datePattern;
     if (descriptionColumnIndexes != null) {
-      csvDescriptionColumnIndexes = descriptionColumnIndexes;
+      mapping.descriptionColumnIndexes = descriptionColumnIndexes;
     }
-    if (amountConvention != null) csvAmountConvention = amountConvention;
+    if (amountConvention != null) mapping.amountConvention = amountConvention;
     if (signedAmountColumnIndex != null) {
-      csvSignedAmountColumnIndex = signedAmountColumnIndex;
+      mapping.signedAmountColumnIndex = signedAmountColumnIndex;
     }
-    if (debitColumnIndex != null) csvDebitColumnIndex = debitColumnIndex;
-    if (creditColumnIndex != null) csvCreditColumnIndex = creditColumnIndex;
+    if (debitColumnIndex != null) mapping.debitColumnIndex = debitColumnIndex;
+    if (creditColumnIndex != null) {
+      mapping.creditColumnIndex = creditColumnIndex;
+    }
     if (referenceIdColumnIndex != null) {
-      csvReferenceIdColumnIndex = referenceIdColumnIndex;
+      mapping.referenceIdColumnIndex = referenceIdColumnIndex;
     }
-    if (decimalSeparator != null) csvDecimalSeparator = decimalSeparator;
-    if (currency != null) csvCurrency = currency;
+    if (decimalSeparator != null) mapping.decimalSeparator = decimalSeparator;
+    if (currency != null) mapping.currency = currency;
     notifyListeners();
   }
 
-  bool get canConfirmCsvMapping {
-    if (csvDateColumnIndex == null) return false;
-    if (csvDescriptionColumnIndexes.isEmpty) return false;
-    if (csvCurrency == null || csvCurrency!.isEmpty) return false;
-    switch (csvAmountConvention) {
-      case CsvAmountConvention.signedColumn:
-        return csvSignedAmountColumnIndex != null;
-      case CsvAmountConvention.debitCreditColumns:
-        return csvDebitColumnIndex != null && csvCreditColumnIndex != null;
-    }
-  }
+  bool get canConfirmCsvMapping => _session.canConfirmCsvMapping;
 
-  /// Returns null for an incomplete mapping rather than constructing (and
-  /// having [CsvColumnMapping]'s constructor assert on) one - reuses
-  /// [canConfirmCsvMapping]'s validity check so this can never throw for a
-  /// mapping the user simply hasn't finished yet (e.g. the live preview
-  /// re-evaluates this on every keystroke).
-  CsvColumnMapping? _buildCsvMapping() {
-    if (!canConfirmCsvMapping) return null;
-    final currency = csvCurrency;
-    final dateIndex = csvDateColumnIndex;
-    if (currency == null || dateIndex == null) return null;
-    return CsvColumnMapping(
-      hasHeaderRow: csvHasHeaderRow,
-      dateColumnIndex: dateIndex,
-      datePattern: csvDatePattern,
-      descriptionColumnIndexes: csvDescriptionColumnIndexes,
-      amountConvention: csvAmountConvention,
-      signedAmountColumnIndex: csvSignedAmountColumnIndex,
-      debitColumnIndex: csvDebitColumnIndex,
-      creditColumnIndex: csvCreditColumnIndex,
-      referenceIdColumnIndex: csvReferenceIdColumnIndex,
-      decimalSeparator: csvDecimalSeparator,
-      currency: currency,
-    );
-  }
+  CsvColumnMapping? _buildCsvMapping() => _session.csvMapping.toMapping();
 
   /// Best-effort re-parse of the already-loaded bytes under the
   /// in-progress mapping, so the mapping screen can show a live preview
@@ -338,7 +257,7 @@ class StatementImportViewModel extends ChangeNotifier {
     _fileName = name;
     _parseError = null;
     try {
-      switch (_source) {
+      switch (_session.source) {
         case StatementSource.ofx || null:
           final result = _importRepository.parseOfxFile(bytes);
           _transactions = result.transactions;
@@ -349,7 +268,7 @@ class StatementImportViewModel extends ChangeNotifier {
           _csvBytes = bytes;
           _csvHeaderRow = readCsvRows(bytes).first;
       }
-      _step = StatementImportStep.selectAccount;
+      _session.step = StatementImportStep.selectAccount;
 
       final requested = _initialFinancialAccountId;
       final requestedIsActive =
@@ -379,7 +298,7 @@ class StatementImportViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    switch (_source) {
+    switch (_session.source) {
       case StatementSource.ofx || null:
         await _checkCurrencyAndBuildPreview(accountId);
       case StatementSource.csv:
@@ -391,12 +310,12 @@ class StatementImportViewModel extends ChangeNotifier {
         final accountCurrency = await _importRepository.groupCurrencyFor(
           accountId,
         );
-        csvCurrency ??= accountCurrency;
+        _session.csvMapping.currency ??= accountCurrency;
 
         if (_isDisposed) return;
         if (profile != null) applyProfile(profile);
         _isLoading = false;
-        _step = StatementImportStep.mapColumns;
+        _session.step = StatementImportStep.mapColumns;
         notifyListeners();
     }
   }
@@ -441,7 +360,7 @@ class StatementImportViewModel extends ChangeNotifier {
       if (_isDisposed) return;
       _isLoading = false;
       _parseError = error.message;
-      _step = StatementImportStep.pickFile;
+      _session.step = StatementImportStep.pickFile;
       notifyListeners();
       return;
     }
@@ -472,7 +391,7 @@ class StatementImportViewModel extends ChangeNotifier {
     if (_isDisposed) return;
     _rows = rows;
     _isLoading = false;
-    _step = StatementImportStep.preview;
+    _session.step = StatementImportStep.preview;
     notifyListeners();
   }
 
@@ -491,22 +410,7 @@ class StatementImportViewModel extends ChangeNotifier {
   /// by Matching Description"). A row with a description no other row
   /// shares still gets its own single-row group, so it's bulk-assignable
   /// through the same action as a multi-row group.
-  List<StatementImportRowGroup> get rowGroups {
-    final order = <String>[];
-    final indexesByKey = <String, List<int>>{};
-    for (var i = 0; i < _rows.length; i++) {
-      final key = normalizeDescription(_rows[i].transaction.description);
-      final indexes = indexesByKey.putIfAbsent(key, () {
-        order.add(key);
-        return [];
-      });
-      indexes.add(i);
-    }
-    return [
-      for (final key in order)
-        StatementImportRowGroup(key: key, rowIndexes: indexesByKey[key]!),
-    ];
-  }
+  List<StatementImportRowGroup> get rowGroups => groupPreviewRows(_rows);
 
   /// Sets [categoryId] on every row currently in the group identified by
   /// [groupKey] - not retroactive to rows added afterward, since it only
@@ -592,7 +496,7 @@ class StatementImportViewModel extends ChangeNotifier {
     final result = await _importRepository.postAcceptedRows(
       financialAccountId: accountId,
       rows: acceptedRows,
-      source: _source == StatementSource.csv
+      source: _session.source == StatementSource.csv
           ? ImportSource.csv
           : ImportSource.ofx,
     );
@@ -600,7 +504,7 @@ class StatementImportViewModel extends ChangeNotifier {
     if (_isDisposed) return;
     _batchResult = result;
     _isSubmitting = false;
-    _step = StatementImportStep.summary;
+    _session.step = StatementImportStep.summary;
     notifyListeners();
   }
 

@@ -8,8 +8,8 @@ import '../../domain/models/integrity_event.dart';
 import '../../domain/models/signing_identity.dart';
 import '../database/app_database.dart';
 import '../database/tables/entry_verification_cache_table.dart';
-import '../database/tables/ledger_chain_state_table.dart';
 import 'account_repository.dart';
+import 'ledger_chain_store.dart';
 import 'repository_date_utils.dart';
 
 /// Device signing-identity lifecycle, chain verification, and keystore
@@ -18,21 +18,24 @@ import 'repository_date_utils.dart';
 /// starter books in [confirmFirstIdentity]; omitted for
 /// [LedgerBackupRepository]'s throwaway temp-file instance (design.md D2).
 ///
-/// [LedgerRepository.appendSignedEntry] does **not** call this class —
-/// it keeps a private identity lookup so Identity → Account → Ledger
-/// cannot cycle back here (design.md D1a).
+/// Chain tip, verification-cache, and current-identity reads go through
+/// [LedgerChainStore] so posting can share them without importing this
+/// class (Identity → Account → Ledger stays acyclic).
 class IdentityRepository {
   IdentityRepository({
     required AppDatabase database,
     AccountRepository? accountRepository,
     SigningKeyService? signingKeyService,
+    LedgerChainStore? chain,
   }) : _db = database,
        _accountRepository = accountRepository,
-       _signingKeyService = signingKeyService ?? SigningKeyService();
+       _signingKeyService = signingKeyService ?? SigningKeyService(),
+       _chain = chain ?? LedgerChainStore(database);
 
   final AppDatabase _db;
   final AccountRepository? _accountRepository;
   final SigningKeyService _signingKeyService;
+  final LedgerChainStore _chain;
 
   AccountRepository _requireAccountRepository() {
     final accounts = _accountRepository;
@@ -46,15 +49,7 @@ class IdentityRepository {
 
   /// The active (non-superseded) signing identity, or null if none has
   /// been generated/confirmed yet - the true-first-launch state.
-  Future<SigningIdentity?> currentIdentity() async {
-    final row =
-        await (_db.select(_db.signingIdentities)
-              ..where((t) => t.supersededAt.isNull())
-              ..orderBy([(t) => OrderingTerm.desc(t.createdAt)])
-              ..limit(1))
-            .getSingleOrNull();
-    return row == null ? null : _toDomainIdentity(row);
-  }
+  Future<SigningIdentity?> currentIdentity() => _chain.currentSigningIdentity();
 
   /// Whether this device's secure storage currently holds the private key
   /// matching [identity]. False means either no key is stored at all, or
@@ -118,14 +113,7 @@ class IdentityRepository {
               publicKey: Uint8List.fromList(generated.keyMaterial.publicKey),
             ),
           );
-      await _db
-          .into(_db.ledgerChainState)
-          .insertOnConflictUpdate(
-            LedgerChainStateCompanion.insert(
-              id: ledgerChainStateSingletonId,
-              nextDeviceChainSequence: 0,
-            ),
-          );
+      await _chain.loadState();
       await _requireAccountRepository().seedOnboardingBooks(currency: currency);
     });
     return _toDomainIdentity(row);
@@ -213,7 +201,7 @@ class IdentityRepository {
       // counter rather than restarting at 0. Only the hash chain itself
       // (previousHash below) resets to genesis: that's the actual fresh
       // trust root a migration establishes.
-      final priorChainState = await _chainState();
+      final priorChainState = await _chain.loadState();
       var sequence = priorChainState.nextDeviceChainSequence;
       Uint8List previousHash = Uint8List.fromList(genesisPreviousEntryHash);
       String? lastInsertedId;
@@ -280,7 +268,7 @@ class IdentityRepository {
               );
         }
 
-        await _upsertVerificationCache(
+        await _chain.upsertVerificationCache(
           entryId: newId,
           isVerified: true,
           breakReason: null,
@@ -291,7 +279,7 @@ class IdentityRepository {
         sequence += 1;
       }
 
-      await _updateChainState(
+      await _chain.updateState(
         trustedTipEntryId: lastInsertedId,
         trustedTipHash: activeEntries.isEmpty ? null : previousHash,
         nextDeviceChainSequence: sequence,
@@ -457,23 +445,16 @@ class IdentityRepository {
         expectedPreviousHash = recomputedHash;
       }
 
-      await _db.delete(_db.entryVerificationCache).go();
-      final now = DateTime.now();
-      for (final entry in entries) {
-        final result = results[entry.id]!;
-        await _db
-            .into(_db.entryVerificationCache)
-            .insert(
-              EntryVerificationCacheCompanion.insert(
-                entryId: entry.id,
-                isVerified: result.isVerified,
-                breakReason: Value(result.reason),
-                checkedAt: now,
-              ),
-            );
-      }
+      await _chain.replaceVerificationCache([
+        for (final entry in entries)
+          (
+            entryId: entry.id,
+            isVerified: results[entry.id]!.isVerified,
+            breakReason: results[entry.id]!.reason,
+          ),
+      ]);
 
-      final priorChainState = await _chainState();
+      final priorChainState = await _chain.loadState();
       final isNewBreak =
           breakEntryId != null && priorChainState.trustedTipHash != null
           ? !bytesEqual(priorChainState.trustedTipHash!, expectedPreviousHash)
@@ -485,7 +466,7 @@ class IdentityRepository {
         final lastVerifiedEntry = lastVerifiedIndex >= 0
             ? entries[lastVerifiedIndex]
             : null;
-        await _updateChainState(
+        await _chain.updateState(
           trustedTipEntryId: lastVerifiedEntry?.id,
           trustedTipHash: lastVerifiedEntry?.entryHash,
           nextDeviceChainSequence: priorChainState.nextDeviceChainSequence,
@@ -507,7 +488,7 @@ class IdentityRepository {
         }
       } else if (entries.isNotEmpty) {
         final tip = entries.last;
-        await _updateChainState(
+        await _chain.updateState(
           trustedTipEntryId: tip.id,
           trustedTipHash: tip.entryHash,
           nextDeviceChainSequence: priorChainState.nextDeviceChainSequence,
@@ -528,56 +509,6 @@ class IdentityRepository {
   /// touched.
   Future<String> exportKeystoreFile({required String passphrase}) {
     return _signingKeyService.exportKeystoreFile(passphrase: passphrase);
-  }
-
-  Future<ChainStateRow> _chainState() async {
-    final existing =
-        await (_db.select(_db.ledgerChainState)
-              ..where((t) => t.id.equals(ledgerChainStateSingletonId)))
-            .getSingleOrNull();
-    if (existing != null) return existing;
-    return _db
-        .into(_db.ledgerChainState)
-        .insertReturning(
-          LedgerChainStateCompanion.insert(
-            id: ledgerChainStateSingletonId,
-            nextDeviceChainSequence: 0,
-          ),
-        );
-  }
-
-  Future<void> _updateChainState({
-    required String? trustedTipEntryId,
-    required Uint8List? trustedTipHash,
-    required int nextDeviceChainSequence,
-  }) {
-    return _db
-        .into(_db.ledgerChainState)
-        .insertOnConflictUpdate(
-          LedgerChainStateCompanion(
-            id: const Value(ledgerChainStateSingletonId),
-            trustedTipEntryId: Value(trustedTipEntryId),
-            trustedTipHash: Value(trustedTipHash),
-            nextDeviceChainSequence: Value(nextDeviceChainSequence),
-          ),
-        );
-  }
-
-  Future<void> _upsertVerificationCache({
-    required String entryId,
-    required bool isVerified,
-    required VerificationBreakReason? breakReason,
-  }) {
-    return _db
-        .into(_db.entryVerificationCache)
-        .insertOnConflictUpdate(
-          EntryVerificationCacheCompanion.insert(
-            entryId: entryId,
-            isVerified: isVerified,
-            breakReason: Value(breakReason),
-            checkedAt: DateTime.now(),
-          ),
-        );
   }
 }
 

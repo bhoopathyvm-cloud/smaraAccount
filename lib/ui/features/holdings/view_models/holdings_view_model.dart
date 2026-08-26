@@ -15,7 +15,7 @@ import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/investment_research_prompt.dart';
 import '../../../../domain/models/account.dart';
-import '../../../../domain/models/account_group.dart';
+import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/instrument.dart';
 import '../../../../domain/models/instrument_holding.dart';
 import '../../../../domain/models/instrument_quote.dart';
@@ -82,10 +82,12 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _categories = categories;
       notifyListeners();
     });
-    _groupsSub = _accountRepository.watchAccountGroups().listen((groups) {
-      _groups = groups;
-      notifyListeners();
-    });
+    _currenciesSub = _accountRepository
+        .watchAccountCurrencies(includeArchived: true)
+        .listen((catalog) {
+          _currencies = catalog;
+          notifyListeners();
+        });
     _settingsRepository.isMarketPriceFetchEnabled().then((enabled) {
       _quotesEnabled = enabled;
       notifyListeners();
@@ -110,7 +112,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   late final StreamSubscription<List<Instrument>> _instrumentsSub;
   late final StreamSubscription<List<Instrument>> _heldInstrumentsSub;
   late final StreamSubscription<List<Account>> _categoriesSub;
-  late final StreamSubscription<List<AccountGroup>> _groupsSub;
+  late final StreamSubscription<AccountCurrencyCatalog> _currenciesSub;
   Timer? _quoteTimer;
 
   Account? _account;
@@ -146,18 +148,9 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   bool _quotesEnabled = true;
   bool get quotesEnabled => _quotesEnabled;
 
-  List<AccountGroup> _groups = const [];
+  AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
-  String get currency {
-    final groupId = _account?.groupId;
-    if (groupId == null) return 'USD';
-    for (final group in _groups) {
-      if (group.id == groupId && group.currency != null) {
-        return group.currency!;
-      }
-    }
-    return 'USD';
-  }
+  String get currency => _currencies.currencyFor(accountId) ?? 'USD';
 
   void clearError() => clearFailure();
 
@@ -347,7 +340,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     _instrumentsSub.cancel();
     _heldInstrumentsSub.cancel();
     _categoriesSub.cancel();
-    _groupsSub.cancel();
+    _currenciesSub.cancel();
     super.dispose();
   }
 }

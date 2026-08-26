@@ -954,8 +954,6 @@ Widget buildAppFor(
   final investmentRepository = InvestmentRepository(
     database: database,
     ledgerRepository: repository,
-    accountRepository: accountRepository,
-    categoryRepository: categoryRepository,
   );
   final recurringTemplateRepository = RecurringTemplateRepository(
     database: database,
