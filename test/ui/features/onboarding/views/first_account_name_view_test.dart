@@ -9,7 +9,7 @@ import 'package:smara_accounting/ui/features/onboarding/views/first_account_name
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository repository;
+  late MockAccountRepository repository;
 
   const seededAccount = Account(
     id: 'asset-seed',
@@ -19,7 +19,7 @@ void main() {
   );
 
   setUp(() {
-    repository = MockLedgerRepository();
+    repository = MockAccountRepository();
     when(
       repository.watchFinancialAccounts(),
     ).thenAnswer((_) => Stream.value(const [seededAccount]));
@@ -35,7 +35,9 @@ void main() {
         ),
       ).thenAnswer((_) async {});
 
-      final viewModel = FirstAccountNameViewModel(ledgerRepository: repository);
+      final viewModel = FirstAccountNameViewModel(
+        accountRepository: repository,
+      );
       addTearDown(viewModel.dispose);
       var finished = false;
 
@@ -77,7 +79,9 @@ void main() {
         ),
       ).thenAnswer((_) async {});
 
-      final viewModel = FirstAccountNameViewModel(ledgerRepository: repository);
+      final viewModel = FirstAccountNameViewModel(
+        accountRepository: repository,
+      );
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(

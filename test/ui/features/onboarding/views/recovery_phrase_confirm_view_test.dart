@@ -10,13 +10,13 @@ import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_co
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository repository;
+  late MockIdentityRepository repository;
   late RecoveryPhraseSetupViewModel viewModel;
   late GeneratedIdentity generated;
 
   setUp(() async {
-    repository = MockLedgerRepository();
-    viewModel = RecoveryPhraseSetupViewModel(ledgerRepository: repository);
+    repository = MockIdentityRepository();
+    viewModel = RecoveryPhraseSetupViewModel(identityRepository: repository);
     final phrase = RecoveryPhrase.generate();
     final keyMaterial = await const Ed25519Signing().keyPairFromSeed(
       phrase.seed,

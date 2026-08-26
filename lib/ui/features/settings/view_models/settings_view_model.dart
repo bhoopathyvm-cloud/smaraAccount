@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/ledger_backup_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -19,13 +19,13 @@ import '../../../core/app_lock_controller.dart';
 class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   SettingsViewModel({
     required SettingsRepository settingsRepository,
-    required LedgerRepository ledgerRepository,
+    required LedgerBackupRepository ledgerBackupRepository,
     required AppLockService appLockService,
     required BiometricAuthenticator biometricAuthenticator,
     required AppLockController appLockController,
     LocaleController? localeController,
   }) : _settingsRepository = settingsRepository,
-       _ledgerRepository = ledgerRepository,
+       _ledgerBackupRepository = ledgerBackupRepository,
        _appLockService = appLockService,
        _biometricAuthenticator = biometricAuthenticator,
        _appLockController = appLockController,
@@ -34,7 +34,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   final SettingsRepository _settingsRepository;
-  final LedgerRepository _ledgerRepository;
+  final LedgerBackupRepository _ledgerBackupRepository;
   final AppLockService _appLockService;
   final BiometricAuthenticator _biometricAuthenticator;
   final AppLockController _appLockController;
@@ -147,7 +147,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     clearFailure();
     notifyListeners();
     try {
-      final contents = await _ledgerRepository.exportLedgerBackup(
+      final contents = await _ledgerBackupRepository.exportLedgerBackup(
         passphrase: passphrase,
       );
       _isBackingUp = false;
@@ -174,7 +174,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     clearFailure();
     notifyListeners();
     try {
-      await _ledgerRepository.restoreLedgerBackup(
+      await _ledgerBackupRepository.restoreLedgerBackup(
         fileContents: fileContents,
         passphrase: passphrase,
       );

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../../data/repositories/account_repository.dart';
+import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -16,6 +18,8 @@ import '../../../../domain/models/transaction_direction.dart';
 class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   CorrectionViewModel({
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
+    required CategoryRepository categoryRepository,
     required this.entryId,
     required int initialAmountMinor,
     required TransactionDirection initialDirection,
@@ -24,25 +28,27 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required DateTime initialTransactionDate,
     String? initialDescription,
   }) : _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository,
+       _categoryRepository = categoryRepository,
        _amountMinor = initialAmountMinor,
        _direction = initialDirection,
        _categoryId = initialCategoryId,
        _financialAccountId = initialFinancialAccountId,
        _transactionDate = initialTransactionDate,
        _description = initialDescription {
-    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+    _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
       _financialAccounts = accounts;
       notifyListeners();
     });
-    _categoriesSubscription = _ledgerRepository.watchCategories().listen((
+    _categoriesSubscription = _categoryRepository.watchCategories().listen((
       categories,
     ) {
       _categories = categories;
       notifyListeners();
     });
-    _groupsSubscription = _ledgerRepository.watchAccountGroups().listen((
+    _groupsSubscription = _accountRepository.watchAccountGroups().listen((
       groups,
     ) {
       _groups = groups;
@@ -51,6 +57,8 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
+  final CategoryRepository _categoryRepository;
 
   /// The original, still-unmodified entry this Fix corrects.
   final String entryId;

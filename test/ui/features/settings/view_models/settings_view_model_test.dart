@@ -10,7 +10,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockSettingsRepository settingsRepository;
-  late MockLedgerRepository ledgerRepository;
+  late MockLedgerBackupRepository ledgerBackupRepository;
   late MockAppLockService appLockService;
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockAppLockController appLockController;
@@ -18,7 +18,7 @@ void main() {
 
   setUp(() {
     settingsRepository = MockSettingsRepository();
-    ledgerRepository = MockLedgerRepository();
+    ledgerBackupRepository = MockLedgerBackupRepository();
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     appLockController = MockAppLockController();
@@ -40,7 +40,7 @@ void main() {
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
     viewModel = SettingsViewModel(
       settingsRepository: settingsRepository,
-      ledgerRepository: ledgerRepository,
+      ledgerBackupRepository: ledgerBackupRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -50,7 +50,9 @@ void main() {
   group('exportBackup', () {
     test('returns the encrypted contents on success', () async {
       when(
-        ledgerRepository.exportLedgerBackup(passphrase: anyNamed('passphrase')),
+        ledgerBackupRepository.exportLedgerBackup(
+          passphrase: anyNamed('passphrase'),
+        ),
       ).thenAnswer((_) async => '{"kind":"smara-ledger-backup"}');
 
       final result = await viewModel.exportBackup(passphrase: 'hunter2');
@@ -62,7 +64,9 @@ void main() {
 
     test('returns null and sets an error message on failure', () async {
       when(
-        ledgerRepository.exportLedgerBackup(passphrase: anyNamed('passphrase')),
+        ledgerBackupRepository.exportLedgerBackup(
+          passphrase: anyNamed('passphrase'),
+        ),
       ).thenThrow(Exception('disk full'));
 
       final result = await viewModel.exportBackup(passphrase: 'hunter2');
@@ -76,7 +80,7 @@ void main() {
   group('restoreBackup', () {
     test('returns true on success', () async {
       when(
-        ledgerRepository.restoreLedgerBackup(
+        ledgerBackupRepository.restoreLedgerBackup(
           fileContents: anyNamed('fileContents'),
           passphrase: anyNamed('passphrase'),
         ),
@@ -96,7 +100,7 @@ void main() {
       'surfaces ForeignBackupIdentityException as a plain-language message',
       () async {
         when(
-          ledgerRepository.restoreLedgerBackup(
+          ledgerBackupRepository.restoreLedgerBackup(
             fileContents: anyNamed('fileContents'),
             passphrase: anyNamed('passphrase'),
           ),
@@ -123,7 +127,7 @@ void main() {
       'surfaces InvalidLedgerBackupException as a plain-language message',
       () async {
         when(
-          ledgerRepository.restoreLedgerBackup(
+          ledgerBackupRepository.restoreLedgerBackup(
             fileContents: anyNamed('fileContents'),
             passphrase: anyNamed('passphrase'),
           ),
@@ -146,7 +150,7 @@ void main() {
       'any other failure (e.g. wrong passphrase) surfaces a generic message',
       () async {
         when(
-          ledgerRepository.restoreLedgerBackup(
+          ledgerBackupRepository.restoreLedgerBackup(
             fileContents: anyNamed('fileContents'),
             passphrase: anyNamed('passphrase'),
           ),

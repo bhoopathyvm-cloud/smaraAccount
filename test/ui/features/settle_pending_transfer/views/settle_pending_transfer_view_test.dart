@@ -12,6 +12,8 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
 
   const checking = Account(
     id: 'asset-1',
@@ -54,18 +56,20 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([checking, euroSavings]));
     when(
-      repository.watchAccountGroups(
+      accountRepository.watchAccountGroups(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
     when(
-      repository.watchCategories(),
+      categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value([expenseCategory]));
   });
 
@@ -100,6 +104,8 @@ void main() {
 
       final viewModel = SettlePendingTransferViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
         summary: summary,
       );
       addTearDown(viewModel.dispose);
@@ -170,6 +176,8 @@ void main() {
 
       final viewModel = SettlePendingTransferViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
         summary: summary,
       );
       addTearDown(viewModel.dispose);
@@ -243,6 +251,8 @@ void main() {
 
       final viewModel = SettlePendingTransferViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
         summary: summary,
       );
       addTearDown(viewModel.dispose);

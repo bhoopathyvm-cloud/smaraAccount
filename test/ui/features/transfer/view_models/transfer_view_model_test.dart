@@ -15,6 +15,8 @@ import '../../../../mocks.mocks.dart';
 // transfer_view_test.dart.
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
   late MockExchangeRateService exchangeRateService;
   late MockSettingsRepository settingsRepository;
 
@@ -83,6 +85,8 @@ void main() {
   TransferViewModel buildViewModel() {
     return TransferViewModel(
       ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       exchangeRateService: exchangeRateService,
       settingsRepository: settingsRepository,
     );
@@ -90,18 +94,20 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([checking, savings]));
     when(
-      repository.watchAccountGroups(
+      accountRepository.watchAccountGroups(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([usdGroup]));
     when(
-      repository.watchCategories(),
+      categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value([bankFees]));
 
     exchangeRateService = MockExchangeRateService();
@@ -343,12 +349,12 @@ void main() {
     'when the reference-rate lookup setting is disabled, fetchRate is never called for a cross-currency pair',
     () async {
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, eurSavings]));
       when(
-        repository.watchAccountGroups(
+        accountRepository.watchAccountGroups(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
@@ -433,12 +439,12 @@ void main() {
     'deducted-fee mode reduces the source-side amount but leaves a known destination amount untouched',
     () async {
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, eurSavings]));
       when(
-        repository.watchAccountGroups(
+        accountRepository.watchAccountGroups(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
@@ -533,12 +539,12 @@ void main() {
   group('impliedRate', () {
     Future<TransferViewModel> buildCrossCurrencyViewModel() async {
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, eurSavings]));
       when(
-        repository.watchAccountGroups(
+        accountRepository.watchAccountGroups(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
@@ -615,12 +621,12 @@ void main() {
         'different minor-unit digit counts (USD, 2 decimals; JPY, 0) still '
         'computes the true rate, not the raw minor-unit ratio', () async {
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, jpySavings]));
       when(
-        repository.watchAccountGroups(
+        accountRepository.watchAccountGroups(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([usdGroup, jpyGroup]));
@@ -656,13 +662,15 @@ void main() {
 
       test('pre-selects the requested card as the destination', () async {
         when(
-          repository.watchFinancialAccounts(
+          accountRepository.watchFinancialAccounts(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value([checking, savings, visaCard]));
 
         final viewModel = TransferViewModel(
           ledgerRepository: repository,
+          accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
           exchangeRateService: exchangeRateService,
           settingsRepository: settingsRepository,
           initialToAccountId: 'liability-1',
@@ -679,13 +687,15 @@ void main() {
       test('falls back to the ordinary first-other-account default when the '
           'requested card no longer exists', () async {
         when(
-          repository.watchFinancialAccounts(
+          accountRepository.watchFinancialAccounts(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value([checking, savings]));
 
         final viewModel = TransferViewModel(
           ledgerRepository: repository,
+          accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
           exchangeRateService: exchangeRateService,
           settingsRepository: settingsRepository,
           initialToAccountId: 'no-such-account',

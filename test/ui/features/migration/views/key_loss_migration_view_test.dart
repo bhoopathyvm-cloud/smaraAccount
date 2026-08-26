@@ -13,6 +13,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockIdentityRepository identityRepository;
   late KeyLossMigrationViewModel viewModel;
 
   JournalEntry entry(String id, int assetAmount) {
@@ -51,10 +52,14 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    identityRepository = MockIdentityRepository();
     when(
       repository.watchEntries(),
     ).thenAnswer((_) => Stream.value([entry('e1', 1000)]));
-    viewModel = KeyLossMigrationViewModel(ledgerRepository: repository);
+    viewModel = KeyLossMigrationViewModel(
+      ledgerRepository: repository,
+      identityRepository: identityRepository,
+    );
   });
 
   testWidgets(
@@ -104,7 +109,7 @@ void main() {
     final keyMaterial = await const Ed25519Signing().keyPairFromSeed(
       phrase.seed,
     );
-    when(repository.migrateToNewIdentityAfterKeyLoss()).thenAnswer(
+    when(identityRepository.migrateToNewIdentityAfterKeyLoss()).thenAnswer(
       (_) async => GeneratedIdentity(phrase: phrase, keyMaterial: keyMaterial),
     );
     var migrated = false;

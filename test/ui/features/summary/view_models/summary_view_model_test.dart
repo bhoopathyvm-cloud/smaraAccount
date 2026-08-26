@@ -7,9 +7,11 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
   });
 
   test('subscribes with the default (current month) range on construction', () {
@@ -21,7 +23,10 @@ void main() {
       ),
     );
 
-    final viewModel = SummaryViewModel(ledgerRepository: repository);
+    final viewModel = SummaryViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+    );
     addTearDown(viewModel.dispose);
 
     expect(viewModel.start.day, equals(1));
@@ -41,7 +46,10 @@ void main() {
         ),
       );
 
-      final viewModel = SummaryViewModel(ledgerRepository: repository);
+      final viewModel = SummaryViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+      );
       addTearDown(viewModel.dispose);
 
       final start = DateTime(2026, 2, 1);

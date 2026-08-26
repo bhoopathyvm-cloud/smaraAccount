@@ -9,11 +9,11 @@
 ## 2. Device targeting
 
 - [~] 2.1 Confirm each capability group's test files run correctly via `flutter test integration_test/acceptance/<file>.dart -d <device-id>` against a macOS build, an iOS simulator, and an Android emulator — no platform-specific test code should be needed given 1.1–1.3 already abstract over the target via `path_provider`/secure storage. **macOS confirmed: `core_ledger_test.dart` passes cleanly and reproducibly (2 consecutive green runs, ~11s each). iOS/Android untested — no reason to expect the harness itself to differ (it's already platform-abstracted), but device-specific window/timing quirks (design.md Risks) haven't been observed there yet.**
-- [ ] 2.2 Document, in the script from Task 8, how to discover device ids for each platform (`flutter devices` output for a running macOS session, a booted iOS Simulator, and a running Android emulator).
+- [x] 2.2 Document, in the script from Task 8, how to discover device ids for each platform (`flutter devices` output for a running macOS session, a booted iOS Simulator, and a running Android emulator). **Done in `tool/run_acceptance_tests.sh` header (also referenced by task 10.3 / CONTRIBUTING).**
 
 ## 3. Capability group: core ledger journeys
 
-- [~] 3.1 Port the existing INTEGRATION-tier journeys — record transaction, reverse a posted entry, archive a category, tamper detection and re-anchoring, user-created group archive lifecycle (`core-ledger-single-account`, `multi-account-ledger`, `ledger-integrity-signing`) — onto the real-build harness in `integration_test/acceptance/core_ledger_test.dart`. **Record-transaction, hide-category, and tamper-detection-on-restart scenarios DONE, all three passing reliably and reproducibly against a real macOS build (3/3 clean runs). Reverse-entry has no GUI affordance in the app at all (ViewModel/Repository-only — see design.md note) so it's excluded from this GUI-only tier, not deferred. `completeOnboardingWithGuidedEntry` extracted into the shared harness so every remaining scenario (here and in other groups) reuses it instead of duplicating the onboarding walk. Two follow-ups intentionally scoped out rather than silently dropped: (1) re-anchoring - recording a second, clean entry after quarantine and confirming only the tampered one keeps the lock badge - hit a still-unexplained "no FAB found" failure distinct from every other issue in this change; (2) group-archive-lifecycle not yet started.**
+- [~] 3.1 Port the existing INTEGRATION-tier journeys — record transaction, reverse a posted entry, archive a category, tamper detection and re-anchoring, user-created group archive lifecycle (`core-ledger-single-account`, `multi-account-ledger`, `ledger-integrity-signing`) — onto the real-build harness in `integration_test/acceptance/core_ledger_test.dart`. **Record-transaction, hide-category, and tamper+re-anchoring scenarios DONE (`core_ledger_test.dart` 3/3 isolated macOS). Reverse-entry excluded (no GUI). Group archive → `group_archive_test.dart` (follow-up `acceptance-group-archive`, 2/2 green).**
 
 ## 4. Capability group: currency and transfers
 
@@ -40,12 +40,12 @@
 
 ## 8. Capability group: organization features
 
-- [ ] 8.1 Add scenarios for `payees`, `recurring-templates`, `import-category-rules`, `monthly-category-limits`, `split-transactions`, `correction-wizard`, and `register-search` — one representative real-GUI journey per capability, at minimum covering that capability's primary spec scenario.
+- [x] 8.1 Add scenarios for `payees`, `recurring-templates`, `import-category-rules`, `monthly-category-limits`, `split-transactions`, `correction-wizard`, and `register-search` — one representative real-GUI journey per capability, at minimum covering that capability's primary spec scenario. **`organization_test.dart`: 7/7 scenarios, 2 consecutive green runs on macOS.**
 
 ## 9. Capability group: home, accounts overview, and App Lock (PIN path)
 
 - [x] 9.1 Add a scenario asserting the home/accounts overview renders correctly against real recorded data (`accounts-home-overview`, `home-hub`, `account-management-ui`). `home_and_lock_test.dart`: onboards, asserts Home's summary figure and "this month" entry, then Accounts' seeded groups (including the below-the-fold Investments group). 2/2 clean runs.
-- [x] 9.2 Add a scenario locking and unlocking via PIN through the real GUI (`app-lock`, PIN path only — biometric path stays out of scope per design.md Non-Goals). Second scenario in `home_and_lock_test.dart`: enables the PIN through the real Set-PIN dialog, simulates a relaunch (the router's redirect guard only re-evaluates app-lock on a fresh navigation/cold start, not on enabling the PIN itself), and asserts the real Lock screen appears. **Unlocking is not exercised**: calling the real `AppLockService.verifyPin` after this same-process relaunch was confirmed — via a direct, non-UI call to the service bypassing the widget tree entirely — to hang indefinitely rather than resolve, on this ad-hoc signed macOS build. This matches the same class of real-Keychain timing quirk already documented in acceptance_harness.dart (`errSecMissingEntitlement`), not a bug in the PIN logic or the test's own interactions. Locking is proven and reliable (2/2 clean runs); unlocking needs manual verification on this platform, or revisiting on a differently-signed build.
+- [x] 9.2 Add a scenario locking and unlocking via PIN through the real GUI (`app-lock`, PIN path only — biometric path stays out of scope per design.md Non-Goals). **`home_and_lock_test.dart`: lock + unlock via real Lock UI; macOS 2/2 and iOS Simulator green after `AppLockService` PBKDF2 isolate fix (`acceptance-app-lock-unlock`).**
 
 ## 10. Developer entry point
 
@@ -62,7 +62,7 @@
 ## 12. Verification
 
 - [x] 12.1 Run the full suite locally against `-d macos` and confirm every capability group passes. Run via `tool/run_acceptance_tests.sh -d macos`: all 10 files / 27 scenarios pass cleanly (this same run surfaced and fixed the script's multi-file batching bug - see task 10.2's note).
-- [ ] 12.2 Repeat against an iOS simulator and an Android emulator, confirming the same test code passes unmodified on each.
+- [~] 12.2 Repeat against an iOS simulator **or wipeable physical iOS device** (not a daily-ledger install) and an Android emulator, confirming the same test code passes unmodified on each. **iOS Simulator: `home_and_lock_test.dart` green. macOS: full suite previously green + organization/core_ledger/group_archive this session. Android emulator (`smara_kiosk_pixel`) did not register as a device in time — retry locally.**
 - [ ] 12.3 Inspect each target's real storage location and keychain/keystore afterward and confirm no acceptance-test artifacts remain.
 - [ ] 12.4 Force-kill a run mid-test, then run again, and confirm pre-run cleanup removes the leftover state before the second run's assertions execute.
 - [x] 12.5 Confirm `flutter-ci.yml` and every other workflow are unchanged. This change has never touched any file under `.github/workflows/` - confirmed via `git status`/`git diff` showing no workflow file among the changes made across this change's commits.

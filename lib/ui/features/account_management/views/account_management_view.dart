@@ -12,6 +12,7 @@ import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
+import '../../../core/show_managed_dialog.dart';
 import '../../../core/status_banner.dart';
 import '../view_models/account_management_view_model.dart';
 
@@ -32,39 +33,291 @@ class AccountManagementView extends StatelessWidget {
   final VoidCallback? onTransfer;
   final VoidCallback? onImport;
 
-  // These dialog-local controllers are intentionally never disposed: the
-  // AlertDialog's exit transition keeps its TextFields mounted (and
-  // rebuilding) for a few frames after showDialog's Future resolves, so
-  // disposing immediately after await races that animation and throws.
   Future<void> _showCreateDialog(BuildContext context) async {
     final l10n = l10nOf(context);
-    final nameController = TextEditingController();
-    final balanceController = TextEditingController();
     var type = AccountType.asset;
     String? groupId;
     int? openingBalanceMinor;
     var isCreditCard = false;
     var holdsInvestments = false;
 
-    await showDialog<void>(
+    await showManagedDialog<void>(
       context: context,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setDialogState) {
-          final kind = type == AccountType.asset
-              ? AccountGroupKind.assetGroup
-              : AccountGroupKind.liabilityGroup;
-          final groups = viewModel.groups
-              .where((group) => group.kind == kind && !group.archived)
-              .toList();
-          if (!groups.any((group) => group.id == groupId)) {
-            groupId = groups.isEmpty ? null : groups.first.id;
-          }
-          final selectedGroupCurrency = groups
-              .where((group) => group.id == groupId)
-              .map((group) => group.currency)
-              .firstWhere((currency) => currency != null, orElse: () => null);
-          return AlertDialog(
-            title: Text(l10n.createAccount),
+      controllerCount: 2,
+      builder: (dialogContext, controllers) {
+        final nameController = controllers[0];
+        final balanceController = controllers[1];
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            final kind = type == AccountType.asset
+                ? AccountGroupKind.assetGroup
+                : AccountGroupKind.liabilityGroup;
+            final groups = viewModel.groups
+                .where((group) => group.kind == kind && !group.archived)
+                .toList();
+            if (!groups.any((group) => group.id == groupId)) {
+              groupId = groups.isEmpty ? null : groups.first.id;
+            }
+            final selectedGroupCurrency = groups
+                .where((group) => group.id == groupId)
+                .map((group) => group.currency)
+                .firstWhere((currency) => currency != null, orElse: () => null);
+            return AlertDialog(
+              title: Text(l10n.createAccount),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: nameController,
+                      autofocus: true,
+                      decoration: InputDecoration(labelText: l10n.name),
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    SegmentedButton<AccountType>(
+                      segments: [
+                        ButtonSegment(
+                          value: AccountType.asset,
+                          label: Text(l10n.asset),
+                        ),
+                        ButtonSegment(
+                          value: AccountType.liability,
+                          label: Text(l10n.liability),
+                        ),
+                      ],
+                      selected: {type},
+                      onSelectionChanged: (selection) {
+                        setDialogState(() {
+                          type = selection.first;
+                          groupId = null;
+                          if (type != AccountType.liability) {
+                            isCreditCard = false;
+                          }
+                          if (type != AccountType.asset) {
+                            holdsInvestments = false;
+                          }
+                        });
+                      },
+                    ),
+                    // credit-card-household-flow: set once at creation,
+                    // never changeable afterward - a Liability-only flag,
+                    // mirroring the holdsInvestments pattern.
+                    if (type == AccountType.asset)
+                      CheckboxListTile(
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: Text(l10n.thisAccountHoldsInvestments),
+                        subtitle: Text(
+                          l10n.thisAccountHoldsInvestmentsSubtitle,
+                        ),
+                        value: holdsInvestments,
+                        onChanged: (value) => setDialogState(
+                          () => holdsInvestments = value ?? false,
+                        ),
+                      ),
+                    if (type == AccountType.liability)
+                      CheckboxListTile(
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: Text(l10n.thisIsACreditCard),
+                        value: isCreditCard,
+                        onChanged: (value) =>
+                            setDialogState(() => isCreditCard = value ?? false),
+                      ),
+                    const SizedBox(height: AppSpacing.medium),
+                    EntityPickerField<AccountGroup>(
+                      key: ValueKey(type),
+                      labelText: l10n.groupLabel,
+                      items: groups,
+                      idOf: (group) => group.id,
+                      labelOf: (group) => localizeStoredName(l10n, group.name),
+                      value: groupId,
+                      onChanged: (value) => groupId = value,
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    MoneyAmountField(
+                      controller: balanceController,
+                      labelText: l10n.openingBalanceOptional,
+                      currency: selectedGroupCurrency ?? 'USD',
+                      onChangedMinor: (value) => openingBalanceMinor = value,
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: Text(l10n.actionCancel),
+                ),
+                ElevatedButton(
+                  onPressed: groupId == null
+                      ? null
+                      : () async {
+                          final name = nameController.text.trim();
+                          if (name.isEmpty) return;
+                          final created = await viewModel.createAccount(
+                            name: name,
+                            type: type,
+                            groupId: groupId!,
+                            openingBalanceMinor: openingBalanceMinor,
+                            isCreditCard: isCreditCard,
+                            holdsInvestments: holdsInvestments,
+                          );
+                          if (created && dialogContext.mounted) {
+                            Navigator.of(dialogContext).pop();
+                          }
+                        },
+                  child: Text(l10n.actionCreate),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _showRenameAccountDialog(
+    BuildContext context,
+    Account account,
+  ) async {
+    final l10n = l10nOf(context);
+    await showManagedDialog<void>(
+      context: context,
+      controllerCount: 1,
+      initialTexts: [editingNameFor(l10n, account.name)],
+      builder: (dialogContext, controllers) {
+        final controller = controllers[0];
+        return AlertDialog(
+          title: Text(l10n.renameAccount),
+          content: AppTextField(controller: controller, autofocus: true),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(l10n.actionCancel),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final name = canonicalNameToPersist(
+                  l10n,
+                  account.name,
+                  controller.text,
+                );
+                if (name.isEmpty) return;
+                final renamed = await viewModel.renameAccount(
+                  id: account.id,
+                  newName: name,
+                );
+                if (renamed && dialogContext.mounted) {
+                  Navigator.of(dialogContext).pop();
+                }
+              },
+              child: Text(l10n.actionSave),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showRenameGroupDialog(
+    BuildContext context,
+    AccountGroup group,
+  ) async {
+    final l10n = l10nOf(context);
+    final hasActiveAccounts = viewModel.accounts.any(
+      (account) => account.groupId == group.id && !account.archived,
+    );
+    await showManagedDialog<void>(
+      context: context,
+      controllerCount: 2,
+      initialTexts: [editingNameFor(l10n, group.name), group.currency],
+      builder: (dialogContext, controllers) {
+        final controller = controllers[0];
+        final currencyController = controllers[1];
+        return AlertDialog(
+          title: Text(l10n.editGroup),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppTextField(controller: controller, autofocus: true),
+              const SizedBox(height: AppSpacing.medium),
+              TextField(
+                controller: currencyController,
+                enabled: !hasActiveAccounts,
+                textCapitalization: TextCapitalization.characters,
+                maxLength: 3,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                  TextInputFormatter.withFunction(
+                    (oldValue, newValue) =>
+                        newValue.copyWith(text: newValue.text.toUpperCase()),
+                  ),
+                ],
+                decoration: InputDecoration(
+                  labelText: l10n.currencyIso,
+                  helperText: hasActiveAccounts
+                      ? l10n.errorCannotChangeGroupCurrencyWithAccounts
+                      : null,
+                  helperMaxLines: 2,
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(l10n.actionCancel),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final name = canonicalNameToPersist(
+                  l10n,
+                  group.name,
+                  controller.text,
+                );
+                if (name.isEmpty) return;
+                if (name != group.name) {
+                  final renamed = await viewModel.renameGroup(
+                    id: group.id,
+                    newName: name,
+                  );
+                  if (!renamed) return;
+                }
+                final currency = currencyController.text.trim();
+                if (!hasActiveAccounts &&
+                    currency.isNotEmpty &&
+                    currency != group.currency) {
+                  final changed = await viewModel.changeGroupCurrency(
+                    id: group.id,
+                    currency: currency,
+                  );
+                  if (!changed) return;
+                }
+                if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+              },
+              child: Text(l10n.actionSave),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showCreateGroupDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
+    var kind = AccountGroupKind.assetGroup;
+
+    await showManagedDialog<void>(
+      context: context,
+      controllerCount: 2,
+      initialTexts: ['', _commonCurrencies.first],
+      builder: (dialogContext, controllers) {
+        final nameController = controllers[0];
+        final currencyController = controllers[1];
+        return StatefulBuilder(
+          builder: (context, setDialogState) => AlertDialog(
+            title: Text(l10n.createGroup),
             content: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -75,70 +328,52 @@ class AccountManagementView extends StatelessWidget {
                     decoration: InputDecoration(labelText: l10n.name),
                   ),
                   const SizedBox(height: AppSpacing.medium),
-                  SegmentedButton<AccountType>(
+                  SegmentedButton<AccountGroupKind>(
                     segments: [
                       ButtonSegment(
-                        value: AccountType.asset,
+                        value: AccountGroupKind.assetGroup,
                         label: Text(l10n.asset),
                       ),
                       ButtonSegment(
-                        value: AccountType.liability,
+                        value: AccountGroupKind.liabilityGroup,
                         label: Text(l10n.liability),
                       ),
                     ],
-                    selected: {type},
-                    onSelectionChanged: (selection) {
-                      setDialogState(() {
-                        type = selection.first;
-                        groupId = null;
-                        if (type != AccountType.liability) {
-                          isCreditCard = false;
-                        }
-                        if (type != AccountType.asset) {
-                          holdsInvestments = false;
-                        }
-                      });
-                    },
+                    selected: {kind},
+                    onSelectionChanged: (selection) =>
+                        setDialogState(() => kind = selection.first),
                   ),
-                  // credit-card-household-flow: set once at creation,
-                  // never changeable afterward - a Liability-only flag,
-                  // mirroring the holdsInvestments pattern.
-                  if (type == AccountType.asset)
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.zero,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(l10n.thisAccountHoldsInvestments),
-                      subtitle: Text(l10n.thisAccountHoldsInvestmentsSubtitle),
-                      value: holdsInvestments,
-                      onChanged: (value) => setDialogState(
-                        () => holdsInvestments = value ?? false,
+                  const SizedBox(height: AppSpacing.medium),
+                  Wrap(
+                    spacing: AppSpacing.small,
+                    children: [
+                      for (final code in _commonCurrencies)
+                        ChoiceChip(
+                          label: Text(code),
+                          selected: currencyController.text == code,
+                          onSelected: (_) => setDialogState(
+                            () => currencyController.text = code,
+                          ),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.medium),
+                  TextField(
+                    controller: currencyController,
+                    textCapitalization: TextCapitalization.characters,
+                    maxLength: 3,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                      TextInputFormatter.withFunction(
+                        (oldValue, newValue) => newValue.copyWith(
+                          text: newValue.text.toUpperCase(),
+                        ),
                       ),
+                    ],
+                    decoration: InputDecoration(
+                      labelText: l10n.currencyIsoExample,
                     ),
-                  if (type == AccountType.liability)
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.zero,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(l10n.thisIsACreditCard),
-                      value: isCreditCard,
-                      onChanged: (value) =>
-                          setDialogState(() => isCreditCard = value ?? false),
-                    ),
-                  const SizedBox(height: AppSpacing.medium),
-                  EntityPickerField<AccountGroup>(
-                    key: ValueKey(type),
-                    labelText: l10n.groupLabel,
-                    items: groups,
-                    idOf: (group) => group.id,
-                    labelOf: (group) => localizeStoredName(l10n, group.name),
-                    value: groupId,
-                    onChanged: (value) => groupId = value,
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  MoneyAmountField(
-                    controller: balanceController,
-                    labelText: l10n.openingBalanceOptional,
-                    currency: selectedGroupCurrency ?? 'USD',
-                    onChangedMinor: (value) => openingBalanceMinor = value,
+                    onChanged: (_) => setDialogState(() {}),
                   ),
                 ],
               ),
@@ -149,18 +384,16 @@ class AccountManagementView extends StatelessWidget {
                 child: Text(l10n.actionCancel),
               ),
               ElevatedButton(
-                onPressed: groupId == null
+                onPressed:
+                    !RegExp(r'^[A-Z]{3}$').hasMatch(currencyController.text)
                     ? null
                     : () async {
                         final name = nameController.text.trim();
                         if (name.isEmpty) return;
-                        final created = await viewModel.createAccount(
+                        final created = await viewModel.createGroup(
                           name: name,
-                          type: type,
-                          groupId: groupId!,
-                          openingBalanceMinor: openingBalanceMinor,
-                          isCreditCard: isCreditCard,
-                          holdsInvestments: holdsInvestments,
+                          kind: kind,
+                          currency: currencyController.text,
                         );
                         if (created && dialogContext.mounted) {
                           Navigator.of(dialogContext).pop();
@@ -169,233 +402,9 @@ class AccountManagementView extends StatelessWidget {
                 child: Text(l10n.actionCreate),
               ),
             ],
-          );
-        },
-      ),
-    );
-  }
-
-  Future<void> _showRenameAccountDialog(
-    BuildContext context,
-    Account account,
-  ) async {
-    final l10n = l10nOf(context);
-    final controller = TextEditingController(
-      text: editingNameFor(l10n, account.name),
-    );
-    await showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.renameAccount),
-        content: AppTextField(controller: controller, autofocus: true),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(l10n.actionCancel),
           ),
-          ElevatedButton(
-            onPressed: () async {
-              final name = canonicalNameToPersist(
-                l10n,
-                account.name,
-                controller.text,
-              );
-              if (name.isEmpty) return;
-              final renamed = await viewModel.renameAccount(
-                id: account.id,
-                newName: name,
-              );
-              if (renamed && dialogContext.mounted) {
-                Navigator.of(dialogContext).pop();
-              }
-            },
-            child: Text(l10n.actionSave),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _showRenameGroupDialog(
-    BuildContext context,
-    AccountGroup group,
-  ) async {
-    final l10n = l10nOf(context);
-    final controller = TextEditingController(
-      text: editingNameFor(l10n, group.name),
-    );
-    final currencyController = TextEditingController(text: group.currency);
-    final hasActiveAccounts = viewModel.accounts.any(
-      (account) => account.groupId == group.id && !account.archived,
-    );
-    await showDialog<void>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.editGroup),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppTextField(controller: controller, autofocus: true),
-            const SizedBox(height: AppSpacing.medium),
-            TextField(
-              controller: currencyController,
-              enabled: !hasActiveAccounts,
-              textCapitalization: TextCapitalization.characters,
-              maxLength: 3,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                TextInputFormatter.withFunction(
-                  (oldValue, newValue) =>
-                      newValue.copyWith(text: newValue.text.toUpperCase()),
-                ),
-              ],
-              decoration: InputDecoration(
-                labelText: l10n.currencyIso,
-                helperText: hasActiveAccounts
-                    ? l10n.errorCannotChangeGroupCurrencyWithAccounts
-                    : null,
-                helperMaxLines: 2,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(l10n.actionCancel),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final name = canonicalNameToPersist(
-                l10n,
-                group.name,
-                controller.text,
-              );
-              if (name.isEmpty) return;
-              if (name != group.name) {
-                final renamed = await viewModel.renameGroup(
-                  id: group.id,
-                  newName: name,
-                );
-                if (!renamed) return;
-              }
-              final currency = currencyController.text.trim();
-              if (!hasActiveAccounts &&
-                  currency.isNotEmpty &&
-                  currency != group.currency) {
-                final changed = await viewModel.changeGroupCurrency(
-                  id: group.id,
-                  currency: currency,
-                );
-                if (!changed) return;
-              }
-              if (dialogContext.mounted) Navigator.of(dialogContext).pop();
-            },
-            child: Text(l10n.actionSave),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _showCreateGroupDialog(BuildContext context) async {
-    final l10n = l10nOf(context);
-    final nameController = TextEditingController();
-    final currencyController = TextEditingController(
-      text: _commonCurrencies.first,
-    );
-    var kind = AccountGroupKind.assetGroup;
-
-    await showDialog<void>(
-      context: context,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setDialogState) => AlertDialog(
-          title: Text(l10n.createGroup),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: nameController,
-                  autofocus: true,
-                  decoration: InputDecoration(labelText: l10n.name),
-                ),
-                const SizedBox(height: AppSpacing.medium),
-                SegmentedButton<AccountGroupKind>(
-                  segments: [
-                    ButtonSegment(
-                      value: AccountGroupKind.assetGroup,
-                      label: Text(l10n.asset),
-                    ),
-                    ButtonSegment(
-                      value: AccountGroupKind.liabilityGroup,
-                      label: Text(l10n.liability),
-                    ),
-                  ],
-                  selected: {kind},
-                  onSelectionChanged: (selection) =>
-                      setDialogState(() => kind = selection.first),
-                ),
-                const SizedBox(height: AppSpacing.medium),
-                Wrap(
-                  spacing: AppSpacing.small,
-                  children: [
-                    for (final code in _commonCurrencies)
-                      ChoiceChip(
-                        label: Text(code),
-                        selected: currencyController.text == code,
-                        onSelected: (_) => setDialogState(
-                          () => currencyController.text = code,
-                        ),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.medium),
-                TextField(
-                  controller: currencyController,
-                  textCapitalization: TextCapitalization.characters,
-                  maxLength: 3,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                    TextInputFormatter.withFunction(
-                      (oldValue, newValue) =>
-                          newValue.copyWith(text: newValue.text.toUpperCase()),
-                    ),
-                  ],
-                  decoration: InputDecoration(
-                    labelText: l10n.currencyIsoExample,
-                  ),
-                  onChanged: (_) => setDialogState(() {}),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(l10n.actionCancel),
-            ),
-            ElevatedButton(
-              onPressed:
-                  !RegExp(r'^[A-Z]{3}$').hasMatch(currencyController.text)
-                  ? null
-                  : () async {
-                      final name = nameController.text.trim();
-                      if (name.isEmpty) return;
-                      final created = await viewModel.createGroup(
-                        name: name,
-                        kind: kind,
-                        currency: currencyController.text,
-                      );
-                      if (created && dialogContext.mounted) {
-                        Navigator.of(dialogContext).pop();
-                      }
-                    },
-              child: Text(l10n.actionCreate),
-            ),
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 

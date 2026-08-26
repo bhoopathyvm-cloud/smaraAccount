@@ -10,17 +10,28 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
+  late MockPayeeRepository payeeRepository;
   late RecordTransactionViewModel viewModel;
 
   setUp(() {
     repository = MockLedgerRepository();
-    viewModel = RecordTransactionViewModel(ledgerRepository: repository);
+    accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
+    payeeRepository = MockPayeeRepository();
+    viewModel = RecordTransactionViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+      payeeRepository: payeeRepository,
+    );
   });
 
   test(
     'categories reflects the currently selected direction, active only',
     () async {
-      final withCategories = MockLedgerRepository();
+      final withCategories = MockCategoryRepository();
       when(withCategories.watchCategories()).thenAnswer(
         (_) => Stream.value(const [
           Account(
@@ -38,7 +49,10 @@ void main() {
         ]),
       );
       final categorizedViewModel = RecordTransactionViewModel(
-        ledgerRepository: withCategories,
+        ledgerRepository: MockLedgerRepository(),
+        accountRepository: MockAccountRepository(),
+        categoryRepository: withCategories,
+        payeeRepository: MockPayeeRepository(),
       );
       addTearDown(categorizedViewModel.dispose);
       // Stream.value(...) emits asynchronously (via a microtask), not
@@ -59,6 +73,9 @@ void main() {
 
     final spentViewModel = RecordTransactionViewModel(
       ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+      payeeRepository: payeeRepository,
       initialDirection: TransactionDirection.moneyOut,
     );
     addTearDown(spentViewModel.dispose);
@@ -134,32 +151,49 @@ void main() {
     );
 
     Future<
-      ({RecordTransactionViewModel viewModel, MockLedgerRepository repository})
+      ({
+        RecordTransactionViewModel viewModel,
+        MockLedgerRepository repository,
+        MockPayeeRepository payeeRepository,
+      })
     >
     viewModelWithPayees() async {
       final withPayees = MockLedgerRepository();
+      final withPayeesAccounts = MockAccountRepository();
+      final withPayeesCategories = MockCategoryRepository();
+      final withPayeesPayees = MockPayeeRepository();
       when(
-        withPayees.watchFinancialAccounts(),
+        withPayeesAccounts.watchFinancialAccounts(),
       ).thenAnswer((_) => Stream.value(const []));
       when(
-        withPayees.watchAccountGroups(
+        withPayeesAccounts.watchAccountGroups(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value(const []));
       when(
-        withPayees.watchCategories(),
+        withPayeesCategories.watchCategories(),
       ).thenAnswer((_) => Stream.value(const []));
       when(
-        withPayees.watchPayees(),
+        withPayeesPayees.watchPayees(),
       ).thenAnswer((_) => Stream.value(const [starbucks]));
-      final vm = RecordTransactionViewModel(ledgerRepository: withPayees);
+      final vm = RecordTransactionViewModel(
+        ledgerRepository: withPayees,
+        accountRepository: withPayeesAccounts,
+        categoryRepository: withPayeesCategories,
+        payeeRepository: withPayeesPayees,
+      );
       await Future<void>.delayed(Duration.zero);
-      return (viewModel: vm, repository: withPayees);
+      return (
+        viewModel: vm,
+        repository: withPayees,
+        payeeRepository: withPayeesPayees,
+      );
     }
 
     test('payeeSuggestions matches by normalized substring, empty query '
         'yields no suggestions', () async {
-      final (:viewModel, :repository) = await viewModelWithPayees();
+      final (:viewModel, :repository, :payeeRepository) =
+          await viewModelWithPayees();
       addTearDown(viewModel.dispose);
 
       expect(viewModel.payeeSuggestions('star').map((p) => p.id), ['payee-1']);
@@ -171,7 +205,8 @@ void main() {
     test(
       'selectPayee applies defaults, always overridable afterward',
       () async {
-        final (:viewModel, :repository) = await viewModelWithPayees();
+        final (:viewModel, :repository, :payeeRepository) =
+            await viewModelWithPayees();
         addTearDown(viewModel.dispose);
 
         viewModel.selectPayee(starbucks);
@@ -188,7 +223,8 @@ void main() {
     test(
       'submit records payee usage for an explicitly selected payee',
       () async {
-        final (:viewModel, :repository) = await viewModelWithPayees();
+        final (:viewModel, :repository, :payeeRepository) =
+            await viewModelWithPayees();
         addTearDown(viewModel.dispose);
         viewModel.selectPayee(starbucks);
         viewModel.setAmountMinor(500);
@@ -210,7 +246,7 @@ void main() {
 
         expect(result, isTrue);
         verify(
-          repository.recordPayeeUsage(
+          payeeRepository.recordPayeeUsage(
             payeeId: 'payee-1',
             categoryId: 'cat-1',
             financialAccountId: 'account-1',
@@ -223,7 +259,8 @@ void main() {
       'submit records payee usage when the typed description exactly '
       'matches an existing payee, even without an explicit selection',
       () async {
-        final (:viewModel, :repository) = await viewModelWithPayees();
+        final (:viewModel, :repository, :payeeRepository) =
+            await viewModelWithPayees();
         addTearDown(viewModel.dispose);
         viewModel.setDescription('starbucks');
         viewModel.setAmountMinor(500);
@@ -244,7 +281,7 @@ void main() {
         await viewModel.submit();
 
         verify(
-          repository.recordPayeeUsage(
+          payeeRepository.recordPayeeUsage(
             payeeId: 'payee-1',
             categoryId: 'cat-1',
             financialAccountId: 'account-1',
@@ -256,7 +293,8 @@ void main() {
     test(
       'submit records no payee usage when the description matches nothing',
       () async {
-        final (:viewModel, :repository) = await viewModelWithPayees();
+        final (:viewModel, :repository, :payeeRepository) =
+            await viewModelWithPayees();
         addTearDown(viewModel.dispose);
         viewModel.setDescription('unrelated text');
         viewModel.setAmountMinor(500);
@@ -277,7 +315,7 @@ void main() {
         await viewModel.submit();
 
         verifyNever(
-          repository.recordPayeeUsage(
+          payeeRepository.recordPayeeUsage(
             payeeId: anyNamed('payeeId'),
             categoryId: anyNamed('categoryId'),
             financialAccountId: anyNamed('financialAccountId'),
@@ -288,7 +326,8 @@ void main() {
 
     test('editing the description away from a selected payee clears the '
         'selection, so submit records no usage for it', () async {
-      final (:viewModel, :repository) = await viewModelWithPayees();
+      final (:viewModel, :repository, :payeeRepository) =
+          await viewModelWithPayees();
       addTearDown(viewModel.dispose);
       viewModel.selectPayee(starbucks);
       viewModel.setDescription('something else entirely');
@@ -310,7 +349,7 @@ void main() {
       await viewModel.submit();
 
       verifyNever(
-        repository.recordPayeeUsage(
+        payeeRepository.recordPayeeUsage(
           payeeId: anyNamed('payeeId'),
           categoryId: anyNamed('categoryId'),
           financialAccountId: anyNamed('financialAccountId'),
@@ -518,10 +557,16 @@ void main() {
 
     Future<RecordTransactionViewModel> viewModelWithCardAndBank() async {
       final withAccounts = MockLedgerRepository();
+      final withAccountsRepository = MockAccountRepository();
       when(
-        withAccounts.watchFinancialAccounts(),
+        withAccountsRepository.watchFinancialAccounts(),
       ).thenAnswer((_) => Stream.value(const [checking, visaCard]));
-      final vm = RecordTransactionViewModel(ledgerRepository: withAccounts);
+      final vm = RecordTransactionViewModel(
+        ledgerRepository: withAccounts,
+        accountRepository: withAccountsRepository,
+        categoryRepository: MockCategoryRepository(),
+        payeeRepository: MockPayeeRepository(),
+      );
       await Future<void>.delayed(Duration.zero);
       return vm;
     }

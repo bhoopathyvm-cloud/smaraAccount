@@ -13,6 +13,7 @@ import '../../../core/destructive_confirmation.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
 import '../../../core/money_formatter.dart';
+import '../../../core/show_managed_dialog.dart';
 import '../view_models/recurring_template_management_view_model.dart';
 
 /// Add/edit/delete recurring templates (recurring-templates tasks.md
@@ -114,19 +115,11 @@ class RecurringTemplateManagementView extends StatelessWidget {
     );
   }
 
-  /// Controllers are intentionally not disposed after [showDialog]
-  /// returns: the dialog route's exit animation still rebuilds its
-  /// TextFields (same reasoning as account_management_view.dart's dialogs).
   Future<void> _showTemplateDialog(
     BuildContext context,
     RecurringTemplateManagementViewModel viewModel, [
     RecurringTemplate? existing,
   ]) async {
-    final nameController = TextEditingController(text: existing?.name ?? '');
-    final amountController = TextEditingController();
-    final dayController = TextEditingController(
-      text: existing == null ? '' : existing.dayOfMonth.toString(),
-    );
     var direction = existing?.direction ?? TransactionDirection.moneyOut;
     String? financialAccountId =
         existing?.financialAccountId ??
@@ -137,163 +130,174 @@ class RecurringTemplateManagementView extends StatelessWidget {
     var errorMessage = viewModel.errorMessageFor(l10nOf(context));
     var initialAmountSet = false;
 
-    await showDialog<void>(
+    await showManagedDialog<void>(
       context: context,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setDialogState) {
-          final l10n = l10nOf(context);
-          final currency = viewModel.currencyFor(financialAccountId) ?? 'USD';
-          if (!initialAmountSet && existing != null) {
-            initialAmountSet = true;
-            amountController.text = formatAmountMinor(
-              existing.amountMinor,
-              currency,
-            );
-          }
-          return AlertDialog(
-            title: Text(
-              existing == null ? l10n.addTemplate : l10n.editTemplate,
-            ),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  AppTextField(
-                    controller: nameController,
-                    labelText: l10n.name,
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  SegmentedButton<TransactionDirection>(
-                    segments: [
-                      ButtonSegment(
-                        value: TransactionDirection.moneyIn,
-                        label: Text(l10n.captureReceived),
+      controllerCount: 3,
+      initialTexts: [
+        existing?.name ?? '',
+        '',
+        existing == null ? '' : existing.dayOfMonth.toString(),
+      ],
+      builder: (dialogContext, controllers) {
+        final nameController = controllers[0];
+        final amountController = controllers[1];
+        final dayController = controllers[2];
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            final l10n = l10nOf(context);
+            final currency = viewModel.currencyFor(financialAccountId) ?? 'USD';
+            if (!initialAmountSet && existing != null) {
+              initialAmountSet = true;
+              amountController.text = formatAmountMinor(
+                existing.amountMinor,
+                currency,
+              );
+            }
+            return AlertDialog(
+              title: Text(
+                existing == null ? l10n.addTemplate : l10n.editTemplate,
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AppTextField(
+                      controller: nameController,
+                      labelText: l10n.name,
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    SegmentedButton<TransactionDirection>(
+                      segments: [
+                        ButtonSegment(
+                          value: TransactionDirection.moneyIn,
+                          label: Text(l10n.captureReceived),
+                        ),
+                        ButtonSegment(
+                          value: TransactionDirection.moneyOut,
+                          label: Text(l10n.captureSpent),
+                        ),
+                      ],
+                      selected: {direction},
+                      onSelectionChanged: (selection) {
+                        setDialogState(() {
+                          direction = selection.first;
+                          categoryId = null;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    EntityPickerField<Account>(
+                      labelText: l10n.account,
+                      items: viewModel.financialAccounts,
+                      idOf: (account) => account.id,
+                      labelOf: (account) =>
+                          localizeStoredName(l10n, account.name),
+                      value: financialAccountId,
+                      onChanged: (value) =>
+                          setDialogState(() => financialAccountId = value),
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    EntityPickerField<Account>(
+                      labelText: l10n.category,
+                      items: viewModel.categoriesFor(direction),
+                      idOf: (category) => category.id,
+                      labelOf: (category) =>
+                          localizeStoredName(l10n, category.name),
+                      value: categoryId,
+                      onChanged: (value) =>
+                          setDialogState(() => categoryId = value),
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    MoneyAmountField(
+                      controller: amountController,
+                      labelText: l10n.amount,
+                      currency: currency,
+                      suffixText: currency,
+                      onChangedMinor: (_) {},
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    TextField(
+                      controller: dayController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: l10n.dayOfMonth,
+                        helperText: l10n.dayOfMonthNote,
+                        helperMaxLines: 2,
                       ),
-                      ButtonSegment(
-                        value: TransactionDirection.moneyOut,
-                        label: Text(l10n.captureSpent),
+                    ),
+                    if (errorMessage != null) ...[
+                      const SizedBox(height: AppSpacing.medium),
+                      Text(
+                        errorMessage!,
+                        style: AppTypography.body.copyWith(
+                          color: AppColors.signal,
+                        ),
                       ),
                     ],
-                    selected: {direction},
-                    onSelectionChanged: (selection) {
-                      setDialogState(() {
-                        direction = selection.first;
-                        categoryId = null;
-                      });
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  EntityPickerField<Account>(
-                    labelText: l10n.account,
-                    items: viewModel.financialAccounts,
-                    idOf: (account) => account.id,
-                    labelOf: (account) =>
-                        localizeStoredName(l10n, account.name),
-                    value: financialAccountId,
-                    onChanged: (value) =>
-                        setDialogState(() => financialAccountId = value),
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  EntityPickerField<Account>(
-                    labelText: l10n.category,
-                    items: viewModel.categoriesFor(direction),
-                    idOf: (category) => category.id,
-                    labelOf: (category) =>
-                        localizeStoredName(l10n, category.name),
-                    value: categoryId,
-                    onChanged: (value) =>
-                        setDialogState(() => categoryId = value),
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  MoneyAmountField(
-                    controller: amountController,
-                    labelText: l10n.amount,
-                    currency: currency,
-                    suffixText: currency,
-                    onChangedMinor: (_) {},
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  TextField(
-                    controller: dayController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: l10n.dayOfMonth,
-                      helperText: l10n.dayOfMonthNote,
-                      helperMaxLines: 2,
-                    ),
-                  ),
-                  if (errorMessage != null) ...[
-                    const SizedBox(height: AppSpacing.medium),
-                    Text(
-                      errorMessage!,
-                      style: AppTypography.body.copyWith(
-                        color: AppColors.signal,
-                      ),
-                    ),
                   ],
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(dialogContext).pop(),
-                child: Text(l10n.actionCancel),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  final name = nameController.text.trim();
-                  final accountId = financialAccountId;
-                  final category = categoryId;
-                  final amountMinor = parseAmountToMinor(
-                    amountController.text,
-                    currency,
-                  );
-                  final dayOfMonth = int.tryParse(dayController.text.trim());
-                  if (name.isEmpty ||
-                      accountId == null ||
-                      category == null ||
-                      amountMinor == null ||
-                      dayOfMonth == null) {
-                    setDialogState(
-                      () => errorMessage = l10n.validationFillTemplateFields,
-                    );
-                    return;
-                  }
-                  final ok = existing == null
-                      ? await viewModel.createTemplate(
-                          name: name,
-                          direction: direction,
-                          financialAccountId: accountId,
-                          categoryId: category,
-                          amountMinor: amountMinor,
-                          dayOfMonth: dayOfMonth,
-                        )
-                      : await viewModel.updateTemplate(
-                          id: existing.id,
-                          name: name,
-                          direction: direction,
-                          financialAccountId: accountId,
-                          categoryId: category,
-                          amountMinor: amountMinor,
-                          dayOfMonth: dayOfMonth,
-                        );
-                  if (ok && dialogContext.mounted) {
-                    Navigator.of(dialogContext).pop();
-                  } else {
-                    setDialogState(
-                      () => errorMessage = viewModel.errorMessageFor(l10n),
-                    );
-                  }
-                },
-                child: Text(
-                  existing == null ? l10n.actionAdd : l10n.actionSave,
                 ),
               ),
-            ],
-          );
-        },
-      ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: Text(l10n.actionCancel),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    final name = nameController.text.trim();
+                    final accountId = financialAccountId;
+                    final category = categoryId;
+                    final amountMinor = parseAmountToMinor(
+                      amountController.text,
+                      currency,
+                    );
+                    final dayOfMonth = int.tryParse(dayController.text.trim());
+                    if (name.isEmpty ||
+                        accountId == null ||
+                        category == null ||
+                        amountMinor == null ||
+                        dayOfMonth == null) {
+                      setDialogState(
+                        () => errorMessage = l10n.validationFillTemplateFields,
+                      );
+                      return;
+                    }
+                    final ok = existing == null
+                        ? await viewModel.createTemplate(
+                            name: name,
+                            direction: direction,
+                            financialAccountId: accountId,
+                            categoryId: category,
+                            amountMinor: amountMinor,
+                            dayOfMonth: dayOfMonth,
+                          )
+                        : await viewModel.updateTemplate(
+                            id: existing.id,
+                            name: name,
+                            direction: direction,
+                            financialAccountId: accountId,
+                            categoryId: category,
+                            amountMinor: amountMinor,
+                            dayOfMonth: dayOfMonth,
+                          );
+                    if (ok && dialogContext.mounted) {
+                      Navigator.of(dialogContext).pop();
+                    } else {
+                      setDialogState(
+                        () => errorMessage = viewModel.errorMessageFor(l10n),
+                      );
+                    }
+                  },
+                  child: Text(
+                    existing == null ? l10n.actionAdd : l10n.actionSave,
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

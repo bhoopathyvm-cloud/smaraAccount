@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/signing_identity.dart';
 import 'package:smara_accounting/ui/features/restore/view_models/restore_identity_view_model.dart';
@@ -8,7 +8,7 @@ import 'package:smara_accounting/ui/features/restore/view_models/restore_identit
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository repository;
+  late MockIdentityRepository repository;
   late RestoreIdentityViewModel viewModel;
 
   final identity = SigningIdentity(
@@ -26,8 +26,8 @@ void main() {
   );
 
   setUp(() {
-    repository = MockLedgerRepository();
-    viewModel = RestoreIdentityViewModel(ledgerRepository: repository);
+    repository = MockIdentityRepository();
+    viewModel = RestoreIdentityViewModel(identityRepository: repository);
   });
 
   group('restoreFromPhrase', () {

@@ -21,6 +21,8 @@ import '../../../../mocks.mocks.dart';
 // test() (not testWidgets()) against a real in-memory database.
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
 
   const salary = Account(
     id: 'income-1',
@@ -38,11 +40,15 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     when(
-      repository.watchCategories(includeArchived: anyNamed('includeArchived')),
+      categoryRepository.watchCategories(
+        includeArchived: anyNamed('includeArchived'),
+      ),
     ).thenAnswer((_) => Stream.value([salary]));
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([asset]));
@@ -89,7 +95,11 @@ void main() {
       repository.watchEntriesForAccount(any),
     ).thenAnswer((_) => Stream.value([entryWithAssetAmount(250000)]));
 
-    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -111,7 +121,11 @@ void main() {
       repository.watchEntriesForAccount(any),
     ).thenAnswer((_) => Stream.value([entryWithAssetAmount(1000)]));
 
-    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -164,7 +178,11 @@ void main() {
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value([quarantined]));
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(
@@ -219,7 +237,11 @@ void main() {
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value([superseded]));
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(
@@ -311,7 +333,11 @@ void main() {
       ]),
     );
 
-    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -331,7 +357,11 @@ void main() {
       repository.watchEntriesForAccount(any),
     ).thenAnswer((_) => Stream.value([entryWithAssetAmount(1000)]));
 
-    final viewModel = RegisterViewModel(ledgerRepository: repository);
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+    );
     addTearDown(viewModel.dispose);
     String? fixedEntryId;
 
@@ -362,7 +392,7 @@ void main() {
         archived: false,
       );
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([asset, otherAsset]));
@@ -402,7 +432,11 @@ void main() {
         ]),
       );
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
       var fixCalled = false;
 
@@ -438,7 +472,11 @@ void main() {
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value(const []));
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
       var transferTapped = false;
 
@@ -472,7 +510,7 @@ void main() {
         archived: true,
       );
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([archivedAsset]));
@@ -480,7 +518,11 @@ void main() {
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value(const []));
 
-      final archivedViewModel = RegisterViewModel(ledgerRepository: repository);
+      final archivedViewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(archivedViewModel.dispose);
       var spentTapped = false;
 
@@ -504,11 +546,15 @@ void main() {
       expect(spentTapped, isFalse);
 
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([asset]));
-      final activeViewModel = RegisterViewModel(ledgerRepository: repository);
+      final activeViewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(activeViewModel.dispose);
       await tester.pumpWidget(
         MaterialApp(
@@ -549,7 +595,7 @@ void main() {
         archived: false,
       );
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([archivedAsset, other]));
@@ -559,6 +605,8 @@ void main() {
 
       final withBalance = RegisterViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
         initialAccountId: archivedAsset.id,
       );
       addTearDown(withBalance.dispose);
@@ -573,6 +621,8 @@ void main() {
       ).thenAnswer((_) => Stream.value(const []));
       final zeroBalance = RegisterViewModel(
         ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
         initialAccountId: archivedAsset.id,
       );
       addTearDown(zeroBalance.dispose);
@@ -583,14 +633,18 @@ void main() {
       expect(find.text('Transfer remaining balance'), findsNothing);
 
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([asset, other]));
       when(
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value([entryWithAssetAmount(10000)]));
-      final active = RegisterViewModel(ledgerRepository: repository);
+      final active = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(active.dispose);
       await tester.pumpWidget(
         MaterialApp(home: RegisterView(viewModel: active)),
@@ -641,7 +695,11 @@ void main() {
         ]),
       );
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(
@@ -678,7 +736,7 @@ void main() {
       'onPayCard',
       (tester) async {
         when(
-          repository.watchFinancialAccounts(
+          accountRepository.watchFinancialAccounts(
             includeArchived: anyNamed('includeArchived'),
           ),
         ).thenAnswer((_) => Stream.value([visaCard]));
@@ -686,7 +744,11 @@ void main() {
           repository.watchEntriesForAccount(any),
         ).thenAnswer((_) => Stream.value(const []));
 
-        final viewModel = RegisterViewModel(ledgerRepository: repository);
+        final viewModel = RegisterViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
+        );
         addTearDown(viewModel.dispose);
         var payCardTapped = false;
 
@@ -715,7 +777,11 @@ void main() {
         repository.watchEntriesForAccount(any),
       ).thenAnswer((_) => Stream.value(const []));
 
-      final viewModel = RegisterViewModel(ledgerRepository: repository);
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(
@@ -735,7 +801,11 @@ void main() {
           repository.watchEntriesForAccount(any),
         ).thenAnswer((_) => Stream.value(const []));
 
-        final viewModel = RegisterViewModel(ledgerRepository: repository);
+        final viewModel = RegisterViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
+        );
         addTearDown(viewModel.dispose);
 
         await tester.pumpWidget(

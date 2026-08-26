@@ -2,7 +2,7 @@ import 'package:cryptography/cryptography.dart'
     show SecretBoxAuthenticationError;
 import 'package:flutter/foundation.dart';
 
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/identity_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 
@@ -11,10 +11,10 @@ import '../../../../l10n/l10n.dart';
 /// Never re-signs or alters any entry - only re-derives and matches the
 /// device's private key.
 class RestoreIdentityViewModel extends ChangeNotifier with LocalizedErrorMixin {
-  RestoreIdentityViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository;
+  RestoreIdentityViewModel({required IdentityRepository identityRepository})
+    : _identityRepository = identityRepository;
 
-  final LedgerRepository _ledgerRepository;
+  final IdentityRepository _identityRepository;
 
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
@@ -26,7 +26,7 @@ class RestoreIdentityViewModel extends ChangeNotifier with LocalizedErrorMixin {
         .where((w) => w.isNotEmpty)
         .toList();
     return _restore(
-      () => _ledgerRepository.restoreIdentity(recoveryPhraseWords: words),
+      () => _identityRepository.restoreIdentity(recoveryPhraseWords: words),
     );
   }
 
@@ -35,7 +35,7 @@ class RestoreIdentityViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required String passphrase,
   }) {
     return _restore(
-      () => _ledgerRepository.restoreIdentity(
+      () => _identityRepository.restoreIdentity(
         keystoreFileContents: fileContents,
         keystorePassphrase: passphrase,
       ),
@@ -49,7 +49,7 @@ class RestoreIdentityViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
     try {
       await attempt();
-      await _ledgerRepository.verifyChain();
+      await _identityRepository.verifyChain();
       _isSubmitting = false;
       notifyListeners();
       return true;

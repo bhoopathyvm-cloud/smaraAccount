@@ -8,7 +8,7 @@ import 'package:smara_accounting/ui/features/category_management/view_models/cat
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository repository;
+  late MockCategoryRepository repository;
 
   const salary = Account(
     id: 'income-1',
@@ -18,7 +18,7 @@ void main() {
   );
 
   setUp(() {
-    repository = MockLedgerRepository();
+    repository = MockCategoryRepository();
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer((_) => Stream.value([salary]));
@@ -28,7 +28,7 @@ void main() {
     'exposes categories from watchCategories(includeArchived: true)',
     () async {
       final viewModel = CategoryManagementViewModel(
-        ledgerRepository: repository,
+        categoryRepository: repository,
       );
       addTearDown(viewModel.dispose);
       // Stream.value(...) emits asynchronously (via a microtask), not
@@ -44,7 +44,9 @@ void main() {
     when(
       repository.addCategory(name: anyNamed('name'), type: anyNamed('type')),
     ).thenAnswer((_) async {});
-    final viewModel = CategoryManagementViewModel(ledgerRepository: repository);
+    final viewModel = CategoryManagementViewModel(
+      categoryRepository: repository,
+    );
     addTearDown(viewModel.dispose);
 
     await viewModel.addCategory(name: 'Freelance', type: AccountType.income);
@@ -59,7 +61,9 @@ void main() {
     when(
       repository.addCategory(name: anyNamed('name'), type: anyNamed('type')),
     ).thenThrow(ArgumentError('must be income or expense'));
-    final viewModel = CategoryManagementViewModel(ledgerRepository: repository);
+    final viewModel = CategoryManagementViewModel(
+      categoryRepository: repository,
+    );
     addTearDown(viewModel.dispose);
 
     await viewModel.addCategory(name: 'Nope', type: AccountType.asset);
@@ -78,7 +82,7 @@ void main() {
       ).thenAnswer((_) async {});
       when(repository.archiveCategory(any)).thenAnswer((_) async {});
       final viewModel = CategoryManagementViewModel(
-        ledgerRepository: repository,
+        categoryRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -111,7 +115,7 @@ void main() {
       );
 
       final viewModel = CategoryManagementViewModel(
-        ledgerRepository: repository,
+        categoryRepository: repository,
       );
       addTearDown(viewModel.dispose);
       await Future<void>.delayed(Duration.zero);
@@ -130,7 +134,7 @@ void main() {
           ),
         ).thenAnswer((_) async {});
         final viewModel = CategoryManagementViewModel(
-          ledgerRepository: repository,
+          categoryRepository: repository,
         );
         addTearDown(viewModel.dispose);
 
@@ -159,7 +163,7 @@ void main() {
         ),
       ).thenThrow(InvalidTransactionAmountException('must be positive'));
       final viewModel = CategoryManagementViewModel(
-        ledgerRepository: repository,
+        categoryRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -181,7 +185,7 @@ void main() {
         ),
       ).thenThrow(ArgumentError('wrong type'));
       final viewModel = CategoryManagementViewModel(
-        ledgerRepository: repository,
+        categoryRepository: repository,
       );
       addTearDown(viewModel.dispose);
 

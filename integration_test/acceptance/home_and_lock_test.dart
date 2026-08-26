@@ -128,16 +128,30 @@ void main() {
     await pumpUntilFound(tester, find.text(l10n.lockScreenTitle));
     expect(find.text(l10n.lockScreenTitle), findsOneWidget);
 
-    // Verifying the PIN itself unlocks the app is not exercised here:
-    // calling the real AppLockService.verifyPin (real secure-storage
-    // read, real PBKDF2 check) after this same-process relaunch was
-    // confirmed - via a direct, non-UI call to the service, bypassing the
-    // widget tree entirely - to hang indefinitely rather than resolve
-    // either way, on this ad-hoc signed macOS build. This matches the
-    // same class of real-Keychain timing quirk acceptance_harness.dart
-    // already documents (errSecMissingEntitlement) rather than a bug in
-    // the PIN logic or this test's own interactions. Locking is proven
-    // above; unlocking is left to manual verification on this platform.
+    // Unlock via the real Lock UI (acceptance-app-lock-unlock).
+    await enterTextReliably(
+      tester,
+      () => find.widgetWithText(TextField, l10n.pinLabel),
+      '1234',
+      () {
+        final field =
+            find
+                    .widgetWithText(TextField, l10n.pinLabel)
+                    .evaluate()
+                    .single
+                    .widget
+                as TextField;
+        return field.controller?.text == '1234';
+      },
+    );
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(ElevatedButton, l10n.actionUnlock),
+      () =>
+          find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
+      innerTries: 200,
+    );
+    expect(find.text(l10n.homeWhatYouHaveMinusWhatYouOwe), findsOneWidget);
 
     await tester.pump(const Duration(seconds: 2));
   }, timeout: const Timeout(Duration(minutes: 5)));

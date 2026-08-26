@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/identity_repository.dart';
 import '../../../../domain/crypto/signing_key_service.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -22,10 +22,10 @@ import '../../../../l10n/l10n.dart';
 /// relaunched anywhere in this window, so the words are never lost.
 class RecoveryPhraseSetupViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  RecoveryPhraseSetupViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository;
+  RecoveryPhraseSetupViewModel({required IdentityRepository identityRepository})
+    : _identityRepository = identityRepository;
 
-  final LedgerRepository _ledgerRepository;
+  final IdentityRepository _identityRepository;
 
   /// Fixed spread across a 24-word phrase, asked back during confirmation.
   static const confirmationWordIndices = [2, 9, 17];
@@ -54,12 +54,14 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
   Future<void> ensureGenerated() async {
     if (_generated != null) return;
     try {
-      final resumed = await _ledgerRepository.resumePendingIdentity();
+      final resumed = await _identityRepository.resumePendingIdentity();
       if (resumed != null) {
         _generated = resumed;
       } else {
-        final generated = await _ledgerRepository.generateFirstIdentity();
-        await _ledgerRepository.stashPendingPhraseWords(generated.phrase.words);
+        final generated = await _identityRepository.generateFirstIdentity();
+        await _identityRepository.stashPendingPhraseWords(
+          generated.phrase.words,
+        );
         _generated = generated;
       }
     } catch (e) {
@@ -74,7 +76,7 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
   }
 
   Future<String> exportKeystoreFile({required String passphrase}) {
-    return _ledgerRepository.exportKeystoreFile(passphrase: passphrase);
+    return _identityRepository.exportKeystoreFile(passphrase: passphrase);
   }
 
   void recordKeystoreExportPath(String path) {
@@ -123,8 +125,11 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
     clearFailure();
     notifyListeners();
 
-    await _ledgerRepository.confirmFirstIdentity(generated, currency: currency);
-    await _ledgerRepository.verifyChain();
+    await _identityRepository.confirmFirstIdentity(
+      generated,
+      currency: currency,
+    );
+    await _identityRepository.verifyChain();
 
     _isSubmitting = false;
     notifyListeners();
@@ -134,6 +139,6 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
   /// Completes the mandatory recovery-phrase acknowledgment. Call only
   /// after [confirm] has already returned true.
   Future<void> acknowledge() {
-    return _ledgerRepository.acknowledgeIdentity();
+    return _identityRepository.acknowledgeIdentity();
   }
 }

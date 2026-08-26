@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 
+import '../../../../data/repositories/account_repository.dart';
+import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/payee_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
@@ -33,11 +36,17 @@ class RecordTransactionViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
   RecordTransactionViewModel({
     required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
+    required CategoryRepository categoryRepository,
+    required PayeeRepository payeeRepository,
     String? initialFinancialAccountId,
     TransactionDirection initialDirection = TransactionDirection.moneyIn,
   }) : _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository,
+       _categoryRepository = categoryRepository,
+       _payeeRepository = payeeRepository,
        _direction = initialDirection {
-    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+    _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
       _financialAccounts = accounts;
@@ -46,25 +55,28 @@ class RecordTransactionViewModel extends ChangeNotifier
       }
       notifyListeners();
     });
-    _groupsSubscription = _ledgerRepository
+    _groupsSubscription = _accountRepository
         .watchAccountGroups(includeArchived: true)
         .listen((groups) {
           _groups = groups;
           notifyListeners();
         });
-    _categoriesSubscription = _ledgerRepository.watchCategories().listen((
+    _categoriesSubscription = _categoryRepository.watchCategories().listen((
       categories,
     ) {
       _categories = categories;
       notifyListeners();
     });
-    _payeesSubscription = _ledgerRepository.watchPayees().listen((payees) {
+    _payeesSubscription = _payeeRepository.watchPayees().listen((payees) {
       _payees = payees;
       notifyListeners();
     });
   }
 
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
+  final CategoryRepository _categoryRepository;
+  final PayeeRepository _payeeRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
@@ -373,7 +385,7 @@ class RecordTransactionViewModel extends ChangeNotifier
       );
       final matchedPayee = _matchedPayeeForUsage();
       if (matchedPayee != null) {
-        await _ledgerRepository.recordPayeeUsage(
+        await _payeeRepository.recordPayeeUsage(
           payeeId: matchedPayee.id,
           categoryId: categoryId,
           financialAccountId: financialAccountId,

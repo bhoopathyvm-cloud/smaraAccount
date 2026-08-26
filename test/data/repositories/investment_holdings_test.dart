@@ -2,8 +2,12 @@ import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/investment_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
@@ -16,17 +20,39 @@ import '../../domain/crypto/in_memory_secure_key_storage.dart';
 void main() {
   late AppDatabase db;
   late LedgerRepository repository;
+  late AccountRepository accountRepository;
+  late IdentityRepository identityRepository;
+  late CategoryRepository categoryRepository;
+  late InvestmentRepository investmentRepository;
+  late SigningKeyService signingKeyService;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
+    signingKeyService = SigningKeyService(
+      secureStorage: InMemorySecureKeyStorage(),
+    );
     repository = LedgerRepository(
       database: db,
-      signingKeyService: SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      ),
+      signingKeyService: signingKeyService,
     );
-    final generated = await repository.generateFirstIdentity();
-    await repository.confirmFirstIdentity(generated, currency: 'USD');
+    accountRepository = AccountRepository(
+      database: db,
+      ledgerRepository: repository,
+    );
+    identityRepository = IdentityRepository(
+      database: db,
+      accountRepository: accountRepository,
+      signingKeyService: signingKeyService,
+    );
+    categoryRepository = CategoryRepository(database: db);
+    investmentRepository = InvestmentRepository(
+      database: db,
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+    );
+    final generated = await identityRepository.generateFirstIdentity();
+    await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
   });
 
   tearDown(() async {
@@ -34,22 +60,22 @@ void main() {
   });
 
   Future<String> cashAccountId() async {
-    final accounts = await repository.watchFinancialAccounts().first;
+    final accounts = await accountRepository.watchFinancialAccounts().first;
     return accounts.firstWhere((a) => !a.isInvestmentAccount).id;
   }
 
   Future<String> expenseId() async {
-    final categories = await repository.watchCategories().first;
+    final categories = await categoryRepository.watchCategories().first;
     return categories.firstWhere((a) => a.type == AccountType.expense).id;
   }
 
   Future<String> incomeId() async {
-    final categories = await repository.watchCategories().first;
+    final categories = await categoryRepository.watchCategories().first;
     return categories.firstWhere((a) => a.type == AccountType.income).id;
   }
 
   Future<String> createInvestmentAccount({String name = 'Brokerage'}) async {
-    return (await repository.createFinancialAccount(
+    return (await accountRepository.createFinancialAccount(
       name: name,
       type: AccountType.asset,
       groupId: groupInvestmentsId,
@@ -69,15 +95,18 @@ void main() {
   group('cash in/out', () {
     test('transfer in increases cash and leaves inventory unchanged', () async {
       final accountId = await createInvestmentAccount();
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
       await fund(accountId, amountMinor: 50000);
       expect(await repository.displayBalanceMinor(accountId), equals(50000));
-      expect(await repository.computeHoldingsForAccount(accountId), isEmpty);
+      expect(
+        await investmentRepository.computeHoldingsForAccount(accountId),
+        isEmpty,
+      );
 
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -85,7 +114,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      final qtyAfterBuy = (await repository.computeHoldingsForAccount(
+      final qtyAfterBuy = (await investmentRepository.computeHoldingsForAccount(
         accountId,
       )).first.quantityScaled;
       await repository.recordTransfer(
@@ -96,7 +125,7 @@ void main() {
       );
       expect(await repository.displayBalanceMinor(accountId), equals(60000));
       expect(
-        (await repository.computeHoldingsForAccount(
+        (await investmentRepository.computeHoldingsForAccount(
           accountId,
         )).first.quantityScaled,
         equals(qtyAfterBuy),
@@ -127,11 +156,11 @@ void main() {
       () async {
         final accountId = await createInvestmentAccount();
         await fund(accountId, amountMinor: 50000);
-        final instrument = await repository.createInstrument(
+        final instrument = await investmentRepository.createInstrument(
           name: 'Apple',
           kind: InstrumentKind.stock,
         );
-        await repository.recordBuy(
+        await investmentRepository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -148,7 +177,7 @@ void main() {
         );
         expect(await repository.displayBalanceMinor(accountId), equals(39500));
         expect(
-          (await repository.computeHoldingsForAccount(
+          (await investmentRepository.computeHoldingsForAccount(
             accountId,
           )).first.quantityScaled,
           equals(10000),
@@ -161,11 +190,11 @@ void main() {
     test('cash-funded buy with brokerage posts a second expense', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId, amountMinor: 200000);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 100000,
@@ -177,18 +206,20 @@ void main() {
       );
       // 10 units * 100.00 = 100000 + 500 brokerage
       expect(await repository.displayBalanceMinor(accountId), equals(99500));
-      final holdings = await repository.computeHoldingsForAccount(accountId);
+      final holdings = await investmentRepository.computeHoldingsForAccount(
+        accountId,
+      );
       expect(holdings.single.totalCostMinor, equals(100000));
     });
 
     test('zero-cash account rejects a cash-funded buy', () async {
       final accountId = await createInvestmentAccount();
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
       await expectLater(
-        () => repository.recordBuy(
+        () => investmentRepository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -203,11 +234,11 @@ void main() {
     test('non-cash acquisition posts income not cash', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId, amountMinor: 50000);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Employer stock',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -217,19 +248,21 @@ void main() {
         incomeCategoryId: await incomeId(),
       );
       expect(await repository.displayBalanceMinor(accountId), equals(50000));
-      final holdings = await repository.computeHoldingsForAccount(accountId);
+      final holdings = await investmentRepository.computeHoldingsForAccount(
+        accountId,
+      );
       expect(holdings.single.quantityScaled, equals(10000));
       expect(holdings.single.totalCostMinor, equals(20000));
     });
 
     test('non-cash without income category is rejected', () async {
       final accountId = await createInvestmentAccount();
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Gift',
         kind: InstrumentKind.stock,
       );
       await expectLater(
-        () => repository.recordBuy(
+        () => investmentRepository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -244,11 +277,11 @@ void main() {
     test('buy 3 cash + 1 non-cash match tracks 4 units', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId, amountMinor: 400000);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'ESPP',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 30000,
@@ -256,7 +289,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -266,7 +299,7 @@ void main() {
         incomeCategoryId: await incomeId(),
         lockedUntil: DateTime(2027, 1, 2),
       );
-      final holding = (await repository.computeHoldingsForAccount(
+      final holding = (await investmentRepository.computeHoldingsForAccount(
         accountId,
       )).single;
       expect(holding.quantityScaled, equals(40000));
@@ -278,11 +311,11 @@ void main() {
       final b = await createInvestmentAccount(name: 'Broker B');
       await fund(a, amountMinor: 100000);
       await fund(b, amountMinor: 100000);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: a,
         instrumentId: instrument.id,
         quantityScaled: 20000,
@@ -290,7 +323,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: b,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -299,20 +332,31 @@ void main() {
         fundingSource: BuyFundingSource.cash,
       );
       expect(
-        (await repository.computeHoldingsForAccount(a)).single.quantityScaled,
+        (await investmentRepository.computeHoldingsForAccount(
+          a,
+        )).single.quantityScaled,
         equals(20000),
       );
       expect(
-        (await repository.computeHoldingsForAccount(b)).single.totalCostMinor,
+        (await investmentRepository.computeHoldingsForAccount(
+          b,
+        )).single.totalCostMinor,
         equals(20000),
       );
-      await repository.renameInstrument(id: instrument.id, newName: 'AAPL Inc');
+      await investmentRepository.renameInstrument(
+        id: instrument.id,
+        newName: 'AAPL Inc',
+      );
       expect(
-        (await repository.computeHoldingsForAccount(a)).single.instrument.name,
+        (await investmentRepository.computeHoldingsForAccount(
+          a,
+        )).single.instrument.name,
         equals('AAPL Inc'),
       );
       expect(
-        (await repository.computeHoldingsForAccount(b)).single.instrument.name,
+        (await investmentRepository.computeHoldingsForAccount(
+          b,
+        )).single.instrument.name,
         equals('AAPL Inc'),
       );
     });
@@ -322,11 +366,11 @@ void main() {
     test('rejection message states the lock date', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Vested',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -337,7 +381,7 @@ void main() {
       );
       final income = await incomeId();
       await expectLater(
-        () => repository.recordSell(
+        () => investmentRepository.recordSell(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -358,11 +402,11 @@ void main() {
     test('becomes sellable on the lock-until date', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Vested',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -371,7 +415,7 @@ void main() {
         fundingSource: BuyFundingSource.cash,
         lockedUntil: DateTime(2026, 6, 15),
       );
-      await repository.recordSell(
+      await investmentRepository.recordSell(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -379,7 +423,10 @@ void main() {
         transactionDate: DateTime(2026, 6, 15),
         gainIncomeCategoryId: await incomeId(),
       );
-      expect(await repository.computeHoldingsForAccount(accountId), isEmpty);
+      expect(
+        await investmentRepository.computeHoldingsForAccount(accountId),
+        isEmpty,
+      );
     });
   });
 
@@ -387,11 +434,11 @@ void main() {
     test('increases cash, posts income, never changes inventory', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId, amountMinor: 50000);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -399,7 +446,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.recordDividend(
+      await investmentRepository.recordDividend(
         accountId: accountId,
         instrumentId: instrument.id,
         amountMinor: 250,
@@ -408,7 +455,7 @@ void main() {
       );
       expect(await repository.displayBalanceMinor(accountId), equals(40250));
       expect(
-        (await repository.computeHoldingsForAccount(
+        (await investmentRepository.computeHoldingsForAccount(
           accountId,
         )).single.quantityScaled,
         equals(10000),
@@ -418,11 +465,11 @@ void main() {
     test('posts for an instrument with zero current quantity', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -430,21 +477,24 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.recordSell(
+      await investmentRepository.recordSell(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
         unitPriceMinor: 10000,
         transactionDate: DateTime(2026, 2, 1),
       );
-      await repository.recordDividend(
+      await investmentRepository.recordDividend(
         accountId: accountId,
         instrumentId: instrument.id,
         amountMinor: 100,
         transactionDate: DateTime(2026, 3, 1),
         incomeCategoryId: await incomeId(),
       );
-      expect(await repository.computeHoldingsForAccount(accountId), isEmpty);
+      expect(
+        await investmentRepository.computeHoldingsForAccount(accountId),
+        isEmpty,
+      );
     });
   });
 
@@ -452,11 +502,11 @@ void main() {
     test('sell at a loss with brokerage', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId, amountMinor: 200000);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Loser',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -464,7 +514,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.recordSell(
+      await investmentRepository.recordSell(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -480,11 +530,11 @@ void main() {
     test('over-sell and brokerage exceeding proceeds are rejected', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -495,7 +545,7 @@ void main() {
       final income = await incomeId();
       final expense = await expenseId();
       await expectLater(
-        () => repository.recordSell(
+        () => investmentRepository.recordSell(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 20000,
@@ -506,7 +556,7 @@ void main() {
         throwsA(isA<InsufficientQuantityException>()),
       );
       await expectLater(
-        () => repository.recordSell(
+        () => investmentRepository.recordSell(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -526,11 +576,11 @@ void main() {
       () async {
         final accountId = await createInvestmentAccount();
         await fund(accountId, amountMinor: 500000);
-        final instrument = await repository.createInstrument(
+        final instrument = await investmentRepository.createInstrument(
           name: 'Apple',
           kind: InstrumentKind.stock,
         );
-        await repository.recordBuy(
+        await investmentRepository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -538,7 +588,7 @@ void main() {
           transactionDate: DateTime(2026, 2, 1),
           fundingSource: BuyFundingSource.cash,
         );
-        await repository.recordSell(
+        await investmentRepository.recordSell(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -547,7 +597,7 @@ void main() {
           gainIncomeCategoryId: await incomeId(),
         );
         final cashAfterSell = await repository.displayBalanceMinor(accountId);
-        await repository.recordBuy(
+        await investmentRepository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -569,11 +619,11 @@ void main() {
     test('reversing a buy with no later sell restores cash', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId, amountMinor: 50000);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
-      final buyId = await repository.recordBuy(
+      final buyId = await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -583,17 +633,20 @@ void main() {
       );
       await repository.reverseEntry(buyId);
       expect(await repository.displayBalanceMinor(accountId), equals(50000));
-      expect(await repository.computeHoldingsForAccount(accountId), isEmpty);
+      expect(
+        await investmentRepository.computeHoldingsForAccount(accountId),
+        isEmpty,
+      );
     });
 
     test('reversing a buy that a later sell relied on is rejected', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
       );
-      final buyId = await repository.recordBuy(
+      final buyId = await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -601,7 +654,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.recordSell(
+      await investmentRepository.recordSell(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -620,11 +673,11 @@ void main() {
       () async {
         final accountId = await createInvestmentAccount();
         await fund(accountId);
-        final instrument = await repository.createInstrument(
+        final instrument = await investmentRepository.createInstrument(
           name: 'Apple',
           kind: InstrumentKind.stock,
         );
-        await repository.recordBuy(
+        await investmentRepository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -632,7 +685,7 @@ void main() {
           transactionDate: DateTime(2026, 1, 2),
           fundingSource: BuyFundingSource.cash,
         );
-        final sellId = await repository.recordSell(
+        final sellId = await investmentRepository.recordSell(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -642,12 +695,12 @@ void main() {
         );
         await repository.reverseEntry(sellId);
         expect(
-          (await repository.computeHoldingsForAccount(
+          (await investmentRepository.computeHoldingsForAccount(
             accountId,
           )).single.quantityScaled,
           equals(10000),
         );
-        final dividendId = await repository.recordDividend(
+        final dividendId = await investmentRepository.recordDividend(
           accountId: accountId,
           instrumentId: instrument.id,
           amountMinor: 100,
@@ -656,7 +709,7 @@ void main() {
         );
         await repository.reverseEntry(dividendId);
         expect(
-          (await repository.computeHoldingsForAccount(
+          (await investmentRepository.computeHoldingsForAccount(
             accountId,
           )).single.quantityScaled,
           equals(10000),
@@ -671,11 +724,11 @@ void main() {
       () async {
         final accountId = await createInvestmentAccount();
         await fund(accountId, amountMinor: 50000);
-        final instrument = await repository.createInstrument(
+        final instrument = await investmentRepository.createInstrument(
           name: 'Apple',
           kind: InstrumentKind.stock,
         );
-        await repository.recordBuy(
+        await investmentRepository.recordBuy(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -683,9 +736,9 @@ void main() {
           transactionDate: DateTime(2026, 1, 2),
           fundingSource: BuyFundingSource.cash,
         );
-        await repository.archiveFinancialAccount(accountId);
+        await accountRepository.archiveFinancialAccount(accountId);
         await expectLater(
-          () => repository.recordBuy(
+          () => investmentRepository.recordBuy(
             accountId: accountId,
             instrumentId: instrument.id,
             quantityScaled: 10000,
@@ -696,13 +749,13 @@ void main() {
           throwsA(isA<AccountGroupException>()),
         );
         final dest = await cashAccountId();
-        await repository.recordArchivedAccountCloseoutTransfer(
+        await accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: accountId,
           toAccountId: dest,
           transactionDate: DateTime(2026, 4, 2),
         );
         expect(await repository.displayBalanceMinor(accountId), equals(0));
-        await repository.recordSell(
+        await investmentRepository.recordSell(
           accountId: accountId,
           instrumentId: instrument.id,
           quantityScaled: 10000,
@@ -711,13 +764,13 @@ void main() {
           gainIncomeCategoryId: await incomeId(),
         );
         expect(await repository.displayBalanceMinor(accountId), greaterThan(0));
-        await repository.recordArchivedAccountCloseoutTransfer(
+        await accountRepository.recordArchivedAccountCloseoutTransfer(
           fromAccountId: accountId,
           toAccountId: dest,
           transactionDate: DateTime(2026, 4, 4),
         );
         expect(await repository.displayBalanceMinor(accountId), equals(0));
-        await repository.recordDividend(
+        await investmentRepository.recordDividend(
           accountId: accountId,
           instrumentId: instrument.id,
           amountMinor: 50,
@@ -732,12 +785,12 @@ void main() {
     test('unrealized gain matches market minus book cost', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
         ticker: 'AAPL',
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -745,12 +798,12 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.cacheInstrumentQuote(
+      await investmentRepository.cacheInstrumentQuote(
         instrumentId: instrument.id,
         priceMinor: 12000,
         currency: 'USD',
       );
-      final holding = (await repository.computeHoldingsForAccount(
+      final holding = (await investmentRepository.computeHoldingsForAccount(
         accountId,
       )).single;
       expect(holding.displayMarketValueMinor, equals(12000));
@@ -761,12 +814,12 @@ void main() {
     test('quote currency mismatch uses cost', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
         ticker: 'AAPL',
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -774,12 +827,12 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.cacheInstrumentQuote(
+      await investmentRepository.cacheInstrumentQuote(
         instrumentId: instrument.id,
         priceMinor: 12000,
         currency: 'EUR',
       );
-      final holding = (await repository.computeHoldingsForAccount(
+      final holding = (await investmentRepository.computeHoldingsForAccount(
         accountId,
       )).single;
       expect(holding.displayMarketValueMinor, equals(10000));
@@ -789,12 +842,12 @@ void main() {
     test('home net position uses portfolio value', () async {
       final accountId = await createInvestmentAccount();
       await fund(accountId, amountMinor: 50000);
-      final instrument = await repository.createInstrument(
+      final instrument = await investmentRepository.createInstrument(
         name: 'Apple',
         kind: InstrumentKind.stock,
         ticker: 'AAPL',
       );
-      await repository.recordBuy(
+      await investmentRepository.recordBuy(
         accountId: accountId,
         instrumentId: instrument.id,
         quantityScaled: 10000,
@@ -802,7 +855,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 2),
         fundingSource: BuyFundingSource.cash,
       );
-      await repository.cacheInstrumentQuote(
+      await investmentRepository.cacheInstrumentQuote(
         instrumentId: instrument.id,
         priceMinor: 15000,
         currency: 'USD',

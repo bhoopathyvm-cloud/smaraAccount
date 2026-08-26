@@ -8,7 +8,14 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/data/repositories/category_repository.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/investment_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
+import 'package:smara_accounting/data/repositories/payee_repository.dart';
+import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -80,15 +87,30 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   late AppDatabase db;
+  late SigningKeyService signingKeyService;
   late LedgerRepository repository;
+  late AccountRepository accountRepository;
+  late CategoryRepository categoryRepository;
+  late IdentityRepository identityRepository;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
+    signingKeyService = SigningKeyService(
+      secureStorage: InMemorySecureKeyStorage(),
+    );
     repository = LedgerRepository(
       database: db,
-      signingKeyService: SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      ),
+      signingKeyService: signingKeyService,
+    );
+    accountRepository = AccountRepository(
+      database: db,
+      ledgerRepository: repository,
+    );
+    categoryRepository = CategoryRepository(database: db);
+    identityRepository = IdentityRepository(
+      database: db,
+      accountRepository: accountRepository,
+      signingKeyService: signingKeyService,
     );
     // app_router.dart's redirect requires a confirmed AND acknowledged
     // signing identity, plus a completed first-week-setup wizard, before
@@ -97,9 +119,9 @@ void main() {
     // (deferred-onboarding-first-entry otherwise sends every fresh
     // identity through first-account-name -> first-entry -> the
     // recovery-phrase screens before Home is ever reachable.)
-    final generated = await repository.generateFirstIdentity();
-    await repository.confirmFirstIdentity(generated, currency: 'USD');
-    await repository.acknowledgeIdentity();
+    final generated = await identityRepository.generateFirstIdentity();
+    await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
+    await identityRepository.acknowledgeIdentity();
     await SettingsRepository().setFirstWeekSetupCompleted(true);
   });
 
@@ -107,7 +129,7 @@ void main() {
     await db.close();
   });
 
-  Widget buildApp() => buildAppFor(repository, db);
+  Widget buildApp() => buildAppFor(repository, db, signingKeyService);
 
   testWidgets('record money in updates the register and running balance', (
     tester,
@@ -149,11 +171,11 @@ void main() {
   testWidgets(
     'reversing a posted entry keeps the original and adds a new entry',
     (tester) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
@@ -162,7 +184,11 @@ void main() {
         transactionDate: DateTime.now(),
       );
 
-      final registerViewModel = RegisterViewModel(ledgerRepository: repository);
+      final registerViewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(registerViewModel.dispose);
       await Future<void>.delayed(Duration.zero);
       final entryId = registerViewModel.rows.single.entryId;
@@ -182,9 +208,9 @@ void main() {
   testWidgets(
     'archiving a category hides it from the picker but keeps history visible',
     (tester) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final salary = categories.firstWhere((a) => a.name == 'Salary');
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 500,
         direction: TransactionDirection.moneyIn,
@@ -192,12 +218,16 @@ void main() {
         financialAccountId: accounts.first.id,
         transactionDate: DateTime.now(),
       );
-      await repository.archiveCategory(salary.id);
+      await categoryRepository.archiveCategory(salary.id);
 
-      final pickerCategories = await repository.watchCategories().first;
+      final pickerCategories = await categoryRepository.watchCategories().first;
       expect(pickerCategories.any((a) => a.id == salary.id), isFalse);
 
-      final registerViewModel = RegisterViewModel(ledgerRepository: repository);
+      final registerViewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
       addTearDown(registerViewModel.dispose);
       await Future<void>.delayed(Duration.zero);
 
@@ -233,11 +263,11 @@ void main() {
   testWidgets(
     'tamper detection: a mutated row is quarantined on restart and new activity re-anchors',
     (tester) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
@@ -307,11 +337,11 @@ void main() {
   testWidgets(
     'full cross-currency transfer lifecycle: provisional, pending on Home, then settled',
     (tester) async {
-      final incomeId = (await repository.watchCategories().first)
+      final incomeId = (await categoryRepository.watchCategories().first)
           .firstWhere((a) => a.type == AccountType.income)
           .id;
       final checkingId =
-          (await repository.watchFinancialAccounts().first).first.id;
+          (await accountRepository.watchFinancialAccounts().first).first.id;
       await repository.recordTransaction(
         amountMinor: 100000,
         direction: TransactionDirection.moneyIn,
@@ -319,11 +349,11 @@ void main() {
         financialAccountId: checkingId,
         transactionDate: DateTime(2026, 1, 15),
       );
-      await repository.changeAccountGroupCurrency(
+      await accountRepository.changeAccountGroupCurrency(
         groupId: groupPensionRetirementId,
         currency: 'EUR',
       );
-      await repository.createFinancialAccount(
+      await accountRepository.createFinancialAccount(
         name: 'Euro Savings',
         type: AccountType.asset,
         groupId: groupPensionRetirementId,
@@ -370,7 +400,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
 
       expect(await repository.watchPendingTransfers().first, isEmpty);
-      final euroAccounts = await repository.watchFinancialAccounts().first;
+      final euroAccounts = await accountRepository
+          .watchFinancialAccounts()
+          .first;
       final euroId = euroAccounts
           .firstWhere((a) => a.name == 'Euro Savings')
           .id;
@@ -384,11 +416,11 @@ void main() {
   testWidgets('bounced transfer settled back to source with a retained fee', (
     tester,
   ) async {
-    final incomeId = (await repository.watchCategories().first)
+    final incomeId = (await categoryRepository.watchCategories().first)
         .firstWhere((a) => a.type == AccountType.income)
         .id;
     final checkingId =
-        (await repository.watchFinancialAccounts().first).first.id;
+        (await accountRepository.watchFinancialAccounts().first).first.id;
     await repository.recordTransaction(
       amountMinor: 100000,
       direction: TransactionDirection.moneyIn,
@@ -396,18 +428,18 @@ void main() {
       financialAccountId: checkingId,
       transactionDate: DateTime(2026, 1, 15),
     );
-    await repository.changeAccountGroupCurrency(
+    await accountRepository.changeAccountGroupCurrency(
       groupId: groupPensionRetirementId,
       currency: 'EUR',
     );
-    await repository.createFinancialAccount(
+    await accountRepository.createFinancialAccount(
       name: 'Euro Savings',
       type: AccountType.asset,
       groupId: groupPensionRetirementId,
     );
     await repository.recordTransfer(
       fromAccountId: checkingId,
-      toAccountId: (await repository.watchFinancialAccounts().first)
+      toAccountId: (await accountRepository.watchFinancialAccounts().first)
           .firstWhere((a) => a.name == 'Euro Savings')
           .id,
       amountMinor: 10000,
@@ -460,11 +492,12 @@ void main() {
     (tester) async {
       final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
       addTearDown(freshDb.close);
+      final firstKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
+      );
       final firstInstallRepository = LedgerRepository(
         database: freshDb,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        ),
+        signingKeyService: firstKeys,
       );
 
       // Skip the first-week-setup wizard gate (unrelated to what this test
@@ -477,7 +510,10 @@ void main() {
       // commits the identity), then the starter account's name, then a
       // guided first entry, and only then the recovery-phrase
       // acknowledgment screens (app_router.dart's _onboardingPaths).
-      await pumpApp(tester, buildAppFor(firstInstallRepository, freshDb));
+      await pumpApp(
+        tester,
+        buildAppFor(firstInstallRepository, freshDb, firstKeys),
+      );
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
 
@@ -568,13 +604,17 @@ void main() {
 
       // Reinstall: same database file, fresh secure storage (the private
       // key is gone from this "device").
+      final reinstalledKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
+      );
       final reinstalledRepository = LedgerRepository(
         database: freshDb,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        ),
+        signingKeyService: reinstalledKeys,
       );
-      await pumpApp(tester, buildAppFor(reinstalledRepository, freshDb));
+      await pumpApp(
+        tester,
+        buildAppFor(reinstalledRepository, freshDb, reinstalledKeys),
+      );
       await pumpUntilFound(tester, find.text('Restore signing key'));
       expect(find.text('Restore signing key'), findsOneWidget);
 
@@ -597,11 +637,11 @@ void main() {
   testWidgets(
     'true key loss: migrating re-signs history under a new identity end to end',
     (tester) async {
-      final categories = await repository.watchCategories().first;
+      final categories = await categoryRepository.watchCategories().first;
       final incomeId = categories
           .firstWhere((a) => a.type == AccountType.income)
           .id;
-      final accounts = await repository.watchFinancialAccounts().first;
+      final accounts = await accountRepository.watchFinancialAccounts().first;
       await repository.recordTransaction(
         amountMinor: 1000,
         direction: TransactionDirection.moneyIn,
@@ -610,17 +650,18 @@ void main() {
         transactionDate: DateTime(2026, 1, 15),
       );
       final legacy = (await repository.watchEntries().first).single;
-      final oldIdentity = (await repository.currentIdentity())!;
+      final oldIdentity = (await identityRepository.currentIdentity())!;
 
       // Simulate true key loss: same database, brand new secure storage,
       // and no recovery phrase or keystore file to restore from.
+      final postLossKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
+      );
       final postLossRepository = LedgerRepository(
         database: db,
-        signingKeyService: SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        ),
+        signingKeyService: postLossKeys,
       );
-      await pumpApp(tester, buildAppFor(postLossRepository, db));
+      await pumpApp(tester, buildAppFor(postLossRepository, db, postLossKeys));
       await pumpUntilFound(tester, find.text('Restore signing key'));
       expect(find.text('Restore signing key'), findsOneWidget);
 
@@ -651,7 +692,15 @@ void main() {
       );
       expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
 
-      final newIdentity = (await postLossRepository.currentIdentity())!;
+      final postLossIdentity = IdentityRepository(
+        database: db,
+        accountRepository: AccountRepository(
+          database: db,
+          ledgerRepository: postLossRepository,
+        ),
+        signingKeyService: postLossKeys,
+      );
+      final newIdentity = (await postLossIdentity.currentIdentity())!;
       expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
       expect(newIdentity.supersedesIdentityId, equals(oldIdentity.identityId));
 
@@ -688,7 +737,7 @@ void main() {
   testWidgets(
     'tapping Transfer from an account\'s register opens Transfer with that account pre-selected',
     (tester) async {
-      await repository.createFinancialAccount(
+      await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
@@ -744,7 +793,7 @@ void main() {
       // ListenableBuilder is already mounted (as it is here, thanks to
       // StatefulShellRoute keeping every branch alive) and the user taps a
       // different account, that becomes a rebuild-during-build.
-      await repository.createFinancialAccount(
+      await accountRepository.createFinancialAccount(
         name: 'Savings',
         type: AccountType.asset,
         groupId: groupCashEquivalentsId,
@@ -787,12 +836,12 @@ void main() {
       // account/group setup (e.g. "Euro Savings" above); this test's focus
       // is the archive lifecycle and its effect on pickers, not the create
       // dialog itself.
-      final group = await repository.createAccountGroup(
+      final group = await accountRepository.createAccountGroup(
         name: 'Business',
         kind: AccountGroupKind.assetGroup,
         currency: 'USD',
       );
-      await repository.createFinancialAccount(
+      await accountRepository.createFinancialAccount(
         name: 'Business Checking',
         type: AccountType.asset,
         groupId: group.id,
@@ -838,13 +887,13 @@ void main() {
       // Archive the account (via Repository - the account's own archive
       // flow is already covered elsewhere), then the group archives
       // successfully through the UI.
-      final businessAccounts = await repository
+      final businessAccounts = await accountRepository
           .watchFinancialAccounts(includeArchived: true)
           .first;
       final businessAccountId = businessAccounts
           .firstWhere((a) => a.name == 'Business Checking')
           .id;
-      await repository.archiveFinancialAccount(businessAccountId);
+      await accountRepository.archiveFinancialAccount(businessAccountId);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
@@ -886,36 +935,92 @@ void main() {
   );
 }
 
-Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
+Widget buildAppFor(
+  LedgerRepository repository,
+  AppDatabase database,
+  SigningKeyService signingKeyService,
+) {
+  final accountRepository = AccountRepository(
+    database: database,
+    ledgerRepository: repository,
+  );
+  final categoryRepository = CategoryRepository(database: database);
+  final payeeRepository = PayeeRepository(database: database);
+  final identityRepository = IdentityRepository(
+    database: database,
+    accountRepository: accountRepository,
+    signingKeyService: signingKeyService,
+  );
+  final investmentRepository = InvestmentRepository(
+    database: database,
+    ledgerRepository: repository,
+    accountRepository: accountRepository,
+    categoryRepository: categoryRepository,
+  );
+  final recurringTemplateRepository = RecurringTemplateRepository(
+    database: database,
+    ledgerRepository: repository,
+  );
+  final ledgerBackupRepository = LedgerBackupRepository(
+    database: database,
+    identityRepository: identityRepository,
+    signingKeyService: signingKeyService,
+  );
   final statementImportRepository = StatementImportRepository(
     database: database,
     ledgerRepository: repository,
+    accountRepository: accountRepository,
+    categoryRepository: categoryRepository,
   );
   return MultiProvider(
     providers: [
       Provider<LedgerRepository>.value(value: repository),
+      Provider<AccountRepository>.value(value: accountRepository),
+      Provider<CategoryRepository>.value(value: categoryRepository),
+      Provider<PayeeRepository>.value(value: payeeRepository),
+      Provider<IdentityRepository>.value(value: identityRepository),
+      Provider<InvestmentRepository>.value(value: investmentRepository),
+      Provider<RecurringTemplateRepository>.value(
+        value: recurringTemplateRepository,
+      ),
+      Provider<LedgerBackupRepository>.value(value: ledgerBackupRepository),
       ChangeNotifierProvider(
-        create: (_) => RegisterViewModel(ledgerRepository: repository),
+        create: (_) => RegisterViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+          categoryRepository: categoryRepository,
+        ),
       ),
       ChangeNotifierProvider(
-        create: (_) => SummaryViewModel(ledgerRepository: repository),
+        create: (_) => SummaryViewModel(
+          ledgerRepository: repository,
+          accountRepository: accountRepository,
+        ),
       ),
       ChangeNotifierProvider(
         create: (_) =>
-            CategoryManagementViewModel(ledgerRepository: repository),
+            CategoryManagementViewModel(categoryRepository: categoryRepository),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => RecoveryPhraseSetupViewModel(
+          identityRepository: identityRepository,
+        ),
       ),
       ChangeNotifierProvider(
         create: (_) =>
-            RecoveryPhraseSetupViewModel(ledgerRepository: repository),
+            RestoreIdentityViewModel(identityRepository: identityRepository),
       ),
       ChangeNotifierProvider(
-        create: (_) => RestoreIdentityViewModel(ledgerRepository: repository),
+        create: (_) => HomeViewModel(
+          ledgerRepository: repository,
+          categoryRepository: categoryRepository,
+          recurringTemplateRepository: recurringTemplateRepository,
+          investmentRepository: investmentRepository,
+        ),
       ),
       ChangeNotifierProvider(
-        create: (_) => HomeViewModel(ledgerRepository: repository),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => AccountManagementViewModel(ledgerRepository: repository),
+        create: (_) =>
+            AccountManagementViewModel(accountRepository: accountRepository),
       ),
     ],
     child: Builder(
@@ -925,6 +1030,12 @@ Widget buildAppFor(LedgerRepository repository, AppDatabase database) {
           theme: buildAppTheme(),
           routerConfig: buildAppRouter(
             repository,
+            accountRepository,
+            categoryRepository,
+            payeeRepository,
+            identityRepository,
+            investmentRepository,
+            ledgerBackupRepository,
             statementImportRepository,
             settingsRepository,
             AppLockController(settingsRepository: settingsRepository),

@@ -53,7 +53,7 @@ void main() {
 
       final viewModel = SettingsViewModel(
         settingsRepository: repository,
-        ledgerRepository: MockLedgerRepository(),
+        ledgerBackupRepository: MockLedgerBackupRepository(),
         appLockService: MockAppLockService(),
         biometricAuthenticator: biometric,
         appLockController: appLockController,

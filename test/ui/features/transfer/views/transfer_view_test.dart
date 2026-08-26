@@ -13,12 +13,16 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockLedgerRepository repository;
+  late MockAccountRepository accountRepository;
+  late MockCategoryRepository categoryRepository;
   late MockExchangeRateService exchangeRateService;
   late MockSettingsRepository settingsRepository;
 
   TransferViewModel buildViewModel({String? initialFromAccountId}) {
     return TransferViewModel(
       ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
       exchangeRateService: exchangeRateService,
       settingsRepository: settingsRepository,
       initialFromAccountId: initialFromAccountId,
@@ -67,18 +71,20 @@ void main() {
 
   setUp(() {
     repository = MockLedgerRepository();
+    accountRepository = MockAccountRepository();
+    categoryRepository = MockCategoryRepository();
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([checking, savings]));
     when(
-      repository.watchAccountGroups(
+      accountRepository.watchAccountGroups(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([usdGroup, eurGroup]));
     when(
-      repository.watchCategories(),
+      categoryRepository.watchCategories(),
     ).thenAnswer((_) => Stream.value(const []));
 
     exchangeRateService = MockExchangeRateService();
@@ -95,7 +101,7 @@ void main() {
     tester,
   ) async {
     when(
-      repository.watchFinancialAccounts(
+      accountRepository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
       ),
     ).thenAnswer((_) => Stream.value([checking]));
@@ -285,7 +291,7 @@ void main() {
   group('cross-currency branching', () {
     setUp(() {
       when(
-        repository.watchFinancialAccounts(
+        accountRepository.watchFinancialAccounts(
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value([checking, savings, euroSavings]));

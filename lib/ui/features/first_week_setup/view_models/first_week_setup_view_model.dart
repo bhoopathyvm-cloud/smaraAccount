@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/database/tables/account_groups_table.dart';
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/account.dart';
@@ -20,12 +20,12 @@ import '../../../../l10n/l10n.dart';
 /// just the optional credit-card and cash-account sub-steps.
 class FirstWeekSetupViewModel extends ChangeNotifier with LocalizedErrorMixin {
   FirstWeekSetupViewModel({
-    required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
     required SettingsRepository settingsRepository,
-  }) : _ledgerRepository = ledgerRepository,
+  }) : _accountRepository = accountRepository,
        _settingsRepository = settingsRepository;
 
-  final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   final SettingsRepository _settingsRepository;
 
   bool _hasCreditCard = false;
@@ -70,7 +70,7 @@ class FirstWeekSetupViewModel extends ChangeNotifier with LocalizedErrorMixin {
     try {
       final cardName = _creditCardName.trim();
       if (_hasCreditCard && cardName.isNotEmpty) {
-        await _ledgerRepository.createFinancialAccount(
+        await _accountRepository.createFinancialAccount(
           name: cardName,
           type: AccountType.liability,
           groupId: groupCreditShortTermId,
@@ -79,7 +79,7 @@ class FirstWeekSetupViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
       final cashName = _cashAccountName.trim();
       if (_hasCashAccount && cashName.isNotEmpty) {
-        await _ledgerRepository.createFinancialAccount(
+        await _accountRepository.createFinancialAccount(
           name: cashName,
           type: AccountType.asset,
           groupId: groupCashEquivalentsId,

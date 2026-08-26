@@ -1,19 +1,19 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 
 /// One-time prompt for a database migrated from schemaVersion 3 (before
 /// account groups had a currency) - see
-/// [LedgerRepository.needsCurrencyBackfill] (multi-currency-support
+/// [AccountRepository.needsCurrencyBackfill] (multi-currency-support
 /// design.md Migration Plan step 3).
 class CurrencyBackfillViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  CurrencyBackfillViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository;
+  CurrencyBackfillViewModel({required AccountRepository accountRepository})
+    : _accountRepository = accountRepository;
 
-  final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
 
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
@@ -23,7 +23,7 @@ class CurrencyBackfillViewModel extends ChangeNotifier
     clearFailure();
     notifyListeners();
     try {
-      await _ledgerRepository.backfillGroupCurrencies(currency);
+      await _accountRepository.backfillGroupCurrencies(currency);
       _isSubmitting = false;
       notifyListeners();
       return true;

@@ -23,7 +23,11 @@ void main() {
       ),
     );
 
-    final viewModel = SummaryViewModel(ledgerRepository: repository);
+    final accountRepository = MockAccountRepository();
+    final viewModel = SummaryViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+    );
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(

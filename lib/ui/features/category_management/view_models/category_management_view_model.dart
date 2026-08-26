@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/category_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
@@ -17,15 +17,15 @@ import '../../../../domain/models/summary.dart';
 /// month-to-date spent-vs-limit progress (design.md Decision 2).
 class CategoryManagementViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  CategoryManagementViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository {
-    _subscription = _ledgerRepository
+  CategoryManagementViewModel({required CategoryRepository categoryRepository})
+    : _categoryRepository = categoryRepository {
+    _subscription = _categoryRepository
         .watchCategories(includeArchived: true)
         .listen(_onCategories);
     final now = DateTime.now();
     final firstOfMonth = DateTime(now.year, now.month, 1);
     final lastOfMonth = DateTime(now.year, now.month + 1, 0);
-    _categoryTotalsSubscription = _ledgerRepository
+    _categoryTotalsSubscription = _categoryRepository
         .watchCategoryTotals(start: firstOfMonth, end: lastOfMonth)
         .listen((totals) {
           _spentByCategoryId = {
@@ -35,7 +35,7 @@ class CategoryManagementViewModel extends ChangeNotifier
         });
   }
 
-  final LedgerRepository _ledgerRepository;
+  final CategoryRepository _categoryRepository;
   late final StreamSubscription<List<Account>> _subscription;
   late final StreamSubscription<List<CategoryTotal>>
   _categoryTotalsSubscription;
@@ -59,7 +59,7 @@ class CategoryManagementViewModel extends ChangeNotifier
     required AccountType type,
   }) async {
     try {
-      await _ledgerRepository.addCategory(name: name, type: type);
+      await _categoryRepository.addCategory(name: name, type: type);
       clearFailure();
     } on ArgumentError {
       setFailure(
@@ -69,14 +69,14 @@ class CategoryManagementViewModel extends ChangeNotifier
   }
 
   Future<void> renameCategory({required String id, required String newName}) {
-    return _ledgerRepository.renameCategory(id: id, newName: newName);
+    return _categoryRepository.renameCategory(id: id, newName: newName);
   }
 
   Future<void> archiveCategory(String id) =>
-      _ledgerRepository.archiveCategory(id);
+      _categoryRepository.archiveCategory(id);
 
   Future<void> unarchiveCategory(String id) =>
-      _ledgerRepository.unarchiveCategory(id);
+      _categoryRepository.unarchiveCategory(id);
 
   /// Sets or clears (`monthlyLimitMinor: null`) a category's monthly
   /// limit. Returns whether it succeeded; a failure (wrong category type,
@@ -86,7 +86,7 @@ class CategoryManagementViewModel extends ChangeNotifier
     required int? monthlyLimitMinor,
   }) async {
     try {
-      await _ledgerRepository.setCategoryMonthlyLimit(
+      await _categoryRepository.setCategoryMonthlyLimit(
         id: id,
         monthlyLimitMinor: monthlyLimitMinor,
       );

@@ -12,7 +12,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockLedgerRepository repository;
+  late MockAccountRepository repository;
 
   const cashGroup = AccountGroup(
     id: 'group-cash',
@@ -59,7 +59,7 @@ void main() {
   );
 
   setUp(() {
-    repository = MockLedgerRepository();
+    repository = MockAccountRepository();
     when(
       repository.watchFinancialAccounts(
         includeArchived: anyNamed('includeArchived'),
@@ -75,7 +75,7 @@ void main() {
   testWidgets('lists accounts grouped under their account group', (
     tester,
   ) async {
-    final viewModel = AccountManagementViewModel(ledgerRepository: repository);
+    final viewModel = AccountManagementViewModel(accountRepository: repository);
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -98,7 +98,7 @@ void main() {
       );
 
       final viewModel = AccountManagementViewModel(
-        ledgerRepository: repository,
+        accountRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -124,7 +124,7 @@ void main() {
   testWidgets('system groups have no archive action, only an edit icon', (
     tester,
   ) async {
-    final viewModel = AccountManagementViewModel(ledgerRepository: repository);
+    final viewModel = AccountManagementViewModel(accountRepository: repository);
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -151,7 +151,7 @@ void main() {
       ).thenAnswer((_) async => businessGroup);
 
       final viewModel = AccountManagementViewModel(
-        ledgerRepository: repository,
+        accountRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -213,7 +213,7 @@ void main() {
       ),
     );
 
-    final viewModel = AccountManagementViewModel(ledgerRepository: repository);
+    final viewModel = AccountManagementViewModel(accountRepository: repository);
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -256,7 +256,7 @@ void main() {
       ).thenAnswer((_) async {});
 
       final viewModel = AccountManagementViewModel(
-        ledgerRepository: repository,
+        accountRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -313,7 +313,7 @@ void main() {
       ).thenAnswer((_) async {});
 
       final viewModel = AccountManagementViewModel(
-        ledgerRepository: repository,
+        accountRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -362,7 +362,7 @@ void main() {
       ).thenAnswer((_) async {});
 
       final viewModel = AccountManagementViewModel(
-        ledgerRepository: repository,
+        accountRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -395,7 +395,7 @@ void main() {
     'Create group dialog disables Create until the currency is a valid 3-letter code',
     (tester) async {
       final viewModel = AccountManagementViewModel(
-        ledgerRepository: repository,
+        accountRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -433,7 +433,7 @@ void main() {
       repository.archiveAccountGroup(businessGroup.id),
     ).thenAnswer((_) async {});
 
-    final viewModel = AccountManagementViewModel(ledgerRepository: repository);
+    final viewModel = AccountManagementViewModel(accountRepository: repository);
     addTearDown(viewModel.dispose);
 
     await tester.pumpWidget(
@@ -471,7 +471,7 @@ void main() {
       );
 
       final viewModel = AccountManagementViewModel(
-        ledgerRepository: repository,
+        accountRepository: repository,
       );
       addTearDown(viewModel.dispose);
 
@@ -526,7 +526,7 @@ void main() {
         ).thenAnswer((_) async {});
 
         final viewModel = AccountManagementViewModel(
-          ledgerRepository: repository,
+          accountRepository: repository,
         );
         addTearDown(viewModel.dispose);
 
@@ -571,7 +571,7 @@ void main() {
         ).thenAnswer((_) async {});
 
         final viewModel = AccountManagementViewModel(
-          ledgerRepository: repository,
+          accountRepository: repository,
         );
         addTearDown(viewModel.dispose);
 
@@ -625,7 +625,7 @@ void main() {
         );
 
         final viewModel = AccountManagementViewModel(
-          ledgerRepository: repository,
+          accountRepository: repository,
         );
         addTearDown(viewModel.dispose);
 
@@ -673,7 +673,7 @@ void main() {
       tester,
     ) async {
       final viewModel = AccountManagementViewModel(
-        ledgerRepository: repository,
+        accountRepository: repository,
       );
       addTearDown(viewModel.dispose);
 

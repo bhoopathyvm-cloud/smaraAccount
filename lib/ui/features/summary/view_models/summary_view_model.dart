@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/summary.dart';
@@ -9,11 +10,14 @@ import '../../../../domain/models/summary.dart';
 /// Date range selection for the Income vs. Expense Summary requirement.
 /// Defaults to the current calendar month.
 class SummaryViewModel extends ChangeNotifier {
-  SummaryViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository,
-      _start = _startOfMonth(DateTime.now()),
-      _end = DateTime.now() {
-    _accountsSubscription = _ledgerRepository.watchFinancialAccounts().listen((
+  SummaryViewModel({
+    required LedgerRepository ledgerRepository,
+    required AccountRepository accountRepository,
+  }) : _ledgerRepository = ledgerRepository,
+       _accountRepository = accountRepository,
+       _start = _startOfMonth(DateTime.now()),
+       _end = DateTime.now() {
+    _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
       _financialAccounts = accounts;
@@ -28,6 +32,7 @@ class SummaryViewModel extends ChangeNotifier {
   }
 
   final LedgerRepository _ledgerRepository;
+  final AccountRepository _accountRepository;
   StreamSubscription<LedgerSummary>? _subscription;
   late final StreamSubscription<List<Account>> _accountsSubscription;
 

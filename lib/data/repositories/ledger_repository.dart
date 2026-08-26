@@ -1,38 +1,27 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:drift/drift.dart';
-import 'package:path/path.dart' as p;
 import 'package:uuid/uuid.dart';
 
-import '../../domain/backup/ledger_backup_file.dart';
 import '../../domain/crypto/entry_canonical_hash.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
 import '../../domain/models/account.dart';
 import '../../domain/models/account_group.dart';
-import '../../domain/models/instrument.dart';
-import '../../domain/models/instrument_holding.dart';
-import '../../domain/models/instrument_quote.dart';
 import '../../domain/models/home_overview.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/journal_entry.dart';
 import '../../domain/money/currency_minor_units.dart';
-import '../../domain/models/payee.dart';
 import '../../domain/models/pending_transfer.dart';
-import '../../domain/models/recurring_template.dart';
 import '../../domain/models/posting.dart';
 import '../../domain/models/signing_identity.dart';
 import '../../domain/models/summary.dart';
 import '../../domain/models/transaction_direction.dart';
-import '../../domain/statement_import/category_rule.dart'
-    show normalizeDescription;
 import '../database/app_database.dart';
-import '../database/tables/account_groups_table.dart';
 import '../database/tables/accounts_table.dart';
-import '../database/tables/investment_lots_table.dart';
 import '../database/tables/ledger_chain_state_table.dart';
 import 'investment_holdings_logic.dart';
+import 'repository_date_utils.dart';
 
 /// The only layer that talks to Drift. Exposes domain models, never
 /// Drift's generated row classes (smara-tech-guidelines.md). Every write
@@ -55,15 +44,10 @@ class LedgerRepository {
   final AppDatabase _db;
   final SigningKeyService _signingKeyService;
 
-  // ---------------------------------------------------------------------
-  // Signing identity lifecycle (spec: "Device Signing Identity",
-  // "Mandatory Recovery Phrase Acknowledgment", "Recoverable Reinstall or
-  // Device Migration").
-  // ---------------------------------------------------------------------
-
-  /// The active (non-superseded) signing identity, or null if none has
-  /// been generated/confirmed yet - the true-first-launch state.
-  Future<SigningIdentity?> currentIdentity() async {
+  /// Private copy of IdentityRepository.currentIdentity for
+  /// [appendSignedEntry]. Ledger cannot depend on IdentityRepository
+  /// (Identity → Account → Ledger would cycle — design.md D1a).
+  Future<SigningIdentity?> _currentSigningIdentity() async {
     final row =
         await (_db.select(_db.signingIdentities)
               ..where((t) => t.supersededAt.isNull())
@@ -71,391 +55,6 @@ class LedgerRepository {
               ..limit(1))
             .getSingleOrNull();
     return row == null ? null : _toDomainIdentity(row);
-  }
-
-  /// Whether this device's secure storage currently holds the private key
-  /// matching [identity]. False means either no key is stored at all, or
-  /// (very unusually) a different key is stored - both are the
-  /// "existing database file, no matching key" reinstall scenario the
-  /// caller should route to a restore flow for, never silently regenerate.
-  Future<bool> hasMatchingStoredKey(SigningIdentity identity) async {
-    final stored = await _signingKeyService.loadStoredKeyMaterial();
-    if (stored == null) return false;
-    return _bytesEqual(stored.publicKey, identity.publicKey);
-  }
-
-  /// Generates a new recovery phrase and its key pair, storing the private
-  /// key immediately. Does *not* write a `signing_identities` row - call
-  /// [confirmFirstIdentity] only after the user has confirmed possession
-  /// of the phrase, so the ledger stays unusable (no identity to sign
-  /// against) until that mandatory acknowledgment is complete (spec:
-  /// "Onboarding blocks until recovery phrase is acknowledged").
-  Future<GeneratedIdentity> generateFirstIdentity() {
-    return _signingKeyService.generateNewIdentity();
-  }
-
-  /// Stashes the just-generated phrase's words so they survive an app kill
-  /// before acknowledgment completes (deferred-onboarding-first-entry).
-  Future<void> stashPendingPhraseWords(List<String> words) {
-    return _signingKeyService.stashPendingPhraseWords(words);
-  }
-
-  /// Reconstructs the pending (committed-but-unacknowledged) identity's
-  /// [GeneratedIdentity] from words stashed by [stashPendingPhraseWords],
-  /// for redisplay after an app kill. Null if there's nothing pending.
-  Future<GeneratedIdentity?> resumePendingIdentity() {
-    return _signingKeyService.resumePendingIdentity();
-  }
-
-  /// Persists [generated] as this device's signing identity, seeds the
-  /// chain state, and seeds the starter financial account/categories.
-  /// Call only after the user has confirmed the recovery phrase.
-  ///
-  /// Starter accounts are seeded here rather than at database creation
-  /// (core-ledger-single-account's original approach) because spec
-  /// ("Device Signing Identity") requires the signing identity to exist
-  /// before any starter account or journal entry does.
-  ///
-  /// [currency] (ISO 4217, e.g. 'USD') is chosen by the user during a
-  /// dedicated onboarding step before this runs (multi-currency-support
-  /// design.md addendum) and applied to all four starter groups - a fresh
-  /// install never has a group with a null currency, unlike a database
-  /// migrated from schemaVersion 3 (see [needsCurrencyBackfill]).
-  Future<SigningIdentity> confirmFirstIdentity(
-    GeneratedIdentity generated, {
-    required String currency,
-  }) async {
-    late IdentityRow row;
-    await _db.transaction(() async {
-      row = await _db
-          .into(_db.signingIdentities)
-          .insertReturning(
-            SigningIdentitiesCompanion.insert(
-              publicKey: Uint8List.fromList(generated.keyMaterial.publicKey),
-            ),
-          );
-      await _db
-          .into(_db.ledgerChainState)
-          .insertOnConflictUpdate(
-            LedgerChainStateCompanion.insert(
-              id: ledgerChainStateSingletonId,
-              nextDeviceChainSequence: 0,
-            ),
-          );
-      await _seedSystemGroupsEquityAndClearing(currency: currency);
-      await _db
-          .into(_db.accounts)
-          .insert(
-            AccountsCompanion.insert(
-              name: financialAccountName,
-              type: AccountType.asset,
-              groupId: const Value(groupCashEquivalentsId),
-            ),
-          );
-      for (final name in starterIncomeCategories) {
-        await _db
-            .into(_db.accounts)
-            .insert(
-              AccountsCompanion.insert(name: name, type: AccountType.income),
-            );
-      }
-      for (final name in starterExpenseCategories) {
-        await _db
-            .into(_db.accounts)
-            .insert(
-              AccountsCompanion.insert(name: name, type: AccountType.expense),
-            );
-      }
-    });
-    return _toDomainIdentity(row);
-  }
-
-  Future<void> _seedSystemGroupsEquityAndClearing({
-    required String currency,
-  }) async {
-    final seeds = <(String id, String name, AccountGroupKind kind, int order)>[
-      (
-        groupCashEquivalentsId,
-        'Cash & cash equivalents',
-        AccountGroupKind.assetGroup,
-        0,
-      ),
-      (
-        groupPensionRetirementId,
-        'Pension & retirement',
-        AccountGroupKind.assetGroup,
-        1,
-      ),
-      (
-        groupCreditShortTermId,
-        'Credit & short-term debt',
-        AccountGroupKind.liabilityGroup,
-        2,
-      ),
-      (
-        groupLoansMortgagesId,
-        'Loans & mortgages',
-        AccountGroupKind.liabilityGroup,
-        3,
-      ),
-      (groupInvestmentsId, 'Investments', AccountGroupKind.assetGroup, 4),
-    ];
-    for (final (id, name, kind, order) in seeds) {
-      await _db
-          .into(_db.accountGroups)
-          .insertOnConflictUpdate(
-            AccountGroupsCompanion.insert(
-              id: Value(id),
-              name: name,
-              kind: kind,
-              sortOrder: order,
-              isSystem: true,
-              currency: Value(currency),
-            ),
-          );
-    }
-    await _db
-        .into(_db.accounts)
-        .insertOnConflictUpdate(
-          AccountsCompanion.insert(
-            id: const Value(openingBalanceEquityAccountId),
-            name: openingBalanceEquityAccountName,
-            type: AccountType.equity,
-          ),
-        );
-    await _db
-        .into(_db.accounts)
-        .insertOnConflictUpdate(
-          AccountsCompanion.insert(
-            id: const Value(transfersInTransitAccountId),
-            name: transfersInTransitAccountName,
-            type: AccountType.clearing,
-          ),
-        );
-  }
-
-  /// Whether any `account_groups` row still has no currency - the signal
-  /// for a database migrated from schemaVersion 3 that needs the one-time
-  /// currency-backfill prompt before the app is otherwise usable
-  /// (multi-currency-support design.md Migration Plan step 3). Always
-  /// false for a fresh schemaVersion-4 install, since
-  /// [confirmFirstIdentity] seeds every group with a currency already.
-  Future<bool> needsCurrencyBackfill() async {
-    final row =
-        await (_db.select(_db.accountGroups)
-              ..where((g) => g.currency.isNull())
-              ..limit(1))
-            .getSingleOrNull();
-    return row != null;
-  }
-
-  /// Applies [currency] to every account group that doesn't have one yet.
-  /// A one-time action for a database migrated from schemaVersion 3 - see
-  /// [needsCurrencyBackfill].
-  Future<void> backfillGroupCurrencies(String currency) async {
-    await (_db.update(_db.accountGroups)..where((g) => g.currency.isNull()))
-        .write(AccountGroupsCompanion(currency: Value(currency)));
-  }
-
-  /// Re-derives key material from a recovery phrase or keystore file and,
-  /// if it matches an identity already on record, stores it as the
-  /// device's active private key (spec: "Recoverable Reinstall or Device
-  /// Migration"). Exactly one of [recoveryPhraseWords] or
-  /// [keystoreFileContents] (with [keystorePassphrase]) must be given.
-  /// Throws [SigningIdentityMismatchException] if the derived key doesn't
-  /// match any known identity - the phrase/file doesn't belong to this
-  /// database.
-  Future<SigningIdentity> restoreIdentity({
-    List<String>? recoveryPhraseWords,
-    String? keystoreFileContents,
-    String? keystorePassphrase,
-  }) async {
-    final material = recoveryPhraseWords != null
-        ? await _signingKeyService.restoreFromRecoveryPhrase(
-            recoveryPhraseWords,
-          )
-        : await _signingKeyService.restoreFromKeystoreFile(
-            fileContents: keystoreFileContents!,
-            passphrase: keystorePassphrase!,
-          );
-
-    final candidates = await _db.select(_db.signingIdentities).get();
-    IdentityRow? match;
-    for (final row in candidates) {
-      if (_bytesEqual(row.publicKey, material.publicKey)) {
-        match = row;
-        break;
-      }
-    }
-    if (match == null) {
-      throw SigningIdentityMismatchException(
-        'This recovery phrase or keystore file does not match any signing '
-        'identity in this database.',
-      );
-    }
-    return _toDomainIdentity(match);
-  }
-
-  /// Disaster-recovery path for true key loss (spec: "True Key-Loss
-  /// Migration"). Generates a brand-new identity, re-creates every
-  /// currently-active entry as a new, signed entry under it (preserving
-  /// content, referencing the legacy entry via [JournalEntry.migratedFromEntryId]),
-  /// and records a `KEY_MIGRATION_CONFIRMED` integrity event. The new
-  /// chain starts fresh from genesis - it does not, and cannot, inherit
-  /// cryptographic trust from the unrecoverable old chain.
-  ///
-  /// Callers must have already shown the required plain-language
-  /// confirmation that this does not retroactively prove pre-migration
-  /// entries were untampered (spec) before calling this.
-  Future<GeneratedIdentity> migrateToNewIdentityAfterKeyLoss() async {
-    final previousIdentity = await currentIdentity();
-    final generated = await _signingKeyService.generateNewIdentity();
-
-    await _db.transaction(() async {
-      final newIdentityRow = await _db
-          .into(_db.signingIdentities)
-          .insertReturning(
-            SigningIdentitiesCompanion.insert(
-              publicKey: Uint8List.fromList(generated.keyMaterial.publicKey),
-              supersedesIdentityId: Value(previousIdentity?.identityId),
-              // This migration flow has its own explicit "I confirm the
-              // current ledger is valid" acknowledgment (spec: "True
-              // Key-Loss Migration") and never shows a new recovery
-              // phrase to re-acknowledge - mark it acknowledged
-              // immediately so the router doesn't also send the user
-              // through deferred-onboarding-first-entry's acknowledgment
-              // screens for a phrase this flow never generated.
-              acknowledgedAt: Value(DateTime.now()),
-            ),
-          );
-
-      if (previousIdentity != null) {
-        await (_db.update(_db.signingIdentities)
-              ..where((t) => t.identityId.equals(previousIdentity.identityId)))
-            .write(
-              SigningIdentitiesCompanion(supersededAt: Value(DateTime.now())),
-            );
-      }
-
-      final activeEntries = await _activeEntriesForMigration();
-      // device_chain_sequence is UNIQUE across the whole table (design.md),
-      // not scoped per identity - legacy entries keep their old sequence
-      // numbers forever, so a migration continues the *same* monotonic
-      // counter rather than restarting at 0. Only the hash chain itself
-      // (previousHash below) resets to genesis: that's the actual fresh
-      // trust root a migration establishes.
-      final priorChainState = await _chainState();
-      var sequence = priorChainState.nextDeviceChainSequence;
-      Uint8List previousHash = Uint8List.fromList(genesisPreviousEntryHash);
-      String? lastInsertedId;
-
-      for (final legacy in activeEntries) {
-        final legacyPostings = await (_db.select(
-          _db.postings,
-        )..where((p) => p.entryId.equals(legacy.id))).get();
-
-        final newId = const Uuid().v4();
-        final recordedAt = _truncateToStoredPrecision(DateTime.now());
-        final canonicalPostings = legacyPostings
-            .map(
-              (p) => CanonicalPosting(
-                lineNumber: p.lineNumber,
-                accountId: p.accountId,
-                amountMinor: p.amountMinor,
-              ),
-            )
-            .toList();
-
-        final bytes = canonicalEntryBytes(
-          previousEntryHash: previousHash,
-          id: newId,
-          deviceChainSequence: sequence,
-          transactionDate: legacy.transactionDate,
-          recordedAt: recordedAt,
-          description: legacy.description,
-          reversesEntryId: legacy.reversesEntryId,
-          signedByIdentityId: newIdentityRow.identityId,
-          postings: canonicalPostings,
-        );
-        final entryHash = await hashCanonicalEntry(bytes);
-        final signature = await _signingKeyService.sign(entryHash);
-
-        await _db
-            .into(_db.journalEntries)
-            .insert(
-              JournalEntriesCompanion.insert(
-                id: Value(newId),
-                transactionDate: legacy.transactionDate,
-                recordedAt: recordedAt,
-                description: Value(legacy.description),
-                reversesEntryId: Value(legacy.reversesEntryId),
-                deviceChainSequence: sequence,
-                previousEntryHash: previousHash,
-                entryHash: entryHash,
-                signedByIdentityId: newIdentityRow.identityId,
-                signature: signature,
-                migratedFromEntryId: Value(legacy.id),
-              ),
-            );
-
-        for (final p in legacyPostings) {
-          await _db
-              .into(_db.postings)
-              .insert(
-                PostingsCompanion.insert(
-                  entryId: newId,
-                  accountId: p.accountId,
-                  amountMinor: p.amountMinor,
-                  lineNumber: p.lineNumber,
-                ),
-              );
-        }
-
-        await _upsertVerificationCache(
-          entryId: newId,
-          isVerified: true,
-          breakReason: null,
-        );
-
-        previousHash = entryHash;
-        lastInsertedId = newId;
-        sequence += 1;
-      }
-
-      await _updateChainState(
-        trustedTipEntryId: lastInsertedId,
-        trustedTipHash: activeEntries.isEmpty ? null : previousHash,
-        nextDeviceChainSequence: sequence,
-      );
-
-      await _db
-          .into(_db.integrityEvents)
-          .insert(
-            IntegrityEventsCompanion.insert(
-              eventType: IntegrityEventType.keyMigrationConfirmed,
-              relatedIdentityId: Value(newIdentityRow.identityId),
-              detail: Value(
-                'Migrated ${activeEntries.length} entries to new identity '
-                '${newIdentityRow.identityId} after confirmed key loss.',
-              ),
-            ),
-          );
-    });
-
-    return generated;
-  }
-
-  /// Entries not already superseded by an earlier migration - the set
-  /// re-created by [migrateToNewIdentityAfterKeyLoss].
-  Future<List<JournalEntryRow>> _activeEntriesForMigration() async {
-    final all = await (_db.select(
-      _db.journalEntries,
-    )..orderBy([(e) => OrderingTerm.asc(e.deviceChainSequence)])).get();
-    final supersededIds = all
-        .where((e) => e.migratedFromEntryId != null)
-        .map((e) => e.migratedFromEntryId!)
-        .toSet();
-    return all.where((e) => !supersededIds.contains(e.id)).toList();
   }
 
   SigningIdentity _toDomainIdentity(IdentityRow row) {
@@ -469,24 +68,6 @@ class LedgerRepository {
     );
   }
 
-  /// Marks the current (latest, non-superseded) identity as having
-  /// completed the mandatory recovery-phrase acknowledgment, and clears
-  /// the phrase words temporarily held in secure storage for
-  /// crash-recovery re-display (deferred-onboarding-first-entry). Throws
-  /// [StateError] if there is no current identity.
-  Future<void> acknowledgeIdentity() async {
-    final identity = await currentIdentity();
-    if (identity == null) {
-      throw StateError('No signing identity to acknowledge.');
-    }
-    await (_db.update(
-      _db.signingIdentities,
-    )..where((t) => t.identityId.equals(identity.identityId))).write(
-      SigningIdentitiesCompanion(acknowledgedAt: Value(DateTime.now())),
-    );
-    await _signingKeyService.clearPendingPhraseWords();
-  }
-
   /// Whether at least one journal entry has ever been recorded - used by
   /// the app router to know whether a first-time user still needs the
   /// guided first-entry screen before the recovery-phrase acknowledgment
@@ -498,318 +79,11 @@ class LedgerRepository {
     return row != null;
   }
 
-  // ---------------------------------------------------------------------
-  // Ledger backup/restore (spec: "User-Controlled Ledger Backup",
-  // "Restoring a Backup Replaces the Local Ledger").
-  // ---------------------------------------------------------------------
-
-  /// Encrypts the raw local database file under [passphrase] and returns
-  /// the backup file's contents, ready to write wherever the user chooses.
-  /// Includes `signing_identities` (public keys/metadata only - the
-  /// private key never leaves OS secure storage and is never part of this
-  /// file) alongside every ledger table, so a restored backup can be
-  /// fully signature-verified with no private key needed.
-  ///
-  /// [databaseFile] defaults to the real on-disk database
-  /// ([AppDatabase.resolveDatabaseFile]) - overridable so this method is
-  /// testable without a platform path_provider plugin available.
-  Future<String> exportLedgerBackup({
-    required String passphrase,
-    File? databaseFile,
-  }) async {
-    // Flush any writes still only in a WAL/rollback-journal sidecar file
-    // into the main database file, so reading that one file below is a
-    // complete, self-contained snapshot - harmless (and fast) if the
-    // database isn't in WAL mode at all.
-    await _db.customStatement('PRAGMA wal_checkpoint(TRUNCATE)');
-    final file = databaseFile ?? await AppDatabase.resolveDatabaseFile();
-    final bytes = await file.readAsBytes();
-    return LedgerBackupFile.encrypt(
-      databaseBytes: bytes,
-      passphrase: passphrase,
-    );
-  }
-
-  /// Decrypts [fileContents] under [passphrase], validates it opens as a
-  /// genuine ledger database with an active signing identity, rejects it
-  /// if that identity differs from this device's own active identity
-  /// (design.md Decision 4), and - only once every check passes - closes
-  /// this repository's database connection and replaces the real database
-  /// file on disk with the validated backup.
-  ///
-  /// After this returns successfully, this [LedgerRepository] instance
-  /// (and the [AppDatabase] it wraps) is closed and must not be used
-  /// again - the caller is responsible for restarting the app so a fresh
-  /// connection opens against the replaced file. Throws
-  /// [InvalidLedgerBackupException] or [ForeignBackupIdentityException]
-  /// (or a [SecretBoxAuthenticationError]/[FormatException] from a wrong
-  /// passphrase or non-backup file) without touching the real database
-  /// file at all - every failure path is a no-op on disk.
-  ///
-  /// [targetFile] defaults to the real on-disk database
-  /// ([AppDatabase.resolveDatabaseFile]), same testability reasoning as
-  /// [exportLedgerBackup]'s [databaseFile] parameter.
-  Future<void> restoreLedgerBackup({
-    required String fileContents,
-    required String passphrase,
-    File? targetFile,
-  }) async {
-    final decryptedBytes = await LedgerBackupFile.decrypt(
-      fileContents: fileContents,
-      passphrase: passphrase,
-    );
-
-    // Directory.systemTemp is pure `dart:io` (no path_provider platform
-    // channel needed) - appropriate here since this file is an internal
-    // scratch copy for validation only, never user-facing.
-    final tempFile = File(
-      p.join(
-        Directory.systemTemp.path,
-        'smara-backup-validate-${DateTime.now().microsecondsSinceEpoch}.sqlite',
-      ),
-    );
-    await tempFile.writeAsBytes(decryptedBytes);
-
-    late final SigningIdentity backupIdentity;
-    try {
-      final backupDb = AppDatabase.openFile(tempFile);
-      try {
-        final backupRepository = LedgerRepository(
-          database: backupDb,
-          signingKeyService: _signingKeyService,
-        );
-        final identity = await backupRepository.currentIdentity();
-        if (identity == null) {
-          throw InvalidLedgerBackupException(
-            'This backup has no signing identity - it is not a valid '
-            'Smara backup.',
-            code: AppErrorCode.invalidLedgerBackupNoIdentity,
-          );
-        }
-        backupIdentity = identity;
-        final verification = await backupRepository.verifyChain();
-        if (!verification.isFullyVerified) {
-          throw InvalidLedgerBackupException(
-            'This backup did not verify as intact books, so it was not '
-            'restored.',
-            code: AppErrorCode.invalidLedgerBackupUnverified,
-          );
-        }
-      } finally {
-        await backupDb.close();
-      }
-    } on InvalidLedgerBackupException {
-      await tempFile.delete();
-      rethrow;
-    } catch (e) {
-      await tempFile.delete();
-      throw InvalidLedgerBackupException(
-        'This file could not be opened as a Smara backup: $e',
-        code: AppErrorCode.invalidLedgerBackupUnreadable,
-      );
-    }
-
-    final deviceIdentity = await currentIdentity();
-    if (deviceIdentity != null &&
-        !_bytesEqual(deviceIdentity.publicKey, backupIdentity.publicKey)) {
-      await tempFile.delete();
-      throw ForeignBackupIdentityException(
-        'This backup belongs to a different signing identity than the one '
-        'already set up on this device. Restoring it would combine two '
-        "different identities' books, not restore your own.",
-      );
-    }
-
-    final resolvedTargetFile =
-        targetFile ?? await AppDatabase.resolveDatabaseFile();
-    await close();
-    await tempFile.copy(resolvedTargetFile.path);
-    await tempFile.delete();
-    // A fresh connection on next launch should never try to replay a
-    // stale WAL/rollback-journal sidecar left over from the *previous*
-    // database file at this same path.
-    for (final suffix in ['-wal', '-shm', '-journal']) {
-      final sidecar = File('${resolvedTargetFile.path}$suffix');
-      if (await sidecar.exists()) await sidecar.delete();
-    }
-  }
-
   /// Closes the underlying database connection. Only meaningful
   /// immediately before replacing the database file out from under it
-  /// (see [restoreLedgerBackup]) - this repository instance is unusable
-  /// afterward.
+  /// (see [LedgerBackupRepository.restoreLedgerBackup]) - this repository
+  /// instance is unusable afterward.
   Future<void> close() => _db.close();
-
-  // ---------------------------------------------------------------------
-  // Startup verification (spec: "Startup Integrity Verification",
-  // "Quarantine of Entries After a Break", "Re-anchoring After a Break").
-  // ---------------------------------------------------------------------
-
-  /// Walks the entire chain, recomputing hashes and checking signatures
-  /// and linkage, and rebuilds `entry_verification_cache` from scratch
-  /// (design.md: "recomputed in full on every app startup"). If the break
-  /// point has moved since the last check, updates
-  /// `ledger_chain_state.trusted_tip_*` to the last verified entry before
-  /// it and records a `CHAIN_BREAK_DETECTED` integrity event.
-  Future<ChainVerificationResult> verifyChain() async {
-    return _db.transaction(() async {
-      final entries = await (_db.select(
-        _db.journalEntries,
-      )..orderBy([(e) => OrderingTerm.asc(e.deviceChainSequence)])).get();
-      final identities = await _db.select(_db.signingIdentities).get();
-      final publicKeyById = {
-        for (final i in identities) i.identityId: i.publicKey,
-      };
-
-      String? breakEntryId;
-      var breakReason = VerificationBreakReason.hashMismatch;
-      final results =
-          <String, ({bool isVerified, VerificationBreakReason? reason})>{};
-      Uint8List expectedPreviousHash = Uint8List.fromList(
-        genesisPreviousEntryHash,
-      );
-
-      for (final entry in entries) {
-        if (breakEntryId != null) {
-          results[entry.id] = (
-            isVerified: false,
-            reason: VerificationBreakReason.excludedAfterBreak,
-          );
-          continue;
-        }
-
-        final postings = await (_db.select(
-          _db.postings,
-        )..where((p) => p.entryId.equals(entry.id))).get();
-        final canonicalPostings = postings
-            .map(
-              (p) => CanonicalPosting(
-                lineNumber: p.lineNumber,
-                accountId: p.accountId,
-                amountMinor: p.amountMinor,
-              ),
-            )
-            .toList();
-
-        // A migration-created entry (migratedFromEntryId set) deliberately
-        // starts a fresh hash-chain root under its new identity - it does
-        // not, and cannot, chain onto the unrecoverable old identity's
-        // last hash (migrateToNewIdentityAfterKeyLoss docs why). Without
-        // this, every post-migration entry would wrongly read as a chain
-        // break purely because device_chain_sequence keeps incrementing
-        // across the migration boundary while the hash chain resets.
-        final requiredPreviousHash = entry.migratedFromEntryId != null
-            ? Uint8List.fromList(genesisPreviousEntryHash)
-            : expectedPreviousHash;
-        if (!_bytesEqual(entry.previousEntryHash, requiredPreviousHash)) {
-          breakEntryId = entry.id;
-          breakReason = VerificationBreakReason.chainLinkBroken;
-          results[entry.id] = (isVerified: false, reason: breakReason);
-          continue;
-        }
-
-        final bytes = canonicalEntryBytes(
-          previousEntryHash: entry.previousEntryHash,
-          id: entry.id,
-          deviceChainSequence: entry.deviceChainSequence,
-          transactionDate: entry.transactionDate,
-          recordedAt: entry.recordedAt,
-          description: entry.description,
-          reversesEntryId: entry.reversesEntryId,
-          signedByIdentityId: entry.signedByIdentityId,
-          postings: canonicalPostings,
-        );
-        final recomputedHash = await hashCanonicalEntry(bytes);
-        if (!_bytesEqual(recomputedHash, entry.entryHash)) {
-          breakEntryId = entry.id;
-          breakReason = VerificationBreakReason.hashMismatch;
-          results[entry.id] = (isVerified: false, reason: breakReason);
-          continue;
-        }
-
-        final publicKey = publicKeyById[entry.signedByIdentityId];
-        final signatureValid =
-            publicKey != null &&
-            await _signingKeyService.verify(
-              recomputedHash,
-              signature: entry.signature,
-              publicKey: publicKey,
-            );
-        if (!signatureValid) {
-          breakEntryId = entry.id;
-          breakReason = VerificationBreakReason.signatureInvalid;
-          results[entry.id] = (isVerified: false, reason: breakReason);
-          continue;
-        }
-
-        results[entry.id] = (isVerified: true, reason: null);
-        expectedPreviousHash = recomputedHash;
-      }
-
-      await _db.delete(_db.entryVerificationCache).go();
-      final now = DateTime.now();
-      for (final entry in entries) {
-        final result = results[entry.id]!;
-        await _db
-            .into(_db.entryVerificationCache)
-            .insert(
-              EntryVerificationCacheCompanion.insert(
-                entryId: entry.id,
-                isVerified: result.isVerified,
-                breakReason: Value(result.reason),
-                checkedAt: now,
-              ),
-            );
-      }
-
-      final priorChainState = await _chainState();
-      final isNewBreak =
-          breakEntryId != null && priorChainState.trustedTipHash != null
-          ? !_bytesEqual(priorChainState.trustedTipHash!, expectedPreviousHash)
-          : breakEntryId != null;
-
-      if (breakEntryId != null) {
-        final lastVerifiedIndex =
-            entries.indexWhere((e) => e.id == breakEntryId) - 1;
-        final lastVerifiedEntry = lastVerifiedIndex >= 0
-            ? entries[lastVerifiedIndex]
-            : null;
-        await _updateChainState(
-          trustedTipEntryId: lastVerifiedEntry?.id,
-          trustedTipHash: lastVerifiedEntry?.entryHash,
-          nextDeviceChainSequence: priorChainState.nextDeviceChainSequence,
-        );
-
-        if (isNewBreak) {
-          await _db
-              .into(_db.integrityEvents)
-              .insert(
-                IntegrityEventsCompanion.insert(
-                  eventType: IntegrityEventType.chainBreakDetected,
-                  relatedEntryId: Value(breakEntryId),
-                  detail: Value(
-                    'Break detected at entry $breakEntryId (${breakReason.name}); '
-                    'reanchoring onto ${lastVerifiedEntry?.id ?? "genesis"}.',
-                  ),
-                ),
-              );
-        }
-      } else if (entries.isNotEmpty) {
-        final tip = entries.last;
-        await _updateChainState(
-          trustedTipEntryId: tip.id,
-          trustedTipHash: tip.entryHash,
-          nextDeviceChainSequence: priorChainState.nextDeviceChainSequence,
-        );
-      }
-
-      return ChainVerificationResult(
-        totalEntries: entries.length,
-        breakEntryId: breakEntryId,
-        breakReason: breakEntryId != null ? breakReason : null,
-      );
-    });
-  }
 
   // ---------------------------------------------------------------------
   // Register / summary reads.
@@ -911,56 +185,6 @@ class LedgerRepository {
     );
   }
 
-  /// Categories for pickers ([includeArchived] false, the default) or
-  /// historical views ([includeArchived] true). Allowlist: income/expense
-  /// only — never liability/equity/asset.
-  Stream<List<Account>> watchCategories({bool includeArchived = false}) {
-    final query = _db.select(_db.accounts)
-      ..where(
-        (a) =>
-            a.type.equalsValue(AccountType.income) |
-            a.type.equalsValue(AccountType.expense),
-      )
-      ..orderBy([(a) => OrderingTerm.asc(a.name)]);
-    if (!includeArchived) {
-      query.where((a) => a.archivedAt.isNull());
-    }
-    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
-  }
-
-  /// Active financial accounts only (`asset` / `liability` allowlist).
-  Stream<List<Account>> watchFinancialAccounts({bool includeArchived = false}) {
-    final query = _db.select(_db.accounts)
-      ..where(
-        (a) =>
-            a.type.equalsValue(AccountType.asset) |
-            a.type.equalsValue(AccountType.liability),
-      )
-      ..orderBy([
-        (a) => OrderingTerm.asc(a.sortOrder),
-        (a) => OrderingTerm.asc(a.name),
-      ]);
-    if (!includeArchived) {
-      query.where((a) => a.archivedAt.isNull());
-    }
-    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
-  }
-
-  /// Account-group pickers ([includeArchived] false, the default) or
-  /// callers resolving an existing account's own group, which may since
-  /// have been archived ([includeArchived] true) - mirrors
-  /// [watchFinancialAccounts]'s convention.
-  Stream<List<AccountGroup>> watchAccountGroups({
-    bool includeArchived = false,
-  }) {
-    final query = _db.select(_db.accountGroups)
-      ..orderBy([(g) => OrderingTerm.asc(g.sortOrder)]);
-    if (!includeArchived) {
-      query.where((g) => g.archivedAt.isNull());
-    }
-    return query.watch().map((rows) => rows.map(_toDomainGroup).toList());
-  }
-
   Account _toDomainAccount(AccountRow row) {
     return Account(
       id: row.id,
@@ -976,20 +200,8 @@ class LedgerRepository {
     );
   }
 
-  AccountGroup _toDomainGroup(AccountGroupRow row) {
-    return AccountGroup(
-      id: row.id,
-      name: row.name,
-      kind: row.kind,
-      sortOrder: row.sortOrder,
-      isSystem: row.isSystem,
-      currency: row.currency,
-      archived: row.archivedAt != null,
-    );
-  }
-
   /// Used by [recordTransaction], [recordTransfer], and
-  /// [archiveFinancialAccount] - throws [AccountGroupException] (not
+  /// [AccountRepository.archiveFinancialAccount] - throws [AccountGroupException] (not
   /// [InvalidTransferException], which is reserved for transfer-specific
   /// validation like same-account/non-positive-amount) so every caller's
   /// existing catch clause for "not a valid financial account" applies
@@ -1009,38 +221,6 @@ class LedgerRepository {
       throw AccountGroupException(
         'Account $id is archived.',
         code: AppErrorCode.accountArchived,
-      );
-    }
-    return row;
-  }
-
-  /// Sibling of [_requireActiveFinancialAccount] for the one write that
-  /// *must* start from an archived account: closeout of its remaining
-  /// display balance (spec: "Closeout of an Archived Account with a
-  /// Remaining Balance"). A boolean on the active helper would let any
-  /// caller silently loosen both sides of a transfer.
-  Future<AccountRow> _requireCloseoutEligibleFinancialAccount(String id) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null ||
-        (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException(
-        'Account $id is not a financial account.',
-        code: AppErrorCode.accountNotFinancial,
-      );
-    }
-    if (row.archivedAt == null) {
-      throw AccountGroupException(
-        'Account $id is not archived.',
-        code: AppErrorCode.accountNotArchived,
-      );
-    }
-    final balance = await displayBalanceMinor(id);
-    if (balance <= 0) {
-      throw AccountGroupException(
-        'Account $id has no positive display balance to close out.',
-        code: AppErrorCode.accountNoPositiveBalanceToCloseOut,
       );
     }
     return row;
@@ -1072,442 +252,70 @@ class LedgerRepository {
     return currency;
   }
 
-  /// Creates a financial account. [openingBalanceMinor] if supplied must be
-  /// positive; for liabilities it means amount owed.
-  Future<Account> createFinancialAccount({
-    required String name,
-    required AccountType type,
-    required String groupId,
-    int? openingBalanceMinor,
-    bool holdsInvestments = false,
-    bool isCreditCard = false,
-  }) async {
-    if (type != AccountType.asset && type != AccountType.liability) {
-      throw ArgumentError.value(type, 'type', 'must be asset or liability');
+  /// Internal duplicate of [AccountRepository.watchFinancialAccounts],
+  /// kept private here so [watchHomeOverview]/[exportLedgerCsv] don't
+  /// need a dependency on AccountRepository (which itself depends on
+  /// this class - see design.md D2).
+  Stream<List<Account>> _watchFinancialAccounts({
+    bool includeArchived = false,
+  }) {
+    final query = _db.select(_db.accounts)
+      ..where(
+        (a) =>
+            a.type.equalsValue(AccountType.asset) |
+            a.type.equalsValue(AccountType.liability),
+      )
+      ..orderBy([
+        (a) => OrderingTerm.asc(a.sortOrder),
+        (a) => OrderingTerm.asc(a.name),
+      ]);
+    if (!includeArchived) {
+      query.where((a) => a.archivedAt.isNull());
     }
-    if (holdsInvestments && type != AccountType.asset) {
-      throw AccountGroupException(
-        'Only asset accounts can be marked as investment accounts.',
-        code: AppErrorCode.investmentAccountsMustBeAssets,
-      );
-    }
-    if (isCreditCard && type != AccountType.liability) {
-      throw AccountGroupException(
-        'Only liability accounts can be marked as credit cards.',
-        code: AppErrorCode.creditCardsMustBeLiabilities,
-      );
-    }
-    if (openingBalanceMinor != null && openingBalanceMinor <= 0) {
-      throw InvalidOpeningBalanceException(
-        'Opening balance must be positive and non-zero when supplied, '
-        'got $openingBalanceMinor.',
-      );
-    }
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
-    if (group == null) {
-      throw AccountGroupException(
-        'Account group $groupId not found.',
-        code: AppErrorCode.groupNotFound,
-      );
-    }
-    final expectedKind = type == AccountType.asset
-        ? AccountGroupKind.assetGroup
-        : AccountGroupKind.liabilityGroup;
-    if (group.kind != expectedKind) {
-      throw AccountGroupException(
-        'Account type $type does not match group kind ${group.kind}.',
-        code: AppErrorCode.accountTypeDoesNotMatchGroup,
-      );
-    }
-    // Defensive: the app-level currency-backfill gate (needsCurrencyBackfill)
-    // should always run before any account-creation UI is reachable, so
-    // this should never actually trigger - but a null currency here would
-    // otherwise propagate silently into every downstream currency label.
-    if (group.currency == null) {
-      throw AccountGroupException(
-        'Account group $groupId has no currency set yet.',
-        code: AppErrorCode.groupHasNoCurrency,
-      );
-    }
-
-    late AccountRow created;
-    await _db.transaction(() async {
-      created = await _db
-          .into(_db.accounts)
-          .insertReturning(
-            AccountsCompanion.insert(
-              name: name,
-              type: type,
-              holdsInvestments: Value(holdsInvestments),
-              isCreditCard: Value(isCreditCard),
-              groupId: Value(groupId),
-            ),
-          );
-      if (holdsInvestments) {
-        await _db
-            .into(_db.accounts)
-            .insert(
-              AccountsCompanion.insert(
-                name: '$name Inventory',
-                type: AccountType.inventory,
-                holdsInvestments: const Value(false),
-                investmentOwnerAccountId: Value(created.id),
-                groupId: Value(groupId),
-              ),
-            );
-      }
-    });
-
-    if (openingBalanceMinor != null) {
-      await _postOpeningBalance(
-        account: created,
-        openingBalanceMinor: openingBalanceMinor,
-      );
-    }
-    return _toDomainAccount(created);
+    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
   }
 
-  Future<void> _postOpeningBalance({
-    required AccountRow account,
-    required int openingBalanceMinor,
-  }) async {
-    // Option A: asset +O / equity −O; liability −O / equity +O.
-    final (financialAmount, equityAmount) = account.type == AccountType.asset
-        ? (openingBalanceMinor, -openingBalanceMinor)
-        : (-openingBalanceMinor, openingBalanceMinor);
-
-    await _appendSignedEntry(
-      transactionDate: _dateOnly(DateTime.now()),
-      description: 'Opening balance',
-      reversesEntryId: null,
-      postings: [
-        (accountId: account.id, amountMinor: financialAmount, lineNumber: 1),
-        (
-          accountId: openingBalanceEquityAccountId,
-          amountMinor: equityAmount,
-          lineNumber: 2,
-        ),
-      ],
-    );
+  /// Internal duplicate of [CategoryRepository.watchCategories], kept
+  /// private here so [exportLedgerCsv] doesn't need a dependency on
+  /// CategoryRepository - design.md D2 keeps this class dependency-free
+  /// until group 4 adds AccountRepository, so no new repository
+  /// dependency is introduced a group early just for this one read.
+  Stream<List<Account>> _watchCategories({bool includeArchived = false}) {
+    final query = _db.select(_db.accounts)
+      ..where(
+        (a) =>
+            a.type.equalsValue(AccountType.income) |
+            a.type.equalsValue(AccountType.expense),
+      )
+      ..orderBy([(a) => OrderingTerm.asc(a.name)]);
+    if (!includeArchived) {
+      query.where((a) => a.archivedAt.isNull());
+    }
+    return query.watch().map((rows) => rows.map(_toDomainAccount).toList());
   }
 
-  Future<void> renameFinancialAccount({
-    required String id,
-    required String newName,
-  }) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null ||
-        (row.type != AccountType.asset && row.type != AccountType.liability)) {
-      throw AccountGroupException(
-        'Account $id is not a financial account.',
-        code: AppErrorCode.accountNotFinancial,
-      );
+  /// Internal duplicate of [AccountRepository.watchAccountGroups] - see
+  /// [_watchFinancialAccounts].
+  Stream<List<AccountGroup>> _watchAccountGroups({
+    bool includeArchived = false,
+  }) {
+    final query = _db.select(_db.accountGroups)
+      ..orderBy([(g) => OrderingTerm.asc(g.sortOrder)]);
+    if (!includeArchived) {
+      query.where((g) => g.archivedAt.isNull());
     }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(name: Value(newName)),
-    );
+    return query.watch().map((rows) => rows.map(_toDomainGroup).toList());
   }
 
-  Future<void> reassignFinancialAccountGroup({
-    required String id,
-    required String groupId,
-  }) async {
-    final account = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (account == null ||
-        (account.type != AccountType.asset &&
-            account.type != AccountType.liability)) {
-      throw AccountGroupException(
-        'Account $id is not a financial account.',
-        code: AppErrorCode.accountNotFinancial,
-      );
-    }
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
-    if (group == null) {
-      throw AccountGroupException(
-        'Account group $groupId not found.',
-        code: AppErrorCode.groupNotFound,
-      );
-    }
-    final expectedKind = account.type == AccountType.asset
-        ? AccountGroupKind.assetGroup
-        : AccountGroupKind.liabilityGroup;
-    if (group.kind != expectedKind) {
-      throw AccountGroupException(
-        'Account type ${account.type} does not match group kind ${group.kind}.',
-        code: AppErrorCode.accountTypeDoesNotMatchGroup,
-      );
-    }
-    // multi-currency-support: reassigning across currencies would silently
-    // reinterpret the account's entire historical balance in a new
-    // currency - rejected regardless of whether the account has any
-    // postings yet (design.md Decision 1).
-    if (account.groupId != null) {
-      final currentGroup = await (_db.select(
-        _db.accountGroups,
-      )..where((g) => g.id.equals(account.groupId!))).getSingleOrNull();
-      if (currentGroup != null && currentGroup.currency != group.currency) {
-        throw AccountGroupException(
-          'Cannot reassign to a group with a different currency '
-          '(${currentGroup.currency} -> ${group.currency}).',
-          code: AppErrorCode.cannotReassignDifferentCurrency,
-        );
-      }
-    }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(groupId: Value(groupId)),
-    );
-  }
-
-  /// Changes an account group's currency. Rejected while the group has at
-  /// least one active financial account, since that would retroactively
-  /// reinterpret its members' historical balances (multi-currency-support
-  /// design.md Open Questions).
-  Future<void> changeAccountGroupCurrency({
-    required String groupId,
-    required String currency,
-  }) async {
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(groupId))).getSingleOrNull();
-    if (group == null) {
-      throw AccountGroupException(
-        'Account group $groupId not found.',
-        code: AppErrorCode.groupNotFound,
-      );
-    }
-    final activeMembers =
-        await (_db.select(_db.accounts)..where(
-              (a) =>
-                  a.groupId.equals(groupId) &
-                  (a.type.equalsValue(AccountType.asset) |
-                      a.type.equalsValue(AccountType.liability)) &
-                  a.archivedAt.isNull(),
-            ))
-            .get();
-    if (activeMembers.isNotEmpty) {
-      throw AccountGroupException(
-        'Cannot change currency while the group has active financial accounts.',
-        code: AppErrorCode.cannotChangeGroupCurrencyWithAccounts,
-      );
-    }
-    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(groupId)))
-        .write(AccountGroupsCompanion(currency: Value(currency)));
-  }
-
-  Future<void> archiveFinancialAccount(String id) async {
-    await _requireActiveFinancialAccount(id);
-    final activeCount =
-        await (_db.select(_db.accounts)..where(
-              (a) =>
-                  (a.type.equalsValue(AccountType.asset) |
-                      a.type.equalsValue(AccountType.liability)) &
-                  a.archivedAt.isNull(),
-            ))
-            .get();
-    if (activeCount.length <= 1) {
-      throw LastActiveAccountException(
-        'Cannot archive the last active financial account.',
-      );
-    }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(archivedAt: Value(DateTime.now())),
-    );
-  }
-
-  /// Restores an archived financial account to active status
-  /// (unarchive-accounts-categories spec: "Unarchive Financial Account").
-  /// If the account's own group is itself archived - only reachable by
-  /// archiving the account, then archiving its now-empty group - the
-  /// group is unarchived in the same transaction too, so the restored
-  /// account is never left referencing an archived group (design.md
-  /// Decision 2).
-  Future<void> unarchiveFinancialAccount(String id) async {
-    final account = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (account == null ||
-        (account.type != AccountType.asset &&
-            account.type != AccountType.liability)) {
-      throw AccountGroupException(
-        'Account $id is not a financial account.',
-        code: AppErrorCode.accountNotFinancial,
-      );
-    }
-    await _db.transaction(() async {
-      await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-        const AccountsCompanion(archivedAt: Value(null)),
-      );
-      final groupId = account.groupId;
-      if (groupId == null) return;
-      final group = await (_db.select(
-        _db.accountGroups,
-      )..where((g) => g.id.equals(groupId))).getSingleOrNull();
-      if (group != null && group.archivedAt != null) {
-        await (_db.update(_db.accountGroups)
-              ..where((g) => g.id.equals(groupId)))
-            .write(const AccountGroupsCompanion(archivedAt: Value(null)));
-      }
-    });
-  }
-
-  Future<void> renameAccountGroup({
-    required String id,
-    required String newName,
-  }) async {
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(id))).getSingleOrNull();
-    if (group == null) {
-      throw AccountGroupException(
-        'Account group $id not found.',
-        code: AppErrorCode.groupNotFound,
-      );
-    }
-    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
-      AccountGroupsCompanion(name: Value(newName)),
-    );
-  }
-
-  /// Creates a user-created account group (custom-account-groups
-  /// design.md Decision 5). [currency] must be non-blank - the first
-  /// repository-level currency check in this codebase, since every other
-  /// currency value today only ever reaches the Repository after a UI
-  /// screen's own regex already validated it. `sortOrder` is always `(max
-  /// existing sortOrder) + 1`, so a new group sorts after every existing
-  /// one.
-  Future<AccountGroup> createAccountGroup({
-    required String name,
-    required AccountGroupKind kind,
-    required String currency,
-  }) async {
-    if (currency.trim().isEmpty) {
-      throw AccountGroupException(
-        'Currency is required to create a group.',
-        code: AppErrorCode.currencyRequiredToCreateGroup,
-      );
-    }
-    final existing = await _db.select(_db.accountGroups).get();
-    final nextSortOrder =
-        existing.fold<int>(
-          -1,
-          (max, g) => g.sortOrder > max ? g.sortOrder : max,
-        ) +
-        1;
-    final created = await _db
-        .into(_db.accountGroups)
-        .insertReturning(
-          AccountGroupsCompanion.insert(
-            name: name,
-            kind: kind,
-            sortOrder: nextSortOrder,
-            isSystem: false,
-            currency: Value(currency),
-          ),
-        );
-    return _toDomainGroup(created);
-  }
-
-  /// Archives a user-created account group once it has zero active member
-  /// financial accounts (custom-account-groups design.md Decision 3). A
-  /// system group ([AccountGroupRow.isSystem]) is rejected outright,
-  /// before even checking membership - "System Account Groups Are
-  /// Permanent and Renameable" requires they SHALL NOT be archived.
-  /// Archiving is not idempotent, mirroring [archiveFinancialAccount]'s
-  /// existing "must currently be active" precondition.
-  Future<void> archiveAccountGroup(String id) async {
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(id))).getSingleOrNull();
-    if (group == null) {
-      throw AccountGroupException(
-        'Account group $id not found.',
-        code: AppErrorCode.groupNotFound,
-      );
-    }
-    if (group.isSystem) {
-      throw AccountGroupException(
-        'System account groups cannot be archived.',
-        code: AppErrorCode.systemGroupCannotBeArchived,
-      );
-    }
-    if (group.archivedAt != null) {
-      throw AccountGroupException(
-        'Account group $id is already archived.',
-        code: AppErrorCode.groupAlreadyArchived,
-      );
-    }
-    final activeMembers =
-        await (_db.select(_db.accounts)..where(
-              (a) =>
-                  a.groupId.equals(id) &
-                  (a.type.equalsValue(AccountType.asset) |
-                      a.type.equalsValue(AccountType.liability)) &
-                  a.archivedAt.isNull(),
-            ))
-            .get();
-    if (activeMembers.isNotEmpty) {
-      throw AccountGroupException(
-        'Cannot archive a group with active financial accounts.',
-        code: AppErrorCode.cannotArchiveGroupWithAccounts,
-      );
-    }
-    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
-      AccountGroupsCompanion(archivedAt: Value(DateTime.now())),
-    );
-  }
-
-  /// Restores an archived user-created account group to active status
-  /// (unarchive-accounts-categories spec: "Unarchive Account Group").
-  /// Does not itself unarchive any of the group's previously archived
-  /// member accounts - that's [unarchiveFinancialAccount]'s own action,
-  /// done independently per account (design.md Decision 3). Rejects a
-  /// system group, though that's unreachable in practice since system
-  /// groups are never archived in the first place.
-  Future<void> unarchiveAccountGroup(String id) async {
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(id))).getSingleOrNull();
-    if (group == null) {
-      throw AccountGroupException(
-        'Account group $id not found.',
-        code: AppErrorCode.groupNotFound,
-      );
-    }
-    if (group.isSystem) {
-      throw AccountGroupException(
-        'System account groups are never archived.',
-        code: AppErrorCode.systemGroupNeverArchived,
-      );
-    }
-    await (_db.update(_db.accountGroups)..where((g) => g.id.equals(id))).write(
-      const AccountGroupsCompanion(archivedAt: Value(null)),
-    );
-  }
-
-  /// No account group - system or user-created, archived or not - can be
-  /// permanently deleted (custom-account-groups design.md Non-Goals):
-  /// archiving via [archiveAccountGroup] is the only lifecycle action.
-  Future<void> deleteAccountGroup(String id) async {
-    final group = await (_db.select(
-      _db.accountGroups,
-    )..where((g) => g.id.equals(id))).getSingleOrNull();
-    if (group == null) {
-      throw AccountGroupException(
-        'Account group $id not found.',
-        code: AppErrorCode.groupNotFound,
-      );
-    }
-    throw AccountGroupException(
-      'Account groups cannot be deleted.',
-      code: AppErrorCode.accountGroupsCannotBeDeleted,
+  AccountGroup _toDomainGroup(AccountGroupRow row) {
+    return AccountGroup(
+      id: row.id,
+      name: row.name,
+      kind: row.kind,
+      sortOrder: row.sortOrder,
+      isSystem: row.isSystem,
+      currency: row.currency,
+      archived: row.archivedAt != null,
     );
   }
 
@@ -1567,8 +375,8 @@ class LedgerRepository {
     };
 
     if (!isForeignCurrency) {
-      return _appendSignedEntry(
-        transactionDate: _dateOnly(transactionDate),
+      return appendSignedEntry(
+        transactionDate: dateOnly(transactionDate),
         description: description,
         reversesEntryId: null,
         postings: [
@@ -1594,8 +402,8 @@ class LedgerRepository {
           code: AppErrorCode.accountCurrencyAmountMustBePositive,
         );
       }
-      return _appendSignedEntry(
-        transactionDate: _dateOnly(transactionDate),
+      return appendSignedEntry(
+        transactionDate: dateOnly(transactionDate),
         description: description,
         reversesEntryId: null,
         postings: [
@@ -1713,8 +521,8 @@ class LedgerRepository {
         ),
     ];
 
-    return _appendSignedEntry(
-      transactionDate: _dateOnly(transactionDate),
+    return appendSignedEntry(
+      transactionDate: dateOnly(transactionDate),
       description: description,
       reversesEntryId: null,
       postings: postings,
@@ -1768,52 +576,7 @@ class LedgerRepository {
     }
     final fromAccount = await _requireActiveFinancialAccount(fromAccountId);
     final toAccount = await _requireActiveFinancialAccount(toAccountId);
-    await _postTransfer(
-      fromAccount: fromAccount,
-      toAccount: toAccount,
-      amountMinor: amountMinor,
-      transactionDate: transactionDate,
-      description: description,
-      destinationAmountMinor: destinationAmountMinor,
-    );
-  }
-
-  /// One outbound transfer of an archived financial account's full current
-  /// display balance to a different, active account (spec: "Closeout of an
-  /// Archived Account with a Remaining Balance"). The source amount is
-  /// always [displayBalanceMinor] at submit time, never a caller-supplied
-  /// figure. Cross-currency closeout requires [destinationAmountMinor] so
-  /// the posting is a single complete entry — never a pending transfer on
-  /// an account the user is retiring.
-  Future<void> recordArchivedAccountCloseoutTransfer({
-    required String fromAccountId,
-    required String toAccountId,
-    required DateTime transactionDate,
-    String? description,
-    int? destinationAmountMinor,
-  }) async {
-    if (fromAccountId == toAccountId) {
-      throw InvalidTransferException(
-        'Source and destination accounts must be distinct.',
-        code: AppErrorCode.transferAccountsMustDiffer,
-      );
-    }
-    final fromAccount = await _requireCloseoutEligibleFinancialAccount(
-      fromAccountId,
-    );
-    final toAccount = await _requireActiveFinancialAccount(toAccountId);
-    final amountMinor = await displayBalanceMinor(fromAccountId);
-    final fromCurrency = await _groupCurrencyFor(fromAccount);
-    final toCurrency = await _groupCurrencyFor(toAccount);
-    if (fromCurrency != toCurrency &&
-        (destinationAmountMinor == null || destinationAmountMinor <= 0)) {
-      throw InvalidTransferException(
-        'A cross-currency closeout requires a known destination amount; '
-        'a pending transfer is not allowed on an archived account.',
-        code: AppErrorCode.closeoutRequiresDestinationAmount,
-      );
-    }
-    await _postTransfer(
+    await postTransferEntry(
       fromAccount: fromAccount,
       toAccount: toAccount,
       amountMinor: amountMinor,
@@ -1824,9 +587,9 @@ class LedgerRepository {
   }
 
   /// Shared posting for [recordTransfer] and
-  /// [recordArchivedAccountCloseoutTransfer]. Callers have already
-  /// resolved and validated both accounts.
-  Future<void> _postTransfer({
+  /// [AccountRepository.recordArchivedAccountCloseoutTransfer]. Callers
+  /// have already resolved and validated both accounts.
+  Future<void> postTransferEntry({
     required AccountRow fromAccount,
     required AccountRow toAccount,
     required int amountMinor,
@@ -1856,8 +619,8 @@ class LedgerRepository {
           );
         }
       }
-      await _appendSignedEntry(
-        transactionDate: _dateOnly(transactionDate),
+      await appendSignedEntry(
+        transactionDate: dateOnly(transactionDate),
         description: description,
         reversesEntryId: null,
         postings: [
@@ -1886,8 +649,8 @@ class LedgerRepository {
           );
         }
       }
-      await _appendSignedEntry(
-        transactionDate: _dateOnly(transactionDate),
+      await appendSignedEntry(
+        transactionDate: dateOnly(transactionDate),
         description: description,
         reversesEntryId: null,
         postings: [
@@ -1916,7 +679,7 @@ class LedgerRepository {
 
   /// Posts the provisional entry (the known leg + the Transfers-in-transit
   /// leg) and the matching `pending_transfers` row atomically - Drift
-  /// nests the inner [_appendSignedEntry] transaction inside this one, so
+  /// nests the inner [appendSignedEntry] transaction inside this one, so
   /// either both writes land or neither does (multi-currency-support
   /// design.md Decision 4).
   Future<String> _postProvisionalEntry({
@@ -1931,8 +694,8 @@ class LedgerRepository {
     String? description,
   }) async {
     return _db.transaction(() async {
-      final entryId = await _appendSignedEntry(
-        transactionDate: _dateOnly(transactionDate),
+      final entryId = await appendSignedEntry(
+        transactionDate: dateOnly(transactionDate),
         description: description,
         reversesEntryId: null,
         postings: [
@@ -1982,7 +745,7 @@ class LedgerRepository {
   /// entry while still reporting status pending.
   Future<void> reverseEntry(String entryId) {
     // The already-reversed guard below must not be a separate check-then-act
-    // against the insert in `_appendSignedEntry` - two overlapping callers
+    // against the insert in `appendSignedEntry` - two overlapping callers
     // could both pass the guard before either has inserted, posting two
     // reversals for one original. Wrapping the whole method in one
     // transaction closes that window; Drift's transactions nest cleanly
@@ -2023,8 +786,8 @@ class LedgerRepository {
         _db.postings,
       )..where((p) => p.entryId.equals(entryId))).get();
 
-      await _appendSignedEntry(
-        transactionDate: _dateOnly(DateTime.now()),
+      await appendSignedEntry(
+        transactionDate: dateOnly(DateTime.now()),
         reversesEntryId: original.id,
         postings: [
           for (final p in originalPostings)
@@ -2244,8 +1007,8 @@ class LedgerRepository {
     await _db.transaction(() async {
       String? settlementEntryId;
       if (settledAmountMinor > 0) {
-        settlementEntryId = await _appendSignedEntry(
-          transactionDate: _dateOnly(DateTime.now()),
+        settlementEntryId = await appendSignedEntry(
+          transactionDate: dateOnly(DateTime.now()),
           description: 'Settlement',
           reversesEntryId: null,
           postings: [
@@ -2265,8 +1028,8 @@ class LedgerRepository {
 
       String? feeEntryId;
       if (shortfall > 0) {
-        feeEntryId = await _appendSignedEntry(
-          transactionDate: _dateOnly(DateTime.now()),
+        feeEntryId = await appendSignedEntry(
+          transactionDate: dateOnly(DateTime.now()),
           description: 'Transfer fee / shortfall',
           reversesEntryId: null,
           postings: [
@@ -2297,220 +1060,16 @@ class LedgerRepository {
     });
   }
 
-  // ---------------------------------------------------------------------
-  // Investment holdings (investment-holdings).
-  // ---------------------------------------------------------------------
-
-  Stream<List<Instrument>> watchInstruments({bool includeArchived = false}) {
-    final query = _db.select(_db.instruments)
-      ..orderBy([(i) => OrderingTerm.asc(i.name)]);
-    if (!includeArchived) {
-      query.where((i) => i.archivedAt.isNull());
-    }
-    return query.watch().map((rows) => rows.map(_toDomainInstrument).toList());
-  }
-
-  Instrument _toDomainInstrument(InstrumentRow row) {
-    return Instrument(
-      id: row.id,
-      name: row.name,
-      kind: row.kind,
-      ticker: row.ticker,
-      isin: row.isin,
-      archived: row.archivedAt != null,
-    );
-  }
-
-  Future<Instrument> createInstrument({
-    required String name,
-    required InstrumentKind kind,
-    String? ticker,
-    String? isin,
-  }) async {
-    final created = await _db
-        .into(_db.instruments)
-        .insertReturning(
-          InstrumentsCompanion.insert(
-            name: name,
-            kind: kind,
-            ticker: Value(ticker),
-            isin: Value(isin),
-          ),
-        );
-    return _toDomainInstrument(created);
-  }
-
-  Future<void> renameInstrument({
-    required String id,
-    required String newName,
-  }) async {
-    await (_db.update(_db.instruments)..where((i) => i.id.equals(id))).write(
-      InstrumentsCompanion(name: Value(newName)),
-    );
-  }
-
-  Future<void> archiveInstrument(String id) async {
-    await (_db.update(_db.instruments)..where((i) => i.id.equals(id))).write(
-      InstrumentsCompanion(archivedAt: Value(DateTime.now())),
-    );
-  }
-
-  Stream<List<InstrumentHolding>> watchHoldingsForAccount(String accountId) {
-    return _tickOn([
-      watchInstruments(includeArchived: true),
-      _db.select(_db.instrumentQuotes).watch(),
-      watchEntriesForAccount(accountId),
-    ]).asyncMap((_) => computeHoldingsForAccount(accountId));
-  }
-
-  /// Instruments that have ever had a lot in [accountId], including
-  /// ones currently at zero quantity (ex-dividend / fully sold).
-  Stream<List<Instrument>> watchInstrumentsHeldInAccount(String accountId) {
-    return watchHoldingsForAccount(accountId).asyncMap((_) async {
-      return computeInstrumentsHeldInAccount(accountId);
-    });
-  }
-
-  Future<List<Instrument>> computeInstrumentsHeldInAccount(
-    String accountId,
-  ) async {
-    final lots = await (_db.select(
-      _db.investmentLots,
-    )..where((l) => l.accountId.equals(accountId))).get();
-    final instrumentIds = lots.map((l) => l.instrumentId).toSet();
-    if (instrumentIds.isEmpty) return [];
-    final instruments = await (_db.select(
-      _db.instruments,
-    )..where((i) => i.id.isIn(instrumentIds))).get();
-    instruments.sort((a, b) => a.name.compareTo(b.name));
-    return instruments.map(_toDomainInstrument).toList();
-  }
-
-  Future<Map<String, InstrumentQuote>> _quotesByInstrumentId() async {
-    final rows = await _db.select(_db.instrumentQuotes).get();
-    return {
-      for (final row in rows)
-        row.instrumentId: InstrumentQuote(
-          instrumentId: row.instrumentId,
-          priceMinor: row.priceMinor,
-          currency: row.currency,
-          fetchedAt: row.fetchedAt,
-        ),
-    };
-  }
-
-  Stream<List<InstrumentQuote>> watchInstrumentQuotes() {
-    return _db
-        .select(_db.instrumentQuotes)
-        .watch()
-        .map(
-          (rows) => rows
-              .map(
-                (row) => InstrumentQuote(
-                  instrumentId: row.instrumentId,
-                  priceMinor: row.priceMinor,
-                  currency: row.currency,
-                  fetchedAt: row.fetchedAt,
-                ),
-              )
-              .toList(),
-        );
-  }
-
-  Future<void> cacheInstrumentQuote({
-    required String instrumentId,
-    required int priceMinor,
-    required String currency,
-  }) async {
-    final existing = await (_db.select(
-      _db.instrumentQuotes,
-    )..where((q) => q.instrumentId.equals(instrumentId))).get();
-    if (existing.isEmpty) {
-      await _db
-          .into(_db.instrumentQuotes)
-          .insert(
-            InstrumentQuotesCompanion.insert(
-              instrumentId: instrumentId,
-              priceMinor: priceMinor,
-              currency: currency,
-              fetchedAt: DateTime.now(),
-            ),
-          );
-      return;
-    }
-    await (_db.update(
-      _db.instrumentQuotes,
-    )..where((q) => q.instrumentId.equals(instrumentId))).write(
-      InstrumentQuotesCompanion(
-        priceMinor: Value(priceMinor),
-        currency: Value(currency),
-        fetchedAt: Value(DateTime.now()),
-      ),
-    );
-  }
-
-  Future<List<InstrumentHolding>> computeHoldingsForAccount(
-    String accountId, {
-    bool includeZeroQuantity = false,
-  }) async {
-    final lots = await (_db.select(
-      _db.investmentLots,
-    )..where((l) => l.accountId.equals(accountId))).get();
-    final instrumentIds = lots.map((l) => l.instrumentId).toSet();
-    if (instrumentIds.isEmpty) return [];
-
-    final instruments = await (_db.select(
-      _db.instruments,
-    )..where((i) => i.id.isIn(instrumentIds))).get();
-    final instrumentById = {for (final i in instruments) i.id: i};
-    final quotes = await _quotesByInstrumentId();
-    var groupCurrency = 'USD';
-    final cashRow = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(accountId))).getSingleOrNull();
-    if (cashRow != null) {
-      try {
-        groupCurrency = await _groupCurrencyFor(cashRow);
-      } on AccountGroupException {
-        // Fall back to USD for display-only valuation.
-      }
-    }
-
-    final holdings = <InstrumentHolding>[];
-    for (final instrumentId in instrumentIds) {
-      final instrumentRow = instrumentById[instrumentId];
-      if (instrumentRow == null) continue;
-      final events = await _replayEventsFor(
-        accountId: accountId,
-        instrumentId: instrumentId,
-      );
-      final metrics = replayInvestmentHistory(events);
-      if (metrics.quantityScaled <= 0 && !includeZeroQuantity) continue;
-      final valuation = valueHolding(
-        quantityScaled: metrics.quantityScaled,
-        totalCostMinor: metrics.totalCostMinor,
-        quote: quotes[instrumentId],
-        groupCurrency: groupCurrency,
-        quotesEnabled: true,
-      );
-      holdings.add(
-        toInstrumentHolding(
-          instrumentRow: instrumentRow,
-          metrics: metrics,
-          valuation: valuation,
-        ),
-      );
-    }
-    holdings.sort((a, b) => a.instrument.name.compareTo(b.instrument.name));
-    return holdings;
-  }
-
   Future<({int portfolioMinor, int bookMinor})> _portfolioForInvestmentAccount({
     required String accountId,
     required int cashMinor,
     required String groupCurrency,
   }) async {
-    final holdings = await computeHoldingsForAccount(accountId);
+    final holdings = await computeInstrumentHoldingsForAccount(
+      _db,
+      accountId: accountId,
+      groupCurrency: groupCurrency,
+    );
     var marketInventory = 0;
     var bookInventory = 0;
     for (final holding in holdings) {
@@ -2545,493 +1104,14 @@ class LedgerRepository {
     return controller.stream;
   }
 
-  Future<String> recordBuy({
-    required String accountId,
-    required String instrumentId,
-    required int quantityScaled,
-    required int unitPriceMinor,
-    required DateTime transactionDate,
-    required BuyFundingSource fundingSource,
-    String? incomeCategoryId,
-    DateTime? lockedUntil,
-    String? description,
-    int? brokerageMinor,
-    String? brokerageExpenseCategoryId,
-  }) async {
-    if (quantityScaled <= 0 || unitPriceMinor <= 0) {
-      throw const InvestmentException(
-        'Buy quantity and unit price must be positive.',
-        code: AppErrorCode.buyQuantityAndPriceMustBePositive,
-      );
-    }
-    await _requireInvestmentCashAccount(accountId);
-    final instrument = await (_db.select(
-      _db.instruments,
-    )..where((i) => i.id.equals(instrumentId))).getSingleOrNull();
-    if (instrument == null) {
-      throw InvestmentException(
-        'Instrument $instrumentId not found.',
-        code: AppErrorCode.instrumentNotFound,
-      );
-    }
-    if (instrument.archivedAt != null) {
-      throw const InvestmentException(
-        'Cannot buy an archived instrument.',
-        code: AppErrorCode.instrumentArchived,
-      );
-    }
-
-    final totalCostMinor = multiplyScaledQuantityPrice(
-      quantityScaled,
-      unitPriceMinor,
-    );
-    final feeMinor = brokerageMinor;
-    final hasBrokerage = feeMinor != null && feeMinor > 0;
-    if (fundingSource == BuyFundingSource.nonCash && hasBrokerage) {
-      throw const InvestmentException(
-        'Non-cash acquisitions cannot include brokerage.',
-        code: AppErrorCode.nonCashCannotIncludeBrokerage,
-      );
-    }
-    if (hasBrokerage && brokerageExpenseCategoryId == null) {
-      throw const InvestmentException(
-        'An active expense category is required when brokerage is positive.',
-        code: AppErrorCode.brokerageRequiresExpenseCategory,
-      );
-    }
-    if (hasBrokerage) {
-      await _requireActiveExpenseCategory(brokerageExpenseCategoryId!);
-    }
-    if (fundingSource == BuyFundingSource.nonCash) {
-      if (incomeCategoryId == null) {
-        throw const InvestmentException(
-          'An active income category is required for a non-cash acquisition.',
-          code: AppErrorCode.incomeRequiredForNonCash,
-        );
-      }
-      await _requireActiveIncomeCategory(incomeCategoryId);
-    } else {
-      final cashBalance = await displayBalanceMinor(accountId);
-      if (totalCostMinor > cashBalance) {
-        throw InsufficientCashException(
-          'Insufficient cash for buy: need $totalCostMinor minor units, '
-          'have $cashBalance.',
-        );
-      }
-    }
-
-    final inventoryAccountId = await _inventoryAccountIdFor(accountId);
-    final lotSource = fundingSource == BuyFundingSource.cash
-        ? LotSource.cashPurchase
-        : LotSource.nonCashAcquisition;
-
-    final entryId = await _db.transaction(() async {
-      final postings = <({String accountId, int amountMinor, int lineNumber})>[
-        (
-          accountId: inventoryAccountId,
-          amountMinor: totalCostMinor,
-          lineNumber: 1,
-        ),
-        if (fundingSource == BuyFundingSource.cash)
-          (accountId: accountId, amountMinor: -totalCostMinor, lineNumber: 2)
-        else
-          (
-            accountId: incomeCategoryId!,
-            amountMinor: -totalCostMinor,
-            lineNumber: 2,
-          ),
-      ];
-      final id = await _appendSignedEntry(
-        transactionDate: _dateOnly(transactionDate),
-        description: description,
-        reversesEntryId: null,
-        postings: postings,
-      );
-      await _db
-          .into(_db.investmentLots)
-          .insert(
-            InvestmentLotsCompanion.insert(
-              accountId: accountId,
-              instrumentId: instrumentId,
-              quantityScaled: quantityScaled,
-              unitCostMinor: unitPriceMinor,
-              source: lotSource,
-              acquiredAt: parseTransactionDate(_dateOnly(transactionDate)),
-              lockedUntil: Value(lockedUntil),
-              journalEntryId: id,
-            ),
-          );
-      return id;
-    });
-
-    if (hasBrokerage) {
-      try {
-        await recordTransaction(
-          amountMinor: feeMinor,
-          direction: TransactionDirection.moneyOut,
-          categoryId: brokerageExpenseCategoryId!,
-          financialAccountId: accountId,
-          transactionDate: transactionDate,
-          description: description == null
-              ? 'Brokerage'
-              : '$description (brokerage)',
-        );
-      } on InvalidTransactionAmountException catch (e) {
-        throw InvestmentException(
-          'Buy posted, but brokerage fee failed: ${e.message}',
-          code: AppErrorCode.brokerageFailedAfterBuy,
-          params: {'innerCode': e.code.name, ...e.params},
-        );
-      } on AccountGroupException catch (e) {
-        throw InvestmentException(
-          'Buy posted, but brokerage fee failed: ${e.message}',
-          code: AppErrorCode.brokerageFailedAfterBuy,
-          params: {'innerCode': e.code.name, ...e.params},
-        );
-      }
-    }
-
-    return entryId;
-  }
-
-  Future<String> recordSell({
-    required String accountId,
-    required String instrumentId,
-    required int quantityScaled,
-    required int unitPriceMinor,
-    required DateTime transactionDate,
-    String? gainIncomeCategoryId,
-    String? lossExpenseCategoryId,
-    String? description,
-    int? brokerageMinor,
-    String? brokerageExpenseCategoryId,
-  }) async {
-    if (quantityScaled <= 0 || unitPriceMinor <= 0) {
-      throw const InvestmentException(
-        'Sell quantity and unit price must be positive.',
-        code: AppErrorCode.sellQuantityAndPriceMustBePositive,
-      );
-    }
-    await _requireInvestmentCashAccount(accountId, allowArchived: true);
-
-    final proceedsMinor = multiplyScaledQuantityPrice(
-      quantityScaled,
-      unitPriceMinor,
-    );
-    final feeMinor = brokerageMinor;
-    final hasBrokerage = feeMinor != null && feeMinor > 0;
-    if (hasBrokerage && proceedsMinor < feeMinor) {
-      throw const InvestmentException(
-        'Sell proceeds must be at least the brokerage amount.',
-        code: AppErrorCode.sellProceedsMustCoverBrokerage,
-      );
-    }
-    if (hasBrokerage && brokerageExpenseCategoryId == null) {
-      throw const InvestmentException(
-        'An active expense category is required when brokerage is positive.',
-        code: AppErrorCode.brokerageRequiresExpenseCategory,
-      );
-    }
-    if (hasBrokerage) {
-      await _requireActiveExpenseCategory(brokerageExpenseCategoryId!);
-    }
-
-    final events = await _replayEventsFor(
-      accountId: accountId,
-      instrumentId: instrumentId,
-    );
-    final sellDate = parseTransactionDate(_dateOnly(transactionDate));
-    final metricsBeforeSell = replayInvestmentHistory(events, asOf: sellDate);
-    if (quantityScaled > metricsBeforeSell.sellableQuantityScaled) {
-      final locked = metricsBeforeSell.lockedQuantityScaled;
-      if (locked > 0) {
-        final until = metricsBeforeSell.earliestLockedUntil;
-        final untilLabel = until == null ? 'a later date' : _dateOnly(until);
-        throw LockedQuantityException(
-          'Cannot sell: some units are locked until $untilLabel.',
-          params: {'date': untilLabel},
-        );
-      }
-      throw InsufficientQuantityException(
-        'Cannot sell $quantityScaled scaled units: only '
-        '${metricsBeforeSell.sellableQuantityScaled} held.',
-      );
-    }
-
-    final avgCostMinor = metricsBeforeSell.averageCostMinor;
-    final costRemovedMinor = multiplyScaledQuantityPrice(
-      quantityScaled,
-      avgCostMinor,
-    );
-    final gainLossMinor = proceedsMinor - costRemovedMinor;
-
-    if (gainLossMinor > 0) {
-      if (gainIncomeCategoryId == null) {
-        throw const InvestmentException(
-          'An active income category is required for a realized gain.',
-          code: AppErrorCode.incomeRequiredForGain,
-        );
-      }
-      await _requireActiveIncomeCategory(gainIncomeCategoryId);
-    } else if (gainLossMinor < 0) {
-      if (lossExpenseCategoryId == null) {
-        throw const InvestmentException(
-          'An active expense category is required for a realized loss.',
-          code: AppErrorCode.expenseRequiredForLoss,
-        );
-      }
-      await _requireActiveExpenseCategory(lossExpenseCategoryId);
-    }
-
-    final inventoryAccountId = await _inventoryAccountIdFor(accountId);
-    final postings = <({String accountId, int amountMinor, int lineNumber})>[
-      (accountId: accountId, amountMinor: proceedsMinor, lineNumber: 1),
-      (
-        accountId: inventoryAccountId,
-        amountMinor: -costRemovedMinor,
-        lineNumber: 2,
-      ),
-    ];
-    if (gainLossMinor > 0) {
-      postings.add((
-        accountId: gainIncomeCategoryId!,
-        amountMinor: -gainLossMinor,
-        lineNumber: 3,
-      ));
-    } else if (gainLossMinor < 0) {
-      postings.add((
-        accountId: lossExpenseCategoryId!,
-        amountMinor: -gainLossMinor,
-        lineNumber: 3,
-      ));
-    }
-
-    final entryId = await _db.transaction(() async {
-      final id = await _appendSignedEntry(
-        transactionDate: _dateOnly(transactionDate),
-        description: description,
-        reversesEntryId: null,
-        postings: postings,
-      );
-      await _db
-          .into(_db.investmentSells)
-          .insert(
-            InvestmentSellsCompanion.insert(
-              accountId: accountId,
-              instrumentId: instrumentId,
-              quantityScaled: quantityScaled,
-              journalEntryId: id,
-            ),
-          );
-      return id;
-    });
-
-    if (hasBrokerage) {
-      try {
-        await recordTransaction(
-          amountMinor: feeMinor,
-          direction: TransactionDirection.moneyOut,
-          categoryId: brokerageExpenseCategoryId!,
-          financialAccountId: accountId,
-          transactionDate: transactionDate,
-          description: description == null
-              ? 'Brokerage'
-              : '$description (brokerage)',
-        );
-      } on InvalidTransactionAmountException catch (e) {
-        throw InvestmentException(
-          'Sell posted, but brokerage fee failed: ${e.message}',
-          code: AppErrorCode.brokerageFailedAfterSell,
-          params: {'innerCode': e.code.name, ...e.params},
-        );
-      } on AccountGroupException catch (e) {
-        throw InvestmentException(
-          'Sell posted, but brokerage fee failed: ${e.message}',
-          code: AppErrorCode.brokerageFailedAfterSell,
-          params: {'innerCode': e.code.name, ...e.params},
-        );
-      }
-    }
-
-    return entryId;
-  }
-
-  Future<String> recordDividend({
-    required String accountId,
-    required String instrumentId,
-    required int amountMinor,
-    required DateTime transactionDate,
-    required String incomeCategoryId,
-    String? description,
-  }) async {
-    if (amountMinor <= 0) {
-      throw const InvestmentException(
-        'Dividend amount must be positive.',
-        code: AppErrorCode.dividendMustBePositive,
-      );
-    }
-    await _requireInvestmentCashAccount(accountId, allowArchived: true);
-    await _requireActiveIncomeCategory(incomeCategoryId);
-    final instrument = await (_db.select(
-      _db.instruments,
-    )..where((i) => i.id.equals(instrumentId))).getSingleOrNull();
-    if (instrument == null) {
-      throw InvestmentException(
-        'Instrument $instrumentId not found.',
-        code: AppErrorCode.instrumentNotFound,
-      );
-    }
-
-    return _appendSignedEntry(
-      transactionDate: _dateOnly(transactionDate),
-      description: description,
-      reversesEntryId: null,
-      postings: [
-        (accountId: accountId, amountMinor: amountMinor, lineNumber: 1),
-        (accountId: incomeCategoryId, amountMinor: -amountMinor, lineNumber: 2),
-      ],
-    );
-  }
-
-  Future<void> _requireActiveIncomeCategory(String id) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null || row.type != AccountType.income) {
-      throw InvestmentException(
-        '$id is not an active Income category.',
-        code: AppErrorCode.notActiveIncomeCategory,
-      );
-    }
-    if (row.archivedAt != null) {
-      throw InvestmentException(
-        '$id is not an active Income category.',
-        code: AppErrorCode.notActiveIncomeCategory,
-      );
-    }
-  }
-
-  Future<AccountRow> _requireInvestmentCashAccount(
-    String id, {
-    bool allowArchived = false,
-  }) async {
-    final row = await (_db.select(
-      _db.accounts,
-    )..where((a) => a.id.equals(id))).getSingleOrNull();
-    if (row == null || row.type != AccountType.asset || !row.holdsInvestments) {
-      throw InvestmentException(
-        'Account $id is not an investment account.',
-        code: AppErrorCode.notInvestmentAccount,
-      );
-    }
-    if (row.archivedAt != null && !allowArchived) {
-      throw AccountGroupException(
-        'Account $id is archived.',
-        code: AppErrorCode.accountArchived,
-      );
-    }
-    return row;
-  }
-
-  Future<String> _inventoryAccountIdFor(String cashAccountId) async {
-    final row =
-        await (_db.select(_db.accounts)
-              ..where((a) => a.investmentOwnerAccountId.equals(cashAccountId)))
-            .getSingleOrNull();
-    if (row == null) {
-      throw InvestmentException(
-        'No inventory companion for investment account $cashAccountId.',
-        code: AppErrorCode.noInventoryCompanion,
-      );
-    }
-    return row.id;
-  }
-
-  Future<Set<String>> _reversedOriginalEntryIds() async {
-    final rows = await (_db.select(
-      _db.journalEntries,
-    )..where((e) => e.reversesEntryId.isNotNull())).get();
-    return rows.map((e) => e.reversesEntryId!).toSet();
-  }
-
-  Future<List<InvestmentReplayEvent>> _replayEventsFor({
-    required String accountId,
-    required String instrumentId,
-  }) async {
-    final reversed = await _reversedOriginalEntryIds();
-    final lots =
-        await (_db.select(_db.investmentLots)..where(
-              (l) =>
-                  l.accountId.equals(accountId) &
-                  l.instrumentId.equals(instrumentId),
-            ))
-            .get();
-    final sells =
-        await (_db.select(_db.investmentSells)..where(
-              (s) =>
-                  s.accountId.equals(accountId) &
-                  s.instrumentId.equals(instrumentId),
-            ))
-            .get();
-
-    final entryIds = {
-      ...lots.map((l) => l.journalEntryId),
-      ...sells.map((s) => s.journalEntryId),
-    };
-    if (entryIds.isEmpty) return [];
-
-    final entries = await (_db.select(
-      _db.journalEntries,
-    )..where((e) => e.id.isIn(entryIds))).get();
-    final entryById = {for (final e in entries) e.id: e};
-
-    final events = <InvestmentReplayEvent>[];
-    for (final lot in lots) {
-      if (reversed.contains(lot.journalEntryId)) continue;
-      final entry = entryById[lot.journalEntryId];
-      if (entry == null) continue;
-      events.add(
-        InvestmentReplayEvent(
-          kind: InvestmentReplayEventKind.buy,
-          transactionDate: parseTransactionDate(entry.transactionDate),
-          recordedAt: entry.recordedAt,
-          quantityScaled: lot.quantityScaled,
-          unitCostMinor: lot.unitCostMinor,
-          lockedUntil: lot.lockedUntil,
-          journalEntryId: lot.journalEntryId,
-        ),
-      );
-    }
-    for (final sell in sells) {
-      if (reversed.contains(sell.journalEntryId)) continue;
-      final entry = entryById[sell.journalEntryId];
-      if (entry == null) continue;
-      events.add(
-        InvestmentReplayEvent(
-          kind: InvestmentReplayEventKind.sell,
-          transactionDate: parseTransactionDate(entry.transactionDate),
-          recordedAt: entry.recordedAt,
-          quantityScaled: sell.quantityScaled,
-          unitCostMinor: 0,
-          journalEntryId: sell.journalEntryId,
-        ),
-      );
-    }
-    events.sort((a, b) {
-      final byDate = a.transactionDate.compareTo(b.transactionDate);
-      if (byDate != 0) return byDate;
-      return a.recordedAt.compareTo(b.recordedAt);
-    });
-    return events;
-  }
-
   Future<void> _guardInvestmentBuyReversal(String entryId) async {
     final lot = await (_db.select(
       _db.investmentLots,
     )..where((l) => l.journalEntryId.equals(entryId))).getSingleOrNull();
     if (lot == null) return;
 
-    final events = await _replayEventsFor(
+    final events = await loadInvestmentReplayEvents(
+      _db,
       accountId: lot.accountId,
       instrumentId: lot.instrumentId,
     );
@@ -3060,14 +1140,14 @@ class LedgerRepository {
   /// yet re-anchored by new activity), this is the re-anchor moment and a
   /// `CHAIN_REANCHORED` integrity event is recorded (spec: "Re-anchoring
   /// After a Break"). Returns the new entry's id.
-  Future<String> _appendSignedEntry({
+  Future<String> appendSignedEntry({
     required String transactionDate,
     String? description,
     String? reversesEntryId,
     required List<({String accountId, int amountMinor, int lineNumber})>
     postings,
   }) async {
-    final identity = await currentIdentity();
+    final identity = await _currentSigningIdentity();
     if (identity == null) {
       throw StateError(
         'No signing identity is set up on this device - '
@@ -3091,7 +1171,7 @@ class LedgerRepository {
           Uint8List.fromList(genesisPreviousEntryHash);
       final sequence = chainState.nextDeviceChainSequence;
       final id = const Uuid().v4();
-      final recordedAt = _truncateToStoredPrecision(DateTime.now());
+      final recordedAt = truncateToStoredPrecision(DateTime.now());
 
       final canonicalPostings = postings
           .map(
@@ -3228,78 +1308,6 @@ class LedgerRepository {
         );
   }
 
-  /// [type] must be [AccountType.income] or [AccountType.expense].
-  Future<void> addCategory({
-    required String name,
-    required AccountType type,
-  }) async {
-    if (type != AccountType.income && type != AccountType.expense) {
-      throw ArgumentError.value(type, 'type', 'must be income or expense');
-    }
-    await _db
-        .into(_db.accounts)
-        .insert(AccountsCompanion.insert(name: name, type: type));
-  }
-
-  Future<void> renameCategory({
-    required String id,
-    required String newName,
-  }) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(name: Value(newName)),
-    );
-  }
-
-  Future<void> archiveCategory(String id) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(archivedAt: Value(DateTime.now())),
-    );
-  }
-
-  /// Restores an archived income or expense category to active status
-  /// (unarchive-accounts-categories spec: "Unarchive Income or Expense
-  /// Category").
-  Future<void> unarchiveCategory(String id) async {
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      const AccountsCompanion(archivedAt: Value(null)),
-    );
-  }
-
-  /// Sets or clears (`null`) an Expense category's optional monthly
-  /// spending limit (spec: "Category Management" - "An Income category
-  /// SHALL NOT have a monthly limit"). Informational only - never
-  /// enforced against posting (monthly-category-limits design.md
-  /// Decision 3).
-  Future<void> setCategoryMonthlyLimit({
-    required String id,
-    required int? monthlyLimitMinor,
-  }) async {
-    if (monthlyLimitMinor != null) {
-      if (monthlyLimitMinor <= 0) {
-        throw InvalidTransactionAmountException(
-          'Monthly limit must be positive and non-zero, got $monthlyLimitMinor.',
-          code: AppErrorCode.monthlyLimitMustBePositive,
-        );
-      }
-      final row = await (_db.select(
-        _db.accounts,
-      )..where((a) => a.id.equals(id))).getSingleOrNull();
-      if (row == null || row.type != AccountType.expense) {
-        throw ArgumentError.value(
-          id,
-          'id',
-          'must be an Expense category to set a monthly limit',
-        );
-      }
-    }
-    await (_db.update(_db.accounts)..where((a) => a.id.equals(id))).write(
-      AccountsCompanion(monthlyLimitMinor: Value(monthlyLimitMinor)),
-    );
-  }
-
-  /// Reactive stream of entries that post to [financialAccountId], ordered
-  /// chronologically. Includes verification status; running balance should
-  /// be computed by the ViewModel using [displayBalanceDeltaFor].
   Stream<List<JournalEntry>> watchEntriesForAccount(String financialAccountId) {
     return watchEntries().map(
       (entries) => entries
@@ -3379,19 +1387,19 @@ class LedgerRepository {
         code: AppErrorCode.accountNotFinancial,
       );
     }
-    final startDate = _dateOnly(start);
-    final endDate = _dateOnly(end);
+    final startDate = dateOnly(start);
+    final endDate = dateOnly(end);
 
     final entries = await watchEntriesForAccount(financialAccountId).first;
     final inRange = entries.where((e) {
-      final entryDate = _dateOnly(e.transactionDate);
+      final entryDate = dateOnly(e.transactionDate);
       return entryDate.compareTo(startDate) >= 0 &&
           entryDate.compareTo(endDate) <= 0;
     }).toList()..sort((a, b) => a.transactionDate.compareTo(b.transactionDate));
 
-    final categories = await watchCategories(includeArchived: true).first;
+    final categories = await _watchCategories(includeArchived: true).first;
     final categoriesById = {for (final c in categories) c.id: c};
-    final allAccounts = await watchFinancialAccounts(
+    final allAccounts = await _watchFinancialAccounts(
       includeArchived: true,
     ).first;
     final accountsById = {for (final a in allAccounts) a.id: a};
@@ -3423,7 +1431,7 @@ class LedgerRepository {
               );
         buffer.writeln(
           [
-            _dateOnly(entry.transactionDate),
+            dateOnly(entry.transactionDate),
             _csvField(entry.description ?? ''),
             _csvField(label),
             direction,
@@ -3481,14 +1489,14 @@ class LedgerRepository {
   Stream<HomeOverview> watchHomeOverview() {
     return _tickOn([
       watchEntries(),
-      watchFinancialAccounts(includeArchived: true),
+      _watchFinancialAccounts(includeArchived: true),
       _db.select(_db.instrumentQuotes).watch(),
     ]).asyncMap((_) => _buildHomeOverview());
   }
 
   Future<HomeOverview> _buildHomeOverview() async {
-    final groups = await watchAccountGroups(includeArchived: true).first;
-    final accounts = await watchFinancialAccounts(includeArchived: true).first;
+    final groups = await _watchAccountGroups(includeArchived: true).first;
+    final accounts = await _watchFinancialAccounts(includeArchived: true).first;
     final entries = await watchEntries().first;
     final pendingRows = await (_db.select(
       _db.pendingTransfers,
@@ -3653,8 +1661,8 @@ class LedgerRepository {
     required DateTime end,
     String? financialAccountId,
   }) {
-    final startDate = _dateOnly(start);
-    final endDate = _dateOnly(end);
+    final startDate = dateOnly(start);
+    final endDate = dateOnly(end);
 
     final query =
         _db.select(_db.postings).join([
@@ -3725,92 +1733,6 @@ class LedgerRepository {
     });
   }
 
-  /// Per-category totals within a date range (home-hub-capture: "this
-  /// calendar month's spent totals grouped by expense category and
-  /// received totals by income category") - same exclusions as
-  /// [watchSummary] (quarantined entries, migration-superseded entries,
-  /// non-income/expense account types), but grouped by category instead
-  /// of collapsed into two totals. A category with no postings in range
-  /// is simply absent, not returned as zero.
-  Stream<List<CategoryTotal>> watchCategoryTotals({
-    required DateTime start,
-    required DateTime end,
-  }) {
-    final startDate = _dateOnly(start);
-    final endDate = _dateOnly(end);
-
-    final query =
-        _db.select(_db.postings).join([
-          innerJoin(
-            _db.journalEntries,
-            _db.journalEntries.id.equalsExp(_db.postings.entryId),
-          ),
-          innerJoin(
-            _db.accounts,
-            _db.accounts.id.equalsExp(_db.postings.accountId),
-          ),
-          leftOuterJoin(
-            _db.entryVerificationCache,
-            _db.entryVerificationCache.entryId.equalsExp(_db.postings.entryId),
-          ),
-        ])..where(
-          _db.journalEntries.transactionDate.isBiggerOrEqualValue(startDate) &
-              _db.journalEntries.transactionDate.isSmallerOrEqualValue(endDate),
-        );
-
-    return query.watch().asyncMap((rows) async {
-      final supersededEntryIds = <String>{
-        for (final row in rows)
-          ?row.readTable(_db.journalEntries).migratedFromEntryId,
-      };
-
-      final totalsById = <String, ({String name, bool isIncome, int total})>{};
-      for (final row in rows) {
-        final entry = row.readTable(_db.journalEntries);
-        if (supersededEntryIds.contains(entry.id)) continue;
-
-        final verification = row.readTableOrNull(_db.entryVerificationCache);
-        if (verification != null && !verification.isVerified) continue;
-
-        final account = row.readTable(_db.accounts);
-        final posting = row.readTable(_db.postings);
-        int magnitude;
-        bool isIncome;
-        switch (account.type) {
-          case AccountType.income:
-            magnitude = -posting.amountMinor;
-            isIncome = true;
-          case AccountType.expense:
-            magnitude = posting.amountMinor;
-            isIncome = false;
-          case AccountType.asset:
-          case AccountType.liability:
-          case AccountType.equity:
-          case AccountType.clearing:
-          case AccountType.inventory:
-            continue;
-        }
-
-        final existing = totalsById[account.id];
-        totalsById[account.id] = (
-          name: account.name,
-          isIncome: isIncome,
-          total: (existing?.total ?? 0) + magnitude,
-        );
-      }
-
-      return [
-        for (final entry in totalsById.entries)
-          CategoryTotal(
-            categoryId: entry.key,
-            categoryName: entry.value.name,
-            isIncome: entry.value.isIncome,
-            totalMinor: entry.value.total,
-          ),
-      ];
-    });
-  }
-
   /// The append-only audit log of chain breaks, re-anchors, and key
   /// migrations, newest first.
   Stream<List<IntegrityEvent>> watchIntegrityEvents() {
@@ -3831,321 +1753,4 @@ class LedgerRepository {
           .toList(),
     );
   }
-
-  /// Encrypted keystore file export of the device's current signing key
-  /// (spec: "Optional keystore file export"). Passthrough to
-  /// [SigningKeyService] - the only place private key bytes are ever
-  /// touched.
-  Future<String> exportKeystoreFile({required String passphrase}) {
-    return _signingKeyService.exportKeystoreFile(passphrase: passphrase);
-  }
-
-  // ---------------------------------------------------------------------
-  // Payees and spending memory (payees-and-spending-memory design.md
-  // Decision 1). No FK/link column on journal_entries - a payee is matched
-  // against a typed description at query time, not stored per-entry.
-  // ---------------------------------------------------------------------
-
-  Stream<List<Payee>> watchPayees() {
-    final query = _db.select(_db.payees)
-      ..orderBy([(p) => OrderingTerm.asc(p.name)]);
-    return query.watch().map((rows) => rows.map(_toDomainPayee).toList());
-  }
-
-  Future<Payee> createPayee({
-    required String name,
-    String? defaultCategoryId,
-    String? defaultFinancialAccountId,
-  }) async {
-    final id = await _db
-        .into(_db.payees)
-        .insertReturning(
-          PayeesCompanion.insert(
-            name: name,
-            defaultCategoryId: Value(defaultCategoryId),
-            defaultFinancialAccountId: Value(defaultFinancialAccountId),
-            createdAt: DateTime.now(),
-          ),
-        );
-    return _toDomainPayee(id);
-  }
-
-  /// Links an existing payee whose normalized [name] matches, or creates
-  /// one, updating its default category to [defaultCategoryId] either way
-  /// (import-category-rules "Saving a rule offers to link a payee too"
-  /// scenario: saving a rule always applies the rule's category as the
-  /// linked payee's default, whether the payee already existed or not).
-  Future<Payee> findOrCreatePayeeByName({
-    required String name,
-    String? defaultCategoryId,
-  }) async {
-    final normalized = normalizeDescription(name);
-    final allPayees = await _db.select(_db.payees).get();
-    final existing = allPayees.cast<PayeeRow?>().firstWhere(
-      (p) => normalizeDescription(p!.name) == normalized,
-      orElse: () => null,
-    );
-    if (existing != null) {
-      if (defaultCategoryId != null) {
-        await (_db.update(
-          _db.payees,
-        )..where((p) => p.id.equals(existing.id))).write(
-          PayeesCompanion(defaultCategoryId: Value(defaultCategoryId)),
-        );
-      }
-      return _toDomainPayee(existing);
-    }
-    return createPayee(name: name, defaultCategoryId: defaultCategoryId);
-  }
-
-  Future<void> renamePayee({required String id, required String newName}) {
-    return (_db.update(_db.payees)..where((p) => p.id.equals(id))).write(
-      PayeesCompanion(name: Value(newName)),
-    );
-  }
-
-  Future<void> deletePayee(String id) async {
-    await (_db.delete(_db.payees)..where((p) => p.id.equals(id))).go();
-  }
-
-  /// Updates [payeeId]'s remembered defaults to whatever was just used -
-  /// called after a successful [recordTransaction] for a matched payee, so
-  /// the next entry for the same payee suggests the most recent choice
-  /// (design.md Decisions: defaults double as "last used").
-  Future<void> recordPayeeUsage({
-    required String payeeId,
-    required String categoryId,
-    required String financialAccountId,
-  }) {
-    return (_db.update(_db.payees)..where((p) => p.id.equals(payeeId))).write(
-      PayeesCompanion(
-        defaultCategoryId: Value(categoryId),
-        defaultFinancialAccountId: Value(financialAccountId),
-      ),
-    );
-  }
-
-  Payee _toDomainPayee(PayeeRow row) {
-    return Payee(
-      id: row.id,
-      name: row.name,
-      defaultCategoryId: row.defaultCategoryId,
-      defaultFinancialAccountId: row.defaultFinancialAccountId,
-    );
-  }
-
-  // ---------------------------------------------------------------------
-  // Recurring templates (recurring-templates design.md Decisions). No
-  // FK/link column on journal_entries - recording a due template just
-  // calls recordTransaction, same as a manual entry.
-  // ---------------------------------------------------------------------
-
-  Stream<List<RecurringTemplate>> watchRecurringTemplates() {
-    final query = _db.select(_db.recurringTemplates)
-      ..orderBy([(t) => OrderingTerm.asc(t.dayOfMonth)]);
-    return query.watch().map(
-      (rows) => rows.map(_toDomainRecurringTemplate).toList(),
-    );
-  }
-
-  /// Templates due today or overdue this month (see `isTemplateDue`),
-  /// joined with the account/category names Home needs to display them -
-  /// mirrors [watchHomeOverview]'s precedent of resolving names in the
-  /// repository layer, not the ViewModel.
-  Stream<List<DueRecurringTemplate>> watchDueRecurringTemplates() {
-    return watchRecurringTemplates().asyncMap((templates) async {
-      final today = DateTime.now();
-      final due = templates.where((t) => isTemplateDue(t, today)).toList();
-      if (due.isEmpty) return const <DueRecurringTemplate>[];
-
-      final accounts = await _db.select(_db.accounts).get();
-      final accountsById = {for (final a in accounts) a.id: a};
-      final groups = await _db.select(_db.accountGroups).get();
-      final currencyByGroupId = {for (final g in groups) g.id: g.currency};
-
-      return [
-        for (final template in due)
-          DueRecurringTemplate(
-            template: template,
-            financialAccountName:
-                accountsById[template.financialAccountId]?.name ??
-                'Unknown account',
-            categoryName:
-                accountsById[template.categoryId]?.name ?? 'Unknown category',
-            currency:
-                currencyByGroupId[accountsById[template.financialAccountId]
-                    ?.groupId] ??
-                'USD',
-          ),
-      ];
-    });
-  }
-
-  Future<RecurringTemplate> createRecurringTemplate({
-    required String name,
-    required TransactionDirection direction,
-    required String financialAccountId,
-    required String categoryId,
-    required int amountMinor,
-    required int dayOfMonth,
-  }) async {
-    _validateRecurringTemplateFields(
-      amountMinor: amountMinor,
-      dayOfMonth: dayOfMonth,
-    );
-    final row = await _db
-        .into(_db.recurringTemplates)
-        .insertReturning(
-          RecurringTemplatesCompanion.insert(
-            name: name,
-            direction: direction,
-            financialAccountId: financialAccountId,
-            categoryId: categoryId,
-            amountMinor: amountMinor,
-            dayOfMonth: dayOfMonth,
-            createdAt: DateTime.now(),
-          ),
-        );
-    return _toDomainRecurringTemplate(row);
-  }
-
-  Future<void> updateRecurringTemplate({
-    required String id,
-    required String name,
-    required TransactionDirection direction,
-    required String financialAccountId,
-    required String categoryId,
-    required int amountMinor,
-    required int dayOfMonth,
-  }) async {
-    _validateRecurringTemplateFields(
-      amountMinor: amountMinor,
-      dayOfMonth: dayOfMonth,
-    );
-    await (_db.update(
-      _db.recurringTemplates,
-    )..where((t) => t.id.equals(id))).write(
-      RecurringTemplatesCompanion(
-        name: Value(name),
-        direction: Value(direction),
-        financialAccountId: Value(financialAccountId),
-        categoryId: Value(categoryId),
-        amountMinor: Value(amountMinor),
-        dayOfMonth: Value(dayOfMonth),
-      ),
-    );
-  }
-
-  Future<void> deleteRecurringTemplate(String id) async {
-    await (_db.delete(
-      _db.recurringTemplates,
-    )..where((t) => t.id.equals(id))).go();
-  }
-
-  /// Posts [templateId]'s due transaction via [recordTransaction] - the
-  /// exact same path a manual entry takes - then stamps it recorded for
-  /// this calendar month so it stops being offered as due (spec:
-  /// "surface due templates for one-tap recording without auto-posting").
-  Future<String> recordDueTemplate(String templateId) async {
-    final row = await (_db.select(
-      _db.recurringTemplates,
-    )..where((t) => t.id.equals(templateId))).getSingle();
-    final template = _toDomainRecurringTemplate(row);
-    final now = DateTime.now();
-
-    return _db.transaction(() async {
-      final entryId = await recordTransaction(
-        amountMinor: template.amountMinor,
-        direction: template.direction,
-        categoryId: template.categoryId,
-        financialAccountId: template.financialAccountId,
-        transactionDate: now,
-        description: template.name,
-      );
-
-      await (_db.update(
-        _db.recurringTemplates,
-      )..where((t) => t.id.equals(templateId))).write(
-        RecurringTemplatesCompanion(
-          lastRecordedYearMonth: Value(yearMonthOf(now)),
-        ),
-      );
-      return entryId;
-    });
-  }
-
-  void _validateRecurringTemplateFields({
-    required int amountMinor,
-    required int dayOfMonth,
-  }) {
-    if (amountMinor <= 0) {
-      throw InvalidTransactionAmountException(
-        'Template amount must be positive and non-zero, got $amountMinor.',
-        code: AppErrorCode.templateAmountMustBePositive,
-      );
-    }
-    if (dayOfMonth < 1 || dayOfMonth > 31) {
-      throw ArgumentError.value(
-        dayOfMonth,
-        'dayOfMonth',
-        'must be between 1 and 31',
-      );
-    }
-  }
-
-  RecurringTemplate _toDomainRecurringTemplate(RecurringTemplateRow row) {
-    return RecurringTemplate(
-      id: row.id,
-      name: row.name,
-      direction: row.direction,
-      financialAccountId: row.financialAccountId,
-      categoryId: row.categoryId,
-      amountMinor: row.amountMinor,
-      dayOfMonth: row.dayOfMonth,
-      lastRecordedYearMonth: row.lastRecordedYearMonth,
-    );
-  }
-}
-
-/// Result of one [LedgerRepository.verifyChain] pass.
-class ChainVerificationResult {
-  const ChainVerificationResult({
-    required this.totalEntries,
-    required this.breakEntryId,
-    required this.breakReason,
-  });
-
-  final int totalEntries;
-  final String? breakEntryId;
-  final VerificationBreakReason? breakReason;
-
-  bool get isFullyVerified => breakEntryId == null;
-}
-
-/// Drift's `DateTimeColumn` stores values as whole-second unix timestamps
-/// by default, so a value hashed at write time with millisecond precision
-/// would never match what verifyChain recomputes after reading the same
-/// value back from the database. Truncating before hashing (and before
-/// storing) keeps the two in sync.
-DateTime _truncateToStoredPrecision(DateTime dateTime) {
-  final seconds = dateTime.millisecondsSinceEpoch ~/ 1000;
-  return DateTime.fromMillisecondsSinceEpoch(
-    seconds * 1000,
-    isUtc: dateTime.isUtc,
-  );
-}
-
-bool _bytesEqual(List<int> a, List<int> b) {
-  if (a.length != b.length) return false;
-  for (var i = 0; i < a.length; i++) {
-    if (a[i] != b[i]) return false;
-  }
-  return true;
-}
-
-String _dateOnly(DateTime date) {
-  final y = date.year.toString().padLeft(4, '0');
-  final m = date.month.toString().padLeft(2, '0');
-  final d = date.day.toString().padLeft(2, '0');
-  return '$y-$m-$d';
 }
