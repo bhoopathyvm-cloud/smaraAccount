@@ -12,5 +12,5 @@
 
 ## 3. Verify
 
-- [ ] 3.1 Projection unit tests cover balance sign, quarantine exclusion, split labels
-- [ ] 3.2 Register/export-related unit tests green; spot-check acceptance register search / core ledger on macOS
+- [x] 3.1 Projection unit tests cover balance sign, quarantine exclusion, split labels
+- [x] 3.2 Register/export-related unit tests green; spot-check acceptance register search / core ledger on macOS

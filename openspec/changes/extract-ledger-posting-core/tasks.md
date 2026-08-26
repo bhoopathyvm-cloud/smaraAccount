@@ -13,6 +13,6 @@
 
 ## 3. Verify
 
-- [ ] 3.1 `dart analyze` clean; unit suites for journal/integrity green
+- [x] 3.1 `dart analyze` clean; unit suites for journal/integrity green
 - [ ] 3.2 `tool/run_acceptance_tests.sh -d macos core_ledger` green
-- [ ] 3.3 Confirm no product-spec requirement files needed updating (behavior-preserving)
+- [x] 3.3 Confirm no product-spec requirement files needed updating (behavior-preserving)

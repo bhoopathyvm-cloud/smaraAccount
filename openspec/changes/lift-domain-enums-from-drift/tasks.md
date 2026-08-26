@@ -12,6 +12,6 @@
 
 ## 3. Verify
 
-- [ ] 3.1 Domain sources no longer import `lib/data/database/tables` for those enums
-- [ ] 3.2 Unit suites for ledger/accounts/integrity green
+- [x] 3.1 Domain sources no longer import `lib/data/database/tables` for those enums
+- [x] 3.2 Unit suites for ledger/accounts/integrity green
 - [x] 3.3 Note coordination with `extract-ledger-posting-core` if both touch the same files
