@@ -1,15 +1,9 @@
 import 'package:drift/drift.dart';
 
+import '../../../domain/models/verification_break_reason.dart';
 import 'journal_entries_table.dart';
 
-/// Why an entry failed verification (Golden Rule #5: no magic strings for
-/// fixed sets).
-enum VerificationBreakReason {
-  hashMismatch,
-  signatureInvalid,
-  chainLinkBroken,
-  excludedAfterBreak,
-}
+export '../../../domain/models/verification_break_reason.dart';
 
 /// Derived data, never part of the immutable truth: whether an entry
 /// currently verifies is a projection that can be recomputed and rebuilt

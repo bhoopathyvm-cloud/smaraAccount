@@ -11,7 +11,7 @@ import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
-import '../../../../domain/models/account_group.dart';
+import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/transaction_direction.dart';
 import '../../../core/money_formatter.dart';
@@ -66,10 +66,10 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _maybeFetchReferenceRate();
       notifyListeners();
     });
-    _groupsSubscription = _accountRepository
-        .watchAccountGroups(includeArchived: true)
-        .listen((groups) {
-          _groups = groups;
+    _currenciesSubscription = _accountRepository
+        .watchAccountCurrencies(includeArchived: true)
+        .listen((catalog) {
+          _currencies = catalog;
           _maybeFetchReferenceRate();
           notifyListeners();
         });
@@ -90,32 +90,21 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final ExchangeRateService _exchangeRateService;
   final SettingsRepository _settingsRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
-  late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
+  late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
   bool _isDisposed = false;
 
   List<Account> _accounts = const [];
   List<Account> get accounts => _accounts;
 
-  List<AccountGroup> _groups = const [];
+  AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
   List<Account> _expenseCategories = const [];
   List<Account> get expenseCategories => _expenseCategories;
 
   /// The ISO 4217 currency of [accountId]'s group, or null if either can't
   /// be resolved yet.
-  String? currencyFor(String? accountId) {
-    final account = _accounts
-        .where((a) => a.id == accountId)
-        .cast<Account?>()
-        .firstWhere((a) => a != null, orElse: () => null);
-    if (account?.groupId == null) return null;
-    return _groups
-        .where((g) => g.id == account!.groupId)
-        .cast<AccountGroup?>()
-        .firstWhere((g) => g != null, orElse: () => null)
-        ?.currency;
-  }
+  String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);
 
   String? _fromAccountId;
   String? get fromAccountId => _fromAccountId;
@@ -410,7 +399,7 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   void dispose() {
     _isDisposed = true;
     _accountsSubscription.cancel();
-    _groupsSubscription.cancel();
+    _currenciesSubscription.cancel();
     _categoriesSubscription.cancel();
     super.dispose();
   }

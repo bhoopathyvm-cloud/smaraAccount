@@ -1,6 +1,6 @@
-import '../../data/database/tables/instruments_table.dart' show InstrumentKind;
+import 'instrument_kind.dart';
 
-export '../../data/database/tables/instruments_table.dart' show InstrumentKind;
+export 'instrument_kind.dart';
 
 /// Domain-facing view of an instrument (stock, ETF, etc.).
 class Instrument {

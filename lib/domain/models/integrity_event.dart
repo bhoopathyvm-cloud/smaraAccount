@@ -1,8 +1,6 @@
-import '../../data/database/tables/integrity_events_table.dart'
-    show IntegrityEventType;
+import 'integrity_event_type.dart';
 
-export '../../data/database/tables/integrity_events_table.dart'
-    show IntegrityEventType;
+export 'integrity_event_type.dart';
 
 /// Domain-facing view of an `integrity_events` row - the append-only audit
 /// log of chain breaks, re-anchors, and key migrations (design.md).

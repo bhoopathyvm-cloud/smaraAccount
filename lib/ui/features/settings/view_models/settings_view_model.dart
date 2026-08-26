@@ -203,7 +203,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   /// twice - this method itself does not ask for confirmation.
   Future<void> enableAppLock(String pin) async {
     await _appLockService.setPin(pin);
-    await _settingsRepository.setAppLockEnabled(true);
+    await _appLockController.setLockEnabled(true);
     _isAppLockEnabled = true;
     notifyListeners();
   }
@@ -213,7 +213,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   /// live while "disabled".
   Future<void> disableAppLock() async {
     await _appLockService.clearPin();
-    await _settingsRepository.setAppLockEnabled(false);
+    await _appLockController.setLockEnabled(false);
     await _settingsRepository.setAppLockBiometricEnabled(false);
     _isAppLockEnabled = false;
     _isBiometricEnabled = false;
@@ -235,7 +235,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   Future<void> setAppLockTimeoutMinutes(int minutes) async {
     _appLockTimeoutMinutes = minutes;
     notifyListeners();
-    await _settingsRepository.setAppLockTimeoutMinutes(minutes);
+    await _appLockController.setTimeoutMinutes(minutes);
   }
 
   Future<void> setBiometricEnabled(bool value) async {

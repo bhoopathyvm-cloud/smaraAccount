@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'data/database/app_database.dart';
+import 'data/repositories/account_chart_reader.dart';
 import 'data/repositories/account_repository.dart';
 import 'data/repositories/category_repository.dart';
 import 'data/repositories/identity_repository.dart';
@@ -42,17 +43,28 @@ class SmaraAccountingApp extends StatelessWidget {
           create: (_) => AppDatabase(),
           dispose: (_, db) => db.close(),
         ),
-        ProxyProvider<AppDatabase, LedgerRepository>(
-          update: (_, db, _) => LedgerRepository(database: db),
+        ProxyProvider<AppDatabase, AccountChartReader>(
+          update: (_, db, _) => AccountChartReader(db),
         ),
-        ProxyProvider2<AppDatabase, LedgerRepository, AccountRepository>(
-          update: (_, db, ledgerRepository, _) => AccountRepository(
+        ProxyProvider2<AppDatabase, AccountChartReader, LedgerRepository>(
+          update: (_, db, chart, _) =>
+              LedgerRepository(database: db, chart: chart),
+        ),
+        ProxyProvider3<
+          AppDatabase,
+          LedgerRepository,
+          AccountChartReader,
+          AccountRepository
+        >(
+          update: (_, db, ledgerRepository, chart, _) => AccountRepository(
             database: db,
             ledgerRepository: ledgerRepository,
+            chart: chart,
           ),
         ),
-        ProxyProvider<AppDatabase, CategoryRepository>(
-          update: (_, db, _) => CategoryRepository(database: db),
+        ProxyProvider2<AppDatabase, AccountChartReader, CategoryRepository>(
+          update: (_, db, chart, _) =>
+              CategoryRepository(database: db, chart: chart),
         ),
         ProxyProvider<AppDatabase, PayeeRepository>(
           update: (_, db, _) => PayeeRepository(database: db),
@@ -69,11 +81,12 @@ class SmaraAccountingApp extends StatelessWidget {
             identityRepository: identityRepository,
           ),
         ),
-        ProxyProvider4<
+        ProxyProvider5<
           AppDatabase,
           LedgerRepository,
           AccountRepository,
           CategoryRepository,
+          AccountChartReader,
           InvestmentRepository
         >(
           update:
@@ -83,12 +96,14 @@ class SmaraAccountingApp extends StatelessWidget {
                 ledgerRepository,
                 accountRepository,
                 categoryRepository,
+                chart,
                 _,
               ) => InvestmentRepository(
                 database: db,
                 ledgerRepository: ledgerRepository,
                 accountRepository: accountRepository,
                 categoryRepository: categoryRepository,
+                chart: chart,
               ),
         ),
         ProxyProvider2<

@@ -9,11 +9,12 @@ import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
-import '../../../../domain/models/account_group.dart';
+import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/journal_entry.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../domain/register/register_projection.dart';
+import '../../../../domain/register/register_row.dart';
 import '../../../core/money_formatter.dart';
-import 'register_row.dart';
 
 /// Account-scoped register: counterpart labels for category / transfer /
 /// opening balance; running display balance for the viewed account.
@@ -29,11 +30,11 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
     _accountsSubscription = _accountRepository
         .watchFinancialAccounts(includeArchived: true)
         .listen(_onAccounts);
-    _groupsSubscription = _accountRepository
-        .watchAccountGroups(includeArchived: true)
-        .listen((groups) {
-          _groups = groups;
-          notifyListeners();
+    _currenciesSubscription = _accountRepository
+        .watchAccountCurrencies(includeArchived: true)
+        .listen((catalog) {
+          _currencies = catalog;
+          _recompute(_lastEntries);
         });
     if (initialAccountId != null) {
       _selectedAccountId = initialAccountId;
@@ -45,13 +46,13 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final AccountRepository _accountRepository;
   final CategoryRepository _categoryRepository;
   late final StreamSubscription<List<Account>> _accountsSubscription;
-  late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
+  late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
   StreamSubscription<List<JournalEntry>>? _entriesSubscription;
 
   List<Account> _accounts = const [];
   Map<String, Account> _accountsById = const {};
   Map<String, Account> _categoriesById = const {};
-  List<AccountGroup> _groups = const [];
+  AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
   String? _selectedAccountId;
   String? get selectedAccountId => _selectedAccountId;
@@ -161,15 +162,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
       .where((a) => !a.archived && a.id != _selectedAccountId)
       .toList();
 
-  String? currencyFor(String? accountId) {
-    final account = _accountsById[accountId];
-    if (account?.groupId == null) return null;
-    return _groups
-        .where((g) => g.id == account!.groupId)
-        .cast<AccountGroup?>()
-        .firstWhere((g) => g != null, orElse: () => null)
-        ?.currency;
-  }
+  String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);
 
   bool isCloseoutCrossCurrency(String? toAccountId) {
     final from = currencyFor(_selectedAccountId);
@@ -239,91 +232,24 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
     // router already forces that prompt before Register is reachable, so
     // this fallback is a harmless default for a window never actually seen.
     final rowCurrency = currencyFor(accountId) ?? 'USD';
-    var runningBalance = 0;
-    final rows = <RegisterRow>[];
-    for (final entry in entries) {
-      final ownPosting = entry.postings.firstWhere(
-        (p) => p.accountId == accountId,
-      );
-      // split-transactions: an entry can have more than one non-financial-
-      // account posting (one per category leg) - collect all of them, not
-      // just the first, so a split's row label reflects every category.
-      final others = entry.postings
-          .where((p) => p.accountId != accountId)
-          .toList();
-      final counterpartIds = others.isEmpty
-          ? [ownPosting.accountId]
-          : others.map((p) => p.accountId).toList();
-
-      final counterpartName = _counterpartLabel(counterpartIds);
-      final delta = LedgerRepository.displayBalanceDeltaFor(
-        accountType: account.type,
-        postingAmountMinor: ownPosting.amountMinor,
-      );
-
-      if (entry.isVerified && !entry.isSupersededByMigration) {
-        runningBalance += delta;
-      }
-
-      rows.add(
-        RegisterRow(
-          entryId: entry.id,
-          categoryName: counterpartName,
-          counterpartAccountIds: counterpartIds,
-          currency: rowCurrency,
-          // Sign relative to the viewed account's *display* balance, not
-          // the raw posting - for a liability, those are inverted (Option
-          // A: a purchase posts -amount raw but increases what's owed),
-          // and the row must agree with the running balance shown right
-          // next to it.
-          direction: delta >= 0
-              ? TransactionDirection.moneyIn
-              : TransactionDirection.moneyOut,
-          amountMinor: delta.abs(),
-          transactionDate: entry.transactionDate,
-          description: entry.description,
-          runningBalanceMinor: runningBalance,
-          isReversal: entry.reversesEntryId != null,
-          isVerified: entry.isVerified,
-          breakReason: entry.breakReason,
-          isSupersededByMigration: entry.isSupersededByMigration,
-        ),
-      );
-    }
-    // Balance accumulates oldest-to-newest above (the only order that math
-    // works in); the register itself displays newest first so a new entry
-    // and the current balance are visible without scrolling.
-    _rows = rows.reversed.toList();
-    notifyListeners();
-  }
-
-  /// [accountIds] is normally one id; more than one only for a
-  /// split-transactions entry, summarized as "first name +N more" rather
-  /// than silently showing only the first category (design.md Decision 3).
-  String _counterpartLabel(List<String> accountIds) {
-    final names = accountIds.map(_singleCounterpartLabel).toList();
-    if (names.length <= 1) {
-      return names.isEmpty
-          ? englishAppLocalizations.actionTransfer
-          : names.first;
-    }
-    return englishAppLocalizations.splitCounterpartMore(
-      names.first,
-      '${names.length - 1}',
+    final l10n = englishAppLocalizations;
+    _rows = projectRegisterRows(
+      entries: entries,
+      viewedAccountId: accountId,
+      viewedAccountType: account.type,
+      currency: rowCurrency,
+      accountsById: _accountsById,
+      categoriesById: _categoriesById,
+      openingBalanceAccountId: openingBalanceEquityAccountId,
+      labels: RegisterProjectionLabels(
+        openingBalance: l10n.openingBalance,
+        transferFallback: l10n.actionTransfer,
+        transferToName: l10n.transferToName,
+        splitCounterpartMore: (name, count) =>
+            l10n.splitCounterpartMore(name, '$count'),
+      ),
     );
-  }
-
-  String _singleCounterpartLabel(String accountId) {
-    if (accountId == openingBalanceEquityAccountId) {
-      return englishAppLocalizations.openingBalance;
-    }
-    final category = _categoriesById[accountId];
-    if (category != null) return category.name;
-    final other = _accountsById[accountId];
-    if (other != null) {
-      return englishAppLocalizations.transferToName(other.name);
-    }
-    return englishAppLocalizations.actionTransfer;
+    notifyListeners();
   }
 
   Future<void> reverseEntry(String entryId) =>
@@ -411,7 +337,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   @override
   void dispose() {
     _accountsSubscription.cancel();
-    _groupsSubscription.cancel();
+    _currenciesSubscription.cancel();
     _entriesSubscription?.cancel();
     super.dispose();
   }

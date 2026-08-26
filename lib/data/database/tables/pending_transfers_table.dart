@@ -1,19 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../domain/models/pending_transfer_kind.dart';
 import 'accounts_table.dart';
 import 'journal_entries_table.dart';
 
-/// Whether a pending item is a transfer between two financial accounts, or
-/// the account-currency leg of a foreign-currency income/expense
-/// transaction (multi-currency-support design.md Decision 4).
-enum PendingTransferKind { transfer, foreignTransaction }
-
-/// pending: the provisional entry has posted, awaiting settlement.
-/// settled: closed - either delivered to the destination, or returned to
-/// the source (with any shortfall posted as a fee), per design.md
-/// Decision 5.
-enum PendingTransferStatus { pending, settled }
+export '../../../domain/models/pending_transfer_kind.dart';
 
 /// Tracks the two-phase provisional/settled lifecycle for a cross-currency
 /// transfer or foreign-currency transaction whose final amount wasn't

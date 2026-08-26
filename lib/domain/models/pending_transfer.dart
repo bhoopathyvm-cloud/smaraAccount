@@ -1,8 +1,6 @@
-import '../../data/database/tables/pending_transfers_table.dart'
-    show PendingTransferKind, PendingTransferStatus;
+import 'pending_transfer_kind.dart';
 
-export '../../data/database/tables/pending_transfers_table.dart'
-    show PendingTransferKind, PendingTransferStatus;
+export 'pending_transfer_kind.dart';
 
 /// Domain-facing view of a `pending_transfers` row (multi-currency-support
 /// design.md Decision 4).

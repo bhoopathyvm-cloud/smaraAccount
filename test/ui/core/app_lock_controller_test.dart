@@ -26,6 +26,7 @@ void main() {
       settingsRepository: settingsRepository,
     );
     addTearDown(controller.dispose);
+    await controller.policy.ensureLoaded();
 
     expect(controller.isUnlocked, isFalse);
   });
@@ -35,6 +36,7 @@ void main() {
       settingsRepository: settingsRepository,
     );
     addTearDown(controller.dispose);
+    await controller.policy.ensureLoaded();
     var notifications = 0;
     controller.addListener(() => notifications++);
 
@@ -72,12 +74,12 @@ void main() {
         settingsRepository: settingsRepository,
       );
       addTearDown(controller.dispose);
+      await controller.policy.ensureLoaded();
       controller.markUnlocked();
       expect(controller.isUnlocked, isTrue);
 
       controller.didChangeAppLifecycleState(AppLifecycleState.paused);
       controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
-      await Future<void>.delayed(Duration.zero);
 
       // timeoutMinutes 0 means "immediately" - any backgrounding relocks.
       expect(controller.isUnlocked, isFalse);
@@ -91,11 +93,11 @@ void main() {
       settingsRepository: settingsRepository,
     );
     addTearDown(controller.dispose);
+    await controller.policy.ensureLoaded();
     controller.markUnlocked();
 
     controller.didChangeAppLifecycleState(AppLifecycleState.paused);
     controller.didChangeAppLifecycleState(AppLifecycleState.resumed);
-    await Future<void>.delayed(Duration.zero);
 
     expect(controller.isUnlocked, isTrue);
   });
