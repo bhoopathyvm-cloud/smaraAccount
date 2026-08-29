@@ -194,29 +194,26 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _selectedAccountId = (active.isNotEmpty ? active : accounts).first.id;
       _resubscribeEntries();
     }
-    unawaited(_loadCategoriesAndRecompute());
+    _categoryRepository
+        .watchCategories(includeArchived: true)
+        .first
+        .then(
+          (cats) {
+            if (_disposed) return;
+            _categoriesById = {for (final c in cats) c.id: c};
+            _recompute(_lastEntries);
+          },
+          onError: (Object error, StackTrace stackTrace) {
+            if (_disposed) return;
+            if (error is StateError) {
+              _categoriesById = const {};
+              _recompute(_lastEntries);
+              return;
+            }
+            Error.throwWithStackTrace(error, stackTrace);
+          },
+        );
     notifyListeners();
-  }
-
-  /// One-shot category read that yields an empty list when the stream
-  /// closes without emitting (database teardown / dispose race) instead
-  /// of throwing [StateError] from [Stream.first].
-  Future<List<Account>> _firstEmissionOrEmpty(
-    Stream<List<Account>> stream,
-  ) async {
-    await for (final value in stream.take(1)) {
-      return value;
-    }
-    return const [];
-  }
-
-  Future<void> _loadCategoriesAndRecompute() async {
-    final cats = await _firstEmissionOrEmpty(
-      _categoryRepository.watchCategories(includeArchived: true),
-    );
-    if (_disposed) return;
-    _categoriesById = {for (final c in cats) c.id: c};
-    _recompute(_lastEntries);
   }
 
   List<JournalEntry> _lastEntries = const [];
