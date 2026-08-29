@@ -138,6 +138,95 @@ void main() {
   });
 
   test(
+    'categories stream that emits normally enriches rows with category names',
+    () async {
+      when(
+        categoryRepository.watchCategories(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([income]));
+      when(repository.watchEntriesForAccount(any)).thenAnswer(
+        (_) => Stream.value([
+          testEntry(
+            id: 'e1',
+            transactionDate: DateTime(2026, 1, 1),
+            postings: const [
+              Posting(
+                id: 'p1',
+                entryId: 'e1',
+                accountId: 'asset-1',
+                amountMinor: 1000,
+                lineNumber: 1,
+              ),
+              Posting(
+                id: 'p2',
+                entryId: 'e1',
+                accountId: 'income-1',
+                amountMinor: -1000,
+                lineNumber: 2,
+              ),
+            ],
+          ),
+        ]),
+      );
+
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+      );
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
+
+      expect(viewModel.rows.single.categoryName, equals('Salary'));
+    },
+  );
+
+  test('disposing while the categories stream is still empty does not throw '
+      'or notify after dispose', () async {
+    final accountsController = StreamController<List<Account>>();
+    final categoriesController = StreamController<List<Account>>();
+    addTearDown(() async {
+      if (!accountsController.isClosed) await accountsController.close();
+      if (!categoriesController.isClosed) await categoriesController.close();
+    });
+    when(
+      accountRepository.watchFinancialAccounts(
+        includeArchived: anyNamed('includeArchived'),
+      ),
+    ).thenAnswer((_) => accountsController.stream);
+    when(
+      categoryRepository.watchCategories(
+        includeArchived: anyNamed('includeArchived'),
+      ),
+    ).thenAnswer((_) => categoriesController.stream);
+    when(
+      repository.watchEntriesForAccount(any),
+    ).thenAnswer((_) => Stream.value(const []));
+
+    final viewModel = RegisterViewModel(
+      ledgerRepository: repository,
+      accountRepository: accountRepository,
+      categoryRepository: categoryRepository,
+    );
+
+    var notifications = 0;
+    viewModel.addListener(() => notifications++);
+
+    accountsController.add([asset]);
+    await Future<void>.delayed(Duration.zero);
+    expect(viewModel.selectedAccountId, equals(asset.id));
+
+    final notificationsAtDispose = notifications;
+    viewModel.dispose();
+
+    await categoriesController.close();
+    await Future<void>.delayed(Duration.zero);
+
+    expect(notifications, equals(notificationsAtDispose));
+  });
+
+  test(
     'a quarantined entry is shown but excluded from the running balance',
     () async {
       when(

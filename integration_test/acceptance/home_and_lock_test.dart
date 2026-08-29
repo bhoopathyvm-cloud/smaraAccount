@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations_en.dart';
-import 'package:smara_accounting/main.dart';
 
 import 'support/acceptance_harness.dart';
 
@@ -121,10 +120,7 @@ void main() {
     // (AppLockController.markUnlocked is only ever called from a
     // successful unlock) - simulating a relaunch is what the router's
     // redirect guard catches and sends to /lock.
-    await tester.pumpWidget(const SizedBox.shrink());
-    await tester.pump();
-    await tester.pumpWidget(const SmaraAccountingApp());
-    await tester.pump();
+    await simulateRelaunch(tester);
     await pumpUntilFound(tester, find.text(l10n.lockScreenTitle));
     expect(find.text(l10n.lockScreenTitle), findsOneWidget);
 

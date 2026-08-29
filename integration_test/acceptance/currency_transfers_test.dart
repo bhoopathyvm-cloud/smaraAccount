@@ -196,16 +196,19 @@ Future<void> _setUpCrossCurrencyTransfer(
   );
   await enterTextReliably(
     tester,
-    () => find.byType(TextField).first,
+    () => inDialog(find.byType(TextField)).first,
     'Euro Group',
     () {
-      final field = find.byType(TextField).evaluate().first.widget as TextField;
+      final field =
+          inDialog(find.byType(TextField)).evaluate().first.widget as TextField;
       return field.controller?.text == 'Euro Group';
     },
   );
-  await tapReliably(tester, () => find.text('EUR'), () {
+  await tapReliably(tester, () => inDialog(find.text('EUR')), () {
     final chip =
-        find.widgetWithText(ChoiceChip, 'EUR').evaluate().single.widget
+        inDialog(
+              find.widgetWithText(ChoiceChip, 'EUR'),
+            ).evaluate().single.widget
             as ChoiceChip;
     return chip.selected;
   });
@@ -234,25 +237,32 @@ Future<void> _setUpCrossCurrencyTransfer(
   );
   await enterTextReliably(
     tester,
-    () => find.byType(TextField).first,
+    () => inDialog(find.byType(TextField)).first,
     'Euro Savings',
     () {
-      final field = find.byType(TextField).evaluate().first.widget as TextField;
+      final field =
+          inDialog(find.byType(TextField)).evaluate().first.widget as TextField;
       return field.controller?.text == 'Euro Savings';
     },
   );
   // The group picker defaults to the first asset group (a seeded
   // default), not the new one just created - must be selected
-  // explicitly.
+  // explicitly. Success checks are scoped to the dialog: on a tablet
+  // the Accounts list's "Euro Group" header stays visible behind it.
   await tapReliably(
     tester,
-    () => find.byType(DropdownButtonFormField<String>).last,
-    () => find.text('Euro Group').evaluate().isNotEmpty,
+    () => inDialog(find.byType(DropdownButtonFormField<String>)).last,
+    () => find
+        .descendant(of: dropdownMenu(), matching: find.text('Euro Group'))
+        .evaluate()
+        .isNotEmpty,
   );
   await tapReliably(
     tester,
-    () => find.text('Euro Group').last,
-    () => find.text('Euro Group').evaluate().length == 1,
+    () =>
+        find.descendant(of: dropdownMenu(), matching: find.text('Euro Group')),
+    () => inDialog(find.text('Euro Group')).evaluate().length == 1,
+    scrollIntoView: false,
   );
   // Same below-the-fold caveat as the group creation above.
   await tapReliably(
