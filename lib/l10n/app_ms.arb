@@ -85,6 +85,8 @@
   "settingsManageRecurring": "Urus templat berulang",
   "settingsRecurringBlurb": "Bil atau pendapatan yang berulang setiap bulan, seperti sewa atau gaji. Templat yang tiba masanya dipaparkan pada Laman utama untuk anda rekod dengan satu ketikan - tidak pernah direkod secara automatik.",
   "settingsAbout": "Perihal",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (kadar ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (sebut harga harian)",

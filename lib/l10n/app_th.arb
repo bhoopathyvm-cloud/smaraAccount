@@ -85,6 +85,8 @@
   "settingsManageRecurring": "จัดการแม่แบบรายการประจำ",
   "settingsRecurringBlurb": "ค่าใช้จ่ายหรือรายได้ที่เกิดซ้ำทุกเดือน เช่น ค่าเช่าหรือเงินเดือน แม่แบบที่ถึงกำหนดจะปรากฏในหน้าหลักให้คุณบันทึกด้วยการแตะเพียงครั้งเดียว - จะไม่ถูกบันทึกให้โดยอัตโนมัติ",
   "settingsAbout": "เกี่ยวกับ",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (อัตราจาก ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ราคารายวัน)",

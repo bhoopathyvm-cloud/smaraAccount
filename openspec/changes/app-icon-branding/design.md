@@ -40,4 +40,8 @@ This change's own implementation is blocked on having a real 1024×1024+ source 
 
 ## Open Questions
 
-- Who supplies the master icon, and what it should depict — a literal mark evoking "Smara" (remembrance/memory), a ledger/notebook motif, or something else. Blocks task 1 below until resolved.
+- Resolved during apply: the master icon is a navy ledger-page mark using
+  `AppColors.primary` (`#1A3A6B`), generated from
+  `assets/branding/app_icon.png` via `tool/branding/generate_app_icon.py`.
+  It evokes a remembered notebook page rather than a letterform, and stays
+  a simple silhouette at notification size.

@@ -1,8 +1,25 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+val keyPropertiesFile = rootProject.file("key.properties")
+val keyProperties = Properties()
+if (keyPropertiesFile.exists()) {
+    keyPropertiesFile.inputStream().use { keyProperties.load(it) }
+}
+
+// A key.properties that exists but is missing fields is treated the same as
+// no file at all: the release signingConfig is left unconfigured (so we never
+// call file(null) during the configuration phase and crash unrelated builds
+// like `flutter run`), and the whenReady guard below fails release builds with
+// a message naming what's missing.
+val requiredSigningKeys = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
+val missingSigningKeys = requiredSigningKeys.filter { keyProperties.getProperty(it).isNullOrBlank() }
+val hasReleaseSigningConfig = keyPropertiesFile.exists() && missingSigningKeys.isEmpty()
 
 android {
     namespace = "com.smaraaccounting.smara_accounting"
@@ -25,12 +42,50 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            if (hasReleaseSigningConfig) {
+                keyAlias = keyProperties.getProperty("keyAlias")
+                keyPassword = keyProperties.getProperty("keyPassword")
+                storeFile = file(keyProperties.getProperty("storeFile"))
+                storePassword = keyProperties.getProperty("storePassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
+    }
+}
+
+gradle.taskGraph.whenReady {
+    val assemblingRelease =
+        gradle.taskGraph.allTasks.any { task ->
+            val name = task.name
+            name.contains("Release", ignoreCase = true) &&
+                (
+                    name.startsWith("assemble") ||
+                        name.startsWith("bundle") ||
+                        name.startsWith("package")
+                )
+        }
+    if (assemblingRelease && !hasReleaseSigningConfig) {
+        val problem =
+            if (!keyPropertiesFile.exists()) {
+                "Missing android/key.properties."
+            } else {
+                "android/key.properties is incomplete (missing or blank: " +
+                    "${missingSigningKeys.joinToString(", ")})."
+            }
+        throw GradleException(
+            "$problem Release builds must be signed with the upload keystore " +
+                "named in that file, not the shared debug keystore. Copy " +
+                "android/key.properties.example, fill in the four fields, and " +
+                "keep both the properties file and the .jks/.keystore outside " +
+                "version control. See docs/release/android-upload-keystore.md.",
+        )
     }
 }
 

@@ -4,9 +4,9 @@
 
 ## 2. Entitlements
 
-- [ ] 2.1 Set `com.apple.security.app-sandbox` to `true` in `macos/Runner/Release.entitlements`
-- [ ] 2.2 Add `com.apple.security.keychain-access-groups` as an empty array
-- [ ] 2.3 Change `com.apple.security.files.user-selected.read-only` to `com.apple.security.files.user-selected.read-write`
+- [x] 2.1 Set `com.apple.security.app-sandbox` to `true` in `macos/Runner/Release.entitlements`
+- [x] 2.2 Add `com.apple.security.keychain-access-groups` as an empty array
+- [x] 2.3 Change `com.apple.security.files.user-selected.read-only` to `com.apple.security.files.user-selected.read-write`
 
 ## 3. Verify on a real sandboxed build
 
@@ -16,6 +16,8 @@
 - [ ] 3.4 App-lock Face ID/Touch ID unlock still works
 - [ ] 3.5 `tool/run_acceptance_tests.sh -d macos` green
 
+Blocked on task 1.1 (real Team ID). Entitlement XML is in place for Release.
+
 ## 4. Decide on DebugProfile.entitlements
 
-- [ ] 4.1 Resolve the Open Question in `design.md` once real signing is routine for local dev
+- [x] 4.1 Resolve the Open Question in `design.md` once real signing is routine for local dev — keep DebugProfile unsandboxed until a real Team is routine for `flutter run -d macos` (Decision 3)

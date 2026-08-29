@@ -274,6 +274,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingsAbout => 'Tentang';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get settingsPrivacyPolicyOpenFailed =>
+      'Could not open the privacy policy in a browser.';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (kurs ECB)';
 
   @override

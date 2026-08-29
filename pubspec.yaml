@@ -69,6 +69,7 @@ dev_dependencies:
   build_runner: ^2.15.1
   mockito: ^5.6.4
   test: ^1.31.0
+  flutter_launcher_icons: ^0.14.4
   shared_preferences_platform_interface: ^2.4.2
   url_launcher_platform_interface: ^2.3.2
   coverage: ^1.15.1
@@ -77,6 +78,14 @@ dev_dependencies:
   sqlite3: ^3.5.1
   file_picker_platform_interface: ^3.0.1
   cross_file: ^0.3.5+4
+
+dependency_overrides:
+  # flutter_launcher_icons (dev-only) caps cli_util at ^0.4.1, which would
+  # otherwise drag the whole graph back from 0.5.2 to 0.4.2. drift_dev's
+  # codegen shares cli_util and supports the full 0.4–0.5 range; 0.5.x only
+  # adds APIs to cli_logging, so flutter_launcher_icons still builds against
+  # it. Hold the modern version so the icon tool can't silently downgrade it.
+  cli_util: ^0.5.2
 
 
 # For information on the generic Dart part of this file, see the
@@ -121,3 +130,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# flutter_launcher_icons config (dev-only tooling, run manually with
+# `dart run flutter_launcher_icons` after tool/branding/generate_app_icon.py).
+# Its own top-level key after the flutter: section so the template comments
+# above stay attached to flutter:.
+flutter_launcher_icons:
+  android: true
+  ios: true
+  macos:
+    generate: true
+  image_path: assets/branding/app_icon.png
+  adaptive_icon_background: "#1A3A6B"
+  adaptive_icon_foreground: assets/branding/app_icon.png
+  remove_alpha_ios: true

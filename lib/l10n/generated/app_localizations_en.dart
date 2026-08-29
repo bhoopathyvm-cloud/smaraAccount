@@ -273,6 +273,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsAbout => 'About';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
+  String get settingsPrivacyPolicyOpenFailed =>
+      'Could not open the privacy policy in a browser.';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB rates)';
 
   @override

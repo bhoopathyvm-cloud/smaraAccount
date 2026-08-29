@@ -85,6 +85,8 @@
   "settingsManageRecurring": "Quản lý mẫu định kỳ",
   "settingsRecurringBlurb": "Hóa đơn hoặc thu nhập lặp lại hàng tháng, như tiền thuê nhà hay lương. Một mẫu đến hạn sẽ hiện trên Trang chủ để bạn ghi nhận chỉ với một chạm - không bao giờ tự động ghi sổ.",
   "settingsAbout": "Giới thiệu",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (tỷ giá ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (báo giá hàng ngày)",

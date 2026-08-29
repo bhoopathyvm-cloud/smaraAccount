@@ -2,10 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- See DebugProfile.entitlements - same reasoning applies here. -->
+	<!-- Mac App Store requires App Sandbox. Empty keychain-access-groups
+	     is sufficient for flutter_secure_storage's own Keychain items
+	     (no App Group / companion app). user-selected.read-write covers
+	     both OFX/CSV open dialogs and FilePicker.saveFile (CSV export,
+	     Save backup). network.client is required for the in-process
+	     https calls in lib/data/exchange_rate_service.dart and
+	     lib/data/instrument_quote_service.dart — without it the sandbox
+	     blocks every outbound connection in Release / Mac App Store
+	     builds. DebugProfile.entitlements stays unsandboxed until
+	     local runs use a real Apple Developer Team — see
+	     openspec/changes/macos-app-store-sandbox/design.md Decision 3. -->
 	<key>com.apple.security.app-sandbox</key>
-	<false/>
-	<key>com.apple.security.files.user-selected.read-only</key>
+	<true/>
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<key>com.apple.security.keychain-access-groups</key>
+	<array/>
+	<key>com.apple.security.files.user-selected.read-write</key>
 	<true/>
 </dict>
 </plist>

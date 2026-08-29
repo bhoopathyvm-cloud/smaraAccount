@@ -85,6 +85,8 @@
   "settingsManageRecurring": "बार-बार होने आळे टेम्पलेट प्रबंधन करो",
   "settingsRecurringBlurb": "बिल जां आमदन जेह्ड़े हर म्हीने दुहराए दन्दे न, जियां किराया जां तनखा। इक ड्यू टेम्पलेट होम पर दिक्खी सकदा ऐ तां तुसें इक टैप कन्नै दर्ज करी सकनी ओ - कदी अपने आप पोस्ट नेईं होंदा।",
   "settingsAbout": "बारे",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "फ्रैंकफर्टर (ECB दर)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "स्टूक (रोजाना भाव)",

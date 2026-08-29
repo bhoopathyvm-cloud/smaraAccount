@@ -85,6 +85,8 @@
   "settingsManageRecurring": "Wiederkehrende Vorlagen verwalten",
   "settingsRecurringBlurb": "Rechnungen oder Einnahmen, die sich monatlich wiederholen, wie Miete oder Gehalt. Eine fällige Vorlage erscheint auf der Startseite, um sie mit einem Tipp zu erfassen – wird nie automatisch gebucht.",
   "settingsAbout": "Über",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (EZB-Kurse)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (tägliche Kurse)",

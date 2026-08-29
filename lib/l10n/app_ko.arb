@@ -85,6 +85,8 @@
   "settingsManageRecurring": "정기 템플릿 관리",
   "settingsRecurringBlurb": "임대료나 급여처럼 매달 반복되는 청구서나 수입입니다. 예정된 템플릿은 홈 화면에 표시되어 탭 한 번으로 기록할 수 있으며, 자동으로 등록되지 않습니다.",
   "settingsAbout": "정보",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB 환율)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (일일 시세)",

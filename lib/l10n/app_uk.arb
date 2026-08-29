@@ -85,6 +85,8 @@
   "settingsManageRecurring": "Керувати регулярними шаблонами",
   "settingsRecurringBlurb": "Рахунки або дохід, що повторюються щомісяця, наприклад оренда чи зарплата. Шаблон із настанням терміну з''являється на Головній, щоб ви записали його одним дотиком — ніколи не проводиться автоматично.",
   "settingsAbout": "Про застосунок",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (курси ЄЦБ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (щоденні котирування)",

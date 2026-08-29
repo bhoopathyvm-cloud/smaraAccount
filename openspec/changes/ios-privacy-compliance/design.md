@@ -40,3 +40,18 @@ Apple's model is that each bundled SDK/plugin ships its *own* `PrivacyInfo.xcpri
 ## Open Questions
 
 - None outstanding — the audit itself will surface any remaining gaps as concrete findings, not open design questions.
+
+## Plugin privacy-manifest audit (apply)
+
+Checked the versions resolved by this repo's `pubspec.lock` for a bundled
+`PrivacyInfo.xcprivacy`. Findings:
+
+- `shared_preferences_foundation`, `file_picker_darwin`,
+  `flutter_secure_storage_darwin`, `local_auth_darwin`, and
+  `url_launcher_ios` ship privacy manifests.
+- `path_provider_foundation` and `sqlite3` / Drift's native layer do **not**.
+  The app target's `ios/Runner/PrivacyInfo.xcprivacy` therefore declares
+  file-timestamp access (`C617.1`) for the local ledger database (and
+  `path_provider`'s app-container paths), plus UserDefaults (`CA92.1`)
+  for Flutter/`shared_preferences` settings. No tracking; no collected
+  data types. That matches `privacy-policy-page`.

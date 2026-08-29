@@ -85,6 +85,8 @@
   "settingsManageRecurring": "पुनरावर्तिसाञ्चानां व्यवस्थापनम्",
   "settingsRecurringBlurb": "मासे मासे पुनरावर्तमानानि ऋणपत्राणि आयो वा, यथा भाटकं वेतनं वा। नियततिथौ साञ्चः गृहपृष्ठे दृश्यते, एकस्पर्शेन लेखनार्थम् — कदापि स्वयमेव न प्रविश्यते।",
   "settingsAbout": "विषये",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB मूल्यानि)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (दैनिकमूल्यानि)",

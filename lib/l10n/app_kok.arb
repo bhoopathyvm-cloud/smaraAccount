@@ -85,6 +85,8 @@
   "settingsManageRecurring": "नियमित टेम्प्लेट व्यवस्थापित करात",
   "settingsRecurringBlurb": "भाडें वा पगारावरी दर म्हयन्याक परतपी बिल वा उत्पन्न. देणें आशिल्लें टेम्प्लेट घरा पानार दिसता, एका टॅपान नोंद करपाक - कधींच आपसूंक नोंद जायना.",
   "settingsAbout": "विशीं",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB दर)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (दिसाळे भाव)",

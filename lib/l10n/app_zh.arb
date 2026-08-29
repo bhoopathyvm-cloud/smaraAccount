@@ -85,6 +85,8 @@
   "settingsManageRecurring": "管理定期模板",
   "settingsRecurringBlurb": "每月重复发生的账单或收入，例如房租或工资。到期的模板会显示在首页，供您一键记录——绝不会自动记账。",
   "settingsAbout": "关于",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter（欧洲央行汇率）",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq（每日报价）",

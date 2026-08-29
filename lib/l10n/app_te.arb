@@ -85,6 +85,8 @@
   "settingsManageRecurring": "పునరావృత టెంప్లేట్‌లను నిర్వహించు",
   "settingsRecurringBlurb": "అద్దె లేదా జీతం వంటి ప్రతి నెలా పునరావృతమయ్యే బిల్లులు లేదా ఆదాయం. గడువు ఉన్న టెంప్లేట్ మీరు ఒక ట్యాప్‌తో నమోదు చేయడానికి హోమ్‌లో కనిపిస్తుంది - ఎప్పుడూ స్వయంచాలకంగా పోస్ట్ చేయబడదు.",
   "settingsAbout": "గురించి",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB రేట్లు)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (రోజువారీ కోట్‌లు)",

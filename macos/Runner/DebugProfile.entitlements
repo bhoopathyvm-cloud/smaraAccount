@@ -2,13 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- App Sandbox off: flutter_secure_storage's Keychain writes need a
-	     keychain-access-groups entitlement whose $(AppIdentifierPrefix)
-	     only resolves under real Apple Developer code signing, which
-	     isn't configured for local runs (ad-hoc/"Sign to Run Locally").
-	     Revisit before any App Store submission - sandboxing is required
-	     there, at which point real signing + keychain-access-groups
-	     should replace this. -->
+	<!-- App Sandbox off for local debug/profile: flutter_secure_storage's
+	     Keychain writes need a keychain-access-groups entitlement whose
+	     $(AppIdentifierPrefix) only resolves under real Apple Developer
+	     code signing, which isn't configured for "Sign to Run Locally."
+	     Release.entitlements enables the sandbox for Mac App Store
+	     builds. Revisit aligning this file once a real Team is routine
+	     for local flutter run -d macos (macos-app-store-sandbox
+	     design.md Decision 3). -->
 	<key>com.apple.security.app-sandbox</key>
 	<false/>
 	<key>com.apple.security.cs.allow-jit</key>

@@ -85,6 +85,8 @@
   "settingsManageRecurring": "आवर्ती टेम्पलेट प्रबंधित करें",
   "settingsRecurringBlurb": "बिल या आय जो हर महीने दोहराते हैं, जैसे किराया या वेतन। एक देय टेम्पलेट होम पर तब दिखता है जब आप इसे एक टैप से दर्ज कर सकते हैं - यह कभी अपने आप पोस्ट नहीं होता।",
   "settingsAbout": "जानकारी",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "फ्रैंकफर्टर (ECB दरें)",
   "providerOpenErApi": "एक्सचेंजरेट-API (open.er-api.com)",
   "providerStooq": "स्टूक (दैनिक भाव)",

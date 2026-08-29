@@ -85,6 +85,8 @@
   "settingsManageRecurring": "પુનરાવર્તિત ટેમ્પલેટ સંચાલિત કરો",
   "settingsRecurringBlurb": "ભાડું અથવા પગાર જેવા બિલ કે આવક જે દર મહિને પુનરાવર્તિત થાય છે. બાકી ટેમ્પલેટ હોમ પર દેખાય છે જેથી તમે એક ટેપથી નોંધી શકો - તે ક્યારેય આપમેળે નોંધાતું નથી.",
   "settingsAbout": "વિશે",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB દરો)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (દૈનિક ભાવ)",
