@@ -273,6 +273,9 @@ class AppLocalizationsPa extends AppLocalizations {
   String get settingsAbout => 'ਬਾਰੇ';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB ਦਰਾਂ)';
 
   @override

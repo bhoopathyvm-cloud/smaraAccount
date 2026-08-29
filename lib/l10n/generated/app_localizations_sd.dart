@@ -274,6 +274,9 @@ class AppLocalizationsSd extends AppLocalizations {
   String get settingsAbout => 'باري ۾';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB شرحون)';
 
   @override

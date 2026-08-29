@@ -277,6 +277,9 @@ class AppLocalizationsRo extends AppLocalizations {
   String get settingsAbout => 'Despre';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (cursuri BCE)';
 
   @override

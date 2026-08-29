@@ -275,6 +275,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsAbout => 'О приложении';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (курсы ЕЦБ)';
 
   @override

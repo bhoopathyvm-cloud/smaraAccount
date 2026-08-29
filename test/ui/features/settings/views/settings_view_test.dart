@@ -313,4 +313,40 @@ void main() {
       expect(find.byType(DropdownButtonFormField<int>), findsOneWidget);
     },
   );
+
+  testWidgets('Privacy Policy in About opens the public policy URL', (
+    tester,
+  ) async {
+    Uri? launched;
+    final viewModel = SettingsViewModel(
+      settingsRepository: repository,
+      ledgerBackupRepository: ledgerBackupRepository,
+      appLockService: appLockService,
+      biometricAuthenticator: biometricAuthenticator,
+      appLockController: appLockController,
+      launchUrlFn: (uri) async {
+        launched = uri;
+        return true;
+      },
+    );
+    addTearDown(viewModel.dispose);
+    tester.view.physicalSize = const Size(800, 2400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    when(appLockController.isSnapshotHidingEnabled).thenReturn(false);
+    await tester.pumpWidget(
+      MaterialApp(home: SettingsView(viewModel: viewModel)),
+    );
+    await tester.pump();
+    while (viewModel.isLoading) {
+      await tester.pump();
+    }
+    await tester.pump();
+
+    await tapScrolled(tester, find.text('Privacy Policy'));
+    await tester.pump();
+
+    expect(launched, Uri.parse(kPrivacyPolicyUrl));
+  });
 }

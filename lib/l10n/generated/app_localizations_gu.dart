@@ -273,6 +273,9 @@ class AppLocalizationsGu extends AppLocalizations {
   String get settingsAbout => 'વિશે';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB દરો)';
 
   @override

@@ -85,6 +85,7 @@
   "settingsManageRecurring": "定期テンプレートを管理",
   "settingsRecurringBlurb": "家賃や給料のように毎月繰り返される支払いや収入です。期日が来たテンプレートはホーム画面に表示され、ワンタップで記録できます - 自動的に記帳されることはありません。",
   "settingsAbout": "このアプリについて",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter（ECBレート）",
   "providerOpenErApi": "ExchangeRate-API（open.er-api.com）",
   "providerStooq": "Stooq（日次相場）",

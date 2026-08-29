@@ -85,6 +85,7 @@
   "settingsManageRecurring": "Yinelenen şablonları yönet",
   "settingsRecurringBlurb": "Kira veya maaş gibi her ay tekrarlanan fatura veya gelirler. Vadesi gelen bir şablon, tek dokunuşla kaydetmeniz için Ana Sayfa''da görünür - asla otomatik olarak işlenmez.",
   "settingsAbout": "Hakkında",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (ECB kurları)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (günlük fiyatlar)",

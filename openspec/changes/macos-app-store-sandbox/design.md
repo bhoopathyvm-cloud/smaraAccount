@@ -53,4 +53,6 @@ Flipping `DebugProfile.entitlements` to sandboxed too would require every contri
 
 ## Open Questions
 
-- Whether `DebugProfile.entitlements` should be aligned with `Release.entitlements` once a real Apple Developer Team is available for local runs, or whether the two should permanently diverge (sandboxed release, unsandboxed local dev for convenience). Default to revisiting once the App Store submission itself is further along.
+- Resolved during apply: keep `DebugProfile.entitlements` unsandboxed
+  until a real Apple Developer Team is routine for local `flutter run -d
+  macos` (Decision 3). `Release.entitlements` is the store configuration.

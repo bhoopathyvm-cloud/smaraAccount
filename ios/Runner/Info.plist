@@ -49,6 +49,13 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Cryptography is used only for local ledger signing/verification
+	     and for hashing the app-lock PIN (PBKDF2). No proprietary
+	     algorithms; the app is not a cryptography product; crypto is not
+	     used to encrypt communications. This is Apple's standard
+	     authentication/integrity exemption. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<!-- app-lock: local_auth's Face ID unlock option (household-product-repositioning). -->
 	<key>NSFaceIDUsageDescription</key>
 	<string>Use Face ID to unlock Smara Account.</string>

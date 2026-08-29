@@ -275,6 +275,9 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settingsAbout => 'Perihal';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (kadar ECB)';
 
   @override

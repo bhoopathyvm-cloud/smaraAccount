@@ -85,6 +85,7 @@
   "settingsManageRecurring": "إدارة القوالب المتكررة",
   "settingsRecurringBlurb": "فواتير أو دخل يتكرر شهرياً، مثل الإيجار أو الراتب. يظهر القالب المستحق في الرئيسية لتسجيله بلمسة واحدة - لا يُرحّل تلقائياً أبداً.",
   "settingsAbout": "حول",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (أسعار البنك المركزي الأوروبي)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (أسعار يومية)",

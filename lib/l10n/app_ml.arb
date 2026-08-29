@@ -85,6 +85,7 @@
   "settingsManageRecurring": "ആവർത്തന ടെംപ്ലേറ്റുകൾ കൈകാര്യം ചെയ്യുക",
   "settingsRecurringBlurb": "വാടകയോ ശമ്പളമോ പോലെ പ്രതിമാസം ആവർത്തിക്കുന്ന ബില്ലുകളോ വരുമാനമോ. അടയ്ക്കേണ്ട ടെംപ്ലേറ്റ് ഹോമിൽ കാണിക്കും, ഒറ്റ ടാപ്പിൽ രേഖപ്പെടുത്താൻ - ഒരിക്കലും സ്വയമേവ പോസ്റ്റ് ചെയ്യില്ല.",
   "settingsAbout": "വിവരണം",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (ECB നിരക്കുകൾ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ദൈനംദിന ക്വോട്ടുകൾ)",

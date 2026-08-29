@@ -277,6 +277,9 @@ class AppLocalizationsHu extends AppLocalizations {
   String get settingsAbout => 'Névjegy';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (EKB árfolyamok)';
 
   @override

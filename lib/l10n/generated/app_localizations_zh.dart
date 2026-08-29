@@ -270,6 +270,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsAbout => '关于';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter（欧洲央行汇率）';
 
   @override

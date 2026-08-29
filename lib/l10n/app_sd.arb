@@ -85,6 +85,7 @@
   "settingsManageRecurring": "بار بار ٿيندڙ ٽيمپليٽون منظم ڪريو",
   "settingsRecurringBlurb": "بل يا آمدني جيڪا مهيني بمهينو بار بار ٿئي، جيئن ڪرايو يا پگهار. ڏنل ٽيمپليٽ گهر تي ڏيکاريل ٿئي ٿي ته جيئن توهان هڪ ٽيپ سان رڪارڊ ڪريو - ڪڏهن به خودڪار طور پوسٽ نه ٿيندي.",
   "settingsAbout": "باري ۾",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (ECB شرحون)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (روزاني قيمتون)",

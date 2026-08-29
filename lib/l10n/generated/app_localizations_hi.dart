@@ -274,6 +274,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get settingsAbout => 'जानकारी';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'फ्रैंकफर्टर (ECB दरें)';
 
   @override

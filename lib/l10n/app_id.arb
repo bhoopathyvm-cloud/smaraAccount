@@ -85,6 +85,7 @@
   "settingsManageRecurring": "Kelola templat berulang",
   "settingsRecurringBlurb": "Tagihan atau pemasukan yang berulang setiap bulan, seperti sewa atau gaji. Templat yang jatuh tempo muncul di Beranda untuk Anda catat dengan satu ketukan - tidak pernah diposting secara otomatis.",
   "settingsAbout": "Tentang",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (kurs ECB)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (kuotasi harian)",

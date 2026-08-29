@@ -274,6 +274,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingsAbout => 'Tentang';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (kurs ECB)';
 
   @override

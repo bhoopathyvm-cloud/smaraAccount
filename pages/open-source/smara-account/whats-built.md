@@ -62,3 +62,7 @@ This list reflects the specs under `openspec/specs/` as of when this
 page was last updated by hand — see the
 [repository](https://github.com/bhoopathyvm-cloud/smaraAccount/tree/main/openspec/specs)
 for the current, authoritative list.
+
+The [privacy policy](privacy-policy.md) is the public description of
+on-device storage and the two optional network lookups, kept in sync
+with the iOS privacy manifest.

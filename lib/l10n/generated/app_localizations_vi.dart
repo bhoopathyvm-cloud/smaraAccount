@@ -273,6 +273,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get settingsAbout => 'Giới thiệu';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (tỷ giá ECB)';
 
   @override

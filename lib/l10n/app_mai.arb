@@ -85,6 +85,7 @@
   "settingsManageRecurring": "आवर्ती टेम्पलेट प्रबंधित करू",
   "settingsRecurringBlurb": "मासिक रूप सँ दोहराएबला बिल वा आय, जेना किराया वा वेतन। देय टेम्पलेट घर पृष्ठ पर देखाइत अछि जकरा अहाँ एक टैप सँ दर्ज कऽ सकैत छी - कहियो स्वतः पोस्ट नहि होइत अछि।",
   "settingsAbout": "एहि विषय मे",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (ECB दर)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (दैनिक भाव)",

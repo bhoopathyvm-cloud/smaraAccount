@@ -273,6 +273,9 @@ class AppLocalizationsKok extends AppLocalizations {
   String get settingsAbout => 'विशीं';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB दर)';
 
   @override

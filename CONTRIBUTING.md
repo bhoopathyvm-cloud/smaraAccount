@@ -104,3 +104,11 @@ in short: behavior matches its spec scenario exactly, tests exist at every
 applicable tier (unit, widget, integration), `dart analyze` is clean, and
 nothing the change replaces (a widget, a Repository method, a dependency)
 is left behind unused.
+
+## Store release (human steps)
+
+Android upload signing and the first Play Console upload are documented in
+[`docs/release/android-upload-keystore.md`](docs/release/android-upload-keystore.md).
+Mac App Store sandboxing is on for **Release** entitlements; local
+`flutter run -d macos` stays unsandboxed until a real Apple Developer Team
+is configured in Xcode (Signing & Capabilities on the `Runner` target).

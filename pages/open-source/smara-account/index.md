@@ -88,6 +88,10 @@ flow, encrypted backup/restore and CSV export, an optional PIN/biometric
 app lock, and a fully localized interface in dozens of languages. See
 [What's built](whats-built.md) for the full, current list.
 
+The [privacy policy](privacy-policy.md) describes what stays on the
+device, the two optional network lookups, and how backups work — the
+same page linked from in-app Settings.
+
 ## Try It Or Contribute
 
 The project is open source. See [How it was built](how-it-was-built.md)

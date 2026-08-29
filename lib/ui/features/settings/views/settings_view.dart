@@ -285,6 +285,13 @@ class SettingsView extends StatelessWidget {
               Text(l10n.whyWeDontEdit, style: AppTypography.cardTitle),
               const SizedBox(height: AppSpacing.small),
               Text(l10n.whyWeDontEditBody, style: AppTypography.metadata),
+              const SizedBox(height: AppSpacing.medium),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n.settingsPrivacyPolicy),
+                trailing: const Icon(Icons.open_in_new),
+                onTap: viewModel.openPrivacyPolicy,
+              ),
             ],
           );
         },

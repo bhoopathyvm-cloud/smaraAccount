@@ -275,6 +275,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsAbout => 'Über';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (EZB-Kurse)';
 
   @override

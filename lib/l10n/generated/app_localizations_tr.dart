@@ -276,6 +276,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsAbout => 'Hakkında';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB kurları)';
 
   @override

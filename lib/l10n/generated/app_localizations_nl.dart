@@ -275,6 +275,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get settingsAbout => 'Over';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB-koersen)';
 
   @override

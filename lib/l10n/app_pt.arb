@@ -85,6 +85,7 @@
   "settingsManageRecurring": "Gerir modelos recorrentes",
   "settingsRecurringBlurb": "Contas ou receitas que se repetem mensalmente, como a renda ou o salário. Um modelo com vencimento aparece no Início para o registar com um toque - nunca é lançado automaticamente.",
   "settingsAbout": "Acerca",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (taxas do BCE)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (cotações diárias)",

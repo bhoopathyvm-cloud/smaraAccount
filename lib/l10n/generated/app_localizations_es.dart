@@ -277,6 +277,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsAbout => 'Acerca de';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (tasas del BCE)';
 
   @override

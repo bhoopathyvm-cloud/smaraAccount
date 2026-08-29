@@ -13,6 +13,7 @@ nav:
           - What's Built: open-source/smara-account/whats-built.md
           - Architecture: open-source/smara-account/architecture.md
           - How It Was Built: open-source/smara-account/how-it-was-built.md
+          - Privacy Policy: open-source/smara-account/privacy-policy.md
 
 theme:
   name: material

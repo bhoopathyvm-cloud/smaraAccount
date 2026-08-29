@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../data/repositories/ledger_backup_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
@@ -10,6 +11,10 @@ import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/quote_provider.dart';
 import '../../../../domain/models/research_tool.dart';
 import '../../../core/app_lock_controller.dart';
+
+/// Public privacy policy — the same URL used for store listings.
+const kPrivacyPolicyUrl =
+    'https://bhoopathy.com/open-source/smara-account/privacy-policy/';
 
 /// The app's Settings surface: the reference exchange-rate lookup's
 /// enable/disable toggle and predefined-provider selection (design.md
@@ -24,12 +29,16 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required BiometricAuthenticator biometricAuthenticator,
     required AppLockController appLockController,
     LocaleController? localeController,
+    Future<bool> Function(Uri url)? launchUrlFn,
   }) : _settingsRepository = settingsRepository,
        _ledgerBackupRepository = ledgerBackupRepository,
        _appLockService = appLockService,
        _biometricAuthenticator = biometricAuthenticator,
        _appLockController = appLockController,
-       localeController = localeController {
+       localeController = localeController,
+       _launchUrl =
+           launchUrlFn ??
+           ((uri) => launchUrl(uri, mode: LaunchMode.externalApplication)) {
     _load();
   }
 
@@ -39,6 +48,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final BiometricAuthenticator _biometricAuthenticator;
   final AppLockController _appLockController;
   final LocaleController? localeController;
+  final Future<bool> Function(Uri url) _launchUrl;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -262,5 +272,10 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   Future<void> setSnapshotHidingEnabled(bool value) async {
     await _appLockController.setSnapshotHidingEnabled(value);
     notifyListeners();
+  }
+
+  /// Opens the public privacy policy in the device browser.
+  Future<void> openPrivacyPolicy() async {
+    await _launchUrl(Uri.parse(kPrivacyPolicyUrl));
   }
 }

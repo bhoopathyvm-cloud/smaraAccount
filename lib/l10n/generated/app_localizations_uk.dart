@@ -277,6 +277,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get settingsAbout => 'Про застосунок';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (курси ЄЦБ)';
 
   @override

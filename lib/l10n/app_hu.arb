@@ -85,6 +85,7 @@
   "settingsManageRecurring": "Ismétlődő sablonok kezelése",
   "settingsRecurringBlurb": "Havonta ismétlődő számlák vagy bevételek, például lakbér vagy fizetés. Egy esedékes sablon megjelenik a Kezdőlapon, hogy egy koppintással rögzíthesse - soha nem kerül automatikusan könyvelésre.",
   "settingsAbout": "Névjegy",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (EKB árfolyamok)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (napi árfolyamok)",

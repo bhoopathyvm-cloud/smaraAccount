@@ -273,6 +273,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsAbout => 'حول';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter =>
       'Frankfurter (أسعار البنك المركزي الأوروبي)';
 

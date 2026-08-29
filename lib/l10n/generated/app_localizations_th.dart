@@ -273,6 +273,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get settingsAbout => 'เกี่ยวกับ';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (อัตราจาก ECB)';
 
   @override

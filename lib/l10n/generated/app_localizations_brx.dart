@@ -273,6 +273,9 @@ class AppLocalizationsBrx extends AppLocalizations {
   String get settingsAbout => 'बारे';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'फ्रैंकफर्टार (ECB रेट)';
 
   @override

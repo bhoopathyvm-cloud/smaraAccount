@@ -274,6 +274,9 @@ class AppLocalizationsTa extends AppLocalizations {
   String get settingsAbout => 'பற்றி';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB விகிதங்கள்)';
 
   @override

@@ -273,6 +273,9 @@ class AppLocalizationsSat extends AppLocalizations {
   String get settingsAbout => 'ᱵᱟᱵᱚᱛ';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB ᱨᱮᱴ)';
 
   @override

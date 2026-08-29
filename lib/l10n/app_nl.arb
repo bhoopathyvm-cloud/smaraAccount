@@ -85,6 +85,7 @@
   "settingsManageRecurring": "Terugkerende sjablonen beheren",
   "settingsRecurringBlurb": "Rekeningen of inkomsten die maandelijks terugkeren, zoals huur of salaris. Een vervallen sjabloon verschijnt op Home zodat je het met één tik kunt registreren - nooit automatisch geboekt.",
   "settingsAbout": "Over",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (ECB-koersen)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (dagelijkse koersen)",

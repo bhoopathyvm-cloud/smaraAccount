@@ -275,6 +275,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsAbout => 'کے بارے میں';
 
   @override
+  String get settingsPrivacyPolicy => 'Privacy Policy';
+
+  @override
   String get providerFrankfurter => 'Frankfurter (ECB شرحیں)';
 
   @override

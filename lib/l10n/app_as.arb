@@ -85,6 +85,7 @@
   "settingsManageRecurring": "পুনৰাবৃত্তিমূলক টেম্পলেট পৰিচালনা কৰক",
   "settingsRecurringBlurb": "বিল বা আয় যি মাহেকীয়াভাৱে পুনৰাবৃত্তি হয়, যেনে ভাৰা বা দৰমহা। এটা বাকী থকা টেম্পলেট গৃহ পৃষ্ঠাত দেখা যায় এটা টিপতে লিপিবদ্ধ কৰিবলৈ - কেতিয়াও স্বয়ংক্ৰিয়ভাৱে দাখিল কৰা নহয়।",
   "settingsAbout": "বিষয়ে",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (ECB হাৰ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (দৈনিক ক''ট)",

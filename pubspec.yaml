@@ -69,6 +69,7 @@ dev_dependencies:
   build_runner: ^2.15.1
   mockito: ^5.6.4
   test: ^1.31.0
+  flutter_launcher_icons: ^0.14.4
   shared_preferences_platform_interface: ^2.4.2
   url_launcher_platform_interface: ^2.3.2
   coverage: ^1.15.1
@@ -90,6 +91,16 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  macos:
+    generate: true
+  image_path: assets/branding/app_icon.png
+  adaptive_icon_background: "#1A3A6B"
+  adaptive_icon_foreground: assets/branding/app_icon.png
+  remove_alpha_ios: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:

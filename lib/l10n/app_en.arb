@@ -85,6 +85,7 @@
   "settingsManageRecurring": "Manage recurring templates",
   "settingsRecurringBlurb": "Bills or income that repeat monthly, like rent or a paycheck. A due template shows up on Home for you to record with one tap - never posted automatically.",
   "settingsAbout": "About",
+  "settingsPrivacyPolicy": "Privacy Policy",
   "providerFrankfurter": "Frankfurter (ECB rates)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (daily quotes)",
