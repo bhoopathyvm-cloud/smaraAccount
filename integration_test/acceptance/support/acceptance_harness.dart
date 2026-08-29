@@ -83,6 +83,32 @@ Future<void> resetToFreshDevice([WidgetTester? tester]) async {
   await SharedPreferencesAsync().clear();
 }
 
+/// Scopes [inner] to the currently open [AlertDialog] so a still-visible
+/// list behind a tablet dialog cannot inflate a `find.text` match count.
+Finder inDialog(Finder inner) =>
+    find.descendant(of: find.byType(AlertDialog), matching: inner);
+
+/// Drain in-flight navigation (including go_router platform-channel
+/// redirects), unmount the tree, and pump a fresh [SmaraAccountingApp]
+/// against the same on-disk database and keychain.
+Future<void> simulateRelaunch(WidgetTester tester) async {
+  try {
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 100),
+      EnginePhase.sendSemanticsUpdate,
+      const Duration(seconds: 5),
+    );
+  } on FlutterError {
+    for (var i = 0; i < 20; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+  }
+  await tester.pumpWidget(const SizedBox.shrink());
+  await tester.pump();
+  await tester.pumpWidget(const SmaraAccountingApp());
+  await tester.pump();
+}
+
 Future<void> _deleteDatabaseDirectory() async {
   final dir = await getApplicationSupportDirectory();
   Object? lastError;

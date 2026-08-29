@@ -33,6 +33,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
     _currenciesSubscription = _accountRepository
         .watchAccountCurrencies(includeArchived: true)
         .listen((catalog) {
+          if (_disposed) return;
           _currencies = catalog;
           _recompute(_lastEntries);
         });
@@ -48,6 +49,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
   StreamSubscription<List<JournalEntry>>? _entriesSubscription;
+  bool _disposed = false;
 
   List<Account> _accounts = const [];
   Map<String, Account> _accountsById = const {};
@@ -184,6 +186,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   void _onAccounts(List<Account> accounts) {
+    if (_disposed) return;
     _accounts = accounts;
     _accountsById = {for (final a in accounts) a.id: a};
     if (_selectedAccountId == null && accounts.isNotEmpty) {
@@ -191,13 +194,29 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _selectedAccountId = (active.isNotEmpty ? active : accounts).first.id;
       _resubscribeEntries();
     }
-    _categoryRepository.watchCategories(includeArchived: true).first.then((
-      cats,
-    ) {
-      _categoriesById = {for (final c in cats) c.id: c};
-      _recompute(_lastEntries);
-    });
+    unawaited(_loadCategoriesAndRecompute());
     notifyListeners();
+  }
+
+  /// One-shot category read that yields an empty list when the stream
+  /// closes without emitting (database teardown / dispose race) instead
+  /// of throwing [StateError] from [Stream.first].
+  Future<List<Account>> _firstEmissionOrEmpty(
+    Stream<List<Account>> stream,
+  ) async {
+    await for (final value in stream.take(1)) {
+      return value;
+    }
+    return const [];
+  }
+
+  Future<void> _loadCategoriesAndRecompute() async {
+    final cats = await _firstEmissionOrEmpty(
+      _categoryRepository.watchCategories(includeArchived: true),
+    );
+    if (_disposed) return;
+    _categoriesById = {for (final c in cats) c.id: c};
+    _recompute(_lastEntries);
   }
 
   List<JournalEntry> _lastEntries = const [];
@@ -209,12 +228,14 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
     _entriesSubscription = _ledgerRepository.watchEntriesForAccount(id).listen((
       entries,
     ) {
+      if (_disposed) return;
       _lastEntries = entries;
       _recompute(entries);
     });
   }
 
   void _recompute(List<JournalEntry> entries) {
+    if (_disposed) return;
     final accountId = _selectedAccountId;
     if (accountId == null) {
       _rows = const [];
@@ -297,12 +318,15 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
         description: description,
         destinationAmountMinor: destinationAmountMinor,
       );
+      if (_disposed) return true;
       notifyListeners();
       return true;
     } on AccountGroupException catch (error) {
+      if (_disposed) return false;
       setFailure(error);
       return false;
     } on InvalidTransferException catch (error) {
+      if (_disposed) return false;
       setFailure(error);
       return false;
     }
@@ -326,16 +350,25 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
         start: start,
         end: end,
       );
+      if (_disposed) return csv;
       notifyListeners();
       return csv;
     } on AccountGroupException catch (error) {
+      if (_disposed) return null;
       setFailure(error);
       return null;
     }
   }
 
   @override
+  void notifyListeners() {
+    if (_disposed) return;
+    super.notifyListeners();
+  }
+
+  @override
   void dispose() {
+    _disposed = true;
     _accountsSubscription.cancel();
     _currenciesSubscription.cancel();
     _entriesSubscription?.cancel();
