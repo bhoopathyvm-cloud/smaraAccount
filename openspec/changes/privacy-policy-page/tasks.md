@@ -12,6 +12,6 @@
 
 ## 3. Verify
 
-- [ ] 3.1 `mkdocs build --strict` passes with the new page and links — CI `pages.yml` runs this; MkDocs was not installable in this agent (no pip/venv)
+- [x] 3.1 `mkdocs build --strict` passes with the new page and links — verified locally (`mkdocs-material==9.7.7` per `requirements.txt`, `mkdocs 1.6.1`); build succeeds with exit 0, no `--strict` failures. Also enforced in CI by `pages.yml`.
 - [x] 3.2 Widget test: tapping the Settings row calls the injected opener with the expected URL (matching how the research-tool link is tested)
 - [x] 3.3 Cross-check the page's content against `ios-privacy-compliance`'s manifest/export-compliance declarations for consistency
