@@ -57,38 +57,50 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
         .listen((accounts) {
           _account = accounts.where((a) => a.id == accountId).firstOrNull;
           notifyListeners();
-        });
+        }, onError: _ignoreError);
     _holdingsSub = _investmentRepository
         .watchHoldingsForAccount(accountId)
         .listen((holdings) async {
+          if (_disposed) return;
           _holdings = holdings;
-          _cashMinor = await _ledgerRepository.displayBalanceMinor(accountId);
+          // A value emitted just before teardown can resume here after the
+          // Drift connection has closed (view disposal, or the acceptance
+          // harness's per-test device reset). Swallow that teardown-race
+          // error; a genuine error while still alive is rethrown.
+          try {
+            _cashMinor = await _ledgerRepository.displayBalanceMinor(accountId);
+          } catch (error, stackTrace) {
+            if (_disposed) return;
+            Error.throwWithStackTrace(error, stackTrace);
+          }
+          if (_disposed) return;
           notifyListeners();
           await _refreshQuotes();
-        });
+        }, onError: _ignoreError);
     _instrumentsSub = _investmentRepository.watchInstruments().listen((
       instruments,
     ) {
       _instruments = instruments;
       notifyListeners();
-    });
+    }, onError: _ignoreError);
     _heldInstrumentsSub = _investmentRepository
         .watchInstrumentsHeldInAccount(accountId)
         .listen((instruments) {
           _heldInstruments = instruments;
           notifyListeners();
-        });
+        }, onError: _ignoreError);
     _categoriesSub = _categoryRepository.watchCategories().listen((categories) {
       _categories = categories;
       notifyListeners();
-    });
+    }, onError: _ignoreError);
     _currenciesSub = _accountRepository
         .watchAccountCurrencies(includeArchived: true)
         .listen((catalog) {
           _currencies = catalog;
           notifyListeners();
-        });
+        }, onError: _ignoreError);
     _settingsRepository.isMarketPriceFetchEnabled().then((enabled) {
+      if (_disposed) return;
       _quotesEnabled = enabled;
       notifyListeners();
     });
@@ -114,6 +126,16 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   late final StreamSubscription<List<Account>> _categoriesSub;
   late final StreamSubscription<AccountCurrencyCatalog> _currenciesSub;
   Timer? _quoteTimer;
+  bool _disposed = false;
+
+  // A torn-down view model has nothing to do with a repository-stream error
+  // (e.g. the Drift connection closing under an in-flight query) except not
+  // crash the zone with an unhandled async error. While still alive, a genuine
+  // stream error must surface, so it is rethrown.
+  void _ignoreError(Object error, [StackTrace? stackTrace]) {
+    if (_disposed) return;
+    Error.throwWithStackTrace(error, stackTrace ?? StackTrace.current);
+  }
 
   Account? _account;
   Account? get account => _account;
@@ -156,8 +178,13 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   bool get isArchived => _account?.archived ?? false;
 
-  Future<void> _refreshQuotes() {
-    return _quoteRefresh.refresh(_instruments);
+  Future<void> _refreshQuotes() async {
+    try {
+      await _quoteRefresh.refresh(_instruments);
+    } catch (error, stackTrace) {
+      if (_disposed) return;
+      Error.throwWithStackTrace(error, stackTrace);
+    }
   }
 
   Future<bool> _run(Future<void> Function() action) async {
@@ -301,6 +328,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   @override
   void dispose() {
+    _disposed = true;
     _quoteTimer?.cancel();
     _accountsSub.cancel();
     _holdingsSub.cancel();
