@@ -23,7 +23,10 @@ val hasReleaseSigningConfig = keyPropertiesFile.exists() && missingSigningKeys.i
 
 android {
     namespace = "com.smaraaccounting.smara_accounting"
-    compileSdk = flutter.compileSdkVersion
+    // flutter.compileSdkVersion is 36 in Flutter 3.47; flutter_secure_storage
+    // 11 compiles against 37 and its AAR metadata forces every consumer to do
+    // the same. Pin explicitly until the Flutter SDK default catches up.
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
