@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "بل یا آمدنی جو ماہانہ دہرائی جاتی ہے، جیسے کرایہ یا تنخواہ۔ واجب الادا ٹیمپلیٹ ہوم پر ظاہر ہوتا ہے تاکہ آپ ایک ٹیپ سے ریکارڈ کر سکیں - کبھی خودکار طور پر پوسٹ نہیں ہوتا۔",
   "settingsAbout": "کے بارے میں",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB شرحیں)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (روزانہ کی قیمتیں)",

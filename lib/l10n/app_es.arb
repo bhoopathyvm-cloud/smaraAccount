@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "Facturas o ingresos que se repiten cada mes, como el alquiler o una nómina. Una plantilla pendiente aparece en Inicio para que la registres con un toque - nunca se registra automáticamente.",
   "settingsAbout": "Acerca de",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (tasas del BCE)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (cotizaciones diarias)",

@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "ਬਿੱਲ ਜਾਂ ਆਮਦਨ ਜੋ ਹਰ ਮਹੀਨੇ ਦੁਹਰਾਈ ਜਾਂਦੀ ਹੈ, ਜਿਵੇਂ ਕਿਰਾਇਆ ਜਾਂ ਤਨਖਾਹ। ਬਕਾਇਆ ਟੈਂਪਲੇਟ ਘਰ ਪੰਨੇ ਉੱਤੇ ਦਿਖਾਈ ਦਿੰਦਾ ਹੈ ਤਾਂ ਜੋ ਤੁਸੀਂ ਇੱਕ ਟੈਪ ਨਾਲ ਰਿਕਾਰਡ ਕਰ ਸਕੋ - ਇਹ ਕਦੇ ਵੀ ਆਪਣੇ-ਆਪ ਪੋਸਟ ਨਹੀਂ ਹੁੰਦਾ।",
   "settingsAbout": "ਬਾਰੇ",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB ਦਰਾਂ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ਰੋਜ਼ਾਨਾ ਕੀਮਤਾਂ)",

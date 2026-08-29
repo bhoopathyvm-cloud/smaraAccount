@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "ᱚᱠᱟ ᱵᱤᱞ ᱥᱮ ᱟᱭ ᱫᱚᱦᱲᱟ ᱪᱟᱸᱫᱚ ᱨᱮ ᱦᱩᱭᱩᱜᱼᱟ, ᱡᱮᱞᱠᱟ ᱵᱷᱟᱰᱟ ᱥᱮ ᱛᱚᱱᱚᱜ᱾ ᱡᱟᱦᱟᱸ ᱴᱮᱢᱯᱞᱮᱴ ᱚᱠᱛᱚ ᱦᱩᱭᱩᱜᱼᱟ, ᱚᱱᱟ ᱚᱲᱟᱜ ᱨᱮ ᱩᱫᱩᱜᱼᱟ ᱢᱤᱫ ᱴᱚᱠᱚᱸ ᱚᱞ ᱞᱟᱹᱜᱤᱫ — ᱟᱡᱮ ᱟᱡᱮ ᱵᱟᱝ ᱚᱞᱚᱜᱼᱟ᱾",
   "settingsAbout": "ᱵᱟᱵᱚᱛ",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB ᱨᱮᱴ)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ᱚᱠᱛᱚ ᱚᱠᱛᱚ ᱫᱟᱢ)",

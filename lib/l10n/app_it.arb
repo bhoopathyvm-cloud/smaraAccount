@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "Bollette o entrate che si ripetono mensilmente, come l''affitto o uno stipendio. Un modello in scadenza compare nella schermata Home per essere registrato con un tocco - non viene mai pubblicato automaticamente.",
   "settingsAbout": "Informazioni",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (tassi BCE)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (quotazioni giornaliere)",

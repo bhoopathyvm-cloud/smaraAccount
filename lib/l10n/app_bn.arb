@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "বিল বা আয় যা মাসিকভাবে পুনরাবৃত্তি হয়, যেমন ভাড়া বা বেতন। একটি বকেয়া টেমপ্লেট হোম-এ দেখা যায় এক ট্যাপে রেকর্ড করার জন্য - কখনও স্বয়ংক্রিয়ভাবে পোস্ট করা হয় না।",
   "settingsAbout": "সম্পর্কে",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB হার)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (দৈনিক কোট)",

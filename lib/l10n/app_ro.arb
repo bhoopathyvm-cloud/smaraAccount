@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "Facturi sau venituri care se repetă lunar, cum ar fi chiria sau salariul. Un șablon scadent apare pe ecranul Acasă pentru a-l înregistra dintr-o atingere - nu este niciodată înregistrat automat.",
   "settingsAbout": "Despre",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (cursuri BCE)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (cotații zilnice)",

@@ -290,12 +290,20 @@ class SettingsView extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n.settingsPrivacyPolicy),
                 trailing: const Icon(Icons.open_in_new),
-                onTap: viewModel.openPrivacyPolicy,
+                onTap: () => _openPrivacyPolicy(context),
               ),
             ],
           );
         },
       ),
+    );
+  }
+
+  Future<void> _openPrivacyPolicy(BuildContext context) async {
+    final opened = await viewModel.openPrivacyPolicy();
+    if (opened || !context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10nOf(context).settingsPrivacyPolicyOpenFailed)),
     );
   }
 

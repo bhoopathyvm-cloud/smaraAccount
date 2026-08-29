@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "ମାସିକ ପୁନରାବୃତ୍ତ ହେଉଥିବା ବିଲ୍ କିମ୍ବା ଆୟ, ଯେମିତି ଭଡ଼ା କିମ୍ବା ଦରମା। ଏକ ଦେୟ ଟେମ୍ପଲେଟ୍ ହୋମ୍‌ରେ ଦେଖାଯାଏ ଯାହା ଆପଣ ଗୋଟିଏ ଟାପ୍‌ରେ ରେକର୍ଡ କରିପାରିବେ - ଏହା କେବେ ବି ସ୍ୱୟଂଚାଳିତ ଭାବେ ପୋଷ୍ଟ ହୁଏ ନାହିଁ।",
   "settingsAbout": "ବିଷୟରେ",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB ହାର)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ଦୈନିକ ମୂଲ୍ୟ)",

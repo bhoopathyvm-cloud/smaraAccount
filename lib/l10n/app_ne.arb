@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "भाडा वा तलबजस्तो महिनैपिच्छे दोहोरिने बिल वा आम्दानी। तिर्नुपर्ने टेम्प्लेट गृह पृष्ठमा एक ट्यापमा रेकर्ड गर्न देखिन्छ - कहिल्यै स्वतः पोस्ट हुँदैन।",
   "settingsAbout": "बारेमा",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB दर)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (दैनिक मूल्य)",

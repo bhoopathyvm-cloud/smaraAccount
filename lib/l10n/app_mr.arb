@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "भाडे किंवा पगारासारखे दर महिन्याला पुनरावृत्ती होणारे बिल किंवा उत्पन्न. देय टेम्पलेट मुख्यपृष्ठावर एका टॅपने नोंदवण्यासाठी दिसते - कधीही आपोआप नोंदवले जात नाही.",
   "settingsAbout": "बद्दल",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB दर)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (दैनिक भाव)",

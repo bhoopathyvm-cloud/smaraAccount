@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "ಬಾಡಿಗೆ ಅಥವಾ ಸಂಬಳದಂತೆ ಪ್ರತಿ ತಿಂಗಳು ಪುನರಾವರ್ತನೆಯಾಗುವ ಬಿಲ್‌ಗಳು ಅಥವಾ ಆದಾಯ. ಬಾಕಿ ಇರುವ ಟೆಂಪ್ಲೇಟ್ ಮುಖಪುಟದಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ, ಒಂದೇ ಟ್ಯಾಪ್‌ನಲ್ಲಿ ದಾಖಲಿಸಲು - ಇದನ್ನು ಎಂದಿಗೂ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪೋಸ್ಟ್ ಮಾಡಲಾಗುವುದಿಲ್ಲ.",
   "settingsAbout": "ಬಗ್ಗೆ",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB ದರಗಳು)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (ದೈನಂದಿನ ದರಗಳು)",

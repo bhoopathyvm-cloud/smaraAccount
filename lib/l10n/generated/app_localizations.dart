@@ -696,6 +696,12 @@ abstract class AppLocalizations {
   /// **'Privacy Policy'**
   String get settingsPrivacyPolicy;
 
+  /// No description provided for @settingsPrivacyPolicyOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the privacy policy in a browser.'**
+  String get settingsPrivacyPolicyOpenFailed;
+
   /// No description provided for @providerFrankfurter.
   ///
   /// In en, this message translates to:

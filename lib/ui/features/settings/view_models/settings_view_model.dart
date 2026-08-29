@@ -274,8 +274,14 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     notifyListeners();
   }
 
-  /// Opens the public privacy policy in the device browser.
-  Future<void> openPrivacyPolicy() async {
-    await _launchUrl(Uri.parse(kPrivacyPolicyUrl));
+  /// Opens the public privacy policy in the device browser. Returns false
+  /// when the platform has no handler for the URL or the launch throws -
+  /// the caller is expected to tell the user rather than fail silently.
+  Future<bool> openPrivacyPolicy() async {
+    try {
+      return await _launchUrl(Uri.parse(kPrivacyPolicyUrl));
+    } catch (_) {
+      return false;
+    }
   }
 }

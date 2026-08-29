@@ -86,6 +86,7 @@
   "settingsRecurringBlurb": "வாடகை அல்லது சம்பளம் போன்று மாதந்தோறும் மீண்டும் வரும் பில்கள் அல்லது வருமானம். நிலுவையிலுள்ள வார்ப்புரு ஒரு தட்டலில் பதிவு செய்ய முகப்பில் காட்டப்படும் - தானாகப் பதிவு செய்யப்படாது.",
   "settingsAbout": "பற்றி",
   "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsPrivacyPolicyOpenFailed": "Could not open the privacy policy in a browser.",
   "providerFrankfurter": "Frankfurter (ECB விகிதங்கள்)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (தினசரி விலைகள்)",
