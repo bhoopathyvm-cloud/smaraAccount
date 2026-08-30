@@ -22,7 +22,11 @@
   steps, etc.) are still open is *partially* implemented, not implemented.
   For those, leave the change active and report the outstanding tasks so they
   stay tracked. Never silently check a box you did not actually satisfy just
-  to make a change archivable.
+  to make a change archivable. A CI check enforces this mechanically —
+  `tool/check_archived_changes_complete.sh` (run by
+  `.github/workflows/openspec-archive-guard.yml`) fails a PR that moves a
+  change into `openspec/changes/archive/` while its `tasks.md` still has a
+  `- [ ]` or `- [~]`; the local `tool/git-hooks/pre-push` hook mirrors it.
 
 ## Agent skills
 
