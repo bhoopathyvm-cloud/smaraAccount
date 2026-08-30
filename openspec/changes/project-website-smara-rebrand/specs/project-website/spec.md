@@ -1,16 +1,16 @@
 ## MODIFIED Requirements
 
 ### Requirement: Public Site Has Personal Home and Open Source Sections
-The repository SHALL contain a static website under `pages/` whose home page tells the Smara brand story — what the name means and why the work exists — in visitor-facing terms. The home page SHALL consist of clearly separated top-level (H2) sections and SHALL be structured so an additional section (for a later project) can be added without reworking the existing sections; the home page SHALL NOT be the Smara Account project's own landing page. A dedicated "About" page SHALL introduce the author, his background, and his software interests, and SHALL be reachable from the top-level navigation. The top-level navigation SHALL expose Home, Open Source, and About. The Open Source section SHALL list public projects, with Smara Account as the first project and room for future projects.
+The repository SHALL contain a static website under `pages/` whose home page introduces Smara, starting with what the name means, in visitor-facing terms. The home page SHALL use top-level (H2) sections and SHALL be structured so further sections (a mission statement, a later project) can be added without reworking the existing section; the home page SHALL NOT be the Smara Account project's own landing page. A dedicated "About" page SHALL introduce the author, his background, and his software interests, and SHALL be reachable from the top-level navigation. The top-level navigation SHALL expose Home, Open Source, and About. The Open Source section SHALL list public projects, with Smara Account as the first project and room for future projects.
 
-#### Scenario: Home page tells the Smara brand story
+#### Scenario: Home page introduces Smara by its name
 - **WHEN** a visitor opens the site's home page
-- **THEN** it explains, in separated headed sections, what "Smara" means and why the work exists
+- **THEN** it explains, in a headed section, what "Smara" means
 - **AND** it is not the Smara Account project's landing page
 
-#### Scenario: Home page is extensible for a later project section
-- **WHEN** a later change adds a section introducing another project to the home page
-- **THEN** it can be added as a new top-level section without editing the existing "name" and "why" sections
+#### Scenario: Home page is extensible for later sections
+- **WHEN** a later change adds a section (a mission statement, or an introduction to another project) to the home page
+- **THEN** it can be added as a new top-level section without editing the existing "The Name" section
 
 #### Scenario: About page introduces the author
 - **WHEN** a visitor opens the About page

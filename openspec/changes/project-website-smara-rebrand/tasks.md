@@ -1,8 +1,8 @@
 ## 1. Landing page + About page
 
 - [x] 1.1 Add `pages/about.md` containing the current `pages/index.md` body (village near Tiruppur, radio, textile→CS, Switzerland, bank; Interests; Open Source pointer), H1 `# About`; trim the "This site is where I collect…" line to a plain link to Open Source
-- [x] 1.2 Replace `pages/index.md` with `# Smara` and exactly two H2 sections — `## The Name` and `## Why We Built This` — using the relayed brand-story copy verbatim (etymology stated as-is, not embellished)
-- [x] 1.3 Append the reserved HTML comment after the two sections marking the seam for a future SmaraAI section; add no heading or placeholder text for it
+- [x] 1.2 Replace `pages/index.md` with `# Smara` and a single H2 section — `## The Name` — using the relayed etymology copy verbatim (stated as-is, not embellished). The "Why We Built This" / care-worker mission copy is held back (not public yet), not included.
+- [x] 1.3 Append the reserved HTML comment after "The Name" marking the seam for the held-back mission copy and a future SmaraAI section; add no heading or placeholder text for it
 
 ## 2. Site config
 
@@ -20,7 +20,7 @@
 ## 4. Build check
 
 - [x] 4.1 `pip install -r requirements.txt && mkdocs build --strict` passes locally (no broken internal links after moving the bio to `about.md`)
-- [x] 4.2 Serve locally (`mkdocs serve`) and confirm: Home shows the two brand-story sections; About shows the bio and is in the nav; Open Source → Smara Account pages still render
+- [x] 4.2 Serve locally (`mkdocs serve`) and confirm: Home shows `# Smara` + the "The Name" section; About shows the bio and is in the nav; Open Source → Smara Account pages still render
 
 ## 5. Spec
 

@@ -16,14 +16,13 @@ brand story.
   `mkdocs.yml` `site_url`, the `pages.yml` workflow comment, the Smara
   Account privacy-policy page, and the `project-website` spec's purpose
   text. `mkdocs.yml` `site_name` changes from `Bhoopathy` to `Smara`.
-- **New landing page** (`pages/index.md`) becomes the Smara brand story,
-  with exactly two H2 sections — **"The Name"** (the Sanskrit *smara* /
-  *smṛti* = remembrance etymology, presented as-is) and **"Why We Built
-  This"** (closing the gap between doing the work and the paperwork that
-  proves it, starting with care workers). The page keeps a clean H2
-  boundary and a reserved HTML comment so a third section (SmaraAI) can be
-  slotted in later without touching these two. **No placeholder content
-  for that third section now.**
+- **New landing page** (`pages/index.md`) opens with `# Smara` and a
+  single H2 section — **"The Name"** (the Sanskrit *smara* / *smṛti* =
+  remembrance etymology, presented as-is). The mission copy ("Why We Built
+  This", the care-worker framing) is **deliberately held back — not yet
+  public** — and a reserved HTML comment marks where it, and a later
+  SmaraAI project section, slot in without reworking "The Name". **No
+  placeholder content for the held-back sections now.**
 - **New "About the author" page** carries the current biographical home-
   page content (village near Tiruppur, radio, textile-to-CS, Switzerland,
   writing software at a Swiss bank, interests) essentially unchanged, and
@@ -41,15 +40,15 @@ brand story.
 ### Modified Capabilities
 
 - `project-website`: the site is served from `smara-ai.ch`, not
-  `bhoopathy.com`; the landing page tells the Smara brand story (two
-  headed sections, extensible for a later SmaraAI section) instead of
-  introducing the author; the author biography moves to a dedicated
+  `bhoopathy.com`; the landing page introduces Smara by its name (one
+  headed section, extensible for later mission / project sections) instead
+  of introducing the author; the author biography moves to a dedicated
   "About" page reachable from the top-level navigation; the custom-domain
   requirement's `CNAME` target changes accordingly.
 
 ## Impact
 
-- `pages/index.md` (rewritten to the brand story)
+- `pages/index.md` (rewritten: `# Smara` + "The Name" only)
 - `pages/about.md` (new — the relocated biography)
 - `pages/CNAME` (`bhoopathy.com` → `smara-ai.ch`)
 - `mkdocs.yml` (`site_name`, `site_url`, `nav` gains About)

@@ -25,14 +25,16 @@ tradition) is factually sound and stated plainly.
 
 **Goals**
 - New domain everywhere it is named, in one change.
-- Landing page = the Smara brand story; author bio preserved on its own
-  page and still one click away.
-- Landing page structured so a future SmaraAI section drops in without
-  editing "The Name" / "Why We Built This".
+- Landing page introduces Smara by its name; author bio preserved on its
+  own page and still one click away.
+- Landing page structured so held-back sections (the mission copy, a
+  future SmaraAI section) drop in later without editing "The Name".
 - `mkdocs build --strict` stays green (CI runs it).
 
 **Non-Goals**
-- Writing or stubbing the future SmaraAI section — only leave the seam.
+- Publishing the mission copy ("Why We Built This" / the care-worker
+  framing) or a SmaraAI section now — held back deliberately; only leave
+  the seam.
 - Rewriting the Smara Account project pages (Overview, What's Built,
   Architecture, How It Was Built) beyond the single "personal site"
   sentence.
@@ -43,7 +45,7 @@ tradition) is factually sound and stated plainly.
 
 ## Decisions
 
-### 1. Landing page: exactly two H2s now, a reserved comment for later
+### 1. Landing page: one H2 now ("The Name"), a reserved comment for later
 
 `pages/index.md` becomes:
 
@@ -53,18 +55,17 @@ tradition) is factually sound and stated plainly.
 ## The Name
 <the relayed "smara / smṛti = remembrance" paragraph, as written>
 
-## Why We Built This
-<the relayed "everyone gets one life / close the admin gap, care workers
-first" paragraphs, as written>
-
-<!-- Reserved for a future section introducing the SmaraAI project
-     (private repo). Keep the H2 structure above so a new "## …" section
-     slots in without reworking "The Name" / "Why We Built This". -->
+<!-- Reserved for later sections (the "why we built this" mission copy,
+     and a future SmaraAI project introduction). Keep the H2 structure
+     so a new "## …" section slots in without reworking "The Name". -->
 ```
 
-No `## SmaraAI` heading, no "coming soon" text — an empty heading would
-render in the page and the nav-less Material TOC. The HTML comment is the
-seam; a later change adds the third H2 above the comment.
+The mission copy ("Why We Built This" — everyone gets one life / close the
+admin gap / care workers first) was drafted but the user is **not making
+it public yet**, so it is left out entirely rather than stubbed. No
+`## …` heading, no "coming soon" text — an empty heading would render in
+the page and the Material TOC. The HTML comment is the seam; a later
+change adds the next H2 above it.
 
 ### 2. Author bio → `pages/about.md`, added to top-level nav
 
@@ -109,13 +110,13 @@ normative text — updated as a task).
 
 ## Risks / Trade-offs
 
-- **[Risk]** The landing page's "Why We Built This" pitches care-worker
-  documentation, but the only project the site links is Smara Account
-  (personal/household tamper-evident accounting). A visitor may expect a
-  care product and find an accounting app. → **Mitigation / note:** this
-  is the user's deliberate framing (Smara as an umbrella; care work is the
-  forthcoming SmaraAI direction). Surfaced here so it is a conscious
-  choice; the Open Source section still describes Smara Account plainly.
+- **[Note]** The drafted "Why We Built This" copy pitched care-worker
+  documentation, which would have sat oddly next to the site's only linked
+  project (Smara Account, personal/household tamper-evident accounting).
+  The user chose to hold that copy back for now, so the landing page is
+  just the etymology and the mismatch does not arise yet; when the mission
+  copy (and the SmaraAI section) are published, the umbrella framing
+  should be revisited alongside them.
 - **[Risk]** Inbound links and search results point at `bhoopathy.com`. →
   **Mitigation:** a redirect is an external human step in tasks; the
   content itself is domain-agnostic apart from the named references fixed
@@ -127,8 +128,8 @@ normative text — updated as a task).
 ## Migration Plan
 
 1. Add `pages/about.md` with the current `pages/index.md` body.
-2. Replace `pages/index.md` with the two-section brand story + reserved
-   comment.
+2. Replace `pages/index.md` with `# Smara` + the "The Name" section +
+   reserved comment.
 3. `mkdocs.yml`: `site_name: Smara`, `site_url: https://smara-ai.ch`, add
    About to `nav`.
 4. `pages/CNAME` → `smara-ai.ch`.
