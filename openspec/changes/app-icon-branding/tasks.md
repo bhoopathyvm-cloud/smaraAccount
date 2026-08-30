@@ -12,5 +12,5 @@
 
 - [ ] 3.1 Clean build on iOS Simulator: home-screen icon shows the new artwork
 - [ ] 3.2 Clean build on macOS: Dock/Finder icon shows the new artwork
-- [x] 3.3 Clean build on Android emulator: launcher icon shows the new artwork — verified in this agent on an API-36 `medium_tablet` emulator; the freshly built debug APK launches showing the navy ledger-page mark (not the Flutter default). iOS Simulator (3.1) and macOS (3.2) remain unverified here — no macOS host.
+- [ ] 3.3 Clean build on Android emulator: launcher icon shows the new artwork
 - [x] 3.4 Spot-check legibility at the smallest generated size per platform (e.g. iOS notification-size icon) — `assets/branding/app_icon_20.png` and iOS `Icon-App-20x20@1x.png` still read as a page on navy, not the Flutter mark
