@@ -7,11 +7,11 @@ memory, and recollection. That meaning fits this project: Smara Account is
 about helping a person remember financial history clearly, without old
 records quietly changing behind their back.
 
-The name also links the project back to this personal site. My own story
-started far from software, in a farming village where memory, trust, and
-spoken records mattered. Smara Account takes that simple idea of
-remembering what happened and gives it a modern software shape: local
-books, signed history, and corrections that keep the original visible.
+The idea comes from a background where memory, trust, and spoken records
+mattered — see [About](../../about.md). Smara Account takes that simple
+idea of remembering what happened and gives it a modern software shape:
+local books, signed history, and corrections that keep the original
+visible.
 
 A local-first, tamper-evident double-entry ledger. No server, no cloud,
 no data leaving your device.

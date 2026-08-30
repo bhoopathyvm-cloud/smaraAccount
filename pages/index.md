@@ -1,28 +1,33 @@
-# Bhoopathy
+# Smara
 
-I am a software engineer from an agricultural family in a small Indian
-village near Tiruppur. For much of my childhood, radio was the only
-entertainment at home; I did not see a television until I was about 25.
-Life was still full: friends, wells used for farm water, tractors in the
-fields, cows, bullocks, and other farm animals that often felt like real
-companions.
+## The Name
 
-After school, my family looked toward Tiruppur's textile industry, but I
-missed textile engineering admission and found a new computer science
-course almost by accident. That was the first time I heard the word
-"computer." I stayed with it, studied computer applications, found my
-first job in Coimbatore, and came to Switzerland in 1999. Since then I
-have worked across different fields and levels, and I now write software
-at one of Switzerland's largest banks.
+Smara comes from Sanskrit — *smara* (स्मर), from the root *smṛ*, to
+remember. It's the same root behind *smṛti*, one of the two great streams
+of classical Indian textual tradition: knowledge kept alive not by
+decree, but by being remembered and carried forward, person to person.
 
-## Interests
+That's the whole job here, too. A resident's preferences. The medication
+given an hour ago. The small change in mood that matters more than any
+chart. And in Swiss long-term care, memory is also money — a minute of
+care that's never written down is a minute a home can't bill for. Smara
+exists so that what's remembered actually gets written down: accurately,
+in the moment, without the writing stealing the time it took to do the
+remembering.
 
-I like building practical software with clear behavior, durable records,
-and simple explanations. This site is where I collect personal notes and
-open source projects, starting with [Smara Account](open-source/smara-account/).
+## Why We Built This
 
-## Open Source
+Everyone gets one life. Too much of it, for too many people, goes to the
+paperwork standing between doing the work and being allowed to have done
+it.
 
-[Open source projects](open-source/) is the home for public work. Smara
-Account is my first open source repository; more projects may follow as
-they become useful enough to share.
+Smara started from that reason: using AI and fast, modern software
+development to close that gap for one very concrete group first — care
+workers, buried in documentation instead of caring — because the
+underlying problem is universal, and everyone touched by it benefits from
+closing it. Less time lost to admin, more of your one life spent on what
+you actually set out to do.
+
+<!-- Reserved for a future section introducing the SmaraAI project (private repo,
+     to be added here once ready) — keep this page's H2 structure so a new section
+     slots in cleanly without reworking "The Name" / "Why We Built This" above. -->
