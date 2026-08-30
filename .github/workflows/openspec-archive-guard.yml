@@ -1,0 +1,31 @@
+name: OpenSpec Archive Guard
+
+# Enforces the "only archive fully-complete changes" rule mechanically: a
+# change newly moved into openspec/changes/archive/ must have every task in
+# its tasks.md checked ([x]). Scoped to changes archived in this PR, so
+# historical archives are never re-checked. See CLAUDE.md.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "openspec/changes/archive/**"
+
+permissions:
+  contents: read
+
+jobs:
+  archive-complete:
+    name: Newly-archived changes are complete
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Ensure base branch is available
+        run: git fetch --no-tags --depth=1 origin "${{ github.base_ref }}"
+
+      - name: Check newly-archived changes have no incomplete tasks
+        run: tool/check_archived_changes_complete.sh "origin/${{ github.base_ref }}"

@@ -1,0 +1,13 @@
+#!/bin/sh
+# Blocks pushing a newly-archived OpenSpec change whose tasks.md is still
+# incomplete. Best-effort local mirror of the CI "OpenSpec Archive Guard".
+# Installed via: git config core.hooksPath tool/git-hooks
+#
+# Compares against the local origin/main tracking ref (may be slightly stale);
+# CI is the authoritative gate.
+
+set -e
+
+if git rev-parse --verify --quiet origin/main >/dev/null 2>&1; then
+  tool/check_archived_changes_complete.sh origin/main
+fi
