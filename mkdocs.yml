@@ -1,6 +1,6 @@
-site_name: Bhoopathy
-site_description: Personal site and open source projects by Bhoopathy.
-site_url: https://bhoopathy.com
+site_name: Smara
+site_description: Smara — closing the gap between doing the work and the paperwork that proves it.
+site_url: https://smara-ai.ch
 repo_url: https://github.com/bhoopathyvm-cloud/smaraAccount
 docs_dir: pages
 
@@ -14,6 +14,7 @@ nav:
           - Architecture: open-source/smara-account/architecture.md
           - How It Was Built: open-source/smara-account/how-it-was-built.md
           - Privacy Policy: open-source/smara-account/privacy-policy.md
+  - About: about.md
 
 theme:
   name: material

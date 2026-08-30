@@ -13,7 +13,7 @@ The app does not create an online account, does not sign you in, and does
 not store your books on a Smara server. By default, nothing you enter
 leaves your device.
 
-This website (`bhoopathy.com`) is a static project site. It does not set
+This website (`smara-ai.ch`) is a static project site. It does not set
 analytics cookies and does not run an advertising or tracking SDK.
 
 ## What stays on your device
