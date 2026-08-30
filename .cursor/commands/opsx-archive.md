@@ -42,10 +42,18 @@ Archive a completed change in the experimental workflow.
 
    Count tasks marked with `- [ ]` (incomplete) vs `- [x]` (complete).
 
-   **If incomplete tasks found:**
-   - Display warning showing count of incomplete tasks
-   - Prompt user for confirmation to continue
-   - Proceed if user confirms
+   **A change is archivable ONLY when every task is `- [x]`.** Treat `- [ ]`
+   (incomplete) and `- [~]` (partial) as not done.
+
+   **If any incomplete/partial tasks are found:**
+   - Do NOT archive this change. This is a hard stop — do not offer to archive
+     anyway, and do not proceed even if the user asked to archive "all" /
+     "all implemented" / "all completed" changes (that means only the changes
+     that are actually 100% complete).
+   - Report the change as still in progress and list its outstanding tasks so
+     they stay tracked, then move on to the next candidate.
+   - Never check a box yourself just to make the change archivable unless you
+     genuinely satisfied that exact task and can cite the evidence.
 
    **If no tasks file exists:** Proceed without task-related warning.
 
@@ -153,7 +161,8 @@ Target archive directory already exists.
 **Guardrails**
 - Always prompt for change selection if not provided
 - Use artifact graph (openspec status --json) for completion checking
-- Don't block archive on warnings - just inform and confirm
+- Only archive a change whose `tasks.md` is 100% `- [x]`. Any `- [ ]` or `- [~]` task is a hard stop: do not archive, report the outstanding tasks instead. "Archive all / all implemented / all completed changes" means only the 100%-complete changes; code merged with verification tasks still open is partially implemented, not archivable.
+- Incomplete *artifacts* (step 2) may still be confirmed-and-proceeded; incomplete *tasks* are never overridden.
 - Preserve .openspec.yaml when moving to archive (it moves with the directory)
 - Show clear summary of what happened
 - If sync is requested, use the Skill tool to invoke `openspec-sync-specs` (agent-driven)
