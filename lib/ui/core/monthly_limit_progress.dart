@@ -54,12 +54,15 @@ class MonthlyLimitProgress extends StatelessWidget {
           const SizedBox(height: AppSpacing.small),
           Row(
             children: [
-              Text(
-                l10n.homeSpentOfLimitThisMonth(
-                  formatAmountMinor(spentMinor, monthlyLimitDisplayCurrency),
-                  formatAmountMinor(limitMinor, monthlyLimitDisplayCurrency),
+              Flexible(
+                child: Text(
+                  l10n.homeSpentOfLimitThisMonth(
+                    formatAmountMinor(spentMinor, monthlyLimitDisplayCurrency),
+                    formatAmountMinor(limitMinor, monthlyLimitDisplayCurrency),
+                  ),
+                  style: AppTypography.metadata,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                style: AppTypography.metadata,
               ),
               if (isOverLimit) ...[
                 const SizedBox(width: AppSpacing.small),

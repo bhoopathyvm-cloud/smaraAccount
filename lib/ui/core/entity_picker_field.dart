@@ -26,9 +26,13 @@ class EntityPickerField<T> extends StatelessWidget {
     return DropdownButtonFormField<String>(
       initialValue: value,
       decoration: InputDecoration(labelText: labelText),
+      isExpanded: true,
       items: [
         for (final item in items)
-          DropdownMenuItem(value: idOf(item), child: Text(labelOf(item))),
+          DropdownMenuItem(
+            value: idOf(item),
+            child: Text(labelOf(item), overflow: TextOverflow.ellipsis),
+          ),
       ],
       onChanged: onChanged,
     );

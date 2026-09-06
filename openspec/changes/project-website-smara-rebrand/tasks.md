@@ -28,6 +28,6 @@
 
 ## 6. External (human, not code)
 
-- [ ] 6.1 Point `smara-ai.ch` DNS at GitHub Pages (A/AAAA + `www` CNAME) per GitHub's docs
-- [ ] 6.2 Set the repository's GitHub Pages custom domain to `smara-ai.ch` and re-enable HTTPS
+- [x] 6.1 Point `smara-ai.ch` DNS at GitHub Pages (A/AAAA + `www` CNAME) per GitHub's docs — verified live via `dig` (2026-09-05)
+- [x] 6.2 Set the repository's GitHub Pages custom domain to `smara-ai.ch` and re-enable HTTPS — verified via `gh api repos/:owner/:repo/pages`: cname set, HTTPS certificate approved (2026-09-05). `https_enforced` is still off; flip it on in repo Settings → Pages when convenient
 - [ ] 6.3 Decide whether to keep `bhoopathy.com` and 301-redirect it to `smara-ai.ch`, or let it lapse
