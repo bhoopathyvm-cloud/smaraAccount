@@ -1,9 +1,19 @@
 #!/bin/sh
-# Runs the ACCEPTANCE tier: integration_test/acceptance/*_test.dart, driving
-# a real launched build of the app (real database, real OS keychain)
+# Runs the ACCEPTANCE tier: integration_test/acceptance/acceptance_test.dart,
+# driving a real launched build of the app (real database, real OS keychain)
 # through its GUI. Manual-only, per acceptance-test-suite design.md
 # Decision 4 - no CI workflow invokes this script or any file under
 # integration_test/acceptance/.
+#
+# One file, one `flutter test` invocation, one install: the suite used to
+# be 13 separate files, each its own `flutter test <file> -d <device>`
+# invocation - meaning 13 full app rebuild+reinstall+relaunch cycles per
+# full run. Every former file is now a `group('name', () { ... })` inside
+# a single shared `main()` (app-store-launch-readiness), so a full run
+# needs only one install. This especially matters on a real iOS device,
+# where Xcode's own automation-driven launch step is intermittently flaky
+# - one launch attempt per full run instead of 13 means one chance to hit
+# that flakiness instead of thirteen.
 #
 # Usage:
 #   tool/run_acceptance_tests.sh -d <device-id> [group]
@@ -13,9 +23,12 @@
 #                    emulator/device. One target per invocation - this
 #                    never runs against more than one platform at a time
 #                    (spec: "Target Device Is Selectable Per Run").
-#   [group]          Optional. A substring matched against test file names
-#                    under integration_test/acceptance/ (e.g. "core_ledger",
-#                    "currency", "csv_import"). Omit to run the full suite.
+#   [group]          Optional. A plain-text substring matched against
+#                    `group()`/`testWidgets()` names in
+#                    acceptance_test.dart (e.g. "core_ledger", "currency",
+#                    "csv_import" - the former per-file names, now group
+#                    names) via `flutter test --plain-name`. Omit to run
+#                    every group.
 #
 # Examples:
 #   tool/run_acceptance_tests.sh -d macos
@@ -29,15 +42,19 @@
 #   iOS Simulator:     open -a Simulator (boots the last-used simulator,
 #                      or pick one in Xcode > Open Developer Tool >
 #                      Simulator), then `flutter devices`.
+#   iOS real device:   must be connected by USB cable, not just wireless -
+#                      `flutter test` cannot launch a debug session on a
+#                      wirelessly-tethered iOS device ("Cannot start app
+#                      on wirelessly tethered iOS device").
 #   Android emulator:  start it first - via Android Studio's Device
 #                      Manager, or `emulator -avd <avd-name>` - then
 #                      `flutter devices`; its id looks like emulator-5554.
 #
-# Pre-run cleanup happens automatically: every acceptance test file's
-# own setUpAll calls resetToFreshDevice() (acceptance_harness.dart)
-# before anything else runs, so a prior crashed run's leftover database
-# file and keychain entries never contaminate this one
-# (spec: "Acceptance Runs Leave No Residual Host State").
+# Pre-run cleanup happens automatically: every group's own setUpAll calls
+# resetToFreshDevice() (acceptance_harness.dart) before its tests run, so
+# a prior crashed run's leftover database file and keychain entries never
+# contaminate this one (spec: "Acceptance Runs Leave No Residual Host
+# State").
 
 set -eu
 
@@ -64,45 +81,25 @@ fi
 group="${1:-}"
 
 repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-acceptance_dir="$repo_root/integration_test/acceptance"
+test_file="$repo_root/integration_test/acceptance/acceptance_test.dart"
 
 if [ -n "$group" ]; then
-  test_files=$(find "$acceptance_dir" -maxdepth 1 -name "*${group}*_test.dart" | sort)
-  if [ -z "$test_files" ]; then
-    echo "Error: no acceptance test file under integration_test/acceptance/ matches '*${group}*_test.dart'." >&2
-    exit 1
-  fi
+  echo "Running acceptance tests on device '$device_id' (group: '$group'):"
 else
-  test_files=$(find "$acceptance_dir" -maxdepth 1 -name "*_test.dart" | sort)
+  echo "Running acceptance tests on device '$device_id':"
 fi
-
-echo "Running acceptance tests on device '$device_id':"
-echo "$test_files" | sed "s#^#  #"
 echo
 
-# One `flutter test` invocation per file, not all files passed to a single
-# invocation: batching them was observed, on macOS, to leave every file
-# after the first unable to launch at all ("log reader stopped
-# unexpectedly, or never started") - the app-foreground mechanism a
-# fresh build+launch depends on doesn't recover within one `flutter test`
-# process after the first launch. Each file gets a clean process instead.
-overall_status=0
-failed_files=""
-for test_file in $test_files; do
-  echo "── $test_file ──"
-  if flutter test "$test_file" -d "$device_id"; then
-    :
-  else
-    overall_status=1
-    failed_files="$failed_files
-  $test_file"
-  fi
-  echo
-done
+status=0
+if [ -n "$group" ]; then
+  flutter test "$test_file" -d "$device_id" --plain-name "$group" || status=$?
+else
+  flutter test "$test_file" -d "$device_id" || status=$?
+fi
 
-if [ "$overall_status" -eq 0 ]; then
+if [ "$status" -eq 0 ]; then
   echo "Acceptance suite passed."
 else
-  echo "Acceptance suite failed. Failing files:$failed_files" >&2
+  echo "Acceptance suite failed." >&2
 fi
-exit "$overall_status"
+exit "$status"

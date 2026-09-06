@@ -99,9 +99,7 @@ void main() {
       // The balance read is held pending so the async listener is suspended
       // mid-await exactly when dispose() runs.
       final balance = Completer<int>();
-      when(
-        ledger.displayBalanceMinor(any),
-      ).thenAnswer((_) => balance.future);
+      when(ledger.displayBalanceMinor(any)).thenAnswer((_) => balance.future);
 
       final viewModel = buildViewModel();
       var notifyCount = 0;
@@ -130,30 +128,31 @@ void main() {
     },
   );
 
-  test('a stream error while the view model is alive still propagates', () async {
-    final instrumentsController = StreamController<List<Instrument>>.broadcast();
-    when(
-      investment.watchInstruments(),
-    ).thenAnswer((_) => instrumentsController.stream);
-    when(ledger.displayBalanceMinor(any)).thenAnswer((_) async => 40000);
-    when(
-      investment.watchHoldingsForAccount(any),
-    ).thenAnswer((_) => Stream.value([holding]));
+  test(
+    'a stream error while the view model is alive still propagates',
+    () async {
+      final instrumentsController =
+          StreamController<List<Instrument>>.broadcast();
+      when(
+        investment.watchInstruments(),
+      ).thenAnswer((_) => instrumentsController.stream);
+      when(ledger.displayBalanceMinor(any)).thenAnswer((_) async => 40000);
+      when(
+        investment.watchHoldingsForAccount(any),
+      ).thenAnswer((_) => Stream.value([holding]));
 
-    Object? caught;
-    await runZonedGuarded(
-      () async {
+      Object? caught;
+      await runZonedGuarded(() async {
         final viewModel = buildViewModel();
         await pumpEventQueue();
         // Delivered while still alive → must not be swallowed.
         instrumentsController.addError(StateError('stream boom'));
         await pumpEventQueue();
         viewModel.dispose();
-      },
-      (error, stack) => caught = error,
-    );
+      }, (error, stack) => caught = error);
 
-    expect(caught, isStateError);
-    await instrumentsController.close();
-  });
+      expect(caught, isStateError);
+      await instrumentsController.close();
+    },
+  );
 }

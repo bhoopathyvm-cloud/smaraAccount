@@ -659,6 +659,15 @@ Future<void> openHoldingsFor(WidgetTester tester, String accountName) async {
     () => find.text(l10n.holdingsCash).evaluate().isNotEmpty,
     innerTries: 150,
   );
+
+  // The "Cash" label and its numeric total come from separate rebuilds -
+  // the label appears first, the total streams in slightly later. On a
+  // real device (slower than a desktop build) callers asserting on the
+  // total immediately after this returns can race it, so give it a
+  // bounded moment to catch up here rather than in every call site.
+  for (var i = 0; i < 10; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
 }
 
 /// Holdings → Buy dialog → new instrument (Stock) → Record buy.

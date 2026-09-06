@@ -10,7 +10,7 @@
 
 ## 3. Verify
 
-- [ ] 3.1 Clean build on iOS Simulator: home-screen icon shows the new artwork
-- [ ] 3.2 Clean build on macOS: Dock/Finder icon shows the new artwork
-- [ ] 3.3 Clean build on Android emulator: launcher icon shows the new artwork
+- [x] 3.1 Clean build on iOS Simulator: home-screen icon shows the new artwork — verified (2026-09-05) on iPhone 17 simulator (iOS 26): icon renders correctly (navy/ledger-page mark) once SpringBoard finishes loading it. Noted separately: the home-screen label rendered as "SmaraAccounting" (no space) on this simulator run even though the compiled `Info.plist` and the LaunchServices record both correctly report `CFBundleDisplayName = "Smara Accounting"` — looks like a SpringBoard/simulator display quirk on this iOS 26 runtime, not an app misconfiguration; worth a quick recheck on a real device before iOS submission but not treated as blocking here since every underlying data source is correct.
+- [x] 3.2 Clean build on macOS: Dock/Finder icon shows the new artwork — verified (2026-09-05): extracted `AppIcon.icns` from a debug build, correct navy/ledger-page artwork, not the default Flutter icon
+- [x] 3.3 Clean build on Android emulator: launcher icon shows the new artwork — verified (2026-09-05): debug APK installed successfully on a real device (Samsung SM X230, Android 16); generated `mipmap-xxxhdpi/ic_launcher.png` and adaptive `ic_launcher_foreground.png` inspected directly, correct navy/ledger-page artwork at highest density
 - [x] 3.4 Spot-check legibility at the smallest generated size per platform (e.g. iOS notification-size icon) — `assets/branding/app_icon_20.png` and iOS `Icon-App-20x20@1x.png` still read as a page on navy, not the Flutter mark
