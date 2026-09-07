@@ -14,4 +14,4 @@
 
 - [x] 3.1 `dart analyze` clean; draft unit tests green
 - [x] 3.2 Existing `transfer_view_model_test.dart` green
-- [ ] 3.3 Full acceptance suite on macOS
+- [x] 3.3 Full acceptance suite on macOS
