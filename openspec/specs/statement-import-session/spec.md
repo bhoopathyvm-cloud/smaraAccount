@@ -18,11 +18,11 @@ The system SHALL keep statement-import wizard step, CSV mapping draft, and trans
 - **THEN** it still talks only to the ViewModel; preview/post remain on `StatementImportRepository`
 
 ### Requirement: Preview batching stays on the repository
-This change SHALL NOT replace `buildPreviewRows`. The session calls that repository interface when a preview is needed.
+This change SHALL NOT replace `buildPreviewRows`. The ViewModel calls that repository interface when a preview is needed, then feeds the result into the session via `applyPreview`.
 
 #### Scenario: Preview still batched
-- **WHEN** the session builds preview after mapping/account selection
-- **THEN** it uses the existing `buildPreviewRows` seam (one batched suggestion pass)
+- **WHEN** the ViewModel builds preview after mapping/account selection
+- **THEN** it uses the existing `buildPreviewRows` seam (one batched suggestion pass) and applies the result to the session
 
 ### Requirement: Statement import wizard state lives on StatementImportSession
 The system SHALL keep statement-import wizard review state (preview rows, selection, categories, currency mismatch, skipped-row counts used for summary, accepted rows for posting) on `StatementImportSession`. `StatementImportViewModel` MUST orchestrate repository I/O and forward review mutations to the session rather than owning parallel row lists.

@@ -10,18 +10,11 @@ import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/home_overview.dart';
-import '../../../../domain/models/pending_transfer.dart';
+import '../../../../domain/transfer/settle_pending_draft.dart';
 
 /// Form state for settling a pending transfer or foreign-currency
-/// transaction (spec: "Settle a Pending Transfer or Transaction").
-///
-/// A `transfer` may settle to either its own planned destination account
-/// (normal delivery, no shortfall comparison) or back to its own source
-/// account (bounced/returned - a shortfall below the provisional amount
-/// requires a fee/loss category). A `foreignTransaction` always settles to
-/// its own financial account, following the same no-shortfall path as
-/// destination delivery: no shortfall comparison, no fee/loss entry, no
-/// account picker, and a zero settled amount is rejected.
+/// transaction. Owns streams and submit; form rules live on
+/// [SettlePendingDraft].
 class SettlePendingTransferViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
   SettlePendingTransferViewModel({
@@ -32,10 +25,7 @@ class SettlePendingTransferViewModel extends ChangeNotifier
   }) : _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
        _categoryRepository = categoryRepository,
-       _summary = summary {
-    if (isTransfer) {
-      _settledToAccountId = summary.pendingTransfer.destinationAccountId;
-    }
+       _draft = SettlePendingDraft(summary: summary) {
     _categoriesSubscription = _categoryRepository.watchCategories().listen((
       categories,
     ) {
@@ -48,15 +38,18 @@ class SettlePendingTransferViewModel extends ChangeNotifier
         .watchAccountCurrencies(includeArchived: true)
         .listen((catalog) {
           _currencies = catalog;
+          _syncTargetCurrency();
           notifyListeners();
         });
+    _syncTargetCurrency();
   }
 
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
   final CategoryRepository _categoryRepository;
-  final PendingTransferSummary _summary;
-  PendingTransferSummary get summary => _summary;
+  final SettlePendingDraft _draft;
+
+  PendingTransferSummary get summary => _draft.summary;
 
   late final StreamSubscription<List<Account>> _categoriesSubscription;
   List<Account> _expenseCategories = const [];
@@ -65,59 +58,39 @@ class SettlePendingTransferViewModel extends ChangeNotifier
   late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
   AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
-  /// The ISO 4217 currency of [accountId]'s group, or null if either
-  /// can't be resolved yet.
   String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);
 
-  /// The currency [settledAmountMinor] should be entered in, given the
-  /// current settlement target.
-  String? get settledAmountCurrency {
-    if (isShortfallComparable) return _summary.currency;
-    final targetAccountId = isTransfer
-        ? _summary.pendingTransfer.destinationAccountId
-        : _summary.pendingTransfer.sourceAccountId;
-    return currencyFor(targetAccountId);
+  void _syncTargetCurrency() {
+    final accountId = _draft.isTransfer
+        ? _draft.summary.pendingTransfer.destinationAccountId
+        : _draft.summary.pendingTransfer.sourceAccountId;
+    _draft.targetAccountCurrency = currencyFor(accountId);
   }
 
-  bool get isTransfer =>
-      _summary.pendingTransfer.kind == PendingTransferKind.transfer;
+  String? get settledAmountCurrency => _draft.settledAmountCurrency;
 
-  /// Only meaningful when [isTransfer] - a foreignTransaction always
-  /// settles to its own source account with no choice offered.
-  String? _settledToAccountId;
-  String? get settledToAccountId => _settledToAccountId;
+  bool get isTransfer => _draft.isTransfer;
+
+  String? get settledToAccountId => _draft.settledToAccountId;
   void setSettledToAccountId(String? value) {
-    _settledToAccountId = value;
+    _draft.settledToAccountId = value;
+    _syncTargetCurrency();
     notifyListeners();
   }
 
-  /// Whether the settlement compares [settledAmountMinor] to the
-  /// provisional amount and allows a shortfall fee - true only for a
-  /// transfer settling back to its own source account.
-  bool get isShortfallComparable =>
-      isTransfer &&
-      _settledToAccountId == _summary.pendingTransfer.sourceAccountId;
+  bool get isShortfallComparable => _draft.isShortfallComparable;
 
-  int? _settledAmountMinor;
-  int? get settledAmountMinor => _settledAmountMinor;
+  int? get settledAmountMinor => _draft.settledAmountMinor;
   void setSettledAmountMinor(int? value) {
-    _settledAmountMinor = value;
+    _draft.settledAmountMinor = value;
     notifyListeners();
   }
 
-  /// Only relevant when [isShortfallComparable] and a shortfall exists.
-  int get shortfallMinor {
-    if (!isShortfallComparable) return 0;
-    final settled = _settledAmountMinor;
-    if (settled == null) return 0;
-    final shortfall = _summary.amountMinor - settled;
-    return shortfall > 0 ? shortfall : 0;
-  }
+  int get shortfallMinor => _draft.shortfallMinor;
 
-  String? _feeCategoryId;
-  String? get feeCategoryId => _feeCategoryId;
+  String? get feeCategoryId => _draft.feeCategoryId;
   void setFeeCategoryId(String? value) {
-    _feeCategoryId = value;
+    _draft.feeCategoryId = value;
     notifyListeners();
   }
 
@@ -125,16 +98,14 @@ class SettlePendingTransferViewModel extends ChangeNotifier
   bool get isSubmitting => _isSubmitting;
 
   Future<bool> submit() async {
-    final settledAmountMinor = _settledAmountMinor;
+    final settledAmountMinor = _draft.settledAmountMinor;
     if (settledAmountMinor == null) {
       setFailure(
         const AppFailure(AppErrorCode.validationAmountArrivedRequired),
       );
       return false;
     }
-    final settledToAccountId = isTransfer
-        ? _settledToAccountId
-        : _summary.pendingTransfer.sourceAccountId;
+    final settledToAccountId = _draft.effectiveSettledToAccountId;
     if (settledToAccountId == null) {
       setFailure(
         const AppFailure(AppErrorCode.validationChooseReceivingAccount),
@@ -147,10 +118,12 @@ class SettlePendingTransferViewModel extends ChangeNotifier
     notifyListeners();
     try {
       await _ledgerRepository.settlePendingTransfer(
-        pendingTransferId: _summary.pendingTransfer.id,
+        pendingTransferId: _draft.summary.pendingTransfer.id,
         settledToAccountId: settledToAccountId,
         settledAmountMinor: settledAmountMinor,
-        feeCategoryId: isShortfallComparable ? _feeCategoryId : null,
+        feeCategoryId: _draft.isShortfallComparable
+            ? _draft.feeCategoryId
+            : null,
       );
       _isSubmitting = false;
       notifyListeners();
