@@ -11,6 +11,7 @@ import '../../../../data/repositories/investment_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
+import '../../../../domain/home/home_overview_engine.dart';
 import '../../../../domain/investment/trade_order_draft.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../domain/investment_research_prompt.dart';
@@ -160,12 +161,15 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   int _cashMinor = 0;
   int get cashMinor => _cashMinor;
 
-  int get bookMinor =>
-      _cashMinor + _holdings.fold<int>(0, (sum, h) => sum + h.totalCostMinor);
+  int get bookMinor => investmentPortfolioTotals(
+    cashMinor: _cashMinor,
+    holdings: _holdings,
+  ).bookMinor;
 
-  int get portfolioMinor =>
-      _cashMinor +
-      _holdings.fold<int>(0, (sum, h) => sum + h.displayMarketValueMinor);
+  int get portfolioMinor => investmentPortfolioTotals(
+    cashMinor: _cashMinor,
+    holdings: _holdings,
+  ).portfolioMinor;
 
   bool _quotesEnabled = true;
   bool get quotesEnabled => _quotesEnabled;
