@@ -4,7 +4,8 @@ import 'package:drift/drift.dart';
 
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
-import '../../domain/models/account.dart';
+import '../../domain/home/home_overview_engine.dart';
+import '../../domain/models/account_group.dart';
 import '../../domain/models/home_overview.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/journal_entry.dart';
@@ -357,16 +358,7 @@ class LedgerRepository {
       accountId: accountId,
       groupCurrency: groupCurrency,
     );
-    var marketInventory = 0;
-    var bookInventory = 0;
-    for (final holding in holdings) {
-      marketInventory += holding.displayMarketValueMinor;
-      bookInventory += holding.totalCostMinor;
-    }
-    return (
-      portfolioMinor: cashMinor + marketInventory,
-      bookMinor: cashMinor + bookInventory,
-    );
+    return investmentPortfolioTotals(cashMinor: cashMinor, holdings: holdings);
   }
 
   Stream<void> _tickOn(Iterable<Stream<dynamic>> streams) {
@@ -570,84 +562,31 @@ class LedgerRepository {
     )..where((p) => p.status.equalsValue(PendingTransferStatus.pending))).get();
 
     final rawSumByAccount = rawPostingSumsByAccount(entries);
-
-    int displayFor(Account account) {
-      final raw = rawSumByAccount[account.id] ?? 0;
-      return displayBalanceDeltaFor(
-        accountType: account.type,
-        postingAmountMinor: raw,
-      );
-    }
-
-    final assetsByCurrency = <String, int>{};
-    final liabilitiesByCurrency = <String, int>{};
-    final sections = <AccountGroupSection>[];
-
-    for (final group in groups) {
-      final members = accounts.where((a) => a.groupId == group.id).toList()
-        ..sort((a, b) {
-          final byOrder = a.sortOrder.compareTo(b.sortOrder);
-          return byOrder != 0 ? byOrder : a.name.compareTo(b.name);
-        });
-      if (members.isEmpty) continue;
-
-      final currency = group.currency;
-      final balances = <AccountBalance>[];
-      var groupTotal = 0;
-      for (final account in members) {
-        final cashOrOwed = displayFor(account);
-        var display = cashOrOwed;
-        int? bookValueMinor;
-        var isMarketEstimate = false;
-        if (account.isInvestmentAccount && currency != null) {
-          final valued = await _portfolioForInvestmentAccount(
-            accountId: account.id,
-            cashMinor: cashOrOwed,
-            groupCurrency: currency,
-          );
-          display = valued.portfolioMinor;
-          bookValueMinor = valued.bookMinor;
-          isMarketEstimate = true;
-        }
-        balances.add(
-          AccountBalance(
-            account: account,
-            displayBalanceMinor: display,
-            bookValueMinor: bookValueMinor,
-            isMarketEstimate: isMarketEstimate,
-          ),
-        );
-        groupTotal += display;
-        if (currency != null) {
-          if (account.type == AccountType.asset) {
-            assetsByCurrency[currency] =
-                (assetsByCurrency[currency] ?? 0) + display;
-          } else if (account.type == AccountType.liability) {
-            liabilitiesByCurrency[currency] =
-                (liabilitiesByCurrency[currency] ?? 0) + display;
-          }
-        }
-      }
-      sections.add(
-        AccountGroupSection(
-          group: group,
-          accounts: balances,
-          totalDisplayBalanceMinor: groupTotal,
-        ),
-      );
-    }
-
-    // Pending transfers: shown as their own line items, and their
-    // provisional amount counts toward their source currency's net
-    // position while unsettled - unless the provisional entry itself is
-    // quarantined or migration-superseded, in which case it's excluded
-    // from the totals but still listed for review (multi-currency-support
-    // design.md Decision 2 / spec "A quarantined or superseded provisional
-    // entry does not distort net worth").
     final entryById = {for (final e in entries) e.id: e};
     final nameById = await _accountNameById();
-    final pendingSummaries = <PendingTransferSummary>[];
 
+    final investmentPortfolios =
+        <String, ({int portfolioMinor, int bookMinor})>{};
+    for (final account in accounts) {
+      if (!account.isInvestmentAccount) continue;
+      final group = groups.cast<AccountGroup?>().firstWhere(
+        (g) => g!.id == account.groupId,
+        orElse: () => null,
+      );
+      final currency = group?.currency;
+      if (currency == null) continue;
+      final cashOrOwed = displayBalanceDeltaFor(
+        accountType: account.type,
+        postingAmountMinor: rawSumByAccount[account.id] ?? 0,
+      );
+      investmentPortfolios[account.id] = await _portfolioForInvestmentAccount(
+        accountId: account.id,
+        cashMinor: cashOrOwed,
+        groupCurrency: currency,
+      );
+    }
+
+    final pendingInputs = <HomeOverviewPendingInput>[];
     for (final row in pendingRows) {
       final summary = _pendingTransferSummary(
         row: row,
@@ -655,36 +594,28 @@ class LedgerRepository {
         nameById: nameById,
       );
       if (summary == null) continue;
-      pendingSummaries.add(summary);
-
       final provisionalEntry = entryById[row.provisionalEntryId]!;
-      final isExcluded =
-          !provisionalEntry.isVerified ||
-          provisionalEntry.isSupersededByMigration;
-      if (!isExcluded) {
-        assetsByCurrency[summary.currency] =
-            (assetsByCurrency[summary.currency] ?? 0) + summary.amountMinor;
-      }
+      final countsTowardNetPosition =
+          provisionalEntry.isVerified &&
+          !provisionalEntry.isSupersededByMigration;
+      pendingInputs.add(
+        HomeOverviewPendingInput(
+          pendingTransfer: summary.pendingTransfer,
+          sourceAccountName: summary.sourceAccountName,
+          destinationLabel: summary.destinationLabel,
+          currency: summary.currency,
+          amountMinor: summary.amountMinor,
+          countsTowardNetPosition: countsTowardNetPosition,
+        ),
+      );
     }
 
-    final currencies = {
-      ...assetsByCurrency.keys,
-      ...liabilitiesByCurrency.keys,
-    }.toList()..sort();
-    final netPositions = currencies
-        .map(
-          (currency) => CurrencyNetPosition(
-            currency: currency,
-            totalAssetsMinor: assetsByCurrency[currency] ?? 0,
-            totalLiabilitiesMinor: liabilitiesByCurrency[currency] ?? 0,
-          ),
-        )
-        .toList();
-
-    return HomeOverview(
-      sections: sections,
-      netPositionsByCurrency: netPositions,
-      pendingTransfers: pendingSummaries,
+    return buildHomeOverview(
+      groups: groups,
+      accounts: accounts,
+      rawSumByAccount: rawSumByAccount,
+      investmentPortfolios: investmentPortfolios,
+      pending: pendingInputs,
     );
   }
 
