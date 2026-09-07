@@ -10,4 +10,4 @@
 ## 3. Verify
 
 - [x] 3.1 analyze + unit tests green
-- [ ] 3.2 Full macOS acceptance
+- [x] 3.2 Full macOS acceptance
