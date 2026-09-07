@@ -14,6 +14,7 @@ import '../../../../domain/models/journal_entry.dart';
 import '../../../../domain/models/transaction_direction.dart';
 import '../../../../domain/register/register_projection.dart';
 import '../../../../domain/register/register_row.dart';
+import '../../../../domain/register/register_row_policy.dart';
 import '../../../core/money_formatter.dart';
 
 /// Account-scoped register: counterpart labels for category / transfer /
@@ -66,35 +67,14 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   /// stays the full, unfiltered set so clearing search/filters restores
   /// everything with no resubscription needed.
   List<RegisterRow> get rows {
-    if (!hasActiveSearchOrFilters) return _rows;
-    final query = _searchText.trim().toLowerCase();
-    return _rows.where((row) {
-      if (_filterDirection != null && row.direction != _filterDirection) {
-        return false;
-      }
-      if (_filterStartDate != null &&
-          row.transactionDate.isBefore(_filterStartDate!)) {
-        return false;
-      }
-      if (_filterEndDate != null) {
-        final endExclusive = DateTime(
-          _filterEndDate!.year,
-          _filterEndDate!.month,
-          _filterEndDate!.day + 1,
-        );
-        if (!row.transactionDate.isBefore(endExclusive)) return false;
-      }
-      if (query.isEmpty) return true;
-      final description = (row.description ?? '').toLowerCase();
-      final category = row.categoryName.toLowerCase();
-      final amountText = formatAmountMinor(
-        row.amountMinor,
-        row.currency,
-      ).toLowerCase();
-      return description.contains(query) ||
-          category.contains(query) ||
-          amountText.contains(query);
-    }).toList();
+    return filterRegisterRows(
+      rows: _rows,
+      searchText: _searchText,
+      filterStartDate: _filterStartDate,
+      filterEndDate: _filterEndDate,
+      filterDirection: _filterDirection,
+      amountTextFor: (row) => formatAmountMinor(row.amountMinor, row.currency),
+    );
   }
 
   String _searchText = '';
@@ -282,15 +262,15 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   /// quarantined, superseded, or already corrected by a later reversal
   /// (those are explained some other way, not re-fixed).
   bool isRowFixable(RegisterRow row) {
-    final alreadyCorrected = _lastEntries.any(
-      (entry) => entry.reversesEntryId == row.entryId,
+    final reversedEntryIds = {
+      for (final entry in _lastEntries)
+        if (entry.reversesEntryId != null) entry.reversesEntryId!,
+    };
+    return isRegisterRowFixable(
+      row: row,
+      categoryIds: _categoriesById.keys.toSet(),
+      reversedEntryIds: reversedEntryIds,
     );
-    return row.counterpartAccountIds.length == 1 &&
-        _categoriesById.containsKey(row.counterpartAccountIds.single) &&
-        !row.isReversal &&
-        !alreadyCorrected &&
-        row.isVerified &&
-        !row.isSupersededByMigration;
   }
 
   /// Posts the selected archived account's full current display balance
