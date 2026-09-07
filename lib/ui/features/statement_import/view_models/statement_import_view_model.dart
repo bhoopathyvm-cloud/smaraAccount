@@ -97,41 +97,34 @@ class StatementImportViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String? _fileName;
-  String? get fileName => _fileName;
+  String? get fileName => _session.fileName;
 
-  String? _parseError;
-  String? get parseError => _parseError;
+  String? get parseError => _session.parseError;
 
   /// Surfaces a failure from the platform file picker itself (e.g. a
   /// missing OS-level permission) on the same pick-file step as a parse
   /// error, so a picker failure is never silently invisible to the user.
   void reportPickFileError(String message) {
-    _parseError = message;
+    _session.setParseError(message);
     notifyListeners();
   }
 
-  int _parsedTransactionCount = 0;
-  int get parsedTransactionCount => _parsedTransactionCount;
-  List<StatementSkippedRow> _skippedRows = const [];
+  int get parsedTransactionCount => _session.parsedTransactionCount;
 
   /// Rows the parser could not turn into a transaction, with the reason
   /// each was skipped (spec: "Skipped-Row Reasons Are Shown to the User").
-  List<StatementSkippedRow> get skippedRows => List.unmodifiable(_skippedRows);
-  int get skippedRowCount => _skippedRows.length;
-  String? _statementCurrency;
+  List<StatementSkippedRow> get skippedRows =>
+      List.unmodifiable(_session.skippedRows);
+  int get skippedRowCount => _session.skippedRows.length;
 
-  String? _selectedAccountId;
-  String? get selectedAccountId => _selectedAccountId;
+  String? get selectedAccountId => _session.selectedAccountId;
 
-  bool _currencyMismatch = false;
-  bool get currencyMismatch => _currencyMismatch;
-  String? get statementCurrency => _statementCurrency;
+  bool get currencyMismatch => _session.currencyMismatch;
+  String? get statementCurrency => _session.statementCurrency;
 
   List<ParsedStatementTransaction> _transactions = const [];
 
-  List<StatementImportPreviewRow> _rows = [];
-  List<StatementImportPreviewRow> get rows => List.unmodifiable(_rows);
+  List<StatementImportPreviewRow> get rows => List.unmodifiable(_session.rows);
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -139,8 +132,7 @@ class StatementImportViewModel extends ChangeNotifier {
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
 
-  StatementImportBatchResult? _batchResult;
-  StatementImportBatchResult? get batchResult => _batchResult;
+  StatementImportBatchResult? get batchResult => _session.batchResult;
 
   // --- CSV-only mapping state -----------------------------------------
 
@@ -241,9 +233,7 @@ class StatementImportViewModel extends ChangeNotifier {
   /// duplicates left at their default-excluded state) or left without a
   /// category. Shown in the post-import summary alongside posted/failed
   /// counts (spec: "Preview and Duplicate Detection Before Posting").
-  int get skippedOrExcludedRowCount =>
-      skippedRowCount +
-      _rows.where((row) => !(row.selected && row.categoryId != null)).length;
+  int get skippedOrExcludedRowCount => _session.skippedOrExcludedRowCount;
 
   /// Loads [bytes] and, on success, advances to the account-selection
   /// step. For OFX, the file is parsed immediately; an unrecognizable
@@ -254,21 +244,23 @@ class StatementImportViewModel extends ChangeNotifier {
     required String name,
     required List<int> bytes,
   }) async {
-    _fileName = name;
-    _parseError = null;
+    _session.fileName = name;
+    _session.clearParseError();
     try {
       switch (_session.source) {
         case StatementSource.ofx || null:
           final result = _importRepository.parseOfxFile(bytes);
           _transactions = result.transactions;
-          _parsedTransactionCount = result.transactions.length;
-          _skippedRows = result.skippedRows;
-          _statementCurrency = result.statementCurrency;
+          _session.applyParsedTransactions(
+            transactions: result.transactions,
+            skipped: result.skippedRows,
+            currency: result.statementCurrency,
+          );
         case StatementSource.csv:
           _csvBytes = bytes;
           _csvHeaderRow = readCsvRows(bytes).first;
       }
-      _session.step = StatementImportStep.selectAccount;
+      _session.goToSelectAccount();
 
       final requested = _initialFinancialAccountId;
       final requestedIsActive =
@@ -279,9 +271,9 @@ class StatementImportViewModel extends ChangeNotifier {
         return;
       }
     } on OfxParseException catch (error) {
-      _parseError = error.message;
+      _session.setParseError(error.message);
     } on CsvParseException catch (error) {
-      _parseError = error.message;
+      _session.setParseError(error.message);
     }
     notifyListeners();
   }
@@ -294,7 +286,7 @@ class StatementImportViewModel extends ChangeNotifier {
   /// needed) rather than the file silently skipping straight to preview
   /// (spec: "confirming it skips directly to the preview step").
   Future<void> selectAccount(String accountId) async {
-    _selectedAccountId = accountId;
+    _session.selectedAccountId = accountId;
     _isLoading = true;
     notifyListeners();
 
@@ -315,7 +307,7 @@ class StatementImportViewModel extends ChangeNotifier {
         if (_isDisposed) return;
         if (profile != null) applyProfile(profile);
         _isLoading = false;
-        _session.step = StatementImportStep.mapColumns;
+        _session.goToMapColumns();
         notifyListeners();
     }
   }
@@ -326,7 +318,7 @@ class StatementImportViewModel extends ChangeNotifier {
   /// Flow Through the Shared Statement-Import Review and Posting
   /// Pipeline").
   Future<void> confirmCsvMapping({String? saveAsProfileName}) async {
-    final accountId = _selectedAccountId;
+    final accountId = _session.selectedAccountId;
     final bytes = _csvBytes;
     final headerRow = _csvHeaderRow;
     final mapping = _buildCsvMapping();
@@ -353,14 +345,15 @@ class StatementImportViewModel extends ChangeNotifier {
     try {
       final result = _importRepository.parseCsvFile(_csvBytes!, mapping);
       _transactions = result.transactions;
-      _parsedTransactionCount = result.transactions.length;
-      _skippedRows = result.skippedRows;
-      _statementCurrency = result.statementCurrency;
+      _session.applyParsedTransactions(
+        transactions: result.transactions,
+        skipped: result.skippedRows,
+        currency: result.statementCurrency,
+      );
     } on CsvParseException catch (error) {
       if (_isDisposed) return;
       _isLoading = false;
-      _parseError = error.message;
-      _session.step = StatementImportStep.pickFile;
+      _session.resetToPickFile(error.message);
       notifyListeners();
       return;
     }
@@ -373,55 +366,27 @@ class StatementImportViewModel extends ChangeNotifier {
       transactions: _transactions,
       rules: _categoryRules,
     );
-    final statementCurrency = _statementCurrency;
-    _currencyMismatch =
-        statementCurrency != null &&
-        preview.accountCurrency != null &&
-        statementCurrency != preview.accountCurrency;
-
-    final rows = <StatementImportPreviewRow>[
-      for (final draft in preview.rows)
-        StatementImportPreviewRow(
-          transaction: draft.transaction,
-          isDuplicate: draft.isDuplicate,
-          categoryId: draft.suggestedCategoryId,
-        ),
-    ];
 
     if (_isDisposed) return;
-    _rows = rows;
+    _session.applyPreview(preview: preview);
     _isLoading = false;
-    _session.step = StatementImportStep.preview;
     notifyListeners();
   }
 
   void toggleRowSelected(int index) {
-    _rows[index].selected = !_rows[index].selected;
+    _session.toggleRowSelected(index);
     notifyListeners();
   }
 
   void setRowCategory(int index, String? categoryId) {
-    _rows[index].categoryId = categoryId;
+    _session.setRowCategory(index, categoryId);
     notifyListeners();
   }
 
-  /// Preview rows grouped by normalized description (trim + case-fold),
-  /// preserving each group's first-seen order (spec: "Group Preview Rows
-  /// by Matching Description"). A row with a description no other row
-  /// shares still gets its own single-row group, so it's bulk-assignable
-  /// through the same action as a multi-row group.
-  List<StatementImportRowGroup> get rowGroups => groupPreviewRows(_rows);
+  List<StatementImportRowGroup> get rowGroups => _session.rowGroups;
 
-  /// Sets [categoryId] on every row currently in the group identified by
-  /// [groupKey] - not retroactive to rows added afterward, since it only
-  /// touches the rows present in [_rows] at call time (spec: "Assigning a
-  /// category to a group sets it on every row in the group").
   void setCategoryForGroup(String groupKey, String? categoryId) {
-    for (final row in _rows) {
-      if (normalizeDescription(row.transaction.description) == groupKey) {
-        row.categoryId = categoryId;
-      }
-    }
+    _session.setCategoryForGroup(groupKey, categoryId);
     notifyListeners();
   }
 
@@ -478,17 +443,10 @@ class StatementImportViewModel extends ChangeNotifier {
   /// unparseable rows were never candidates in the first place (spec:
   /// "Post Accepted Rows as Ordinary Journal Entries").
   Future<void> confirmImport() async {
-    final accountId = _selectedAccountId;
+    final accountId = _session.selectedAccountId;
     if (accountId == null) return;
 
-    final acceptedRows = <StatementAcceptedRow>[
-      for (final row in _rows)
-        if (row.selected && row.categoryId != null)
-          StatementAcceptedRow(
-            transaction: row.transaction,
-            categoryId: row.categoryId!,
-          ),
-    ];
+    final acceptedRows = _session.acceptedRows;
 
     _isSubmitting = true;
     notifyListeners();
@@ -502,9 +460,8 @@ class StatementImportViewModel extends ChangeNotifier {
     );
 
     if (_isDisposed) return;
-    _batchResult = result;
+    _session.applyPostResult(result);
     _isSubmitting = false;
-    _session.step = StatementImportStep.summary;
     notifyListeners();
   }
 
