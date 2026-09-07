@@ -222,6 +222,55 @@ class LedgerRepository {
     destinationAmountMinor: destinationAmountMinor,
   );
 
+  /// Posts [recordTransfer] then, when [feeAmountMinor] is non-null, an
+  /// expense [recordTransaction] against [fromAccountId]. The transfer is
+  /// never rolled back if the fee fails — surfaces
+  /// [AppErrorCode.validationTransferSavedFeeFailed] (same partial-failure
+  /// story the Transfer ViewModel used to own inline).
+  Future<void> recordTransferWithOptionalFee({
+    required String fromAccountId,
+    required String toAccountId,
+    required int amountMinor,
+    required DateTime transactionDate,
+    String? description,
+    int? destinationAmountMinor,
+    int? feeAmountMinor,
+    String? feeCategoryId,
+    String? feeDescription,
+  }) async {
+    await recordTransfer(
+      fromAccountId: fromAccountId,
+      toAccountId: toAccountId,
+      amountMinor: amountMinor,
+      transactionDate: transactionDate,
+      description: description,
+      destinationAmountMinor: destinationAmountMinor,
+    );
+    if (feeAmountMinor == null) return;
+    try {
+      await recordTransaction(
+        amountMinor: feeAmountMinor,
+        direction: TransactionDirection.moneyOut,
+        categoryId: feeCategoryId!,
+        financialAccountId: fromAccountId,
+        transactionDate: transactionDate,
+        description: feeDescription,
+      );
+    } on InvalidTransactionAmountException catch (error) {
+      throw AppFailure(
+        AppErrorCode.validationTransferSavedFeeFailed,
+        params: {'innerCode': error.code.name, ...error.params},
+        debugMessage: error.message,
+      );
+    } on AccountGroupException catch (error) {
+      throw AppFailure(
+        AppErrorCode.validationTransferSavedFeeFailed,
+        params: {'innerCode': error.code.name, ...error.params},
+        debugMessage: error.message,
+      );
+    }
+  }
+
   Future<void> postTransferEntry({
     required AccountRow fromAccount,
     required AccountRow toAccount,

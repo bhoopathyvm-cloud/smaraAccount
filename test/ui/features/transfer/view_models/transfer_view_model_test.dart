@@ -4,13 +4,12 @@ import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/account_currency_catalog.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
-import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/features/transfer/view_models/transfer_view_model.dart';
 
 import '../../../../mocks.mocks.dart';
 
 // Plain unit tests against the ViewModel (no widgets needed): the fee
-// orchestration in submit() - validate, recordTransfer, then recordTransaction
+// orchestration in submit() - validate, then recordTransferWithOptionalFee
 // - is pure ViewModel logic, distinct from the rendering covered by
 // transfer_view_test.dart.
 void main() {
@@ -80,6 +79,27 @@ void main() {
     );
   }
 
+  void stubRecordTransferWithOptionalFee({Object? throws}) {
+    final stub = when(
+      repository.recordTransferWithOptionalFee(
+        fromAccountId: anyNamed('fromAccountId'),
+        toAccountId: anyNamed('toAccountId'),
+        amountMinor: anyNamed('amountMinor'),
+        transactionDate: anyNamed('transactionDate'),
+        description: anyNamed('description'),
+        destinationAmountMinor: anyNamed('destinationAmountMinor'),
+        feeAmountMinor: anyNamed('feeAmountMinor'),
+        feeCategoryId: anyNamed('feeCategoryId'),
+        feeDescription: anyNamed('feeDescription'),
+      ),
+    );
+    if (throws != null) {
+      stub.thenThrow(throws);
+    } else {
+      stub.thenAnswer((_) async {});
+    }
+  }
+
   setUp(() {
     repository = MockLedgerRepository();
     accountRepository = MockAccountRepository();
@@ -109,28 +129,9 @@ void main() {
   });
 
   test(
-    'submit with a valid fee calls recordTransfer then recordTransaction with the expected amounts/category',
+    'submit with a valid fee calls recordTransferWithOptionalFee with the expected amounts/category',
     () async {
-      when(
-        repository.recordTransfer(
-          fromAccountId: anyNamed('fromAccountId'),
-          toAccountId: anyNamed('toAccountId'),
-          amountMinor: anyNamed('amountMinor'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-          destinationAmountMinor: anyNamed('destinationAmountMinor'),
-        ),
-      ).thenAnswer((_) async {});
-      when(
-        repository.recordTransaction(
-          amountMinor: anyNamed('amountMinor'),
-          direction: anyNamed('direction'),
-          categoryId: anyNamed('categoryId'),
-          financialAccountId: anyNamed('financialAccountId'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-        ),
-      ).thenAnswer((_) async => 'entry-fee');
+      stubRecordTransferWithOptionalFee();
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
@@ -143,72 +144,54 @@ void main() {
       final result = await viewModel.submit();
 
       expect(result, isTrue);
-      verifyInOrder([
-        repository.recordTransfer(
+      verify(
+        repository.recordTransferWithOptionalFee(
           fromAccountId: 'asset-1',
           toAccountId: 'asset-2',
           amountMinor: 10000,
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
           destinationAmountMinor: null,
+          feeAmountMinor: 500,
+          feeCategoryId: 'expense-1',
+          feeDescription: anyNamed('feeDescription'),
         ),
-        repository.recordTransaction(
-          amountMinor: 500,
-          direction: TransactionDirection.moneyOut,
-          categoryId: 'expense-1',
-          financialAccountId: 'asset-1',
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-        ),
-      ]);
+      ).called(1);
     },
   );
 
-  test('submit without a fee calls only recordTransfer', () async {
-    when(
-      repository.recordTransfer(
-        fromAccountId: anyNamed('fromAccountId'),
-        toAccountId: anyNamed('toAccountId'),
-        amountMinor: anyNamed('amountMinor'),
-        transactionDate: anyNamed('transactionDate'),
-        description: anyNamed('description'),
-        destinationAmountMinor: anyNamed('destinationAmountMinor'),
-      ),
-    ).thenAnswer((_) async {});
+  test(
+    'submit without a fee calls recordTransferWithOptionalFee with null fee fields',
+    () async {
+      stubRecordTransferWithOptionalFee();
 
-    final viewModel = buildViewModel();
-    addTearDown(viewModel.dispose);
-    await Future<void>.delayed(Duration.zero);
+      final viewModel = buildViewModel();
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
 
-    viewModel.setAmountMinor(10000);
+      viewModel.setAmountMinor(10000);
 
-    final result = await viewModel.submit();
+      final result = await viewModel.submit();
 
-    expect(result, isTrue);
-    verify(
-      repository.recordTransfer(
-        fromAccountId: 'asset-1',
-        toAccountId: 'asset-2',
-        amountMinor: 10000,
-        transactionDate: anyNamed('transactionDate'),
-        description: anyNamed('description'),
-        destinationAmountMinor: null,
-      ),
-    ).called(1);
-    verifyNever(
-      repository.recordTransaction(
-        amountMinor: anyNamed('amountMinor'),
-        direction: anyNamed('direction'),
-        categoryId: anyNamed('categoryId'),
-        financialAccountId: anyNamed('financialAccountId'),
-        transactionDate: anyNamed('transactionDate'),
-        description: anyNamed('description'),
-      ),
-    );
-  });
+      expect(result, isTrue);
+      verify(
+        repository.recordTransferWithOptionalFee(
+          fromAccountId: 'asset-1',
+          toAccountId: 'asset-2',
+          amountMinor: 10000,
+          transactionDate: anyNamed('transactionDate'),
+          description: anyNamed('description'),
+          destinationAmountMinor: null,
+          feeAmountMinor: null,
+          feeCategoryId: null,
+          feeDescription: null,
+        ),
+      ).called(1);
+    },
+  );
 
   test(
-    'a fee missing its category does not call recordTransfer or recordTransaction',
+    'a fee missing its category does not call recordTransferWithOptionalFee',
     () async {
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
@@ -223,30 +206,23 @@ void main() {
       expect(result, isFalse);
       expect(viewModel.errorMessage, isNotNull);
       verifyNever(
-        repository.recordTransfer(
+        repository.recordTransferWithOptionalFee(
           fromAccountId: anyNamed('fromAccountId'),
           toAccountId: anyNamed('toAccountId'),
           amountMinor: anyNamed('amountMinor'),
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
           destinationAmountMinor: anyNamed('destinationAmountMinor'),
-        ),
-      );
-      verifyNever(
-        repository.recordTransaction(
-          amountMinor: anyNamed('amountMinor'),
-          direction: anyNamed('direction'),
-          categoryId: anyNamed('categoryId'),
-          financialAccountId: anyNamed('financialAccountId'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
+          feeAmountMinor: anyNamed('feeAmountMinor'),
+          feeCategoryId: anyNamed('feeCategoryId'),
+          feeDescription: anyNamed('feeDescription'),
         ),
       );
     },
   );
 
   test(
-    'a non-positive fee amount does not call recordTransfer or recordTransaction',
+    'a non-positive fee amount does not call recordTransferWithOptionalFee',
     () async {
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
@@ -261,51 +237,30 @@ void main() {
       expect(result, isFalse);
       expect(viewModel.errorMessage, isNotNull);
       verifyNever(
-        repository.recordTransfer(
+        repository.recordTransferWithOptionalFee(
           fromAccountId: anyNamed('fromAccountId'),
           toAccountId: anyNamed('toAccountId'),
           amountMinor: anyNamed('amountMinor'),
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
           destinationAmountMinor: anyNamed('destinationAmountMinor'),
-        ),
-      );
-      verifyNever(
-        repository.recordTransaction(
-          amountMinor: anyNamed('amountMinor'),
-          direction: anyNamed('direction'),
-          categoryId: anyNamed('categoryId'),
-          financialAccountId: anyNamed('financialAccountId'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
+          feeAmountMinor: anyNamed('feeAmountMinor'),
+          feeCategoryId: anyNamed('feeCategoryId'),
+          feeDescription: anyNamed('feeDescription'),
         ),
       );
     },
   );
 
   test(
-    'when recordTransfer succeeds and recordTransaction fails, the error indicates the transfer was saved and the fee failed',
+    'when recordTransferWithOptionalFee throws validationTransferSavedFeeFailed, the error indicates the transfer was saved and the fee failed',
     () async {
-      when(
-        repository.recordTransfer(
-          fromAccountId: anyNamed('fromAccountId'),
-          toAccountId: anyNamed('toAccountId'),
-          amountMinor: anyNamed('amountMinor'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-          destinationAmountMinor: anyNamed('destinationAmountMinor'),
+      stubRecordTransferWithOptionalFee(
+        throws: AppFailure(
+          AppErrorCode.validationTransferSavedFeeFailed,
+          params: {'innerCode': AppErrorCode.amountMustBePositive.name},
         ),
-      ).thenAnswer((_) async {});
-      when(
-        repository.recordTransaction(
-          amountMinor: anyNamed('amountMinor'),
-          direction: anyNamed('direction'),
-          categoryId: anyNamed('categoryId'),
-          financialAccountId: anyNamed('financialAccountId'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-        ),
-      ).thenThrow(InvalidTransactionAmountException('amount must be positive'));
+      );
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
@@ -319,13 +274,16 @@ void main() {
 
       expect(result, isFalse);
       verify(
-        repository.recordTransfer(
+        repository.recordTransferWithOptionalFee(
           fromAccountId: anyNamed('fromAccountId'),
           toAccountId: anyNamed('toAccountId'),
           amountMinor: anyNamed('amountMinor'),
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
           destinationAmountMinor: anyNamed('destinationAmountMinor'),
+          feeAmountMinor: anyNamed('feeAmountMinor'),
+          feeCategoryId: anyNamed('feeCategoryId'),
+          feeDescription: anyNamed('feeDescription'),
         ),
       ).called(1);
       expect(viewModel.errorMessage, contains('Transfer saved'));
@@ -363,28 +321,9 @@ void main() {
   );
 
   test(
-    'deducted-fee mode posts recordTransfer for amount minus fee, and recordTransaction for the entered fee',
+    'deducted-fee mode posts recordTransferWithOptionalFee for amount minus fee, with the entered fee',
     () async {
-      when(
-        repository.recordTransfer(
-          fromAccountId: anyNamed('fromAccountId'),
-          toAccountId: anyNamed('toAccountId'),
-          amountMinor: anyNamed('amountMinor'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-          destinationAmountMinor: anyNamed('destinationAmountMinor'),
-        ),
-      ).thenAnswer((_) async {});
-      when(
-        repository.recordTransaction(
-          amountMinor: anyNamed('amountMinor'),
-          direction: anyNamed('direction'),
-          categoryId: anyNamed('categoryId'),
-          financialAccountId: anyNamed('financialAccountId'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-        ),
-      ).thenAnswer((_) async => 'entry-fee');
+      stubRecordTransferWithOptionalFee();
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
@@ -401,23 +340,16 @@ void main() {
 
       expect(result, isTrue);
       verify(
-        repository.recordTransfer(
+        repository.recordTransferWithOptionalFee(
           fromAccountId: 'asset-1',
           toAccountId: 'asset-2',
           amountMinor: 9838,
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
           destinationAmountMinor: null,
-        ),
-      ).called(1);
-      verify(
-        repository.recordTransaction(
-          amountMinor: 162,
-          direction: TransactionDirection.moneyOut,
-          categoryId: 'expense-1',
-          financialAccountId: 'asset-1',
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
+          feeAmountMinor: 162,
+          feeCategoryId: 'expense-1',
+          feeDescription: anyNamed('feeDescription'),
         ),
       ).called(1);
     },
@@ -436,26 +368,7 @@ void main() {
           includeArchived: anyNamed('includeArchived'),
         ),
       ).thenAnswer((_) => Stream.value(usdEurCatalog));
-      when(
-        repository.recordTransfer(
-          fromAccountId: anyNamed('fromAccountId'),
-          toAccountId: anyNamed('toAccountId'),
-          amountMinor: anyNamed('amountMinor'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-          destinationAmountMinor: anyNamed('destinationAmountMinor'),
-        ),
-      ).thenAnswer((_) async {});
-      when(
-        repository.recordTransaction(
-          amountMinor: anyNamed('amountMinor'),
-          direction: anyNamed('direction'),
-          categoryId: anyNamed('categoryId'),
-          financialAccountId: anyNamed('financialAccountId'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
-        ),
-      ).thenAnswer((_) async => 'entry-fee');
+      stubRecordTransferWithOptionalFee();
 
       final viewModel = buildViewModel();
       addTearDown(viewModel.dispose);
@@ -473,13 +386,16 @@ void main() {
 
       expect(result, isTrue);
       verify(
-        repository.recordTransfer(
+        repository.recordTransferWithOptionalFee(
           fromAccountId: 'asset-1',
           toAccountId: 'asset-3',
           amountMinor: 9838,
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
           destinationAmountMinor: 9114,
+          feeAmountMinor: 162,
+          feeCategoryId: 'expense-1',
+          feeDescription: anyNamed('feeDescription'),
         ),
       ).called(1);
     },
@@ -502,23 +418,16 @@ void main() {
       expect(result, isFalse);
       expect(viewModel.errorMessage, contains('fee'));
       verifyNever(
-        repository.recordTransfer(
+        repository.recordTransferWithOptionalFee(
           fromAccountId: anyNamed('fromAccountId'),
           toAccountId: anyNamed('toAccountId'),
           amountMinor: anyNamed('amountMinor'),
           transactionDate: anyNamed('transactionDate'),
           description: anyNamed('description'),
           destinationAmountMinor: anyNamed('destinationAmountMinor'),
-        ),
-      );
-      verifyNever(
-        repository.recordTransaction(
-          amountMinor: anyNamed('amountMinor'),
-          direction: anyNamed('direction'),
-          categoryId: anyNamed('categoryId'),
-          financialAccountId: anyNamed('financialAccountId'),
-          transactionDate: anyNamed('transactionDate'),
-          description: anyNamed('description'),
+          feeAmountMinor: anyNamed('feeAmountMinor'),
+          feeCategoryId: anyNamed('feeCategoryId'),
+          feeDescription: anyNamed('feeDescription'),
         ),
       );
     },

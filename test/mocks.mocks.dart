@@ -321,6 +321,35 @@ class MockLedgerRepository extends _i1.Mock implements _i14.LedgerRepository {
           as _i15.Future<void>);
 
   @override
+  _i15.Future<void> recordTransferWithOptionalFee({
+    required String? fromAccountId,
+    required String? toAccountId,
+    required int? amountMinor,
+    required DateTime? transactionDate,
+    String? description,
+    int? destinationAmountMinor,
+    int? feeAmountMinor,
+    String? feeCategoryId,
+    String? feeDescription,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#recordTransferWithOptionalFee, [], {
+              #fromAccountId: fromAccountId,
+              #toAccountId: toAccountId,
+              #amountMinor: amountMinor,
+              #transactionDate: transactionDate,
+              #description: description,
+              #destinationAmountMinor: destinationAmountMinor,
+              #feeAmountMinor: feeAmountMinor,
+              #feeCategoryId: feeCategoryId,
+              #feeDescription: feeDescription,
+            }),
+            returnValue: _i15.Future<void>.value(),
+            returnValueForMissingStub: _i15.Future<void>.value(),
+          )
+          as _i15.Future<void>);
+
+  @override
   _i15.Future<void> postTransferEntry({
     required _i19.AccountRow? fromAccount,
     required _i19.AccountRow? toAccount,
