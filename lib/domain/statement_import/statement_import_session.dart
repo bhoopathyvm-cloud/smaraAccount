@@ -2,6 +2,8 @@ import '../csv/csv_column_mapping.dart';
 import '../csv/csv_import_profile.dart';
 import 'category_rule.dart';
 import 'parsed_statement_transaction.dart';
+import 'statement_import_batch.dart';
+import 'statement_import_preview.dart';
 
 /// Which statement source the user is importing - chosen first, since CSV
 /// needs a column-mapping step OFX never does.
@@ -122,11 +124,22 @@ List<StatementImportRowGroup> groupPreviewRows(
   ];
 }
 
-/// Flutter-free wizard state: step, source, CSV mapping draft, grouping.
+/// Flutter-free wizard state: step, source, CSV mapping draft, preview
+/// review, and summary inputs. Repository I/O stays on the ViewModel.
 class StatementImportSession {
   StatementImportStep step = StatementImportStep.chooseSource;
   StatementSource? source;
   final csvMapping = CsvMappingDraft();
+
+  String? fileName;
+  String? parseError;
+  String? selectedAccountId;
+  String? statementCurrency;
+  bool currencyMismatch = false;
+  int parsedTransactionCount = 0;
+  List<StatementSkippedRow> skippedRows = const [];
+  List<StatementImportPreviewRow> rows = [];
+  StatementImportBatchResult? batchResult;
 
   void chooseSource(StatementSource next) {
     source = next;
@@ -134,4 +147,88 @@ class StatementImportSession {
   }
 
   bool get canConfirmCsvMapping => csvMapping.isComplete;
+
+  List<StatementImportRowGroup> get rowGroups => groupPreviewRows(rows);
+
+  int get skippedOrExcludedRowCount =>
+      skippedRows.length +
+      rows.where((row) => !(row.selected && row.categoryId != null)).length;
+
+  List<StatementAcceptedRow> get acceptedRows => [
+    for (final row in rows)
+      if (row.selected && row.categoryId != null)
+        StatementAcceptedRow(
+          transaction: row.transaction,
+          categoryId: row.categoryId!,
+        ),
+  ];
+
+  void setParseError(String message) {
+    parseError = message;
+  }
+
+  void clearParseError() {
+    parseError = null;
+  }
+
+  void goToSelectAccount() {
+    step = StatementImportStep.selectAccount;
+  }
+
+  void goToMapColumns() {
+    step = StatementImportStep.mapColumns;
+  }
+
+  void resetToPickFile(String message) {
+    parseError = message;
+    step = StatementImportStep.pickFile;
+  }
+
+  void applyParsedTransactions({
+    required List<ParsedStatementTransaction> transactions,
+    required List<StatementSkippedRow> skipped,
+    required String? currency,
+  }) {
+    parsedTransactionCount = transactions.length;
+    skippedRows = skipped;
+    statementCurrency = currency;
+  }
+
+  void applyPreview({required StatementImportPreview preview}) {
+    final statement = statementCurrency;
+    currencyMismatch =
+        statement != null &&
+        preview.accountCurrency != null &&
+        statement != preview.accountCurrency;
+    rows = [
+      for (final draft in preview.rows)
+        StatementImportPreviewRow(
+          transaction: draft.transaction,
+          isDuplicate: draft.isDuplicate,
+          categoryId: draft.suggestedCategoryId,
+        ),
+    ];
+    step = StatementImportStep.preview;
+  }
+
+  void applyPostResult(StatementImportBatchResult result) {
+    batchResult = result;
+    step = StatementImportStep.summary;
+  }
+
+  void toggleRowSelected(int index) {
+    rows[index].selected = !rows[index].selected;
+  }
+
+  void setRowCategory(int index, String? categoryId) {
+    rows[index].categoryId = categoryId;
+  }
+
+  void setCategoryForGroup(String groupKey, String? categoryId) {
+    for (final row in rows) {
+      if (normalizeDescription(row.transaction.description) == groupKey) {
+        row.categoryId = categoryId;
+      }
+    }
+  }
 }

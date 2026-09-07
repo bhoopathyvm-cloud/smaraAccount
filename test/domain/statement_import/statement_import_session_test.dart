@@ -1,6 +1,7 @@
 import 'package:smara_accounting/domain/csv/csv_column_mapping.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart';
+import 'package:smara_accounting/domain/statement_import/statement_import_preview.dart';
 import 'package:smara_accounting/domain/statement_import/statement_import_session.dart';
 import 'package:test/test.dart';
 
@@ -63,4 +64,47 @@ void main() {
     expect(groups.first.rowIndexes, [0, 1]);
     expect(groups.last.isSingleRow, isTrue);
   });
+
+  test(
+    'applyPreview sets mismatch and editable rows; acceptedRows filters',
+    () {
+      ParsedStatementTransaction tx(String description) {
+        return ParsedStatementTransaction(
+          transactionDate: DateTime(2026, 1, 1),
+          amountMinor: 100,
+          direction: TransactionDirection.moneyOut,
+          description: description,
+          currency: 'EUR',
+        );
+      }
+
+      final session = StatementImportSession()..statementCurrency = 'EUR';
+      session.applyPreview(
+        preview: StatementImportPreview(
+          accountCurrency: 'USD',
+          rows: [
+            StatementImportPreviewDraft(
+              transaction: tx('Coffee'),
+              isDuplicate: false,
+              suggestedCategoryId: 'cat-1',
+            ),
+            StatementImportPreviewDraft(
+              transaction: tx('Dup'),
+              isDuplicate: true,
+            ),
+          ],
+        ),
+      );
+      expect(session.currencyMismatch, isTrue);
+      expect(session.step, StatementImportStep.preview);
+      expect(session.rows, hasLength(2));
+      expect(session.rows.first.selected, isTrue);
+      expect(session.rows.last.selected, isFalse);
+
+      session.setCategoryForGroup('coffee', 'cat-1');
+      expect(session.acceptedRows, hasLength(1));
+      session.toggleRowSelected(0);
+      expect(session.acceptedRows, isEmpty);
+    },
+  );
 }
