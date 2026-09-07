@@ -15,4 +15,4 @@
 
 - [x] 3.1 `dart analyze` clean; new draft unit tests green
 - [x] 3.2 Existing `record_transaction_view_model_test.dart` (and view widget tests if any) still green
-- [ ] 3.3 Full acceptance suite on macOS (`tool/run_acceptance_tests.sh -d macos`)
+- [x] 3.3 Full acceptance suite on macOS (`tool/run_acceptance_tests.sh -d macos`)
