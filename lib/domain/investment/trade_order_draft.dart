@@ -1,9 +1,8 @@
-import '../../data/repositories/investment_holdings_logic.dart';
 import '../models/instrument.dart';
 import '../models/instrument_holding.dart';
+import 'investment_holdings.dart';
 
-export '../../data/repositories/investment_holdings_logic.dart'
-    show BuyFundingSource;
+export 'investment_holdings.dart' show BuyFundingSource;
 
 /// Mutable buy-dialog state: funding-source visibility and submit readiness.
 class BuyOrderDraft {

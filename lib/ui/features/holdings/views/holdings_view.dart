@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
-import '../../../../data/repositories/investment_holdings_logic.dart';
+import '../../../../domain/investment/investment_holdings.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/instrument.dart';
 import '../../../../domain/models/instrument_holding.dart';
