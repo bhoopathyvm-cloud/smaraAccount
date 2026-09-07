@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 
@@ -9,12 +8,12 @@ import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
-import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/transaction_direction.dart';
-import '../../../core/money_formatter.dart';
+import '../../../../domain/transfer/transfer_order_draft.dart';
+import '../../../../l10n/l10n.dart';
 
 class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   TransferViewModel({
@@ -29,40 +28,38 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
        _accountRepository = accountRepository,
        _categoryRepository = categoryRepository,
        _exchangeRateService = exchangeRateService ?? ExchangeRateService(),
-       _settingsRepository = settingsRepository ?? SettingsRepository() {
+       _settingsRepository = settingsRepository ?? SettingsRepository(),
+       _draft = TransferOrderDraft() {
     _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
       _accounts = accounts;
-      if (_fromAccountId == null && accounts.isNotEmpty) {
-        // Only honor the register's pre-selected account if it's still an
-        // active account by the time this first emission arrives - never
-        // seed a stale or archived id (e.g. the account was archived
-        // between the register screen loading and this one opening).
+      if (_draft.fromAccountId == null && accounts.isNotEmpty) {
         final requested = initialFromAccountId;
         final requestedIsActive =
             requested != null && accounts.any((a) => a.id == requested);
-        _fromAccountId = requestedIsActive ? requested : accounts.first.id;
+        _draft.fromAccountId = requestedIsActive
+            ? requested
+            : accounts.first.id;
       }
-      if (_toAccountId == null) {
-        // credit-card-household-flow's "Pay card" pre-fill: same
-        // still-active-by-arrival safety as initialFromAccountId above.
+      if (_draft.toAccountId == null) {
         final requestedTo = initialToAccountId;
         final requestedToIsActive =
             requestedTo != null &&
-            requestedTo != _fromAccountId &&
+            requestedTo != _draft.fromAccountId &&
             accounts.any((a) => a.id == requestedTo);
         if (requestedToIsActive) {
-          _toAccountId = requestedTo;
+          _draft.toAccountId = requestedTo;
         } else {
           for (final account in accounts) {
-            if (account.id != _fromAccountId) {
-              _toAccountId = account.id;
+            if (account.id != _draft.fromAccountId) {
+              _draft.toAccountId = account.id;
               break;
             }
           }
         }
       }
+      _syncCurrencies();
       _maybeFetchReferenceRate();
       notifyListeners();
     });
@@ -70,6 +67,7 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
         .watchAccountCurrencies(includeArchived: true)
         .listen((catalog) {
           _currencies = catalog;
+          _syncCurrencies();
           _maybeFetchReferenceRate();
           notifyListeners();
         });
@@ -89,6 +87,7 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final CategoryRepository _categoryRepository;
   final ExchangeRateService _exchangeRateService;
   final SettingsRepository _settingsRepository;
+  final TransferOrderDraft _draft;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
@@ -102,50 +101,40 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   List<Account> _expenseCategories = const [];
   List<Account> get expenseCategories => _expenseCategories;
 
-  /// The ISO 4217 currency of [accountId]'s group, or null if either can't
-  /// be resolved yet.
   String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);
 
-  String? _fromAccountId;
-  String? get fromAccountId => _fromAccountId;
+  void _syncCurrencies() {
+    _draft.fromCurrency = currencyFor(_draft.fromAccountId);
+    _draft.toCurrency = currencyFor(_draft.toAccountId);
+  }
+
+  String? get fromAccountId => _draft.fromAccountId;
   void setFromAccountId(String? value) {
-    _fromAccountId = value;
-    if (_toAccountId == value) _toAccountId = null;
+    _draft.setFromAccountId(value);
+    _syncCurrencies();
     _maybeFetchReferenceRate();
     notifyListeners();
   }
 
-  String? _toAccountId;
-  String? get toAccountId => _toAccountId;
+  String? get toAccountId => _draft.toAccountId;
   void setToAccountId(String? value) {
-    _toAccountId = value;
+    _draft.toAccountId = value;
+    _syncCurrencies();
     _maybeFetchReferenceRate();
     notifyListeners();
   }
 
-  /// Whether the from/to accounts are in different-currency groups
-  /// (multi-currency-support design.md Decisions 4/6) - drives whether the
-  /// optional "known destination amount" field is shown at all.
-  bool get isCrossCurrency {
-    final from = currencyFor(_fromAccountId);
-    final to = currencyFor(_toAccountId);
-    return from != null && to != null && from != to;
-  }
+  bool get isCrossCurrency => _draft.isCrossCurrency;
 
-  int? _amountMinor;
-  int? get amountMinor => _amountMinor;
+  int? get amountMinor => _draft.amountMinor;
   void setAmountMinor(int? value) {
-    _amountMinor = value;
+    _draft.amountMinor = value;
     notifyListeners();
   }
 
-  /// Only meaningful when [isCrossCurrency]. Left null: the transfer posts
-  /// provisionally, settled later. Supplied: the rate/fee was known
-  /// upfront and a single complete entry posts now.
-  int? _destinationAmountMinor;
-  int? get destinationAmountMinor => _destinationAmountMinor;
+  int? get destinationAmountMinor => _draft.destinationAmountMinor;
   void setDestinationAmountMinor(int? value) {
-    _destinationAmountMinor = value;
+    _draft.destinationAmountMinor = value;
     notifyListeners();
   }
 
@@ -162,67 +151,20 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   double? _referenceRate;
-
-  /// Best-effort market rate for the current cross-currency pair, fetched
-  /// from the user's selected provider - `null` whenever unavailable
-  /// (disabled, same-currency, offline, provider failure, or simply not
-  /// fetched yet). Display-only: never written into [destinationAmountMinor]
-  /// (design.md Decision 4).
   double? get referenceRate => _referenceRate;
 
-  /// Locally computed from the user's own entered amounts - no network
-  /// call, so it's available even when the reference-rate setting is
-  /// disabled or the fetch failed. `null` unless both amounts are entered
-  /// for a cross-currency transfer. Converts each side to its own major
-  /// units first (localized-money-formatting: minor-unit digit count is
-  /// per-currency, e.g. 0 for JPY vs 2 for USD - the raw minor-unit ratio
-  /// only equals the major-unit rate when both currencies share the same
-  /// digit count, which isn't true in general).
-  ///
-  /// When [feeDeductedFromAmount] is set, only `amountMinor - feeAmountMinor`
-  /// is actually converted (mirrors the `transferAmountMinor` computation in
-  /// [submit]) - dividing by the full entered amount here would understate
-  /// the rate the user is actually getting.
-  double? get impliedRate {
-    final amount = _amountMinor;
-    final destination = _destinationAmountMinor;
-    final fromCurrency = currencyFor(_fromAccountId);
-    final toCurrency = currencyFor(_toAccountId);
-    if (!isCrossCurrency ||
-        amount == null ||
-        amount <= 0 ||
-        destination == null ||
-        fromCurrency == null ||
-        toCurrency == null) {
-      return null;
-    }
-    final feeAmountMinor = _feeAmountMinor;
-    final convertedAmount = _feeDeductedFromAmount && feeAmountMinor != null
-        ? amount - feeAmountMinor
-        : amount;
-    if (convertedAmount <= 0) return null;
-    final fromMajor =
-        convertedAmount /
-        math.pow(10, minorUnitDigitsForCurrency(fromCurrency));
-    final toMajor =
-        destination / math.pow(10, minorUnitDigitsForCurrency(toCurrency));
-    return toMajor / fromMajor;
-  }
+  double? get impliedRate => _draft.impliedRate;
 
   int _referenceRateFetchGeneration = 0;
 
-  /// Re-evaluates whether a reference-rate fetch is warranted for the
-  /// current pair and, if so, starts one - cancelling relevance of any
-  /// still-in-flight fetch for a previous pair via the generation counter,
-  /// so a stale response can never display against the wrong accounts.
   void _maybeFetchReferenceRate() {
     _referenceRateFetchGeneration++;
     final generation = _referenceRateFetchGeneration;
     _referenceRate = null;
 
     if (!_referenceRateLookupEnabled || !isCrossCurrency) return;
-    final from = currencyFor(_fromAccountId);
-    final to = currencyFor(_toAccountId);
+    final from = currencyFor(_draft.fromAccountId);
+    final to = currencyFor(_draft.toAccountId);
     if (from == null || to == null) return;
 
     unawaited(
@@ -238,55 +180,39 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
     );
   }
 
-  DateTime _transactionDate = DateTime.now();
-  DateTime get transactionDate => _transactionDate;
+  DateTime get transactionDate => _draft.transactionDate;
   void setTransactionDate(DateTime value) {
-    _transactionDate = value;
+    _draft.transactionDate = value;
     notifyListeners();
   }
 
-  String? _description;
-  String? get description => _description;
+  String? get description => _draft.description;
   void setDescription(String? value) {
-    _description = value;
+    _draft.description = value;
     notifyListeners();
   }
 
-  /// Optional upfront transfer commission/fee - a separate expense entry
-  /// against the source account, independent of the transfer entry itself
-  /// (design.md Decision 2). Left `null`: no fee path at all, unchanged
-  /// single-`recordTransfer` behavior.
-  int? _feeAmountMinor;
-  int? get feeAmountMinor => _feeAmountMinor;
+  int? get feeAmountMinor => _draft.feeAmountMinor;
   void setFeeAmountMinor(int? value) {
-    _feeAmountMinor = value;
+    _draft.feeAmountMinor = value;
     notifyListeners();
   }
 
-  String? _feeCategoryId;
-  String? get feeCategoryId => _feeCategoryId;
+  String? get feeCategoryId => _draft.feeCategoryId;
   void setFeeCategoryId(String? value) {
-    _feeCategoryId = value;
+    _draft.feeCategoryId = value;
     notifyListeners();
   }
 
-  String? _feeDescription;
-  String? get feeDescription => _feeDescription;
+  String? get feeDescription => _draft.feeDescription;
   void setFeeDescription(String? value) {
-    _feeDescription = value;
+    _draft.feeDescription = value;
     notifyListeners();
   }
 
-  /// Off (default): the fee posts as an additional debit on top of
-  /// [amountMinor] - unchanged behavior. On: [amountMinor] is treated as
-  /// the total to be debited from the source account, and the transfer
-  /// itself moves `amountMinor - feeAmountMinor` (e.g. sending 100 via a
-  /// remittance service that takes a 1.62 fee out of it before converting
-  /// the remaining 98.38) - design.md Decision 1.
-  bool _feeDeductedFromAmount = false;
-  bool get feeDeductedFromAmount => _feeDeductedFromAmount;
+  bool get feeDeductedFromAmount => _draft.feeDeductedFromAmount;
   void setFeeDeductedFromAmount(bool value) {
-    _feeDeductedFromAmount = value;
+    _draft.feeDeductedFromAmount = value;
     notifyListeners();
   }
 
@@ -294,33 +220,30 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
   bool get isSubmitting => _isSubmitting;
 
   Future<bool> submit() async {
-    final fromAccountId = _fromAccountId;
-    final toAccountId = _toAccountId;
-    final amountMinor = _amountMinor;
-    if (fromAccountId == null || toAccountId == null || amountMinor == null) {
+    if (!_draft.hasRequiredAccountsAndAmount) {
       setFailure(const AppFailure(AppErrorCode.validationFromToAmountRequired));
       return false;
     }
 
-    final feeAmountMinor = _feeAmountMinor;
-    final hasFee = feeAmountMinor != null;
-    if (hasFee && (feeAmountMinor <= 0 || _feeCategoryId == null)) {
+    if (_draft.feeInvalid) {
       setFailure(
         const AppFailure(AppErrorCode.validationFeePositiveWithCategory),
       );
       return false;
     }
 
-    var transferAmountMinor = amountMinor;
-    if (hasFee && _feeDeductedFromAmount) {
-      transferAmountMinor = amountMinor - feeAmountMinor;
-      if (transferAmountMinor <= 0) {
-        setFailure(
-          const AppFailure(AppErrorCode.validationFeeMustBeLessThanAmount),
-        );
-        return false;
-      }
+    final transferAmountMinor = _draft.transferAmountMinor;
+    if (_draft.feeExceedsAmountWhenDeducted || transferAmountMinor == null) {
+      setFailure(
+        const AppFailure(AppErrorCode.validationFeeMustBeLessThanAmount),
+      );
+      return false;
     }
+
+    final fromAccountId = _draft.fromAccountId!;
+    final toAccountId = _draft.toAccountId!;
+    final feeAmountMinor = _draft.feeAmountMinor;
+    final hasFee = _draft.hasFee;
 
     _isSubmitting = true;
     clearFailure();
@@ -330,10 +253,10 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
         fromAccountId: fromAccountId,
         toAccountId: toAccountId,
         amountMinor: transferAmountMinor,
-        transactionDate: _transactionDate,
-        description: _description,
+        transactionDate: _draft.transactionDate,
+        description: _draft.description,
         destinationAmountMinor: isCrossCurrency
-            ? _destinationAmountMinor
+            ? _draft.destinationAmountMinor
             : null,
       );
     } on InvalidTransferException catch (error) {
@@ -346,18 +269,16 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
       return false;
     }
 
-    // The transfer entry is posted and signed at this point - it must not
-    // be rolled back, and must not appear to have failed, regardless of
-    // what happens to the fee below.
     if (hasFee) {
       try {
         await _ledgerRepository.recordTransaction(
-          amountMinor: feeAmountMinor,
+          amountMinor: feeAmountMinor!,
           direction: TransactionDirection.moneyOut,
-          categoryId: _feeCategoryId!,
+          categoryId: _draft.feeCategoryId!,
           financialAccountId: fromAccountId,
-          transactionDate: _transactionDate,
-          description: _feeDescription ?? _defaultFeeDescription(toAccountId),
+          transactionDate: _draft.transactionDate,
+          description:
+              _draft.feeDescription ?? _defaultFeeDescription(toAccountId),
         );
       } on InvalidTransactionAmountException catch (error) {
         _isSubmitting = false;
