@@ -12,4 +12,4 @@
 ## 3. Verify
 
 - [x] 3.1 `dart analyze` clean; domain + investment_holdings tests green
-- [ ] 3.2 Full acceptance suite on macOS
+- [x] 3.2 Full acceptance suite on macOS
