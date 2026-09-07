@@ -11,7 +11,6 @@ import '../../../../domain/exceptions.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
-import '../../../../domain/models/transaction_direction.dart';
 import '../../../../domain/transfer/transfer_order_draft.dart';
 import '../../../../l10n/l10n.dart';
 
@@ -249,7 +248,7 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
     clearFailure();
     notifyListeners();
     try {
-      await _ledgerRepository.recordTransfer(
+      await _ledgerRepository.recordTransferWithOptionalFee(
         fromAccountId: fromAccountId,
         toAccountId: toAccountId,
         amountMinor: transferAmountMinor,
@@ -257,6 +256,11 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
         description: _draft.description,
         destinationAmountMinor: isCrossCurrency
             ? _draft.destinationAmountMinor
+            : null,
+        feeAmountMinor: hasFee ? feeAmountMinor : null,
+        feeCategoryId: hasFee ? _draft.feeCategoryId : null,
+        feeDescription: hasFee
+            ? (_draft.feeDescription ?? _defaultFeeDescription(toAccountId))
             : null,
       );
     } on InvalidTransferException catch (error) {
@@ -267,38 +271,10 @@ class TransferViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _isSubmitting = false;
       setFailure(error);
       return false;
-    }
-
-    if (hasFee) {
-      try {
-        await _ledgerRepository.recordTransaction(
-          amountMinor: feeAmountMinor!,
-          direction: TransactionDirection.moneyOut,
-          categoryId: _draft.feeCategoryId!,
-          financialAccountId: fromAccountId,
-          transactionDate: _draft.transactionDate,
-          description:
-              _draft.feeDescription ?? _defaultFeeDescription(toAccountId),
-        );
-      } on InvalidTransactionAmountException catch (error) {
-        _isSubmitting = false;
-        setFailure(
-          AppFailure(
-            AppErrorCode.validationTransferSavedFeeFailed,
-            params: {'innerCode': error.code.name, ...error.params},
-          ),
-        );
-        return false;
-      } on AccountGroupException catch (error) {
-        _isSubmitting = false;
-        setFailure(
-          AppFailure(
-            AppErrorCode.validationTransferSavedFeeFailed,
-            params: {'innerCode': error.code.name, ...error.params},
-          ),
-        );
-        return false;
-      }
+    } on AppFailure catch (error) {
+      _isSubmitting = false;
+      setFailure(error);
+      return false;
     }
 
     _isSubmitting = false;
