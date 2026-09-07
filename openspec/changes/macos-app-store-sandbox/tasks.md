@@ -1,6 +1,6 @@
 ## 1. Prerequisite (human, not code)
 
-- [ ] 1.1 Configure a real Apple Developer Team in Xcode's Signing & Capabilities for the `Runner` target (blocks verification of every task below)
+- [x] 1.1 Configure a real Apple Developer Team in Xcode's Signing & Capabilities for the `Runner` target (blocks verification of every task below)
 
 ## 2. Entitlements
 
