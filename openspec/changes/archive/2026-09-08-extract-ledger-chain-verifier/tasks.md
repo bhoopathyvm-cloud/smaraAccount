@@ -11,4 +11,4 @@
 ## 3. Verify
 
 - [x] 3.1 analyze + focused tests green
-- [ ] 3.2 Full macOS acceptance
+- [x] 3.2 Full macOS acceptance
