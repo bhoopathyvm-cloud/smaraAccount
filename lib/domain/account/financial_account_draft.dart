@@ -5,16 +5,14 @@ import '../models/account_group.dart';
 /// target group, an optional opening balance, and the two create-time-only
 /// flags (credit card for liabilities, holds-investments for assets).
 ///
-/// Exposes the groups valid for the current [type], the selected group's
-/// currency, and keeps [groupId] pointing at a still-valid group as the
-/// type changes. Group snapshots are supplied by the dialog/ViewModel;
-/// this module never touches Drift, a Repository, or Flutter.
+/// Owns the field coupling - switching type clears the group and the flag
+/// that no longer applies, and the selection is kept valid as the caller's
+/// type-filtered group list changes. The group list itself comes from
+/// `AccountManagementViewModel.groupsAvailableForType` (the existing
+/// account/group type-filter seam), so this module never re-implements that
+/// rule and never touches Drift, a Repository, or Flutter.
 class FinancialAccountDraft {
   FinancialAccountDraft({this.type = AccountType.asset});
-
-  /// Live snapshot of every group (asset and liability, archived or not),
-  /// refreshed by the dialog from the ViewModel on each rebuild.
-  List<AccountGroup> groups = const [];
 
   AccountType type;
   String? groupId;
@@ -22,21 +20,14 @@ class FinancialAccountDraft {
   bool isCreditCard = false;
   bool holdsInvestments = false;
 
-  /// Active groups whose kind matches the current [type] (asset groups for
-  /// an asset account, liability groups for a liability account).
-  List<AccountGroup> get groupsForType {
-    final kind = type == AccountType.asset
-        ? AccountGroupKind.assetGroup
-        : AccountGroupKind.liabilityGroup;
-    return groups
-        .where((group) => group.kind == kind && !group.archived)
-        .toList();
-  }
+  /// Whether a target group is selected - the create dialog's submit gate.
+  /// The account name is validated separately at submit time.
+  bool get hasSelectedGroup => groupId != null;
 
-  /// ISO currency of the selected group, or null when no group is selected
-  /// or the selected group has no currency set. Drives the opening-balance
-  /// field's minor-unit formatting.
-  String? get selectedGroupCurrency {
+  /// ISO currency of the selected group within [groupsForType], or null
+  /// when no group is selected or it has no currency set. Drives the
+  /// opening-balance field's minor-unit formatting.
+  String? selectedGroupCurrency(List<AccountGroup> groupsForType) {
     for (final group in groupsForType) {
       if (group.id == groupId && group.currency != null) {
         return group.currency;
@@ -45,18 +36,12 @@ class FinancialAccountDraft {
     return null;
   }
 
-  /// Whether a target group is selected - the create dialog's submit gate.
-  /// The account name is validated separately at submit time.
-  bool get hasSelectedGroup => groupId != null;
-
-  /// Keep [groupId] valid for the current [type]: default to the first
-  /// group of that kind, or null when none exist, whenever the current
-  /// selection is no longer in that list. Idempotent - safe to call on
-  /// every rebuild.
-  void ensureValidGroupSelection() {
-    final available = groupsForType;
-    if (!available.any((group) => group.id == groupId)) {
-      groupId = available.isEmpty ? null : available.first.id;
+  /// Keep [groupId] valid within [groupsForType]: default to the first
+  /// entry, or null when it is empty, whenever the current selection is no
+  /// longer present. Idempotent - safe to call on every rebuild.
+  void ensureValidGroupSelection(List<AccountGroup> groupsForType) {
+    if (!groupsForType.any((group) => group.id == groupId)) {
+      groupId = groupsForType.isEmpty ? null : groupsForType.first.id;
     }
   }
 

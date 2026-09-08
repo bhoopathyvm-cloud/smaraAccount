@@ -46,10 +46,9 @@ class AccountManagementView extends StatelessWidget {
         final balanceController = controllers[1];
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            draft.groups = viewModel.groups;
-            draft.ensureValidGroupSelection();
-            final groups = draft.groupsForType;
-            final selectedGroupCurrency = draft.selectedGroupCurrency;
+            final groups = viewModel.groupsAvailableForType(draft.type);
+            draft.ensureValidGroupSelection(groups);
+            final selectedGroupCurrency = draft.selectedGroupCurrency(groups);
             return AlertDialog(
               title: Text(l10n.createAccount),
               content: SingleChildScrollView(

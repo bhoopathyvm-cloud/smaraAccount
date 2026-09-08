@@ -1,7 +1,7 @@
 ## 1. Draft module
 
-- [x] 1.1 Add `lib/domain/account/financial_account_draft.dart` (type/group/flags, `groupsForType`, `selectedGroupCurrency`, `ensureValidGroupSelection`, `setType`)
-- [x] 1.2 Domain unit tests (`test/domain/account/financial_account_draft_test.dart`): kind filter, auto-select, currency, type-switch clears flags
+- [x] 1.1 Add `lib/domain/account/financial_account_draft.dart` (type/group/flags, `selectedGroupCurrency`, `ensureValidGroupSelection`, `setType`); type-filtering stays on the ViewModel seam
+- [x] 1.2 Domain unit tests (`test/domain/account/financial_account_draft_test.dart`): auto-select, currency, type-switch clears flags
 
 ## 2. Wire the create dialog
 
