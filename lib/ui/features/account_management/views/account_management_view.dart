@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
+import '../../../../domain/account/financial_account_draft.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_group.dart';
 import '../../../../l10n/l10n.dart';
@@ -35,11 +36,7 @@ class AccountManagementView extends StatelessWidget {
 
   Future<void> _showCreateDialog(BuildContext context) async {
     final l10n = l10nOf(context);
-    var type = AccountType.asset;
-    String? groupId;
-    int? openingBalanceMinor;
-    var isCreditCard = false;
-    var holdsInvestments = false;
+    final draft = FinancialAccountDraft();
 
     await showManagedDialog<void>(
       context: context,
@@ -49,14 +46,10 @@ class AccountManagementView extends StatelessWidget {
         final balanceController = controllers[1];
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            final groups = viewModel.groupsAvailableForType(type);
-            if (!groups.any((group) => group.id == groupId)) {
-              groupId = groups.isEmpty ? null : groups.first.id;
-            }
-            final selectedGroupCurrency = groups
-                .where((group) => group.id == groupId)
-                .map((group) => group.currency)
-                .firstWhere((currency) => currency != null, orElse: () => null);
+            draft.groups = viewModel.groups;
+            draft.ensureValidGroupSelection();
+            final groups = draft.groupsForType;
+            final selectedGroupCurrency = draft.selectedGroupCurrency;
             return AlertDialog(
               title: Text(l10n.createAccount),
               content: SingleChildScrollView(
@@ -80,24 +73,15 @@ class AccountManagementView extends StatelessWidget {
                           label: Text(l10n.liability),
                         ),
                       ],
-                      selected: {type},
+                      selected: {draft.type},
                       onSelectionChanged: (selection) {
-                        setDialogState(() {
-                          type = selection.first;
-                          groupId = null;
-                          if (type != AccountType.liability) {
-                            isCreditCard = false;
-                          }
-                          if (type != AccountType.asset) {
-                            holdsInvestments = false;
-                          }
-                        });
+                        setDialogState(() => draft.setType(selection.first));
                       },
                     ),
                     // credit-card-household-flow: set once at creation,
                     // never changeable afterward - a Liability-only flag,
                     // mirroring the holdsInvestments pattern.
-                    if (type == AccountType.asset)
+                    if (draft.type == AccountType.asset)
                       CheckboxListTile(
                         contentPadding: EdgeInsets.zero,
                         controlAffinity: ListTileControlAffinity.leading,
@@ -105,36 +89,38 @@ class AccountManagementView extends StatelessWidget {
                         subtitle: Text(
                           l10n.thisAccountHoldsInvestmentsSubtitle,
                         ),
-                        value: holdsInvestments,
+                        value: draft.holdsInvestments,
                         onChanged: (value) => setDialogState(
-                          () => holdsInvestments = value ?? false,
+                          () => draft.holdsInvestments = value ?? false,
                         ),
                       ),
-                    if (type == AccountType.liability)
+                    if (draft.type == AccountType.liability)
                       CheckboxListTile(
                         contentPadding: EdgeInsets.zero,
                         controlAffinity: ListTileControlAffinity.leading,
                         title: Text(l10n.thisIsACreditCard),
-                        value: isCreditCard,
-                        onChanged: (value) =>
-                            setDialogState(() => isCreditCard = value ?? false),
+                        value: draft.isCreditCard,
+                        onChanged: (value) => setDialogState(
+                          () => draft.isCreditCard = value ?? false,
+                        ),
                       ),
                     const SizedBox(height: AppSpacing.medium),
                     EntityPickerField<AccountGroup>(
-                      key: ValueKey(type),
+                      key: ValueKey(draft.type),
                       labelText: l10n.groupLabel,
                       items: groups,
                       idOf: (group) => group.id,
                       labelOf: (group) => localizeStoredName(l10n, group.name),
-                      value: groupId,
-                      onChanged: (value) => groupId = value,
+                      value: draft.groupId,
+                      onChanged: (value) => draft.groupId = value,
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     MoneyAmountField(
                       controller: balanceController,
                       labelText: l10n.openingBalanceOptional,
                       currency: selectedGroupCurrency ?? 'USD',
-                      onChangedMinor: (value) => openingBalanceMinor = value,
+                      onChangedMinor: (value) =>
+                          draft.openingBalanceMinor = value,
                     ),
                   ],
                 ),
@@ -145,18 +131,18 @@ class AccountManagementView extends StatelessWidget {
                   child: Text(l10n.actionCancel),
                 ),
                 ElevatedButton(
-                  onPressed: groupId == null
+                  onPressed: !draft.hasSelectedGroup
                       ? null
                       : () async {
                           final name = nameController.text.trim();
                           if (name.isEmpty) return;
                           final created = await viewModel.createAccount(
                             name: name,
-                            type: type,
-                            groupId: groupId!,
-                            openingBalanceMinor: openingBalanceMinor,
-                            isCreditCard: isCreditCard,
-                            holdsInvestments: holdsInvestments,
+                            type: draft.type,
+                            groupId: draft.groupId!,
+                            openingBalanceMinor: draft.openingBalanceMinor,
+                            isCreditCard: draft.isCreditCard,
+                            holdsInvestments: draft.holdsInvestments,
                           );
                           if (created && dialogContext.mounted) {
                             Navigator.of(dialogContext).pop();
