@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 
 import '../../domain/exceptions.dart';
-import '../../domain/investment/investment_holdings.dart' show BuyFundingSource;
 import '../../domain/models/account.dart';
 import '../../domain/models/transaction_direction.dart';
 import '../database/app_database.dart';

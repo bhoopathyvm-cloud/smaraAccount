@@ -6,4 +6,4 @@
 ## 2. Verify
 
 - [x] 2.1 analyze + investment holdings tests green
-- [ ] 2.2 Full macOS acceptance
+- [x] 2.2 Full macOS acceptance
