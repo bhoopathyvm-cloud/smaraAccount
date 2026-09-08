@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import '../../domain/exceptions.dart';
 import '../../domain/models/account.dart';
 import '../../domain/models/summary.dart';
+import '../../domain/summary/ledger_summary_engine.dart';
 import '../database/app_database.dart';
 import 'account_chart_reader.dart';
 import 'repository_date_utils.dart';
@@ -129,55 +130,25 @@ class CategoryRepository {
         );
 
     return query.watch().asyncMap((rows) async {
-      final supersededEntryIds = <String>{
-        for (final row in rows)
-          ?row.readTable(_db.journalEntries).migratedFromEntryId,
-      };
-
-      final totalsById = <String, ({String name, bool isIncome, int total})>{};
+      final lines = <SummaryPostingLine>[];
       for (final row in rows) {
         final entry = row.readTable(_db.journalEntries);
-        if (supersededEntryIds.contains(entry.id)) continue;
-
-        final verification = row.readTableOrNull(_db.entryVerificationCache);
-        if (verification != null && !verification.isVerified) continue;
-
         final account = row.readTable(_db.accounts);
         final posting = row.readTable(_db.postings);
-        int magnitude;
-        bool isIncome;
-        switch (account.type) {
-          case AccountType.income:
-            magnitude = -posting.amountMinor;
-            isIncome = true;
-          case AccountType.expense:
-            magnitude = posting.amountMinor;
-            isIncome = false;
-          case AccountType.asset:
-          case AccountType.liability:
-          case AccountType.equity:
-          case AccountType.clearing:
-          case AccountType.inventory:
-            continue;
-        }
-
-        final existing = totalsById[account.id];
-        totalsById[account.id] = (
-          name: account.name,
-          isIncome: isIncome,
-          total: (existing?.total ?? 0) + magnitude,
+        final verification = row.readTableOrNull(_db.entryVerificationCache);
+        lines.add(
+          SummaryPostingLine(
+            entryId: entry.id,
+            migratedFromEntryId: entry.migratedFromEntryId,
+            isQuarantined: verification != null && !verification.isVerified,
+            accountId: account.id,
+            accountName: account.name,
+            accountType: account.type,
+            amountMinor: posting.amountMinor,
+          ),
         );
       }
-
-      return [
-        for (final entry in totalsById.entries)
-          CategoryTotal(
-            categoryId: entry.key,
-            categoryName: entry.value.name,
-            isIncome: entry.value.isIncome,
-            totalMinor: entry.value.total,
-          ),
-      ];
+      return buildCategoryTotals(lines);
     });
   }
 }

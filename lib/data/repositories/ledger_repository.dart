@@ -17,6 +17,7 @@ import '../../domain/models/transaction_direction.dart';
 import '../../domain/register/display_balance.dart' as display_balance;
 import '../../domain/register/active_balance.dart';
 import '../../domain/register/register_projection.dart';
+import '../../domain/summary/ledger_summary_engine.dart';
 import '../database/app_database.dart';
 import '../database/tables/accounts_table.dart';
 import 'account_chart_reader.dart';
@@ -704,52 +705,25 @@ class LedgerRepository {
         );
 
     return query.watch().asyncMap((rows) async {
-      final supersededEntryIds = <String>{
-        for (final row in rows)
-          ?row.readTable(_db.journalEntries).migratedFromEntryId,
-      };
-
-      Set<String>? entryIdsTouchingAccount;
-      if (financialAccountId != null) {
-        entryIdsTouchingAccount = {
-          for (final row in rows)
-            if (row.readTable(_db.postings).accountId == financialAccountId)
-              row.readTable(_db.journalEntries).id,
-        };
-      }
-
-      var totalIncomeMinor = 0;
-      var totalExpenseMinor = 0;
+      final lines = <SummaryPostingLine>[];
       for (final row in rows) {
         final entry = row.readTable(_db.journalEntries);
-        if (supersededEntryIds.contains(entry.id)) continue;
-        if (entryIdsTouchingAccount != null &&
-            !entryIdsTouchingAccount.contains(entry.id)) {
-          continue;
-        }
-
-        final verification = row.readTableOrNull(_db.entryVerificationCache);
-        if (verification != null && !verification.isVerified) continue;
-
         final account = row.readTable(_db.accounts);
         final posting = row.readTable(_db.postings);
-        switch (account.type) {
-          case AccountType.income:
-            totalIncomeMinor -= posting.amountMinor;
-          case AccountType.expense:
-            totalExpenseMinor += posting.amountMinor;
-          case AccountType.asset:
-          case AccountType.liability:
-          case AccountType.equity:
-          case AccountType.clearing:
-          case AccountType.inventory:
-            break;
-        }
+        final verification = row.readTableOrNull(_db.entryVerificationCache);
+        lines.add(
+          SummaryPostingLine(
+            entryId: entry.id,
+            migratedFromEntryId: entry.migratedFromEntryId,
+            isQuarantined: verification != null && !verification.isVerified,
+            accountId: account.id,
+            accountName: account.name,
+            accountType: account.type,
+            amountMinor: posting.amountMinor,
+          ),
+        );
       }
-      return LedgerSummary(
-        totalIncomeMinor: totalIncomeMinor,
-        totalExpenseMinor: totalExpenseMinor,
-      );
+      return buildLedgerSummary(lines, financialAccountId: financialAccountId);
     });
   }
 
