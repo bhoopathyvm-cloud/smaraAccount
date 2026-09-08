@@ -5,11 +5,11 @@ import 'package:drift/drift.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
 import '../../domain/home/home_overview_engine.dart';
+import '../../domain/ledger_export/ledger_csv_exporter.dart';
 import '../../domain/models/account_group.dart';
 import '../../domain/models/home_overview.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/journal_entry.dart';
-import '../../domain/money/currency_minor_units.dart';
 import '../../domain/models/pending_transfer.dart';
 import '../../domain/models/posting.dart';
 import '../../domain/models/summary.dart';
@@ -530,8 +530,6 @@ class LedgerRepository {
         .first;
     final accountsById = {for (final a in allAccounts) a.id: a};
 
-    final buffer = StringBuffer()
-      ..writeln('Date,Description,Category,Direction,Amount,Currency,Verified');
     final currency = await _chart.groupCurrencyFor(account);
 
     // Projection returns newest-first (Register UI). CSV is oldest-first.
@@ -544,53 +542,7 @@ class LedgerRepository {
       categoriesById: categoriesById,
       openingBalanceAccountId: openingBalanceEquityAccountId,
     );
-    for (final item in projected.reversed) {
-      final direction = item.row.direction == TransactionDirection.moneyIn
-          ? 'Received'
-          : 'Spent';
-      for (final leg in item.legs) {
-        buffer.writeln(
-          [
-            dateOnly(item.row.transactionDate),
-            _csvField(item.row.description ?? ''),
-            _csvField(leg.label),
-            direction,
-            _csvAmount(leg.amountMinor, currency),
-            currency,
-            item.row.isVerified ? 'Yes' : 'No',
-          ].join(','),
-        );
-      }
-    }
-    return buffer.toString();
-  }
-
-  /// A plain, locale-independent decimal string (period decimal, no
-  /// grouping) for [amountMinor] in [currency] - never [formatAmountMinor]'s
-  /// locale-grouped display form, which for a currency like EUR uses a
-  /// comma as its *decimal* separator and would silently break this CSV's
-  /// own comma delimiting. Still uses each currency's real minor-unit
-  /// digit count (0 for JPY, 2 for most others), so the value itself is
-  /// accurate - only the presentation is deliberately plain.
-  String _csvAmount(int amountMinor, String currency) {
-    final digits = minorUnitDigitsForCurrency(currency);
-    final major = amountMinor / _pow10(digits);
-    return major.toStringAsFixed(digits);
-  }
-
-  static int _pow10(int exponent) {
-    var result = 1;
-    for (var i = 0; i < exponent; i++) {
-      result *= 10;
-    }
-    return result;
-  }
-
-  String _csvField(String value) {
-    if (value.contains(',') || value.contains('"') || value.contains('\n')) {
-      return '"${value.replaceAll('"', '""')}"';
-    }
-    return value;
+    return buildLedgerCsv(projected: projected, currency: currency);
   }
 
   Stream<HomeOverview> watchHomeOverview() {

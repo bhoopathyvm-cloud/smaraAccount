@@ -16,8 +16,8 @@ class RegisterProjectionLabels {
     required this.splitCounterpartMore,
   });
 
-  /// English labels used by [LedgerRepository.exportLedgerCsv] so the
-  /// export file stays locale-independent.
+  /// English labels used by [buildLedgerCsv] so the export file stays
+  /// locale-independent.
   static const english = RegisterProjectionLabels(
     openingBalance: 'Opening balance',
     transferFallback: 'Transfer',
