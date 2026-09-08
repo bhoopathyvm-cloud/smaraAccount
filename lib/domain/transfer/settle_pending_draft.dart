@@ -1,5 +1,6 @@
 import '../models/home_overview.dart';
 import '../models/pending_transfer.dart';
+import 'pending_transfer_settlement.dart';
 
 /// Mutable settle-pending form state: target account, settled amount,
 /// fee category, and computed shortfall / currency visibility.
@@ -23,10 +24,17 @@ class SettlePendingDraft {
   bool get isTransfer =>
       summary.pendingTransfer.kind == PendingTransferKind.transfer;
 
+  /// Resolve the target account and shortfall path through the shared policy
+  /// so this form and `LedgerPosting.settlePendingTransfer` never diverge.
+  PendingTransferSettlement get _settlement =>
+      PendingTransferSettlement.resolve(
+        kind: summary.pendingTransfer.kind,
+        sourceAccountId: summary.pendingTransfer.sourceAccountId,
+        settledToAccountId: settledToAccountId,
+      );
+
   /// True only for a transfer settling back to its own source account.
-  bool get isShortfallComparable =>
-      isTransfer &&
-      settledToAccountId == summary.pendingTransfer.sourceAccountId;
+  bool get isShortfallComparable => _settlement.isShortfallComparable;
 
   /// Currency [settledAmountMinor] should be entered in.
   String? get settledAmountCurrency {
@@ -45,5 +53,5 @@ class SettlePendingDraft {
   /// Account id to settle to for submit (destination for transfer, source
   /// for foreign transaction).
   String? get effectiveSettledToAccountId =>
-      isTransfer ? settledToAccountId : summary.pendingTransfer.sourceAccountId;
+      _settlement.resolvedTargetAccountId;
 }
