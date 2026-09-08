@@ -2,6 +2,7 @@ import '../models/account.dart';
 import '../models/payee.dart';
 import '../models/transaction_direction.dart';
 import '../statement_import/category_rule.dart' show normalizeDescription;
+import '../transaction/categories_for_direction.dart';
 
 /// One category line within an in-progress split (split-transactions
 /// spec: "Split Entry Form Shows a Running Remainder"). [id] is a stable
@@ -63,12 +64,8 @@ class RecordTransactionDraft {
 
   /// Active categories matching the currently selected transaction
   /// direction (income for money-in, expense for money-out).
-  List<Account> get categories {
-    final categoryType = direction == TransactionDirection.moneyIn
-        ? AccountType.income
-        : AccountType.expense;
-    return allCategories.where((a) => a.type == categoryType).toList();
-  }
+  List<Account> get categories =>
+      categoriesForDirection(allCategories, direction);
 
   /// Transaction total minus every split line's entered amount.
   int get splitRemainderMinor {

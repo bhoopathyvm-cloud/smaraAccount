@@ -6,11 +6,12 @@ import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/recurring_template_repository.dart';
 import '../../../../domain/exceptions.dart';
-import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../domain/transaction/categories_for_direction.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Add/edit/delete for recurring templates (recurring-templates tasks.md
 /// 11.2). Editing an existing template posts nothing itself - recording a
@@ -68,16 +69,12 @@ class RecurringTemplateManagementViewModel extends ChangeNotifier
   AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
   List<Account> _categories = const [];
+  List<Account> get allCategories => _categories;
 
   /// Active categories matching [direction] (income for money-in, expense
-  /// for money-out) - same filtering `RecordTransactionViewModel.categories`
-  /// already applies.
-  List<Account> categoriesFor(TransactionDirection direction) {
-    final categoryType = direction == TransactionDirection.moneyIn
-        ? AccountType.income
-        : AccountType.expense;
-    return _categories.where((a) => a.type == categoryType).toList();
-  }
+  /// for money-out).
+  List<Account> categoriesFor(TransactionDirection direction) =>
+      categoriesForDirection(_categories, direction);
 
   /// The ISO 4217 currency of [accountId]'s group, for the amount field.
   String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);

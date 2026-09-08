@@ -4,6 +4,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../domain/recurring/recurring_template_draft.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
@@ -120,13 +121,23 @@ class RecurringTemplateManagementView extends StatelessWidget {
     RecurringTemplateManagementViewModel viewModel, [
     RecurringTemplate? existing,
   ]) async {
-    var direction = existing?.direction ?? TransactionDirection.moneyOut;
-    String? financialAccountId =
-        existing?.financialAccountId ??
-        (viewModel.financialAccounts.isEmpty
-            ? null
-            : viewModel.financialAccounts.first.id);
-    String? categoryId = existing?.categoryId;
+    final draft = existing == null
+        ? RecurringTemplateDraft(
+            financialAccountId: viewModel.financialAccounts.isEmpty
+                ? null
+                : viewModel.financialAccounts.first.id,
+          )
+        : RecurringTemplateDraft.fromTemplate(
+            name: existing.name,
+            direction: existing.direction,
+            financialAccountId: existing.financialAccountId,
+            categoryId: existing.categoryId,
+            amountMinor: existing.amountMinor,
+            dayOfMonth: existing.dayOfMonth,
+          );
+    draft.financialAccounts = viewModel.financialAccounts;
+    draft.allCategories = viewModel.allCategories;
+
     var errorMessage = viewModel.errorMessageFor(l10nOf(context));
     var initialAmountSet = false;
 
@@ -145,7 +156,8 @@ class RecurringTemplateManagementView extends StatelessWidget {
         return StatefulBuilder(
           builder: (context, setDialogState) {
             final l10n = l10nOf(context);
-            final currency = viewModel.currencyFor(financialAccountId) ?? 'USD';
+            final currency =
+                viewModel.currencyFor(draft.financialAccountId) ?? 'USD';
             if (!initialAmountSet && existing != null) {
               initialAmountSet = true;
               amountController.text = formatAmountMinor(
@@ -178,35 +190,35 @@ class RecurringTemplateManagementView extends StatelessWidget {
                           label: Text(l10n.captureSpent),
                         ),
                       ],
-                      selected: {direction},
+                      selected: {draft.direction},
                       onSelectionChanged: (selection) {
                         setDialogState(() {
-                          direction = selection.first;
-                          categoryId = null;
+                          draft.setDirection(selection.first);
                         });
                       },
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     EntityPickerField<Account>(
                       labelText: l10n.account,
-                      items: viewModel.financialAccounts,
+                      items: draft.financialAccounts,
                       idOf: (account) => account.id,
                       labelOf: (account) =>
                           localizeStoredName(l10n, account.name),
-                      value: financialAccountId,
-                      onChanged: (value) =>
-                          setDialogState(() => financialAccountId = value),
+                      value: draft.financialAccountId,
+                      onChanged: (value) => setDialogState(
+                        () => draft.financialAccountId = value,
+                      ),
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     EntityPickerField<Account>(
                       labelText: l10n.category,
-                      items: viewModel.categoriesFor(direction),
+                      items: draft.categories,
                       idOf: (category) => category.id,
                       labelOf: (category) =>
                           localizeStoredName(l10n, category.name),
-                      value: categoryId,
+                      value: draft.categoryId,
                       onChanged: (value) =>
-                          setDialogState(() => categoryId = value),
+                          setDialogState(() => draft.categoryId = value),
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     MoneyAmountField(
@@ -245,19 +257,13 @@ class RecurringTemplateManagementView extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    final name = nameController.text.trim();
-                    final accountId = financialAccountId;
-                    final category = categoryId;
-                    final amountMinor = parseAmountToMinor(
+                    draft.name = nameController.text.trim();
+                    draft.amountMinor = parseAmountToMinor(
                       amountController.text,
                       currency,
                     );
-                    final dayOfMonth = int.tryParse(dayController.text.trim());
-                    if (name.isEmpty ||
-                        accountId == null ||
-                        category == null ||
-                        amountMinor == null ||
-                        dayOfMonth == null) {
+                    draft.dayOfMonth = int.tryParse(dayController.text.trim());
+                    if (!draft.canSubmit) {
                       setDialogState(
                         () => errorMessage = l10n.validationFillTemplateFields,
                       );
@@ -265,21 +271,21 @@ class RecurringTemplateManagementView extends StatelessWidget {
                     }
                     final ok = existing == null
                         ? await viewModel.createTemplate(
-                            name: name,
-                            direction: direction,
-                            financialAccountId: accountId,
-                            categoryId: category,
-                            amountMinor: amountMinor,
-                            dayOfMonth: dayOfMonth,
+                            name: draft.name,
+                            direction: draft.direction,
+                            financialAccountId: draft.financialAccountId!,
+                            categoryId: draft.categoryId!,
+                            amountMinor: draft.amountMinor!,
+                            dayOfMonth: draft.dayOfMonth!,
                           )
                         : await viewModel.updateTemplate(
                             id: existing.id,
-                            name: name,
-                            direction: direction,
-                            financialAccountId: accountId,
-                            categoryId: category,
-                            amountMinor: amountMinor,
-                            dayOfMonth: dayOfMonth,
+                            name: draft.name,
+                            direction: draft.direction,
+                            financialAccountId: draft.financialAccountId!,
+                            categoryId: draft.categoryId!,
+                            amountMinor: draft.amountMinor!,
+                            dayOfMonth: draft.dayOfMonth!,
                           );
                     if (ok && dialogContext.mounted) {
                       Navigator.of(dialogContext).pop();

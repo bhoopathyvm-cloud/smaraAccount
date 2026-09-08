@@ -1,6 +1,7 @@
 import '../models/account.dart';
 import '../models/account_currency_catalog.dart';
 import '../models/transaction_direction.dart';
+import '../transaction/categories_for_direction.dart';
 
 /// Mutable Fix-this correction form state: prefilled amount/direction/
 /// category/account/date/description, plus direction-filtered categories
@@ -44,12 +45,8 @@ class CorrectionDraft {
 
   /// Active categories matching the currently selected direction (income
   /// for Received, expense for Spent) - same rule as record-transaction.
-  List<Account> get categories {
-    final categoryType = direction == TransactionDirection.moneyIn
-        ? AccountType.income
-        : AccountType.expense;
-    return allCategories.where((a) => a.type == categoryType).toList();
-  }
+  List<Account> get categories =>
+      categoriesForDirection(allCategories, direction);
 
   bool get canSubmit => categoryId != null && financialAccountId != null;
 
