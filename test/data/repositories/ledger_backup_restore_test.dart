@@ -6,6 +6,7 @@ import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
@@ -37,6 +38,7 @@ void main() {
       AccountRepository accountRepository,
       CategoryRepository categoryRepository,
       IdentityRepository identityRepository,
+      LedgerChainVerifier chainVerifier,
       LedgerBackupRepository ledgerBackupRepository,
     })
   >
@@ -53,11 +55,16 @@ void main() {
       accountRepository: accountRepository,
       signingKeyService: keys,
     );
+    final chainVerifier = LedgerChainVerifier(
+      database: db,
+      signingKeyService: keys,
+    );
     return (
       repository: repository,
       accountRepository: accountRepository,
       categoryRepository: CategoryRepository(database: db),
       identityRepository: identityRepository,
+      chainVerifier: chainVerifier,
       ledgerBackupRepository: LedgerBackupRepository(
         database: db,
         identityRepository: identityRepository,
@@ -72,6 +79,7 @@ void main() {
       AccountRepository accountRepository,
       CategoryRepository categoryRepository,
       IdentityRepository identityRepository,
+      LedgerChainVerifier chainVerifier,
       LedgerBackupRepository ledgerBackupRepository,
     })
   >
@@ -137,8 +145,7 @@ void main() {
       expect(entries, hasLength(1));
       expect(entries.single.postings, hasLength(2));
 
-      final verification = await restoredOpened.identityRepository
-          .verifyChain();
+      final verification = await restoredOpened.chainVerifier.verifyChain();
       expect(verification.isFullyVerified, isTrue);
 
       // No matching private key was restored on this "device" - only the

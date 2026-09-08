@@ -8,16 +8,18 @@ import '../../domain/exceptions.dart';
 import '../../domain/models/signing_identity.dart';
 import '../database/app_database.dart';
 import 'identity_repository.dart';
+import 'ledger_chain_verifier.dart';
 import 'repository_date_utils.dart';
 
 /// Encrypted export/restore of the whole ledger database file. Split out
 /// of `LedgerRepository` (architecture-deepening design.md D1); depends on
 /// [IdentityRepository] for [IdentityRepository.currentIdentity] (comparing
 /// the device's active identity against the backup's) and constructs its
-/// own throwaway [IdentityRepository] (via its own [SigningKeyService])
-/// wrapping a temp file to validate the backup before replacing the real
-/// database (design.md D2). The throwaway instance omits AccountRepository
-/// because it only reads identity and verifies the chain.
+/// own throwaway [IdentityRepository] / [LedgerChainVerifier] (via its own
+/// [SigningKeyService]) wrapping a temp file to validate the backup before
+/// replacing the real database (design.md D2). The throwaway Identity
+/// instance omits AccountRepository because it only reads identity; chain
+/// verification uses [LedgerChainVerifier].
 class LedgerBackupRepository {
   LedgerBackupRepository({
     required AppDatabase database,
@@ -115,7 +117,10 @@ class LedgerBackupRepository {
           );
         }
         backupIdentity = identity;
-        final verification = await backupRepository.verifyChain();
+        final verification = await LedgerChainVerifier(
+          database: backupDb,
+          signingKeyService: _signingKeyService,
+        ).verifyChain();
         if (!verification.isFullyVerified) {
           throw InvalidLedgerBackupException(
             'This backup did not verify as intact books, so it was not '

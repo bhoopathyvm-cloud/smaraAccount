@@ -11,12 +11,17 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockIdentityRepository repository;
+  late MockLedgerChainVerifier chainVerifier;
   late RecoveryPhraseSetupViewModel viewModel;
   late GeneratedIdentity generated;
 
   setUp(() async {
     repository = MockIdentityRepository();
-    viewModel = RecoveryPhraseSetupViewModel(identityRepository: repository);
+    chainVerifier = MockLedgerChainVerifier();
+    viewModel = RecoveryPhraseSetupViewModel(
+      identityRepository: repository,
+      chainVerifier: chainVerifier,
+    );
     final phrase = RecoveryPhrase.generate();
     final keyMaterial = await const Ed25519Signing().keyPairFromSeed(
       phrase.seed,
@@ -90,7 +95,7 @@ void main() {
       verifyNever(
         repository.confirmFirstIdentity(any, currency: anyNamed('currency')),
       );
-      verifyNever(repository.verifyChain());
+      verifyNever(chainVerifier.verifyChain());
     },
   );
 }

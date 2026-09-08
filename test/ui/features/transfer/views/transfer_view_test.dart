@@ -111,12 +111,16 @@ void main() {
 
   testWidgets('submitting a valid transfer calls onSaved', (tester) async {
     when(
-      repository.recordTransfer(
+      repository.recordTransferWithOptionalFee(
         fromAccountId: anyNamed('fromAccountId'),
         toAccountId: anyNamed('toAccountId'),
         amountMinor: anyNamed('amountMinor'),
         transactionDate: anyNamed('transactionDate'),
         description: anyNamed('description'),
+        destinationAmountMinor: null,
+        feeAmountMinor: null,
+        feeCategoryId: null,
+        feeDescription: null,
       ),
     ).thenAnswer((_) async {});
 
@@ -141,12 +145,16 @@ void main() {
 
     expect(saved, isTrue);
     verify(
-      repository.recordTransfer(
+      repository.recordTransferWithOptionalFee(
         fromAccountId: 'asset-1',
         toAccountId: 'asset-2',
         amountMinor: 2500,
         transactionDate: anyNamed('transactionDate'),
         description: anyNamed('description'),
+        destinationAmountMinor: null,
+        feeAmountMinor: null,
+        feeCategoryId: null,
+        feeDescription: null,
       ),
     ).called(1);
   });
@@ -155,12 +163,16 @@ void main() {
     tester,
   ) async {
     when(
-      repository.recordTransfer(
+      repository.recordTransferWithOptionalFee(
         fromAccountId: anyNamed('fromAccountId'),
         toAccountId: anyNamed('toAccountId'),
         amountMinor: anyNamed('amountMinor'),
         transactionDate: anyNamed('transactionDate'),
         description: anyNamed('description'),
+        destinationAmountMinor: null,
+        feeAmountMinor: null,
+        feeCategoryId: null,
+        feeDescription: null,
       ),
     ).thenThrow(
       InvalidTransferException(
@@ -195,12 +207,16 @@ void main() {
       'hardcoded English (regression: localizeVmError baked every error '
       'message to English regardless of the app language)', (tester) async {
     when(
-      repository.recordTransfer(
+      repository.recordTransferWithOptionalFee(
         fromAccountId: anyNamed('fromAccountId'),
         toAccountId: anyNamed('toAccountId'),
         amountMinor: anyNamed('amountMinor'),
         transactionDate: anyNamed('transactionDate'),
         description: anyNamed('description'),
+        destinationAmountMinor: null,
+        feeAmountMinor: null,
+        feeCategoryId: null,
+        feeDescription: null,
       ),
     ).thenThrow(
       InvalidTransferException(
@@ -325,13 +341,16 @@ void main() {
       'leaving the destination amount blank posts a provisional (unknown-rate) transfer',
       (tester) async {
         when(
-          repository.recordTransfer(
+          repository.recordTransferWithOptionalFee(
             fromAccountId: anyNamed('fromAccountId'),
             toAccountId: anyNamed('toAccountId'),
             amountMinor: anyNamed('amountMinor'),
             transactionDate: anyNamed('transactionDate'),
             description: anyNamed('description'),
             destinationAmountMinor: null,
+            feeAmountMinor: null,
+            feeCategoryId: null,
+            feeDescription: null,
           ),
         ).thenAnswer((_) async {});
 
@@ -359,13 +378,16 @@ void main() {
         await tester.pump();
 
         verify(
-          repository.recordTransfer(
+          repository.recordTransferWithOptionalFee(
             fromAccountId: 'asset-1',
             toAccountId: 'asset-3',
             amountMinor: 10000,
             transactionDate: anyNamed('transactionDate'),
             description: anyNamed('description'),
             destinationAmountMinor: null,
+            feeAmountMinor: null,
+            feeCategoryId: null,
+            feeDescription: null,
           ),
         ).called(1);
       },
@@ -375,13 +397,16 @@ void main() {
       'entering a destination amount posts a known-rate cross-currency transfer',
       (tester) async {
         when(
-          repository.recordTransfer(
+          repository.recordTransferWithOptionalFee(
             fromAccountId: anyNamed('fromAccountId'),
             toAccountId: anyNamed('toAccountId'),
             amountMinor: anyNamed('amountMinor'),
             transactionDate: anyNamed('transactionDate'),
             description: anyNamed('description'),
             destinationAmountMinor: anyNamed('destinationAmountMinor'),
+            feeAmountMinor: null,
+            feeCategoryId: null,
+            feeDescription: null,
           ),
         ).thenAnswer((_) async {});
 
@@ -413,13 +438,16 @@ void main() {
         await tester.pump();
 
         verify(
-          repository.recordTransfer(
+          repository.recordTransferWithOptionalFee(
             fromAccountId: 'asset-1',
             toAccountId: 'asset-3',
             amountMinor: 10000,
             transactionDate: anyNamed('transactionDate'),
             description: anyNamed('description'),
             destinationAmountMinor: 9200,
+            feeAmountMinor: null,
+            feeCategoryId: null,
+            feeDescription: null,
           ),
         ).called(1);
       },

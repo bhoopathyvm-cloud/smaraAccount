@@ -7,6 +7,7 @@ import '../data/repositories/category_repository.dart';
 import '../data/repositories/identity_repository.dart';
 import '../data/repositories/investment_repository.dart';
 import '../data/repositories/ledger_backup_repository.dart';
+import '../data/repositories/ledger_chain_verifier.dart';
 import '../data/repositories/ledger_repository.dart';
 import '../data/repositories/payee_repository.dart';
 import '../data/repositories/settings_repository.dart';
@@ -76,6 +77,7 @@ GoRouter buildAppRouter(
   CategoryRepository categoryRepository,
   PayeeRepository payeeRepository,
   IdentityRepository identityRepository,
+  LedgerChainVerifier chainVerifier,
   InvestmentRepository investmentRepository,
   LedgerBackupRepository ledgerBackupRepository,
   StatementImportRepository statementImportRepository,
@@ -87,7 +89,7 @@ GoRouter buildAppRouter(
     hasAnyJournalEntries: ledgerRepository.hasAnyJournalEntries,
     hasMatchingStoredKey: identityRepository.hasMatchingStoredKey,
     verifyChain: () async {
-      await identityRepository.verifyChain();
+      await chainVerifier.verifyChain();
     },
     needsCurrencyBackfill: accountRepository.needsCurrencyBackfill,
     isFirstWeekSetupCompleted: settingsRepository.isFirstWeekSetupCompleted,

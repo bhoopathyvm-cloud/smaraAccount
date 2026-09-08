@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/signing_identity.dart';
 import 'package:smara_accounting/ui/features/restore/view_models/restore_identity_view_model.dart';
@@ -9,6 +9,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockIdentityRepository repository;
+  late MockLedgerChainVerifier chainVerifier;
   late RestoreIdentityViewModel viewModel;
 
   final identity = SigningIdentity(
@@ -27,7 +28,11 @@ void main() {
 
   setUp(() {
     repository = MockIdentityRepository();
-    viewModel = RestoreIdentityViewModel(identityRepository: repository);
+    chainVerifier = MockLedgerChainVerifier();
+    viewModel = RestoreIdentityViewModel(
+      identityRepository: repository,
+      chainVerifier: chainVerifier,
+    );
   });
 
   group('restoreFromPhrase', () {
@@ -39,7 +44,7 @@ void main() {
             recoveryPhraseWords: anyNamed('recoveryPhraseWords'),
           ),
         ).thenAnswer((_) async => identity);
-        when(repository.verifyChain()).thenAnswer((_) async => verified);
+        when(chainVerifier.verifyChain()).thenAnswer((_) async => verified);
 
         final result = await viewModel.restoreFromPhrase(
           '  word1  word2\nword3 ',
@@ -55,7 +60,7 @@ void main() {
                 ).captured.single
                 as List<String>;
         expect(captured, equals(['word1', 'word2', 'word3']));
-        verify(repository.verifyChain()).called(1);
+        verify(chainVerifier.verifyChain()).called(1);
       },
     );
 
@@ -82,7 +87,7 @@ void main() {
           keystorePassphrase: anyNamed('keystorePassphrase'),
         ),
       ).thenAnswer((_) async => identity);
-      when(repository.verifyChain()).thenAnswer((_) async => verified);
+      when(chainVerifier.verifyChain()).thenAnswer((_) async => verified);
 
       final result = await viewModel.restoreFromKeystore(
         fileContents: '{"version":1}',
@@ -90,7 +95,7 @@ void main() {
       );
 
       expect(result, isTrue);
-      verify(repository.verifyChain()).called(1);
+      verify(chainVerifier.verifyChain()).called(1);
     });
 
     test('surfaces a wrong passphrase as errorMessage', () async {

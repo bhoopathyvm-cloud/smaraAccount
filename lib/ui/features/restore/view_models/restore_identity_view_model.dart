@@ -3,6 +3,7 @@ import 'package:cryptography/cryptography.dart'
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/identity_repository.dart';
+import '../../../../data/repositories/ledger_chain_verifier.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 
@@ -11,10 +12,14 @@ import '../../../../l10n/l10n.dart';
 /// Never re-signs or alters any entry - only re-derives and matches the
 /// device's private key.
 class RestoreIdentityViewModel extends ChangeNotifier with LocalizedErrorMixin {
-  RestoreIdentityViewModel({required IdentityRepository identityRepository})
-    : _identityRepository = identityRepository;
+  RestoreIdentityViewModel({
+    required IdentityRepository identityRepository,
+    required LedgerChainVerifier chainVerifier,
+  }) : _identityRepository = identityRepository,
+       _chainVerifier = chainVerifier;
 
   final IdentityRepository _identityRepository;
+  final LedgerChainVerifier _chainVerifier;
 
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
@@ -49,7 +54,7 @@ class RestoreIdentityViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
     try {
       await attempt();
-      await _identityRepository.verifyChain();
+      await _chainVerifier.verifyChain();
       _isSubmitting = false;
       notifyListeners();
       return true;
