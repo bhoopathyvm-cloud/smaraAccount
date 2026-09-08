@@ -5,16 +5,20 @@ import 'package:flutter/foundation.dart';
 import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../domain/correction/correction_draft.dart';
 import '../../../../domain/exceptions.dart';
-import '../../../../l10n/l10n.dart';
 import '../../../../domain/models/account.dart';
-import '../../../../domain/models/account_currency_catalog.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Form state for fixing a posted transaction (fix-this-correction-wizard):
 /// prefilled from the original entry, editable, and on [fix] posts a
 /// reversal of the original plus a new entry with the corrected fields -
 /// the original entry is never edited or deleted (Golden Rule #7).
+///
+/// Field rules live on [CorrectionDraft]; this ViewModel owns stream
+/// subscriptions, notifies listeners, and orchestrates
+/// [LedgerRepository.fixPostedTransaction].
 class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   CorrectionViewModel({
     required LedgerRepository ledgerRepository,
@@ -30,28 +34,30 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }) : _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
        _categoryRepository = categoryRepository,
-       _amountMinor = initialAmountMinor,
-       _direction = initialDirection,
-       _categoryId = initialCategoryId,
-       _financialAccountId = initialFinancialAccountId,
-       _transactionDate = initialTransactionDate,
-       _description = initialDescription {
+       _draft = CorrectionDraft(
+         amountMinor: initialAmountMinor,
+         direction: initialDirection,
+         categoryId: initialCategoryId,
+         financialAccountId: initialFinancialAccountId,
+         transactionDate: initialTransactionDate,
+         description: initialDescription,
+       ) {
     _accountsSubscription = _accountRepository.watchFinancialAccounts().listen((
       accounts,
     ) {
-      _financialAccounts = accounts;
+      _draft.financialAccounts = accounts;
       notifyListeners();
     });
     _categoriesSubscription = _categoryRepository.watchCategories().listen((
       categories,
     ) {
-      _categories = categories;
+      _draft.allCategories = categories;
       notifyListeners();
     });
     _currenciesSubscription = _accountRepository
         .watchAccountCurrencies(includeArchived: true)
         .listen((catalog) {
-          _currencies = catalog;
+          _draft.currencies = catalog;
           notifyListeners();
         });
   }
@@ -59,81 +65,63 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
   final CategoryRepository _categoryRepository;
+  final CorrectionDraft _draft;
 
   /// The original, still-unmodified entry this Fix corrects.
   final String entryId;
 
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
-  late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
+  late final StreamSubscription _currenciesSubscription;
 
-  List<Account> _financialAccounts = const [];
-  List<Account> get financialAccounts => _financialAccounts;
-
-  AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
+  List<Account> get financialAccounts => _draft.financialAccounts;
 
   /// The selected account's own currency (localized-money-formatting), or
   /// null until accounts/groups have loaded.
-  String? get currency => _currencies.currencyFor(_financialAccountId);
-
-  List<Account> _categories = const [];
+  String? get currency => _draft.currency;
 
   /// Active categories matching the currently selected direction (income
   /// for Received, expense for Spent) - same rule as record-transaction.
-  List<Account> get categories {
-    final categoryType = _direction == TransactionDirection.moneyIn
-        ? AccountType.income
-        : AccountType.expense;
-    return _categories.where((a) => a.type == categoryType).toList();
-  }
+  List<Account> get categories => _draft.categories;
 
-  int _amountMinor;
-  int get amountMinor => _amountMinor;
+  int get amountMinor => _draft.amountMinor;
   void setAmountMinor(int? value) {
-    if (value == null) return;
-    _amountMinor = value;
+    _draft.setAmountMinor(value);
     notifyListeners();
   }
 
-  TransactionDirection _direction;
-  TransactionDirection get direction => _direction;
+  TransactionDirection get direction => _draft.direction;
   void setDirection(TransactionDirection value) {
-    if (_direction == value) return;
-    _direction = value;
-    // The previously-selected category almost certainly doesn't match the
-    // new direction's category type (income vs expense) - clear it rather
-    // than silently keep an invalid selection, same as record-transaction.
-    _categoryId = null;
+    if (_draft.direction == value) return;
+    _draft.setDirection(value);
     notifyListeners();
   }
 
-  String? _categoryId;
-  String? get categoryId => _categoryId;
+  String? get categoryId => _draft.categoryId;
   void setCategoryId(String? value) {
-    _categoryId = value;
+    _draft.setCategoryId(value);
     notifyListeners();
   }
 
-  String? _financialAccountId;
-  String? get financialAccountId => _financialAccountId;
+  String? get financialAccountId => _draft.financialAccountId;
   void setFinancialAccountId(String? value) {
-    _financialAccountId = value;
+    _draft.setFinancialAccountId(value);
     notifyListeners();
   }
 
-  DateTime _transactionDate;
-  DateTime get transactionDate => _transactionDate;
+  DateTime get transactionDate => _draft.transactionDate;
   void setTransactionDate(DateTime value) {
-    _transactionDate = value;
+    _draft.setTransactionDate(value);
     notifyListeners();
   }
 
-  String? _description;
-  String? get description => _description;
+  String? get description => _draft.description;
   void setDescription(String? value) {
-    _description = value;
+    _draft.setDescription(value);
     notifyListeners();
   }
+
+  bool get canSubmit => _draft.canSubmit;
 
   bool _isSubmitting = false;
   bool get isSubmitting => _isSubmitting;
@@ -142,10 +130,7 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
   /// corrected fields, as one repository transaction. The original entry
   /// is never edited or deleted (Golden Rule #7).
   Future<bool> fix() async {
-    final categoryId = _categoryId;
-    final financialAccountId = _financialAccountId;
-    final amountMinor = _amountMinor;
-    if (categoryId == null || financialAccountId == null) {
+    if (!_draft.canSubmit) {
       setFailure(
         const AppFailure(AppErrorCode.validationAccountCategoryRequired),
       );
@@ -159,12 +144,12 @@ class CorrectionViewModel extends ChangeNotifier with LocalizedErrorMixin {
     try {
       await _ledgerRepository.fixPostedTransaction(
         entryId: entryId,
-        amountMinor: amountMinor,
-        direction: _direction,
-        categoryId: categoryId,
-        financialAccountId: financialAccountId,
-        transactionDate: _transactionDate,
-        description: _description,
+        amountMinor: _draft.amountMinor,
+        direction: _draft.direction,
+        categoryId: _draft.categoryId!,
+        financialAccountId: _draft.financialAccountId!,
+        transactionDate: _draft.transactionDate,
+        description: _draft.description,
       );
       return true;
     } on InvalidTransactionAmountException catch (e) {
