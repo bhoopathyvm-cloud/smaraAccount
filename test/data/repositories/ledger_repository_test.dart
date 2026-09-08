@@ -10,6 +10,7 @@ import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -31,6 +32,7 @@ void main() {
   late CategoryRepository categoryRepository;
   late PayeeRepository payeeRepository;
   late IdentityRepository identityRepository;
+  late LedgerChainVerifier chainVerifier;
   late InvestmentRepository investmentRepository;
   late RecurringTemplateRepository recurringTemplateRepository;
 
@@ -52,6 +54,10 @@ void main() {
     identityRepository = IdentityRepository(
       database: db,
       accountRepository: accountRepository,
+      signingKeyService: signingKeyService,
+    );
+    chainVerifier = LedgerChainVerifier(
+      database: db,
       signingKeyService: signingKeyService,
     );
     investmentRepository = InvestmentRepository(
@@ -809,7 +815,7 @@ void main() {
         expect(reversal.entryHash, isNotEmpty);
         expect(reversal.isVerified, isTrue);
 
-        final result = await identityRepository.verifyChain();
+        final result = await chainVerifier.verifyChain();
         expect(result.isFullyVerified, isTrue);
       },
     );
@@ -1499,7 +1505,7 @@ void main() {
             description: Value('tampered outside the app'),
           ),
         );
-        await identityRepository.verifyChain();
+        await chainVerifier.verifyChain();
 
         expect(await repository.displayBalanceMinor(checkingId), equals(0));
         final overview = await repository.watchHomeOverview().first;
@@ -1596,7 +1602,7 @@ void main() {
       )..where((e) => e.id.equals(entry.id))).write(
         JournalEntriesCompanion(description: Value('tampered outside the app')),
       );
-      await identityRepository.verifyChain();
+      await chainVerifier.verifyChain();
 
       final summary = await repository
           .watchSummary(
@@ -1702,7 +1708,7 @@ void main() {
       )..where((e) => e.id.equals(entry.id))).write(
         JournalEntriesCompanion(description: Value('tampered outside the app')),
       );
-      await identityRepository.verifyChain();
+      await chainVerifier.verifyChain();
 
       final totals = await categoryRepository
           .watchCategoryTotals(
@@ -1733,7 +1739,7 @@ void main() {
         transactionDate: DateTime(2026, 1, 16),
       );
 
-      final result = await identityRepository.verifyChain();
+      final result = await chainVerifier.verifyChain();
 
       expect(result.isFullyVerified, isTrue);
       expect(result.totalEntries, equals(2));
@@ -1773,7 +1779,7 @@ void main() {
           ),
         );
 
-        final result = await identityRepository.verifyChain();
+        final result = await chainVerifier.verifyChain();
 
         expect(result.isFullyVerified, isFalse);
         expect(result.breakEntryId, equals(firstEntry.id));
@@ -1812,7 +1818,7 @@ void main() {
           ),
         );
 
-        final result = await identityRepository.verifyChain();
+        final result = await chainVerifier.verifyChain();
         expect(result.breakEntryId, equals(middleEntry.id));
 
         final afterVerification = await repository.watchEntries().first;
@@ -1849,7 +1855,7 @@ void main() {
             description: Value('tampered outside the app'),
           ),
         );
-        await identityRepository.verifyChain();
+        await chainVerifier.verifyChain();
 
         await repository.recordTransaction(
           amountMinor: 200,
@@ -1972,7 +1978,7 @@ void main() {
         );
 
         await identityRepository.migrateToNewIdentityAfterKeyLoss();
-        final result = await identityRepository.verifyChain();
+        final result = await chainVerifier.verifyChain();
 
         expect(result.isFullyVerified, isTrue);
 
@@ -3260,7 +3266,7 @@ void main() {
             description: Value('tampered outside the app'),
           ),
         );
-        await identityRepository.verifyChain();
+        await chainVerifier.verifyChain();
 
         final overview = await repository.watchHomeOverview().first;
         final usd = overview.netPositionsByCurrency.firstWhere(
@@ -3884,7 +3890,7 @@ void main() {
       )..where((e) => e.id.equals(entryId))).write(
         JournalEntriesCompanion(description: Value('tampered outside the app')),
       );
-      await identityRepository.verifyChain();
+      await chainVerifier.verifyChain();
 
       final csv = await repository.exportLedgerCsv(
         financialAccountId: accountId,

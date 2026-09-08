@@ -11,11 +11,16 @@ import '../../../../mocks.mocks.dart';
 // and Skip always being available to continue past this optional step.
 void main() {
   late MockIdentityRepository repository;
+  late MockLedgerChainVerifier chainVerifier;
   late RecoveryPhraseSetupViewModel viewModel;
 
   setUp(() {
     repository = MockIdentityRepository();
-    viewModel = RecoveryPhraseSetupViewModel(identityRepository: repository);
+    chainVerifier = MockLedgerChainVerifier();
+    viewModel = RecoveryPhraseSetupViewModel(
+      identityRepository: repository,
+      chainVerifier: chainVerifier,
+    );
   });
 
   testWidgets('Skip always continues, regardless of passphrase state', (

@@ -4,11 +4,11 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i15;
-import 'dart:io' as _i36;
-import 'dart:ui' as _i50;
+import 'dart:io' as _i37;
+import 'dart:ui' as _i51;
 
-import 'package:flutter/services.dart' as _i51;
-import 'package:flutter/widgets.dart' as _i52;
+import 'package:flutter/services.dart' as _i52;
+import 'package:flutter/widgets.dart' as _i53;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i18;
 import 'package:smara_accounting/data/database/app_database.dart' as _i19;
@@ -17,67 +17,69 @@ import 'package:smara_accounting/data/database/tables/account_groups_table.dart'
 import 'package:smara_accounting/data/database/tables/accounts_table.dart'
     as _i26;
 import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
-    as _i45;
-import 'package:smara_accounting/data/exchange_rate_service.dart' as _i37;
+    as _i46;
+import 'package:smara_accounting/data/exchange_rate_service.dart' as _i38;
 import 'package:smara_accounting/data/repositories/account_repository.dart'
     as _i24;
 import 'package:smara_accounting/data/repositories/category_repository.dart'
     as _i28;
 import 'package:smara_accounting/data/repositories/identity_repository.dart'
-    as _i7;
-import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart'
-    as _i33;
-import 'package:smara_accounting/data/repositories/investment_repository.dart'
     as _i30;
+import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart'
+    as _i34;
+import 'package:smara_accounting/data/repositories/investment_repository.dart'
+    as _i31;
 import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart'
-    as _i35;
+    as _i36;
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart'
+    as _i7;
 import 'package:smara_accounting/data/repositories/ledger_repository.dart'
     as _i14;
 import 'package:smara_accounting/data/repositories/payee_repository.dart'
     as _i29;
 import 'package:smara_accounting/data/repositories/recurring_template_repository.dart'
-    as _i34;
+    as _i35;
 import 'package:smara_accounting/data/repositories/settings_repository.dart'
-    as _i39;
+    as _i40;
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart'
-    as _i42;
+    as _i43;
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart' as _i5;
-import 'package:smara_accounting/domain/csv/csv_column_mapping.dart' as _i43;
-import 'package:smara_accounting/domain/csv/csv_import_profile.dart' as _i46;
+import 'package:smara_accounting/domain/csv/csv_column_mapping.dart' as _i44;
+import 'package:smara_accounting/domain/csv/csv_import_profile.dart' as _i47;
 import 'package:smara_accounting/domain/lock/app_lock_policy.dart' as _i13;
-import 'package:smara_accounting/domain/lock/app_lock_service.dart' as _i47;
+import 'package:smara_accounting/domain/lock/app_lock_service.dart' as _i48;
 import 'package:smara_accounting/domain/lock/biometric_authenticator.dart'
-    as _i48;
+    as _i49;
 import 'package:smara_accounting/domain/models/account.dart' as _i2;
 import 'package:smara_accounting/domain/models/account_currency_catalog.dart'
     as _i25;
 import 'package:smara_accounting/domain/models/account_group.dart' as _i3;
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart'
-    as _i38;
+    as _i39;
 import 'package:smara_accounting/domain/models/home_overview.dart' as _i21;
 import 'package:smara_accounting/domain/models/instrument.dart' as _i8;
-import 'package:smara_accounting/domain/models/instrument_holding.dart' as _i31;
-import 'package:smara_accounting/domain/models/instrument_quote.dart' as _i32;
+import 'package:smara_accounting/domain/models/instrument_holding.dart' as _i32;
+import 'package:smara_accounting/domain/models/instrument_quote.dart' as _i33;
 import 'package:smara_accounting/domain/models/integrity_event.dart' as _i23;
 import 'package:smara_accounting/domain/models/journal_entry.dart' as _i16;
 import 'package:smara_accounting/domain/models/payee.dart' as _i4;
 import 'package:smara_accounting/domain/models/pending_transfer.dart' as _i20;
-import 'package:smara_accounting/domain/models/quote_provider.dart' as _i40;
+import 'package:smara_accounting/domain/models/quote_provider.dart' as _i41;
 import 'package:smara_accounting/domain/models/recurring_template.dart' as _i9;
-import 'package:smara_accounting/domain/models/research_tool.dart' as _i41;
+import 'package:smara_accounting/domain/models/research_tool.dart' as _i42;
 import 'package:smara_accounting/domain/models/signing_identity.dart' as _i6;
 import 'package:smara_accounting/domain/models/summary.dart' as _i22;
 import 'package:smara_accounting/domain/models/transaction_direction.dart'
     as _i17;
 import 'package:smara_accounting/domain/statement_import/category_rule.dart'
-    as _i44;
+    as _i45;
 import 'package:smara_accounting/domain/statement_import/parsed_statement_transaction.dart'
     as _i10;
 import 'package:smara_accounting/domain/statement_import/statement_import_batch.dart'
     as _i12;
 import 'package:smara_accounting/domain/statement_import/statement_import_preview.dart'
     as _i11;
-import 'package:smara_accounting/ui/core/app_lock_controller.dart' as _i49;
+import 'package:smara_accounting/ui/core/app_lock_controller.dart' as _i50;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -1113,7 +1115,7 @@ class MockPayeeRepository extends _i1.Mock implements _i29.PayeeRepository {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIdentityRepository extends _i1.Mock
-    implements _i7.IdentityRepository {
+    implements _i30.IdentityRepository {
   @override
   _i15.Future<_i6.SigningIdentity?> currentIdentity() =>
       (super.noSuchMethod(
@@ -1269,26 +1271,6 @@ class MockIdentityRepository extends _i1.Mock
           as _i15.Future<void>);
 
   @override
-  _i15.Future<_i7.ChainVerificationResult> verifyChain() =>
-      (super.noSuchMethod(
-            Invocation.method(#verifyChain, []),
-            returnValue: _i15.Future<_i7.ChainVerificationResult>.value(
-              _FakeChainVerificationResult_5(
-                this,
-                Invocation.method(#verifyChain, []),
-              ),
-            ),
-            returnValueForMissingStub:
-                _i15.Future<_i7.ChainVerificationResult>.value(
-                  _FakeChainVerificationResult_5(
-                    this,
-                    Invocation.method(#verifyChain, []),
-                  ),
-                ),
-          )
-          as _i15.Future<_i7.ChainVerificationResult>);
-
-  @override
   _i15.Future<String> exportKeystoreFile({required String? passphrase}) =>
       (super.noSuchMethod(
             Invocation.method(#exportKeystoreFile, [], {
@@ -1314,11 +1296,37 @@ class MockIdentityRepository extends _i1.Mock
           as _i15.Future<String>);
 }
 
+/// A class which mocks [LedgerChainVerifier].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockLedgerChainVerifier extends _i1.Mock
+    implements _i7.LedgerChainVerifier {
+  @override
+  _i15.Future<_i7.ChainVerificationResult> verifyChain() =>
+      (super.noSuchMethod(
+            Invocation.method(#verifyChain, []),
+            returnValue: _i15.Future<_i7.ChainVerificationResult>.value(
+              _FakeChainVerificationResult_5(
+                this,
+                Invocation.method(#verifyChain, []),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i15.Future<_i7.ChainVerificationResult>.value(
+                  _FakeChainVerificationResult_5(
+                    this,
+                    Invocation.method(#verifyChain, []),
+                  ),
+                ),
+          )
+          as _i15.Future<_i7.ChainVerificationResult>);
+}
+
 /// A class which mocks [InvestmentRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockInvestmentRepository extends _i1.Mock
-    implements _i30.InvestmentRepository {
+    implements _i31.InvestmentRepository {
   @override
   _i15.Stream<List<_i8.Instrument>> watchInstruments({
     bool? includeArchived = false,
@@ -1397,16 +1405,16 @@ class MockInvestmentRepository extends _i1.Mock
           as _i15.Future<void>);
 
   @override
-  _i15.Stream<List<_i31.InstrumentHolding>> watchHoldingsForAccount(
+  _i15.Stream<List<_i32.InstrumentHolding>> watchHoldingsForAccount(
     String? accountId,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#watchHoldingsForAccount, [accountId]),
-            returnValue: _i15.Stream<List<_i31.InstrumentHolding>>.empty(),
+            returnValue: _i15.Stream<List<_i32.InstrumentHolding>>.empty(),
             returnValueForMissingStub:
-                _i15.Stream<List<_i31.InstrumentHolding>>.empty(),
+                _i15.Stream<List<_i32.InstrumentHolding>>.empty(),
           )
-          as _i15.Stream<List<_i31.InstrumentHolding>>);
+          as _i15.Stream<List<_i32.InstrumentHolding>>);
 
   @override
   _i15.Stream<List<_i8.Instrument>> watchInstrumentsHeldInAccount(
@@ -1436,14 +1444,14 @@ class MockInvestmentRepository extends _i1.Mock
           as _i15.Future<List<_i8.Instrument>>);
 
   @override
-  _i15.Stream<List<_i32.InstrumentQuote>> watchInstrumentQuotes() =>
+  _i15.Stream<List<_i33.InstrumentQuote>> watchInstrumentQuotes() =>
       (super.noSuchMethod(
             Invocation.method(#watchInstrumentQuotes, []),
-            returnValue: _i15.Stream<List<_i32.InstrumentQuote>>.empty(),
+            returnValue: _i15.Stream<List<_i33.InstrumentQuote>>.empty(),
             returnValueForMissingStub:
-                _i15.Stream<List<_i32.InstrumentQuote>>.empty(),
+                _i15.Stream<List<_i33.InstrumentQuote>>.empty(),
           )
-          as _i15.Stream<List<_i32.InstrumentQuote>>);
+          as _i15.Stream<List<_i33.InstrumentQuote>>);
 
   @override
   _i15.Future<void> cacheInstrumentQuote({
@@ -1469,7 +1477,7 @@ class MockInvestmentRepository extends _i1.Mock
     required int? quantityScaled,
     required int? unitPriceMinor,
     required DateTime? transactionDate,
-    required _i33.BuyFundingSource? fundingSource,
+    required _i34.BuyFundingSource? fundingSource,
     String? incomeCategoryId,
     DateTime? lockedUntil,
     String? description,
@@ -1640,7 +1648,7 @@ class MockInvestmentRepository extends _i1.Mock
           as _i15.Future<String>);
 
   @override
-  _i15.Future<List<_i31.InstrumentHolding>> computeHoldingsForAccount(
+  _i15.Future<List<_i32.InstrumentHolding>> computeHoldingsForAccount(
     String? accountId, {
     bool? includeZeroQuantity = false,
   }) =>
@@ -1650,22 +1658,22 @@ class MockInvestmentRepository extends _i1.Mock
               [accountId],
               {#includeZeroQuantity: includeZeroQuantity},
             ),
-            returnValue: _i15.Future<List<_i31.InstrumentHolding>>.value(
-              <_i31.InstrumentHolding>[],
+            returnValue: _i15.Future<List<_i32.InstrumentHolding>>.value(
+              <_i32.InstrumentHolding>[],
             ),
             returnValueForMissingStub:
-                _i15.Future<List<_i31.InstrumentHolding>>.value(
-                  <_i31.InstrumentHolding>[],
+                _i15.Future<List<_i32.InstrumentHolding>>.value(
+                  <_i32.InstrumentHolding>[],
                 ),
           )
-          as _i15.Future<List<_i31.InstrumentHolding>>);
+          as _i15.Future<List<_i32.InstrumentHolding>>);
 }
 
 /// A class which mocks [RecurringTemplateRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockRecurringTemplateRepository extends _i1.Mock
-    implements _i34.RecurringTemplateRepository {
+    implements _i35.RecurringTemplateRepository {
   @override
   _i15.Stream<List<_i9.RecurringTemplate>> watchRecurringTemplates() =>
       (super.noSuchMethod(
@@ -1791,11 +1799,11 @@ class MockRecurringTemplateRepository extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockLedgerBackupRepository extends _i1.Mock
-    implements _i35.LedgerBackupRepository {
+    implements _i36.LedgerBackupRepository {
   @override
   _i15.Future<String> exportLedgerBackup({
     required String? passphrase,
-    _i36.File? databaseFile,
+    _i37.File? databaseFile,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#exportLedgerBackup, [], {
@@ -1827,7 +1835,7 @@ class MockLedgerBackupRepository extends _i1.Mock
   _i15.Future<void> restoreLedgerBackup({
     required String? fileContents,
     required String? passphrase,
-    _i36.File? targetFile,
+    _i37.File? targetFile,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#restoreLedgerBackup, [], {
@@ -1845,12 +1853,12 @@ class MockLedgerBackupRepository extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockExchangeRateService extends _i1.Mock
-    implements _i37.ExchangeRateService {
+    implements _i38.ExchangeRateService {
   @override
   _i15.Future<double?> fetchRate({
     required String? from,
     required String? to,
-    required _i38.ExchangeRateProvider? provider,
+    required _i39.ExchangeRateProvider? provider,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#fetchRate, [], {
@@ -1868,7 +1876,7 @@ class MockExchangeRateService extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSettingsRepository extends _i1.Mock
-    implements _i39.SettingsRepository {
+    implements _i40.SettingsRepository {
   @override
   _i15.Future<bool> isReferenceRateLookupEnabled() =>
       (super.noSuchMethod(
@@ -1888,21 +1896,21 @@ class MockSettingsRepository extends _i1.Mock
           as _i15.Future<void>);
 
   @override
-  _i15.Future<_i38.ExchangeRateProvider> selectedProvider() =>
+  _i15.Future<_i39.ExchangeRateProvider> selectedProvider() =>
       (super.noSuchMethod(
             Invocation.method(#selectedProvider, []),
-            returnValue: _i15.Future<_i38.ExchangeRateProvider>.value(
-              _i38.ExchangeRateProvider.frankfurter,
+            returnValue: _i15.Future<_i39.ExchangeRateProvider>.value(
+              _i39.ExchangeRateProvider.frankfurter,
             ),
             returnValueForMissingStub:
-                _i15.Future<_i38.ExchangeRateProvider>.value(
-                  _i38.ExchangeRateProvider.frankfurter,
+                _i15.Future<_i39.ExchangeRateProvider>.value(
+                  _i39.ExchangeRateProvider.frankfurter,
                 ),
           )
-          as _i15.Future<_i38.ExchangeRateProvider>);
+          as _i15.Future<_i39.ExchangeRateProvider>);
 
   @override
-  _i15.Future<void> setSelectedProvider(_i38.ExchangeRateProvider? provider) =>
+  _i15.Future<void> setSelectedProvider(_i39.ExchangeRateProvider? provider) =>
       (super.noSuchMethod(
             Invocation.method(#setSelectedProvider, [provider]),
             returnValue: _i15.Future<void>.value(),
@@ -2019,20 +2027,20 @@ class MockSettingsRepository extends _i1.Mock
           as _i15.Future<void>);
 
   @override
-  _i15.Future<_i40.QuoteProvider> selectedQuoteProvider() =>
+  _i15.Future<_i41.QuoteProvider> selectedQuoteProvider() =>
       (super.noSuchMethod(
             Invocation.method(#selectedQuoteProvider, []),
-            returnValue: _i15.Future<_i40.QuoteProvider>.value(
-              _i40.QuoteProvider.stooq,
+            returnValue: _i15.Future<_i41.QuoteProvider>.value(
+              _i41.QuoteProvider.stooq,
             ),
-            returnValueForMissingStub: _i15.Future<_i40.QuoteProvider>.value(
-              _i40.QuoteProvider.stooq,
+            returnValueForMissingStub: _i15.Future<_i41.QuoteProvider>.value(
+              _i41.QuoteProvider.stooq,
             ),
           )
-          as _i15.Future<_i40.QuoteProvider>);
+          as _i15.Future<_i41.QuoteProvider>);
 
   @override
-  _i15.Future<void> setSelectedQuoteProvider(_i40.QuoteProvider? provider) =>
+  _i15.Future<void> setSelectedQuoteProvider(_i41.QuoteProvider? provider) =>
       (super.noSuchMethod(
             Invocation.method(#setSelectedQuoteProvider, [provider]),
             returnValue: _i15.Future<void>.value(),
@@ -2041,20 +2049,20 @@ class MockSettingsRepository extends _i1.Mock
           as _i15.Future<void>);
 
   @override
-  _i15.Future<_i41.ResearchTool> selectedResearchTool() =>
+  _i15.Future<_i42.ResearchTool> selectedResearchTool() =>
       (super.noSuchMethod(
             Invocation.method(#selectedResearchTool, []),
-            returnValue: _i15.Future<_i41.ResearchTool>.value(
-              _i41.ResearchTool.chatGpt,
+            returnValue: _i15.Future<_i42.ResearchTool>.value(
+              _i42.ResearchTool.chatGpt,
             ),
-            returnValueForMissingStub: _i15.Future<_i41.ResearchTool>.value(
-              _i41.ResearchTool.chatGpt,
+            returnValueForMissingStub: _i15.Future<_i42.ResearchTool>.value(
+              _i42.ResearchTool.chatGpt,
             ),
           )
-          as _i15.Future<_i41.ResearchTool>);
+          as _i15.Future<_i42.ResearchTool>);
 
   @override
-  _i15.Future<void> setSelectedResearchTool(_i41.ResearchTool? tool) =>
+  _i15.Future<void> setSelectedResearchTool(_i42.ResearchTool? tool) =>
       (super.noSuchMethod(
             Invocation.method(#setSelectedResearchTool, [tool]),
             returnValue: _i15.Future<void>.value(),
@@ -2085,7 +2093,7 @@ class MockSettingsRepository extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStatementImportRepository extends _i1.Mock
-    implements _i42.StatementImportRepository {
+    implements _i43.StatementImportRepository {
   @override
   _i10.StatementParseResult parseOfxFile(List<int>? bytes) =>
       (super.noSuchMethod(
@@ -2104,7 +2112,7 @@ class MockStatementImportRepository extends _i1.Mock
   @override
   _i10.StatementParseResult parseCsvFile(
     List<int>? bytes,
-    _i43.CsvColumnMapping? mapping,
+    _i44.CsvColumnMapping? mapping,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#parseCsvFile, [bytes, mapping]),
@@ -2147,7 +2155,7 @@ class MockStatementImportRepository extends _i1.Mock
   _i15.Future<_i11.StatementImportPreview> buildPreviewRows({
     required String? financialAccountId,
     required List<_i10.ParsedStatementTransaction>? transactions,
-    required List<_i44.CategoryRule>? rules,
+    required List<_i45.CategoryRule>? rules,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#buildPreviewRows, [], {
@@ -2198,7 +2206,7 @@ class MockStatementImportRepository extends _i1.Mock
   _i15.Future<_i12.StatementImportBatchResult> postAcceptedRows({
     required String? financialAccountId,
     required List<_i12.StatementAcceptedRow>? rows,
-    required _i45.ImportSource? source,
+    required _i46.ImportSource? source,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#postAcceptedRows, [], {
@@ -2233,7 +2241,7 @@ class MockStatementImportRepository extends _i1.Mock
   @override
   _i15.Future<void> saveProfile({
     required String? name,
-    required _i43.CsvColumnMapping? mapping,
+    required _i44.CsvColumnMapping? mapping,
     required List<String>? headerRow,
   }) =>
       (super.noSuchMethod(
@@ -2248,26 +2256,26 @@ class MockStatementImportRepository extends _i1.Mock
           as _i15.Future<void>);
 
   @override
-  _i15.Future<_i46.CsvImportProfile?> findProfileForHeaderRow(
+  _i15.Future<_i47.CsvImportProfile?> findProfileForHeaderRow(
     List<String>? headerRow,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#findProfileForHeaderRow, [headerRow]),
-            returnValue: _i15.Future<_i46.CsvImportProfile?>.value(),
+            returnValue: _i15.Future<_i47.CsvImportProfile?>.value(),
             returnValueForMissingStub:
-                _i15.Future<_i46.CsvImportProfile?>.value(),
+                _i15.Future<_i47.CsvImportProfile?>.value(),
           )
-          as _i15.Future<_i46.CsvImportProfile?>);
+          as _i15.Future<_i47.CsvImportProfile?>);
 
   @override
-  _i15.Stream<List<_i46.CsvImportProfile>> watchProfiles() =>
+  _i15.Stream<List<_i47.CsvImportProfile>> watchProfiles() =>
       (super.noSuchMethod(
             Invocation.method(#watchProfiles, []),
-            returnValue: _i15.Stream<List<_i46.CsvImportProfile>>.empty(),
+            returnValue: _i15.Stream<List<_i47.CsvImportProfile>>.empty(),
             returnValueForMissingStub:
-                _i15.Stream<List<_i46.CsvImportProfile>>.empty(),
+                _i15.Stream<List<_i47.CsvImportProfile>>.empty(),
           )
-          as _i15.Stream<List<_i46.CsvImportProfile>>);
+          as _i15.Stream<List<_i47.CsvImportProfile>>);
 
   @override
   _i15.Future<void> renameProfile({
@@ -2306,14 +2314,14 @@ class MockStatementImportRepository extends _i1.Mock
           as _i15.Future<void>);
 
   @override
-  _i15.Stream<List<_i44.CategoryRule>> watchCategoryRules() =>
+  _i15.Stream<List<_i45.CategoryRule>> watchCategoryRules() =>
       (super.noSuchMethod(
             Invocation.method(#watchCategoryRules, []),
-            returnValue: _i15.Stream<List<_i44.CategoryRule>>.empty(),
+            returnValue: _i15.Stream<List<_i45.CategoryRule>>.empty(),
             returnValueForMissingStub:
-                _i15.Stream<List<_i44.CategoryRule>>.empty(),
+                _i15.Stream<List<_i45.CategoryRule>>.empty(),
           )
-          as _i15.Stream<List<_i44.CategoryRule>>);
+          as _i15.Stream<List<_i45.CategoryRule>>);
 
   @override
   _i15.Future<void> updateCategoryRule({
@@ -2345,7 +2353,7 @@ class MockStatementImportRepository extends _i1.Mock
 /// A class which mocks [AppLockService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAppLockService extends _i1.Mock implements _i47.AppLockService {
+class MockAppLockService extends _i1.Mock implements _i48.AppLockService {
   @override
   _i15.Future<bool> hasPinSet() =>
       (super.noSuchMethod(
@@ -2387,7 +2395,7 @@ class MockAppLockService extends _i1.Mock implements _i47.AppLockService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockBiometricAuthenticator extends _i1.Mock
-    implements _i48.BiometricAuthenticator {
+    implements _i49.BiometricAuthenticator {
   @override
   _i15.Future<bool> isAvailable() =>
       (super.noSuchMethod(
@@ -2410,7 +2418,7 @@ class MockBiometricAuthenticator extends _i1.Mock
 /// A class which mocks [AppLockController].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAppLockController extends _i1.Mock implements _i49.AppLockController {
+class MockAppLockController extends _i1.Mock implements _i50.AppLockController {
   @override
   _i13.AppLockPolicy get policy =>
       (super.noSuchMethod(
@@ -2496,7 +2504,7 @@ class MockAppLockController extends _i1.Mock implements _i49.AppLockController {
   );
 
   @override
-  void didChangeAppLifecycleState(_i50.AppLifecycleState? state) =>
+  void didChangeAppLifecycleState(_i51.AppLifecycleState? state) =>
       super.noSuchMethod(
         Invocation.method(#didChangeAppLifecycleState, [state]),
         returnValueForMissingStub: null,
@@ -2509,13 +2517,13 @@ class MockAppLockController extends _i1.Mock implements _i49.AppLockController {
   );
 
   @override
-  void addListener(_i50.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i51.VoidCallback? listener) => super.noSuchMethod(
     Invocation.method(#addListener, [listener]),
     returnValueForMissingStub: null,
   );
 
   @override
-  void removeListener(_i50.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i51.VoidCallback? listener) => super.noSuchMethod(
     Invocation.method(#removeListener, [listener]),
     returnValueForMissingStub: null,
   );
@@ -2536,7 +2544,7 @@ class MockAppLockController extends _i1.Mock implements _i49.AppLockController {
           as _i15.Future<bool>);
 
   @override
-  bool handleStartBackGesture(_i51.PredictiveBackEvent? backEvent) =>
+  bool handleStartBackGesture(_i52.PredictiveBackEvent? backEvent) =>
       (super.noSuchMethod(
             Invocation.method(#handleStartBackGesture, [backEvent]),
             returnValue: false,
@@ -2545,7 +2553,7 @@ class MockAppLockController extends _i1.Mock implements _i49.AppLockController {
           as bool);
 
   @override
-  void handleUpdateBackGestureProgress(_i51.PredictiveBackEvent? backEvent) =>
+  void handleUpdateBackGestureProgress(_i52.PredictiveBackEvent? backEvent) =>
       super.noSuchMethod(
         Invocation.method(#handleUpdateBackGestureProgress, [backEvent]),
         returnValueForMissingStub: null,
@@ -2580,7 +2588,7 @@ class MockAppLockController extends _i1.Mock implements _i49.AppLockController {
 
   @override
   _i15.Future<bool> didPushRouteInformation(
-    _i52.RouteInformation? routeInformation,
+    _i53.RouteInformation? routeInformation,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#didPushRouteInformation, [routeInformation]),
@@ -2608,29 +2616,29 @@ class MockAppLockController extends _i1.Mock implements _i49.AppLockController {
   );
 
   @override
-  void didChangeLocales(List<_i50.Locale>? locales) => super.noSuchMethod(
+  void didChangeLocales(List<_i51.Locale>? locales) => super.noSuchMethod(
     Invocation.method(#didChangeLocales, [locales]),
     returnValueForMissingStub: null,
   );
 
   @override
-  void didChangeViewFocus(_i50.ViewFocusEvent? event) => super.noSuchMethod(
+  void didChangeViewFocus(_i51.ViewFocusEvent? event) => super.noSuchMethod(
     Invocation.method(#didChangeViewFocus, [event]),
     returnValueForMissingStub: null,
   );
 
   @override
-  _i15.Future<_i50.AppExitResponse> didRequestAppExit() =>
+  _i15.Future<_i51.AppExitResponse> didRequestAppExit() =>
       (super.noSuchMethod(
             Invocation.method(#didRequestAppExit, []),
-            returnValue: _i15.Future<_i50.AppExitResponse>.value(
-              _i50.AppExitResponse.exit,
+            returnValue: _i15.Future<_i51.AppExitResponse>.value(
+              _i51.AppExitResponse.exit,
             ),
-            returnValueForMissingStub: _i15.Future<_i50.AppExitResponse>.value(
-              _i50.AppExitResponse.exit,
+            returnValueForMissingStub: _i15.Future<_i51.AppExitResponse>.value(
+              _i51.AppExitResponse.exit,
             ),
           )
-          as _i15.Future<_i50.AppExitResponse>);
+          as _i15.Future<_i51.AppExitResponse>);
 
   @override
   void didHaveMemoryPressure() => super.noSuchMethod(

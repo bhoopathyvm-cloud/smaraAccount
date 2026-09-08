@@ -14,11 +14,16 @@ import '../../../../mocks.mocks.dart';
 // pattern for this project.
 void main() {
   late MockIdentityRepository repository;
+  late MockLedgerChainVerifier chainVerifier;
   late RecoveryPhraseSetupViewModel viewModel;
 
   setUp(() {
     repository = MockIdentityRepository();
-    viewModel = RecoveryPhraseSetupViewModel(identityRepository: repository);
+    chainVerifier = MockLedgerChainVerifier();
+    viewModel = RecoveryPhraseSetupViewModel(
+      identityRepository: repository,
+      chainVerifier: chainVerifier,
+    );
   });
 
   testWidgets(

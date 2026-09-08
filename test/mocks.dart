@@ -5,6 +5,7 @@ import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
@@ -20,6 +21,7 @@ import 'package:smara_accounting/ui/core/app_lock_controller.dart';
   MockSpec<CategoryRepository>(),
   MockSpec<PayeeRepository>(),
   MockSpec<IdentityRepository>(),
+  MockSpec<LedgerChainVerifier>(),
   MockSpec<InvestmentRepository>(),
   MockSpec<RecurringTemplateRepository>(),
   MockSpec<LedgerBackupRepository>(),

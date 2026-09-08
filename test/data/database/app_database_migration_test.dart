@@ -8,6 +8,7 @@ import 'package:smara_accounting/data/database/tables/ofx_import_records_table.d
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
@@ -1327,6 +1328,10 @@ void main() {
           ),
           signingKeyService: keys,
         );
+        final chainVerifier = LedgerChainVerifier(
+          database: db,
+          signingKeyService: keys,
+        );
         final accountRepository = AccountRepository(
           database: db,
           ledgerRepository: repository,
@@ -1356,7 +1361,7 @@ void main() {
           transactionDate: DateTime(2026, 1, 15),
         );
 
-        final result = await identityRepository.verifyChain();
+        final result = await chainVerifier.verifyChain();
         expect(result.isFullyVerified, isTrue);
       },
     );

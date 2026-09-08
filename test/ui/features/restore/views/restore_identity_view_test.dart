@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/domain/models/signing_identity.dart';
 import 'package:smara_accounting/ui/features/restore/view_models/restore_identity_view_model.dart';
 import 'package:smara_accounting/ui/features/restore/views/restore_identity_view.dart';
@@ -10,6 +10,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockIdentityRepository repository;
+  late MockLedgerChainVerifier chainVerifier;
   late RestoreIdentityViewModel viewModel;
 
   final identity = SigningIdentity(
@@ -28,7 +29,11 @@ void main() {
 
   setUp(() {
     repository = MockIdentityRepository();
-    viewModel = RestoreIdentityViewModel(identityRepository: repository);
+    chainVerifier = MockLedgerChainVerifier();
+    viewModel = RestoreIdentityViewModel(
+      identityRepository: repository,
+      chainVerifier: chainVerifier,
+    );
   });
 
   testWidgets(
@@ -39,7 +44,7 @@ void main() {
           recoveryPhraseWords: anyNamed('recoveryPhraseWords'),
         ),
       ).thenAnswer((_) async => identity);
-      when(repository.verifyChain()).thenAnswer((_) async => verified);
+      when(chainVerifier.verifyChain()).thenAnswer((_) async => verified);
       var restored = false;
 
       await tester.pumpWidget(

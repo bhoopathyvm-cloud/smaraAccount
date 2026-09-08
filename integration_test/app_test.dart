@@ -13,6 +13,7 @@ import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
 import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
@@ -951,6 +952,10 @@ Widget buildAppFor(
     accountRepository: accountRepository,
     signingKeyService: signingKeyService,
   );
+  final chainVerifier = LedgerChainVerifier(
+    database: database,
+    signingKeyService: signingKeyService,
+  );
   final investmentRepository = InvestmentRepository(
     database: database,
     ledgerRepository: repository,
@@ -977,6 +982,7 @@ Widget buildAppFor(
       Provider<CategoryRepository>.value(value: categoryRepository),
       Provider<PayeeRepository>.value(value: payeeRepository),
       Provider<IdentityRepository>.value(value: identityRepository),
+      Provider<LedgerChainVerifier>.value(value: chainVerifier),
       Provider<InvestmentRepository>.value(value: investmentRepository),
       Provider<RecurringTemplateRepository>.value(
         value: recurringTemplateRepository,
@@ -1002,11 +1008,14 @@ Widget buildAppFor(
       ChangeNotifierProvider(
         create: (_) => RecoveryPhraseSetupViewModel(
           identityRepository: identityRepository,
+          chainVerifier: chainVerifier,
         ),
       ),
       ChangeNotifierProvider(
-        create: (_) =>
-            RestoreIdentityViewModel(identityRepository: identityRepository),
+        create: (_) => RestoreIdentityViewModel(
+          identityRepository: identityRepository,
+          chainVerifier: chainVerifier,
+        ),
       ),
       ChangeNotifierProvider(
         create: (_) => HomeViewModel(
@@ -1032,6 +1041,7 @@ Widget buildAppFor(
             categoryRepository,
             payeeRepository,
             identityRepository,
+            chainVerifier,
             investmentRepository,
             ledgerBackupRepository,
             statementImportRepository,

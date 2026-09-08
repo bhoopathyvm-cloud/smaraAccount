@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/domain/crypto/ed25519_signing.dart';
 import 'package:smara_accounting/domain/crypto/recovery_phrase.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
@@ -11,6 +11,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockIdentityRepository repository;
+  late MockLedgerChainVerifier chainVerifier;
   late RecoveryPhraseSetupViewModel viewModel;
   late GeneratedIdentity generated;
 
@@ -24,7 +25,11 @@ void main() {
 
   setUp(() {
     repository = MockIdentityRepository();
-    viewModel = RecoveryPhraseSetupViewModel(identityRepository: repository);
+    chainVerifier = MockLedgerChainVerifier();
+    viewModel = RecoveryPhraseSetupViewModel(
+      identityRepository: repository,
+      chainVerifier: chainVerifier,
+    );
     // deferred-onboarding-first-entry: ensureGenerated() always checks for
     // a resumable (crash-interrupted) phrase first. Default to "nothing
     // pending" so existing true-first-generation tests don't need to know
@@ -130,7 +135,7 @@ void main() {
         when(
           repository.confirmFirstIdentity(generated, currency: 'USD'),
         ).thenAnswer((_) async => identity);
-        when(repository.verifyChain()).thenAnswer(
+        when(chainVerifier.verifyChain()).thenAnswer(
           (_) async => const ChainVerificationResult(
             totalEntries: 0,
             breakEntryId: null,
@@ -145,7 +150,7 @@ void main() {
         verify(
           repository.confirmFirstIdentity(generated, currency: 'USD'),
         ).called(1);
-        verify(repository.verifyChain()).called(1);
+        verify(chainVerifier.verifyChain()).called(1);
       },
     );
   });

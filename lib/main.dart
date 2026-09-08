@@ -9,6 +9,7 @@ import 'data/repositories/identity_repository.dart';
 import 'data/repositories/investment_repository.dart';
 import 'data/repositories/ledger_backup_repository.dart';
 import 'data/repositories/ledger_chain_store.dart';
+import 'data/repositories/ledger_chain_verifier.dart';
 import 'data/repositories/ledger_repository.dart';
 import 'data/repositories/payee_repository.dart';
 import 'data/repositories/recurring_template_repository.dart';
@@ -91,6 +92,10 @@ class SmaraAccountingApp extends StatelessWidget {
             accountRepository: accountRepository,
             chain: chain,
           ),
+        ),
+        ProxyProvider2<AppDatabase, LedgerChainStore, LedgerChainVerifier>(
+          update: (_, db, chain, _) =>
+              LedgerChainVerifier(database: db, chain: chain),
         ),
         ProxyProvider2<AppDatabase, IdentityRepository, LedgerBackupRepository>(
           update: (_, db, identityRepository, _) => LedgerBackupRepository(
@@ -214,27 +219,37 @@ class SmaraAccountingApp extends StatelessWidget {
               previous ??
               CategoryManagementViewModel(categoryRepository: repository),
         ),
-        ChangeNotifierProxyProvider<
+        ChangeNotifierProxyProvider2<
           IdentityRepository,
+          LedgerChainVerifier,
           RecoveryPhraseSetupViewModel
         >(
           create: (context) => RecoveryPhraseSetupViewModel(
             identityRepository: context.read<IdentityRepository>(),
+            chainVerifier: context.read<LedgerChainVerifier>(),
           ),
-          update: (_, repository, previous) =>
+          update: (_, repository, chainVerifier, previous) =>
               previous ??
-              RecoveryPhraseSetupViewModel(identityRepository: repository),
+              RecoveryPhraseSetupViewModel(
+                identityRepository: repository,
+                chainVerifier: chainVerifier,
+              ),
         ),
-        ChangeNotifierProxyProvider<
+        ChangeNotifierProxyProvider2<
           IdentityRepository,
+          LedgerChainVerifier,
           RestoreIdentityViewModel
         >(
           create: (context) => RestoreIdentityViewModel(
             identityRepository: context.read<IdentityRepository>(),
+            chainVerifier: context.read<LedgerChainVerifier>(),
           ),
-          update: (_, repository, previous) =>
+          update: (_, repository, chainVerifier, previous) =>
               previous ??
-              RestoreIdentityViewModel(identityRepository: repository),
+              RestoreIdentityViewModel(
+                identityRepository: repository,
+                chainVerifier: chainVerifier,
+              ),
         ),
         ChangeNotifierProxyProvider5<
           LedgerRepository,
@@ -327,6 +342,7 @@ class SmaraAccountingApp extends StatelessWidget {
             context.read<CategoryRepository>(),
             context.read<PayeeRepository>(),
             context.read<IdentityRepository>(),
+            context.read<LedgerChainVerifier>(),
             context.read<InvestmentRepository>(),
             context.read<LedgerBackupRepository>(),
             context.read<StatementImportRepository>(),

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/identity_repository.dart';
+import '../../../../data/repositories/ledger_chain_verifier.dart';
 import '../../../../domain/crypto/signing_key_service.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -22,10 +23,14 @@ import '../../../../l10n/l10n.dart';
 /// relaunched anywhere in this window, so the words are never lost.
 class RecoveryPhraseSetupViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  RecoveryPhraseSetupViewModel({required IdentityRepository identityRepository})
-    : _identityRepository = identityRepository;
+  RecoveryPhraseSetupViewModel({
+    required IdentityRepository identityRepository,
+    required LedgerChainVerifier chainVerifier,
+  }) : _identityRepository = identityRepository,
+       _chainVerifier = chainVerifier;
 
   final IdentityRepository _identityRepository;
+  final LedgerChainVerifier _chainVerifier;
 
   /// Fixed spread across a 24-word phrase, asked back during confirmation.
   static const confirmationWordIndices = [2, 9, 17];
@@ -129,7 +134,7 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
       generated,
       currency: currency,
     );
-    await _identityRepository.verifyChain();
+    await _chainVerifier.verifyChain();
 
     _isSubmitting = false;
     notifyListeners();
