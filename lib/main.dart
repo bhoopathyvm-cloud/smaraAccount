@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'data/database/app_database.dart';
@@ -332,43 +333,62 @@ class SmaraAccountingApp extends StatelessWidget {
                   ),
         ),
       ],
-      child: Builder(
-        builder: (context) {
-          final appLockController = context.read<AppLockController>();
-          final localeController = context.watch<LocaleController>();
-          final router = buildAppRouter(
-            context.read<LedgerRepository>(),
-            context.read<AccountRepository>(),
-            context.read<CategoryRepository>(),
-            context.read<PayeeRepository>(),
-            context.read<IdentityRepository>(),
-            context.read<LedgerChainVerifier>(),
-            context.read<InvestmentRepository>(),
-            context.read<LedgerBackupRepository>(),
-            context.read<StatementImportRepository>(),
-            context.read<SettingsRepository>(),
-            appLockController,
-          );
-          return SnapshotHidingOverlay(
-            appLockController: appLockController,
-            child: MaterialApp.router(
-              onGenerateTitle: (context) =>
-                  AppLocalizations.of(context)!.appTitle,
-              theme: buildAppTheme(),
-              locale: localeController.overrideLocale,
-              localizationsDelegates:
-                  appLocalizationsDelegatesWithMaterialFallback,
-              supportedLocales: supportedAppLocales,
-              localeListResolutionCallback: (locales, supported) {
-                final device = locales?.isNotEmpty == true
-                    ? locales!.first
-                    : null;
-                return localeController.resolve(device);
-              },
-              routerConfig: router,
-            ),
-          );
+      child: const _AppRoot(),
+    );
+  }
+}
+
+/// Owns the single [GoRouter] instance and rebuilds only [MaterialApp.router]
+/// when the language changes.
+///
+/// The router is built once and memoized: rebuilding it on every
+/// [LocaleController] notification (the previous behavior) recreated the whole
+/// Navigator and threw away in-flight screen state on any language change -
+/// including the onboarding language screen's mandatory "a row was tapped"
+/// flag, which left Continue permanently disabled after selecting a language.
+/// Every repository the router captures is a stable singleton from the
+/// provider tree above, so building it once is safe.
+class _AppRoot extends StatefulWidget {
+  const _AppRoot();
+
+  @override
+  State<_AppRoot> createState() => _AppRootState();
+}
+
+class _AppRootState extends State<_AppRoot> {
+  GoRouter? _router;
+
+  @override
+  Widget build(BuildContext context) {
+    final appLockController = context.read<AppLockController>();
+    final localeController = context.watch<LocaleController>();
+    final router =
+        _router ??= buildAppRouter(
+          context.read<LedgerRepository>(),
+          context.read<AccountRepository>(),
+          context.read<CategoryRepository>(),
+          context.read<PayeeRepository>(),
+          context.read<IdentityRepository>(),
+          context.read<LedgerChainVerifier>(),
+          context.read<InvestmentRepository>(),
+          context.read<LedgerBackupRepository>(),
+          context.read<StatementImportRepository>(),
+          context.read<SettingsRepository>(),
+          appLockController,
+        );
+    return SnapshotHidingOverlay(
+      appLockController: appLockController,
+      child: MaterialApp.router(
+        onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+        theme: buildAppTheme(),
+        locale: localeController.overrideLocale,
+        localizationsDelegates: appLocalizationsDelegatesWithMaterialFallback,
+        supportedLocales: supportedAppLocales,
+        localeListResolutionCallback: (locales, supported) {
+          final device = locales?.isNotEmpty == true ? locales!.first : null;
+          return localeController.resolve(device);
         },
+        routerConfig: router,
       ),
     );
   }
