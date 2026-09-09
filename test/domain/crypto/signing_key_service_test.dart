@@ -53,6 +53,81 @@ void main() {
     });
   });
 
+  group('generateNewIdentity with a non-English language', () {
+    test('produces a French phrase, and restore auto-detects it', () async {
+      final generated = await service.generateNewIdentity(
+        language: Language.french,
+      );
+      expect(generated.phrase.language, Language.french);
+      expect(
+        generated.phrase.words.every(Language.french.list.contains),
+        isTrue,
+      );
+
+      final restored = await service.restoreFromRecoveryPhrase(
+        generated.phrase.words,
+      );
+      expect(restored.publicKey, equals(generated.keyMaterial.publicKey));
+    });
+  });
+
+  group('stashPendingPhraseWords / resumePendingIdentity', () {
+    test('resumes an English-generated identity unchanged', () async {
+      final generated = await service.generateNewIdentity();
+      await service.stashPendingPhraseWords(generated.phrase.words);
+
+      final resumed = await service.resumePendingIdentity();
+
+      expect(resumed, isNotNull);
+      expect(resumed!.phrase.language, Language.english);
+      expect(
+        resumed.keyMaterial.publicKey,
+        equals(generated.keyMaterial.publicKey),
+      );
+    });
+
+    test(
+      'resumes a non-English identity using the stashed language, not English',
+      () async {
+        final generated = await service.generateNewIdentity(
+          language: Language.japanese,
+        );
+        await service.stashPendingPhraseWords(
+          generated.phrase.words,
+          language: Language.japanese,
+        );
+
+        final resumed = await service.resumePendingIdentity();
+
+        expect(resumed, isNotNull);
+        expect(resumed!.phrase.language, Language.japanese);
+        expect(
+          resumed.keyMaterial.publicKey,
+          equals(generated.keyMaterial.publicKey),
+        );
+      },
+    );
+
+    test('returns null when nothing is stashed', () async {
+      expect(await service.resumePendingIdentity(), isNull);
+    });
+
+    test('clearPendingPhraseWords removes both words and language', () async {
+      final generated = await service.generateNewIdentity(
+        language: Language.spanish,
+      );
+      await service.stashPendingPhraseWords(
+        generated.phrase.words,
+        language: Language.spanish,
+      );
+
+      await service.clearPendingPhraseWords();
+
+      expect(await service.resumePendingIdentity(), isNull);
+      expect(await service.readPendingPhraseWords(), isNull);
+    });
+  });
+
   group('restoreFromRecoveryPhrase', () {
     test('rejects a phrase with an invalid checksum', () async {
       final generated = await service.generateNewIdentity();

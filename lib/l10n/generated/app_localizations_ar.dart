@@ -828,6 +828,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get exportKeystoreFile => 'تصدير ملف مخزن المفاتيح';
 
   @override
+  String get chooseLanguageTitle => 'اختر لغتك';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'سيظهر كل شيء في التطبيق بهذه اللغة. يمكنك تغييرها لاحقًا من الإعدادات.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'سيتم عرض عبارة الاسترداد الخاصة بك باللغة الإنجليزية. فهي تستخدم مجموعة صغيرة من الكلمات القياسية التي تتعرف عليها أدوات الاسترداد في كل مكان، وهي غير متوفرة بعد بهذه اللغة.';
+
+  @override
   String get chooseCurrencyTitle => 'اختر عملتك';
 
   @override

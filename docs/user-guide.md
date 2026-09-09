@@ -60,24 +60,37 @@ untampered, only preserved as a read-only historical record.
 
 On first launch, the app walks you through this order:
 
-1. **Currency** — pick your base currency. This becomes the currency of
-   the starter account groups (Cash & cash equivalents, Credit &
-   short-term debt, etc.) created for you, and generates your device's
-   signing key automatically in the background.
-2. **Name your main account** — a starter account is created for you;
+1. **Language** — pick the app's language from a list of every language it
+   supports, each shown in its own script. Your device's language is
+   pre-highlighted; confirming it counts as your choice. You must pick one
+   to continue — there's no way to skip this screen. If your chosen
+   language doesn't yet have a security-standard word list for the
+   recovery phrase in step 5 (most languages don't), you'll see a plain
+   notice here saying the phrase will be in English, and why, before you
+   ever reach that step. You can always change the language later in
+   Settings.
+2. **Currency** — pick your base currency. The list starts pre-filled with
+   a sensible guess based on the language you just chose (editable, not
+   enforced) and becomes the currency of the starter account groups (Cash
+   & cash equivalents, Credit & short-term debt, etc.) created for you,
+   and generates your device's signing key automatically in the
+   background.
+3. **Name your main account** — a starter account is created for you;
    give it a name you recognize, like your bank.
-3. **Record one entry** — a guided Spent or Received, so you can try the
+4. **Record one entry** — a guided Spent or Received, so you can try the
    app before facing the recovery-phrase ritual.
-4. **Your recovery phrase** — the 24 words are generated and shown once.
-   Tap "I've saved my recovery phrase" only once you've actually written
-   them down.
-5. **Optional backup file** — enter a passphrase to export an encrypted
+5. **Your recovery phrase** — the 24 words are generated and shown once,
+   in your chosen language if a security-standard word list exists for it
+   (currently French, Italian, Spanish, Portuguese, Japanese, Korean, and
+   Simplified Chinese), or in English otherwise. Tap "I've saved my
+   recovery phrase" only once you've actually written them down.
+6. **Optional backup file** — enter a passphrase to export an encrypted
    keystore file, or tap "Skip." Neither blocks you from continuing.
-6. **Confirm** — you re-enter part of your phrase to confirm you actually
+7. **Confirm** — you re-enter part of your phrase to confirm you actually
    saved it correctly.
 
-The entry you record in step 3 is a real, permanently signed transaction
-from the moment it posts — not a demo. Steps 4–6 are mandatory and block
+The entry you record in step 4 is a real, permanently signed transaction
+from the moment it posts — not a demo. Steps 5–7 are mandatory and block
 everything else (recording a second entry, leaving the app, even resuming
 after it's closed) until you complete them; if the app is closed partway
 through, it picks back up at the same step next time you open it, showing
@@ -87,7 +100,7 @@ the same phrase again.
 
 Right after onboarding finishes, a short one-time wizard offers two
 optional accounts beyond the main one you already named during
-onboarding (step 2 above):
+onboarding (step 3 above):
 
 - **Add a credit card** (optional) — name it to create a liability
   account for it.

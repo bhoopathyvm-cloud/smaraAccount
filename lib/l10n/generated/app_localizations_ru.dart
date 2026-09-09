@@ -834,6 +834,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exportKeystoreFile => 'Экспортировать файл ключей';
 
   @override
+  String get chooseLanguageTitle => 'Выберите свой язык';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Все в приложении будет отображаться на этом языке. Вы можете изменить это позже в Настройках.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Ваша фраза восстановления будет показана на английском языке. Она использует небольшой набор стандартных слов, распознаваемых инструментами восстановления повсюду, который пока недоступен для этого языка.';
+
+  @override
   String get chooseCurrencyTitle => 'Выберите вашу валюту';
 
   @override

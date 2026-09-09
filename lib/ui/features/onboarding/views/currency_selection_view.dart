@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../domain/crypto/bip39_language_for_locale.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
@@ -34,7 +35,23 @@ class CurrencySelectionView extends StatefulWidget {
 }
 
 class _CurrencySelectionViewState extends State<CurrencySelectionView> {
-  final _controller = TextEditingController(text: _commonCurrencies.first);
+  final _controller = TextEditingController();
+  bool _defaultSeeded = false;
+
+  // Localizations.localeOf(context) throws if called from initState (the
+  // widget isn't finished mounting yet); didChangeDependencies is the
+  // correct hook for a one-time read of an inherited value. Guarded so a
+  // later dependency change (shouldn't happen on this screen, but
+  // defensively) never overwrites a value the user already edited.
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_defaultSeeded) return;
+    _defaultSeeded = true;
+    _controller.text = defaultCurrencyForLocale(
+      Localizations.localeOf(context).languageCode,
+    );
+  }
 
   @override
   void dispose() {
@@ -46,7 +63,13 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
 
   Future<void> _submit() async {
     if (!_isValid) return;
-    final success = await widget.viewModel.commitIdentity(_controller.text);
+    final language = bip39LanguageForLocale(
+      Localizations.localeOf(context).languageCode,
+    );
+    final success = await widget.viewModel.commitIdentity(
+      _controller.text,
+      language: language,
+    );
     if (success) widget.onFinished();
   }
 

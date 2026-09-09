@@ -830,6 +830,17 @@ class AppLocalizationsPa extends AppLocalizations {
   String get exportKeystoreFile => 'ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਕਰੋ';
 
   @override
+  String get chooseLanguageTitle => 'ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ਐਪ ਵਿੱਚ ਸਭ ਕੁਝ ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਦਿਖੇਗਾ। ਤੁਸੀਂ ਬਾਅਦ ਵਿੱਚ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇਸਨੂੰ ਬਦਲ ਸਕਦੇ ਹੋ।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ ਦਿਖਾਇਆ ਜਾਵੇਗਾ। ਇਹ ਹਰ ਥਾਂ ਰਿਕਵਰੀ ਟੂਲਾਂ ਦੁਆਰਾ ਪਛਾਣੇ ਜਾਂਦੇ ਮਿਆਰੀ ਸ਼ਬਦਾਂ ਦੇ ਇੱਕ ਛੋਟੇ ਸਮੂਹ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ, ਜੋ ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਅਜੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।';
+
+  @override
   String get chooseCurrencyTitle => 'ਆਪਣੀ ਮੁਦਰਾ ਚੁਣੋ';
 
   @override

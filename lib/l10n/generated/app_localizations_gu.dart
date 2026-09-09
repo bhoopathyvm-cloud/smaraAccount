@@ -829,6 +829,17 @@ class AppLocalizationsGu extends AppLocalizations {
   String get exportKeystoreFile => 'કીસ્ટોર ફાઇલ નિકાસ કરો';
 
   @override
+  String get chooseLanguageTitle => 'તમારી ભાષા પસંદ કરો';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'એપમાં બધું આ ભાષામાં દેખાશે. તમે પછીથી સેટિંગ્સમાં તેને બદલી શકો છો.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'તમારો રિકવરી શબ્દસમૂહ અંગ્રેજીમાં બતાવવામાં આવશે. તે દરેક જગ્યાએ રિકવરી ટૂલ્સ દ્વારા ઓળખાતા પ્રમાણભૂત શબ્દોના નાના સમૂહનો ઉપયોગ કરે છે, જે આ ભાષામાં હજુ ઉપલબ્ધ નથી.';
+
+  @override
   String get chooseCurrencyTitle => 'તમારું ચલણ પસંદ કરો';
 
   @override

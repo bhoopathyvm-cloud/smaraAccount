@@ -838,6 +838,17 @@ class AppLocalizationsUk extends AppLocalizations {
   String get exportKeystoreFile => 'Експортувати файл keystore';
 
   @override
+  String get chooseLanguageTitle => 'Оберіть свою мову';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Усе в застосунку відображатиметься цією мовою. Ви можете змінити це пізніше в Налаштуваннях.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Ваша фраза відновлення відображатиметься англійською мовою. Вона використовує невеликий набір стандартних слів, які розпізнаються інструментами відновлення повсюди і які ще недоступні цією мовою.';
+
+  @override
   String get chooseCurrencyTitle => 'Виберіть вашу валюту';
 
   @override

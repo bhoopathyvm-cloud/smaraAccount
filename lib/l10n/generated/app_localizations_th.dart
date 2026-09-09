@@ -826,6 +826,17 @@ class AppLocalizationsTh extends AppLocalizations {
   String get exportKeystoreFile => 'ส่งออกไฟล์ keystore';
 
   @override
+  String get chooseLanguageTitle => 'เลือกภาษาของคุณ';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ทุกอย่างในแอปจะแสดงเป็นภาษานี้ คุณสามารถเปลี่ยนได้ภายหลังในการตั้งค่า';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'วลีกู้คืนของคุณจะแสดงเป็นภาษาอังกฤษ ซึ่งใช้ชุดคำมาตรฐานเล็กๆ ที่เครื่องมือกู้คืนทุกที่รู้จัก ซึ่งยังไม่มีให้ใช้งานในภาษานี้';
+
+  @override
   String get chooseCurrencyTitle => 'เลือกสกุลเงินของคุณ';
 
   @override

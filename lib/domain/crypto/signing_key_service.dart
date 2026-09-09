@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:bip39_mnemonic/bip39_mnemonic.dart';
+
+import 'bip39_language_for_locale.dart';
 import 'ed25519_signing.dart';
 import 'keystore_file.dart';
 import 'recovery_phrase.dart';
@@ -31,6 +34,12 @@ class SigningKeyService {
   static const _pendingPhraseWordsStorageKey =
       'ledger_pending_recovery_phrase_words';
 
+  /// The BIP39 language [_pendingPhraseWordsStorageKey]'s words were
+  /// generated in (stored by [Language.label]), so [resumePendingIdentity]
+  /// reconstructs deterministically instead of assuming English.
+  static const _pendingPhraseLanguageStorageKey =
+      'ledger_pending_recovery_phrase_language';
+
   final SecureKeyStorage _secureStorage;
   final Ed25519Signing _signer;
 
@@ -45,14 +54,16 @@ class SigningKeyService {
     return _signer.keyPairFromSeed(seed);
   }
 
-  /// Generates a brand-new recovery phrase and the key pair it
-  /// deterministically derives, and stores the private key. This is the
-  /// only key-generation entry point: the phrase is always the source of
-  /// truth for the key, never the other way around, so recovery always
-  /// works the same way regardless of whether this is first-install or a
-  /// later re-generation.
-  Future<GeneratedIdentity> generateNewIdentity() async {
-    final phrase = RecoveryPhrase.generate();
+  /// Generates a brand-new recovery phrase (in [language]; English by
+  /// default) and the key pair it deterministically derives, and stores
+  /// the private key. This is the only key-generation entry point: the
+  /// phrase is always the source of truth for the key, never the other
+  /// way around, so recovery always works the same way regardless of
+  /// whether this is first-install or a later re-generation.
+  Future<GeneratedIdentity> generateNewIdentity({
+    Language language = Language.english,
+  }) async {
+    final phrase = RecoveryPhrase.generate(language: language);
     final keyMaterial = await _signer.keyPairFromSeed(phrase.seed);
     await _storeSeed(keyMaterial.privateKeySeed);
     return GeneratedIdentity(phrase: phrase, keyMaterial: keyMaterial);
@@ -60,9 +71,28 @@ class SigningKeyService {
 
   /// Re-derives key material from a recovery phrase the user typed in
   /// during restore, and stores it as the device's active private key.
-  /// Throws if [words] fail the phrase's own checksum.
+  /// The restoring device has no record of which language the phrase was
+  /// originally generated in, so this tries each language this app ever
+  /// generates with ([bip39RestoreLanguageCandidates], English first -
+  /// the original, most common case) until one parses with a valid
+  /// checksum. Throws the last language's error if none match - the
+  /// strongest available signal that [words] themselves are wrong, not
+  /// just tried in the wrong language.
   Future<KeyMaterial> restoreFromRecoveryPhrase(List<String> words) async {
-    final phrase = RecoveryPhrase.fromWords(words);
+    RecoveryPhrase? phrase;
+    Object? lastError;
+    for (final language in bip39RestoreLanguageCandidates) {
+      try {
+        phrase = RecoveryPhrase.fromWords(words, language: language);
+        break;
+      } catch (e) {
+        lastError = e;
+      }
+    }
+    if (phrase == null) {
+      throw lastError ??
+          StateError('Could not parse the recovery phrase in any language.');
+    }
     final keyMaterial = await _signer.keyPairFromSeed(phrase.seed);
     await _storeSeed(keyMaterial.privateKeySeed);
     return keyMaterial;
@@ -117,12 +147,20 @@ class SigningKeyService {
     return _signer.verify(message, signature: signature, publicKey: publicKey);
   }
 
-  /// Stashes [words] (the just-generated recovery phrase) so they survive
-  /// an app kill between identity commit and acknowledgment. Call only for
-  /// the true-first-launch generation path, never for the true-key-loss
-  /// migration path (which never shows a phrase to re-acknowledge).
-  Future<void> stashPendingPhraseWords(List<String> words) {
-    return _secureStorage.write(_pendingPhraseWordsStorageKey, words.join(' '));
+  /// Stashes [words] (the just-generated recovery phrase, generated in
+  /// [language]) so they survive an app kill between identity commit and
+  /// acknowledgment. Call only for the true-first-launch generation path,
+  /// never for the true-key-loss migration path (which never shows a
+  /// phrase to re-acknowledge).
+  Future<void> stashPendingPhraseWords(
+    List<String> words, {
+    Language language = Language.english,
+  }) async {
+    await _secureStorage.write(_pendingPhraseWordsStorageKey, words.join(' '));
+    await _secureStorage.write(
+      _pendingPhraseLanguageStorageKey,
+      language.label,
+    );
   }
 
   /// The words stashed by [stashPendingPhraseWords], if an app kill
@@ -135,10 +173,24 @@ class SigningKeyService {
     return joined.split(' ');
   }
 
-  /// Deletes the stashed phrase words. Call once acknowledgment completes
-  /// (or, for a device that never needed them, this is a harmless no-op).
-  Future<void> clearPendingPhraseWords() {
-    return _secureStorage.delete(_pendingPhraseWordsStorageKey);
+  /// The language stashed alongside [readPendingPhraseWords]'s words.
+  /// Defaults to English if nothing was stored (e.g. words stashed by a
+  /// version of this app before language-aware generation existed).
+  Future<Language> _readPendingPhraseLanguage() async {
+    final label = await _secureStorage.read(_pendingPhraseLanguageStorageKey);
+    if (label == null) return Language.english;
+    return Language.values.firstWhere(
+      (language) => language.label == label,
+      orElse: () => Language.english,
+    );
+  }
+
+  /// Deletes the stashed phrase words and language. Call once
+  /// acknowledgment completes (or, for a device that never needed them,
+  /// this is a harmless no-op).
+  Future<void> clearPendingPhraseWords() async {
+    await _secureStorage.delete(_pendingPhraseWordsStorageKey);
+    await _secureStorage.delete(_pendingPhraseLanguageStorageKey);
   }
 
   /// Reconstructs the [GeneratedIdentity] from words stashed by
@@ -150,7 +202,8 @@ class SigningKeyService {
   Future<GeneratedIdentity?> resumePendingIdentity() async {
     final words = await readPendingPhraseWords();
     if (words == null) return null;
-    final phrase = RecoveryPhrase.fromWords(words);
+    final language = await _readPendingPhraseLanguage();
+    final phrase = RecoveryPhrase.fromWords(words, language: language);
     final keyMaterial = await _signer.keyPairFromSeed(phrase.seed);
     return GeneratedIdentity(phrase: phrase, keyMaterial: keyMaterial);
   }

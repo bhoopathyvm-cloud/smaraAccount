@@ -828,6 +828,17 @@ class AppLocalizationsSat extends AppLocalizations {
   String get exportKeystoreFile => 'ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱮᱠᱥᱯᱚᱴ ᱢᱮ';
 
   @override
+  String get chooseLanguageTitle => 'आम रेयाक़ पासनाव कुड़ी कुरुमुटे';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'एपेत् सबज् बाहा नित पासनावेत् नेल ओड़ोगोआ। आम ताया सेटिंस रे नोवा बोदोल दाड़े आ।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'आम रेयाक़ रिकभेरी सादान् इंग्रेजी रे उदुक ओड़ोगोआ। नोवा जोतो ठाइञ रे रिकभेरी टुल दाड़ेत् बादाय काना मानाक् काथा रेयाक़ हुड़िञ जोड़ाव बेभारेता, जाहाँ नोवा पासनाव रे नितोक जाहाँ उपलब्ध बानुक।';
+
+  @override
   String get chooseCurrencyTitle => 'ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱩᱫᱨᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ';
 
   @override

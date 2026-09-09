@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/crypto/bip39_language_for_locale.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
@@ -29,14 +30,21 @@ class RecoveryPhraseView extends StatefulWidget {
 
 class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
   @override
-  void initState() {
-    super.initState();
-    widget.viewModel.ensureGenerated();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    widget.viewModel.ensureGenerated(
+      language: bip39LanguageForLocale(
+        Localizations.localeOf(context).languageCode,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = l10nOf(context);
+    final language = bip39LanguageForLocale(
+      Localizations.localeOf(context).languageCode,
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.recoveryPhraseTitle, style: AppTypography.headerTitle),
@@ -63,7 +71,8 @@ class _RecoveryPhraseViewState extends State<RecoveryPhraseView> {
                     ),
                     const SizedBox(height: AppSpacing.large),
                     ElevatedButton(
-                      onPressed: widget.viewModel.ensureGenerated,
+                      onPressed: () =>
+                          widget.viewModel.ensureGenerated(language: language),
                       child: Text(l10n.actionRetry),
                     ),
                   ],

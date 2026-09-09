@@ -10,6 +10,7 @@ import 'package:smara_accounting/main.dart';
 import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
+import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_confirm_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
@@ -335,13 +336,30 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
 
   await tester.pumpWidget(const SmaraAccountingApp());
   await tester.pump();
-  await pumpUntilFound(tester, find.byType(CurrencySelectionView));
-  if (find.byType(CurrencySelectionView).evaluate().isEmpty) {
+  await pumpUntilFound(tester, find.byType(LanguageSelectionView));
+  if (find.byType(LanguageSelectionView).evaluate().isEmpty) {
     fail(
-      'completeOnboardingWithGuidedEntry: CurrencySelectionView never '
+      'completeOnboardingWithGuidedEntry: LanguageSelectionView never '
       'appeared (device may not have been reset).\n$_visibleTextsDump()',
     );
   }
+
+  // onboarding-language-selection: selection is mandatory - Continue stays
+  // disabled until a row is tapped, so confirm the pre-highlighted "Same as
+  // device" row (English in this suite) before it becomes tappable.
+  await tapReliably(tester, () => find.text(l10n.settingsLanguageSystem), () {
+    final buttons = find
+        .widgetWithText(ElevatedButton, l10n.actionContinue)
+        .evaluate();
+    if (buttons.isEmpty) return false;
+    return (buttons.single.widget as ElevatedButton).onPressed != null;
+  });
+
+  await tapReliably(
+    tester,
+    () => find.widgetWithText(ElevatedButton, l10n.actionContinue),
+    () => find.byType(CurrencySelectionView).evaluate().isNotEmpty,
+  );
 
   await tapReliably(
     tester,

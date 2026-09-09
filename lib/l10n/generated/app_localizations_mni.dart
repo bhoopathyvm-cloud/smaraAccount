@@ -827,6 +827,17 @@ class AppLocalizationsMni extends AppLocalizations {
   String get exportKeystoreFile => 'ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯊꯥꯗꯣꯛꯎ';
 
   @override
+  String get chooseLanguageTitle => 'নহাক্কী লোন খল্লু';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'এপ্তা মায়োক্কী য়াম্না অসিগী লোন অসিদা উৎকনি। নহাক্না মতুংদা সেটিংসতা মসি হোংবা য়াই।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'নহাক্কী রিকভরী ৱাহৈ অসি ইংলিশতা উৎকনি। মসিনা মফমখুদিংমক্তা রিকভরী তূলসনা খংবা য়াবা য়াম্না অপীকপা মানক ৱাহৈ অমা শীজিন্নই, মদু লোন অসিদা হৌজিক ফোংদোকপা তাঙাইতে।';
+
+  @override
   String get chooseCurrencyTitle => 'ꯅꯍꯥꯛꯀꯤ ꯀꯔꯦꯟꯁꯤ ꯈꯪꯗꯣꯛꯎ';
 
   @override

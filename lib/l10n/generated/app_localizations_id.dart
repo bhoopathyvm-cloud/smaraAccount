@@ -834,6 +834,17 @@ class AppLocalizationsId extends AppLocalizations {
   String get exportKeystoreFile => 'Ekspor file keystore';
 
   @override
+  String get chooseLanguageTitle => 'Pilih bahasa Anda';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Semua yang ada di aplikasi akan ditampilkan dalam bahasa ini. Anda dapat mengubahnya nanti di Pengaturan.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Frasa pemulihan Anda akan ditampilkan dalam bahasa Inggris. Frasa ini menggunakan kumpulan kecil kata standar yang dikenali oleh alat pemulihan di mana saja, yang belum tersedia dalam bahasa ini.';
+
+  @override
   String get chooseCurrencyTitle => 'Pilih mata uang Anda';
 
   @override

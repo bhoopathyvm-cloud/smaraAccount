@@ -831,6 +831,17 @@ class AppLocalizationsSa extends AppLocalizations {
   String get exportKeystoreFile => 'कुञ्जिकाभाण्डारसञ्चिका निर्यात्यताम्';
 
   @override
+  String get chooseLanguageTitle => 'स्वभाषां चिनुत';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'अनुप्रयोगे सर्वं एतस्यां भाषायां दृश्यते। भवन्तः पश्चात् सेटिंग्ज़ मध्ये एतत् परिवर्तयितुं शक्नुवन्ति।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'भवतः पुनर्प्राप्ति-वाक्यं आङ्ग्लभाषायां दर्श्यते। एतत् सर्वत्र पुनर्प्राप्ति-साधनैः ज्ञायमानानां मानक-शब्दानां लघु-समूहं उपयुङ्क्ते, यत् एतस्यां भाषायां अद्यापि उपलब्धं नास्ति।';
+
+  @override
   String get chooseCurrencyTitle => 'भवतः मुद्रा चीयताम्';
 
   @override

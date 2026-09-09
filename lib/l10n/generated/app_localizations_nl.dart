@@ -834,6 +834,17 @@ class AppLocalizationsNl extends AppLocalizations {
   String get exportKeystoreFile => 'Keystore-bestand exporteren';
 
   @override
+  String get chooseLanguageTitle => 'Kies je taal';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Alles in de app wordt in deze taal weergegeven. Je kunt dit later wijzigen in Instellingen.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Je herstelzin wordt in het Engels weergegeven. Deze gebruikt een kleine set standaardwoorden die overal door hersteltools worden herkend, en die nog niet beschikbaar is in deze taal.';
+
+  @override
   String get chooseCurrencyTitle => 'Kies je valuta';
 
   @override

@@ -837,6 +837,17 @@ class AppLocalizationsTa extends AppLocalizations {
   String get exportKeystoreFile => 'கீஸ்டோர் கோப்பை ஏற்றுமதி செய்';
 
   @override
+  String get chooseLanguageTitle => 'உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ஆப்பில் உள்ள அனைத்தும் இந்த மொழியில் காட்டப்படும். இதை பின்னர் அமைப்புகளில் மாற்றலாம்.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'உங்கள் மீட்பு சொற்றொடர் ஆங்கிலத்தில் காட்டப்படும். இது எல்லா இடங்களிலும் மீட்பு கருவிகளால் அடையாளம் காணப்படும் ஒரு சிறிய தரப்படுத்தப்பட்ட சொற்களின் தொகுப்பைப் பயன்படுத்துகிறது, இது இந்த மொழியில் இன்னும் கிடைக்கவில்லை.';
+
+  @override
   String get chooseCurrencyTitle => 'உங்கள் நாணயத்தைத் தேர்ந்தெடுக்கவும்';
 
   @override

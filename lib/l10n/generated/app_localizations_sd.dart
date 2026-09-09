@@ -831,6 +831,17 @@ class AppLocalizationsSd extends AppLocalizations {
   String get exportKeystoreFile => 'ڪيسٽور فائل برآمد ڪريو';
 
   @override
+  String get chooseLanguageTitle => 'پنهنجي ٻولي چونڊيو';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ايپ ۾ سڀ ڪجهه هن ٻولي ۾ ڏيکاريو ويندو. توهان بعد ۾ سيٽنگز ۾ ان کي تبديل ڪري سگهو ٿا.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'توهان جو ريڪوري جملو انگريزيءَ ۾ ڏيکاريو ويندو. اهو هر جڳهه تي ريڪوري اوزارن پاران سڃاتل معياري لفظن جو هڪ ننڍڙو سيٽ استعمال ڪري ٿو، جيڪو هن ٻولي ۾ اڃا موجود ناهي.';
+
+  @override
   String get chooseCurrencyTitle => 'پنهنجي ڪرنسي چونڊيو';
 
   @override

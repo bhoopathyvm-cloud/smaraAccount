@@ -833,6 +833,17 @@ class AppLocalizationsTe extends AppLocalizations {
   String get exportKeystoreFile => 'కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయి';
 
   @override
+  String get chooseLanguageTitle => 'మీ భాషను ఎంచుకోండి';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'యాప్‌లో ప్రతిదీ ఈ భాషలో కనిపిస్తుంది. మీరు తర్వాత సెట్టింగ్‌లలో దీన్ని మార్చవచ్చు.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'మీ రికవరీ పదబంధం ఇంగ్లీషులో చూపబడుతుంది. ఇది ప్రతిచోటా రికవరీ సాధనాల ద్వారా గుర్తించబడే చిన్న ప్రామాణిక పదాల సమితిని ఉపయోగిస్తుంది, ఇది ఈ భాషలో ఇంకా అందుబాటులో లేదు.';
+
+  @override
   String get chooseCurrencyTitle => 'మీ కరెన్సీని ఎంచుకోండి';
 
   @override

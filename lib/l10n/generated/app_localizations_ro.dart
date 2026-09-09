@@ -835,6 +835,17 @@ class AppLocalizationsRo extends AppLocalizations {
   String get exportKeystoreFile => 'Exportă fișierul keystore';
 
   @override
+  String get chooseLanguageTitle => 'Alege limba ta';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Totul în aplicație va fi afișat în această limbă. O poți schimba mai târziu din Setări.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Fraza ta de recuperare va fi afișată în engleză. Aceasta folosește un set mic de cuvinte standard recunoscute peste tot de instrumentele de recuperare, care nu este încă disponibil în această limbă.';
+
+  @override
   String get chooseCurrencyTitle => 'Alegeți moneda';
 
   @override

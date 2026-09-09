@@ -832,6 +832,17 @@ class AppLocalizationsUr extends AppLocalizations {
   String get exportKeystoreFile => 'کی اسٹور فائل ایکسپورٹ کریں';
 
   @override
+  String get chooseLanguageTitle => 'اپنی زبان منتخب کریں';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ایپ میں سب کچھ اسی زبان میں دکھایا جائے گا۔ آپ بعد میں سیٹنگز میں اسے تبدیل کر سکتے ہیں۔';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'آپ کا ریکوری فقرہ انگریزی میں دکھایا جائے گا۔ یہ ہر جگہ ریکوری ٹولز کے ذریعے پہچانے جانے والے معیاری الفاظ کے ایک چھوٹے مجموعے کا استعمال کرتا ہے، جو اس زبان میں ابھی دستیاب نہیں ہے۔';
+
+  @override
   String get chooseCurrencyTitle => 'اپنی کرنسی منتخب کریں';
 
   @override

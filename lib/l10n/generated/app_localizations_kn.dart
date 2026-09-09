@@ -834,6 +834,17 @@ class AppLocalizationsKn extends AppLocalizations {
   String get exportKeystoreFile => 'ಕೀಸ್ಟೋರ್ ಫೈಲ್ ರಫ್ತು ಮಾಡಿ';
 
   @override
+  String get chooseLanguageTitle => 'ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ಎಲ್ಲವೂ ಈ ಭಾಷೆಯಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ. ನೀವು ನಂತರ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಇದನ್ನು ಬದಲಾಯಿಸಬಹುದು.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'ನಿಮ್ಮ ಮರುಪಡೆಯುವಿಕೆ ಪದಗುಚ್ಛವನ್ನು ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ತೋರಿಸಲಾಗುತ್ತದೆ. ಇದು ಎಲ್ಲೆಡೆ ಮರುಪಡೆಯುವಿಕೆ ಪರಿಕರಗಳಿಂದ ಗುರುತಿಸಲ್ಪಡುವ ಪ್ರಮಾಣಿತ ಪದಗಳ ಸಣ್ಣ ಗುಂಪನ್ನು ಬಳಸುತ್ತದೆ, ಇದು ಈ ಭಾಷೆಯಲ್ಲಿ ಇನ್ನೂ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
   String get chooseCurrencyTitle => 'ನಿಮ್ಮ ಕರೆನ್ಸಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ';
 
   @override

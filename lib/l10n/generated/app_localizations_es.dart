@@ -839,6 +839,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get exportKeystoreFile => 'Exportar archivo de almacén de claves';
 
   @override
+  String get chooseLanguageTitle => 'Elige tu idioma';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Todo en la aplicación se mostrará en este idioma. Puedes cambiarlo más tarde en Ajustes.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Tu frase de recuperación se mostrará en inglés. Usa un pequeño conjunto de palabras estándar reconocidas por herramientas de recuperación en todo el mundo, que aún no está disponible en este idioma.';
+
+  @override
   String get chooseCurrencyTitle => 'Elige tu moneda';
 
   @override

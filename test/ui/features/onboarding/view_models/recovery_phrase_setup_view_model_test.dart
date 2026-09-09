@@ -1,3 +1,4 @@
+import 'package:bip39_mnemonic/bip39_mnemonic.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
@@ -153,6 +154,49 @@ void main() {
         verify(chainVerifier.verifyChain()).called(1);
       },
     );
+
+    test('threads a non-English language through to generation and stashing '
+        '(onboarding-language-selection)', () async {
+      when(
+        repository.generateFirstIdentity(language: Language.french),
+      ).thenAnswer((_) async => generated);
+      when(
+        repository.stashPendingPhraseWords(any, language: Language.french),
+      ).thenAnswer((_) async {});
+      when(
+        repository.confirmFirstIdentity(generated, currency: 'EUR'),
+      ).thenAnswer(
+        (_) async => SigningIdentity(
+          identityId: 'identity-2',
+          publicKey: generated.keyMaterial.publicKey,
+          createdAt: DateTime.now(),
+          supersedesIdentityId: null,
+          supersededAt: null,
+          acknowledgedAt: null,
+        ),
+      );
+      when(chainVerifier.verifyChain()).thenAnswer(
+        (_) async => const ChainVerificationResult(
+          totalEntries: 0,
+          breakEntryId: null,
+          breakReason: null,
+        ),
+      );
+
+      final result = await viewModel.commitIdentity(
+        'EUR',
+        language: Language.french,
+      );
+
+      expect(result, isTrue);
+      verify(repository.generateFirstIdentity(language: Language.french));
+      verify(
+        repository.stashPendingPhraseWords(
+          generated.phrase.words,
+          language: Language.french,
+        ),
+      );
+    });
   });
 
   group('acknowledge', () {

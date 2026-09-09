@@ -833,6 +833,17 @@ class AppLocalizationsNe extends AppLocalizations {
   String get exportKeystoreFile => 'किस्टोर फाइल निर्यात गर्नुहोस्';
 
   @override
+  String get chooseLanguageTitle => 'आफ्नो भाषा छान्नुहोस्';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'एपमा सबै कुरा यही भाषामा देखिनेछ। तपाईं पछि सेटिङमा यो परिवर्तन गर्न सक्नुहुन्छ।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'तपाईंको रिकभरी फ्रेज अंग्रेजीमा देखाइनेछ। यसले जताततै रिकभरी उपकरणहरूले चिन्ने थोरै मानक शब्दहरू प्रयोग गर्छ, जुन यो भाषामा अझै उपलब्ध छैन।';
+
+  @override
   String get chooseCurrencyTitle => 'आफ्नो मुद्रा छान्नुहोस्';
 
   @override

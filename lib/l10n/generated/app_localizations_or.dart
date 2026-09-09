@@ -830,6 +830,17 @@ class AppLocalizationsOr extends AppLocalizations {
   String get exportKeystoreFile => 'କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ରପ୍ତାନୀ କରନ୍ତୁ';
 
   @override
+  String get chooseLanguageTitle => 'ଆପଣଙ୍କ ଭାଷା ବାଛନ୍ତୁ';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ଆପ୍‌ର ସବୁକିଛି ଏହି ଭାଷାରେ ଦେଖାଯିବ। ଆପଣ ପରେ ସେଟିଂସରେ ଏହାକୁ ବଦଳାଇ ପାରିବେ।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'ଆପଣଙ୍କ ରିକଭରି ବାକ୍ୟାଂଶ ଇଂରାଜୀରେ ଦେଖାଯିବ। ଏହା ସବୁଠାରେ ରିକଭରି ଉପକରଣ ଦ୍ୱାରା ଚିହ୍ନାଯାଉଥିବା ଛୋଟ ମାନକ ଶବ୍ଦଗୁଡ଼ିକର ଏକ ସେଟ୍ ବ୍ୟବହାର କରେ, ଯାହା ଏହି ଭାଷାରେ ଏପର୍ଯ୍ୟନ୍ତ ଉପଲବ୍ଧ ନାହିଁ।';
+
+  @override
   String get chooseCurrencyTitle => 'ଆପଣଙ୍କ ମୁଦ୍ରା ବାଛନ୍ତୁ';
 
   @override

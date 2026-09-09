@@ -42,6 +42,7 @@ import 'features/onboarding/views/currency_backfill_view.dart';
 import 'features/onboarding/views/currency_selection_view.dart';
 import 'features/onboarding/views/first_account_name_view.dart';
 import 'features/onboarding/views/keystore_export_view.dart';
+import 'features/onboarding/views/language_selection_view.dart';
 import 'features/onboarding/views/recovery_phrase_confirm_view.dart';
 import 'features/onboarding/views/recovery_phrase_view.dart';
 import 'features/payee_management/view_models/payee_management_view_model.dart';
@@ -105,6 +106,12 @@ GoRouter buildAppRouter(
     redirect: (context, state) =>
         navigationPolicy.resolve(state.matchedLocation),
     routes: [
+      GoRoute(
+        path: AppNavPaths.language,
+        builder: (context, state) => LanguageSelectionView(
+          onFinished: () => context.go(AppNavPaths.currency),
+        ),
+      ),
       GoRoute(
         path: AppNavPaths.currency,
         builder: (context, state) => CurrencySelectionView(
