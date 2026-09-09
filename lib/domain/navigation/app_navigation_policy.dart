@@ -3,6 +3,7 @@ import '../models/signing_identity.dart';
 /// Startup and resume path constants shared by [AppNavigationPolicy] and
 /// the GoRouter adapter.
 abstract final class AppNavPaths {
+  static const language = '/onboarding/language';
   static const currency = '/onboarding/currency';
   static const firstAccount = '/onboarding/first-account';
   static const firstEntry = '/onboarding/first-entry';
@@ -19,6 +20,7 @@ abstract final class AppNavPaths {
   static const acknowledgment = {recoveryPhrase, keystoreExport, confirm};
 
   static const onboarding = {
+    language,
     currency,
     firstAccount,
     firstEntry,
@@ -71,9 +73,10 @@ class AppNavigationPolicy {
 
     final identity = await _currentIdentity();
     if (identity == null) {
-      return matchedLocation == AppNavPaths.currency
+      return matchedLocation == AppNavPaths.language ||
+              matchedLocation == AppNavPaths.currency
           ? null
-          : AppNavPaths.currency;
+          : AppNavPaths.language;
     }
 
     if (identity.acknowledgedAt == null) {

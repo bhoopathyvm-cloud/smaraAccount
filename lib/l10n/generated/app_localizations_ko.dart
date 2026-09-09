@@ -818,6 +818,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get exportKeystoreFile => '키스토어 파일 내보내기';
 
   @override
+  String get chooseLanguageTitle => '언어를 선택하세요';
+
+  @override
+  String get chooseLanguageBlurb =>
+      '앱의 모든 내용이 이 언어로 표시됩니다. 나중에 설정에서 변경할 수 있습니다.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      '복구 문구는 영어로 표시됩니다. 이는 전 세계 복구 도구가 인식하는 표준 단어의 작은 집합을 사용하며, 이 언어에는 아직 제공되지 않습니다.';
+
+  @override
   String get chooseCurrencyTitle => '통화 선택';
 
   @override

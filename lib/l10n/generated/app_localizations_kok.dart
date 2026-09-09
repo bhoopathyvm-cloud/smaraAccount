@@ -827,6 +827,17 @@ class AppLocalizationsKok extends AppLocalizations {
   String get exportKeystoreFile => 'कीस्टोअर फायल एक्सपोर्ट करात';
 
   @override
+  String get chooseLanguageTitle => 'तुमची भास निवडात';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'अॅप्लिकेशनांतलें सगळें हे भाशेंत दाखयतले. तुमी उपरांत सेटिंग्जांत ती बदलूं येता.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'तुमचो रिकवरी फ्रेज इंग्लीशींत दाखयतलो. हो सगळे कडेन रिकवरी साधनांनी वळखिल्ल्या थोड्या मानक उतरां वापरता, जो ह्या भाशेंत आजून उपलब्ध ना.';
+
+  @override
   String get chooseCurrencyTitle => 'तुमचें चलन निवडात';
 
   @override

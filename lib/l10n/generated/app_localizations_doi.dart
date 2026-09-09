@@ -829,6 +829,17 @@ class AppLocalizationsDoi extends AppLocalizations {
   String get exportKeystoreFile => 'कीस्टोर फाइल एक्सपोर्ट करो';
 
   @override
+  String get chooseLanguageTitle => 'आपणी भाशा चुनो';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ऐप च सब कुछ इसी भाशा च दिक्खी देगा। तुस बाद च सेटिंग्स च इसा बदली सकदेियो।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'तुंदी रिकवरी फ्रेज़ अंग्रेज़ी च दिक्खाई जागी। एह् हर जगह रिकवरी टूल्स आसेआ पछेने जाणे आळे थोड़े जेह़े मानक शब्दें दा इस्तेमाल करदी ऐ, जेह़ड़े इस भाशा च हाले उपलब्ध नेईं।';
+
+  @override
   String get chooseCurrencyTitle => 'अपणी करेंसी चुनो';
 
   @override

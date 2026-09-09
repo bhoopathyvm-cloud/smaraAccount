@@ -835,6 +835,17 @@ class AppLocalizationsVi extends AppLocalizations {
   String get exportKeystoreFile => 'Xuất tệp keystore';
 
   @override
+  String get chooseLanguageTitle => 'Chọn ngôn ngữ của bạn';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Mọi thứ trong ứng dụng sẽ hiển thị bằng ngôn ngữ này. Bạn có thể thay đổi sau trong Cài đặt.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Cụm từ khôi phục của bạn sẽ được hiển thị bằng tiếng Anh. Cụm từ này sử dụng một tập hợp nhỏ các từ chuẩn được các công cụ khôi phục ở mọi nơi nhận biết, hiện chưa có sẵn trong ngôn ngữ này.';
+
+  @override
   String get chooseCurrencyTitle => 'Chọn đơn vị tiền tệ của bạn';
 
   @override

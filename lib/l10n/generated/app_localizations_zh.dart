@@ -813,6 +813,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exportKeystoreFile => '导出密钥库文件';
 
   @override
+  String get chooseLanguageTitle => '选择你的语言';
+
+  @override
+  String get chooseLanguageBlurb => '应用中的所有内容都将以此语言显示。你可以稍后在设置中更改。';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      '你的恢复短语将以英语显示。它使用的是一小组各地恢复工具都能识别的标准单词，而这套单词目前还没有这种语言的版本。';
+
+  @override
   String get chooseCurrencyTitle => '选择您的货币';
 
   @override

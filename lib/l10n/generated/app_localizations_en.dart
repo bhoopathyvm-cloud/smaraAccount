@@ -830,6 +830,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportKeystoreFile => 'Export keystore file';
 
   @override
+  String get chooseLanguageTitle => 'Choose your language';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Everything in the app will show in this language. You can change it later in Settings.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Your recovery phrase will be shown in English. It uses a small set of standard words recognized by recovery tools everywhere, which isn\'t available yet in this language.';
+
+  @override
   String get chooseCurrencyTitle => 'Choose your currency';
 
   @override

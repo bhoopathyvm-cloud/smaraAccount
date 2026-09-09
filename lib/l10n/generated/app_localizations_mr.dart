@@ -829,6 +829,17 @@ class AppLocalizationsMr extends AppLocalizations {
   String get exportKeystoreFile => 'कीस्टोअर फाइल निर्यात करा';
 
   @override
+  String get chooseLanguageTitle => 'तुमची भाषा निवडा';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'अ‍ॅपमधील सर्व काही या भाषेत दिसेल. तुम्ही नंतर सेटिंग्जमध्ये ते बदलू शकता.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'तुमचा रिकव्हरी फ्रेज इंग्रजीत दाखवला जाईल. तो सर्वत्र रिकव्हरी टूल्सद्वारे ओळखल्या जाणाऱ्या थोड्या मानक शब्दांचा वापर करतो, जो या भाषेत अजून उपलब्ध नाही.';
+
+  @override
   String get chooseCurrencyTitle => 'तुमचे चलन निवडा';
 
   @override

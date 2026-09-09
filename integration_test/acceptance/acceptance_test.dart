@@ -19,6 +19,7 @@ import 'package:smara_accounting/ui/core/monthly_limit_progress.dart';
 import 'package:smara_accounting/ui/features/holdings/views/holdings_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
+import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/payee_management/views/payee_management_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
@@ -3025,7 +3026,27 @@ void main() {
 
         await tester.pumpWidget(const SmaraAccountingApp());
         await tester.pump();
-        await pumpUntilFound(tester, find.byType(CurrencySelectionView));
+        await pumpUntilFound(tester, find.byType(LanguageSelectionView));
+        expect(find.byType(LanguageSelectionView), findsOneWidget);
+
+        // onboarding-language-selection: selection is mandatory - confirm
+        // the pre-highlighted "Same as device" row before Continue enables.
+        await tapReliably(
+          tester,
+          () => find.text(l10n.settingsLanguageSystem),
+          () {
+            final buttons = find
+                .widgetWithText(ElevatedButton, l10n.actionContinue)
+                .evaluate();
+            if (buttons.isEmpty) return false;
+            return (buttons.single.widget as ElevatedButton).onPressed != null;
+          },
+        );
+        await tapReliably(
+          tester,
+          () => find.widgetWithText(ElevatedButton, l10n.actionContinue),
+          () => find.byType(CurrencySelectionView).evaluate().isNotEmpty,
+        );
         expect(find.byType(CurrencySelectionView), findsOneWidget);
 
         await tapReliably(

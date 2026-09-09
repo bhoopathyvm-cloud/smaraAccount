@@ -836,6 +836,17 @@ class AppLocalizationsMs extends AppLocalizations {
   String get exportKeystoreFile => 'Eksport fail simpanan kunci';
 
   @override
+  String get chooseLanguageTitle => 'Pilih bahasa anda';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Semua dalam aplikasi akan dipaparkan dalam bahasa ini. Anda boleh menukarnya kemudian dalam Tetapan.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Frasa pemulihan anda akan dipaparkan dalam bahasa Inggeris. Ia menggunakan set kecil perkataan piawai yang dikenali oleh alat pemulihan di mana-mana sahaja, yang belum lagi tersedia dalam bahasa ini.';
+
+  @override
   String get chooseCurrencyTitle => 'Pilih mata wang anda';
 
   @override

@@ -834,6 +834,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get exportKeystoreFile => 'Keystore dosyasını dışa aktar';
 
   @override
+  String get chooseLanguageTitle => 'Dilinizi seçin';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Uygulamadaki her şey bu dilde gösterilecek. Daha sonra Ayarlar\'dan değiştirebilirsiniz.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'Kurtarma ifadeniz İngilizce gösterilecek. Bu, her yerdeki kurtarma araçları tarafından tanınan küçük bir standart kelime kümesi kullanır ve bu dilde henüz mevcut değildir.';
+
+  @override
   String get chooseCurrencyTitle => 'Para biriminizi seçin';
 
   @override

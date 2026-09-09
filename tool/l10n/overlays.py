@@ -14,6 +14,9 @@ correction note.
 
 OVERLAYS = {
     'ar': {
+        'chooseLanguageTitle': 'اختر لغتك',
+        'chooseLanguageBlurb': 'سيظهر كل شيء في التطبيق بهذه اللغة. يمكنك تغييرها لاحقًا من الإعدادات.',
+        'chooseLanguageBip39Notice': 'سيتم عرض عبارة الاسترداد الخاصة بك باللغة الإنجليزية. فهي تستخدم مجموعة صغيرة من الكلمات القياسية التي تتعرف عليها أدوات الاسترداد في كل مكان، وهي غير متوفرة بعد بهذه اللغة.',
         'settingsPrivacyPolicy': 'سياسة الخصوصية',
         'settingsPrivacyPolicyOpenFailed': 'تعذّر فتح سياسة الخصوصية في المتصفح.',
         'appTitle': 'سمارا للحسابات',
@@ -545,6 +548,9 @@ OVERLAYS = {
         'unknownCategory': 'فئة غير معروفة',
     },
     'as': {
+        'chooseLanguageTitle': 'আপোনাৰ ভাষা বাছনি কৰক',
+        'chooseLanguageBlurb': 'এপ্‌টোৰ সকলো বস্তু এই ভাষাত দেখা যাব। আপুনি পিছত ছেটিংছত ইয়াক সলনি কৰিব পাৰে।',
+        'chooseLanguageBip39Notice': 'আপোনাৰ পুনৰুদ্ধাৰ বাক্যাংশ ইংৰাজীত দেখুওৱা হ\'\'ব। ই সৰ্বত্ৰ পুনৰুদ্ধাৰ সঁজুলিয়ে চিনি পোৱা মানক শব্দৰ এটা সৰু সংহতি ব্যৱহাৰ কৰে, যিটো এই ভাষাত এতিয়াও উপলব্ধ নহয়।',
         'settingsPrivacyPolicy': 'গোপনীয়তা নীতি',
         'settingsPrivacyPolicyOpenFailed': 'ব্ৰাউজাৰত গোপনীয়তা নীতি খুলিব পৰা নগ\'\'ল।',
         'appTitle': 'স্মাৰা হিচাপ',
@@ -1076,6 +1082,9 @@ OVERLAYS = {
         'unknownCategory': 'অজ্ঞাত শ্ৰেণী',
     },
     'bn': {
+        'chooseLanguageTitle': 'আপনার ভাষা বেছে নিন',
+        'chooseLanguageBlurb': 'অ্যাপের সবকিছু এই ভাষায় দেখা যাবে। আপনি পরে সেটিংসে এটি পরিবর্তন করতে পারবেন।',
+        'chooseLanguageBip39Notice': 'আপনার পুনরুদ্ধার শব্দগুচ্ছ ইংরেজিতে দেখানো হবে। এটি সর্বত্র পুনরুদ্ধার সরঞ্জামগুলি চিনতে পারে এমন একটি ছোট আদর্শ শব্দসেট ব্যবহার করে, যা এই ভাষায় এখনও উপলব্ধ নয়।',
         'settingsPrivacyPolicy': 'গোপনীয়তা নীতি',
         'settingsPrivacyPolicyOpenFailed': 'ব্রাউজারে গোপনীয়তা নীতি খোলা যায়নি।',
         'appTitle': 'স্মারা হিসাব',
@@ -1607,6 +1616,9 @@ OVERLAYS = {
         'unknownCategory': 'অজানা বিভাগ',
     },
     'brx': {
+        'chooseLanguageTitle': 'नोंथांनि रादाब सायख',
+        'chooseLanguageBlurb': 'एपखौ जोबथानो जायखि सब रादाबाव नुनो मोनबाय। नोंथाङा उनि उनाव सेटिंसआव सोलायनो हायो।',
+        'chooseLanguageBip39Notice': 'नोंथांनि पुनरुद्धार खोन्थाय इंराजी रादाबाव दिन्थियो। बे रादाबाव गासैबो थाखाय बुहुम मोननि थाखाय मोनथाय गोरा शब्दमा बाहायो, बे बे रादाबाव दानसननि थाखाय हमनि।',
         'settingsPrivacyPolicy': 'गोपनीयता नीति',
         'settingsPrivacyPolicyOpenFailed': 'ब्राउजारनि गोपनीयता नीति खेवनो हायाखै।',
         'appTitle': 'स्मारा खाता',
@@ -2138,6 +2150,9 @@ OVERLAYS = {
         'unknownCategory': 'मोनोबथि थाखो',
     },
     'de': {
+        'chooseLanguageTitle': 'Wähle deine Sprache',
+        'chooseLanguageBlurb': 'Die gesamte App wird in dieser Sprache angezeigt. Du kannst sie später in den Einstellungen ändern.',
+        'chooseLanguageBip39Notice': 'Deine Wiederherstellungsphrase wird auf Englisch angezeigt. Sie verwendet einen kleinen Satz von Standardwörtern, die überall von Wiederherstellungstools erkannt werden - für diese Sprache gibt es diesen Satz noch nicht.',
         'settingsPrivacyPolicy': 'Datenschutzerklärung',
         'settingsPrivacyPolicyOpenFailed': 'Die Datenschutzerklärung konnte nicht im Browser geöffnet werden.',
         'appTitle': 'Smara Buchhaltung',
@@ -2669,6 +2684,9 @@ OVERLAYS = {
         'unknownCategory': 'Unbekannte Kategorie',
     },
     'doi': {
+        'chooseLanguageTitle': 'आपणी भाशा चुनो',
+        'chooseLanguageBlurb': 'ऐप च सब कुछ इसी भाशा च दिक्खी देगा। तुस बाद च सेटिंग्स च इसा बदली सकदेियो।',
+        'chooseLanguageBip39Notice': 'तुंदी रिकवरी फ्रेज़ अंग्रेज़ी च दिक्खाई जागी। एह् हर जगह रिकवरी टूल्स आसेआ पछेने जाणे आळे थोड़े जेह़े मानक शब्दें दा इस्तेमाल करदी ऐ, जेह़ड़े इस भाशा च हाले उपलब्ध नेईं।',
         'settingsPrivacyPolicy': 'गोपनीयता नीति',
         'settingsPrivacyPolicyOpenFailed': 'ब्राउज़र च गोपनीयता नीति खोह् सकी नेईं।',
         'appTitle': 'स्मारा खाता',
@@ -3200,6 +3218,9 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'es': {
+        'chooseLanguageTitle': 'Elige tu idioma',
+        'chooseLanguageBlurb': 'Todo en la aplicación se mostrará en este idioma. Puedes cambiarlo más tarde en Ajustes.',
+        'chooseLanguageBip39Notice': 'Tu frase de recuperación se mostrará en inglés. Usa un pequeño conjunto de palabras estándar reconocidas por herramientas de recuperación en todo el mundo, que aún no está disponible en este idioma.',
         'settingsPrivacyPolicy': 'Política de privacidad',
         'settingsPrivacyPolicyOpenFailed': 'No se pudo abrir la política de privacidad en el navegador.',
         'appTitle': 'Smara Contabilidad',
@@ -3731,6 +3752,9 @@ OVERLAYS = {
         'unknownCategory': 'Categoría desconocida',
     },
     'fr': {
+        'chooseLanguageTitle': 'Choisissez votre langue',
+        'chooseLanguageBlurb': 'Tout dans l\'\'application s\'\'affichera dans cette langue. Vous pourrez la changer plus tard dans les Réglages.',
+        'chooseLanguageBip39Notice': 'Votre phrase de récupération sera affichée en anglais. Elle utilise un petit ensemble de mots standard reconnus partout par les outils de récupération, qui n\'\'est pas encore disponible dans cette langue.',
         'settingsPrivacyPolicy': 'Politique de confidentialité',
         'settingsPrivacyPolicyOpenFailed': 'Impossible d\'\'ouvrir la politique de confidentialité dans un navigateur.',
         'appTitle': 'Smara Comptabilité',
@@ -4262,6 +4286,9 @@ OVERLAYS = {
         'unknownCategory': 'Catégorie inconnue',
     },
     'gu': {
+        'chooseLanguageTitle': 'તમારી ભાષા પસંદ કરો',
+        'chooseLanguageBlurb': 'એપમાં બધું આ ભાષામાં દેખાશે. તમે પછીથી સેટિંગ્સમાં તેને બદલી શકો છો.',
+        'chooseLanguageBip39Notice': 'તમારો રિકવરી શબ્દસમૂહ અંગ્રેજીમાં બતાવવામાં આવશે. તે દરેક જગ્યાએ રિકવરી ટૂલ્સ દ્વારા ઓળખાતા પ્રમાણભૂત શબ્દોના નાના સમૂહનો ઉપયોગ કરે છે, જે આ ભાષામાં હજુ ઉપલબ્ધ નથી.',
         'settingsPrivacyPolicy': 'ગોપનીયતા નીતિ',
         'settingsPrivacyPolicyOpenFailed': 'બ્રાઉઝરમાં ગોપનીયતા નીતિ ખોલી શકાઈ નથી.',
         'appTitle': 'સ્મારા ખાતું',
@@ -4793,6 +4820,9 @@ OVERLAYS = {
         'unknownCategory': 'અજ્ઞાત શ્રેણી',
     },
     'hi': {
+        'chooseLanguageTitle': 'अपनी भाषा चुनें',
+        'chooseLanguageBlurb': 'ऐप में सब कुछ इसी भाषा में दिखेगा। आप बाद में सेटिंग्स में इसे बदल सकते हैं।',
+        'chooseLanguageBip39Notice': 'आपका रिकवरी फ़्रेज़ अंग्रेज़ी में दिखाया जाएगा। यह हर जगह रिकवरी टूल्स द्वारा पहचाने जाने वाले मानक शब्दों के एक छोटे समूह का उपयोग करता है, जो इस भाषा में अभी उपलब्ध नहीं है।',
         'settingsPrivacyPolicy': 'गोपनीयता नीति',
         'settingsPrivacyPolicyOpenFailed': 'गोपनीयता नीति को ब्राउज़र में नहीं खोला जा सका।',
         'appTitle': 'स्मारा खाता',
@@ -5324,6 +5354,9 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'hu': {
+        'chooseLanguageTitle': 'Válassz nyelvet',
+        'chooseLanguageBlurb': 'Az alkalmazás mindene ezen a nyelven fog megjelenni. Később a Beállításokban megváltoztathatod.',
+        'chooseLanguageBip39Notice': 'A helyreállítási kifejezésed angolul fog megjelenni. Egy olyan kis, szabványos szókészletet használ, amelyet a helyreállító eszközök mindenhol felismernek, és amely ezen a nyelven még nem áll rendelkezésre.',
         'settingsPrivacyPolicy': 'Adatvédelmi irányelvek',
         'settingsPrivacyPolicyOpenFailed': 'Az adatvédelmi irányelvek nem nyithatók meg a böngészőben.',
         'appTitle': 'Smara könyvelés',
@@ -5855,6 +5888,9 @@ OVERLAYS = {
         'unknownCategory': 'Ismeretlen kategória',
     },
     'id': {
+        'chooseLanguageTitle': 'Pilih bahasa Anda',
+        'chooseLanguageBlurb': 'Semua yang ada di aplikasi akan ditampilkan dalam bahasa ini. Anda dapat mengubahnya nanti di Pengaturan.',
+        'chooseLanguageBip39Notice': 'Frasa pemulihan Anda akan ditampilkan dalam bahasa Inggris. Frasa ini menggunakan kumpulan kecil kata standar yang dikenali oleh alat pemulihan di mana saja, yang belum tersedia dalam bahasa ini.',
         'settingsPrivacyPolicy': 'Kebijakan Privasi',
         'settingsPrivacyPolicyOpenFailed': 'Tidak dapat membuka kebijakan privasi di browser.',
         'appTitle': 'Smara Pembukuan',
@@ -6386,6 +6422,9 @@ OVERLAYS = {
         'unknownCategory': 'Kategori tidak diketahui',
     },
     'it': {
+        'chooseLanguageTitle': 'Scegli la tua lingua',
+        'chooseLanguageBlurb': 'Tutto nell\'\'app verrà mostrato in questa lingua. Potrai cambiarla più tardi nelle Impostazioni.',
+        'chooseLanguageBip39Notice': 'La tua frase di recupero verrà mostrata in inglese. Usa un piccolo insieme di parole standard riconosciute ovunque dagli strumenti di recupero, non ancora disponibile in questa lingua.',
         'settingsPrivacyPolicy': 'Informativa sulla privacy',
         'settingsPrivacyPolicyOpenFailed': 'Impossibile aprire l\'\'informativa sulla privacy nel browser.',
         'appTitle': 'Smara Contabilità',
@@ -6917,6 +6956,9 @@ OVERLAYS = {
         'unknownCategory': 'Categoria sconosciuta',
     },
     'ja': {
+        'chooseLanguageTitle': '言語を選んでください',
+        'chooseLanguageBlurb': 'アプリのすべての表示がこの言語になります。後で設定から変更できます。',
+        'chooseLanguageBip39Notice': '回復フレーズは英語で表示されます。これはどこでも回復ツールが認識する少数の標準的な単語を使用しており、この言語ではまだ利用できません。',
         'settingsPrivacyPolicy': 'プライバシーポリシー',
         'settingsPrivacyPolicyOpenFailed': 'ブラウザでプライバシーポリシーを開けませんでした。',
         'appTitle': 'Smara家計簿',
@@ -7448,6 +7490,9 @@ OVERLAYS = {
         'unknownCategory': '不明なカテゴリ',
     },
     'kn': {
+        'chooseLanguageTitle': 'ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+        'chooseLanguageBlurb': 'ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ಎಲ್ಲವೂ ಈ ಭಾಷೆಯಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ. ನೀವು ನಂತರ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಇದನ್ನು ಬದಲಾಯಿಸಬಹುದು.',
+        'chooseLanguageBip39Notice': 'ನಿಮ್ಮ ಮರುಪಡೆಯುವಿಕೆ ಪದಗುಚ್ಛವನ್ನು ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ತೋರಿಸಲಾಗುತ್ತದೆ. ಇದು ಎಲ್ಲೆಡೆ ಮರುಪಡೆಯುವಿಕೆ ಪರಿಕರಗಳಿಂದ ಗುರುತಿಸಲ್ಪಡುವ ಪ್ರಮಾಣಿತ ಪದಗಳ ಸಣ್ಣ ಗುಂಪನ್ನು ಬಳಸುತ್ತದೆ, ಇದು ಈ ಭಾಷೆಯಲ್ಲಿ ಇನ್ನೂ ಲಭ್ಯವಿಲ್ಲ.',
         'settingsPrivacyPolicy': 'ಗೌಪ್ಯತಾ ನೀತಿ',
         'settingsPrivacyPolicyOpenFailed': 'ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಗೌಪ್ಯತಾ ನೀತಿಯನ್ನು ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.',
         'appTitle': 'ಸ್ಮಾರ ಖಾತೆ',
@@ -7979,6 +8024,9 @@ OVERLAYS = {
         'unknownCategory': 'ಅಜ್ಞಾತ ವರ್ಗ',
     },
     'ko': {
+        'chooseLanguageTitle': '언어를 선택하세요',
+        'chooseLanguageBlurb': '앱의 모든 내용이 이 언어로 표시됩니다. 나중에 설정에서 변경할 수 있습니다.',
+        'chooseLanguageBip39Notice': '복구 문구는 영어로 표시됩니다. 이는 전 세계 복구 도구가 인식하는 표준 단어의 작은 집합을 사용하며, 이 언어에는 아직 제공되지 않습니다.',
         'settingsPrivacyPolicy': '개인정보 처리방침',
         'settingsPrivacyPolicyOpenFailed': '브라우저에서 개인정보 처리방침을 열 수 없습니다.',
         'appTitle': 'Smara 회계',
@@ -8510,6 +8558,9 @@ OVERLAYS = {
         'unknownCategory': '알 수 없는 분류',
     },
     'kok': {
+        'chooseLanguageTitle': 'तुमची भास निवडात',
+        'chooseLanguageBlurb': 'अॅप्लिकेशनांतलें सगळें हे भाशेंत दाखयतले. तुमी उपरांत सेटिंग्जांत ती बदलूं येता.',
+        'chooseLanguageBip39Notice': 'तुमचो रिकवरी फ्रेज इंग्लीशींत दाखयतलो. हो सगळे कडेन रिकवरी साधनांनी वळखिल्ल्या थोड्या मानक उतरां वापरता, जो ह्या भाशेंत आजून उपलब्ध ना.',
         'settingsPrivacyPolicy': 'गुप्ततायेचें धोरण',
         'settingsPrivacyPolicyOpenFailed': 'ब्राउझरांत गुप्ततायेचें धोरण उगडपाक जालें ना.',
         'appTitle': 'स्मारा हिशोब',
@@ -9041,6 +9092,9 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात वर्ग',
     },
     'ks': {
+        'chooseLanguageTitle': 'پننٕ زبان ژارٕو',
+        'chooseLanguageBlurb': 'ایپہٕ منز ساری کہین یم زبانہٕ منٛز ظٲہر گژھی۔ توہہِ کٔرِتھ پتہٕ سیٹنگژَن منٛز یہ بدلاو ہیکِو۔',
+        'chooseLanguageBip39Notice': 'توٚہنٛد ریکوری فقرہٕ انٛگریزی منٛز ظٲہر کرنہٕ آمُت۔ یہ استعمال کران ہے اکھ لوکٕٹ معیاری لفظن ہنٛد سیٹ یم ہر تہِ جاے ریکوری اوزارن ہٕنٛدِس ذریعہٕ پہچانہٕ چھِ، یم اتھ زبانہٕ منٛز وُنی دستیاب چھٕنہٕ۔',
         'settingsPrivacyPolicy': 'خٲنگی پالیسی',
         'settingsPrivacyPolicyOpenFailed': 'براوزرس منز خٲنگی پالیسی کھۄلنہٕ نہٕ آسئ.',
         'appTitle': 'سمارا حساب',
@@ -9572,6 +9626,9 @@ OVERLAYS = {
         'unknownCategory': 'نامعلوم زمرٕ',
     },
     'mai': {
+        'chooseLanguageTitle': 'अपन भाषा चुनू',
+        'chooseLanguageBlurb': 'ऐपमे सभटा एहि भाषामे देखल जायत। अहाँ बादमे सेटिंगमे एकरा बदलि सकैत छी।',
+        'chooseLanguageBip39Notice': 'अहाँक रिकवरी फ्रेज अंग्रेजीमे देखाओल जायत। ई हर जगह रिकवरी टूलसँ पहचानल जाए वाला थोड़ेक मानक शब्दक इस्तेमाल करैत अछि, जे एहि भाषामे अखन उपलब्ध नहि अछि।',
         'settingsPrivacyPolicy': 'गोपनीयता नीति',
         'settingsPrivacyPolicyOpenFailed': 'ब्राउजरमे गोपनीयता नीति खोलल नहि जा सकल।',
         'appTitle': 'स्मारा खाता',
@@ -10103,6 +10160,9 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'ml': {
+        'chooseLanguageTitle': 'നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക',
+        'chooseLanguageBlurb': 'ആപ്പിലെ എല്ലാം ഈ ഭാഷയിൽ കാണിക്കും. നിങ്ങൾക്ക് പിന്നീട് സെറ്റിംഗ്സിൽ ഇത് മാറ്റാം.',
+        'chooseLanguageBip39Notice': 'നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്‌സ് ഇംഗ്ലീഷിൽ കാണിക്കും. എല്ലായിടത്തും റിക്കവറി ടൂളുകൾ തിരിച്ചറിയുന്ന ഒരു ചെറിയ സ്റ്റാൻഡേർഡ് പദസഞ്ചയമാണ് ഇത് ഉപയോഗിക്കുന്നത്, അത് ഈ ഭാഷയിൽ ഇതുവരെ ലഭ്യമല്ല.',
         'settingsPrivacyPolicy': 'സ്വകാര്യതാ നയം',
         'settingsPrivacyPolicyOpenFailed': 'ബ്രൗസറിൽ സ്വകാര്യതാ നയം തുറക്കാൻ കഴിഞ്ഞില്ല.',
         'appTitle': 'സ്മാര അക്കൗണ്ട്',
@@ -10634,6 +10694,9 @@ OVERLAYS = {
         'unknownCategory': 'അജ്ഞാത വിഭാഗം',
     },
     'mni': {
+        'chooseLanguageTitle': 'নহাক্কী লোন খল্লু',
+        'chooseLanguageBlurb': 'এপ্তা মায়োক্কী য়াম্না অসিগী লোন অসিদা উৎকনি। নহাক্না মতুংদা সেটিংসতা মসি হোংবা য়াই।',
+        'chooseLanguageBip39Notice': 'নহাক্কী রিকভরী ৱাহৈ অসি ইংলিশতা উৎকনি। মসিনা মফমখুদিংমক্তা রিকভরী তূলসনা খংবা য়াবা য়াম্না অপীকপা মানক ৱাহৈ অমা শীজিন্নই, মদু লোন অসিদা হৌজিক ফোংদোকপা তাঙাইতে।',
         'settingsPrivacyPolicy': 'ꯅꯤꯡꯇꯝ ꯑꯣꯏꯅꯗꯨꯅ ꯆꯠꯅꯕꯤ ꯄꯣꯂꯤꯁꯤ',
         'settingsPrivacyPolicyOpenFailed': 'ꯕꯔꯥꯎꯖꯔꯗ ꯅꯤꯡꯇꯝ ꯑꯣꯏꯅꯗꯨꯅ ꯆꯠꯅꯕꯤ ꯄꯣꯂꯤꯁꯤ ꯍꯥꯡꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ.',
         'appTitle': 'ꯁ꯭ꯃꯥꯔꯥ ꯑꯦꯀꯥꯎꯟꯠ',
@@ -11165,6 +11228,9 @@ OVERLAYS = {
         'unknownCategory': 'ꯈꯪꯗꯕ ꯉꯝꯗꯕ ꯃꯆꯦꯠ',
     },
     'mr': {
+        'chooseLanguageTitle': 'तुमची भाषा निवडा',
+        'chooseLanguageBlurb': 'अ‍ॅपमधील सर्व काही या भाषेत दिसेल. तुम्ही नंतर सेटिंग्जमध्ये ते बदलू शकता.',
+        'chooseLanguageBip39Notice': 'तुमचा रिकव्हरी फ्रेज इंग्रजीत दाखवला जाईल. तो सर्वत्र रिकव्हरी टूल्सद्वारे ओळखल्या जाणाऱ्या थोड्या मानक शब्दांचा वापर करतो, जो या भाषेत अजून उपलब्ध नाही.',
         'settingsPrivacyPolicy': 'गोपनीयता धोरण',
         'settingsPrivacyPolicyOpenFailed': 'ब्राउझरमध्ये गोपनीयता धोरण उघडता आले नाही.',
         'appTitle': 'स्मारा खाते',
@@ -11696,6 +11762,9 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'ms': {
+        'chooseLanguageTitle': 'Pilih bahasa anda',
+        'chooseLanguageBlurb': 'Semua dalam aplikasi akan dipaparkan dalam bahasa ini. Anda boleh menukarnya kemudian dalam Tetapan.',
+        'chooseLanguageBip39Notice': 'Frasa pemulihan anda akan dipaparkan dalam bahasa Inggeris. Ia menggunakan set kecil perkataan piawai yang dikenali oleh alat pemulihan di mana-mana sahaja, yang belum lagi tersedia dalam bahasa ini.',
         'settingsPrivacyPolicy': 'Dasar Privasi',
         'settingsPrivacyPolicyOpenFailed': 'Tidak dapat membuka dasar privasi dalam pelayar.',
         'appTitle': 'Smara Perakaunan',
@@ -12227,6 +12296,9 @@ OVERLAYS = {
         'unknownCategory': 'Kategori tidak diketahui',
     },
     'ne': {
+        'chooseLanguageTitle': 'आफ्नो भाषा छान्नुहोस्',
+        'chooseLanguageBlurb': 'एपमा सबै कुरा यही भाषामा देखिनेछ। तपाईं पछि सेटिङमा यो परिवर्तन गर्न सक्नुहुन्छ।',
+        'chooseLanguageBip39Notice': 'तपाईंको रिकभरी फ्रेज अंग्रेजीमा देखाइनेछ। यसले जताततै रिकभरी उपकरणहरूले चिन्ने थोरै मानक शब्दहरू प्रयोग गर्छ, जुन यो भाषामा अझै उपलब्ध छैन।',
         'settingsPrivacyPolicy': 'गोपनीयता नीति',
         'settingsPrivacyPolicyOpenFailed': 'ब्राउजरमा गोपनीयता नीति खोल्न सकिएन।',
         'appTitle': 'स्मारा खाता',
@@ -12758,6 +12830,9 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'nl': {
+        'chooseLanguageTitle': 'Kies je taal',
+        'chooseLanguageBlurb': 'Alles in de app wordt in deze taal weergegeven. Je kunt dit later wijzigen in Instellingen.',
+        'chooseLanguageBip39Notice': 'Je herstelzin wordt in het Engels weergegeven. Deze gebruikt een kleine set standaardwoorden die overal door hersteltools worden herkend, en die nog niet beschikbaar is in deze taal.',
         'settingsPrivacyPolicy': 'Privacybeleid',
         'settingsPrivacyPolicyOpenFailed': 'Kan het privacybeleid niet openen in een browser.',
         'appTitle': 'Smara Boekhouding',
@@ -13289,6 +13364,9 @@ OVERLAYS = {
         'unknownCategory': 'Onbekende categorie',
     },
     'or': {
+        'chooseLanguageTitle': 'ଆପଣଙ୍କ ଭାଷା ବାଛନ୍ତୁ',
+        'chooseLanguageBlurb': 'ଆପ୍‌ର ସବୁକିଛି ଏହି ଭାଷାରେ ଦେଖାଯିବ। ଆପଣ ପରେ ସେଟିଂସରେ ଏହାକୁ ବଦଳାଇ ପାରିବେ।',
+        'chooseLanguageBip39Notice': 'ଆପଣଙ୍କ ରିକଭରି ବାକ୍ୟାଂଶ ଇଂରାଜୀରେ ଦେଖାଯିବ। ଏହା ସବୁଠାରେ ରିକଭରି ଉପକରଣ ଦ୍ୱାରା ଚିହ୍ନାଯାଉଥିବା ଛୋଟ ମାନକ ଶବ୍ଦଗୁଡ଼ିକର ଏକ ସେଟ୍ ବ୍ୟବହାର କରେ, ଯାହା ଏହି ଭାଷାରେ ଏପର୍ଯ୍ୟନ୍ତ ଉପଲବ୍ଧ ନାହିଁ।',
         'settingsPrivacyPolicy': 'ଗୋପନୀୟତା ନୀତି',
         'settingsPrivacyPolicyOpenFailed': 'ବ୍ରାଉଜରରେ ଗୋପନୀୟତା ନୀତି ଖୋଲିହେଲା ନାହିଁ।',
         'appTitle': 'ସ୍ମାରା ଖାତା',
@@ -13820,6 +13898,9 @@ OVERLAYS = {
         'unknownCategory': 'ଅଜଣା ବର୍ଗ',
     },
     'pa': {
+        'chooseLanguageTitle': 'ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ',
+        'chooseLanguageBlurb': 'ਐਪ ਵਿੱਚ ਸਭ ਕੁਝ ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਦਿਖੇਗਾ। ਤੁਸੀਂ ਬਾਅਦ ਵਿੱਚ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇਸਨੂੰ ਬਦਲ ਸਕਦੇ ਹੋ।',
+        'chooseLanguageBip39Notice': 'ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ ਦਿਖਾਇਆ ਜਾਵੇਗਾ। ਇਹ ਹਰ ਥਾਂ ਰਿਕਵਰੀ ਟੂਲਾਂ ਦੁਆਰਾ ਪਛਾਣੇ ਜਾਂਦੇ ਮਿਆਰੀ ਸ਼ਬਦਾਂ ਦੇ ਇੱਕ ਛੋਟੇ ਸਮੂਹ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ, ਜੋ ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਅਜੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।',
         'settingsPrivacyPolicy': 'ਪਰਦੇਦਾਰੀ ਨੀਤੀ',
         'settingsPrivacyPolicyOpenFailed': 'ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਪਰਦੇਦਾਰੀ ਨੀਤੀ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ।',
         'appTitle': 'ਸਮਾਰਾ ਖਾਤਾ',
@@ -14351,6 +14432,9 @@ OVERLAYS = {
         'unknownCategory': 'ਅਣਜਾਣ ਸ਼੍ਰੇਣੀ',
     },
     'pl': {
+        'chooseLanguageTitle': 'Wybierz swój język',
+        'chooseLanguageBlurb': 'Wszystko w aplikacji będzie wyświetlane w tym języku. Możesz to zmienić później w Ustawieniach.',
+        'chooseLanguageBip39Notice': 'Twoja fraza odzyskiwania zostanie wyświetlona po angielsku. Używa ona niewielkiego zestawu standardowych słów rozpoznawanych wszędzie przez narzędzia odzyskiwania, który nie jest jeszcze dostępny w tym języku.',
         'settingsPrivacyPolicy': 'Polityka prywatności',
         'settingsPrivacyPolicyOpenFailed': 'Nie udało się otworzyć polityki prywatności w przeglądarce.',
         'appTitle': 'Smara Księgowość',
@@ -14882,6 +14966,9 @@ OVERLAYS = {
         'unknownCategory': 'Nieznana kategoria',
     },
     'pt': {
+        'chooseLanguageTitle': 'Escolha o seu idioma',
+        'chooseLanguageBlurb': 'Tudo na aplicação será mostrado neste idioma. Poderá mudar mais tarde nas Definições.',
+        'chooseLanguageBip39Notice': 'A sua frase de recuperação será mostrada em inglês. Ela usa um pequeno conjunto de palavras padrão reconhecidas em qualquer lugar por ferramentas de recuperação, ainda não disponível neste idioma.',
         'settingsPrivacyPolicy': 'Política de Privacidade',
         'settingsPrivacyPolicyOpenFailed': 'Não foi possível abrir a política de privacidade no navegador.',
         'appTitle': 'Smara Contabilidade',
@@ -15413,6 +15500,9 @@ OVERLAYS = {
         'unknownCategory': 'Categoria desconhecida',
     },
     'ro': {
+        'chooseLanguageTitle': 'Alege limba ta',
+        'chooseLanguageBlurb': 'Totul în aplicație va fi afișat în această limbă. O poți schimba mai târziu din Setări.',
+        'chooseLanguageBip39Notice': 'Fraza ta de recuperare va fi afișată în engleză. Aceasta folosește un set mic de cuvinte standard recunoscute peste tot de instrumentele de recuperare, care nu este încă disponibil în această limbă.',
         'settingsPrivacyPolicy': 'Politica de confidențialitate',
         'settingsPrivacyPolicyOpenFailed': 'Politica de confidențialitate nu a putut fi deschisă în browser.',
         'appTitle': 'Smara Contabilitate',
@@ -15944,6 +16034,9 @@ OVERLAYS = {
         'unknownCategory': 'Categorie necunoscută',
     },
     'ru': {
+        'chooseLanguageTitle': 'Выберите свой язык',
+        'chooseLanguageBlurb': 'Все в приложении будет отображаться на этом языке. Вы можете изменить это позже в Настройках.',
+        'chooseLanguageBip39Notice': 'Ваша фраза восстановления будет показана на английском языке. Она использует небольшой набор стандартных слов, распознаваемых инструментами восстановления повсюду, который пока недоступен для этого языка.',
         'settingsPrivacyPolicy': 'Политика конфиденциальности',
         'settingsPrivacyPolicyOpenFailed': 'Не удалось открыть политику конфиденциальности в браузере.',
         'appTitle': 'Smara учёт',
@@ -16475,6 +16568,9 @@ OVERLAYS = {
         'unknownCategory': 'Неизвестная категория',
     },
     'sa': {
+        'chooseLanguageTitle': 'स्वभाषां चिनुत',
+        'chooseLanguageBlurb': 'अनुप्रयोगे सर्वं एतस्यां भाषायां दृश्यते। भवन्तः पश्चात् सेटिंग्ज़ मध्ये एतत् परिवर्तयितुं शक्नुवन्ति।',
+        'chooseLanguageBip39Notice': 'भवतः पुनर्प्राप्ति-वाक्यं आङ्ग्लभाषायां दर्श्यते। एतत् सर्वत्र पुनर्प्राप्ति-साधनैः ज्ञायमानानां मानक-शब्दानां लघु-समूहं उपयुङ्क्ते, यत् एतस्यां भाषायां अद्यापि उपलब्धं नास्ति।',
         'settingsPrivacyPolicy': 'गोपनीयता नीतिः',
         'settingsPrivacyPolicyOpenFailed': 'ब्राउज़रे गोपनीयतानीतिः उद्घाटयितुं न शक्यते स्म।',
         'appTitle': 'स्मारा लेखा',
@@ -17006,6 +17102,9 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञातवर्गः',
     },
     'sat': {
+        'chooseLanguageTitle': 'आम रेयाक़ पासनाव कुड़ी कुरुमुटे',
+        'chooseLanguageBlurb': 'एपेत् सबज् बाहा नित पासनावेत् नेल ओड़ोगोआ। आम ताया सेटिंस रे नोवा बोदोल दाड़े आ।',
+        'chooseLanguageBip39Notice': 'आम रेयाक़ रिकभेरी सादान् इंग्रेजी रे उदुक ओड़ोगोआ। नोवा जोतो ठाइञ रे रिकभेरी टुल दाड़ेत् बादाय काना मानाक् काथा रेयाक़ हुड़िञ जोड़ाव बेभारेता, जाहाँ नोवा पासनाव रे नितोक जाहाँ उपलब्ध बानुक।',
         'settingsPrivacyPolicy': 'ᱨᱩᱠᱷᱤᱭᱟᱹ ᱥᱟᱪᱟᱭ',
         'settingsPrivacyPolicyOpenFailed': 'ᱵᱨᱟᱣᱡᱟᱨ ᱨᱮ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱥᱟᱪᱟᱭ ᱠᱷᱩᱞᱟᱹ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾',
         'appTitle': 'ᱥᱢᱟᱨᱟ ᱦᱤᱥᱟᱹᱵ',
@@ -17537,6 +17636,9 @@ OVERLAYS = {
         'unknownCategory': 'ᱵᱟᱭ ᱵᱟᱰᱟᱭ ᱡᱟᱹᱛ',
     },
     'sd': {
+        'chooseLanguageTitle': 'پنهنجي ٻولي چونڊيو',
+        'chooseLanguageBlurb': 'ايپ ۾ سڀ ڪجهه هن ٻولي ۾ ڏيکاريو ويندو. توهان بعد ۾ سيٽنگز ۾ ان کي تبديل ڪري سگهو ٿا.',
+        'chooseLanguageBip39Notice': 'توهان جو ريڪوري جملو انگريزيءَ ۾ ڏيکاريو ويندو. اهو هر جڳهه تي ريڪوري اوزارن پاران سڃاتل معياري لفظن جو هڪ ننڍڙو سيٽ استعمال ڪري ٿو، جيڪو هن ٻولي ۾ اڃا موجود ناهي.',
         'settingsPrivacyPolicy': 'پرائيويسي پاليسي',
         'settingsPrivacyPolicyOpenFailed': 'برائوزر ۾ پرائيويسي پاليسي کولي نه سگهجي.',
         'appTitle': 'سمارا اڪائونٽنگ',
@@ -18068,6 +18170,9 @@ OVERLAYS = {
         'unknownCategory': 'اڻڄاتل زمرو',
     },
     'ta': {
+        'chooseLanguageTitle': 'உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்',
+        'chooseLanguageBlurb': 'ஆப்பில் உள்ள அனைத்தும் இந்த மொழியில் காட்டப்படும். இதை பின்னர் அமைப்புகளில் மாற்றலாம்.',
+        'chooseLanguageBip39Notice': 'உங்கள் மீட்பு சொற்றொடர் ஆங்கிலத்தில் காட்டப்படும். இது எல்லா இடங்களிலும் மீட்பு கருவிகளால் அடையாளம் காணப்படும் ஒரு சிறிய தரப்படுத்தப்பட்ட சொற்களின் தொகுப்பைப் பயன்படுத்துகிறது, இது இந்த மொழியில் இன்னும் கிடைக்கவில்லை.',
         'settingsPrivacyPolicy': 'தனியுரிமைக் கொள்கை',
         'settingsPrivacyPolicyOpenFailed': 'உலாவியில் தனியுரிமைக் கொள்கையைத் திறக்க முடியவில்லை.',
         'appTitle': 'ஸ்மாரா கணக்கியல்',
@@ -18599,6 +18704,9 @@ OVERLAYS = {
         'unknownCategory': 'தெரியாத வகை',
     },
     'te': {
+        'chooseLanguageTitle': 'మీ భాషను ఎంచుకోండి',
+        'chooseLanguageBlurb': 'యాప్‌లో ప్రతిదీ ఈ భాషలో కనిపిస్తుంది. మీరు తర్వాత సెట్టింగ్‌లలో దీన్ని మార్చవచ్చు.',
+        'chooseLanguageBip39Notice': 'మీ రికవరీ పదబంధం ఇంగ్లీషులో చూపబడుతుంది. ఇది ప్రతిచోటా రికవరీ సాధనాల ద్వారా గుర్తించబడే చిన్న ప్రామాణిక పదాల సమితిని ఉపయోగిస్తుంది, ఇది ఈ భాషలో ఇంకా అందుబాటులో లేదు.',
         'settingsPrivacyPolicy': 'గోప్యతా విధానం',
         'settingsPrivacyPolicyOpenFailed': 'బ్రౌజర్‌లో గోప్యతా విధానాన్ని తెరవడం సాధ్యం కాలేదు.',
         'appTitle': 'స్మారా అకౌంటింగ్',
@@ -19130,6 +19238,9 @@ OVERLAYS = {
         'unknownCategory': 'తెలియని వర్గం',
     },
     'th': {
+        'chooseLanguageTitle': 'เลือกภาษาของคุณ',
+        'chooseLanguageBlurb': 'ทุกอย่างในแอปจะแสดงเป็นภาษานี้ คุณสามารถเปลี่ยนได้ภายหลังในการตั้งค่า',
+        'chooseLanguageBip39Notice': 'วลีกู้คืนของคุณจะแสดงเป็นภาษาอังกฤษ ซึ่งใช้ชุดคำมาตรฐานเล็กๆ ที่เครื่องมือกู้คืนทุกที่รู้จัก ซึ่งยังไม่มีให้ใช้งานในภาษานี้',
         'settingsPrivacyPolicy': 'นโยบายความเป็นส่วนตัว',
         'settingsPrivacyPolicyOpenFailed': 'ไม่สามารถเปิดนโยบายความเป็นส่วนตัวในเบราว์เซอร์ได้',
         'appTitle': 'สมุดบัญชี Smara',
@@ -19661,6 +19772,9 @@ OVERLAYS = {
         'unknownCategory': 'หมวดหมู่ที่ไม่ทราบ',
     },
     'tr': {
+        'chooseLanguageTitle': 'Dilinizi seçin',
+        'chooseLanguageBlurb': 'Uygulamadaki her şey bu dilde gösterilecek. Daha sonra Ayarlar\'\'dan değiştirebilirsiniz.',
+        'chooseLanguageBip39Notice': 'Kurtarma ifadeniz İngilizce gösterilecek. Bu, her yerdeki kurtarma araçları tarafından tanınan küçük bir standart kelime kümesi kullanır ve bu dilde henüz mevcut değildir.',
         'settingsPrivacyPolicy': 'Gizlilik Politikası',
         'settingsPrivacyPolicyOpenFailed': 'Gizlilik politikası tarayıcıda açılamadı.',
         'appTitle': 'Smara Muhasebe',
@@ -20192,6 +20306,9 @@ OVERLAYS = {
         'unknownCategory': 'Bilinmeyen kategori',
     },
     'uk': {
+        'chooseLanguageTitle': 'Оберіть свою мову',
+        'chooseLanguageBlurb': 'Усе в застосунку відображатиметься цією мовою. Ви можете змінити це пізніше в Налаштуваннях.',
+        'chooseLanguageBip39Notice': 'Ваша фраза відновлення відображатиметься англійською мовою. Вона використовує невеликий набір стандартних слів, які розпізнаються інструментами відновлення повсюди і які ще недоступні цією мовою.',
         'settingsPrivacyPolicy': 'Політика конфіденційності',
         'settingsPrivacyPolicyOpenFailed': 'Не вдалося відкрити політику конфіденційності в браузері.',
         'appTitle': 'Smara облік',
@@ -20723,6 +20840,9 @@ OVERLAYS = {
         'unknownCategory': 'Невідома категорія',
     },
     'ur': {
+        'chooseLanguageTitle': 'اپنی زبان منتخب کریں',
+        'chooseLanguageBlurb': 'ایپ میں سب کچھ اسی زبان میں دکھایا جائے گا۔ آپ بعد میں سیٹنگز میں اسے تبدیل کر سکتے ہیں۔',
+        'chooseLanguageBip39Notice': 'آپ کا ریکوری فقرہ انگریزی میں دکھایا جائے گا۔ یہ ہر جگہ ریکوری ٹولز کے ذریعے پہچانے جانے والے معیاری الفاظ کے ایک چھوٹے مجموعے کا استعمال کرتا ہے، جو اس زبان میں ابھی دستیاب نہیں ہے۔',
         'settingsPrivacyPolicy': 'پرائیویسی پالیسی',
         'settingsPrivacyPolicyOpenFailed': 'براؤزر میں پرائیویسی پالیسی نہیں کھولی جا سکی۔',
         'appTitle': 'سمارا کھاتہ',
@@ -21254,6 +21374,9 @@ OVERLAYS = {
         'unknownCategory': 'نامعلوم زمرہ',
     },
     'vi': {
+        'chooseLanguageTitle': 'Chọn ngôn ngữ của bạn',
+        'chooseLanguageBlurb': 'Mọi thứ trong ứng dụng sẽ hiển thị bằng ngôn ngữ này. Bạn có thể thay đổi sau trong Cài đặt.',
+        'chooseLanguageBip39Notice': 'Cụm từ khôi phục của bạn sẽ được hiển thị bằng tiếng Anh. Cụm từ này sử dụng một tập hợp nhỏ các từ chuẩn được các công cụ khôi phục ở mọi nơi nhận biết, hiện chưa có sẵn trong ngôn ngữ này.',
         'settingsPrivacyPolicy': 'Chính sách quyền riêng tư',
         'settingsPrivacyPolicyOpenFailed': 'Không thể mở chính sách quyền riêng tư trong trình duyệt.',
         'appTitle': 'Sổ kế toán Smara',
@@ -21785,6 +21908,9 @@ OVERLAYS = {
         'unknownCategory': 'Danh mục không xác định',
     },
     'zh': {
+        'chooseLanguageTitle': '选择你的语言',
+        'chooseLanguageBlurb': '应用中的所有内容都将以此语言显示。你可以稍后在设置中更改。',
+        'chooseLanguageBip39Notice': '你的恢复短语将以英语显示。它使用的是一小组各地恢复工具都能识别的标准单词，而这套单词目前还没有这种语言的版本。',
         'settingsPrivacyPolicy': '隐私政策',
         'settingsPrivacyPolicyOpenFailed': '无法在浏览器中打开隐私政策。',
         'appTitle': 'Smara记账',

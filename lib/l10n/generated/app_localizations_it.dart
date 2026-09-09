@@ -836,6 +836,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get exportKeystoreFile => 'Esporta file keystore';
 
   @override
+  String get chooseLanguageTitle => 'Scegli la tua lingua';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Tutto nell\'app verrà mostrato in questa lingua. Potrai cambiarla più tardi nelle Impostazioni.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'La tua frase di recupero verrà mostrata in inglese. Usa un piccolo insieme di parole standard riconosciute ovunque dagli strumenti di recupero, non ancora disponibile in questa lingua.';
+
+  @override
   String get chooseCurrencyTitle => 'Scegli la tua valuta';
 
   @override

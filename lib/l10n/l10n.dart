@@ -4,6 +4,7 @@ import 'generated/app_localizations.dart';
 import 'localize_error.dart';
 import 'supported_locales.dart';
 
+export 'default_currency_for_locale.dart';
 export 'generated/app_localizations.dart';
 export 'locale_controller.dart';
 export 'locale_endonyms.dart';
