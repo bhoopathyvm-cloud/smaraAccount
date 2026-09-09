@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../domain/crypto/recovery_phrase_language.dart';
+import '../../../../l10n/default_currency.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
@@ -34,7 +36,22 @@ class CurrencySelectionView extends StatefulWidget {
 }
 
 class _CurrencySelectionViewState extends State<CurrencySelectionView> {
-  final _controller = TextEditingController(text: _commonCurrencies.first);
+  final _controller = TextEditingController();
+
+  /// The currency default follows the chosen language (onboarding-language-
+  /// selection Decision 7) but only seeds the initial text once - after that
+  /// it is a plain, freely-editable value like any other.
+  bool _seededDefault = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_seededDefault) {
+      _seededDefault = true;
+      final languageCode = Localizations.localeOf(context).languageCode;
+      _controller.text = defaultCurrencyForLocale(languageCode);
+    }
+  }
 
   @override
   void dispose() {
@@ -46,7 +63,38 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
 
   Future<void> _submit() async {
     if (!_isValid) return;
-    final success = await widget.viewModel.commitIdentity(_controller.text);
+    final l10n = l10nOf(context);
+    final languageCode = Localizations.localeOf(context).languageCode;
+
+    // The recovery phrase is generated inside commitIdentity below, so the
+    // English-fallback disclosure (onboarding-language-selection Decision 8)
+    // must be shown and accepted here, before that call.
+    if (recoveryPhraseUsesEnglishFallback(languageCode)) {
+      final proceed = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(l10n.recoveryPhraseEnglishFallbackTitle),
+          content: Text(l10n.recoveryPhraseEnglishFallbackBlurb),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(l10n.actionCancel),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              child: Text(l10n.actionContinue),
+            ),
+          ],
+        ),
+      );
+      if (proceed != true) return;
+    }
+    if (!mounted) return;
+
+    final success = await widget.viewModel.commitIdentity(
+      _controller.text,
+      recoveryPhraseLanguage: bip39LanguageForLocale(languageCode),
+    );
     if (success) widget.onFinished();
   }
 

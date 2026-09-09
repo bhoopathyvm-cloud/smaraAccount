@@ -38,9 +38,12 @@ AppNavigationPolicy _policy({
 void main() {
   final ready = _identity(acknowledgedAt: DateTime(2026, 1, 2));
 
-  test('no identity redirects to currency', () async {
+  test('no identity redirects to the language screen first', () async {
     final policy = _policy(identity: null);
-    expect(await policy.resolve(AppNavPaths.home), AppNavPaths.currency);
+    expect(await policy.resolve(AppNavPaths.home), AppNavPaths.language);
+    // Both language and currency stay reachable pre-identity so the user can
+    // move language -> currency.
+    expect(await policy.resolve(AppNavPaths.language), isNull);
     expect(await policy.resolve(AppNavPaths.currency), isNull);
   });
 
@@ -114,6 +117,7 @@ void main() {
 
   test('finished gated routes redirect home; shell stays', () async {
     final policy = _policy(identity: ready);
+    expect(await policy.resolve(AppNavPaths.language), AppNavPaths.home);
     expect(await policy.resolve(AppNavPaths.currency), AppNavPaths.home);
     expect(await policy.resolve(AppNavPaths.lock), AppNavPaths.home);
     expect(await policy.resolve(AppNavPaths.home), isNull);

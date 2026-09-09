@@ -13,12 +13,14 @@ import 'package:smara_accounting/data/database/tables/account_groups_table.dart'
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
+import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations_en.dart';
 import 'package:smara_accounting/main.dart';
 import 'package:smara_accounting/ui/core/monthly_limit_progress.dart';
 import 'package:smara_accounting/ui/features/holdings/views/holdings_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
+import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/payee_management/views/payee_management_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
@@ -2919,6 +2921,65 @@ void main() {
     });
 
     testWidgets(
+      'first launch opens on the language screen; choosing Tamil applies to '
+      'the rest of onboarding and persists to Settings',
+      (tester) async {
+        addTearDown(() => resetToFreshDevice(tester));
+
+        await tester.pumpWidget(const SmaraAccountingApp());
+        await tester.pump();
+        await pumpUntilFound(tester, find.byType(LanguageSelectionView));
+        expect(
+          find.byType(LanguageSelectionView),
+          findsOneWidget,
+          reason: 'first launch must open on the language screen',
+        );
+
+        final tamil = lookupAppLocalizations(const Locale('ta'));
+
+        // Pick Tamil by its endonym, then continue to the currency screen.
+        await tapReliably(
+          tester,
+          () => find.text('தமிழ்'),
+          () => find
+              .descendant(
+                of: find.byType(LanguageSelectionView),
+                matching: find.byIcon(Icons.check),
+              )
+              .evaluate()
+              .isNotEmpty,
+        );
+        await tapReliably(
+          tester,
+          () => find.descendant(
+            of: find.byType(LanguageSelectionView),
+            matching: find.text(tamil.actionContinue),
+          ),
+          () => find.byType(CurrencySelectionView).evaluate().isNotEmpty,
+        );
+
+        // The currency screen (and the rest of onboarding) is now in Tamil.
+        expect(find.text(tamil.chooseCurrencyTitle), findsOneWidget);
+
+        // Its currency field is pre-filled with Tamil's default (INR), not the
+        // old unconditional USD (onboarding-language-selection Decision 7).
+        final currencyField = find.byWidgetPredicate(
+          (widget) =>
+              widget is TextField &&
+              widget.decoration?.labelText == tamil.currencyCodeIso,
+        );
+        await pumpUntilFound(tester, currencyField);
+        expect(
+          (currencyField.evaluate().single.widget as TextField)
+              .controller
+              ?.text,
+          'INR',
+        );
+      },
+      timeout: const Timeout(Duration(minutes: 5)),
+    );
+
+    testWidgets(
       'the first-week setup wizard creates a credit card and a cash account',
       (tester) async {
         addTearDown(() => resetToFreshDevice(tester));
@@ -3025,6 +3086,7 @@ void main() {
 
         await tester.pumpWidget(const SmaraAccountingApp());
         await tester.pump();
+        await advancePastLanguageScreen(tester);
         await pumpUntilFound(tester, find.byType(CurrencySelectionView));
         expect(find.byType(CurrencySelectionView), findsOneWidget);
 

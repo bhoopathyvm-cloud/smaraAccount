@@ -1698,6 +1698,30 @@ abstract class AppLocalizations {
   /// **'Export keystore file'**
   String get exportKeystoreFile;
 
+  /// No description provided for @languageSelectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your language'**
+  String get languageSelectTitle;
+
+  /// No description provided for @languageSelectBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the language you\'\'d like to use. You can change it any time in Settings.'**
+  String get languageSelectBlurb;
+
+  /// No description provided for @recoveryPhraseEnglishFallbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery phrase will be in English'**
+  String get recoveryPhraseEnglishFallbackTitle;
+
+  /// No description provided for @recoveryPhraseEnglishFallbackBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'The security standard behind your recovery phrase doesn\'\'t have a word list for your language yet, so your recovery phrase will be shown in English. Everything else stays in your chosen language.'**
+  String get recoveryPhraseEnglishFallbackBlurb;
+
   /// No description provided for @chooseCurrencyTitle.
   ///
   /// In en, this message translates to:

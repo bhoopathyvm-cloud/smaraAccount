@@ -21,6 +21,7 @@ import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/data/repositories/statement_import_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/models/integrity_event.dart';
+import 'package:smara_accounting/l10n/locale_controller.dart';
 import 'package:smara_accounting/ui/app_router.dart';
 import 'package:smara_accounting/ui/core/app_lock_controller.dart';
 import 'package:smara_accounting/ui/core/app_theme.dart';
@@ -517,6 +518,16 @@ void main() {
       );
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
+
+      // LanguageSelectionView is now the first onboarding screen, and the
+      // choice is mandatory - Continue is disabled until a row is tapped. Tap
+      // the pre-highlighted "Device language" row (keeps the default locale),
+      // then Continue to reach the currency screen.
+      await tester.tap(find.text('Device language'));
+      await tester.pump();
+      await tester.tap(find.text('Continue'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
 
       // CurrencySelectionView: defaults to USD, so Continue needs no input.
       await tester.tap(find.text('Continue'));
@@ -1028,6 +1039,12 @@ Widget buildAppFor(
       ChangeNotifierProvider(
         create: (_) =>
             AccountManagementViewModel(accountRepository: accountRepository),
+      ),
+      // The pre-identity onboarding language route reads a LocaleController;
+      // provide one so the fresh-onboarding path resolves it (mirrors
+      // main.dart's provider).
+      ChangeNotifierProvider<LocaleController>(
+        create: (_) => LocaleController(settingsRepository: SettingsRepository()),
       ),
     ],
     child: Builder(

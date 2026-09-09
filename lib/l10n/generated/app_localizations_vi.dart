@@ -835,6 +835,21 @@ class AppLocalizationsVi extends AppLocalizations {
   String get exportKeystoreFile => 'Xuất tệp keystore';
 
   @override
+  String get languageSelectTitle => 'Choose your language';
+
+  @override
+  String get languageSelectBlurb =>
+      'Pick the language you\'d like to use. You can change it any time in Settings.';
+
+  @override
+  String get recoveryPhraseEnglishFallbackTitle =>
+      'Recovery phrase will be in English';
+
+  @override
+  String get recoveryPhraseEnglishFallbackBlurb =>
+      'The security standard behind your recovery phrase doesn\'t have a word list for your language yet, so your recovery phrase will be shown in English. Everything else stays in your chosen language.';
+
+  @override
   String get chooseCurrencyTitle => 'Chọn đơn vị tiền tệ của bạn';
 
   @override

@@ -10,6 +10,7 @@ import 'package:smara_accounting/main.dart';
 import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
+import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_confirm_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
@@ -335,6 +336,10 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
 
   await tester.pumpWidget(const SmaraAccountingApp());
   await tester.pump();
+  // onboarding-language-selection: the language screen is now the first
+  // onboarding screen, ahead of currency. Continue past it (keeping the
+  // resolved locale) to reach the currency screen this flow starts from.
+  await advancePastLanguageScreen(tester);
   await pumpUntilFound(tester, find.byType(CurrencySelectionView));
   if (find.byType(CurrencySelectionView).evaluate().isEmpty) {
     fail(
@@ -494,6 +499,41 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   );
 
   return words;
+}
+
+/// onboarding-language-selection: the language screen precedes the currency
+/// screen on first launch, and selection is now mandatory (Continue is
+/// disabled until a row is tapped). Tap the pre-highlighted "Device language"
+/// row - which keeps the device-resolved locale - then Continue, landing on
+/// the currency screen. A no-op if the language screen is not currently shown.
+Future<void> advancePastLanguageScreen(WidgetTester tester) async {
+  final l10n = AppLocalizationsEn();
+  await pumpUntilFound(tester, find.byType(LanguageSelectionView));
+  if (find.byType(LanguageSelectionView).evaluate().isEmpty) return;
+  // Tapping "Device language" is itself the required explicit choice and
+  // keeps the resolved locale unchanged.
+  await tapReliably(
+    tester,
+    () => find.descendant(
+      of: find.byType(LanguageSelectionView),
+      matching: find.text(l10n.settingsLanguageSystem),
+    ),
+    () {
+      final button = find
+          .widgetWithText(ElevatedButton, l10n.actionContinue)
+          .evaluate();
+      if (button.isEmpty) return false;
+      return (button.single.widget as ElevatedButton).onPressed != null;
+    },
+  );
+  await tapReliably(
+    tester,
+    () => find.descendant(
+      of: find.byType(LanguageSelectionView),
+      matching: find.text(l10n.actionContinue),
+    ),
+    () => find.byType(CurrencySelectionView).evaluate().isNotEmpty,
+  );
 }
 
 Finder textFieldWithLabel(String label) {

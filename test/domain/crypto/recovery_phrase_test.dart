@@ -4,10 +4,11 @@ import 'package:test/test.dart';
 
 void main() {
   group('RecoveryPhrase.generate', () {
-    test('uses the English BIP39 wordlist regardless of other languages', () {
+    test('uses the English BIP39 wordlist by default', () {
       final english = Language.english.list.toSet();
       final phrase = RecoveryPhrase.generate();
       expect(phrase.words.every(english.contains), isTrue);
+      expect(phrase.language, Language.english);
     });
 
     test('produces different words on each call', () {
@@ -15,6 +16,24 @@ void main() {
       final b = RecoveryPhrase.generate();
 
       expect(a.words, isNot(equals(b.words)));
+    });
+
+    test('generates from the requested localized wordlist', () {
+      for (final language in const [
+        Language.french,
+        Language.japanese,
+        Language.simplifiedChinese,
+        Language.korean,
+      ]) {
+        final words = language.list.toSet();
+        final phrase = RecoveryPhrase.generate(language: language);
+        expect(phrase.language, language);
+        expect(
+          phrase.words.every(words.contains),
+          isTrue,
+          reason: 'every word should come from the ${language.label} wordlist',
+        );
+      }
     });
   });
 
@@ -39,6 +58,37 @@ void main() {
       final phrase = RecoveryPhrase.generate();
 
       expect(phrase.seed.length, greaterThanOrEqualTo(32));
+    });
+  });
+
+  group('RecoveryPhrase.fromWords language auto-detection', () {
+    test(
+      'detects the wordlist of a localized phrase and round-trips its seed',
+      () {
+        for (final language in const [
+          Language.french,
+          Language.japanese,
+          Language.simplifiedChinese,
+          Language.korean,
+        ]) {
+          final generated = RecoveryPhrase.generate(language: language);
+
+          final restored = RecoveryPhrase.fromWords(generated.words);
+
+          expect(restored.language, language, reason: language.label);
+          // The seed must match the generation seed exactly - restore depends
+          // on picking the right wordlist (separator/normalization differ per
+          // language), so a mis-detected language would derive a different key.
+          expect(restored.seed, equals(generated.seed), reason: language.label);
+        }
+      },
+    );
+
+    test('an English phrase still detects as English (unchanged path)', () {
+      final generated = RecoveryPhrase.generate();
+      final restored = RecoveryPhrase.fromWords(generated.words);
+      expect(restored.language, Language.english);
+      expect(restored.seed, equals(generated.seed));
     });
   });
 

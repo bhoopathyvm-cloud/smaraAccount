@@ -1,3 +1,4 @@
+import 'package:bip39_mnemonic/bip39_mnemonic.dart';
 import 'package:drift/drift.dart';
 
 import '../../domain/crypto/signing_key_service.dart';
@@ -72,8 +73,10 @@ class IdentityRepository {
   /// of the phrase, so the ledger stays unusable (no identity to sign
   /// against) until that mandatory acknowledgment is complete (spec:
   /// "Onboarding blocks until recovery phrase is acknowledged").
-  Future<GeneratedIdentity> generateFirstIdentity() {
-    return _signingKeyService.generateNewIdentity();
+  Future<GeneratedIdentity> generateFirstIdentity({
+    Language language = Language.english,
+  }) {
+    return _signingKeyService.generateNewIdentity(language: language);
   }
 
   /// Stashes the just-generated phrase's words so they survive an app kill

@@ -1,3 +1,4 @@
+import 'package:bip39_mnemonic/bip39_mnemonic.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/identity_repository.dart';
@@ -56,14 +57,18 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
   /// secure storage rejects the write), sets [errorMessage] rather than
   /// leaving the caller waiting on a Future that already failed silently
   /// in the background.
-  Future<void> ensureGenerated() async {
+  Future<void> ensureGenerated({
+    Language recoveryPhraseLanguage = Language.english,
+  }) async {
     if (_generated != null) return;
     try {
       final resumed = await _identityRepository.resumePendingIdentity();
       if (resumed != null) {
         _generated = resumed;
       } else {
-        final generated = await _identityRepository.generateFirstIdentity();
+        final generated = await _identityRepository.generateFirstIdentity(
+          language: recoveryPhraseLanguage,
+        );
         await _identityRepository.stashPendingPhraseWords(
           generated.phrase.words,
         );
@@ -121,8 +126,11 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
   /// step now (deferred-onboarding-first-entry) - it generates the
   /// identity if [ensureGenerated] hasn't already run, and does not wait
   /// for phrase display or confirmation, which happen later.
-  Future<bool> commitIdentity(String currency) async {
-    await ensureGenerated();
+  Future<bool> commitIdentity(
+    String currency, {
+    Language recoveryPhraseLanguage = Language.english,
+  }) async {
+    await ensureGenerated(recoveryPhraseLanguage: recoveryPhraseLanguage);
     final generated = _generated;
     if (generated == null) return false;
 

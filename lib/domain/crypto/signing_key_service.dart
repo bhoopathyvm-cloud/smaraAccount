@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:bip39_mnemonic/bip39_mnemonic.dart';
+
 import 'ed25519_signing.dart';
 import 'keystore_file.dart';
 import 'recovery_phrase.dart';
@@ -51,8 +53,15 @@ class SigningKeyService {
   /// truth for the key, never the other way around, so recovery always
   /// works the same way regardless of whether this is first-install or a
   /// later re-generation.
-  Future<GeneratedIdentity> generateNewIdentity() async {
-    final phrase = RecoveryPhrase.generate();
+  ///
+  /// [language] selects the BIP39 wordlist the phrase is drawn from
+  /// (onboarding-language-selection design.md Decision 8); English by
+  /// default, so every path that does not opt in - notably key-loss
+  /// migration - keeps its original English phrase unchanged.
+  Future<GeneratedIdentity> generateNewIdentity({
+    Language language = Language.english,
+  }) async {
+    final phrase = RecoveryPhrase.generate(language: language);
     final keyMaterial = await _signer.keyPairFromSeed(phrase.seed);
     await _storeSeed(keyMaterial.privateKeySeed);
     return GeneratedIdentity(phrase: phrase, keyMaterial: keyMaterial);
