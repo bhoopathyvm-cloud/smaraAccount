@@ -3353,6 +3353,100 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'ISIN: (none provided)'**
   String get researchPromptIsinNoneProvided;
+
+  /// No description provided for @identifyPromptIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'I want to add this security to my portfolio tracker. Give me its ISIN, its primary listing exchange and ticker, the trading currency, the exact market-data symbol (for example the Yahoo Finance symbol), and — if it is cross-listed — each venue with its own currency. Facts only, with the source if you can. Do not give buy, sell, or hold advice. This is not financial advice.'**
+  String get identifyPromptIntro;
+
+  /// No description provided for @instrumentLookUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Look up identifiers'**
+  String get instrumentLookUp;
+
+  /// No description provided for @instrumentLookUpCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied an identifier look-up prompt — no browser URL available, or you are offline.'**
+  String get instrumentLookUpCopied;
+
+  /// No description provided for @instrumentLookUpOpened.
+  ///
+  /// In en, this message translates to:
+  /// **'Opened your favourite tool to look up the identifiers.'**
+  String get instrumentLookUpOpened;
+
+  /// No description provided for @isinInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This does not look like an ISIN (12 letters/digits starting with a country code).'**
+  String get isinInvalid;
+
+  /// No description provided for @isinCheckDigitWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This ISIN looks mistyped — its check digit does not add up.'**
+  String get isinCheckDigitWarning;
+
+  /// No description provided for @instrumentCurrencyMismatchWithHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic quotes may not match: this looks like a {inferred} listing but the account is in {account}. For {account} quotes, use the {suffix} listing.'**
+  String instrumentCurrencyMismatchWithHint(
+    String inferred,
+    String account,
+    String suffix,
+  );
+
+  /// No description provided for @instrumentCurrencyMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic quotes may not match: this looks like a {inferred} listing but the account is in {account}.'**
+  String instrumentCurrencyMismatch(String inferred, String account);
+
+  /// No description provided for @settingsDefaultExchange.
+  ///
+  /// In en, this message translates to:
+  /// **'Default exchange'**
+  String get settingsDefaultExchange;
+
+  /// No description provided for @settingsDefaultExchangeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Biases which listing a new instrument resolves to, and supplies its currency. A fixed list — pick the venue you trade on most.'**
+  String get settingsDefaultExchangeSubtitle;
+
+  /// No description provided for @confirmListingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the listing'**
+  String get confirmListingTitle;
+
+  /// No description provided for @confirmListingBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the listing that matches your holding. Its currency is what automatic quotes will use.'**
+  String get confirmListingBlurb;
+
+  /// No description provided for @confirmListingCurrencyLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{exchange} · {currency}'**
+  String confirmListingCurrencyLine(String exchange, String currency);
+
+  /// No description provided for @confirmListingSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip — save as typed'**
+  String get confirmListingSkip;
+
+  /// No description provided for @resolveDeferredSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved. The exact market symbol will be resolved on the next price refresh.'**
+  String get resolveDeferredSaved;
 }
 
 class _AppLocalizationsDelegate

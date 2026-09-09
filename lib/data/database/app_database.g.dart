@@ -4081,6 +4081,28 @@ class $InstrumentsTable extends Instruments
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _resolvedSymbolMeta = const VerificationMeta(
+    'resolvedSymbol',
+  );
+  @override
+  late final GeneratedColumn<String> resolvedSymbol = GeneratedColumn<String>(
+    'resolved_symbol',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _exchangeMeta = const VerificationMeta(
+    'exchange',
+  );
+  @override
+  late final GeneratedColumn<String> exchange = GeneratedColumn<String>(
+    'exchange',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _archivedAtMeta = const VerificationMeta(
     'archivedAt',
   );
@@ -4111,6 +4133,8 @@ class $InstrumentsTable extends Instruments
     kind,
     ticker,
     isin,
+    resolvedSymbol,
+    exchange,
     archivedAt,
     createdAt,
   ];
@@ -4147,6 +4171,21 @@ class $InstrumentsTable extends Instruments
       context.handle(
         _isinMeta,
         isin.isAcceptableOrUnknown(data['isin']!, _isinMeta),
+      );
+    }
+    if (data.containsKey('resolved_symbol')) {
+      context.handle(
+        _resolvedSymbolMeta,
+        resolvedSymbol.isAcceptableOrUnknown(
+          data['resolved_symbol']!,
+          _resolvedSymbolMeta,
+        ),
+      );
+    }
+    if (data.containsKey('exchange')) {
+      context.handle(
+        _exchangeMeta,
+        exchange.isAcceptableOrUnknown(data['exchange']!, _exchangeMeta),
       );
     }
     if (data.containsKey('archived_at')) {
@@ -4192,6 +4231,14 @@ class $InstrumentsTable extends Instruments
         DriftSqlType.string,
         data['${effectivePrefix}isin'],
       ),
+      resolvedSymbol: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}resolved_symbol'],
+      ),
+      exchange: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exchange'],
+      ),
       archivedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}archived_at'],
@@ -4218,6 +4265,16 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
   final InstrumentKind kind;
   final String? ticker;
   final String? isin;
+
+  /// Canonical market-data symbol confirmed at Save (e.g. `UBSG.SW`), used
+  /// in preference to [ticker] when fetching quotes
+  /// (instrument-identifier-assist). Nullable; unresolved until the user
+  /// confirms a listing or a later refresh resolves it.
+  final String? resolvedSymbol;
+
+  /// Registry code of the exchange the resolved listing trades on (e.g.
+  /// `SIX`), binding its currency and national fallback endpoint.
+  final String? exchange;
   final DateTime? archivedAt;
   final DateTime createdAt;
   const InstrumentRow({
@@ -4226,6 +4283,8 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
     required this.kind,
     this.ticker,
     this.isin,
+    this.resolvedSymbol,
+    this.exchange,
     this.archivedAt,
     required this.createdAt,
   });
@@ -4245,6 +4304,12 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
     if (!nullToAbsent || isin != null) {
       map['isin'] = Variable<String>(isin);
     }
+    if (!nullToAbsent || resolvedSymbol != null) {
+      map['resolved_symbol'] = Variable<String>(resolvedSymbol);
+    }
+    if (!nullToAbsent || exchange != null) {
+      map['exchange'] = Variable<String>(exchange);
+    }
     if (!nullToAbsent || archivedAt != null) {
       map['archived_at'] = Variable<DateTime>(archivedAt);
     }
@@ -4261,6 +4326,12 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
           ? const Value.absent()
           : Value(ticker),
       isin: isin == null && nullToAbsent ? const Value.absent() : Value(isin),
+      resolvedSymbol: resolvedSymbol == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resolvedSymbol),
+      exchange: exchange == null && nullToAbsent
+          ? const Value.absent()
+          : Value(exchange),
       archivedAt: archivedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(archivedAt),
@@ -4281,6 +4352,8 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
       ),
       ticker: serializer.fromJson<String?>(json['ticker']),
       isin: serializer.fromJson<String?>(json['isin']),
+      resolvedSymbol: serializer.fromJson<String?>(json['resolvedSymbol']),
+      exchange: serializer.fromJson<String?>(json['exchange']),
       archivedAt: serializer.fromJson<DateTime?>(json['archivedAt']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
@@ -4296,6 +4369,8 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
       ),
       'ticker': serializer.toJson<String?>(ticker),
       'isin': serializer.toJson<String?>(isin),
+      'resolvedSymbol': serializer.toJson<String?>(resolvedSymbol),
+      'exchange': serializer.toJson<String?>(exchange),
       'archivedAt': serializer.toJson<DateTime?>(archivedAt),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
@@ -4307,6 +4382,8 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
     InstrumentKind? kind,
     Value<String?> ticker = const Value.absent(),
     Value<String?> isin = const Value.absent(),
+    Value<String?> resolvedSymbol = const Value.absent(),
+    Value<String?> exchange = const Value.absent(),
     Value<DateTime?> archivedAt = const Value.absent(),
     DateTime? createdAt,
   }) => InstrumentRow(
@@ -4315,6 +4392,10 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
     kind: kind ?? this.kind,
     ticker: ticker.present ? ticker.value : this.ticker,
     isin: isin.present ? isin.value : this.isin,
+    resolvedSymbol: resolvedSymbol.present
+        ? resolvedSymbol.value
+        : this.resolvedSymbol,
+    exchange: exchange.present ? exchange.value : this.exchange,
     archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
     createdAt: createdAt ?? this.createdAt,
   );
@@ -4325,6 +4406,10 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
       kind: data.kind.present ? data.kind.value : this.kind,
       ticker: data.ticker.present ? data.ticker.value : this.ticker,
       isin: data.isin.present ? data.isin.value : this.isin,
+      resolvedSymbol: data.resolvedSymbol.present
+          ? data.resolvedSymbol.value
+          : this.resolvedSymbol,
+      exchange: data.exchange.present ? data.exchange.value : this.exchange,
       archivedAt: data.archivedAt.present
           ? data.archivedAt.value
           : this.archivedAt,
@@ -4340,6 +4425,8 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
           ..write('kind: $kind, ')
           ..write('ticker: $ticker, ')
           ..write('isin: $isin, ')
+          ..write('resolvedSymbol: $resolvedSymbol, ')
+          ..write('exchange: $exchange, ')
           ..write('archivedAt: $archivedAt, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
@@ -4347,8 +4434,17 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, kind, ticker, isin, archivedAt, createdAt);
+  int get hashCode => Object.hash(
+    id,
+    name,
+    kind,
+    ticker,
+    isin,
+    resolvedSymbol,
+    exchange,
+    archivedAt,
+    createdAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -4358,6 +4454,8 @@ class InstrumentRow extends DataClass implements Insertable<InstrumentRow> {
           other.kind == this.kind &&
           other.ticker == this.ticker &&
           other.isin == this.isin &&
+          other.resolvedSymbol == this.resolvedSymbol &&
+          other.exchange == this.exchange &&
           other.archivedAt == this.archivedAt &&
           other.createdAt == this.createdAt);
 }
@@ -4368,6 +4466,8 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
   final Value<InstrumentKind> kind;
   final Value<String?> ticker;
   final Value<String?> isin;
+  final Value<String?> resolvedSymbol;
+  final Value<String?> exchange;
   final Value<DateTime?> archivedAt;
   final Value<DateTime> createdAt;
   final Value<int> rowid;
@@ -4377,6 +4477,8 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
     this.kind = const Value.absent(),
     this.ticker = const Value.absent(),
     this.isin = const Value.absent(),
+    this.resolvedSymbol = const Value.absent(),
+    this.exchange = const Value.absent(),
     this.archivedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -4387,6 +4489,8 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
     required InstrumentKind kind,
     this.ticker = const Value.absent(),
     this.isin = const Value.absent(),
+    this.resolvedSymbol = const Value.absent(),
+    this.exchange = const Value.absent(),
     this.archivedAt = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -4398,6 +4502,8 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
     Expression<String>? kind,
     Expression<String>? ticker,
     Expression<String>? isin,
+    Expression<String>? resolvedSymbol,
+    Expression<String>? exchange,
     Expression<DateTime>? archivedAt,
     Expression<DateTime>? createdAt,
     Expression<int>? rowid,
@@ -4408,6 +4514,8 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
       if (kind != null) 'kind': kind,
       if (ticker != null) 'ticker': ticker,
       if (isin != null) 'isin': isin,
+      if (resolvedSymbol != null) 'resolved_symbol': resolvedSymbol,
+      if (exchange != null) 'exchange': exchange,
       if (archivedAt != null) 'archived_at': archivedAt,
       if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
@@ -4420,6 +4528,8 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
     Value<InstrumentKind>? kind,
     Value<String?>? ticker,
     Value<String?>? isin,
+    Value<String?>? resolvedSymbol,
+    Value<String?>? exchange,
     Value<DateTime?>? archivedAt,
     Value<DateTime>? createdAt,
     Value<int>? rowid,
@@ -4430,6 +4540,8 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
       kind: kind ?? this.kind,
       ticker: ticker ?? this.ticker,
       isin: isin ?? this.isin,
+      resolvedSymbol: resolvedSymbol ?? this.resolvedSymbol,
+      exchange: exchange ?? this.exchange,
       archivedAt: archivedAt ?? this.archivedAt,
       createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
@@ -4456,6 +4568,12 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
     if (isin.present) {
       map['isin'] = Variable<String>(isin.value);
     }
+    if (resolvedSymbol.present) {
+      map['resolved_symbol'] = Variable<String>(resolvedSymbol.value);
+    }
+    if (exchange.present) {
+      map['exchange'] = Variable<String>(exchange.value);
+    }
     if (archivedAt.present) {
       map['archived_at'] = Variable<DateTime>(archivedAt.value);
     }
@@ -4476,6 +4594,8 @@ class InstrumentsCompanion extends UpdateCompanion<InstrumentRow> {
           ..write('kind: $kind, ')
           ..write('ticker: $ticker, ')
           ..write('isin: $isin, ')
+          ..write('resolvedSymbol: $resolvedSymbol, ')
+          ..write('exchange: $exchange, ')
           ..write('archivedAt: $archivedAt, ')
           ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
@@ -13496,6 +13616,8 @@ typedef $$InstrumentsTableCreateCompanionBuilder =
       required InstrumentKind kind,
       Value<String?> ticker,
       Value<String?> isin,
+      Value<String?> resolvedSymbol,
+      Value<String?> exchange,
       Value<DateTime?> archivedAt,
       Value<DateTime> createdAt,
       Value<int> rowid,
@@ -13507,6 +13629,8 @@ typedef $$InstrumentsTableUpdateCompanionBuilder =
       Value<InstrumentKind> kind,
       Value<String?> ticker,
       Value<String?> isin,
+      Value<String?> resolvedSymbol,
+      Value<String?> exchange,
       Value<DateTime?> archivedAt,
       Value<DateTime> createdAt,
       Value<int> rowid,
@@ -13607,6 +13731,16 @@ class $$InstrumentsTableFilterComposer
 
   ColumnFilters<String> get isin => $composableBuilder(
     column: $table.isin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get resolvedSymbol => $composableBuilder(
+    column: $table.resolvedSymbol,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exchange => $composableBuilder(
+    column: $table.exchange,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -13730,6 +13864,16 @@ class $$InstrumentsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get resolvedSymbol => $composableBuilder(
+    column: $table.resolvedSymbol,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exchange => $composableBuilder(
+    column: $table.exchange,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get archivedAt => $composableBuilder(
     column: $table.archivedAt,
     builder: (column) => ColumnOrderings(column),
@@ -13764,6 +13908,14 @@ class $$InstrumentsTableAnnotationComposer
 
   GeneratedColumn<String> get isin =>
       $composableBuilder(column: $table.isin, builder: (column) => column);
+
+  GeneratedColumn<String> get resolvedSymbol => $composableBuilder(
+    column: $table.resolvedSymbol,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get exchange =>
+      $composableBuilder(column: $table.exchange, builder: (column) => column);
 
   GeneratedColumn<DateTime> get archivedAt => $composableBuilder(
     column: $table.archivedAt,
@@ -13886,6 +14038,8 @@ class $$InstrumentsTableTableManager
                 Value<InstrumentKind> kind = const Value.absent(),
                 Value<String?> ticker = const Value.absent(),
                 Value<String?> isin = const Value.absent(),
+                Value<String?> resolvedSymbol = const Value.absent(),
+                Value<String?> exchange = const Value.absent(),
                 Value<DateTime?> archivedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -13895,6 +14049,8 @@ class $$InstrumentsTableTableManager
                 kind: kind,
                 ticker: ticker,
                 isin: isin,
+                resolvedSymbol: resolvedSymbol,
+                exchange: exchange,
                 archivedAt: archivedAt,
                 createdAt: createdAt,
                 rowid: rowid,
@@ -13906,6 +14062,8 @@ class $$InstrumentsTableTableManager
                 required InstrumentKind kind,
                 Value<String?> ticker = const Value.absent(),
                 Value<String?> isin = const Value.absent(),
+                Value<String?> resolvedSymbol = const Value.absent(),
+                Value<String?> exchange = const Value.absent(),
                 Value<DateTime?> archivedAt = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -13915,6 +14073,8 @@ class $$InstrumentsTableTableManager
                 kind: kind,
                 ticker: ticker,
                 isin: isin,
+                resolvedSymbol: resolvedSymbol,
+                exchange: exchange,
                 archivedAt: archivedAt,
                 createdAt: createdAt,
                 rowid: rowid,

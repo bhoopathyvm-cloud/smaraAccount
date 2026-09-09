@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../domain/investment/exchange_registry.dart';
+
 import '../../../../data/repositories/ledger_backup_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
@@ -68,6 +70,9 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   ResearchTool _selectedResearchTool = ResearchTool.values.first;
   ResearchTool get selectedResearchTool => _selectedResearchTool;
 
+  Exchange _defaultExchange = exchangeForCode(kDefaultExchangeCode)!;
+  Exchange get defaultExchange => _defaultExchange;
+
   bool _isAppLockEnabled = false;
   bool get isAppLockEnabled => _isAppLockEnabled;
 
@@ -100,6 +105,9 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
         .isMarketPriceFetchEnabled();
     _selectedQuoteProvider = await _settingsRepository.selectedQuoteProvider();
     _selectedResearchTool = await _settingsRepository.selectedResearchTool();
+    _defaultExchange = await _settingsRepository.selectedDefaultExchange(
+      deviceRegion: PlatformDispatcher.instance.locale.countryCode,
+    );
     _isAppLockEnabled = await _settingsRepository.isAppLockEnabled();
     _appLockTimeoutMinutes = await _settingsRepository.appLockTimeoutMinutes();
     _isBiometricEnabled = await _settingsRepository.isAppLockBiometricEnabled();
@@ -136,6 +144,12 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     _selectedResearchTool = tool;
     notifyListeners();
     await _settingsRepository.setSelectedResearchTool(tool);
+  }
+
+  Future<void> setDefaultExchange(Exchange exchange) async {
+    _defaultExchange = exchange;
+    notifyListeners();
+    await _settingsRepository.setDefaultExchange(exchange);
   }
 
   bool _isBackingUp = false;

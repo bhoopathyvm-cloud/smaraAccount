@@ -1831,4 +1831,67 @@ class AppLocalizationsKok extends AppLocalizations {
 
   @override
   String get researchPromptIsinNoneProvided => 'ISIN: (दिवंक ना)';
+
+  @override
+  String get identifyPromptIntro =>
+      'I want to add this security to my portfolio tracker. Give me its ISIN, its primary listing exchange and ticker, the trading currency, the exact market-data symbol (for example the Yahoo Finance symbol), and — if it is cross-listed — each venue with its own currency. Facts only, with the source if you can. Do not give buy, sell, or hold advice. This is not financial advice.';
+
+  @override
+  String get instrumentLookUp => 'Look up identifiers';
+
+  @override
+  String get instrumentLookUpCopied =>
+      'Copied an identifier look-up prompt — no browser URL available, or you are offline.';
+
+  @override
+  String get instrumentLookUpOpened =>
+      'Opened your favourite tool to look up the identifiers.';
+
+  @override
+  String get isinInvalid =>
+      'This does not look like an ISIN (12 letters/digits starting with a country code).';
+
+  @override
+  String get isinCheckDigitWarning =>
+      'This ISIN looks mistyped — its check digit does not add up.';
+
+  @override
+  String instrumentCurrencyMismatchWithHint(
+    String inferred,
+    String account,
+    String suffix,
+  ) {
+    return 'Automatic quotes may not match: this looks like a $inferred listing but the account is in $account. For $account quotes, use the $suffix listing.';
+  }
+
+  @override
+  String instrumentCurrencyMismatch(String inferred, String account) {
+    return 'Automatic quotes may not match: this looks like a $inferred listing but the account is in $account.';
+  }
+
+  @override
+  String get settingsDefaultExchange => 'Default exchange';
+
+  @override
+  String get settingsDefaultExchangeSubtitle =>
+      'Biases which listing a new instrument resolves to, and supplies its currency. A fixed list — pick the venue you trade on most.';
+
+  @override
+  String get confirmListingTitle => 'Confirm the listing';
+
+  @override
+  String get confirmListingBlurb =>
+      'Pick the listing that matches your holding. Its currency is what automatic quotes will use.';
+
+  @override
+  String confirmListingCurrencyLine(String exchange, String currency) {
+    return '$exchange · $currency';
+  }
+
+  @override
+  String get confirmListingSkip => 'Skip — save as typed';
+
+  @override
+  String get resolveDeferredSaved =>
+      'Saved. The exact market symbol will be resolved on the next price refresh.';
 }
