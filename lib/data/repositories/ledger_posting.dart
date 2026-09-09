@@ -7,6 +7,7 @@ import '../../domain/exceptions.dart';
 import '../../domain/models/integrity_event.dart';
 import '../../domain/models/pending_transfer.dart';
 import '../../domain/models/transaction_direction.dart';
+import '../../domain/transfer/pending_transfer_settlement.dart';
 import '../database/app_database.dart';
 import '../database/tables/accounts_table.dart';
 import 'account_chart_reader.dart';
@@ -619,10 +620,15 @@ class LedgerPosting {
       );
     }
 
-    final resolvedTarget =
-        pending.kind == PendingTransferKind.foreignTransaction
-        ? pending.sourceAccountId
-        : settledToAccountId;
+    // Resolve the target account and shortfall path through the shared
+    // policy so this write path and the settle-pending form
+    // (`SettlePendingDraft`) never diverge on these two subtle rules.
+    final settlement = PendingTransferSettlement.resolve(
+      kind: pending.kind,
+      sourceAccountId: pending.sourceAccountId,
+      settledToAccountId: settledToAccountId,
+    );
+    final resolvedTarget = settlement.resolvedTargetAccountId!;
     if (pending.kind == PendingTransferKind.transfer &&
         resolvedTarget != pending.sourceAccountId &&
         resolvedTarget != pending.destinationAccountId) {
@@ -636,9 +642,7 @@ class LedgerPosting {
     // Shortfall comparison only applies to a transfer settling back to its
     // own source - never a transfer settling to its destination, and never
     // a foreignTransaction (see method doc for why).
-    final isShortfallComparable =
-        pending.kind == PendingTransferKind.transfer &&
-        resolvedTarget == pending.sourceAccountId;
+    final isShortfallComparable = settlement.isShortfallComparable;
 
     if (!isShortfallComparable && feeCategoryId != null) {
       throw PendingTransferException(
