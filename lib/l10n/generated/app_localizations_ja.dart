@@ -817,6 +817,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exportKeystoreFile => 'キーストアファイルを書き出す';
 
   @override
+  String get chooseLanguageTitle => '言語を選んでください';
+
+  @override
+  String get chooseLanguageBlurb => 'アプリのすべての表示がこの言語になります。後で設定から変更できます。';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      '回復フレーズは英語で表示されます。これはどこでも回復ツールが認識する少数の標準的な単語を使用しており、この言語ではまだ利用できません。';
+
+  @override
   String get chooseCurrencyTitle => '通貨を選択してください';
 
   @override

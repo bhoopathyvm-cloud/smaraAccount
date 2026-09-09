@@ -42,6 +42,39 @@ void main() {
     });
   });
 
+  group('non-English languages (onboarding-language-selection)', () {
+    test('generate() in French uses the French wordlist', () {
+      final french = Language.french.list.toSet();
+      final phrase = RecoveryPhrase.generate(language: Language.french);
+      expect(phrase.words.every(french.contains), isTrue);
+      expect(phrase.language, Language.french);
+    });
+
+    test(
+      'a French phrase round-trips through fromWords with language: french',
+      () {
+        final generated = RecoveryPhrase.generate(language: Language.french);
+
+        final reconstructed = RecoveryPhrase.fromWords(
+          generated.words,
+          language: Language.french,
+        );
+
+        expect(reconstructed.seed, equals(generated.seed));
+      },
+    );
+
+    test('reconstructing a French phrase as English throws rather than '
+        'silently deriving the wrong seed', () {
+      final generated = RecoveryPhrase.generate(language: Language.french);
+
+      expect(
+        () => RecoveryPhrase.fromWords(generated.words),
+        throwsA(anything),
+      );
+    });
+  });
+
   group('RecoveryPhrase.fromWords', () {
     test('rejects words with an invalid checksum', () {
       final valid = RecoveryPhrase.generate().words;

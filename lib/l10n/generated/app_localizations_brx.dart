@@ -828,6 +828,17 @@ class AppLocalizationsBrx extends AppLocalizations {
   String get exportKeystoreFile => 'कीस्टोर फाइल एक्सपोर्ट खालाम';
 
   @override
+  String get chooseLanguageTitle => 'नोंथांनि रादाब सायख';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'एपखौ जोबथानो जायखि सब रादाबाव नुनो मोनबाय। नोंथाङा उनि उनाव सेटिंसआव सोलायनो हायो।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'नोंथांनि पुनरुद्धार खोन्थाय इंराजी रादाबाव दिन्थियो। बे रादाबाव गासैबो थाखाय बुहुम मोननि थाखाय मोनथाय गोरा शब्दमा बाहायो, बे बे रादाबाव दानसननि थाखाय हमनि।';
+
+  @override
   String get chooseCurrencyTitle => 'नोंथांनि करेंसी सायख';
 
   @override

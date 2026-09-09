@@ -840,6 +840,17 @@ class AppLocalizationsHu extends AppLocalizations {
   String get exportKeystoreFile => 'Kulcstartó fájl exportálása';
 
   @override
+  String get chooseLanguageTitle => 'Válassz nyelvet';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'Az alkalmazás mindene ezen a nyelven fog megjelenni. Később a Beállításokban megváltoztathatod.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'A helyreállítási kifejezésed angolul fog megjelenni. Egy olyan kis, szabványos szókészletet használ, amelyet a helyreállító eszközök mindenhol felismernek, és amely ezen a nyelven még nem áll rendelkezésre.';
+
+  @override
   String get chooseCurrencyTitle => 'Válassza ki a pénznemét';
 
   @override

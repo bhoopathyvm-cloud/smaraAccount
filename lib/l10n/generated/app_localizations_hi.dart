@@ -831,6 +831,17 @@ class AppLocalizationsHi extends AppLocalizations {
   String get exportKeystoreFile => 'कीस्टोर फ़ाइल निर्यात करें';
 
   @override
+  String get chooseLanguageTitle => 'अपनी भाषा चुनें';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ऐप में सब कुछ इसी भाषा में दिखेगा। आप बाद में सेटिंग्स में इसे बदल सकते हैं।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'आपका रिकवरी फ़्रेज़ अंग्रेज़ी में दिखाया जाएगा। यह हर जगह रिकवरी टूल्स द्वारा पहचाने जाने वाले मानक शब्दों के एक छोटे समूह का उपयोग करता है, जो इस भाषा में अभी उपलब्ध नहीं है।';
+
+  @override
   String get chooseCurrencyTitle => 'अपनी मुद्रा चुनें';
 
   @override

@@ -838,6 +838,17 @@ class AppLocalizationsMl extends AppLocalizations {
   String get exportKeystoreFile => 'കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യുക';
 
   @override
+  String get chooseLanguageTitle => 'നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ആപ്പിലെ എല്ലാം ഈ ഭാഷയിൽ കാണിക്കും. നിങ്ങൾക്ക് പിന്നീട് സെറ്റിംഗ്സിൽ ഇത് മാറ്റാം.';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്‌സ് ഇംഗ്ലീഷിൽ കാണിക്കും. എല്ലായിടത്തും റിക്കവറി ടൂളുകൾ തിരിച്ചറിയുന്ന ഒരു ചെറിയ സ്റ്റാൻഡേർഡ് പദസഞ്ചയമാണ് ഇത് ഉപയോഗിക്കുന്നത്, അത് ഈ ഭാഷയിൽ ഇതുവരെ ലഭ്യമല്ല.';
+
+  @override
   String get chooseCurrencyTitle => 'നിങ്ങളുടെ കറൻസി തിരഞ്ഞെടുക്കുക';
 
   @override

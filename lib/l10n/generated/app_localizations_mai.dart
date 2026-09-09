@@ -830,6 +830,17 @@ class AppLocalizationsMai extends AppLocalizations {
   String get exportKeystoreFile => 'कीस्टोर फाइल निर्यात करू';
 
   @override
+  String get chooseLanguageTitle => 'अपन भाषा चुनू';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ऐपमे सभटा एहि भाषामे देखल जायत। अहाँ बादमे सेटिंगमे एकरा बदलि सकैत छी।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'अहाँक रिकवरी फ्रेज अंग्रेजीमे देखाओल जायत। ई हर जगह रिकवरी टूलसँ पहचानल जाए वाला थोड़ेक मानक शब्दक इस्तेमाल करैत अछि, जे एहि भाषामे अखन उपलब्ध नहि अछि।';
+
+  @override
   String get chooseCurrencyTitle => 'अपन मुद्रा चुनू';
 
   @override

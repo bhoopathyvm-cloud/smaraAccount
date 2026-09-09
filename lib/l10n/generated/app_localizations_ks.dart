@@ -830,6 +830,17 @@ class AppLocalizationsKs extends AppLocalizations {
   String get exportKeystoreFile => 'کی سٹور فایل برآمد کریو';
 
   @override
+  String get chooseLanguageTitle => 'پننٕ زبان ژارٕو';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'ایپہٕ منز ساری کہین یم زبانہٕ منٛز ظٲہر گژھی۔ توہہِ کٔرِتھ پتہٕ سیٹنگژَن منٛز یہ بدلاو ہیکِو۔';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'توٚہنٛد ریکوری فقرہٕ انٛگریزی منٛز ظٲہر کرنہٕ آمُت۔ یہ استعمال کران ہے اکھ لوکٕٹ معیاری لفظن ہنٛد سیٹ یم ہر تہِ جاے ریکوری اوزارن ہٕنٛدِس ذریعہٕ پہچانہٕ چھِ، یم اتھ زبانہٕ منٛز وُنی دستیاب چھٕنہٕ۔';
+
+  @override
   String get chooseCurrencyTitle => 'تُہند کرنسی ژارٕو';
 
   @override

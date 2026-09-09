@@ -832,6 +832,17 @@ class AppLocalizationsAs extends AppLocalizations {
   String get exportKeystoreFile => 'কীষ্টোৰ ফাইল ৰপ্তানি কৰক';
 
   @override
+  String get chooseLanguageTitle => 'আপোনাৰ ভাষা বাছনি কৰক';
+
+  @override
+  String get chooseLanguageBlurb =>
+      'এপ্‌টোৰ সকলো বস্তু এই ভাষাত দেখা যাব। আপুনি পিছত ছেটিংছত ইয়াক সলনি কৰিব পাৰে।';
+
+  @override
+  String get chooseLanguageBip39Notice =>
+      'আপোনাৰ পুনৰুদ্ধাৰ বাক্যাংশ ইংৰাজীত দেখুওৱা হ\'ব। ই সৰ্বত্ৰ পুনৰুদ্ধাৰ সঁজুলিয়ে চিনি পোৱা মানক শব্দৰ এটা সৰু সংহতি ব্যৱহাৰ কৰে, যিটো এই ভাষাত এতিয়াও উপলব্ধ নহয়।';
+
+  @override
   String get chooseCurrencyTitle => 'আপোনাৰ মুদ্ৰা বাছক';
 
   @override
