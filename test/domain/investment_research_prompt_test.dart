@@ -51,4 +51,31 @@ void main() {
     expect(prompt, contains(ta.researchPromptIntro));
     expect(prompt, isNot(contains(en.researchPromptIntro)));
   });
+
+  group('buildInstrumentIdentifyPrompt', () {
+    test('asks for ISIN, exchange, ticker, currency, and symbol', () {
+      final prompt = buildInstrumentIdentifyPrompt(en, 'UBS Group AG');
+      expect(prompt, contains('UBS Group AG'));
+      expect(prompt.toLowerCase(), contains('isin'));
+      expect(prompt.toLowerCase(), contains('exchange'));
+      expect(prompt.toLowerCase(), contains('ticker'));
+      expect(prompt.toLowerCase(), contains('currency'));
+      expect(prompt.toLowerCase(), contains('symbol'));
+      expect(prompt.toLowerCase(), contains('not financial advice'));
+    });
+
+    test('includes only the name, no quantity/cost/account', () {
+      final prompt = buildInstrumentIdentifyPrompt(en, 'UBS Group AG');
+      expect(prompt.toLowerCase(), isNot(contains('quantity')));
+      expect(prompt.toLowerCase(), isNot(contains('cost')));
+      expect(prompt.toLowerCase(), isNot(contains('account')));
+    });
+
+    test('follows the active locale', () {
+      final ta = lookupAppLocalizations(const Locale('ta'));
+      final prompt = buildInstrumentIdentifyPrompt(ta, 'UBS Group AG');
+      expect(prompt, contains('UBS Group AG'));
+      expect(prompt, contains(ta.identifyPromptIntro));
+    });
+  });
 }

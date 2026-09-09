@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:smara_accounting/domain/investment/exchange_registry.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 import 'package:smara_accounting/domain/models/quote_provider.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
@@ -35,6 +36,11 @@ void main() {
     when(
       repository.selectedResearchTool(),
     ).thenAnswer((_) async => ResearchTool.chatGpt);
+    when(
+      repository.selectedDefaultExchange(
+        deviceRegion: anyNamed('deviceRegion'),
+      ),
+    ).thenAnswer((_) async => exchangeForCode('US')!);
     when(
       repository.setReferenceRateLookupEnabled(any),
     ).thenAnswer((_) async {});

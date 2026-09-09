@@ -8,6 +8,7 @@ import 'package:smara_accounting/data/database/tables/ofx_import_records_table.d
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
+import 'package:smara_accounting/data/repositories/investment_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
@@ -439,7 +440,66 @@ sqlite3.Database _openV15Database() {
   return db;
 }
 
+/// Built by taking [_openV15Database] and hand-applying the
+/// schemaVersion-16 migration SQL (`accounts.is_credit_card`) so
+/// onUpgrade(16, 17) can be exercised for real for the
+/// instrument-identifier-assist `resolved_symbol`/`exchange` column
+/// migration below.
+sqlite3.Database _openV16Database() {
+  final db = _openV15Database();
+  db.execute('''
+    ALTER TABLE accounts ADD COLUMN is_credit_card INTEGER NOT NULL DEFAULT 0;
+    PRAGMA user_version = 16;
+  ''');
+  return db;
+}
+
 void main() {
+  group('onUpgrade from schemaVersion 16', () {
+    test(
+      'existing instruments upgrade cleanly and a resolved symbol is settable',
+      () async {
+        final v16 = _openV16Database();
+        // An instrument that predates the resolved-symbol columns.
+        v16.execute('''
+          INSERT INTO instruments (id, name, kind, ticker, isin, created_at)
+          VALUES ('i-legacy', 'UBS', 'stock', 'ubsg', NULL, 0);
+        ''');
+
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v16));
+        addTearDown(db.close);
+
+        final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
+        final ledger = LedgerRepository(database: db, signingKeyService: keys);
+        final investment = InvestmentRepository(
+          database: db,
+          ledgerRepository: ledger,
+        );
+
+        // The legacy row upgraded with NULL resolved columns.
+        final before = (await investment
+                .watchInstruments(includeArchived: true)
+                .first)
+            .firstWhere((i) => i.id == 'i-legacy');
+        expect(before.resolvedSymbol, isNull);
+        expect(before.exchange, isNull);
+
+        await investment.setInstrumentResolution(
+          id: 'i-legacy',
+          resolvedSymbol: 'UBSG.SW',
+          exchange: 'SIX',
+        );
+
+        final after = (await investment
+                .watchInstruments(includeArchived: true)
+                .first)
+            .firstWhere((i) => i.id == 'i-legacy');
+        expect(after.resolvedSymbol, equals('UBSG.SW'));
+        expect(after.exchange, equals('SIX'));
+      },
+    );
+  });
+
   group('onUpgrade from schemaVersion 15', () {
     test('existing database upgrades cleanly and a liability account can be '
         'flagged as a credit card', () async {

@@ -103,4 +103,83 @@ void main() {
       expect(quote?.priceMinor, equals(1234));
     },
   );
+
+  test('fetchQuote prefers an explicit resolved symbol over ticker', () async {
+    Uri? captured;
+    final service = InstrumentQuoteService(
+      client: MockClient((request) async {
+        captured = request.url;
+        return http.Response(
+          '{"chart":{"result":[{"meta":{"regularMarketPrice":10,"currency":"CHF"}}]}}',
+          200,
+        );
+      }),
+    );
+    await service.fetchQuote(
+      provider: QuoteProvider.yahooFinance,
+      symbol: 'UBSG.SW',
+      ticker: 'ubsg',
+    );
+    expect(captured!.path, contains('UBSG.SW'));
+    expect(captured!.path, isNot(contains('ubsg,')));
+  });
+
+  group('searchIdentifier', () {
+    const body =
+        '{"quotes":['
+        '{"symbol":"UBSG.SW","shortname":"UBS Group AG","longname":"UBS Group AG","exchDisp":"Swiss","quoteType":"EQUITY"},'
+        '{"symbol":"UBS","shortname":"UBS Group AG","exchDisp":"NYSE","quoteType":"EQUITY"},'
+        '{"symbol":"BTC-USD","shortname":"Bitcoin","exchDisp":"CCC","quoteType":"CRYPTOCURRENCY"}'
+        ']}';
+
+    test('returns candidates with a currency inferred from the suffix', () async {
+      final service = InstrumentQuoteService(
+        client: MockClient((request) async => http.Response(body, 200)),
+      );
+      final candidates = await service.searchIdentifier('CH0244767585');
+      // The crypto row is filtered out; the two equities remain.
+      expect(candidates.length, equals(2));
+      final swiss = candidates.firstWhere((c) => c.symbol == 'UBSG.SW');
+      expect(swiss.currency, equals('CHF'));
+      expect(swiss.exchangeCode, equals('SIX'));
+      final us = candidates.firstWhere((c) => c.symbol == 'UBS');
+      expect(us.currency, equals('USD'));
+      expect(us.exchangeCode, isNull);
+    });
+
+    test('sends only the query, no quantity/cost/account', () async {
+      Uri? captured;
+      final service = InstrumentQuoteService(
+        client: MockClient((request) async {
+          captured = request.url;
+          return http.Response(body, 200);
+        }),
+      );
+      await service.searchIdentifier('CH0244767585');
+      expect(captured!.queryParameters['q'], equals('CH0244767585'));
+      final lower = captured!.toString().toLowerCase();
+      expect(lower, isNot(contains('quantity')));
+      expect(lower, isNot(contains('cost')));
+      expect(lower, isNot(contains('account')));
+    });
+
+    test('an empty query never hits the network', () async {
+      var requested = false;
+      final service = InstrumentQuoteService(
+        client: MockClient((request) async {
+          requested = true;
+          return http.Response('{}', 200);
+        }),
+      );
+      expect(await service.searchIdentifier('  '), isEmpty);
+      expect(requested, isFalse);
+    });
+
+    test('a failed search resolves to an empty list', () async {
+      final service = InstrumentQuoteService(
+        client: MockClient((request) async => http.Response('boom', 500)),
+      );
+      expect(await service.searchIdentifier('AAPL'), isEmpty);
+    });
+  });
 }
