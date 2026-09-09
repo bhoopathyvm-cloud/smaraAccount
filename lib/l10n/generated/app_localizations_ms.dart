@@ -275,11 +275,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settingsAbout => 'Perihal';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Dasar Privasi';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Tidak dapat membuka dasar privasi dalam pelayar.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (kadar ECB)';

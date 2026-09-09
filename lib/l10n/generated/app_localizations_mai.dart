@@ -273,11 +273,11 @@ class AppLocalizationsMai extends AppLocalizations {
   String get settingsAbout => 'एहि विषय मे';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'गोपनीयता नीति';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'ब्राउजरमे गोपनीयता नीति खोलल नहि जा सकल।';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB दर)';

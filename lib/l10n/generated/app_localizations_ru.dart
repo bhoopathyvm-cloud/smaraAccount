@@ -275,11 +275,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsAbout => 'О приложении';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Политика конфиденциальности';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Не удалось открыть политику конфиденциальности в браузере.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (курсы ЕЦБ)';

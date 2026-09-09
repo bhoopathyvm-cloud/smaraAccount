@@ -546,7 +546,7 @@ OVERLAYS = {
     },
     'as': {
         'settingsPrivacyPolicy': 'গোপনীয়তা নীতি',
-        'settingsPrivacyPolicyOpenFailed': 'ব্ৰাউজাৰত গোপনীয়তা নীতি খুলিব পৰা নগ\'ল।',
+        'settingsPrivacyPolicyOpenFailed': 'ব্ৰাউজাৰত গোপনীয়তা নীতি খুলিব পৰা নগ\'\'ল।',
         'appTitle': 'স্মাৰা হিচাপ',
         'navHome': 'গৃহ',
         'navRegister': 'ৰেজিষ্টাৰ',
@@ -3732,7 +3732,7 @@ OVERLAYS = {
     },
     'fr': {
         'settingsPrivacyPolicy': 'Politique de confidentialité',
-        'settingsPrivacyPolicyOpenFailed': 'Impossible d\'ouvrir la politique de confidentialité dans un navigateur.',
+        'settingsPrivacyPolicyOpenFailed': 'Impossible d\'\'ouvrir la politique de confidentialité dans un navigateur.',
         'appTitle': 'Smara Comptabilité',
         'navHome': 'Accueil',
         'navRegister': 'Registre',
@@ -6387,7 +6387,7 @@ OVERLAYS = {
     },
     'it': {
         'settingsPrivacyPolicy': 'Informativa sulla privacy',
-        'settingsPrivacyPolicyOpenFailed': 'Impossibile aprire l\'informativa sulla privacy nel browser.',
+        'settingsPrivacyPolicyOpenFailed': 'Impossibile aprire l\'\'informativa sulla privacy nel browser.',
         'appTitle': 'Smara Contabilità',
         'navHome': 'Home',
         'navRegister': 'Registro',

@@ -270,11 +270,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsAbout => '关于';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => '隐私政策';
 
   @override
-  String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+  String get settingsPrivacyPolicyOpenFailed => '无法在浏览器中打开隐私政策。';
 
   @override
   String get providerFrankfurter => 'Frankfurter（欧洲央行汇率）';

@@ -86,7 +86,7 @@
   "settingsRecurringBlurb": "Factures ou revenus qui se répètent chaque mois, comme un loyer ou un salaire. Un modèle arrivé à échéance apparaît sur l''accueil pour que vous l''enregistriez d''un geste - il n''est jamais comptabilisé automatiquement.",
   "settingsAbout": "À propos",
   "settingsPrivacyPolicy": "Politique de confidentialité",
-  "settingsPrivacyPolicyOpenFailed": "Impossible d'ouvrir la politique de confidentialité dans un navigateur.",
+  "settingsPrivacyPolicyOpenFailed": "Impossible d''ouvrir la politique de confidentialité dans un navigateur.",
   "providerFrankfurter": "Frankfurter (taux de la BCE)",
   "providerOpenErApi": "ExchangeRate-API (open.er-api.com)",
   "providerStooq": "Stooq (cours quotidiens)",

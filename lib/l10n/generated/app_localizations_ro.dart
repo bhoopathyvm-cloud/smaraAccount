@@ -277,11 +277,11 @@ class AppLocalizationsRo extends AppLocalizations {
   String get settingsAbout => 'Despre';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Politica de confidențialitate';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Politica de confidențialitate nu a putut fi deschisă în browser.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (cursuri BCE)';

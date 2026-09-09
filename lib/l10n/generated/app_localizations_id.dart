@@ -274,11 +274,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingsAbout => 'Tentang';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Kebijakan Privasi';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Tidak dapat membuka kebijakan privasi di browser.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (kurs ECB)';
