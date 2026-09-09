@@ -27,14 +27,17 @@ void main() {
       _group(id: 'savings', kind: AccountGroupKind.assetGroup, currency: 'EUR'),
     ];
 
-    test('ensureValidGroupSelection defaults to first, then keeps a valid pick', () {
-      final draft = FinancialAccountDraft();
-      draft.ensureValidGroupSelection(assetGroups);
-      expect(draft.groupId, 'cash');
-      draft.groupId = 'savings';
-      draft.ensureValidGroupSelection(assetGroups);
-      expect(draft.groupId, 'savings');
-    });
+    test(
+      'ensureValidGroupSelection defaults to first, then keeps a valid pick',
+      () {
+        final draft = FinancialAccountDraft();
+        draft.ensureValidGroupSelection(assetGroups);
+        expect(draft.groupId, 'cash');
+        draft.groupId = 'savings';
+        draft.ensureValidGroupSelection(assetGroups);
+        expect(draft.groupId, 'savings');
+      },
+    );
 
     test('ensureValidGroupSelection nulls out when the list is empty', () {
       final draft = FinancialAccountDraft()..groupId = 'cash';
@@ -65,12 +68,15 @@ void main() {
       expect(draft.isCreditCard, isFalse);
     });
 
-    test('setType is a no-op for the same type (keeps flags and selection)', () {
-      final draft = FinancialAccountDraft()..holdsInvestments = true;
-      draft.ensureValidGroupSelection(assetGroups);
-      draft.setType(AccountType.asset);
-      expect(draft.groupId, 'cash');
-      expect(draft.holdsInvestments, isTrue);
-    });
+    test(
+      'setType is a no-op for the same type (keeps flags and selection)',
+      () {
+        final draft = FinancialAccountDraft()..holdsInvestments = true;
+        draft.ensureValidGroupSelection(assetGroups);
+        draft.setType(AccountType.asset);
+        expect(draft.groupId, 'cash');
+        expect(draft.holdsInvestments, isTrue);
+      },
+    );
   });
 }

@@ -272,11 +272,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settingsAbout => '정보';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => '개인정보 처리방침';
 
   @override
-  String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+  String get settingsPrivacyPolicyOpenFailed => '브라우저에서 개인정보 처리방침을 열 수 없습니다.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB 환율)';

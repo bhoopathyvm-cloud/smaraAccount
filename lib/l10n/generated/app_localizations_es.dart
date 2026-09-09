@@ -277,11 +277,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsAbout => 'Acerca de';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Política de privacidad';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'No se pudo abrir la política de privacidad en el navegador.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (tasas del BCE)';

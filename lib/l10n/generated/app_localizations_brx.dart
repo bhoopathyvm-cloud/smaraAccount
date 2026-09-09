@@ -273,11 +273,11 @@ class AppLocalizationsBrx extends AppLocalizations {
   String get settingsAbout => 'बारे';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'गोपनीयता नीति';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'ब्राउजारनि गोपनीयता नीति खेवनो हायाखै।';
 
   @override
   String get providerFrankfurter => 'फ्रैंकफर्टार (ECB रेट)';

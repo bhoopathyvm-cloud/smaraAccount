@@ -36,14 +36,17 @@ void main() {
       expect(settlement.isShortfallComparable, isFalse);
     });
 
-    test('transfer target is null (and not shortfall) before one is chosen', () {
-      final settlement = PendingTransferSettlement.resolve(
-        kind: PendingTransferKind.transfer,
-        sourceAccountId: 'src',
-        settledToAccountId: null,
-      );
-      expect(settlement.resolvedTargetAccountId, isNull);
-      expect(settlement.isShortfallComparable, isFalse);
-    });
+    test(
+      'transfer target is null (and not shortfall) before one is chosen',
+      () {
+        final settlement = PendingTransferSettlement.resolve(
+          kind: PendingTransferKind.transfer,
+          sourceAccountId: 'src',
+          settledToAccountId: null,
+        );
+        expect(settlement.resolvedTargetAccountId, isNull);
+        expect(settlement.isShortfallComparable, isFalse);
+      },
+    );
   });
 }

@@ -275,11 +275,11 @@ class AppLocalizationsMl extends AppLocalizations {
   String get settingsAbout => 'വിവരണം';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'സ്വകാര്യതാ നയം';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'ബ്രൗസറിൽ സ്വകാര്യതാ നയം തുറക്കാൻ കഴിഞ്ഞില്ല.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB നിരക്കുകൾ)';

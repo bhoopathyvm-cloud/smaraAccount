@@ -277,11 +277,11 @@ class AppLocalizationsHu extends AppLocalizations {
   String get settingsAbout => 'Névjegy';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Adatvédelmi irányelvek';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Az adatvédelmi irányelvek nem nyithatók meg a böngészőben.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (EKB árfolyamok)';

@@ -277,11 +277,11 @@ class AppLocalizationsUk extends AppLocalizations {
   String get settingsAbout => 'Про застосунок';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Політика конфіденційності';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Не вдалося відкрити політику конфіденційності в браузері.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (курси ЄЦБ)';

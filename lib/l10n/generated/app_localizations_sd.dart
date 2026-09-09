@@ -274,11 +274,11 @@ class AppLocalizationsSd extends AppLocalizations {
   String get settingsAbout => 'باري ۾';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'پرائيويسي پاليسي';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'برائوزر ۾ پرائيويسي پاليسي کولي نه سگهجي.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB شرحون)';

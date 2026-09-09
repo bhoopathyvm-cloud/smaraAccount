@@ -275,11 +275,11 @@ class AppLocalizationsKn extends AppLocalizations {
   String get settingsAbout => 'ಬಗ್ಗೆ';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'ಗೌಪ್ಯತಾ ನೀತಿ';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಗೌಪ್ಯತಾ ನೀತಿಯನ್ನು ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB ದರಗಳು)';
