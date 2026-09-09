@@ -14,6 +14,8 @@ correction note.
 
 OVERLAYS = {
     'ar': {
+        'settingsPrivacyPolicy': 'سياسة الخصوصية',
+        'settingsPrivacyPolicyOpenFailed': 'تعذّر فتح سياسة الخصوصية في المتصفح.',
         'appTitle': 'سمارا للحسابات',
         'navHome': 'الرئيسية',
         'navRegister': 'السجل',
@@ -543,6 +545,8 @@ OVERLAYS = {
         'unknownCategory': 'فئة غير معروفة',
     },
     'as': {
+        'settingsPrivacyPolicy': 'গোপনীয়তা নীতি',
+        'settingsPrivacyPolicyOpenFailed': 'ব্ৰাউজাৰত গোপনীয়তা নীতি খুলিব পৰা নগ\'ল।',
         'appTitle': 'স্মাৰা হিচাপ',
         'navHome': 'গৃহ',
         'navRegister': 'ৰেজিষ্টাৰ',
@@ -1072,6 +1076,8 @@ OVERLAYS = {
         'unknownCategory': 'অজ্ঞাত শ্ৰেণী',
     },
     'bn': {
+        'settingsPrivacyPolicy': 'গোপনীয়তা নীতি',
+        'settingsPrivacyPolicyOpenFailed': 'ব্রাউজারে গোপনীয়তা নীতি খোলা যায়নি।',
         'appTitle': 'স্মারা হিসাব',
         'navHome': 'হোম',
         'navRegister': 'রেজিস্টার',
@@ -1601,6 +1607,8 @@ OVERLAYS = {
         'unknownCategory': 'অজানা বিভাগ',
     },
     'brx': {
+        'settingsPrivacyPolicy': 'गोपनीयता नीति',
+        'settingsPrivacyPolicyOpenFailed': 'ब्राउजारनि गोपनीयता नीति खेवनो हायाखै।',
         'appTitle': 'स्मारा खाता',
         'navHome': 'घर',
         'navRegister': 'रेजिष्टार',
@@ -2130,6 +2138,8 @@ OVERLAYS = {
         'unknownCategory': 'मोनोबथि थाखो',
     },
     'de': {
+        'settingsPrivacyPolicy': 'Datenschutzerklärung',
+        'settingsPrivacyPolicyOpenFailed': 'Die Datenschutzerklärung konnte nicht im Browser geöffnet werden.',
         'appTitle': 'Smara Buchhaltung',
         'navHome': 'Start',
         'navRegister': 'Register',
@@ -2659,6 +2669,8 @@ OVERLAYS = {
         'unknownCategory': 'Unbekannte Kategorie',
     },
     'doi': {
+        'settingsPrivacyPolicy': 'गोपनीयता नीति',
+        'settingsPrivacyPolicyOpenFailed': 'ब्राउज़र च गोपनीयता नीति खोह् सकी नेईं।',
         'appTitle': 'स्मारा खाता',
         'navHome': 'घर',
         'navRegister': 'रजिस्टर',
@@ -3188,6 +3200,8 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'es': {
+        'settingsPrivacyPolicy': 'Política de privacidad',
+        'settingsPrivacyPolicyOpenFailed': 'No se pudo abrir la política de privacidad en el navegador.',
         'appTitle': 'Smara Contabilidad',
         'navHome': 'Inicio',
         'navRegister': 'Registro',
@@ -3717,6 +3731,8 @@ OVERLAYS = {
         'unknownCategory': 'Categoría desconocida',
     },
     'fr': {
+        'settingsPrivacyPolicy': 'Politique de confidentialité',
+        'settingsPrivacyPolicyOpenFailed': 'Impossible d\'ouvrir la politique de confidentialité dans un navigateur.',
         'appTitle': 'Smara Comptabilité',
         'navHome': 'Accueil',
         'navRegister': 'Registre',
@@ -4246,6 +4262,8 @@ OVERLAYS = {
         'unknownCategory': 'Catégorie inconnue',
     },
     'gu': {
+        'settingsPrivacyPolicy': 'ગોપનીયતા નીતિ',
+        'settingsPrivacyPolicyOpenFailed': 'બ્રાઉઝરમાં ગોપનીયતા નીતિ ખોલી શકાઈ નથી.',
         'appTitle': 'સ્મારા ખાતું',
         'navHome': 'હોમ',
         'navRegister': 'રજિસ્ટર',
@@ -4775,6 +4793,8 @@ OVERLAYS = {
         'unknownCategory': 'અજ્ઞાત શ્રેણી',
     },
     'hi': {
+        'settingsPrivacyPolicy': 'गोपनीयता नीति',
+        'settingsPrivacyPolicyOpenFailed': 'गोपनीयता नीति को ब्राउज़र में नहीं खोला जा सका।',
         'appTitle': 'स्मारा खाता',
         'navHome': 'होम',
         'navRegister': 'रजिस्टर',
@@ -5304,6 +5324,8 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'hu': {
+        'settingsPrivacyPolicy': 'Adatvédelmi irányelvek',
+        'settingsPrivacyPolicyOpenFailed': 'Az adatvédelmi irányelvek nem nyithatók meg a böngészőben.',
         'appTitle': 'Smara könyvelés',
         'navHome': 'Kezdőlap',
         'navRegister': 'Napló',
@@ -5833,6 +5855,8 @@ OVERLAYS = {
         'unknownCategory': 'Ismeretlen kategória',
     },
     'id': {
+        'settingsPrivacyPolicy': 'Kebijakan Privasi',
+        'settingsPrivacyPolicyOpenFailed': 'Tidak dapat membuka kebijakan privasi di browser.',
         'appTitle': 'Smara Pembukuan',
         'navHome': 'Beranda',
         'navRegister': 'Buku',
@@ -6362,6 +6386,8 @@ OVERLAYS = {
         'unknownCategory': 'Kategori tidak diketahui',
     },
     'it': {
+        'settingsPrivacyPolicy': 'Informativa sulla privacy',
+        'settingsPrivacyPolicyOpenFailed': 'Impossibile aprire l\'informativa sulla privacy nel browser.',
         'appTitle': 'Smara Contabilità',
         'navHome': 'Home',
         'navRegister': 'Registro',
@@ -6891,6 +6917,8 @@ OVERLAYS = {
         'unknownCategory': 'Categoria sconosciuta',
     },
     'ja': {
+        'settingsPrivacyPolicy': 'プライバシーポリシー',
+        'settingsPrivacyPolicyOpenFailed': 'ブラウザでプライバシーポリシーを開けませんでした。',
         'appTitle': 'Smara家計簿',
         'navHome': 'ホーム',
         'navRegister': '明細',
@@ -7420,6 +7448,8 @@ OVERLAYS = {
         'unknownCategory': '不明なカテゴリ',
     },
     'kn': {
+        'settingsPrivacyPolicy': 'ಗೌಪ್ಯತಾ ನೀತಿ',
+        'settingsPrivacyPolicyOpenFailed': 'ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಗೌಪ್ಯತಾ ನೀತಿಯನ್ನು ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.',
         'appTitle': 'ಸ್ಮಾರ ಖಾತೆ',
         'navHome': 'ಮುಖಪುಟ',
         'navRegister': 'ರಿಜಿಸ್ಟರ್',
@@ -7949,6 +7979,8 @@ OVERLAYS = {
         'unknownCategory': 'ಅಜ್ಞಾತ ವರ್ಗ',
     },
     'ko': {
+        'settingsPrivacyPolicy': '개인정보 처리방침',
+        'settingsPrivacyPolicyOpenFailed': '브라우저에서 개인정보 처리방침을 열 수 없습니다.',
         'appTitle': 'Smara 회계',
         'navHome': '홈',
         'navRegister': '내역',
@@ -8478,6 +8510,8 @@ OVERLAYS = {
         'unknownCategory': '알 수 없는 분류',
     },
     'kok': {
+        'settingsPrivacyPolicy': 'गुप्ततायेचें धोरण',
+        'settingsPrivacyPolicyOpenFailed': 'ब्राउझरांत गुप्ततायेचें धोरण उगडपाक जालें ना.',
         'appTitle': 'स्मारा हिशोब',
         'navHome': 'घर',
         'navRegister': 'रजिस्टर',
@@ -9007,6 +9041,8 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात वर्ग',
     },
     'ks': {
+        'settingsPrivacyPolicy': 'خٲنگی پالیسی',
+        'settingsPrivacyPolicyOpenFailed': 'براوزرس منز خٲنگی پالیسی کھۄلنہٕ نہٕ آسئ.',
         'appTitle': 'سمارا حساب',
         'navHome': 'گَرٕ',
         'navRegister': 'رجسٹر',
@@ -9536,6 +9572,8 @@ OVERLAYS = {
         'unknownCategory': 'نامعلوم زمرٕ',
     },
     'mai': {
+        'settingsPrivacyPolicy': 'गोपनीयता नीति',
+        'settingsPrivacyPolicyOpenFailed': 'ब्राउजरमे गोपनीयता नीति खोलल नहि जा सकल।',
         'appTitle': 'स्मारा खाता',
         'navHome': 'घर',
         'navRegister': 'रजिस्टर',
@@ -10065,6 +10103,8 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'ml': {
+        'settingsPrivacyPolicy': 'സ്വകാര്യതാ നയം',
+        'settingsPrivacyPolicyOpenFailed': 'ബ്രൗസറിൽ സ്വകാര്യതാ നയം തുറക്കാൻ കഴിഞ്ഞില്ല.',
         'appTitle': 'സ്മാര അക്കൗണ്ട്',
         'navHome': 'ഹോം',
         'navRegister': 'രജിസ്റ്റർ',
@@ -10594,6 +10634,8 @@ OVERLAYS = {
         'unknownCategory': 'അജ്ഞാത വിഭാഗം',
     },
     'mni': {
+        'settingsPrivacyPolicy': 'ꯅꯤꯡꯇꯝ ꯑꯣꯏꯅꯗꯨꯅ ꯆꯠꯅꯕꯤ ꯄꯣꯂꯤꯁꯤ',
+        'settingsPrivacyPolicyOpenFailed': 'ꯕꯔꯥꯎꯖꯔꯗ ꯅꯤꯡꯇꯝ ꯑꯣꯏꯅꯗꯨꯅ ꯆꯠꯅꯕꯤ ꯄꯣꯂꯤꯁꯤ ꯍꯥꯡꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ.',
         'appTitle': 'ꯁ꯭ꯃꯥꯔꯥ ꯑꯦꯀꯥꯎꯟꯠ',
         'navHome': 'ꯌꯨꯝ',
         'navRegister': 'ꯔꯦꯖꯤꯁꯇꯔ',
@@ -11123,6 +11165,8 @@ OVERLAYS = {
         'unknownCategory': 'ꯈꯪꯗꯕ ꯉꯝꯗꯕ ꯃꯆꯦꯠ',
     },
     'mr': {
+        'settingsPrivacyPolicy': 'गोपनीयता धोरण',
+        'settingsPrivacyPolicyOpenFailed': 'ब्राउझरमध्ये गोपनीयता धोरण उघडता आले नाही.',
         'appTitle': 'स्मारा खाते',
         'navHome': 'मुख्यपृष्ठ',
         'navRegister': 'रजिस्टर',
@@ -11652,6 +11696,8 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'ms': {
+        'settingsPrivacyPolicy': 'Dasar Privasi',
+        'settingsPrivacyPolicyOpenFailed': 'Tidak dapat membuka dasar privasi dalam pelayar.',
         'appTitle': 'Smara Perakaunan',
         'navHome': 'Laman utama',
         'navRegister': 'Daftar',
@@ -12181,6 +12227,8 @@ OVERLAYS = {
         'unknownCategory': 'Kategori tidak diketahui',
     },
     'ne': {
+        'settingsPrivacyPolicy': 'गोपनीयता नीति',
+        'settingsPrivacyPolicyOpenFailed': 'ब्राउजरमा गोपनीयता नीति खोल्न सकिएन।',
         'appTitle': 'स्मारा खाता',
         'navHome': 'गृह',
         'navRegister': 'रेजिस्टर',
@@ -12710,6 +12758,8 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञात श्रेणी',
     },
     'nl': {
+        'settingsPrivacyPolicy': 'Privacybeleid',
+        'settingsPrivacyPolicyOpenFailed': 'Kan het privacybeleid niet openen in een browser.',
         'appTitle': 'Smara Boekhouding',
         'navHome': 'Home',
         'navRegister': 'Register',
@@ -13239,6 +13289,8 @@ OVERLAYS = {
         'unknownCategory': 'Onbekende categorie',
     },
     'or': {
+        'settingsPrivacyPolicy': 'ଗୋପନୀୟତା ନୀତି',
+        'settingsPrivacyPolicyOpenFailed': 'ବ୍ରାଉଜରରେ ଗୋପନୀୟତା ନୀତି ଖୋଲିହେଲା ନାହିଁ।',
         'appTitle': 'ସ୍ମାରା ଖାତା',
         'navHome': 'ହୋମ୍',
         'navRegister': 'ରେଜିଷ୍ଟର',
@@ -13768,6 +13820,8 @@ OVERLAYS = {
         'unknownCategory': 'ଅଜଣା ବର୍ଗ',
     },
     'pa': {
+        'settingsPrivacyPolicy': 'ਪਰਦੇਦਾਰੀ ਨੀਤੀ',
+        'settingsPrivacyPolicyOpenFailed': 'ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਪਰਦੇਦਾਰੀ ਨੀਤੀ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ।',
         'appTitle': 'ਸਮਾਰਾ ਖਾਤਾ',
         'navHome': 'ਘਰ',
         'navRegister': 'ਰਜਿਸਟਰ',
@@ -14297,6 +14351,8 @@ OVERLAYS = {
         'unknownCategory': 'ਅਣਜਾਣ ਸ਼੍ਰੇਣੀ',
     },
     'pl': {
+        'settingsPrivacyPolicy': 'Polityka prywatności',
+        'settingsPrivacyPolicyOpenFailed': 'Nie udało się otworzyć polityki prywatności w przeglądarce.',
         'appTitle': 'Smara Księgowość',
         'navHome': 'Start',
         'navRegister': 'Rejestr',
@@ -14826,6 +14882,8 @@ OVERLAYS = {
         'unknownCategory': 'Nieznana kategoria',
     },
     'pt': {
+        'settingsPrivacyPolicy': 'Política de Privacidade',
+        'settingsPrivacyPolicyOpenFailed': 'Não foi possível abrir a política de privacidade no navegador.',
         'appTitle': 'Smara Contabilidade',
         'navHome': 'Início',
         'navRegister': 'Registo',
@@ -15355,6 +15413,8 @@ OVERLAYS = {
         'unknownCategory': 'Categoria desconhecida',
     },
     'ro': {
+        'settingsPrivacyPolicy': 'Politica de confidențialitate',
+        'settingsPrivacyPolicyOpenFailed': 'Politica de confidențialitate nu a putut fi deschisă în browser.',
         'appTitle': 'Smara Contabilitate',
         'navHome': 'Acasă',
         'navRegister': 'Registru',
@@ -15884,6 +15944,8 @@ OVERLAYS = {
         'unknownCategory': 'Categorie necunoscută',
     },
     'ru': {
+        'settingsPrivacyPolicy': 'Политика конфиденциальности',
+        'settingsPrivacyPolicyOpenFailed': 'Не удалось открыть политику конфиденциальности в браузере.',
         'appTitle': 'Smara учёт',
         'navHome': 'Главная',
         'navRegister': 'Журнал',
@@ -16413,6 +16475,8 @@ OVERLAYS = {
         'unknownCategory': 'Неизвестная категория',
     },
     'sa': {
+        'settingsPrivacyPolicy': 'गोपनीयता नीतिः',
+        'settingsPrivacyPolicyOpenFailed': 'ब्राउज़रे गोपनीयतानीतिः उद्घाटयितुं न शक्यते स्म।',
         'appTitle': 'स्मारा लेखा',
         'navHome': 'गृहम्',
         'navRegister': 'पञ्जिका',
@@ -16942,6 +17006,8 @@ OVERLAYS = {
         'unknownCategory': 'अज्ञातवर्गः',
     },
     'sat': {
+        'settingsPrivacyPolicy': 'ᱨᱩᱠᱷᱤᱭᱟᱹ ᱥᱟᱪᱟᱭ',
+        'settingsPrivacyPolicyOpenFailed': 'ᱵᱨᱟᱣᱡᱟᱨ ᱨᱮ ᱨᱩᱠᱷᱤᱭᱟᱹ ᱥᱟᱪᱟᱭ ᱠᱷᱩᱞᱟᱹ ᱵᱟᱭ ᱦᱩᱭ ᱮᱱᱟ ᱾',
         'appTitle': 'ᱥᱢᱟᱨᱟ ᱦᱤᱥᱟᱹᱵ',
         'navHome': 'ᱚᱲᱟᱜ',
         'navRegister': 'ᱨᱮᱡᱤᱥᱴᱚᱨ',
@@ -17471,6 +17537,8 @@ OVERLAYS = {
         'unknownCategory': 'ᱵᱟᱭ ᱵᱟᱰᱟᱭ ᱡᱟᱹᱛ',
     },
     'sd': {
+        'settingsPrivacyPolicy': 'پرائيويسي پاليسي',
+        'settingsPrivacyPolicyOpenFailed': 'برائوزر ۾ پرائيويسي پاليسي کولي نه سگهجي.',
         'appTitle': 'سمارا اڪائونٽنگ',
         'navHome': 'گهر',
         'navRegister': 'رجسٽر',
@@ -18000,6 +18068,8 @@ OVERLAYS = {
         'unknownCategory': 'اڻڄاتل زمرو',
     },
     'ta': {
+        'settingsPrivacyPolicy': 'தனியுரிமைக் கொள்கை',
+        'settingsPrivacyPolicyOpenFailed': 'உலாவியில் தனியுரிமைக் கொள்கையைத் திறக்க முடியவில்லை.',
         'appTitle': 'ஸ்மாரா கணக்கியல்',
         'navHome': 'முகப்பு',
         'navRegister': 'பதிவேடு',
@@ -18529,6 +18599,8 @@ OVERLAYS = {
         'unknownCategory': 'தெரியாத வகை',
     },
     'te': {
+        'settingsPrivacyPolicy': 'గోప్యతా విధానం',
+        'settingsPrivacyPolicyOpenFailed': 'బ్రౌజర్‌లో గోప్యతా విధానాన్ని తెరవడం సాధ్యం కాలేదు.',
         'appTitle': 'స్మారా అకౌంటింగ్',
         'navHome': 'హోమ్',
         'navRegister': 'రిజిస్టర్',
@@ -19058,6 +19130,8 @@ OVERLAYS = {
         'unknownCategory': 'తెలియని వర్గం',
     },
     'th': {
+        'settingsPrivacyPolicy': 'นโยบายความเป็นส่วนตัว',
+        'settingsPrivacyPolicyOpenFailed': 'ไม่สามารถเปิดนโยบายความเป็นส่วนตัวในเบราว์เซอร์ได้',
         'appTitle': 'สมุดบัญชี Smara',
         'navHome': 'หน้าหลัก',
         'navRegister': 'รายการ',
@@ -19587,6 +19661,8 @@ OVERLAYS = {
         'unknownCategory': 'หมวดหมู่ที่ไม่ทราบ',
     },
     'tr': {
+        'settingsPrivacyPolicy': 'Gizlilik Politikası',
+        'settingsPrivacyPolicyOpenFailed': 'Gizlilik politikası tarayıcıda açılamadı.',
         'appTitle': 'Smara Muhasebe',
         'navHome': 'Ana sayfa',
         'navRegister': 'Kayıt',
@@ -20116,6 +20192,8 @@ OVERLAYS = {
         'unknownCategory': 'Bilinmeyen kategori',
     },
     'uk': {
+        'settingsPrivacyPolicy': 'Політика конфіденційності',
+        'settingsPrivacyPolicyOpenFailed': 'Не вдалося відкрити політику конфіденційності в браузері.',
         'appTitle': 'Smara облік',
         'navHome': 'Головна',
         'navRegister': 'Журнал',
@@ -20645,6 +20723,8 @@ OVERLAYS = {
         'unknownCategory': 'Невідома категорія',
     },
     'ur': {
+        'settingsPrivacyPolicy': 'پرائیویسی پالیسی',
+        'settingsPrivacyPolicyOpenFailed': 'براؤزر میں پرائیویسی پالیسی نہیں کھولی جا سکی۔',
         'appTitle': 'سمارا کھاتہ',
         'navHome': 'ہوم',
         'navRegister': 'رجسٹر',
@@ -21174,6 +21254,8 @@ OVERLAYS = {
         'unknownCategory': 'نامعلوم زمرہ',
     },
     'vi': {
+        'settingsPrivacyPolicy': 'Chính sách quyền riêng tư',
+        'settingsPrivacyPolicyOpenFailed': 'Không thể mở chính sách quyền riêng tư trong trình duyệt.',
         'appTitle': 'Sổ kế toán Smara',
         'navHome': 'Trang chủ',
         'navRegister': 'Sổ',
@@ -21703,6 +21785,8 @@ OVERLAYS = {
         'unknownCategory': 'Danh mục không xác định',
     },
     'zh': {
+        'settingsPrivacyPolicy': '隐私政策',
+        'settingsPrivacyPolicyOpenFailed': '无法在浏览器中打开隐私政策。',
         'appTitle': 'Smara记账',
         'navHome': '首页',
         'navRegister': '流水',
