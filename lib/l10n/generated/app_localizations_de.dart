@@ -275,11 +275,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsAbout => 'Über';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Datenschutzerklärung';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Die Datenschutzerklärung konnte nicht im Browser geöffnet werden.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (EZB-Kurse)';

@@ -273,11 +273,11 @@ class AppLocalizationsMni extends AppLocalizations {
   String get settingsAbout => 'ꯃꯁꯤꯒꯤ ꯃꯔꯃꯗ';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'ꯅꯤꯡꯇꯝ ꯑꯣꯏꯅꯗꯨꯅ ꯆꯠꯅꯕꯤ ꯄꯣꯂꯤꯁꯤ';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'ꯕꯔꯥꯎꯖꯔꯗ ꯅꯤꯡꯇꯝ ꯑꯣꯏꯅꯗꯨꯅ ꯆꯠꯅꯕꯤ ꯄꯣꯂꯤꯁꯤ ꯍꯥꯡꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB ꯔꯦꯠ)';

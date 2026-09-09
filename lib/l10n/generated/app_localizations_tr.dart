@@ -276,11 +276,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsAbout => 'Hakkında';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Gizlilik Politikası';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Gizlilik politikası tarayıcıda açılamadı.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB kurları)';

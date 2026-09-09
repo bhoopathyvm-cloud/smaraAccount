@@ -274,11 +274,11 @@ class AppLocalizationsTa extends AppLocalizations {
   String get settingsAbout => 'பற்றி';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'தனியுரிமைக் கொள்கை';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'உலாவியில் தனியுரிமைக் கொள்கையைத் திறக்க முடியவில்லை.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB விகிதங்கள்)';

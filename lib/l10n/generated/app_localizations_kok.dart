@@ -273,11 +273,11 @@ class AppLocalizationsKok extends AppLocalizations {
   String get settingsAbout => 'विशीं';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'गुप्ततायेचें धोरण';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'ब्राउझरांत गुप्ततायेचें धोरण उगडपाक जालें ना.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB दर)';
