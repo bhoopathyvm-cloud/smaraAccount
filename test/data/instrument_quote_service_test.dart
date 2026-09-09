@@ -103,4 +103,50 @@ void main() {
       expect(quote?.priceMinor, equals(1234));
     },
   );
+
+  group('stooqCurrencyForSymbol', () {
+    test('maps market suffixes to their ISO-4217 currency', () {
+      expect(InstrumentQuoteService.stooqCurrencyForSymbol('ubsg.ch'), 'CHF');
+      expect(InstrumentQuoteService.stooqCurrencyForSymbol('sap.de'), 'EUR');
+      expect(InstrumentQuoteService.stooqCurrencyForSymbol('vod.uk'), 'GBP');
+      expect(InstrumentQuoteService.stooqCurrencyForSymbol('7203.jp'), 'JPY');
+    });
+
+    test('a bare symbol with no suffix is a US listing (USD)', () {
+      expect(InstrumentQuoteService.stooqCurrencyForSymbol('aapl'), 'USD');
+    });
+
+    test('an unrecognised suffix is null (treated as no quote)', () {
+      expect(InstrumentQuoteService.stooqCurrencyForSymbol('xxx.zz'), isNull);
+    });
+  });
+
+  Future<FetchedQuote?> fetchStooqClose(String symbol, String close) {
+    final service = InstrumentQuoteService(
+      client: MockClient((request) async {
+        return http.Response(
+          'Symbol,Date,Time,Open,High,Low,Close,Volume\n'
+          '$symbol,2026-01-02,22:00:00,1,1,1,$close,100\n',
+          200,
+        );
+      }),
+    );
+    return service.fetchQuote(provider: QuoteProvider.stooq, ticker: symbol);
+  }
+
+  test('stooq CHF quote is returned in CHF, scaled by 2 digits', () async {
+    final quote = await fetchStooqClose('ubsg.ch', '25');
+    expect(quote?.currency, equals('CHF'));
+    expect(quote?.priceMinor, equals(2500));
+  });
+
+  test('stooq JPY quote scales by JPY\'s 0 minor-unit digits', () async {
+    final quote = await fetchStooqClose('7203.jp', '3000');
+    expect(quote?.currency, equals('JPY'));
+    expect(quote?.priceMinor, equals(3000));
+  });
+
+  test('stooq quote for an unmapped-suffix symbol returns null', () async {
+    expect(await fetchStooqClose('xxx.zz', '25'), isNull);
+  });
 }
