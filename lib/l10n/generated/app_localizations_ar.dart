@@ -273,11 +273,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsAbout => 'حول';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'سياسة الخصوصية';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'تعذّر فتح سياسة الخصوصية في المتصفح.';
 
   @override
   String get providerFrankfurter =>

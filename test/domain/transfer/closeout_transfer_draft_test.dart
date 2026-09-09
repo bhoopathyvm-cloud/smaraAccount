@@ -4,15 +4,18 @@ import 'package:smara_accounting/domain/transfer/closeout_transfer_draft.dart';
 
 void main() {
   group('CloseoutTransferDraft', () {
-    test('same-currency closeout is not cross-currency and submits null amount', () {
-      final draft = CloseoutTransferDraft(sourceCurrency: 'USD')
-        ..setDestinationAccount('acct-2', 'USD')
-        ..destinationAmountMinor = 5000;
-      expect(draft.isCrossCurrency, isFalse);
-      // A same-currency closeout moves the full source balance, so no
-      // destination amount is carried even if one was set.
-      expect(draft.destinationAmountForSubmit, isNull);
-    });
+    test(
+      'same-currency closeout is not cross-currency and submits null amount',
+      () {
+        final draft = CloseoutTransferDraft(sourceCurrency: 'USD')
+          ..setDestinationAccount('acct-2', 'USD')
+          ..destinationAmountMinor = 5000;
+        expect(draft.isCrossCurrency, isFalse);
+        // A same-currency closeout moves the full source balance, so no
+        // destination amount is carried even if one was set.
+        expect(draft.destinationAmountForSubmit, isNull);
+      },
+    );
 
     test('cross-currency closeout submits the entered destination amount', () {
       final draft = CloseoutTransferDraft(sourceCurrency: 'USD')

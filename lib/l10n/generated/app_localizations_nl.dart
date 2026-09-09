@@ -275,11 +275,11 @@ class AppLocalizationsNl extends AppLocalizations {
   String get settingsAbout => 'Over';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Privacybeleid';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Kan het privacybeleid niet openen in een browser.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB-koersen)';

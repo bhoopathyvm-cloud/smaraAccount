@@ -273,11 +273,11 @@ class AppLocalizationsTh extends AppLocalizations {
   String get settingsAbout => 'เกี่ยวกับ';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'นโยบายความเป็นส่วนตัว';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'ไม่สามารถเปิดนโยบายความเป็นส่วนตัวในเบราว์เซอร์ได้';
 
   @override
   String get providerFrankfurter => 'Frankfurter (อัตราจาก ECB)';

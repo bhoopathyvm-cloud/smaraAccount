@@ -273,11 +273,11 @@ class AppLocalizationsPa extends AppLocalizations {
   String get settingsAbout => 'ਬਾਰੇ';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'ਪਰਦੇਦਾਰੀ ਨੀਤੀ';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਪਰਦੇਦਾਰੀ ਨੀਤੀ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ।';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB ਦਰਾਂ)';

@@ -273,11 +273,11 @@ class AppLocalizationsVi extends AppLocalizations {
   String get settingsAbout => 'Giới thiệu';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'Chính sách quyền riêng tư';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'Không thể mở chính sách quyền riêng tư trong trình duyệt.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (tỷ giá ECB)';

@@ -273,11 +273,11 @@ class AppLocalizationsGu extends AppLocalizations {
   String get settingsAbout => 'વિશે';
 
   @override
-  String get settingsPrivacyPolicy => 'Privacy Policy';
+  String get settingsPrivacyPolicy => 'ગોપનીયતા નીતિ';
 
   @override
   String get settingsPrivacyPolicyOpenFailed =>
-      'Could not open the privacy policy in a browser.';
+      'બ્રાઉઝરમાં ગોપનીયતા નીતિ ખોલી શકાઈ નથી.';
 
   @override
   String get providerFrankfurter => 'Frankfurter (ECB દરો)';
