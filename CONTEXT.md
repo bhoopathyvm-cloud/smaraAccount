@@ -11,19 +11,30 @@ the ledger vocabulary below to the household words the UI actually shows.
 ### Ledger core
 
 **Journal Entry**:
-A posted, immutable double-entry entry with exactly two Postings whose
-amounts sum to zero. Once posted, no code path updates or deletes it
-(Golden Rule #7) — a correction is a new entry that references the
-original via `reversesEntryId`.
+A posted, immutable double-entry entry with **two or more** Postings whose
+amounts sum to zero. An ordinary transaction or transfer has two; a Split
+has three or more (one Financial Account leg plus one leg per Category).
+Once posted, no code path updates or deletes it (Golden Rule #7) — a
+correction is a new entry that references the original via `reversesEntryId`.
 _Avoid_: Transaction (the household-facing term for this same concept —
 used only in UI copy and feature/flow naming like `record_transaction`,
 never in domain code), Entry alone.
 
 **Posting**:
 One leg of a Journal Entry: a signed amount against one Account. Every
-entry has exactly two, and they sum to zero — this is what makes the
-ledger double-entry instead of a plain list of amounts.
+entry has **at least two**, and they always sum to zero — that balance (not
+the count) is what makes the ledger double-entry instead of a plain list of
+amounts.
 _Avoid_: debit, credit, line item.
+
+**Split**:
+A single Journal Entry recording one transaction divided across two or more
+Categories: one Financial Account leg plus one Posting per Category, still
+summing to zero. A Split is not fixable through the Correction flow (only an
+ordinary single-Category transaction is) — changing one means reversing the
+whole entry and re-recording.
+_Avoid_: multi-entry, split transactions as separate entries (a Split is
+*one* entry with many legs, not several entries).
 
 **Reversal**:
 A Journal Entry that cancels a prior one by referencing it via
@@ -90,6 +101,29 @@ The sequence of Journal Entries signed by one Signing Identity, ordered by
 `deviceChainSequence`, each entry's hash linking to the one before it.
 Verifying an entry means walking this chain.
 
+**Trusted Tip**:
+The Journal Entry the app currently trusts as the head of the Chain — the
+entry a new one chains onto. Held in the singleton chain-state row
+(`trustedTipEntryId` / `trustedTipHash`). After a break it is the last
+entry verified before the break point (see Re-anchor), not the compromised
+tip.
+_Avoid_: head, latest entry (the latest stored entry may be quarantined and
+therefore not the trusted tip).
+
+**Genesis**:
+The root of a Chain: the well-defined 32-zero-byte previous-hash
+(`genesisPreviousEntryHash`) that the Chain's first entry links back to. A
+key Migration establishes a fresh trust root by starting the new identity's
+Chain from genesis again.
+
+**Device Chain Sequence**:
+The unique, monotonic per-device counter (`deviceChainSequence`) stamped on
+every Journal Entry, which orders the Chain. It continues across a Migration
+rather than resetting — only the hash chain returns to Genesis; the counter
+never reuses a number.
+_Avoid_: index, row number (it is device-wide and never reset, unlike a
+per-Chain position).
+
 **Integrity Event**:
 An append-only audit-log row recording a chain break, re-anchor, or key
 migration. Distinct from a Journal Entry — it records something that
@@ -100,6 +134,29 @@ The derived, re-checkable judgment of whether a Journal Entry's hash,
 signature, and chain link still hold. Not part of the entry's immutable
 identity — it can change across app restarts as the chain is re-walked,
 unlike every other field on the entry.
+
+**Quarantine**:
+The state of the break-point Journal Entry and every entry chained after
+it once a chain break is detected: excluded from all balance and summary
+calculations, yet kept **visible** in the register (error treatment — red
+border + lock icon), never deleted or hidden. Quarantine is not reversible
+by the app — a user who confirms a quarantined entry was legitimate
+re-records it as a new entry on the current trusted tip; the original row
+stays untrusted. Distinct from a migration-superseded entry, which is not
+unverifiable, only historical (see Migration).
+_Avoid_: delete, hide, remove (none happen to a quarantined entry — it
+stays on the ledger, just uncounted).
+
+**Re-anchor** (re-anchoring):
+The recovery that resumes the ledger after a break without a key change:
+the next new Journal Entry chains onto the last entry verified *before* the
+break point (the trusted tip) rather than the compromised tip, and a
+`chainReanchored` Integrity Event records the break and re-anchor point. The
+quarantined tail is left behind, not repaired. Distinct from Migration,
+which re-creates a whole chain under a new Signing Identity — re-anchoring
+keeps the same identity and only steps around the damaged tail.
+_Avoid_: repair, restore, heal (re-anchoring abandons the broken tail, it
+does not fix it).
 
 **Migration** (key migration):
 The process of re-creating a Signing Identity's entries under a new
