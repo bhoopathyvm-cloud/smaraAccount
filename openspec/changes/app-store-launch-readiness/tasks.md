@@ -1,8 +1,8 @@
 ## 1. Account enrollment (human, not code — start first, longest lead time)
 
 - [x] 1.1 Start Apple Developer Program enrollment ($99/yr) — subscription created (2026-09-05); a real Team is now signed into Xcode, resolving the free/personal-team signing churn (new certificate needing re-trust on every build) and the device-provisioning gate that blocked tasks 3.1-3.4 and 9.2
-- [ ] 1.2 Start Google Play Console registration ($25 one-time) and complete identity verification
-- [ ] 1.3 Confirm whether this Play Console account is subject to Google's mandatory closed-testing requirement for new accounts (it will be, per Google's current policy for accounts with no prior production app) and note the earliest possible production-eligible date once the account activates
+- [x] 1.2 Start Google Play Console registration ($25 one-time) and complete identity verification — verification cleared (2026-09-08)
+- [x] 1.3 Confirm whether this Play Console account is subject to Google's mandatory closed-testing requirement for new accounts (it will be, per Google's current policy for accounts with no prior production app) and note the earliest possible production-eligible date once the account activates — confirmed in Console (2026-09-08); specific tester-count/day requirement and the resulting earliest production-eligible date not yet recorded here — worth adding once a closed test is actually live and Console shows the countdown
 
 ## 2. Close out Android signing (cross-references `android-release-signing`)
 

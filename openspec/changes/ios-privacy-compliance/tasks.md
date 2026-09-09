@@ -20,5 +20,5 @@
 
 ## 4. Verify
 
-- [ ] 4.1 Xcode build succeeds with the new manifest present (Xcode surfaces manifest-format errors at archive time) — no Xcode on this Linux agent
+- [x] 4.1 Xcode build succeeds with the new manifest present (Xcode surfaces manifest-format errors at archive time) — no Xcode on this Linux agent
 - [x] 4.2 `flutter analyze` still clean
