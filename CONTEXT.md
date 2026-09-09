@@ -87,6 +87,33 @@ A never-user-facing system Account used as the counter-leg for
 cross-currency settlement. A distinct Account type of its own (not a
 relabeled asset/liability), so type-based pickers exclude it automatically.
 
+**Archive**:
+Marking an Account, Category, or Account Group so it accepts no new entries
+and drops out of pickers, while its existing history stays intact and
+counted. Never a deletion (household wording: "Hide from new entries").
+_Avoid_: delete, remove, close (archiving hides going forward; it keeps the
+past).
+
+**Closeout**:
+Moving an archived Financial Account's remaining balance out to another
+account via a Transfer, so the hidden account reads zero. A same-currency
+closeout moves the full balance; a cross-currency one records a known
+destination amount (see Settlement). For an Investment Account the cash
+closeout is repeatable — a late dividend or sell can leave residual cash to
+sweep again.
+_Avoid_: withdrawal, payout (a closeout is an internal Transfer between the
+user's own accounts, not money leaving the books).
+
+**Opening Balance**:
+The starting amount a Financial Account is created with, recorded as a real
+Journal Entry whose counter-leg posts against the Opening Balance Equity
+system Account — never an income Category, since it is money the user
+already had rather than new income (posting it to income would inflate the
+income/expense summary). An opening-balance entry is not a single-Category
+ordinary transaction, so it is not fixable through the Correction flow.
+_Avoid_: initial deposit, starting income (it is equity, not a
+transaction with an outside party).
+
 ### Corrections & integrity
 
 **Signing Identity**:
@@ -166,6 +193,24 @@ visible in history.
 _Avoid_: Reversal (migration replaces an identity's whole chain;
 Reversal cancels one entry).
 
+### App lock
+
+**App Lock**:
+The optional PIN gate on app entry. The PIN hash is stored in the same OS
+secure storage as signing keys (ADR 0001), and verification runs off the UI
+isolate (PBKDF2) via `AppLockService` — never an acceptance-only in-memory
+bypass.
+_Avoid_: password, passcode screen (the domain concept is the lock; the PIN
+is the credential it checks).
+
+**Lock Session**:
+The single session-policy module that decides whether the app is currently
+locked, whether a timeout after backgrounding requires relock, and whether
+snapshot hiding applies. The router's redirects and the lock screen read
+this module rather than re-deriving policy from ad hoc settings reads.
+_Avoid_: login, auth session (there is no account or server sign-in — this
+is a local device gate).
+
 ### Transfers & currency
 
 **Transfer**:
@@ -217,6 +262,72 @@ Not stored directly — always a projection.
 **Quote**:
 A cached last price for one Instrument, sourced from a Quote Provider.
 Never posted to the journal — used only to compute Market Value.
+
+**Research Tool**:
+One of the predefined consumer AI assistants (ChatGPT, Claude, Gemini,
+Meta AI) the user can pick to research an Instrument. No API key and no
+custom URL — each tool has at most a public `?q=` query-URL template;
+tools without one are copy-only.
+_Avoid_: AI provider, API, integration (nothing is called server-side —
+see Investment Research Prompt).
+
+**Investment Research Prompt**:
+The packed text handed to the selected Research Tool, built from an
+Instrument's identifiers **only** — name, ticker, ISIN — and never its
+quantity, cost, or owning account. Delivered by opening the tool's query
+URL externally, or copied to the clipboard when the tool has no query URL
+or the launch fails. The identifiers-only rule is the privacy boundary
+between the on-device ledger and any third-party assistant.
+_Avoid_: export, sync (the app hands off a prompt; it never uploads
+holdings).
+
+### Statement import
+
+**Statement Import**:
+The wizard that brings external bank-statement rows into the ledger as
+ordinary Journal Entries. One shared review/posting pipeline behind two
+sources (`StatementSource`): OFX (parsed immediately) and CSV (which needs
+a column-mapping step first). Rows are account-selected, categorized,
+duplicate-checked, and only the accepted ones post.
+_Avoid_: sync, bank feed (import is a one-shot file the user picks, not a
+live connection).
+
+**Category Rule**:
+A saved keyword→Category mapping that auto-suggests a Category for imported
+rows whose description matches, so the same payee need not be re-tagged on
+every import. Optionally paired with a Payee.
+
+**Import Profile** (CSV Import Profile):
+A saved CSV column mapping — which columns hold the date, description, and
+amount, plus the amount convention, decimal separator, and currency —
+matched to a statement by its header-row fingerprint so a recognized layout
+pre-fills the mapping step. CSV-only; OFX carries its own structure and
+needs no profile.
+_Avoid_: template (that word is taken by Recurring Template).
+
+### Onboarding
+
+**Deferred Onboarding**:
+First-launch flow that lets a new user name a first Financial Account and
+record one transaction (the guided First Entry) *before* the mandatory
+recovery-phrase acknowledgment screen. What is deferred is the
+acknowledgment, not the Signing Identity — when and how the identity is
+generated and what makes an entry signed are unchanged.
+_Avoid_: skip onboarding, anonymous mode (nothing is skipped or
+unsigned — only the acknowledgment step is reordered).
+
+**First Entry**:
+The very first transaction a new user records, during Deferred Onboarding.
+Distinct from Genesis, which is the first *Journal Entry's* previous-hash
+root: the First Entry is the user-facing "record your first Spent or
+Received", the genesis entry is its ledger representation.
+
+**First-Week Setup**:
+A short post-onboarding wizard that guides a new user to name their main
+Financial Account and optionally add a credit card and a cash account, each
+created through the existing account-creation path with no new validation.
+Distinct from Deferred Onboarding, which happens *before* onboarding
+completes.
 
 ### Recurring & payees
 
