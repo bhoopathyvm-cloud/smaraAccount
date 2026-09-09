@@ -7,6 +7,7 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/transaction_direction.dart';
+import '../../../../domain/transfer/closeout_transfer_draft.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
@@ -228,11 +229,15 @@ class RegisterView extends StatelessWidget {
     BuildContext context,
     RegisterViewModel viewModel,
   ) async {
-    String? toAccountId = viewModel.closeoutDestinationCandidates.isEmpty
+    final initialToAccountId = viewModel.closeoutDestinationCandidates.isEmpty
         ? null
         : viewModel.closeoutDestinationCandidates.first.id;
-    var transactionDate = DateTime.now();
-    int? destinationAmountMinor;
+    final draft =
+        CloseoutTransferDraft(
+            sourceCurrency: viewModel.currencyFor(viewModel.selectedAccountId),
+          )
+          ..toAccountId = initialToAccountId
+          ..destinationCurrency = viewModel.currencyFor(initialToAccountId);
 
     await showManagedDialog<void>(
       context: context,
@@ -242,13 +247,9 @@ class RegisterView extends StatelessWidget {
         final destinationAmountController = controllers[1];
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            final isCrossCurrency = viewModel.isCloseoutCrossCurrency(
-              toAccountId,
-            );
-            final sourceCurrency = viewModel.currencyFor(
-              viewModel.selectedAccountId,
-            );
-            final destCurrency = viewModel.currencyFor(toAccountId);
+            final isCrossCurrency = draft.isCrossCurrency;
+            final sourceCurrency = draft.sourceCurrency;
+            final destCurrency = draft.destinationCurrency;
             return AlertDialog(
               title: Text(l10nOf(context).transferRemainingBalance),
               content: SingleChildScrollView(
@@ -262,11 +263,13 @@ class RegisterView extends StatelessWidget {
                       idOf: (account) => account.id,
                       labelOf: (account) =>
                           localizeStoredName(l10nOf(context), account.name),
-                      value: toAccountId,
+                      value: draft.toAccountId,
                       onChanged: (accountId) {
                         setDialogState(() {
-                          toAccountId = accountId;
-                          destinationAmountMinor = null;
+                          draft.setDestinationAccount(
+                            accountId,
+                            viewModel.currencyFor(accountId),
+                          );
                           destinationAmountController.clear();
                         });
                       },
@@ -285,7 +288,9 @@ class RegisterView extends StatelessWidget {
                         currency: destCurrency!,
                         suffixText: destCurrency,
                         onChangedMinor: (value) {
-                          setDialogState(() => destinationAmountMinor = value);
+                          setDialogState(
+                            () => draft.destinationAmountMinor = value,
+                          );
                         },
                       ),
                     if (isCrossCurrency)
@@ -299,17 +304,17 @@ class RegisterView extends StatelessWidget {
                       onPressed: () async {
                         final picked = await showDatePicker(
                           context: context,
-                          initialDate: transactionDate,
+                          initialDate: draft.transactionDate,
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                         );
                         if (picked != null) {
-                          setDialogState(() => transactionDate = picked);
+                          setDialogState(() => draft.transactionDate = picked);
                         }
                       },
                       child: Text(
                         '${l10nOf(context).dateLabel}: '
-                        '${formatLocalDate(context, transactionDate)}',
+                        '${formatLocalDate(context, draft.transactionDate)}',
                       ),
                     ),
                   ],
@@ -321,19 +326,18 @@ class RegisterView extends StatelessWidget {
                   child: Text(l10nOf(context).actionCancel),
                 ),
                 ElevatedButton(
-                  onPressed: toAccountId == null
+                  onPressed: !draft.hasDestinationAccount
                       ? null
                       : () async {
                           final description = descriptionController.text.trim();
                           final ok = await viewModel.closeoutSelectedAccount(
-                            toAccountId: toAccountId!,
-                            transactionDate: transactionDate,
+                            toAccountId: draft.toAccountId!,
+                            transactionDate: draft.transactionDate,
                             description: description.isEmpty
                                 ? null
                                 : description,
-                            destinationAmountMinor: isCrossCurrency
-                                ? destinationAmountMinor
-                                : null,
+                            destinationAmountMinor:
+                                draft.destinationAmountForSubmit,
                           );
                           if (ok && dialogContext.mounted) {
                             Navigator.of(dialogContext).pop();

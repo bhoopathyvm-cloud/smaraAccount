@@ -146,12 +146,6 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   String? currencyFor(String? accountId) => _currencies.currencyFor(accountId);
 
-  bool isCloseoutCrossCurrency(String? toAccountId) {
-    final from = currencyFor(_selectedAccountId);
-    final to = currencyFor(toAccountId);
-    return from != null && to != null && from != to;
-  }
-
   void clearError() => clearFailure();
 
   void selectAccount(String accountId) {

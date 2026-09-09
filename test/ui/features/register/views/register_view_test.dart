@@ -655,6 +655,70 @@ void main() {
   );
 
   testWidgets(
+    'submitting the closeout dialog posts the full balance to the '
+    'auto-selected destination with no destination amount (same currency)',
+    (tester) async {
+      const archivedAsset = Account(
+        id: 'asset-1',
+        name: 'Cash & Bank',
+        type: AccountType.asset,
+        archived: true,
+      );
+      const other = Account(
+        id: 'asset-2',
+        name: 'Savings',
+        type: AccountType.asset,
+        archived: false,
+      );
+      when(
+        accountRepository.watchFinancialAccounts(
+          includeArchived: anyNamed('includeArchived'),
+        ),
+      ).thenAnswer((_) => Stream.value([archivedAsset, other]));
+      when(
+        repository.watchEntriesForAccount(any),
+      ).thenAnswer((_) => Stream.value([entryWithAssetAmount(10000)]));
+      when(
+        accountRepository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: anyNamed('fromAccountId'),
+          toAccountId: anyNamed('toAccountId'),
+          transactionDate: anyNamed('transactionDate'),
+          description: anyNamed('description'),
+          destinationAmountMinor: anyNamed('destinationAmountMinor'),
+        ),
+      ).thenAnswer((_) async {});
+
+      final viewModel = RegisterViewModel(
+        ledgerRepository: repository,
+        accountRepository: accountRepository,
+        categoryRepository: categoryRepository,
+        initialAccountId: archivedAsset.id,
+      );
+      addTearDown(viewModel.dispose);
+      await tester.pumpWidget(
+        MaterialApp(home: RegisterView(viewModel: viewModel)),
+      );
+      await tester.pump();
+
+      await tester.tap(find.text('Transfer remaining balance'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.widgetWithText(ElevatedButton, 'Transfer'));
+      await tester.pumpAndSettle();
+
+      verify(
+        accountRepository.recordArchivedAccountCloseoutTransfer(
+          fromAccountId: 'asset-1',
+          toAccountId: 'asset-2',
+          transactionDate: anyNamed('transactionDate'),
+          description: null,
+          destinationAmountMinor: null,
+        ),
+      ).called(1);
+    },
+  );
+
+  testWidgets(
     'typing in the search box narrows visible rows; the clear button restores '
     'them',
     (tester) async {
