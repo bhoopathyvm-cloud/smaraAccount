@@ -1,0 +1,41 @@
+name: Localized Smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  localized-smoke:
+    name: Locale ${{ matrix.locale }}
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-slim
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        locale: [ar, ur, hi, ja, zh, ko, fr, de, as]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.1"
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run locale smoke test
+        run: >
+          flutter test
+          test/l10n/curated_locale_smoke_test.dart
+          test/acceptance_locale_fixtures_test.dart
+          --dart-define=SMOKE_LOCALE=${{ matrix.locale }}
