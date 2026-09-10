@@ -100,16 +100,19 @@ void main() {
       );
     });
 
-    test('an unrecognised stored code falls back to the regional default', () async {
-      final prefs = SharedPreferencesAsync();
-      await prefs.setString('defaultExchange', 'aRemovedExchange');
+    test(
+      'an unrecognised stored code falls back to the regional default',
+      () async {
+        final prefs = SharedPreferencesAsync();
+        await prefs.setString('defaultExchange', 'aRemovedExchange');
 
-      expect(
-        (await SettingsRepository().selectedDefaultExchange(
-          deviceRegion: 'CH',
-        )).code,
-        equals('SIX'),
-      );
-    });
+        expect(
+          (await SettingsRepository().selectedDefaultExchange(
+            deviceRegion: 'CH',
+          )).code,
+          equals('SIX'),
+        );
+      },
+    );
   });
 }

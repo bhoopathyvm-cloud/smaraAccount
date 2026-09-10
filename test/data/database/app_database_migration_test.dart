@@ -469,7 +469,9 @@ void main() {
         final db = AppDatabase.forTesting(NativeDatabase.opened(v16));
         addTearDown(db.close);
 
-        final keys = SigningKeyService(secureStorage: InMemorySecureKeyStorage());
+        final keys = SigningKeyService(
+          secureStorage: InMemorySecureKeyStorage(),
+        );
         final ledger = LedgerRepository(database: db, signingKeyService: keys);
         final investment = InvestmentRepository(
           database: db,
@@ -477,10 +479,9 @@ void main() {
         );
 
         // The legacy row upgraded with NULL resolved columns.
-        final before = (await investment
-                .watchInstruments(includeArchived: true)
-                .first)
-            .firstWhere((i) => i.id == 'i-legacy');
+        final before =
+            (await investment.watchInstruments(includeArchived: true).first)
+                .firstWhere((i) => i.id == 'i-legacy');
         expect(before.resolvedSymbol, isNull);
         expect(before.exchange, isNull);
 
@@ -490,10 +491,9 @@ void main() {
           exchange: 'SIX',
         );
 
-        final after = (await investment
-                .watchInstruments(includeArchived: true)
-                .first)
-            .firstWhere((i) => i.id == 'i-legacy');
+        final after =
+            (await investment.watchInstruments(includeArchived: true).first)
+                .firstWhere((i) => i.id == 'i-legacy');
         expect(after.resolvedSymbol, equals('UBSG.SW'));
         expect(after.exchange, equals('SIX'));
       },

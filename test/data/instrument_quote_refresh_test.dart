@@ -98,108 +98,117 @@ void main() {
     );
   });
 
-  test('refresh sends the resolved symbol in preference to the ticker', () async {
-    final resolved = await investment.createInstrument(
-      name: 'UBS',
-      kind: InstrumentKind.stock,
-      ticker: 'ubsg',
-      resolvedSymbol: 'UBSG.SW',
-      exchange: 'SIX',
-    );
-    String? stooqSymbol;
-    final refresh = InstrumentQuoteRefresh(
-      settingsRepository: SettingsRepository(),
-      investmentRepository: investment,
-      quoteService: InstrumentQuoteService(
-        client: MockClient((request) async {
-          if (request.url.path.contains('/q/l/')) {
-            stooqSymbol = request.url.queryParameters['s'];
-            return http.Response(
-              'Symbol,Date,Time,Open,High,Low,Close,Volume\n'
-              'UBSG.SW,2026-01-02,22:00:00,1,1,1,25.00,1\n',
-              200,
-            );
-          }
-          return http.Response('', 500);
-        }),
-      ),
-    );
-
-    await refresh.refresh([resolved]);
-    // The resolved symbol, not the raw `ubsg`, goes on the wire.
-    expect(stooqSymbol, equals('ubsg.sw'));
-  });
-
-  test('national fallback is tried only when the primary provider misses', () async {
-    final nse = await investment.createInstrument(
-      name: 'Reliance',
-      kind: InstrumentKind.stock,
-      ticker: 'RELIANCE',
-      resolvedSymbol: 'RELIANCE.NS',
-      exchange: 'NSE',
-    );
-    var yahooChartCalls = 0;
-    final refresh = InstrumentQuoteRefresh(
-      settingsRepository: SettingsRepository(),
-      investmentRepository: investment,
-      quoteService: InstrumentQuoteService(
-        client: MockClient((request) async {
-          if (request.url.path.contains('/q/l/')) {
-            // Primary (Stooq) has no .NS listing.
-            return http.Response('', 404);
-          }
-          if (request.url.path.contains('/v8/finance/chart/')) {
-            yahooChartCalls++;
-            return http.Response(
-              '{"chart":{"result":[{"meta":{"regularMarketPrice":1400,"currency":"INR"}}]}}',
-              200,
-            );
-          }
-          return http.Response('', 500);
-        }),
-      ),
-    );
-
-    await refresh.refresh([nse]);
-    expect(yahooChartCalls, equals(1));
-    final quote = (await investment.watchInstrumentQuotes().first).single;
-    expect(quote.currency, equals('INR'));
-    expect(quote.priceMinor, equals(140000));
-  });
-
-  test('national fallback is skipped when the primary provider succeeds', () async {
-    final nse = await investment.createInstrument(
-      name: 'Reliance',
-      kind: InstrumentKind.stock,
-      ticker: 'RELIANCE',
-      resolvedSymbol: 'RELIANCE.NS',
-      exchange: 'NSE',
-    );
-    var yahooChartCalls = 0;
-    final refresh = InstrumentQuoteRefresh(
-      settingsRepository: SettingsRepository(),
-      investmentRepository: investment,
-      quoteService: InstrumentQuoteService(
-        client: MockClient((request) async {
-          if (request.url.path.contains('/q/l/')) {
-            return http.Response(
-              'Symbol,Date,Time,Open,High,Low,Close,Volume\n'
-              'RELIANCE.NS,2026-01-02,22:00:00,1,1,1,30.00,1\n',
-              200,
-            );
-          }
-          if (request.url.path.contains('/v8/finance/chart/')) {
-            yahooChartCalls++;
+  test(
+    'refresh sends the resolved symbol in preference to the ticker',
+    () async {
+      final resolved = await investment.createInstrument(
+        name: 'UBS',
+        kind: InstrumentKind.stock,
+        ticker: 'ubsg',
+        resolvedSymbol: 'UBSG.SW',
+        exchange: 'SIX',
+      );
+      String? stooqSymbol;
+      final refresh = InstrumentQuoteRefresh(
+        settingsRepository: SettingsRepository(),
+        investmentRepository: investment,
+        quoteService: InstrumentQuoteService(
+          client: MockClient((request) async {
+            if (request.url.path.contains('/q/l/')) {
+              stooqSymbol = request.url.queryParameters['s'];
+              return http.Response(
+                'Symbol,Date,Time,Open,High,Low,Close,Volume\n'
+                'UBSG.SW,2026-01-02,22:00:00,1,1,1,25.00,1\n',
+                200,
+              );
+            }
             return http.Response('', 500);
-          }
-          return http.Response('', 500);
-        }),
-      ),
-    );
+          }),
+        ),
+      );
 
-    await refresh.refresh([nse]);
-    expect(yahooChartCalls, equals(0));
-  });
+      await refresh.refresh([resolved]);
+      // The resolved symbol, not the raw `ubsg`, goes on the wire.
+      expect(stooqSymbol, equals('ubsg.sw'));
+    },
+  );
+
+  test(
+    'national fallback is tried only when the primary provider misses',
+    () async {
+      final nse = await investment.createInstrument(
+        name: 'Reliance',
+        kind: InstrumentKind.stock,
+        ticker: 'RELIANCE',
+        resolvedSymbol: 'RELIANCE.NS',
+        exchange: 'NSE',
+      );
+      var yahooChartCalls = 0;
+      final refresh = InstrumentQuoteRefresh(
+        settingsRepository: SettingsRepository(),
+        investmentRepository: investment,
+        quoteService: InstrumentQuoteService(
+          client: MockClient((request) async {
+            if (request.url.path.contains('/q/l/')) {
+              // Primary (Stooq) has no .NS listing.
+              return http.Response('', 404);
+            }
+            if (request.url.path.contains('/v8/finance/chart/')) {
+              yahooChartCalls++;
+              return http.Response(
+                '{"chart":{"result":[{"meta":{"regularMarketPrice":1400,"currency":"INR"}}]}}',
+                200,
+              );
+            }
+            return http.Response('', 500);
+          }),
+        ),
+      );
+
+      await refresh.refresh([nse]);
+      expect(yahooChartCalls, equals(1));
+      final quote = (await investment.watchInstrumentQuotes().first).single;
+      expect(quote.currency, equals('INR'));
+      expect(quote.priceMinor, equals(140000));
+    },
+  );
+
+  test(
+    'national fallback is skipped when the primary provider succeeds',
+    () async {
+      final nse = await investment.createInstrument(
+        name: 'Reliance',
+        kind: InstrumentKind.stock,
+        ticker: 'RELIANCE',
+        resolvedSymbol: 'RELIANCE.NS',
+        exchange: 'NSE',
+      );
+      var yahooChartCalls = 0;
+      final refresh = InstrumentQuoteRefresh(
+        settingsRepository: SettingsRepository(),
+        investmentRepository: investment,
+        quoteService: InstrumentQuoteService(
+          client: MockClient((request) async {
+            if (request.url.path.contains('/q/l/')) {
+              return http.Response(
+                'Symbol,Date,Time,Open,High,Low,Close,Volume\n'
+                'RELIANCE.NS,2026-01-02,22:00:00,1,1,1,30.00,1\n',
+                200,
+              );
+            }
+            if (request.url.path.contains('/v8/finance/chart/')) {
+              yahooChartCalls++;
+              return http.Response('', 500);
+            }
+            return http.Response('', 500);
+          }),
+        ),
+      );
+
+      await refresh.refresh([nse]);
+      expect(yahooChartCalls, equals(0));
+    },
+  );
 
   test('an unresolved instrument is resolved and stored on refresh', () async {
     final settings = SettingsRepository();
@@ -236,9 +245,9 @@ void main() {
     );
 
     await refresh.refresh([unresolved]);
-    final stored = (await investment.watchInstruments(
-      includeArchived: true,
-    ).first).firstWhere((i) => i.id == unresolved.id);
+    final stored =
+        (await investment.watchInstruments(includeArchived: true).first)
+            .firstWhere((i) => i.id == unresolved.id);
     // The default exchange (SIX) biases the auto-pick to the .SW listing.
     expect(stored.resolvedSymbol, equals('UBSG.SW'));
     expect(stored.exchange, equals('SIX'));

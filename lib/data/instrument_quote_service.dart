@@ -59,6 +59,44 @@ class InstrumentQuoteService {
 
   static const _timeout = Duration(seconds: 5);
 
+  /// Stooq market suffix (the part after the last `.` in a symbol) → the
+  /// ISO-4217 currency that market quotes in. Stooq's light CSV carries no
+  /// currency column, but its symbols encode the market as `ticker.<mic>`,
+  /// so the suffix is a deterministic, offline currency source. A bare
+  /// symbol (no `.`) is a US listing (Stooq's convention). A suffix that is
+  /// not in this map is treated as "no quote" rather than guessed at — see
+  /// [stooqCurrencyForSymbol].
+  static const stooqSuffixCurrency = <String, String>{
+    'us': 'USD',
+    'ch': 'CHF',
+    'de': 'EUR',
+    'fr': 'EUR',
+    'nl': 'EUR',
+    'be': 'EUR',
+    'es': 'EUR',
+    'it': 'EUR',
+    'pt': 'EUR',
+    'uk': 'GBP',
+    'jp': 'JPY',
+    'hk': 'HKD',
+    'ca': 'CAD',
+    'au': 'AUD',
+    'ns': 'INR',
+  };
+
+  /// The currency a Stooq [symbol] quotes in, or `null` when the market
+  /// cannot be determined from a recognised suffix. A symbol with no `.`
+  /// suffix is a US listing (`USD`); a symbol whose suffix is not in
+  /// [stooqSuffixCurrency] returns `null` so the caller treats it as a
+  /// missing quote instead of silently assuming a currency.
+  static String? stooqCurrencyForSymbol(String symbol) {
+    final lower = symbol.trim().toLowerCase();
+    final dot = lower.lastIndexOf('.');
+    if (dot < 0) return 'USD';
+    final suffix = lower.substring(dot + 1);
+    return stooqSuffixCurrency[suffix];
+  }
+
   Future<FetchedQuote?> fetchQuote({
     required QuoteProvider provider,
     String? symbol,
@@ -138,7 +176,8 @@ class InstrumentQuoteService {
         (quote['longname'] ?? quote['shortname'] ?? quote['symbol']) as String;
     final exchangeForSymbol = _exchangeForSymbol(symbol);
     final exchDisp = quote['exchDisp'];
-    final display = exchangeForSymbol?.name ??
+    final display =
+        exchangeForSymbol?.name ??
         (exchDisp is String && exchDisp.isNotEmpty ? exchDisp : symbol);
     return InstrumentCandidate(
       name: name,
@@ -183,7 +222,16 @@ class InstrumentQuoteService {
     if (parts.length < 7) return null;
     final close = double.tryParse(parts[6]);
     if (close == null || close <= 0) return null;
-    return FetchedQuote(priceMinor: (close * 100).round(), currency: 'USD');
+    // Stooq reports no currency; infer it from the symbol's market suffix.
+    // An unrecognised suffix is "no quote", never a guessed currency, so a
+    // wrong-market ticker never silently mis-values a holding.
+    final currency = stooqCurrencyForSymbol(symbol);
+    if (currency == null) return null;
+    final digits = minorUnitDigitsForCurrency(currency);
+    return FetchedQuote(
+      priceMinor: (close * pow(10, digits)).round(),
+      currency: currency,
+    );
   }
 
   Future<FetchedQuote?> _fetchYahoo(String symbol) async {

@@ -270,9 +270,9 @@ class HoldingsView extends StatelessWidget {
         query != null &&
         query.isNotEmpty &&
         dialogContext.mounted) {
-      ScaffoldMessenger.of(dialogContext).showSnackBar(
-        SnackBar(content: Text(l10n.resolveDeferredSaved)),
-      );
+      ScaffoldMessenger.of(
+        dialogContext,
+      ).showSnackBar(SnackBar(content: Text(l10n.resolveDeferredSaved)));
     }
     return created;
   }
@@ -345,8 +345,7 @@ class HoldingsView extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.medium),
                     ElevatedButton(
-                      onPressed: () =>
-                          Navigator.of(sheetContext).pop(selected),
+                      onPressed: () => Navigator.of(sheetContext).pop(selected),
                       child: Text(l10n.actionConfirm),
                     ),
                     const SizedBox(height: AppSpacing.small),
@@ -654,8 +653,7 @@ class HoldingsView extends StatelessWidget {
                     if (!draft.canSubmit) return;
                     // A provably-malformed ISIN blocks save (a bad check
                     // digit only warns, above) — Decision 2.
-                    if (validateIsin(draft.isinOrNull) ==
-                        IsinCheck.malformed) {
+                    if (validateIsin(draft.isinOrNull) == IsinCheck.malformed) {
                       return;
                     }
                     final created = await _createResolvedInstrument(
