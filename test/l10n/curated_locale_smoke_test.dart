@@ -7,7 +7,7 @@ import '../../integration_test/acceptance/support/locale_fixtures.dart';
 
 const _smokeLocaleTag = String.fromEnvironment(
   'SMOKE_LOCALE',
-  defaultValue: 'en',
+  defaultValue: 'ja', // 'en' isn't in kCuratedAcceptanceLocales
 );
 
 void main() {
