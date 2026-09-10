@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
-import 'package:smara_accounting/l10n/generated/app_localizations_en.dart';
+import 'package:smara_accounting/l10n/locale_endonyms.dart';
 import 'package:smara_accounting/main.dart';
 import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
@@ -15,6 +15,20 @@ import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_co
 import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
+
+import 'acceptance_locale.dart';
+
+/// Every `l10n`/system-name lookup in this file and in `acceptance_test.dart`
+/// resolves through [l10nFor]/[kAcceptanceLocaleTag] (acceptance-tests-
+/// multi-locale) rather than a hardcoded `AppLocalizationsEn()`, so a
+/// `--dart-define=ACCEPTANCE_LOCALE=<tag>` run drives the app - and asserts
+/// on it - in that locale throughout. App-seeded names ("Salary", "Cash &
+/// Bank", ...) resolve via their own `AppLocalizations` getters
+/// (`lib/l10n/system_name_localizer.dart`); genuinely test-authored strings
+/// (a typed-in account/payee/template name) resolve via
+/// `locale_fixtures.dart`'s `fixturesForTag`. Add new typed-in test strings
+/// to one of those two places, never as a bare literal, if the suite should
+/// keep working under a non-English `ACCEPTANCE_LOCALE`.
 
 /// Real OS keychain access, matching the options
 /// `FlutterSecureKeyStorage` (lib/domain/crypto/secure_key_storage.dart)
@@ -284,6 +298,29 @@ String _visibleTextsDump() {
   return 'Visible texts at failure: $texts';
 }
 
+/// Flutter's own framework-provided translations (the AppBar back-button
+/// tooltip, a [PopupMenuButton]'s default "Show menu" tooltip, a
+/// [DatePickerDialog]'s "OK"/month-navigation labels, ...) ship separately
+/// from this app's own [AppLocalizations] and follow the same active
+/// locale, so a non-English `ACCEPTANCE_LOCALE` run needs these resolved
+/// dynamically too, never hardcoded as English literals.
+MaterialLocalizations materialL10n(WidgetTester tester) =>
+    MaterialLocalizations.of(tester.element(find.byType(Scaffold).first));
+
+/// The static text preceding a one-placeholder [AppLocalizations] template's
+/// substitution point (e.g. `l10n.lockedUntilDate`), for a `textContaining`
+/// match that stays a genuine substring of the real rendered text no matter
+/// where the placeholder sits in the template. Feeding the template an
+/// empty string only works when the placeholder is the very last thing in
+/// the template (`errorLockedUntil`'s placeholder is followed by a literal
+/// "." - `errorLockedUntil('').trim()` produces "...until ." with a
+/// dangling space before the period, which is NOT a substring of
+/// "...until 2026-10-15." once a real date fills that gap - a real bug
+/// this suite's own full-locale run caught after seeming to work for
+/// `lockedUntilDate`, whose placeholder happens to be at the end).
+String staticPrefixOf(String Function(String) template) =>
+    template('￿').split('￿').first;
+
 /// Shell destinations on a wide window are a [NavigationRail] whose
 /// unselected labels are not hit-testable (`labelType: selected`). Tap the
 /// rail/bar icon instead of [find.text].
@@ -309,7 +346,9 @@ Finder shellNavIcon(IconData icon) {
 /// pre-seeded identity to skip ahead with on this tier. Returns the 24
 /// recovery-phrase words.
 ///
-/// Walks: CurrencySelectionView (defaults to USD) -> FirstAccountNameView
+/// Walks: LanguageSelectionView -> CurrencySelectionView (default currency
+/// follows the selected locale, onboarding-language-selection) ->
+/// FirstAccountNameView
 /// (defaults to a starter name) -> RecordTransactionView (the guided first
 /// entry, recording [amountText] against [categoryName]) ->
 /// RecoveryPhraseView -> KeystoreExportView (Skip) ->
@@ -322,7 +361,7 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   required String categoryName,
   bool skipFirstWeekSetup = true,
 }) async {
-  final l10n = AppLocalizationsEn();
+  final l10n = l10nFor(kAcceptanceLocaleTag);
 
   // The first-week-setup wizard is a separate onboarding concern (design.md
   // Decision 5, group 4) - skipped here the same way
@@ -345,9 +384,26 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   }
 
   // onboarding-language-selection: selection is mandatory - Continue stays
-  // disabled until a row is tapped, so confirm the pre-highlighted "Same as
-  // device" row (English in this suite) before it becomes tappable.
-  await tapReliably(tester, () => find.text(l10n.settingsLanguageSystem), () {
+  // disabled until a row is tapped. `kAcceptanceLocaleTag == 'en'` confirms
+  // the pre-highlighted "Same as device" row, exactly as before this suite
+  // supported other locales; any other tag taps that locale's own endonym
+  // row instead (acceptance-tests-multi-locale design.md Decision 3).
+  final languageRowFinder = kAcceptanceLocaleTag == 'en'
+      ? find.text(l10n.settingsLanguageSystem)
+      : find.text(endonymForLocaleTag(kAcceptanceLocaleTag));
+  if (kAcceptanceLocaleTag != 'en') {
+    // Most curated locales sort well below the live window's fold in this
+    // 44-row list (design.md Risks) - the lazily-built ListView won't have
+    // built that far yet, so scroll it into existence first, exactly like
+    // language_selection_view_test.dart's own fix for the same laziness.
+    await tester.dragUntilVisible(
+      languageRowFinder,
+      find.byType(ListView),
+      const Offset(0, -300),
+    );
+    await tester.pump(const Duration(milliseconds: 200));
+  }
+  await tapReliably(tester, () => languageRowFinder, () {
     final buttons = find
         .widgetWithText(ElevatedButton, l10n.actionContinue)
         .evaluate();
@@ -359,6 +415,38 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
     tester,
     () => find.widgetWithText(ElevatedButton, l10n.actionContinue),
     () => find.byType(CurrencySelectionView).evaluate().isNotEmpty,
+  );
+
+  // onboarding-language-selection seeds this screen's default currency from
+  // the selected locale (e.g. 'ja' -> JPY, zero decimal digits) - left alone,
+  // every hardcoded amount+currency assertion elsewhere in this suite
+  // ('25.00', '1,000.00 USD', ...) would only hold for whichever locale
+  // happens to default to USD. That locale-follows-currency behavior has
+  // its own dedicated coverage elsewhere (onboarding-language-selection);
+  // this suite exists to test the rest of the app *in* each locale, so it
+  // overrides the field to a fixed USD regardless of `kAcceptanceLocaleTag`
+  // (acceptance-tests-multi-locale design.md Decision 6, found via
+  // a real run: Japanese's JPY default broke a plain '25.00' assertion).
+  await enterTextReliably(
+    tester,
+    () => find.descendant(
+      of: find.byType(CurrencySelectionView),
+      matching: find.byType(TextField),
+    ),
+    'USD',
+    () {
+      final field =
+          find
+                  .descendant(
+                    of: find.byType(CurrencySelectionView),
+                    matching: find.byType(TextField),
+                  )
+                  .evaluate()
+                  .single
+                  .widget
+              as TextField;
+      return field.controller?.text == 'USD';
+    },
   );
 
   await tapReliably(
@@ -385,7 +473,7 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   // specific account name before entering anything else; proceeding too
   // early leaves financialAccountId null and Save silently blocked on
   // "Amount, account, and category are required." (design.md Risks).
-  await pumpUntilFound(tester, find.text('Cash & Bank'));
+  await pumpUntilFound(tester, find.text(l10n.systemAccountCashBank));
 
   // Amount field must be keyed by label: the form also has the optional
   // transaction-currency TextField (and a description field), so
@@ -582,7 +670,7 @@ Future<void> createInvestmentAccountThroughGui(
   required String name,
   String? openingBalanceText,
 }) async {
-  final l10n = AppLocalizationsEn();
+  final l10n = l10nFor(kAcceptanceLocaleTag);
 
   await tapReliably(
     tester,
@@ -659,7 +747,7 @@ Future<void> createInvestmentAccountThroughGui(
 
 /// Home → tap the investment account (pushes `/holdings/:id`).
 Future<void> openHoldingsFor(WidgetTester tester, String accountName) async {
-  final l10n = AppLocalizationsEn();
+  final l10n = l10nFor(kAcceptanceLocaleTag);
   if (find.text(l10n.holdingsCash).evaluate().isNotEmpty &&
       find.text(accountName).evaluate().isNotEmpty) {
     return;
@@ -699,7 +787,7 @@ Future<void> recordCashFundedBuyThroughGui(
   String? brokerageExpenseCategory,
   bool expectSuccess = true,
 }) async {
-  final l10n = AppLocalizationsEn();
+  final l10n = l10nFor(kAcceptanceLocaleTag);
 
   await tapReliably(
     tester,
