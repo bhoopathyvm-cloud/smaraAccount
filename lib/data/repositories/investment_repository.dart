@@ -51,6 +51,8 @@ class InvestmentRepository {
       kind: row.kind,
       ticker: row.ticker,
       isin: row.isin,
+      resolvedSymbol: row.resolvedSymbol,
+      exchange: row.exchange,
       archived: row.archivedAt != null,
     );
   }
@@ -60,6 +62,8 @@ class InvestmentRepository {
     required InstrumentKind kind,
     String? ticker,
     String? isin,
+    String? resolvedSymbol,
+    String? exchange,
   }) async {
     final created = await _db
         .into(_db.instruments)
@@ -69,9 +73,27 @@ class InvestmentRepository {
             kind: kind,
             ticker: Value(ticker),
             isin: Value(isin),
+            resolvedSymbol: Value(resolvedSymbol),
+            exchange: Value(exchange),
           ),
         );
     return _toDomainInstrument(created);
+  }
+
+  /// Stores the canonical market symbol and exchange the user confirmed (or
+  /// a later refresh resolved) for [id]. Overwrites any previous value —
+  /// a resolve that later succeeds updates the stored symbol silently.
+  Future<void> setInstrumentResolution({
+    required String id,
+    required String resolvedSymbol,
+    required String exchange,
+  }) async {
+    await (_db.update(_db.instruments)..where((i) => i.id.equals(id))).write(
+      InstrumentsCompanion(
+        resolvedSymbol: Value(resolvedSymbol),
+        exchange: Value(exchange),
+      ),
+    );
   }
 
   Future<void> renameInstrument({

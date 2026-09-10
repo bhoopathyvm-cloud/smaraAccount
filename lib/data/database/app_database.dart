@@ -91,7 +91,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 16;
+  int get schemaVersion => 17;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -415,6 +415,22 @@ class AppDatabase extends _$AppDatabase {
         // (Liability accounts only), same plain-addColumn reasoning as
         // monthlyLimitMinor above.
         await m.addColumn(accounts, accounts.isCreditCard);
+      }
+
+      if (from < 17 && from >= 10) {
+        // instrument-identifier-assist: nullable resolved_symbol / exchange
+        // on instruments (design.md Migration Plan step 1). Additive, no
+        // backfill - existing instruments keep fetching quotes by raw
+        // ticker until a resolve confirms a canonical symbol.
+        //
+        // Guarded to `from >= 10`: a database upgrading from < 10 has its
+        // `instruments` table freshly built by the `from < 10`
+        // `createTable(instruments)` branch above, which already uses the
+        // current table definition (both new columns included). Only a
+        // database that carried a pre-17 `instruments` table (schemaVersion
+        // 10-16) needs these columns added.
+        await m.addColumn(instruments, instruments.resolvedSymbol);
+        await m.addColumn(instruments, instruments.exchange);
       }
     },
   );

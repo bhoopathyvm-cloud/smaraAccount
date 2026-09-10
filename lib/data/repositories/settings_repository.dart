@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../domain/investment/exchange_registry.dart';
 import '../../domain/lock/app_lock_settings_store.dart';
 import '../../domain/models/exchange_rate_provider.dart';
 import '../../domain/models/quote_provider.dart';
@@ -26,6 +27,7 @@ class SettingsRepository implements AppLockSettingsStore {
   static const _marketPriceFetchEnabledKey = 'marketPriceFetchEnabled';
   static const _quoteProviderKey = 'quoteProvider';
   static const _researchToolKey = 'researchTool';
+  static const _defaultExchangeKey = 'defaultExchange';
   static const _preferredLocaleTagKey = 'preferredLocaleTag';
 
   /// Defaults to disabled - this app has never made a network call before
@@ -151,6 +153,26 @@ class SettingsRepository implements AppLockSettingsStore {
 
   Future<void> setSelectedResearchTool(ResearchTool tool) {
     return _preferences.setString(_researchToolKey, tool.name);
+  }
+
+  /// The raw stored Default-exchange registry code, or null when the user
+  /// has never chosen one. Callers that need a concrete exchange should use
+  /// [selectedDefaultExchange], which applies the region/default fallback.
+  Future<String?> defaultExchangeCode() {
+    return _preferences.getString(_defaultExchangeKey);
+  }
+
+  Future<void> setDefaultExchange(Exchange exchange) {
+    return _preferences.setString(_defaultExchangeKey, exchange.code);
+  }
+
+  /// The Default exchange: the stored code when it is still in the registry,
+  /// otherwise the [deviceRegion]'s regional default, otherwise the global
+  /// default. Same "unrecognised stored value falls back" rule as
+  /// [selectedProvider].
+  Future<Exchange> selectedDefaultExchange({String? deviceRegion}) async {
+    final stored = await _preferences.getString(_defaultExchangeKey);
+    return resolveDefaultExchange(storedCode: stored, regionCode: deviceRegion);
   }
 
   /// BCP-47 tag such as `en` or `ta`, or `system` to follow the device.

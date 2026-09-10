@@ -47,6 +47,7 @@ class _CannedQuoteService extends InstrumentQuoteService {
     required QuoteProvider provider,
     String? ticker,
     String? isin,
+    String? symbol,
   }) async {
     if (_delivered) return null;
     _delivered = true;

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../data/instrument_quote_refresh.dart';
+import '../../../../data/instrument_quote_service.dart';
 import '../../../../data/repositories/account_repository.dart';
 import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/investment_repository.dart';
@@ -14,6 +15,7 @@ import '../../../../domain/exceptions.dart';
 import '../../../../domain/home/home_overview_engine.dart';
 import '../../../../domain/investment/trade_order_draft.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../domain/investment/exchange_registry.dart';
 import '../../../../domain/investment_research_prompt.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/account_currency_catalog.dart';
@@ -34,6 +36,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required SettingsRepository settingsRepository,
     required this.accountId,
     InstrumentQuoteRefresh? quoteRefresh,
+    InstrumentQuoteService? quoteService,
     Future<bool> Function(Uri url)? launchUrlFn,
     Future<void> Function(String text)? copyTextFn,
   }) : _ledgerRepository = ledgerRepository,
@@ -41,11 +44,13 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
        _categoryRepository = categoryRepository,
        _investmentRepository = investmentRepository,
        _settingsRepository = settingsRepository,
+       _quoteService = quoteService ?? InstrumentQuoteService(),
        _quoteRefresh =
            quoteRefresh ??
            InstrumentQuoteRefresh(
              settingsRepository: settingsRepository,
              investmentRepository: investmentRepository,
+             quoteService: quoteService,
            ),
        _launchUrl =
            launchUrlFn ??
@@ -105,6 +110,11 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _quotesEnabled = enabled;
       notifyListeners();
     });
+    _settingsRepository.selectedDefaultExchange().then((exchange) {
+      if (_disposed) return;
+      _defaultExchange = exchange;
+      notifyListeners();
+    });
     _quoteTimer = Timer.periodic(const Duration(minutes: 5), (_) {
       unawaited(_refreshQuotes());
     });
@@ -115,6 +125,7 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final CategoryRepository _categoryRepository;
   final InvestmentRepository _investmentRepository;
   final SettingsRepository _settingsRepository;
+  final InstrumentQuoteService _quoteService;
   final InstrumentQuoteRefresh _quoteRefresh;
   final Future<bool> Function(Uri url) _launchUrl;
   final Future<void> Function(String text) _copyText;
@@ -174,6 +185,12 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   bool _quotesEnabled = true;
   bool get quotesEnabled => _quotesEnabled;
 
+  Exchange _defaultExchange = exchangeForCode(kDefaultExchangeCode)!;
+
+  /// The Default exchange used to infer a bare identifier's currency and to
+  /// bias Save-time resolution (instrument-identifier-assist).
+  Exchange get defaultExchange => _defaultExchange;
+
   AccountCurrencyCatalog _currencies = AccountCurrencyCatalog.empty;
 
   String get currency => _currencies.currencyFor(accountId) ?? 'USD';
@@ -216,6 +233,8 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required InstrumentKind kind,
     String? ticker,
     String? isin,
+    String? resolvedSymbol,
+    String? exchange,
   }) async {
     try {
       final created = await _investmentRepository.createInstrument(
@@ -223,6 +242,8 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
         kind: kind,
         ticker: ticker,
         isin: isin,
+        resolvedSymbol: resolvedSymbol,
+        exchange: exchange,
       );
       clearFailure();
       return created;
@@ -230,6 +251,36 @@ class HoldingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
       setFailure(e);
     }
     return null;
+  }
+
+  /// Opens the favourite AI tool with the *identify* prompt for [name]
+  /// (instrument-identifier-assist Decision 1), or copies it when the tool
+  /// has no query URL or the browser cannot be opened.
+  Future<ResearchLaunchResult> lookUpIdentifiers(
+    AppLocalizations l10n,
+    String name,
+  ) async {
+    final tool = await _settingsRepository.selectedResearchTool();
+    final prompt = buildInstrumentIdentifyPrompt(l10n, name);
+    final uri = researchQueryUri(tool, prompt);
+    if (uri != null) {
+      try {
+        final opened = await _launchUrl(uri);
+        if (opened) return ResearchLaunchResult.opened;
+      } catch (_) {
+        // Fall through to copy.
+      }
+    }
+    await _copyText(prompt);
+    return ResearchLaunchResult.copied;
+  }
+
+  /// Save-time identifier search (Decision 4). Returns the candidate
+  /// listings for the user to confirm, or an empty list when offline / no
+  /// match (the caller then saves with the typed values and defers
+  /// resolution to the next refresh).
+  Future<List<InstrumentCandidate>> searchListings(String query) {
+    return _quoteService.searchIdentifier(query);
   }
 
   Future<bool> renameInstrument({required String id, required String newName}) {

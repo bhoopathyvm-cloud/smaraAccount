@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../domain/investment/exchange_registry.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/quote_provider.dart';
 import '../../../../domain/models/research_tool.dart';
@@ -147,6 +148,34 @@ class SettingsView extends StatelessWidget {
                         }
                       }
                     : null,
+              ),
+              const SizedBox(height: AppSpacing.large),
+              DropdownButtonFormField<String>(
+                initialValue: viewModel.defaultExchange.code,
+                isExpanded: true,
+                decoration: InputDecoration(
+                  labelText: l10n.settingsDefaultExchange,
+                ),
+                items: [
+                  for (final exchange in kExchangeRegistry)
+                    DropdownMenuItem(
+                      value: exchange.code,
+                      child: Text(
+                        '${exchange.name} (${exchange.currency})',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                ],
+                onChanged: (code) {
+                  final exchange = exchangeForCode(code);
+                  if (exchange != null) {
+                    viewModel.setDefaultExchange(exchange);
+                  }
+                },
+              ),
+              Text(
+                l10n.settingsDefaultExchangeSubtitle,
+                style: AppTypography.metadata,
               ),
               const SizedBox(height: AppSpacing.xLarge),
               DropdownButtonFormField<ResearchTool>(

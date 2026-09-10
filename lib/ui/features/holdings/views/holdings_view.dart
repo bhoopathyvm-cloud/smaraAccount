@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
+import '../../../../data/instrument_quote_service.dart';
+import '../../../../domain/investment/exchange_registry.dart';
+import '../../../../domain/investment/instrument_currency_inference.dart';
 import '../../../../domain/investment/investment_holdings.dart';
+import '../../../../domain/investment/isin.dart';
+import '../../../../domain/investment/trade_order_draft.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/instrument.dart';
 import '../../../../domain/models/instrument_holding.dart';
@@ -180,6 +185,184 @@ class HoldingsView extends StatelessWidget {
     ).showSnackBar(SnackBar(content: Text(message)));
   }
 
+  Future<void> _lookUpIdentifiers(BuildContext context, String name) async {
+    final trimmed = name.trim();
+    if (trimmed.isEmpty) return;
+    final l10n = l10nOf(context);
+    final result = await viewModel.lookUpIdentifiers(l10n, trimmed);
+    if (!context.mounted) return;
+    final message = result == ResearchLaunchResult.copied
+        ? l10n.instrumentLookUpCopied
+        : l10n.instrumentLookUpOpened;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  /// The currency-mismatch warning to show under the ISIN field, or null
+  /// when nothing is typed yet or the inferred currency matches the account
+  /// (instrument-identifier-assist Decision 2). Points at the account
+  /// currency's listing suffix when one exists.
+  String? _currencyMismatchWarning(
+    AppLocalizations l10n, {
+    required String ticker,
+    required String isin,
+    required String accountCurrency,
+    required Exchange defaultExchange,
+  }) {
+    if (ticker.trim().isEmpty && isin.trim().isEmpty) return null;
+    final inferred = inferTradingCurrency(
+      isin: isin,
+      ticker: ticker,
+      defaultExchange: defaultExchange,
+    );
+    if (inferred == accountCurrency) return null;
+    final suffix = suffixHintForCurrency(accountCurrency);
+    if (suffix != null) {
+      return l10n.instrumentCurrencyMismatchWithHint(
+        inferred,
+        accountCurrency,
+        suffix,
+      );
+    }
+    return l10n.instrumentCurrencyMismatch(inferred, accountCurrency);
+  }
+
+  /// Searches for the typed identifier and, when it resolves, has the user
+  /// confirm a listing before storing the canonical symbol. Offline / no
+  /// result / skip saves with the typed values and defers resolution to the
+  /// next refresh (Decision 4). Returns the created instrument, or null when
+  /// creation failed.
+  Future<Instrument?> _createResolvedInstrument(
+    BuildContext dialogContext,
+    BuyOrderDraft draft,
+  ) async {
+    final l10n = l10nOf(dialogContext);
+    final name = draft.newInstrumentName.trim();
+    final ticker = draft.tickerOrNull;
+    final isin = draft.isinOrNull;
+    final query = (isin != null && isin.isNotEmpty) ? isin : ticker;
+
+    InstrumentCandidate? chosen;
+    if (query != null && query.isNotEmpty) {
+      final candidates = await viewModel.searchListings(query);
+      if (!dialogContext.mounted) return null;
+      if (candidates.isNotEmpty) {
+        chosen = await _confirmListing(
+          dialogContext,
+          candidates,
+          viewModel.defaultExchange,
+        );
+        if (!dialogContext.mounted) return null;
+      }
+    }
+
+    final created = await viewModel.createInstrument(
+      name: name,
+      kind: draft.newKind,
+      ticker: ticker,
+      isin: isin,
+      resolvedSymbol: chosen?.symbol,
+      exchange: chosen?.exchangeCode,
+    );
+    if (created != null &&
+        chosen == null &&
+        query != null &&
+        query.isNotEmpty &&
+        dialogContext.mounted) {
+      ScaffoldMessenger.of(
+        dialogContext,
+      ).showSnackBar(SnackBar(content: Text(l10n.resolveDeferredSaved)));
+    }
+    return created;
+  }
+
+  /// A bottom sheet of candidate listings (name · exchange · currency),
+  /// pre-selecting the default-exchange match. Returns the confirmed
+  /// candidate, or null when the user skips / dismisses (save as typed).
+  Future<InstrumentCandidate?> _confirmListing(
+    BuildContext context,
+    List<InstrumentCandidate> candidates,
+    Exchange defaultExchange,
+  ) {
+    var selected = candidates.firstWhere(
+      (c) => c.exchangeCode == defaultExchange.code,
+      orElse: () => candidates.first,
+    );
+    return showModalBottomSheet<InstrumentCandidate?>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetContext) {
+        final l10n = l10nOf(sheetContext);
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.large),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      l10n.confirmListingTitle,
+                      style: AppTypography.cardTitle,
+                    ),
+                    const SizedBox(height: AppSpacing.small),
+                    Text(
+                      l10n.confirmListingBlurb,
+                      style: AppTypography.metadata,
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    Flexible(
+                      child: SingleChildScrollView(
+                        child: RadioGroup<InstrumentCandidate>(
+                          groupValue: selected,
+                          onChanged: (value) {
+                            if (value != null) {
+                              setSheetState(() => selected = value);
+                            }
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              for (final candidate in candidates)
+                                RadioListTile<InstrumentCandidate>(
+                                  value: candidate,
+                                  title: Text(
+                                    '${candidate.name} · ${candidate.symbol}',
+                                  ),
+                                  subtitle: Text(
+                                    l10n.confirmListingCurrencyLine(
+                                      candidate.exchangeDisplay,
+                                      candidate.currency,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(sheetContext).pop(selected),
+                      child: Text(l10n.actionConfirm),
+                    ),
+                    const SizedBox(height: AppSpacing.small),
+                    TextButton(
+                      onPressed: () => Navigator.of(sheetContext).pop(),
+                      child: Text(l10n.confirmListingSkip),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Future<void> _archiveInstrument(
     BuildContext context,
     InstrumentHolding holding,
@@ -294,6 +477,17 @@ class HoldingsView extends StatelessWidget {
                         controller: newNameController,
                         labelText: l10n.name,
                       ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton.icon(
+                          icon: const Icon(TablerIcons.search, size: 18),
+                          label: Text(l10n.instrumentLookUp),
+                          onPressed: () => _lookUpIdentifiers(
+                            context,
+                            newNameController.text,
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: AppSpacing.medium),
                       DropdownButtonFormField<InstrumentKind>(
                         initialValue: draft.newKind,
@@ -317,13 +511,36 @@ class HoldingsView extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: l10n.tickerOptional,
                         ),
+                        onChanged: (_) => setDialogState(() {}),
                       ),
                       const SizedBox(height: AppSpacing.medium),
                       TextField(
                         controller: isinController,
                         decoration: InputDecoration(
                           labelText: l10n.isinOptional,
+                          errorText:
+                              validateIsin(isinController.text) ==
+                                  IsinCheck.malformed
+                              ? l10n.isinInvalid
+                              : null,
                         ),
+                        onChanged: (_) => setDialogState(() {}),
+                      ),
+                      if (validateIsin(isinController.text) ==
+                          IsinCheck.badCheckDigit)
+                        _DialogWarning(message: l10n.isinCheckDigitWarning),
+                      Builder(
+                        builder: (context) {
+                          final warning = _currencyMismatchWarning(
+                            l10n,
+                            ticker: tickerController.text,
+                            isin: isinController.text,
+                            accountCurrency: currency,
+                            defaultExchange: viewModel.defaultExchange,
+                          );
+                          if (warning == null) return const SizedBox.shrink();
+                          return _DialogWarning(message: warning);
+                        },
                       ),
                     ],
                     const SizedBox(height: AppSpacing.medium),
@@ -434,11 +651,14 @@ class HoldingsView extends StatelessWidget {
                   draft.description = descriptionController.text;
                   if (draft.creatingNew) {
                     if (!draft.canSubmit) return;
-                    final created = await viewModel.createInstrument(
-                      name: draft.newInstrumentName.trim(),
-                      kind: draft.newKind,
-                      ticker: draft.tickerOrNull,
-                      isin: draft.isinOrNull,
+                    // A provably-malformed ISIN blocks save (a bad check
+                    // digit only warns, above) — Decision 2.
+                    if (validateIsin(draft.isinOrNull) == IsinCheck.malformed) {
+                      return;
+                    }
+                    final created = await _createResolvedInstrument(
+                      dialogContext,
+                      draft,
                     );
                     if (created == null) return;
                     draft.instrumentId = created.id;
@@ -711,6 +931,38 @@ class HoldingsView extends StatelessWidget {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+/// An inline, non-blocking caution line under the identifier fields (ISIN
+/// check-digit / currency-mismatch warnings).
+class _DialogWarning extends StatelessWidget {
+  const _DialogWarning({required this.message});
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.small),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            TablerIcons.alertTriangle,
+            size: 16,
+            color: AppColors.signal,
+          ),
+          const SizedBox(width: AppSpacing.small),
+          Expanded(
+            child: Text(
+              message,
+              style: AppTypography.metadata.copyWith(color: AppColors.signal),
+            ),
+          ),
+        ],
       ),
     );
   }

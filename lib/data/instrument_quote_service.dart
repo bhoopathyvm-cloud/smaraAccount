@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:http/http.dart' as http;
 
+import '../domain/investment/exchange_registry.dart';
 import '../domain/models/quote_provider.dart';
 import '../domain/money/currency_minor_units.dart';
 
@@ -12,6 +13,38 @@ class FetchedQuote {
 
   final int priceMinor;
   final String currency;
+}
+
+/// One listing returned by the Save-time identifier search
+/// (instrument-identifier-assist Decision 4): a canonical market symbol
+/// with the venue and currency the user picks between when confirming.
+class InstrumentCandidate {
+  const InstrumentCandidate({
+    required this.name,
+    required this.symbol,
+    required this.exchangeDisplay,
+    required this.currency,
+    this.exchangeCode,
+  });
+
+  /// Display name of the security (issuer/fund name).
+  final String name;
+
+  /// Canonical market-data symbol, e.g. `UBSG.SW`.
+  final String symbol;
+
+  /// Human-facing venue label (registry name when known, else the
+  /// provider's exchange display string).
+  final String exchangeDisplay;
+
+  /// ISO 4217 currency of this listing, derived from the symbol's market
+  /// suffix (registry) — Yahoo search does not itself return a currency.
+  final String currency;
+
+  /// Registry [Exchange.code] when the symbol's suffix matches a known
+  /// exchange, used to pre-select the default-exchange listing. Null for an
+  /// unrecognised venue (still selectable).
+  final String? exchangeCode;
 }
 
 /// Best-effort, offline-safe lookup of an indicative instrument price.
@@ -48,6 +81,7 @@ class InstrumentQuoteService {
     'hk': 'HKD',
     'ca': 'CAD',
     'au': 'AUD',
+    'ns': 'INR',
   };
 
   /// The currency a Stooq [symbol] quotes in, or `null` when the market
@@ -65,22 +99,106 @@ class InstrumentQuoteService {
 
   Future<FetchedQuote?> fetchQuote({
     required QuoteProvider provider,
+    String? symbol,
     String? ticker,
     String? isin,
   }) async {
-    final symbol = _symbol(ticker: ticker, isin: isin);
-    if (symbol == null) return null;
+    final resolved = _symbol(symbol: symbol, ticker: ticker, isin: isin);
+    if (resolved == null) return null;
     try {
       return switch (provider) {
-        QuoteProvider.stooq => await _fetchStooq(symbol),
-        QuoteProvider.yahooFinance => await _fetchYahoo(symbol),
+        QuoteProvider.stooq => await _fetchStooq(resolved),
+        QuoteProvider.yahooFinance => await _fetchYahoo(resolved),
       };
     } catch (_) {
       return null;
     }
   }
 
-  String? _symbol({String? ticker, String? isin}) {
+  /// Tries the resolved exchange's national data source once, after the
+  /// primary provider returned nothing (instrument-identifier-assist
+  /// Decision 5). The accessible national source for the currently
+  /// supported endpoints (NSE India, Börse Frankfurt) is the Yahoo chart
+  /// API keyed on the resolved market symbol — the same offline-safe,
+  /// never-throwing contract as [fetchQuote].
+  Future<FetchedQuote?> fetchNationalQuote({
+    required NationalQuoteEndpoint endpoint,
+    required String symbol,
+  }) async {
+    if (symbol.trim().isEmpty) return null;
+    try {
+      return await _fetchYahoo(symbol.trim());
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Searches the market-data provider for listings matching [query] (an
+  /// ISIN or ticker) and returns the candidates for the user to confirm.
+  /// Sends only [query] — never quantity, cost, or account information.
+  /// Never throws: any failure resolves to an empty list.
+  Future<List<InstrumentCandidate>> searchIdentifier(String query) async {
+    final q = query.trim();
+    if (q.isEmpty) return const [];
+    try {
+      final uri = Uri.https('query1.finance.yahoo.com', '/v1/finance/search', {
+        'q': q,
+        'quotesCount': '10',
+        'newsCount': '0',
+      });
+      final response = await _client.get(uri).timeout(_timeout);
+      if (response.statusCode != 200) return const [];
+      final decoded = jsonDecode(response.body);
+      if (decoded is! Map<String, dynamic>) return const [];
+      final quotes = decoded['quotes'];
+      if (quotes is! List) return const [];
+      final candidates = <InstrumentCandidate>[];
+      for (final quote in quotes) {
+        final candidate = _candidateFrom(quote);
+        if (candidate != null) candidates.add(candidate);
+      }
+      return candidates;
+    } catch (_) {
+      return const [];
+    }
+  }
+
+  InstrumentCandidate? _candidateFrom(Object? quote) {
+    if (quote is! Map<String, dynamic>) return null;
+    final quoteType = quote['quoteType'];
+    if (quoteType is String &&
+        !const {'EQUITY', 'ETF', 'MUTUALFUND', 'INDEX'}.contains(quoteType)) {
+      return null;
+    }
+    final symbol = quote['symbol'];
+    if (symbol is! String || symbol.isEmpty) return null;
+    final name =
+        (quote['longname'] ?? quote['shortname'] ?? quote['symbol']) as String;
+    final exchangeForSymbol = _exchangeForSymbol(symbol);
+    final exchDisp = quote['exchDisp'];
+    final display =
+        exchangeForSymbol?.name ??
+        (exchDisp is String && exchDisp.isNotEmpty ? exchDisp : symbol);
+    return InstrumentCandidate(
+      name: name,
+      symbol: symbol,
+      exchangeDisplay: display,
+      currency: exchangeForSymbol?.currency ?? 'USD',
+      exchangeCode: exchangeForSymbol?.code,
+    );
+  }
+
+  /// The registry exchange a Yahoo symbol's suffix maps to (e.g.
+  /// `UBSG.SW` → SIX), or null for a bare (US) symbol / unknown suffix.
+  Exchange? _exchangeForSymbol(String symbol) {
+    final dot = symbol.lastIndexOf('.');
+    if (dot <= 0 || dot >= symbol.length - 1) return null;
+    return exchangeForYahooSuffix(symbol.substring(dot));
+  }
+
+  String? _symbol({String? symbol, String? ticker, String? isin}) {
+    final s = symbol?.trim();
+    if (s != null && s.isNotEmpty) return s;
     final t = ticker?.trim();
     if (t != null && t.isNotEmpty) return t;
     final i = isin?.trim();

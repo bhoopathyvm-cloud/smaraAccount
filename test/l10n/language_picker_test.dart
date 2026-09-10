@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
+import 'package:smara_accounting/domain/investment/exchange_registry.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 import 'package:smara_accounting/domain/models/quote_provider.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
@@ -41,6 +42,11 @@ void main() {
       when(
         repository.selectedResearchTool(),
       ).thenAnswer((_) async => ResearchTool.chatGpt);
+      when(
+        repository.selectedDefaultExchange(
+          deviceRegion: anyNamed('deviceRegion'),
+        ),
+      ).thenAnswer((_) async => exchangeForCode('US')!);
       when(repository.isAppLockEnabled()).thenAnswer((_) async => false);
       when(repository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
       when(

@@ -1032,5 +1032,53 @@
       }
     }
   },
-  "researchPromptIsinNoneProvided": "ISIN: (दिलेले नाही)"
+  "researchPromptIsinNoneProvided": "ISIN: (दिलेले नाही)",
+  "identifyPromptIntro": "I want to add this security to my portfolio tracker. Give me its ISIN, its primary listing exchange and ticker, the trading currency, the exact market-data symbol (for example the Yahoo Finance symbol), and — if it is cross-listed — each venue with its own currency. Facts only, with the source if you can. Do not give buy, sell, or hold advice. This is not financial advice.",
+  "instrumentLookUp": "Look up identifiers",
+  "instrumentLookUpCopied": "Copied an identifier look-up prompt — no browser URL available, or you are offline.",
+  "instrumentLookUpOpened": "Opened your favourite tool to look up the identifiers.",
+  "isinInvalid": "This does not look like an ISIN (12 letters/digits starting with a country code).",
+  "isinCheckDigitWarning": "This ISIN looks mistyped — its check digit does not add up.",
+  "instrumentCurrencyMismatchWithHint": "Automatic quotes may not match: this looks like a {inferred} listing but the account is in {account}. For {account} quotes, use the {suffix} listing.",
+  "@instrumentCurrencyMismatchWithHint": {
+    "placeholders": {
+      "inferred": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      },
+      "suffix": {
+        "type": "String"
+      }
+    }
+  },
+  "instrumentCurrencyMismatch": "Automatic quotes may not match: this looks like a {inferred} listing but the account is in {account}.",
+  "@instrumentCurrencyMismatch": {
+    "placeholders": {
+      "inferred": {
+        "type": "String"
+      },
+      "account": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsDefaultExchange": "Default exchange",
+  "settingsDefaultExchangeSubtitle": "Biases which listing a new instrument resolves to, and supplies its currency. A fixed list — pick the venue you trade on most.",
+  "confirmListingTitle": "Confirm the listing",
+  "confirmListingBlurb": "Pick the listing that matches your holding. Its currency is what automatic quotes will use.",
+  "confirmListingCurrencyLine": "{exchange} · {currency}",
+  "@confirmListingCurrencyLine": {
+    "placeholders": {
+      "exchange": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmListingSkip": "Skip — save as typed",
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
 }

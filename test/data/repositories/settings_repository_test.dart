@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
+import 'package:smara_accounting/domain/investment/exchange_registry.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 
 void main() {
@@ -75,5 +76,43 @@ void main() {
 
   test('market price fetch defaults to enabled', () async {
     expect(await SettingsRepository().isMarketPriceFetchEnabled(), isTrue);
+  });
+
+  group('default exchange', () {
+    test('first run uses the device region when none is stored', () async {
+      final repository = SettingsRepository();
+
+      expect((await repository.selectedDefaultExchange()).code, equals('US'));
+      expect(
+        (await repository.selectedDefaultExchange(deviceRegion: 'CH')).code,
+        equals('SIX'),
+      );
+    });
+
+    test('a chosen exchange persists across instances', () async {
+      await SettingsRepository().setDefaultExchange(exchangeForCode('LSE')!);
+
+      expect(
+        (await SettingsRepository().selectedDefaultExchange(
+          deviceRegion: 'CH',
+        )).code,
+        equals('LSE'),
+      );
+    });
+
+    test(
+      'an unrecognised stored code falls back to the regional default',
+      () async {
+        final prefs = SharedPreferencesAsync();
+        await prefs.setString('defaultExchange', 'aRemovedExchange');
+
+        expect(
+          (await SettingsRepository().selectedDefaultExchange(
+            deviceRegion: 'CH',
+          )).code,
+          equals('SIX'),
+        );
+      },
+    );
   });
 }

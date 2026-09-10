@@ -25,6 +25,16 @@ String buildInvestmentResearchPrompt(
       '$isinLine';
 }
 
+/// Builds the *identify* prompt from the typed name only — asks the
+/// favourite AI tool for the ISIN, primary exchange + ticker, trading
+/// currency, market-data symbol, and cross-listings, and forbids advice
+/// (instrument-identifier-assist Decision 1). Never includes quantity,
+/// cost, or account information. Uses [l10n]'s active locale.
+String buildInstrumentIdentifyPrompt(AppLocalizations l10n, String name) {
+  return '${l10n.identifyPromptIntro}\n'
+      '${l10n.researchPromptNameLine(name)}';
+}
+
 Uri? researchQueryUri(ResearchTool tool, String prompt) {
   final template = tool.queryUrlTemplate;
   if (template == null) return null;
