@@ -69,8 +69,8 @@ void main() {
   setUp(() async {
     // Run headless: an in-memory async preferences store stands in for the
     // platform plugin so SettingsRepository works without a real device.
-    SharedPreferencesAsyncPlatform.instance = InMemorySharedPreferencesAsync
-        .empty();
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.empty();
     db = AppDatabase.forTesting(NativeDatabase.memory());
     signingKeyService = SigningKeyService(
       secureStorage: InMemorySecureKeyStorage(),
