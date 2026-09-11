@@ -107,6 +107,9 @@ is left behind unused.
 
 ## Store release (human steps)
 
+Complete the [release checklist](docs/release/checklist.md), including the
+required localized acceptance verification, before shipping any release.
+
 Android upload signing and the first Play Console upload are documented in
 [`docs/release/android-upload-keystore.md`](docs/release/android-upload-keystore.md).
 Mac App Store sandboxing is on for **Release** entitlements; local
