@@ -74,3 +74,31 @@ N/A — purely additive (a new platform directory, possibly a new CI workflow, p
   and identity persistence remain unknown until the app is actually launched
   and walked through (tasks 3-4) — a successful build proves compilation, not
   runtime behavior. No speculative secure-storage option has been added.
+
+## Verification method for task 4 (added during implementation)
+
+The Non-Goals section rules out running the *full* 13-group acceptance suite
+on Linux (multi-hour, one group at a time would need separate justification
+each). Task 4 still needs real evidence that onboarding, a guided transaction,
+and identity persistence actually work on Linux, not just that the binary
+launches. This session has no way to watch a live GUI on a CI runner, so a
+literal hands-on walkthrough isn't available — the closest substitute that
+still counts as real evidence (not a guess) is running the two *existing*
+acceptance groups that already assert exactly this, individually, the same
+way `tool/run_acceptance_tests.sh` already filters by group with
+`--plain-name`:
+- `onboarding` — `completeOnboardingWithGuidedEntry`, i.e. language/currency →
+  first-week-setup wizard → a guided transaction → the recovery-phrase gate.
+- `identity_restore` — clears only the signing key from secure storage
+  (simulating a reinstall) and confirms the recovery phrase restores it,
+  a stronger check than a simple relaunch for "does the signing identity
+  survive."
+
+This is two targeted groups out of thirteen, in English only, not the full
+suite — it does not contradict the Non-Goals above. If either group needs a
+Linux-specific harness change (`acceptance_harness.dart`'s
+`MacOsOptions`-configured `FlutterSecureStorage` constant is macOS-only
+configuration, but `flutter_secure_storage` ignores it on other platforms and
+falls back to platform defaults, so no change was assumed necessary without
+first trying it as-is), that will surface as a real test failure, not be
+speculated about in advance.

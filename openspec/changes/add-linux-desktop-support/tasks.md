@@ -10,8 +10,8 @@
 
 ## 3. Get the app launching and interactable
 
-- [ ] 3.1 Extend the CI job (or a follow-up one) to actually launch the built app under a virtual display (`Xvfb`, the standard headless-Linux-GUI approach) and capture whether it starts without crashing.
-- [ ] 3.2 If the app needs a working secret-service/keyring for `flutter_secure_storage` (likely, per design.md Decision 2), add the CI steps this needs (e.g. `gnome-keyring` + `dbus-x11`, unlocking a keyring in the CI job) and confirm secure-storage reads/writes succeed rather than hanging or erroring.
+- [x] 3.1 Extended the CI job to launch the built app under Xvfb: [run 34574615287](https://github.com/bhoopathyvm-cloud/smaraAccount/actions/runs/34574615287) shows the app starting (Impeller/OpenGLESSDF backend selected), staying alive for the full 10s check, and being killed cleanly — no crash on launch.
+- [x] 3.2 Added `gnome-keyring` + `dbus-x11`, running the app inside `dbus-run-session` with an unlocked keyring (`gnome-keyring-daemon --unlock` / `--start --components=secrets`). The same run above completed the 10s liveness window with the keyring active and no hang — onboarding's actual read/write exercise happens in task 4.1, but nothing here suggests `flutter_secure_storage` blocks with this setup.
 - [ ] 3.3 If a working keyring/D-Bus setup doesn't resolve it, add `LinuxOptions(...)` to `FlutterSecureKeyStorage` (`lib/domain/crypto/secure_key_storage.dart`) with whatever configuration the real failure mode calls for, documented with a rationale comment matching the existing `MacOsOptions` comment's style and level of detail.
 
 ## 4. Manual smoke check

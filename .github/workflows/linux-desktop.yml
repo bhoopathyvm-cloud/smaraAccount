@@ -11,7 +11,7 @@ jobs:
     name: Build Linux desktop
     if: github.actor == github.repository_owner
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - name: Checkout repository
@@ -49,33 +49,42 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-      - name: Launch under Xvfb with a keyring available
+      - name: Start virtual display, D-Bus session, and keyring
         run: |
           set -e
           Xvfb :99 -screen 0 1280x1024x24 &
-          XVFB_PID=$!
+          echo "DISPLAY=:99" >> "$GITHUB_ENV"
           sleep 3
-          export DISPLAY=:99
 
-          dbus-run-session -- bash -c '
-            set -e
-            eval "$(printf "\n" | gnome-keyring-daemon --unlock)"
-            eval "$(gnome-keyring-daemon --start --components=secrets)"
-            export GNOME_KEYRING_CONTROL
-            export GNOME_KEYRING_PID
+          eval "$(dbus-launch --sh-syntax)"
+          echo "DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS" >> "$GITHUB_ENV"
 
-            build/linux/x64/release/bundle/smara_accounting &
-            APP_PID=$!
-            sleep 10
+          eval "$(printf "\n" | gnome-keyring-daemon --unlock)"
+          eval "$(gnome-keyring-daemon --start --components=secrets)"
+          echo "GNOME_KEYRING_CONTROL=$GNOME_KEYRING_CONTROL" >> "$GITHUB_ENV"
 
-            if kill -0 "$APP_PID" 2>/dev/null; then
-              echo "App is still running after 10s - launch succeeded."
-              kill "$APP_PID"
-              wait "$APP_PID" 2>/dev/null || true
-            else
-              echo "App exited within 10s of launch - treating as a failure."
-              wait "$APP_PID"
-            fi
-          '
+      - name: Launch the built app and confirm it stays up
+        run: |
+          set -e
+          build/linux/x64/release/bundle/smara_accounting &
+          APP_PID=$!
+          sleep 10
 
-          kill "$XVFB_PID"
+          if kill -0 "$APP_PID" 2>/dev/null; then
+            echo "App is still running after 10s - launch succeeded."
+            kill "$APP_PID"
+            wait "$APP_PID" 2>/dev/null || true
+          else
+            echo "App exited within 10s of launch - treating as a failure."
+            wait "$APP_PID"
+          fi
+
+      - name: Run the onboarding acceptance group on Linux
+        run: |
+          flutter test integration_test/acceptance/acceptance_test.dart \
+            -d linux --plain-name "onboarding"
+
+      - name: Run the identity_restore acceptance group on Linux
+        run: |
+          flutter test integration_test/acceptance/acceptance_test.dart \
+            -d linux --plain-name "identity_restore"
