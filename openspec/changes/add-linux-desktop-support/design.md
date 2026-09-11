@@ -39,8 +39,51 @@ N/A — purely additive (a new platform directory, possibly a new CI workflow, p
 
 ## Open Questions
 
-- Does the user have a real Linux machine available for hands-on validation, or is CI-runner-only validation (build succeeds, logs/screenshots reviewed) sufficient for this change's scope?
-- Once basic functionality is confirmed, should Linux join `flutter-ci.yml`'s required PR gate, stay a manual/on-demand check indefinitely (like the acceptance suite), or something in between (e.g., a build-only check, no GUI interaction, on every PR)? Not decided here.
+- Does the user have a real Linux machine available for hands-on validation, or is CI-runner-only validation (build succeeds, logs/screenshots reviewed) sufficient for this change's scope? **Resolved during implementation**: no real Linux machine was used or needed. CI-runner-only validation (build, Xvfb launch, and two targeted acceptance groups) was sufficient to confirm basic platform functionality — see below.
+- Once basic functionality is confirmed, should Linux join `flutter-ci.yml`'s required PR gate, stay a manual/on-demand check indefinitely (like the acceptance suite), or something in between (e.g., a build-only check, no GUI interaction, on every PR)? Still not decided — genuinely out of scope for this change; a separate decision once the team has run this workflow a few more times and has a feel for its stability/cost.
+
+## What was actually found (implementation, 2026-09-11)
+
+- **No `LinuxOptions` was needed.** `flutter_secure_storage`'s Linux backend
+  worked with its own defaults once a real secret-service was available —
+  no macOS-style workaround was required. `FlutterSecureKeyStorage`
+  (`lib/domain/crypto/secure_key_storage.dart`) is unchanged.
+- **The keyring/D-Bus requirement was real but standard.** A bare
+  `ubuntu-latest` runner has neither; `apt-get install gnome-keyring
+  dbus-x11`, starting a session with `dbus-launch`, then unlocking and
+  starting a keyring with `gnome-keyring-daemon --unlock` / `--start
+  --components=secrets`, and exporting the resulting env vars via
+  `$GITHUB_ENV` so they persist across steps, was enough. No hang, no error.
+- **Headless launch needed Xvfb, nothing more exotic.** `Xvfb :99 -screen 0
+  1280x1024x24` plus `DISPLAY=:99` was sufficient; the app selected the
+  Impeller/OpenGLESSDF rendering backend and ran normally.
+- **The acceptance harness's macOS-specific secure-storage constant needed no
+  Linux equivalent.** `acceptance_harness.dart`'s `resetToFreshDevice` uses a
+  `FlutterSecureStorage` configured with `MacOsOptions(...)` —
+  `flutter_secure_storage` simply ignores that option object on non-macOS
+  platforms and falls back to Linux's own defaults, which worked. The
+  Non-Goals section's concern about needing "its own Linux equivalent" turned
+  out to apply to running the *full* 13-group suite's overall time cost, not
+  to a harness code change — none was needed for the two groups actually run.
+- **Verification vehicle for task 4**: ran the existing `onboarding` and
+  `identity_restore` acceptance groups (not the full suite, not a
+  hands-on/VNC walkthrough — CI offers no way to do the latter) via
+  `flutter test integration_test/acceptance/acceptance_test.dart -d linux
+  --plain-name "<group>"`, the same filtering mechanism
+  `tool/run_acceptance_tests.sh` already uses. Both passed: 3/3 and 1/1
+  tests. This is real evidence that onboarding, a guided transaction, and
+  identity persistence via recovery-phrase restore all work on Linux — not a
+  build-only claim.
+- **CI workflow** (`.github/workflows/linux-desktop.yml`) now: installs
+  build + runtime dependencies, builds and packages the release bundle,
+  starts Xvfb/D-Bus/keyring, launches the binary directly to confirm it
+  stays up, then runs the two acceptance groups above. Still
+  `workflow_dispatch`-only, still gated to the repository owner, still not
+  part of `flutter-ci.yml`'s required PR gate.
+- **What's still unknown**: everything outside onboarding/identity-restore's
+  code paths (the other 11 acceptance groups) hasn't been exercised on
+  Linux at all. Multi-locale testing and the full suite remain explicitly
+  out of scope here (see Non-Goals) and would be their own future change.
 
 ## Implementation findings (2026-09-10)
 
