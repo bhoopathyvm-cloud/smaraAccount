@@ -2,21 +2,32 @@
 
 ## Purpose
 
-A static GitHub Pages site deployed via GitHub Actions and served from the
-author's personal domain, `bhoopathy.com`. The site introduces Bhoopathy
-on the landing page, then organizes public work under an Open Source
-section. Smara Account is the first project in that section, with its
-problem statement, build-approach narrative, technical documentation, and
-capability listing kept under the project page.
+A static GitHub Pages site deployed via GitHub Actions and served from
+`smara-ai.ch`. The landing page introduces Smara by its name, with the
+author biography moved to a dedicated About page, then organizes public
+work under an Open Source section. Smara Account is the first project in
+that section, with its problem statement, build-approach narrative,
+technical documentation, and capability listing kept under the project
+page.
 
 ## Requirements
 
 ### Requirement: Public Site Has Personal Home and Open Source Sections
-The repository SHALL contain a static website under `pages/` whose home page introduces Bhoopathy and his interests in visitor-facing terms, without making Smara Account the whole site's landing page. The top-level navigation SHALL expose Home and Open Source. The Open Source section SHALL list public projects, with Smara Account as the first project and room for future projects.
+The repository SHALL contain a static website under `pages/` whose home page introduces Smara, starting with what the name means, in visitor-facing terms. The home page SHALL use top-level (H2) sections and SHALL be structured so further sections (a mission statement, a later project) can be added without reworking the existing section; the home page SHALL NOT be the Smara Account project's own landing page. A dedicated "About" page SHALL introduce the author, his background, and his software interests, and SHALL be reachable from the top-level navigation. The top-level navigation SHALL expose Home, Open Source, and About. The Open Source section SHALL list public projects, with Smara Account as the first project and room for future projects.
 
-#### Scenario: Home page introduces the author
+#### Scenario: Home page introduces Smara by its name
 - **WHEN** a visitor opens the site's home page
-- **THEN** it introduces Bhoopathy, his background, and his software interests in 200 words or fewer
+- **THEN** it explains, in a headed section, what "Smara" means
+- **AND** it is not the Smara Account project's landing page
+
+#### Scenario: Home page is extensible for later sections
+- **WHEN** a later change adds a section (a mission statement, or an introduction to another project) to the home page
+- **THEN** it can be added as a new top-level section without editing the existing "The Name" section
+
+#### Scenario: About page introduces the author
+- **WHEN** a visitor opens the About page
+- **THEN** it introduces the author, his background, and his software interests in 200 words or fewer
+- **AND** it is linked from the top-level navigation
 
 #### Scenario: Open Source page lists projects
 - **WHEN** a visitor opens the Open Source section
@@ -72,8 +83,8 @@ A GitHub Actions workflow SHALL build the Markdown source under `pages/` into a 
 - **THEN** the site deployment workflow does not run
 
 ### Requirement: Site Is Configured for a Custom Domain
-The `pages/` directory SHALL contain a `CNAME` file naming the domain the site is served at, matching the domain configured in the repository's Pages settings and in the domain's DNS records.
+The `pages/` directory SHALL contain a `CNAME` file naming the domain the site is served at, matching the domain configured in the repository's Pages settings and in the domain's DNS records. The site SHALL be served from `smara-ai.ch`, and the site generator's configured site URL SHALL match that domain.
 
 #### Scenario: CNAME file matches the intended domain
 - **WHEN** the repository's GitHub Pages custom domain is configured
-- **THEN** the `pages/CNAME` file's contents match that domain exactly
+- **THEN** the `pages/CNAME` file's contents are `smara-ai.ch`, matching that configured domain and the site generator's site URL

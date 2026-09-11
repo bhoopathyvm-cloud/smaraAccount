@@ -49,12 +49,21 @@ Follow-on locale packs MAY ship AI-generated ARB translations. The English templ
 - **THEN** the locale is eligible to be listed in `supportedLocales`
 - **AND** missing keys still fall back to English
 
-### Requirement: Recovery Phrase Language Unchanged
-BIP39 recovery phrase generation and confirmation SHALL continue to use the English wordlist regardless of the UI locale.
+### Requirement: Recovery Phrase Language Follows UI Locale Where a Standard Wordlist Exists
+BIP39 recovery phrase generation and confirmation SHALL use the BIP39-standard wordlist matching the active UI locale, for the subset of supported locales that have an official BIP39 wordlist available to this app (French, Italian, Spanish, Portuguese, Japanese, Korean, Simplified Chinese). For every other non-English supported locale, recovery phrase generation and confirmation SHALL continue to use the English wordlist, and the system SHALL show the user an explicit, plain-language notice — before the recovery phrase is first generated — that it will be in English because no standard wordlist exists yet for their chosen language. English behaves exactly as before, with no notice shown.
 
-#### Scenario: UI in a non-English locale
-- **WHEN** the user views or confirms a recovery phrase while the UI locale is not English
-- **THEN** mnemonic words remain English BIP39 words
+#### Scenario: UI locale has an official BIP39 wordlist
+- **WHEN** the active UI locale is French, Italian, Spanish, Portuguese, Japanese, Korean, or Simplified Chinese
+- **THEN** the recovery phrase is generated and confirmed using that language's official BIP39 wordlist
+
+#### Scenario: UI locale has no official BIP39 wordlist
+- **WHEN** the active UI locale is any supported locale other than English or the seven listed above
+- **THEN** the recovery phrase is generated and confirmed using the English wordlist
+- **AND** the user sees an explicit notice, before the phrase is generated, stating that the recovery phrase will be in English
+
+#### Scenario: English UI is unaffected
+- **WHEN** the active UI locale is English
+- **THEN** the recovery phrase is generated in English exactly as before this change, with no notice shown
 
 ### Requirement: Ledger Amounts Follow Currency, Not UI Locale
 Ledger amounts SHALL continue to render using each currency's own grouping and decimal conventions (`formatAmountMinor` / `localeForCurrency`), not the active UI locale. Currency labels SHALL continue to use ISO 4217 codes. Switching the app language SHALL NOT change how a given currency amount is formatted.
