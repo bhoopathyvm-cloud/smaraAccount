@@ -62,12 +62,15 @@ N/A — purely additive (a new platform directory, possibly a new CI workflow, p
   gate, Ubuntu runner, Flutter 3.47.1, release build, and a tarred bundle
   artifact preserving executable permissions. No launch or acceptance step
   is included before the first build has been confirmed.
-- First dispatch is pending: GitHub's registered workflows do not include this
-  new workflow. GitHub requires a `workflow_dispatch` workflow on the default
-  branch before it can be dispatched, even when selecting another branch.
-  See [GitHub's manual workflow documentation](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
-  A workflow bootstrap on the default branch requires a reviewed merge; this
-  session has not merged or claimed a successful Linux build.
+- First dispatch succeeded once the workflow reached the default branch:
+  [run 34569574847](https://github.com/bhoopathyvm-cloud/smaraAccount/actions/runs/34569574847)
+  (`workflow_dispatch`, 2026-09-11T06:21:26Z, `main`@`80de59f`, 2m20s total).
+  Every step — checkout, installing Linux build dependencies, Flutter setup,
+  `flutter pub get`, `flutter build linux --release --no-pub`, packaging the
+  bundle, and uploading the artifact — reported `success`. This confirms task
+  2.2: the app builds cleanly on a GitHub Actions `ubuntu-latest` runner with
+  no dependency or generated-code fixes needed.
 - Keyring/D-Bus runtime requirements, any need for `LinuxOptions`, onboarding,
-  and identity persistence remain unknown until the Linux build and manual
-  smoke check run. No speculative secure-storage option has been added.
+  and identity persistence remain unknown until the app is actually launched
+  and walked through (tasks 3-4) — a successful build proves compilation, not
+  runtime behavior. No speculative secure-storage option has been added.

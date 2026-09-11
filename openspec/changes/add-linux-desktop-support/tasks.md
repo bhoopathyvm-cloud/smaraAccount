@@ -6,7 +6,7 @@
 ## 2. Get a build running via CI (this session's environment can't build Linux desktop locally)
 
 - [x] 2.1 Add a `workflow_dispatch`-triggered GitHub Actions job on `ubuntu-latest` (mirroring `localized-smoke.yml`'s `if: github.actor == github.repository_owner` gate, manual trigger, not part of `flutter-ci.yml`'s required PR gate) that installs Linux build dependencies (`clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev` — the standard Flutter-on-Linux CI package set) and runs `flutter build linux`.
-- [ ] 2.2 Trigger the workflow and confirm the build actually succeeds. If it fails, fix what's needed (missing dependency, generated-code issue) and re-run — do not proceed to task 3 on an unconfirmed build.
+- [x] 2.2 Triggered the workflow and confirmed the build succeeded: run [34569574847](https://github.com/bhoopathyvm-cloud/smaraAccount/actions/runs/34569574847) (`workflow_dispatch`, 2026-09-11T06:21:26Z, `main`@`80de59f`, 2m20s) — every step (checkout, install Linux build dependencies, set up Flutter, install dependencies, `flutter build linux --release --no-pub`, package bundle, upload artifact) reported `success`. No dependency or generated-code fixes were needed.
 
 ## 3. Get the app launching and interactable
 
