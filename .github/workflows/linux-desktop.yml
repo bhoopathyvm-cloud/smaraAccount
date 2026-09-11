@@ -22,7 +22,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             clang cmake ninja-build pkg-config libgtk-3-dev \
-            liblzma-dev libstdc++-12-dev libsecret-1-dev
+            liblzma-dev libstdc++-12-dev libsecret-1-dev \
+            xvfb dbus-x11 gnome-keyring
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -47,3 +48,34 @@ jobs:
           path: linux-desktop.tar.gz
           if-no-files-found: error
           retention-days: 7
+
+      - name: Launch under Xvfb with a keyring available
+        run: |
+          set -e
+          Xvfb :99 -screen 0 1280x1024x24 &
+          XVFB_PID=$!
+          sleep 3
+          export DISPLAY=:99
+
+          dbus-run-session -- bash -c '
+            set -e
+            eval "$(printf "\n" | gnome-keyring-daemon --unlock)"
+            eval "$(gnome-keyring-daemon --start --components=secrets)"
+            export GNOME_KEYRING_CONTROL
+            export GNOME_KEYRING_PID
+
+            build/linux/x64/release/bundle/smara_accounting &
+            APP_PID=$!
+            sleep 10
+
+            if kill -0 "$APP_PID" 2>/dev/null; then
+              echo "App is still running after 10s - launch succeeded."
+              kill "$APP_PID"
+              wait "$APP_PID" 2>/dev/null || true
+            else
+              echo "App exited within 10s of launch - treating as a failure."
+              wait "$APP_PID"
+            fi
+          '
+
+          kill "$XVFB_PID"
