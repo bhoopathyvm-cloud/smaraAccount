@@ -4,11 +4,20 @@ name: Acceptance Suite GitHub Runner Spike
 # the full real-device acceptance suite (tool/run_acceptance_tests.sh, ~37
 # tests) complete within GitHub Actions' fixed 6-hour hosted-runner job
 # timeout, run against the Linux desktop target (-d linux, per
-# add-linux-desktop-support) on the ubuntu-slim runner already used by
-# localized-smoke.yml? Only the onboarding/identity_restore groups have
-# been run on Linux before now (add-linux-desktop-support tasks 4.1/4.2,
-# both well under a minute) - this spike is the first time the FULL
-# 37-test suite runs on this platform, across every supported locale.
+# add-linux-desktop-support)? Only the onboarding/identity_restore groups
+# have been run on Linux before now (add-linux-desktop-support tasks
+# 4.1/4.2, both well under a minute) - this spike is the first time the
+# FULL 37-test suite runs on this platform, across every supported locale.
+#
+# Uses ubuntu-latest, not the ubuntu-slim runner localized-smoke.yml uses:
+# the first dispatch of this workflow on ubuntu-slim showed every one of
+# 43 jobs's acceptance-suite step cancelled 8-12 minutes in regardless of
+# real test progress (one locale had passed 21/37 tests with zero
+# failures before being cut off) - a reclaim/preemption ceiling intrinsic
+# to that runner class, unrelated to this workflow's own timeout-minutes
+# setting. ubuntu-latest has no such ceiling and already supports
+# multi-hour jobs (linux-desktop.yml).
+#
 # Narrow, explicit, owner-gated exception to acceptance-test-suite's
 # manual-only/no-CI requirement - see that spec's "A manual, owner-gated
 # feasibility spike is permitted" scenario. Not a CI gate: workflow_dispatch
@@ -24,7 +33,7 @@ jobs:
   acceptance-spike:
     name: Locale ${{ matrix.locale }}
     if: github.actor == github.repository_owner
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     timeout-minutes: 360
 
     strategy:
