@@ -17,7 +17,12 @@ jobs:
       fail-fast: false
       max-parallel: 25
       matrix:
-        locale: [ar, ur, hi, ja, zh, ko, fr, de, as]
+        locale:
+          [
+            en, ta, te, ml, kn, hi, ur, pa, ne, sa, doi, ks, mai, mr, gu,
+            kok, sd, bn, as, or, mni, brx, sat, de, fr, es, it, pt, hu, ro,
+            ja, zh, ko, ar, ru, id, tr, vi, th, ms, uk, pl, nl,
+          ]
 
     steps:
       - name: Checkout repository
