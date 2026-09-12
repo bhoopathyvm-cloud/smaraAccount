@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
@@ -306,6 +307,26 @@ String _visibleTextsDump() {
 /// dynamically too, never hardcoded as English literals.
 MaterialLocalizations materialL10n(WidgetTester tester) =>
     MaterialLocalizations.of(tester.element(find.byType(Scaffold).first));
+
+/// Renders [day] the same way [MaterialLocalizations.formatDecimal] would
+/// for [localeTag] - `intl.NumberFormat.decimalPattern`, with the same
+/// language-code fallback Flutter's own `GlobalMaterialLocalizations.load`
+/// uses. A calendar day picker's day numbers go through that exact
+/// formatter, so several locales (Bengali, Assamese, Marathi, Nepali among
+/// this suite's tags) render native-script digits ("১৫", "१५") there, not
+/// ASCII - a hardcoded `find.text('15')` finds nothing and `.last` on an
+/// empty finder throws `Bad state: No element` (a real bug this suite's own
+/// full-locale run caught, not a flaky one - reproduced identically twice).
+String localizedDay(String localeTag, int day) {
+  if (intl.NumberFormat.localeExists(localeTag)) {
+    return intl.NumberFormat.decimalPattern(localeTag).format(day);
+  }
+  final languageCode = Locale(localeTag).languageCode;
+  if (intl.NumberFormat.localeExists(languageCode)) {
+    return intl.NumberFormat.decimalPattern(languageCode).format(day);
+  }
+  return intl.NumberFormat.decimalPattern().format(day);
+}
 
 /// The static text preceding a one-placeholder [AppLocalizations] template's
 /// substitution point (e.g. `l10n.lockedUntilDate`), for a `textContaining`
