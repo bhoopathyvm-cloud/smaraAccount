@@ -37,6 +37,17 @@ The first dispatch used `ubuntu-slim` (matching `localized-smoke.yml`'s runner, 
 
 Before being cut off, Punjabi (`pa`) passed 21 of 37 tests (~5 of 13 groups: `currency_transfers`, `group_archive`, `home_and_lock`, `identity_restore`, `investment_holdings`) in ~10.5 minutes, zero failures. Extrapolating, the full suite likely finishes in roughly 20 minutes on Linux — the blocker was entirely the runner class, not the suite's real Linux runtime. Switched `runs-on` to `ubuntu-latest` (no known reclaim behavior, already proven for multi-hour jobs via `linux-desktop.yml`) for the second dispatch.
 
+## Findings (second dispatch, ubuntu-latest, 2026-09-12)
+
+[Run 34681112956](https://github.com/bhoopathyvm-cloud/smaraAccount/actions/runs/34681112956) fully completed — the core question is answered: **yes, the full 37-test acceptance suite fits comfortably within GitHub's 6-hour hosted-runner cap when run against the Linux target.** All 43 jobs finished in 10.4-12.2 minutes each (avg 11.0 min total, including setup) — roughly 40-50x faster than the measured 8-10h macOS runtime, not just under the cap but under it by a huge margin (~30x headroom even against the 6h ceiling).
+
+37 of 43 locales passed clean (37/37 tests each). 6 failed, with failures scattered across different tests rather than one shared cause:
+- `as`, `bn`, `mr`, `ne`: all failed the same single test, `investment_holdings employer-match buy with lock-until blocks selling the locked unit`, with the same `Bad state: No element` exception.
+- `ks`: failed 2 `ledger_backup` restore tests.
+- `mni`: failed 2 `currency_transfers` tests and 1 `ledger_backup` test.
+
+This pattern — different tests failing for different locales, all with a generic "expected widget/element not present yet" exception shape, affecting only 6 of 43 otherwise-identical concurrent runs — reads as CI-concurrency-induced flakiness (43 simultaneous GTK/Xvfb-driven jobs contending for shared runner CPU/IO) rather than a deterministic translation or locale-specific bug. Not yet confirmed: a re-run of just these 6 locales, to see whether the same tests fail again (real bug) or different/no tests fail (flakiness).
+
 ## Migration Plan
 
 If the spike confirms CI is infeasible even on Linux: delete `.github/workflows/acceptance-suite-spike.yml` and revert the spec exception in a follow-up change, restoring the original absolute prohibition. If some or all locales genuinely complete within 6h: that becomes its own future proposal (whether this replaces, supplements, or has no relation to the existing macOS-only manual pre-release process) — this change does not commit to that outcome.
