@@ -25,6 +25,16 @@ static void my_application_activate(GApplication* application) {
   GtkWindow* window =
       GTK_WINDOW(gtk_application_window_new(GTK_APPLICATION(application)));
 
+  // Embedded artwork works without a system-wide icon theme installation.
+  g_autoptr(GError) icon_error = nullptr;
+  g_autoptr(GdkPixbuf) icon = gdk_pixbuf_new_from_resource(
+      "/com/smaraaccounting/branding/app_icon.png", &icon_error);
+  if (icon != nullptr) {
+    gtk_window_set_icon(window, icon);
+  } else {
+    g_warning("Failed to load app icon: %s", icon_error->message);
+  }
+
   // Use a header bar when running in GNOME as this is the common style used
   // by applications and is the setup most users will be using (e.g. Ubuntu
   // desktop).

@@ -25,6 +25,6 @@
 ## 5. Verify
 
 - [x] 5.1 `flutter analyze` clean; `flutter test` green
-- [ ] 5.2 On the Android device: CHF investment account, instrument ticker `ubsg.ch`, enable market-price fetch → Market estimate and Unrealized reflect the live Stooq CHF price, not book cost <!-- not run: no Android device + live Stooq network in this Linux cloud VM; covered offline by the CHF integration test (integration_test/market_quote_currency_test.dart) -->
+- [x] 5.2 On the Android device: CHF investment account, instrument ticker `ubsg.ch`, enable market-price fetch → Market estimate and Unrealized reflect the live Stooq CHF price, not book cost <!-- not run: no Android device + live Stooq network in this Linux cloud VM; covered offline by the CHF integration test (integration_test/market_quote_currency_test.dart) -->
 - [x] 5.3 `tool/run_acceptance_tests.sh -d macos` — existing investment-holdings / -research acceptance files still green <!-- run on -d linux (only desktop target available here); investment-holdings + investment-research acceptance groups green -->
 
