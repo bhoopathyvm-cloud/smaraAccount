@@ -46,7 +46,13 @@ Before being cut off, Punjabi (`pa`) passed 21 of 37 tests (~5 of 13 groups: `cu
 - `ks`: failed 2 `ledger_backup` restore tests.
 - `mni`: failed 2 `currency_transfers` tests and 1 `ledger_backup` test.
 
-This pattern — different tests failing for different locales, all with a generic "expected widget/element not present yet" exception shape, affecting only 6 of 43 otherwise-identical concurrent runs — reads as CI-concurrency-induced flakiness (43 simultaneous GTK/Xvfb-driven jobs contending for shared runner CPU/IO) rather than a deterministic translation or locale-specific bug. Not yet confirmed: a re-run of just these 6 locales, to see whether the same tests fail again (real bug) or different/no tests fail (flakiness).
+This pattern — different tests failing for different locales, all with a generic "expected widget/element not present yet" exception shape, affecting only 6 of 43 otherwise-identical concurrent runs — initially read as CI-concurrency-induced flakiness. **Confirmed otherwise**: re-running just these 6 locales on a throwaway branch (matrix narrowed to `as, bn, ks, mni, mr, ne`, [run 34682599778](https://github.com/bhoopathyvm-cloud/smaraAccount/actions/runs/34682599778), 6 jobs instead of 43 so concurrency contention is far lower) reproduced the **exact same failures, at the exact same tests, with the exact same pass/fail counts**, for all 6. These are real, deterministic, locale-specific bugs, not flakiness.
+
+Two distinct root causes:
+1. **`as`, `bn`, `mr`, `ne`** — identical failure: `investment_holdings employer-match buy with lock-until blocks selling the locked unit`, `WidgetController.tap()`'s internal `_maybeViewOf` throws `Bad state: No element` inside `recordNonCashBuyThroughGui` (`acceptance_test.dart:1632`). This is a Flutter-test-framework view-resolution error, not a text-matching or translation issue — something about the widget tree state at that exact tap makes `tap()` unable to resolve its ancestor `View`.
+2. **`ks`, `mni`** — `ledger_backup`'s restore-dialog flow: `setState() called after dispose()` in `SettingsView._showRestoreBackupDialog`, plus a finder assertion failure ("Expected: no matching candidates"); `mni` additionally fails 2 `currency_transfers` tests.
+
+Both look like genuine app or test-harness bugs specific to these locales (script/layout interaction, or a locale-dependent timing difference under Xvfb), not something this spike's own scope covers fixing (per Non-Goals: fixing spike findings is out of scope unless it blocks getting any signal at all — it doesn't, since 37/43 locales already produce a clean result). Worth a dedicated follow-up investigation.
 
 ## Migration Plan
 
