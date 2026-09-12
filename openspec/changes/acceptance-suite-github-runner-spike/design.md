@@ -31,6 +31,12 @@ The user asked to run this on the `ubuntu-slim` runner already used by `localize
 - **[A timed-out job leaves no artifact/log evidence of partial progress by default]** → Mitigation: the workflow step's own `flutter test` output streams to the job log regardless of whether the job is later killed by the timeout, so however far it got before the 6h cutoff is still visible in the log.
 - **[This is a genuine, if narrow, loosening of a previously firm prohibition]** → Mitigation: the spec exception's own scenario names the specific workflow file and ties the exception to that one purpose, so it reads clearly as bounded rather than as a quiet general reversal.
 
+## Findings (first dispatch, 2026-09-12)
+
+The first dispatch used `ubuntu-slim` (matching `localized-smoke.yml`'s runner, per the user's direction). Every one of the 43 jobs' acceptance-suite step was cancelled 8.3-12.4 minutes after it started (average 11.4 min), regardless of each job's own absolute start time — a per-job ceiling intrinsic to `ubuntu-slim` reclaiming/preempting the runner, not this workflow's `timeout-minutes: 360` (which only bounds the job from GitHub Actions' side and cannot override the runner's own infrastructure limit). This is consistent with `localized-smoke.yml`'s own pre-existing `timeout-minutes: 15`, which now reads as already having been tuned to this runner class's real ceiling.
+
+Before being cut off, Punjabi (`pa`) passed 21 of 37 tests (~5 of 13 groups: `currency_transfers`, `group_archive`, `home_and_lock`, `identity_restore`, `investment_holdings`) in ~10.5 minutes, zero failures. Extrapolating, the full suite likely finishes in roughly 20 minutes on Linux — the blocker was entirely the runner class, not the suite's real Linux runtime. Switched `runs-on` to `ubuntu-latest` (no known reclaim behavior, already proven for multi-hour jobs via `linux-desktop.yml`) for the second dispatch.
+
 ## Migration Plan
 
 If the spike confirms CI is infeasible even on Linux: delete `.github/workflows/acceptance-suite-spike.yml` and revert the spec exception in a follow-up change, restoring the original absolute prohibition. If some or all locales genuinely complete within 6h: that becomes its own future proposal (whether this replaces, supplements, or has no relation to the existing macOS-only manual pre-release process) — this change does not commit to that outcome.
