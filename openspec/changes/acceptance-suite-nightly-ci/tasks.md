@@ -12,6 +12,6 @@
 
 ## 3. Verify
 
-- [ ] 3.1 After merging the renamed/scheduled workflow, manually dispatch it once (`workflow_dispatch`) to confirm the rename didn't break anything — all 43 locales still pass.
-- [ ] 3.2 Confirm the `schedule` trigger is actually registered (GitHub requires a scheduled workflow to exist on the default branch before its cron starts firing) — check the Actions tab shows the workflow with an upcoming scheduled run, or wait for/confirm the first automatic nightly run once its scheduled time passes.
+- [x] 3.1 Dispatched the renamed/scheduled workflow after merge: [run 34693977093](https://github.com/bhoopathyvm-cloud/smaraAccount/actions/runs/34693977093). All 43 locales pass 37/37 clean — the rename didn't break anything.
+- [x] 3.2 Confirmed the `schedule` trigger is registered: `gh api repos/.../actions/workflows` shows the workflow (`Acceptance Suite Nightly`, `.github/workflows/acceptance-suite-nightly.yml`) with `state: "active"` on the default branch. The first actual automatic firing (next 3 AM UTC) hasn't happened yet as of this check — registration is confirmed, the schedule itself is not yet independently observed firing on its own.
 - [x] 3.3 `flutter analyze`: no issues. `flutter test`: 904/904 passed — confirmed no application code changes affected anything.
