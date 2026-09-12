@@ -966,7 +966,7 @@ class AppLocalizationsKs extends AppLocalizations {
   String get chooseBackupFileFirst => 'برونٹھ بیک اپ فایل ژارٕو.';
 
   @override
-  String get backupRestored => 'بیک اپ بحال';
+  String get backupRestored => 'بیک اپ بحال گژھمژٕ';
 
   @override
   String get backupRestoredBody =>
