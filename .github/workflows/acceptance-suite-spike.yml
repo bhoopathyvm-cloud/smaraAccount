@@ -1,0 +1,52 @@
+name: Acceptance Suite GitHub Runner Spike
+
+# Feasibility experiment only (acceptance-suite-github-runner-spike): does
+# the full real-device acceptance suite (tool/run_acceptance_tests.sh, ~37
+# tests, measured 8-10h/locale on a developer Mac) complete within GitHub
+# Actions' fixed 6-hour hosted-runner job timeout, for any locale? Expected
+# outcome is "no" for most or all locales - this workflow exists to check
+# that empirically instead of assuming it. Narrow, explicit, owner-gated
+# exception to acceptance-test-suite's manual-only/no-CI requirement - see
+# that spec's "A manual, owner-gated feasibility spike is permitted"
+# scenario. Not a CI gate: workflow_dispatch only, never part of
+# flutter-ci.yml.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acceptance-spike:
+    name: Locale ${{ matrix.locale }}
+    if: github.actor == github.repository_owner
+    runs-on: macos-latest
+    timeout-minutes: 360
+
+    strategy:
+      fail-fast: false
+      matrix:
+        locale:
+          [
+            en, ta, te, ml, kn, hi, ur, pa, ne, sa, doi, ks, mai, mr, gu,
+            kok, sd, bn, as, or, mni, brx, sat, de, fr, es, it, pt, hu, ro,
+            ja, zh, ko, ar, ru, id, tr, vi, th, ms, uk, pl, nl,
+          ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.1"
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get --enforce-lockfile
+
+      - name: Run the full acceptance suite for this locale
+        run: tool/run_acceptance_tests.sh -d macos -l ${{ matrix.locale }}
