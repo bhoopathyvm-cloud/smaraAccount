@@ -2690,6 +2690,20 @@ void main() {
 
         await tester.tap(shellNavIcon(TablerIcons.wallet));
         await pumpUntilFound(tester, find.byTooltip(l10n.createGroup));
+        // AccountManagementViewModel's group list is a reactive stream
+        // subscription against the freshly-reopened (post-restore) database
+        // - reaching this screen only confirms the scaffold built, not that
+        // the stream's first post-restore emission has landed yet. A single
+        // fixed pump(300ms) here was too short on some CI runs (a real,
+        // reproducible failure this suite's own Linux run caught: the
+        // pre-restore divergent group was still visible) - unlike the
+        // transaction check above, which polls for its own real data
+        // (pumpUntilFound(find.text('+250.00'))) rather than guessing a
+        // fixed delay. Give the stream several full pump cycles to emit and
+        // settle instead of one short fixed delay.
+        for (var i = 0; i < 10; i++) {
+          await tester.pump(const Duration(milliseconds: 200));
+        }
         await tester.drag(find.byType(ListView).first, const Offset(0, -2000));
         await tester.pump(const Duration(milliseconds: 300));
         expect(
