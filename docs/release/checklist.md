@@ -1,14 +1,41 @@
 # Release checklist
 
-A release is ready only after the release owner completes the required
-localized acceptance check below for the release candidate. This is a
-manual pre-release gate on macOS, separate from the PR checks and the
-localized smoke test in CI.
+A release is ready only after the release owner confirms both required
+checks below for the release candidate: the automated nightly Linux
+locale-regression tier, and a manual macOS baseline check. Together these
+replace the old curated-9-locale manual macOS sweep (multi-day, by hand) —
+locale coverage is now automatic and broader (43 locales, nightly); the
+macOS check verifies real macOS platform behavior, not locale variation.
 
-## Prepare
+## Required: nightly Linux locale-regression check
 
-- [ ] Check out the release candidate and record its commit (`git rev-parse HEAD`),
-  the release version, the operator, and the verification date in the release record.
+[`acceptance-suite-nightly.yml`](../../.github/workflows/acceptance-suite-nightly.yml)
+runs the full acceptance suite once per night, once per supported locale
+(all 43, see `kSupportedLocaleTags` in
+[`supported_locales.dart`](../../lib/l10n/supported_locales.dart)), against
+the Linux desktop target on a GitHub-hosted runner. It is not part of the
+required pull-request checks — a failing locale on a given night does not
+block merges — but it is required reading before a release ships.
+
+- [ ] Open the workflow's run history and find the most recent run at or
+  near the release candidate's commit. If the last run predates changes
+  that could plausibly affect localization or the acceptance suite itself,
+  dispatch it manually (`workflow_dispatch`, repository-owner only) against
+  the candidate commit rather than relying on a stale result.
+- [ ] Confirm every one of the 43 locale jobs in that run passed. Record the
+  run URL and commit SHA it covered in the release record.
+- [ ] If any locale failed, hold the release. Investigate and fix the
+  failure (or obtain a fresh passing run for the candidate), or document a
+  deliberate, explicit exception (excluded locale, reason, release owner's
+  decision) in the release record. Never silently ignore a failed locale or
+  describe a partial result as a full pass.
+
+## Required: macOS baseline check
+
+This verifies real macOS platform behavior (window/rendering behavior, OS
+Keychain integration) independent of locale — it is **English only**, not a
+multi-locale sweep.
+
 - [ ] Use a Mac configured for this project's Flutter desktop development.
   From the repository root, run `flutter doctor -v`, resolve any macOS/Xcode
   setup problems, then run `flutter pub get` and `flutter devices`. The latter
@@ -16,59 +43,27 @@ localized smoke test in CI.
 - [ ] Use a dedicated test macOS user account with no production Smara data.
   The acceptance harness resets the app's real database, preferences, and
   signing/recovery keychain entries. Do not run this against your personal ledger.
-- [ ] Reserve approximately **8–10 hours per locale**, run sequentially on
-  one Mac: **72–90 hours (about 3–4 days)** for all nine. These estimates
-  come from previous macOS runs; allow time for failures and reruns. Keep
-  the Mac powered, awake, and available for the GUI run throughout.
+- [ ] Reserve approximately **8–10 hours** for this single run (one locale,
+  English) — this estimate comes from previous macOS runs; allow time for
+  failures and reruns. Keep the Mac powered, awake, and available for the
+  GUI run throughout.
+- [ ] From the repository root, run exactly:
 
-## Required localized acceptance check
+  ```sh
+  tool/run_acceptance_tests.sh -d macos
+  ```
 
-From the repository root, run exactly:
-
-```sh
-tool/run_localized_acceptance_tests.sh -d macos
-```
-
-Do not add a group filter: the release gate requires the **full acceptance
-suite once per locale**. The wrapper calls `tool/run_acceptance_tests.sh`
-for each locale in order, using a real macOS app, database, and OS keychain.
-It runs manually; no GitHub Actions workflow invokes this tier.
-
-The curated set is defined by `kCuratedAcceptanceLocales` in
-[`locale_fixtures.dart`](../../integration_test/acceptance/support/locale_fixtures.dart)
-and mirrored in the wrapper:
-
-| Tag | Language |
-| --- | --- |
-| `ar` | Arabic |
-| `ur` | Urdu |
-| `hi` | Hindi |
-| `ja` | Japanese |
-| `zh` | Chinese |
-| `ko` | Korean |
-| `fr` | French |
-| `de` | German |
-| `as` | Assamese |
-
-**This verifies only these nine locales on macOS.** It does not verify the
-other 34 currently supported locales, or localized behavior on other platforms.
-
-- [ ] Save the terminal output and final `Curated multi-locale summary` with
-  the release record, alongside the candidate commit and environment details.
-- [ ] Confirm all nine summary entries say `PASSED`, the final message says
-  `All curated locales passed.`, and the command exits with status 0
-  (`echo $?` immediately after it returns).
-- [ ] If a locale fails, hold the release. The wrapper continues through the
-  remaining locales and exits nonzero if any failed; completion alone is
-  not a pass. Investigate and fix the failure, then obtain passing full-suite
-  results for the release candidate. A deliberate exception must explicitly
-  document the excluded locale, reason, and release owner's decision in the
-  release record; never silently ignore a failed locale or describe partial
-  coverage as a full pass. If the candidate changes, re-establish the gate
-  for the candidate that will actually ship.
+  No locale flag: this runs the full acceptance suite once, in English,
+  using a real macOS app, database, and OS keychain.
+- [ ] Confirm the run passes (37/37 tests, exit status 0 — `echo $?`
+  immediately after it returns) and save the terminal output with the
+  release record, alongside the candidate commit and environment details.
+- [ ] If it fails, hold the release. Investigate and fix the failure, then
+  obtain a passing run for the release candidate. If the candidate changes,
+  re-run for the candidate that will actually ship.
 
 The CI localized smoke test and a filtered acceptance group do not satisfy
-this gate. Coverage beyond this curated set requires a separate scope decision.
+either check above.
 
 ## Platform release steps
 
@@ -76,5 +71,5 @@ this gate. Coverage beyond this curated set requires a separate scope decision.
   instructions](android-upload-keystore.md), including the Play Console steps.
 - [ ] Follow the project's [contribution and store release
   guidance](../../CONTRIBUTING.md#store-release-human-steps) for the target
-  platform. This checklist establishes the localized gate; it does not replace
-  platform signing or store submission requirements.
+  platform. This checklist establishes the localized and macOS-baseline
+  gates; it does not replace platform signing or store submission requirements.
