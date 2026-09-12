@@ -1629,7 +1629,9 @@ void main() {
           await tester.tap(next);
           await tester.pump(const Duration(milliseconds: 300));
         }
-        await tester.tap(find.text('15').last);
+        await tester.tap(
+          find.text(localizedDay(kAcceptanceLocaleTag, 15)).last,
+        );
         await tester.pump();
         await tester.tap(find.text(materialL10n(tester).okButtonLabel));
         await pumpUntilFound(
