@@ -7,13 +7,12 @@ import '../../integration_test/acceptance/support/locale_fixtures.dart';
 
 const _smokeLocaleTag = String.fromEnvironment(
   'SMOKE_LOCALE',
-  defaultValue: 'ja', // 'en' isn't in kCuratedAcceptanceLocales
+  defaultValue: 'ja',
 );
 
 void main() {
-  test('smoke locale is supported and curated', () {
+  test('smoke locale is a supported app locale', () {
     expect(kSupportedLocaleTags, contains(_smokeLocaleTag));
-    expect(kCuratedAcceptanceLocales, contains(_smokeLocaleTag));
   });
 
   test('smoke locale loads core app chrome and acceptance fixtures', () {

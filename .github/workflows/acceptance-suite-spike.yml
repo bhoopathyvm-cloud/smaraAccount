@@ -1,0 +1,77 @@
+name: Acceptance Suite GitHub Runner Spike
+
+# Feasibility experiment only (acceptance-suite-github-runner-spike): does
+# the full real-device acceptance suite (tool/run_acceptance_tests.sh, ~37
+# tests) complete within GitHub Actions' fixed 6-hour hosted-runner job
+# timeout, run against the Linux desktop target (-d linux, per
+# add-linux-desktop-support) on the ubuntu-slim runner already used by
+# localized-smoke.yml? Only the onboarding/identity_restore groups have
+# been run on Linux before now (add-linux-desktop-support tasks 4.1/4.2,
+# both well under a minute) - this spike is the first time the FULL
+# 37-test suite runs on this platform, across every supported locale.
+# Narrow, explicit, owner-gated exception to acceptance-test-suite's
+# manual-only/no-CI requirement - see that spec's "A manual, owner-gated
+# feasibility spike is permitted" scenario. Not a CI gate: workflow_dispatch
+# only, never part of flutter-ci.yml.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acceptance-spike:
+    name: Locale ${{ matrix.locale }}
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-slim
+    timeout-minutes: 360
+
+    strategy:
+      fail-fast: false
+      matrix:
+        locale:
+          [
+            en, ta, te, ml, kn, hi, ur, pa, ne, sa, doi, ks, mai, mr, gu,
+            kok, sd, bn, as, or, mni, brx, sat, de, fr, es, it, pt, hu, ro,
+            ja, zh, ko, ar, ru, id, tr, vi, th, ms, uk, pl, nl,
+          ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            clang cmake ninja-build pkg-config libgtk-3-dev \
+            liblzma-dev libstdc++-12-dev libsecret-1-dev \
+            xvfb dbus-x11 gnome-keyring
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.1"
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get --enforce-lockfile
+
+      - name: Start virtual display, D-Bus session, and keyring
+        run: |
+          set -e
+          Xvfb :99 -screen 0 1280x1024x24 &
+          echo "DISPLAY=:99" >> "$GITHUB_ENV"
+          sleep 3
+
+          eval "$(dbus-launch --sh-syntax)"
+          echo "DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS" >> "$GITHUB_ENV"
+
+          eval "$(printf "\n" | gnome-keyring-daemon --unlock)"
+          eval "$(gnome-keyring-daemon --start --components=secrets)"
+          echo "GNOME_KEYRING_CONTROL=$GNOME_KEYRING_CONTROL" >> "$GITHUB_ENV"
+
+      - name: Run the full acceptance suite for this locale
+        run: tool/run_acceptance_tests.sh -d linux -l ${{ matrix.locale }}
