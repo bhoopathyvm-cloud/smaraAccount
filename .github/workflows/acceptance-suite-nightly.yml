@@ -1,38 +1,46 @@
-name: Acceptance Suite GitHub Runner Spike
+name: Acceptance Suite Nightly
 
-# Feasibility experiment only (acceptance-suite-github-runner-spike): does
-# the full real-device acceptance suite (tool/run_acceptance_tests.sh, ~37
-# tests) complete within GitHub Actions' fixed 6-hour hosted-runner job
-# timeout, run against the Linux desktop target (-d linux, per
-# add-linux-desktop-support)? Only the onboarding/identity_restore groups
-# have been run on Linux before now (add-linux-desktop-support tasks
-# 4.1/4.2, both well under a minute) - this spike is the first time the
-# FULL 37-test suite runs on this platform, across every supported locale.
+# Standing locale-regression gate (acceptance-suite-nightly-ci): runs the
+# full real-device acceptance suite (tool/run_acceptance_tests.sh, ~37
+# tests) against the Linux desktop target (-d linux, per
+# add-linux-desktop-support) once nightly, across every supported locale.
+# Replaces localized-release-verification's old manual, curated-9-locale,
+# ~72-90h macOS sweep as the pre-release locale gate - proven via
+# acceptance-suite-github-runner-spike to run all 43 locales in ~11
+# minutes each on this runner, ~40-50x faster than the macOS process it
+# replaces. See acceptance-test-suite's "Nightly Linux CI Tier"
+# requirement.
 #
 # Uses ubuntu-latest, not the ubuntu-slim runner localized-smoke.yml uses:
-# the first dispatch of this workflow on ubuntu-slim showed every one of
-# 43 jobs's acceptance-suite step cancelled 8-12 minutes in regardless of
-# real test progress (one locale had passed 21/37 tests with zero
-# failures before being cut off) - a reclaim/preemption ceiling intrinsic
-# to that runner class, unrelated to this workflow's own timeout-minutes
-# setting. ubuntu-latest has no such ceiling and already supports
-# multi-hour jobs (linux-desktop.yml).
+# the spike's first dispatch on ubuntu-slim showed every one of 43 jobs's
+# acceptance-suite step cancelled 8-12 minutes in regardless of real test
+# progress - a reclaim/preemption ceiling intrinsic to that runner class,
+# unrelated to this workflow's own timeout-minutes setting. ubuntu-latest
+# has no such ceiling and already supports multi-hour jobs
+# (linux-desktop.yml).
 #
-# Narrow, explicit, owner-gated exception to acceptance-test-suite's
-# manual-only/no-CI requirement - see that spec's "A manual, owner-gated
-# feasibility spike is permitted" scenario. Not a CI gate: workflow_dispatch
-# only, never part of flutter-ci.yml.
+# Not a flutter-ci.yml gate: a failing or flaky locale on a given night
+# does not block any pull request from merging. workflow_dispatch stays
+# available for an on-demand run (e.g. release timing tighter than the
+# nightly cadence).
 
 on:
+  schedule:
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  acceptance-spike:
+  acceptance-nightly:
     name: Locale ${{ matrix.locale }}
-    if: github.actor == github.repository_owner
+    # Scheduled runs are always the repo's own cron, not an external
+    # trigger - safe unconditionally. A manual workflow_dispatch still
+    # needs the owner-gate: github.actor on a schedule event is whoever
+    # last edited the cron line, not a real "who triggered this", so
+    # checking it there would be fragile rather than protective.
+    if: github.event_name == 'schedule' || github.actor == github.repository_owner
     runs-on: ubuntu-latest
     timeout-minutes: 360
 
