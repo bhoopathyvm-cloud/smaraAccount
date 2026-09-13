@@ -13,11 +13,18 @@ This is a first draft to react to, not final copy.
 
 ## 2. Screenshots
 
-- [ ] 2.1 List every iOS device size class App Store Connect currently requires screenshots for, and every Android device size class Play Console currently requires
-- [ ] 2.2 Launch the app on iOS Simulator for each required size class and capture screenshots of the key screens (home/overview, a transaction entry, an account/ledger view, backup or settings) — verify each captured image's pixel dimensions match that size class's requirement
-- [ ] 2.3 Spot-check at least one Simulator screenshot against the real iPhone (font rendering, safe-area insets) and verify no visible mismatch before treating the Simulator set as final
-- [ ] 2.4 Capture Android screenshots (emulator or the real Android tablet already used for acceptance testing) for Play Console's required size classes
-- [ ] 2.5 Organize all captured screenshots into per-store, per-size-class folders and verify every required slot has an image before moving to submission
+- [x] 2.1 List every iOS device size class App Store Connect currently requires screenshots for, and every Android device size class Play Console currently requires — researched (2026): only the **largest** size per device family is now mandatory, Apple auto-scales the rest. iPhone 6.9" (1290x2796 or 1320x2868) is required; iPad Pro 13" (2064x2752) is also required since this app is universal (`TARGETED_DEVICE_FAMILY = "1,2"` in `ios/Runner.xcodeproj`). Google Play size requirements not yet researched — covered by task 2.4.
+- [x] 2.2 Launch the app on iOS Simulator for each required size class and capture screenshots of the key screens (home/overview, a transaction entry, an account/ledger view, backup or settings) — done: captured on iPhone 17 Pro Max and iPad Pro 13-inch (M5) simulators via a temporary integration_test file reusing this suite's own acceptance-test navigation helpers (kept as `screenshots/capture-screenshots.dart.reference` for reproducibility, not wired into the build). Verified pixel dimensions with Pillow: iPhone shots are exactly 1320x2868, iPad shots exactly 2064x2752. Also found and fixed a real, permanent debug-ribbon problem along the way (see `lib/main.dart`'s new opt-in `HIDE_DEBUG_BANNER` dart-define) rather than shipping screenshots with a "DEBUG" banner across the corner.
+- [ ] 2.3 Spot-check at least one Simulator screenshot against the real iPhone (font rendering, safe-area insets) and verify no visible mismatch before treating the Simulator set as final — not yet done, needs the user's real device
+- [ ] 2.4 Capture Android screenshots (emulator or the real Android tablet already used for acceptance testing) for Play Console's required size classes — not started this pass (scoped to iOS Simulator first)
+- [ ] 2.5 Organize all captured screenshots into per-store, per-size-class folders and verify every required slot has an image before moving to submission — iOS side done (`screenshots/iphone-6.9in/`, `screenshots/ipad-13in/`), Android side blocked on 2.4
+
+Known rough edge to revisit before these are final: the Accounts screenshot
+shows several account groups as empty ("No accounts") since the onboarding
+seed data only creates one Cash & Bank account — a screenshot with 2-3
+populated account types (e.g. adding a credit card or investment account
+first) would look more representative. Shipped as-is for this pass rather
+than risk further navigation debugging; flagged here instead of hidden.
 
 ## 3. Google Play content rating and Data Safety
 

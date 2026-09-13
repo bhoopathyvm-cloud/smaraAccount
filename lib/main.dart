@@ -381,6 +381,13 @@ class _AppRouterHostState extends State<_AppRouterHost> {
     return SnapshotHidingOverlay(
       appLockController: _appLockController,
       child: MaterialApp.router(
+        // Opt-in only (store-listing-assembly task 2.2): hides the debug
+        // ribbon when capturing store screenshots via
+        // `--dart-define=HIDE_DEBUG_BANNER=true`. Off by default, so every
+        // normal debug run keeps the banner.
+        debugShowCheckedModeBanner: !const bool.fromEnvironment(
+          'HIDE_DEBUG_BANNER',
+        ),
         onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
         theme: buildAppTheme(),
         locale: localeController.overrideLocale,
