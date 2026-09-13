@@ -158,19 +158,28 @@ merged and forgotten.
 
 ## Building the mechanism, one layer at a time
 
-The mechanism I ended up building was a stack of tests, not a single kind:
-unit tests for individual pieces of logic, integration tests for how those
-pieces behave together against a real database and real local state, and —
-the layer that mattered most — a kind of business-acceptance test that
-actually drives the compiled application through its real interface, the
-way a person would use it, and checks that the outcome is what the
-requirement actually promised.
+The mechanism I ended up building was a stack of tests, not a single kind,
+shaped like the classic testing pyramid: a wide base of fast, narrow
+checks, thinning out to a much smaller number of expensive, full-system
+ones at the top. Unit and widget tests cover individual pieces of logic in
+isolation, with their dependencies mocked. Integration tests check how
+those pieces behave together against a real database and real local
+state. And — the layer that mattered most — a kind of business-acceptance
+test actually drives the compiled application through its real interface,
+the way a person would use it, and checks that the outcome is what the
+requirement actually promised. Here's the actual shape of it, with real
+numbers attached, at the point this post was written:
 
 ```mermaid
 flowchart BT
-    A["Unit tests<br/>one function, one behavior"] --> B["Integration tests<br/>real database, real local state,<br/>pieces working together"]
-    B --> C["UI-driven acceptance tests<br/>drives the real, compiled app<br/>the way a person would use it"]
+    A["Unit &amp; widget tests — 908 checks<br/>one function or one widget,<br/>one behavior, dependencies mocked"] --> B["Integration tests — 15 checks<br/>real database, real local state,<br/>pieces working together"]
+    B --> C["UI-driven acceptance tests — 37 checks<br/>drives the real, compiled app<br/>the way a person would use it"]
 ```
+
+Close to a thousand automated checks in total, and the shape is
+deliberate: cheap enough at the base to run constantly, expensive enough
+at the top that thirty-seven of them earn their keep by covering entire
+real-world scenarios rather than single functions.
 
 This is the actual training session for that horse from earlier: not one
 command, but a stack of them, run against every single change until
