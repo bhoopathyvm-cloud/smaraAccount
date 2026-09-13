@@ -114,9 +114,14 @@ as a support URL.
 
 ## Open items before this is submission-ready
 
-- [ ] Confirm the app name "Smara Accounting" is what should actually
-  appear in the store listings (matches the installed app's display name
-  everywhere else, but is a naming decision worth a deliberate yes)
+- [x] Confirm the app name "Smara Accounting" is what should actually
+  appear in the store listings — confirmed. Considered "Smara Ledger"
+  (thematically neat — "Smara" means remembrance, a ledger's job is
+  remembering accurately — but collides with the Ledger crypto hardware
+  wallet brand for a general audience) and "Smara Finance Book Keeping"
+  (too long, truncates on home screens, redundant wording). "Accounting"
+  needs no specialized knowledge and matches what people actually search
+  for. See design.md Decision 4.
 - [ ] Native speaker / second-pass proofread of the full description
 - [ ] Decide whether Google Play's separate "Short description" and
   "Full description" should actually differ in tone, or reuse the same

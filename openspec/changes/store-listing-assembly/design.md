@@ -58,6 +58,30 @@ each form field against a specific line in it (not a paraphrase of it)
 is the only way to guarantee the two can't say different things about
 what the app actually does with data.
 
+### 4. App name stays "Smara Accounting," not "Smara Ledger" or "Smara Finance Book Keeping"
+Considered three options against two different audiences: how an actual
+accountant reads the word, and how a person on the street reads it.
+"Ledger" is precise, correct bookkeeping vocabulary to an accountant (the
+app does implement a real general ledger), but to a general audience it
+collides with the **Ledger crypto hardware wallet** — a well-known,
+unrelated consumer brand — and risks reading as a crypto product rather
+than an accounting app. "Smara Finance Book Keeping" is too long: app
+names truncate on home screens (roughly 11-13 visible characters on iOS
+before an ellipsis), and "Finance" plus "Book Keeping" is redundant.
+"Accounting" needs no specialized knowledge and is what people actually
+search for ("accounting app," "expense tracker," "bookkeeping app," not
+"ledger app"). Since this app is explicitly aimed at regular people and
+small-business owners rather than professional accountants, the
+street-level audience's comprehension wins over the thematically neater
+but narrower "Ledger" pitch.
+
+**Alternative considered:** "Smara Books" — colloquial on both sides
+(accountants say "the books" too), no crypto-brand collision, but sits
+close to Apple's own "Apple Books" reading app. Rejected in favor of
+"Smara Accounting," which is also already the real `CFBundleDisplayName`
+everywhere (iOS, macOS, Android) — zero migration cost, nothing to
+rename in code.
+
 ## Risks / Trade-offs
 
 - **[Risk]** The privacy policy itself might have gaps or be slightly
