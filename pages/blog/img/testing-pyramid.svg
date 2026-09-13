@@ -1,0 +1,37 @@
+<svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A five-layer testing pyramid: 908 unit and widget tests at the base, 15 integration tests above that, 37 UI-driven acceptance tests above that, the same 37 tests run nightly across all 43 locales above that, and a manual macOS human verification pass at the very top before each release">
+  <g fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+    <!-- Band A: apex - Human verification -->
+    <polygon points="170,20 138,72 202,72" fill-opacity="0.95" />
+    <!-- Band B: Nightly full acceptance runs -->
+    <polygon points="138,72 202,72 234,124 106,124" fill-opacity="0.78" />
+    <!-- Band C: UI-driven acceptance tests -->
+    <polygon points="106,124 234,124 266,176 74,176" fill-opacity="0.61" />
+    <!-- Band D: Integration tests -->
+    <polygon points="74,176 266,176 298,228 42,228" fill-opacity="0.44" />
+    <!-- Band E: base - Unit & widget tests -->
+    <polygon points="42,228 298,228 330,280 10,280" fill-opacity="0.27" />
+  </g>
+  <g stroke="currentColor" stroke-width="1" opacity="0.5">
+    <line x1="190" y1="46" x2="345" y2="46" />
+    <line x1="222" y1="98" x2="345" y2="98" />
+    <line x1="254" y1="150" x2="345" y2="150" />
+    <line x1="286" y1="202" x2="345" y2="202" />
+    <line x1="318" y1="254" x2="345" y2="254" />
+  </g>
+  <g fill="currentColor" font-family="sans-serif">
+    <text x="352" y="43" font-size="14" font-weight="bold">Human verification</text>
+    <text x="352" y="60" font-size="11" opacity="0.7">macOS baseline pass, English only, before every release</text>
+
+    <text x="352" y="95" font-size="14" font-weight="bold">Nightly full acceptance runs</text>
+    <text x="352" y="112" font-size="11" opacity="0.7">37 tests &#215; 43 locales, automated every night</text>
+
+    <text x="352" y="147" font-size="14" font-weight="bold">UI-driven acceptance tests</text>
+    <text x="352" y="164" font-size="11" opacity="0.7">37 checks, drives the real, compiled app</text>
+
+    <text x="352" y="199" font-size="14" font-weight="bold">Integration tests</text>
+    <text x="352" y="216" font-size="11" opacity="0.7">15 checks, real database, real local state</text>
+
+    <text x="352" y="251" font-size="14" font-weight="bold">Unit &amp; widget tests</text>
+    <text x="352" y="268" font-size="11" opacity="0.7">908 checks, one behavior each, dependencies mocked</text>
+  </g>
+</svg>

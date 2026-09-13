@@ -161,25 +161,30 @@ merged and forgotten.
 The mechanism I ended up building was a stack of tests, not a single kind,
 shaped like the classic testing pyramid: a wide base of fast, narrow
 checks, thinning out to a much smaller number of expensive, full-system
-ones at the top. Unit and widget tests cover individual pieces of logic in
-isolation, with their dependencies mocked. Integration tests check how
-those pieces behave together against a real database and real local
-state. And — the layer that mattered most — a kind of business-acceptance
-test actually drives the compiled application through its real interface,
-the way a person would use it, and checks that the outcome is what the
-requirement actually promised. Here's the actual shape of it, with real
-numbers attached, at the point this post was written:
+ones — and then, above even those, two layers that aren't new test code at
+all, just different ways of running and trusting the same suite. Unit and
+widget tests cover individual pieces of logic in isolation, with their
+dependencies mocked. Integration tests check how those pieces behave
+together against a real database and real local state. A kind of
+business-acceptance test actually drives the compiled application through
+its real interface, the way a person would use it, and checks that the
+outcome is what the requirement actually promised. That same acceptance
+suite then runs automatically every night, once per supported locale, so a
+translation change can't quietly break a scenario nobody thought to check
+by hand. And before anything actually ships, a person runs that same suite
+once more by hand, in English, on a real Mac — the one check nothing
+automated replaces. Here's the actual shape of it, with real numbers
+attached, at the point this post was written:
 
-```mermaid
-flowchart BT
-    A["Unit &amp; widget tests — 908 checks<br/>one function or one widget,<br/>one behavior, dependencies mocked"] --> B["Integration tests — 15 checks<br/>real database, real local state,<br/>pieces working together"]
-    B --> C["UI-driven acceptance tests — 37 checks<br/>drives the real, compiled app<br/>the way a person would use it"]
-```
+![A five-layer testing pyramid, widest at the base: 908 unit and widget tests, 15 integration tests, 37 UI-driven acceptance tests, the same 37 tests run nightly across all 43 locales, and a manual macOS verification pass at the very top before every release](img/testing-pyramid.svg)
 
-Close to a thousand automated checks in total, and the shape is
-deliberate: cheap enough at the base to run constantly, expensive enough
-at the top that thirty-seven of them earn their keep by covering entire
-real-world scenarios rather than single functions.
+The bottom three layers add up to close to a thousand automated checks in
+code, and that shape is deliberate: cheap enough at the base to run
+constantly, expensive enough near the top that thirty-seven of them earn
+their keep by covering entire real-world scenarios rather than single
+functions. The top two layers aren't more test code — they're that same
+acceptance suite multiplied across every locale automatically, and then
+confirmed once more by a person before anything ships.
 
 This is the actual training session for that horse from earlier: not one
 command, but a stack of them, run against every single change until
