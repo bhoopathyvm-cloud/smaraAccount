@@ -1,16 +1,17 @@
 <svg viewBox="0 0 240 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The same horse on a lunge line, circling a handler who is teaching it to respond to a line and a voice before anyone rides it">
-  <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity="0.5">
+  <rect x="0" y="0" width="240" height="160" fill="#fbfcff" />
+  <g fill="none" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round" opacity="0.5">
     <!-- lunge circle on the ground -->
     <path d="M 55 146 A 145 92 0 0 1 210 60" stroke-dasharray="5 6" />
     <!-- lunge line from handler to horse's head -->
     <line x1="40" y1="118" x2="188" y2="34" stroke-dasharray="2 5" />
   </g>
-  <g fill="currentColor" stroke="none">
+  <g fill="#1a1a1a" stroke="none">
     <!-- handler: a small figure holding the line -->
     <circle cx="22" cy="112" r="6" />
-    <path d="M 22 118 L 22 134" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none" />
-    <path d="M 22 134 L 14 148 M 22 134 L 30 148" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none" />
-    <path d="M 22 122 L 40 118" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none" />
+    <path d="M 22 118 L 22 134" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" fill="none" />
+    <path d="M 22 134 L 14 148 M 22 134 L 30 148" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" fill="none" />
+    <path d="M 22 122 L 40 118" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" fill="none" />
     <!-- tail -->
     <path d="M 78 82 C 60 88, 48 98, 42 114 C 39 122, 44 127, 50 121 C 55 116, 62 104, 74 90 Z" />
     <!-- legs -->

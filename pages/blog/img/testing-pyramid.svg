@@ -9,6 +9,7 @@
     .label-main { fill: #33408f; font-weight: bold; }
     .label-detail { fill: #5b6270; }
   </style>
+  <rect x="0" y="0" width="760" height="320" fill="#fbfcff" />
   <g stroke-width="1.5" stroke-linejoin="round">
     <!-- Band A: apex - Human verification -->
     <polygon class="band1" points="170,20 138,72 202,72" />
