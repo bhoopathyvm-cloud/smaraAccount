@@ -1,13 +1,43 @@
 # From a Weekend Idea to a Shipping Product
 
-Smara Account started as a learning exercise, not a plan. I wanted to
-understand how far I could get building a real application almost entirely
-in conversation with AI, with no fixed idea of where it would end up. A few
-months later, it's a working, tested, multi-platform app, translated into
-forty-three languages, with a real release process behind it. This post is
-the short version of how it got from one of those states to the other — the
-rest of this series goes deep on the specific moments that mattered along
-the way.
+Smara Account started from a real, personal itch, and turned into a
+learning exercise almost by accident. I wanted to understand how far I
+could get building a real application almost entirely in conversation with
+AI, with no fixed idea of where it would end up. A few months later, it's a
+working, tested, multi-platform app, translated into forty-three languages,
+with a real release process behind it. This post is the short version of
+how it got from one of those states to the other — the rest of this series
+goes deep on the specific moments that mattered along the way.
+
+## Why this, specifically
+
+I've used personal accounting software for years to track my own spending.
+It isn't a simple picture: multiple cards, multiple currencies, accounts
+spread across different countries. Plenty of existing tools cover that
+ground reasonably well on features. Almost all of them are cloud-based,
+subscription-priced, or both — I never liked handing my financial history
+to someone else's server as an ongoing rent. More importantly, as far as I
+could find, none of them make any real claim about the *integrity* of what
+they record. Once an entry is in, is it actually protected from being
+quietly changed later — by the software, by a bug, by anyone? None of the
+tools I looked at even framed that as a question worth answering.
+
+I'd had the idea of building something better for a long time, and had
+started on it more than once. Each time, it ran into the same wall: doing
+it properly meant learning a new language and a real application stack from
+scratch, or falling back to the same shape every other tool already had —
+which defeated the point of building it at all. The idea kept getting
+shelved, not because it was wrong, but because the distance between "I know
+what I want" and "I know how to build it safely" was large enough to keep
+stopping me.
+
+What changed wasn't the idea. It was framing the distance itself as the
+actual challenge: with real technical knowledge, but without formal
+training in building this specific kind of application, how far could I get
+toward something that could genuinely run in production — using AI as the
+thing that closes that gap, rather than years of learning a new stack
+first? That question, more than the accounting problem itself, is what
+actually started this journey.
 
 ## Where it actually started
 
