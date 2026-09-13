@@ -176,7 +176,7 @@ once more by hand, in English, on a real Mac — the one check nothing
 automated replaces. Here's the actual shape of it, with real numbers
 attached, at the point this post was written:
 
-![A five-layer testing pyramid, widest at the base: 908 unit and widget tests, 15 integration tests, 37 UI-driven acceptance tests, the same 37 tests run nightly across all 43 locales, and a manual macOS verification pass at the very top before every release](img/testing-pyramid.svg)
+![A five-layer testing pyramid, widest at the base: 637 unit and widget tests, 286 integration tests, 37 UI-driven acceptance tests, the same 37 tests run nightly across all 43 locales, and a manual macOS verification pass at the very top before every release](img/testing-pyramid.svg)
 
 The bottom three layers add up to close to a thousand automated checks in
 code, and that shape is deliberate: cheap enough at the base to run
