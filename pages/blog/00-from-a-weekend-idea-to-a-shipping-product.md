@@ -2,12 +2,12 @@
 
 Smara Account started as a learning exercise, not a plan. I wanted to
 understand how far I could get building a real application almost entirely
-in conversation with an AI, with no fixed idea of where it would end up. A
-few months later, it's a working, tested, multi-platform app, translated
-into forty-three languages, with a real release process behind it. This
-post is the short version of how it got from one of those states to the
-other — the rest of this series goes deep on the specific moments that
-mattered along the way.
+in conversation with AI, with no fixed idea of where it would end up. A few
+months later, it's a working, tested, multi-platform app, translated into
+forty-three languages, with a real release process behind it. This post is
+the short version of how it got from one of those states to the other — the
+rest of this series goes deep on the specific moments that mattered along
+the way.
 
 ## Where it actually started
 
@@ -33,45 +33,98 @@ Around that point, a training session at work happened to be about
 spec-driven development — writing down what a system should do, in a
 structured way, before writing the code that does it. I'd seen the idea
 before in the abstract; this was the first time I connected it directly to
-the pain I was already feeling on this project. I started experimenting
-with the same discipline here, deliberately in small pieces rather than
-rewriting everything at once, to see whether it would actually hold up
-against a real, AI-assisted workflow rather than just a classroom example.
+the pain I was already feeling on this project.
 
-## It didn't fix everything immediately
+What I actually learned went further than that one practice. Alongside
+spec-driven development, I found myself relearning architecture as a
+guardrail, design as a guardrail, and a required development approach —
+test-driven development, specifically — as a guardrail too. These aren't
+new ideas. What was new was realizing *where* this knowledge normally
+lives: mostly in the heads of a handful of senior engineers on any given
+team, passed on through review comments, hallway conversations, and
+osmosis, rarely written down in full because a human colleague can absorb
+most of it without a document. Working with an AI collaborator removes that
+shortcut entirely. It has no tenure on the team, no hallway conversations to
+have absorbed, nothing to fall back on except what's actually written down.
+For the first time, I had to take knowledge that normally stays implicit
+and put it into an explicit document, in real depth — not because the AI
+demanded it, but because nothing less was going to work.
 
-Having a written specification made it much easier to tell *whether* a
-change was right. It didn't automatically make the AI write good code, or
-write tests, or follow the specification faithfully rather than
-approximately. Early on, a spec would go in, and a large volume of code
-would come back — more than I'd asked for, more than I could easily review
-line by line — and testing it would turn up real breakage. The discipline
-on the *requirements* side wasn't yet matched by discipline on the
-*implementation* side.
+## Writing it down is not the same as it being followed
 
-I'd wanted a strict test-first style from the start — write the failing
-test, then write the code that makes it pass — but simply asking for that
-didn't reliably produce it. What actually worked was turning the question
-back around: instead of asking for TDD, I asked how to make it
-*impossible to skip*. The answer was mechanical, not aspirational — real
-checks that run automatically and block a commit outright if formatting,
-static analysis, or the project's own completion rules don't pass, rather
-than a style guideline anyone (including the AI) could quietly ignore under
-time pressure. The same instinct got applied to the specification side too:
-a change can't be filed away as finished unless every task it committed to
-is actually, verifiably done.
+Here's the part that surprised me most, and it's worth saying plainly: even
+with all of that written down, the AI does not reliably follow it. Most of
+the time it does. Often enough, it doesn't — and it doesn't fail loudly or
+ask for clarification when it skips something, it just quietly proceeds as
+if the instruction weren't there.
 
-## The bigger win came after that
+I saw this most starkly once, on a separate codebase I was experimenting
+with around the same time. I asked directly for test-driven development —
+write the failing test first, then the code. What I got instead was code.
+Straight ahead, fast, confident-looking code, with no tests leading it and
+no tests following it, as if the instruction had simply been noted and set
+aside. It's a good image for what an unguided AI actually does: like a
+horse at full gallop with no blinders and no reins — genuinely fast, and
+headed wherever its own momentum takes it, not necessarily where you
+pointed it. The breakage only became visible once real interface testing
+started. Everything had looked fine right up until then.
 
-Even with all of that in place, the quality of what shipped still wasn't
-where I wanted it. The gap that actually closed it was real integration
-testing — tests that launch the genuine, compiled app and drive its actual
-interface, not a simplified stand-in for it — combined with making that
-kind of test a requirement for *every* significant piece of behavior, and
-having the AI run those tests itself and see them pass before it was
-allowed to consider anything finished. That change, more than the process
-discipline that came before it, is the single biggest reason the app
-actually works as well as it does today.
+That single experience reframed how I thought about instructions to an AI
+collaborator. An instruction in a document is a request, not a constraint.
+If a rule actually needs to hold, it needs a mechanism that enforces it,
+not a sentence that asks for it.
+
+## Building the mechanism, one layer at a time
+
+The mechanism I ended up building was a stack of tests, not a single kind:
+unit tests for individual pieces of logic, integration tests for how those
+pieces behave together against a real database and real local state, and —
+the layer that mattered most — a kind of business-acceptance test that
+actually drives the compiled application through its real interface, the
+way a person would use it, and checks that the outcome is what the
+requirement actually promised.
+
+This did not come for free. As the test coverage got more serious, a
+development-and-test cycle that used to take minutes started taking hours.
+That's a real cost, and I paid it deliberately, because the alternative —
+fast cycles producing code that only *looked* right — was the exact problem
+I was trying to get out of.
+
+What made the cost worth it was what started happening once the pieces
+were all in place: I could let an agent run a full piece of work end to
+end, without stepping in along the way, and it would routinely introduce a
+real bug or two during that run — and then find it and fix it itself,
+before anything ever reached a pull request I'd need to review. That's a
+genuinely different working relationship than reviewing a wild first draft
+line by line. The guardrails weren't just catching mistakes for me anymore;
+they were letting the AI catch its own.
+
+## How the work actually split
+
+In practice, I ended up using more than one AI tool for more than one
+purpose: research and detailed requirement-writing through Claude, and most
+of the day-to-day implementation through Cursor's agents, working from
+whatever had been specified. I'd assumed, going in, that simply routing
+everything through one strong model would be what brought the bug rate
+down. It wasn't. What actually moved the needle was the engineering
+discipline wrapped around whichever model was writing the code — the
+guardrails, not the brand name.
+
+## The lesson underneath all of it
+
+An AI model is trained on an enormous amount of code, and a meaningful
+share of that code is not good code. Left with a vague instruction and no
+constraints, it's just as likely to confidently reproduce the bad patterns
+as the good ones — fast, capable, and completely unconcerned with which
+direction it's actually running. A horse that fast is genuinely useful.
+It's also not something you'd want to simply sit on and hope for the best.
+You train it, you fit it with blinders and reins, and only then does that
+speed become something you can actually steer. Put real guardrails around
+an AI collaborator — architecture, design, a required development approach,
+enforced mechanically rather than requested politely — and the same
+underlying model narrows down to consistently good results. That
+distinction, more than any specific tool or model, is what actually
+determined how this project turned out.
 
 ## Where the story gets more interesting
 
