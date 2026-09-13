@@ -85,14 +85,28 @@ and put it into an explicit document, in real depth — not because the AI
 demanded it, but because nothing less was going to work.
 
 The actual loop I settled into is small and repeats for every change, large
-or small:
+or small — but the loop by itself is just a shell. What actually points it
+somewhere useful is architecture and design shaping what gets proposed, and
+a required development approach shaping how it gets built:
 
 ```mermaid
 flowchart LR
-    A["Propose<br/>write the why, the design,<br/>the task list"] --> B["Apply<br/>implement one task<br/>at a time, verify each"]
-    B --> C["Archive<br/>only once every<br/>task is checked"]
+    AR["Architecture guardrail<br/>where this belongs<br/>in the system"]
+    DS["Design guardrail<br/>how it should work,<br/>decided before how it's built"]
+    TD["Required approach<br/>test-driven development"]
+    A["Propose<br/>write the why, the design,<br/>the task list"]
+    B["Apply<br/>implement one task<br/>at a time, verify each"]
+    C["Archive<br/>only once every<br/>task is checked"]
+    AR --> A
+    DS --> A
+    A --> B
+    TD --> B
+    B --> C
     C -.->|next change| A
 ```
+
+(The fourth guardrail — UI-driven acceptance testing — gets its own diagram
+further down, once the testing stack it belongs to has been introduced.)
 
 This isn't the only way to structure it, and I wouldn't claim it's the best
 one — it's just the shape that ended up making a difference once I started
