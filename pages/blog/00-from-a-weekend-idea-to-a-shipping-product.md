@@ -80,6 +80,16 @@ For the first time, I had to take knowledge that normally stays implicit
 and put it into an explicit document, in real depth — not because the AI
 demanded it, but because nothing less was going to work.
 
+The actual loop I settled into is small and repeats for every change, large
+or small:
+
+```mermaid
+flowchart LR
+    A["Propose<br/>write the why, the design,<br/>the task list"] --> B["Apply<br/>implement one task<br/>at a time, verify each"]
+    B --> C["Archive<br/>only once every<br/>task is checked"]
+    C -.->|next change| A
+```
+
 ## Writing it down is not the same as it being followed
 
 Here's the part that surprised me most, and it's worth saying plainly: even
@@ -102,7 +112,17 @@ started. Everything had looked fine right up until then.
 That single experience reframed how I thought about instructions to an AI
 collaborator. An instruction in a document is a request, not a constraint.
 If a rule actually needs to hold, it needs a mechanism that enforces it,
-not a sentence that asks for it.
+not a sentence that asks for it — the difference between these two paths
+turned out to matter more than almost anything else in this project:
+
+```mermaid
+flowchart TD
+    I["Instruction: follow TDD"] --> N{Guardrail<br/>or request?}
+    N -->|Just a request| W["AI writes the feature first,<br/>tests later or not at all"]
+    W --> X["Breakage only visible once<br/>something else happens to fail"]
+    N -->|An enforced mechanism| G["Commit is blocked unless<br/>format, analysis, and tests pass"]
+    G --> P["Discipline holds whether<br/>anyone remembers to ask or not"]
+```
 
 ## Building the mechanism, one layer at a time
 
@@ -113,6 +133,12 @@ the layer that mattered most — a kind of business-acceptance test that
 actually drives the compiled application through its real interface, the
 way a person would use it, and checks that the outcome is what the
 requirement actually promised.
+
+```mermaid
+flowchart BT
+    A["Unit tests<br/>one function, one behavior"] --> B["Integration tests<br/>real database, real local state,<br/>pieces working together"]
+    B --> C["UI-driven acceptance tests<br/>drives the real, compiled app<br/>the way a person would use it"]
+```
 
 This did not come for free. As the test coverage got more serious, a
 development-and-test cycle that used to take minutes started taking hours.
