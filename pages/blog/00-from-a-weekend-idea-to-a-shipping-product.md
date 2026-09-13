@@ -142,15 +142,20 @@ guardrails, not the brand name.
 
 ## The lesson underneath all of it
 
-An AI model is trained on an enormous amount of code, and a meaningful
-share of that code is not good code. Left with a vague instruction and no
-constraints, it's just as likely to confidently reproduce the bad patterns
-as the good ones — fast, capable, and completely unconcerned with which
-direction it's actually running. A horse that fast is genuinely useful.
-It's also not something you'd want to simply sit on and hope for the best.
-You train it, you fit it with blinders and reins, and only then does that
-speed become something you can actually steer. Put real guardrails around
-an AI collaborator — architecture, design, a required development approach,
+That horse from earlier is really the whole lesson. An AI model is trained
+on an enormous amount of code, and a meaningful share of that code is not
+good code. Left with a vague instruction and no constraints, it's just as
+likely to confidently reproduce the bad patterns as the good ones — fast,
+capable, and completely unconcerned with which direction it's actually
+running, exactly like a horse at full gallop with nothing on it to say
+otherwise. That kind of speed is genuinely useful. It's also not something
+you'd want to simply sit on and hope for the best.
+
+You don't get a horse like that to actually take you somewhere by asking it
+nicely. You train it, you fit it with blinders and reins, and only then
+does that speed become something you can steer instead of something that
+happens to you. Put the same kind of real guardrails around an AI
+collaborator — architecture, design, a required development approach,
 enforced mechanically rather than requested politely — and the same
 underlying model narrows down to consistently good results. That
 distinction, more than any specific tool or model, is what actually
