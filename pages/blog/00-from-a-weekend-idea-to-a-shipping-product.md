@@ -109,6 +109,8 @@ headed wherever its own momentum takes it, not necessarily where you
 pointed it. The breakage only became visible once real interface testing
 started. Everything had looked fine right up until then.
 
+![A horse running at full gallop with no reins or rider, motion lines behind it](img/horse-wild.svg)
+
 That single experience reframed how I thought about instructions to an AI
 collaborator. An instruction in a document is a request, not a constraint.
 If a rule actually needs to hold, it needs a mechanism that enforces it,
@@ -139,6 +141,12 @@ flowchart BT
     A["Unit tests<br/>one function, one behavior"] --> B["Integration tests<br/>real database, real local state,<br/>pieces working together"]
     B --> C["UI-driven acceptance tests<br/>drives the real, compiled app<br/>the way a person would use it"]
 ```
+
+This is the actual training session for that horse from earlier: not one
+command, but a stack of them, run against every single change until
+following the discipline stopped being optional.
+
+![The same horse on a lunge line, circling a handler who is teaching it to respond to a line and a voice before anyone rides it](img/horse-training.svg)
 
 This did not come for free. As the test coverage got more serious, a
 development-and-test cycle that used to take minutes started taking hours.
@@ -186,6 +194,8 @@ enforced mechanically rather than requested politely — and the same
 underlying model narrows down to consistently good results. That
 distinction, more than any specific tool or model, is what actually
 determined how this project turned out.
+
+![The same horse again, now calm, with a rider on its back holding the reins, its speed pointed somewhere on purpose](img/horse-controlled.svg)
 
 ## Where the story gets more interesting
 
