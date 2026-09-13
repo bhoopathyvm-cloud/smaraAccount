@@ -6,15 +6,15 @@
 
 ## 2. Close out Android signing (cross-references `android-release-signing`)
 
-- [ ] 2.1 `android-release-signing` task 2.1: generate an upload keystore (`keytool -genkeypair ...`)
+- [x] 2.1 `android-release-signing` task 2.1: generate an upload keystore (`keytool -genkeypair ...`) — done: `android/upload-keystore.jks` exists (2026-09-08)
 - [ ] 2.2 `android-release-signing` task 2.2: store the keystore file and passwords somewhere durable and private, outside the repo
-- [ ] 2.3 `android-release-signing` task 2.3: populate local `android/key.properties` from that keystore
+- [ ] 2.3 `android-release-signing` task 2.3: populate local `android/key.properties` from that keystore — still placeholder values, not the real passwords
 - [ ] 2.4 `android-release-signing` task 3.1: run `flutter build appbundle` and verify the artifact is release-signed, not debug-signed (`apksigner verify --print-certs`)
 
 ## 3. iOS/macOS Team signing
 
-- [ ] 3.1 Once Apple Developer Program enrollment is active, configure the real Team in Xcode's Signing & Capabilities for the `Runner` target's **iOS** build configuration (new — not tracked elsewhere)
-- [ ] 3.2 `macos-app-store-sandbox` task 1.1: configure the same real Team for the **macOS** build configuration, if macOS App Store distribution is also wanted in this pass
+- [x] 3.1 Once Apple Developer Program enrollment is active, configure the real Team in Xcode's Signing & Capabilities for the `Runner` target's **iOS** build configuration — done: `DEVELOPMENT_TEAM = PLUT6R5W2W` confirmed set on the `Runner` target's Debug, Release, and Profile configs in `ios/Runner.xcodeproj/project.pbxproj`
+- [ ] 3.2 `macos-app-store-sandbox` task 1.1: configure the same real Team for the **macOS** build configuration, if macOS App Store distribution is also wanted in this pass — re-opened: that task was marked done, but `macos/Runner.xcodeproj/project.pbxproj` has no `DEVELOPMENT_TEAM` entry at all, unlike the iOS project; see that change's tasks.md
 - [ ] 3.3 Verify an iOS archive build succeeds and is Team-signed
 - [ ] 3.4 `ios-privacy-compliance` task 4.1: verify the Xcode archive build succeeds with `PrivacyInfo.xcprivacy` present (blocked on Xcode/Team access, not previously verifiable on the Linux agent that did the original change)
 - [x] 3.5 `app-icon-branding` tasks 3.1-3.3: spot-check the generated app icon on a real iOS Simulator, macOS build, and Android emulator/device home screen — done; see that change's `tasks.md` for verification detail and the noted (non-blocking) iOS Simulator home-screen-label display quirk

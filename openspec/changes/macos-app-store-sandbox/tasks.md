@@ -1,6 +1,6 @@
 ## 1. Prerequisite (human, not code)
 
-- [x] 1.1 Configure a real Apple Developer Team in Xcode's Signing & Capabilities for the `Runner` target (blocks verification of every task below)
+- [ ] 1.1 Configure a real Apple Developer Team in Xcode's Signing & Capabilities for the `Runner` target (blocks verification of every task below) — re-opened: this was marked done, but `macos/Runner.xcodeproj/project.pbxproj` has no `DEVELOPMENT_TEAM` entry anywhere, unlike `ios/Runner.xcodeproj/project.pbxproj` (which does have one). The iOS Team was configured; the macOS one apparently wasn't, or the change didn't get saved
 
 ## 2. Entitlements
 
