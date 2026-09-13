@@ -5,8 +5,9 @@
 ## 2. Entitlements
 
 - [x] 2.1 Set `com.apple.security.app-sandbox` to `true` in `macos/Runner/Release.entitlements`
-- [x] 2.2 Add `com.apple.security.keychain-access-groups` as an empty array
+- [x] 2.2 ~~Add `com.apple.security.keychain-access-groups` as an empty array~~ — reversed (2026-09-13): Apple's real App Store Connect validator rejected this outright — `Invalid Code Signing Entitlements ... key 'com.apple.security.keychain-access-groups' ... is not supported` (error 90285) — on an actual Validate attempt. The empty-array assumption in design.md was wrong. Removed the key entirely from `Release.entitlements`; `flutter_secure_storage`'s own Keychain items don't need it since there's no App Group/companion app to share with
 - [x] 2.3 Change `com.apple.security.files.user-selected.read-only` to `com.apple.security.files.user-selected.read-write`
+- [x] 2.4 New, found via the same Validate attempt (2026-09-13): App Store Connect also rejected the archive with `The Info.plist must contain a LSApplicationCategoryType key` (error 90242). Added `LSApplicationCategoryType = public.app-category.finance` to `macos/Runner/Info.plist`. Both fixes verified directly on a rebuilt archive: `codesign -d --entitlements -` no longer lists `keychain-access-groups`, and `PlistBuddy -c "Print :LSApplicationCategoryType"` returns `public.app-category.finance`; `TeamIdentifier=PLUT6R5W2W` unchanged
 
 ## 3. Verify on a real sandboxed build
 
