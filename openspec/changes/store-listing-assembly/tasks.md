@@ -1,10 +1,15 @@
 ## 1. App description, keywords, category, support URL
 
-- [ ] 1.1 Draft a short description (Play Console's 80-char short description limit) and verify it fits without truncation
-- [ ] 1.2 Draft a full description (App Store Connect's 4000-char limit, Play Console's 4000-char full description), adapted from `pages/open-source/smara-account/index.md`'s "what it is / the problem / the solution" framing, and verify both fit their store's limit
-- [ ] 1.3 Choose keywords for App Store Connect's 100-character keyword field and verify the count fits
-- [ ] 1.4 Confirm category: `public.app-category.finance` (already set in `macos/Runner/Info.plist`) for App Store Connect; the equivalent Play Console category (Finance)
-- [ ] 1.5 Confirm the support URL to submit to both stores (e.g. the project website's contact/about page) and verify it resolves with a 200 status
+- [x] 1.1 Draft a short description (Play Console's 80-char short description limit) and verify it fits without truncation — drafted at 74 chars, see `store-listing-draft.md`
+- [x] 1.2 Draft a full description (App Store Connect's 4000-char limit, Play Console's 4000-char full description), adapted from `pages/open-source/smara-account/index.md`'s "what it is / the problem / the solution" framing, and verify both fit their store's limit — drafted at 2,573 chars (one shared version for both stores), see `store-listing-draft.md`
+- [x] 1.3 Choose keywords for App Store Connect's 100-character keyword field and verify the count fits — drafted at 90 chars, see `store-listing-draft.md`
+- [x] 1.4 Confirm category: `public.app-category.finance` (already set in `macos/Runner/Info.plist`) for App Store Connect; the equivalent Play Console category (Finance) — both confirmed as Finance
+- [x] 1.5 Confirm the support URL to submit to both stores (e.g. the project website's contact/about page) and verify it resolves with a 200 status — `https://smara-ai.ch/open-source/smara-account/`, verified via `curl` (HTTP 200)
+
+Still open before this section is truly done: the app name, description
+wording, and the Play short/full-description split all need the user's
+review — see "Open items" at the bottom of `store-listing-draft.md`.
+This is a first draft to react to, not final copy.
 
 ## 2. Screenshots
 
