@@ -126,3 +126,13 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
   install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
     COMPONENT Runtime)
 endif()
+
+# Desktop integration metadata for Linux packagers. The PNG uses the same
+# application ID as GTK so desktops can associate the launcher with its window.
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/smara.desktop.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_ID}.desktop" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_ID}.desktop"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/applications" COMPONENT Runtime)
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../assets/branding/app_icon.png"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/1024x1024/apps"
+  RENAME "${APPLICATION_ID}.png" COMPONENT Runtime)

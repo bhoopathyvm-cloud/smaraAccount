@@ -132,7 +132,7 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 # flutter_launcher_icons config (dev-only tooling, run manually with
-# `dart run flutter_launcher_icons` after tool/branding/generate_app_icon.py).
+# `python3 tool/branding/generate_app_icon.py`).
 # Its own top-level key after the flutter: section so the template comments
 # above stay attached to flutter:.
 flutter_launcher_icons:
@@ -140,6 +140,9 @@ flutter_launcher_icons:
   ios: true
   macos:
     generate: true
+  windows:
+    generate: true
+    icon_size: 256
   image_path: assets/branding/app_icon.png
   adaptive_icon_background: "#1A3A6B"
   adaptive_icon_foreground: assets/branding/app_icon.png
