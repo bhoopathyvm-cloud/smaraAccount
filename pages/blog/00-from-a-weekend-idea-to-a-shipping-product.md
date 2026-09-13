@@ -5,9 +5,12 @@ learning exercise almost by accident. I wanted to understand how far I
 could get building a real application almost entirely in conversation with
 AI, with no fixed idea of where it would end up. A few months later, it's a
 working, tested, multi-platform app, translated into forty-three languages,
-with a real release process behind it. This post is the short version of
-how it got from one of those states to the other — the rest of this series
-goes deep on the specific moments that mattered along the way.
+with a real release process behind it, that I actually use for my own
+accounts. This post is the short version of how it got from one of those
+states to the other, told from what I personally learned along the way —
+not a controlled study, not a claim about how any team or any other AI
+setup would fare, just one person's data point. The rest of this series
+goes deep on the specific moments that mattered.
 
 ## Why this, specifically
 
@@ -19,8 +22,9 @@ subscription-priced, or both — I never liked handing my financial history
 to someone else's server as an ongoing rent. More importantly, as far as I
 could find, none of them make any real claim about the *integrity* of what
 they record. Once an entry is in, is it actually protected from being
-quietly changed later — by the software, by a bug, by anyone? None of the
-tools I looked at even framed that as a question worth answering.
+quietly changed later — by the software, by a bug, by anyone? It wasn't
+something any of the tools I evaluated treated as a first-class concern —
+which doesn't mean no such tool exists, only that I hadn't found one.
 
 I'd had the idea of building something better for a long time, and had
 started on it more than once. Each time, it ran into the same wall: doing
@@ -90,6 +94,10 @@ flowchart LR
     C -.->|next change| A
 ```
 
+This isn't the only way to structure it, and I wouldn't claim it's the best
+one — it's just the shape that ended up making a difference once I started
+following it consistently.
+
 ## Writing it down is not the same as it being followed
 
 Here's the part that surprised me most, and it's worth saying plainly: even
@@ -125,6 +133,14 @@ flowchart TD
     N -->|An enforced mechanism| G["Commit is blocked unless<br/>format, analysis, and tests pass"]
     G --> P["Discipline holds whether<br/>anyone remembers to ask or not"]
 ```
+
+I want to be honest about what that mechanism actually guarantees, because
+it's narrower than it sounds: a hook that blocks a commit until tests pass
+proves the tests exist and pass at that moment — it doesn't prove they were
+written *before* the code, only that the code can't land without them. Real
+test-first discipline still comes down to habit. What the hook reliably
+closes is the worse failure I'd already seen: code with no tests at all,
+merged and forgotten.
 
 ## Building the mechanism, one layer at a time
 
@@ -163,6 +179,13 @@ genuinely different working relationship than reviewing a wild first draft
 line by line. The guardrails weren't just catching mistakes for me anymore;
 they were letting the AI catch its own.
 
+I want to be precise about what that claim covers, though: it's bounded by
+what the suite was actually built to check. I don't have a count of what
+slipped past it, only what it caught — a test suite proves the presence of
+bugs it finds, not the absence of the ones it doesn't. The honest version
+of this lesson isn't "the AI stopped writing bugs." It's narrower and still
+useful: a whole class of regressions stopped reaching me silently.
+
 ## How the work actually split
 
 In practice, I ended up using more than one AI tool for more than one
@@ -170,9 +193,12 @@ purpose: research and detailed requirement-writing through Claude, and most
 of the day-to-day implementation through Cursor's agents, working from
 whatever had been specified. I'd assumed, going in, that simply routing
 everything through one strong model would be what brought the bug rate
-down. It wasn't. What actually moved the needle was the engineering
-discipline wrapped around whichever model was writing the code — the
-guardrails, not the brand name.
+down. On this project, that isn't what happened: what actually moved the
+needle was the engineering discipline wrapped around whichever model was
+writing the code — the guardrails, more than the brand name. I can't rule
+out that a different project, or a genuinely much stronger model, would
+tell a different story. This is what I actually observed on the one
+project I have.
 
 ## The lesson underneath all of it
 
@@ -180,20 +206,18 @@ That horse from earlier is really the whole lesson. An AI model is trained
 on an enormous amount of code, and a meaningful share of that code is not
 good code. Left with a vague instruction and no constraints, it's just as
 likely to confidently reproduce the bad patterns as the good ones — fast,
-capable, and completely unconcerned with which direction it's actually
-running, exactly like a horse at full gallop with nothing on it to say
-otherwise. That kind of speed is genuinely useful. It's also not something
-you'd want to simply sit on and hope for the best.
+capable, and unconcerned with which direction it's actually running. That
+speed is genuinely useful. It's also not something I'd want to simply sit
+on and hope for the best.
 
-You don't get a horse like that to actually take you somewhere by asking it
-nicely. You train it, you fit it with blinders and reins, and only then
-does that speed become something you can steer instead of something that
-happens to you. Put the same kind of real guardrails around an AI
-collaborator — architecture, design, a required development approach,
-enforced mechanically rather than requested politely — and the same
-underlying model narrows down to consistently good results. That
-distinction, more than any specific tool or model, is what actually
-determined how this project turned out.
+You don't get a horse like that to take you somewhere by asking it nicely —
+you train it, and you fit it with blinders and reins. Put the same kind of
+real guardrails around an AI collaborator — architecture, design, a
+required development approach, enforced mechanically rather than requested
+politely — and the same underlying model produced far more consistent
+results, at least on this project. I don't know how far that generalizes
+beyond it. What I can say is that on the one project I built, that
+distinction mattered more than which specific tool or model I used.
 
 ![The same horse again, now calm, with a rider on its back holding the reins, its speed pointed somewhere on purpose](img/horse-controlled.svg)
 
@@ -212,5 +236,7 @@ thing and were three, the assumption about a testing platform that turned
 out to be completely wrong, and the very particular way AI-generated
 translations tend to fail. None of it happened in a straight line, and none
 of it happened without real setbacks along the way — but a weekend
-exploration did become a real, working product, and I think the path
-between those two points is worth writing down honestly.
+exploration did become a real, working app that I actually rely on for my
+own accounts, built to the same bar I'd have held it to if it were going
+out to other people. I think the path between those two points, and what
+it taught me about working with AI, is worth writing down honestly.
