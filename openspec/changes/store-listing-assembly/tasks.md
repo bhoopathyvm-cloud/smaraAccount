@@ -44,8 +44,8 @@ Data Safety draft above assumes that fix is merged.
 
 ## 4. App Store Connect App Privacy
 
-- [ ] 4.1 Fill in App Store Connect's App Privacy ("nutrition label") section using the same line-by-line list from task 3.2 — verify every field traces back to the privacy policy the same way
-- [ ] 4.2 Cross-compare the two stores' completed privacy declarations against each other and verify they describe the same data practices (a discrepancy between them would mean one is wrong, since they describe the same app and the same policy)
+- [x] 4.1 Fill in App Store Connect's App Privacy ("nutrition label") section using the same line-by-line list from task 3.2 — verify every field traces back to the privacy policy the same way — drafted: "No, we do not collect data" as the overall answer, which is not just derived from the same evidence as the Play draft but already backed by a standing code artifact — `ios/Runner/PrivacyInfo.xcprivacy` (an already-enforced `ios-privacy-compliance` requirement) declares `NSPrivacyTracking = false` and `NSPrivacyCollectedDataTypes = []` in every archive already verified this session. See `app-privacy-draft.md`.
+- [x] 4.2 Cross-compare the two stores' completed privacy declarations against each other and verify they describe the same data practices (a discrepancy between them would mean one is wrong, since they describe the same app and the same policy) — done, same file: both stores land on "no data collected," from the same source facts, with the same currency-pair/ticker nuance flagged on both sides rather than resolved differently per store
 
 ## 5. Handoff
 
