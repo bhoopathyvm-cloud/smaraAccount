@@ -24,6 +24,12 @@ durable private backup **before** the first Play upload. Losing the
 upload key after Play App Signing enrollment is recoverable only through
 Google's support process.
 
+Current `keytool` defaults to a PKCS12 keystore, which doesn't support
+distinct store and key passwords — it silently ignores `-keypass` and
+uses the store password for both. Set `keyPassword` equal to
+`storePassword` in `key.properties`, or the release build fails with a
+wrong-password error even though the keystore itself is fine.
+
 ## Local `key.properties`
 
 ```bash
