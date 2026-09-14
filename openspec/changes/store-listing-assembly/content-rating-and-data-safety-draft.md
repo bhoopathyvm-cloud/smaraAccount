@@ -82,7 +82,26 @@ the way the rest of this table is.
 - Data encrypted at rest: the signing key and app-lock PIN hash use OS-level secure storage (Keychain/Keystore); the ledger database itself is a plain local file, not separately encrypted at rest (backups *are* encrypted — "Save backup writes an encrypted, passphrase-protected copy")
 - User can request data deletion: not applicable in Play's usual sense (no server-side account to delete) — uninstalling the app removes all local data
 
+## 3. Other mandatory Play Console declarations
+
+Not covered above, but required on the same "App content" checklist
+before a release can go out. Added 2026-09-14 while starting Play
+Console groundwork — these weren't tracked anywhere in this change
+before.
+
+| Declaration | Answer | Why |
+|---|---|---|
+| Ads | No ads | No ad SDK in `pubspec.yaml`, no ad placements anywhere in the app |
+| News apps | Not a news app | N/A |
+| COVID-19 contact tracing / status apps | Not applicable | N/A |
+| Government apps | Not a government app | N/A |
+| Target audience — age groups | 18 and over only | Deliberately excludes every "under 18" bracket: selecting any child age group pulls in Google's Families/child-safety policies and extra review, which don't fit a general-audience finance app. Also answer "No" to "Is your app designed to appeal to children primarily" |
+| Data safety re-declaration reminder | — | Play requires re-confirming this form on every release with a data-practice change; the answers in section 2 above are the current source of truth |
+
+**Financial features declaration** — Play has a separate, finance-category-specific questionnaire (asks about lending, crypto exchange, payment processing, etc.) that didn't exist in earlier research and needs answering directly in Console rather than assumed here: this app does none of those things (no lending, no crypto trading, no payment processing — it is a local record-keeping tool with two optional read-only market-data lookups), so every sub-question should land on "No," but the exact current wording should be read in Console before answering rather than pattern-matched from this table.
+
 ## Open items before this is submission-ready
 
 - [ ] Confirm the ticker/currency-pair judgment call above with a final read of Play's current category definitions in the actual Console UI before submitting (definitions can be updated by Google over time)
 - [ ] Complete the content rating questionnaire in Play Console directly using the table above — it's an interactive multi-step form, not a single field
+- [ ] Read the actual current wording of Play's "Financial features" questionnaire in Console before answering (section 3) — this app's answers should all be "No," but the exact question set wasn't independently verified here
