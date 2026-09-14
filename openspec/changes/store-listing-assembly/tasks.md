@@ -28,9 +28,19 @@ than risk further navigation debugging; flagged here instead of hidden.
 
 ## 3. Google Play content rating and Data Safety
 
-- [ ] 3.1 Complete Google Play's content rating questionnaire based on the app's actual functionality (personal finance ledger, no user-generated social content, no ads, no gambling mechanics) and verify the resulting rating is generated without needing to guess an answer
-- [ ] 3.2 Go through `pages/open-source/smara-account/privacy-policy.md` line by line and list every data type/purpose it actually describes
-- [ ] 3.3 Fill in Google Play's Data Safety form using that list — verify every field traces back to a specific line in the privacy policy, and nothing is declared that the policy doesn't also describe
+- [x] 3.1 Complete Google Play's content rating questionnaire based on the app's actual functionality (personal finance ledger, no user-generated social content, no ads, no gambling mechanics) and verify the resulting rating is generated without needing to guess an answer — drafted: every category answered "none/no" with a verifiable reason (no IAP package in `pubspec.yaml`, no social/sharing feature, no location permission). See `content-rating-and-data-safety-draft.md`.
+- [x] 3.2 Go through `pages/open-source/smara-account/privacy-policy.md` line by line and list every data type/purpose it actually describes — done, same file: a full Play Data Safety category table, each row citing the specific policy section it traces to (or a direct code/manifest check where the policy itself doesn't cover it, e.g. confirming no analytics SDK)
+- [x] 3.3 Fill in Google Play's Data Safety form using that list — verify every field traces back to a specific line in the privacy policy, and nothing is declared that the policy doesn't also describe — drafted: "no data collected" across every Play category, with one nuance flagged explicitly rather than silently decided (the two optional lookups do send a currency-pair/ticker code off-device, which doesn't fall under any of Play's personal-data categories, but is a judgment call worth a final human check against Play's current category definitions before submitting)
+
+**Real bug found and fixed while doing this cross-check, not part of this
+change's own scope**: `android.permission.INTERNET` was only present via
+Flutter's debug/profile manifest overlays, never in the manifest that
+ships in Release — meaning both optional network features would have
+silently failed in the actual Play Store build. Fixed and verified
+separately in `android-release-internet-permission` (PR #168, its own
+branch/change per this repo's convention, since it's a real app-code
+change and this change's own scope is explicitly docs/content-only). The
+Data Safety draft above assumes that fix is merged.
 
 ## 4. App Store Connect App Privacy
 
