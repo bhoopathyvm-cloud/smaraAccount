@@ -7,9 +7,9 @@
 ## 2. Close out Android signing (cross-references `android-release-signing`)
 
 - [x] 2.1 `android-release-signing` task 2.1: generate an upload keystore (`keytool -genkeypair ...`) — done: `android/upload-keystore.jks` exists (2026-09-08)
-- [ ] 2.2 `android-release-signing` task 2.2: store the keystore file and passwords somewhere durable and private, outside the repo
-- [ ] 2.3 `android-release-signing` task 2.3: populate local `android/key.properties` from that keystore — still placeholder values, not the real passwords
-- [ ] 2.4 `android-release-signing` task 3.1: run `flutter build appbundle` and verify the artifact is release-signed, not debug-signed (`apksigner verify --print-certs`)
+- [ ] 2.2 `android-release-signing` task 2.2: store the keystore file and passwords somewhere durable and private, outside the repo — regenerated (2026-09-14) since the original 2026-09-08 keystore's passwords were never actually saved anywhere (safe to redo, no Play upload had happened yet); new passwords written to `android/key.properties` but not shown in chat/logs — **still needs the user to back them up to a password manager**
+- [x] 2.3 `android-release-signing` task 2.3: populate local `android/key.properties` from that keystore — done (2026-09-14), verified working (see 2.4)
+- [x] 2.4 `android-release-signing` task 3.1: run `flutter build appbundle` and verify the artifact is release-signed, not debug-signed (`apksigner verify --print-certs`) — done (2026-09-14): `flutter build appbundle --release` succeeded, `jarsigner -verify -verbose -certs` confirms signing with the new upload cert (`CN=Smara Accounting`), `jar verified` exit code 0
 
 ## 3. iOS/macOS Team signing
 
