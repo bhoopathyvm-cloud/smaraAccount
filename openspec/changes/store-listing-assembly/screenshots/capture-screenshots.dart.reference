@@ -45,6 +45,20 @@
 //   the real applicationId with `adb shell pm list packages | grep
 //   smara` if unsure - it's `com.smaraaccounting.smara_accounting`
 //   (with an underscore), not the iOS bundle ID's camelCase form.
+//
+// A real iOS device (task 2.3's spot-check) is sandboxed the same way
+// Android is - same `getApplicationDocumentsDirectory()`/pull-window
+// approach applies, but retrieve files with:
+//
+//   xcrun devicectl device copy from --device <udid> \
+//     --domain-type appDataContainer \
+//     --domain-identifier com.smaraaccounting.smaraAccounting \
+//     --source "Documents/<name>.png" --destination "./<name>.png"
+//
+// A real device can also die silently mid-build/install with no error
+// text and exit 0 - if that happens, just retry; it isn't necessarily
+// the documented screen-lock issue (this project's own acceptance-suite
+// history) even though the failure looks identical.
 
 import 'dart:io';
 
