@@ -28,11 +28,10 @@
 
 ## 5. Store listing assembly
 
-- [ ] 5.1 Organize existing screenshots into each store's required size sets (App Store Connect and Play Console have different requirements per device class)
-- [ ] 5.2 Finalize app description, keywords, category, and support URL for both stores
-- [ ] 5.3 Complete Google Play's content rating questionnaire
-- [ ] 5.4 Complete Google Play's Data Safety form, cross-checked line-by-line against `pages/open-source/smara-account/privacy-policy.md`
-- [ ] 5.5 Complete App Store Connect's App Privacy ("nutrition label") section, cross-checked the same way
+Superseded by its own tracked change, `store-listing-assembly` (PR #167),
+per task 5.1 below — kept here as a pointer rather than duplicated.
+
+- [x] 5.1 Split out into `store-listing-assembly`: description/keywords/category/support URL drafted, screenshots captured for all four device classes (iPhone, iPad, Android phone, Android tablet) and spot-checked against a real iPhone, Google Play's content rating and Data Safety form drafted, and App Store Connect's App Privacy section drafted and cross-checked against Play's — see that change's tasks.md for the real evidence behind each. One real bug found and fixed along the way, in its own change: `android-release-internet-permission` (PR #168) — the release Android manifest was missing `INTERNET`, which would have silently broken both of the app's optional network features in the actual Play Store build.
 
 ## 6. iOS submission
 
