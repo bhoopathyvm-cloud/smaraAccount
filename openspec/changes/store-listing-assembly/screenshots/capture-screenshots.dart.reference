@@ -1,0 +1,147 @@
+// Reference copy only - not a maintained test, not wired into the build.
+//
+// How every screenshot under screenshots/ was captured (tasks 2.2, 2.4):
+// saved here as `.reference` (not `.dart`) so it isn't picked up by
+// `flutter test` or `flutter analyze`. To regenerate, save as
+// integration_test/store_screenshots_test.dart, run e.g.:
+//
+//   flutter test integration_test/store_screenshots_test.dart \
+//     -d <device-id> --dart-define=HIDE_DEBUG_BANNER=true
+//
+// then delete the file again afterward - it's a one-off capture tool
+// reusing this suite's own acceptance-test navigation helpers, not part
+// of the maintained acceptance suite itself.
+//
+// Required device/size classes:
+// - App Store Connect (2026): only the largest size per device family is
+//   mandatory, Apple auto-scales the rest - iPhone 6.9" (1290x2796 or
+//   1320x2868) and, since this app is universal
+//   (TARGETED_DEVICE_FAMILY = "1,2"), iPad Pro 13" (2064x2752).
+// - Play Console (2026): at least 2 phone screenshots are mandatory
+//   (1080x1920-ish, matched here by a real Pixel 9 profile at 1080x2424);
+//   a 10" tablet screenshot (1200x1920) is optional but recommended -
+//   captured here on the real Samsung SM X230 already used for
+//   acceptance testing, not an emulator.
+//
+// A real, non-investment cash account's Home row navigates straight to
+// its Register - there is no intermediate "holdings" screen for it
+// (that only exists for investment accounts, which is what
+// `openHoldingsFor` in acceptance_harness.dart is actually for). Learned
+// this the hard way via several failed navigation attempts before
+// landing on the sequence below.
+//
+// Android-specific gotchas iOS/macOS don't have:
+// - `takeScreenshot()` throws until `convertFlutterSurfaceToImage()` has
+//   run once in the same test.
+// - The app's own sandbox means you can't write to an arbitrary host
+//   path like /tmp directly (unlike iOS Simulator, which shares the host
+//   process space and just works) - write inside
+//   `getApplicationDocumentsDirectory()` instead.
+// - `flutter test` uninstalls the app - and its sandboxed files with it
+//   - the moment the test process exits, so there's a `Future.delayed`
+//   pause at the end of this file to leave a window for
+//   `adb -s <device> exec-out run-as <applicationId> cat
+//   app_flutter/<name>.png > <host-path>` to grab the files first. Find
+//   the real applicationId with `adb shell pm list packages | grep
+//   smara` if unsure - it's `com.smaraaccounting.smara_accounting`
+//   (with an underscore), not the iOS bundle ID's camelCase form.
+//
+// A real iOS device (task 2.3's spot-check) is sandboxed the same way
+// Android is - same `getApplicationDocumentsDirectory()`/pull-window
+// approach applies, but retrieve files with:
+//
+//   xcrun devicectl device copy from --device <udid> \
+//     --domain-type appDataContainer \
+//     --domain-identifier com.smaraaccounting.smaraAccounting \
+//     --source "Documents/<name>.png" --destination "./<name>.png"
+//
+// A real device can also die silently mid-build/install with no error
+// text and exit 0 - if that happens, just retry; it isn't necessarily
+// the documented screen-lock issue (this project's own acceptance-suite
+// history) even though the failure looks identical.
+
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:smara_accounting/l10n/l10n.dart';
+import 'package:tabler_icons_plus/tabler_icons_plus.dart';
+
+import 'acceptance/support/acceptance_harness.dart';
+import 'acceptance/support/acceptance_locale.dart';
+
+// On Android/iOS-device runs this is a path inside the app's own sandboxed
+// storage (not the host's /tmp - the emulator is a real separate guest
+// filesystem, unlike iOS Simulator which shares the host directly). Pull
+// the files off afterward with `adb pull <this-path> <host-dir>`.
+Future<void> _shoot(String name, String outDir) async {
+  final bytes = await IntegrationTestWidgetsFlutterBinding.instance
+      .takeScreenshot(name);
+  await File('$outDir/$name.png').writeAsBytes(bytes);
+}
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final l10n = l10nFor(kAcceptanceLocaleTag);
+  final salaryCategory = l10n.systemCategorySalary;
+  final cashBankAccount = l10n.systemAccountCashBank;
+
+  testWidgets('capture store screenshots', (tester) async {
+    final outDir = (await getApplicationDocumentsDirectory()).path;
+    Future<void> shoot(String name) => _shoot(name, outDir);
+    // Android-only requirement: takeScreenshot() throws until this runs
+    // once (not needed on iOS/macOS, which don't use this render path).
+    await IntegrationTestWidgetsFlutterBinding.instance
+        .convertFlutterSurfaceToImage();
+    await resetToFreshDevice();
+
+    await completeOnboardingWithGuidedEntry(
+      tester,
+      amountText: '1000',
+      categoryName: salaryCategory,
+    );
+    await tester.pump(const Duration(seconds: 1));
+    await shoot('01_home');
+
+    // A plain cash account's Home row goes straight to its Register (no
+    // "holdings" screen exists for it - that's investment-account-only).
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(ListTile, cashBankAccount).hitTestable(),
+      () => find.text(l10n.registerTitle).evaluate().isNotEmpty,
+      innerTries: 150,
+    );
+    await tester.pump(const Duration(milliseconds: 500));
+    await shoot('02_register');
+
+    await tapReliably(
+      tester,
+      () => shellNavIcon(TablerIcons.wallet),
+      () => find.byTooltip(l10n.createGroup).evaluate().isNotEmpty,
+    );
+    await tester.pump(const Duration(milliseconds: 500));
+    await shoot('03_accounts');
+
+    await tapReliably(
+      tester,
+      () => shellNavIcon(TablerIcons.home),
+      () => find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
+    );
+    await tapReliably(
+      tester,
+      () => find.byTooltip(l10n.settingsTitle),
+      () => find.text(l10n.settingsBackup).evaluate().isNotEmpty,
+    );
+    await tester.pump(const Duration(milliseconds: 500));
+    await shoot('04_settings');
+
+    // flutter test uninstalls the app the moment this test process exits,
+    // taking its sandboxed files with it - this window is for `adb pull`
+    // (or `adb shell run-as <id> cat ...`) to grab them first.
+    // ignore: avoid_print
+    print('SCREENSHOTS READY AT: $outDir - pausing for adb pull');
+    await Future<void>.delayed(const Duration(minutes: 3));
+  });
+}
