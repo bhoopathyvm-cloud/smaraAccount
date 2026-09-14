@@ -1,23 +1,24 @@
 ## 1. Account enrollment (human, not code — start first, longest lead time)
 
-- [x] 1.1 Start Apple Developer Program enrollment ($99/yr) — subscription created (2026-09-05); a real Team is now signed into Xcode, resolving the free/personal-team signing churn (new certificate needing re-trust on every build) and the device-provisioning gate that blocked tasks 3.1-3.4 and 9.2
+- [x] 1.1 Start Apple Developer Program enrollment ($99/yr) — subscription created (2026-09-05); the enrollment itself stands regardless of Xcode's local state. Note: the "real Team is now signed into Xcode" part of this task doesn't hold in the environment checked on 2026-09-13 — `defaults read com.apple.dt.Xcode IDEProvisioningTeams` is empty and `flutter build ipa` failed with `No Accounts: Add a new account in Accounts settings`, despite a Development certificate for the correct team already in the keychain. Xcode's Accounts sign-in doesn't appear to persist the same way across machines/sessions as the enrollment itself — see task 3.3
 - [x] 1.2 Start Google Play Console registration ($25 one-time) and complete identity verification — verification cleared (2026-09-08)
 - [x] 1.3 Confirm whether this Play Console account is subject to Google's mandatory closed-testing requirement for new accounts (it will be, per Google's current policy for accounts with no prior production app) and note the earliest possible production-eligible date once the account activates — confirmed in Console (2026-09-08); specific tester-count/day requirement and the resulting earliest production-eligible date not yet recorded here — worth adding once a closed test is actually live and Console shows the countdown
 
 ## 2. Close out Android signing (cross-references `android-release-signing`)
 
-- [ ] 2.1 `android-release-signing` task 2.1: generate an upload keystore (`keytool -genkeypair ...`)
+- [x] 2.1 `android-release-signing` task 2.1: generate an upload keystore (`keytool -genkeypair ...`) — done: `android/upload-keystore.jks` exists (2026-09-08)
 - [ ] 2.2 `android-release-signing` task 2.2: store the keystore file and passwords somewhere durable and private, outside the repo
-- [ ] 2.3 `android-release-signing` task 2.3: populate local `android/key.properties` from that keystore
+- [ ] 2.3 `android-release-signing` task 2.3: populate local `android/key.properties` from that keystore — still placeholder values, not the real passwords
 - [ ] 2.4 `android-release-signing` task 3.1: run `flutter build appbundle` and verify the artifact is release-signed, not debug-signed (`apksigner verify --print-certs`)
 
 ## 3. iOS/macOS Team signing
 
-- [ ] 3.1 Once Apple Developer Program enrollment is active, configure the real Team in Xcode's Signing & Capabilities for the `Runner` target's **iOS** build configuration (new — not tracked elsewhere)
-- [ ] 3.2 `macos-app-store-sandbox` task 1.1: configure the same real Team for the **macOS** build configuration, if macOS App Store distribution is also wanted in this pass
-- [ ] 3.3 Verify an iOS archive build succeeds and is Team-signed
-- [ ] 3.4 `ios-privacy-compliance` task 4.1: verify the Xcode archive build succeeds with `PrivacyInfo.xcprivacy` present (blocked on Xcode/Team access, not previously verifiable on the Linux agent that did the original change)
+- [x] 3.1 Once Apple Developer Program enrollment is active, configure the real Team in Xcode's Signing & Capabilities for the `Runner` target's **iOS** build configuration — done: `DEVELOPMENT_TEAM = PLUT6R5W2W` confirmed set on the `Runner` target's Debug, Release, and Profile configs in `ios/Runner.xcodeproj/project.pbxproj`
+- [x] 3.2 `macos-app-store-sandbox` task 1.1: configure the same real Team for the **macOS** build configuration — done (2026-09-13): added `DEVELOPMENT_TEAM = PLUT6R5W2W` to the Runner target's Debug/Release/Profile configs, and removed a project-level `CODE_SIGN_IDENTITY = "-"` override on Release only (Debug/Profile keep it, intentionally, for unsandboxed local `flutter run`). See `macos-app-store-sandbox` tasks.md for the full verification.
+- [x] 3.3 Verify an iOS archive build succeeds and is Team-signed — done (2026-09-13), after the Apple ID was added to Xcode's Accounts settings: `flutter build ipa --release` succeeded end to end (`Xcode archive done`, `Building App Store IPA...`, `Built IPA to build/ios/ipa`). `codesign -dvv` on the archived `.app` confirms `TeamIdentifier=PLUT6R5W2W` with the real Apple Development authority chain, not ad-hoc.
+- [x] 3.4 `ios-privacy-compliance` task 4.1: verify the Xcode archive build succeeds with `PrivacyInfo.xcprivacy` present — done (2026-09-13): confirmed present in both the `.xcarchive` and the exported `.ipa` (`Payload/Runner.app/PrivacyInfo.xcprivacy`, plus per-plugin manifests for `flutter_secure_storage`, `local_auth`, `url_launcher`, `shared_preferences`, and the Flutter engine itself)
 - [x] 3.5 `app-icon-branding` tasks 3.1-3.3: spot-check the generated app icon on a real iOS Simulator, macOS build, and Android emulator/device home screen — done; see that change's `tasks.md` for verification detail and the noted (non-blocking) iOS Simulator home-screen-label display quirk
+- [ ] 3.6 New, found during the 3.3 archive attempt (2026-09-13): `flutter build ipa` warned `Launch image is set to the default placeholder icon. Replace with unique launch image.` Not blocking a build, but worth a real launch image before submission — App Review has rejected placeholder assets before
 
 ## 4. Privacy policy hosting
 
@@ -27,11 +28,10 @@
 
 ## 5. Store listing assembly
 
-- [ ] 5.1 Organize existing screenshots into each store's required size sets (App Store Connect and Play Console have different requirements per device class)
-- [ ] 5.2 Finalize app description, keywords, category, and support URL for both stores
-- [ ] 5.3 Complete Google Play's content rating questionnaire
-- [ ] 5.4 Complete Google Play's Data Safety form, cross-checked line-by-line against `pages/open-source/smara-account/privacy-policy.md`
-- [ ] 5.5 Complete App Store Connect's App Privacy ("nutrition label") section, cross-checked the same way
+Superseded by its own tracked change, `store-listing-assembly` (PR #167),
+per task 5.1 below — kept here as a pointer rather than duplicated.
+
+- [x] 5.1 Split out into `store-listing-assembly`: description/keywords/category/support URL drafted, screenshots captured for all four device classes (iPhone, iPad, Android phone, Android tablet) and spot-checked against a real iPhone, Google Play's content rating and Data Safety form drafted, and App Store Connect's App Privacy section drafted and cross-checked against Play's — see that change's tasks.md for the real evidence behind each. One real bug found and fixed along the way, in its own change: `android-release-internet-permission` (PR #168) — the release Android manifest was missing `INTERNET`, which would have silently broken both of the app's optional network features in the actual Play Store build.
 
 ## 6. iOS submission
 
@@ -70,3 +70,10 @@
 - [x] 10.7 Re-verified green on the real iPhone with the merged file: 37/37, see task 9.3.
 - [x] 10.8 Fixed two real, previously-undiscovered production layout bugs surfaced only by running on an actual iPhone screen width (neither the macOS window, iOS Simulator, nor Android tablet ever hit these): `lib/ui/core/entity_picker_field.dart`'s `DropdownButtonFormField` overflowed 9.7px on the right (fixed with `isExpanded: true` + `TextOverflow.ellipsis` on the item text); `lib/ui/core/monthly_limit_progress.dart`'s Row overflowed 13px (fixed by wrapping the "spent of limit" text in `Flexible` with `TextOverflow.ellipsis`).
 - [x] 10.9 Fixed two acceptance-test scroll helpers that assumed a fixed screen coordinate tuned against the desktop/simulator window (`tester.dragFrom(Offset(400, 300), ...)`), which on this iPhone's actual screen dimensions landed outside the scrollable region and did nothing: the `home_and_lock` PIN-lock test's Settings scroll, and the `organization` group's local `scrollUntilVisible` helper. Both switched to `tester.drag(find.byType(ListView).first, ...)` — the same pattern already used reliably elsewhere in this suite — in a bounded loop that stops as soon as the target is visible.
+
+## 11. macOS submission — new, discovered this session
+
+- [x] 11.1 App Store Connect app record for macOS now exists — created accidentally (2026-09-13) by Xcode Organizer's own "Validate" flow, not deliberately via task 6.1-equivalent. Confirmed from the real distribution log (`IDEDistributionAppStoreConnect.log`): `CreateAppService` POST succeeded (`201`, app id `6811678836`), attributes `bundleId=com.smaraaccounting.smaraAccounting`, `sku=com.smaraaccounting.smaraAccounting`, `primaryLocale=en-GB`, `appStoreVersions.platform=MAC_OS`, `versionString=1.0.0`, name `smara_accounting`. Organizer then tried to create the *same* app a second time (apparently not recognizing what it had just created in the same session) and got `409 DUPLICATE` on bundle ID/SKU/name, which is what actually showed as "Validate failed" — the archive, signing, and entitlements were never the problem.
+- [ ] 11.2 Review and fix the auto-filled metadata for this app record directly in App Store Connect: name (`smara_accounting` — probably want something like "Smara Accounting"), and primary locale (`en-GB`, may not be intended)
+- [x] 11.3 Retry Validate/Distribute in Xcode Organizer on the same archive now that the app record exists — first retry (2026-09-13) surfaced two real, separate errors instead of the duplicate-create loop: `90285 Invalid Code Signing Entitlements` (`com.apple.security.keychain-access-groups` not supported — see `macos-app-store-sandbox` tasks.md 2.2) and `90242` (missing `LSApplicationCategoryType` — see `macos-app-store-sandbox` tasks.md 2.4). Both fixed and verified on a rebuilt archive; **Validate succeeded** on the next retry, confirmed directly by the user
+- [ ] 11.4 Now that Validate passes: complete the store-listing work (description, screenshots, content rating, privacy declarations) tracked in the new `store-listing-assembly` change, review/fix the app-record metadata (11.2), then upload and submit for review

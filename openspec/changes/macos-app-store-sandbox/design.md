@@ -29,6 +29,8 @@ Found during App Store distribution planning (2026-08-27). App Sandbox has been 
 
 An empty array is sufficient — an explicit `$(AppIdentifierPrefix)<group>` entry is only needed if a Keychain item must be shared across multiple apps or an app extension, which this app doesn't have. Using the plugin's own confirmed-working example over a hand-derived guess avoids introducing a mismatched entitlement that "looks right" but silently fails at runtime (the exact failure mode this repo's existing comment already warns about).
 
+**Superseded (2026-09-13):** this was wrong. A real App Store Connect Validate attempt rejected the archive outright: `Invalid Code Signing Entitlements ... key 'com.apple.security.keychain-access-groups' ... is not supported on macOS` (error 90285). The plugin's example presumably assumes an app that has the Keychain Sharing capability actually enabled for its App ID in the Apple Developer portal; without that, App Store Connect doesn't accept the key at all, empty array or not. The actual fix was to omit `keychain-access-groups` from `Release.entitlements` entirely — `flutter_secure_storage`'s own Keychain items work fine without it since nothing here shares Keychain access across apps.
+
 ### 2. `files.user-selected.read-write`, not `read-only`
 
 Two existing flows call `FilePicker.saveFile` to write to a user-chosen location outside the sandbox container: `ledger-backup`'s "Save backup" and `ledger-data-export`'s "Export CSV." The current `read-only` entitlement covers only the *open* dialogs (OFX/CSV import). `read-write` is required for `saveFile` to function under sandbox — confirmed against `file_picker`'s documented macOS entitlement requirements.

@@ -2,12 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Mac App Store requires App Sandbox. Empty keychain-access-groups
-	     is sufficient for flutter_secure_storage's own Keychain items
-	     (no App Group / companion app). user-selected.read-write covers
-	     both OFX/CSV open dialogs and FilePicker.saveFile (CSV export,
-	     Save backup). network.client is required for the in-process
-	     https calls in lib/data/exchange_rate_service.dart and
+	<!-- Mac App Store requires App Sandbox. keychain-access-groups is
+	     deliberately omitted: flutter_secure_storage's own Keychain items
+	     don't need it (no App Group / companion app to share with), and
+	     Apple's real App Store Connect validator rejects the key outright
+	     when set to an empty array (error 90285, "not supported on
+	     macOS") — the design.md note that an empty array was "sufficient"
+	     was wrong; omitting the key entirely is what's actually required.
+	     user-selected.read-write covers both OFX/CSV open dialogs and
+	     FilePicker.saveFile (CSV export, Save backup). network.client is
+	     required for the in-process https calls in
+	     lib/data/exchange_rate_service.dart and
 	     lib/data/instrument_quote_service.dart — without it the sandbox
 	     blocks every outbound connection in Release / Mac App Store
 	     builds. DebugProfile.entitlements stays unsandboxed until
@@ -17,8 +22,6 @@
 	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
-	<key>com.apple.security.keychain-access-groups</key>
-	<array/>
 	<key>com.apple.security.files.user-selected.read-write</key>
 	<true/>
 </dict>

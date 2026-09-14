@@ -7,9 +7,9 @@
 
 ## 2. Keystore (human, not code)
 
-- [ ] 2.1 Generate an upload keystore (`keytool -genkeypair ...`)
-- [ ] 2.2 Store the keystore file and its passwords somewhere durable and private (outside the repo)
-- [ ] 2.3 Populate local `android/key.properties` from that keystore
+- [x] 2.1 Generate an upload keystore (`keytool -genkeypair ...`) — done: `android/upload-keystore.jks` exists (2026-09-08), correctly untracked
+- [ ] 2.2 Store the keystore file and its passwords somewhere durable and private (outside the repo) — not verifiable from the repo; confirm a backup of the `.jks` file exists outside this working copy before relying on it
+- [ ] 2.3 Populate local `android/key.properties` from that keystore — not done: `android/key.properties` still has placeholder values (`<from password manager>`) instead of the real store/key passwords
 
 See `docs/release/android-upload-keystore.md` and `android/key.properties.example`.
 
