@@ -5,6 +5,7 @@
 - [x] 1.3 Choose keywords for App Store Connect's 100-character keyword field and verify the count fits — drafted at 90 chars, see `store-listing-draft.md`
 - [x] 1.4 Confirm category: `public.app-category.finance` (already set in `macos/Runner/Info.plist`) for App Store Connect; the equivalent Play Console category (Finance) — both confirmed as Finance
 - [x] 1.5 Confirm the support URL to submit to both stores (e.g. the project website's contact/about page) and verify it resolves with a 200 status — `https://smara-ai.ch/open-source/smara-account/`, verified via `curl` (HTTP 200)
+- [x] 1.6 New, added after the fact: App Store Connect's Subtitle field (30 char limit, shown directly under the app name) — user's own wording, "Your tamper-evident ledger" (26 chars), see `store-listing-draft.md`
 
 Still open before this section is truly done: the app name, description
 wording, and the Play short/full-description split all need the user's
