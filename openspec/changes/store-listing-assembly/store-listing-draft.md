@@ -10,6 +10,13 @@ App name used throughout: **Smara Accounting** (matches
 `CFBundleDisplayName` on iOS/macOS and `android:label`, not the repo's
 internal `smara_accounting` package name).
 
+## Subtitle (App Store Connect — 30 char limit, shown directly under the app name)
+
+> Your tamper-evident ledger
+
+26 characters. Google Play doesn't have an equivalent dedicated subtitle
+field — the short description below does that job there.
+
 ## Short description (Google Play — 80 char limit)
 
 > Local-first, tamper-evident accounting. No cloud, no subscription, no ads.
