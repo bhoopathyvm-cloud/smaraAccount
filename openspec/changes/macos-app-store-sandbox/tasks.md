@@ -11,13 +11,13 @@
 
 ## 3. Verify on a real sandboxed build
 
-- [ ] 3.1 OFX import and CSV import (open dialog) still work
-- [ ] 3.2 CSV export and "Save backup" (save dialog) still work
-- [ ] 3.3 Signing key read/write (`flutter_secure_storage`) still works — onboarding, restore, and normal posting all still sign correctly
-- [ ] 3.4 App-lock Face ID/Touch ID unlock still works
+- [x] 3.1 OFX import and CSV import (open dialog) still work — manually click-tested by the user (2026-09-14) against the actual sandboxed Release archive
+- [x] 3.2 CSV export and "Save backup" (save dialog) still work — same manual pass
+- [x] 3.3 Signing key read/write (`flutter_secure_storage`) still works — onboarding, restore, and normal posting all still sign correctly — same manual pass
+- [x] 3.4 App-lock Face ID/Touch ID unlock still works — same manual pass; this one specifically needed a human, since Touch ID can't be scripted
 - [ ] 3.5 `tool/run_acceptance_tests.sh -d macos` green
 
-No longer blocked on task 1.1 — but a real gap surfaced while unblocking it: `tool/run_acceptance_tests.sh -d macos` runs `flutter test -d macos`, which always builds **Debug**, and `DebugProfile.entitlements` is intentionally unsandboxed (Decision 3). So a green run of that command does not exercise the sandbox at all — it never has, and still doesn't. The actual `.xcarchive` now builds Release-signed with the real entitlements applied and confirmed present (`codesign -d --entitlements -` shows `app-sandbox`, `network.client`, `keychain-access-groups`, `user-selected.read-write` all correctly set) at `build/macos/Build/Products/smara_accounting.xcarchive`. Tasks 3.1-3.4 need a manual click-through of that archived `.app` specifically (or a real answer to whether `flutter test`/`flutter drive` can target a Release-configured build) — not just a green 3.5.
+No longer blocked on task 1.1. Tasks 3.1-3.4 are done via a manual click-through of the real sandboxed `.xcarchive` by the user directly, confirmed 2026-09-14 (a fresh archive was rebuilt after the `ios-launch-screen-image` and `store-listing-assembly-macos-screenshots` changes; those touch launch-image assets and demo-data screenshots only, nothing sandbox/entitlement-related, so the earlier click-through result still holds — re-verified anyway since a new archive was on hand). Task 3.5 stays open: `tool/run_acceptance_tests.sh -d macos` runs `flutter test -d macos`, which always builds **Debug**, and `DebugProfile.entitlements` is intentionally unsandboxed (Decision 3) — a green run of that command still wouldn't exercise the sandbox at all. Given 3.1-3.4 already cover the sandboxed behavior directly, 3.5 is now a lower-value automated regression check rather than a blocker for submission.
 
 ## 4. Decide on DebugProfile.entitlements
 
