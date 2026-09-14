@@ -269,6 +269,6 @@ own accounts, built to the same bar I'd have held it to if it were going
 out to other people. I think the path between those two points, and what
 it taught me about working with AI, is worth writing down honestly.
 
-**Try it yourself:** Smara Accounting is in early testing on Android —
-[request access as a tester](https://play.google.com/apps/internaltest/4701556111563240924).
+**Try it yourself:** Smara Accounting is in closed testing on Android —
+[request access as a tester](https://play.google.com/apps/testing/com.smaraaccounting.smara_accounting).
 The iOS and macOS versions are currently in App Review.
