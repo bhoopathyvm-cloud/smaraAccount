@@ -16,7 +16,7 @@ import '../../../core/app_lock_controller.dart';
 
 /// Public privacy policy — the same URL used for store listings.
 const kPrivacyPolicyUrl =
-    'https://bhoopathy.com/open-source/smara-account/privacy-policy/';
+    'https://smara-ai.ch/open-source/smara-account/privacy-policy/';
 
 /// The app's Settings surface: the reference exchange-rate lookup's
 /// enable/disable toggle and predefined-provider selection (design.md
