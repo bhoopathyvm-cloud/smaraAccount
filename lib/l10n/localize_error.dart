@@ -15,6 +15,11 @@ import 'generated/app_localizations.dart';
     CsvParseException e => (code: e.code, params: e.params),
     InvalidLedgerBackupException e => (code: e.code, params: e.params),
     ForeignBackupIdentityException e => (code: e.code, params: e.params),
+    InvalidDeviceMigrationBundleException e => (code: e.code, params: e.params),
+    ForeignDeviceMigrationBundleIdentityException e => (
+      code: e.code,
+      params: e.params,
+    ),
     InvestmentException e => (code: e.code, params: e.params),
     AlreadyReversedException e => (code: e.code, params: e.params),
     _ => null,
@@ -68,6 +73,18 @@ String localizeError(
     AppErrorCode.invalidLedgerBackupUnreadable =>
       l10n.errorInvalidLedgerBackupUnreadable(_detailFor(l10n, params)),
     AppErrorCode.foreignBackupIdentity => l10n.errorForeignBackupIdentity,
+    AppErrorCode.invalidDeviceMigrationBundle =>
+      l10n.errorInvalidDeviceMigrationBundle,
+    AppErrorCode.invalidDeviceMigrationBundleNoIdentity =>
+      l10n.errorInvalidDeviceMigrationBundleNoIdentity,
+    AppErrorCode.invalidDeviceMigrationBundleUnverified =>
+      l10n.errorInvalidDeviceMigrationBundleUnverified,
+    AppErrorCode.invalidDeviceMigrationBundleUnreadable =>
+      l10n.errorInvalidDeviceMigrationBundleUnreadable(
+        _detailFor(l10n, params),
+      ),
+    AppErrorCode.foreignDeviceMigrationBundleIdentity =>
+      l10n.errorForeignDeviceMigrationBundleIdentity,
     AppErrorCode.accountNotFinancial => l10n.errorAccountNotFinancial,
     AppErrorCode.accountArchived => l10n.errorAccountArchived,
     AppErrorCode.accountNotArchived => l10n.errorAccountNotArchived,
@@ -177,6 +194,10 @@ String localizeError(
       _detailFor(l10n, params),
     ),
     AppErrorCode.backupRestoreFailed => l10n.errorBackupRestoreFailed,
+    AppErrorCode.deviceMigrationBundleCreateFailed =>
+      l10n.errorDeviceMigrationBundleCreateFailed(_detailFor(l10n, params)),
+    AppErrorCode.deviceMigrationBundleImportFailed =>
+      l10n.errorDeviceMigrationBundleImportFailed,
     AppErrorCode.validationAmountAccountCategoryRequired =>
       l10n.validationAmountAccountCategoryRequired,
     AppErrorCode.validationAmountAccountRequired =>
@@ -215,6 +236,8 @@ String localizeError(
       l10n.validationSaveCurrencyFailed(_detailFor(l10n, params)),
     AppErrorCode.validationMigrationFailed => l10n.validationMigrationFailed,
     AppErrorCode.validationChooseBackupFile => l10n.validationChooseBackupFile,
+    AppErrorCode.validationChooseDeviceMigrationBundleFile =>
+      l10n.validationChooseDeviceMigrationBundleFile,
     AppErrorCode.validationPassphraseRequired =>
       l10n.validationPassphraseRequired,
     AppErrorCode.validationPinsDoNotMatch => l10n.validationPinsDoNotMatch,

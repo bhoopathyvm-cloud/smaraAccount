@@ -3,13 +3,12 @@ import '../models/signing_identity.dart';
 /// Startup and resume path constants shared by [AppNavigationPolicy] and
 /// the GoRouter adapter.
 abstract final class AppNavPaths {
+  static const setupChoice = '/onboarding/setup-choice';
+  static const importBackup = '/onboarding/import-backup';
   static const language = '/onboarding/language';
   static const currency = '/onboarding/currency';
   static const firstAccount = '/onboarding/first-account';
   static const firstEntry = '/onboarding/first-entry';
-  static const recoveryPhrase = '/onboarding/recovery-phrase';
-  static const keystoreExport = '/onboarding/keystore-export';
-  static const confirm = '/onboarding/confirm';
   static const restore = '/restore';
   static const migrate = '/restore/migrate';
   static const currencyBackfill = '/currency-backfill';
@@ -17,22 +16,29 @@ abstract final class AppNavPaths {
   static const lock = '/lock';
   static const home = '/home';
 
-  static const acknowledgment = {recoveryPhrase, keystoreExport, confirm};
+  /// Reachable before any signing identity exists (device-migration-bundle:
+  /// "Startup Setup Choice") - the choice screen itself, the import flow
+  /// (which never generates an identity of its own), and New Setup's
+  /// first two screens (language/currency), which run before
+  /// [IdentityRepository.confirmFirstIdentity] commits an identity.
+  static const preIdentity = {setupChoice, importBackup, language, currency};
 
   static const onboarding = {
+    setupChoice,
+    importBackup,
     language,
     currency,
     firstAccount,
     firstEntry,
-    ...acknowledgment,
   };
 
   static const restoreRelated = {restore, migrate};
 }
 
-/// Deep redirect policy: identity, first-entry, key match, session chain
-/// verify, currency backfill, first-week setup, and app lock. [GoRouter]
-/// forwards [matchedLocation] and returns the path (or none).
+/// Deep redirect policy: setup choice, identity, first-entry, key match,
+/// session chain verify, currency backfill, first-week setup, and app
+/// lock. [GoRouter] forwards [matchedLocation] and returns the path (or
+/// none).
 ///
 /// Session-once chain verify lives on this instance (same lifetime as the
 /// router that owns it). Ports are functions so tests need no Flutter
@@ -73,23 +79,22 @@ class AppNavigationPolicy {
 
     final identity = await _currentIdentity();
     if (identity == null) {
-      return matchedLocation == AppNavPaths.language ||
-              matchedLocation == AppNavPaths.currency
+      return AppNavPaths.preIdentity.contains(matchedLocation)
           ? null
-          : AppNavPaths.language;
+          : AppNavPaths.setupChoice;
     }
 
-    if (identity.acknowledgedAt == null) {
-      final hasRecordedFirstEntry = await _hasAnyJournalEntries();
-      if (!hasRecordedFirstEntry) {
-        return matchedLocation == AppNavPaths.firstAccount ||
-                matchedLocation == AppNavPaths.firstEntry
-            ? null
-            : AppNavPaths.firstAccount;
-      }
-      return AppNavPaths.acknowledgment.contains(matchedLocation)
+    // device-migration-bundle: no acknowledgment gate follows the guided
+    // first entry - once it's posted, an identity falls straight through
+    // to the ordinary key-match/backfill/setup-wizard/lock checks below,
+    // the same whether it came from New Setup or from an Import From
+    // Backup identity that already has entries of its own.
+    final hasRecordedFirstEntry = await _hasAnyJournalEntries();
+    if (!hasRecordedFirstEntry) {
+      return matchedLocation == AppNavPaths.firstAccount ||
+              matchedLocation == AppNavPaths.firstEntry
           ? null
-          : AppNavPaths.recoveryPhrase;
+          : AppNavPaths.firstAccount;
     }
 
     final hasMatchingKey = await _hasMatchingStoredKey(identity);

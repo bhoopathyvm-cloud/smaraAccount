@@ -13,6 +13,7 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockSettingsRepository repository;
   late MockLedgerBackupRepository ledgerBackupRepository;
+  late MockDeviceMigrationBundleRepository deviceMigrationBundleRepository;
   late MockAppLockService appLockService;
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockAppLockController appLockController;
@@ -20,6 +21,7 @@ void main() {
   setUp(() {
     repository = MockSettingsRepository();
     ledgerBackupRepository = MockLedgerBackupRepository();
+    deviceMigrationBundleRepository = MockDeviceMigrationBundleRepository();
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     appLockController = MockAppLockController();
@@ -51,10 +53,16 @@ void main() {
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
   });
 
-  Future<SettingsViewModel> pumpSettings(WidgetTester tester) async {
+  Future<SettingsViewModel> pumpSettings(
+    WidgetTester tester, {
+    VoidCallback? onOpenRecoveryPhrase,
+    VoidCallback? onOpenKeystoreExport,
+    VoidCallback? onOpenDeviceMigrationBundleExport,
+  }) async {
     final viewModel = SettingsViewModel(
       settingsRepository: repository,
       ledgerBackupRepository: ledgerBackupRepository,
+      deviceMigrationBundleRepository: deviceMigrationBundleRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -66,7 +74,14 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     when(appLockController.isSnapshotHidingEnabled).thenReturn(false);
     await tester.pumpWidget(
-      MaterialApp(home: SettingsView(viewModel: viewModel)),
+      MaterialApp(
+        home: SettingsView(
+          viewModel: viewModel,
+          onOpenRecoveryPhrase: onOpenRecoveryPhrase,
+          onOpenKeystoreExport: onOpenKeystoreExport,
+          onOpenDeviceMigrationBundleExport: onOpenDeviceMigrationBundleExport,
+        ),
+      ),
     );
     await tester.pump();
     while (viewModel.isLoading) {
@@ -235,6 +250,34 @@ void main() {
     },
   );
 
+  testWidgets(
+    'all three recovery-and-identity screens are reachable and none of '
+    'them are ever disabled or gated on the others (device-migration-bundle)',
+    (tester) async {
+      var openedRecoveryPhrase = false;
+      var openedKeystoreExport = false;
+      var openedBundleExport = false;
+      await pumpSettings(
+        tester,
+        onOpenRecoveryPhrase: () => openedRecoveryPhrase = true,
+        onOpenKeystoreExport: () => openedKeystoreExport = true,
+        onOpenDeviceMigrationBundleExport: () => openedBundleExport = true,
+      );
+
+      await tapScrolled(tester, find.text('View recovery phrase'));
+      await tester.pump();
+      expect(openedRecoveryPhrase, isTrue);
+
+      await tapScrolled(tester, find.text('Export keystore file'));
+      await tester.pump();
+      expect(openedKeystoreExport, isTrue);
+
+      await tapScrolled(tester, find.text('Export device migration bundle'));
+      await tester.pump();
+      expect(openedBundleExport, isTrue);
+    },
+  );
+
   testWidgets('turning on Require unlock opens a set-PIN dialog; matching PINs '
       'enable app lock', (tester) async {
     when(appLockService.setPin(any)).thenAnswer((_) async {});
@@ -327,6 +370,7 @@ void main() {
     final viewModel = SettingsViewModel(
       settingsRepository: repository,
       ledgerBackupRepository: ledgerBackupRepository,
+      deviceMigrationBundleRepository: deviceMigrationBundleRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -362,6 +406,7 @@ void main() {
       final viewModel = SettingsViewModel(
         settingsRepository: repository,
         ledgerBackupRepository: ledgerBackupRepository,
+        deviceMigrationBundleRepository: deviceMigrationBundleRepository,
         appLockService: appLockService,
         biometricAuthenticator: biometricAuthenticator,
         appLockController: appLockController,

@@ -213,6 +213,23 @@ class AppLocalizationsPt extends AppLocalizations {
       'Guarde uma cópia encriptada dos seus livros num local à sua escolha, ou restaure a partir de uma. Isto é diferente da sua frase de recuperação ou ficheiro de keystore, que salvaguardam a sua chave de assinatura, não os seus livros.';
 
   @override
+  String get settingsRecovery => 'Recovery & identity';
+
+  @override
+  String get settingsRecoveryBlurb =>
+      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
+
+  @override
+  String get settingsViewRecoveryPhrase => 'View recovery phrase';
+
+  @override
+  String get settingsExportKeystoreFile => 'Export keystore file';
+
+  @override
+  String get settingsExportDeviceMigrationBundle =>
+      'Export device migration bundle';
+
+  @override
   String get settingsLock => 'Bloqueio';
 
   @override
@@ -812,6 +829,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get iveSavedRecoveryPhrase => 'Guardei a minha frase de recuperação';
 
   @override
+  String get noRecoveryPhraseAvailable =>
+      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
+
+  @override
   String get confirmPhraseBlurb =>
       'Introduza as palavras pedidas da frase que acabou de guardar.';
 
@@ -832,6 +853,39 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get exportKeystoreFile => 'Exportar ficheiro de keystore';
+
+  @override
+  String get deviceMigrationBundleExportTitle =>
+      'Export device migration bundle';
+
+  @override
+  String get deviceMigrationBundleExportBlurb =>
+      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
+
+  @override
+  String get deviceMigrationBundleFile => 'Device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleTitle =>
+      'Import device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleBlurb =>
+      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
+
+  @override
+  String get chooseDeviceMigrationBundleFileFirst =>
+      'Choose a device migration bundle file first.';
+
+  @override
+  String get exportDeviceMigrationBundle => 'Export bundle';
+
+  @override
+  String get deviceMigrationBundleImported => 'Bundle imported';
+
+  @override
+  String get deviceMigrationBundleImportedBody =>
+      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Escolha o seu idioma';
@@ -868,6 +922,19 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get whatsMainAccountCalled => 'Como se chama a sua conta principal?';
+
+  @override
+  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+
+  @override
+  String get setupChoiceBlurb =>
+      'Starting fresh, or moving from another device?';
+
+  @override
+  String get actionNewSetup => 'New setup';
+
+  @override
+  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get restoreTitle => 'Restaurar chave de assinatura';
@@ -1182,6 +1249,27 @@ class AppLocalizationsPt extends AppLocalizations {
       'Esta cópia de segurança pertence a uma identidade de assinatura diferente da deste dispositivo.';
 
   @override
+  String get errorInvalidDeviceMigrationBundle =>
+      'This file is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleNoIdentity =>
+      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleUnverified =>
+      'This bundle did not verify as intact books, so it was not imported.';
+
+  @override
+  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
+    return 'This file could not be opened as a Smara device migration bundle: $detail';
+  }
+
+  @override
+  String get errorForeignDeviceMigrationBundleIdentity =>
+      'This bundle belongs to a different signing identity than the one already set up on this device.';
+
+  @override
   String get errorAccountNotFinancial => 'Essa não é uma conta financeira.';
 
   @override
@@ -1477,6 +1565,15 @@ class AppLocalizationsPt extends AppLocalizations {
       'Não foi possível restaurar esta cópia de segurança - frase-passe incorreta, ou não é um ficheiro de cópia de segurança Smara.';
 
   @override
+  String errorDeviceMigrationBundleCreateFailed(String detail) {
+    return 'Could not create the device migration bundle: $detail';
+  }
+
+  @override
+  String get errorDeviceMigrationBundleImportFailed =>
+      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
+
+  @override
   String get validationAmountAccountCategoryRequired =>
       'O montante, a conta e a categoria são obrigatórios.';
 
@@ -1564,6 +1661,10 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get validationChooseBackupFile =>
       'Escolha primeiro um ficheiro de cópia de segurança.';
+
+  @override
+  String get validationChooseDeviceMigrationBundleFile =>
+      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'Introduza uma frase-passe.';

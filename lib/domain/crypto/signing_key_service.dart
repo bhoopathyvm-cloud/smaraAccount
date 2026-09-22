@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bip39_mnemonic/bip39_mnemonic.dart';
 
+import '../backup/device_migration_bundle_file.dart';
 import 'bip39_language_for_locale.dart';
 import 'ed25519_signing.dart';
 import 'keystore_file.dart';
@@ -10,9 +11,10 @@ import 'recovery_phrase.dart';
 import 'secure_key_storage.dart';
 
 /// Orchestrates the device signing key's lifecycle: generation, secure
-/// storage, signing, and the recovery-phrase / keystore-file backup and
-/// restore paths (spec: "Device Signing Identity", "Mandatory Recovery
-/// Phrase Acknowledgment", "Recoverable Reinstall or Device Migration").
+/// storage, signing, and the recovery-phrase / keystore-file / device
+/// migration bundle backup and restore paths (spec: "Device Signing
+/// Identity", "Recoverable Reinstall or Device Migration",
+/// `device-migration-bundle`).
 ///
 /// Never touches Drift - the private key is stored exclusively in OS
 /// secure storage (Keychain/Keystore/DPAPI, via [SecureKeyStorage]), never
@@ -25,12 +27,16 @@ class SigningKeyService {
 
   static const _privateKeySeedStorageKey = 'ledger_signing_private_key_seed';
 
-  /// Holds the plaintext recovery-phrase words between identity commit and
-  /// acknowledgment (deferred-onboarding-first-entry), so a killed/crashed
-  /// app can still show the user the same words on relaunch instead of
-  /// losing them forever. Same OS-protected secure storage already trusted
-  /// for the private key; cleared the moment acknowledgment completes (see
-  /// [clearPendingPhraseWords]) so it never lingers past that window.
+  /// Holds the plaintext recovery-phrase words permanently, once
+  /// generated - not just transiently. BIP-39's seed derivation (PBKDF2
+  /// over the words) is one-way, so the stored private key seed alone can
+  /// never reconstruct them; this is the only place they exist once the
+  /// phrase display screen is gone, and the Settings recovery phrase
+  /// screen reads from it on every visit (`ledger-integrity-signing`'s
+  /// "Optional Recovery and Backup Setup"). Same OS-protected secure
+  /// storage already trusted for the private key, so this introduces no
+  /// new exposure. Never cleared while an identity backed by a generated
+  /// (not imported) phrase remains active.
   static const _pendingPhraseWordsStorageKey =
       'ledger_pending_recovery_phrase_words';
 
@@ -127,6 +133,38 @@ class SigningKeyService {
     return KeystoreFile.encrypt(privateKeySeed: seed, passphrase: passphrase);
   }
 
+  /// Encrypted device migration bundle export of [databaseBytes] together
+  /// with the *currently stored* private key (spec:
+  /// `device-migration-bundle`'s "Device Migration Bundle Export").
+  /// Throws [StateError] if no key is currently stored.
+  Future<String> exportDeviceMigrationBundle({
+    required List<int> databaseBytes,
+    required String passphrase,
+  }) async {
+    final seed = await _readStoredSeed();
+    if (seed == null) {
+      throw StateError(
+        'No signing identity is currently stored on this device.',
+      );
+    }
+    return DeviceMigrationBundleFile.encrypt(
+      databaseBytes: databaseBytes,
+      privateKeySeed: seed,
+      passphrase: passphrase,
+    );
+  }
+
+  /// Stores [seed] as the device's active private key and returns the key
+  /// pair it derives. The device migration bundle import path (spec:
+  /// `device-migration-bundle`) already carries the raw seed directly -
+  /// unlike [restoreFromRecoveryPhrase] or [restoreFromKeystoreFile],
+  /// there's no phrase or encrypted file layer left to unwrap here.
+  Future<KeyMaterial> restoreFromSeed(List<int> seed) async {
+    final keyMaterial = await _signer.keyPairFromSeed(seed);
+    await _storeSeed(keyMaterial.privateKeySeed);
+    return keyMaterial;
+  }
+
   /// Signs [message] with the currently stored private key. Throws
   /// [StateError] if no key is currently stored.
   Future<Uint8List> sign(List<int> message) async {
@@ -148,10 +186,11 @@ class SigningKeyService {
   }
 
   /// Stashes [words] (the just-generated recovery phrase, generated in
-  /// [language]) so they survive an app kill between identity commit and
-  /// acknowledgment. Call only for the true-first-launch generation path,
-  /// never for the true-key-loss migration path (which never shows a
-  /// phrase to re-acknowledge).
+  /// [language]) as the permanent record the Settings recovery phrase
+  /// screen displays from thereafter. Call only for the
+  /// generate-a-new-identity path (`generateNewIdentity`), never for the
+  /// true-key-loss migration path (which generates a fresh identity with
+  /// no phrase of its own to display).
   Future<void> stashPendingPhraseWords(
     List<String> words, {
     Language language = Language.english,
@@ -163,10 +202,10 @@ class SigningKeyService {
     );
   }
 
-  /// The words stashed by [stashPendingPhraseWords], if an app kill
-  /// interrupted onboarding before [clearPendingPhraseWords] ran. Null
-  /// means there's nothing pending - either a true first launch, or
-  /// acknowledgment already completed.
+  /// The words stashed by [stashPendingPhraseWords]. Null means no
+  /// identity was ever generated with a displayable phrase on this
+  /// device (a fresh install with nothing set up yet, or an identity
+  /// restored from a keystore file or device migration bundle instead).
   Future<List<String>?> readPendingPhraseWords() async {
     final joined = await _secureStorage.read(_pendingPhraseWordsStorageKey);
     if (joined == null) return null;
@@ -185,20 +224,17 @@ class SigningKeyService {
     );
   }
 
-  /// Deletes the stashed phrase words and language. Call once
-  /// acknowledgment completes (or, for a device that never needed them,
-  /// this is a harmless no-op).
-  Future<void> clearPendingPhraseWords() async {
-    await _secureStorage.delete(_pendingPhraseWordsStorageKey);
-    await _secureStorage.delete(_pendingPhraseLanguageStorageKey);
-  }
-
   /// Reconstructs the [GeneratedIdentity] from words stashed by
-  /// [stashPendingPhraseWords], for redisplay after an app kill interrupted
-  /// onboarding between identity commit and acknowledgment. Re-derives the
-  /// same key material deterministically from the phrase - does not
-  /// generate a new phrase or overwrite stored key material. Null if there
-  /// is nothing pending.
+  /// [stashPendingPhraseWords] - the permanent store the Settings recovery
+  /// phrase screen reads from (`ledger-integrity-signing`'s "Optional
+  /// Recovery and Backup Setup"). BIP-39's seed derivation is one-way, so
+  /// the stored private key seed alone can never reconstruct these words -
+  /// this stash is the only place they exist once the phrase display
+  /// screen is gone. Re-derives the same key material deterministically
+  /// from the phrase - does not generate a new phrase or overwrite stored
+  /// key material. Null if nothing has ever been stashed (e.g. an
+  /// identity restored from a keystore file or device migration bundle,
+  /// which never displays a phrase).
   Future<GeneratedIdentity?> resumePendingIdentity() async {
     final words = await readPendingPhraseWords();
     if (words == null) return null;
@@ -219,9 +255,9 @@ class SigningKeyService {
   }
 }
 
-/// A freshly generated identity: the recovery phrase the user must
-/// acknowledge (spec: "Mandatory Recovery Phrase Acknowledgment") paired
-/// with the key material it derives.
+/// A freshly generated identity: its recovery phrase, optionally viewable
+/// later from Settings (spec: "Optional Recovery and Backup Setup"),
+/// paired with the key material it derives.
 class GeneratedIdentity {
   const GeneratedIdentity({required this.phrase, required this.keyMaterial});
 

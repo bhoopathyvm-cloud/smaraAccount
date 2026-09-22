@@ -11,6 +11,7 @@ import '../../../../mocks.mocks.dart';
 void main() {
   late MockSettingsRepository settingsRepository;
   late MockLedgerBackupRepository ledgerBackupRepository;
+  late MockDeviceMigrationBundleRepository deviceMigrationBundleRepository;
   late MockAppLockService appLockService;
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockAppLockController appLockController;
@@ -19,6 +20,7 @@ void main() {
   setUp(() {
     settingsRepository = MockSettingsRepository();
     ledgerBackupRepository = MockLedgerBackupRepository();
+    deviceMigrationBundleRepository = MockDeviceMigrationBundleRepository();
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     appLockController = MockAppLockController();
@@ -41,6 +43,7 @@ void main() {
     viewModel = SettingsViewModel(
       settingsRepository: settingsRepository,
       ledgerBackupRepository: ledgerBackupRepository,
+      deviceMigrationBundleRepository: deviceMigrationBundleRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -74,6 +77,40 @@ void main() {
       expect(result, isNull);
       expect(viewModel.backupErrorMessage, isNotNull);
       expect(viewModel.isBackingUp, isFalse);
+    });
+  });
+
+  group('exportDeviceMigrationBundle', () {
+    test('returns the encrypted contents on success', () async {
+      when(
+        deviceMigrationBundleRepository.exportBundle(
+          passphrase: anyNamed('passphrase'),
+        ),
+      ).thenAnswer((_) async => '{"kind":"smara-device-migration-bundle"}');
+
+      final result = await viewModel.exportDeviceMigrationBundle(
+        passphrase: 'hunter2',
+      );
+
+      expect(result, equals('{"kind":"smara-device-migration-bundle"}'));
+      expect(viewModel.backupErrorMessage, isNull);
+      expect(viewModel.isExportingBundle, isFalse);
+    });
+
+    test('returns null and sets an error message on failure', () async {
+      when(
+        deviceMigrationBundleRepository.exportBundle(
+          passphrase: anyNamed('passphrase'),
+        ),
+      ).thenThrow(Exception('disk full'));
+
+      final result = await viewModel.exportDeviceMigrationBundle(
+        passphrase: 'hunter2',
+      );
+
+      expect(result, isNull);
+      expect(viewModel.backupErrorMessage, isNotNull);
+      expect(viewModel.isExportingBundle, isFalse);
     });
   });
 

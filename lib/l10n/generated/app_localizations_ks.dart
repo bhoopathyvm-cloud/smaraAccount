@@ -212,6 +212,23 @@ class AppLocalizationsKs extends AppLocalizations {
       'تُہند حساب ہند اکھ محفوظ نقل تُہند پسند کرنہٕ آمت جایہٕ پؠٹھ محفوظ کریو، یا تِتھی بحال کریو۔ یہ چھ تُہند بازیابی فقرہٕ یا کی سٹور فایلہٕ کِنٕ الگ، یُس تُہند سائننگ کی محفوظ کران، حساب نہٕ۔';
 
   @override
+  String get settingsRecovery => 'Recovery & identity';
+
+  @override
+  String get settingsRecoveryBlurb =>
+      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
+
+  @override
+  String get settingsViewRecoveryPhrase => 'View recovery phrase';
+
+  @override
+  String get settingsExportKeystoreFile => 'Export keystore file';
+
+  @override
+  String get settingsExportDeviceMigrationBundle =>
+      'Export device migration bundle';
+
+  @override
   String get settingsLock => 'لاک';
 
   @override
@@ -808,6 +825,10 @@ class AppLocalizationsKs extends AppLocalizations {
       'بہٕ چھس می ہند بازیابی فقرہٕ محفوظ کریتھ';
 
   @override
+  String get noRecoveryPhraseAvailable =>
+      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
+
+  @override
   String get confirmPhraseBlurb =>
       'یم لفظ تُہی مطلوب چھ، یم فقرس منز آسان یم تُہی ہاتہٕ محفوظ کریتھ، یم درج کریو.';
 
@@ -828,6 +849,39 @@ class AppLocalizationsKs extends AppLocalizations {
 
   @override
   String get exportKeystoreFile => 'کی سٹور فایل برآمد کریو';
+
+  @override
+  String get deviceMigrationBundleExportTitle =>
+      'Export device migration bundle';
+
+  @override
+  String get deviceMigrationBundleExportBlurb =>
+      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
+
+  @override
+  String get deviceMigrationBundleFile => 'Device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleTitle =>
+      'Import device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleBlurb =>
+      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
+
+  @override
+  String get chooseDeviceMigrationBundleFileFirst =>
+      'Choose a device migration bundle file first.';
+
+  @override
+  String get exportDeviceMigrationBundle => 'Export bundle';
+
+  @override
+  String get deviceMigrationBundleImported => 'Bundle imported';
+
+  @override
+  String get deviceMigrationBundleImportedBody =>
+      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'پننٕ زبان ژارٕو';
@@ -863,6 +917,19 @@ class AppLocalizationsKs extends AppLocalizations {
 
   @override
   String get whatsMainAccountCalled => 'تُہند اصلی حساب ہند ناو کیا چھ؟';
+
+  @override
+  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+
+  @override
+  String get setupChoiceBlurb =>
+      'Starting fresh, or moving from another device?';
+
+  @override
+  String get actionNewSetup => 'New setup';
+
+  @override
+  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get restoreTitle => 'سائننگ کی بحال کریو';
@@ -1173,6 +1240,27 @@ class AppLocalizationsKs extends AppLocalizations {
       'یہ بیک اپ چھ یتھ ڈیوایسہٕ ہند سائننگ شناختہٕ کِنٕ جدا شناختہٕ تعلق.';
 
   @override
+  String get errorInvalidDeviceMigrationBundle =>
+      'This file is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleNoIdentity =>
+      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleUnverified =>
+      'This bundle did not verify as intact books, so it was not imported.';
+
+  @override
+  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
+    return 'This file could not be opened as a Smara device migration bundle: $detail';
+  }
+
+  @override
+  String get errorForeignDeviceMigrationBundleIdentity =>
+      'This bundle belongs to a different signing identity than the one already set up on this device.';
+
+  @override
   String get errorAccountNotFinancial => 'یہ چھ نہٕ مالی حساب.';
 
   @override
@@ -1454,6 +1542,15 @@ class AppLocalizationsKs extends AppLocalizations {
       'یہ بیک اپ بحال کرنہٕ ہیکان نہٕ - غلط پاس فریز، یا سمارا بیک اپ فایل نہٕ.';
 
   @override
+  String errorDeviceMigrationBundleCreateFailed(String detail) {
+    return 'Could not create the device migration bundle: $detail';
+  }
+
+  @override
+  String get errorDeviceMigrationBundleImportFailed =>
+      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
+
+  @override
   String get validationAmountAccountCategoryRequired =>
       'رقم، حساب، تہٕ زمرٕ ضروری چھ.';
 
@@ -1538,6 +1635,10 @@ class AppLocalizationsKs extends AppLocalizations {
 
   @override
   String get validationChooseBackupFile => 'برونٹھ بیک اپ فایل ژارٕو.';
+
+  @override
+  String get validationChooseDeviceMigrationBundleFile =>
+      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'پاس فریز درج کریو.';

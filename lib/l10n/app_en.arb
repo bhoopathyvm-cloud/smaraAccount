@@ -66,6 +66,11 @@
   "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
   "settingsBackup": "Backup",
   "settingsBackupBlurb": "Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.",
+  "settingsRecovery": "Recovery & identity",
+  "settingsRecoveryBlurb": "None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.",
+  "settingsViewRecoveryPhrase": "View recovery phrase",
+  "settingsExportKeystoreFile": "Export keystore file",
+  "settingsExportDeviceMigrationBundle": "Export device migration bundle",
   "settingsLock": "Lock",
   "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
   "settingsRequireUnlock": "Require unlock to open the app",
@@ -408,6 +413,7 @@
   "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost, reset, or replaced. Smara Accounting has no server and cannot recover them for you.\n\nIf you lose this device and this phrase together, every transaction you''ve recorded becomes permanently unverifiable.",
   "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe and separate from this device.",
   "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
+  "noRecoveryPhraseAvailable": "This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.",
   "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
   "wordNumber": "Word #{n}",
   "@wordNumber": {
@@ -421,6 +427,15 @@
   "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file protected by a passphrase you choose. This is optional - your recovery phrase alone is always enough to restore your signing key.",
   "keystorePassphrase": "Passphrase",
   "exportKeystoreFile": "Export keystore file",
+  "deviceMigrationBundleExportTitle": "Export device migration bundle",
+  "deviceMigrationBundleExportBlurb": "This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.",
+  "deviceMigrationBundleFile": "Device migration bundle",
+  "importDeviceMigrationBundleTitle": "Import device migration bundle",
+  "importDeviceMigrationBundleBlurb": "This replaces everything currently in this app with the bundle''s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.",
+  "chooseDeviceMigrationBundleFileFirst": "Choose a device migration bundle file first.",
+  "exportDeviceMigrationBundle": "Export bundle",
+  "deviceMigrationBundleImported": "Bundle imported",
+  "deviceMigrationBundleImportedBody": "Your books and signing key have been restored. Close the app and reopen it to continue.",
   "chooseLanguageTitle": "Choose your language",
   "chooseLanguageBlurb": "Everything in the app will show in this language. You can change it later in Settings.",
   "chooseLanguageBip39Notice": "Your recovery phrase will be shown in English. It uses a small set of standard words recognized by recovery tools everywhere, which isn''t available yet in this language.",
@@ -429,8 +444,12 @@
   "currencyBackfillTitle": "Choose a currency for existing groups",
   "currencyBackfillBlurb": "This app now supports multiple currencies. Your existing accounts and account groups need a currency - since they were all set up before this feature existed, one choice applies to all of them.",
   "firstAccountTitle": "Name your account",
-  "firstAccountBlurb": "This is the account already set up for you - give it a name you recognize, like your bank. You will record one Spent or Received next, then protect the device with your recovery phrase.",
+  "firstAccountBlurb": "This is the account already set up for you - give it a name you recognize, like your bank. You will record one Spent or Received next.",
   "whatsMainAccountCalled": "What''s your main account called?",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "actionImportFromBackup": "Import from backup",
   "restoreTitle": "Restore signing key",
   "restoreBlurb": "This device has existing books, but no matching signing key. Restore it from your saved recovery phrase or keystore file - your data will verify normally, and nothing will be re-signed or altered.",
   "recoveryPhrase24": "Recovery phrase (all 24 words)",
@@ -576,6 +595,18 @@
     }
   },
   "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
+  "errorInvalidDeviceMigrationBundle": "This file is not a valid Smara device migration bundle.",
+  "errorInvalidDeviceMigrationBundleNoIdentity": "This bundle has no signing identity - it is not a valid Smara device migration bundle.",
+  "errorInvalidDeviceMigrationBundleUnverified": "This bundle did not verify as intact books, so it was not imported.",
+  "errorInvalidDeviceMigrationBundleUnreadable": "This file could not be opened as a Smara device migration bundle: {detail}",
+  "@errorInvalidDeviceMigrationBundleUnreadable": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorForeignDeviceMigrationBundleIdentity": "This bundle belongs to a different signing identity than the one already set up on this device.",
   "errorAccountNotFinancial": "That is not a financial account.",
   "errorAccountArchived": "That account is hidden.",
   "errorAccountNotArchived": "That account is not hidden.",
@@ -710,6 +741,15 @@
     }
   },
   "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
+  "errorDeviceMigrationBundleCreateFailed": "Could not create the device migration bundle: {detail}",
+  "@errorDeviceMigrationBundleCreateFailed": {
+    "placeholders": {
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDeviceMigrationBundleImportFailed": "Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.",
   "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
   "validationAmountAccountRequired": "Amount and account are required.",
   "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
@@ -747,6 +787,7 @@
   },
   "validationMigrationFailed": "Migration failed. Please try again.",
   "validationChooseBackupFile": "Choose a backup file first.",
+  "validationChooseDeviceMigrationBundleFile": "Choose a device migration bundle file first.",
   "validationPassphraseRequired": "Enter a passphrase.",
   "validationPinsDoNotMatch": "The two PINs do not match.",
   "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",

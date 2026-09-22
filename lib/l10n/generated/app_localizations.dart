@@ -576,6 +576,36 @@ abstract class AppLocalizations {
   /// **'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.'**
   String get settingsBackupBlurb;
 
+  /// No description provided for @settingsRecovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery & identity'**
+  String get settingsRecovery;
+
+  /// No description provided for @settingsRecoveryBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.'**
+  String get settingsRecoveryBlurb;
+
+  /// No description provided for @settingsViewRecoveryPhrase.
+  ///
+  /// In en, this message translates to:
+  /// **'View recovery phrase'**
+  String get settingsViewRecoveryPhrase;
+
+  /// No description provided for @settingsExportKeystoreFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Export keystore file'**
+  String get settingsExportKeystoreFile;
+
+  /// No description provided for @settingsExportDeviceMigrationBundle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export device migration bundle'**
+  String get settingsExportDeviceMigrationBundle;
+
   /// No description provided for @settingsLock.
   ///
   /// In en, this message translates to:
@@ -1662,6 +1692,12 @@ abstract class AppLocalizations {
   /// **'I\'\'ve saved my recovery phrase'**
   String get iveSavedRecoveryPhrase;
 
+  /// No description provided for @noRecoveryPhraseAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.'**
+  String get noRecoveryPhraseAvailable;
+
   /// No description provided for @confirmPhraseBlurb.
   ///
   /// In en, this message translates to:
@@ -1697,6 +1733,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Export keystore file'**
   String get exportKeystoreFile;
+
+  /// No description provided for @deviceMigrationBundleExportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export device migration bundle'**
+  String get deviceMigrationBundleExportTitle;
+
+  /// No description provided for @deviceMigrationBundleExportBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.'**
+  String get deviceMigrationBundleExportBlurb;
+
+  /// No description provided for @deviceMigrationBundleFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Device migration bundle'**
+  String get deviceMigrationBundleFile;
+
+  /// No description provided for @importDeviceMigrationBundleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import device migration bundle'**
+  String get importDeviceMigrationBundleTitle;
+
+  /// No description provided for @importDeviceMigrationBundleBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'This replaces everything currently in this app with the bundle\'\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.'**
+  String get importDeviceMigrationBundleBlurb;
+
+  /// No description provided for @chooseDeviceMigrationBundleFileFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a device migration bundle file first.'**
+  String get chooseDeviceMigrationBundleFileFirst;
+
+  /// No description provided for @exportDeviceMigrationBundle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export bundle'**
+  String get exportDeviceMigrationBundle;
+
+  /// No description provided for @deviceMigrationBundleImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Bundle imported'**
+  String get deviceMigrationBundleImported;
+
+  /// No description provided for @deviceMigrationBundleImportedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your books and signing key have been restored. Close the app and reopen it to continue.'**
+  String get deviceMigrationBundleImportedBody;
 
   /// No description provided for @chooseLanguageTitle.
   ///
@@ -1749,7 +1839,7 @@ abstract class AppLocalizations {
   /// No description provided for @firstAccountBlurb.
   ///
   /// In en, this message translates to:
-  /// **'This is the account already set up for you - give it a name you recognize, like your bank. You will record one Spent or Received next, then protect the device with your recovery phrase.'**
+  /// **'This is the account already set up for you - give it a name you recognize, like your bank. You will record one Spent or Received next.'**
   String get firstAccountBlurb;
 
   /// No description provided for @whatsMainAccountCalled.
@@ -1757,6 +1847,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What\'\'s your main account called?'**
   String get whatsMainAccountCalled;
+
+  /// No description provided for @setupChoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Smara Accounting'**
+  String get setupChoiceTitle;
+
+  /// No description provided for @setupChoiceBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting fresh, or moving from another device?'**
+  String get setupChoiceBlurb;
+
+  /// No description provided for @actionNewSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'New setup'**
+  String get actionNewSetup;
+
+  /// No description provided for @actionImportFromBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Import from backup'**
+  String get actionImportFromBackup;
 
   /// No description provided for @restoreTitle.
   ///
@@ -2316,6 +2430,36 @@ abstract class AppLocalizations {
   /// **'This backup belongs to a different signing identity than the one on this device.'**
   String get errorForeignBackupIdentity;
 
+  /// No description provided for @errorInvalidDeviceMigrationBundle.
+  ///
+  /// In en, this message translates to:
+  /// **'This file is not a valid Smara device migration bundle.'**
+  String get errorInvalidDeviceMigrationBundle;
+
+  /// No description provided for @errorInvalidDeviceMigrationBundleNoIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'This bundle has no signing identity - it is not a valid Smara device migration bundle.'**
+  String get errorInvalidDeviceMigrationBundleNoIdentity;
+
+  /// No description provided for @errorInvalidDeviceMigrationBundleUnverified.
+  ///
+  /// In en, this message translates to:
+  /// **'This bundle did not verify as intact books, so it was not imported.'**
+  String get errorInvalidDeviceMigrationBundleUnverified;
+
+  /// No description provided for @errorInvalidDeviceMigrationBundleUnreadable.
+  ///
+  /// In en, this message translates to:
+  /// **'This file could not be opened as a Smara device migration bundle: {detail}'**
+  String errorInvalidDeviceMigrationBundleUnreadable(String detail);
+
+  /// No description provided for @errorForeignDeviceMigrationBundleIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'This bundle belongs to a different signing identity than the one already set up on this device.'**
+  String get errorForeignDeviceMigrationBundleIdentity;
+
   /// No description provided for @errorAccountNotFinancial.
   ///
   /// In en, this message translates to:
@@ -2766,6 +2910,18 @@ abstract class AppLocalizations {
   /// **'Could not restore this backup - wrong passphrase, or not a Smara backup file.'**
   String get errorBackupRestoreFailed;
 
+  /// No description provided for @errorDeviceMigrationBundleCreateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create the device migration bundle: {detail}'**
+  String errorDeviceMigrationBundleCreateFailed(String detail);
+
+  /// No description provided for @errorDeviceMigrationBundleImportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.'**
+  String get errorDeviceMigrationBundleImportFailed;
+
   /// No description provided for @validationAmountAccountCategoryRequired.
   ///
   /// In en, this message translates to:
@@ -2903,6 +3059,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a backup file first.'**
   String get validationChooseBackupFile;
+
+  /// No description provided for @validationChooseDeviceMigrationBundleFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a device migration bundle file first.'**
+  String get validationChooseDeviceMigrationBundleFile;
 
   /// No description provided for @validationPassphraseRequired.
   ///
