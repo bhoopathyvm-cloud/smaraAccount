@@ -4,7 +4,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/l10n/locale_endonyms.dart';
 import 'package:smara_accounting/main.dart';
@@ -12,7 +14,6 @@ import 'package:smara_accounting/ui/features/onboarding/views/currency_selection
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
-import 'package:smara_accounting/ui/features/settings/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -158,6 +159,33 @@ Future<void> pumpUntilFound(
     await tester.pump(const Duration(milliseconds: 100));
   }
   await tester.pump(const Duration(milliseconds: 100));
+}
+
+/// Drags [scrollableFinder] (defaults to the first [ListView]) until
+/// [target] is hit-testable, or gives up after 12 drags. A plain
+/// (non-`.builder`) `ListView` is still `Sliver`-backed, so an item well
+/// below the fold isn't merely off-screen - it isn't mounted into the
+/// element tree at all yet, meaning `find` won't see it either, only
+/// `hitTestable()` reliably signals "close enough to scroll the rest of
+/// the way with `ensureVisible`". Drags the scrollable itself rather than
+/// a fixed screen coordinate: on a real device, whose screen dimensions
+/// differ from the desktop/simulator window this was originally tuned
+/// against, a coordinate-based drag was observed to land outside the
+/// scrollable region entirely and do nothing (mirrors
+/// `acceptance_test.dart`'s own local settings-item scroll helper).
+Future<void> scrollUntilVisible(
+  WidgetTester tester,
+  Finder target, {
+  Finder? scrollableFinder,
+}) async {
+  final scrollable = scrollableFinder ?? find.byType(ListView).first;
+  for (var i = 0; i < 12; i++) {
+    if (target.hitTestable().evaluate().isNotEmpty) return;
+    await tester.drag(scrollable, const Offset(0, -220));
+    await tester.pump(const Duration(milliseconds: 250));
+  }
+  await tester.ensureVisible(target);
+  await tester.pump(const Duration(milliseconds: 200));
 }
 
 /// Enters [text] into whatever [fieldTarget] resolves to, then polls (like
@@ -365,21 +393,22 @@ Finder shellNavIcon(IconData icon) {
 /// since there is no pre-seeded identity to skip ahead with on this tier.
 /// Onboarding never blocks on any recovery/backup step
 /// (`ledger-integrity-signing`'s "Optional Recovery and Backup Setup"), so
-/// this then makes one extra trip through Settings to capture the real 24
-/// recovery-phrase words many scenarios still need for restore/migration
-/// coverage, before returning to Home. Returns the 24 recovery-phrase
-/// words ([skipFirstWeekSetup] false callers, which land on
-/// FirstWeekSetupView instead of Home, get an empty list back - none of
-/// them use the words).
+/// this then reads the real 24 recovery-phrase words many scenarios still
+/// need for restore/migration coverage straight from the already-mounted
+/// `IdentityRepository` (the phrase is no longer shown automatically, and
+/// the Settings screen that displays it on request has its own dedicated
+/// coverage elsewhere - no need to drive that UI just to obtain the
+/// words). Returns the 24 recovery-phrase words ([skipFirstWeekSetup]
+/// false callers, which land on FirstWeekSetupView instead of Home, get
+/// an empty list back - none of them use the words).
 ///
 /// Walks: SetupChoiceView (New Setup) -> LanguageSelectionView ->
 /// CurrencySelectionView (default currency follows the selected locale,
 /// onboarding-language-selection) -> FirstAccountNameView (defaults to a
 /// starter name) -> RecordTransactionView (the guided first entry,
-/// recording [amountText] against [categoryName]) -> Home directly, then
-/// Settings -> RecoveryPhraseView -> back to Home. Every step's ordering
-/// and the fixes applied here were hard-won against a real macOS build -
-/// see design.md Risks before changing this sequence.
+/// recording [amountText] against [categoryName]) -> Home directly. Every
+/// step's ordering and the fixes applied here were hard-won against a
+/// real macOS build - see design.md Risks before changing this sequence.
 Future<List<String>> completeOnboardingWithGuidedEntry(
   WidgetTester tester, {
   required String amountText,
@@ -585,62 +614,25 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   }
 
   // The recovery phrase is no longer shown automatically during
-  // onboarding - fetch the real words from Settings instead, for the
-  // restore/migration scenarios that still need them.
-  //
-  // innerTries raised (matching this file's own convention for a
-  // transition that does real I/O, e.g. Settings' own _load() querying
-  // several repositories/biometrics): the default 4s window was observed
-  // to time out before Settings finished loading, causing the outer
-  // retry loop to re-tap a tooltip that no longer exists once Settings
-  // is already open - target.evaluate() then empty, and ensureVisible on
-  // an empty finder throws "Bad state: No element".
-  await tapReliably(
-    tester,
-    () => find.byTooltip(l10n.settingsTitle),
-    () => find.text(l10n.settingsViewRecoveryPhrase).evaluate().isNotEmpty,
-    innerTries: 150,
-  );
-  await tapReliably(
-    tester,
-    () => find.text(l10n.settingsViewRecoveryPhrase).hitTestable(),
-    () => find.byType(RecoveryPhraseView).evaluate().isNotEmpty,
-    innerTries: 150,
-  );
-
-  List<String>? words;
-  for (var attempt = 0; attempt < 200 && words == null; attempt++) {
-    final matches = find.byType(RecoveryPhraseView).evaluate();
-    if (matches.length == 1) {
-      final displayedWords =
-          (matches.single.widget as RecoveryPhraseView).viewModel.words;
-      if (displayedWords.isNotEmpty) words = displayedWords;
-    }
-    if (words == null) await tester.pump(const Duration(milliseconds: 100));
-  }
-  if (words == null) {
+  // onboarding, and the Settings screen that would show it on request is
+  // real UI this helper doesn't need to drive just to obtain the words -
+  // that screen has its own dedicated widget-test coverage. Reading
+  // straight from the already-mounted IdentityRepository (same Provider
+  // tree the real Settings screen itself reads from) is equivalent and
+  // far more robust than navigating there, scrolling a Sliver-backed
+  // list, and popping back out.
+  final identityRepository = tester
+      .element(find.byType(Scaffold).first)
+      .read<IdentityRepository>();
+  final generated = await identityRepository.resumePendingIdentity();
+  if (generated == null) {
     fail(
-      'completeOnboardingWithGuidedEntry: RecoveryPhraseView never stably '
-      'showed a phrase.\n${_visibleTextsDump()}',
+      'completeOnboardingWithGuidedEntry: no recovery phrase was stashed '
+      'for this identity.\n${_visibleTextsDump()}',
     );
   }
 
-  // Back twice: RecoveryPhraseView (pushed from Settings) then Settings
-  // itself, landing on Home again.
-  await tapReliably(
-    tester,
-    () => find.byTooltip(materialL10n(tester).backButtonTooltip),
-    () => find.byType(RecoveryPhraseView).evaluate().isEmpty,
-    innerTries: 150,
-  );
-  await tapReliably(
-    tester,
-    () => find.byTooltip(materialL10n(tester).backButtonTooltip),
-    () => find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
-    innerTries: 150,
-  );
-
-  return words;
+  return generated.phrase.words;
 }
 
 Finder textFieldWithLabel(String label) {
