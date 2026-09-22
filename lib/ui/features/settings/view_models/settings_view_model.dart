@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../domain/investment/exchange_registry.dart';
 
+import '../../../../data/repositories/device_migration_bundle_repository.dart';
 import '../../../../data/repositories/ledger_backup_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
@@ -27,6 +28,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   SettingsViewModel({
     required SettingsRepository settingsRepository,
     required LedgerBackupRepository ledgerBackupRepository,
+    required DeviceMigrationBundleRepository deviceMigrationBundleRepository,
     required AppLockService appLockService,
     required BiometricAuthenticator biometricAuthenticator,
     required AppLockController appLockController,
@@ -34,6 +36,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     Future<bool> Function(Uri url)? launchUrlFn,
   }) : _settingsRepository = settingsRepository,
        _ledgerBackupRepository = ledgerBackupRepository,
+       _deviceMigrationBundleRepository = deviceMigrationBundleRepository,
        _appLockService = appLockService,
        _biometricAuthenticator = biometricAuthenticator,
        _appLockController = appLockController,
@@ -46,6 +49,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   final SettingsRepository _settingsRepository;
   final LedgerBackupRepository _ledgerBackupRepository;
+  final DeviceMigrationBundleRepository _deviceMigrationBundleRepository;
   final AppLockService _appLockService;
   final BiometricAuthenticator _biometricAuthenticator;
   final AppLockController _appLockController;
@@ -217,6 +221,37 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _isRestoring = false;
       setFailure(const AppFailure(AppErrorCode.backupRestoreFailed));
       return false;
+    }
+  }
+
+  bool _isExportingBundle = false;
+  bool get isExportingBundle => _isExportingBundle;
+
+  /// Returns the encrypted device migration bundle's contents (books and
+  /// signing key together, spec: `device-migration-bundle`), or null
+  /// (with [backupErrorMessage] set) on failure.
+  Future<String?> exportDeviceMigrationBundle({
+    required String passphrase,
+  }) async {
+    _isExportingBundle = true;
+    clearFailure();
+    notifyListeners();
+    try {
+      final contents = await _deviceMigrationBundleRepository.exportBundle(
+        passphrase: passphrase,
+      );
+      _isExportingBundle = false;
+      notifyListeners();
+      return contents;
+    } catch (e) {
+      _isExportingBundle = false;
+      setFailure(
+        AppFailure(
+          AppErrorCode.deviceMigrationBundleCreateFailed,
+          debugMessage: '$e',
+        ),
+      );
+      return null;
     }
   }
 

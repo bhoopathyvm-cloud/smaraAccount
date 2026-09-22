@@ -211,6 +211,23 @@ class AppLocalizationsKok extends AppLocalizations {
       'तुमच्या हिशोबाची एनक्रिप्टेड प्रत तुमी निवडिल्ल्या जाग्यार जतन करात, वा थंयसून पुनर्स्थापित करात. हें तुमच्या पुनर्प्राप्ती वाक्यां वा कीस्टोअर फायलीसावन वेगळें आसा, जी तुमची सही किल्ली बॅकअप करता, हिशोब न्हय.';
 
   @override
+  String get settingsRecovery => 'Recovery & identity';
+
+  @override
+  String get settingsRecoveryBlurb =>
+      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
+
+  @override
+  String get settingsViewRecoveryPhrase => 'View recovery phrase';
+
+  @override
+  String get settingsExportKeystoreFile => 'Export keystore file';
+
+  @override
+  String get settingsExportDeviceMigrationBundle =>
+      'Export device migration bundle';
+
+  @override
   String get settingsLock => 'लॉक';
 
   @override
@@ -805,6 +822,10 @@ class AppLocalizationsKok extends AppLocalizations {
   String get iveSavedRecoveryPhrase => 'म्हजें पुनर्प्राप्ती वाक्य जतन केलां';
 
   @override
+  String get noRecoveryPhraseAvailable =>
+      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
+
+  @override
   String get confirmPhraseBlurb =>
       'तुमी आतांच जतन केल्ल्या वाक्यांतलीं मागिल्लीं उतरां भरात.';
 
@@ -825,6 +846,39 @@ class AppLocalizationsKok extends AppLocalizations {
 
   @override
   String get exportKeystoreFile => 'कीस्टोअर फायल एक्सपोर्ट करात';
+
+  @override
+  String get deviceMigrationBundleExportTitle =>
+      'Export device migration bundle';
+
+  @override
+  String get deviceMigrationBundleExportBlurb =>
+      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
+
+  @override
+  String get deviceMigrationBundleFile => 'Device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleTitle =>
+      'Import device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleBlurb =>
+      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
+
+  @override
+  String get chooseDeviceMigrationBundleFileFirst =>
+      'Choose a device migration bundle file first.';
+
+  @override
+  String get exportDeviceMigrationBundle => 'Export bundle';
+
+  @override
+  String get deviceMigrationBundleImported => 'Bundle imported';
+
+  @override
+  String get deviceMigrationBundleImportedBody =>
+      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'तुमची भास निवडात';
@@ -860,6 +914,19 @@ class AppLocalizationsKok extends AppLocalizations {
 
   @override
   String get whatsMainAccountCalled => 'तुमच्या मुखेल खात्याचें नाव कितें आसा?';
+
+  @override
+  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+
+  @override
+  String get setupChoiceBlurb =>
+      'Starting fresh, or moving from another device?';
+
+  @override
+  String get actionNewSetup => 'New setup';
+
+  @override
+  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get restoreTitle => 'सही किल्ली पुनर्स्थापित करात';
@@ -1171,6 +1238,27 @@ class AppLocalizationsKok extends AppLocalizations {
       'हो बॅकअप ह्या साधनावयल्या सही वळखीपरस वेगळ्या वळखीचो आसा.';
 
   @override
+  String get errorInvalidDeviceMigrationBundle =>
+      'This file is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleNoIdentity =>
+      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleUnverified =>
+      'This bundle did not verify as intact books, so it was not imported.';
+
+  @override
+  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
+    return 'This file could not be opened as a Smara device migration bundle: $detail';
+  }
+
+  @override
+  String get errorForeignDeviceMigrationBundleIdentity =>
+      'This bundle belongs to a different signing identity than the one already set up on this device.';
+
+  @override
   String get errorAccountNotFinancial => 'तें आर्थिक खातें न्हय.';
 
   @override
@@ -1453,6 +1541,15 @@ class AppLocalizationsKok extends AppLocalizations {
       'हो बॅकअप पुनर्स्थापित करूंक जायना - चुकिचो पासफ्रेज, वा स्मारा बॅकअप फायल न्हय.';
 
   @override
+  String errorDeviceMigrationBundleCreateFailed(String detail) {
+    return 'Could not create the device migration bundle: $detail';
+  }
+
+  @override
+  String get errorDeviceMigrationBundleImportFailed =>
+      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
+
+  @override
   String get validationAmountAccountCategoryRequired =>
       'रक्कम, खातें, आनी वर्ग गरजेचें.';
 
@@ -1536,6 +1633,10 @@ class AppLocalizationsKok extends AppLocalizations {
 
   @override
   String get validationChooseBackupFile => 'पयलीं बॅकअप फायल निवडात.';
+
+  @override
+  String get validationChooseDeviceMigrationBundleFile =>
+      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'पासफ्रेज भरात.';

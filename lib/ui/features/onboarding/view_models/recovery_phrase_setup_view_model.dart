@@ -7,21 +7,21 @@ import '../../../../domain/crypto/signing_key_service.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 
-/// Spans every onboarding screen (currency, recovery-phrase display,
-/// optional keystore export, confirmation) so the same [GeneratedIdentity]
-/// - one freshly generated phrase and its key pair - carries through the
-/// whole flow without regenerating (each generation would produce a
-/// different phrase/key, spec: "Device Signing Identity").
+/// Spans the New Setup onboarding screens (currency, then the Settings
+/// recovery-phrase/keystore-export/device-migration-bundle-export screens
+/// once an identity exists) so the same [GeneratedIdentity] - one freshly
+/// generated phrase and its key pair - carries through without
+/// regenerating (each generation would produce a different phrase/key,
+/// spec: "Device Signing Identity").
 ///
-/// deferred-onboarding-first-entry: the identity is committed to the
-/// database in [commitIdentity], right after the user picks a currency -
-/// before the phrase is ever displayed or confirmed - so a guided first
-/// entry can post between commit and acknowledgment. The mandatory
-/// acknowledgment ritual (display, optional keystore export, confirm)
-/// still fully gates everything else; [acknowledge] is what finally lifts
-/// that gate. [ensureGenerated] transparently resumes from a stashed
-/// phrase (see [resumePendingIdentity]) if the app was killed and
-/// relaunched anywhere in this window, so the words are never lost.
+/// The identity is committed to the database in [commitIdentity], right
+/// after the user picks a currency - onboarding never blocks on any
+/// backup step afterward (`ledger-integrity-signing`'s "Optional Recovery
+/// and Backup Setup"). [ensureGenerated] transparently resumes from a
+/// stashed phrase (see [resumePendingIdentity]) if the app was killed and
+/// relaunched anywhere in this window, so the words are never lost -
+/// [loadExistingPhraseForDisplay] does the same for a later Settings
+/// visit, but never generates a new identity if nothing was stashed.
 class RecoveryPhraseSetupViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
   RecoveryPhraseSetupViewModel({
@@ -32,9 +32,6 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
 
   final IdentityRepository _identityRepository;
   final LedgerChainVerifier _chainVerifier;
-
-  /// Fixed spread across a 24-word phrase, asked back during confirmation.
-  static const confirmationWordIndices = [2, 9, 17];
 
   GeneratedIdentity? _generated;
   List<String> get words => _generated?.phrase.words ?? const [];
@@ -47,6 +44,14 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
   String? get keystoreExportPath => _keystoreExportPath;
 
   bool get hasGenerationError => failure != null && _generated == null;
+
+  bool _hasCheckedExistingPhrase = false;
+
+  /// True once [loadExistingPhraseForDisplay] has resolved (successfully
+  /// or not). Distinguishes "still loading" from "checked, and this
+  /// identity genuinely has no phrase to show" - both look like
+  /// `!isReady` on their own.
+  bool get hasCheckedExistingPhrase => _hasCheckedExistingPhrase;
 
   /// Idempotent - safe to call from every build of the display screen, and
   /// from [commitIdentity] before currency selection has even reached that
@@ -93,38 +98,35 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
     notifyListeners();
   }
 
-  /// Validates the words at [confirmationWordIndices] against
-  /// [enteredWords] (same indices). Returns true on success; on mismatch,
-  /// sets [errorMessage] and leaves everything else untouched so the user
-  /// can retry. Only validates locally - does not itself acknowledge
-  /// anything; the caller still needs to call [acknowledge] on success
-  /// (deferred-onboarding-first-entry: the identity and starter accounts
-  /// were already committed earlier, in [commitIdentity]).
-  bool confirm(Map<int, String> enteredWords) {
-    final generated = _generated;
-    if (generated == null) return false;
-
-    for (final index in confirmationWordIndices) {
-      final entered = (enteredWords[index] ?? '').trim().toLowerCase();
-      if (entered != generated.phrase.words[index]) {
-        setFailure(
-          AppFailure(
-            AppErrorCode.validationConfirmWordMismatch,
-            params: {'n': '${index + 1}'},
-          ),
-        );
-        return false;
-      }
+  /// Loads the current identity's stashed phrase for display in Settings,
+  /// if one exists. Unlike [ensureGenerated], this never generates a new
+  /// identity - an identity restored from a keystore file, recovery
+  /// phrase, or device migration bundle has no phrase of its own stashed,
+  /// and this must never silently mint an unrelated one instead. Callers
+  /// should treat "still not [isReady] and no [failure]" as "this
+  /// identity has no recovery phrase to show", not as an error.
+  /// Set [retry] to force a fresh attempt after a prior failure (e.g. the
+  /// user tapped Retry) - otherwise a no-op once already checked.
+  Future<void> loadExistingPhraseForDisplay({bool retry = false}) async {
+    if (_hasCheckedExistingPhrase && !retry) return;
+    if (retry) clearFailure();
+    try {
+      _generated = await _identityRepository.resumePendingIdentity();
+    } catch (e) {
+      setFailure(
+        AppFailure(
+          AppErrorCode.validationGenerateKeyFailed,
+          debugMessage: '$e',
+        ),
+      );
     }
-    clearFailure();
-    return true;
+    _hasCheckedExistingPhrase = true;
+    notifyListeners();
   }
 
   /// Commits the signing identity with the starter account groups seeded
-  /// in [currency], then verifies the chain. This is the first onboarding
-  /// step now (deferred-onboarding-first-entry) - it generates the
-  /// identity if [ensureGenerated] hasn't already run, and does not wait
-  /// for phrase display or confirmation, which happen later.
+  /// in [currency], then verifies the chain - the last step of New Setup
+  /// onboarding; nothing blocks the app afterward.
   Future<bool> commitIdentity(
     String currency, {
     Language language = Language.english,
@@ -146,11 +148,5 @@ class RecoveryPhraseSetupViewModel extends ChangeNotifier
     _isSubmitting = false;
     notifyListeners();
     return true;
-  }
-
-  /// Completes the mandatory recovery-phrase acknowledgment. Call only
-  /// after [confirm] has already returned true.
-  Future<void> acknowledge() {
-    return _identityRepository.acknowledgeIdentity();
   }
 }

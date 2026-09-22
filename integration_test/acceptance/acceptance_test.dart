@@ -15,14 +15,9 @@ import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:smara_accounting/l10n/l10n.dart' show englishAppLocalizations;
-import 'package:smara_accounting/l10n/locale_endonyms.dart';
 import 'package:smara_accounting/main.dart';
 import 'package:smara_accounting/ui/core/monthly_limit_progress.dart';
 import 'package:smara_accounting/ui/features/holdings/views/holdings_view.dart';
-import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
-import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
-import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
-import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/payee_management/views/payee_management_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
 import 'package:smara_accounting/ui/features/recurring_template_management/views/recurring_template_management_view.dart';
@@ -3073,159 +3068,38 @@ void main() {
     );
 
     testWidgets(
-      'closing and reopening after the guided first entry still requires '
-      'phrase acknowledgment',
+      'closing and reopening after the guided first entry never blocks - '
+      'there is no acknowledgment gate to complete (device-migration-bundle)',
       (tester) async {
         addTearDown(() => resetToFreshDevice(tester));
 
-        await tester.pumpWidget(const SmaraAccountingApp());
-        await tester.pump();
-        await pumpUntilFound(tester, find.byType(LanguageSelectionView));
-        expect(find.byType(LanguageSelectionView), findsOneWidget);
-
-        // onboarding-language-selection: selection is mandatory - confirm
-        // the pre-highlighted "Same as device" row before Continue enables.
-        // acceptance-tests-multi-locale: mirrors
-        // completeOnboardingWithGuidedEntry's own locale branch - a
-        // non-English run taps that locale's own row instead, scrolling it
-        // into view first since most curated locales sort below the fold.
-        final languageRowFinder = kAcceptanceLocaleTag == 'en'
-            ? find.text(l10n.settingsLanguageSystem)
-            : find.text(endonymForLocaleTag(kAcceptanceLocaleTag));
-        if (kAcceptanceLocaleTag != 'en') {
-          await tester.dragUntilVisible(
-            languageRowFinder,
-            find.byType(ListView),
-            const Offset(0, -300),
-          );
-          await tester.pump(const Duration(milliseconds: 200));
-        }
-        await tapReliably(tester, () => languageRowFinder, () {
-          final buttons = find
-              .widgetWithText(ElevatedButton, l10n.actionContinue)
-              .evaluate();
-          if (buttons.isEmpty) return false;
-          return (buttons.single.widget as ElevatedButton).onPressed != null;
-        });
-        await tapReliably(
+        await completeOnboardingWithGuidedEntry(
           tester,
-          () => find.widgetWithText(ElevatedButton, l10n.actionContinue),
-          () => find.byType(CurrencySelectionView).evaluate().isNotEmpty,
+          amountText: '75',
+          categoryName: salaryCategory,
         );
-        expect(find.byType(CurrencySelectionView), findsOneWidget);
-
-        // Mirrors completeOnboardingWithGuidedEntry's own fix: force USD
-        // regardless of locale, so this suite's amount assertions stay
-        // locale-independent (acceptance-tests-multi-locale design.md
-        // Decision 6).
-        await enterTextReliably(
-          tester,
-          () => find.descendant(
-            of: find.byType(CurrencySelectionView),
-            matching: find.byType(TextField),
-          ),
-          'USD',
-          () {
-            final field =
-                find
-                        .descendant(
-                          of: find.byType(CurrencySelectionView),
-                          matching: find.byType(TextField),
-                        )
-                        .evaluate()
-                        .single
-                        .widget
-                    as TextField;
-            return field.controller?.text == 'USD';
-          },
-        );
-
-        await tapReliably(
-          tester,
-          () => find.descendant(
-            of: find.byType(CurrencySelectionView),
-            matching: find.text(l10n.actionContinue),
-          ),
-          () => find.byType(FirstAccountNameView).evaluate().isNotEmpty,
-        );
-        await tapReliably(
-          tester,
-          () => find.descendant(
-            of: find.byType(FirstAccountNameView),
-            matching: find.text(l10n.actionContinue),
-          ),
-          () => find.byType(RecordTransactionView).evaluate().isNotEmpty,
-        );
-        await pumpUntilFound(tester, find.text(cashBankAccount));
-
-        // The whole entry retries as a unit, not just the Save tap -
-        // mirrors completeOnboardingWithGuidedEntry's own documented
-        // workaround (design.md Risks): enterText updating the controller's
-        // raw text is a weak proxy for its onChanged having actually
-        // reached the ViewModel, observed to pass its own check yet still
-        // leave the amount null, surfacing only downstream as Save's
-        // validation failing.
-        var saved = false;
-        for (var attempt = 0; attempt < 3 && !saved; attempt++) {
-          await enterTextReliably(
-            tester,
-            () => find.byType(TextField).first,
-            '75',
-            () {
-              final field =
-                  find.byType(TextField).evaluate().first.widget as TextField;
-              return field.controller?.text == '75';
-            },
-          );
-          await tapReliably(
-            tester,
-            () => find.byType(DropdownButtonFormField<String>).last,
-            () => find.text(salaryCategory).evaluate().isNotEmpty,
-          );
-          await tapReliably(
-            tester,
-            () => find.text(salaryCategory).last,
-            () => find.text(salaryCategory).evaluate().length == 1,
-          );
-          await tester.tap(
-            find.descendant(
-              of: find.byType(RecordTransactionView),
-              matching: find.text(l10n.actionSave),
-            ),
-          );
-          for (var i = 0; i < 20 && !saved; i++) {
-            if (find.text(l10n.iveSavedRecoveryPhrase).evaluate().isNotEmpty) {
-              saved = true;
-            } else {
-              await tester.pump(const Duration(milliseconds: 100));
-            }
-          }
-        }
-        if (!saved) {
-          fail('Save never succeeded after 3 full re-entry attempts.');
-        }
-        // The guided first entry has posted; acknowledgment (spec: "the
-        // mandatory recovery-phrase acknowledgment flow") is showing but
-        // deliberately NOT completed here - simulating the app being closed
-        // right at this point instead.
-        expect(find.byType(RecoveryPhraseView), findsOneWidget);
+        expect(find.text(l10n.homeWhatYouHaveMinusWhatYouOwe), findsOneWidget);
 
         // Simulate closing and reopening the app - same on-disk database and
-        // keychain, no resetToFreshDevice (spec: "...or resuming the app
-        // after it was closed or killed").
+        // keychain, no resetToFreshDevice (spec: `ledger-integrity-signing`'s
+        // "Optional Recovery and Backup Setup" - nothing gates a resume on
+        // any backup step ever being completed).
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pump();
         await tester.pumpWidget(const SmaraAccountingApp());
         await tester.pump();
 
-        await pumpUntilFound(tester, find.text(l10n.iveSavedRecoveryPhrase));
+        await pumpUntilFound(
+          tester,
+          find.text(l10n.homeWhatYouHaveMinusWhatYouOwe),
+        );
         expect(
-          find.byType(RecoveryPhraseView),
+          find.text(l10n.homeWhatYouHaveMinusWhatYouOwe),
           findsOneWidget,
           reason:
-              'reopening before acknowledgment must not skip straight to Home',
+              'reopening after the first entry must land straight on '
+              'Home, with no acknowledgment or recovery screen in the way',
         );
-        expect(find.text(l10n.homeWhatYouHaveMinusWhatYouOwe), findsNothing);
 
         await tester.pump(const Duration(seconds: 2));
       },

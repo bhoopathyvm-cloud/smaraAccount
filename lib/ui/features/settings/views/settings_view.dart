@@ -24,6 +24,9 @@ class SettingsView extends StatelessWidget {
     required this.viewModel,
     this.onOpenPayees,
     this.onOpenRecurringTemplates,
+    this.onOpenRecoveryPhrase,
+    this.onOpenKeystoreExport,
+    this.onOpenDeviceMigrationBundleExport,
   });
 
   final SettingsViewModel viewModel;
@@ -33,6 +36,17 @@ class SettingsView extends StatelessWidget {
 
   /// recurring-templates: opens the recurring template CRUD screen.
   final VoidCallback? onOpenRecurringTemplates;
+
+  /// device-migration-bundle: opens the recovery phrase display screen -
+  /// optional, reachable at any time, never blocking.
+  final VoidCallback? onOpenRecoveryPhrase;
+
+  /// device-migration-bundle: opens the keystore file export screen.
+  final VoidCallback? onOpenKeystoreExport;
+
+  /// device-migration-bundle: opens the device migration bundle export
+  /// screen - books and signing key together, for moving to a new device.
+  final VoidCallback? onOpenDeviceMigrationBundleExport;
 
   @override
   Widget build(BuildContext context) {
@@ -217,6 +231,25 @@ class SettingsView extends StatelessWidget {
                     ? null
                     : () => _showRestoreBackupDialog(context, viewModel),
                 child: Text(l10n.actionRestoreBackup),
+              ),
+              const SizedBox(height: AppSpacing.xLarge),
+              Text(l10n.settingsRecovery, style: AppTypography.sectionLabel),
+              const SizedBox(height: AppSpacing.base),
+              Text(l10n.settingsRecoveryBlurb, style: AppTypography.metadata),
+              const SizedBox(height: AppSpacing.medium),
+              OutlinedButton(
+                onPressed: onOpenRecoveryPhrase,
+                child: Text(l10n.settingsViewRecoveryPhrase),
+              ),
+              const SizedBox(height: AppSpacing.small),
+              OutlinedButton(
+                onPressed: onOpenKeystoreExport,
+                child: Text(l10n.settingsExportKeystoreFile),
+              ),
+              const SizedBox(height: AppSpacing.small),
+              OutlinedButton(
+                onPressed: onOpenDeviceMigrationBundleExport,
+                child: Text(l10n.settingsExportDeviceMigrationBundle),
               ),
               const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsLock, style: AppTypography.sectionLabel),

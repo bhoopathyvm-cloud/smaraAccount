@@ -73,48 +73,28 @@ void main() {
     );
   });
 
-  group('confirm', () {
-    test(
-      'rejects a mismatched confirmation word without acknowledging anything',
-      () async {
-        when(
-          repository.generateFirstIdentity(),
-        ).thenAnswer((_) async => generated);
-        await viewModel.ensureGenerated();
+  group('loadExistingPhraseForDisplay', () {
+    test('loads an already-stashed phrase for Settings display', () async {
+      when(
+        repository.resumePendingIdentity(),
+      ).thenAnswer((_) async => generated);
 
-        final wrongWords = {
-          for (final i in RecoveryPhraseSetupViewModel.confirmationWordIndices)
-            i: 'wrong',
-        };
+      await viewModel.loadExistingPhraseForDisplay();
 
-        final result = viewModel.confirm(wrongWords);
+      expect(viewModel.isReady, isTrue);
+      expect(viewModel.words, equals(generated.phrase.words));
+      verifyNever(repository.generateFirstIdentity());
+    });
 
-        expect(result, isFalse);
-        expect(viewModel.errorMessage, isNotNull);
-        verifyNever(repository.acknowledgeIdentity());
-      },
-    );
+    test('never generates a new identity when nothing was stashed '
+        '(a keystore/bundle/phrase-restored identity has no phrase of its '
+        'own)', () async {
+      await viewModel.loadExistingPhraseForDisplay();
 
-    test(
-      'accepts all matching confirmation words without acknowledging anything',
-      () async {
-        when(
-          repository.generateFirstIdentity(),
-        ).thenAnswer((_) async => generated);
-        await viewModel.ensureGenerated();
-
-        final correctWords = {
-          for (final i in RecoveryPhraseSetupViewModel.confirmationWordIndices)
-            i: generated.phrase.words[i],
-        };
-
-        final result = viewModel.confirm(correctWords);
-
-        expect(result, isTrue);
-        expect(viewModel.errorMessage, isNull);
-        verifyNever(repository.acknowledgeIdentity());
-      },
-    );
+      expect(viewModel.isReady, isFalse);
+      expect(viewModel.failure, isNull);
+      verifyNever(repository.generateFirstIdentity());
+    });
   });
 
   group('commitIdentity', () {
@@ -196,16 +176,6 @@ void main() {
           language: Language.french,
         ),
       );
-    });
-  });
-
-  group('acknowledge', () {
-    test('delegates to the Repository', () async {
-      when(repository.acknowledgeIdentity()).thenAnswer((_) async {});
-
-      await viewModel.acknowledge();
-
-      verify(repository.acknowledgeIdentity()).called(1);
     });
   });
 

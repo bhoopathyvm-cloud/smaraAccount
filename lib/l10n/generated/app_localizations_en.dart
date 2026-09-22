@@ -211,6 +211,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.';
 
   @override
+  String get settingsRecovery => 'Recovery & identity';
+
+  @override
+  String get settingsRecoveryBlurb =>
+      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
+
+  @override
+  String get settingsViewRecoveryPhrase => 'View recovery phrase';
+
+  @override
+  String get settingsExportKeystoreFile => 'Export keystore file';
+
+  @override
+  String get settingsExportDeviceMigrationBundle =>
+      'Export device migration bundle';
+
+  @override
   String get settingsLock => 'Lock';
 
   @override
@@ -808,6 +825,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
 
   @override
+  String get noRecoveryPhraseAvailable =>
+      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
+
+  @override
   String get confirmPhraseBlurb =>
       'Enter the requested words from the phrase you just saved.';
 
@@ -828,6 +849,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exportKeystoreFile => 'Export keystore file';
+
+  @override
+  String get deviceMigrationBundleExportTitle =>
+      'Export device migration bundle';
+
+  @override
+  String get deviceMigrationBundleExportBlurb =>
+      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
+
+  @override
+  String get deviceMigrationBundleFile => 'Device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleTitle =>
+      'Import device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleBlurb =>
+      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
+
+  @override
+  String get chooseDeviceMigrationBundleFileFirst =>
+      'Choose a device migration bundle file first.';
+
+  @override
+  String get exportDeviceMigrationBundle => 'Export bundle';
+
+  @override
+  String get deviceMigrationBundleImported => 'Bundle imported';
+
+  @override
+  String get deviceMigrationBundleImportedBody =>
+      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Choose your language';
@@ -859,10 +913,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get firstAccountBlurb =>
-      'This is the account already set up for you - give it a name you recognize, like your bank. You will record one Spent or Received next, then protect the device with your recovery phrase.';
+      'This is the account already set up for you - give it a name you recognize, like your bank. You will record one Spent or Received next.';
 
   @override
   String get whatsMainAccountCalled => 'What\'s your main account called?';
+
+  @override
+  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+
+  @override
+  String get setupChoiceBlurb =>
+      'Starting fresh, or moving from another device?';
+
+  @override
+  String get actionNewSetup => 'New setup';
+
+  @override
+  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get restoreTitle => 'Restore signing key';
@@ -1174,6 +1241,27 @@ class AppLocalizationsEn extends AppLocalizations {
       'This backup belongs to a different signing identity than the one on this device.';
 
   @override
+  String get errorInvalidDeviceMigrationBundle =>
+      'This file is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleNoIdentity =>
+      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleUnverified =>
+      'This bundle did not verify as intact books, so it was not imported.';
+
+  @override
+  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
+    return 'This file could not be opened as a Smara device migration bundle: $detail';
+  }
+
+  @override
+  String get errorForeignDeviceMigrationBundleIdentity =>
+      'This bundle belongs to a different signing identity than the one already set up on this device.';
+
+  @override
   String get errorAccountNotFinancial => 'That is not a financial account.';
 
   @override
@@ -1464,6 +1552,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
 
   @override
+  String errorDeviceMigrationBundleCreateFailed(String detail) {
+    return 'Could not create the device migration bundle: $detail';
+  }
+
+  @override
+  String get errorDeviceMigrationBundleImportFailed =>
+      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
+
+  @override
   String get validationAmountAccountCategoryRequired =>
       'Amount, account, and category are required.';
 
@@ -1549,6 +1646,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationChooseBackupFile => 'Choose a backup file first.';
+
+  @override
+  String get validationChooseDeviceMigrationBundleFile =>
+      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'Enter a passphrase.';

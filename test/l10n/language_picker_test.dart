@@ -60,6 +60,7 @@ void main() {
       final viewModel = SettingsViewModel(
         settingsRepository: repository,
         ledgerBackupRepository: MockLedgerBackupRepository(),
+        deviceMigrationBundleRepository: MockDeviceMigrationBundleRepository(),
         appLockService: MockAppLockService(),
         biometricAuthenticator: biometric,
         appLockController: appLockController,

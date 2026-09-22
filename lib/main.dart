@@ -6,6 +6,7 @@ import 'data/database/app_database.dart';
 import 'data/repositories/account_chart_reader.dart';
 import 'data/repositories/account_repository.dart';
 import 'data/repositories/category_repository.dart';
+import 'data/repositories/device_migration_bundle_repository.dart';
 import 'data/repositories/identity_repository.dart';
 import 'data/repositories/investment_repository.dart';
 import 'data/repositories/ledger_backup_repository.dart';
@@ -31,6 +32,7 @@ import 'ui/features/payee_management/view_models/payee_management_view_model.dar
 import 'ui/features/recurring_template_management/view_models/recurring_template_management_view_model.dart';
 import 'ui/features/register/view_models/register_view_model.dart';
 import 'ui/features/restore/view_models/restore_identity_view_model.dart';
+import 'ui/features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'ui/features/summary/view_models/summary_view_model.dart';
 
 void main() {
@@ -103,6 +105,17 @@ class SmaraAccountingApp extends StatelessWidget {
             database: db,
             identityRepository: identityRepository,
           ),
+        ),
+        ProxyProvider2<
+          AppDatabase,
+          IdentityRepository,
+          DeviceMigrationBundleRepository
+        >(
+          update: (_, db, identityRepository, _) =>
+              DeviceMigrationBundleRepository(
+                database: db,
+                identityRepository: identityRepository,
+              ),
         ),
         ProxyProvider3<
           AppDatabase,
@@ -252,6 +265,17 @@ class SmaraAccountingApp extends StatelessWidget {
                 chainVerifier: chainVerifier,
               ),
         ),
+        ChangeNotifierProxyProvider<
+          DeviceMigrationBundleRepository,
+          BundleImportViewModel
+        >(
+          create: (context) => BundleImportViewModel(
+            bundleRepository: context.read<DeviceMigrationBundleRepository>(),
+          ),
+          update: (_, bundleRepository, previous) =>
+              previous ??
+              BundleImportViewModel(bundleRepository: bundleRepository),
+        ),
         ChangeNotifierProxyProvider5<
           LedgerRepository,
           SettingsRepository,
@@ -370,6 +394,7 @@ class _AppRouterHostState extends State<_AppRouterHost> {
     context.read<LedgerChainVerifier>(),
     context.read<InvestmentRepository>(),
     context.read<LedgerBackupRepository>(),
+    context.read<DeviceMigrationBundleRepository>(),
     context.read<StatementImportRepository>(),
     context.read<SettingsRepository>(),
     _appLockController,

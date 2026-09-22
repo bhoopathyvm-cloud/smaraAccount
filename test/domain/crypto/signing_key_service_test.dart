@@ -112,7 +112,8 @@ void main() {
       expect(await service.resumePendingIdentity(), isNull);
     });
 
-    test('clearPendingPhraseWords removes both words and language', () async {
+    test('remains readable indefinitely - it is the permanent Settings '
+        'recovery phrase store, not a transient cache', () async {
       final generated = await service.generateNewIdentity(
         language: Language.spanish,
       );
@@ -121,10 +122,13 @@ void main() {
         language: Language.spanish,
       );
 
-      await service.clearPendingPhraseWords();
+      final resumed = await service.resumePendingIdentity();
 
-      expect(await service.resumePendingIdentity(), isNull);
-      expect(await service.readPendingPhraseWords(), isNull);
+      expect(resumed, isNotNull);
+      expect(
+        resumed!.keyMaterial.publicKey,
+        equals(generated.keyMaterial.publicKey),
+      );
     });
   });
 
@@ -197,6 +201,50 @@ void main() {
         () => service.exportKeystoreFile(passphrase: 'x'),
         throwsStateError,
       );
+    });
+  });
+
+  group('device migration bundle export', () {
+    test(
+      'exported bundle decrypts to the same seed currently stored',
+      () async {
+        final generated = await service.generateNewIdentity();
+        final databaseBytes = List<int>.generate(32, (i) => i);
+
+        final file = await service.exportDeviceMigrationBundle(
+          databaseBytes: databaseBytes,
+          passphrase: 'hunter2-hunter2',
+        );
+        final restored = await service.restoreFromSeed(
+          (await service.loadStoredKeyMaterial())!.privateKeySeed,
+        );
+
+        expect(file, isNotEmpty);
+        expect(restored.publicKey, equals(generated.keyMaterial.publicKey));
+      },
+    );
+
+    test('export throws when no identity is stored', () async {
+      expect(
+        () => service.exportDeviceMigrationBundle(
+          databaseBytes: const [],
+          passphrase: 'x',
+        ),
+        throwsStateError,
+      );
+    });
+  });
+
+  group('restoreFromSeed', () {
+    test('stores the seed and derives the matching key pair', () async {
+      final generated = await service.generateNewIdentity();
+      final seed = (await service.loadStoredKeyMaterial())!.privateKeySeed;
+
+      final restored = await service.restoreFromSeed(seed);
+
+      expect(restored.publicKey, equals(generated.keyMaterial.publicKey));
+      final reloaded = await service.loadStoredKeyMaterial();
+      expect(reloaded!.publicKey, equals(generated.keyMaterial.publicKey));
     });
   });
 }

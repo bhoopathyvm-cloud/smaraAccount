@@ -1,6 +1,7 @@
 import 'package:bip39_mnemonic/bip39_mnemonic.dart';
 import 'package:drift/drift.dart';
 
+import '../../domain/crypto/ed25519_signing.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
 import '../../domain/models/signing_identity.dart';
@@ -191,29 +192,34 @@ class IdentityRepository {
     );
   }
 
-  /// Marks the current (latest, non-superseded) identity as having
-  /// completed the mandatory recovery-phrase acknowledgment, and clears
-  /// the phrase words temporarily held in secure storage for
-  /// crash-recovery re-display (deferred-onboarding-first-entry). Throws
-  /// [StateError] if there is no current identity.
-  Future<void> acknowledgeIdentity() async {
-    final identity = await currentIdentity();
-    if (identity == null) {
-      throw StateError('No signing identity to acknowledge.');
-    }
-    await (_db.update(
-      _db.signingIdentities,
-    )..where((t) => t.identityId.equals(identity.identityId))).write(
-      SigningIdentitiesCompanion(acknowledgedAt: Value(DateTime.now())),
-    );
-    await _signingKeyService.clearPendingPhraseWords();
-  }
-
   /// Encrypted keystore file export of the device's current signing key
   /// (spec: "Optional keystore file export"). Passthrough to
   /// [SigningKeyService] - the only place private key bytes are ever
   /// touched.
   Future<String> exportKeystoreFile({required String passphrase}) {
     return _signingKeyService.exportKeystoreFile(passphrase: passphrase);
+  }
+
+  /// Encrypted device migration bundle export of [databaseBytes] together
+  /// with the device's current signing key (spec:
+  /// `device-migration-bundle`). Passthrough to [SigningKeyService], same
+  /// reasoning as [exportKeystoreFile].
+  Future<String> exportDeviceMigrationBundle({
+    required List<int> databaseBytes,
+    required String passphrase,
+  }) {
+    return _signingKeyService.exportDeviceMigrationBundle(
+      databaseBytes: databaseBytes,
+      passphrase: passphrase,
+    );
+  }
+
+  /// Stores [seed] as this device's active private key - the device
+  /// migration bundle import path (spec: `device-migration-bundle`),
+  /// once the bundle's database has already been validated and adopted.
+  /// Passthrough to [SigningKeyService], same reasoning as
+  /// [exportKeystoreFile].
+  Future<KeyMaterial> adoptPrivateKeySeed(List<int> seed) {
+    return _signingKeyService.restoreFromSeed(seed);
   }
 }

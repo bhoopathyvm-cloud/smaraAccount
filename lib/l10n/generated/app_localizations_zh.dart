@@ -211,6 +211,23 @@ class AppLocalizationsZh extends AppLocalizations {
       '将您的账本加密副本保存到您选择的位置，或从中恢复。这与您的恢复短语或密钥库文件不同，后者备份的是您的签名密钥，而不是您的账本。';
 
   @override
+  String get settingsRecovery => 'Recovery & identity';
+
+  @override
+  String get settingsRecoveryBlurb =>
+      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
+
+  @override
+  String get settingsViewRecoveryPhrase => 'View recovery phrase';
+
+  @override
+  String get settingsExportKeystoreFile => 'Export keystore file';
+
+  @override
+  String get settingsExportDeviceMigrationBundle =>
+      'Export device migration bundle';
+
+  @override
   String get settingsLock => '锁定';
 
   @override
@@ -792,6 +809,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get iveSavedRecoveryPhrase => '我已保存我的恢复短语';
 
   @override
+  String get noRecoveryPhraseAvailable =>
+      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
+
+  @override
   String get confirmPhraseBlurb => '输入您刚保存的恢复短语中被要求的单词。';
 
   @override
@@ -811,6 +832,39 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get exportKeystoreFile => '导出密钥库文件';
+
+  @override
+  String get deviceMigrationBundleExportTitle =>
+      'Export device migration bundle';
+
+  @override
+  String get deviceMigrationBundleExportBlurb =>
+      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
+
+  @override
+  String get deviceMigrationBundleFile => 'Device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleTitle =>
+      'Import device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleBlurb =>
+      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
+
+  @override
+  String get chooseDeviceMigrationBundleFileFirst =>
+      'Choose a device migration bundle file first.';
+
+  @override
+  String get exportDeviceMigrationBundle => 'Export bundle';
+
+  @override
+  String get deviceMigrationBundleImported => 'Bundle imported';
+
+  @override
+  String get deviceMigrationBundleImportedBody =>
+      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => '选择你的语言';
@@ -845,6 +899,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get whatsMainAccountCalled => '您的主要账户叫什么名字？';
+
+  @override
+  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+
+  @override
+  String get setupChoiceBlurb =>
+      'Starting fresh, or moving from another device?';
+
+  @override
+  String get actionNewSetup => 'New setup';
+
+  @override
+  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get restoreTitle => '恢复签名密钥';
@@ -1144,6 +1211,27 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorForeignBackupIdentity => '此备份属于与本设备不同的签名身份。';
 
   @override
+  String get errorInvalidDeviceMigrationBundle =>
+      'This file is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleNoIdentity =>
+      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleUnverified =>
+      'This bundle did not verify as intact books, so it was not imported.';
+
+  @override
+  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
+    return 'This file could not be opened as a Smara device migration bundle: $detail';
+  }
+
+  @override
+  String get errorForeignDeviceMigrationBundleIdentity =>
+      'This bundle belongs to a different signing identity than the one already set up on this device.';
+
+  @override
   String get errorAccountNotFinancial => '该账户不是财务账户。';
 
   @override
@@ -1385,6 +1473,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorBackupRestoreFailed => '无法恢复此备份——密码短语错误，或该文件不是 Smara 备份文件。';
 
   @override
+  String errorDeviceMigrationBundleCreateFailed(String detail) {
+    return 'Could not create the device migration bundle: $detail';
+  }
+
+  @override
+  String get errorDeviceMigrationBundleImportFailed =>
+      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
+
+  @override
   String get validationAmountAccountCategoryRequired => '需要填写金额、账户和分类。';
 
   @override
@@ -1456,6 +1553,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get validationChooseBackupFile => '请先选择一个备份文件。';
+
+  @override
+  String get validationChooseDeviceMigrationBundleFile =>
+      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => '请输入密码短语。';

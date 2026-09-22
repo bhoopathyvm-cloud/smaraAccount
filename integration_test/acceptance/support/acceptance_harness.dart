@@ -8,13 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/l10n/locale_endonyms.dart';
 import 'package:smara_accounting/main.dart';
-import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
-import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_confirm_view.dart';
-import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
+import 'package:smara_accounting/ui/features/settings/views/recovery_phrase_view.dart';
+import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import 'acceptance_locale.dart';
@@ -361,21 +360,26 @@ Finder shellNavIcon(IconData icon) {
 
 /// Pumps the real app from a completely fresh device
 /// (`resetToFreshDevice` must already have run) all the way through the
-/// real onboarding GUI and its mandatory guided first entry, landing on
-/// Home with a real recovery phrase captured - the starting point every
-/// acceptance scenario needs (design.md Decision 5), since there is no
-/// pre-seeded identity to skip ahead with on this tier. Returns the 24
-/// recovery-phrase words.
+/// real onboarding GUI and its guided first entry, landing on Home - the
+/// starting point every acceptance scenario needs (design.md Decision 5),
+/// since there is no pre-seeded identity to skip ahead with on this tier.
+/// Onboarding never blocks on any recovery/backup step
+/// (`ledger-integrity-signing`'s "Optional Recovery and Backup Setup"), so
+/// this then makes one extra trip through Settings to capture the real 24
+/// recovery-phrase words many scenarios still need for restore/migration
+/// coverage, before returning to Home. Returns the 24 recovery-phrase
+/// words ([skipFirstWeekSetup] false callers, which land on
+/// FirstWeekSetupView instead of Home, get an empty list back - none of
+/// them use the words).
 ///
-/// Walks: LanguageSelectionView -> CurrencySelectionView (default currency
-/// follows the selected locale, onboarding-language-selection) ->
-/// FirstAccountNameView
-/// (defaults to a starter name) -> RecordTransactionView (the guided first
-/// entry, recording [amountText] against [categoryName]) ->
-/// RecoveryPhraseView -> KeystoreExportView (Skip) ->
-/// RecoveryPhraseConfirmView -> Home. Every step's ordering and the fixes
-/// applied here were hard-won against a real macOS build - see design.md
-/// Risks before changing this sequence.
+/// Walks: SetupChoiceView (New Setup) -> LanguageSelectionView ->
+/// CurrencySelectionView (default currency follows the selected locale,
+/// onboarding-language-selection) -> FirstAccountNameView (defaults to a
+/// starter name) -> RecordTransactionView (the guided first entry,
+/// recording [amountText] against [categoryName]) -> Home directly, then
+/// Settings -> RecoveryPhraseView -> back to Home. Every step's ordering
+/// and the fixes applied here were hard-won against a real macOS build -
+/// see design.md Risks before changing this sequence.
 Future<List<String>> completeOnboardingWithGuidedEntry(
   WidgetTester tester, {
   required String amountText,
@@ -396,13 +400,19 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
 
   await tester.pumpWidget(const SmaraAccountingApp());
   await tester.pump();
-  await pumpUntilFound(tester, find.byType(LanguageSelectionView));
-  if (find.byType(LanguageSelectionView).evaluate().isEmpty) {
+  await pumpUntilFound(tester, find.byType(SetupChoiceView));
+  if (find.byType(SetupChoiceView).evaluate().isEmpty) {
     fail(
-      'completeOnboardingWithGuidedEntry: LanguageSelectionView never '
-      'appeared (device may not have been reset).\n$_visibleTextsDump()',
+      'completeOnboardingWithGuidedEntry: SetupChoiceView never '
+      'appeared (device may not have been reset).\n${_visibleTextsDump()}',
     );
   }
+
+  await tapReliably(
+    tester,
+    () => find.text(l10n.actionNewSetup),
+    () => find.byType(LanguageSelectionView).evaluate().isNotEmpty,
+  );
 
   // onboarding-language-selection: selection is mandatory - Continue stays
   // disabled until a row is tapped. `kAcceptanceLocaleTag == 'en'` confirms
@@ -533,6 +543,14 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
     // it into view and re-taps until the phrase screen appears.
     // Catch so a failed Save attempt can re-enter amount/category (same
     // pattern as core_ledger_test's re-anchoring Save loop).
+    //
+    // Landing here also awaits the router's own redirect chain re-reading
+    // hasAnyJournalEntries() from the real database - as slow, in real
+    // wall-clock terms, as everything else real I/O touches in this suite -
+    // and, unlike the old acknowledgment-gated flow, goes straight through
+    // to Home (or FirstWeekSetupView, for [skipFirstWeekSetup] false
+    // callers) with nothing in between (`ledger-integrity-signing`'s
+    // "Optional Recovery and Backup Setup").
     try {
       await tapReliably(
         tester,
@@ -540,7 +558,12 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
           of: find.byType(RecordTransactionView),
           matching: find.text(l10n.actionSave),
         ),
-        () => find.text(l10n.iveSavedRecoveryPhrase).evaluate().isNotEmpty,
+        () => skipFirstWeekSetup
+            ? find
+                  .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
+                  .evaluate()
+                  .isNotEmpty
+            : find.text(l10n.firstWeekTitle).evaluate().isNotEmpty,
         innerTries: 150,
       );
       saved = true;
@@ -555,68 +578,65 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
     );
   }
 
-  // Landing here also awaits the router's own redirect chain re-reading
-  // hasAnyJournalEntries() from the real database - as slow, in real
-  // wall-clock terms, as everything else real I/O touches in this suite,
-  // so this polls as patiently as pumpUntilFound rather than a handful of
-  // short tries.
+  if (!skipFirstWeekSetup) {
+    // Wizard-specific callers land on FirstWeekSetupView, not Home, and
+    // none of them use the returned words.
+    return const [];
+  }
+
+  // The recovery phrase is no longer shown automatically during
+  // onboarding - fetch the real words from Settings instead, for the
+  // restore/migration scenarios that still need them.
+  //
+  // innerTries raised (matching this file's own convention for a
+  // transition that does real I/O, e.g. Settings' own _load() querying
+  // several repositories/biometrics): the default 4s window was observed
+  // to time out before Settings finished loading, causing the outer
+  // retry loop to re-tap a tooltip that no longer exists once Settings
+  // is already open - target.evaluate() then empty, and ensureVisible on
+  // an empty finder throws "Bad state: No element".
+  await tapReliably(
+    tester,
+    () => find.byTooltip(l10n.settingsTitle),
+    () => find.text(l10n.settingsViewRecoveryPhrase).evaluate().isNotEmpty,
+    innerTries: 150,
+  );
+  await tapReliably(
+    tester,
+    () => find.text(l10n.settingsViewRecoveryPhrase).hitTestable(),
+    () => find.byType(RecoveryPhraseView).evaluate().isNotEmpty,
+    innerTries: 150,
+  );
+
   List<String>? words;
   for (var attempt = 0; attempt < 200 && words == null; attempt++) {
     final matches = find.byType(RecoveryPhraseView).evaluate();
     if (matches.length == 1) {
-      words = (matches.single.widget as RecoveryPhraseView).viewModel.words;
-    } else {
-      await tester.pump(const Duration(milliseconds: 100));
+      final displayedWords =
+          (matches.single.widget as RecoveryPhraseView).viewModel.words;
+      if (displayedWords.isNotEmpty) words = displayedWords;
     }
+    if (words == null) await tester.pump(const Duration(milliseconds: 100));
   }
   if (words == null) {
     fail(
       'completeOnboardingWithGuidedEntry: RecoveryPhraseView never stably '
-      'found.\n${_visibleTextsDump()}',
+      'showed a phrase.\n${_visibleTextsDump()}',
     );
   }
 
+  // Back twice: RecoveryPhraseView (pushed from Settings) then Settings
+  // itself, landing on Home again.
   await tapReliably(
     tester,
-    () => find.text(l10n.iveSavedRecoveryPhrase),
-    () => find.text(l10n.actionSkip).evaluate().isNotEmpty,
+    () => find.byTooltip(materialL10n(tester).backButtonTooltip),
+    () => find.byType(RecoveryPhraseView).evaluate().isEmpty,
+    innerTries: 150,
   );
   await tapReliably(
     tester,
-    () => find.text(l10n.actionSkip),
-    () => find.byType(RecoveryPhraseConfirmView).evaluate().isNotEmpty,
-  );
-
-  final wordFields = find.descendant(
-    of: find.byType(RecoveryPhraseConfirmView),
-    matching: find.byType(TextField),
-  );
-  for (
-    var i = 0;
-    i < RecoveryPhraseSetupViewModel.confirmationWordIndices.length;
-    i++
-  ) {
-    await tester.enterText(
-      wordFields.at(i),
-      words[RecoveryPhraseSetupViewModel.confirmationWordIndices[i]],
-    );
-  }
-  await tester.pump();
-  // Confirming goes straight to Home when the wizard is pre-skipped - the
-  // identity (and its currency) was already committed back at
-  // CurrencySelectionView. With [skipFirstWeekSetup] false, it lands on
-  // FirstWeekSetupView instead (app_router.dart's redirect chain).
-  await tapReliably(
-    tester,
-    () => find.text(l10n.actionConfirm).hitTestable(),
-    () =>
-        find.byType(RecoveryPhraseConfirmView).evaluate().isEmpty &&
-        (skipFirstWeekSetup
-            ? find
-                  .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
-                  .evaluate()
-                  .isNotEmpty
-            : find.text(l10n.firstWeekTitle).evaluate().isNotEmpty),
+    () => find.byTooltip(materialL10n(tester).backButtonTooltip),
+    () => find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
     innerTries: 150,
   );
 

@@ -8,8 +8,10 @@ import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/domain/time/iso_date.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
+import 'package:smara_accounting/data/repositories/device_migration_bundle_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
@@ -28,11 +30,10 @@ import 'package:smara_accounting/ui/features/account_management/view_models/acco
 import 'package:smara_accounting/ui/features/category_management/view_models/category_management_view_model.dart';
 import 'package:smara_accounting/ui/features/home/view_models/home_view_model.dart';
 import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
-import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_confirm_view.dart';
-import 'package:smara_accounting/ui/features/onboarding/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/register/view_models/register_view_model.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/features/restore/view_models/restore_identity_view_model.dart';
+import 'package:smara_accounting/ui/features/settings/views/recovery_phrase_view.dart';
 import 'package:smara_accounting/ui/features/summary/view_models/summary_view_model.dart';
 import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 
@@ -93,6 +94,7 @@ void main() {
   late AccountRepository accountRepository;
   late CategoryRepository categoryRepository;
   late IdentityRepository identityRepository;
+  late String seedEntryId;
 
   setUp(() async {
     db = AppDatabase.forTesting(NativeDatabase.memory());
@@ -113,16 +115,40 @@ void main() {
       accountRepository: accountRepository,
       signingKeyService: signingKeyService,
     );
-    // app_router.dart's redirect requires a confirmed AND acknowledged
-    // signing identity, plus a completed first-week-setup wizard, before
-    // /register (or any other main route) is reachable - these tests
-    // exercise the ledger, not onboarding, so start past all of it.
-    // (deferred-onboarding-first-entry otherwise sends every fresh
-    // identity through first-account-name -> first-entry -> the
-    // recovery-phrase screens before Home is ever reachable.)
+    // app_router.dart's redirect requires a confirmed signing identity
+    // with at least one recorded journal entry, plus a completed
+    // first-week-setup wizard, before /register (or any other main
+    // route) is reachable - these tests exercise the ledger, not
+    // onboarding, so start past all of it. Unlike the old mandatory
+    // acknowledgment flow (removed - device-migration-bundle), there is
+    // no repository-level shortcut left to skip the "has any journal
+    // entry" gate other than actually posting one, so this posts a real,
+    // balanced entry between two system accounts (opening-balance
+    // equity and transfers-in-transit) that never appear as a financial
+    // account, never touch an income/expense category, and never touch
+    // the starter checking account - so it never perturbs a test's own
+    // exact balance/summary/entry-count assertions. A few tests that
+    // query `watchEntries()`/`watchIntegrityEvents()` globally (not
+    // scoped to one account) filter this seed entry out by
+    // [seedEntryId] explicitly - see their own comments.
     final generated = await identityRepository.generateFirstIdentity();
     await identityRepository.confirmFirstIdentity(generated, currency: 'USD');
-    await identityRepository.acknowledgeIdentity();
+    seedEntryId = await repository.appendSignedEntry(
+      transactionDate: dateOnly(DateTime(2020, 1, 1)),
+      description: 'app_test.dart fixture seed',
+      postings: [
+        (
+          accountId: openingBalanceEquityAccountId,
+          amountMinor: 1,
+          lineNumber: 1,
+        ),
+        (
+          accountId: transfersInTransitAccountId,
+          amountMinor: -1,
+          lineNumber: 2,
+        ),
+      ],
+    );
     await SettingsRepository().setFirstWeekSetupCompleted(true);
   });
 
@@ -276,7 +302,9 @@ void main() {
         financialAccountId: accounts.first.id,
         transactionDate: DateTime(2026, 1, 15),
       );
-      final tampered = (await repository.watchEntries().first).single;
+      final tampered = (await repository.watchEntries().first).firstWhere(
+        (e) => e.id != seedEntryId,
+      );
 
       // Mutate the stored row directly - not through the Repository (which
       // has no update path) - exactly mimicking direct SQLite file access
@@ -506,17 +534,29 @@ void main() {
       // other test's setUp() in this file.
       await SettingsRepository().setFirstWeekSetupCompleted(true);
 
-      // First launch: walk the real onboarding UI, in the current
-      // deferred-onboarding-first-entry order - currency first (which
-      // commits the identity), then the starter account's name, then a
-      // guided first entry, and only then the recovery-phrase
-      // acknowledgment screens (app_router.dart's _onboardingPaths).
+      // First launch: walk the real onboarding UI. Onboarding no longer
+      // blocks on any recovery/backup step (device-migration-bundle) - New
+      // Setup -> language -> currency (which commits the identity) -> the
+      // starter account's name -> a guided first entry -> Home directly.
       await pumpApp(
         tester,
         buildAppFor(firstInstallRepository, freshDb, firstKeys),
       );
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 100));
+
+      // SetupChoiceView.
+      await tester.tap(find.text('New setup'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+
+      // LanguageSelectionView: selection is mandatory - confirm the
+      // pre-highlighted "Device language" row before Continue enables.
+      await tester.tap(find.text('Device language'));
+      await tester.pump();
+      await tester.tap(find.text('Continue'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
 
       // CurrencySelectionView: defaults to USD, so Continue needs no input.
       await tester.tap(find.text('Continue'));
@@ -539,12 +579,25 @@ void main() {
       await tester.tap(find.text('Salary').last);
       await tester.pump();
       await tester.tap(find.text('Save'));
-      // The continue button only renders once the ViewModel's async key
-      // generation has actually finished, unlike the bare presence of
-      // RecoveryPhraseView.
-      final continueButton = find.text('I\'ve saved my recovery phrase');
-      await pumpUntilFound(tester, continueButton);
-      expect(continueButton, findsOneWidget);
+      // Saving now lands straight on Home - no acknowledgment screen
+      // follows (device-migration-bundle).
+      await pumpUntilFound(
+        tester,
+        find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
+      );
+      expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
+
+      final originalEntry =
+          (await firstInstallRepository.watchEntries().first).single;
+
+      // The recovery phrase is no longer shown automatically - fetch it
+      // from Settings instead, same as completeOnboardingWithGuidedEntry
+      // does for the acceptance suite.
+      await tester.tap(find.byTooltip('Settings'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.text('View recovery phrase'));
+      await pumpUntilFound(tester, find.byType(RecoveryPhraseView));
 
       final phraseView = tester.widget<RecoveryPhraseView>(
         find.byType(RecoveryPhraseView),
@@ -552,56 +605,16 @@ void main() {
       final words = phraseView.viewModel.words;
       expect(words, hasLength(24));
 
-      await tester.ensureVisible(continueButton);
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(continueButton);
-      await pumpUntilFound(tester, find.text('Skip'));
-      expect(find.text('Skip'), findsOneWidget);
-
-      final skipButton = find.text('Skip');
-      await tester.ensureVisible(skipButton);
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(skipButton);
-      await pumpUntilFound(tester, find.text('Confirm'));
-      expect(find.text('Confirm'), findsOneWidget);
-
-      // Scoped to RecoveryPhraseConfirmView specifically, not just
-      // find.byType(TextField): the previous page's fields can still be
-      // present mid-transition when this is reached via pumpUntilFound's
-      // early exit as soon as "Confirm" first appears.
-      final wordFields = find.descendant(
-        of: find.byType(RecoveryPhraseConfirmView),
-        matching: find.byType(TextField),
-      );
-      for (
-        var i = 0;
-        i < RecoveryPhraseSetupViewModel.confirmationWordIndices.length;
-        i++
-      ) {
-        await tester.enterText(
-          wordFields.at(i),
-          words[RecoveryPhraseSetupViewModel.confirmationWordIndices[i]],
-        );
-      }
-      final confirmButton = find.text('Confirm');
-      await tester.ensureVisible(confirmButton);
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(confirmButton);
-      // Confirming now goes straight to Home - the identity (and its
-      // currency) was already committed back at CurrencySelectionView.
+      // Back twice: RecoveryPhraseView, then Settings, landing on Home.
+      await tester.tap(find.byTooltip('Back'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
+      await tester.tap(find.byTooltip('Back'));
       await pumpUntilFound(
         tester,
         find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
       );
-      expect(
-        find.textContaining('doesn\'t match'),
-        findsNothing,
-        reason: 'confirmation words were rejected',
-      );
       expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
-
-      final originalEntry =
-          (await firstInstallRepository.watchEntries().first).single;
 
       // Reinstall: same database file, fresh secure storage (the private
       // key is gone from this "device").
@@ -650,7 +663,9 @@ void main() {
         financialAccountId: accounts.first.id,
         transactionDate: DateTime(2026, 1, 15),
       );
-      final legacy = (await repository.watchEntries().first).single;
+      final legacy = (await repository.watchEntries().first).firstWhere(
+        (e) => e.id != seedEntryId,
+      );
       final oldIdentity = (await identityRepository.currentIdentity())!;
 
       // Simulate true key loss: same database, brand new secure storage,
@@ -706,7 +721,10 @@ void main() {
       expect(newIdentity.supersedesIdentityId, equals(oldIdentity.identityId));
 
       final entries = await postLossRepository.watchEntries().first;
-      expect(entries, hasLength(2));
+      // 4, not 2: migration re-signs every active entry, including the
+      // shared setUp's own seed entry - seed, legacy, migrated-seed,
+      // migrated-legacy.
+      expect(entries, hasLength(4));
       final migrated = entries.firstWhere(
         (e) => e.migratedFromEntryId == legacy.id,
       );
@@ -969,6 +987,11 @@ Widget buildAppFor(
     identityRepository: identityRepository,
     signingKeyService: signingKeyService,
   );
+  final deviceMigrationBundleRepository = DeviceMigrationBundleRepository(
+    database: database,
+    identityRepository: identityRepository,
+    signingKeyService: signingKeyService,
+  );
   final statementImportRepository = StatementImportRepository(
     database: database,
     ledgerRepository: repository,
@@ -988,6 +1011,9 @@ Widget buildAppFor(
         value: recurringTemplateRepository,
       ),
       Provider<LedgerBackupRepository>.value(value: ledgerBackupRepository),
+      Provider<DeviceMigrationBundleRepository>.value(
+        value: deviceMigrationBundleRepository,
+      ),
       ChangeNotifierProvider(
         create: (_) => RegisterViewModel(
           ledgerRepository: repository,
@@ -1044,6 +1070,7 @@ Widget buildAppFor(
             chainVerifier,
             investmentRepository,
             ledgerBackupRepository,
+            deviceMigrationBundleRepository,
             statementImportRepository,
             settingsRepository,
             AppLockController(settingsRepository: settingsRepository),

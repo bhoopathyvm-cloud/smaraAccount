@@ -2,14 +2,14 @@ import 'package:smara_accounting/domain/models/signing_identity.dart';
 import 'package:smara_accounting/domain/navigation/app_navigation_policy.dart';
 import 'package:test/test.dart';
 
-SigningIdentity _identity({DateTime? acknowledgedAt}) {
+SigningIdentity _identity() {
   return SigningIdentity(
     identityId: 'id-1',
     publicKey: const [1, 2, 3],
     createdAt: DateTime(2026, 1, 1),
     supersedesIdentityId: null,
     supersededAt: null,
-    acknowledgedAt: acknowledgedAt,
+    acknowledgedAt: null,
   );
 }
 
@@ -36,21 +36,25 @@ AppNavigationPolicy _policy({
 }
 
 void main() {
-  final ready = _identity(acknowledgedAt: DateTime(2026, 1, 2));
+  final ready = _identity();
 
-  test('no identity redirects to language', () async {
+  test('no identity redirects to the setup choice screen', () async {
     final policy = _policy(identity: null);
-    expect(await policy.resolve(AppNavPaths.home), AppNavPaths.language);
-    expect(await policy.resolve(AppNavPaths.language), isNull);
+    expect(await policy.resolve(AppNavPaths.home), AppNavPaths.setupChoice);
+    expect(await policy.resolve(AppNavPaths.setupChoice), isNull);
   });
 
-  test('no identity stays on currency (reachable from language)', () async {
+  test('no identity stays on every pre-identity screen '
+      '(setup choice, import, language, currency)', () async {
     final policy = _policy(identity: null);
+    expect(await policy.resolve(AppNavPaths.setupChoice), isNull);
+    expect(await policy.resolve(AppNavPaths.importBackup), isNull);
+    expect(await policy.resolve(AppNavPaths.language), isNull);
     expect(await policy.resolve(AppNavPaths.currency), isNull);
   });
 
   test(
-    'unacknowledged with no entry stays on first-account or first-entry',
+    'identity with no entry stays on first-account or first-entry',
     () async {
       final policy = _policy(identity: _identity(), hasEntries: false);
       expect(await policy.resolve(AppNavPaths.home), AppNavPaths.firstAccount);
@@ -59,10 +63,10 @@ void main() {
     },
   );
 
-  test('unacknowledged after first entry goes to recovery phrase', () async {
+  test('identity with a recorded entry proceeds straight through - no '
+      'acknowledgment screen follows', () async {
     final policy = _policy(identity: _identity(), hasEntries: true);
-    expect(await policy.resolve(AppNavPaths.home), AppNavPaths.recoveryPhrase);
-    expect(await policy.resolve(AppNavPaths.confirm), isNull);
+    expect(await policy.resolve(AppNavPaths.home), isNull);
   });
 
   test('missing stored key redirects to restore', () async {
@@ -119,6 +123,7 @@ void main() {
 
   test('finished gated routes redirect home; shell stays', () async {
     final policy = _policy(identity: ready);
+    expect(await policy.resolve(AppNavPaths.setupChoice), AppNavPaths.home);
     expect(await policy.resolve(AppNavPaths.language), AppNavPaths.home);
     expect(await policy.resolve(AppNavPaths.currency), AppNavPaths.home);
     expect(await policy.resolve(AppNavPaths.lock), AppNavPaths.home);

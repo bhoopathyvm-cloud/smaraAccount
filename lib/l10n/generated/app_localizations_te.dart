@@ -212,6 +212,23 @@ class AppLocalizationsTe extends AppLocalizations {
       'మీ ఖాతా పుస్తకాల ఎన్‌క్రిప్టెడ్ కాపీని మీరు ఎంచుకున్న ప్రదేశంలో సేవ్ చేయండి, లేదా దాని నుండి పునరుద్ధరించండి. ఇది మీ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ నుండి వేరు, అవి మీ సైనింగ్ కీని బ్యాకప్ చేస్తాయి, మీ ఖాతా పుస్తకాలను కాదు.';
 
   @override
+  String get settingsRecovery => 'Recovery & identity';
+
+  @override
+  String get settingsRecoveryBlurb =>
+      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
+
+  @override
+  String get settingsViewRecoveryPhrase => 'View recovery phrase';
+
+  @override
+  String get settingsExportKeystoreFile => 'Export keystore file';
+
+  @override
+  String get settingsExportDeviceMigrationBundle =>
+      'Export device migration bundle';
+
+  @override
   String get settingsLock => 'లాక్';
 
   @override
@@ -811,6 +828,10 @@ class AppLocalizationsTe extends AppLocalizations {
       'నేను నా రికవరీ పదబంధాన్ని సేవ్ చేసుకున్నాను';
 
   @override
+  String get noRecoveryPhraseAvailable =>
+      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
+
+  @override
   String get confirmPhraseBlurb =>
       'మీరు ఇప్పుడే సేవ్ చేసిన పదబంధం నుండి అడిగిన పదాలను నమోదు చేయండి.';
 
@@ -831,6 +852,39 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get exportKeystoreFile => 'కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయి';
+
+  @override
+  String get deviceMigrationBundleExportTitle =>
+      'Export device migration bundle';
+
+  @override
+  String get deviceMigrationBundleExportBlurb =>
+      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
+
+  @override
+  String get deviceMigrationBundleFile => 'Device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleTitle =>
+      'Import device migration bundle';
+
+  @override
+  String get importDeviceMigrationBundleBlurb =>
+      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
+
+  @override
+  String get chooseDeviceMigrationBundleFileFirst =>
+      'Choose a device migration bundle file first.';
+
+  @override
+  String get exportDeviceMigrationBundle => 'Export bundle';
+
+  @override
+  String get deviceMigrationBundleImported => 'Bundle imported';
+
+  @override
+  String get deviceMigrationBundleImportedBody =>
+      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'మీ భాషను ఎంచుకోండి';
@@ -867,6 +921,19 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get whatsMainAccountCalled => 'మీ ప్రధాన ఖాతా పేరు ఏమిటి?';
+
+  @override
+  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+
+  @override
+  String get setupChoiceBlurb =>
+      'Starting fresh, or moving from another device?';
+
+  @override
+  String get actionNewSetup => 'New setup';
+
+  @override
+  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get restoreTitle => 'సైనింగ్ కీని పునరుద్ధరించు';
@@ -1180,6 +1247,27 @@ class AppLocalizationsTe extends AppLocalizations {
       'ఈ బ్యాకప్ ఈ పరికరంలో ఉన్న దానికంటే వేరే సైనింగ్ ఐడెంటిటీకి చెందినది.';
 
   @override
+  String get errorInvalidDeviceMigrationBundle =>
+      'This file is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleNoIdentity =>
+      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
+
+  @override
+  String get errorInvalidDeviceMigrationBundleUnverified =>
+      'This bundle did not verify as intact books, so it was not imported.';
+
+  @override
+  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
+    return 'This file could not be opened as a Smara device migration bundle: $detail';
+  }
+
+  @override
+  String get errorForeignDeviceMigrationBundleIdentity =>
+      'This bundle belongs to a different signing identity than the one already set up on this device.';
+
+  @override
   String get errorAccountNotFinancial => 'అది ఆర్థిక ఖాతా కాదు.';
 
   @override
@@ -1469,6 +1557,15 @@ class AppLocalizationsTe extends AppLocalizations {
       'ఈ బ్యాకప్‌ను పునరుద్ధరించలేకపోయాము - తప్పు పాస్‌ఫ్రేజ్, లేదా ఇది స్మారా బ్యాకప్ ఫైల్ కాదు.';
 
   @override
+  String errorDeviceMigrationBundleCreateFailed(String detail) {
+    return 'Could not create the device migration bundle: $detail';
+  }
+
+  @override
+  String get errorDeviceMigrationBundleImportFailed =>
+      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
+
+  @override
   String get validationAmountAccountCategoryRequired =>
       'మొత్తం, ఖాతా, మరియు వర్గం అవసరం.';
 
@@ -1553,6 +1650,10 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get validationChooseBackupFile => 'మొదట బ్యాకప్ ఫైల్‌ను ఎంచుకోండి.';
+
+  @override
+  String get validationChooseDeviceMigrationBundleFile =>
+      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.';
