@@ -1124,10 +1124,13 @@ void main() {
         categoryName: salaryCategory,
       );
 
+      // Settings body is a lazily-built ListView: sections below the fold
+      // (Backup, Lock, …) are not in the element tree until scrolled into
+      // the cache extent. Wait for a top-of-list marker, not settingsBackup.
       await tapReliably(
         tester,
         () => find.byTooltip(l10n.settingsTitle),
-        () => find.text(l10n.settingsBackup).evaluate().isNotEmpty,
+        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
       );
       // Lock is below Backup, below the live window's fold (design.md
       // Risks). Drag the settings ListView itself - the same pattern
@@ -2527,10 +2530,12 @@ void main() {
       _RecordingFilePickerPlatform fakePicker, {
       required String passphrase,
     }) async {
+      // Top-of-list marker: Backup itself is below the fold and not yet
+      // mounted in the lazily-built Settings ListView.
       await tapReliably(
         tester,
         () => find.byTooltip(l10n.settingsTitle),
-        () => find.text(l10n.settingsBackup).evaluate().isNotEmpty,
+        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
       );
       // Settings has many sections above Backup (language, FX/market-price
       // toggles, research tool) - below the live window's fold (design.md
@@ -2618,7 +2623,7 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(l10n.settingsTitle),
-          () => find.text(l10n.settingsBackup).evaluate().isNotEmpty,
+          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
         );
         await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
         await tester.pump(const Duration(milliseconds: 300));
@@ -2755,7 +2760,7 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(l10n.settingsTitle),
-          () => find.text(l10n.settingsBackup).evaluate().isNotEmpty,
+          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
         );
         await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
         await tester.pump(const Duration(milliseconds: 300));
@@ -3123,10 +3128,12 @@ void main() {
       WidgetTester tester,
       AppLocalizations l10n,
     ) async {
+      // Top-of-list marker only — Backup/Lock/Payees sit below the fold in
+      // the lazily-built Settings ListView and are not mounted until scrolled.
       await tapReliably(
         tester,
         () => find.byTooltip(l10n.settingsTitle),
-        () => find.text(l10n.settingsBackup).evaluate().isNotEmpty,
+        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
       );
     }
 

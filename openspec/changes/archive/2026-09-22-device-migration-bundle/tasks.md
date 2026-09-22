@@ -26,10 +26,10 @@
 
 ## 6. Spec-required documentation
 
-- [ ] 6.1 Rewrite the onboarding, signing-key-tradeoff, and backup/restore sections of `docs/user-guide.md` per the `user-guide` spec delta, and verify `openspec show user-guide --type spec` scenarios are each satisfied by the rewritten text
+- [x] 6.1 Rewrite the onboarding, signing-key-tradeoff, and backup/restore sections of `docs/user-guide.md` per the `user-guide` spec delta, and verify `openspec show user-guide --type spec` scenarios are each satisfied by the rewritten text
 
 ## 7. Full verification
 
 - [x] 7.1 Run `flutter analyze` and `flutter test`, verify both pass
-- [ ] 7.2 Run `tool/run_acceptance_tests.sh -d macos` (required per this repo's working conventions after DI/routing/onboarding-flow changes) and verify it passes, since onboarding routing and app-resume gating changed in ways unit/widget test mocks would not catch
-- [ ] 7.3 Run `openspec validate device-migration-bundle --strict` and verify it reports the change valid before archiving
+- [x] 7.2 Run `tool/run_acceptance_tests.sh -d macos` (required per this repo's working conventions after DI/routing/onboarding-flow changes) and verify it passes, since onboarding routing and app-resume gating changed in ways unit/widget test mocks would not catch
+- [x] 7.3 Run `openspec validate device-migration-bundle --strict` and verify it reports the change valid before archiving

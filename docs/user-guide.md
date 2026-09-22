@@ -33,42 +33,62 @@ It does not prove that every transaction was truthful when entered, and it
 does not replace your device passcode, app lock, or backups. It means the
 stored history cannot be quietly rewritten later without the app noticing.
 
-## Your recovery phrase
+## Your recovery phrase, keystore file, and device migration bundle
 
 Every device generates its own signing key, and every transaction you
 record is signed with it. This is what makes the ledger tamper-evident —
-there is no server and no account recovery. **If you lose this device and
-your recovery phrase together, every transaction you've recorded becomes
-permanently unverifiable.** There is no way for anyone, including the
-app's author, to recover it for you.
+there is no server and no account recovery. **If you lose this device
+without having backed up your signing key, every transaction you've
+recorded becomes permanently unverifiable.** There is no way for anyone,
+including the app's author, to recover it for you.
 
-You get two ways to protect against that:
+None of the following is required to keep using the app — recording
+transactions, navigating anywhere, and reopening the app all work
+immediately, with nothing to complete first. You get three ways to
+protect your key, all reachable any time from Settings → Recovery &
+identity:
 
-- **Recovery phrase** (mandatory): a 24-word phrase, written down and
-  acknowledged right after your first entry (see Onboarding below). This
-  alone is always enough to restore your signing key.
-- **Keystore file** (optional): an additional, passphrase-encrypted backup
-  file you can export during that same step or skip entirely — your
-  recovery phrase alone is sufficient without it.
+- **Recovery phrase** — a 24-word phrase you write down on paper. This
+  alone is always enough to restore your signing key on a new device
+  (see [Restoring on a new device or after a reinstall](#restoring-on-a-new-device-or-after-a-reinstall)
+  below), but not your books — you'd still need a books backup (see
+  Settings below) or the device's own data to go with it.
+- **Keystore file** — a passphrase-encrypted file containing just the key.
+  Also identity-only, same as the phrase, just file-based instead of
+  words on paper.
+- **Device migration bundle** — a single passphrase-encrypted file
+  containing your books *and* your signing key together. This is the
+  fastest way to move to a new device: importing it there restores
+  everything in one step, with nothing else to restore afterward. Because
+  it carries both together, anyone who obtained this file *and* its
+  passphrase could both read your books and sign new entries as you — a
+  larger exposure than the recovery phrase or a books-only backup alone.
+  Keep the passphrase somewhere separate from the file, such as a
+  password manager.
 
-If you ever lose both, the app still has an escape hatch (see
+If you ever lose all of these, the app still has an escape hatch (see
 [True key loss](#true-key-loss) below), but it comes with a real
 trade-off: everything recorded before that point can no longer be proven
 untampered, only preserved as a read-only historical record.
 
 ## Onboarding
 
-On first launch, the app walks you through this order:
+On first launch, the app asks you to choose:
+
+- **New setup** — starting fresh on this device.
+- **Import from backup** — moving from another device, using a device
+  migration bundle you exported there (see Settings below).
+
+Choosing **New setup** walks you through:
 
 1. **Language** — pick the app's language from a list of every language it
    supports, each shown in its own script. Your device's language is
    pre-highlighted; confirming it counts as your choice. You must pick one
    to continue — there's no way to skip this screen. If your chosen
    language doesn't yet have a security-standard word list for the
-   recovery phrase in step 5 (most languages don't), you'll see a plain
-   notice here saying the phrase will be in English, and why, before you
-   ever reach that step. You can always change the language later in
-   Settings.
+   recovery phrase (most languages don't), you'll see a plain notice here
+   saying the phrase will be in English, and why. You can always change
+   the language later in Settings.
 2. **Currency** — pick your base currency. The list starts pre-filled with
    a sensible guess based on the language you just chose (editable, not
    enforced) and becomes the currency of the starter account groups (Cash
@@ -78,23 +98,17 @@ On first launch, the app walks you through this order:
 3. **Name your main account** — a starter account is created for you;
    give it a name you recognize, like your bank.
 4. **Record one entry** — a guided Spent or Received, so you can try the
-   app before facing the recovery-phrase ritual.
-5. **Your recovery phrase** — the 24 words are generated and shown once,
-   in your chosen language if a security-standard word list exists for it
-   (currently French, Italian, Spanish, Portuguese, Japanese, Korean, and
-   Simplified Chinese), or in English otherwise. Tap "I've saved my
-   recovery phrase" only once you've actually written them down.
-6. **Optional backup file** — enter a passphrase to export an encrypted
-   keystore file, or tap "Skip." Neither blocks you from continuing.
-7. **Confirm** — you re-enter part of your phrase to confirm you actually
-   saved it correctly.
+   app right away.
 
-The entry you record in step 4 is a real, permanently signed transaction
-from the moment it posts — not a demo. Steps 5–7 are mandatory and block
-everything else (recording a second entry, leaving the app, even resuming
-after it's closed) until you complete them; if the app is closed partway
-through, it picks back up at the same step next time you open it, showing
-the same phrase again.
+That entry is a real, permanently signed transaction from the moment it
+posts — not a demo. Once it's recorded, you land in the app with nothing
+further to complete — no forced screen follows. Your recovery phrase,
+keystore file, and device migration bundle are all optional and waiting
+for you in Settings whenever you want them.
+
+Choosing **Import from backup** instead skips all of the above: pick your
+device migration bundle file and enter its passphrase, and you land
+directly in your restored books, ready to record a new entry immediately.
 
 ## Setting up your accounts
 
@@ -113,9 +127,19 @@ ever appears once.
 
 ## Restoring on a new device or after a reinstall
 
-If you reinstall the app, or move to a new device, and the app detects an
-existing books with no matching local signing key, it shows a **Restore
-signing key** screen instead of onboarding. Choose either:
+The simplest way to move to a new device: export a **device migration
+bundle** from Settings on your old device beforehand, then choose
+**Import from backup** at startup on the new one (see
+[Onboarding](#onboarding) above). One file, one passphrase, and you're
+immediately back to recording entries — no separate steps. Importing
+**replaces** whatever is on the new device with the bundle's books and
+key; it never merges the two.
+
+If you don't have a device migration bundle — say, you already restored
+your books some other way (a Save backup/Restore backup file, or the
+device's own backup mechanism) and the app now has your existing books
+but no matching local signing key — it shows a **Restore signing key**
+screen instead. Choose either:
 
 - **Recovery phrase** — paste all 24 words.
 - **Keystore file** — paste the file's contents and the passphrase you set
@@ -530,6 +554,22 @@ period-over-period read on where money went.
   readable and fully verified, but recording a new entry still needs the
   matching signing key restored separately, via recovery phrase or
   keystore.
+- **Recovery & identity** — three optional, independent ways to protect
+  your signing key, none of them required to keep using the app (see
+  [Your recovery phrase, keystore file, and device migration bundle](#your-recovery-phrase-keystore-file-and-device-migration-bundle)
+  above):
+  - **View recovery phrase**: shows the 24-word phrase again, whenever you
+    want. An identity restored from a keystore file, a recovery phrase, or
+    a device migration bundle instead of generated fresh on this device
+    has no phrase of its own to show here.
+  - **Export keystore file**: writes a passphrase-encrypted file containing
+    just your signing key.
+  - **Export device migration bundle**: writes a single passphrase-encrypted
+    file containing both your books and your signing key together, for
+    moving to a new device in one step (see
+    [Restoring on a new device or after a reinstall](#restoring-on-a-new-device-or-after-a-reinstall)
+    above). Because it carries both together, protect its passphrase at
+    least as carefully as the file itself.
 - **Require unlock to open the app**: off by default. Turning it on asks
   you to set a PIN (at least 4 characters); from then on, opening the app
   or returning to it after the idle timeout requires that PIN. Turning it

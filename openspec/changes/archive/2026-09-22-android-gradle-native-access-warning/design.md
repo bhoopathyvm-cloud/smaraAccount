@@ -28,7 +28,7 @@ metaspace, code cache). Nothing there addresses native access.
 
 ## Decisions
 
-### 1. `--enable-native-access=ALL-UNNAMED` in `org.gradle.jvmargs`
+### 1. `--enable-native-access=ALL-UNNAMED` on both the daemon and the wrapper client
 
 **Alternatives considered:**
 - *Pin `org.gradle.java.home` to a JDK 21 that does not warn.* Rejected — a
@@ -40,11 +40,19 @@ metaspace, code cache). Nothing there addresses native access.
   place indefinitely.
 - *`-XX:+IgnoreUnrecognizedVMOptions` / log suppression.* Rejected — hides
   the class of warning, not just this instance.
+- *Only `org.gradle.jvmargs`.* Insufficient: that flag applies to the
+  **daemon** JVM. The Gradle **wrapper client** JVM (what `./gradlew` and
+  Flutter's `assembleDebug` spawn first) still loads `native-platform` and
+  prints the four WARNING lines unless it also receives the flag.
 
-**Decision:** append `--enable-native-access=ALL-UNNAMED` — a standard
-`java` launcher option since JDK 22, valid in `org.gradle.jvmargs`, and the
-exact remedy the warning text names. `ALL-UNNAMED` (not a specific module)
-because `native-platform` loads from the unnamed module.
+**Decision:** append `--enable-native-access=ALL-UNNAMED` to
+`org.gradle.jvmargs` **and** set the same flag in `DEFAULT_JVM_OPTS` in
+`android/gradlew` / `android/gradlew.bat` — a standard `java` launcher
+option since JDK 22, and the exact remedy the warning text names.
+`ALL-UNNAMED` (not a specific module) because `native-platform` loads from
+the unnamed module. The wrapper `DEFAULT_JVM_OPTS` covers every Flutter/
+CI invocation that shells out to `./gradlew` without requiring a machine-
+local `GRADLE_OPTS`.
 
 ### 2. Keep it in `android/gradle.properties`, not a global `~/.gradle`
 
@@ -67,10 +75,13 @@ log, not just this machine.
 ## Migration Plan
 
 1. Append the arg to `org.gradle.jvmargs` in `android/gradle.properties`
-   with a one-line comment.
+   with a short comment, and set the same flag in `DEFAULT_JVM_OPTS` in
+   `android/gradlew` / `android/gradlew.bat` (track those wrappers in git —
+   they were previously gitignored, which would leave the client-JVM half of
+   the fix machine-local).
 2. `flutter run -d <android>` (or any Android build) — confirm the four
    WARNING lines are gone and the build still succeeds.
-3. Rollback = remove the arg.
+3. Rollback = remove the arg from both places.
 
 ## Open Questions
 
