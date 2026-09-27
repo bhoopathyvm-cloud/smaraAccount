@@ -215,13 +215,21 @@ already paid for.
 
 Two honest caveats.
 
-First, the glossary drifts too. When I checked for this post, two code
-comments still say "Every entry has exactly two postings." They date
-from the first scaffold, weeks before splits existed. The glossary got
-fixed; the comments didn't. An agent that trusts the comment over the
-glossary could write a wrong validation. This is the same paperwork
-drift from post 10, only for vocabulary. A glossary is only as good as
-the grep that keeps it in sync with the code.
+First, the glossary drifts too. While researching this post, I found
+two code comments that still said "Every entry has exactly two
+postings." They dated from the first scaffold, weeks before splits
+existed. The glossary had been fixed; the comments hadn't. Nothing broke,
+since the code and tests handled splits correctly, but an agent that
+trusted the comment over the glossary could have written a validation
+that rejected every split. This is the same paperwork drift from post 10,
+only for vocabulary.
+
+The fix was small: one search for "exactly two", two comments corrected
+to "two or more", and a short OpenSpec change to record why. What's
+worth noting is how it was found. It wasn't a bug report. It was a
+search for the glossary's own words across the code. A glossary is only
+as good as the grep that keeps it in sync with the code, and that
+search belongs in the routine every time a definition changes.
 
 Second, I haven't measured any of this. I found no controlled study
 showing that a project glossary makes coding agents more accurate. The

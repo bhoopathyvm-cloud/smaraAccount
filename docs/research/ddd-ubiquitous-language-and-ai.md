@@ -672,6 +672,9 @@ branch `store-release-runbook`.
 - Worth either fixing in its own tiny change before publishing, or using
   openly as "the glossary is only as good as the grep that keeps it in
   sync". Not fixed here, per instructions.
+- **Update 2026-09-27:** both comments were corrected to "two or more"
+  in the OpenSpec change `fix-posting-count-doc-comments` (PR #197). The
+  post now tells this as drift that was found and fixed.
 
 ### 4.7 Agent wiring: how the glossary reaches the agent
 
