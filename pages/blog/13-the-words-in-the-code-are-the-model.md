@@ -175,6 +175,17 @@ skills to "do real engineering - not vibe coding," designed to be
 installed them in late August and copied them into the Cursor and Codex
 skill folders too, so every agent I use reads the same instructions.
 
+The skills are built on domain-driven design on purpose. The README's
+section on agents that talk too much opens with the same idea from
+Evans: "With a ubiquitous language, conversations among developers and
+expressions of the code are all derived from the same domain model."
+Matt's diagnosis of the agent version of the problem is blunt: agents
+"are usually dropped into a project and asked to figure out the jargon
+as they go. So they use 20 words where 1 will do." Even the file name
+comes from DDD. The docs explain that "context" is "the standing DDD word
+for a bounded area of the model," which is why the glossary is called
+`CONTEXT.md` and not `GLOSSARY.md`.
+
 Four of them shaped the domain model directly:
 
 - **Setup** (`setup-matt-pocock-skills`) scaffolded `docs/agents/`: where
@@ -264,7 +275,7 @@ already paid for.
 
 ## What it doesn't solve
 
-Two honest caveats.
+Three honest caveats.
 
 First, the glossary drifts too. While researching this post, I found
 two code comments that still said "Every entry has exactly two
@@ -291,6 +302,26 @@ on their own mature codebases while believing they were 20% faster. How
 fast something feels isn't evidence that it is fast. I'd rather say "this
 made the agent's first attempt land closer more often, in my experience"
 than invent a number.
+
+Third, the people who built the tooling are careful about this too. The
+documentation for Matt's `domain-modeling` skill openly asks whether a
+glossary earns its keep. Its answer is: sometimes it doesn't. DDD's
+payoff, it says, is "upstream, in naming and concept alignment, not in
+aggregates and layer ceremony." Controlling synonyms matters at naming
+boundaries such as module names, table names, status enums and issue
+titles, and much less in ordinary prose. It also records a live
+objection: an agent may respond just as well to a plain-English
+description, in which case the glossary's real value is "keeping you and
+your reviewers aligned with what the agent is doing, not making the
+agent better." And it gives the sharpest warning I've read on the
+subject: "an unreviewed, agent-authored glossary is worse than none: it
+becomes confident-sounding lore that later sessions treat as truth."
+
+That's exactly what "exactly two" was: a confident line in the glossary
+that was never checked against the code. It didn't cause harm because the
+grilling rounds reviewed every definition before anything depended on
+it. So I'd add one rule to everything above: a glossary is worth having
+only if someone keeps questioning it.
 
 ## What I'd tell myself at the start
 
@@ -323,6 +354,9 @@ saved the most wrong guesses.
 - Matt Pocock, *Skills For Real Engineers* (agent skills, including
   `domain-modeling`, `grill-with-docs`, `grilling`, `codebase-design` and
   `improve-codebase-architecture`). <https://github.com/mattpocock/skills>
+- Matt Pocock, `domain-modeling` skill documentation (including "Does a
+  glossary actually earn its keep?").
+  <https://github.com/mattpocock/skills/blob/main/docs/engineering/domain-modeling.md>
 - Eric Evans, *Domain-Driven Design Reference: Definitions and Pattern
   Summaries* (Domain Language, 2015), sections "Ubiquitous Language",
   "Model-Driven Design", "Intention-Revealing Interfaces".
