@@ -9359,7 +9359,16 @@ class $$AccountGroupsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$AccountGroupsTable, AccountGroupRow>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $AccountGroupsTable,
+                    AccountGroupRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -10044,7 +10053,7 @@ class $$AccountsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$AccountsTable, AccountRow>(table),
                   $$AccountsTableReferences(db, table, e),
                 ),
               )
@@ -10654,7 +10663,7 @@ class $$SigningIdentitiesTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$SigningIdentitiesTable, IdentityRow>(table),
                   $$SigningIdentitiesTableReferences(db, table, e),
                 ),
               )
@@ -11835,7 +11844,7 @@ class $$JournalEntriesTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$JournalEntriesTable, JournalEntryRow>(table),
                   $$JournalEntriesTableReferences(db, table, e),
                 ),
               )
@@ -12440,7 +12449,7 @@ class $$PostingsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$PostingsTable, PostingRow>(table),
                   $$PostingsTableReferences(db, table, e),
                 ),
               )
@@ -12784,7 +12793,10 @@ class $$EntryVerificationCacheTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<
+                    $EntryVerificationCacheTable,
+                    EntryVerificationRow
+                  >(table),
                   $$EntryVerificationCacheTableReferences(db, table, e),
                 ),
               )
@@ -13097,7 +13109,7 @@ class $$LedgerChainStateTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$LedgerChainStateTable, ChainStateRow>(table),
                   $$LedgerChainStateTableReferences(db, table, e),
                 ),
               )
@@ -13527,7 +13539,7 @@ class $$IntegrityEventsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$IntegrityEventsTable, IntegrityEventRow>(table),
                   $$IntegrityEventsTableReferences(db, table, e),
                 ),
               )
@@ -14082,7 +14094,7 @@ class $$InstrumentsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$InstrumentsTable, InstrumentRow>(table),
                   $$InstrumentsTableReferences(db, table, e),
                 ),
               )
@@ -14708,7 +14720,7 @@ class $$InvestmentLotsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$InvestmentLotsTable, InvestmentLotRow>(table),
                   $$InvestmentLotsTableReferences(db, table, e),
                 ),
               )
@@ -15250,7 +15262,7 @@ class $$InvestmentSellsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$InvestmentSellsTable, InvestmentSellRow>(table),
                   $$InvestmentSellsTableReferences(db, table, e),
                 ),
               )
@@ -15622,7 +15634,9 @@ class $$InstrumentQuotesTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$InstrumentQuotesTable, InstrumentQuoteRow>(
+                    table,
+                  ),
                   $$InstrumentQuotesTableReferences(db, table, e),
                 ),
               )
@@ -16477,7 +16491,9 @@ class $$PendingTransfersTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$PendingTransfersTable, PendingTransferRow>(
+                    table,
+                  ),
                   $$PendingTransfersTableReferences(db, table, e),
                 ),
               )
@@ -17015,7 +17031,9 @@ class $$OfxImportRecordsTableTableManager
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
-                  e.readTable(table),
+                  e.readTable<$OfxImportRecordsTable, OfxImportRecordRow>(
+                    table,
+                  ),
                   $$OfxImportRecordsTableReferences(db, table, e),
                 ),
               )
@@ -17286,7 +17304,18 @@ class $$CsvImportProfilesTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$CsvImportProfilesTable, CsvImportProfileRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $CsvImportProfilesTable,
+                    CsvImportProfileRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -17473,7 +17502,16 @@ class $$CategoryRulesTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$CategoryRulesTable, CategoryRuleRow>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $CategoryRulesTable,
+                    CategoryRuleRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -17674,7 +17712,16 @@ class $$PayeesTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$PayeesTable, PayeeRow>(table),
+                  BaseReferences<_$AppDatabase, $PayeesTable, PayeeRow>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
@@ -17972,7 +18019,18 @@ class $$RecurringTemplatesTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable<$RecurringTemplatesTable, RecurringTemplateRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $RecurringTemplatesTable,
+                    RecurringTemplateRow
+                  >(db, table, e),
+                ),
+              )
               .toList(),
           prefetchHooksCallback: null,
         ),
