@@ -14,7 +14,9 @@ nav:
           - Architecture: open-source/smara-account/architecture.md
           - How It Was Built: open-source/smara-account/how-it-was-built.md
           - Privacy Policy: open-source/smara-account/privacy-policy.md
-  - Blog: blog/00-from-a-weekend-idea-to-a-shipping-product.md
+  - Blog:
+      - From a Weekend Idea to a Shipping Product: blog/00-from-a-weekend-idea-to-a-shipping-product.md
+      - The Words in the Code Are the Model: blog/13-the-words-in-the-code-are-the-model.md
   - About: about.md
 
 theme:
