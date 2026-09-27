@@ -4,9 +4,10 @@ import 'package:uuid/uuid.dart';
 import 'accounts_table.dart';
 import 'journal_entries_table.dart';
 
-/// Every journal entry has exactly two postings whose [amountMinor] values
-/// sum to zero (design.md: "Signed-amount postings instead of explicit
-/// debit/credit columns"). Postings are immutable along with their entry.
+/// Every journal entry has two or more postings (three or more for a split)
+/// whose [amountMinor] values sum to zero (design.md: "Signed-amount
+/// postings instead of explicit debit/credit columns"). Postings are
+/// immutable along with their entry.
 ///
 /// Named PostingRow (not the Drift default "Posting") to stay distinct
 /// from domain/models/posting.dart's Posting.

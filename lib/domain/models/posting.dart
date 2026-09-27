@@ -1,5 +1,6 @@
-/// One leg of a journal entry. Every entry has exactly two postings whose
-/// [amountMinor] values sum to zero (design.md: "Signed-amount postings
+/// One leg of a journal entry. Every entry has two or more postings whose
+/// [amountMinor] values sum to zero: two for an ordinary transaction or
+/// transfer, three or more for a split (design.md: "Signed-amount postings
 /// instead of explicit debit/credit columns").
 class Posting {
   const Posting({
