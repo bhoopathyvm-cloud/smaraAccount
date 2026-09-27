@@ -1,465 +1,198 @@
 # The Words in the Code Are the Model
 
-When AI writes a lot of your code, the words you use matter more than
-ever. This post is about that idea, and about one small mistake that
-showed me why.
+**Domain-driven design isn't only for humans. With AI writing much of
+the code, a shared language is also how the AI understands your
+project.**
 
-First, a little accounting, because the story depends on it. Every field
-has its own vocabulary. In double-entry accounting, each purchase is
-recorded as a **Journal Entry** with at least two sides: money leaves
-your bank account, and the same amount lands in a category like
-"Groceries". Each side is called a **Posting**, and together the
-postings always add up to zero, so no money appears or disappears.
+More than twenty years ago, domain-driven design gave software teams a
+simple rule: use the same words as the business, everywhere, including
+inside the code. The goal was to help *people* understand each other.
 
-Late in August, about six weeks into the project, I finally wrote this
-vocabulary down in one place: a
-glossary file called `CONTEXT.md`, a one-page dictionary that I, the
-code, and the AI I build with are all meant to follow. The first entry,
-the most basic term in the whole app, said that a Journal Entry is "a
-posted, immutable double-entry entry with exactly two Postings."
+Building Smara Account mostly with AI coding assistants taught me that
+the rule matters even more for the AI. A person can ask a colleague what
+a word means. An AI can't. It knows your project only through the words
+it reads, so those words had better be the right ones.
 
-That was wrong. Eight days earlier I had added split purchases. A single
-supermarket receipt split between Groceries and Household has three
-sides, not two: one for the bank account and one for each category. The
-app handled splits fine, and the tests covered them. Only the dictionary
-was wrong. The sentence that was supposed to define the core of the app
-described a model it had already outgrown, and nobody, me or the AI,
-had noticed.
+This post covers that idea, one small mistake that showed it, and what
+it changed in practice. It's one developer's experience, not a study.
+
+## A one-minute accounting lesson
+
+Smara Account is a household money app built on double-entry
+accounting. When you spend 50 on groceries, the app records one
+**entry** with two sides: 50 leaves your bank account, and 50 lands in
+the "Groceries" category. Each side is called a **posting**. The minus
+on one side and the plus on the other always cancel out, so money never
+appears or disappears.
+
+About six weeks into the project, I wrote words like these down in a
+**glossary**: a one-page dictionary that I, the code and the AI all
+follow. Its first line said an entry has "exactly two" postings.
+
+That was wrong. I had already added split purchases: one supermarket
+receipt split between Groceries and Household has *three* sides. The
+app handled splits correctly, and the tests covered them. Only the
+glossary was wrong, and neither I nor the AI had noticed.
 
 It was caught when I asked an AI to question every definition in the
-dictionary against the actual code, one by one, over ten rounds. Only
-then did "exactly two" become "two or more." That review, and the
-glossary format it worked on, came from Matt Pocock's open-source agent
-skills, which I'll come back to below.
+glossary against the actual code, over ten rounds of questions. That's
+the real lesson. The glossary didn't save the day. Writing the model
+down in plain sentences made it *checkable*, and an AI could then check
+it. Before that, "an entry has two sides" existed only in my head and in
+two old code comments, where nothing ever checked it.
 
-I want to be honest about what this story shows, because it isn't "the
-glossary saved me." The code was right; the glossary was the part that
-was wrong. What the glossary did was make the model *checkable*. Once
-the rules were written down as plain sentences, an AI could hold each
-one up against the code and find the one that didn't match. Before that,
-the belief "an entry has two sides" lived only in my head and in a
-couple of old code comments, where nothing ever checked it.
+## Why AI needs a shared language more than people do
 
-The word "team" also needs explaining. Smara Account has one developer:
-me. The shared language of domain-driven design is meant to close the
-gap between developers and business experts, and on paper I'm both. In
-practice, my team is me plus several AI coding agents (Claude, Cursor,
-Codex), and every one of them starts each session knowing nothing about
-the project. They are the teammates who need a shared language most.
+On a human team, shared vocabulary spreads by itself: in meetings, in
+code reviews, by being corrected over coffee. My team is me plus several
+AI coding agents (Claude, Cursor and Codex), and each of them starts
+every session knowing nothing about the project. There is no coffee. The
+agent learns the project the only way it can: by searching for words
+and reading the files it finds.
 
-This post is about why that file exists, why the words in it matter more
-when an AI writes much of the code, and what keeping the code aligned
-with those words did for this project. As with the rest of this series,
-it's one person's data point, not a controlled study. No study I know of
-tests "glossary versus no glossary" for AI agents directly; later I'll
-show the nearest evidence and where it falls short.
+So the words decide what the agent understands:
 
-## What "ubiquitous language" actually asks for
+- If the code calls the same thing "entry" in one place and
+  "transaction" in another, a search for either word finds only half of
+  the rules.
+- If a function's name says one thing and its body does another, the
+  agent tends to trust the name.
+- If a rule lives only in someone's head, the agent never sees it.
 
-Domain-driven design has a term for this: *ubiquitous language*. It's
-often read as "agree on some vocabulary in meetings." Eric Evans, who
-coined it, asks for much more. His DDD Reference says:
+Research points the same way. One study found that deliberately
+misleading function names cut the share of AI-generated code that
+worked by 32–44% (Yang et al., *ACM TOSEM*, using older AI models).
+Another found that when names are removed, AI models lose track of what
+code is *for* (Le et al., 2025). The Thoughtworks Technology Radar says
+AI coding assistants "perform better with well-factored codebases," and
+that "expressive naming provides domain context." Anthropic's guidance
+for building AI tools says to take the context you normally carry in
+your head, including "definitions of niche terminology," and "make it
+explicit."
 
-> Use the model as the backbone of a language. Commit the team to
-> exercising that language relentlessly in all communication within the
-> team and in the code. […] Recognize that a change in the language is a
-> change to the model. […] Then refactor the code, renaming classes,
-> methods, and modules to conform to the new model.
-> — Eric Evans, *Domain-Driven Design Reference* (2015)
+To be clear about the limits: this research shows that names matter to
+AI. None of it tests a project glossary directly. That last step is my
+argument, not a proven result.
 
-Two parts of that did real work for me. *In the code*: the vocabulary
-isn't documentation next to the software, it's the names inside it. And
-*a change in the language is a change to the model*: when I changed
-"exactly two" to "two or more," I wasn't fixing a typo. I was correcting
-what the project believed about its own core object.
+## What it looks like in practice
 
-Evans also says the cost of *not* doing this is translation, and that
-"translation blunts communication." With an AI collaborator, I'd put it
-more strongly. Every place where the code says one thing and the
-conversation says another is a place where the model has to guess.
+**1. The same words in the glossary, the code and the tests.** The
+glossary defines a quarantined entry (one that failed the app's
+tamper check) as excluded from every balance but kept visible. The test
+for it is called "quarantined entries stay visible but skip running
+balance." Anyone who searches for "quarantined", person or AI, finds the
+definition, the rule and the proof together.
 
-## What the glossary looks like here
+**2. A list of words *not* to use.** Most glossary entries end with an
+*Avoid* line. "Posting: avoid debit, credit, line item." "Import
+Profile: avoid template, because that word already belongs to Recurring
+Template." People learn this by being corrected. An AI can check its own
+work against the list before anyone has to correct it.
 
-`CONTEXT.md` has around fifty terms, grouped by area: the ledger core,
-integrity and signing, accounts, imports, investments. Each entry has a
-short definition and, for most of them, a line starting with *Avoid*:
+**3. Two languages, kept apart on purpose.** Inside the code, a mistake
+is "reversed": a new entry cancels the old one, and nothing is ever
+edited or deleted. On screen, the button just says "Fix." A short
+written map lists every such pair. The code keeps the accounting words;
+only on-screen text uses household words. This might look like it
+breaks domain-driven design, but the shared language is meant for the
+people and agents *building* the model. The user sits outside that
+team, and the map is one written-down translation at that boundary, not
+a silent one in someone's head.
 
-- **Journal Entry.** *Avoid:* "Transaction" in domain code (that's the
-  word the *user* sees), "Entry" alone.
-- **Posting.** *Avoid:* debit, credit, line item.
-- **Reversal.** *Avoid:* edit, delete, undo, "none of these happen to a
-  posted entry."
-- **Trusted Tip.** *Avoid:* head, latest entry, because the latest stored
-  entry might be quarantined, and treating it as trusted is exactly the
-  bug the term exists to prevent.
-- **Import Profile.** *Avoid:* template, because that word already
-  belongs to Recurring Template.
+**4. Let the AI question the glossary, not just follow it.** The format
+of my glossary and the ten-round review both come from [Matt Pocock's
+open-source agent skills](https://github.com/mattpocock/skills), which
+I use and recommend. His `domain-modeling` skill keeps the glossary and
+decision records up to date as decisions are made. His
+`grill-with-docs` skill interviews you in rounds, suggests an answer to
+each question, and updates the glossary as the answers come in. His
+README introduces the idea with a quote from Eric Evans about shared
+language, and notes that without one, agents "use 20 words where 1 will
+do."
 
-I didn't invent this format. It's the one Matt Pocock's `domain-modeling`
-skill uses for `CONTEXT.md`, with the rule "be opinionated": when several
-words exist for the same concept, pick the best one and list the others
-under *Avoid*. The *Avoid* lines turned out to be the most useful part. A human glossary
-rarely bothers to list the words you *shouldn't* use; people pick that up
-by being corrected. An AI agent doesn't get corrected in the hallway. It
-reads files, greps for words, and pattern-matches. A list of rejected
-synonyms is something it can check its own output against: test names,
-issue titles, new method names.
+## What it changed here
 
-The agent instructions make this explicit. The skills' setup step wrote
-them into `docs/agents/`, and they tell every agent to read
-the glossary before exploring, to use terms as defined, not to drift to
-synonyms the glossary avoids, and to treat a missing term as a signal
-that the model needs sharpening, not as a gap to fill with whatever word
-seems close.
+I can't prove the agents got faster or more accurate. That would need a
+controlled comparison I haven't run. A well-known study by METR found
+that experienced developers using AI tools felt 20% faster while
+actually being 19% slower, so my impression isn't evidence. What I can
+show is concrete and checkable in the project history:
 
-## Two languages, on purpose
+- **One wrong rule found before it caused harm.** The "exactly two"
+  sentence could have led an agent to write a check that rejected every
+  split purchase.
+- **Nineteen glossary entries added or corrected** in that one ten-round
+  review, including the Split concept itself.
+- **A privacy rule with a name and a test.** One review round asked what
+  the investment research feature may send out of the app. The answer,
+  "the investment's name and identifiers only, never your holdings," is
+  now a glossary term, a written decision, and a test called "prompt
+  omits quantity, cost, and account name" that fails if the rule is ever
+  broken.
+- **Translations that didn't need redoing.** The map between accounting
+  words and household words was written one day before the first
+  translation file. Today the app has 574 on-screen texts in 43
+  languages, close to 25,000 translations. Changing what one word means
+  after that point means changing it 43 times.
 
-Smara Account has an unusual constraint. Underneath, it's a signed,
-double-entry ledger. On screen, it has to read like a household notebook,
-in forty-three languages. Nobody tracking their grocery spending wants to
-see the word "posting."
+For a tester, the gain is that test names read like the glossary, so the
+list of tests doubles as a readable list of the rules. For a product
+manager, the case is this: one short document, kept up to date, in
+exchange for wrong assumptions being caught while they are still
+sentences instead of code.
 
-So there are two vocabularies, and a map between them
-(`docs/household-term-map.md`):
+## Where it falls short
 
-| Ledger (code, specs) | Household (what the user sees) |
-| --- | --- |
-| Reverse an entry | Fix |
-| Archive an account | Hide from new entries |
-| Quarantined entry | Unverified |
-| Transfer | Moved money |
+- **The glossary drifts too.** After the glossary was fixed, the two old
+  code comments still said "exactly two" until I searched for the phrase
+  while writing this post. Nothing checks this automatically. A simple
+  test that flags *Avoid* words in the code would be worth adding.
+- **Not all code reads like the glossary.** The rule for whether an
+  entry can be fixed still checks "has exactly one category" where it
+  means "is not a split." A check named after the glossary term would
+  read better.
+- **Accounting is an easy case.** It comes with centuries of precise
+  vocabulary. A messier domain would need more judgment calls.
+- **An unchecked glossary can be worse than none.** Matt Pocock's own
+  documentation warns that an unreviewed, AI-written glossary "becomes
+  confident-sounding lore that later sessions treat as truth." My
+  "exactly two" line was exactly that until it was questioned.
 
-The rule is simple. Code, domain models and specs keep the ledger names.
-Only user-visible strings use the household words. The seam is easy to
-see in the code. The repository method is `reverseEntry`. The screen's
-view model exposes `fix()`, with a comment saying the original entry is
-never edited or deleted. The button's translation key is `actionFix`.
+## The short version
 
-This can look like it breaks Evans's rule. He says to use one language
-everywhere, and I've just described translating "reverse" into "Fix."
-But a ubiquitous language is meant to hold within one team working on
-one model. The person tracking their groceries isn't part of that team,
-and the screen they see is a different context. DDD expects translation
-at the edge between contexts. What it warns against is translation
-*inside* the team, done silently in people's heads. The term map is the
-opposite of that: one written-down translation, at one boundary.
+Domain-driven design was created so that people building software would
+share one language with each other and with the business. With AI
+writing much of the code, that same language is how the AI understands
+your project. Write the words down, use them in the code and the tests,
+list the words to avoid, and let the AI question the list, not just
+follow it.
 
-Inside the code, the same care applies. Martin Fowler's classic example
-of why it matters is a utility company where "meter" meant subtly different things
-to different departments. People smooth that over in conversation;
-computers can't. Smara Account's version is the word "Account," which
-covers a bank account, a spending category and internal system rows. The
-glossary splits them into Financial Account, Category and system
-accounts, each with its own repository, so neither I nor an agent has to
-guess which one a given `accountId` means.
-
-The order of the work mattered too. The term map was written *before*
-the app was translated. Once translation keys encode a meaning in
-forty-three languages, changing that meaning is expensive. Getting the
-words right first was far cheaper than fixing them in every language
-later.
-
-## For developers: when the code reads like the glossary
-
-If you don't read code, you can skip to the next section. The short
-version: most rules in the glossary show up almost one-for-one in the
-code and in the test names, and the one place they don't is instructive.
-
-Here's the rule for whether a row in the register can go through the
-Fix flow:
-
-```dart
-bool isRegisterRowFixable({
-  required RegisterRow row,
-  required Set<String> categoryIds,
-  required Set<String> reversedEntryIds,
-}) {
-  return row.counterpartAccountIds.length == 1 &&
-      categoryIds.contains(row.counterpartAccountIds.single) &&
-      !row.isReversal &&
-      !reversedEntryIds.contains(row.entryId) &&
-      row.isVerified &&
-      !row.isSupersededByMigration;
-}
-```
-
-Each condition corresponds to a rule in the glossary. A Split or an
-Opening Balance can't be fixed. A Reversal, or an entry that's already
-been reversed, can't be fixed. A Quarantined entry can't be fixed until
-it's verified. An entry superseded by a Migration can't be fixed.
-
-Most of those read straight off the code: `isReversal`, `isVerified`,
-`isSupersededByMigration`. The first two don't. The code says
-`counterpartAccountIds.length == 1`, and you have to know the model to
-translate that into "not a Split." The Opening Balance rule is hidden
-inside `categoryIds.contains(...)`. A named `isSplit` check would read
-better. That gap is exactly the kind of silent translation this post
-argues against, and it's still in the code.
-
-The tests read the same way: "quarantined entries stay visible but skip
-running balance," "skips quarantined and superseded entries." The
-glossary defines a quarantined entry as excluded from every balance but
-kept *visible*. The test name is almost the definition.
-
-Where the words do match, it pays off. When I ask an agent "can a
-quarantined entry be fixed?", the glossary, the function and the tests
-all answer using the *same words*. That's the practical meaning of "the
-code mirrors the model": searching for the word finds the rule.
-
-It even reaches security. One of the glossary review rounds surfaced a
-privacy question about the investment research feature. It's now recorded
-as a decision (ADR 0003) and pinned to a glossary term, Investment
-Research Prompt, whose *Avoid* line says: not export, not sync, "the app
-hands off a prompt; it never uploads holdings." The word on its own
-doesn't enforce anything. A test does: "prompt omits quantity, cost, and
-account name" fails if holdings ever leak into the prompt. What the
-glossary adds is a name for the rule, so anyone, human or agent, who
-reads the glossary meets the rule before touching the feature.
-
-## The skills that did the heavy lifting
-
-Most of this structure didn't come from me reading DDD books and
-applying them by hand. It came from [Matt Pocock's skills
-repository](https://github.com/mattpocock/skills), a set of small,
-open-source "agent skills": plain Markdown instructions that a coding
-agent loads when a task calls for them. The README describes them as
-skills to "do real engineering - not vibe coding," designed to be
-"small, easy to adapt, and composable," and they work across agents. I
-installed them in late August and copied them into the Cursor and Codex
-skill folders too, so every agent I use reads the same instructions. I'm
-writing about them as a user.
-
-The skills are built on domain-driven design on purpose. The README's
-section on agents that talk too much opens with the same idea from
-Evans: "With a ubiquitous language, conversations among developers and
-expressions of the code are all derived from the same domain model."
-Matt's diagnosis of the agent version of the problem is blunt: agents
-"are usually dropped into a project and asked to figure out the jargon
-as they go. So they use 20 words where 1 will do." Even the file name
-comes from DDD. The docs explain that "context" is "the standing DDD word
-for a bounded area of the model," which is why the glossary is called
-`CONTEXT.md` and not `GLOSSARY.md`.
-
-Four of them shaped the domain model directly:
-
-- **Setup** (`setup-matt-pocock-skills`) scaffolded `docs/agents/`: where
-  issues live, the triage labels, and, most importantly, how every agent
-  should read the domain docs before touching code.
-- **`domain-modeling`** is the discipline of *changing* the model, not
-  just reading it: challenge terms, invent edge cases, and write the
-  glossary entry or decision record the moment it's settled. It defines
-  the `CONTEXT.md` format and when a decision deserves an ADR.
-- **`grill-with-docs`** combines that with a `grilling` skill. The agent
-  interviews you in rounds. Each round asks every question whose
-  prerequisites are already settled, with a recommended answer for each,
-  and updates the glossary and ADRs as answers land. Ten rounds of this
-  in early September caught the "exactly two" error, added
-  terms like Quarantine, Trusted Tip and Split, and produced the privacy
-  decision in ADR 0003.
-- **`improve-codebase-architecture`**, with its companion
-  `codebase-design`, looks for shallow modules worth deepening, with the
-  stated aim of "testability and AI-navigability." About twenty
-  "architecture cycle" pull requests came out of it, each named in a
-  small vocabulary of its own: `extract-`, `deepen-`, `unify-`,
-  `finish-`. New domain modules such as `RegisterProjection` are named
-  after glossary concepts, not implementation details.
-
-What made them genuinely helpful wasn't any single clever prompt. It was
-that they turned practices I knew I *should* follow into things that
-actually happened, every time, in the same way. A glossary is easy to
-start and easy to let rot. A skill that says "write the term down the
-moment it's resolved," and an interview that won't move on until the
-definition is sharp, keeps it alive. And because each skill is only a
-Markdown file, I could read exactly what the agent was being told and
-adapt it to this repo instead of adopting someone else's whole process.
-
-They aren't free of friction. The glossary and the decision-record
-format ship together in one skill, so a team with its own ADR style has
-to edit the skill (the docs list splitting them as an open request).
-Building a glossary for an existing codebase takes a long interrogation;
-the docs mention one user answering more than fifty questions before the
-file was in shape. And because I copied the skills into three agents'
-folders, I now have three copies to keep in sync.
-
-## Why this matters more with AI, not less
-
-A common argument goes: if AI writes and rewrites the code, human
-readability matters less. The evidence I found points the other way,
-with one limit worth saying up front. None of it tests a project
-glossary. It shows that names matter to AI models, which is one step
-short of my claim that a glossary helps.
-
-**Names are how models understand intent.** Research on code models is
-fairly consistent here. One study found that deliberately misleading
-method names cut code-generation pass rates by 32–44% (Yang et al.,
-*ACM TOSEM*). Another found that stripping names out of code "severely
-degrades" tasks that depend on intent, such as summarization, with models
-falling back to line-by-line descriptions (Le et al., 2025). A third,
-testing thirteen models including GPT-4o, found that renaming variables
-dropped average accuracy by 18.6 percentage points (Nikiema et al.,
-2025). These used older or smaller models and deliberately bad names, so
-I read them as direction, not magnitude. The direction is clear: names
-carry meaning the structure alone doesn't.
-
-**Agents navigate by reading and searching.** Birgitta Böckeler's
-writing on coding agents calls file reading and searching "the most
-basic and powerful context interfaces," and suggests asking "how well
-your existing code serves as context." The Thoughtworks Technology Radar
-goes further in its "AI-friendly code design" entry: "AI coding
-assistants also perform better with well-factored codebases," and
-"expressive naming provides domain context and functionality." It ends
-on a line I found reassuring: "the best AI-friendly patterns align with
-established best practices." Nothing about this is new. It just matters
-more.
-
-**Anthropic says the same thing about tools.** Anthropic's guidance on
-writing tools for agents says to think about the context you bring
-without noticing, including "definitions of niche terminology," and
-"make it explicit." Their piece on context engineering notes that
-"naming conventions […] provide important signals that help both humans
-and agents." That's written about tool design and context, not
-application code, but a codebase is the biggest tool an agent uses.
-
-**And it helps keep the always-loaded context small.** Anthropic's Claude
-Code guidance says to keep `CLAUDE.md` short and to leave out anything
-the agent can work out by reading the code. In this repo `CLAUDE.md`
-doesn't paste the glossary in; it points to it, and the agent reads it
-when it needs it. The more the domain can be read straight from the
-code, the less has to be said up front: the names carry that context
-without anyone writing it down twice.
-
-## What it doesn't solve
-
-Three honest caveats, plus a question about the future.
-
-First, the glossary drifts too. While researching this post, I found
-two code comments that still said "Every entry has exactly two
-postings." They dated from the first scaffold, weeks before splits
-existed. The glossary had been fixed; the comments hadn't. Nothing broke,
-since the code and tests handled splits correctly, but an agent that
-trusted the comment over the glossary could have written a validation
-that rejected every split. It's the same drift that makes status
-documents go stale, only for vocabulary.
-
-The fix was small: one search for "exactly two", two comments corrected
-to "two or more", and a short OpenSpec change to record why. What's
-worth noting is how it was found. It wasn't a bug report. It was a
-search for the glossary's own words across the code. A glossary is only
-as good as the grep that keeps it in sync with the code, and that
-search belongs in the routine every time a definition changes.
-
-Second, I haven't measured any of this. I found no controlled study
-showing that a project glossary makes coding agents more accurate. The
-argument here is built from nearby evidence (naming studies, tool-design
-guidance, industry reports) plus my own experience. METR's 2025 study is
-a useful warning: experienced developers using AI tools were 19% slower
-on their own mature codebases while believing they were 20% faster. How
-fast something feels isn't evidence that it is fast. So I won't claim
-the agents got faster or more accurate with the glossary. That's my
-impression, and METR shows impressions are unreliable. What I can point
-to is checkable in the project history: the ten grilling rounds added or
-rewrote nineteen glossary entries, corrected one wrong rule, and
-produced a privacy decision with a test behind it. That's evidence the
-model got sharper. Whether the agents got better because of it is a
-hypothesis I'd like to see someone test properly.
-
-Accounting is also an easy case. It has centuries of precise vocabulary
-to borrow, and most of my definitions already existed in textbooks. In a
-messier domain the glossary would be harder to write, and more of it
-would be judgment calls.
-
-Third, the people who built the tooling are careful about this too. The
-documentation for Matt's `domain-modeling` skill openly asks whether a
-glossary earns its keep. Its answer is: sometimes it doesn't. DDD's
-payoff, it says, is "upstream, in naming and concept alignment, not in
-aggregates and layer ceremony." Controlling synonyms matters at naming
-boundaries such as module names, table names, status enums and issue
-titles, and much less in ordinary prose. It also records a live
-objection: an agent may respond just as well to a plain-English
-description, in which case the glossary's real value is "keeping you and
-your reviewers aligned with what the agent is doing, not making the
-agent better." And it gives the sharpest warning I've read on the
-subject: "an unreviewed, agent-authored glossary is worse than none: it
-becomes confident-sounding lore that later sessions treat as truth."
-
-That's exactly what "exactly two" was: a confident line in the glossary
-that was never checked against the code. It didn't cause harm because the
-grilling rounds reviewed every definition before anything depended on
-it. So I'd add one rule to everything above: a glossary is worth having
-only if someone keeps questioning it.
-
-That also answers whether better models will make all this unnecessary.
-The naming studies above used older models, and newer ones may need good
-names less. But the glossary's other job, keeping me and my reviewers
-aligned with what the agent is doing, doesn't go away as models improve.
-
-## What I'd tell myself at the start
-
-- **Write the glossary early, and include the words to avoid.** I started
-  mine six weeks in, after the words had already drifted (the commits
-  that created it are called "domain words realigning"). Earlier would
-  have been cheaper. A list of rejected synonyms is cheap to write, and
-  it's the part an agent can actually check against.
-- **Put the words in the code, not next to it.** Class names, method
-  names, test names. If a rule in the glossary doesn't map to one
-  condition in the code, one of them is wrong.
-- **Treat a vocabulary change as a model change.** When a definition
-  shifts, rename things. Don't leave the old word in the code "for now."
-- **Keep the user's language separate and mapped.** Two vocabularies
-  are fine if the boundary is explicit and written down.
-- **Have the AI question the glossary, not just follow it.** The "exactly
-  two" error was caught by an agent asking hard questions of each
-  definition. That's letting the AI push back, aimed at the model
-  itself.
-- **Don't build the discipline from scratch.** Small, readable skills
-  like Matt Pocock's gave me a working glossary format, an interview
-  loop and an architecture review on day one. Then I adapted them.
-
-In [my first post](00-from-a-weekend-idea-to-a-shipping-product.md) I said that working with AI forces you to write down
-knowledge that would normally stay in senior engineers' heads. The
-glossary is the most concrete example of that in this project. It's
-the least glamorous file in the repo, and probably the one that has
-saved the most wrong guesses.
+In [my first post](00-from-a-weekend-idea-to-a-shipping-product.md) I
+said that working with AI forces you to write down knowledge that would
+normally stay in senior engineers' heads. The glossary is the clearest
+example of that in this project. It's the least glamorous file in the
+repository, and the one I'd start with next time.
 
 ## References
 
-- Matt Pocock, *Skills For Real Engineers* (agent skills, including
-  `domain-modeling`, `grill-with-docs`, `grilling`, `codebase-design` and
-  `improve-codebase-architecture`). <https://github.com/mattpocock/skills>
-- Matt Pocock, `domain-modeling` skill documentation (including "Does a
-  glossary actually earn its keep?").
-  <https://github.com/mattpocock/skills/blob/main/docs/engineering/domain-modeling.md>
-- Eric Evans, *Domain-Driven Design Reference: Definitions and Pattern
-  Summaries* (Domain Language, 2015), sections "Ubiquitous Language",
-  "Model-Driven Design", "Intention-Revealing Interfaces".
+- Eric Evans, *Domain-Driven Design Reference* (2015), "Ubiquitous
+  Language".
   <https://www.domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf>
 - Martin Fowler, "UbiquitousLanguage" (2006).
   <https://martinfowler.com/bliki/UbiquitousLanguage.html>
-- Martin Fowler, "BoundedContext" (2014).
-  <https://martinfowler.com/bliki/BoundedContext.html>
-- Martin Fowler, "DomainDrivenDesign" (2020).
-  <https://martinfowler.com/bliki/DomainDrivenDesign.html>
+- Matt Pocock, agent skills (`domain-modeling`, `grill-with-docs`) and
+  their documentation. <https://github.com/mattpocock/skills>
 - Thoughtworks Technology Radar, "AI-friendly code design" (April 2025).
   <https://www.thoughtworks.com/radar/techniques/ai-friendly-code-design>
-- Birgitta Böckeler, "Context Engineering for Coding Agents"
-  (martinfowler.com, February 2026).
-  <https://martinfowler.com/articles/exploring-gen-ai/context-engineering-coding-agents.html>
 - Anthropic, "Writing effective tools for AI agents — with agents"
   (September 2025).
   <https://www.anthropic.com/engineering/writing-tools-for-agents>
-- Anthropic, "Effective context engineering for AI agents" (September
-  2025).
-  <https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents>
-- Anthropic, "Best practices for Claude Code".
-  <https://code.claude.com/docs/en/best-practices>
 - Guang Yang et al., "How Important are Good Method Names in Neural Code
   Generation? A Model Robustness Perspective", *ACM TOSEM*.
   <https://arxiv.org/abs/2211.15844>
 - Cuong Chi Le et al., "When Names Disappear: Revealing What LLMs
   Actually Understand About Code" (2025, preprint).
   <https://arxiv.org/abs/2510.03178>
-- Serge Lionel Nikiema et al., "The Code Barrier: What LLMs Actually
-  Understand?" (2025, preprint). <https://arxiv.org/abs/2504.10557>
 - METR, "Measuring the Impact of Early-2025 AI on Experienced
   Open-Source Developer Productivity" (July 2025).
   <https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/>
