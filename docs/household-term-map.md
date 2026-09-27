@@ -19,6 +19,15 @@ same meaning.
 | Net position                   | What you have minus what you owe      |
 | Pending transfer                | Money in transit                     |
 | Financial account               | Account                              |
+| Split (multi-category entry)    | Split into multiple categories       |
+| Closeout (archived account)     | Transfer remaining balance           |
+| Unarchive                       | Restore                              |
+| Quarantined entry               | Unverified                           |
+| Credit-card liability account   | Credit card / Pay card               |
+| Investment inventory / lots     | Holdings                             |
+| Market value                    | Market estimate                      |
+| Ledger backup                   | Save backup / Restore backup         |
+| Device migration bundle import  | Import from backup                   |
 
 Internal code, domain models, and OpenSpec specs may keep the existing
 ledger-facing names (`TransactionDirection.moneyIn`, `archiveFinancialAccount`,

@@ -320,8 +320,13 @@ orders or connect to a broker.
 
 Open the account from Home to see **holdings**: cash, book (cash + cost
 of what you hold), and a **market estimate** (cash + last prices). The
-estimate is labeled as such. If a price is missing, stale, turned off,
-or in another currency, that instrument is valued at cost.
+estimate is labeled as such. Each instrument row says where its value
+comes from — **Live price**, **Cached price**, **Stale price**, or, when
+the app falls back to cost, **Using cost (no price)**, **Quotes off**, or
+**Using cost (price currency differs)**. That last one means the price
+found is for a listing in another currency than the account (for
+example a US listing in a CHF account) — pick the listing in your
+account's currency (see below) to get a market estimate.
 
 **Buy** records a trade that already happened: quantity, unit price,
 optional brokerage (a separate expense, like a transfer fee), optional
@@ -331,6 +336,29 @@ restriction — not a broker rule). Fund it from cash, or as a
 income category at fair value. You can create a new instrument inline
 the first time you buy it (name, kind from a fixed list, optional
 ticker, optional ISIN).
+
+When adding an instrument:
+
+- **Look up identifiers** (next to the name) opens your favourite
+  research tool (see Settings) with a prompt asking for that name's
+  ISIN, exchange, ticker, currency, and market symbol. Only the name
+  you typed is sent — never quantity, cost, or account. If the browser
+  can't open, the prompt is copied instead.
+- **ISIN check** happens on the device, with no network request: an
+  entry that isn't 12 letters/digits starting with a country code
+  can't be saved; one whose check digit doesn't add up shows a "looks
+  mistyped" warning but can still be saved.
+- **Currency warning**: if the ISIN, ticker suffix, or your default
+  exchange suggests a listing in a different currency than the account,
+  the form warns that automatic quotes may not match and suggests the
+  listing to use. It never blocks saving.
+- **Confirm the listing**: when you save while online, the app searches
+  once for that ISIN (or ticker) and shows the matching listings as
+  name, exchange, and currency, with the one on your default exchange
+  pre-selected. Pick the one you actually hold, or **Skip — save as
+  typed**. The confirmed listing's currency is what automatic quotes
+  use. Offline, the instrument is saved as typed and matched on the next
+  price refresh.
 
 **Sell** records proceeds at the price you enter. Gain or loss uses
 ordinary income or expense categories. Quantity you can sell excludes
@@ -583,19 +611,36 @@ period-over-period read on where money went.
 - **Also allow biometrics**: shown only on a device with working Face
   ID/Touch ID/fingerprint unlock. When on, the lock screen tries
   biometrics first and always still accepts the PIN as a fallback.
+- **Hide balances in the app switcher**: off by default, and independent
+  of the PIN lock. When on, the app's content is covered while it's in
+  the background, so your balances aren't visible at a glance in the
+  app switcher. Where a platform has no way to do this, Settings says
+  so instead of showing the switch as working.
 - **Fetch market prices for investments**: on by default. When on, Home
   and holdings look up last prices for instruments that have a ticker or
   ISIN, to estimate what those holdings are worth. The lookup only sends
   the ticker or ISIN — never how many you hold or what you paid. Quotes
   never record a transaction. If a price is in a different currency than
-  the account, the app uses cost instead. Turn this off to stop the
-  requests; cached prices and cost are still used for the estimate.
-- **Market price provider**: which predefined quote source to use.
+  the account, the app uses cost instead and says so on the row. Turn
+  this off to stop the background requests; cached prices and cost are
+  still used for the estimate. (Confirming a listing when you add a new
+  instrument while online is a separate, one-time search for that ISIN
+  or ticker.)
+- **Market price provider**: which predefined quote source to use
+  (Stooq or Yahoo Finance).
+- **Default exchange**: the stock exchange you trade on most, from a
+  fixed list (preset from your device's region). It decides which
+  listing is pre-selected when you add an instrument and supplies its
+  likely currency. There's no way to add a custom exchange.
 - **Favourite research tool**: ChatGPT, Claude, Gemini, or Meta AI.
   Tapping an instrument **name** on holdings opens that tool in the
   browser with a research prompt (news, downside, upside — not advice).
-  If you're offline, the prompt is copied instead. Rename and hide use
-  the menu on the row, not the name.
+  The same tool is used for **Look up identifiers** when adding an
+  instrument. If you're offline, the prompt is copied instead. Rename and
+  hide use the menu on the row, not the name.
+- **About**: a short explanation of why the app never edits old entries
+  ("Why we don’t edit old entries"), and a link that opens the **Privacy Policy** in
+  your browser.
 
 ## Background reading
 

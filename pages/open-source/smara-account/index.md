@@ -84,13 +84,16 @@ currencies, credit-card capture shortcuts, investment accounts with
 buy/sell/dividend tracking and AI-assisted research, transfers between
 accounts, importing bank statements from OFX and CSV files with saved
 category rules, a searchable running register with a guided correction
-flow, encrypted backup/restore and CSV export, an optional PIN/biometric
-app lock, and a fully localized interface in dozens of languages. See
+flow, encrypted backup/restore and CSV export, optional key backups and a
+one-file device migration bundle for moving to a new device, an optional
+PIN/biometric app lock, and a fully localized interface in 43 languages —
+on iOS, Android, macOS, and Linux. See
 [What's built](whats-built.md) for the full, current list.
 
 The [privacy policy](privacy-policy.md) describes what stays on the
-device, the two optional network lookups, and how backups work — the
-same page linked from in-app Settings.
+device, the app's few network lookups (exchange rates, investment
+prices, and instrument listing search — never ledger data), and how
+backups work — the same page linked from in-app Settings.
 
 ## Try It Or Contribute
 

@@ -1,9 +1,9 @@
 #!/bin/sh
 # Runs the ACCEPTANCE tier: integration_test/acceptance/acceptance_test.dart,
 # driving a real launched build of the app (real database, real OS keychain)
-# through its GUI. Manual-only, per acceptance-test-suite design.md
-# Decision 4 - no CI workflow invokes this script or any file under
-# integration_test/acceptance/.
+# through its GUI. Developer-triggered locally; the only CI caller is
+# .github/workflows/acceptance-suite-nightly.yml (Linux, one job per
+# locale), which is a release gate, not a pull-request gate.
 #
 # One file, one `flutter test` invocation, one install: the suite used to
 # be 13 separate files, each its own `flutter test <file> -d <device>`

@@ -16,6 +16,13 @@ Before writing any code, read:
   duplicated dependencies or UI components, and more), responsibility
   boundaries per layer, testing rules, Drift migration rules, and the
   Definition of Done checklist.
+- [`Specs/design/smara-design-system.md`](Specs/design/smara-design-system.md) —
+  the 3-color rule, typography, navigation, shared components, icons.
+- [`CONTEXT.md`](CONTEXT.md) — the domain glossary, and
+  [`docs/adr/`](docs/adr/) — architecture decision records.
+- [`docs/agents/architecture-deepening.md`](docs/agents/architecture-deepening.md) —
+  conventions for `extract-`/`deepen-`/`unify-`/`finish-` refactoring
+  changes.
 
 This document doesn't repeat those rules — it covers the *process* around
 them.
@@ -55,7 +62,10 @@ Every change goes through four stages:
 4. **Archive** — once merged, the change's spec deltas are folded into
    `openspec/specs/<capability>/spec.md`, the single source of truth for
    that capability's current requirements, and the change moves to
-   `openspec/changes/archive/`.
+   `openspec/changes/archive/`. Archive only when **every** task in
+   `tasks.md` is checked — `openspec-archive-guard.yml` (and the local
+   `tool/git-hooks/pre-push` hook) rejects archiving a change with an
+   unchecked or partial task.
 
 Every requirement in a spec delta is written as a testable `SHALL`/`MUST`
 statement with at least one `WHEN`/`THEN` scenario — if you can't write a
@@ -77,24 +87,43 @@ scenario for it, it's not specified precisely enough to implement yet.
 
 ## Acceptance testing
 
-Beyond unit/widget/integration tests (all run in CI), the repo has a
-manual-only ACCEPTANCE tier under `integration_test/acceptance/`: it
-drives a real, launched build of the app through its GUI against a real
-on-disk database and real OS keychain/keystore, organized into capability
-groups (core ledger, currency/transfers, identity/backup, onboarding,
-data import, organization features, home/accounts overview, App Lock).
-Run it via:
+Beyond unit/widget/integration tests (all run in CI on every push and pull
+request), the repo has an ACCEPTANCE tier in
+`integration_test/acceptance/acceptance_test.dart`: it drives a real,
+launched build of the app through its GUI against a real on-disk database
+and real OS keychain/keystore. Its 37 tests are organized as one `group()`
+per capability area (account currency, core ledger, CSV import,
+currency/transfers, group archive, home and lock, identity restore,
+investment holdings, investment research, ledger backup, OFX import,
+onboarding, organization). Run it via:
 
 ```sh
-tool/run_acceptance_tests.sh -d <device-id> [group]
+tool/run_acceptance_tests.sh -d <device-id> [-l <locale-tag>] [group]
 ```
 
-Run the full suite (omit `[group]`) once per target platform you want
-confidence on — macOS, an iOS simulator, an Android emulator — after
-finishing a large change and before opening a PR. See the script's own
-header comments for device-id discovery per platform. No CI workflow
-invokes this script or any file under `integration_test/acceptance/`; it
-stays a manual, developer-triggered tool by design.
+Run the full suite (omit `[group]`) on each target platform you want
+confidence on — macOS, Linux, an iOS simulator, an Android emulator —
+after finishing a large change and before opening a PR; after a big
+refactor, always run it on `-d macos` (see `CLAUDE.md`). `-l` drives
+onboarding to one of the 43 supported locales. See the script's own header
+comments for device-id discovery per platform.
+
+The same suite also runs **nightly in CI** on Linux, once per supported
+locale (`.github/workflows/acceptance-suite-nightly.yml`). That run does
+not block pull requests; it is a required check before a release (see
+[the release checklist](docs/release/checklist.md)).
+
+## Documentation
+
+When a change alters what a user sees or does, update
+[`docs/user-guide.md`](docs/user-guide.md) in the same change (the
+`user-guide` spec requires it to describe only shipped behavior). New
+user-visible strings go in `lib/l10n/app_en.arb` using the household
+wording in [`docs/household-term-map.md`](docs/household-term-map.md);
+new domain terms go in [`CONTEXT.md`](CONTEXT.md). A change that adds or
+alters a network request or what is stored on the device also updates the
+[privacy policy page](pages/open-source/smara-account/privacy-policy.md)
+and `SECURITY.md`.
 
 ## Definition of done
 
