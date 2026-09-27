@@ -1,17 +1,33 @@
 # The Words in the Code Are the Model
 
-Late in August I finally wrote down the vocabulary of Smara Account in one
-place: a glossary file called `CONTEXT.md`. The first entry, the most
-basic term in the whole app, said that a Journal Entry is "a posted,
-immutable double-entry entry with exactly two Postings."
+When AI writes a lot of your code, the words you use matter more than
+ever. This post is about that idea, and about one small mistake that
+showed me why.
 
-That was wrong. Split transactions had shipped eight days earlier, and a
-split has three or more legs. The code handled them fine. The tests
-covered them. But the sentence that was supposed to define the core of
-the ledger described a model the app had already outgrown, and nobody,
-me or the AI, had noticed. It took a structured review of the glossary
-itself, ten rounds of an agent questioning every definition against the
-code, before "exactly two" became "two or more." That review, and the
+First, a little accounting, because the story depends on it. Every field
+has its own vocabulary. In double-entry accounting, each purchase is
+recorded as a **Journal Entry** with at least two sides: money leaves
+your bank account, and the same amount lands in a category like
+"Groceries". Each side is called a **Posting**, and together the
+postings always add up to zero, so no money appears or disappears.
+
+Late in August I finally wrote this vocabulary down in one place: a
+glossary file called `CONTEXT.md`, a one-page dictionary that I, the
+code, and the AI I build with are all meant to follow. The first entry,
+the most basic term in the whole app, said that a Journal Entry is "a
+posted, immutable double-entry entry with exactly two Postings."
+
+That was wrong. Eight days earlier I had added split purchases. A single
+supermarket receipt split between Groceries and Household has three
+sides, not two: one for the bank account and one for each category. The
+app handled splits fine, and the tests covered them. Only the dictionary
+was wrong. The sentence that was supposed to define the core of the app
+described a model it had already outgrown, and nobody, me or the AI,
+had noticed.
+
+It was caught when I asked an AI to question every definition in the
+dictionary against the actual code, one by one, over ten rounds. Only
+then did "exactly two" become "two or more." That review, and the
 glossary format it worked on, came from Matt Pocock's open-source agent
 skills, which I'll come back to below.
 
