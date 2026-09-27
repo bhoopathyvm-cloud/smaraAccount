@@ -11,7 +11,9 @@ covered them. But the sentence that was supposed to define the core of
 the ledger described a model the app had already outgrown, and nobody,
 me or the AI, had noticed. It took a structured review of the glossary
 itself, ten rounds of an agent questioning every definition against the
-code, before "exactly two" became "two or more."
+code, before "exactly two" became "two or more." That review, and the
+glossary format it worked on, came from Matt Pocock's open-source agent
+skills, which I'll come back to below.
 
 This post is about why that file exists, why the words in it matter more
 when an AI writes much of the code, and what keeping the code aligned
@@ -59,14 +61,18 @@ short definition and, for most of them, a line starting with *Avoid*:
 - **Import Profile.** *Avoid:* template, because that word already
   belongs to Recurring Template.
 
-The *Avoid* lines turned out to be the most useful part. A human glossary
+I didn't invent this format. It's the one Matt Pocock's `domain-modeling`
+skill uses for `CONTEXT.md`, with the rule "be opinionated": when several
+words exist for the same concept, pick the best one and list the others
+under *Avoid*. The *Avoid* lines turned out to be the most useful part. A human glossary
 rarely bothers to list the words you *shouldn't* use; people pick that up
 by being corrected. An AI agent doesn't get corrected in the hallway. It
 reads files, greps for words, and pattern-matches. A list of rejected
 synonyms is something it can check its own output against: test names,
 issue titles, new method names.
 
-The agent instructions make this explicit. They tell every agent to read
+The agent instructions make this explicit. The skills' setup step wrote
+them into `docs/agents/`, and they tell every agent to read
 the glossary before exploring, to use terms as defined, not to drift to
 synonyms the glossary avoids, and to treat a missing term as a signal
 that the model needs sharpening, not as a gap to fill with whatever word
@@ -156,6 +162,51 @@ Research Prompt, whose *Avoid* line says: not export, not sync, "the app
 hands off a prompt; it never uploads holdings." A guarantee that lives
 in a noun is much harder to erode by accident than one buried in a
 code comment.
+
+## The skills that did the heavy lifting
+
+Most of this structure didn't come from me reading DDD books and
+applying them by hand. It came from [Matt Pocock's skills
+repository](https://github.com/mattpocock/skills), a set of small,
+open-source "agent skills": plain Markdown instructions that a coding
+agent loads when a task calls for them. The README describes them as
+skills to "do real engineering - not vibe coding," designed to be
+"small, easy to adapt, and composable," and they work across agents. I
+installed them in late August and copied them into the Cursor and Codex
+skill folders too, so every agent I use reads the same instructions.
+
+Four of them shaped the domain model directly:
+
+- **Setup** (`setup-matt-pocock-skills`) scaffolded `docs/agents/`: where
+  issues live, the triage labels, and, most importantly, how every agent
+  should read the domain docs before touching code.
+- **`domain-modeling`** is the discipline of *changing* the model, not
+  just reading it: challenge terms, invent edge cases, and write the
+  glossary entry or decision record the moment it's settled. It defines
+  the `CONTEXT.md` format and when a decision deserves an ADR.
+- **`grill-with-docs`** combines that with a `grilling` skill. The agent
+  interviews you in rounds. Each round asks every question whose
+  prerequisites are already settled, with a recommended answer for each,
+  and updates the glossary and ADRs as answers land. Ten rounds of this
+  in early September caught the "exactly two" error, added
+  terms like Quarantine, Trusted Tip and Split, and produced the privacy
+  decision in ADR 0003.
+- **`improve-codebase-architecture`**, with its companion
+  `codebase-design`, looks for shallow modules worth deepening, with the
+  stated aim of "testability and AI-navigability." About twenty
+  "architecture cycle" pull requests came out of it, each named in a
+  small vocabulary of its own: `extract-`, `deepen-`, `unify-`,
+  `finish-`. New domain modules such as `RegisterProjection` are named
+  after glossary concepts, not implementation details.
+
+What made them genuinely helpful wasn't any single clever prompt. It was
+that they turned practices I knew I *should* follow into things that
+actually happened, every time, in the same way. A glossary is easy to
+start and easy to let rot. A skill that says "write the term down the
+moment it's resolved," and an interview that won't move on until the
+definition is sharp, keeps it alive. And because each skill is only a
+Markdown file, I could read exactly what the agent was being told and
+adapt it to this repo instead of adopting someone else's whole process.
 
 ## Why this matters more with AI, not less
 
@@ -257,6 +308,9 @@ than invent a number.
   two" error was caught by an agent asking hard questions of each
   definition. That's the structured version of post 11: letting the AI
   push back, aimed at the model itself.
+- **Don't build the discipline from scratch.** Small, readable skills
+  like Matt Pocock's gave me a working glossary format, an interview
+  loop and an architecture review on day one. Then I adapted them.
 
 In post 00 I said that working with AI forces you to write down
 knowledge that would normally stay in senior engineers' heads. The
@@ -266,6 +320,9 @@ saved the most wrong guesses.
 
 ## References
 
+- Matt Pocock, *Skills For Real Engineers* (agent skills, including
+  `domain-modeling`, `grill-with-docs`, `grilling`, `codebase-design` and
+  `improve-codebase-architecture`). <https://github.com/mattpocock/skills>
 - Eric Evans, *Domain-Driven Design Reference: Definitions and Pattern
   Summaries* (Domain Language, 2015), sections "Ubiquitous Language",
   "Model-Driven Design", "Intention-Revealing Interfaces".

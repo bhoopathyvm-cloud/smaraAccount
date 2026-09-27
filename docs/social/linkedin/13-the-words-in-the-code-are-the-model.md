@@ -15,7 +15,7 @@ Split transactions had shipped eight days earlier. A split has three or more.
 
 The code was right. The tests were right. The one sentence meant to define the core of the ledger was wrong, and neither I nor the AI I build with had noticed.
 
-It was caught by an AI agent asked to question every definition in the glossary against the code. Not by a bug report.
+It was caught by an AI agent running the grill-with-docs skill from Matt Pocock's open-source skills (github.com/mattpocock/skills), which questions every definition in the glossary against the code, round after round. Not by a bug report.
 
 That's the idea behind my new post: the words in the code are the model.
 
@@ -26,6 +26,8 @@ What I learned building Smara Account, mostly with AI coding agents:
 → List the words to avoid, too. "Posting: avoid debit, credit, line item." It's the part of a glossary an agent can actually check its own output against.
 
 → Keep two languages on purpose. Ledger terms in the code, household words on screen ("Reverse" becomes "Fix"), with a written map between them.
+
+→ Don't build the discipline from scratch. Matt Pocock's skills gave me the glossary format (with its "avoid" lists), a structured interview that sharpens it, and an architecture review aimed at "AI-navigability". Each skill is a small Markdown file I could read and adapt.
 
 → Clean code matters more with AI, not less. Research shows misleading names cut code-generation pass rates by 32–44%. Thoughtworks says AI assistants "perform better with well-factored codebases." DORA 2025: AI "amplifies what's already there."
 
