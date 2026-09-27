@@ -94,7 +94,11 @@ WHAT STAYS, EVEN THOUGH IT LOOKS OLD:
 
 ## Responsibility Boundaries
 
-Applies the MVVM + Repository layering from `smara-architecture.md`.
+Applies the MVVM + Repository layering from `smara-architecture.md`, with
+view-agnostic logic in pure-Dart domain modules under `lib/domain/`.
+Conventions for placing and shaping those modules (drafts, projections,
+engines, seams, DI wiring) live in `docs/agents/architecture-deepening.md`
+and ADR 0002 — read them before adding or moving a module.
 
 ### Views
 
@@ -156,11 +160,28 @@ class RegisterViewModel extends ChangeNotifier {
 }
 ```
 
+### Domain modules (drafts, projections, policies)
+
+- A multi-step flow's in-progress state is a plain mutable Dart class
+  under `lib/domain/<feature>/` (e.g. `RecordTransactionDraft`,
+  `CorrectionDraft`, `TransferOrderDraft`, `StatementImportSession`) that
+  exposes computed getters like `canSubmit`. The ViewModel owns it; it
+  never touches Drift or a Repository.
+- A value derived from ledger entries and used by more than one caller
+  (register rows and CSV export, Home and Summary) is one domain module
+  (register projection, active balance, `buildLedgerSummary`,
+  `buildHomeOverview`), not duplicated per caller.
+- Test these directly with plain `package:test` — no mocks.
+
 ### Repositories
 
 ```dart
 // The only layer that talks to Drift.
 // Exposes domain models, never Drift's generated row classes.
+// One repository per domain concept; heavy write paths are deep modules
+// the repository composes (LedgerPosting, LedgerChainStore,
+// LedgerChainVerifier, InvestmentTradePosting). The dependency graph
+// must stay acyclic (ADR 0002).
 // A transaction's journal_entries + postings rows are written in a
 // single Drift transaction — never committed separately.
 
@@ -246,7 +267,8 @@ UNIT (dart-add-unit-test):
 WIDGET (flutter-add-widget-test):
   Every View: renders correct data for given state, responds to taps/
   input as expected (e.g. archived category absent from picker,
-  running balance shown per row).
+  running balance shown per row). Keep logic that lives in a domain
+  draft/projection out of widget tests — test it at the domain module.
 
 INTEGRATION (flutter-add-integration-test):
   Full user journeys, e.g.:
@@ -256,19 +278,25 @@ INTEGRATION (flutter-add-integration-test):
       historical entries
 
 ACCEPTANCE (integration_test/acceptance/):
-  Manual-only, developer-triggered - not part of any CI workflow.
   Drives a real, launched build of the app (SmaraAccountingApp from
   main.dart, not a hand-rebuilt widget tree) through its GUI against a
-  real on-disk database and real OS keychain/keystore. Organized into
-  capability groups (core ledger, currency/transfers, identity/backup,
-  onboarding, data import, organization features, home/accounts
-  overview, App Lock PIN path), each sharing the same real-build
-  harness and resetToFreshDevice() cleanup (integration_test/
-  acceptance/support/acceptance_harness.dart). Every run requires an
-  explicit target device (macOS, an iOS simulator, or an Android
-  emulator/device) - never defaults, never runs more than one target
-  per invocation. Run via tool/run_acceptance_tests.sh -d <device-id>
-  [group] after finishing a large change, before opening a PR.
+  real on-disk database and real OS keychain/keystore. One file,
+  acceptance_test.dart, with one group() per capability area
+  (account_currency, core_ledger, csv_import, currency_transfers,
+  group_archive, home_and_lock, identity_restore, investment_holdings,
+  investment_research, ledger_backup, ofx_import, onboarding,
+  organization) - 37 tests - sharing one real-build harness and
+  resetToFreshDevice() cleanup (support/acceptance_harness.dart), so a
+  full run needs only one install. Every run requires an explicit
+  target device (macOS, Linux, an iOS simulator/device, or an Android
+  emulator/device) - never defaults, never more than one target per
+  invocation. Run via
+    tool/run_acceptance_tests.sh -d <device-id> [-l <locale>] [group]
+  after finishing a large change or refactor, before opening a PR
+  (CLAUDE.md: full suite on -d macos after each big refactor).
+  Nightly CI (acceptance-suite-nightly.yml) also runs the full suite on
+  Linux once per supported locale (43). It is a release gate
+  (docs/release/checklist.md), not a pull-request gate.
 
 COVERAGE (dart-collect-coverage):
   Generate an LCOV report. No fixed percentage gate yet — track the
@@ -325,6 +353,9 @@ BUG REGRESSION:
 - [ ] Domain/Repository logic has unit tests covering all public methods and branches
 - [ ] Every new/changed View has a widget test
 - [ ] Multi-screen user flows have an integration test
+- [ ] New user-visible strings are added to `lib/l10n/app_en.arb` (never hardcoded) and use household wording (`docs/household-term-map.md`)
+- [ ] After a big refactor, the full acceptance suite passes (`tool/run_acceptance_tests.sh -d macos`)
+- [ ] User-facing behavior changes are reflected in `docs/user-guide.md` (and the privacy policy page if a network call or stored data changes)
 - [ ] `dart analyze` is clean; `dart fix --apply` has been run
 - [ ] No hardcoded strings for closed sets — enums used throughout
 - [ ] No `print()` left in shipped code
@@ -355,7 +386,14 @@ ACCIDENTAL DEPENDENCY PREVENTION
   pubspec.yaml (e.g. a second HTTP client, a second state-management
   package) without removing the old one in the same change.
 
-CI QUALITY GATES (once CI exists)
-  flutter test and dart analyze run on every push. A red check
-  blocks merge — it isn't advisory.
+CI QUALITY GATES
+  flutter-ci.yml runs dart format, flutter analyze, and flutter test on
+  every push and pull request; security.yml (OSV Scanner, gitleaks) and
+  codeql.yml (Actions workflows) run alongside it;
+  openspec-archive-guard.yml rejects archiving an OpenSpec change whose
+  tasks.md still has an unchecked/partial task (mirrored locally by
+  tool/git-hooks/pre-push). A red check blocks merge — it isn't
+  advisory. Non-blocking workflows: acceptance-suite-nightly.yml
+  (release gate), localized-smoke.yml and linux-desktop.yml (manual
+  dispatch), pages.yml (website deploy).
 ```

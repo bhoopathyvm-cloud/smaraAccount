@@ -185,13 +185,35 @@ keeps the same identity and only steps around the damaged tail.
 _Avoid_: repair, restore, heal (re-anchoring abandons the broken tail, it
 does not fix it).
 
+**Recovery Phrase** / **Keystore File**:
+Two optional, identity-only exports of the Signing Identity's key: a
+24-word BIP39 phrase (always English words) or a passphrase-encrypted
+file. Neither carries books. Both live in Settings → Recovery & identity
+and are never a blocking onboarding step.
+
+**Ledger Backup**:
+A passphrase-encrypted copy of the ledger database — books only, never
+key material. Restoring replaces local books; it is rejected onto a
+device whose active Signing Identity differs from the backup's.
+_Avoid_: bundle (see Device Migration Bundle), sync.
+
+**Device Migration Bundle**:
+One passphrase-encrypted file carrying **both** the ledger database and
+the private key material, so importing it on a new device yields
+immediately verified, immediately record-capable books with no separate
+key-restore step. A deliberate, disclosed trade-off: file + passphrase
+together allow reading the books *and* signing as the user. Imported via
+**Import from backup** at the Setup Choice or exported from Settings.
+_Avoid_: backup (a Ledger Backup carries no key), sync, clone.
+
 **Migration** (key migration):
 The process of re-creating a Signing Identity's entries under a new
 identity after true key loss. A migrated entry is marked
 `isSupersededByMigration` and excluded from active balances, but remains
 visible in history.
 _Avoid_: Reversal (migration replaces an identity's whole chain;
-Reversal cancels one entry).
+Reversal cancels one entry); Device Migration Bundle (moving the *same*
+identity to a new device, not replacing it).
 
 ### App lock
 
@@ -260,12 +282,33 @@ derived by replaying its Lots (and any sells) in transaction-date order.
 Not stored directly — always a projection.
 
 **Quote**:
-A cached last price for one Instrument, sourced from a Quote Provider.
-Never posted to the journal — used only to compute Market Value.
+A cached last price for one Instrument, sourced from a Quote Provider
+(Stooq or Yahoo Finance), with its currency — reported by the provider or,
+for Stooq, inferred from the market-symbol suffix (`.ch` → CHF). A quote
+whose currency differs from the account's is unusable (shown as "price
+currency differs"), and the holding falls back to cost. Never posted to
+the journal — used only to compute Market Value.
+
+**Exchange** (Default Exchange):
+One entry in a fixed, code-defined registry of stock exchanges (name,
+market identifier, market-symbol suffix, trading currency). The Default
+Exchange setting biases which listing a new Instrument resolves to; no
+custom exchange, endpoint, or API key can be added.
+
+**Listing** (listing confirmation):
+One market listing of an Instrument (exchange + currency + canonical
+market symbol). When an Instrument is saved online, one identifier search
+returns candidate Listings and the user confirms one (the Default
+Exchange's is pre-selected); offline, resolution is retried on the next
+quote refresh. The confirmed Listing's currency is what Quotes must match.
+_Avoid_: ticker (the user-typed identifier; the Listing's market symbol
+may differ, e.g. `UBSG.SW`).
 
 **Research Tool**:
 One of the predefined consumer AI assistants (ChatGPT, Claude, Gemini,
-Meta AI) the user can pick to research an Instrument. No API key and no
+Meta AI) the user can pick as a favourite to research an Instrument, and
+to look up an Instrument's identifiers (ISIN, exchange, ticker, currency)
+from the Add-instrument form using only the typed name. No API key and no
 custom URL — each tool has at most a public `?q=` query-URL template;
 tools without one are copy-only.
 _Avoid_: AI provider, API, integration (nothing is called server-side —
@@ -307,17 +350,27 @@ _Avoid_: template (that word is taken by Recurring Template).
 
 ### Onboarding
 
-**Deferred Onboarding**:
-First-launch flow that lets a new user name a first Financial Account and
-record one transaction (the guided First Entry) *before* the mandatory
-recovery-phrase acknowledgment screen. What is deferred is the
-acknowledgment, not the Signing Identity — when and how the identity is
-generated and what makes an entry signed are unchanged.
-_Avoid_: skip onboarding, anonymous mode (nothing is skipped or
-unsigned — only the acknowledgment step is reordered).
+**Setup Choice**:
+The first-launch screen, shown before any Signing Identity exists:
+**New setup** (ordinary onboarding) or **Import from backup** (restore a
+Device Migration Bundle and land directly in verified books).
+
+**Onboarding** (New setup):
+Language (mandatory pick, device language pre-highlighted) → base
+currency → name the main Financial Account → record the guided First
+Entry, then straight into the app. The Signing Identity is generated
+silently in the background; no recovery-phrase step blocks or follows.
+
+**Deferred Onboarding** (historical):
+The earlier flow that let a new user record a First Entry *before* a
+mandatory recovery-phrase acknowledgment. Superseded by
+`device-migration-bundle`: the acknowledgment no longer exists, so there
+is nothing left to defer. The term survives only in the
+`deferred-onboarding` spec name.
+_Avoid_: using it for current onboarding (say Onboarding).
 
 **First Entry**:
-The very first transaction a new user records, during Deferred Onboarding.
+The very first transaction a new user records, during Onboarding.
 Distinct from Genesis, which is the first *Journal Entry's* previous-hash
 root: the First Entry is the user-facing "record your first Spent or
 Received", the genesis entry is its ledger representation.
@@ -326,8 +379,7 @@ Received", the genesis entry is its ledger representation.
 A short post-onboarding wizard that guides a new user to name their main
 Financial Account and optionally add a credit card and a cash account, each
 created through the existing account-creation path with no new validation.
-Distinct from Deferred Onboarding, which happens *before* onboarding
-completes.
+Distinct from Onboarding, which it follows.
 
 ### Recurring & payees
 

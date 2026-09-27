@@ -1,7 +1,8 @@
 # Android upload keystore
 
-Before shipping, complete the [release checklist](checklist.md), including
-the required macOS acceptance pass for the nine curated locales.
+Before shipping, complete the [release checklist](checklist.md): a passing
+nightly Linux acceptance run across all 43 locales and the English macOS
+baseline acceptance run.
 
 Release APK/AAB builds read `android/key.properties` (git-ignored) and
 sign with a dedicated upload keystore — never Flutter's shared debug

@@ -7,8 +7,10 @@ never quietly drift apart.
 
 ## Stack
 
-- **Flutter / Dart**, one codebase across macOS, iOS, Android, and
-  Windows.
+- **Flutter / Dart**, one codebase across iOS, Android, macOS, and
+  Linux (Linux validated in CI; a Windows target is scaffolded).
+- **Localization** in 43 languages via Flutter's gen-l10n; money is
+  always formatted by the currency's own convention.
 - **Drift**, a typed, reactive layer over SQLite, for the local
   database — one file per device, opened only by this app.
 - **Provider** for state management; ViewModels extend `ChangeNotifier`.
@@ -17,32 +19,41 @@ never quietly drift apart.
 
 ## Layering: MVVM + Repository
 
-The app is organized in three layers, each with a single job:
+The app is organized in layers, each with a single job:
 
 - **Views** render UI and forward user actions. They hold no business
   logic and never call a Repository directly.
 - **ViewModels** hold UI state, expose it as streams/listenables, and
   call into Repositories to read or change data.
+- **Domain modules** (plain Dart) hold view-independent logic — in-progress
+  form drafts, register/summary/home projections, navigation and lock
+  policies — so it can be tested without any UI or database.
 - **Repositories** are the single source of truth for a domain area —
-  the only layer that talks to the database.
+  the only layer that talks to the database. Heavy paths such as
+  signing-and-posting and chain verification are deep modules behind
+  them, and the repositories' dependency graph is kept strictly acyclic.
 
-Data flows one direction: Views listen to ViewModels, ViewModels call
-Repositories, Repositories talk to Drift. This keeps business logic out
-of widgets and out of the database layer, and makes each piece testable
-on its own.
+Data flows one direction: Views listen to ViewModels, ViewModels use
+domain modules and call Repositories, Repositories talk to Drift. This
+keeps business logic out of widgets and out of the database layer, and
+makes each piece testable on its own.
 
 ## Security And Privacy Stance
 
 All ledger data stays on the device, in a local SQLite database. There's
-no account, no cloud sync, and nothing sent off-device by default. The
-one optional exception is a reference exchange-rate lookup, off by
-default, which — when a user turns it on — sends only a currency pair to
-a chosen provider for a comparison figure, never any ledger data.
+no account and no cloud sync, and ledger data is never sent off-device.
+The app's only network requests are predefined lookups that carry no
+ledger data: an opt-in reference exchange-rate lookup (a currency pair),
+investment market prices (on by default, can be turned off; a ticker or
+ISIN only), and a one-time listing search when an instrument is added
+(its ISIN or ticker only). See the [privacy policy](privacy-policy.md).
 
 The device's signing identity lives in the OS-level secure keystore, not
-in the SQLite file itself, and every posted journal entry is signed and
-hash-chained so that tampering with a past entry breaks verification
-from that point forward, detected the next time the app starts.
+in the SQLite file itself — the user can optionally back it up (recovery
+phrase, keystore file, or a books-plus-key device migration bundle) — and
+every posted journal entry is signed and hash-chained so that tampering
+with a past entry breaks verification from that point forward, detected
+the next time the app starts.
 
 For users, this means the app treats unverifiable history as suspect
 instead of silently including it in balances. It is useful during backup

@@ -2,8 +2,10 @@
 
 Household books on your device: track what you spend and receive like a
 notebook, with a history that can't quietly rewrite itself. No server, no
-cloud, no data leaving your device — just Flutter, your devices, and your
-own LAN.
+cloud, no account, and no ledger data leaving your device.
+
+Runs on iOS, Android, macOS, and Linux from one Flutter codebase (a
+Windows target is scaffolded but not CI-validated), in 43 languages.
 
 This repository is also a working example of [OpenSpec](https://github.com/Fission-AI/OpenSpec)
 and AI spec-driven development: features are specified first, then
@@ -17,9 +19,9 @@ others. It comes with **no liability and no support** from the author.
 
 The ledger is deliberately designed so entries cannot be manipulated manually — this is the whole point of the project, not an afterthought.
 
-- Every entry is signed with a key generated and stored on the user's own device.
-- Users can export this key and store it separately (e.g. as a backup) — the app never transmits it anywhere.
-- **If the signing key is lost, it cannot be recovered.** In that event, all entries must be re-created from scratch to keep the ledger consistent and trustworthy.
+- Every entry is signed with a key generated and stored on the user's own device, and chained to the entry before it.
+- Users can optionally back this key up from Settings — as a 24-word recovery phrase, a passphrase-encrypted keystore file, or a device migration bundle that carries books and key together for moving to a new device. The app never transmits it anywhere.
+- **If the signing key is lost with no backup, it cannot be recovered.** The app can re-sign the existing books under a brand-new key after the user reviews and confirms them, but trust restarts from that point: earlier entries are kept only as a read-only historical record that can no longer be proven untampered.
 
 This tradeoff is intentional: without a recoverable key, there's no backdoor for editing history, which is what makes the transaction log genuinely immutable rather than immutable-in-name-only.
 
@@ -32,7 +34,9 @@ background references.
 
 ## Usage
 
-See the [user guide](docs/user-guide.md) for how to use the app — onboarding and your recovery phrase, accounts, categories, transfers, importing bank statements, and more.
+See the [user guide](docs/user-guide.md) for how to use the app — onboarding, backing up your key and moving to a new device, accounts, categories, transfers, investments, importing bank statements, and more.
+
+Privacy: see the [privacy policy](pages/open-source/smara-account/privacy-policy.md) and [`SECURITY.md`](SECURITY.md) for exactly what stays on the device and the few optional network lookups.
 
 ## Contributing
 

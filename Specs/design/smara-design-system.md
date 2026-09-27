@@ -8,7 +8,11 @@
 
 ## The 3-Color Rule
 
-SmaraAccounting uses exactly 3 colors. No exceptions.
+SmaraAccounting uses exactly 3 colors. No exceptions. The palette is
+implemented once in `lib/ui/core/app_colors.dart` and assembled into
+`ThemeData` by `lib/ui/core/app_theme.dart`; no widget introduces a color
+outside `AppColors`. The app icon (navy-and-ivory folded S,
+`assets/branding/app_icon.png`) uses the same navy.
 
 ```
 PRIMARY:   #1a3a6b   Navy Blue
@@ -29,7 +33,7 @@ NEUTRAL:   Gray scale (not a color — a range)
 SIGNAL:    #e24b4a   Red
            Used ONLY for:
              Negative / overdrawn account balance
-             Destructive action (archive category, reverse entry)
+             Destructive action (e.g. "Hide from new entries")
              Validation error (e.g. unbalanced entry, invalid amount)
              Mandatory field indicator
 ```
@@ -43,7 +47,16 @@ green/amber tint would break the 3-color rule.
 ## Typography
 
 ```
-Font family: system-ui, -apple-system, sans-serif (platform default — no custom font)
+Font family: platform default sans (no custom font, no runtime font download)
+Fallback:    ThemeData.fontFamilyFallback = Noto families for Latin, Indic,
+             Arabic, CJK, Thai, Meetei Mayek, Ol Chiki (kFontFamilyFallback in
+             lib/ui/core/app_theme.dart). No font files are bundled yet —
+             this renders reliably on Android; iOS/desktop rely on their
+             own system fonts (see lib/l10n/FONTS.md).
+Direction:   Right-to-left locales (Arabic, Urdu, Sindhi, Kashmiri) mirror
+             automatically via Flutter's Directionality; never hardcode
+             left/right — use start/end.
+Implemented: lib/ui/core/app_typography.dart (sizes below)
 
 Scale:
   10px   Section labels (uppercase + letter-spacing: 1px)
@@ -123,7 +136,7 @@ border: 0.5px solid #d0d0d0;
 padding: 12px 16px;
 border-radius: 8px;
 
-/* Destructive — red outlined (e.g. "Archive category", "Reverse entry") */
+/* Destructive — red outlined (e.g. "Hide from new entries") */
 border: 1.5px solid #e24b4a;
 color: #e24b4a;
 background: transparent;
@@ -144,21 +157,63 @@ Money out: ↑ arrow icon (or ti-arrow-up), amount prefixed "−"
 
 Both rendered in NEUTRAL primary text (#111111). Only an archived category
 tag or an amount that would take the account negative uses SIGNAL red.
+
+User-facing words are household terms, never ledger terms: "Spent" /
+"Received", "Moved money", "Fix", "Hide from new entries", "Money in
+transit" (canonical list: docs/household-term-map.md).
 ```
+
+### Shared components
+
+Reuse before writing a new one (tech guidelines, Golden Rule #10). All live
+in `lib/ui/core/`:
+
+```
+confirmDestructiveAction   destructive_confirmation.dart — red confirm dialog
+MoneyAmountField           money_amount_field.dart — per-currency amount input
+EntityPickerField          entity_picker_field.dart — account/category/payee picker
+StatusBanner               status_banner.dart — inline info/error banner
+showManagedDialog          show_managed_dialog.dart — dialog that owns text
+                           controllers and disposes them after exit animation
+showCaptureActionSheet     capture_action_sheet.dart — the single Add hub
+                           (Spent / Received / Moved money / Import statement)
+MonthlyLimitProgress       monthly_limit_progress.dart — informational limit bar
+SnapshotHidingOverlay      snapshot_hiding_overlay.dart — app-switcher privacy cover
+```
+
+### Money formatting
+
+Amounts are formatted by the **currency's** own convention, never the UI
+language (₹10,00,000 lakh grouping, ¥ with no decimals, € with `.`
+grouping and `,` decimal). Use `formatAmountMinor` / `parseAmountToMinor`
+(`money_formatter.dart`) or `MoneyAmountField`;
+never format money with a locale-based `NumberFormat` directly.
 
 ### Register Row
 ```
 [icon]  Category name                    +/- CHF amount
         transaction date · description   running balance (muted, #6b7280)
+
+Split entry:       "Groceries +1 more", full transaction amount
+Reversal row:      ti-corner-up-left marker
+Unverified row:    SIGNAL red left border + ti-lock, still visible,
+                   excluded from balances
+Migrated row:      ti-history marker (superseded by a key migration;
+                   historical, excluded from active balances)
 ```
 
 ### Navigation
 ```
-Bottom tab bar — mobile (Android/iOS):
-  Active: navy background, white icon + label
-  Inactive: transparent, gray icon + label
+Five top-level destinations (lib/ui/core/app_shell.dart):
+  Home (ti-home) · Register (ti-receipt) · Summary (ti-chart-bar)
+  · Accounts (ti-wallet) · Categories (ti-tag)
+Settings is reached from Home's gear icon (ti-settings), not a tab.
 
-Desktop/macOS/Windows: sidebar or top bar, same active/inactive treatment.
+Chosen by available window width, not device type:
+  width <= 600px   Bottom navigation bar
+  width  > 600px   NavigationRail sidebar
+Both: navy (#1a3a6b) background; selected = white (#ffffff) icon + label,
+unselected = light gray (#e0e0e0) icon + label.
 ```
 
 ---
@@ -169,6 +224,10 @@ Desktop/macOS/Windows: sidebar or top bar, same active/inactive treatment.
 Mobile (phone):    320px — 768px   — primary design target
 Tablet:            768px — 1024px  — adapted layout
 Desktop:           1024px+         — wide register/table layout
+
+Implemented breakpoint: the navigation switch at 600px window width
+(AppShell). Other layouts adapt with LayoutBuilder/Expanded rather than
+fixed breakpoints.
 
 Mobile-first approach:
   Design for phone touch first
@@ -193,10 +252,30 @@ Key icons used:
   ti-tag            Category
   ti-wallet         Financial account
   ti-chart-bar      Income vs. expense summary
-  ti-corner-up-left Reverse entry
-  ti-archive        Archive category
+  ti-corner-up-left Reversal (Fix) entry marker
+  ti-history        Migration-superseded entry marker
+  ti-archive        Hide from new entries
   ti-check          Confirm / save
   ti-x              Close / cancel
   ti-calendar       Transaction date picker
-  ti-lock           Immutable / posted (non-editable) indicator
+  ti-lock           Unverified (quarantined) entry; lock screen; locked lot
+  ti-home           Home tab
+  ti-settings       Settings (from Home)
+  ti-plus           Add
+  ti-pencil         Rename / edit
+  ti-trash          Delete (payee, template, rule — never a posted entry)
+  ti-search         Register / instrument search
+  ti-arrows-exchange Moved money (transfer)
+  ti-file-import    Import statement
+  ti-file-export    Export CSV
+  ti-folder-plus    New account group
+  ti-credit-card    Credit card account
+  ti-clock-hour-4   Due recurring template
+  ti-target         Monthly category limit
+  ti-user-circle    Payee
+  ti-adjustments    Import mapping / rules
+  ti-alert-triangle / ti-alert-circle   Warning / error banners
+  ti-dots-vertical  Row overflow menu
+
+Only icons from tabler_icons_plus (TablerIcons.*) are used.
 ```
