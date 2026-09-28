@@ -16,30 +16,38 @@ it reads, so those words had better be the right ones.
 This post covers that idea, one small mistake that showed it, and what
 it changed in practice. It's one developer's experience, not a study.
 
-## A one-minute accounting lesson
+## A small mistake that shows the idea
 
-Smara Account is a household money app built on double-entry
-accounting. When you spend 50 on groceries, the app records one
-**entry** with two sides: 50 leaves your bank account, and 50 lands in
-the "Groceries" category. Each side is called a **posting**. The minus
-on one side and the plus on the other always cancel out, so money never
-appears or disappears.
+First, one piece of accounting, because the story needs it. When you
+spend 50 on groceries, the app writes down two lines: 50 left your bank
+account, and 50 went to "Groceries". Accountants call each line a
+**posting**, and the lines together an **entry**.
 
-About six weeks into the project, I wrote words like these down in a
-**glossary**: a one-page dictionary that I, the code and the AI all
-follow. Its first line said an entry has "exactly two" postings.
+About six weeks into the project, I wrote down what words like these
+mean in a one-page **glossary**: a small dictionary for the project that
+both I and the AI follow. It said: every entry has exactly two postings.
 
-That was wrong. I had already added split purchases: one supermarket
-receipt split between Groceries and Household has *three* sides. The
-app handled splits correctly, and the tests covered them. Only the
-glossary was wrong, and neither I nor the AI had noticed.
+But that was no longer true. The app already let you split one shopping
+receipt, for example 30 for Groceries and 20 for Household. A split
+entry has three lines, not two: one for the bank account, one for
+Groceries and one for Household.
 
-It was caught when I asked an AI to question every definition in the
-glossary against the actual code, over ten rounds of questions. That's
-the real lesson. The glossary didn't save the day. Writing the model
-down in plain sentences made it *checkable*, and an AI could then check
-it. Before that, "an entry has two sides" existed only in my head and in
-two old code comments, where nothing ever checked it.
+The app itself handled splits correctly. The mistake was only in the
+dictionary. It described the app as it used to be, and neither I nor
+the AI had noticed.
+
+Why does that matter? Because the AI reads the dictionary to understand
+the app. An AI that trusted that sentence could one day have "fixed"
+the app to allow only two lines, and broken every split purchase.
+
+How was it found? I asked an AI to go through the dictionary one
+definition at a time and compare each one with what the app actually
+does. It asked me questions in ten rounds, and one of those questions
+found the mistake.
+
+That's the point of the story. Writing the rules down as plain
+sentences made them possible to check, and the AI could do the
+checking. While the rule lived only in my head, nobody could check it.
 
 ## Why AI needs a shared language more than people do
 
