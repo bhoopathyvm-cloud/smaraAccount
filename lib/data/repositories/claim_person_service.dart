@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+import '../../domain/app_error.dart';
 import '../../domain/models/account.dart';
 import '../../domain/models/join_qr_payload.dart';
 import '../../domain/models/linked_device.dart';
@@ -137,5 +138,35 @@ class ClaimPersonService {
       peerHint: peerHint,
       owedToAccountId: owedToId,
     );
+  }
+
+  /// Removes a person (Owner only). History, receipts, and posted Journal
+  /// Entries remain. Archives the owed-to account when [balanceMinor] is
+  /// zero (design Decision 5); leaves it when a balance remains.
+  Future<LinkedDevice> removePerson({
+    required String actorDeviceId,
+    required String targetDeviceId,
+    int balanceMinor = 0,
+  }) async {
+    final target = await _membership.findByDeviceId(targetDeviceId);
+    if (target == null || !target.isActive) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'Target person is not an active member.',
+      );
+    }
+    final owedToId = target.owedToAccountId;
+    final removed = await _membership.removeDevice(
+      actorDeviceId: actorDeviceId,
+      targetDeviceId: targetDeviceId,
+    );
+    if (owedToId != null && balanceMinor == 0) {
+      try {
+        await _accounts.archiveFinancialAccount(owedToId);
+      } catch (_) {
+        // Leave account active if archive is blocked (e.g. last financial).
+      }
+    }
+    return removed;
   }
 }

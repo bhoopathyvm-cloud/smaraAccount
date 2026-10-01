@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../view_models/claims_list_view_model.dart';
 
 /// Claimant home: own claims, balance copy, advances.
@@ -10,6 +11,7 @@ class ClaimsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return AnimatedBuilder(
       animation: viewModel,
       builder: (context, _) {
@@ -19,7 +21,7 @@ class ClaimsListView extends StatelessWidget {
           );
         }
         return Scaffold(
-          appBar: AppBar(title: const Text('Claims')),
+          appBar: AppBar(title: Text(l10n.claimsTitle)),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               await viewModel.createDraft();
@@ -31,7 +33,7 @@ class ClaimsListView extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: [
               Text(
-                viewModel.balanceCopy(),
+                viewModel.balanceCopy(l10n),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               if (viewModel.balanceMinor != 0)
@@ -41,23 +43,29 @@ class ClaimsListView extends StatelessWidget {
                 ),
               const SizedBox(height: 16),
               if (viewModel.advances.isNotEmpty) ...[
-                Text('Advances', style: Theme.of(context).textTheme.titleSmall),
+                Text(
+                  l10n.claimsAdvances,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
                 ...viewModel.advances.map(
                   (a) => ListTile(
                     title: Text((a.amountMinor / 100).toStringAsFixed(2)),
-                    subtitle: Text(a.description ?? 'Advance'),
+                    subtitle: Text(a.description ?? l10n.claimsAdvanceDefault),
                   ),
                 ),
                 const Divider(),
               ],
               if (viewModel.items.isEmpty)
-                const Text('No claims yet.')
+                Text(l10n.claimsNoClaimsYet)
               else
                 ...viewModel.items.map(
                   (c) => ListTile(
-                    title: Text(ClaimsListViewModel.statusLabel(c.status)),
+                    title: Text(
+                      ClaimsListViewModel.statusLabel(c.status, l10n),
+                    ),
                     subtitle: Text(
-                      '${c.items.length} item(s) · ${c.id.substring(0, 8)}',
+                      '${l10n.claimsItemCount(c.items.length)}'
+                      ' · ${c.id.substring(0, 8)}',
                     ),
                   ),
                 ),

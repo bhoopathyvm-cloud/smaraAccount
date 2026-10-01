@@ -3,13 +3,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:smara_accounting/data/repositories/claim_repository.dart';
 import 'package:smara_accounting/domain/models/claim.dart';
 import 'package:smara_accounting/domain/models/claim_status.dart';
+import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/features/claims/view_models/claims_list_view_model.dart';
 import 'package:smara_accounting/ui/features/claims/views/claims_list_view.dart';
 
 class _NoopClaims extends Fake implements ClaimRepository {}
 
 void main() {
-  testWidgets('Claimant list shows balance copy and claim status', (
+  testWidgets('Claimant list uses l10n keys for balance and status', (
     tester,
   ) async {
     final vm = ClaimsListViewModel(
@@ -30,9 +31,16 @@ void main() {
       ),
     ];
 
-    await tester.pumpWidget(MaterialApp(home: ClaimsListView(viewModel: vm)));
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: appLocalizationsDelegatesWithMaterialFallback,
+        supportedLocales: supportedAppLocales,
+        home: ClaimsListView(viewModel: vm),
+      ),
+    );
     expect(find.text('Acme owes you'), findsOneWidget);
     expect(find.text('Submitted'), findsOneWidget);
+    expect(find.text('Claims'), findsOneWidget);
     expect(find.text('Register'), findsNothing);
     expect(find.text('Accounts'), findsNothing);
   });

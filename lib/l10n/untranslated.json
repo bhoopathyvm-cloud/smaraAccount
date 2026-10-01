@@ -69,7 +69,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "as": [
@@ -142,7 +154,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "bn": [
@@ -215,7 +239,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "brx": [
@@ -288,7 +324,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "de": [
@@ -361,7 +409,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "doi": [
@@ -434,7 +494,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "es": [
@@ -507,7 +579,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "fr": [
@@ -580,7 +664,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "gu": [
@@ -653,7 +749,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "hi": [
@@ -726,7 +834,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "hu": [
@@ -799,7 +919,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "id": [
@@ -872,7 +1004,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "it": [
@@ -945,7 +1089,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ja": [
@@ -1018,7 +1174,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "kn": [
@@ -1091,7 +1259,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ko": [
@@ -1164,7 +1344,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "kok": [
@@ -1237,7 +1429,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ks": [
@@ -1310,7 +1514,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "mai": [
@@ -1383,7 +1599,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ml": [
@@ -1456,7 +1684,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "mni": [
@@ -1529,7 +1769,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "mr": [
@@ -1602,7 +1854,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ms": [
@@ -1675,7 +1939,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ne": [
@@ -1748,7 +2024,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "nl": [
@@ -1821,7 +2109,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "or": [
@@ -1894,7 +2194,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "pa": [
@@ -1967,7 +2279,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "pl": [
@@ -2040,7 +2364,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "pt": [
@@ -2113,7 +2449,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ro": [
@@ -2186,7 +2534,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ru": [
@@ -2259,7 +2619,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "sa": [
@@ -2332,7 +2704,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "sat": [
@@ -2405,7 +2789,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "sd": [
@@ -2478,7 +2874,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ta": [
@@ -2551,7 +2959,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "te": [
@@ -2624,7 +3044,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "th": [
@@ -2697,7 +3129,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "tr": [
@@ -2770,7 +3214,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "uk": [
@@ -2843,7 +3299,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "ur": [
@@ -2916,7 +3384,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "vi": [
@@ -2989,7 +3469,19 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ],
 
   "zh": [
@@ -3062,6 +3554,18 @@
     "claimsReceiptPdfTooLarge",
     "claimsSpendingHint",
     "claimsNoClaimsYet",
-    "claimsNoClaimsToReview"
+    "claimsNoClaimsToReview",
+    "claimsAdvanceDefault",
+    "claimsItemCount",
+    "claimsRejectReasonTitle",
+    "claimsApproveDifferentReasonTitle",
+    "claimsPersonNameLabel",
+    "claimsRemovePerson",
+    "claimsRemovePersonTitle",
+    "claimsRemovePersonWarning",
+    "claimsRemovePersonWarningOpenOnly",
+    "claimsRemovePersonWarningBalanceOnly",
+    "claimsRemovePersonWarningClean",
+    "claimsRemovePersonConfirm"
   ]
 }

@@ -51,6 +51,7 @@
 #   group_archive, investment_holdings, investment_research, books_copy,
 #   books_switcher, shared_categories,
 #   linked_devices          — in-process DualDeviceHarness (CI, no device)
+#   claims                  — in-process Claims DualDeviceHarness (CI, no device)
 #   linked_devices_physical — MANUAL only (two devices on one Wi-Fi)
 #
 # Manual group `linked_devices_physical`:
@@ -70,6 +71,7 @@
 #   tool/run_acceptance_tests.sh -d macos -l ja
 #   tool/run_acceptance_tests.sh -d macos -l ar onboarding
 #   tool/run_acceptance_tests.sh -d linux linked_devices
+#   tool/run_acceptance_tests.sh -d linux claims
 #   tool/run_acceptance_tests.sh -d macos books_switcher
 #   tool/run_acceptance_tests.sh -d macos shared_categories
 #
@@ -105,7 +107,7 @@ usage() {
   echo "Usage: $0 -d <device-id> [-l <locale-tag>] [group]" >&2
   echo "Groups include: core_ledger, books_copy, books_switcher," >&2
   echo "  shared_categories, linked_devices (harness/CI)," >&2
-  echo "  linked_devices_physical (manual, two devices on one Wi-Fi)." >&2
+  echo "  claims (harness/CI), linked_devices_physical (manual)." >&2
   echo "Default (no group) skips linked_devices_physical." >&2
   echo "Run '$0 --help' style comments at the top of this script for device-id discovery and locale tags." >&2
 }
@@ -152,6 +154,7 @@ group="${1:-}"
 repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 test_file="$repo_root/integration_test/acceptance/acceptance_test.dart"
 harness_file="$repo_root/test/harness/linked_devices_acceptance_test.dart"
+claims_harness_file="$repo_root/test/harness/claims_dual_device_harness_test.dart"
 
 # linked_devices: in-process DualDeviceHarness — no GUI device required.
 if [ "$group" = "linked_devices" ]; then
@@ -159,6 +162,20 @@ if [ "$group" = "linked_devices" ]; then
   echo
   status=0
   flutter test "$harness_file" || status=$?
+  if [ "$status" -eq 0 ]; then
+    echo "Acceptance suite passed."
+  else
+    echo "Acceptance suite failed." >&2
+  fi
+  exit "$status"
+fi
+
+# claims: in-process Claims DualDeviceHarness — no GUI device required.
+if [ "$group" = "claims" ]; then
+  echo "Running claims harness (in-process, no physical devices; -d '$device_id' unused):"
+  echo
+  status=0
+  flutter test "$claims_harness_file" || status=$?
   if [ "$status" -eq 0 ]; then
     echo "Acceptance suite passed."
   else

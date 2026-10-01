@@ -8,6 +8,7 @@ import '../data/database/app_database.dart';
 import '../data/repositories/account_repository.dart';
 import '../data/repositories/books_copy_repository.dart';
 import '../data/repositories/category_repository.dart';
+import '../data/repositories/claim_person_service.dart';
 import '../data/repositories/claim_repository.dart';
 import '../data/repositories/identity_repository.dart';
 import '../data/repositories/investment_repository.dart';
@@ -312,6 +313,8 @@ GoRouter buildAppRouter(
             membershipRepository: context.read<MembershipRepository>(),
             settingsRepository: settingsRepository,
             booksSetStore: context.read<BooksSetStore>(),
+            claimPersonService: context.read<ClaimPersonService>(),
+            claimRepository: context.read<ClaimRepository>(),
             localNetworkPermission: context.read<LocalNetworkPermission>(),
             booksGeneration: context.read<ActiveBooksSession>().generation,
           );

@@ -4,6 +4,7 @@ import '../../../../data/repositories/claim_repository.dart';
 import '../../../../domain/app_error.dart';
 import '../../../../domain/models/claim.dart';
 import '../../../../domain/models/claim_item_decision.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Approver review queue for submitted claims.
 class ApproverQueueViewModel extends ChangeNotifier {
@@ -44,7 +45,7 @@ class ApproverQueueViewModel extends ChangeNotifier {
     try {
       if (differentAmountMinor != null &&
           (reason == null || reason.trim().isEmpty)) {
-        lastActionError = 'A reason is required for a different amount.';
+        lastActionError = englishAppLocalizations.claimsReasonRequired;
         notifyListeners();
         return null;
       }
@@ -69,7 +70,7 @@ class ApproverQueueViewModel extends ChangeNotifier {
   }) async {
     lastActionError = null;
     if (reason.trim().isEmpty) {
-      lastActionError = 'A reason is required to reject.';
+      lastActionError = englishAppLocalizations.claimsReasonRequired;
       notifyListeners();
       return null;
     }

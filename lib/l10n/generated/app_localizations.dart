@@ -3903,6 +3903,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No claims to review.'**
   String get claimsNoClaimsToReview;
+
+  /// No description provided for @claimsAdvanceDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance'**
+  String get claimsAdvanceDefault;
+
+  /// No description provided for @claimsItemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} item(s)'**
+  String claimsItemCount(int count);
+
+  /// No description provided for @claimsRejectReasonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject reason'**
+  String get claimsRejectReasonTitle;
+
+  /// No description provided for @claimsApproveDifferentReasonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve different amount reason'**
+  String get claimsApproveDifferentReasonTitle;
+
+  /// No description provided for @claimsPersonNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Person name'**
+  String get claimsPersonNameLabel;
+
+  /// No description provided for @claimsRemovePerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get claimsRemovePerson;
+
+  /// No description provided for @claimsRemovePersonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}?'**
+  String claimsRemovePersonTitle(String name);
+
+  /// No description provided for @claimsRemovePersonWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has {openClaims} open Claims and a non-zero owed balance. History and receipts stay in these books.'**
+  String claimsRemovePersonWarning(String name, int openClaims);
+
+  /// No description provided for @claimsRemovePersonWarningOpenOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has {openClaims} open Claims. History and receipts stay in these books.'**
+  String claimsRemovePersonWarningOpenOnly(String name, int openClaims);
+
+  /// No description provided for @claimsRemovePersonWarningBalanceOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has a non-zero owed balance. History and receipts stay in these books.'**
+  String claimsRemovePersonWarningBalanceOnly(String name);
+
+  /// No description provided for @claimsRemovePersonWarningClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}? History and receipts stay in these books.'**
+  String claimsRemovePersonWarningClean(String name);
+
+  /// No description provided for @claimsRemovePersonConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get claimsRemovePersonConfirm;
 }
 
 class _AppLocalizationsDelegate

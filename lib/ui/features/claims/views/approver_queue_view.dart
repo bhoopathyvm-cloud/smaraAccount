@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../view_models/approver_queue_view_model.dart';
 
 /// Approver review queue with per-item approve / reject actions.
@@ -10,6 +11,7 @@ class ApproverQueueView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
     return AnimatedBuilder(
       animation: viewModel,
       builder: (context, _) {
@@ -19,7 +21,7 @@ class ApproverQueueView extends StatelessWidget {
           );
         }
         return Scaffold(
-          appBar: AppBar(title: const Text('Review claims')),
+          appBar: AppBar(title: Text(l10n.claimsReviewTitle)),
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -34,7 +36,7 @@ class ApproverQueueView extends StatelessWidget {
                   ),
                 ),
               if (viewModel.queue.isEmpty)
-                const Text('No claims to review.')
+                Text(l10n.claimsNoClaimsToReview)
               else
                 ...viewModel.queue.expand((claim) {
                   return [
@@ -59,13 +61,13 @@ class ApproverQueueView extends StatelessWidget {
                                       onPressed: () => viewModel.approve(
                                         claimItemId: item.id,
                                       ),
-                                      child: const Text('Approve'),
+                                      child: Text(l10n.claimsApprove),
                                     ),
                                     TextButton(
                                       onPressed: () async {
                                         final reason = await _askReason(
                                           context,
-                                          'Reject',
+                                          l10n.claimsRejectReasonTitle,
                                         );
                                         if (reason == null) return;
                                         await viewModel.reject(
@@ -73,7 +75,7 @@ class ApproverQueueView extends StatelessWidget {
                                           reason: reason,
                                         );
                                       },
-                                      child: const Text('Reject'),
+                                      child: Text(l10n.claimsReject),
                                     ),
                                   ],
                                 )
@@ -92,20 +94,21 @@ class ApproverQueueView extends StatelessWidget {
   }
 
   Future<String?> _askReason(BuildContext context, String title) async {
+    final l10n = l10nOf(context);
     final controller = TextEditingController();
     return showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('$title reason'),
+        title: Text(title),
         content: TextField(controller: controller, autofocus: true),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: Text(l10n.actionCancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, controller.text),
-            child: const Text('OK'),
+            child: Text(l10n.actionConfirm),
           ),
         ],
       ),

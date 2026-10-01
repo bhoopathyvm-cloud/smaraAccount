@@ -2201,4 +2201,53 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get claimsNoClaimsToReview => 'No claims to review.';
+
+  @override
+  String get claimsAdvanceDefault => 'Advance';
+
+  @override
+  String claimsItemCount(int count) {
+    return '$count item(s)';
+  }
+
+  @override
+  String get claimsRejectReasonTitle => 'Reject reason';
+
+  @override
+  String get claimsApproveDifferentReasonTitle =>
+      'Approve different amount reason';
+
+  @override
+  String get claimsPersonNameLabel => 'Person name';
+
+  @override
+  String get claimsRemovePerson => 'Remove';
+
+  @override
+  String claimsRemovePersonTitle(String name) {
+    return 'Remove $name?';
+  }
+
+  @override
+  String claimsRemovePersonWarning(String name, int openClaims) {
+    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+  }
+
+  @override
+  String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
+    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+  }
+
+  @override
+  String claimsRemovePersonWarningBalanceOnly(String name) {
+    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+  }
+
+  @override
+  String claimsRemovePersonWarningClean(String name) {
+    return 'Remove $name? History and receipts stay in these books.';
+  }
+
+  @override
+  String get claimsRemovePersonConfirm => 'Remove';
 }

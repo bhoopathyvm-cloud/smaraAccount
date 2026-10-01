@@ -486,4 +486,58 @@ void main() {
       throwsA(isA<AppFailure>()),
     );
   });
+
+  test(
+    'removalWarning reports open claims and balance; history stays after remove',
+    () async {
+      await addClaimantRavi();
+      final claim = await claims.createDraft(claimantDeviceId: 'ravi-device');
+      await claims.addItem(
+        claimId: claim.id,
+        actorDeviceId: 'ravi-device',
+        categoryId: travelCategoryId,
+        expenseDate: DateTime(2026, 3, 10),
+        paidCurrency: 'USD',
+        paidAmountMinor: 8000,
+        companyCurrencyAmountMinor: 8000,
+        description: 'Train',
+      );
+      final item = (await claims.getClaim(claim.id))!.items.single;
+      final store = ClaimReceiptStore(
+        database: db,
+        booksSetId: 'test-books',
+        supportDirectory: tempDir,
+      );
+      final receipt = await store.attach(
+        claimItemId: item.id,
+        bytes: List<int>.filled(120, 3),
+        contentType: 'image/jpeg',
+        fileName: 'train.jpg',
+      );
+      await claims.submit(claimId: claim.id, actorDeviceId: 'ravi-device');
+      await claims.approveItem(
+        claimItemId: item.id,
+        actorDeviceId: 'owner-device',
+      );
+
+      final warning = await claims.removalWarning(targetDeviceId: 'ravi-device');
+      expect(warning.openClaims, 1);
+      expect(warning.balanceMinor, isNot(0));
+
+      await people.removePerson(
+        actorDeviceId: 'owner-device',
+        targetDeviceId: 'ravi-device',
+        balanceMinor: warning.balanceMinor,
+      );
+
+      final removed = await membership.findByDeviceId('ravi-device');
+      expect(removed!.isActive, isFalse);
+
+      final stillThere = await claims.getClaim(claim.id);
+      expect(stillThere, isNotNull);
+      expect(stillThere!.items, hasLength(1));
+      final bytes = await store.readBytes(receipt.id);
+      expect(bytes, isNotEmpty);
+    },
+  );
 }

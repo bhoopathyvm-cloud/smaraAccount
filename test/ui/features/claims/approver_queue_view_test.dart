@@ -4,15 +4,14 @@ import 'package:smara_accounting/data/repositories/claim_repository.dart';
 import 'package:smara_accounting/domain/models/claim.dart';
 import 'package:smara_accounting/domain/models/claim_item.dart';
 import 'package:smara_accounting/domain/models/claim_status.dart';
+import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/features/claims/view_models/approver_queue_view_model.dart';
 import 'package:smara_accounting/ui/features/claims/views/approver_queue_view.dart';
 
 class _NoopClaims extends Fake implements ClaimRepository {}
 
 void main() {
-  testWidgets('Approver queue shows approve/reject for pending items', (
-    tester,
-  ) async {
+  testWidgets('Approver queue uses l10n approve/reject keys', (tester) async {
     final vm = ApproverQueueViewModel(
       claims: _NoopClaims(),
       actorDeviceId: 'owner',
@@ -44,13 +43,17 @@ void main() {
     ];
 
     await tester.pumpWidget(
-      MaterialApp(home: ApproverQueueView(viewModel: vm)),
+      MaterialApp(
+        localizationsDelegates: appLocalizationsDelegatesWithMaterialFallback,
+        supportedLocales: supportedAppLocales,
+        home: ApproverQueueView(viewModel: vm),
+      ),
     );
+    expect(find.text('Review claims'), findsOneWidget);
     expect(find.text('Approve'), findsOneWidget);
     expect(find.text('Reject'), findsOneWidget);
     expect(find.textContaining('Hotel'), findsOneWidget);
 
-    // Reject without reason surfaces required-reason error via dialog cancel.
     await tester.tap(find.text('Reject'));
     await tester.pumpAndSettle();
     expect(find.text('Reject reason'), findsOneWidget);
