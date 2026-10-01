@@ -826,14 +826,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get whatsMainAccountCalled => '您的主要账户叫什么名字？';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => '欢迎使用Smara记账';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => '从头开始，还是从另一台设备迁移？';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => '全新设置';
 
   @override
   String get continueBooksTitle => '在此手机上继续使用我的账本';

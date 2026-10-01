@@ -839,14 +839,14 @@ class AppLocalizationsDoi extends AppLocalizations {
   String get whatsMainAccountCalled => 'तुंदे मुक्ख खाते दा नां केह् ऐ?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'स्मारा खाता च तुंदा स्वागत ऐ';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'नमीं शुरुआत, जां कुसै होर डिवाइस थमां आवा दे ओ?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'नमां सेटअप';
 
   @override
   String get continueBooksTitle => 'इस फोन पर मेरे खाते जारी रक्खो';

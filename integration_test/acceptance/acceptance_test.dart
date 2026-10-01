@@ -27,6 +27,7 @@ import 'package:smara_accounting/ui/features/recurring_template_management/views
 import 'package:smara_accounting/ui/features/register/views/register_row_tile.dart';
 import 'package:smara_accounting/ui/features/register/views/register_view.dart';
 import 'package:smara_accounting/ui/features/continuation/views/continuation_view.dart';
+import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/ui/features/settings/views/device_history_view.dart';
 import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -1653,13 +1654,13 @@ void main() {
         );
         await pumpUntilFound(
           tester,
-          find.textContaining(staticPrefixOf(l10n.deviceHistoryContinuedOn)),
+          find.textContaining(staticTextOf(l10n.deviceHistoryContinuedOn)),
         );
         expect(
           find.descendant(
             of: find.byType(DeviceHistoryView),
             matching: find.textContaining(
-              staticPrefixOf(l10n.deviceHistoryContinuedOn),
+              staticTextOf(l10n.deviceHistoryContinuedOn),
             ),
           ),
           findsOneWidget,
@@ -1948,7 +1949,7 @@ void main() {
         await tester.tap(find.text(materialL10n(tester).okButtonLabel));
         await pumpUntilFound(
           tester,
-          find.textContaining(staticPrefixOf(l10n.lockedUntilDate)),
+          find.textContaining(staticTextOf(l10n.lockedUntilDate)),
         );
       }
       await tapReliably(
@@ -2335,13 +2336,13 @@ void main() {
           tester,
           () => find.widgetWithText(ElevatedButton, l10n.actionRecordSell),
           () => find
-              .textContaining(staticPrefixOf(l10n.errorLockedUntil))
+              .textContaining(staticTextOf(l10n.errorLockedUntil))
               .evaluate()
               .isNotEmpty,
           innerTries: 150,
         );
         expect(
-          find.textContaining(staticPrefixOf(l10n.errorLockedUntil)),
+          find.textContaining(staticTextOf(l10n.errorLockedUntil)),
           findsOneWidget,
         );
         await tapReliably(
@@ -3115,13 +3116,20 @@ void main() {
         name: fileName,
         bytes: bytes,
       );
+      // A reset wipes the language preference, and a restore never brings
+      // one (it is a device setting). Model a new phone already set to the
+      // run's language, so the first-launch screen speaks it.
+      if (kAcceptanceLocaleTag != 'en') {
+        await SettingsRepository().setPreferredLocaleTag(kAcceptanceLocaleTag);
+      }
       await pumpSmaraApp(tester);
       await tester.pump();
       await pumpUntilFound(tester, find.byType(SetupChoiceView));
+      final setupL10n = setupChoiceL10n(tester);
       await tapReliably(
         tester,
-        () => find.text(l10n.restoreFromCopyAction),
-        () => find.text(l10n.actionChooseFile).evaluate().isNotEmpty,
+        () => find.text(setupL10n.restoreFromCopyAction),
+        () => find.text(setupL10n.actionChooseFile).evaluate().isNotEmpty,
       );
       await tapReliably(
         tester,
@@ -3227,7 +3235,7 @@ void main() {
           passphrase: backupPassphrase,
           onReplaceWarningShown: () {
             expect(
-              find.textContaining(staticPrefixOf(l10n.replaceBooksWarning)),
+              find.textContaining(staticTextOf(l10n.replaceBooksWarning)),
               findsOneWidget,
               reason: 'the warning lists what will be replaced',
             );
@@ -3520,8 +3528,9 @@ void main() {
         await pumpSmaraApp(tester);
         await tester.pump();
         await pumpUntilFound(tester, find.byType(SetupChoiceView));
-        expect(find.text(l10n.actionNewSetup), findsOneWidget);
-        expect(find.text(l10n.restoreFromCopyAction), findsOneWidget);
+        final setupL10n = setupChoiceL10n(tester);
+        expect(find.text(setupL10n.actionNewSetup), findsOneWidget);
+        expect(find.text(setupL10n.restoreFromCopyAction), findsOneWidget);
         expect(find.textContaining('recovery phrase'), findsNothing);
         expect(find.textContaining('keystore'), findsNothing);
         await tester.pump(const Duration(seconds: 1));
@@ -4357,7 +4366,7 @@ void main() {
           },
         );
         expect(
-          find.textContaining(staticPrefixOf(l10n.homeRemaining)),
+          find.textContaining(staticTextOf(l10n.homeRemaining)),
           findsOneWidget,
         );
         expect(find.textContaining('40.00'), findsWidgets);
@@ -4536,13 +4545,18 @@ void main() {
         () => find.byTooltip(l10n.settingsTitle),
         () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
       );
-      // Scroll until books switcher section is visible.
-      for (var i = 0; i < 12; i++) {
-        if (find.text(l10n.settingsBooksSwitcher).evaluate().isNotEmpty) break;
-        await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
-        await tester.pump(const Duration(milliseconds: 300));
-      }
+      // Scroll from the screen centre until the section's own "New books"
+      // button is on screen - the title alone can be visible while the
+      // button below it is still off-screen and not yet built.
+      await scrollSettingsUntilVisible(
+        tester,
+        find.text(l10n.settingsBooksSwitcher),
+      );
       expect(find.text(l10n.settingsBooksSwitcher), findsOneWidget);
+      await scrollSettingsUntilVisible(
+        tester,
+        find.text(l10n.settingsBooksSwitcherCreate),
+      );
       expect(find.text(l10n.settingsBooksSwitcherCreate), findsWidgets);
       await tester.pump(const Duration(seconds: 2));
     }, timeout: const Timeout(Duration(minutes: 5)));

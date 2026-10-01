@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      { "command": "./tool/agent-hooks/format_dart_file.sh" }
+    ],
+    "stop": [
+      { "command": "./tool/agent-hooks/format_all_dart.sh" }
+    ]
+  }
+}

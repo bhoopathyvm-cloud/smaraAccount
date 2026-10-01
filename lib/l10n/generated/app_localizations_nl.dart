@@ -844,14 +844,14 @@ class AppLocalizationsNl extends AppLocalizations {
   String get whatsMainAccountCalled => 'Hoe heet je hoofdrekening?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Welkom bij Smara Boekhouding';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Opnieuw beginnen of overstappen van een ander apparaat?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Nieuwe installatie';
 
   @override
   String get continueBooksTitle => 'Mijn boeken op deze telefoon voortzetten';

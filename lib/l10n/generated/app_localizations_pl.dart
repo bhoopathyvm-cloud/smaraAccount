@@ -842,14 +842,14 @@ class AppLocalizationsPl extends AppLocalizations {
   String get whatsMainAccountCalled => 'Jak nazywa się Twoje główne konto?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Witamy w Smara Księgowość';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Zaczynasz od nowa czy przenosisz się z innego urządzenia?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Nowa konfiguracja';
 
   @override
   String get continueBooksTitle => 'Kontynuuj moje księgi na tym telefonie';

@@ -838,14 +838,14 @@ class AppLocalizationsBrx extends AppLocalizations {
   String get whatsMainAccountCalled => 'नोंथांनि गाहाय खातानि मुं मा?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'स्मारा खाता आव बरायबाय';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'गोदानै जागायनाय, एबा गुबुन डिभाइसनिफ्राय फैयो?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'गोदान सेटआप';
 
   @override
   String get continueBooksTitle => 'बे फोनाव आंनि बुखिखौ थाबायनो दिन';

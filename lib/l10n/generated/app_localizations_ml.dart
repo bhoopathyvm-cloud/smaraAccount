@@ -849,14 +849,14 @@ class AppLocalizationsMl extends AppLocalizations {
       'നിങ്ങളുടെ പ്രധാന അക്കൗണ്ടിന്റെ പേരെന്താണ്?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'സ്മാര അക്കൗണ്ട്-ലേക്ക് സ്വാഗതം';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'പുതുതായി തുടങ്ങുകയാണോ, അതോ മറ്റൊരു ഉപകരണത്തിൽ നിന്ന് മാറുകയാണോ?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'പുതിയ സജ്ജീകരണം';
 
   @override
   String get continueBooksTitle => 'ഈ ഫോണിൽ എന്റെ കണക്കുകൾ തുടരുക';

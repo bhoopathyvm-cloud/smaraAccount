@@ -28,6 +28,19 @@
   change into `openspec/changes/archive/` while its `tasks.md` still has a
   `- [ ]` or `- [~]`; the local `tool/git-hooks/pre-push` hook mirrors it.
 
+- **Code formatting is mandatory for every agent and every commit.** Run
+  `dart format .` and `flutter analyze` before committing, and fix what they
+  report. Never commit with `--no-verify`: the pre-commit hook
+  (`tool/git-hooks/pre-commit`, enabled with
+  `git config core.hooksPath tool/git-hooks`) formats staged Dart files
+  automatically and works in git worktrees. Claude Code also formats each
+  edited Dart file and checks the whole tree before it finishes
+  (`.claude/settings.json`); Cursor does the same through
+  `.cursor/hooks.json`. CI's "Format, analyze, and test" is a required
+  check on `main`, so an unformatted or failing pull request cannot merge.
+  Never hand-edit generated files (`*.g.dart`, `*.mocks.dart`,
+  `lib/l10n/generated/`); regenerate them.
+
 ## Agent skills
 
 ### Issue tracker

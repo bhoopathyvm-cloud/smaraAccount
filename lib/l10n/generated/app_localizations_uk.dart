@@ -848,14 +848,14 @@ class AppLocalizationsUk extends AppLocalizations {
   String get whatsMainAccountCalled => 'Як називається ваш основний рахунок?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Ласкаво просимо до Smara облік';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Починаєте з нуля чи переходите з іншого пристрою?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Нове налаштування';
 
   @override
   String get continueBooksTitle => 'Продовжити мої книги на цьому телефоні';

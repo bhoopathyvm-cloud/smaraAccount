@@ -838,14 +838,14 @@ class AppLocalizationsMni extends AppLocalizations {
   String get whatsMainAccountCalled => 'ꯅꯍꯥꯛꯀꯤ ꯃꯄꯨꯡ ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ ꯀꯔꯤꯅꯣ?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'ꯁ꯭ꯃꯥꯔꯥ ꯑꯦꯀꯥꯎꯟꯠ ꯗꯥ ꯇꯔꯥꯝꯅ ꯑꯣꯛꯆꯔꯤ';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'ꯑꯅꯧꯅ ꯍꯧꯗꯣꯛꯂꯤꯕꯔꯥ, ꯅꯠꯔꯒꯥ ꯑꯇꯣꯞꯄ ꯗꯤꯚꯥꯏꯁꯇꯒꯤ ꯂꯥꯛꯂꯤꯕꯔꯥ?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'ꯑꯅꯧꯕ ꯁꯦꯇꯑꯞ';
 
   @override
   String get continueBooksTitle => 'ꯃꯁꯤꯒꯤ ꯐꯣꯟꯗꯥ ꯑꯩꯒꯤ ꯂꯦꯈꯥ ꯃꯈꯥ ꯆꯠꯊꯕꯤꯌꯨ';

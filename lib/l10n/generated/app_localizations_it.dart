@@ -848,14 +848,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Come si chiama il tuo conto principale?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Benvenuto in Smara Contabilità';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Inizi da zero o arrivi da un altro dispositivo?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Nuova configurazione';
 
   @override
   String get continueBooksTitle => 'Continua i miei libri su questo telefono';

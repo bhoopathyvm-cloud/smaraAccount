@@ -846,14 +846,14 @@ class AppLocalizationsMs extends AppLocalizations {
   String get whatsMainAccountCalled => 'Apakah nama akaun utama anda?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Selamat datang ke Smara Perakaunan';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Bermula baharu, atau berpindah dari peranti lain?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Persediaan baharu';
 
   @override
   String get continueBooksTitle => 'Teruskan buku saya di telefon ini';

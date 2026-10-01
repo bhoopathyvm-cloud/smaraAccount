@@ -18,6 +18,7 @@ import 'package:smara_accounting/ui/features/onboarding/views/currency_selection
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
+import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -441,8 +442,15 @@ String localizedDay(String localeTag, int day) {
 /// "...until 2026-10-15." once a real date fills that gap - a real bug
 /// this suite's own full-locale run caught after seeming to work for
 /// `lockedUntilDate`, whose placeholder happens to be at the end).
-String staticPrefixOf(String Function(String) template) =>
-    template('￿').split('￿').first;
+///
+/// Returns the longest fixed part, not just the text before the placeholder:
+/// many languages put the placeholder first ("{date}에 ..." in Korean,
+/// "{date}にこの..." in Japanese), where the prefix is empty and would match
+/// every text on screen.
+String staticTextOf(String Function(String) template) {
+  final parts = template('￿').split('￿');
+  return parts.reduce((a, b) => b.trim().length > a.trim().length ? b : a);
+}
 
 /// Shell destinations on a wide window are a [NavigationRail] whose
 /// unselected labels are not hit-testable (`labelType: selected`). Tap the
@@ -511,9 +519,10 @@ Future<void> completeOnboardingWithGuidedEntry(
   }
   await onScreen?.call('setup_choice');
 
+  final setupL10n = setupChoiceL10n(tester);
   await tapReliably(
     tester,
-    () => find.text(l10n.actionNewSetup),
+    () => find.text(setupL10n.actionNewSetup),
     () => find.byType(LanguageSelectionView).evaluate().isNotEmpty,
   );
 
@@ -973,3 +982,9 @@ Future<void> recordCashFundedBuyThroughGui(
     await pumpUntilFound(tester, find.text(l10n.errorInsufficientCash));
   }
 }
+
+/// The localizations the first-launch Setup Choice screen is actually shown
+/// in. That screen comes before the language picker, so it speaks the
+/// device's own language, which need not be the run's ACCEPTANCE_LOCALE.
+AppLocalizations setupChoiceL10n(WidgetTester tester) =>
+    AppLocalizations.of(tester.element(find.byType(SetupChoiceView)))!;

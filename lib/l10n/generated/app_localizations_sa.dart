@@ -841,14 +841,13 @@ class AppLocalizationsSa extends AppLocalizations {
   String get whatsMainAccountCalled => 'भवतः मुख्यलेखस्य नाम किम्?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'स्मारा लेखा इत्यत्र स्वागतम्';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => 'नूतनारम्भः, उत अन्यस्मात् उपकरणात् आगच्छति?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'नूतनविन्यासः';
 
   @override
   String get continueBooksTitle => 'अस्मिन् दूरभाषे मम लेखाः अनुवर्तयतु';

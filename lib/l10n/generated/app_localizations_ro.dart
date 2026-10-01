@@ -846,14 +846,14 @@ class AppLocalizationsRo extends AppLocalizations {
   String get whatsMainAccountCalled => 'Cum se numește contul dvs. principal?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Bun venit în Smara Contabilitate';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Începi de la zero sau te muți de pe alt dispozitiv?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Configurare nouă';
 
   @override
   String get continueBooksTitle => 'Continuă registrele mele pe acest telefon';

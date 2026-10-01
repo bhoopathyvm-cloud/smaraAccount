@@ -840,14 +840,14 @@ class AppLocalizationsSat extends AppLocalizations {
       'ᱟᱢ ᱨᱮᱭᱟᱜ ᱢᱩᱬᱩᱛ ᱦᱤᱥᱟᱹᱵ ᱧᱩᱛᱩᱢ ᱪᱮᱫᱟᱜ ᱠᱟᱱᱟ?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'ᱥᱢᱟᱨᱟ ᱦᱤᱥᱟᱹᱵ ᱨᱮ ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'ᱱᱟᱶᱟ ᱮᱛᱦᱚᱵ, ᱟᱨ ᱵᱟᱝ ᱮᱴᱟᱜ ᱰᱤᱵᱟᱤᱥ ᱠᱷᱚᱱ ᱦᱤᱡᱩᱜ ᱠᱟᱱᱟ ᱥᱮ?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'ᱱᱟᱶᱟ ᱥᱮᱴᱟᱯ';
 
   @override
   String get continueBooksTitle => 'ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱨᱮ ᱤᱧᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱦᱟ ᱥᱮᱱ ᱢᱮ';

@@ -843,14 +843,14 @@ class AppLocalizationsTe extends AppLocalizations {
   String get whatsMainAccountCalled => 'మీ ప్రధాన ఖాతా పేరు ఏమిటి?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'స్మారా అకౌంటింగ్కి స్వాగతం';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'కొత్తగా ప్రారంభిస్తున్నారా, లేదా మరో పరికరం నుండి మారుతున్నారా?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'కొత్త సెటప్';
 
   @override
   String get continueBooksTitle => 'ఈ ఫోన్‌లో నా ఖాతా పుస్తకాలను కొనసాగించు';

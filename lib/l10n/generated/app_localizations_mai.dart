@@ -840,14 +840,13 @@ class AppLocalizationsMai extends AppLocalizations {
   String get whatsMainAccountCalled => 'अहाँक मुख्य खाताक नाम की अछि?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'स्मारा खाता मे अहाँक स्वागत अछि';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => 'नव शुरुआत, वा दोसर डिवाइस सँ आबि रहल छी?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'नव सेटअप';
 
   @override
   String get continueBooksTitle => 'एहि फोन पर हमर बही जारी राखू';

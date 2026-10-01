@@ -1,0 +1,18 @@
+---
+description: Dart formatting and analysis are mandatory before every commit
+alwaysApply: true
+---
+
+# Code formatting
+
+- Run `dart format .` and `flutter analyze` before every commit, and fix
+  everything they report. CI ("Format, analyze, and test") is a required
+  check on `main`, so an unformatted or failing pull request cannot merge.
+- Never commit with `--no-verify`. The pre-commit hook
+  (`tool/git-hooks/pre-commit`) formats staged Dart files for you; if it
+  fails, fix the cause.
+- Never hand-edit generated files (`*.g.dart`, `*.mocks.dart`,
+  `lib/l10n/generated/`); regenerate them (`dart run build_runner build`,
+  `flutter gen-l10n`).
+
+See CLAUDE.md, "Code formatting", for the shared rule.

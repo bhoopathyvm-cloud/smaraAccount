@@ -844,14 +844,14 @@ class AppLocalizationsId extends AppLocalizations {
   String get whatsMainAccountCalled => 'Apa nama akun utama Anda?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Selamat datang di Smara Pembukuan';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Mulai dari awal, atau pindah dari perangkat lain?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Penyiapan baru';
 
   @override
   String get continueBooksTitle => 'Lanjutkan pembukuan saya di ponsel ini';

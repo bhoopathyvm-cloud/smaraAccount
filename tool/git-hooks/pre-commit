@@ -1,8 +1,41 @@
 #!/bin/sh
-# dart format / dart analyze gate, per smara-tech-guidelines.md's Build Quality Gates.
-# Installed via: git config core.hooksPath tool/git-hooks
+# dart format / flutter analyze gate, per smara-tech-guidelines.md's Build
+# Quality Gates. Installed via: git config core.hooksPath tool/git-hooks
+#
+# 1. Formats the staged Dart files and re-stages them, so a commit made by a
+#    person or an AI agent is always formatted. A file that also has
+#    unstaged changes is not re-staged (that would sneak the unstaged work
+#    into the commit); the commit stops and says which file to fix.
+# 2. Checks that the whole tree is formatted and that flutter analyze is
+#    clean, exactly like CI ("Format, analyze, and test").
 
 set -e
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR -- '*.dart')
+if [ -n "$staged" ]; then
+  echo "Formatting staged Dart files ..."
+  for file in $staged; do
+    [ -f "$file" ] || continue
+    if ! git diff --quiet -- "$file"; then
+      if ! dart format --output=none --set-exit-if-changed "$file" >/dev/null; then
+        echo "pre-commit: $file is not formatted and also has unstaged changes." >&2
+        echo "Run 'dart format $file', stage it, and commit again." >&2
+        exit 1
+      fi
+      continue
+    fi
+    dart format "$file" >/dev/null
+    git add -- "$file"
+  done
+fi
+
+# Flutter finds its own SDK version by running git inside the SDK. The
+# GIT_DIR / GIT_INDEX_FILE / GIT_WORK_TREE variables git sets for hooks point
+# that at this repository instead, so Flutter misreads its version and pub
+# resolution fails ("Try using the Flutter SDK version ..."), notably in git
+# worktrees. Clear them before calling Flutter; the re-staging above is done.
+unset GIT_DIR GIT_INDEX_FILE GIT_WORK_TREE GIT_PREFIX GIT_OBJECT_DIRECTORY \
+  GIT_ALTERNATE_OBJECT_DIRECTORIES GIT_COMMON_DIR
 
 echo "Running dart format --output=none --set-exit-if-changed ..."
 dart format --output=none --set-exit-if-changed .

@@ -838,14 +838,14 @@ class AppLocalizationsKok extends AppLocalizations {
   String get whatsMainAccountCalled => 'तुमच्या मुखेल खात्याचें नाव कितें आसा?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'स्मारा हिशोब हांगा येवकार';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'नव्यान सुरवात, वा दुसऱ्या डिव्हायसांतल्यान येतात?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'नवो सेटअप';
 
   @override
   String get continueBooksTitle => 'ह्या फोनाचेर म्हजो हिशोब फुडें चालू दवरात';

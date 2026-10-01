@@ -829,14 +829,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get whatsMainAccountCalled => 'メインの口座の名前は何ですか？';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Smara家計簿へようこそ';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => '新しく始めますか？それとも別のデバイスから移行しますか？';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => '新しく設定';
 
   @override
   String get continueBooksTitle => 'このスマホで帳簿を続ける';
