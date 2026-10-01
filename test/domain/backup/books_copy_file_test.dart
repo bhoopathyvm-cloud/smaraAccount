@@ -3,9 +3,9 @@ import 'dart:typed_data';
 
 import 'package:cryptography/cryptography.dart';
 import 'package:smara_accounting/domain/backup/books_copy_file.dart';
-import 'package:smara_accounting/domain/backup/device_migration_bundle_file.dart';
-import 'package:smara_accounting/domain/backup/ledger_backup_file.dart';
 import 'package:test/test.dart';
+
+import 'legacy_backup_encrypt.dart';
 
 void main() {
   final dbBytes = Uint8List.fromList(List<int>.generate(64, (i) => i));
@@ -65,7 +65,7 @@ void main() {
     });
 
     test('reads a legacy ledger backup with empty settings', () async {
-      final legacy = await LedgerBackupFile.encrypt(
+      final legacy = await encryptLegacyLedgerBackup(
         databaseBytes: dbBytes,
         passphrase: passphrase,
       );
@@ -80,7 +80,7 @@ void main() {
 
     test('reads a legacy bundle and discards the key', () async {
       final seed = Uint8List.fromList(List<int>.generate(32, (i) => i + 1));
-      final legacy = await DeviceMigrationBundleFile.encrypt(
+      final legacy = await encryptLegacyDeviceMigrationBundle(
         databaseBytes: dbBytes,
         privateKeySeed: seed,
         passphrase: passphrase,

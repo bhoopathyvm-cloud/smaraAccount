@@ -6,13 +6,16 @@ import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_holdings_logic.dart';
+import 'package:smara_accounting/data/repositories/ledger_chain_store.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/recurring_template_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
+import 'package:smara_accounting/data/repositories/repository_date_utils.dart';
 import 'package:smara_accounting/domain/models/instrument.dart';
+import 'package:smara_accounting/domain/crypto/entry_canonical_hash.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/home_overview.dart';
@@ -21,6 +24,7 @@ import 'package:smara_accounting/domain/models/pending_transfer.dart';
 import 'package:smara_accounting/domain/models/recurring_template.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:test/test.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../domain/crypto/in_memory_secure_key_storage.dart';
 
@@ -1955,6 +1959,143 @@ void main() {
         final after = await identityRepository.continueBooks();
         expect(after.identityId, equals(before.identityId));
         expect(after.continuesIdentityId, isNull);
+      },
+    );
+  });
+
+  group('legacy key-loss migration fixture', () {
+    /// Builds the shape an earlier Migration left on disk: a superseded
+    /// identity, a migrated entry (genesis previous hash + migratedFrom),
+    /// and the legacy entry still present. Verifier and register must keep
+    /// accepting that shape after Migration itself was removed.
+    Future<void> seedMigratedFixture() async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      final accountId = await firstFinancialAccountId();
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
+      final legacy = (await repository.watchEntries().first).single;
+      final previous = (await identityRepository.currentIdentity())!;
+
+      final generated = await signingKeyService.generateNewIdentity();
+      final newRow = await db
+          .into(db.signingIdentities)
+          .insertReturning(
+            SigningIdentitiesCompanion.insert(
+              publicKey: Uint8List.fromList(generated.keyMaterial.publicKey),
+              supersedesIdentityId: Value(previous.identityId),
+              acknowledgedAt: Value(DateTime.now()),
+            ),
+          );
+      await (db.update(db.signingIdentities)
+            ..where((t) => t.identityId.equals(previous.identityId)))
+          .write(
+            SigningIdentitiesCompanion(supersededAt: Value(DateTime.now())),
+          );
+
+      final legacyRow = await (db.select(db.journalEntries)
+            ..where((e) => e.id.equals(legacy.id)))
+          .getSingle();
+      final legacyPostings = await (db.select(
+        db.postings,
+      )..where((p) => p.entryId.equals(legacy.id))).get();
+      final chain = LedgerChainStore(db);
+      final prior = await chain.loadState();
+      final sequence = prior.nextDeviceChainSequence;
+      final previousHash = Uint8List.fromList(genesisPreviousEntryHash);
+      final newId = const Uuid().v4();
+      final recordedAt = truncateToStoredPrecision(DateTime.now());
+      final bytes = canonicalEntryBytes(
+        previousEntryHash: previousHash,
+        id: newId,
+        deviceChainSequence: sequence,
+        transactionDate: legacyRow.transactionDate,
+        recordedAt: recordedAt,
+        description: legacyRow.description,
+        reversesEntryId: legacyRow.reversesEntryId,
+        signedByIdentityId: newRow.identityId,
+        postings: legacyPostings
+            .map(
+              (p) => CanonicalPosting(
+                lineNumber: p.lineNumber,
+                accountId: p.accountId,
+                amountMinor: p.amountMinor,
+              ),
+            )
+            .toList(),
+      );
+      final entryHash = await hashCanonicalEntry(bytes);
+      final signature = await signingKeyService.sign(entryHash);
+
+      await db.into(db.journalEntries).insert(
+            JournalEntriesCompanion.insert(
+              id: Value(newId),
+              transactionDate: legacyRow.transactionDate,
+              recordedAt: recordedAt,
+              description: Value(legacyRow.description),
+              reversesEntryId: Value(legacyRow.reversesEntryId),
+              deviceChainSequence: sequence,
+              previousEntryHash: previousHash,
+              entryHash: entryHash,
+              signedByIdentityId: newRow.identityId,
+              signature: signature,
+              migratedFromEntryId: Value(legacy.id),
+            ),
+          );
+      for (final p in legacyPostings) {
+        await db.into(db.postings).insert(
+              PostingsCompanion.insert(
+                entryId: newId,
+                accountId: p.accountId,
+                amountMinor: p.amountMinor,
+                lineNumber: p.lineNumber,
+              ),
+            );
+      }
+      await chain.upsertVerificationCache(
+        entryId: newId,
+        isVerified: true,
+        breakReason: null,
+      );
+      await chain.updateState(
+        trustedTipEntryId: newId,
+        trustedTipHash: entryHash,
+        nextDeviceChainSequence: sequence + 1,
+      );
+    }
+
+    test(
+      'verifyChain fully verifies a chain spanning identities across an '
+      'earlier migration, and register marks the legacy entry superseded',
+      () async {
+        await seedMigratedFixture();
+
+        final result = await chainVerifier.verifyChain();
+        expect(result.isFullyVerified, isTrue);
+        expect(result.totalEntries, equals(2));
+
+        final entries = await repository.watchEntries().first;
+        final legacy = entries.firstWhere((e) => e.migratedFromEntryId == null);
+        final migrated = entries.firstWhere(
+          (e) => e.migratedFromEntryId != null,
+        );
+        expect(legacy.isSupersededByMigration, isTrue);
+        expect(migrated.isSupersededByMigration, isFalse);
+        expect(legacy.isVerified, isTrue);
+        expect(migrated.isVerified, isTrue);
+
+        final summary = await repository
+            .watchSummary(
+              start: DateTime(2020, 1, 1),
+              end: DateTime(2030, 12, 31),
+            )
+            .first;
+        // Superseded legacy is excluded; migrated copy counts once.
+        expect(summary.totalIncomeMinor, equals(1000));
       },
     );
   });

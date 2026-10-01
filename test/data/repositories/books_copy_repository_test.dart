@@ -13,13 +13,12 @@ import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
-import 'package:smara_accounting/domain/backup/device_migration_bundle_file.dart';
-import 'package:smara_accounting/domain/backup/ledger_backup_file.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 
+import '../../domain/backup/legacy_backup_encrypt.dart';
 import '../../domain/crypto/in_memory_secure_key_storage.dart';
 
 /// File-backed databases only — save/restore operates on the on-disk file.
@@ -316,7 +315,7 @@ void main() {
     final source = await seedRepository(sourceFile);
     await source.repository.close();
 
-    final legacy = await LedgerBackupFile.encrypt(
+    final legacy = await encryptLegacyLedgerBackup(
       databaseBytes: await sourceFile.readAsBytes(),
       passphrase: 'legacy-pass',
     );
@@ -358,7 +357,7 @@ void main() {
       await source.repository.close();
 
       final fakeSeed = List<int>.generate(32, (i) => i + 1);
-      final legacy = await DeviceMigrationBundleFile.encrypt(
+      final legacy = await encryptLegacyDeviceMigrationBundle(
         databaseBytes: await sourceFile.readAsBytes(),
         privateKeySeed: fakeSeed,
         passphrase: 'bundle-pass',
