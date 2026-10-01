@@ -86,8 +86,8 @@ void main() {
     await f.relaunchToHome();
     await f.openSettings();
     await f.shot('13_settings');
-    await f.scrollSettingsTo(find.text(l10n.settingsRecovery));
-    await f.shot('14_backup_recovery');
+    await f.scrollSettingsTo(find.text(l10n.settingsBackup));
+    await f.shot('14_books_copy');
 
     await f.relaunchToHome();
     await f.openRecurring();

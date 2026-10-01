@@ -3,6 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/summary.dart';
+import 'package:smara_accounting/l10n/generated/app_localizations_hi.dart';
 import 'package:smara_accounting/ui/features/category_management/view_models/category_management_view_model.dart';
 
 import '../../../../mocks.mocks.dart';
@@ -53,6 +54,42 @@ void main() {
       verify(repository.watchCategories(includeArchived: true)).called(1);
     },
   );
+
+  test(
+    'an untranslated seeded category shows in the app language, not English',
+    () async {
+      final viewModel = CategoryManagementViewModel(
+        categoryRepository: repository,
+      );
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
+      await Future<void>.delayed(Duration.zero);
+
+      final hindi = AppLocalizationsHi();
+      expect(
+        viewModel.displayNameFor(salary, hindi),
+        hindi.systemCategorySalary,
+      );
+      expect(hindi.systemCategorySalary, isNot('Salary'));
+    },
+  );
+
+  test('a translation wins over the localized seeded name', () async {
+    when(
+      repository.displayNameFor(any, appLocale: anyNamed('appLocale')),
+    ).thenAnswer((_) async => 'वेतन (मेरा)');
+    final viewModel = CategoryManagementViewModel(
+      categoryRepository: repository,
+    );
+    addTearDown(viewModel.dispose);
+    await Future<void>.delayed(Duration.zero);
+    await Future<void>.delayed(Duration.zero);
+
+    expect(
+      viewModel.displayNameFor(salary, AppLocalizationsHi()),
+      'वेतन (मेरा)',
+    );
+  });
 
   test('addCategory delegates to the Repository', () async {
     when(

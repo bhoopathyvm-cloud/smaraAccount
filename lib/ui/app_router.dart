@@ -348,8 +348,18 @@ GoRouter buildAppRouter(
                     '/settle-pending-transfer/'
                     '${Uri.encodeQueryComponent(pendingTransferId)}',
                   ),
-                  onOpenSettings: () => context.push('/settings'),
-                  onSaveBooksCopy: () => context.push('/settings'),
+                  // Saving a copy in Settings resets the reminder; re-check
+                  // it on the way back so the banner doesn't linger.
+                  onOpenSettings: () async {
+                    final home = context.read<HomeViewModel>();
+                    await context.push('/settings');
+                    await home.refreshBackupReminder();
+                  },
+                  onSaveBooksCopy: () async {
+                    final home = context.read<HomeViewModel>();
+                    await context.push('/settings');
+                    await home.refreshBackupReminder();
+                  },
                   onSpent: () =>
                       context.push('/record-transaction?direction=spent'),
                   onReceived: () =>

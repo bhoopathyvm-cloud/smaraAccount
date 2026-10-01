@@ -410,17 +410,17 @@
   "firstAccountTitle": "તમારા ખાતાનું નામ આપો",
   "firstAccountBlurb": "આ ખાતું તમારા માટે પહેલેથી સેટ થયેલું છે - તેને તમારી બેંક જેવું ઓળખી શકાય તેવું નામ આપો. પછી તમે એક ખર્ચ અથવા પ્રાપ્તિ નોંધશો, ત્યારબાદ તમારી રિકવરી ફ્રેઝ વડે ડિવાઇસને સુરક્ષિત કરશો.",
   "whatsMainAccountCalled": "તમારા મુખ્ય ખાતાનું નામ શું છે?",
-  "setupChoiceTitle": "Welcome to Smara Accounting",
-  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
-  "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "setupChoiceTitle": "સ્મારા ખાતુંમાં આપનું સ્વાગત છે",
+  "setupChoiceBlurb": "નવેસરથી શરૂઆત, કે બીજા ઉપકરણમાંથી આવી રહ્યા છો?",
+  "actionNewSetup": "નવું સેટઅપ",
+  "continueBooksTitle": "આ ફોન પર મારા ચોપડા ચાલુ રાખો",
+  "continueBooksBlurb": "આ ચોપડા તેમની સહી કી વગર આ ફોન પર આવ્યા છે. તમે આ ફોન માટેની નવી કી સાથે તેમને ચાલુ રાખી શકો છો, અથવા તેના બદલે સાચવેલી નકલમાંથી પુનઃસ્થાપિત કરી શકો છો.",
+  "continueBooksAction": "આ ફોન પર મારા ચોપડા ચાલુ રાખો",
+  "restoreFromCopyAction": "નકલમાંથી પુનઃસ્થાપિત કરો",
+  "saveBooksCopyAction": "મારા ચોપડાની નકલ સાચવો",
+  "deviceHistoryTitle": "ઉપકરણ ઇતિહાસ",
+  "deviceHistoryEmpty": "હજી સુધી કંઈ ચાલુ રાખ્યું નથી. નવા ફોન પર ચોપડા ચાલુ રાખશો ત્યારે અહીં દેખાશે.",
+  "deviceHistoryContinuedOn": "તમારા ચોપડા {date} ના રોજ આ ફોન પર ચાલુ રહ્યા",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "તમારા ચોપડા {continuedDate} ના રોજ આ ફોન પર ચાલુ રહ્યા ({copyDate} ના રોજ સાચવેલી નકલમાંથી)",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "તમારા ચોપડાની નકલ સાચવો",
+  "backupReminderSaveAction": "નકલ સાચવો",
+  "backupReminderLaterAction": "પછીથી",
+  "settingsBackupReminder": "નકલ રિમાઇન્ડર",
+  "settingsBackupReminderBlurb": "થોડા સમય પછી અથવા ઘણી નવી નોંધો પછી અમે તમને ચોપડાની નકલ સાચવવાનું યાદ અપાવીશું. આ ફોન ખોવાઈ જાય તો ચોપડા પાછા મેળવવાનો એકમાત્ર રસ્તો સાચવેલી નકલ છે.",
+  "settingsBackupReminderEnabled": "નકલ સાચવવાનું યાદ અપાવો",
+  "settingsBackupReminderDays": "આટલા દિવસ પછી યાદ અપાવો",
+  "settingsBackupReminderEntries": "આટલી નવી નોંધો પછી યાદ અપાવો",
+  "settingsBackupReminderSnoozeDays": "''પછીથી'' પછી આટલા દિવસ છુપાવો",
+  "settingsBackupReminderSnoozeEntries": "''પછીથી'' પછી આટલી નવી નોંધો સુધી છુપાવો",
   "whyWeDontEdit": "અમે જૂની એન્ટ્રીઓ કેમ સંપાદિત નથી કરતા",
   "whyWeDontEditBody": "જ્યારે તમે ભૂલ સુધારો છો, ત્યારે અમે જૂની લાઇન રાખીએ છીએ અને તમે પહેલેથી દાખલ કરેલું બદલવાને બદલે તેની બાજુમાં સુધારો ઉમેરીએ છીએ. આ રીતે તમારો ઇતિહાસ હંમેશા બરાબર બતાવે છે કે શું થયું અને તમે ક્યારે તેને સુધાર્યું — તમારી જાણ બહાર કંઈ ચૂપચાપ બદલાતું નથી.",
   "lockTitle": "અનલૉક કરો",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "પાસફ્રેઝ",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "આનાથી આ ફોન પરની બધી નોંધો અને ચોપડાના સેટિંગ્સ બદલાઈ જશે ({counts}). કંઈ ભેગું કરવામાં આવશે નહીં. તમારી ભાષા અને અનલૉક સેટિંગ્સ આ ફોન પર જ રહેશે.",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "પહેલાં નકલ સાચવો",
+  "replaceCountEntries": "{count} નોંધો",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} ખાતાં",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} શ્રેણીઓ",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} ખાતા જૂથો",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} પ્રાપ્તકર્તાઓ",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} શ્રેણી નિયમો",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} આયાત પ્રોફાઇલ",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} પુનરાવર્તિત નમૂના",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} રોકાણ સાધનો",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

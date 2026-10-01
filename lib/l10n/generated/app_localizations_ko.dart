@@ -831,81 +831,78 @@ class AppLocalizationsKo extends AppLocalizations {
   String get whatsMainAccountCalled => '주 계좌의 이름은 무엇인가요?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Smara 회계에 오신 것을 환영합니다';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => '새로 시작하시나요, 아니면 다른 기기에서 옮겨 오시나요?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => '새로 설정';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => '이 휴대폰에서 장부 계속하기';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      '이 장부는 서명 키 없이 이 휴대폰에 도착했습니다. 이 휴대폰용 새 키로 계속하거나, 저장된 사본에서 복원할 수 있습니다.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => '이 휴대폰에서 장부 계속하기';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => '사본에서 복원';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => '내 장부 사본 저장';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => '기기 기록';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      '아직 이어서 사용한 기록이 없습니다. 새 휴대폰에서 장부를 계속하면 여기에 표시됩니다.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return '$date에 이 휴대폰에서 장부를 이어서 사용했습니다';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return '$continuedDate에 이 휴대폰에서 장부를 이어서 사용했습니다($copyDate에 저장한 사본에서)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => '장부 사본을 저장하세요';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => '사본 저장';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => '나중에';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => '사본 알림';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      '일정 시간이 지나거나 새 기록이 많이 쌓이면 장부 사본을 저장하도록 알려 드립니다. 이 휴대폰을 잃어버리면 저장한 사본이 장부를 되찾는 유일한 방법입니다.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => '사본 저장 알림 받기';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => '이 일수가 지나면 알림';
 
   @override
-  String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+  String get settingsBackupReminderEntries => '새 기록이 이만큼 쌓이면 알림';
 
   @override
-  String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+  String get settingsBackupReminderSnoozeDays => '\'나중에\' 후 이 일수 동안 숨기기';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      '\'나중에\' 후 새 기록이 이만큼 쌓일 때까지 숨기기';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -1987,54 +1984,54 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return '이 휴대폰의 모든 기록과 장부 설정이 바뀝니다($counts). 합쳐지지 않습니다. 언어와 잠금 해제 설정은 이 휴대폰에 그대로 남습니다.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => '먼저 사본 저장';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '기록 $count개';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '계좌 $count개';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '카테고리 $count개';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '계좌 그룹 $count개';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '수취인 $count명';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '카테고리 규칙 $count개';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '가져오기 프로필 $count개';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '반복 템플릿 $count개';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '종목 $count개';
   }
 }

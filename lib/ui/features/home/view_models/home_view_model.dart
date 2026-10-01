@@ -175,6 +175,9 @@ class HomeViewModel extends ChangeNotifier {
     final reminderDays = await settings.backupReminderDays();
     final reminderEntries = await settings.backupReminderEntries();
     final snoozeEntries = await settings.backupReminderSnoozeEntries();
+    // A refresh started on the way back from Settings can land after a
+    // books switch has disposed this ViewModel.
+    if (_disposed) return;
 
     _showBackupReminder = BackupReminderPolicy.shouldShow(
       enabled: enabled,
@@ -251,8 +254,11 @@ class HomeViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
+  bool _disposed = false;
+
   @override
   void dispose() {
+    _disposed = true;
     _subscription.cancel();
     _categoryTotalsSubscription.cancel();
     _dueTemplatesSubscription.cancel();

@@ -410,17 +410,17 @@
   "firstAccountTitle": "नोंथांनि खातानि मुं थि",
   "firstAccountBlurb": "बेयो नोंथांखायनो सिगाংनिफ्राय बेवस्था खालामबाय खाता - बेखौ नोंथांयो सिनायथिनाय मुं गुदि नोंथांनि बेंकनि मुं थि। नोंथांयो सिगां सा फोजाब एबा मोननाय दर्ज खालामनांगौ, बादि डिभाइसखौ नोंथांनि रिकभरि फ्रेजजों रोखाथाब।",
   "whatsMainAccountCalled": "नोंथांनि गाहाय खातानि मुं मा?",
-  "setupChoiceTitle": "Welcome to Smara Accounting",
-  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
-  "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "setupChoiceTitle": "स्मारा खाता आव बरायबाय",
+  "setupChoiceBlurb": "गोदानै जागायनाय, एबा गुबुन डिभाइसनिफ्राय फैयो?",
+  "actionNewSetup": "गोदान सेटआप",
+  "continueBooksTitle": "बे फोनाव आंनि बुखिखौ थाबायनो दिन",
+  "continueBooksBlurb": "बे बुखिफोरा बिसोरनि सही साबियाव गैयाबालानो बे फोनाव फैबाय। नोंथांआ बे फोननि गोदान साबियाजों बिसोरखौ थाबायनो हायो, एबा बेनि सोलायाव थिना दोनबाय कपिनिफ्राय फिन लाबोनो हायो।",
+  "continueBooksAction": "बे फोनाव आंनि बुखिखौ थाबायनो दिन",
+  "restoreFromCopyAction": "कपिनिफ्राय फिन लाबो",
+  "saveBooksCopyAction": "आंनि बुखिनि कपि थिना दो",
+  "deviceHistoryTitle": "डिभाइस जारिमिन",
+  "deviceHistoryEmpty": "दानो गुबुन थाबायनाय गैया। गोदान फोनाव बुखि थाबायोब्ला बेयाव नुजाथानो।",
+  "deviceHistoryContinuedOn": "नोंथांनि बुखिफोरा {date} आव बे फोनाव थाबायनाय जाबाय",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "नोंथांनि बुखिफोरा {continuedDate} आव बे फोनाव थाबायनाय जाबाय ({copyDate} आव थिना दोनबाय कपिनिफ्राय)",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "नोंथांनि बुखिनि कपि थिना दो",
+  "backupReminderSaveAction": "कपि थिना दो",
+  "backupReminderLaterAction": "उनाव",
+  "settingsBackupReminder": "कपि गोसोखांहोनाय",
+  "settingsBackupReminderBlurb": "खावसे सम उनाव एबा गोबां गोदान एन्ट्रि उनाव जोंआ नोंथांखौ बुखिनि कपि थिना दोनो गोसोखांहोगोन। बे फोनआ गोमायोब्ला बुखि फिन मोननो थिना दोनबाय कपिल'' गोसा लामा।",
+  "settingsBackupReminderEnabled": "कपि थिना दोनो गोसोखांहो",
+  "settingsBackupReminderDays": "बेसेबां सान उनाव गोसोखांहो",
+  "settingsBackupReminderEntries": "बेसेबां गोदान एन्ट्रि उनाव गोसोखांहो",
+  "settingsBackupReminderSnoozeDays": "''उनाव'' उनाव बेसेबां सान दोन",
+  "settingsBackupReminderSnoozeEntries": "''उनाव'' उनाव बेसेबां गोदान एन्ट्रि सिम दोन",
   "whyWeDontEdit": "बुखिय गोबां जोबथानाय एंट्री मानो सुद्रांथियै",
   "whyWeDontEditBody": "नोंथांयो सा गोरोन्थि सुद्रिबाब्ला, बुयो जोबथा लाइनखौ थिना दोनानै बेनि सोदोबसार सुद्रिनाय दाजाबदों, नोंथांयो दाजाबबाय बेखौ सोलायनाय नङा। बेनि थाखाय नोंथांनि इतिहासा जायखिजाबाय आरो मानाव सुद्रिबाय बेखौ थार दिन्थिनाय थादों — नोंथांनि गिबारि गोयै कुनैबो सोलायाखै।",
   "lockTitle": "अनलाक",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "पासफ्रेज",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "बेनि थाखाय बे फोननि गासै एन्ट्रि आरो बुखिनि सेटिंगफोरा सोलायजागोन ({counts})। जेबो गोलोमनाय नङा। नोंथांनि राव आरो आनलक सेटिंगफोरा बे फोनावनो थागोन।",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "गिबियाव कपि थिना दो",
+  "replaceCountEntries": "{count} एन्ट्रि",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} एकाउन्ट",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} थाखोफोर",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} एकाउन्ट दल",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} मोननाय सुबुं",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} थाखो फोथाराय",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} आमदानि प्र''फाइल",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} फिन फिन टेम्प्लेट",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} बिनियग आइजेनफोर",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

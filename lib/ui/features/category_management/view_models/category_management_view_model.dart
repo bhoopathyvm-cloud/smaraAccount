@@ -122,9 +122,15 @@ class CategoryManagementViewModel extends ChangeNotifier
     notifyListeners();
   }
 
-  /// Name shown in lists/pickers for [category] (app-locale then default).
-  String displayNameFor(Account category) =>
-      _displayNames[category.id] ?? category.name;
+  /// Name shown in lists/pickers for [category]: its translation for the app
+  /// locale when one exists, otherwise the stored name - which for an
+  /// unchanged seeded category is shown in the app's language
+  /// (`localizeStoredName`), exactly as before shared translations.
+  String displayNameFor(Account category, AppLocalizations l10n) {
+    final resolved = _displayNames[category.id];
+    if (resolved != null && resolved != category.name) return resolved;
+    return localizeStoredName(l10n, category.name);
+  }
 
   Future<void> setDefaultCategoryLocale(String locale) async {
     await _categoryRepository.setDefaultCategoryLocale(locale);
