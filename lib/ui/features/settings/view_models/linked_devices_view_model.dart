@@ -186,7 +186,9 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   /// Builds an "Add a person" QR (default Claimant). Requires
   /// [ClaimPersonService].
-  Future<JoinQrPayload?> startAddPerson({required String personDisplayName}) async {
+  Future<JoinQrPayload?> startAddPerson({
+    required String personDisplayName,
+  }) async {
     if (_isBusy || _localDeviceId == null || _people == null) return null;
     final name = personDisplayName.trim();
     if (name.isEmpty) return null;

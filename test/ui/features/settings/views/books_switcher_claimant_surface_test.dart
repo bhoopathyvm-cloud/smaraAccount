@@ -31,10 +31,7 @@ class _NoopClaims extends Fake implements ClaimRepository {}
 /// Minimal surface that mirrors app_router Claimant-only gating after a
 /// books-set switch (task 7.4).
 class _ActiveSurface extends StatelessWidget {
-  const _ActiveSurface({
-    required this.session,
-    required this.claimantOnly,
-  });
+  const _ActiveSurface({required this.session, required this.claimantOnly});
 
   final ActiveBooksSession session;
   final bool claimantOnly;
@@ -51,9 +48,7 @@ class _ActiveSurface extends StatelessWidget {
       vm.balanceMinor = 0;
       return ClaimsListView(viewModel: vm);
     }
-    return const Scaffold(
-      body: Center(child: Text('Household home')),
-    );
+    return const Scaffold(body: Center(child: Text('Household home')));
   }
 }
 
@@ -112,14 +107,14 @@ void main() {
       localDeviceId: deviceId,
       displayName: 'This device',
     );
-    await (db.update(db.linkedDevices)
-          ..where((t) => t.deviceId.equals(deviceId)))
-        .write(
-          LinkedDevicesCompanion(
-            rolesCsv: Value(MembershipRoleGates.encodeRoles(roles)),
-            role: Value(MembershipRoleGates.primaryRole(roles)),
-          ),
-        );
+    await (db.update(
+      db.linkedDevices,
+    )..where((t) => t.deviceId.equals(deviceId))).write(
+      LinkedDevicesCompanion(
+        rolesCsv: Value(MembershipRoleGates.encodeRoles(roles)),
+        role: Value(MembershipRoleGates.primaryRole(roles)),
+      ),
+    );
   }
 
   Future<bool> activeIsClaimantOnly() async {

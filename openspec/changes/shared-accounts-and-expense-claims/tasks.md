@@ -12,7 +12,8 @@
 - [x] 2.1 Implement automatic creation of "Owed to \<name\>" liability Financial Account when a Claimant person is added; link on membership — verify unit tests that Add Claimant creates the account once and reuses it
 - [x] 2.2 Implement role-gate helpers (canApproveClaims, canManageMembership, canBookkeep, canSubmitOwnClaims) over the role set — verify unit tests for single- and multi-role combinations
 - [x] 2.3 Build "Add a person" UI/QR flow reusing B's join transport with person-role offer (default Claimant) — verify widget/unit tests for successful Claimant join and same-Wi-Fi refusal off LAN
-- [ ] 2.4 Implement remove-person flow with warning for open Claims and non-zero owed balance; history and receipts remain — verify unit/widget tests for warning content and that past claims stay after removal
+- [x] 2.4 Implement remove-person flow with warning for open Claims and non-zero owed balance; history and receipts remain — verify unit/widget tests for warning content and that past claims stay after removal
+  <!-- 2026-10-01: flow existed (#214); its widget test deadlocked waiting for the removal without pumping. Fixed; `remove_person_section_test` passes (warning names open Claims and balance; removal keeps the claim). Full suite 1020 passed. -->
 
 ## 3. Claim domain and Claimant surface
 
@@ -58,3 +59,14 @@
 - [x] 9.1 Run `flutter analyze` and unit/widget suites touched by this change; fix regressions — verify clean analyze and tests for claims, receipts, roles, sync filter, navigation
 - [ ] 9.2 Run dual-device harness claims group via `tool/run_acceptance_tests.sh` on the available CI/Linux target; run GUI acceptance subsets that exist for Claims on macOS when available — verify harness group passes (note environment limits for macOS GUI / physical phones without checking boxes you cannot satisfy)
 - [ ] 9.3 Manual spot-check when two devices available: Add a person Claimant, submit claim with receipt on office Wi-Fi, approve different amount, pay, confirm Claimant balance — record result in this task (leave unchecked if physical devices unavailable)
+
+## 10. Gaps found in review (2026-10-01)
+
+These are user-facing parts that boxes above were ticked against, but that don't exist in the app yet. They keep the change open until a Claimant can actually use it.
+
+- [ ] 10.1 Claim editor screen: add, edit and remove items (date, allowed category, amount, currency and rate, description), attach receipts, and Submit with the required-receipt and limit-hint behavior. Today the Claimant screen can only create an empty draft (task 3.4 was ticked without an editor). Verify with widget tests for the full draft → submit path
+- [ ] 10.2 Receipt capture in the app: camera photo and photo-library pick (no `image_picker` or camera dependency exists) plus PDF pick, with permissions asked on first use, feeding the existing compression and storage (task 4.1). Verify with widget tests using fake pickers, and on a real phone
+- [ ] 10.3 Approver review screen polish: replace the hard-coded `Claim <id> · <status>` title, raw `amount / 100` values and category ids with localized labels, money formatting in each currency, category names and receipt thumbnails. Verify with widget tests for the formatted output
+- [ ] 10.4 Claimant screens: format balances and advances with the app's money formatting (they show `amount / 100` today) and show claim titles without raw ids. Verify with widget tests
+- [ ] 10.5 "Add a person" QR flow on real devices depends on `linked-devices-and-sync` section 12 (real transport, discovery and QR screens). Verify after that lands, together with 9.3
+- [ ] 10.6 Translate this change's new strings into all 42 non-English ARB files and clear them from `lib/l10n/untranslated.json`. Verify `test/l10n/locale_packs_test.dart` and the localized smoke workflow

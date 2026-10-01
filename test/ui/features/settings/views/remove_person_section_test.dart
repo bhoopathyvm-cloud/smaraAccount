@@ -20,6 +20,7 @@ import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/domain/linked_devices/local_network_permission.dart';
 import 'package:smara_accounting/domain/models/account_type.dart';
+import 'package:smara_accounting/domain/models/claim.dart';
 import 'package:smara_accounting/domain/models/linked_device_role.dart';
 import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/features/settings/view_models/linked_devices_view_model.dart';
@@ -121,79 +122,101 @@ void main() {
   testWidgets(
     'remove person warning shows open Claims and balance; confirm removes',
     (tester) async {
-      final viewModel = await buildVm();
-      addTearDown(viewModel.dispose);
-      final localId = viewModel.localDeviceId!;
+      late LinkedDevicesViewModel viewModel;
+      late Claim claim;
+      await tester.runAsync(() async {
+        viewModel = await buildVm();
+        final localId = viewModel.localDeviceId!;
 
-      final peer = await identity.addLinkedPeerIdentity(
-        publicKey: List<int>.generate(32, (i) => i + 20),
-      );
-      final owed = await people.ensureOwedToAccount(
-        displayName: 'Ravi',
-        currency: 'USD',
-      );
-      await membership.addDevice(
-        actorDeviceId: localId,
-        deviceId: 'ravi-device',
-        displayName: 'Ravi phone',
-        signingIdentityId: peer.identityId,
-        deviceCertFingerprint: 'fp-ravi',
-        roles: {LinkedDeviceRole.claimant},
-        owedToAccountId: owed.id,
-        personDisplayName: 'Ravi',
-      );
+        final peer = await identity.addLinkedPeerIdentity(
+          publicKey: List<int>.generate(32, (i) => i + 20),
+        );
+        final owed = await people.ensureOwedToAccount(
+          displayName: 'Ravi',
+          currency: 'USD',
+        );
+        await membership.addDevice(
+          actorDeviceId: localId,
+          deviceId: 'ravi-device',
+          displayName: 'Ravi phone',
+          signingIdentityId: peer.identityId,
+          deviceCertFingerprint: 'fp-ravi',
+          roles: {LinkedDeviceRole.claimant},
+          owedToAccountId: owed.id,
+          personDisplayName: 'Ravi',
+        );
 
-      final claim = await claims.createDraft(claimantDeviceId: 'ravi-device');
-      await claims.addItem(
-        claimId: claim.id,
-        actorDeviceId: 'ravi-device',
-        categoryId: travelCategoryId,
-        expenseDate: DateTime(2026, 3, 11),
-        paidCurrency: 'USD',
-        paidAmountMinor: 4500,
-        companyCurrencyAmountMinor: 4500,
-      );
-      final item = (await claims.getClaim(claim.id))!.items.single;
-      await ClaimReceiptStore(
-        database: db,
-        booksSetId: 'books-test',
-        supportDirectory: tempDir,
-      ).attach(
-        claimItemId: item.id,
-        bytes: List<int>.filled(80, 1),
-        contentType: 'image/jpeg',
-        fileName: 'r.jpg',
-      );
-      await claims.submit(claimId: claim.id, actorDeviceId: 'ravi-device');
-      await (db.update(db.linkedDevices)
-            ..where((t) => t.deviceId.equals(localId)))
-          .write(
-            LinkedDevicesCompanion(
-              rolesCsv: Value(
-                MembershipRoleGates.encodeRoles({
-                  LinkedDeviceRole.owner,
-                  LinkedDeviceRole.approver,
-                }),
-              ),
+        claim = await claims.createDraft(claimantDeviceId: 'ravi-device');
+        await claims.addItem(
+          claimId: claim.id,
+          actorDeviceId: 'ravi-device',
+          categoryId: travelCategoryId,
+          expenseDate: DateTime(2026, 3, 11),
+          paidCurrency: 'USD',
+          paidAmountMinor: 4500,
+          companyCurrencyAmountMinor: 4500,
+        );
+        final item = (await claims.getClaim(claim.id))!.items.single;
+        await ClaimReceiptStore(
+          database: db,
+          booksSetId: 'books-test',
+          supportDirectory: tempDir,
+        ).attach(
+          claimItemId: item.id,
+          bytes: List<int>.filled(80, 1),
+          contentType: 'image/jpeg',
+          fileName: 'r.jpg',
+        );
+        await claims.submit(claimId: claim.id, actorDeviceId: 'ravi-device');
+        await (db.update(
+          db.linkedDevices,
+        )..where((t) => t.deviceId.equals(localId))).write(
+          LinkedDevicesCompanion(
+            rolesCsv: Value(
+              MembershipRoleGates.encodeRoles({
+                LinkedDeviceRole.owner,
+                LinkedDeviceRole.approver,
+              }),
             ),
-          );
-      await claims.approveItem(claimItemId: item.id, actorDeviceId: localId);
-      await viewModel.refresh();
+          ),
+        );
+        await claims.approveItem(claimItemId: item.id, actorDeviceId: localId);
+        await viewModel.refresh();
+      });
+      addTearDown(viewModel.dispose);
 
       await tester.pumpWidget(
         MaterialApp(
           localizationsDelegates: appLocalizationsDelegatesWithMaterialFallback,
           supportedLocales: supportedAppLocales,
-          home: Scaffold(body: LinkedDevicesSection(viewModel: viewModel)),
+          home: Scaffold(
+            body: SingleChildScrollView(
+              child: LinkedDevicesSection(viewModel: viewModel),
+            ),
+          ),
         ),
       );
-      await tester.pumpAndSettle();
+      await settle(tester);
 
       expect(find.text('Add a person'), findsOneWidget);
       expect(find.text('Ravi'), findsOneWidget);
 
+      await tester.ensureVisible(find.text('Remove').first);
+      await tester.pump();
       await tester.tap(find.text('Remove').first);
-      await tester.pumpAndSettle();
+      // The warning reads open Claims and the owed balance from the database
+      // before the dialog opens; let that real I/O finish.
+      for (
+        var i = 0;
+        i < 50 && find.text('Remove Ravi?').evaluate().isEmpty;
+        i++
+      ) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 20)),
+        );
+        await tester.pump();
+      }
+      await settle(tester);
 
       expect(find.text('Remove Ravi?'), findsOneWidget);
       expect(
@@ -203,11 +226,35 @@ void main() {
       expect(find.textContaining('History and receipts stay'), findsOneWidget);
 
       await tester.tap(find.text('Remove').last);
-      await tester.pumpAndSettle();
+      // The removal runs in the widget test's zone: let real I/O and frames
+      // alternate until it finishes.
+      for (var i = 0; i < 200 && viewModel.isBusy; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 10)),
+        );
+        await tester.pump();
+      }
+      expect(viewModel.isBusy, isFalse);
+      await settle(tester);
 
-      final removed = await membership.findByDeviceId('ravi-device');
-      expect(removed!.isActive, isFalse);
-      expect(await claims.getClaim(claim.id), isNotNull);
+      await tester.runAsync(() async {
+        final removed = await membership.findByDeviceId('ravi-device');
+        expect(removed!.isActive, isFalse);
+        expect(await claims.getClaim(claim.id), isNotNull);
+      });
     },
   );
+}
+
+/// Pumps until no frame is scheduled or [maxTicks] is reached, letting real
+/// database I/O run between frames. Unlike pumpAndSettle it cannot hang on
+/// an indeterminate progress indicator.
+Future<void> settle(WidgetTester tester, {int maxTicks = 100}) async {
+  for (var i = 0; i < maxTicks; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 10)),
+    );
+    await tester.pump(const Duration(milliseconds: 50));
+    if (!tester.binding.hasScheduledFrame) return;
+  }
 }

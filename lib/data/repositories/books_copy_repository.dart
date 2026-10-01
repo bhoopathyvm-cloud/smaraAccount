@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 
 import '../../domain/backup/books_copy_file.dart';
 import '../../domain/crypto/signing_key_service.dart';
@@ -87,7 +86,10 @@ class BooksCopyRepository {
     final file = databaseFile ?? await AppDatabase.resolveDatabaseFile();
     final bytes = await file.readAsBytes();
     final settings = await _settingsRepository.exportBooksSettings();
-    final receipts = await _readReceipts(supportDirectory: supportDirectory);
+    final receipts = await _readReceipts(
+      supportDirectory: supportDirectory,
+      databaseFile: file,
+    );
     final encoded = await BooksCopyFile.encrypt(
       databaseBytes: bytes,
       settings: settings,
@@ -102,14 +104,31 @@ class BooksCopyRepository {
     return encoded;
   }
 
+  /// Receipts live beside the books set's database
+  /// (`books/<id>/receipts/` next to `books/<id>/ledger.sqlite`).
+  static Directory _receiptsBeside(File databaseFile) => Directory(
+    p.join(databaseFile.parent.path, BooksSetPaths.receiptsDirectoryName),
+  );
+
+  Future<Directory?> _receiptsDirectory({
+    Directory? supportDirectory,
+    required File databaseFile,
+  }) async {
+    if (supportDirectory == null) return _receiptsBeside(databaseFile);
+    final booksSetId = await BooksSetStore().activeBooksSetId();
+    if (booksSetId == null) return null;
+    return BooksSetPaths.receiptsDirectory(supportDirectory, booksSetId);
+  }
+
   Future<Map<String, List<int>>> _readReceipts({
     Directory? supportDirectory,
+    required File databaseFile,
   }) async {
-    final support = supportDirectory ?? await getApplicationSupportDirectory();
-    final booksSetId = await BooksSetStore().activeBooksSetId();
-    if (booksSetId == null) return const {};
-    final dir = BooksSetPaths.receiptsDirectory(support, booksSetId);
-    if (!await dir.exists()) return const {};
+    final dir = await _receiptsDirectory(
+      supportDirectory: supportDirectory,
+      databaseFile: databaseFile,
+    );
+    if (dir == null || !await dir.exists()) return const {};
     final out = <String, List<int>>{};
     await for (final entity in dir.list()) {
       if (entity is File) {
@@ -214,18 +233,16 @@ class BooksCopyRepository {
 
     // Restore Claim receipt blobs beside the database (task 7.3).
     if (contents.receiptsById.isNotEmpty) {
-      final support =
-          supportDirectory ?? await getApplicationSupportDirectory();
-      final booksSetId = await BooksSetStore().activeBooksSetId();
-      if (booksSetId != null) {
-        await BooksSetPaths.ensureReceiptsDirectory(support, booksSetId);
+      final dir = await _receiptsDirectory(
+        supportDirectory: supportDirectory,
+        databaseFile: resolvedTargetFile,
+      );
+      if (dir != null) {
+        await dir.create(recursive: true);
         for (final entry in contents.receiptsById.entries) {
-          final file = BooksSetPaths.receiptFile(
-            support,
-            booksSetId,
-            entry.key,
-          );
-          await file.writeAsBytes(entry.value, flush: true);
+          await File(
+            p.join(dir.path, entry.key),
+          ).writeAsBytes(entry.value, flush: true);
         }
       }
     }

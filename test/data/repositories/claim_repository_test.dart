@@ -520,7 +520,9 @@ void main() {
         actorDeviceId: 'owner-device',
       );
 
-      final warning = await claims.removalWarning(targetDeviceId: 'ravi-device');
+      final warning = await claims.removalWarning(
+        targetDeviceId: 'ravi-device',
+      );
       expect(warning.openClaims, 1);
       expect(warning.balanceMinor, isNot(0));
 
