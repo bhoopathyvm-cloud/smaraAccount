@@ -199,6 +199,15 @@ void main() {
       await tester.pump();
       await tester.pump();
       await tester.pumpAndSettle();
+      // On a real build the search can still be in flight after settling.
+      for (
+        var i = 0;
+        i < 100 && find.text('Confirm the listing').evaluate().isEmpty;
+        i++
+      ) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+      await tester.pumpAndSettle();
 
       // Both listings shown, CHF/SIX pre-selected per the Default-exchange
       // setting above.

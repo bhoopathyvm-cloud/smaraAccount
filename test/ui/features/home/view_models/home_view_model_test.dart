@@ -388,6 +388,26 @@ void main() {
 
       expect(viewModel.showBackupReminder, isFalse);
     });
+
+    test('a refresh landing after dispose does not notify', () async {
+      when(
+        repository.watchEntries(),
+      ).thenAnswer((_) => Stream.value([_entry()]));
+
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
+        settingsRepository: settings,
+        clock: () => DateTime.utc(2026, 6, 1),
+      );
+      await Future<void>.delayed(Duration.zero);
+      final pending = viewModel.refreshBackupReminder();
+      viewModel.dispose();
+
+      await expectLater(pending, completes);
+    });
   });
 }
 

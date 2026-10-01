@@ -413,14 +413,14 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "continueBooksTitle": "ଏହି ଫୋନରେ ମୋ ଖାତା ଜାରି ରଖନ୍ତୁ",
+  "continueBooksBlurb": "ଏହି ଖାତାଗୁଡ଼ିକ ସେମାନଙ୍କ ସ୍ୱାକ୍ଷର ଚାବି ବିନା ଏହି ଫୋନକୁ ଆସିଛି। ଆପଣ ଏହି ଫୋନ ପାଇଁ ନୂଆ ଚାବି ସହିତ ଏଗୁଡ଼ିକୁ ଜାରି ରଖିପାରିବେ, କିମ୍ବା ତା'' ବଦଳରେ ସଞ୍ଚିତ କପିରୁ ପୁନଃସ୍ଥାପନ କରିପାରିବେ।",
+  "continueBooksAction": "ଏହି ଫୋନରେ ମୋ ଖାତା ଜାରି ରଖନ୍ତୁ",
+  "restoreFromCopyAction": "କପିରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ",
+  "saveBooksCopyAction": "ମୋ ଖାତାର ଏକ କପି ସଞ୍ଚୟ କରନ୍ତୁ",
+  "deviceHistoryTitle": "ଡିଭାଇସ ଇତିହାସ",
+  "deviceHistoryEmpty": "ଏପର୍ଯ୍ୟନ୍ତ କିଛି ଜାରି ରଖାଯାଇନାହିଁ। ନୂଆ ଫୋନରେ ଖାତା ଜାରି ରଖିଲେ ଏଠାରେ ଦେଖାଯିବ।",
+  "deviceHistoryContinuedOn": "ଆପଣଙ୍କ ଖାତା {date} ରେ ଏହି ଫୋନରେ ଜାରି ରହିଲା",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "ଆପଣଙ୍କ ଖାତା {continuedDate} ରେ ଏହି ଫୋନରେ ଜାରି ରହିଲା ({copyDate} ରେ ସଞ୍ଚିତ କପିରୁ)",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "ଆପଣଙ୍କ ଖାତାର ଏକ କପି ସଞ୍ଚୟ କରନ୍ତୁ",
+  "backupReminderSaveAction": "କପି ସଞ୍ଚୟ କରନ୍ତୁ",
+  "backupReminderLaterAction": "ପରେ",
+  "settingsBackupReminder": "କପି ସ୍ମାରକ",
+  "settingsBackupReminderBlurb": "କିଛି ସମୟ ପରେ କିମ୍ବା ଅନେକ ନୂଆ ଏଣ୍ଟ୍ରି ପରେ ଆମେ ଆପଣଙ୍କୁ ଖାତାର କପି ସଞ୍ଚୟ କରିବାକୁ ମନେ ପକାଇଦେବୁ। ଏହି ଫୋନ ହଜିଗଲେ ଖାତା ଫେରି ପାଇବାର ଏକମାତ୍ର ଉପାୟ ସଞ୍ଚିତ କପି।",
+  "settingsBackupReminderEnabled": "କପି ସଞ୍ଚୟ କରିବାକୁ ମନେ ପକାନ୍ତୁ",
+  "settingsBackupReminderDays": "ଏତେ ଦିନ ପରେ ମନେ ପକାନ୍ତୁ",
+  "settingsBackupReminderEntries": "ଏତେ ନୂଆ ଏଣ୍ଟ୍ରି ପରେ ମନେ ପକାନ୍ତୁ",
+  "settingsBackupReminderSnoozeDays": "''ପରେ'' ପରେ ଏତେ ଦିନ ଲୁଚାନ୍ତୁ",
+  "settingsBackupReminderSnoozeEntries": "''ପରେ'' ପରେ ଏତେ ନୂଆ ଏଣ୍ଟ୍ରି ପର୍ଯ୍ୟନ୍ତ ଲୁଚାନ୍ତୁ",
   "whyWeDontEdit": "ଆମେ କାହିଁକି ପୁରୁଣା ଏଣ୍ଟ୍ରି ସମ୍ପାଦନା କରୁନାହୁଁ",
   "whyWeDontEditBody": "ଯେତେବେଳେ ଆପଣ ଏକ ଭୁଲ ସଂଶୋଧନ କରନ୍ତି, ଆମେ ପୁରୁଣା ଲାଇନ୍ ରଖୁ ଏବଂ ଆପଣ ପୂର୍ବରୁ ଲେଖିଥିବାକୁ ବଦଳାଇବା ପରିବର୍ତ୍ତେ ଏହା ପାଖରେ ଏକ ସଂଶୋଧନ ଯୋଡ଼ିଥାଉ। ଏହି ପ୍ରକାରେ ଆପଣଙ୍କ ଇତିହାସ ସର୍ବଦା ପ୍ରକୃତରେ କଣ ହୋଇଥିଲା ଏବଂ ଆପଣ କେବେ ତାହା ସଂଶୋଧନ କରିଥିଲେ ତାହା ଦେଖାଏ — ଆପଣଙ୍କ ପଛରେ କିଛି ଚୁପ୍‌ଚାପ୍ ବଦଳେ ନାହିଁ।",
   "lockTitle": "ଅନଲକ୍",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "ପାସଫ୍ରେଜ୍",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "ଏହା ଏହି ଫୋନର ସମସ୍ତ ଏଣ୍ଟ୍ରି ଓ ଖାତା ସେଟିଂସ ବଦଳାଇଦେବ ({counts})। କିଛି ମିଶାଯିବ ନାହିଁ। ଆପଣଙ୍କ ଭାଷା ଓ ଅନଲକ ସେଟିଂସ ଏହି ଫୋନରେ ରହିବ।",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "ପ୍ରଥମେ କପି ସଞ୍ଚୟ କରନ୍ତୁ",
+  "replaceCountEntries": "{count}ଟି ଏଣ୍ଟ୍ରି",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count}ଟି ଖାତା",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count}ଟି ବର୍ଗ",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count}ଟି ଖାତା ଗୋଷ୍ଠୀ",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} ଜଣ ପ୍ରାପକ",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count}ଟି ବର୍ଗ ନିୟମ",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count}ଟି ଆମଦାନି ପ୍ରୋଫାଇଲ",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count}ଟି ପୁନରାବୃତ୍ତ ଟେମ୍ପଲେଟ",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count}ଟି ନିବେଶ ସାଧନ",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

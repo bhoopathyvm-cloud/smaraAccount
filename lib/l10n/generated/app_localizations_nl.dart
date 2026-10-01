@@ -854,71 +854,72 @@ class AppLocalizationsNl extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'Mijn boeken op deze telefoon voortzetten';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'Deze boeken zijn zonder hun ondertekeningssleutel op deze telefoon aangekomen. U kunt ze voortzetten met een nieuwe sleutel voor deze telefoon, of in plaats daarvan herstellen vanuit een opgeslagen kopie.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'Mijn boeken op deze telefoon voortzetten';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'Herstellen vanuit een kopie';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'Een kopie van mijn boeken opslaan';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'Apparaatgeschiedenis';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'Nog geen voortzettingen. Wanneer u boeken op een nieuwe telefoon voortzet, verschijnen ze hier.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'Uw boeken zijn op $date op deze telefoon voortgezet';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'Uw boeken zijn op $continuedDate op deze telefoon voortgezet (vanuit een kopie van $copyDate)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'Sla een kopie van uw boeken op';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'Kopie opslaan';
 
   @override
   String get backupReminderLaterAction => 'Later';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'Kopieherinnering';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'We herinneren u er na een tijdje of na veel nieuwe boekingen aan om een kopie van uw boeken op te slaan. Een opgeslagen kopie is de enige manier om uw boeken terug te krijgen als deze telefoon verloren gaat.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled =>
+      'Herinner mij aan een kopie opslaan';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'Herinneren na zoveel dagen';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'Herinneren na zoveel nieuwe boekingen';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      'Na „Later” zoveel dagen verbergen';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      'Na „Later” voor zoveel nieuwe boekingen verbergen';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2075,55 +2076,55 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'Hiermee worden alle boekingen en de instellingen van de boeken op deze telefoon vervangen ($counts). Er wordt niets samengevoegd. Uw taal en ontgrendelinstellingen blijven op deze telefoon.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'Eerst een kopie opslaan';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count boekingen';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count rekeningen';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count categorieën';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count rekeninggroepen';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count begunstigden';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count categorieregels';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count importprofielen';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count terugkerende sjablonen';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count effecten';
   }
 
   @override

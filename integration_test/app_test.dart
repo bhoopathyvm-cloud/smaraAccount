@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart' hide isNull;
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,7 @@ import 'package:smara_accounting/ui/features/account_management/view_models/acco
 import 'package:smara_accounting/ui/features/category_management/view_models/category_management_view_model.dart';
 import 'package:smara_accounting/ui/features/home/view_models/home_view_model.dart';
 import 'package:smara_accounting/ui/features/continuation/view_models/continuation_view_model.dart';
+import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
 import 'package:smara_accounting/ui/features/register/view_models/register_view_model.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/features/setup_choice/view_models/bundle_import_view_model.dart';
@@ -168,11 +171,26 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
+    // The FAB opens the capture sheet; pick "Received".
     await tester.tap(find.byIcon(TablerIcons.plus));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
+    await pumpUntilFound(tester, find.text('Received'), maxTries: 200);
+    await tester.tap(find.text('Received').last);
+    await pumpUntilFound(
+      tester,
+      find.byType(RecordTransactionView),
+      maxTries: 200,
+    );
 
-    await tester.enterText(find.byType(TextField).first, '25');
+    // Scoped: the Register's search field stays mounted under the route.
+    await tester.enterText(
+      find
+          .descendant(
+            of: find.byType(RecordTransactionView),
+            matching: find.byType(TextField),
+          )
+          .first,
+      '25',
+    );
     await tester.pump();
 
     // Two dropdowns now exist (Account, then Category) - the category
@@ -410,17 +428,27 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
+      await pumpUntilFound(tester, find.text('MONEY IN TRANSIT'));
+      await pumpUntilFound(tester, find.text('MONEY IN TRANSIT'));
       expect(find.text('MONEY IN TRANSIT'), findsOneWidget);
       final pendingBefore =
           (await repository.watchPendingTransfers().first).single;
       expect(pendingBefore.currency, equals('USD'));
 
-      await tester.tap(find.textContaining('→').first);
+      await tester.ensureVisible(find.textContaining('You sent').first);
+      await tester.pump();
+      await tester.ensureVisible(find.textContaining('You sent').first);
+      await tester.pump();
+      await tester.tap(find.textContaining('You sent').first);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 200));
 
-      expect(find.text('Settle transfer'), findsOneWidget);
-      await tester.enterText(find.byType(TextField).first, '92.00');
+      await pumpUntilFound(tester, find.text('What arrived?'));
+      await pumpUntilFound(tester, find.text('What arrived?'));
+      expect(find.text('What arrived?'), findsOneWidget);
+      // EUR uses a decimal comma (currency_minor_units.dart), as in the
+      // acceptance suite's currency_transfers group.
+      await tester.enterText(find.byType(TextField).first, '92,00');
       await tester.tap(find.widgetWithText(ElevatedButton, 'Settle'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
@@ -476,17 +504,26 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
 
+    await pumpUntilFound(tester, find.text('MONEY IN TRANSIT'));
     expect(find.text('MONEY IN TRANSIT'), findsOneWidget);
-    await tester.tap(find.textContaining('→').first);
+    await tester.ensureVisible(find.textContaining('You sent').first);
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.tap(find.textContaining('You sent').first);
+    await pumpUntilFound(tester, find.textContaining('Returned to'));
 
     await tester.tap(find.textContaining('Returned to'));
     await tester.pump();
     await tester.enterText(find.byType(TextField).first, '90.00');
     await tester.pump();
 
-    expect(find.textContaining('Shortfall'), findsOneWidget);
+    // Returned short: the difference is booked to a fee/loss category.
+    expect(
+      find.widgetWithText(
+        DropdownButtonFormField<String>,
+        'Fee / loss category',
+      ),
+      findsOneWidget,
+    );
     await tester.tap(
       find.widgetWithText(
         DropdownButtonFormField<String>,
@@ -582,6 +619,120 @@ void main() {
       );
     },
   );
+
+  testWidgets('a saved copy restores on a fresh device and continues there', (
+    tester,
+  ) async {
+    final dir = await Directory.systemTemp.createTemp('smara-app-test-');
+    addTearDown(() => dir.delete(recursive: true));
+    const passphrase = 'correct horse battery';
+
+    // Old phone: file-backed books with one entry, saved as a copy.
+    final oldFile = File('${dir.path}/old.sqlite');
+    final oldDb = AppDatabase.openFile(oldFile);
+    final oldKeys = SigningKeyService(
+      secureStorage: InMemorySecureKeyStorage(),
+    );
+    final oldLedger = LedgerRepository(
+      database: oldDb,
+      signingKeyService: oldKeys,
+    );
+    final oldAccounts = AccountRepository(
+      database: oldDb,
+      ledgerRepository: oldLedger,
+    );
+    final oldIdentityRepository = IdentityRepository(
+      database: oldDb,
+      accountRepository: oldAccounts,
+      signingKeyService: oldKeys,
+    );
+    final generated = await oldIdentityRepository.generateFirstIdentity();
+    await oldIdentityRepository.confirmFirstIdentity(
+      generated,
+      currency: 'USD',
+    );
+    final income = (await CategoryRepository(
+      database: oldDb,
+    ).watchCategories().first).firstWhere((a) => a.type == AccountType.income);
+    await oldLedger.recordTransaction(
+      amountMinor: 2500,
+      direction: TransactionDirection.moneyIn,
+      categoryId: income.id,
+      financialAccountId:
+          (await oldAccounts.watchFinancialAccounts().first).first.id,
+      transactionDate: DateTime(2026, 1, 15),
+    );
+    final oldIdentity = (await oldIdentityRepository.currentIdentity())!;
+    final copy = await BooksCopyRepository(
+      database: oldDb,
+      identityRepository: oldIdentityRepository,
+      signingKeyService: oldKeys,
+      settingsRepository: SettingsRepository(),
+    ).saveBooksCopy(passphrase: passphrase, databaseFile: oldFile);
+    await oldDb.close();
+
+    // New phone: empty books, empty keychain, restore the copy.
+    final newFile = File('${dir.path}/new.sqlite');
+    final emptyDb = AppDatabase.openFile(newFile);
+    final newKeys = SigningKeyService(
+      secureStorage: InMemorySecureKeyStorage(),
+    );
+    await BooksCopyRepository(
+      database: emptyDb,
+      identityRepository: IdentityRepository(
+        database: emptyDb,
+        accountRepository: AccountRepository(
+          database: emptyDb,
+          ledgerRepository: LedgerRepository(
+            database: emptyDb,
+            signingKeyService: newKeys,
+          ),
+        ),
+        signingKeyService: newKeys,
+      ),
+      signingKeyService: newKeys,
+      settingsRepository: SettingsRepository(),
+    ).restoreBooksCopy(
+      fileContents: copy,
+      passphrase: passphrase,
+      targetFile: newFile,
+    );
+
+    // Reopen: the books are there without their key, so Continuation.
+    final restoredDb = AppDatabase.openFile(newFile);
+    addTearDown(restoredDb.close);
+    final restoredLedger = LedgerRepository(
+      database: restoredDb,
+      signingKeyService: newKeys,
+    );
+    await pumpApp(tester, buildAppFor(restoredLedger, restoredDb, newKeys));
+    await pumpUntilFound(tester, find.text('Continue my books on this phone'));
+    await tester.tap(
+      find.widgetWithText(ElevatedButton, 'Continue my books on this phone'),
+    );
+    await pumpUntilFound(tester, find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'));
+
+    final newIdentity = (await IdentityRepository(
+      database: restoredDb,
+      accountRepository: AccountRepository(
+        database: restoredDb,
+        ledgerRepository: restoredLedger,
+      ),
+      signingKeyService: newKeys,
+    ).currentIdentity())!;
+    expect(newIdentity.continuesIdentityId, oldIdentity.identityId);
+    final entries = await restoredLedger.watchEntries().first;
+    expect(
+      entries.any((e) => e.signedByIdentityId == oldIdentity.identityId),
+      isTrue,
+      reason: 'the copied entry is back',
+    );
+    final verification = await LedgerChainVerifier(
+      database: restoredDb,
+      signingKeyService: newKeys,
+    ).verifyChain();
+    expect(verification.isFullyVerified, isTrue);
+  });
 
   testWidgets(
     'first launch offers New setup and Restore from a copy, with no phrase step',

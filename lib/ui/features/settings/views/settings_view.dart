@@ -455,27 +455,30 @@ class SettingsView extends StatelessWidget {
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: Text(l10n.saveBooksCopyAction),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(l10n.choosePassphraseTitle, style: AppTypography.body),
-              const SizedBox(height: AppSpacing.medium),
-              TextField(
-                controller: passphraseController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: l10n.booksCopyPassphrase,
-                ),
-              ),
-              if (statusMessage != null) ...[
+          content: SingleChildScrollView(
+            // Stays usable while the keyboard shrinks the dialog.
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(l10n.choosePassphraseTitle, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.medium),
-                Text(
-                  statusMessage!,
-                  style: AppTypography.body.copyWith(color: AppColors.signal),
+                TextField(
+                  controller: passphraseController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: l10n.booksCopyPassphrase,
+                  ),
                 ),
+                if (statusMessage != null) ...[
+                  const SizedBox(height: AppSpacing.medium),
+                  Text(
+                    statusMessage!,
+                    style: AppTypography.body.copyWith(color: AppColors.signal),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           actions: [
             TextButton(
@@ -754,31 +757,34 @@ class SettingsView extends StatelessWidget {
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: Text(l10n.setPinTitle),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: pinController,
-                obscureText: true,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: l10n.pinLabel),
-              ),
-              const SizedBox(height: AppSpacing.medium),
-              TextField(
-                controller: confirmController,
-                obscureText: true,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: l10n.confirmPin),
-              ),
-              if (statusMessage != null) ...[
-                const SizedBox(height: AppSpacing.medium),
-                Text(
-                  statusMessage!,
-                  style: AppTypography.body.copyWith(color: AppColors.signal),
+          content: SingleChildScrollView(
+            // Stays usable while the keyboard shrinks the dialog.
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  controller: pinController,
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(labelText: l10n.pinLabel),
                 ),
+                const SizedBox(height: AppSpacing.medium),
+                TextField(
+                  controller: confirmController,
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(labelText: l10n.confirmPin),
+                ),
+                if (statusMessage != null) ...[
+                  const SizedBox(height: AppSpacing.medium),
+                  Text(
+                    statusMessage!,
+                    style: AppTypography.body.copyWith(color: AppColors.signal),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           actions: [
             TextButton(
@@ -826,38 +832,41 @@ class SettingsView extends StatelessWidget {
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: Text(l10n.actionChangePin),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: currentPinController,
-                obscureText: true,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: l10n.currentPin),
-              ),
-              const SizedBox(height: AppSpacing.medium),
-              TextField(
-                controller: newPinController,
-                obscureText: true,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: l10n.newPin),
-              ),
-              const SizedBox(height: AppSpacing.medium),
-              TextField(
-                controller: confirmController,
-                obscureText: true,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: l10n.confirmNewPin),
-              ),
-              if (statusMessage != null) ...[
-                const SizedBox(height: AppSpacing.medium),
-                Text(
-                  statusMessage!,
-                  style: AppTypography.body.copyWith(color: AppColors.signal),
+          content: SingleChildScrollView(
+            // Stays usable while the keyboard shrinks the dialog.
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  controller: currentPinController,
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(labelText: l10n.currentPin),
                 ),
+                const SizedBox(height: AppSpacing.medium),
+                TextField(
+                  controller: newPinController,
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(labelText: l10n.newPin),
+                ),
+                const SizedBox(height: AppSpacing.medium),
+                TextField(
+                  controller: confirmController,
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(labelText: l10n.confirmNewPin),
+                ),
+                if (statusMessage != null) ...[
+                  const SizedBox(height: AppSpacing.medium),
+                  Text(
+                    statusMessage!,
+                    style: AppTypography.body.copyWith(color: AppColors.signal),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           actions: [
             TextButton(

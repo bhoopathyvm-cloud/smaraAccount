@@ -186,11 +186,14 @@ void main() {
     );
 
     final listed = await categories.watchCategories().first;
-    expect(listed.where((c) => c.id == lebensmittel.id || c.id == groceries.id),
-        hasLength(1));
+    expect(
+      listed.where((c) => c.id == lebensmittel.id || c.id == groceries.id),
+      hasLength(1),
+    );
 
     final map = await categories.mergeMap();
-    final survivorId = map[lebensmittel.id] ?? map[groceries.id] ?? groceries.id;
+    final survivorId =
+        map[lebensmittel.id] ?? map[groceries.id] ?? groceries.id;
     // The other id must be absorbed (or they are the same if somehow equal).
     expect(
       map.containsKey(lebensmittel.id) || map.containsKey(groceries.id),

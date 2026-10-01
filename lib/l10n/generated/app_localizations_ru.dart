@@ -854,71 +854,71 @@ class AppLocalizationsRu extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'Продолжить мои книги на этом телефоне';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'Эти книги попали на этот телефон без своего ключа подписи. Вы можете продолжить их с новым ключом для этого телефона или вместо этого восстановить из сохранённой копии.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'Продолжить мои книги на этом телефоне';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'Восстановить из копии';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'Сохранить копию моих книг';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'История устройств';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'Продолжений пока нет. Когда вы продолжите книги на новом телефоне, они появятся здесь.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'Ваши книги продолжены на этом телефоне $date';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'Ваши книги продолжены на этом телефоне $continuedDate (из копии, сохранённой $copyDate)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'Сохраните копию своих книг';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'Сохранить копию';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'Позже';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'Напоминание о копии';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'Через некоторое время или после многих новых записей мы мягко напомним сохранить копию книг. Сохранённая копия — единственный способ вернуть книги, если этот телефон потеряется.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'Напоминать о сохранении копии';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'Напомнить через столько дней';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'Напомнить после стольких новых записей';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      'Скрыть на столько дней после «Позже»';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      'Скрыть на столько новых записей после «Позже»';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2070,55 +2070,55 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'Это заменит все записи и настройки книг на этом телефоне ($counts). Ничего не объединяется. Язык и настройки разблокировки остаются на этом телефоне.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'Сначала сохранить копию';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return 'Записей: $count';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return 'Счетов: $count';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return 'Категорий: $count';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return 'Групп счетов: $count';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return 'Получателей: $count';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return 'Правил категорий: $count';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return 'Профилей импорта: $count';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return 'Повторяющихся шаблонов: $count';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return 'Инструментов: $count';
   }
 
   @override

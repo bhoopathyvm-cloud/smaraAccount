@@ -413,14 +413,14 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "continueBooksTitle": "Meine Bücher auf diesem Telefon fortführen",
+  "continueBooksBlurb": "Diese Bücher sind ohne ihren Signierschlüssel auf diesem Telefon angekommen. Sie können sie mit einem neuen Schlüssel für dieses Telefon fortführen oder stattdessen aus einer gespeicherten Kopie wiederherstellen.",
+  "continueBooksAction": "Meine Bücher auf diesem Telefon fortführen",
+  "restoreFromCopyAction": "Aus einer Kopie wiederherstellen",
+  "saveBooksCopyAction": "Eine Kopie meiner Bücher speichern",
+  "deviceHistoryTitle": "Geräteverlauf",
+  "deviceHistoryEmpty": "Noch keine Fortführungen. Wenn Sie Bücher auf einem neuen Telefon fortführen, erscheinen sie hier.",
+  "deviceHistoryContinuedOn": "Ihre Bücher wurden am {date} auf diesem Telefon fortgeführt",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "Ihre Bücher wurden am {continuedDate} auf diesem Telefon fortgeführt (aus einer Kopie vom {copyDate})",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "Speichern Sie eine Kopie Ihrer Bücher",
+  "backupReminderSaveAction": "Kopie speichern",
+  "backupReminderLaterAction": "Später",
+  "settingsBackupReminder": "Kopie-Erinnerung",
+  "settingsBackupReminderBlurb": "Wir erinnern Sie nach einiger Zeit oder nach vielen neuen Einträgen daran, eine Kopie Ihrer Bücher zu speichern. Eine gespeicherte Kopie ist der einzige Weg, Ihre Bücher wiederherzustellen, wenn dieses Telefon verloren geht.",
+  "settingsBackupReminderEnabled": "An das Speichern einer Kopie erinnern",
+  "settingsBackupReminderDays": "Erinnern nach so vielen Tagen",
+  "settingsBackupReminderEntries": "Erinnern nach so vielen neuen Einträgen",
+  "settingsBackupReminderSnoozeDays": "Nach „Später“ so viele Tage ausblenden",
+  "settingsBackupReminderSnoozeEntries": "Nach „Später“ für so viele neue Einträge ausblenden",
   "whyWeDontEdit": "Warum wir alte Einträge nicht bearbeiten",
   "whyWeDontEditBody": "Wenn Sie einen Fehler korrigieren, behalten wir die alte Zeile und fügen daneben eine Korrektur hinzu, statt zu ändern, was Sie bereits eingegeben haben. So zeigt Ihr Verlauf immer genau, was passiert ist und wann Sie es korrigiert haben — nichts ändert sich heimlich im Hintergrund.",
   "lockTitle": "Entsperren",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "Passphrase",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "Dadurch werden alle Einträge und die Einstellungen der Bücher auf diesem Telefon ersetzt ({counts}). Es wird nichts zusammengeführt. Ihre Sprache und Entsperr-Einstellungen bleiben auf diesem Telefon.",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "Zuerst eine Kopie speichern",
+  "replaceCountEntries": "{count} Einträge",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} Konten",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} Kategorien",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} Kontogruppen",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} Zahlungsempfänger",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} Kategorieregeln",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} Importprofile",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} wiederkehrende Vorlagen",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} Wertpapiere",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

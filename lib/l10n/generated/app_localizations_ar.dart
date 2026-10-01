@@ -849,71 +849,71 @@ class AppLocalizationsAr extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'متابعة دفاتري على هذا الهاتف';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'وصلت هذه الدفاتر إلى هذا الهاتف دون مفتاح التوقيع الخاص بها. يمكنك متابعتها بمفتاح جديد لهذا الهاتف، أو الاستعادة من نسخة محفوظة بدلًا من ذلك.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'متابعة دفاتري على هذا الهاتف';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'الاستعادة من نسخة';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'حفظ نسخة من دفاتري';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'سجل الأجهزة';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'لا توجد متابعات بعد. عند متابعة دفاترك على هاتف جديد ستظهر هنا.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'تمت متابعة دفاترك على هذا الهاتف في $date';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'تمت متابعة دفاترك على هذا الهاتف في $continuedDate (من نسخة محفوظة في $copyDate)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'احفظ نسخة من دفاترك';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'حفظ نسخة';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'لاحقًا';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'تذكير بالنسخة';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'سنذكّرك بلطف بحفظ نسخة من دفاترك بعد مدة أو بعد الكثير من القيود الجديدة. النسخة المحفوظة هي الطريقة الوحيدة لاستعادة دفاترك إذا فُقد هذا الهاتف.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'ذكّرني بحفظ نسخة';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'التذكير بعد هذا العدد من الأيام';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'التذكير بعد هذا العدد من القيود الجديدة';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      'الإخفاء لهذا العدد من الأيام بعد «لاحقًا»';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      'الإخفاء لهذا العدد من القيود الجديدة بعد «لاحقًا»';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2048,55 +2048,55 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'سيؤدي هذا إلى استبدال كل القيود وإعدادات الدفاتر على هذا الهاتف ($counts). لا يتم الدمج. تبقى لغتك وإعدادات فتح القفل على هذا الهاتف.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'احفظ نسخة أولًا';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return 'القيود: $count';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return 'الحسابات: $count';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return 'الفئات: $count';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return 'مجموعات الحسابات: $count';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return 'المستفيدون: $count';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return 'قواعد الفئات: $count';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return 'ملفات الاستيراد: $count';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return 'القوالب المتكررة: $count';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return 'الأدوات المالية: $count';
   }
 
   @override

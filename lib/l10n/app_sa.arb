@@ -413,14 +413,14 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "continueBooksTitle": "अस्मिन् दूरभाषे मम लेखाः अनुवर्तयतु",
+  "continueBooksBlurb": "एते लेखाः स्वहस्ताक्षरकुञ्चिकां विना अस्मिन् दूरभाषे आगताः। भवान् अस्य दूरभाषस्य नूतनकुञ्चिकया एतान् अनुवर्तयितुं शक्नोति, अथवा तत्स्थाने रक्षितप्रतिलिपितः पुनःस्थापयितुं शक्नोति।",
+  "continueBooksAction": "अस्मिन् दूरभाषे मम लेखाः अनुवर्तयतु",
+  "restoreFromCopyAction": "प्रतिलिपितः पुनःस्थाप्यताम्",
+  "saveBooksCopyAction": "मम लेखानां प्रतिलिपिः रक्ष्यताम्",
+  "deviceHistoryTitle": "उपकरणेतिहासः",
+  "deviceHistoryEmpty": "अद्यावधि अनुवर्तनं नास्ति। नूतनदूरभाषे लेखान् अनुवर्तयति चेत् अत्र दृश्यते।",
+  "deviceHistoryContinuedOn": "भवतः लेखाः {date} दिने अस्मिन् दूरभाषे अनुवर्तिताः",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "भवतः लेखाः {continuedDate} दिने अस्मिन् दूरभाषे अनुवर्तिताः ({copyDate} दिने रक्षितप्रतिलिपितः)",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "स्वलेखानां प्रतिलिपिं रक्षतु",
+  "backupReminderSaveAction": "प्रतिलिपिः रक्ष्यताम्",
+  "backupReminderLaterAction": "पश्चात्",
+  "settingsBackupReminder": "प्रतिलिपिस्मारकम्",
+  "settingsBackupReminderBlurb": "किञ्चित् कालानन्तरं बहूनां नूतनप्रविष्टीनां अनन्तरं वा लेखानां प्रतिलिपिरक्षणाय वयं स्मारयिष्यामः। अयं दूरभाषः नष्टः चेत् लेखान् पुनः प्राप्तुं रक्षितप्रतिलिपिः एव एकः उपायः।",
+  "settingsBackupReminderEnabled": "प्रतिलिपिरक्षणाय स्मारयतु",
+  "settingsBackupReminderDays": "एतावद्दिनानन्तरं स्मारयतु",
+  "settingsBackupReminderEntries": "एतावन्नूतनप्रविष्टीनाम् अनन्तरं स्मारयतु",
+  "settingsBackupReminderSnoozeDays": "''पश्चात्'' इत्यनन्तरम् एतावन्ति दिनानि गोपयतु",
+  "settingsBackupReminderSnoozeEntries": "''पश्चात्'' इत्यनन्तरम् एतावन्नूतनप्रविष्टिपर्यन्तं गोपयतु",
   "whyWeDontEdit": "वयं पुरातनप्रविष्टीः किमर्थं न सम्पादयामः",
   "whyWeDontEditBody": "यदा भवान् त्रुटिं शोधयति, तदा वयं पुरातनां पङ्क्तिं रक्षामः तथा तस्याः समीपे शुद्धिं योजयामः, न तु भवता पूर्वं प्रविष्टं परिवर्तयामः। एवं भवतः इतिहासः सर्वदा दर्शयति यत् किं जातम् तथा कदा भवता शोधितम् — किमपि गुप्तरूपेण न परिवर्तते।",
   "lockTitle": "उद्घाटनम्",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "स्मृतिवाक्यम्",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "अनेन अस्य दूरभाषस्य सर्वाः प्रविष्टयः लेखविन्यासाः च प्रतिस्थाप्यन्ते ({counts})। किमपि न संयोज्यते। भवतः भाषा उद्घाटनविन्यासाः च अस्मिन् एव दूरभाषे तिष्ठन्ति।",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "प्रथमं प्रतिलिपिः रक्ष्यताम्",
+  "replaceCountEntries": "{count} प्रविष्टयः",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} लेखाः",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} वर्गाः",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} लेखसमूहाः",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} प्राप्तारः",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} वर्गनियमाः",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} आयातरूपरेखाः",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} आवर्तिप्रतिरूपाणि",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} निवेशसाधनानि",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

@@ -413,14 +413,14 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "continueBooksTitle": "هن فون تي منهنجا حساب جاري رکو",
+  "continueBooksBlurb": "هي حساب پنهنجي صحيح ڪنجي کان سواءِ هن فون تي آيا آهن. توهان هن فون جي نئين ڪنجي سان انهن کي جاري رکي سگهو ٿا، يا ان بدران محفوظ ڪاپي مان بحال ڪري سگهو ٿا.",
+  "continueBooksAction": "هن فون تي منهنجا حساب جاري رکو",
+  "restoreFromCopyAction": "ڪاپي مان بحال ڪريو",
+  "saveBooksCopyAction": "منهنجي حسابن جي ڪاپي محفوظ ڪريو",
+  "deviceHistoryTitle": "ڊوائيس جي تاريخ",
+  "deviceHistoryEmpty": "اڃا ڪو تسلسل ناهي. جڏهن توهان نئين فون تي حساب جاري رکندا ته هتي ڏيکاريو ويندو.",
+  "deviceHistoryContinuedOn": "توهان جا حساب {date} تي هن فون تي جاري رکيا ويا",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "توهان جا حساب {continuedDate} تي هن فون تي جاري رکيا ويا ({copyDate} تي محفوظ ٿيل ڪاپي مان)",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "پنهنجي حسابن جي ڪاپي محفوظ ڪريو",
+  "backupReminderSaveAction": "ڪاپي محفوظ ڪريو",
+  "backupReminderLaterAction": "پوءِ",
+  "settingsBackupReminder": "ڪاپي جي ياد ڏياريندڙ",
+  "settingsBackupReminderBlurb": "ڪجهه وقت کان پوءِ يا گهڻين نين داخلائن کان پوءِ اسين توهان کي حسابن جي ڪاپي محفوظ ڪرڻ جي ياد ڏيارينداسين. هي فون گم ٿي وڃي ته حساب واپس حاصل ڪرڻ جو واحد طريقو محفوظ ڪاپي آهي.",
+  "settingsBackupReminderEnabled": "ڪاپي محفوظ ڪرڻ جي ياد ڏياريو",
+  "settingsBackupReminderDays": "ايترن ڏينهن کان پوءِ ياد ڏياريو",
+  "settingsBackupReminderEntries": "ايترين نين داخلائن کان پوءِ ياد ڏياريو",
+  "settingsBackupReminderSnoozeDays": "«پوءِ» کان پوءِ ايترا ڏينهن لڪايو",
+  "settingsBackupReminderSnoozeEntries": "«پوءِ» کان پوءِ ايترين نين داخلائن تائين لڪايو",
   "whyWeDontEdit": "اسان پراڻي داخلائن کي ڇو نه ٿا تبديل ڪريون",
   "whyWeDontEditBody": "جڏهن توهان هڪ غلطي درست ڪريو ٿا، اسان پراڻي لائين کي رکون ٿا ۽ توهان اڳ ۾ ئي داخل ڪيل شي کي تبديل ڪرڻ بدران ان جي ڀرسان هڪ درستي شامل ڪريون ٿا. ان طرح توهان جي تاريخ هميشه بلڪل ڏيکاري ٿي ته ڇا ٿيو ۽ توهان ان کي ڪڏهن درست ڪيو — توهان جي پٺيءَ پويان چپ چاپ ڪجهه به تبديل نه ٿو ٿئي.",
   "lockTitle": "اڻلاڪ",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "پاسفريز",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "هن سان هن فون جون سڀ داخلائون ۽ حسابن جون سيٽنگون بدلجي وينديون ({counts}). ڪجهه به گڏ نه ڪيو ويندو. توهان جي ٻولي ۽ ان لاڪ سيٽنگون هن فون تي رهنديون.",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "پهريان ڪاپي محفوظ ڪريو",
+  "replaceCountEntries": "{count} داخلائون",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} اڪائونٽ",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} زمرا",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} اڪائونٽ گروپ",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} وصول ڪندڙ",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} زمري جا قاعدا",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} درآمد پروفائل",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} ورجائيندڙ سانچا",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} سيڙپڪاري جا اوزار",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

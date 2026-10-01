@@ -839,71 +839,68 @@ class AppLocalizationsJa extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'このスマホで帳簿を続ける';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'この帳簿は署名キーなしでこのスマホに届きました。このスマホ用の新しいキーで続けるか、代わりに保存したコピーから復元できます。';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'このスマホで帳簿を続ける';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'コピーから復元';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => '帳簿のコピーを保存';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'デバイス履歴';
 
   @override
-  String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+  String get deviceHistoryEmpty => 'まだ引き継ぎはありません。新しいスマホで帳簿を続けると、ここに表示されます。';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return '$dateにこのスマホで帳簿を引き継ぎました';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return '$continuedDateにこのスマホで帳簿を引き継ぎました（$copyDateに保存したコピーから）';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => '帳簿のコピーを保存しましょう';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'コピーを保存';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => '後で';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'コピーのリマインダー';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'しばらく経ったときや新しい記録が多くなったときに、帳簿のコピーを保存するようお知らせします。このスマホをなくした場合、保存したコピーが帳簿を取り戻す唯一の方法です。';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'コピーの保存をお知らせする';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'この日数が過ぎたらお知らせ';
 
   @override
-  String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+  String get settingsBackupReminderEntries => '新しい記録がこの件数になったらお知らせ';
 
   @override
-  String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+  String get settingsBackupReminderSnoozeDays => '「後で」の後、この日数は表示しない';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      '「後で」の後、新しい記録がこの件数になるまで表示しない';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -1986,55 +1983,55 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'このスマホの記録と帳簿の設定がすべて置き換えられます（$counts）。統合はされません。言語とロック解除の設定はこのスマホに残ります。';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => '先にコピーを保存';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '記録 $count 件';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '口座 $count 件';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return 'カテゴリ $count 件';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '口座グループ $count 件';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '支払先 $count 件';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return 'カテゴリルール $count 件';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return 'インポート設定 $count 件';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '定期テンプレート $count 件';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '銘柄 $count 件';
   }
 
   @override

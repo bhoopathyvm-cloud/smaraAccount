@@ -854,71 +854,71 @@ class AppLocalizationsId extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'Lanjutkan pembukuan saya di ponsel ini';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'Pembukuan ini tiba di ponsel ini tanpa kunci tanda tangannya. Anda dapat melanjutkannya dengan kunci baru untuk ponsel ini, atau memulihkan dari salinan yang tersimpan.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'Lanjutkan pembukuan saya di ponsel ini';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'Pulihkan dari salinan';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'Simpan salinan pembukuan saya';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'Riwayat perangkat';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'Belum ada kelanjutan. Saat Anda melanjutkan pembukuan di ponsel baru, akan muncul di sini.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'Pembukuan Anda dilanjutkan di ponsel ini pada $date';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'Pembukuan Anda dilanjutkan di ponsel ini pada $continuedDate (dari salinan yang disimpan pada $copyDate)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'Simpan salinan pembukuan Anda';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'Simpan salinan';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'Nanti';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'Pengingat salinan';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'Kami akan mengingatkan Anda untuk menyimpan salinan pembukuan setelah beberapa waktu atau setelah banyak entri baru. Salinan tersimpan adalah satu-satunya cara memulihkan pembukuan jika ponsel ini hilang.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'Ingatkan saya menyimpan salinan';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'Ingatkan setelah sekian hari';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'Ingatkan setelah sekian entri baru';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      'Sembunyikan sekian hari setelah Nanti';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      'Sembunyikan untuk sekian entri baru setelah Nanti';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2070,55 +2070,55 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'Ini akan mengganti semua entri dan pengaturan pembukuan di ponsel ini ($counts). Tidak digabungkan. Bahasa dan pengaturan buka kunci Anda tetap di ponsel ini.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'Simpan salinan dulu';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count entri';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count akun';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count kategori';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count grup akun';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count penerima';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count aturan kategori';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count profil impor';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count templat berulang';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count instrumen';
   }
 
   @override

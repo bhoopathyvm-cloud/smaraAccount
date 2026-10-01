@@ -413,14 +413,14 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "continueBooksTitle": "Teruskan buku saya di telefon ini",
+  "continueBooksBlurb": "Buku ini tiba di telefon ini tanpa kunci tandatangannya. Anda boleh meneruskannya dengan kunci baharu untuk telefon ini, atau memulihkan daripada salinan yang disimpan.",
+  "continueBooksAction": "Teruskan buku saya di telefon ini",
+  "restoreFromCopyAction": "Pulihkan daripada salinan",
+  "saveBooksCopyAction": "Simpan salinan buku saya",
+  "deviceHistoryTitle": "Sejarah peranti",
+  "deviceHistoryEmpty": "Belum ada penerusan. Apabila anda meneruskan buku di telefon baharu, ia akan muncul di sini.",
+  "deviceHistoryContinuedOn": "Buku anda diteruskan di telefon ini pada {date}",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "Buku anda diteruskan di telefon ini pada {continuedDate} (daripada salinan yang disimpan pada {copyDate})",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "Simpan salinan buku anda",
+  "backupReminderSaveAction": "Simpan salinan",
+  "backupReminderLaterAction": "Kemudian",
+  "settingsBackupReminder": "Peringatan salinan",
+  "settingsBackupReminderBlurb": "Kami akan mengingatkan anda dengan lembut untuk menyimpan salinan buku selepas beberapa ketika atau selepas banyak catatan baharu. Salinan yang disimpan ialah satu-satunya cara memulihkan buku jika telefon ini hilang.",
+  "settingsBackupReminderEnabled": "Ingatkan saya untuk menyimpan salinan",
+  "settingsBackupReminderDays": "Ingatkan selepas sekian hari",
+  "settingsBackupReminderEntries": "Ingatkan selepas sekian catatan baharu",
+  "settingsBackupReminderSnoozeDays": "Sembunyikan sekian hari selepas Kemudian",
+  "settingsBackupReminderSnoozeEntries": "Sembunyikan untuk sekian catatan baharu selepas Kemudian",
   "whyWeDontEdit": "Mengapa kami tidak mengedit entri lama",
   "whyWeDontEditBody": "Apabila anda membetulkan kesilapan, kami mengekalkan baris lama dan menambah pembetulan di sebelahnya dan bukannya mengubah apa yang telah anda masukkan. Dengan itu sejarah anda sentiasa menunjukkan dengan tepat apa yang berlaku dan bila anda membetulkannya — tiada apa berubah secara senyap di belakang anda.",
   "lockTitle": "Buka kunci",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "Frasa laluan",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "Ini akan menggantikan semua catatan dan tetapan buku di telefon ini ({counts}). Tiada penggabungan. Bahasa dan tetapan buka kunci anda kekal di telefon ini.",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "Simpan salinan dahulu",
+  "replaceCountEntries": "{count} catatan",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} akaun",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} kategori",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} kumpulan akaun",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} penerima",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} peraturan kategori",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} profil import",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} templat berulang",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} instrumen",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

@@ -32,6 +32,7 @@
 #
 # Example:
 #   tool/run_localized_acceptance_tests.sh -d macos
+#   tool/run_localized_acceptance_tests.sh -d macos books_copy
 
 set -eu
 

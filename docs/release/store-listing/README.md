@@ -40,7 +40,7 @@ device type, so upload the first 10 / 8:
 `01_home`, `02_register`, `03_add`, `04_record_spent`, `05_split`,
 `06_summary`, `07_categories_limits`, `08_holdings`, `09_transfer`,
 `10_fix`, `11_accounts`, `12_search`, `13_settings`,
-`14_backup_recovery`, `15_recurring`, `16_payees`, `17_import`,
+`14_books_copy`, `15_recurring`, `16_payees`, `17_import`,
 `18_setup_choice`, `19_language`.
 
 ## Preview videos

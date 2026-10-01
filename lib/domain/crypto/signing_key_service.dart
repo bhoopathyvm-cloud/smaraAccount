@@ -79,8 +79,14 @@ class SigningKeyService {
   /// Copy restore so an orphaned previous-device key cannot linger and
   /// falsely match (or mismatch) the restored books, and when removing a
   /// books set from the device.
+  ///
+  /// A no-op when nothing is stored: on macOS, deleting a Keychain item
+  /// that doesn't exist throws errSecMissingEntitlement (-34018), which
+  /// would fail a first-launch restore after its database swap had
+  /// already succeeded.
   Future<void> deleteStoredKey() async {
     final key = await _storageKey();
+    if (await _secureStorage.read(key) == null) return;
     await _secureStorage.delete(key);
   }
 
@@ -134,9 +140,9 @@ class SigningKeyService {
   }
 
   Future<String> _storageKey() async {
-    if (_booksSetId != null) return storageKeyFor(_booksSetId!);
+    if (_booksSetId != null) return storageKeyFor(_booksSetId);
     if (_resolveBooksSetId != null) {
-      final id = await _resolveBooksSetId!();
+      final id = await _resolveBooksSetId();
       if (id != null) return storageKeyFor(id);
     }
     return privateKeySeedStorageKey;
