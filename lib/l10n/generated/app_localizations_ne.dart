@@ -843,14 +843,14 @@ class AppLocalizationsNe extends AppLocalizations {
   String get whatsMainAccountCalled => 'तपाईंको मुख्य खाताको नाम के हो?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'स्मारा खाता मा स्वागत छ';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'नयाँ सुरुवात, वा अर्को उपकरणबाट सर्दै हुनुहुन्छ?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'नयाँ सेटअप';
 
   @override
   String get continueBooksTitle => 'यस फोनमा मेरो खाता जारी राख्नुहोस्';

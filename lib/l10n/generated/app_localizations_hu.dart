@@ -850,14 +850,14 @@ class AppLocalizationsHu extends AppLocalizations {
   String get whatsMainAccountCalled => 'Mi a fő számlájának a neve?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Üdvözli a(z) Smara könyvelés';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Új kezdés, vagy átköltözés egy másik eszközről?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Új beállítás';
 
   @override
   String get continueBooksTitle => 'Könyveim folytatása ezen a telefonon';

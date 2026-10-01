@@ -847,14 +847,14 @@ class AppLocalizationsTa extends AppLocalizations {
   String get whatsMainAccountCalled => 'உங்கள் முதன்மைக் கணக்கின் பெயர் என்ன?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'ஸ்மாரா கணக்கியல்-க்கு வரவேற்கிறோம்';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'புதிதாகத் தொடங்குகிறீர்களா, அல்லது வேறு சாதனத்திலிருந்து மாறுகிறீர்களா?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'புதிய அமைப்பு';
 
   @override
   String get continueBooksTitle => 'இந்த தொலைபேசியில் என் கணக்குகளைத் தொடரவும்';

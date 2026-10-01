@@ -840,14 +840,14 @@ class AppLocalizationsSd extends AppLocalizations {
   String get whatsMainAccountCalled => 'توهان جي مکيه کاتي جو نالو ڇا آهي؟';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'سمارا اڪائونٽنگ ۾ ڀليڪار';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'نئين سر شروعات، يا ڪنهن ٻئي ڊوائيس تان اچي رهيا آهيو؟';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'نئون سيٽ اپ';
 
   @override
   String get continueBooksTitle => 'هن فون تي منهنجا حساب جاري رکو';

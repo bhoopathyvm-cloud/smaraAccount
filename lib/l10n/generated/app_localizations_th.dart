@@ -838,14 +838,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get whatsMainAccountCalled => 'บัญชีหลักของคุณชื่ออะไร?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'ยินดีต้อนรับสู่ สมุดบัญชี Smara';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => 'เริ่มต้นใหม่ หรือย้ายมาจากอุปกรณ์อื่น?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'ตั้งค่าใหม่';
 
   @override
   String get continueBooksTitle => 'ใช้สมุดบัญชีของฉันต่อบนโทรศัพท์เครื่องนี้';

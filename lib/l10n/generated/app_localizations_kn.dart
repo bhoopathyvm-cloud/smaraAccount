@@ -844,14 +844,14 @@ class AppLocalizationsKn extends AppLocalizations {
   String get whatsMainAccountCalled => 'ನಿಮ್ಮ ಮುಖ್ಯ ಖಾತೆಯ ಹೆಸರೇನು?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'ಸ್ಮಾರ ಖಾತೆಗೆ ಸ್ವಾಗತ';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'ಹೊಸದಾಗಿ ಆರಂಭಿಸುತ್ತಿದ್ದೀರಾ, ಅಥವಾ ಬೇರೆ ಸಾಧನದಿಂದ ಬರುತ್ತಿದ್ದೀರಾ?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'ಹೊಸ ಸೆಟಪ್';
 
   @override
   String get continueBooksTitle => 'ಈ ಫೋನ್‌ನಲ್ಲಿ ನನ್ನ ಪುಸ್ತಕಗಳನ್ನು ಮುಂದುವರಿಸಿ';

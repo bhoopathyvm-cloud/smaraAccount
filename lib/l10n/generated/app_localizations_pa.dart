@@ -840,14 +840,14 @@ class AppLocalizationsPa extends AppLocalizations {
   String get whatsMainAccountCalled => 'ਤੁਹਾਡੇ ਮੁੱਖ ਖਾਤੇ ਦਾ ਨਾਮ ਕੀ ਹੈ?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'ਸਮਾਰਾ ਖਾਤਾ ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'ਨਵੀਂ ਸ਼ੁਰੂਆਤ, ਜਾਂ ਕਿਸੇ ਹੋਰ ਡਿਵਾਈਸ ਤੋਂ ਆ ਰਹੇ ਹੋ?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'ਨਵਾਂ ਸੈੱਟਅੱਪ';
 
   @override
   String get continueBooksTitle => 'ਇਸ ਫ਼ੋਨ \'ਤੇ ਮੇਰੀਆਂ ਕਿਤਾਬਾਂ ਜਾਰੀ ਰੱਖੋ';

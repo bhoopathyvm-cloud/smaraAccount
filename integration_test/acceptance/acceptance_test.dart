@@ -3125,10 +3125,11 @@ void main() {
       await pumpSmaraApp(tester);
       await tester.pump();
       await pumpUntilFound(tester, find.byType(SetupChoiceView));
+      final setupL10n = setupChoiceL10n(tester);
       await tapReliably(
         tester,
-        () => find.text(l10n.restoreFromCopyAction),
-        () => find.text(l10n.actionChooseFile).evaluate().isNotEmpty,
+        () => find.text(setupL10n.restoreFromCopyAction),
+        () => find.text(setupL10n.actionChooseFile).evaluate().isNotEmpty,
       );
       await tapReliably(
         tester,
@@ -3527,8 +3528,9 @@ void main() {
         await pumpSmaraApp(tester);
         await tester.pump();
         await pumpUntilFound(tester, find.byType(SetupChoiceView));
-        expect(find.text(l10n.actionNewSetup), findsOneWidget);
-        expect(find.text(l10n.restoreFromCopyAction), findsOneWidget);
+        final setupL10n = setupChoiceL10n(tester);
+        expect(find.text(setupL10n.actionNewSetup), findsOneWidget);
+        expect(find.text(setupL10n.restoreFromCopyAction), findsOneWidget);
         expect(find.textContaining('recovery phrase'), findsNothing);
         expect(find.textContaining('keystore'), findsNothing);
         await tester.pump(const Duration(seconds: 1));
@@ -4543,12 +4545,13 @@ void main() {
         () => find.byTooltip(l10n.settingsTitle),
         () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
       );
-      // Scroll until books switcher section is visible.
-      for (var i = 0; i < 12; i++) {
-        if (find.text(l10n.settingsBooksSwitcher).evaluate().isNotEmpty) break;
-        await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
-        await tester.pump(const Duration(milliseconds: 300));
-      }
+      // Scroll from the screen centre until the section's own "New books"
+      // button is on screen - the title alone can be visible while the
+      // button below it is still off-screen and not yet built.
+      await scrollSettingsUntilVisible(
+        tester,
+        find.text(l10n.settingsBooksSwitcherCreate),
+      );
       expect(find.text(l10n.settingsBooksSwitcher), findsOneWidget);
       expect(find.text(l10n.settingsBooksSwitcherCreate), findsWidgets);
       await tester.pump(const Duration(seconds: 2));

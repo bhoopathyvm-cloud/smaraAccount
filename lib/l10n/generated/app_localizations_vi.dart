@@ -846,14 +846,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get whatsMainAccountCalled => 'Tài khoản chính của bạn tên là gì?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Chào mừng đến với Sổ kế toán Smara';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => 'Bắt đầu mới hay chuyển từ thiết bị khác?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Thiết lập mới';
 
   @override
   String get continueBooksTitle =>

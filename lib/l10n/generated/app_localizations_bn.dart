@@ -841,14 +841,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get whatsMainAccountCalled => 'আপনার প্রধান হিসাবের নাম কী?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'স্মারা হিসাব-এ স্বাগতম';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => 'নতুন করে শুরু, নাকি অন্য ডিভাইস থেকে আসছেন?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'নতুন সেটআপ';
 
   @override
   String get continueBooksTitle => 'এই ফোনে আমার হিসাব চালিয়ে যান';

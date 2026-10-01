@@ -831,14 +831,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get whatsMainAccountCalled => '주 계좌의 이름은 무엇인가요?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Smara 회계에 오신 것을 환영합니다';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => '새로 시작하시나요, 아니면 다른 기기에서 옮겨 오시나요?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => '새로 설정';
 
   @override
   String get continueBooksTitle => '이 휴대폰에서 장부 계속하기';

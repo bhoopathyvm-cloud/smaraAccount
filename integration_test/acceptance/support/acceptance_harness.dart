@@ -18,6 +18,7 @@ import 'package:smara_accounting/ui/features/onboarding/views/currency_selection
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
+import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -511,9 +512,10 @@ Future<void> completeOnboardingWithGuidedEntry(
   }
   await onScreen?.call('setup_choice');
 
+  final setupL10n = setupChoiceL10n(tester);
   await tapReliably(
     tester,
-    () => find.text(l10n.actionNewSetup),
+    () => find.text(setupL10n.actionNewSetup),
     () => find.byType(LanguageSelectionView).evaluate().isNotEmpty,
   );
 
@@ -973,3 +975,9 @@ Future<void> recordCashFundedBuyThroughGui(
     await pumpUntilFound(tester, find.text(l10n.errorInsufficientCash));
   }
 }
+
+/// The localizations the first-launch Setup Choice screen is actually shown
+/// in. That screen comes before the language picker, so it speaks the
+/// device's own language, which need not be the run's ACCEPTANCE_LOCALE.
+AppLocalizations setupChoiceL10n(WidgetTester tester) =>
+    AppLocalizations.of(tester.element(find.byType(SetupChoiceView)))!;
