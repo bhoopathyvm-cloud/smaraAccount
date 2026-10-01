@@ -40,7 +40,7 @@ statement of what that capability does today.
 | [Shared UI components](https://github.com/bhoopathyvm-cloud/smaraAccount/blob/main/openspec/specs/shared-ui-components/spec.md) | A small set of reusable widgets — destructive-action confirmation, money entry, entity pickers, status banners — used consistently everywhere that shape of UI appears. |
 | [User guide](https://github.com/bhoopathyvm-cloud/smaraAccount/blob/main/openspec/specs/user-guide/spec.md) | An accurate, end-user guide covering every shipped screen and flow, never describing planned-but-unbuilt functionality. |
 | [Contributor guide](https://github.com/bhoopathyvm-cloud/smaraAccount/blob/main/openspec/specs/contributor-guide/spec.md) | The root-level entry point explaining how to propose and submit a contribution. |
-| [Acceptance test suite](https://github.com/bhoopathyvm-cloud/smaraAccount/blob/main/openspec/specs/acceptance-test-suite/spec.md) | 37 end-to-end tests that drive a real, launched build of the app — real database, real OS keychain — run nightly on Linux in every supported language, plus a macOS baseline before each release. |
+| [Acceptance test suite](https://github.com/bhoopathyvm-cloud/smaraAccount/blob/main/openspec/specs/acceptance-test-suite/spec.md) | 37 end-to-end tests that drive a real, launched build of the app — real database, real OS keychain — run weekly on Linux in every supported language, and again on every release candidate alongside a macOS baseline. |
 
 ## Why The Integrity Feature Matters
 
