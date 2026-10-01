@@ -5,12 +5,12 @@ Let a person save one passphrase-protected copy of their books and restore it on
 ## ADDED Requirements
 
 ### Requirement: Books Copy Contents
-A Books Copy SHALL be a single passphrase-encrypted file containing the complete ledger data (every entry and all master data such as accounts, categories, account groups, payees, category rules, import profiles, recurring templates and investment data), the public signing identities needed to verify every entry, and the app's settings except App Lock (PIN, biometrics and idle-timeout settings). A Books Copy SHALL NOT contain any private key material.
+A Books Copy SHALL be a single passphrase-encrypted file containing the complete ledger data (every entry and all master data such as accounts, categories, account groups, payees, category rules, import profiles, recurring templates and investment data), the public signing identities needed to verify every entry, and the books' settings (settings that affect the books' numbers, such as reference rates, quote provider and default exchange). It SHALL NOT contain device settings: app language, display preferences, research tool, App Lock (PIN, biometrics and idle-timeout settings) and backup-reminder state. A Books Copy SHALL NOT contain any private key material.
 
 #### Scenario: A saved copy holds books, public identities and settings
 - **WHEN** a Books Copy is saved and then decrypted with the correct passphrase
-- **THEN** it yields the ledger data, the signing identities' public keys and metadata, and the app settings
-- **AND** it contains no private key material and no App Lock settings
+- **THEN** it yields the ledger data, the signing identities' public keys and metadata, and the books' settings
+- **AND** it contains no private key material and no device settings (app language, display preferences, research tool, App Lock, reminder state)
 
 #### Scenario: A copy can be fully verified without a private key
 - **WHEN** a Books Copy is opened for restore
@@ -51,11 +51,11 @@ The system SHALL offer "Restore from a copy" both on the first-launch screen (be
 - **THEN** "Restore from a copy" is available there
 
 ### Requirement: Restoring Replaces This Device's Books
-Restoring a Books Copy SHALL replace this device's books and settings (except App Lock) entirely; it SHALL NOT merge them with existing local data. When the device already has data, the system SHALL first show a warning stating that all entries and settings on this device will be replaced, listing the counts of what will be replaced (entries, categories, accounts, payees, category rules, recurring templates, instruments and any other master data with a non-zero count), and offering "Save a copy first", which saves a Books Copy of the current books before continuing. The restore SHALL proceed only after explicit confirmation.
+Restoring a Books Copy SHALL replace this device's books and the books' settings entirely, and SHALL leave the device settings (app language, display preferences, research tool, App Lock, reminder state) unchanged; it SHALL NOT merge them with existing local data. When the device already has data, the system SHALL first show a warning stating that all entries and the books' settings on this device will be replaced, listing the counts of what will be replaced (entries, categories, accounts, payees, category rules, recurring templates, instruments and any other master data with a non-zero count), and offering "Save a copy first", which saves a Books Copy of the current books before continuing. The restore SHALL proceed only after explicit confirmation.
 
 #### Scenario: Warning lists what will be replaced
 - **WHEN** the user starts "Restore from a copy" in Settings on a device holding 3 entries, 5 categories and 2 accounts
-- **THEN** a warning states that all entries and settings on this device will be replaced and shows "3 entries, 5 categories, 2 accounts"
+- **THEN** a warning states that all entries and the books' settings on this device will be replaced and shows "3 entries, 5 categories, 2 accounts"
 - **AND** nothing is replaced until the user confirms
 
 #### Scenario: Save a copy first before replacing
@@ -64,7 +64,11 @@ Restoring a Books Copy SHALL replace this device's books and settings (except Ap
 
 #### Scenario: Restore replaces rather than merges
 - **WHEN** the user confirms the restore
-- **THEN** afterwards the device's entries, master data and settings match the copy exactly, and none of the device's previous entries remain
+- **THEN** afterwards the device's entries, master data and books' settings match the copy exactly, and none of the device's previous entries remain
+
+#### Scenario: Device settings are kept
+- **WHEN** a device set to German, with App Lock on, restores a copy saved on a device set to English
+- **THEN** the app is still in German and App Lock is still on with the same PIN after the restore
 
 #### Scenario: No warning on an empty device
 - **WHEN** the user restores from the first-launch screen on a device with no books

@@ -62,20 +62,21 @@ design:
      `smara-ledger-backup` restores the database and keeps the device's
      current settings. A `smara-device-migration-bundle` restores the
      database and discards `key` without ever writing it to secure storage.
-2. **Which settings travel.** Every `SettingsRepository` preference is
-   exported, except:
-   - the App Lock keys (enabled, PIN hash location, biometric, timeout,
-     snapshot hiding);
-   - the device-local reminder state (last copy saved, entry count at that
-     save, snooze-until).
+2. **Which settings travel.** Settings split into two kinds, matching
+   project B's decision on linked devices:
+   - **Books settings travel:** settings that affect the books' numbers,
+     such as reference rates, quote provider, default exchange and
+     first-week-setup completion.
+   - **Device settings stay:** app language, display preferences, research
+     tool, the App Lock keys (enabled, PIN hash location, biometric,
+     timeout, snapshot hiding) and the reminder state (last copy saved,
+     entry count at that save, snooze-until).
 
-   The exported preferences include language, reference rates, quote
-   provider, research tool, default exchange and first-week-setup
-   completion. Settings are applied only after the database replace
-   succeeds.
-   - Alternative considered: also keep language device-local. Rejected,
-     because the grilling chose "settings travel except App Lock"; the user
-     can change the language right after a restore.
+   Books settings are applied only after the database replace succeeds.
+   - Alternative considered: every setting except App Lock travels.
+     Rejected, because a restored copy would then override the language
+     just chosen on the first-launch screen, and project B treats language
+     and display as belonging to the person, not the books.
 3. **One `BooksCopyRepository`** replaces `LedgerBackupRepository` and
    `DeviceMigrationBundleRepository`.
    - **Restore pipeline:**
@@ -166,9 +167,6 @@ design:
   Continuation. If not, Continuation runs.
 - **[Two devices keep recording after a restore and their books diverge]**
   → The success screen explains it. Sync is project B.
-- **[A restored language overrides the one chosen at first launch]** →
-  The user can change it immediately. The Settings warning names the
-  settings as being replaced.
 - **[Schema migration on existing installs]** → Only nullable columns are
   added. `app_database_migration_test` covers upgrading from the current
   schema version.

@@ -37,7 +37,10 @@ expense claims) build on it and are tracked separately.
   Device Migration Bundle. It is called a **Books Copy** and holds:
   - the books;
   - the public signing identities needed to verify them;
-  - the app settings, except App Lock.
+  - the books' settings (for example reference rates, quote provider and
+    default exchange). Settings that belong to the person or the device
+    stay on the device: app language, display preferences, research tool,
+    App Lock and the backup reminder.
 
   It never holds a private key. Older backup and bundle files are still
   accepted when restoring, and any key inside them is ignored.
@@ -47,7 +50,7 @@ expense claims) build on it and are tracked separately.
   - It always **replaces** this device's books; it never merges them.
   - On a device that already has books, a warning first lists what will be
     replaced: counts of entries, categories, accounts, payees, rules,
-    recurring templates, instruments and so on, and the settings. It also
+    recurring templates, instruments and so on, and the books' settings. It also
     offers "Save a copy first".
   - A copy that fails verification is refused completely, and the device is
     left untouched.
