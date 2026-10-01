@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:smara_accounting/l10n/l10n.dart';
-import 'package:smara_accounting/l10n/supported_locales.dart';
 import 'package:smara_accounting/ui/core/date_formatter.dart';
 
 void main() {
