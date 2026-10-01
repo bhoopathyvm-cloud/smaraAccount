@@ -29,7 +29,12 @@ abstract final class AppTypography {
   );
   static final screenTitle = _base.copyWith(fontSize: 16);
   static final pageHeading = _base.copyWith(fontSize: 17);
-  static final headerTitle = _base.copyWith(fontSize: 18);
+
+  /// App-bar title, always on the navy primary bar - so white text.
+  static final headerTitle = _base.copyWith(
+    fontSize: 18,
+    color: AppColors.cardBackground,
+  );
   static final balance = _base.copyWith(
     fontSize: 24,
     fontWeight: FontWeight.w700,

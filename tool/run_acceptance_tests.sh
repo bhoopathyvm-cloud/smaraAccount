@@ -3,7 +3,8 @@
 # driving a real launched build of the app (real database, real OS keychain)
 # through its GUI. Developer-triggered locally; the only CI caller is
 # .github/workflows/acceptance-suite-nightly.yml (Linux, one job per
-# locale), which is a release gate, not a pull-request gate.
+# locale; weekly, plus a manual dispatch on each release candidate as the
+# release gate), which is not a pull-request gate.
 #
 # One file, one `flutter test` invocation, one install: the suite used to
 # be 13 separate files, each its own `flutter test <file> -d <device>`

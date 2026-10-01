@@ -1,15 +1,19 @@
-name: Acceptance Suite Nightly
+name: Acceptance Suite Weekly
 
 # Standing locale-regression gate (acceptance-suite-nightly-ci): runs the
 # full real-device acceptance suite (tool/run_acceptance_tests.sh, ~37
 # tests) against the Linux desktop target (-d linux, per
-# add-linux-desktop-support) once nightly, across every supported locale.
+# add-linux-desktop-support) once weekly (Sundays 03:00 UTC), across
+# every supported locale. The filename still says "nightly" (its original
+# cadence) so existing run-history and doc links keep working.
 # Replaces localized-release-verification's old manual, curated-9-locale,
 # ~72-90h macOS sweep as the pre-release locale gate - proven via
 # acceptance-suite-github-runner-spike to run all 43 locales in ~11
 # minutes each on this runner, ~40-50x faster than the macOS process it
-# replaces. See acceptance-test-suite's "Nightly Linux CI Tier"
-# requirement.
+# replaces. See acceptance-test-suite's "Scheduled Linux CI Tier"
+# requirement. A release candidate is gated by a manual workflow_dispatch
+# on its own commit (localized-release-verification,
+# docs/release/store-release-runbook.md), not by the scheduled run.
 #
 # Uses ubuntu-latest, not the ubuntu-slim runner localized-smoke.yml uses:
 # the spike's first dispatch on ubuntu-slim showed every one of 43 jobs's
@@ -19,10 +23,8 @@ name: Acceptance Suite Nightly
 # has no such ceiling and already supports multi-hour jobs
 # (linux-desktop.yml).
 #
-# Not a flutter-ci.yml gate: a failing or flaky locale on a given night
-# does not block any pull request from merging. workflow_dispatch stays
-# available for an on-demand run (e.g. release timing tighter than the
-# nightly cadence).
+# Not a flutter-ci.yml gate: a failing or flaky locale on a given run
+# does not block any pull request from merging.
 
 on:
   schedule:

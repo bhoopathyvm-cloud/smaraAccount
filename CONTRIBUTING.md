@@ -108,9 +108,10 @@ refactor, always run it on `-d macos` (see `CLAUDE.md`). `-l` drives
 onboarding to one of the 43 supported locales. See the script's own header
 comments for device-id discovery per platform.
 
-The same suite also runs **nightly in CI** on Linux, once per supported
-locale (`.github/workflows/acceptance-suite-nightly.yml`). That run does
-not block pull requests; it is a required check before a release (see
+The same suite also runs **weekly in CI** on Linux, once per supported
+locale (`.github/workflows/acceptance-suite-nightly.yml`, "Acceptance Suite
+Weekly"). That run does not block pull requests. Before a release, the
+release owner dispatches it manually on the release candidate (see
 [the release checklist](docs/release/checklist.md)).
 
 ## Documentation
@@ -134,10 +135,15 @@ applicable tier (unit, widget, integration), `dart analyze` is clean, and
 nothing the change replaces (a widget, a Repository method, a dependency)
 is left behind unused.
 
-## Store release (human steps)
+## Store release
 
-Complete the [release checklist](docs/release/checklist.md), including the
-required localized acceptance verification, before shipping any release.
+Follow the [store release runbook](docs/release/store-release-runbook.md)
+for every release: calendar version and shared build number, release
+gates, tag and GitHub Release, then Google Play, iOS, and the Mac App
+Store. The gates themselves are in the
+[release checklist](docs/release/checklist.md), and English store listing
+sources and screenshots live in
+[`docs/release/store-listing/`](docs/release/store-listing/README.md).
 
 Android upload signing and the first Play Console upload are documented in
 [`docs/release/android-upload-keystore.md`](docs/release/android-upload-keystore.md).

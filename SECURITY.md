@@ -37,7 +37,7 @@ for the user-facing description.
 | Secrets | gitleaks (same workflow) | Full git history for committed keys/phrases |
 | Dart / Flutter | `flutter analyze` + tests (`.github/workflows/flutter-ci.yml`) | App code under `lib/` and `test/` |
 | Actions YAML | CodeQL advanced setup (`.github/workflows/codeql.yml`) | First-party GitHub Actions workflows only |
-| Real-app behavior | Acceptance suite, nightly on Linux × 43 locales (`.github/workflows/acceptance-suite-nightly.yml`) | End-to-end flows incl. signing, backup/restore, app lock — a release gate, not a PR gate |
+| Real-app behavior | Acceptance suite, weekly on Linux × 43 locales (and on every release candidate) (`.github/workflows/acceptance-suite-nightly.yml`) | End-to-end flows incl. signing, backup/restore, app lock — a release gate, not a PR gate |
 
 CodeQL does **not** support Dart. Default CodeQL setup auto-detects
 C++/Swift/Kotlin/C from Flutter's generated `android/`, `ios/`,
