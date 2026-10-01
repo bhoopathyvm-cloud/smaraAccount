@@ -15,15 +15,47 @@ import 'secure_key_storage.dart';
 ///
 /// The private key never leaves the device: there is no recovery phrase,
 /// keystore file, or migration-bundle export.
+///
+/// When [booksSetId] is set (or [resolveBooksSetId] returns one), the seed
+/// is stored under a namespaced key so several books sets on one device
+/// stay fully separate (linked-devices design Decision 4).
 class SigningKeyService {
-  SigningKeyService({SecureKeyStorage? secureStorage, Ed25519Signing? signer})
-    : _secureStorage = secureStorage ?? FlutterSecureKeyStorage(),
-      _signer = signer ?? const Ed25519Signing();
+  SigningKeyService({
+    SecureKeyStorage? secureStorage,
+    Ed25519Signing? signer,
+    String? booksSetId,
+    Future<String?> Function()? resolveBooksSetId,
+  }) : _secureStorage = secureStorage ?? FlutterSecureKeyStorage(),
+       _signer = signer ?? const Ed25519Signing(),
+       _booksSetId = booksSetId,
+       _resolveBooksSetId = resolveBooksSetId;
 
   static const privateKeySeedStorageKey = 'ledger_signing_private_key_seed';
 
+  /// Secure-storage key for a specific books set's private seed.
+  static String storageKeyFor(String booksSetId) =>
+      '$privateKeySeedStorageKey:$booksSetId';
+
+  /// Moves a pre-multi-set seed to the namespaced key for [booksSetId].
+  /// Idempotent when the namespaced key already exists.
+  static Future<void> migrateLegacyKeyToBooksSet({
+    required SecureKeyStorage secureStorage,
+    required String booksSetId,
+  }) async {
+    final namespaced = storageKeyFor(booksSetId);
+    final existing = await secureStorage.read(namespaced);
+    final legacy = await secureStorage.read(privateKeySeedStorageKey);
+    if (legacy == null) return;
+    if (existing == null) {
+      await secureStorage.write(namespaced, legacy);
+    }
+    await secureStorage.delete(privateKeySeedStorageKey);
+  }
+
   final SecureKeyStorage _secureStorage;
   final Ed25519Signing _signer;
+  final String? _booksSetId;
+  final Future<String?> Function()? _resolveBooksSetId;
 
   /// The key material currently in secure storage, if any. Null means no
   /// identity has been generated on this device yet, or the device's
@@ -45,9 +77,11 @@ class SigningKeyService {
 
   /// Deletes any private key still in secure storage. Used after a Books
   /// Copy restore so an orphaned previous-device key cannot linger and
-  /// falsely match (or mismatch) the restored books.
-  Future<void> deleteStoredKey() {
-    return _secureStorage.delete(privateKeySeedStorageKey);
+  /// falsely match (or mismatch) the restored books, and when removing a
+  /// books set from the device.
+  Future<void> deleteStoredKey() async {
+    final key = await _storageKey();
+    await _secureStorage.delete(key);
   }
 
   /// One-time re-save of the private key under this-device-only Keychain
@@ -65,9 +99,10 @@ class SigningKeyService {
       return false;
     }
     final encoded = base64Encode(seed);
+    final key = await _storageKey();
     try {
-      await _secureStorage.write(privateKeySeedStorageKey, encoded);
-      final readBack = await _secureStorage.read(privateKeySeedStorageKey);
+      await _secureStorage.write(key, encoded);
+      final readBack = await _secureStorage.read(key);
       if (readBack != encoded) {
         return false;
       }
@@ -98,14 +133,30 @@ class SigningKeyService {
     return _signer.verify(message, signature: signature, publicKey: publicKey);
   }
 
+  Future<String> _storageKey() async {
+    if (_booksSetId != null) return storageKeyFor(_booksSetId!);
+    if (_resolveBooksSetId != null) {
+      final id = await _resolveBooksSetId!();
+      if (id != null) return storageKeyFor(id);
+    }
+    return privateKeySeedStorageKey;
+  }
+
   Future<List<int>?> _readStoredSeed() async {
-    final encoded = await _secureStorage.read(privateKeySeedStorageKey);
+    final key = await _storageKey();
+    var encoded = await _secureStorage.read(key);
+    // Pre-multi-set installs may still hold the legacy key until
+    // [migrateLegacyKeyToBooksSet] runs.
+    if (encoded == null && key != privateKeySeedStorageKey) {
+      encoded = await _secureStorage.read(privateKeySeedStorageKey);
+    }
     if (encoded == null) return null;
     return base64Decode(encoded);
   }
 
-  Future<void> _storeSeed(List<int> seed) {
-    return _secureStorage.write(privateKeySeedStorageKey, base64Encode(seed));
+  Future<void> _storeSeed(List<int> seed) async {
+    final key = await _storageKey();
+    await _secureStorage.write(key, base64Encode(seed));
   }
 }
 

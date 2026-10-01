@@ -9184,6 +9184,2046 @@ class RecurringTemplatesCompanion
   }
 }
 
+class $LinkedDevicesTable extends LinkedDevices
+    with TableInfo<$LinkedDevicesTable, LinkedDeviceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LinkedDevicesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _signingIdentityIdMeta = const VerificationMeta(
+    'signingIdentityId',
+  );
+  @override
+  late final GeneratedColumn<String> signingIdentityId =
+      GeneratedColumn<String>(
+        'signing_identity_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES signing_identities (identity_id)',
+        ),
+      );
+  static const VerificationMeta _deviceCertFingerprintMeta =
+      const VerificationMeta('deviceCertFingerprint');
+  @override
+  late final GeneratedColumn<String> deviceCertFingerprint =
+      GeneratedColumn<String>(
+        'device_cert_fingerprint',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  late final GeneratedColumnWithTypeConverter<LinkedDeviceRole, String> role =
+      GeneratedColumn<String>(
+        'role',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<LinkedDeviceRole>($LinkedDevicesTable.$converterrole);
+  static const VerificationMeta _canAddMeta = const VerificationMeta('canAdd');
+  @override
+  late final GeneratedColumn<bool> canAdd = GeneratedColumn<bool>(
+    'can_add',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("can_add" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _removedAtMeta = const VerificationMeta(
+    'removedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> removedAt = GeneratedColumn<DateTime>(
+    'removed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _erasePendingAtMeta = const VerificationMeta(
+    'erasePendingAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> erasePendingAt =
+      GeneratedColumn<DateTime>(
+        'erase_pending_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _erasedAtMeta = const VerificationMeta(
+    'erasedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> erasedAt = GeneratedColumn<DateTime>(
+    'erased_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _soleOwnerClaimedAtMeta =
+      const VerificationMeta('soleOwnerClaimedAt');
+  @override
+  late final GeneratedColumn<DateTime> soleOwnerClaimedAt =
+      GeneratedColumn<DateTime>(
+        'sole_owner_claimed_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    deviceId,
+    displayName,
+    signingIdentityId,
+    deviceCertFingerprint,
+    role,
+    canAdd,
+    removedAt,
+    erasePendingAt,
+    erasedAt,
+    soleOwnerClaimedAt,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'linked_devices';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LinkedDeviceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceIdMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_displayNameMeta);
+    }
+    if (data.containsKey('signing_identity_id')) {
+      context.handle(
+        _signingIdentityIdMeta,
+        signingIdentityId.isAcceptableOrUnknown(
+          data['signing_identity_id']!,
+          _signingIdentityIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_signingIdentityIdMeta);
+    }
+    if (data.containsKey('device_cert_fingerprint')) {
+      context.handle(
+        _deviceCertFingerprintMeta,
+        deviceCertFingerprint.isAcceptableOrUnknown(
+          data['device_cert_fingerprint']!,
+          _deviceCertFingerprintMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceCertFingerprintMeta);
+    }
+    if (data.containsKey('can_add')) {
+      context.handle(
+        _canAddMeta,
+        canAdd.isAcceptableOrUnknown(data['can_add']!, _canAddMeta),
+      );
+    }
+    if (data.containsKey('removed_at')) {
+      context.handle(
+        _removedAtMeta,
+        removedAt.isAcceptableOrUnknown(data['removed_at']!, _removedAtMeta),
+      );
+    }
+    if (data.containsKey('erase_pending_at')) {
+      context.handle(
+        _erasePendingAtMeta,
+        erasePendingAt.isAcceptableOrUnknown(
+          data['erase_pending_at']!,
+          _erasePendingAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('erased_at')) {
+      context.handle(
+        _erasedAtMeta,
+        erasedAt.isAcceptableOrUnknown(data['erased_at']!, _erasedAtMeta),
+      );
+    }
+    if (data.containsKey('sole_owner_claimed_at')) {
+      context.handle(
+        _soleOwnerClaimedAtMeta,
+        soleOwnerClaimedAt.isAcceptableOrUnknown(
+          data['sole_owner_claimed_at']!,
+          _soleOwnerClaimedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {deviceId};
+  @override
+  LinkedDeviceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LinkedDeviceRow(
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      )!,
+      signingIdentityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}signing_identity_id'],
+      )!,
+      deviceCertFingerprint: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_cert_fingerprint'],
+      )!,
+      role: $LinkedDevicesTable.$converterrole.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}role'],
+        )!,
+      ),
+      canAdd: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}can_add'],
+      )!,
+      removedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}removed_at'],
+      ),
+      erasePendingAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}erase_pending_at'],
+      ),
+      erasedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}erased_at'],
+      ),
+      soleOwnerClaimedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}sole_owner_claimed_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $LinkedDevicesTable createAlias(String alias) {
+    return $LinkedDevicesTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<LinkedDeviceRole, String, String> $converterrole =
+      const EnumNameConverter<LinkedDeviceRole>(LinkedDeviceRole.values);
+}
+
+class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
+  final String deviceId;
+  final String displayName;
+  final String signingIdentityId;
+
+  /// Fingerprint of the device TLS certificate exchanged at join.
+  final String deviceCertFingerprint;
+  final LinkedDeviceRole role;
+
+  /// Whether this Member may add other devices (Owner policy).
+  final bool canAdd;
+  final DateTime? removedAt;
+  final DateTime? erasePendingAt;
+  final DateTime? erasedAt;
+
+  /// When a Member claimed sole ownership; effective after 7 days unless
+  /// an Owner objects (linked-devices design Decision 6).
+  final DateTime? soleOwnerClaimedAt;
+  final DateTime createdAt;
+  const LinkedDeviceRow({
+    required this.deviceId,
+    required this.displayName,
+    required this.signingIdentityId,
+    required this.deviceCertFingerprint,
+    required this.role,
+    required this.canAdd,
+    this.removedAt,
+    this.erasePendingAt,
+    this.erasedAt,
+    this.soleOwnerClaimedAt,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['device_id'] = Variable<String>(deviceId);
+    map['display_name'] = Variable<String>(displayName);
+    map['signing_identity_id'] = Variable<String>(signingIdentityId);
+    map['device_cert_fingerprint'] = Variable<String>(deviceCertFingerprint);
+    {
+      map['role'] = Variable<String>(
+        $LinkedDevicesTable.$converterrole.toSql(role),
+      );
+    }
+    map['can_add'] = Variable<bool>(canAdd);
+    if (!nullToAbsent || removedAt != null) {
+      map['removed_at'] = Variable<DateTime>(removedAt);
+    }
+    if (!nullToAbsent || erasePendingAt != null) {
+      map['erase_pending_at'] = Variable<DateTime>(erasePendingAt);
+    }
+    if (!nullToAbsent || erasedAt != null) {
+      map['erased_at'] = Variable<DateTime>(erasedAt);
+    }
+    if (!nullToAbsent || soleOwnerClaimedAt != null) {
+      map['sole_owner_claimed_at'] = Variable<DateTime>(soleOwnerClaimedAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  LinkedDevicesCompanion toCompanion(bool nullToAbsent) {
+    return LinkedDevicesCompanion(
+      deviceId: Value(deviceId),
+      displayName: Value(displayName),
+      signingIdentityId: Value(signingIdentityId),
+      deviceCertFingerprint: Value(deviceCertFingerprint),
+      role: Value(role),
+      canAdd: Value(canAdd),
+      removedAt: removedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(removedAt),
+      erasePendingAt: erasePendingAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(erasePendingAt),
+      erasedAt: erasedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(erasedAt),
+      soleOwnerClaimedAt: soleOwnerClaimedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(soleOwnerClaimedAt),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory LinkedDeviceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LinkedDeviceRow(
+      deviceId: serializer.fromJson<String>(json['deviceId']),
+      displayName: serializer.fromJson<String>(json['displayName']),
+      signingIdentityId: serializer.fromJson<String>(json['signingIdentityId']),
+      deviceCertFingerprint: serializer.fromJson<String>(
+        json['deviceCertFingerprint'],
+      ),
+      role: $LinkedDevicesTable.$converterrole.fromJson(
+        serializer.fromJson<String>(json['role']),
+      ),
+      canAdd: serializer.fromJson<bool>(json['canAdd']),
+      removedAt: serializer.fromJson<DateTime?>(json['removedAt']),
+      erasePendingAt: serializer.fromJson<DateTime?>(json['erasePendingAt']),
+      erasedAt: serializer.fromJson<DateTime?>(json['erasedAt']),
+      soleOwnerClaimedAt: serializer.fromJson<DateTime?>(
+        json['soleOwnerClaimedAt'],
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'deviceId': serializer.toJson<String>(deviceId),
+      'displayName': serializer.toJson<String>(displayName),
+      'signingIdentityId': serializer.toJson<String>(signingIdentityId),
+      'deviceCertFingerprint': serializer.toJson<String>(deviceCertFingerprint),
+      'role': serializer.toJson<String>(
+        $LinkedDevicesTable.$converterrole.toJson(role),
+      ),
+      'canAdd': serializer.toJson<bool>(canAdd),
+      'removedAt': serializer.toJson<DateTime?>(removedAt),
+      'erasePendingAt': serializer.toJson<DateTime?>(erasePendingAt),
+      'erasedAt': serializer.toJson<DateTime?>(erasedAt),
+      'soleOwnerClaimedAt': serializer.toJson<DateTime?>(soleOwnerClaimedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  LinkedDeviceRow copyWith({
+    String? deviceId,
+    String? displayName,
+    String? signingIdentityId,
+    String? deviceCertFingerprint,
+    LinkedDeviceRole? role,
+    bool? canAdd,
+    Value<DateTime?> removedAt = const Value.absent(),
+    Value<DateTime?> erasePendingAt = const Value.absent(),
+    Value<DateTime?> erasedAt = const Value.absent(),
+    Value<DateTime?> soleOwnerClaimedAt = const Value.absent(),
+    DateTime? createdAt,
+  }) => LinkedDeviceRow(
+    deviceId: deviceId ?? this.deviceId,
+    displayName: displayName ?? this.displayName,
+    signingIdentityId: signingIdentityId ?? this.signingIdentityId,
+    deviceCertFingerprint: deviceCertFingerprint ?? this.deviceCertFingerprint,
+    role: role ?? this.role,
+    canAdd: canAdd ?? this.canAdd,
+    removedAt: removedAt.present ? removedAt.value : this.removedAt,
+    erasePendingAt: erasePendingAt.present
+        ? erasePendingAt.value
+        : this.erasePendingAt,
+    erasedAt: erasedAt.present ? erasedAt.value : this.erasedAt,
+    soleOwnerClaimedAt: soleOwnerClaimedAt.present
+        ? soleOwnerClaimedAt.value
+        : this.soleOwnerClaimedAt,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  LinkedDeviceRow copyWithCompanion(LinkedDevicesCompanion data) {
+    return LinkedDeviceRow(
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      signingIdentityId: data.signingIdentityId.present
+          ? data.signingIdentityId.value
+          : this.signingIdentityId,
+      deviceCertFingerprint: data.deviceCertFingerprint.present
+          ? data.deviceCertFingerprint.value
+          : this.deviceCertFingerprint,
+      role: data.role.present ? data.role.value : this.role,
+      canAdd: data.canAdd.present ? data.canAdd.value : this.canAdd,
+      removedAt: data.removedAt.present ? data.removedAt.value : this.removedAt,
+      erasePendingAt: data.erasePendingAt.present
+          ? data.erasePendingAt.value
+          : this.erasePendingAt,
+      erasedAt: data.erasedAt.present ? data.erasedAt.value : this.erasedAt,
+      soleOwnerClaimedAt: data.soleOwnerClaimedAt.present
+          ? data.soleOwnerClaimedAt.value
+          : this.soleOwnerClaimedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LinkedDeviceRow(')
+          ..write('deviceId: $deviceId, ')
+          ..write('displayName: $displayName, ')
+          ..write('signingIdentityId: $signingIdentityId, ')
+          ..write('deviceCertFingerprint: $deviceCertFingerprint, ')
+          ..write('role: $role, ')
+          ..write('canAdd: $canAdd, ')
+          ..write('removedAt: $removedAt, ')
+          ..write('erasePendingAt: $erasePendingAt, ')
+          ..write('erasedAt: $erasedAt, ')
+          ..write('soleOwnerClaimedAt: $soleOwnerClaimedAt, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    deviceId,
+    displayName,
+    signingIdentityId,
+    deviceCertFingerprint,
+    role,
+    canAdd,
+    removedAt,
+    erasePendingAt,
+    erasedAt,
+    soleOwnerClaimedAt,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LinkedDeviceRow &&
+          other.deviceId == this.deviceId &&
+          other.displayName == this.displayName &&
+          other.signingIdentityId == this.signingIdentityId &&
+          other.deviceCertFingerprint == this.deviceCertFingerprint &&
+          other.role == this.role &&
+          other.canAdd == this.canAdd &&
+          other.removedAt == this.removedAt &&
+          other.erasePendingAt == this.erasePendingAt &&
+          other.erasedAt == this.erasedAt &&
+          other.soleOwnerClaimedAt == this.soleOwnerClaimedAt &&
+          other.createdAt == this.createdAt);
+}
+
+class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
+  final Value<String> deviceId;
+  final Value<String> displayName;
+  final Value<String> signingIdentityId;
+  final Value<String> deviceCertFingerprint;
+  final Value<LinkedDeviceRole> role;
+  final Value<bool> canAdd;
+  final Value<DateTime?> removedAt;
+  final Value<DateTime?> erasePendingAt;
+  final Value<DateTime?> erasedAt;
+  final Value<DateTime?> soleOwnerClaimedAt;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const LinkedDevicesCompanion({
+    this.deviceId = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.signingIdentityId = const Value.absent(),
+    this.deviceCertFingerprint = const Value.absent(),
+    this.role = const Value.absent(),
+    this.canAdd = const Value.absent(),
+    this.removedAt = const Value.absent(),
+    this.erasePendingAt = const Value.absent(),
+    this.erasedAt = const Value.absent(),
+    this.soleOwnerClaimedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LinkedDevicesCompanion.insert({
+    required String deviceId,
+    required String displayName,
+    required String signingIdentityId,
+    required String deviceCertFingerprint,
+    required LinkedDeviceRole role,
+    this.canAdd = const Value.absent(),
+    this.removedAt = const Value.absent(),
+    this.erasePendingAt = const Value.absent(),
+    this.erasedAt = const Value.absent(),
+    this.soleOwnerClaimedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : deviceId = Value(deviceId),
+       displayName = Value(displayName),
+       signingIdentityId = Value(signingIdentityId),
+       deviceCertFingerprint = Value(deviceCertFingerprint),
+       role = Value(role);
+  static Insertable<LinkedDeviceRow> custom({
+    Expression<String>? deviceId,
+    Expression<String>? displayName,
+    Expression<String>? signingIdentityId,
+    Expression<String>? deviceCertFingerprint,
+    Expression<String>? role,
+    Expression<bool>? canAdd,
+    Expression<DateTime>? removedAt,
+    Expression<DateTime>? erasePendingAt,
+    Expression<DateTime>? erasedAt,
+    Expression<DateTime>? soleOwnerClaimedAt,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (deviceId != null) 'device_id': deviceId,
+      if (displayName != null) 'display_name': displayName,
+      if (signingIdentityId != null) 'signing_identity_id': signingIdentityId,
+      if (deviceCertFingerprint != null)
+        'device_cert_fingerprint': deviceCertFingerprint,
+      if (role != null) 'role': role,
+      if (canAdd != null) 'can_add': canAdd,
+      if (removedAt != null) 'removed_at': removedAt,
+      if (erasePendingAt != null) 'erase_pending_at': erasePendingAt,
+      if (erasedAt != null) 'erased_at': erasedAt,
+      if (soleOwnerClaimedAt != null)
+        'sole_owner_claimed_at': soleOwnerClaimedAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LinkedDevicesCompanion copyWith({
+    Value<String>? deviceId,
+    Value<String>? displayName,
+    Value<String>? signingIdentityId,
+    Value<String>? deviceCertFingerprint,
+    Value<LinkedDeviceRole>? role,
+    Value<bool>? canAdd,
+    Value<DateTime?>? removedAt,
+    Value<DateTime?>? erasePendingAt,
+    Value<DateTime?>? erasedAt,
+    Value<DateTime?>? soleOwnerClaimedAt,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return LinkedDevicesCompanion(
+      deviceId: deviceId ?? this.deviceId,
+      displayName: displayName ?? this.displayName,
+      signingIdentityId: signingIdentityId ?? this.signingIdentityId,
+      deviceCertFingerprint:
+          deviceCertFingerprint ?? this.deviceCertFingerprint,
+      role: role ?? this.role,
+      canAdd: canAdd ?? this.canAdd,
+      removedAt: removedAt ?? this.removedAt,
+      erasePendingAt: erasePendingAt ?? this.erasePendingAt,
+      erasedAt: erasedAt ?? this.erasedAt,
+      soleOwnerClaimedAt: soleOwnerClaimedAt ?? this.soleOwnerClaimedAt,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (signingIdentityId.present) {
+      map['signing_identity_id'] = Variable<String>(signingIdentityId.value);
+    }
+    if (deviceCertFingerprint.present) {
+      map['device_cert_fingerprint'] = Variable<String>(
+        deviceCertFingerprint.value,
+      );
+    }
+    if (role.present) {
+      map['role'] = Variable<String>(
+        $LinkedDevicesTable.$converterrole.toSql(role.value),
+      );
+    }
+    if (canAdd.present) {
+      map['can_add'] = Variable<bool>(canAdd.value);
+    }
+    if (removedAt.present) {
+      map['removed_at'] = Variable<DateTime>(removedAt.value);
+    }
+    if (erasePendingAt.present) {
+      map['erase_pending_at'] = Variable<DateTime>(erasePendingAt.value);
+    }
+    if (erasedAt.present) {
+      map['erased_at'] = Variable<DateTime>(erasedAt.value);
+    }
+    if (soleOwnerClaimedAt.present) {
+      map['sole_owner_claimed_at'] = Variable<DateTime>(
+        soleOwnerClaimedAt.value,
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LinkedDevicesCompanion(')
+          ..write('deviceId: $deviceId, ')
+          ..write('displayName: $displayName, ')
+          ..write('signingIdentityId: $signingIdentityId, ')
+          ..write('deviceCertFingerprint: $deviceCertFingerprint, ')
+          ..write('role: $role, ')
+          ..write('canAdd: $canAdd, ')
+          ..write('removedAt: $removedAt, ')
+          ..write('erasePendingAt: $erasePendingAt, ')
+          ..write('erasedAt: $erasedAt, ')
+          ..write('soleOwnerClaimedAt: $soleOwnerClaimedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LedgerIdentityChainTipsTable extends LedgerIdentityChainTips
+    with TableInfo<$LedgerIdentityChainTipsTable, IdentityChainTipRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LedgerIdentityChainTipsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _identityIdMeta = const VerificationMeta(
+    'identityId',
+  );
+  @override
+  late final GeneratedColumn<String> identityId = GeneratedColumn<String>(
+    'identity_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES signing_identities (identity_id)',
+    ),
+  );
+  static const VerificationMeta _trustedTipEntryIdMeta = const VerificationMeta(
+    'trustedTipEntryId',
+  );
+  @override
+  late final GeneratedColumn<String> trustedTipEntryId =
+      GeneratedColumn<String>(
+        'trusted_tip_entry_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES journal_entries (id)',
+        ),
+      );
+  static const VerificationMeta _trustedTipHashMeta = const VerificationMeta(
+    'trustedTipHash',
+  );
+  @override
+  late final GeneratedColumn<Uint8List> trustedTipHash =
+      GeneratedColumn<Uint8List>(
+        'trusted_tip_hash',
+        aliasedName,
+        true,
+        type: DriftSqlType.blob,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _nextDeviceChainSequenceMeta =
+      const VerificationMeta('nextDeviceChainSequence');
+  @override
+  late final GeneratedColumn<int> nextDeviceChainSequence =
+      GeneratedColumn<int>(
+        'next_device_chain_sequence',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    identityId,
+    trustedTipEntryId,
+    trustedTipHash,
+    nextDeviceChainSequence,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'ledger_identity_chain_tips';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<IdentityChainTipRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('identity_id')) {
+      context.handle(
+        _identityIdMeta,
+        identityId.isAcceptableOrUnknown(data['identity_id']!, _identityIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_identityIdMeta);
+    }
+    if (data.containsKey('trusted_tip_entry_id')) {
+      context.handle(
+        _trustedTipEntryIdMeta,
+        trustedTipEntryId.isAcceptableOrUnknown(
+          data['trusted_tip_entry_id']!,
+          _trustedTipEntryIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('trusted_tip_hash')) {
+      context.handle(
+        _trustedTipHashMeta,
+        trustedTipHash.isAcceptableOrUnknown(
+          data['trusted_tip_hash']!,
+          _trustedTipHashMeta,
+        ),
+      );
+    }
+    if (data.containsKey('next_device_chain_sequence')) {
+      context.handle(
+        _nextDeviceChainSequenceMeta,
+        nextDeviceChainSequence.isAcceptableOrUnknown(
+          data['next_device_chain_sequence']!,
+          _nextDeviceChainSequenceMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_nextDeviceChainSequenceMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {identityId};
+  @override
+  IdentityChainTipRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return IdentityChainTipRow(
+      identityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}identity_id'],
+      )!,
+      trustedTipEntryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}trusted_tip_entry_id'],
+      ),
+      trustedTipHash: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}trusted_tip_hash'],
+      ),
+      nextDeviceChainSequence: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}next_device_chain_sequence'],
+      )!,
+    );
+  }
+
+  @override
+  $LedgerIdentityChainTipsTable createAlias(String alias) {
+    return $LedgerIdentityChainTipsTable(attachedDatabase, alias);
+  }
+}
+
+class IdentityChainTipRow extends DataClass
+    implements Insertable<IdentityChainTipRow> {
+  final String identityId;
+  final String? trustedTipEntryId;
+  final Uint8List? trustedTipHash;
+  final int nextDeviceChainSequence;
+  const IdentityChainTipRow({
+    required this.identityId,
+    this.trustedTipEntryId,
+    this.trustedTipHash,
+    required this.nextDeviceChainSequence,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['identity_id'] = Variable<String>(identityId);
+    if (!nullToAbsent || trustedTipEntryId != null) {
+      map['trusted_tip_entry_id'] = Variable<String>(trustedTipEntryId);
+    }
+    if (!nullToAbsent || trustedTipHash != null) {
+      map['trusted_tip_hash'] = Variable<Uint8List>(trustedTipHash);
+    }
+    map['next_device_chain_sequence'] = Variable<int>(nextDeviceChainSequence);
+    return map;
+  }
+
+  LedgerIdentityChainTipsCompanion toCompanion(bool nullToAbsent) {
+    return LedgerIdentityChainTipsCompanion(
+      identityId: Value(identityId),
+      trustedTipEntryId: trustedTipEntryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(trustedTipEntryId),
+      trustedTipHash: trustedTipHash == null && nullToAbsent
+          ? const Value.absent()
+          : Value(trustedTipHash),
+      nextDeviceChainSequence: Value(nextDeviceChainSequence),
+    );
+  }
+
+  factory IdentityChainTipRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return IdentityChainTipRow(
+      identityId: serializer.fromJson<String>(json['identityId']),
+      trustedTipEntryId: serializer.fromJson<String?>(
+        json['trustedTipEntryId'],
+      ),
+      trustedTipHash: serializer.fromJson<Uint8List?>(json['trustedTipHash']),
+      nextDeviceChainSequence: serializer.fromJson<int>(
+        json['nextDeviceChainSequence'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'identityId': serializer.toJson<String>(identityId),
+      'trustedTipEntryId': serializer.toJson<String?>(trustedTipEntryId),
+      'trustedTipHash': serializer.toJson<Uint8List?>(trustedTipHash),
+      'nextDeviceChainSequence': serializer.toJson<int>(
+        nextDeviceChainSequence,
+      ),
+    };
+  }
+
+  IdentityChainTipRow copyWith({
+    String? identityId,
+    Value<String?> trustedTipEntryId = const Value.absent(),
+    Value<Uint8List?> trustedTipHash = const Value.absent(),
+    int? nextDeviceChainSequence,
+  }) => IdentityChainTipRow(
+    identityId: identityId ?? this.identityId,
+    trustedTipEntryId: trustedTipEntryId.present
+        ? trustedTipEntryId.value
+        : this.trustedTipEntryId,
+    trustedTipHash: trustedTipHash.present
+        ? trustedTipHash.value
+        : this.trustedTipHash,
+    nextDeviceChainSequence:
+        nextDeviceChainSequence ?? this.nextDeviceChainSequence,
+  );
+  IdentityChainTipRow copyWithCompanion(LedgerIdentityChainTipsCompanion data) {
+    return IdentityChainTipRow(
+      identityId: data.identityId.present
+          ? data.identityId.value
+          : this.identityId,
+      trustedTipEntryId: data.trustedTipEntryId.present
+          ? data.trustedTipEntryId.value
+          : this.trustedTipEntryId,
+      trustedTipHash: data.trustedTipHash.present
+          ? data.trustedTipHash.value
+          : this.trustedTipHash,
+      nextDeviceChainSequence: data.nextDeviceChainSequence.present
+          ? data.nextDeviceChainSequence.value
+          : this.nextDeviceChainSequence,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('IdentityChainTipRow(')
+          ..write('identityId: $identityId, ')
+          ..write('trustedTipEntryId: $trustedTipEntryId, ')
+          ..write('trustedTipHash: $trustedTipHash, ')
+          ..write('nextDeviceChainSequence: $nextDeviceChainSequence')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    identityId,
+    trustedTipEntryId,
+    $driftBlobEquality.hash(trustedTipHash),
+    nextDeviceChainSequence,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is IdentityChainTipRow &&
+          other.identityId == this.identityId &&
+          other.trustedTipEntryId == this.trustedTipEntryId &&
+          $driftBlobEquality.equals(
+            other.trustedTipHash,
+            this.trustedTipHash,
+          ) &&
+          other.nextDeviceChainSequence == this.nextDeviceChainSequence);
+}
+
+class LedgerIdentityChainTipsCompanion
+    extends UpdateCompanion<IdentityChainTipRow> {
+  final Value<String> identityId;
+  final Value<String?> trustedTipEntryId;
+  final Value<Uint8List?> trustedTipHash;
+  final Value<int> nextDeviceChainSequence;
+  final Value<int> rowid;
+  const LedgerIdentityChainTipsCompanion({
+    this.identityId = const Value.absent(),
+    this.trustedTipEntryId = const Value.absent(),
+    this.trustedTipHash = const Value.absent(),
+    this.nextDeviceChainSequence = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LedgerIdentityChainTipsCompanion.insert({
+    required String identityId,
+    this.trustedTipEntryId = const Value.absent(),
+    this.trustedTipHash = const Value.absent(),
+    required int nextDeviceChainSequence,
+    this.rowid = const Value.absent(),
+  }) : identityId = Value(identityId),
+       nextDeviceChainSequence = Value(nextDeviceChainSequence);
+  static Insertable<IdentityChainTipRow> custom({
+    Expression<String>? identityId,
+    Expression<String>? trustedTipEntryId,
+    Expression<Uint8List>? trustedTipHash,
+    Expression<int>? nextDeviceChainSequence,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (identityId != null) 'identity_id': identityId,
+      if (trustedTipEntryId != null) 'trusted_tip_entry_id': trustedTipEntryId,
+      if (trustedTipHash != null) 'trusted_tip_hash': trustedTipHash,
+      if (nextDeviceChainSequence != null)
+        'next_device_chain_sequence': nextDeviceChainSequence,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LedgerIdentityChainTipsCompanion copyWith({
+    Value<String>? identityId,
+    Value<String?>? trustedTipEntryId,
+    Value<Uint8List?>? trustedTipHash,
+    Value<int>? nextDeviceChainSequence,
+    Value<int>? rowid,
+  }) {
+    return LedgerIdentityChainTipsCompanion(
+      identityId: identityId ?? this.identityId,
+      trustedTipEntryId: trustedTipEntryId ?? this.trustedTipEntryId,
+      trustedTipHash: trustedTipHash ?? this.trustedTipHash,
+      nextDeviceChainSequence:
+          nextDeviceChainSequence ?? this.nextDeviceChainSequence,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (identityId.present) {
+      map['identity_id'] = Variable<String>(identityId.value);
+    }
+    if (trustedTipEntryId.present) {
+      map['trusted_tip_entry_id'] = Variable<String>(trustedTipEntryId.value);
+    }
+    if (trustedTipHash.present) {
+      map['trusted_tip_hash'] = Variable<Uint8List>(trustedTipHash.value);
+    }
+    if (nextDeviceChainSequence.present) {
+      map['next_device_chain_sequence'] = Variable<int>(
+        nextDeviceChainSequence.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LedgerIdentityChainTipsCompanion(')
+          ..write('identityId: $identityId, ')
+          ..write('trustedTipEntryId: $trustedTipEntryId, ')
+          ..write('trustedTipHash: $trustedTipHash, ')
+          ..write('nextDeviceChainSequence: $nextDeviceChainSequence, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CategoryTranslationsTable extends CategoryTranslations
+    with TableInfo<$CategoryTranslationsTable, CategoryTranslationRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CategoryTranslationsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<String> categoryId = GeneratedColumn<String>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES accounts (id)',
+    ),
+  );
+  static const VerificationMeta _localeMeta = const VerificationMeta('locale');
+  @override
+  late final GeneratedColumn<String> locale = GeneratedColumn<String>(
+    'locale',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [categoryId, locale, name, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'category_translations';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CategoryTranslationRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('locale')) {
+      context.handle(
+        _localeMeta,
+        locale.isAcceptableOrUnknown(data['locale']!, _localeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_localeMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {categoryId, locale};
+  @override
+  CategoryTranslationRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CategoryTranslationRow(
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_id'],
+      )!,
+      locale: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}locale'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $CategoryTranslationsTable createAlias(String alias) {
+    return $CategoryTranslationsTable(attachedDatabase, alias);
+  }
+}
+
+class CategoryTranslationRow extends DataClass
+    implements Insertable<CategoryTranslationRow> {
+  final String categoryId;
+
+  /// BCP-47 language tag (e.g. `en`, `de`).
+  final String locale;
+  final String name;
+  final DateTime updatedAt;
+  const CategoryTranslationRow({
+    required this.categoryId,
+    required this.locale,
+    required this.name,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['category_id'] = Variable<String>(categoryId);
+    map['locale'] = Variable<String>(locale);
+    map['name'] = Variable<String>(name);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  CategoryTranslationsCompanion toCompanion(bool nullToAbsent) {
+    return CategoryTranslationsCompanion(
+      categoryId: Value(categoryId),
+      locale: Value(locale),
+      name: Value(name),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory CategoryTranslationRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CategoryTranslationRow(
+      categoryId: serializer.fromJson<String>(json['categoryId']),
+      locale: serializer.fromJson<String>(json['locale']),
+      name: serializer.fromJson<String>(json['name']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'categoryId': serializer.toJson<String>(categoryId),
+      'locale': serializer.toJson<String>(locale),
+      'name': serializer.toJson<String>(name),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  CategoryTranslationRow copyWith({
+    String? categoryId,
+    String? locale,
+    String? name,
+    DateTime? updatedAt,
+  }) => CategoryTranslationRow(
+    categoryId: categoryId ?? this.categoryId,
+    locale: locale ?? this.locale,
+    name: name ?? this.name,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  CategoryTranslationRow copyWithCompanion(CategoryTranslationsCompanion data) {
+    return CategoryTranslationRow(
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      locale: data.locale.present ? data.locale.value : this.locale,
+      name: data.name.present ? data.name.value : this.name,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategoryTranslationRow(')
+          ..write('categoryId: $categoryId, ')
+          ..write('locale: $locale, ')
+          ..write('name: $name, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(categoryId, locale, name, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CategoryTranslationRow &&
+          other.categoryId == this.categoryId &&
+          other.locale == this.locale &&
+          other.name == this.name &&
+          other.updatedAt == this.updatedAt);
+}
+
+class CategoryTranslationsCompanion
+    extends UpdateCompanion<CategoryTranslationRow> {
+  final Value<String> categoryId;
+  final Value<String> locale;
+  final Value<String> name;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const CategoryTranslationsCompanion({
+    this.categoryId = const Value.absent(),
+    this.locale = const Value.absent(),
+    this.name = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CategoryTranslationsCompanion.insert({
+    required String categoryId,
+    required String locale,
+    required String name,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : categoryId = Value(categoryId),
+       locale = Value(locale),
+       name = Value(name),
+       updatedAt = Value(updatedAt);
+  static Insertable<CategoryTranslationRow> custom({
+    Expression<String>? categoryId,
+    Expression<String>? locale,
+    Expression<String>? name,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (categoryId != null) 'category_id': categoryId,
+      if (locale != null) 'locale': locale,
+      if (name != null) 'name': name,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CategoryTranslationsCompanion copyWith({
+    Value<String>? categoryId,
+    Value<String>? locale,
+    Value<String>? name,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return CategoryTranslationsCompanion(
+      categoryId: categoryId ?? this.categoryId,
+      locale: locale ?? this.locale,
+      name: name ?? this.name,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (categoryId.present) {
+      map['category_id'] = Variable<String>(categoryId.value);
+    }
+    if (locale.present) {
+      map['locale'] = Variable<String>(locale.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategoryTranslationsCompanion(')
+          ..write('categoryId: $categoryId, ')
+          ..write('locale: $locale, ')
+          ..write('name: $name, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CategoryMergeMapTable extends CategoryMergeMap
+    with TableInfo<$CategoryMergeMapTable, CategoryMergeMapRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CategoryMergeMapTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _absorbedCategoryIdMeta =
+      const VerificationMeta('absorbedCategoryId');
+  @override
+  late final GeneratedColumn<String> absorbedCategoryId =
+      GeneratedColumn<String>(
+        'absorbed_category_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES accounts (id)',
+        ),
+      );
+  static const VerificationMeta _survivorCategoryIdMeta =
+      const VerificationMeta('survivorCategoryId');
+  @override
+  late final GeneratedColumn<String> survivorCategoryId =
+      GeneratedColumn<String>(
+        'survivor_category_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES accounts (id)',
+        ),
+      );
+  static const VerificationMeta _mergedAtMeta = const VerificationMeta(
+    'mergedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> mergedAt = GeneratedColumn<DateTime>(
+    'merged_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    absorbedCategoryId,
+    survivorCategoryId,
+    mergedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'category_merge_map';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CategoryMergeMapRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('absorbed_category_id')) {
+      context.handle(
+        _absorbedCategoryIdMeta,
+        absorbedCategoryId.isAcceptableOrUnknown(
+          data['absorbed_category_id']!,
+          _absorbedCategoryIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_absorbedCategoryIdMeta);
+    }
+    if (data.containsKey('survivor_category_id')) {
+      context.handle(
+        _survivorCategoryIdMeta,
+        survivorCategoryId.isAcceptableOrUnknown(
+          data['survivor_category_id']!,
+          _survivorCategoryIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_survivorCategoryIdMeta);
+    }
+    if (data.containsKey('merged_at')) {
+      context.handle(
+        _mergedAtMeta,
+        mergedAt.isAcceptableOrUnknown(data['merged_at']!, _mergedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_mergedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {absorbedCategoryId};
+  @override
+  CategoryMergeMapRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CategoryMergeMapRow(
+      absorbedCategoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}absorbed_category_id'],
+      )!,
+      survivorCategoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}survivor_category_id'],
+      )!,
+      mergedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}merged_at'],
+      )!,
+    );
+  }
+
+  @override
+  $CategoryMergeMapTable createAlias(String alias) {
+    return $CategoryMergeMapTable(attachedDatabase, alias);
+  }
+}
+
+class CategoryMergeMapRow extends DataClass
+    implements Insertable<CategoryMergeMapRow> {
+  final String absorbedCategoryId;
+  final String survivorCategoryId;
+  final DateTime mergedAt;
+  const CategoryMergeMapRow({
+    required this.absorbedCategoryId,
+    required this.survivorCategoryId,
+    required this.mergedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['absorbed_category_id'] = Variable<String>(absorbedCategoryId);
+    map['survivor_category_id'] = Variable<String>(survivorCategoryId);
+    map['merged_at'] = Variable<DateTime>(mergedAt);
+    return map;
+  }
+
+  CategoryMergeMapCompanion toCompanion(bool nullToAbsent) {
+    return CategoryMergeMapCompanion(
+      absorbedCategoryId: Value(absorbedCategoryId),
+      survivorCategoryId: Value(survivorCategoryId),
+      mergedAt: Value(mergedAt),
+    );
+  }
+
+  factory CategoryMergeMapRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CategoryMergeMapRow(
+      absorbedCategoryId: serializer.fromJson<String>(
+        json['absorbedCategoryId'],
+      ),
+      survivorCategoryId: serializer.fromJson<String>(
+        json['survivorCategoryId'],
+      ),
+      mergedAt: serializer.fromJson<DateTime>(json['mergedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'absorbedCategoryId': serializer.toJson<String>(absorbedCategoryId),
+      'survivorCategoryId': serializer.toJson<String>(survivorCategoryId),
+      'mergedAt': serializer.toJson<DateTime>(mergedAt),
+    };
+  }
+
+  CategoryMergeMapRow copyWith({
+    String? absorbedCategoryId,
+    String? survivorCategoryId,
+    DateTime? mergedAt,
+  }) => CategoryMergeMapRow(
+    absorbedCategoryId: absorbedCategoryId ?? this.absorbedCategoryId,
+    survivorCategoryId: survivorCategoryId ?? this.survivorCategoryId,
+    mergedAt: mergedAt ?? this.mergedAt,
+  );
+  CategoryMergeMapRow copyWithCompanion(CategoryMergeMapCompanion data) {
+    return CategoryMergeMapRow(
+      absorbedCategoryId: data.absorbedCategoryId.present
+          ? data.absorbedCategoryId.value
+          : this.absorbedCategoryId,
+      survivorCategoryId: data.survivorCategoryId.present
+          ? data.survivorCategoryId.value
+          : this.survivorCategoryId,
+      mergedAt: data.mergedAt.present ? data.mergedAt.value : this.mergedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategoryMergeMapRow(')
+          ..write('absorbedCategoryId: $absorbedCategoryId, ')
+          ..write('survivorCategoryId: $survivorCategoryId, ')
+          ..write('mergedAt: $mergedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(absorbedCategoryId, survivorCategoryId, mergedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CategoryMergeMapRow &&
+          other.absorbedCategoryId == this.absorbedCategoryId &&
+          other.survivorCategoryId == this.survivorCategoryId &&
+          other.mergedAt == this.mergedAt);
+}
+
+class CategoryMergeMapCompanion extends UpdateCompanion<CategoryMergeMapRow> {
+  final Value<String> absorbedCategoryId;
+  final Value<String> survivorCategoryId;
+  final Value<DateTime> mergedAt;
+  final Value<int> rowid;
+  const CategoryMergeMapCompanion({
+    this.absorbedCategoryId = const Value.absent(),
+    this.survivorCategoryId = const Value.absent(),
+    this.mergedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CategoryMergeMapCompanion.insert({
+    required String absorbedCategoryId,
+    required String survivorCategoryId,
+    required DateTime mergedAt,
+    this.rowid = const Value.absent(),
+  }) : absorbedCategoryId = Value(absorbedCategoryId),
+       survivorCategoryId = Value(survivorCategoryId),
+       mergedAt = Value(mergedAt);
+  static Insertable<CategoryMergeMapRow> custom({
+    Expression<String>? absorbedCategoryId,
+    Expression<String>? survivorCategoryId,
+    Expression<DateTime>? mergedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (absorbedCategoryId != null)
+        'absorbed_category_id': absorbedCategoryId,
+      if (survivorCategoryId != null)
+        'survivor_category_id': survivorCategoryId,
+      if (mergedAt != null) 'merged_at': mergedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CategoryMergeMapCompanion copyWith({
+    Value<String>? absorbedCategoryId,
+    Value<String>? survivorCategoryId,
+    Value<DateTime>? mergedAt,
+    Value<int>? rowid,
+  }) {
+    return CategoryMergeMapCompanion(
+      absorbedCategoryId: absorbedCategoryId ?? this.absorbedCategoryId,
+      survivorCategoryId: survivorCategoryId ?? this.survivorCategoryId,
+      mergedAt: mergedAt ?? this.mergedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (absorbedCategoryId.present) {
+      map['absorbed_category_id'] = Variable<String>(absorbedCategoryId.value);
+    }
+    if (survivorCategoryId.present) {
+      map['survivor_category_id'] = Variable<String>(survivorCategoryId.value);
+    }
+    if (mergedAt.present) {
+      map['merged_at'] = Variable<DateTime>(mergedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CategoryMergeMapCompanion(')
+          ..write('absorbedCategoryId: $absorbedCategoryId, ')
+          ..write('survivorCategoryId: $survivorCategoryId, ')
+          ..write('mergedAt: $mergedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BooksSetMetadataTable extends BooksSetMetadata
+    with TableInfo<$BooksSetMetadataTable, BooksSetMetadataRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BooksSetMetadataTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _defaultCategoryLocaleMeta =
+      const VerificationMeta('defaultCategoryLocale');
+  @override
+  late final GeneratedColumn<String> defaultCategoryLocale =
+      GeneratedColumn<String>(
+        'default_category_locale',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('en'),
+      );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    displayName,
+    defaultCategoryLocale,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'books_set_metadata';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BooksSetMetadataRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_displayNameMeta);
+    }
+    if (data.containsKey('default_category_locale')) {
+      context.handle(
+        _defaultCategoryLocaleMeta,
+        defaultCategoryLocale.isAcceptableOrUnknown(
+          data['default_category_locale']!,
+          _defaultCategoryLocaleMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BooksSetMetadataRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BooksSetMetadataRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      )!,
+      defaultCategoryLocale: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}default_category_locale'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $BooksSetMetadataTable createAlias(String alias) {
+    return $BooksSetMetadataTable(attachedDatabase, alias);
+  }
+}
+
+class BooksSetMetadataRow extends DataClass
+    implements Insertable<BooksSetMetadataRow> {
+  /// Same id as the `books/<id>/` directory name.
+  final String id;
+  final String displayName;
+
+  /// Default language for category names (books setting; design Decision 9).
+  final String defaultCategoryLocale;
+  final DateTime createdAt;
+  const BooksSetMetadataRow({
+    required this.id,
+    required this.displayName,
+    required this.defaultCategoryLocale,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['display_name'] = Variable<String>(displayName);
+    map['default_category_locale'] = Variable<String>(defaultCategoryLocale);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  BooksSetMetadataCompanion toCompanion(bool nullToAbsent) {
+    return BooksSetMetadataCompanion(
+      id: Value(id),
+      displayName: Value(displayName),
+      defaultCategoryLocale: Value(defaultCategoryLocale),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory BooksSetMetadataRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BooksSetMetadataRow(
+      id: serializer.fromJson<String>(json['id']),
+      displayName: serializer.fromJson<String>(json['displayName']),
+      defaultCategoryLocale: serializer.fromJson<String>(
+        json['defaultCategoryLocale'],
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'displayName': serializer.toJson<String>(displayName),
+      'defaultCategoryLocale': serializer.toJson<String>(defaultCategoryLocale),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  BooksSetMetadataRow copyWith({
+    String? id,
+    String? displayName,
+    String? defaultCategoryLocale,
+    DateTime? createdAt,
+  }) => BooksSetMetadataRow(
+    id: id ?? this.id,
+    displayName: displayName ?? this.displayName,
+    defaultCategoryLocale: defaultCategoryLocale ?? this.defaultCategoryLocale,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  BooksSetMetadataRow copyWithCompanion(BooksSetMetadataCompanion data) {
+    return BooksSetMetadataRow(
+      id: data.id.present ? data.id.value : this.id,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      defaultCategoryLocale: data.defaultCategoryLocale.present
+          ? data.defaultCategoryLocale.value
+          : this.defaultCategoryLocale,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BooksSetMetadataRow(')
+          ..write('id: $id, ')
+          ..write('displayName: $displayName, ')
+          ..write('defaultCategoryLocale: $defaultCategoryLocale, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, displayName, defaultCategoryLocale, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BooksSetMetadataRow &&
+          other.id == this.id &&
+          other.displayName == this.displayName &&
+          other.defaultCategoryLocale == this.defaultCategoryLocale &&
+          other.createdAt == this.createdAt);
+}
+
+class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
+  final Value<String> id;
+  final Value<String> displayName;
+  final Value<String> defaultCategoryLocale;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const BooksSetMetadataCompanion({
+    this.id = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.defaultCategoryLocale = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BooksSetMetadataCompanion.insert({
+    required String id,
+    required String displayName,
+    this.defaultCategoryLocale = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       displayName = Value(displayName);
+  static Insertable<BooksSetMetadataRow> custom({
+    Expression<String>? id,
+    Expression<String>? displayName,
+    Expression<String>? defaultCategoryLocale,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (displayName != null) 'display_name': displayName,
+      if (defaultCategoryLocale != null)
+        'default_category_locale': defaultCategoryLocale,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BooksSetMetadataCompanion copyWith({
+    Value<String>? id,
+    Value<String>? displayName,
+    Value<String>? defaultCategoryLocale,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return BooksSetMetadataCompanion(
+      id: id ?? this.id,
+      displayName: displayName ?? this.displayName,
+      defaultCategoryLocale:
+          defaultCategoryLocale ?? this.defaultCategoryLocale,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (defaultCategoryLocale.present) {
+      map['default_category_locale'] = Variable<String>(
+        defaultCategoryLocale.value,
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BooksSetMetadataCompanion(')
+          ..write('id: $id, ')
+          ..write('displayName: $displayName, ')
+          ..write('defaultCategoryLocale: $defaultCategoryLocale, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -9221,6 +11261,17 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $PayeesTable payees = $PayeesTable(this);
   late final $RecurringTemplatesTable recurringTemplates =
       $RecurringTemplatesTable(this);
+  late final $LinkedDevicesTable linkedDevices = $LinkedDevicesTable(this);
+  late final $LedgerIdentityChainTipsTable ledgerIdentityChainTips =
+      $LedgerIdentityChainTipsTable(this);
+  late final $CategoryTranslationsTable categoryTranslations =
+      $CategoryTranslationsTable(this);
+  late final $CategoryMergeMapTable categoryMergeMap = $CategoryMergeMapTable(
+    this,
+  );
+  late final $BooksSetMetadataTable booksSetMetadata = $BooksSetMetadataTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -9244,6 +11295,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     categoryRules,
     payees,
     recurringTemplates,
+    linkedDevices,
+    ledgerIdentityChainTips,
+    categoryTranslations,
+    categoryMergeMap,
+    booksSetMetadata,
   ];
 }
 
@@ -9646,6 +11702,31 @@ final class $$AccountsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $CategoryTranslationsTable,
+    List<CategoryTranslationRow>
+  >
+  _categoryTranslationsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.categoryTranslations,
+        aliasName: 'accounts__id__category_translations__category_id',
+      );
+
+  $$CategoryTranslationsTableProcessedTableManager
+  get categoryTranslationsRefs {
+    final manager = $$CategoryTranslationsTableTableManager(
+      $_db,
+      $_db.categoryTranslations,
+    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _categoryTranslationsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$AccountsTableFilterComposer
@@ -9822,6 +11903,31 @@ class $$AccountsTableFilterComposer
           }) => $$OfxImportRecordsTableFilterComposer(
             $db: $db,
             $table: $db.ofxImportRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> categoryTranslationsRefs(
+    Expression<bool> Function($$CategoryTranslationsTableFilterComposer f) f,
+  ) {
+    final $$CategoryTranslationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.categoryTranslations,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoryTranslationsTableFilterComposer(
+            $db: $db,
+            $table: $db.categoryTranslations,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -10084,6 +12190,32 @@ class $$AccountsTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> categoryTranslationsRefs<T extends Object>(
+    Expression<T> Function($$CategoryTranslationsTableAnnotationComposer a) f,
+  ) {
+    final $$CategoryTranslationsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.categoryTranslations,
+          getReferencedColumn: (t) => t.categoryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CategoryTranslationsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.categoryTranslations,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$AccountsTableTableManager
@@ -10105,6 +12237,7 @@ class $$AccountsTableTableManager
             bool investmentLotsRefs,
             bool investmentSellsRefs,
             bool ofxImportRecordsRefs,
+            bool categoryTranslationsRefs,
           })
         > {
   $$AccountsTableTableManager(_$AppDatabase db, $AccountsTable table)
@@ -10189,6 +12322,7 @@ class $$AccountsTableTableManager
                 investmentLotsRefs = false,
                 investmentSellsRefs = false,
                 ofxImportRecordsRefs = false,
+                categoryTranslationsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -10197,6 +12331,7 @@ class $$AccountsTableTableManager
                     if (investmentLotsRefs) db.investmentLots,
                     if (investmentSellsRefs) db.investmentSells,
                     if (ofxImportRecordsRefs) db.ofxImportRecords,
+                    if (categoryTranslationsRefs) db.categoryTranslations,
                   ],
                   addJoins:
                       <
@@ -10317,6 +12452,27 @@ class $$AccountsTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (categoryTranslationsRefs)
+                        await $_getPrefetchedData<
+                          AccountRow,
+                          $AccountsTable,
+                          CategoryTranslationRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AccountsTableReferences
+                              ._categoryTranslationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AccountsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).categoryTranslationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.categoryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -10343,6 +12499,7 @@ typedef $$AccountsTableProcessedTableManager =
         bool investmentLotsRefs,
         bool investmentSellsRefs,
         bool ofxImportRecordsRefs,
+        bool categoryTranslationsRefs,
       })
     >;
 typedef $$SigningIdentitiesTableCreateCompanionBuilder =
@@ -10459,6 +12616,59 @@ final class $$SigningIdentitiesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _integrityEventsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$LinkedDevicesTable, List<LinkedDeviceRow>>
+  _linkedDevicesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.linkedDevices,
+    aliasName:
+        'signing_identities__identity_id__linked_devices__signing_identity_id',
+  );
+
+  $$LinkedDevicesTableProcessedTableManager get linkedDevicesRefs {
+    final manager = $$LinkedDevicesTableTableManager($_db, $_db.linkedDevices)
+        .filter(
+          (f) => f.signingIdentityId.identityId.sqlEquals(
+            $_itemColumn<String>('identity_id')!,
+          ),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_linkedDevicesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $LedgerIdentityChainTipsTable,
+    List<IdentityChainTipRow>
+  >
+  _ledgerIdentityChainTipsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.ledgerIdentityChainTips,
+    aliasName:
+        'signing_identities__identity_id__ledger_identity_chain_tips__identity_id',
+  );
+
+  $$LedgerIdentityChainTipsTableProcessedTableManager
+  get ledgerIdentityChainTipsRefs {
+    final manager =
+        $$LedgerIdentityChainTipsTableTableManager(
+          $_db,
+          $_db.ledgerIdentityChainTips,
+        ).filter(
+          (f) => f.identityId.identityId.sqlEquals(
+            $_itemColumn<String>('identity_id')!,
+          ),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _ledgerIdentityChainTipsRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -10598,6 +12808,57 @@ class $$SigningIdentitiesTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> linkedDevicesRefs(
+    Expression<bool> Function($$LinkedDevicesTableFilterComposer f) f,
+  ) {
+    final $$LinkedDevicesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.identityId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.signingIdentityId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableFilterComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> ledgerIdentityChainTipsRefs(
+    Expression<bool> Function($$LedgerIdentityChainTipsTableFilterComposer f) f,
+  ) {
+    final $$LedgerIdentityChainTipsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.identityId,
+          referencedTable: $db.ledgerIdentityChainTips,
+          getReferencedColumn: (t) => t.identityId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LedgerIdentityChainTipsTableFilterComposer(
+                $db: $db,
+                $table: $db.ledgerIdentityChainTips,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -10820,6 +13081,58 @@ class $$SigningIdentitiesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> linkedDevicesRefs<T extends Object>(
+    Expression<T> Function($$LinkedDevicesTableAnnotationComposer a) f,
+  ) {
+    final $$LinkedDevicesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.identityId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.signingIdentityId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> ledgerIdentityChainTipsRefs<T extends Object>(
+    Expression<T> Function($$LedgerIdentityChainTipsTableAnnotationComposer a)
+    f,
+  ) {
+    final $$LedgerIdentityChainTipsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.identityId,
+          referencedTable: $db.ledgerIdentityChainTips,
+          getReferencedColumn: (t) => t.identityId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LedgerIdentityChainTipsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.ledgerIdentityChainTips,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$SigningIdentitiesTableTableManager
@@ -10840,6 +13153,8 @@ class $$SigningIdentitiesTableTableManager
             bool continuesIdentityId,
             bool journalEntriesRefs,
             bool integrityEventsRefs,
+            bool linkedDevicesRefs,
+            bool ledgerIdentityChainTipsRefs,
           })
         > {
   $$SigningIdentitiesTableTableManager(
@@ -10916,12 +13231,16 @@ class $$SigningIdentitiesTableTableManager
                 continuesIdentityId = false,
                 journalEntriesRefs = false,
                 integrityEventsRefs = false,
+                linkedDevicesRefs = false,
+                ledgerIdentityChainTipsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (journalEntriesRefs) db.journalEntries,
                     if (integrityEventsRefs) db.integrityEvents,
+                    if (linkedDevicesRefs) db.linkedDevices,
+                    if (ledgerIdentityChainTipsRefs) db.ledgerIdentityChainTips,
                   ],
                   addJoins:
                       <
@@ -11016,6 +13335,48 @@ class $$SigningIdentitiesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (linkedDevicesRefs)
+                        await $_getPrefetchedData<
+                          IdentityRow,
+                          $SigningIdentitiesTable,
+                          LinkedDeviceRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SigningIdentitiesTableReferences
+                              ._linkedDevicesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SigningIdentitiesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).linkedDevicesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.signingIdentityId == item.identityId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (ledgerIdentityChainTipsRefs)
+                        await $_getPrefetchedData<
+                          IdentityRow,
+                          $SigningIdentitiesTable,
+                          IdentityChainTipRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$SigningIdentitiesTableReferences
+                              ._ledgerIdentityChainTipsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$SigningIdentitiesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ledgerIdentityChainTipsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.identityId == item.identityId,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -11041,6 +13402,8 @@ typedef $$SigningIdentitiesTableProcessedTableManager =
         bool continuesIdentityId,
         bool journalEntriesRefs,
         bool integrityEventsRefs,
+        bool linkedDevicesRefs,
+        bool ledgerIdentityChainTipsRefs,
       })
     >;
 typedef $$JournalEntriesTableCreateCompanionBuilder =
@@ -11277,6 +13640,36 @@ final class $$JournalEntriesTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _ofxImportRecordsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $LedgerIdentityChainTipsTable,
+    List<IdentityChainTipRow>
+  >
+  _ledgerIdentityChainTipsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.ledgerIdentityChainTips,
+    aliasName:
+        'journal_entries__id__ledger_identity_chain_tips__trusted_tip_entry_id',
+  );
+
+  $$LedgerIdentityChainTipsTableProcessedTableManager
+  get ledgerIdentityChainTipsRefs {
+    final manager =
+        $$LedgerIdentityChainTipsTableTableManager(
+          $_db,
+          $_db.ledgerIdentityChainTips,
+        ).filter(
+          (f) => f.trustedTipEntryId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _ledgerIdentityChainTipsRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -11580,6 +13973,32 @@ class $$JournalEntriesTableFilterComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
+    return f(composer);
+  }
+
+  Expression<bool> ledgerIdentityChainTipsRefs(
+    Expression<bool> Function($$LedgerIdentityChainTipsTableFilterComposer f) f,
+  ) {
+    final $$LedgerIdentityChainTipsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.ledgerIdentityChainTips,
+          getReferencedColumn: (t) => t.trustedTipEntryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LedgerIdentityChainTipsTableFilterComposer(
+                $db: $db,
+                $table: $db.ledgerIdentityChainTips,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
     return f(composer);
   }
 }
@@ -11999,6 +14418,33 @@ class $$JournalEntriesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> ledgerIdentityChainTipsRefs<T extends Object>(
+    Expression<T> Function($$LedgerIdentityChainTipsTableAnnotationComposer a)
+    f,
+  ) {
+    final $$LedgerIdentityChainTipsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.ledgerIdentityChainTips,
+          getReferencedColumn: (t) => t.trustedTipEntryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$LedgerIdentityChainTipsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.ledgerIdentityChainTips,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$JournalEntriesTableTableManager
@@ -12025,6 +14471,7 @@ class $$JournalEntriesTableTableManager
             bool investmentLotsRefs,
             bool investmentSellsRefs,
             bool ofxImportRecordsRefs,
+            bool ledgerIdentityChainTipsRefs,
           })
         > {
   $$JournalEntriesTableTableManager(
@@ -12120,6 +14567,7 @@ class $$JournalEntriesTableTableManager
                 investmentLotsRefs = false,
                 investmentSellsRefs = false,
                 ofxImportRecordsRefs = false,
+                ledgerIdentityChainTipsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -12131,6 +14579,7 @@ class $$JournalEntriesTableTableManager
                     if (investmentLotsRefs) db.investmentLots,
                     if (investmentSellsRefs) db.investmentSells,
                     if (ofxImportRecordsRefs) db.ofxImportRecords,
+                    if (ledgerIdentityChainTipsRefs) db.ledgerIdentityChainTips,
                   ],
                   addJoins:
                       <
@@ -12345,6 +14794,27 @@ class $$JournalEntriesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (ledgerIdentityChainTipsRefs)
+                        await $_getPrefetchedData<
+                          JournalEntryRow,
+                          $JournalEntriesTable,
+                          IdentityChainTipRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$JournalEntriesTableReferences
+                              ._ledgerIdentityChainTipsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$JournalEntriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).ledgerIdentityChainTipsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.trustedTipEntryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -12376,6 +14846,7 @@ typedef $$JournalEntriesTableProcessedTableManager =
         bool investmentLotsRefs,
         bool investmentSellsRefs,
         bool ofxImportRecordsRefs,
+        bool ledgerIdentityChainTipsRefs,
       })
     >;
 typedef $$PostingsTableCreateCompanionBuilder =
@@ -18317,6 +20788,1790 @@ typedef $$RecurringTemplatesTableProcessedTableManager =
       RecurringTemplateRow,
       PrefetchHooks Function()
     >;
+typedef $$LinkedDevicesTableCreateCompanionBuilder =
+    LinkedDevicesCompanion Function({
+      required String deviceId,
+      required String displayName,
+      required String signingIdentityId,
+      required String deviceCertFingerprint,
+      required LinkedDeviceRole role,
+      Value<bool> canAdd,
+      Value<DateTime?> removedAt,
+      Value<DateTime?> erasePendingAt,
+      Value<DateTime?> erasedAt,
+      Value<DateTime?> soleOwnerClaimedAt,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$LinkedDevicesTableUpdateCompanionBuilder =
+    LinkedDevicesCompanion Function({
+      Value<String> deviceId,
+      Value<String> displayName,
+      Value<String> signingIdentityId,
+      Value<String> deviceCertFingerprint,
+      Value<LinkedDeviceRole> role,
+      Value<bool> canAdd,
+      Value<DateTime?> removedAt,
+      Value<DateTime?> erasePendingAt,
+      Value<DateTime?> erasedAt,
+      Value<DateTime?> soleOwnerClaimedAt,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$LinkedDevicesTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $LinkedDevicesTable, LinkedDeviceRow> {
+  $$LinkedDevicesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SigningIdentitiesTable _signingIdentityIdTable(_$AppDatabase db) =>
+      db.signingIdentities.createAlias(
+        'linked_devices__signing_identity_id__signing_identities__identity_id',
+      );
+
+  $$SigningIdentitiesTableProcessedTableManager get signingIdentityId {
+    final $_column = $_itemColumn<String>('signing_identity_id')!;
+
+    final manager = $$SigningIdentitiesTableTableManager(
+      $_db,
+      $_db.signingIdentities,
+    ).filter((f) => f.identityId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_signingIdentityIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$LinkedDevicesTableFilterComposer
+    extends Composer<_$AppDatabase, $LinkedDevicesTable> {
+  $$LinkedDevicesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceCertFingerprint => $composableBuilder(
+    column: $table.deviceCertFingerprint,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<LinkedDeviceRole, LinkedDeviceRole, String>
+  get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<bool> get canAdd => $composableBuilder(
+    column: $table.canAdd,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get removedAt => $composableBuilder(
+    column: $table.removedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get erasePendingAt => $composableBuilder(
+    column: $table.erasePendingAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get erasedAt => $composableBuilder(
+    column: $table.erasedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get soleOwnerClaimedAt => $composableBuilder(
+    column: $table.soleOwnerClaimedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SigningIdentitiesTableFilterComposer get signingIdentityId {
+    final $$SigningIdentitiesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.signingIdentityId,
+      referencedTable: $db.signingIdentities,
+      getReferencedColumn: (t) => t.identityId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SigningIdentitiesTableFilterComposer(
+            $db: $db,
+            $table: $db.signingIdentities,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$LinkedDevicesTableOrderingComposer
+    extends Composer<_$AppDatabase, $LinkedDevicesTable> {
+  $$LinkedDevicesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceCertFingerprint => $composableBuilder(
+    column: $table.deviceCertFingerprint,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get role => $composableBuilder(
+    column: $table.role,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get canAdd => $composableBuilder(
+    column: $table.canAdd,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get removedAt => $composableBuilder(
+    column: $table.removedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get erasePendingAt => $composableBuilder(
+    column: $table.erasePendingAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get erasedAt => $composableBuilder(
+    column: $table.erasedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get soleOwnerClaimedAt => $composableBuilder(
+    column: $table.soleOwnerClaimedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SigningIdentitiesTableOrderingComposer get signingIdentityId {
+    final $$SigningIdentitiesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.signingIdentityId,
+      referencedTable: $db.signingIdentities,
+      getReferencedColumn: (t) => t.identityId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SigningIdentitiesTableOrderingComposer(
+            $db: $db,
+            $table: $db.signingIdentities,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$LinkedDevicesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LinkedDevicesTable> {
+  $$LinkedDevicesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get deviceCertFingerprint => $composableBuilder(
+    column: $table.deviceCertFingerprint,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<LinkedDeviceRole, String> get role =>
+      $composableBuilder(column: $table.role, builder: (column) => column);
+
+  GeneratedColumn<bool> get canAdd =>
+      $composableBuilder(column: $table.canAdd, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get removedAt =>
+      $composableBuilder(column: $table.removedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get erasePendingAt => $composableBuilder(
+    column: $table.erasePendingAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get erasedAt =>
+      $composableBuilder(column: $table.erasedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get soleOwnerClaimedAt => $composableBuilder(
+    column: $table.soleOwnerClaimedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$SigningIdentitiesTableAnnotationComposer get signingIdentityId {
+    final $$SigningIdentitiesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.signingIdentityId,
+          referencedTable: $db.signingIdentities,
+          getReferencedColumn: (t) => t.identityId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SigningIdentitiesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.signingIdentities,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$LinkedDevicesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $LinkedDevicesTable,
+          LinkedDeviceRow,
+          $$LinkedDevicesTableFilterComposer,
+          $$LinkedDevicesTableOrderingComposer,
+          $$LinkedDevicesTableAnnotationComposer,
+          $$LinkedDevicesTableCreateCompanionBuilder,
+          $$LinkedDevicesTableUpdateCompanionBuilder,
+          (LinkedDeviceRow, $$LinkedDevicesTableReferences),
+          LinkedDeviceRow,
+          PrefetchHooks Function({bool signingIdentityId})
+        > {
+  $$LinkedDevicesTableTableManager(_$AppDatabase db, $LinkedDevicesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LinkedDevicesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LinkedDevicesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LinkedDevicesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> deviceId = const Value.absent(),
+                Value<String> displayName = const Value.absent(),
+                Value<String> signingIdentityId = const Value.absent(),
+                Value<String> deviceCertFingerprint = const Value.absent(),
+                Value<LinkedDeviceRole> role = const Value.absent(),
+                Value<bool> canAdd = const Value.absent(),
+                Value<DateTime?> removedAt = const Value.absent(),
+                Value<DateTime?> erasePendingAt = const Value.absent(),
+                Value<DateTime?> erasedAt = const Value.absent(),
+                Value<DateTime?> soleOwnerClaimedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LinkedDevicesCompanion(
+                deviceId: deviceId,
+                displayName: displayName,
+                signingIdentityId: signingIdentityId,
+                deviceCertFingerprint: deviceCertFingerprint,
+                role: role,
+                canAdd: canAdd,
+                removedAt: removedAt,
+                erasePendingAt: erasePendingAt,
+                erasedAt: erasedAt,
+                soleOwnerClaimedAt: soleOwnerClaimedAt,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String deviceId,
+                required String displayName,
+                required String signingIdentityId,
+                required String deviceCertFingerprint,
+                required LinkedDeviceRole role,
+                Value<bool> canAdd = const Value.absent(),
+                Value<DateTime?> removedAt = const Value.absent(),
+                Value<DateTime?> erasePendingAt = const Value.absent(),
+                Value<DateTime?> erasedAt = const Value.absent(),
+                Value<DateTime?> soleOwnerClaimedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LinkedDevicesCompanion.insert(
+                deviceId: deviceId,
+                displayName: displayName,
+                signingIdentityId: signingIdentityId,
+                deviceCertFingerprint: deviceCertFingerprint,
+                role: role,
+                canAdd: canAdd,
+                removedAt: removedAt,
+                erasePendingAt: erasePendingAt,
+                erasedAt: erasedAt,
+                soleOwnerClaimedAt: soleOwnerClaimedAt,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$LinkedDevicesTable, LinkedDeviceRow>(table),
+                  $$LinkedDevicesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({signingIdentityId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (signingIdentityId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.signingIdentityId,
+                                referencedTable: $$LinkedDevicesTableReferences
+                                    ._signingIdentityIdTable(db),
+                                referencedColumn: $$LinkedDevicesTableReferences
+                                    ._signingIdentityIdTable(db)
+                                    .identityId,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$LinkedDevicesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $LinkedDevicesTable,
+      LinkedDeviceRow,
+      $$LinkedDevicesTableFilterComposer,
+      $$LinkedDevicesTableOrderingComposer,
+      $$LinkedDevicesTableAnnotationComposer,
+      $$LinkedDevicesTableCreateCompanionBuilder,
+      $$LinkedDevicesTableUpdateCompanionBuilder,
+      (LinkedDeviceRow, $$LinkedDevicesTableReferences),
+      LinkedDeviceRow,
+      PrefetchHooks Function({bool signingIdentityId})
+    >;
+typedef $$LedgerIdentityChainTipsTableCreateCompanionBuilder =
+    LedgerIdentityChainTipsCompanion Function({
+      required String identityId,
+      Value<String?> trustedTipEntryId,
+      Value<Uint8List?> trustedTipHash,
+      required int nextDeviceChainSequence,
+      Value<int> rowid,
+    });
+typedef $$LedgerIdentityChainTipsTableUpdateCompanionBuilder =
+    LedgerIdentityChainTipsCompanion Function({
+      Value<String> identityId,
+      Value<String?> trustedTipEntryId,
+      Value<Uint8List?> trustedTipHash,
+      Value<int> nextDeviceChainSequence,
+      Value<int> rowid,
+    });
+
+final class $$LedgerIdentityChainTipsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $LedgerIdentityChainTipsTable,
+          IdentityChainTipRow
+        > {
+  $$LedgerIdentityChainTipsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $SigningIdentitiesTable _identityIdTable(
+    _$AppDatabase db,
+  ) => db.signingIdentities.createAlias(
+    'ledger_identity_chain_tips__identity_id__signing_identities__identity_id',
+  );
+
+  $$SigningIdentitiesTableProcessedTableManager get identityId {
+    final $_column = $_itemColumn<String>('identity_id')!;
+
+    final manager = $$SigningIdentitiesTableTableManager(
+      $_db,
+      $_db.signingIdentities,
+    ).filter((f) => f.identityId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_identityIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $JournalEntriesTable _trustedTipEntryIdTable(_$AppDatabase db) =>
+      db.journalEntries.createAlias(
+        'ledger_identity_chain_tips__trusted_tip_entry_id__journal_entries__id',
+      );
+
+  $$JournalEntriesTableProcessedTableManager? get trustedTipEntryId {
+    final $_column = $_itemColumn<String>('trusted_tip_entry_id');
+    if ($_column == null) return null;
+    final manager = $$JournalEntriesTableTableManager(
+      $_db,
+      $_db.journalEntries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_trustedTipEntryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$LedgerIdentityChainTipsTableFilterComposer
+    extends Composer<_$AppDatabase, $LedgerIdentityChainTipsTable> {
+  $$LedgerIdentityChainTipsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<Uint8List> get trustedTipHash => $composableBuilder(
+    column: $table.trustedTipHash,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get nextDeviceChainSequence => $composableBuilder(
+    column: $table.nextDeviceChainSequence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SigningIdentitiesTableFilterComposer get identityId {
+    final $$SigningIdentitiesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.identityId,
+      referencedTable: $db.signingIdentities,
+      getReferencedColumn: (t) => t.identityId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SigningIdentitiesTableFilterComposer(
+            $db: $db,
+            $table: $db.signingIdentities,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableFilterComposer get trustedTipEntryId {
+    final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.trustedTipEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$LedgerIdentityChainTipsTableOrderingComposer
+    extends Composer<_$AppDatabase, $LedgerIdentityChainTipsTable> {
+  $$LedgerIdentityChainTipsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<Uint8List> get trustedTipHash => $composableBuilder(
+    column: $table.trustedTipHash,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get nextDeviceChainSequence => $composableBuilder(
+    column: $table.nextDeviceChainSequence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SigningIdentitiesTableOrderingComposer get identityId {
+    final $$SigningIdentitiesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.identityId,
+      referencedTable: $db.signingIdentities,
+      getReferencedColumn: (t) => t.identityId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SigningIdentitiesTableOrderingComposer(
+            $db: $db,
+            $table: $db.signingIdentities,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableOrderingComposer get trustedTipEntryId {
+    final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.trustedTipEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$LedgerIdentityChainTipsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LedgerIdentityChainTipsTable> {
+  $$LedgerIdentityChainTipsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<Uint8List> get trustedTipHash => $composableBuilder(
+    column: $table.trustedTipHash,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get nextDeviceChainSequence => $composableBuilder(
+    column: $table.nextDeviceChainSequence,
+    builder: (column) => column,
+  );
+
+  $$SigningIdentitiesTableAnnotationComposer get identityId {
+    final $$SigningIdentitiesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.identityId,
+          referencedTable: $db.signingIdentities,
+          getReferencedColumn: (t) => t.identityId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SigningIdentitiesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.signingIdentities,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$JournalEntriesTableAnnotationComposer get trustedTipEntryId {
+    final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.trustedTipEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$LedgerIdentityChainTipsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $LedgerIdentityChainTipsTable,
+          IdentityChainTipRow,
+          $$LedgerIdentityChainTipsTableFilterComposer,
+          $$LedgerIdentityChainTipsTableOrderingComposer,
+          $$LedgerIdentityChainTipsTableAnnotationComposer,
+          $$LedgerIdentityChainTipsTableCreateCompanionBuilder,
+          $$LedgerIdentityChainTipsTableUpdateCompanionBuilder,
+          (IdentityChainTipRow, $$LedgerIdentityChainTipsTableReferences),
+          IdentityChainTipRow,
+          PrefetchHooks Function({bool identityId, bool trustedTipEntryId})
+        > {
+  $$LedgerIdentityChainTipsTableTableManager(
+    _$AppDatabase db,
+    $LedgerIdentityChainTipsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LedgerIdentityChainTipsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$LedgerIdentityChainTipsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$LedgerIdentityChainTipsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> identityId = const Value.absent(),
+                Value<String?> trustedTipEntryId = const Value.absent(),
+                Value<Uint8List?> trustedTipHash = const Value.absent(),
+                Value<int> nextDeviceChainSequence = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LedgerIdentityChainTipsCompanion(
+                identityId: identityId,
+                trustedTipEntryId: trustedTipEntryId,
+                trustedTipHash: trustedTipHash,
+                nextDeviceChainSequence: nextDeviceChainSequence,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String identityId,
+                Value<String?> trustedTipEntryId = const Value.absent(),
+                Value<Uint8List?> trustedTipHash = const Value.absent(),
+                required int nextDeviceChainSequence,
+                Value<int> rowid = const Value.absent(),
+              }) => LedgerIdentityChainTipsCompanion.insert(
+                identityId: identityId,
+                trustedTipEntryId: trustedTipEntryId,
+                trustedTipHash: trustedTipHash,
+                nextDeviceChainSequence: nextDeviceChainSequence,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $LedgerIdentityChainTipsTable,
+                    IdentityChainTipRow
+                  >(table),
+                  $$LedgerIdentityChainTipsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({identityId = false, trustedTipEntryId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (identityId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.identityId,
+                                    referencedTable:
+                                        $$LedgerIdentityChainTipsTableReferences
+                                            ._identityIdTable(db),
+                                    referencedColumn:
+                                        $$LedgerIdentityChainTipsTableReferences
+                                            ._identityIdTable(db)
+                                            .identityId,
+                                  )
+                                  as T;
+                        }
+                        if (trustedTipEntryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.trustedTipEntryId,
+                                    referencedTable:
+                                        $$LedgerIdentityChainTipsTableReferences
+                                            ._trustedTipEntryIdTable(db),
+                                    referencedColumn:
+                                        $$LedgerIdentityChainTipsTableReferences
+                                            ._trustedTipEntryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$LedgerIdentityChainTipsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $LedgerIdentityChainTipsTable,
+      IdentityChainTipRow,
+      $$LedgerIdentityChainTipsTableFilterComposer,
+      $$LedgerIdentityChainTipsTableOrderingComposer,
+      $$LedgerIdentityChainTipsTableAnnotationComposer,
+      $$LedgerIdentityChainTipsTableCreateCompanionBuilder,
+      $$LedgerIdentityChainTipsTableUpdateCompanionBuilder,
+      (IdentityChainTipRow, $$LedgerIdentityChainTipsTableReferences),
+      IdentityChainTipRow,
+      PrefetchHooks Function({bool identityId, bool trustedTipEntryId})
+    >;
+typedef $$CategoryTranslationsTableCreateCompanionBuilder =
+    CategoryTranslationsCompanion Function({
+      required String categoryId,
+      required String locale,
+      required String name,
+      required DateTime updatedAt,
+      Value<int> rowid,
+    });
+typedef $$CategoryTranslationsTableUpdateCompanionBuilder =
+    CategoryTranslationsCompanion Function({
+      Value<String> categoryId,
+      Value<String> locale,
+      Value<String> name,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$CategoryTranslationsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CategoryTranslationsTable,
+          CategoryTranslationRow
+        > {
+  $$CategoryTranslationsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $AccountsTable _categoryIdTable(_$AppDatabase db) => db.accounts
+      .createAlias('category_translations__category_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<String>('category_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$CategoryTranslationsTableFilterComposer
+    extends Composer<_$AppDatabase, $CategoryTranslationsTable> {
+  $$CategoryTranslationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get locale => $composableBuilder(
+    column: $table.locale,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AccountsTableFilterComposer get categoryId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CategoryTranslationsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CategoryTranslationsTable> {
+  $$CategoryTranslationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get locale => $composableBuilder(
+    column: $table.locale,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$AccountsTableOrderingComposer get categoryId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CategoryTranslationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CategoryTranslationsTable> {
+  $$CategoryTranslationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get locale =>
+      $composableBuilder(column: $table.locale, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$AccountsTableAnnotationComposer get categoryId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CategoryTranslationsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CategoryTranslationsTable,
+          CategoryTranslationRow,
+          $$CategoryTranslationsTableFilterComposer,
+          $$CategoryTranslationsTableOrderingComposer,
+          $$CategoryTranslationsTableAnnotationComposer,
+          $$CategoryTranslationsTableCreateCompanionBuilder,
+          $$CategoryTranslationsTableUpdateCompanionBuilder,
+          (CategoryTranslationRow, $$CategoryTranslationsTableReferences),
+          CategoryTranslationRow,
+          PrefetchHooks Function({bool categoryId})
+        > {
+  $$CategoryTranslationsTableTableManager(
+    _$AppDatabase db,
+    $CategoryTranslationsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CategoryTranslationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CategoryTranslationsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$CategoryTranslationsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> categoryId = const Value.absent(),
+                Value<String> locale = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CategoryTranslationsCompanion(
+                categoryId: categoryId,
+                locale: locale,
+                name: name,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String categoryId,
+                required String locale,
+                required String name,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => CategoryTranslationsCompanion.insert(
+                categoryId: categoryId,
+                locale: locale,
+                name: name,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $CategoryTranslationsTable,
+                    CategoryTranslationRow
+                  >(table),
+                  $$CategoryTranslationsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({categoryId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (categoryId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.categoryId,
+                                referencedTable:
+                                    $$CategoryTranslationsTableReferences
+                                        ._categoryIdTable(db),
+                                referencedColumn:
+                                    $$CategoryTranslationsTableReferences
+                                        ._categoryIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$CategoryTranslationsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CategoryTranslationsTable,
+      CategoryTranslationRow,
+      $$CategoryTranslationsTableFilterComposer,
+      $$CategoryTranslationsTableOrderingComposer,
+      $$CategoryTranslationsTableAnnotationComposer,
+      $$CategoryTranslationsTableCreateCompanionBuilder,
+      $$CategoryTranslationsTableUpdateCompanionBuilder,
+      (CategoryTranslationRow, $$CategoryTranslationsTableReferences),
+      CategoryTranslationRow,
+      PrefetchHooks Function({bool categoryId})
+    >;
+typedef $$CategoryMergeMapTableCreateCompanionBuilder =
+    CategoryMergeMapCompanion Function({
+      required String absorbedCategoryId,
+      required String survivorCategoryId,
+      required DateTime mergedAt,
+      Value<int> rowid,
+    });
+typedef $$CategoryMergeMapTableUpdateCompanionBuilder =
+    CategoryMergeMapCompanion Function({
+      Value<String> absorbedCategoryId,
+      Value<String> survivorCategoryId,
+      Value<DateTime> mergedAt,
+      Value<int> rowid,
+    });
+
+final class $$CategoryMergeMapTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CategoryMergeMapTable,
+          CategoryMergeMapRow
+        > {
+  $$CategoryMergeMapTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $AccountsTable _absorbedCategoryIdTable(_$AppDatabase db) => db
+      .accounts
+      .createAlias('category_merge_map__absorbed_category_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get absorbedCategoryId {
+    final $_column = $_itemColumn<String>('absorbed_category_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_absorbedCategoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $AccountsTable _survivorCategoryIdTable(_$AppDatabase db) => db
+      .accounts
+      .createAlias('category_merge_map__survivor_category_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get survivorCategoryId {
+    final $_column = $_itemColumn<String>('survivor_category_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_survivorCategoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$CategoryMergeMapTableFilterComposer
+    extends Composer<_$AppDatabase, $CategoryMergeMapTable> {
+  $$CategoryMergeMapTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<DateTime> get mergedAt => $composableBuilder(
+    column: $table.mergedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AccountsTableFilterComposer get absorbedCategoryId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.absorbedCategoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableFilterComposer get survivorCategoryId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.survivorCategoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CategoryMergeMapTableOrderingComposer
+    extends Composer<_$AppDatabase, $CategoryMergeMapTable> {
+  $$CategoryMergeMapTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<DateTime> get mergedAt => $composableBuilder(
+    column: $table.mergedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$AccountsTableOrderingComposer get absorbedCategoryId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.absorbedCategoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableOrderingComposer get survivorCategoryId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.survivorCategoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CategoryMergeMapTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CategoryMergeMapTable> {
+  $$CategoryMergeMapTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<DateTime> get mergedAt =>
+      $composableBuilder(column: $table.mergedAt, builder: (column) => column);
+
+  $$AccountsTableAnnotationComposer get absorbedCategoryId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.absorbedCategoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableAnnotationComposer get survivorCategoryId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.survivorCategoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$CategoryMergeMapTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CategoryMergeMapTable,
+          CategoryMergeMapRow,
+          $$CategoryMergeMapTableFilterComposer,
+          $$CategoryMergeMapTableOrderingComposer,
+          $$CategoryMergeMapTableAnnotationComposer,
+          $$CategoryMergeMapTableCreateCompanionBuilder,
+          $$CategoryMergeMapTableUpdateCompanionBuilder,
+          (CategoryMergeMapRow, $$CategoryMergeMapTableReferences),
+          CategoryMergeMapRow,
+          PrefetchHooks Function({
+            bool absorbedCategoryId,
+            bool survivorCategoryId,
+          })
+        > {
+  $$CategoryMergeMapTableTableManager(
+    _$AppDatabase db,
+    $CategoryMergeMapTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CategoryMergeMapTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CategoryMergeMapTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CategoryMergeMapTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> absorbedCategoryId = const Value.absent(),
+                Value<String> survivorCategoryId = const Value.absent(),
+                Value<DateTime> mergedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CategoryMergeMapCompanion(
+                absorbedCategoryId: absorbedCategoryId,
+                survivorCategoryId: survivorCategoryId,
+                mergedAt: mergedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String absorbedCategoryId,
+                required String survivorCategoryId,
+                required DateTime mergedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => CategoryMergeMapCompanion.insert(
+                absorbedCategoryId: absorbedCategoryId,
+                survivorCategoryId: survivorCategoryId,
+                mergedAt: mergedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CategoryMergeMapTable, CategoryMergeMapRow>(
+                    table,
+                  ),
+                  $$CategoryMergeMapTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({absorbedCategoryId = false, survivorCategoryId = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (absorbedCategoryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.absorbedCategoryId,
+                                    referencedTable:
+                                        $$CategoryMergeMapTableReferences
+                                            ._absorbedCategoryIdTable(db),
+                                    referencedColumn:
+                                        $$CategoryMergeMapTableReferences
+                                            ._absorbedCategoryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (survivorCategoryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.survivorCategoryId,
+                                    referencedTable:
+                                        $$CategoryMergeMapTableReferences
+                                            ._survivorCategoryIdTable(db),
+                                    referencedColumn:
+                                        $$CategoryMergeMapTableReferences
+                                            ._survivorCategoryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$CategoryMergeMapTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CategoryMergeMapTable,
+      CategoryMergeMapRow,
+      $$CategoryMergeMapTableFilterComposer,
+      $$CategoryMergeMapTableOrderingComposer,
+      $$CategoryMergeMapTableAnnotationComposer,
+      $$CategoryMergeMapTableCreateCompanionBuilder,
+      $$CategoryMergeMapTableUpdateCompanionBuilder,
+      (CategoryMergeMapRow, $$CategoryMergeMapTableReferences),
+      CategoryMergeMapRow,
+      PrefetchHooks Function({bool absorbedCategoryId, bool survivorCategoryId})
+    >;
+typedef $$BooksSetMetadataTableCreateCompanionBuilder =
+    BooksSetMetadataCompanion Function({
+      required String id,
+      required String displayName,
+      Value<String> defaultCategoryLocale,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$BooksSetMetadataTableUpdateCompanionBuilder =
+    BooksSetMetadataCompanion Function({
+      Value<String> id,
+      Value<String> displayName,
+      Value<String> defaultCategoryLocale,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$BooksSetMetadataTableFilterComposer
+    extends Composer<_$AppDatabase, $BooksSetMetadataTable> {
+  $$BooksSetMetadataTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get defaultCategoryLocale => $composableBuilder(
+    column: $table.defaultCategoryLocale,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$BooksSetMetadataTableOrderingComposer
+    extends Composer<_$AppDatabase, $BooksSetMetadataTable> {
+  $$BooksSetMetadataTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get defaultCategoryLocale => $composableBuilder(
+    column: $table.defaultCategoryLocale,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$BooksSetMetadataTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BooksSetMetadataTable> {
+  $$BooksSetMetadataTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get defaultCategoryLocale => $composableBuilder(
+    column: $table.defaultCategoryLocale,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$BooksSetMetadataTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BooksSetMetadataTable,
+          BooksSetMetadataRow,
+          $$BooksSetMetadataTableFilterComposer,
+          $$BooksSetMetadataTableOrderingComposer,
+          $$BooksSetMetadataTableAnnotationComposer,
+          $$BooksSetMetadataTableCreateCompanionBuilder,
+          $$BooksSetMetadataTableUpdateCompanionBuilder,
+          (
+            BooksSetMetadataRow,
+            BaseReferences<
+              _$AppDatabase,
+              $BooksSetMetadataTable,
+              BooksSetMetadataRow
+            >,
+          ),
+          BooksSetMetadataRow,
+          PrefetchHooks Function()
+        > {
+  $$BooksSetMetadataTableTableManager(
+    _$AppDatabase db,
+    $BooksSetMetadataTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BooksSetMetadataTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BooksSetMetadataTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BooksSetMetadataTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> displayName = const Value.absent(),
+                Value<String> defaultCategoryLocale = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BooksSetMetadataCompanion(
+                id: id,
+                displayName: displayName,
+                defaultCategoryLocale: defaultCategoryLocale,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String displayName,
+                Value<String> defaultCategoryLocale = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BooksSetMetadataCompanion.insert(
+                id: id,
+                displayName: displayName,
+                defaultCategoryLocale: defaultCategoryLocale,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$BooksSetMetadataTable, BooksSetMetadataRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $BooksSetMetadataTable,
+                    BooksSetMetadataRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$BooksSetMetadataTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BooksSetMetadataTable,
+      BooksSetMetadataRow,
+      $$BooksSetMetadataTableFilterComposer,
+      $$BooksSetMetadataTableOrderingComposer,
+      $$BooksSetMetadataTableAnnotationComposer,
+      $$BooksSetMetadataTableCreateCompanionBuilder,
+      $$BooksSetMetadataTableUpdateCompanionBuilder,
+      (
+        BooksSetMetadataRow,
+        BaseReferences<
+          _$AppDatabase,
+          $BooksSetMetadataTable,
+          BooksSetMetadataRow
+        >,
+      ),
+      BooksSetMetadataRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -18360,4 +22615,17 @@ class $AppDatabaseManager {
       $$PayeesTableTableManager(_db, _db.payees);
   $$RecurringTemplatesTableTableManager get recurringTemplates =>
       $$RecurringTemplatesTableTableManager(_db, _db.recurringTemplates);
+  $$LinkedDevicesTableTableManager get linkedDevices =>
+      $$LinkedDevicesTableTableManager(_db, _db.linkedDevices);
+  $$LedgerIdentityChainTipsTableTableManager get ledgerIdentityChainTips =>
+      $$LedgerIdentityChainTipsTableTableManager(
+        _db,
+        _db.ledgerIdentityChainTips,
+      );
+  $$CategoryTranslationsTableTableManager get categoryTranslations =>
+      $$CategoryTranslationsTableTableManager(_db, _db.categoryTranslations);
+  $$CategoryMergeMapTableTableManager get categoryMergeMap =>
+      $$CategoryMergeMapTableTableManager(_db, _db.categoryMergeMap);
+  $$BooksSetMetadataTableTableManager get booksSetMetadata =>
+      $$BooksSetMetadataTableTableManager(_db, _db.booksSetMetadata);
 }

@@ -2,13 +2,13 @@
 
 ## 1. Prerequisites and schema foundations
 
-- [ ] 1.1 Confirm `books-copy-and-continuation` (project A / ADR 0004) is merged or available on the implementation branch; if not, land or rebase onto it first — verify Books Copy, Continuation, and the shared-vs-device settings split compile and their unit tests pass
-- [ ] 1.2 Add Drift schema for linked-device membership (device id, display name, signing identity id, device cert fingerprint, role, can-add, removed/erase-pending timestamps), per-identity chain tips, category translations, category-merge map, and books-set metadata; bump schema version with a migration that moves the existing single DB into `books/<id>/` and namespaces the existing secure-storage key — verify `app_database_migration_test` upgrades from the prior schema version
-- [ ] 1.3 Implement books-set path helpers (app support `books/<booksSetId>/ledger.sqlite`, `activeBooksSetId` in SharedPreferences, namespaced secure-storage keys) and verify unit tests cover create/open/switch/remove path selection without touching unrelated sets
+- [x] 1.1 Confirm `books-copy-and-continuation` (project A / ADR 0004) is merged or available on the implementation branch; if not, land or rebase onto it first — verify Books Copy, Continuation, and the shared-vs-device settings split compile and their unit tests pass
+- [x] 1.2 Add Drift schema for linked-device membership (device id, display name, signing identity id, device cert fingerprint, role, can-add, removed/erase-pending timestamps), per-identity chain tips, category translations, category-merge map, and books-set metadata; bump schema version with a migration that moves the existing single DB into `books/<id>/` and namespaces the existing secure-storage key — verify `app_database_migration_test` upgrades from the prior schema version
+- [x] 1.3 Implement books-set path helpers (app support `books/<booksSetId>/ledger.sqlite`, `activeBooksSetId` in SharedPreferences, namespaced secure-storage keys) and verify unit tests cover create/open/switch/remove path selection without touching unrelated sets
 
 ## 2. Books switcher
 
-- [ ] 2.1 Implement books-set repository: create set (New setup into a new id), list sets, rename, remove set (delete directory + namespaced key after confirm), switch active set (close Drift connection, open other file) — verify `test/data/repositories/books_set_repository_test.dart` covers independence of two sets' entries and keys
+- [x] 2.1 Implement books-set repository: create set (New setup into a new id), list sets, rename, remove set (delete directory + namespaced key after confirm), switch active set (close Drift connection, open other file) — verify `test/data/repositories/books_set_repository_test.dart` covers independence of two sets' entries and keys
 - [ ] 2.2 Wire books switcher UI (list by user-visible name, switch active set, create/remove) in Settings or shell; after switch, Home/Register/Linked devices refer to the new set — verify widget tests for switcher list and that Home rebuilds against the newly opened database
 - [ ] 2.3 Ensure Books Copy save/restore and backup reminder operate on the active set only — verify unit/widget tests that a copy from set A does not include set B's entries
 
