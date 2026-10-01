@@ -84,6 +84,13 @@ scenario for it, it's not specified precisely enough to implement yet.
 - No formal support or review SLA is provided. If something doesn't get
   merged or reviewed promptly, feel free to fork and continue
   independently.
+- **Formatting is required.** Enable the repository's git hooks once per
+  clone with `git config core.hooksPath tool/git-hooks`. The pre-commit hook
+  formats staged Dart files and runs `flutter analyze`; CI's "Format,
+  analyze, and test" check must pass before a PR can merge. AI coding
+  agents follow the same rule (see `CLAUDE.md`, `AGENTS.md`,
+  `.cursor/rules/code-formatting.mdc` and
+  `.github/copilot-instructions.md`).
 
 ## Acceptance testing
 
