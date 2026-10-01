@@ -9,7 +9,7 @@ English `lib/l10n/app_en.arb` is the only human-authored source of truth.
 3. Instruct: preserve keys, `{placeholders}`, and any `@` metadata
    byte-for-byte from the template. Translate values only.
 4. Use household terms from the glossary (Spent, Received, Fix).
-5. Do not translate BIP39 recovery words or ISO 4217 currency codes.
+5. Do not translate ISO 4217 currency codes.
 
 ## Output location
 

@@ -212,23 +212,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Salva una copia cifrata dei tuoi libri contabili in un percorso a tua scelta, oppure ripristinala da lì. Questo è separato dalla tua frase di recupero o dal file keystore, che eseguono il backup della tua chiave di firma, non dei tuoi libri contabili.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Blocco';
 
   @override
@@ -420,14 +403,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String savedToPath(String path) {
     return 'Salvato in $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Non è stato possibile esportare il file keystore. Puoi saltare questo passaggio.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Inserisci una passphrase per proteggere il file.';
 
   @override
   String get homeTapWhenArrived => 'Tocca quando sai cosa è arrivato';
@@ -814,91 +789,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'La tua frase di recupero';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Conferma la tua frase';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'Queste 24 parole sono l\'unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Accounting non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Scrivi queste parole in ordine e conservale in un luogo sicuro, separato da questo dispositivo.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'Ho salvato la mia frase di recupero';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Inserisci le parole richieste dalla frase che hai appena salvato.';
-
-  @override
-  String wordNumber(String n) {
-    return 'Parola n. $n';
-  }
-
-  @override
-  String get keystoreExportTitle => 'Esporta file keystore';
-
-  @override
-  String get keystoreExportBlurb =>
-      'Oltre alla tua frase di recupero, puoi salvare un file keystore cifrato protetto da una passphrase a tua scelta. È opzionale - la tua sola frase di recupero è sempre sufficiente per ripristinare la tua chiave di firma.';
-
-  @override
-  String get keystorePassphrase => 'Passphrase';
-
-  @override
-  String get exportKeystoreFile => 'Esporta file keystore';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
-
-  @override
   String get chooseLanguageTitle => 'Scegli la tua lingua';
 
   @override
   String get chooseLanguageBlurb =>
       'Tutto nell\'app verrà mostrato in questa lingua. Potrai cambiarla più tardi nelle Impostazioni.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'La tua frase di recupero verrà mostrata in inglese. Usa un piccolo insieme di parole standard riconosciute ovunque dagli strumenti di recupero, non ancora disponibile in questa lingua.';
 
   @override
   String get chooseCurrencyTitle => 'Scegli la tua valuta';
@@ -937,41 +832,71 @@ class AppLocalizationsIt extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get actionImportFromBackup => 'Import from backup';
+  String get continueBooksTitle => 'Continue my books on this phone';
 
   @override
-  String get restoreTitle => 'Ripristina chiave di firma';
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
 
   @override
-  String get restoreBlurb =>
-      'Questo dispositivo ha libri contabili esistenti, ma nessuna chiave di firma corrispondente. Ripristinala dalla tua frase di recupero salvata o dal file keystore - i tuoi dati verranno verificati normalmente, e nulla verrà ri-firmato o alterato.';
+  String get continueBooksAction => 'Continue my books on this phone';
 
   @override
-  String get recoveryPhrase24 => 'Frase di recupero (tutte le 24 parole)';
+  String get restoreFromCopyAction => 'Restore from a copy';
 
   @override
-  String get keystoreFile => 'File keystore';
+  String get saveBooksCopyAction => 'Save a copy of my books';
 
   @override
-  String get keystoreFileContents => 'Contenuto del file keystore';
+  String get deviceHistoryTitle => 'Device history';
 
   @override
-  String get optionalBackupFile => 'File di backup opzionale';
+  String get deviceHistoryEmpty =>
+      'No Continuations yet. When you continue books on a new phone, they will show up here.';
 
   @override
-  String get iDontHavePhrase =>
-      'Non ho la mia frase di recupero o il file keystore';
+  String deviceHistoryContinuedOn(String date) {
+    return 'Your books continued on this phone on $date';
+  }
 
   @override
-  String get migrationTitle => 'Migra a una nuova chiave';
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
+    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+  }
 
   @override
-  String get migrationBlurb =>
-      'Senza la tua frase di recupero o il file keystore, la chiave di firma di questo dispositivo non può essere recuperata. Puoi avviare una nuova chiave. Le voci precedenti restano visibili ma vengono sostituite.';
+  String get backupReminderBannerTitle => 'Save a copy of your books';
 
   @override
-  String get iConfirmBooksValid =>
-      'Confermo che i libri contabili attuali sono validi';
+  String get backupReminderSaveAction => 'Save a copy';
+
+  @override
+  String get backupReminderLaterAction => 'Later';
+
+  @override
+  String get settingsBackupReminder => 'Copy reminder';
+
+  @override
+  String get settingsBackupReminderBlurb =>
+      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+
+  @override
+  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+
+  @override
+  String get settingsBackupReminderDays => 'Remind after this many days';
+
+  @override
+  String get settingsBackupReminderEntries =>
+      'Remind after this many new entries';
+
+  @override
+  String get settingsBackupReminderSnoozeDays =>
+      'Hide for this many days after Later';
+
+  @override
+  String get settingsBackupReminderSnoozeEntries =>
+      'Hide for this many new entries after Later';
 
   @override
   String get whyWeDontEdit => 'Perché non modifichiamo le voci precedenti';
@@ -1227,10 +1152,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get errorGeneric => 'Qualcosa è andato storto. Riprova.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'Questa frase di recupero o file keystore non corrisponde a nessuna identità di firma in questo database.';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'Questo file non è un backup Smara valido.';
 
@@ -1246,31 +1167,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'Non è stato possibile aprire questo file come backup Smara: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'Questo backup appartiene a un\'identità di firma diversa da quella su questo dispositivo.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'Quello non è un conto finanziario.';
@@ -1568,15 +1464,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è stato possibile ripristinare questo backup - passphrase errata, oppure non è un file di backup Smara.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'Importo, conto e categoria sono obbligatori.';
 
@@ -1638,18 +1525,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get validationInvalidTemplate => 'Modello non valido.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'Passphrase errata per questo file keystore.';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'Questo non sembra un file keystore valido.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'Non è stato possibile ripristinare da quella frase di recupero.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'Non è stato possibile generare una chiave di firma su questo dispositivo: $detail';
   }
@@ -1660,14 +1535,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => 'Migrazione non riuscita. Riprova.';
-
-  @override
   String get validationChooseBackupFile => 'Scegli prima un file di backup.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'Inserisci una passphrase.';
@@ -1690,11 +1558,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'Inserisci un importo valido.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'La parola $n non corrisponde alla tua frase salvata. Controllala e riprova.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -2039,4 +1902,60 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Passphrase';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

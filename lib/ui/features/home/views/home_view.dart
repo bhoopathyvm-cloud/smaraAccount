@@ -22,6 +22,7 @@ class HomeView extends StatelessWidget {
     this.onInvestmentAccountTap,
     this.onSettlePendingTransfer,
     this.onOpenSettings,
+    this.onSaveBooksCopy,
     this.onSpent,
     this.onReceived,
     this.onTransfer,
@@ -33,6 +34,7 @@ class HomeView extends StatelessWidget {
   final ValueChanged<String>? onInvestmentAccountTap;
   final ValueChanged<String>? onSettlePendingTransfer;
   final VoidCallback? onOpenSettings;
+  final VoidCallback? onSaveBooksCopy;
 
   /// home-hub-capture: Home's primary Add action opens the same
   /// Spent/Received/Moved money/Import choice as Register's consolidated
@@ -85,6 +87,11 @@ class HomeView extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.large),
             children: [
+              if (viewModel.showBackupReminder)
+                _BackupReminderBanner(
+                  onSaveCopy: onSaveBooksCopy,
+                  onLater: viewModel.snoozeBackupReminder,
+                ),
               _NetPositions(overview: overview),
               if (viewModel.dueTemplates.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.xLarge),
@@ -121,6 +128,55 @@ class HomeView extends StatelessWidget {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _BackupReminderBanner extends StatelessWidget {
+  const _BackupReminderBanner({
+    required this.onSaveCopy,
+    required this.onLater,
+  });
+
+  final VoidCallback? onSaveCopy;
+  final Future<void> Function() onLater;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.large,
+        0,
+        AppSpacing.large,
+        AppSpacing.large,
+      ),
+      child: Material(
+        color: AppColors.primary.withValues(alpha: 0.08),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.medium),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(l10n.backupReminderBannerTitle, style: AppTypography.body),
+              const SizedBox(height: AppSpacing.medium),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: onSaveCopy,
+                    child: Text(l10n.backupReminderSaveAction),
+                  ),
+                  const SizedBox(width: AppSpacing.small),
+                  TextButton(
+                    onPressed: () => onLater(),
+                    child: Text(l10n.backupReminderLaterAction),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

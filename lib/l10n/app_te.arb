@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయలేకపోయాము. మీరు ఈ దశను దాటవేయవచ్చు.",
-  "enterPassphraseToProtect": "ఫైల్‌ను రక్షించడానికి ఒక పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.",
   "homeTapWhenArrived": "ఏమి వచ్చిందో తెలిసినప్పుడు నొక్కండి",
   "homeReturnedTo": "{name}కు తిరిగి వచ్చింది",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "మీ రికవరీ పదబంధం",
-  "recoveryPhraseConfirmTitle": "మీ పదబంధాన్ని నిర్ధారించండి",
-  "recoveryPhraseBlurb": "ఈ పరికరం పోగొట్టుకుంటే, రీసెట్ చేయబడితే లేదా భర్తీ చేయబడితే మీ లావాదేవీల చరిత్రను తిరిగి పొందడానికి ఈ 24 పదాలు మాత్రమే మార్గం. స్మారా అకౌంటింగ్‌కు సర్వర్ లేదు మరియు వాటిని మీ కోసం తిరిగి పొందలేము.\n\nమీరు ఈ పరికరాన్ని మరియు ఈ పదబంధాన్ని కలిపి కోల్పోతే, మీరు నమోదు చేసిన ప్రతి లావాదేవీ శాశ్వతంగా ధృవీకరించలేనిదిగా మారుతుంది.",
-  "recoveryPhraseWriteDown": "ఈ పదాలను క్రమంలో రాసి, ఈ పరికరం నుండి వేరుగా సురక్షితమైన చోట భద్రపరచండి.",
-  "iveSavedRecoveryPhrase": "నేను నా రికవరీ పదబంధాన్ని సేవ్ చేసుకున్నాను",
-  "confirmPhraseBlurb": "మీరు ఇప్పుడే సేవ్ చేసిన పదబంధం నుండి అడిగిన పదాలను నమోదు చేయండి.",
-  "wordNumber": "పదం #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయి",
-  "keystoreExportBlurb": "మీ రికవరీ పదబంధంతో పాటు, మీరు ఎంచుకున్న పాస్‌ఫ్రేజ్‌తో రక్షించబడిన ఎన్‌క్రిప్టెడ్ కీస్టోర్ ఫైల్‌ను కూడా సేవ్ చేయవచ్చు. ఇది ఐచ్ఛికం - మీ సైనింగ్ కీని పునరుద్ధరించడానికి మీ రికవరీ పదబంధం ఒక్కటే ఎల్లప్పుడూ సరిపోతుంది.",
-  "keystorePassphrase": "పాస్‌ఫ్రేజ్",
-  "exportKeystoreFile": "కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయి",
   "chooseLanguageTitle": "మీ భాషను ఎంచుకోండి",
   "chooseLanguageBlurb": "యాప్‌లో ప్రతిదీ ఈ భాషలో కనిపిస్తుంది. మీరు తర్వాత సెట్టింగ్‌లలో దీన్ని మార్చవచ్చు.",
-  "chooseLanguageBip39Notice": "మీ రికవరీ పదబంధం ఇంగ్లీషులో చూపబడుతుంది. ఇది ప్రతిచోటా రికవరీ సాధనాల ద్వారా గుర్తించబడే చిన్న ప్రామాణిక పదాల సమితిని ఉపయోగిస్తుంది, ఇది ఈ భాషలో ఇంకా అందుబాటులో లేదు.",
   "chooseCurrencyTitle": "మీ కరెన్సీని ఎంచుకోండి",
   "chooseCurrencyBlurb": "ప్రతి ఖాతా గ్రూప్ (నగదు & నగదు సమానమైనవి, పెన్షన్ & పదవీ విరమణ, మొదలైనవి) ప్రస్తుతానికి ఈ ఒక్క కరెన్సీని ఉపయోగిస్తుంది. దాని కోసం కొత్త గ్రూప్‌ను సృష్టించడం ద్వారా మీరు తర్వాత వేరే కరెన్సీలో ఖాతాలను జోడించవచ్చు.",
   "currencyBackfillTitle": "ఇప్పటికే ఉన్న గ్రూప్‌ల కోసం కరెన్సీని ఎంచుకోండి",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "మీ ఖాతాకు పేరు పెట్టండి",
   "firstAccountBlurb": "ఇది మీ కోసం ఇప్పటికే సెటప్ చేయబడిన ఖాతా - మీ బ్యాంక్ లాంటి మీకు తెలిసిన పేరును ఇవ్వండి. తర్వాత మీరు ఒక ఖర్చు లేదా రసీదును నమోదు చేస్తారు, ఆపై మీ రికవరీ పదబంధంతో పరికరాన్ని రక్షిస్తారు.",
   "whatsMainAccountCalled": "మీ ప్రధాన ఖాతా పేరు ఏమిటి?",
-  "restoreTitle": "సైనింగ్ కీని పునరుద్ధరించు",
-  "restoreBlurb": "ఈ పరికరంలో ఇప్పటికే ఖాతా పుస్తకాలు ఉన్నాయి, కానీ సరిపోలే సైనింగ్ కీ లేదు. మీ సేవ్ చేసిన రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ నుండి దాన్ని పునరుద్ధరించండి - మీ డేటా సాధారణంగా ధృవీకరించబడుతుంది, మరియు ఏదీ మళ్లీ సైన్ చేయబడదు లేదా మార్చబడదు.",
-  "recoveryPhrase24": "రికవరీ పదబంధం (అన్ని 24 పదాలు)",
-  "keystoreFile": "కీస్టోర్ ఫైల్",
-  "keystoreFileContents": "కీస్టోర్ ఫైల్ కంటెంట్‌లు",
-  "optionalBackupFile": "ఐచ్ఛిక బ్యాకప్ ఫైల్",
-  "iDontHavePhrase": "నా వద్ద నా రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ లేదు",
-  "migrationTitle": "కొత్త కీకి మైగ్రేట్ చేయి",
-  "migrationBlurb": "మీ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ లేకుండా, ఈ పరికరం సైనింగ్ కీని పునరుద్ధరించలేము. మీరు కొత్త కీని ప్రారంభించవచ్చు. పాత ఎంట్రీలు కనిపిస్తూనే ఉంటాయి, కానీ భర్తీ చేయబడినట్లు గుర్తించబడతాయి.",
-  "iConfirmBooksValid": "ప్రస్తుత ఖాతా పుస్తకాలు చెల్లుబాటు అవుతాయని నేను నిర్ధారిస్తున్నాను",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "మేము పాత ఎంట్రీలను ఎందుకు సవరించము",
   "whyWeDontEditBody": "మీరు ఒక తప్పును సరిదిద్దినప్పుడు, మేము పాత లైన్‌ను ఉంచి, మీరు ఇప్పటికే నమోదు చేసినదాన్ని మార్చడానికి బదులుగా దాని పక్కన ఒక సవరణను జోడిస్తాము. ఆ విధంగా మీ చరిత్ర ఎల్లప్పుడూ ఏమి జరిగిందో మరియు మీరు ఎప్పుడు సరిదిద్దారో ఖచ్చితంగా చూపిస్తుంది — మీకు తెలియకుండా ఏదీ మారదు.",
   "lockTitle": "అన్‌లాక్",
@@ -563,7 +571,6 @@
   "none": "ఏదీ లేదు",
   "currency": "కరెన్సీ",
   "errorGeneric": "ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.",
-  "errorSigningIdentityMismatch": "ఈ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ ఈ డేటాబేస్‌లోని ఏ సైనింగ్ ఐడెంటిటీతోనూ సరిపోలడం లేదు.",
   "errorInvalidLedgerBackup": "ఈ ఫైల్ చెల్లుబాటు అయ్యే స్మారా బ్యాకప్ కాదు.",
   "errorInvalidLedgerBackupNoIdentity": "ఈ బ్యాకప్‌కు సైనింగ్ ఐడెంటిటీ లేదు - ఇది చెల్లుబాటు అయ్యే స్మారా బ్యాకప్ కాదు.",
   "errorInvalidLedgerBackupUnverified": "ఈ బ్యాకప్ చెక్కుచెదరని ఖాతా పుస్తకాలుగా ధృవీకరించబడలేదు, కాబట్టి అది పునరుద్ధరించబడలేదు.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "ఈ బ్యాకప్ ఈ పరికరంలో ఉన్న దానికంటే వేరే సైనింగ్ ఐడెంటిటీకి చెందినది.",
   "errorAccountNotFinancial": "అది ఆర్థిక ఖాతా కాదు.",
   "errorAccountArchived": "ఆ ఖాతా దాచబడింది.",
   "errorAccountNotArchived": "ఆ ఖాతా దాచబడలేదు.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "వర్గం ఆదాయం లేదా ఖర్చు అయి ఉండాలి.",
   "validationOnlyExpenseHasMonthlyLimit": "ఖర్చు వర్గం మాత్రమే నెలవారీ పరిమితిని కలిగి ఉంటుంది.",
   "validationInvalidTemplate": "చెల్లని టెంప్లేట్.",
-  "validationWrongKeystorePassphrase": "ఈ కీస్టోర్ ఫైల్ కోసం తప్పు పాస్‌ఫ్రేజ్.",
-  "validationInvalidKeystoreFile": "అది చెల్లుబాటు అయ్యే కీస్టోర్ ఫైల్‌లా కనిపించడం లేదు.",
-  "validationRestorePhraseFailed": "ఆ రికవరీ పదబంధం నుండి పునరుద్ధరించలేకపోయాము.",
   "validationGenerateKeyFailed": "ఈ పరికరంలో సైనింగ్ కీని సృష్టించలేకపోయాము: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "మైగ్రేషన్ విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి.",
   "validationChooseBackupFile": "మొదట బ్యాకప్ ఫైల్‌ను ఎంచుకోండి.",
   "validationPassphraseRequired": "పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.",
   "validationPinsDoNotMatch": "రెండు PIN లు సరిపోలడం లేదు.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "సరైన మొత్తాన్ని నమోదు చేయండి.",
-  "validationConfirmWordMismatch": "పదం {n} మీ సేవ్ చేసిన పదబంధంతో సరిపోలడం లేదు. దాన్ని తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "కొనుగోలు పరిమాణం మరియు యూనిట్ ధర ధనాత్మకంగా ఉండాలి.",
   "errorInstrumentArchived": "దాచిన సాధనాన్ని కొనలేము.",
   "errorNonCashCannotIncludeBrokerage": "నగదు-రహిత సముపార్జనలలో బ్రోకరేజ్ చేర్చలేరు.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "పాస్‌ఫ్రేజ్",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

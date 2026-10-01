@@ -502,4 +502,75 @@ void main() {
       expect(find.textContaining('120.00 of 150.00'), findsOneWidget);
     },
   );
+
+  testWidgets('backup reminder banner shows Save a copy and Later', (
+    tester,
+  ) async {
+    final settings = MockSettingsRepository();
+    when(repository.watchHomeOverview()).thenAnswer(
+      (_) => Stream.value(
+        const HomeOverview(
+          sections: [],
+          netPositionsByCurrency: [],
+          pendingTransfers: [],
+        ),
+      ),
+    );
+    when(
+      categoryRepository.watchCategoryTotals(
+        start: anyNamed('start'),
+        end: anyNamed('end'),
+      ),
+    ).thenAnswer((_) => Stream.value(const []));
+    when(
+      categoryRepository.watchCategories(),
+    ).thenAnswer((_) => Stream.value(const []));
+    when(
+      recurring.watchDueRecurringTemplates(),
+    ).thenAnswer((_) => Stream.value(const []));
+    when(repository.watchEntries()).thenAnswer((_) => Stream.value(const []));
+    when(settings.isBackupReminderEnabled()).thenAnswer((_) async => true);
+    when(settings.backupReminderDays()).thenAnswer((_) async => 30);
+    when(settings.backupReminderEntries()).thenAnswer((_) async => 500);
+    when(settings.backupReminderSnoozeDays()).thenAnswer((_) async => 7);
+    when(settings.backupReminderSnoozeEntries()).thenAnswer((_) async => 500);
+    when(
+      settings.lastCopySavedAt(),
+    ).thenAnswer((_) async => DateTime.utc(2026, 1, 1));
+    when(settings.entryCountAtLastCopy()).thenAnswer((_) async => 0);
+    when(settings.snoozeUntil()).thenAnswer((_) async => null);
+    when(settings.entryCountAtSnooze()).thenAnswer((_) async => null);
+    when(settings.isMarketPriceFetchEnabled()).thenAnswer((_) async => false);
+    when(
+      investment.watchInstruments(),
+    ).thenAnswer((_) => Stream.value(const []));
+
+    final viewModel = HomeViewModel(
+      ledgerRepository: repository,
+      categoryRepository: categoryRepository,
+      recurringTemplateRepository: recurring,
+      investmentRepository: investment,
+      settingsRepository: settings,
+      refreshInstrumentQuotes: false,
+      clock: () => DateTime.utc(2026, 6, 1),
+    );
+    addTearDown(viewModel.dispose);
+    // Force reminder visible for the widget assertion.
+    await viewModel.refreshBackupReminder();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: HomeView(
+          viewModel: viewModel,
+          onAccountTap: (_) {},
+          onSaveBooksCopy: () {},
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.text('Save a copy of your books'), findsOneWidget);
+    expect(find.text('Save a copy'), findsOneWidget);
+    expect(find.text('Later'), findsOneWidget);
+  });
 }

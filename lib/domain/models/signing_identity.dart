@@ -1,6 +1,6 @@
 /// Domain-facing view of a `signing_identities` row - the device's
-/// current or superseded signing key, public half only (design.md:
-/// "Only the public key is ever stored in the database").
+/// current, continued, or superseded signing key, public half only
+/// (design.md: "Only the public key is ever stored in the database").
 class SigningIdentity {
   const SigningIdentity({
     required this.identityId,
@@ -8,6 +8,8 @@ class SigningIdentity {
     required this.createdAt,
     required this.supersedesIdentityId,
     required this.supersededAt,
+    required this.continuesIdentityId,
+    required this.continuedAt,
     required this.acknowledgedAt,
   });
 
@@ -17,9 +19,12 @@ class SigningIdentity {
   final String? supersedesIdentityId;
   final DateTime? supersededAt;
 
-  /// When the mandatory recovery-phrase acknowledgment completed for this
-  /// identity, or null if it's still pending (deferred-onboarding-first-entry:
-  /// the identity is committed before the user reaches the acknowledgment
-  /// screens, so this can be null for a brief, deliberate window).
+  /// Previous identity this one continues, when created by Continuation.
+  final String? continuesIdentityId;
+
+  /// When this identity was continued by a later one (entries stay active).
+  final DateTime? continuedAt;
+
+  /// When the (retired) recovery-phrase acknowledgment completed, or null.
   final DateTime? acknowledgedAt;
 }

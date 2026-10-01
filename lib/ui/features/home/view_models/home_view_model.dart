@@ -8,9 +8,11 @@ import '../../../../data/repositories/investment_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
 import '../../../../data/repositories/recurring_template_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
+import '../../../../domain/backup/backup_reminder_policy.dart';
 import '../../../../domain/models/account.dart';
 import '../../../../domain/models/home_overview.dart';
 import '../../../../domain/models/instrument.dart';
+import '../../../../domain/models/journal_entry.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/summary.dart';
 
@@ -22,13 +24,17 @@ class HomeViewModel extends ChangeNotifier {
     required InvestmentRepository investmentRepository,
     SettingsRepository? settingsRepository,
     InstrumentQuoteRefresh? quoteRefresh,
+    bool refreshInstrumentQuotes = true,
+    DateTime Function()? clock,
   }) : _ledgerRepository = ledgerRepository,
        _categoryRepository = categoryRepository,
        _recurringTemplateRepository = recurringTemplateRepository,
        _investmentRepository = investmentRepository,
+       _settingsRepository = settingsRepository,
+       _clock = clock ?? DateTime.now,
        _quoteRefresh =
            quoteRefresh ??
-           (settingsRepository == null
+           (!refreshInstrumentQuotes || settingsRepository == null
                ? null
                : InstrumentQuoteRefresh(
                    settingsRepository: settingsRepository,
@@ -78,12 +84,21 @@ class HomeViewModel extends ChangeNotifier {
         unawaited(_refreshQuotes());
       });
     }
+    if (_settingsRepository != null) {
+      _entriesSubscription = _ledgerRepository.watchEntries().listen((entries) {
+        _entryCount = entries.length;
+        _firstEntryAt = _earliestEntryDate(entries);
+        unawaited(_refreshReminder());
+      });
+    }
   }
 
   final LedgerRepository _ledgerRepository;
   final CategoryRepository _categoryRepository;
   final RecurringTemplateRepository _recurringTemplateRepository;
   final InvestmentRepository _investmentRepository;
+  final SettingsRepository? _settingsRepository;
+  final DateTime Function() _clock;
   final InstrumentQuoteRefresh? _quoteRefresh;
   late final StreamSubscription<HomeOverview> _subscription;
   late final StreamSubscription<List<CategoryTotal>>
@@ -92,8 +107,65 @@ class HomeViewModel extends ChangeNotifier {
   _dueTemplatesSubscription;
   late final StreamSubscription<List<Account>> _categoriesSubscription;
   StreamSubscription<List<Instrument>>? _instrumentsSubscription;
+  StreamSubscription<List<JournalEntry>>? _entriesSubscription;
   Timer? _quoteTimer;
   List<Instrument> _instruments = const [];
+
+  int _entryCount = 0;
+  DateTime? _firstEntryAt;
+  bool _showBackupReminder = false;
+  bool get showBackupReminder => _showBackupReminder;
+
+  DateTime? _earliestEntryDate(List<JournalEntry> entries) {
+    if (entries.isEmpty) return null;
+    return entries
+        .map((e) => e.transactionDate)
+        .reduce((a, b) => a.isBefore(b) ? a : b);
+  }
+
+  Future<void> _refreshReminder() async {
+    final settings = _settingsRepository;
+    if (settings == null) {
+      _showBackupReminder = false;
+      notifyListeners();
+      return;
+    }
+    final enabled = await settings.isBackupReminderEnabled();
+    final lastCopy = await settings.lastCopySavedAt();
+    final entryCountAtLastCopy = await settings.entryCountAtLastCopy();
+    final snoozeUntil = await settings.snoozeUntil();
+    final entryCountAtSnooze = await settings.entryCountAtSnooze();
+    final reminderDays = await settings.backupReminderDays();
+    final reminderEntries = await settings.backupReminderEntries();
+    final snoozeEntries = await settings.backupReminderSnoozeEntries();
+
+    _showBackupReminder = BackupReminderPolicy.shouldShow(
+      enabled: enabled,
+      now: _clock(),
+      currentEntryCount: _entryCount,
+      lastCopySavedAt: lastCopy,
+      entryCountAtLastCopy: entryCountAtLastCopy,
+      firstEntryAt: _firstEntryAt,
+      snoozeUntil: snoozeUntil,
+      entryCountAtSnooze: entryCountAtSnooze,
+      reminderDays: reminderDays,
+      reminderEntries: reminderEntries,
+      snoozeEntries: snoozeEntries,
+    );
+    notifyListeners();
+  }
+
+  /// Re-evaluates reminder visibility (e.g. after returning from Settings).
+  Future<void> refreshBackupReminder() => _refreshReminder();
+
+  Future<void> snoozeBackupReminder() async {
+    final settings = _settingsRepository;
+    if (settings == null) return;
+    final snoozeDays = await settings.backupReminderSnoozeDays();
+    final until = _clock().add(Duration(days: snoozeDays));
+    await settings.snoozeBackupReminder(until: until, entryCount: _entryCount);
+    await _refreshReminder();
+  }
 
   Future<void> _refreshQuotes() async {
     final refresh = _quoteRefresh;
@@ -149,6 +221,7 @@ class HomeViewModel extends ChangeNotifier {
     _dueTemplatesSubscription.cancel();
     _categoriesSubscription.cancel();
     _instrumentsSubscription?.cancel();
+    _entriesSubscription?.cancel();
     _quoteTimer?.cancel();
     super.dispose();
   }

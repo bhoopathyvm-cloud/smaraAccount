@@ -211,23 +211,6 @@ class AppLocalizationsMni extends AppLocalizations {
       'ꯅꯍꯥꯛꯀꯤ ꯂꯦꯈꯥꯒꯤ ꯑꯦꯅꯆ꯭ꯔꯤꯞꯇꯦꯗ ꯀꯣꯄꯤ ꯑꯃ ꯊꯝꯂꯨ, ꯅꯠꯇ꯭ꯔꯒ ꯃꯗꯨꯗꯒꯤ ꯔꯤꯁꯇꯣꯔ ꯇꯧꯔꯣ. ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖꯗꯒꯤ ꯇꯣꯛꯅ ꯂꯩ, ꯃꯁꯤꯅ ꯅꯍꯥꯛꯀꯤ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯕꯦꯀꯑꯞ ꯇꯧꯔꯤ, ꯂꯦꯈꯥ ꯅꯠꯇꯦ.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'ꯂꯣꯛ';
 
   @override
@@ -420,14 +403,6 @@ class AppLocalizationsMni extends AppLocalizations {
   }
 
   @override
-  String get keystoreExportFailed =>
-      'ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯊꯥꯗꯣꯛꯄ ꯉꯝꯗꯦ. ꯑꯍꯥꯟꯕ ꯑꯁꯤ ꯆꯠꯊꯣꯀꯄꯨ ꯌꯥꯏ.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'ꯐꯥꯏꯂ ꯀꯤ ꯁꯦꯀꯤꯎꯔ ꯇꯧꯅꯕꯒꯤꯗꯃꯛ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.';
-
-  @override
   String get homeTapWhenArrived => 'ꯀꯔꯤ ꯑꯃ ꯌꯧꯈꯤꯕꯒꯦ ꯍꯥꯏꯕ ꯈꯪꯕ ꯃꯇꯃꯗ ꯇꯦꯞ ꯇꯧ';
 
   @override
@@ -522,7 +497,7 @@ class AppLocalizationsMni extends AppLocalizations {
   String get createGroup => 'ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ';
 
   @override
-  String get editGroup => 'ꯒ꯭ꯔꯨꯞ ꯑꯣꯡꯗꯣꯛꯎ';
+  String get editGroup => 'ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ';
 
   @override
   String get renameAccount => 'ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ';
@@ -805,91 +780,11 @@ class AppLocalizationsMni extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'ꯅꯍꯥꯛꯀꯤ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'ꯅꯍꯥꯛꯀꯤ ꯐ꯭ꯔꯦꯖ ꯀꯅꯐꯔꯃ ꯇꯧ';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤ ꯃꯥꯡꯈ꯭ꯔꯕ, ꯔꯤꯁꯦꯠ ꯇꯧꯔꯕ, ꯅꯠꯇ꯭ꯔꯒ ꯑꯣꯡꯗꯣꯛꯄ ꯑꯣꯏꯔꯕꯗꯤ, ꯃꯁꯤꯒꯤ ꯋꯥꯍꯩ 24 ꯑꯁꯤꯅ ꯈꯛꯇꯅ ꯅꯍꯥꯛꯀꯤ ꯂꯦꯟꯗꯦꯟꯒꯤ ꯍꯤꯁꯇꯔꯤ ꯑꯃꯨꯛ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯅꯕ ꯂꯝꯅꯤ. ꯁ꯭ꯃꯥꯔꯥ ꯑꯦꯀꯥꯎꯟꯠꯇ ꯁꯔꯚꯔ ꯂꯩꯇꯦ, ꯅꯍꯥꯛꯀꯤꯗꯃꯛ ꯃꯗꯨ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗꯦ.\n\nꯗꯤꯚꯥꯏꯁ ꯑꯃꯁꯨꯡ ꯐ꯭ꯔꯦꯖ ꯑꯁꯤ ꯑꯃꯨꯛꯇ ꯃꯥꯡꯈ꯭ꯔꯕꯗꯤ, ꯅꯍꯥꯛꯅ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯈꯤꯕ ꯂꯦꯟꯗꯦꯟ ꯈꯨꯗꯤꯡꯃꯛ ꯀꯅꯐꯔꯃ ꯇꯧꯕ ꯑꯃꯨꯛ ꯍꯟꯅ ꯉꯝꯗꯅ ꯂꯩꯒꯅꯤ.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'ꯋꯥꯍꯩ ꯑꯁꯤꯁꯤꯡ ꯃꯊꯧ ꯄꯨꯟꯅ ꯏꯔꯤꯕꯤꯔꯨ ꯑꯃꯁꯨꯡ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗꯒꯤ ꯇꯣꯛꯅꯕ ꯅꯤꯡꯊꯤꯖꯔꯕ ꯃꯐꯝ ꯑꯃꯗ ꯊꯝꯕꯤꯔꯨ.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'ꯑꯩꯒꯤ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯊꯝꯖꯔꯦ';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'ꯅꯍꯥꯛꯅ ꯍꯧꯖꯤꯛ ꯊꯝꯖꯔꯕ ꯐ꯭ꯔꯦꯖꯗꯒꯤ ꯍꯥꯌꯈꯤꯕ ꯋꯥꯍꯩꯁꯤꯡ ꯆꯪꯗꯣꯛꯎ.';
-
-  @override
-  String wordNumber(String n) {
-    return 'ꯋꯥꯍꯩ #$n';
-  }
-
-  @override
-  String get keystoreExportTitle => 'ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯊꯥꯗꯣꯛꯎ';
-
-  @override
-  String get keystoreExportBlurb =>
-      'ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖꯒꯤ ꯃꯊꯛꯇ, ꯅꯍꯥꯛꯅ ꯈꯪꯗꯣꯛꯄ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯃꯅ ꯁꯦꯀꯤꯎꯔ ꯇꯧꯔꯕ ꯑꯦꯅꯆ꯭ꯔꯤꯞꯇꯦꯗ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯁꯨ ꯊꯝꯕ ꯌꯥꯏ. ꯃꯁꯤ ꯑꯣꯞꯁꯟꯦꯜꯅꯤ - ꯅꯍꯥꯛꯀꯤ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯅꯕ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯈꯛꯇꯅ ꯍꯧꯖꯤꯛ ꯍꯧꯖꯤꯛ ꯃꯥꯟꯅꯩ.';
-
-  @override
-  String get keystorePassphrase => 'ꯄꯥꯁꯐ꯭ꯔꯦꯖ';
-
-  @override
-  String get exportKeystoreFile => 'ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯊꯥꯗꯣꯛꯎ';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
-
-  @override
   String get chooseLanguageTitle => 'নহাক্কী লোন খল্লু';
 
   @override
   String get chooseLanguageBlurb =>
       'এপ্তা মায়োক্কী য়াম্না অসিগী লোন অসিদা উৎকনি। নহাক্না মতুংদা সেটিংসতা মসি হোংবা য়াই।';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'নহাক্কী রিকভরী ৱাহৈ অসি ইংলিশতা উৎকনি। মসিনা মফমখুদিংমক্তা রিকভরী তূলসনা খংবা য়াবা য়াম্না অপীকপা মানক ৱাহৈ অমা শীজিন্নই, মদু লোন অসিদা হৌজিক ফোংদোকপা তাঙাইতে।';
 
   @override
   String get chooseCurrencyTitle => 'ꯅꯍꯥꯛꯀꯤ ꯀꯔꯦꯟꯁꯤ ꯈꯪꯗꯣꯛꯎ';
@@ -927,39 +822,71 @@ class AppLocalizationsMni extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get actionImportFromBackup => 'Import from backup';
+  String get continueBooksTitle => 'Continue my books on this phone';
 
   @override
-  String get restoreTitle => 'ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯎ';
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
 
   @override
-  String get restoreBlurb =>
-      'ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗ ꯍꯧꯖꯤꯛ ꯂꯩꯕ ꯂꯦꯈꯥ ꯂꯩ, ꯑꯗꯨꯕꯨ ꯃꯅꯅꯕ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯂꯩꯇꯦ. ꯅꯍꯥꯛꯀꯤ ꯊꯝꯖꯔꯕ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂꯗꯒꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯎ - ꯅꯍꯥꯛꯀꯤ ꯗꯥꯇꯥ ꯑꯁꯤ ꯀꯅꯐꯔꯃ ꯇꯧꯒꯅꯤ, ꯑꯃꯨꯛ ꯍꯟꯅ ꯁꯥꯏꯟ ꯇꯧꯗ꯭ꯔꯒ ꯑꯣꯡꯗꯣꯛꯗ.';
+  String get continueBooksAction => 'Continue my books on this phone';
 
   @override
-  String get recoveryPhrase24 => 'ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ (ꯋꯥꯍꯩ 24 ꯄꯨꯝꯅꯃꯛ)';
+  String get restoreFromCopyAction => 'Restore from a copy';
 
   @override
-  String get keystoreFile => 'ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ';
+  String get saveBooksCopyAction => 'Save a copy of my books';
 
   @override
-  String get keystoreFileContents => 'ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂꯒꯤ ꯃꯅꯨꯡꯆꯥ';
+  String get deviceHistoryTitle => 'Device history';
 
   @override
-  String get optionalBackupFile => 'ꯑꯣꯞꯁꯟꯦꯜ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ';
+  String get deviceHistoryEmpty =>
+      'No Continuations yet. When you continue books on a new phone, they will show up here.';
 
   @override
-  String get iDontHavePhrase => 'ꯑꯩꯒꯤ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯂꯩꯇꯦ';
+  String deviceHistoryContinuedOn(String date) {
+    return 'Your books continued on this phone on $date';
+  }
 
   @override
-  String get migrationTitle => 'ꯀꯤ ꯑꯅꯧꯕꯗ ꯃꯥꯏꯒ꯭ꯔꯦꯠ ꯇꯧ';
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
+    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+  }
 
   @override
-  String get migrationBlurb =>
-      'ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯌꯥꯎꯗꯅ, ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯒꯤ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯑꯃꯨꯛ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗꯦ. ꯀꯤ ꯑꯅꯧꯕ ꯑꯃ ꯍꯧꯔꯛꯄ ꯌꯥꯏ. ꯏꯔꯤꯛꯀꯣꯔꯗ ꯑꯔꯤꯕꯁꯤꯡ ꯎꯗ꯭ꯔꯒꯗꯨꯅꯗꯒꯤ ꯍꯣꯡꯗꯣꯛꯈ꯭ꯔꯦ ꯍꯥꯌꯅ ꯂꯧꯒꯅꯤ.';
+  String get backupReminderBannerTitle => 'Save a copy of your books';
 
   @override
-  String get iConfirmBooksValid => 'ꯍꯧꯖꯤꯛꯀꯤ ꯂꯦꯈꯥ ꯑꯁꯤ ꯆꯨꯝꯅꯩ ꯍꯥꯌꯅ ꯑꯩ ꯀꯅꯐꯔꯃ ꯇꯧꯏ';
+  String get backupReminderSaveAction => 'Save a copy';
+
+  @override
+  String get backupReminderLaterAction => 'Later';
+
+  @override
+  String get settingsBackupReminder => 'Copy reminder';
+
+  @override
+  String get settingsBackupReminderBlurb =>
+      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+
+  @override
+  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+
+  @override
+  String get settingsBackupReminderDays => 'Remind after this many days';
+
+  @override
+  String get settingsBackupReminderEntries =>
+      'Remind after this many new entries';
+
+  @override
+  String get settingsBackupReminderSnoozeDays =>
+      'Hide for this many days after Later';
+
+  @override
+  String get settingsBackupReminderSnoozeEntries =>
+      'Hide for this many new entries after Later';
 
   @override
   String get whyWeDontEdit => 'ꯑꯔꯤꯕ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯀꯔꯤꯅ ꯑꯩꯈꯣꯏꯅ ꯁꯦꯝꯒꯠꯂꯗꯦ';
@@ -1214,10 +1141,6 @@ class AppLocalizationsMni extends AppLocalizations {
   String get errorGeneric => 'ꯑꯔꯥꯟꯕ ꯊꯣꯛꯈꯤ. ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯑꯁꯤ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯑꯁꯤ ꯗꯥꯇꯥꯕꯦꯁ ꯑꯁꯤꯗ ꯁꯥꯏꯅꯤꯡ ꯑꯥꯏꯗꯦꯟꯇꯤꯇꯤ ꯑꯃꯒꯤꯗꯒꯤꯅ ꯆꯨꯝꯗꯦ.';
-
-  @override
   String get errorInvalidLedgerBackup => 'ꯐꯥꯏꯂ ꯑꯁꯤ ꯆꯨꯝꯅꯕ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯅꯠꯇꯦ.';
 
   @override
@@ -1232,31 +1155,6 @@ class AppLocalizationsMni extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'ꯐꯥꯏꯂ ꯑꯁꯤ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯑꯣꯏꯅ ꯍꯥꯡꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'ꯕꯦꯀꯑꯞ ꯑꯁꯤ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯒꯤ ꯅꯠꯇ꯭ꯔꯕ ꯑꯇꯣꯞꯄ ꯁꯥꯏꯅꯤꯡ ꯑꯥꯏꯗꯦꯟꯇꯤꯇꯤ ꯑꯃꯒꯤꯅꯤ.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'ꯑꯗꯨ ꯐꯤꯅꯦꯟꯁꯤꯌꯦꯜ ꯑꯦꯀꯥꯎꯟꯠ ꯅꯠꯇꯦ.';
@@ -1544,15 +1442,6 @@ class AppLocalizationsMni extends AppLocalizations {
       'ꯕꯦꯀꯑꯞ ꯑꯁꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ - ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯁꯤ ꯑꯔꯥꯟꯕ, ꯅꯠꯇ꯭ꯔꯒ ꯃꯁꯤ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ ꯅꯠꯇꯦ.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'ꯁꯦꯟꯐꯝ, ꯑꯦꯀꯥꯎꯟꯠ, ꯑꯃꯁꯨꯡ ꯃꯆꯦꯠ ꯃꯊꯧ ꯇꯥꯏ.';
 
@@ -1608,17 +1497,6 @@ class AppLocalizationsMni extends AppLocalizations {
   String get validationInvalidTemplate => 'ꯇꯦꯝꯄ꯭ꯂꯦꯠ ꯑꯔꯥꯟꯕ.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯑꯁꯤꯒꯤꯗꯃꯛ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯔꯥꯟꯕ.';
-
-  @override
-  String get validationInvalidKeystoreFile => 'ꯃꯁꯤ ꯆꯨꯝꯅꯕ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯒꯨꯝꯅ ꯎꯗꯦ.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'ꯐ꯭ꯔꯦꯖ ꯑꯗꯨꯗꯒꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯁꯦꯝꯒꯠꯄ ꯉꯝꯗ꯭ꯔꯦ: $detail';
   }
@@ -1629,14 +1507,7 @@ class AppLocalizationsMni extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => 'ꯃꯥꯏꯒ꯭ꯔꯦꯁꯟ ꯉꯝꯗ꯭ꯔꯦ. ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.';
-
-  @override
   String get validationChooseBackupFile => 'ꯍꯟꯖꯤꯛ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ ꯑꯃ ꯈꯪꯗꯣꯛꯎ.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.';
@@ -1659,11 +1530,6 @@ class AppLocalizationsMni extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'ꯆꯨꯝꯅꯕ ꯁꯦꯟꯐꯝ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'ꯋꯥꯍꯩ $n ꯅꯍꯥꯛꯀꯤ ꯊꯝꯖꯔꯕ ꯐ꯭ꯔꯦꯖ ꯒ ꯆꯨꯝꯗꯦ. ꯌꯦꯡꯁꯤꯟꯗꯨꯅ ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -2005,4 +1871,60 @@ class AppLocalizationsMni extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'ꯄꯥꯁꯐ꯭ꯔꯦꯖ';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

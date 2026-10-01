@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യാനായില്ല. നിങ്ങൾക്ക് ഈ ഘട്ടം ഒഴിവാക്കാം.",
-  "enterPassphraseToProtect": "ഫയൽ സംരക്ഷിക്കാൻ ഒരു പാസ്ഫ്രെയ്സ് നൽകുക.",
   "homeTapWhenArrived": "എന്താണ് വന്നതെന്ന് അറിയുമ്പോൾ ടാപ്പ് ചെയ്യുക",
   "homeReturnedTo": "{name}-ലേക്ക് തിരികെ എത്തി",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സ്",
-  "recoveryPhraseConfirmTitle": "നിങ്ങളുടെ ഫ്രെയ്സ് സ്ഥിരീകരിക്കുക",
-  "recoveryPhraseBlurb": "ഈ ഡിവൈസ് നഷ്ടപ്പെടുകയോ, റീസെറ്റ് ചെയ്യുകയോ, മാറ്റുകയോ ചെയ്താൽ നിങ്ങളുടെ ഇടപാട് ചരിത്രം വീണ്ടെടുക്കാനുള്ള ഒരേയൊരു വഴിയാണ് ഈ 24 വാക്കുകൾ. സ്മാര അക്കൗണ്ടിംഗിന് സെർവർ ഇല്ല, നിങ്ങൾക്കുവേണ്ടി അവ വീണ്ടെടുക്കാൻ കഴിയില്ല.\n\nഈ ഡിവൈസും ഈ ഫ്രെയ്സും ഒരുമിച്ച് നഷ്ടപ്പെട്ടാൽ, നിങ്ങൾ രേഖപ്പെടുത്തിയ ഓരോ ഇടപാടും എന്നെന്നേക്കുമായി സ്ഥിരീകരിക്കാൻ കഴിയാത്തതായി മാറും.",
-  "recoveryPhraseWriteDown": "ഈ വാക്കുകൾ ക്രമത്തിൽ എഴുതി വയ്ക്കുകയും ഈ ഡിവൈസിൽ നിന്ന് വേറിട്ട സുരക്ഷിതമായ ഒരിടത്ത് സൂക്ഷിക്കുകയും ചെയ്യുക.",
-  "iveSavedRecoveryPhrase": "ഞാൻ എന്റെ റിക്കവറി ഫ്രെയ്സ് സേവ് ചെയ്തു",
-  "confirmPhraseBlurb": "നിങ്ങൾ ഇപ്പോൾ സേവ് ചെയ്ത ഫ്രെയ്സിൽ നിന്ന് ആവശ്യപ്പെട്ട വാക്കുകൾ നൽകുക.",
-  "wordNumber": "വാക്ക് #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യുക",
-  "keystoreExportBlurb": "നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സിന് പുറമേ, നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന ഒരു പാസ്ഫ്രെയ്സ് കൊണ്ട് സംരക്ഷിച്ച എൻക്രിപ്റ്റഡ് കീസ്റ്റോർ ഫയലും സേവ് ചെയ്യാം. ഇത് ഓപ്ഷണലാണ് - നിങ്ങളുടെ സൈനിംഗ് കീ പുനഃസ്ഥാപിക്കാൻ റിക്കവറി ഫ്രെയ്സ് മാത്രം എപ്പോഴും മതിയാകും.",
-  "keystorePassphrase": "പാസ്ഫ്രെയ്സ്",
-  "exportKeystoreFile": "കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യുക",
   "chooseLanguageTitle": "നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക",
   "chooseLanguageBlurb": "ആപ്പിലെ എല്ലാം ഈ ഭാഷയിൽ കാണിക്കും. നിങ്ങൾക്ക് പിന്നീട് സെറ്റിംഗ്സിൽ ഇത് മാറ്റാം.",
-  "chooseLanguageBip39Notice": "നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്‌സ് ഇംഗ്ലീഷിൽ കാണിക്കും. എല്ലായിടത്തും റിക്കവറി ടൂളുകൾ തിരിച്ചറിയുന്ന ഒരു ചെറിയ സ്റ്റാൻഡേർഡ് പദസഞ്ചയമാണ് ഇത് ഉപയോഗിക്കുന്നത്, അത് ഈ ഭാഷയിൽ ഇതുവരെ ലഭ്യമല്ല.",
   "chooseCurrencyTitle": "നിങ്ങളുടെ കറൻസി തിരഞ്ഞെടുക്കുക",
   "chooseCurrencyBlurb": "എല്ലാ അക്കൗണ്ട് ഗ്രൂപ്പും (ക്യാഷും ക്യാഷ് തുല്യങ്ങളും, പെൻഷനും വിരമിക്കലും, തുടങ്ങിയവ) ഇപ്പോൾ ഈ ഒറ്റ കറൻസി ഉപയോഗിക്കുന്നു. പിന്നീട് ഇതിനായി ഒരു പുതിയ ഗ്രൂപ്പ് സൃഷ്ടിച്ച് വ്യത്യസ്ത കറൻസിയിൽ അക്കൗണ്ടുകൾ ചേർക്കാം.",
   "currencyBackfillTitle": "നിലവിലുള്ള ഗ്രൂപ്പുകൾക്ക് ഒരു കറൻസി തിരഞ്ഞെടുക്കുക",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "നിങ്ങളുടെ അക്കൗണ്ടിന് പേരിടുക",
   "firstAccountBlurb": "ഇത് നിങ്ങൾക്കായി മുൻപേ സെറ്റപ്പ് ചെയ്ത അക്കൗണ്ടാണ് - നിങ്ങളുടെ ബാങ്ക് പോലെ, നിങ്ങൾക്ക് തിരിച്ചറിയാവുന്ന ഒരു പേര് നൽകുക. അടുത്തതായി നിങ്ങൾ ഒരു ചെലവ് അല്ലെങ്കിൽ ലഭിച്ചത് രേഖപ്പെടുത്തും, പിന്നീട് നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സ് കൊണ്ട് ഡിവൈസ് സംരക്ഷിക്കും.",
   "whatsMainAccountCalled": "നിങ്ങളുടെ പ്രധാന അക്കൗണ്ടിന്റെ പേരെന്താണ്?",
-  "restoreTitle": "സൈനിംഗ് കീ പുനഃസ്ഥാപിക്കുക",
-  "restoreBlurb": "ഈ ഡിവൈസിൽ നിലവിലുള്ള കണക്കുകളുണ്ട്, പക്ഷേ പൊരുത്തപ്പെടുന്ന സൈനിംഗ് കീയില്ല. നിങ്ങളുടെ സേവ് ചെയ്ത റിക്കവറി ഫ്രെയ്സിൽ നിന്നോ കീസ്റ്റോർ ഫയലിൽ നിന്നോ അത് പുനഃസ്ഥാപിക്കുക - നിങ്ങളുടെ ഡാറ്റ സാധാരണ പോലെ സ്ഥിരീകരിക്കും, ഒന്നും വീണ്ടും സൈൻ ചെയ്യുകയോ മാറ്റുകയോ ചെയ്യില്ല.",
-  "recoveryPhrase24": "റിക്കവറി ഫ്രെയ്സ് (എല്ലാ 24 വാക്കുകളും)",
-  "keystoreFile": "കീസ്റ്റോർ ഫയൽ",
-  "keystoreFileContents": "കീസ്റ്റോർ ഫയലിന്റെ ഉള്ളടക്കം",
-  "optionalBackupFile": "ഓപ്ഷണൽ ബാക്കപ്പ് ഫയൽ",
-  "iDontHavePhrase": "എന്റെ കയ്യിൽ റിക്കവറി ഫ്രെയ്സോ കീസ്റ്റോർ ഫയലോ ഇല്ല",
-  "migrationTitle": "പുതിയ കീയിലേക്ക് മൈഗ്രേറ്റ് ചെയ്യുക",
-  "migrationBlurb": "നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സോ കീസ്റ്റോർ ഫയലോ ഇല്ലാതെ, ഈ ഡിവൈസിന്റെ സൈനിംഗ് കീ വീണ്ടെടുക്കാൻ കഴിയില്ല. നിങ്ങൾക്ക് ഒരു പുതിയ കീ തുടങ്ങാം. പഴയ എൻട്രികൾ ദൃശ്യമായി തുടരും പക്ഷേ അവ മാറ്റിസ്ഥാപിക്കപ്പെടും.",
-  "iConfirmBooksValid": "നിലവിലെ കണക്കുകൾ സാധുവാണെന്ന് ഞാൻ സ്ഥിരീകരിക്കുന്നു",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "പഴയ എൻട്രികൾ ഞങ്ങൾ എന്തുകൊണ്ട് തിരുത്തുന്നില്ല",
   "whyWeDontEditBody": "നിങ്ങൾ ഒരു തെറ്റ് ശരിയാക്കുമ്പോൾ, നിങ്ങൾ നൽകിയത് മാറ്റുന്നതിന് പകരം ഞങ്ങൾ പഴയ വരി സൂക്ഷിക്കുകയും അതിനടുത്ത് ഒരു തിരുത്തൽ ചേർക്കുകയും ചെയ്യുന്നു. അങ്ങനെ എന്താണ് സംഭവിച്ചതെന്നും എപ്പോൾ നിങ്ങൾ അത് ശരിയാക്കിയെന്നും നിങ്ങളുടെ ചരിത്രം എപ്പോഴും കൃത്യമായി കാണിക്കുന്നു — ഒന്നും നിങ്ങളറിയാതെ നിശബ്ദമായി മാറുന്നില്ല.",
   "lockTitle": "അൺലോക്ക്",
@@ -563,7 +571,6 @@
   "none": "ഒന്നുമില്ല",
   "currency": "കറൻസി",
   "errorGeneric": "എന്തോ പിശക് സംഭവിച്ചു. വീണ്ടും ശ്രമിക്കുക.",
-  "errorSigningIdentityMismatch": "ഈ റിക്കവറി ഫ്രെയ്സോ കീസ്റ്റോർ ഫയലോ ഈ ഡാറ്റാബേസിലെ ഒരു സൈനിംഗ് ഐഡന്റിറ്റിയുമായും പൊരുത്തപ്പെടുന്നില്ല.",
   "errorInvalidLedgerBackup": "ഈ ഫയൽ സാധുവായ സ്മാര ബാക്കപ്പ് അല്ല.",
   "errorInvalidLedgerBackupNoIdentity": "ഈ ബാക്കപ്പിന് സൈനിംഗ് ഐഡന്റിറ്റി ഇല്ല - ഇത് സാധുവായ സ്മാര ബാക്കപ്പ് അല്ല.",
   "errorInvalidLedgerBackupUnverified": "ഈ ബാക്കപ്പ് കേടുകൂടാത്ത കണക്കുകളായി സ്ഥിരീകരിക്കാനായില്ല, അതിനാൽ പുനഃസ്ഥാപിച്ചില്ല.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "ഈ ബാക്കപ്പ് ഈ ഡിവൈസിലേതിൽ നിന്ന് വ്യത്യസ്തമായ സൈനിംഗ് ഐഡന്റിറ്റിയുടേതാണ്.",
   "errorAccountNotFinancial": "അത് ഒരു ഫിനാൻഷ്യൽ അക്കൗണ്ട് അല്ല.",
   "errorAccountArchived": "ആ അക്കൗണ്ട് മറച്ചിരിക്കുന്നു.",
   "errorAccountNotArchived": "ആ അക്കൗണ്ട് മറച്ചിട്ടില്ല.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "വിഭാഗം വരുമാനമോ ചെലവോ ആയിരിക്കണം.",
   "validationOnlyExpenseHasMonthlyLimit": "ചെലവ് വിഭാഗത്തിന് മാത്രമേ പ്രതിമാസ പരിധി ഉണ്ടാകാൻ കഴിയൂ.",
   "validationInvalidTemplate": "അസാധുവായ ടെംപ്ലേറ്റ്.",
-  "validationWrongKeystorePassphrase": "ഈ കീസ്റ്റോർ ഫയലിന് തെറ്റായ പാസ്ഫ്രെയ്സ്.",
-  "validationInvalidKeystoreFile": "അത് സാധുവായ കീസ്റ്റോർ ഫയൽ പോലെ തോന്നുന്നില്ല.",
-  "validationRestorePhraseFailed": "ആ റിക്കവറി ഫ്രെയ്സിൽ നിന്ന് പുനഃസ്ഥാപിക്കാൻ കഴിഞ്ഞില്ല.",
   "validationGenerateKeyFailed": "ഈ ഡിവൈസിൽ സൈനിംഗ് കീ ജനറേറ്റ് ചെയ്യാൻ കഴിഞ്ഞില്ല: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "മൈഗ്രേഷൻ പരാജയപ്പെട്ടു. വീണ്ടും ശ്രമിക്കുക.",
   "validationChooseBackupFile": "ആദ്യം ഒരു ബാക്കപ്പ് ഫയൽ തിരഞ്ഞെടുക്കുക.",
   "validationPassphraseRequired": "ഒരു പാസ്ഫ്രെയ്സ് നൽകുക.",
   "validationPinsDoNotMatch": "രണ്ട് PIN-കളും പൊരുത്തപ്പെടുന്നില്ല.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "സാധുവായ തുക നൽകുക.",
-  "validationConfirmWordMismatch": "വാക്ക് {n} നിങ്ങൾ സേവ് ചെയ്ത ഫ്രെയ്സുമായി പൊരുത്തപ്പെടുന്നില്ല. പരിശോധിച്ച് വീണ്ടും ശ്രമിക്കുക.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "വാങ്ങൽ അളവും യൂണിറ്റ് വിലയും പോസിറ്റീവ് ആയിരിക്കണം.",
   "errorInstrumentArchived": "മറച്ചുവച്ച ഇൻസ്ട്രുമെന്റ് വാങ്ങാൻ കഴിയില്ല.",
   "errorNonCashCannotIncludeBrokerage": "നോൺ-ക്യാഷ് ഏറ്റെടുക്കലുകളിൽ ബ്രോക്കറേജ് ഉൾപ്പെടുത്താൻ കഴിയില്ല.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "പാസ്ഫ്രെയ്സ്",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

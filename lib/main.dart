@@ -5,11 +5,10 @@ import 'package:provider/provider.dart';
 import 'data/database/app_database.dart';
 import 'data/repositories/account_chart_reader.dart';
 import 'data/repositories/account_repository.dart';
+import 'data/repositories/books_copy_repository.dart';
 import 'data/repositories/category_repository.dart';
-import 'data/repositories/device_migration_bundle_repository.dart';
 import 'data/repositories/identity_repository.dart';
 import 'data/repositories/investment_repository.dart';
-import 'data/repositories/ledger_backup_repository.dart';
 import 'data/repositories/ledger_chain_store.dart';
 import 'data/repositories/ledger_chain_verifier.dart';
 import 'data/repositories/ledger_repository.dart';
@@ -26,12 +25,12 @@ import 'ui/core/app_theme.dart';
 import 'ui/core/snapshot_hiding_overlay.dart';
 import 'ui/features/account_management/view_models/account_management_view_model.dart';
 import 'ui/features/category_management/view_models/category_management_view_model.dart';
+import 'ui/features/continuation/view_models/continuation_view_model.dart';
 import 'ui/features/home/view_models/home_view_model.dart';
-import 'ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
+import 'ui/features/onboarding/view_models/first_identity_setup_view_model.dart';
 import 'ui/features/payee_management/view_models/payee_management_view_model.dart';
 import 'ui/features/recurring_template_management/view_models/recurring_template_management_view_model.dart';
 import 'ui/features/register/view_models/register_view_model.dart';
-import 'ui/features/restore/view_models/restore_identity_view_model.dart';
 import 'ui/features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'ui/features/summary/view_models/summary_view_model.dart';
 
@@ -100,21 +99,18 @@ class SmaraAccountingApp extends StatelessWidget {
           update: (_, db, chain, _) =>
               LedgerChainVerifier(database: db, chain: chain),
         ),
-        ProxyProvider2<AppDatabase, IdentityRepository, LedgerBackupRepository>(
-          update: (_, db, identityRepository, _) => LedgerBackupRepository(
-            database: db,
-            identityRepository: identityRepository,
-          ),
-        ),
-        ProxyProvider2<
+        Provider<SettingsRepository>(create: (_) => SettingsRepository()),
+        ProxyProvider3<
           AppDatabase,
           IdentityRepository,
-          DeviceMigrationBundleRepository
+          SettingsRepository,
+          BooksCopyRepository
         >(
-          update: (_, db, identityRepository, _) =>
-              DeviceMigrationBundleRepository(
+          update: (_, db, identityRepository, settingsRepository, _) =>
+              BooksCopyRepository(
                 database: db,
                 identityRepository: identityRepository,
+                settingsRepository: settingsRepository,
               ),
         ),
         ProxyProvider3<
@@ -139,7 +135,6 @@ class SmaraAccountingApp extends StatelessWidget {
             ledgerRepository: ledgerRepository,
           ),
         ),
-        Provider<SettingsRepository>(create: (_) => SettingsRepository()),
         Provider<AppLockService>(create: (_) => AppLockService()),
         Provider<BiometricAuthenticator>(
           create: (_) => LocalAuthBiometricAuthenticator(),
@@ -236,45 +231,45 @@ class SmaraAccountingApp extends StatelessWidget {
         ChangeNotifierProxyProvider2<
           IdentityRepository,
           LedgerChainVerifier,
-          RecoveryPhraseSetupViewModel
+          FirstIdentitySetupViewModel
         >(
-          create: (context) => RecoveryPhraseSetupViewModel(
+          create: (context) => FirstIdentitySetupViewModel(
             identityRepository: context.read<IdentityRepository>(),
             chainVerifier: context.read<LedgerChainVerifier>(),
           ),
           update: (_, repository, chainVerifier, previous) =>
               previous ??
-              RecoveryPhraseSetupViewModel(
+              FirstIdentitySetupViewModel(
                 identityRepository: repository,
                 chainVerifier: chainVerifier,
               ),
         ),
-        ChangeNotifierProxyProvider2<
+        ChangeNotifierProxyProvider3<
           IdentityRepository,
           LedgerChainVerifier,
-          RestoreIdentityViewModel
+          BooksCopyRepository,
+          ContinuationViewModel
         >(
-          create: (context) => RestoreIdentityViewModel(
+          create: (context) => ContinuationViewModel(
             identityRepository: context.read<IdentityRepository>(),
             chainVerifier: context.read<LedgerChainVerifier>(),
+            booksCopyRepository: context.read<BooksCopyRepository>(),
           ),
-          update: (_, repository, chainVerifier, previous) =>
+          update: (_, repository, chainVerifier, booksCopy, previous) =>
               previous ??
-              RestoreIdentityViewModel(
+              ContinuationViewModel(
                 identityRepository: repository,
                 chainVerifier: chainVerifier,
+                booksCopyRepository: booksCopy,
               ),
         ),
-        ChangeNotifierProxyProvider<
-          DeviceMigrationBundleRepository,
-          BundleImportViewModel
-        >(
+        ChangeNotifierProxyProvider<BooksCopyRepository, BundleImportViewModel>(
           create: (context) => BundleImportViewModel(
-            bundleRepository: context.read<DeviceMigrationBundleRepository>(),
+            booksCopyRepository: context.read<BooksCopyRepository>(),
           ),
-          update: (_, bundleRepository, previous) =>
+          update: (_, booksCopyRepository, previous) =>
               previous ??
-              BundleImportViewModel(bundleRepository: bundleRepository),
+              BundleImportViewModel(booksCopyRepository: booksCopyRepository),
         ),
         ChangeNotifierProxyProvider5<
           LedgerRepository,
@@ -393,12 +388,26 @@ class _AppRouterHostState extends State<_AppRouterHost> {
     context.read<IdentityRepository>(),
     context.read<LedgerChainVerifier>(),
     context.read<InvestmentRepository>(),
-    context.read<LedgerBackupRepository>(),
-    context.read<DeviceMigrationBundleRepository>(),
+    context.read<BooksCopyRepository>(),
     context.read<StatementImportRepository>(),
     context.read<SettingsRepository>(),
     _appLockController,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    _migrateKeyAccessibilityIfNeeded();
+  }
+
+  Future<void> _migrateKeyAccessibilityIfNeeded() async {
+    final settings = context.read<SettingsRepository>();
+    final identity = context.read<IdentityRepository>();
+    await identity.migrateKeyAccessibilityIfNeeded(
+      alreadyMigrated: await settings.isKeyAccessibilityMigrated(),
+      markMigrated: () => settings.setKeyAccessibilityMigrated(true),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

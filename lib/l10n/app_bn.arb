@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "কীস্টোর ফাইল রপ্তানি করা যায়নি। আপনি এই ধাপটি এড়িয়ে যেতে পারেন।",
-  "enterPassphraseToProtect": "ফাইলটি সুরক্ষিত করতে একটি পাসফ্রেজ লিখুন।",
   "homeTapWhenArrived": "কী এসেছে জানলে ট্যাপ করুন",
   "homeReturnedTo": "{name}-এ ফেরত দেওয়া হয়েছে",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "আপনার পুনরুদ্ধার বাক্যাংশ",
-  "recoveryPhraseConfirmTitle": "আপনার বাক্যাংশ নিশ্চিত করুন",
-  "recoveryPhraseBlurb": "এই ২৪টি শব্দ হলো এই ডিভাইসটি হারিয়ে গেলে, রিসেট হলে, বা প্রতিস্থাপিত হলে আপনার লেনদেনের ইতিহাস পুনরুদ্ধার করার একমাত্র উপায়। স্মারা হিসাব-এর কোনো সার্ভার নেই এবং এটি আপনার জন্য সেগুলো পুনরুদ্ধার করতে পারে না।\n\nআপনি যদি এই ডিভাইস এবং এই বাক্যাংশ একসাথে হারান, তাহলে আপনার রেকর্ড করা প্রতিটি লেনদেন স্থায়ীভাবে যাচাই-অযোগ্য হয়ে যাবে।",
-  "recoveryPhraseWriteDown": "এই শব্দগুলো ক্রমানুসারে লিখে রাখুন এবং এই ডিভাইস থেকে আলাদা কোনো নিরাপদ জায়গায় সংরক্ষণ করুন।",
-  "iveSavedRecoveryPhrase": "আমি আমার পুনরুদ্ধার বাক্যাংশ সংরক্ষণ করেছি",
-  "confirmPhraseBlurb": "আপনি এইমাত্র সংরক্ষণ করা বাক্যাংশ থেকে অনুরোধ করা শব্দগুলো লিখুন।",
-  "wordNumber": "শব্দ #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "কীস্টোর ফাইল রপ্তানি করুন",
-  "keystoreExportBlurb": "আপনার পুনরুদ্ধার বাক্যাংশের পাশাপাশি, আপনি নিজের বেছে নেওয়া একটি পাসফ্রেজ দ্বারা সুরক্ষিত একটি এনক্রিপ্ট করা কীস্টোর ফাইল সংরক্ষণ করতে পারেন। এটি ঐচ্ছিক - আপনার পুনরুদ্ধার বাক্যাংশ একাই সবসময় আপনার সাইনিং কী পুনরুদ্ধার করতে যথেষ্ট।",
-  "keystorePassphrase": "পাসফ্রেজ",
-  "exportKeystoreFile": "কীস্টোর ফাইল রপ্তানি করুন",
   "chooseLanguageTitle": "আপনার ভাষা বেছে নিন",
   "chooseLanguageBlurb": "অ্যাপের সবকিছু এই ভাষায় দেখা যাবে। আপনি পরে সেটিংসে এটি পরিবর্তন করতে পারবেন।",
-  "chooseLanguageBip39Notice": "আপনার পুনরুদ্ধার শব্দগুচ্ছ ইংরেজিতে দেখানো হবে। এটি সর্বত্র পুনরুদ্ধার সরঞ্জামগুলি চিনতে পারে এমন একটি ছোট আদর্শ শব্দসেট ব্যবহার করে, যা এই ভাষায় এখনও উপলব্ধ নয়।",
   "chooseCurrencyTitle": "আপনার মুদ্রা বেছে নিন",
   "chooseCurrencyBlurb": "প্রতিটি হিসাব গ্রুপ (নগদ ও নগদ সমতুল্য, পেনশন ও অবসর, ইত্যাদি) আপাতত এই একটি মুদ্রা ব্যবহার করে। আপনি পরে এর জন্য একটি নতুন গ্রুপ তৈরি করে ভিন্ন মুদ্রায় হিসাব যোগ করতে পারবেন।",
   "currencyBackfillTitle": "বিদ্যমান গ্রুপগুলোর জন্য একটি মুদ্রা বেছে নিন",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "আপনার হিসাবের নাম দিন",
   "firstAccountBlurb": "এটি আপনার জন্য ইতিমধ্যে স্থাপন করা হিসাব - এটিকে আপনি চেনেন এমন একটি নাম দিন, যেমন আপনার ব্যাংকের নাম। আপনি এরপর একটি খরচ বা প্রাপ্ত রেকর্ড করবেন, তারপর আপনার পুনরুদ্ধার বাক্যাংশ দিয়ে ডিভাইসটি সুরক্ষিত করবেন।",
   "whatsMainAccountCalled": "আপনার প্রধান হিসাবের নাম কী?",
-  "restoreTitle": "সাইনিং কী পুনরুদ্ধার করুন",
-  "restoreBlurb": "এই ডিভাইসে বিদ্যমান হিসাব আছে, কিন্তু মিলে যাওয়া কোনো সাইনিং কী নেই। আপনার সংরক্ষিত পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইল থেকে এটি পুনরুদ্ধার করুন - আপনার তথ্য স্বাভাবিকভাবে যাচাই হবে, এবং কিছুই পুনরায় সাইন বা পরিবর্তিত হবে না।",
-  "recoveryPhrase24": "পুনরুদ্ধার বাক্যাংশ (সবগুলো ২৪টি শব্দ)",
-  "keystoreFile": "কীস্টোর ফাইল",
-  "keystoreFileContents": "কীস্টোর ফাইলের বিষয়বস্তু",
-  "optionalBackupFile": "ঐচ্ছিক ব্যাকআপ ফাইল",
-  "iDontHavePhrase": "আমার কাছে পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইল নেই",
-  "migrationTitle": "একটি নতুন কী-তে মাইগ্রেট করুন",
-  "migrationBlurb": "আপনার পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইল ছাড়া, এই ডিভাইসের সাইনিং কী পুনরুদ্ধার করা যাবে না। আপনি একটি নতুন কী শুরু করতে পারেন। পুরনো এন্ট্রিগুলো দৃশ্যমান থাকবে কিন্তু প্রতিস্থাপিত হবে।",
-  "iConfirmBooksValid": "আমি নিশ্চিত করছি যে বর্তমান হিসাব বৈধ",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "কেন আমরা পুরনো এন্ট্রি সম্পাদনা করি না",
   "whyWeDontEditBody": "আপনি যখন একটি ভুল ঠিক করেন, তখন আমরা পুরনো লাইনটি রাখি এবং আপনি ইতিমধ্যে যা লিখেছেন তা পরিবর্তন করার পরিবর্তে তার পাশে একটি সংশোধনী যোগ করি। এভাবে আপনার ইতিহাস সবসময় ঠিক কী ঘটেছিল এবং কখন আপনি তা সংশোধন করেছেন তা দেখায় — আপনার অজান্তে কিছুই নীরবে পরিবর্তিত হয় না।",
   "lockTitle": "আনলক করুন",
@@ -563,7 +571,6 @@
   "none": "কোনোটিই না",
   "currency": "মুদ্রা",
   "errorGeneric": "কিছু ভুল হয়েছে। আবার চেষ্টা করুন।",
-  "errorSigningIdentityMismatch": "এই পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইলটি এই ডাটাবেসের কোনো সাইনিং পরিচয়ের সাথে মেলে না।",
   "errorInvalidLedgerBackup": "এই ফাইলটি একটি বৈধ স্মারা ব্যাকআপ নয়।",
   "errorInvalidLedgerBackupNoIdentity": "এই ব্যাকআপে কোনো সাইনিং পরিচয় নেই - এটি একটি বৈধ স্মারা ব্যাকআপ নয়।",
   "errorInvalidLedgerBackupUnverified": "এই ব্যাকআপ অক্ষত হিসাব হিসেবে যাচাই হয়নি, তাই এটি পুনরুদ্ধার করা হয়নি।",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "এই ব্যাকআপটি এই ডিভাইসে থাকা পরিচয়ের চেয়ে ভিন্ন একটি সাইনিং পরিচয়ের।",
   "errorAccountNotFinancial": "এটি একটি আর্থিক হিসাব নয়।",
   "errorAccountArchived": "এই হিসাবটি লুকানো।",
   "errorAccountNotArchived": "এই হিসাবটি লুকানো নয়।",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "বিভাগ অবশ্যই আয় বা খরচ হতে হবে।",
   "validationOnlyExpenseHasMonthlyLimit": "শুধুমাত্র একটি খরচের বিভাগের মাসিক সীমা থাকতে পারে।",
   "validationInvalidTemplate": "অবৈধ টেমপ্লেট।",
-  "validationWrongKeystorePassphrase": "এই কীস্টোর ফাইলের জন্য ভুল পাসফ্রেজ।",
-  "validationInvalidKeystoreFile": "এটি একটি বৈধ কীস্টোর ফাইলের মতো মনে হচ্ছে না।",
-  "validationRestorePhraseFailed": "সেই পুনরুদ্ধার বাক্যাংশ থেকে পুনরুদ্ধার করা যায়নি।",
   "validationGenerateKeyFailed": "এই ডিভাইসে একটি সাইনিং কী তৈরি করা যায়নি: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "মাইগ্রেশন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।",
   "validationChooseBackupFile": "প্রথমে একটি ব্যাকআপ ফাইল বেছে নিন।",
   "validationPassphraseRequired": "একটি পাসফ্রেজ লিখুন।",
   "validationPinsDoNotMatch": "দুটি পিন মেলেনি।",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "একটি বৈধ পরিমাণ লিখুন।",
-  "validationConfirmWordMismatch": "শব্দ {n} আপনার সংরক্ষিত বাক্যাংশের সাথে মেলে না। এটি পরীক্ষা করে আবার চেষ্টা করুন।",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "ক্রয়ের পরিমাণ এবং একক মূল্য ধনাত্মক হতে হবে।",
   "errorInstrumentArchived": "একটি লুকানো উপকরণ কেনা যাবে না।",
   "errorNonCashCannotIncludeBrokerage": "অ-নগদ অধিগ্রহণে ব্রোকারেজ অন্তর্ভুক্ত করা যাবে না।",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "পাসফ্রেজ",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

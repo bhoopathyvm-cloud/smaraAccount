@@ -4,9 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/l10n/locale_endonyms.dart';
 import 'package:smara_accounting/main.dart';
@@ -47,7 +45,6 @@ const _secureStorage = FlutterSecureStorage(
 /// read/write/delete calls (what the app itself actually uses) work fine.
 const _secureStorageKeys = [
   'ledger_signing_private_key_seed',
-  'ledger_pending_recovery_phrase_words',
   // app-lock PIN hash (acceptance-app-lock-unlock) - must clear between
   // runs or a leftover PIN leaks into the next scenario's lock state.
   'app_lock_pin_record',
@@ -97,6 +94,26 @@ Future<void> resetToFreshDevice([WidgetTester? tester]) async {
     }
   }
   await SharedPreferencesAsync().clear();
+}
+
+/// Clears only the real OS keychain entries the signing key (and app-lock
+/// PIN) live under - keeps the on-disk database intact. Used to simulate
+/// "same books, lost private key" so the app routes to Continuation
+/// (books-copy-and-continuation) rather than a full fresh-device reset.
+Future<void> clearSigningKeyOnly(WidgetTester tester) async {
+  await tester.pump(const Duration(seconds: 2));
+  await tester.pumpWidget(const SizedBox.shrink());
+  await tester.pump();
+  for (final key in _secureStorageKeys) {
+    try {
+      await _secureStorage.delete(key: key);
+    } on PlatformException {
+      // Deleting a key that was never written throws
+      // errSecMissingEntitlement on this ad-hoc signed macOS build's
+      // legacy Keychain fallback - the goal (the key doesn't exist)
+      // already holds either way.
+    }
+  }
 }
 
 /// Scopes [inner] to the currently open [AlertDialog] so a still-visible
@@ -392,15 +409,9 @@ Finder shellNavIcon(IconData icon) {
 /// starting point every acceptance scenario needs (design.md Decision 5),
 /// since there is no pre-seeded identity to skip ahead with on this tier.
 /// Onboarding never blocks on any recovery/backup step
-/// (`ledger-integrity-signing`'s "Optional Recovery and Backup Setup"), so
-/// this then reads the real 24 recovery-phrase words many scenarios still
-/// need for restore/migration coverage straight from the already-mounted
-/// `IdentityRepository` (the phrase is no longer shown automatically, and
-/// the Settings screen that displays it on request has its own dedicated
-/// coverage elsewhere - no need to drive that UI just to obtain the
-/// words). Returns the 24 recovery-phrase words ([skipFirstWeekSetup]
-/// false callers, which land on FirstWeekSetupView instead of Home, get
-/// an empty list back - none of them use the words).
+/// (books-copy-and-continuation): New setup → language → currency →
+/// first account → guided first entry → Home. Returns once Home (or
+/// FirstWeekSetupView when [skipFirstWeekSetup] is false) is visible.
 ///
 /// Walks: SetupChoiceView (New Setup) -> LanguageSelectionView ->
 /// CurrencySelectionView (default currency follows the selected locale,
@@ -413,7 +424,7 @@ Finder shellNavIcon(IconData icon) {
 /// [onScreen], when given, is awaited at each onboarding screen worth
 /// showing (`'setup_choice'`, `'language'`, `'first_entry'`) so the store
 /// screenshot/preview tools can capture them; acceptance tests omit it.
-Future<List<String>> completeOnboardingWithGuidedEntry(
+Future<void> completeOnboardingWithGuidedEntry(
   WidgetTester tester, {
   required String amountText,
   required String categoryName,
@@ -575,9 +586,9 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
     if (attempt == 0) await onScreen?.call('first_entry');
     // Save is often below the live 800x600 fold (design.md Risks) - a raw
     // tap() hits whatever sits at that offset instead of the button, and
-    // the miss is silent enough that the 2s recovery-phrase poll just
-    // retries the whole entry forever on a wedged run. tapReliably scrolls
-    // it into view and re-taps until the phrase screen appears.
+    // the miss is silent enough that a fixed poll just retries forever on
+    // a wedged run. tapReliably scrolls it into view and re-taps until
+    // Home (or FirstWeekSetupView) appears.
     // Catch so a failed Save attempt can re-enter amount/category (same
     // pattern as core_ledger_test's re-anchoring Save loop).
     //
@@ -616,31 +627,9 @@ Future<List<String>> completeOnboardingWithGuidedEntry(
   }
 
   if (!skipFirstWeekSetup) {
-    // Wizard-specific callers land on FirstWeekSetupView, not Home, and
-    // none of them use the returned words.
-    return const [];
+    // Wizard-specific callers land on FirstWeekSetupView, not Home.
+    return;
   }
-
-  // The recovery phrase is no longer shown automatically during
-  // onboarding, and the Settings screen that would show it on request is
-  // real UI this helper doesn't need to drive just to obtain the words -
-  // that screen has its own dedicated widget-test coverage. Reading
-  // straight from the already-mounted IdentityRepository (same Provider
-  // tree the real Settings screen itself reads from) is equivalent and
-  // far more robust than navigating there, scrolling a Sliver-backed
-  // list, and popping back out.
-  final identityRepository = tester
-      .element(find.byType(Scaffold).first)
-      .read<IdentityRepository>();
-  final generated = await identityRepository.resumePendingIdentity();
-  if (generated == null) {
-    fail(
-      'completeOnboardingWithGuidedEntry: no recovery phrase was stashed '
-      'for this identity.\n${_visibleTextsDump()}',
-    );
-  }
-
-  return generated.phrase.words;
 }
 
 Finder textFieldWithLabel(String label) {

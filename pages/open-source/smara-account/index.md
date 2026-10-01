@@ -85,7 +85,7 @@ buy/sell/dividend tracking and AI-assisted research, transfers between
 accounts, importing bank statements from OFX and CSV files with saved
 category rules, a searchable running register with a guided correction
 flow, encrypted backup/restore and CSV export, optional key backups and a
-one-file device migration bundle for moving to a new device, an optional
+Books Copy for moving books to a new device, an optional
 PIN/biometric app lock, and a fully localized interface in 43 languages —
 on iOS, Android, macOS, and Linux. See
 [What's built](whats-built.md) for the full, current list.

@@ -211,23 +211,6 @@ class AppLocalizationsVi extends AppLocalizations {
       'Lưu một bản sao mã hóa của sổ sách của bạn vào nơi bạn chọn, hoặc khôi phục từ đó. Việc này khác với cụm từ khôi phục hoặc tệp keystore của bạn, vốn sao lưu khóa ký của bạn, chứ không phải sổ sách.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Khóa';
 
   @override
@@ -420,14 +403,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String savedToPath(String path) {
     return 'Đã lưu vào $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Không thể xuất tệp keystore. Bạn có thể bỏ qua bước này.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Nhập một cụm mật khẩu để bảo vệ tệp này.';
 
   @override
   String get homeTapWhenArrived => 'Chạm khi bạn biết đã nhận được gì';
@@ -813,91 +788,11 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'Cụm từ khôi phục của bạn';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Xác nhận cụm từ của bạn';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      '24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Smara Accounting không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Ghi lại các từ này theo đúng thứ tự và cất giữ ở nơi an toàn, tách biệt với thiết bị này.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'Tôi đã lưu cụm từ khôi phục của mình';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Nhập các từ được yêu cầu từ cụm từ bạn vừa lưu.';
-
-  @override
-  String wordNumber(String n) {
-    return 'Từ số $n';
-  }
-
-  @override
-  String get keystoreExportTitle => 'Xuất tệp keystore';
-
-  @override
-  String get keystoreExportBlurb =>
-      'Ngoài cụm từ khôi phục, bạn có thể lưu một tệp keystore đã mã hóa được bảo vệ bởi cụm mật khẩu do bạn chọn. Việc này không bắt buộc - chỉ riêng cụm từ khôi phục của bạn luôn đủ để khôi phục khóa ký.';
-
-  @override
-  String get keystorePassphrase => 'Cụm mật khẩu';
-
-  @override
-  String get exportKeystoreFile => 'Xuất tệp keystore';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
-
-  @override
   String get chooseLanguageTitle => 'Chọn ngôn ngữ của bạn';
 
   @override
   String get chooseLanguageBlurb =>
       'Mọi thứ trong ứng dụng sẽ hiển thị bằng ngôn ngữ này. Bạn có thể thay đổi sau trong Cài đặt.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'Cụm từ khôi phục của bạn sẽ được hiển thị bằng tiếng Anh. Cụm từ này sử dụng một tập hợp nhỏ các từ chuẩn được các công cụ khôi phục ở mọi nơi nhận biết, hiện chưa có sẵn trong ngôn ngữ này.';
 
   @override
   String get chooseCurrencyTitle => 'Chọn đơn vị tiền tệ của bạn';
@@ -935,40 +830,71 @@ class AppLocalizationsVi extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get actionImportFromBackup => 'Import from backup';
+  String get continueBooksTitle => 'Continue my books on this phone';
 
   @override
-  String get restoreTitle => 'Khôi phục khóa ký';
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
 
   @override
-  String get restoreBlurb =>
-      'Thiết bị này đã có sổ sách, nhưng không có khóa ký phù hợp. Hãy khôi phục nó từ cụm từ khôi phục hoặc tệp keystore đã lưu - dữ liệu của bạn sẽ được xác minh bình thường, và không có gì bị ký lại hay thay đổi.';
+  String get continueBooksAction => 'Continue my books on this phone';
 
   @override
-  String get recoveryPhrase24 => 'Cụm từ khôi phục (đủ 24 từ)';
+  String get restoreFromCopyAction => 'Restore from a copy';
 
   @override
-  String get keystoreFile => 'Tệp keystore';
+  String get saveBooksCopyAction => 'Save a copy of my books';
 
   @override
-  String get keystoreFileContents => 'Nội dung tệp keystore';
+  String get deviceHistoryTitle => 'Device history';
 
   @override
-  String get optionalBackupFile => 'Tệp sao lưu (không bắt buộc)';
+  String get deviceHistoryEmpty =>
+      'No Continuations yet. When you continue books on a new phone, they will show up here.';
 
   @override
-  String get iDontHavePhrase =>
-      'Tôi không có cụm từ khôi phục hoặc tệp keystore';
+  String deviceHistoryContinuedOn(String date) {
+    return 'Your books continued on this phone on $date';
+  }
 
   @override
-  String get migrationTitle => 'Chuyển sang khóa mới';
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
+    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+  }
 
   @override
-  String get migrationBlurb =>
-      'Nếu không có cụm từ khôi phục hoặc tệp keystore, khóa ký của thiết bị này không thể khôi phục được. Bạn có thể bắt đầu với một khóa mới. Các mục cũ vẫn hiển thị nhưng sẽ bị thay thế.';
+  String get backupReminderBannerTitle => 'Save a copy of your books';
 
   @override
-  String get iConfirmBooksValid => 'Tôi xác nhận sổ sách hiện tại là hợp lệ';
+  String get backupReminderSaveAction => 'Save a copy';
+
+  @override
+  String get backupReminderLaterAction => 'Later';
+
+  @override
+  String get settingsBackupReminder => 'Copy reminder';
+
+  @override
+  String get settingsBackupReminderBlurb =>
+      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+
+  @override
+  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+
+  @override
+  String get settingsBackupReminderDays => 'Remind after this many days';
+
+  @override
+  String get settingsBackupReminderEntries =>
+      'Remind after this many new entries';
+
+  @override
+  String get settingsBackupReminderSnoozeDays =>
+      'Hide for this many days after Later';
+
+  @override
+  String get settingsBackupReminderSnoozeEntries =>
+      'Hide for this many new entries after Later';
 
   @override
   String get whyWeDontEdit => 'Vì sao chúng tôi không sửa các mục cũ';
@@ -1223,10 +1149,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get errorGeneric => 'Đã xảy ra lỗi. Thử lại.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'Cụm từ khôi phục hoặc tệp keystore này không khớp với bất kỳ danh tính ký nào trong cơ sở dữ liệu này.';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'Tệp này không phải là bản sao lưu Smara hợp lệ.';
 
@@ -1242,31 +1164,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'Không thể mở tệp này dưới dạng bản sao lưu Smara: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'Bản sao lưu này thuộc về một danh tính ký khác với danh tính trên thiết bị này.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial =>
@@ -1562,15 +1459,6 @@ class AppLocalizationsVi extends AppLocalizations {
       'Không thể khôi phục bản sao lưu này - sai cụm mật khẩu, hoặc không phải tệp sao lưu Smara.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'Cần có số tiền, tài khoản, và danh mục.';
 
@@ -1629,18 +1517,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get validationInvalidTemplate => 'Mẫu không hợp lệ.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'Sai cụm mật khẩu cho tệp keystore này.';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'Tệp đó có vẻ không phải là tệp keystore hợp lệ.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'Không thể khôi phục từ cụm từ khôi phục đó.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'Không thể tạo khóa ký trên thiết bị này: $detail';
   }
@@ -1651,15 +1527,7 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'Di chuyển khóa thất bại. Vui lòng thử lại.';
-
-  @override
   String get validationChooseBackupFile => 'Hãy chọn một tệp sao lưu trước.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'Nhập một cụm mật khẩu.';
@@ -1682,11 +1550,6 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'Nhập một số tiền hợp lệ.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'Từ số $n không khớp với cụm từ đã lưu của bạn. Hãy kiểm tra lại và thử lại.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -2031,4 +1894,60 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Cụm mật khẩu';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

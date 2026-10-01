@@ -211,23 +211,6 @@ class AppLocalizationsZh extends AppLocalizations {
       '将您的账本加密副本保存到您选择的位置，或从中恢复。这与您的恢复短语或密钥库文件不同，后者备份的是您的签名密钥，而不是您的账本。';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => '锁定';
 
   @override
@@ -414,12 +397,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String savedToPath(String path) {
     return '已保存到 $path';
   }
-
-  @override
-  String get keystoreExportFailed => '无法导出密钥库文件。您可以跳过此步骤。';
-
-  @override
-  String get enterPassphraseToProtect => '输入一个密码短语以保护此文件。';
 
   @override
   String get homeTapWhenArrived => '确认收到内容后点按';
@@ -793,88 +770,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => '您的恢复短语';
-
-  @override
-  String get recoveryPhraseConfirmTitle => '确认您的恢复短语';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      '如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara Accounting 没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。';
-
-  @override
-  String get recoveryPhraseWriteDown => '按顺序写下这些单词，并将其存放在与此设备分开的安全地方。';
-
-  @override
-  String get iveSavedRecoveryPhrase => '我已保存我的恢复短语';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb => '输入您刚保存的恢复短语中被要求的单词。';
-
-  @override
-  String wordNumber(String n) {
-    return '第 $n 个单词';
-  }
-
-  @override
-  String get keystoreExportTitle => '导出密钥库文件';
-
-  @override
-  String get keystoreExportBlurb =>
-      '除了恢复短语外，您还可以保存一个由您选择的密码短语保护的加密密钥库文件。这是可选的——仅凭您的恢复短语始终足以恢复您的签名密钥。';
-
-  @override
-  String get keystorePassphrase => '密码短语';
-
-  @override
-  String get exportKeystoreFile => '导出密钥库文件';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
-
-  @override
   String get chooseLanguageTitle => '选择你的语言';
 
   @override
   String get chooseLanguageBlurb => '应用中的所有内容都将以此语言显示。你可以稍后在设置中更改。';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      '你的恢复短语将以英语显示。它使用的是一小组各地恢复工具都能识别的标准单词，而这套单词目前还没有这种语言的版本。';
 
   @override
   String get chooseCurrencyTitle => '选择您的货币';
@@ -911,39 +810,71 @@ class AppLocalizationsZh extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get actionImportFromBackup => 'Import from backup';
+  String get continueBooksTitle => 'Continue my books on this phone';
 
   @override
-  String get restoreTitle => '恢复签名密钥';
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
 
   @override
-  String get restoreBlurb =>
-      '此设备已有账本，但没有匹配的签名密钥。请从您保存的恢复短语或密钥库文件中恢复它——您的数据将正常通过验证，不会有任何数据被重新签名或更改。';
+  String get continueBooksAction => 'Continue my books on this phone';
 
   @override
-  String get recoveryPhrase24 => '恢复短语（全部 24 个单词）';
+  String get restoreFromCopyAction => 'Restore from a copy';
 
   @override
-  String get keystoreFile => '密钥库文件';
+  String get saveBooksCopyAction => 'Save a copy of my books';
 
   @override
-  String get keystoreFileContents => '密钥库文件内容';
+  String get deviceHistoryTitle => 'Device history';
 
   @override
-  String get optionalBackupFile => '可选备份文件';
+  String get deviceHistoryEmpty =>
+      'No Continuations yet. When you continue books on a new phone, they will show up here.';
 
   @override
-  String get iDontHavePhrase => '我没有恢复短语或密钥库文件';
+  String deviceHistoryContinuedOn(String date) {
+    return 'Your books continued on this phone on $date';
+  }
 
   @override
-  String get migrationTitle => '迁移到新密钥';
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
+    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+  }
 
   @override
-  String get migrationBlurb =>
-      '如果没有恢复短语或密钥库文件，此设备的签名密钥将无法恢复。您可以创建一个新密钥。旧条目仍会显示，但会被标记为已取代。';
+  String get backupReminderBannerTitle => 'Save a copy of your books';
 
   @override
-  String get iConfirmBooksValid => '我确认当前账本有效';
+  String get backupReminderSaveAction => 'Save a copy';
+
+  @override
+  String get backupReminderLaterAction => 'Later';
+
+  @override
+  String get settingsBackupReminder => 'Copy reminder';
+
+  @override
+  String get settingsBackupReminderBlurb =>
+      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+
+  @override
+  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+
+  @override
+  String get settingsBackupReminderDays => 'Remind after this many days';
+
+  @override
+  String get settingsBackupReminderEntries =>
+      'Remind after this many new entries';
+
+  @override
+  String get settingsBackupReminderSnoozeDays =>
+      'Hide for this many days after Later';
+
+  @override
+  String get settingsBackupReminderSnoozeEntries =>
+      'Hide for this many new entries after Later';
 
   @override
   String get whyWeDontEdit => '我们为什么不修改旧条目';
@@ -1190,9 +1121,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorGeneric => '出错了，请重试。';
 
   @override
-  String get errorSigningIdentityMismatch => '此恢复短语或密钥库文件与此数据库中的任何签名身份都不匹配。';
-
-  @override
   String get errorInvalidLedgerBackup => '此文件不是有效的 Smara 备份。';
 
   @override
@@ -1206,30 +1134,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return '无法将此文件作为 Smara 备份打开：$detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity => '此备份属于与本设备不同的签名身份。';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => '该账户不是财务账户。';
@@ -1473,15 +1377,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorBackupRestoreFailed => '无法恢复此备份——密码短语错误，或该文件不是 Smara 备份文件。';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired => '需要填写金额、账户和分类。';
 
   @override
@@ -1530,15 +1425,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get validationInvalidTemplate => '模板无效。';
 
   @override
-  String get validationWrongKeystorePassphrase => '此密钥库文件的密码短语错误。';
-
-  @override
-  String get validationInvalidKeystoreFile => '该文件看起来不是有效的密钥库文件。';
-
-  @override
-  String get validationRestorePhraseFailed => '无法从该恢复短语恢复。';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return '无法在此设备上生成签名密钥：$detail';
   }
@@ -1549,14 +1435,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => '迁移失败。请重试。';
-
-  @override
   String get validationChooseBackupFile => '请先选择一个备份文件。';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => '请输入密码短语。';
@@ -1577,11 +1456,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => '请输入有效金额。';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return '第 $n 个单词与您保存的恢复短语不匹配。请检查后重试。';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive => '买入数量和单价必须为正数。';
@@ -1912,4 +1786,60 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => '密码短语';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

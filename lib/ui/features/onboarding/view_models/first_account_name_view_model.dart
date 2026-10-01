@@ -8,7 +8,7 @@ import '../../../../domain/models/account.dart';
 import '../../../../l10n/l10n.dart';
 
 /// deferred-onboarding-first-entry: name the seeded starter account
-/// before the guided first Spent/Received and before the recovery phrase.
+/// before the guided first Spent/Received.
 class FirstAccountNameViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
   FirstAccountNameViewModel({required AccountRepository accountRepository})

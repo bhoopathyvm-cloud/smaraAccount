@@ -211,23 +211,6 @@ class AppLocalizationsKok extends AppLocalizations {
       'तुमच्या हिशोबाची एनक्रिप्टेड प्रत तुमी निवडिल्ल्या जाग्यार जतन करात, वा थंयसून पुनर्स्थापित करात. हें तुमच्या पुनर्प्राप्ती वाक्यां वा कीस्टोअर फायलीसावन वेगळें आसा, जी तुमची सही किल्ली बॅकअप करता, हिशोब न्हय.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'लॉक';
 
   @override
@@ -419,13 +402,6 @@ class AppLocalizationsKok extends AppLocalizations {
   String savedToPath(String path) {
     return '$path त जतन जालें';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'कीस्टोअर फायल एक्सपोर्ट करूंक जायना. तुमी हें पाऊल वगळपाक शकतात.';
-
-  @override
-  String get enterPassphraseToProtect => 'फायल राखपाक पासफ्रेज दियात.';
 
   @override
   String get homeTapWhenArrived => 'कितें पावलां तें कळ्ळ्यार टॅप करात';
@@ -805,91 +781,11 @@ class AppLocalizationsKok extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'तुमचें पुनर्प्राप्ती वाक्य';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'तुमचें वाक्य निश्चीत करात';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'हीं 24 उतरां हो एकमात मार्ग आसा तुमचो व्यवहार इतिहास परत मेळोवपाचो, जर हें साधन हरवलें, रीसेट जालें, वा बदल्लें. स्मारा हिशोबाक सर्व्हर ना आनी तो तुमच्याखातीर हीं परत मेळोवंक शकना.\n\nजर तुमी हें साधन आनी हें वाक्य एकठांय हरयलें, जाल्यार तुमी नोंद केल्लो हरेक व्यवहार सदांकाळाखातीर पडताळपाक शकना जाता.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'हीं उतरां क्रमान बरयात आनी हातूंत साधनासावन वेगळ्या सुरक्षीत जाग्यार दवरात.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'म्हजें पुनर्प्राप्ती वाक्य जतन केलां';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'तुमी आतांच जतन केल्ल्या वाक्यांतलीं मागिल्लीं उतरां भरात.';
-
-  @override
-  String wordNumber(String n) {
-    return 'उतर #$n';
-  }
-
-  @override
-  String get keystoreExportTitle => 'कीस्टोअर फायल एक्सपोर्ट करात';
-
-  @override
-  String get keystoreExportBlurb =>
-      'तुमच्या पुनर्प्राप्ती वाक्याभायर, तुमी एनक्रिप्टेड कीस्टोअर फायल जतन करूंक शकतात जी तुमी निवडिल्ल्या पासफ्रेजान राखल्या. हें वैकल्पिक आसा - एकटें पुनर्प्राप्ती वाक्य सदांच तुमची सही किल्ली परत हाडपाक पुरो.';
-
-  @override
-  String get keystorePassphrase => 'पासफ्रेज';
-
-  @override
-  String get exportKeystoreFile => 'कीस्टोअर फायल एक्सपोर्ट करात';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
-
-  @override
   String get chooseLanguageTitle => 'तुमची भास निवडात';
 
   @override
   String get chooseLanguageBlurb =>
       'अॅप्लिकेशनांतलें सगळें हे भाशेंत दाखयतले. तुमी उपरांत सेटिंग्जांत ती बदलूं येता.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'तुमचो रिकवरी फ्रेज इंग्लीशींत दाखयतलो. हो सगळे कडेन रिकवरी साधनांनी वळखिल्ल्या थोड्या मानक उतरां वापरता, जो ह्या भाशेंत आजून उपलब्ध ना.';
 
   @override
   String get chooseCurrencyTitle => 'तुमचें चलन निवडात';
@@ -926,40 +822,71 @@ class AppLocalizationsKok extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get actionImportFromBackup => 'Import from backup';
+  String get continueBooksTitle => 'Continue my books on this phone';
 
   @override
-  String get restoreTitle => 'सही किल्ली पुनर्स्थापित करात';
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
 
   @override
-  String get restoreBlurb =>
-      'ह्या साधनार सद्याचो हिशोब आसा, पूण जुळपी सही किल्ली ना. तुमच्या जतन केल्ल्या पुनर्प्राप्ती वाक्यासावन वा कीस्टोअर फायलीसावन ती पुनर्स्थापित करात - तुमचो डेटा सामान्यपणान पडताळ्ळो वता, आनी कांयच परत साइन वा बदल जावचें ना.';
+  String get continueBooksAction => 'Continue my books on this phone';
 
   @override
-  String get recoveryPhrase24 => 'पुनर्प्राप्ती वाक्य (सगळीं 24 उतरां)';
+  String get restoreFromCopyAction => 'Restore from a copy';
 
   @override
-  String get keystoreFile => 'कीस्टोअर फायल';
+  String get saveBooksCopyAction => 'Save a copy of my books';
 
   @override
-  String get keystoreFileContents => 'कीस्टोअर फायलीचो मजकूर';
+  String get deviceHistoryTitle => 'Device history';
 
   @override
-  String get optionalBackupFile => 'वैकल्पिक बॅकअप फायल';
+  String get deviceHistoryEmpty =>
+      'No Continuations yet. When you continue books on a new phone, they will show up here.';
 
   @override
-  String get iDontHavePhrase =>
-      'म्हजेकडे पुनर्प्राप्ती वाक्य वा कीस्टोअर फायल ना';
+  String deviceHistoryContinuedOn(String date) {
+    return 'Your books continued on this phone on $date';
+  }
 
   @override
-  String get migrationTitle => 'नव्या किल्लेक स्थलांतर करात';
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
+    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+  }
 
   @override
-  String get migrationBlurb =>
-      'पुनर्प्राप्ती वाक्य वा कीस्टोअर फायलीभायर, ह्या साधनाची सही किल्ली परत मेळची ना. तुमी नवी किल्ली सुरू करूंक शकतात. जुन्यो नोंदी दिसतच रावतात पूण त्यो बदल्ल्यात अशें दाखयतात.';
+  String get backupReminderBannerTitle => 'Save a copy of your books';
 
   @override
-  String get iConfirmBooksValid => 'म्हजी खात्री आसा की सद्याचो हिशोब वैध आसा';
+  String get backupReminderSaveAction => 'Save a copy';
+
+  @override
+  String get backupReminderLaterAction => 'Later';
+
+  @override
+  String get settingsBackupReminder => 'Copy reminder';
+
+  @override
+  String get settingsBackupReminderBlurb =>
+      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+
+  @override
+  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+
+  @override
+  String get settingsBackupReminderDays => 'Remind after this many days';
+
+  @override
+  String get settingsBackupReminderEntries =>
+      'Remind after this many new entries';
+
+  @override
+  String get settingsBackupReminderSnoozeDays =>
+      'Hide for this many days after Later';
+
+  @override
+  String get settingsBackupReminderSnoozeEntries =>
+      'Hide for this many new entries after Later';
 
   @override
   String get whyWeDontEdit => 'आमी जुन्यो नोंदी कित्याक बदलनात';
@@ -1214,10 +1141,6 @@ class AppLocalizationsKok extends AppLocalizations {
   String get errorGeneric => 'कांय चुकले. परत यत्न करात.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'हें पुनर्प्राप्ती वाक्य वा कीस्टोअर फायल ह्या डेटाबेसांतल्या कोणत्याच सही वळखीशी जुळना.';
-
-  @override
   String get errorInvalidLedgerBackup => 'ही फायल वैध स्मारा बॅकअप न्हय.';
 
   @override
@@ -1232,31 +1155,6 @@ class AppLocalizationsKok extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'ही फायल स्मारा बॅकअप म्हूण उगडपाक जायना: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'हो बॅकअप ह्या साधनावयल्या सही वळखीपरस वेगळ्या वळखीचो आसा.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'तें आर्थिक खातें न्हय.';
@@ -1541,15 +1439,6 @@ class AppLocalizationsKok extends AppLocalizations {
       'हो बॅकअप पुनर्स्थापित करूंक जायना - चुकिचो पासफ्रेज, वा स्मारा बॅकअप फायल न्हय.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'रक्कम, खातें, आनी वर्ग गरजेचें.';
 
@@ -1607,17 +1496,6 @@ class AppLocalizationsKok extends AppLocalizations {
   String get validationInvalidTemplate => 'अवैध टेम्प्लेट.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'ह्या कीस्टोअर फायलीचो पासफ्रेज चुकिचो.';
-
-  @override
-  String get validationInvalidKeystoreFile => 'हें वैध कीस्टोअर फायल दिसना.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'त्या पुनर्प्राप्ती वाक्यासावन पुनर्स्थापित करूंक जायना.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'ह्या साधनार सही किल्ली तयार करूंक जायना: $detail';
   }
@@ -1628,15 +1506,7 @@ class AppLocalizationsKok extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'स्थलांतर अपेशी जालें. परत यत्न करात.';
-
-  @override
   String get validationChooseBackupFile => 'पयलीं बॅकअप फायल निवडात.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'पासफ्रेज भरात.';
@@ -1659,11 +1529,6 @@ class AppLocalizationsKok extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'वैध रक्कम भरात.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'उतर $n तुमच्या जतन केल्ल्या वाक्याशी जुळना. तपासून परत यत्न करात.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -2006,4 +1871,60 @@ class AppLocalizationsKok extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'पासफ्रेज';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

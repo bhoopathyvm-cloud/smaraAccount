@@ -5,20 +5,19 @@ import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 
-/// First screen on a device with no signing identity yet (spec:
-/// `device-migration-bundle`'s "Startup Setup Choice"). New Setup
-/// proceeds exactly as first-time onboarding already did; Import From
-/// Backup skips it entirely, landing directly in restored, ready-to-use
-/// books.
+/// First screen on a device with no signing identity yet
+/// (books-copy-and-continuation: "Startup Setup Choice"). New Setup
+/// proceeds as first-time onboarding; Restore from a copy skips it,
+/// landing directly in restored books (restart required).
 class SetupChoiceView extends StatelessWidget {
   const SetupChoiceView({
     super.key,
     required this.onNewSetup,
-    required this.onImportFromBackup,
+    required this.onRestoreFromCopy,
   });
 
   final VoidCallback onNewSetup;
-  final VoidCallback onImportFromBackup;
+  final VoidCallback onRestoreFromCopy;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +43,8 @@ class SetupChoiceView extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.medium),
             OutlinedButton(
-              onPressed: onImportFromBackup,
-              child: Text(l10n.actionImportFromBackup),
+              onPressed: onRestoreFromCopy,
+              child: Text(l10n.restoreFromCopyAction),
             ),
           ],
         ),

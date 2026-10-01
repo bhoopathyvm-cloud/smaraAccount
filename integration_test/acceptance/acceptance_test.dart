@@ -3,8 +3,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:file_picker_platform_interface/file_picker_platform_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart'
-    hide AndroidOptions, WindowsOptions, LinuxOptions, WebOptions;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,13 +21,15 @@ import 'package:smara_accounting/ui/features/record_transaction/views/record_tra
 import 'package:smara_accounting/ui/features/recurring_template_management/views/recurring_template_management_view.dart';
 import 'package:smara_accounting/ui/features/register/views/register_row_tile.dart';
 import 'package:smara_accounting/ui/features/register/views/register_view.dart';
-import 'package:smara_accounting/ui/features/restore/views/restore_identity_view.dart';
+import 'package:smara_accounting/ui/features/continuation/views/continuation_view.dart';
+import 'package:smara_accounting/ui/features/settings/views/device_history_view.dart';
 import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import 'package:url_launcher_platform_interface/link.dart';
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
+import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
 import 'support/acceptance_harness.dart';
 import 'support/acceptance_locale.dart';
 import 'support/locale_fixtures.dart';
@@ -1232,117 +1232,38 @@ void main() {
   });
 
   group('identity_restore', () {
-    // Real-build acceptance coverage for `key-loss-migration`'s
-    // "Recoverable Reinstall or Device Migration": restoring a lost
-    // signing key from the recovery phrase captured during onboarding,
-    // and rejecting a wrong one.
-    //
-    // Same real-keychain access as acceptance_harness.dart's
-    // `resetToFreshDevice` - duplicated here for the same reason its own
-    // comment gives (avoiding `deleteAll()`, which fails under an ad-hoc
-    // signed macOS build with errSecMissingEntitlement).
-    const secureStorage = FlutterSecureStorage(
-      mOptions: MacOsOptions(usesDataProtectionKeychain: false),
-    );
-    const secureStorageKeys = [
-      'ledger_signing_private_key_seed',
-      'ledger_pending_recovery_phrase_words',
-    ];
-
+    // Real-build acceptance coverage for Continuation (books-copy-and-
+    // continuation): clearing the keychain while keeping books routes to
+    // /continue; continuing under a new this-device key keeps the register;
+    // Device history records the Continuation.
     setUpAll(() async {
       await resetToFreshDevice();
     });
 
-    /// Clears only the real OS keychain entries the signing key lives
-    /// under - unlike `resetToFreshDevice()`, this keeps the real on-disk
-    /// database intact. `RestoreIdentityViewModel`'s own doc comment is
-    /// explicit that restoring from a recovery phrase "never re-signs or
-    /// alters any entry - only re-derives and matches the device's
-    /// private key": it cannot recover entry data that isn't there, so
-    /// this - not a full database wipe - is what "reinstall, same
-    /// identity, lost private key" actually means for this app's
-    /// architecture (matches the existing INTEGRATION-tier reference
-    /// test's own mechanics: a shared database across two
-    /// `LedgerRepository` instances with only secure storage reset
-    /// between them).
-    Future<void> clearSigningKeyOnly(WidgetTester tester) async {
-      await tester.pump(const Duration(seconds: 2));
-      await tester.pumpWidget(const SizedBox.shrink());
-      await tester.pump();
-      for (final key in secureStorageKeys) {
-        try {
-          await secureStorage.delete(key: key);
-        } on PlatformException {
-          // Deleting a key that was never written throws
-          // errSecMissingEntitlement on this ad-hoc signed macOS build's
-          // legacy Keychain fallback - the goal (the key doesn't exist)
-          // already holds either way.
-        }
-      }
-    }
-
-    TextField phraseField(WidgetTester tester) =>
-        tester.widget<TextField>(find.byType(TextField).first);
-
     testWidgets(
-      'a lost signing key is restored from the recovery phrase; a wrong '
-      'phrase is rejected first',
+      'keychain reset keeps books → Continue my books → same register, '
+      'and Device history shows the Continuation',
       (tester) async {
         addTearDown(() => resetToFreshDevice(tester));
 
-        final words = await completeOnboardingWithGuidedEntry(
+        await completeOnboardingWithGuidedEntry(
           tester,
           amountText: '250',
           categoryName: salaryCategory,
         );
-        expect(words, hasLength(24));
 
         // Simulate reinstall: same device, database intact, private key gone.
         await clearSigningKeyOnly(tester);
         await tester.pumpWidget(const SmaraAccountingApp());
         await tester.pump();
-        await pumpUntilFound(tester, find.byType(RestoreIdentityView));
-        expect(find.byType(RestoreIdentityView), findsOneWidget);
+        await pumpUntilFound(tester, find.byType(ContinuationView));
+        expect(find.byType(ContinuationView), findsOneWidget);
+        expect(find.text(l10n.continueBooksAction), findsWidgets);
+        expect(find.text(l10n.restoreFromCopyAction), findsOneWidget);
 
-        // Wrong phrase first: reversing the word order breaks the BIP39
-        // checksum (or, on the rare chance it doesn't, derives a key that
-        // matches no identity in the database) - either way, rejected.
-        final wrongPhrase = words.reversed.join(' ');
-        // Setting the controller directly rather than enterTextReliably's
-        // live-IME simulation: _RestoreIdentityViewState reads
-        // _phraseController.text straight off the controller at submit time
-        // (no onChanged-tracked state), and re-focusing the field after the
-        // Restore button tap below stole focus was observed to leave the
-        // live IME's enterText silently not updating the controller at all.
-        phraseField(tester).controller!.text = wrongPhrase;
-        await tester.pump();
         await tapReliably(
           tester,
-          () => find.widgetWithText(ElevatedButton, l10n.actionRestore),
-          () =>
-              find
-                  .text(l10n.errorSigningIdentityMismatch)
-                  .evaluate()
-                  .isNotEmpty ||
-              find
-                  .text(l10n.validationRestorePhraseFailed)
-                  .evaluate()
-                  .isNotEmpty,
-          innerTries: 150,
-        );
-        expect(
-          find.byType(RestoreIdentityView),
-          findsOneWidget,
-          reason: 'a wrong phrase must not navigate away or restore anything',
-        );
-
-        // Now the real phrase.
-        final correctPhrase = words.join(' ');
-        phraseField(tester).controller!.text = correctPhrase;
-        await tester.pump();
-        await tapReliably(
-          tester,
-          () => find.widgetWithText(ElevatedButton, l10n.actionRestore),
+          () => find.widgetWithText(ElevatedButton, l10n.continueBooksAction),
           () => find
               .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
               .evaluate()
@@ -1350,6 +1271,30 @@ void main() {
           innerTries: 150,
         );
         expect(find.text(l10n.homeWhatYouHaveMinusWhatYouOwe), findsOneWidget);
+
+        await tester.tap(find.byIcon(TablerIcons.receipt).first);
+        await pumpUntilFound(tester, find.text('+250.00'));
+        expect(
+          find.text('+250.00'),
+          findsOneWidget,
+          reason: 'Continuation must keep existing entries',
+        );
+
+        // Device history lists the Continuation in plain words.
+        await tapReliably(
+          tester,
+          () => find.byTooltip(l10n.settingsTitle),
+          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+        );
+        await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
+        await tester.pump(const Duration(milliseconds: 300));
+        await tapReliably(
+          tester,
+          () => find.widgetWithText(OutlinedButton, l10n.deviceHistoryTitle),
+          () => find.byType(DeviceHistoryView).evaluate().isNotEmpty,
+          innerTries: 150,
+        );
+        expect(find.textContaining('continued on this phone'), findsOneWidget);
 
         await tester.pump(const Duration(seconds: 2));
       },
@@ -2472,12 +2417,11 @@ void main() {
     );
   });
 
-  group('ledger_backup', () {
-    // Real-build acceptance coverage for `ledger-backup`: exporting an
-    // encrypted backup through the real Settings GUI and restoring from
-    // it (round trip, and a foreign-identity rejection), faking the
-    // platform file picker the same way the csv_import/ofx_import groups
-    // do for the native save/open dialogs.
+  group('books_copy', () {
+    // Real-build acceptance coverage for Books Copy: saving an encrypted
+    // copy through Settings and restoring it (round trip). Foreign-
+    // identity rejection is gone — restoring always replaces. Fakes the
+    // platform file picker the same way csv_import/ofx_import do.
     const backupPassphrase = 'correct-horse-battery-staple';
     late final FilePickerPlatform defaultFilePickerPlatform;
 
@@ -2549,8 +2493,8 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
       await tapReliably(
         tester,
-        () => find.widgetWithText(ElevatedButton, l10n.actionSaveBackup),
-        () => find.text(l10n.keystorePassphrase).evaluate().isNotEmpty,
+        () => find.widgetWithText(ElevatedButton, l10n.saveBooksCopyAction),
+        () => find.text(l10n.booksCopyPassphrase).evaluate().isNotEmpty,
       );
       await enterTextReliably(
         tester,
@@ -2568,7 +2512,7 @@ void main() {
         () => fakePicker.lastSavedBytes != null,
       );
       final bytes = fakePicker.lastSavedBytes;
-      if (bytes == null) fail('Save Backup never captured any bytes');
+      if (bytes == null) fail('Save a copy never captured any bytes');
       await tapReliably(
         tester,
         () => find.byTooltip(materialL10n(tester).backButtonTooltip),
@@ -2629,7 +2573,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 300));
         await tapReliably(
           tester,
-          () => find.widgetWithText(OutlinedButton, l10n.actionRestoreBackup),
+          () => find.widgetWithText(OutlinedButton, l10n.restoreFromCopyAction),
           () => find.text(l10n.actionChooseFile).evaluate().isNotEmpty,
         );
         // The native dialog is faked - resolves synchronously to the backup
@@ -2658,9 +2602,15 @@ void main() {
         // (destructiveButtonStyle), not an ElevatedButton.
         await tapReliably(
           tester,
-          () => find.widgetWithText(OutlinedButton, l10n.actionReplace),
+          () => find.widgetWithText(ElevatedButton, l10n.actionReplace),
           () => find.text(l10n.backupRestored).evaluate().isNotEmpty,
           innerTries: 150,
+        );
+        expect(
+          find.textContaining(
+            'Entries you make later on the other device will not appear here',
+          ),
+          findsOneWidget,
         );
 
         // restoreBackup() closes the database connection and expects the
@@ -2718,7 +2668,7 @@ void main() {
     );
 
     testWidgets(
-      'restoring a backup from a different signing identity is rejected',
+      'restoring a copy from another device replaces books under this phone',
       (tester) async {
         addTearDown(() {
           FilePickerPlatform.instance = defaultFilePickerPlatform;
@@ -2727,22 +2677,20 @@ void main() {
         final fakePicker = _RecordingFilePickerPlatform();
         FilePickerPlatform.instance = fakePicker;
 
-        // Device A: onboard, record an entry, export its backup.
+        // Device A: onboard, record an entry, save a copy.
         await completeOnboardingWithGuidedEntry(
           tester,
           amountText: '250',
           categoryName: salaryCategory,
         );
-        final foreignBackupBytes = await exportBackupThroughGui(
+        final copyBytes = await exportBackupThroughGui(
           tester,
           l10n,
           fakePicker,
           passphrase: backupPassphrase,
         );
 
-        // Simulate a full reset onto a different device, then onboard fresh
-        // there - a genuinely different signing identity, not just a
-        // cleared keychain (identity_restore group's scenario).
+        // Full reset onto a different device, then onboard fresh there.
         await resetToFreshDevice(tester);
         await tester.pumpWidget(const SmaraAccountingApp());
         await tester.pump();
@@ -2752,10 +2700,10 @@ void main() {
           categoryName: salaryCategory,
         );
 
-        // Attempt to restore device A's backup onto this device (B).
+        // Restore device A's copy onto this device (B) — replaces, no foreign reject.
         fakePicker.nextPickedFile = _LedgerBackupFakePlatformFile(
-          name: 'foreign-backup.smarabackup',
-          bytes: foreignBackupBytes,
+          name: 'other-device-copy.smarabookscopy',
+          bytes: copyBytes,
         );
         await tapReliably(
           tester,
@@ -2766,13 +2714,16 @@ void main() {
         await tester.pump(const Duration(milliseconds: 300));
         await tapReliably(
           tester,
-          () => find.widgetWithText(OutlinedButton, l10n.actionRestoreBackup),
+          () => find.widgetWithText(OutlinedButton, l10n.restoreFromCopyAction),
           () => find.text(l10n.actionChooseFile).evaluate().isNotEmpty,
         );
         await tapReliably(
           tester,
           () => find.text(l10n.actionChooseFile),
-          () => find.text('foreign-backup.smarabackup').evaluate().isNotEmpty,
+          () => find
+              .text('other-device-copy.smarabookscopy')
+              .evaluate()
+              .isNotEmpty,
         );
         await enterTextReliably(
           tester,
@@ -2791,33 +2742,48 @@ void main() {
         );
         await tapReliably(
           tester,
-          () => find.widgetWithText(OutlinedButton, l10n.actionReplace),
-          () =>
-              find.text(l10n.errorForeignBackupIdentity).evaluate().isNotEmpty,
+          () => find.widgetWithText(ElevatedButton, l10n.actionReplace),
+          () => find.text(l10n.backupRestored).evaluate().isNotEmpty,
           innerTries: 150,
         );
         expect(
-          find.text(l10n.backupRestored),
-          findsNothing,
-          reason: 'a foreign identity must not be treated as a success',
+          find.textContaining(
+            'Entries you make later on the other device will not appear here',
+          ),
+          findsOneWidget,
         );
 
-        // Own data (device B's identity and entry) must be untouched. Not
-        // an explicit Cancel tap on the restore dialog first: the rejected
-        // restore's error message was observed to have already unwound the
-        // dialog itself by this point on at least one run, so this just
-        // gets back to Home/Register regardless of whichever screen that
-        // left this on.
-        if (find.text(l10n.settingsTitle).evaluate().isNotEmpty) {
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pump();
+        await tester.pumpWidget(const SmaraAccountingApp());
+        await tester.pump();
+        // After restore the private key was deleted; Continuation or Home
+        // after continue — pump until either continue or home chrome.
+        await pumpUntilFound(
+          tester,
+          find.byType(ContinuationView),
+          maxTries: 40,
+        );
+        if (find.byType(ContinuationView).evaluate().isNotEmpty) {
           await tapReliably(
             tester,
-            () => find.byTooltip(materialL10n(tester).backButtonTooltip),
-            () => find.text(l10n.settingsTitle).evaluate().isEmpty,
+            () => find.widgetWithText(ElevatedButton, l10n.continueBooksAction),
+            () => find
+                .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
+                .evaluate()
+                .isNotEmpty,
+            innerTries: 150,
           );
         }
         await tester.tap(find.byIcon(TablerIcons.receipt).first);
-        await pumpUntilFound(tester, find.text('+800.00'));
-        expect(find.text('+800.00'), findsOneWidget);
+        await pumpUntilFound(tester, find.text('+250.00'));
+        expect(
+          find.text('+250.00'),
+          findsOneWidget,
+          reason:
+              'restored copy from the other device should replace local books',
+        );
+        expect(find.text('+800.00'), findsNothing);
 
         await tester.pump(const Duration(seconds: 2));
       },
@@ -2972,6 +2938,22 @@ void main() {
     setUpAll(() async {
       await resetToFreshDevice();
     });
+
+    testWidgets(
+      'first-launch offers New setup and Restore from a copy, with no phrase step',
+      (tester) async {
+        addTearDown(() => resetToFreshDevice(tester));
+        await tester.pumpWidget(const SmaraAccountingApp());
+        await tester.pump();
+        await pumpUntilFound(tester, find.byType(SetupChoiceView));
+        expect(find.text(l10n.actionNewSetup), findsOneWidget);
+        expect(find.text(l10n.restoreFromCopyAction), findsOneWidget);
+        expect(find.textContaining('recovery phrase'), findsNothing);
+        expect(find.textContaining('keystore'), findsNothing);
+        await tester.pump(const Duration(seconds: 1));
+      },
+      timeout: const Timeout(Duration(minutes: 3)),
+    );
 
     testWidgets(
       'the first-week setup wizard creates a credit card and a cash account',

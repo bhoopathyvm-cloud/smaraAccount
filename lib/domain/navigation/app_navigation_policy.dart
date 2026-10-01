@@ -9,18 +9,18 @@ abstract final class AppNavPaths {
   static const currency = '/onboarding/currency';
   static const firstAccount = '/onboarding/first-account';
   static const firstEntry = '/onboarding/first-entry';
-  static const restore = '/restore';
-  static const migrate = '/restore/migrate';
+  static const continuePath = '/continue';
   static const currencyBackfill = '/currency-backfill';
   static const setupWizard = '/onboarding/first-week-setup';
   static const lock = '/lock';
   static const home = '/home';
 
-  /// Reachable before any signing identity exists (device-migration-bundle:
-  /// "Startup Setup Choice") - the choice screen itself, the import flow
-  /// (which never generates an identity of its own), and New Setup's
-  /// first two screens (language/currency), which run before
-  /// [IdentityRepository.confirmFirstIdentity] commits an identity.
+  /// Reachable before any signing identity exists (books-copy-and-
+  /// continuation: "Startup Setup Choice") - the choice screen itself,
+  /// the restore-from-copy flow (which never generates an identity of its
+  /// own), and New Setup's first two screens (language/currency), which
+  /// run before [IdentityRepository.confirmFirstIdentity] commits an
+  /// identity.
   static const preIdentity = {setupChoice, importBackup, language, currency};
 
   static const onboarding = {
@@ -32,7 +32,7 @@ abstract final class AppNavPaths {
     firstEntry,
   };
 
-  static const restoreRelated = {restore, migrate};
+  static const continueRelated = {continuePath};
 }
 
 /// Deep redirect policy: setup choice, identity, first-entry, key match,
@@ -74,7 +74,9 @@ class AppNavigationPolicy {
   /// Redirect path for [matchedLocation], or null to stay.
   Future<String?> resolve(String matchedLocation) async {
     final isOnboardingRoute = AppNavPaths.onboarding.contains(matchedLocation);
-    final isRestoreRoute = AppNavPaths.restoreRelated.contains(matchedLocation);
+    final isContinueRoute = AppNavPaths.continueRelated.contains(
+      matchedLocation,
+    );
     final isLockRoute = matchedLocation == AppNavPaths.lock;
 
     final identity = await _currentIdentity();
@@ -84,11 +86,10 @@ class AppNavigationPolicy {
           : AppNavPaths.setupChoice;
     }
 
-    // device-migration-bundle: no acknowledgment gate follows the guided
-    // first entry - once it's posted, an identity falls straight through
-    // to the ordinary key-match/backfill/setup-wizard/lock checks below,
-    // the same whether it came from New Setup or from an Import From
-    // Backup identity that already has entries of its own.
+    // Once the guided first entry is posted, an identity falls straight
+    // through to the ordinary key-match/backfill/setup-wizard/lock checks
+    // below, the same whether it came from New Setup or from a restore-
+    // from-copy that already has entries of its own.
     final hasRecordedFirstEntry = await _hasAnyJournalEntries();
     if (!hasRecordedFirstEntry) {
       return matchedLocation == AppNavPaths.firstAccount ||
@@ -99,7 +100,7 @@ class AppNavigationPolicy {
 
     final hasMatchingKey = await _hasMatchingStoredKey(identity);
     if (!hasMatchingKey) {
-      return isRestoreRoute ? null : AppNavPaths.restore;
+      return isContinueRoute ? null : AppNavPaths.continuePath;
     }
 
     if (!_hasVerifiedThisSession) {
@@ -123,7 +124,7 @@ class AppNavigationPolicy {
     }
 
     if (isOnboardingRoute ||
-        isRestoreRoute ||
+        isContinueRoute ||
         isCurrencyBackfillRoute ||
         isSetupWizardRoute ||
         isLockRoute) {

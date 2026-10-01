@@ -211,23 +211,6 @@ class AppLocalizationsKo extends AppLocalizations {
       '장부의 암호화된 사본을 원하는 위치에 저장하거나 그로부터 복원할 수 있습니다. 이는 서명 키를 백업하는 복구 구문이나 키스토어 파일과는 별개이며, 장부가 아닌 키를 백업합니다.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => '잠금';
 
   @override
@@ -416,12 +399,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String savedToPath(String path) {
     return '$path에 저장됨';
   }
-
-  @override
-  String get keystoreExportFailed => '키스토어 파일을 내보낼 수 없습니다. 이 단계는 건너뛸 수 있습니다.';
-
-  @override
-  String get enterPassphraseToProtect => '파일을 보호할 암호를 입력하세요.';
 
   @override
   String get homeTapWhenArrived => '도착한 금액을 알게 되면 탭하세요';
@@ -797,90 +774,11 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => '복구 구문';
-
-  @override
-  String get recoveryPhraseConfirmTitle => '구문 확인';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      '이 24개의 단어는 이 기기를 분실, 초기화 또는 교체했을 때 거래 내역을 복구할 수 있는 유일한 방법입니다. Smara 회계는 서버가 없으며 이를 대신 복구해 드릴 수 없습니다.\n\n이 기기와 이 구문을 함께 잃어버리면 지금까지 기록한 모든 거래를 영구적으로 검증할 수 없게 됩니다.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      '이 단어들을 순서대로 적어 이 기기와 분리된 안전한 곳에 보관하세요.';
-
-  @override
-  String get iveSavedRecoveryPhrase => '복구 구문을 저장했습니다';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb => '방금 저장한 구문에서 요청된 단어를 입력하세요.';
-
-  @override
-  String wordNumber(String n) {
-    return '단어 #$n';
-  }
-
-  @override
-  String get keystoreExportTitle => '키스토어 파일 내보내기';
-
-  @override
-  String get keystoreExportBlurb =>
-      '복구 구문 외에도, 직접 정한 암호로 보호되는 암호화된 키스토어 파일을 저장할 수 있습니다. 이는 선택 사항입니다 — 복구 구문만으로도 항상 서명 키를 복원하기에 충분합니다.';
-
-  @override
-  String get keystorePassphrase => '암호';
-
-  @override
-  String get exportKeystoreFile => '키스토어 파일 내보내기';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
-
-  @override
   String get chooseLanguageTitle => '언어를 선택하세요';
 
   @override
   String get chooseLanguageBlurb =>
       '앱의 모든 내용이 이 언어로 표시됩니다. 나중에 설정에서 변경할 수 있습니다.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      '복구 문구는 영어로 표시됩니다. 이는 전 세계 복구 도구가 인식하는 표준 단어의 작은 집합을 사용하며, 이 언어에는 아직 제공되지 않습니다.';
 
   @override
   String get chooseCurrencyTitle => '통화 선택';
@@ -917,39 +815,71 @@ class AppLocalizationsKo extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get actionImportFromBackup => 'Import from backup';
+  String get continueBooksTitle => 'Continue my books on this phone';
 
   @override
-  String get restoreTitle => '서명 키 복원';
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
 
   @override
-  String get restoreBlurb =>
-      '이 기기에는 기존 장부가 있지만 일치하는 서명 키가 없습니다. 저장된 복구 구문이나 키스토어 파일로 복원하세요 — 데이터는 정상적으로 검증되며, 다시 서명되거나 변경되지 않습니다.';
+  String get continueBooksAction => 'Continue my books on this phone';
 
   @override
-  String get recoveryPhrase24 => '복구 구문 (24개 단어 전체)';
+  String get restoreFromCopyAction => 'Restore from a copy';
 
   @override
-  String get keystoreFile => '키스토어 파일';
+  String get saveBooksCopyAction => 'Save a copy of my books';
 
   @override
-  String get keystoreFileContents => '키스토어 파일 내용';
+  String get deviceHistoryTitle => 'Device history';
 
   @override
-  String get optionalBackupFile => '선택적 백업 파일';
+  String get deviceHistoryEmpty =>
+      'No Continuations yet. When you continue books on a new phone, they will show up here.';
 
   @override
-  String get iDontHavePhrase => '복구 구문이나 키스토어 파일이 없습니다';
+  String deviceHistoryContinuedOn(String date) {
+    return 'Your books continued on this phone on $date';
+  }
 
   @override
-  String get migrationTitle => '새 키로 마이그레이션';
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
+    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+  }
 
   @override
-  String get migrationBlurb =>
-      '복구 구문이나 키스토어 파일이 없으면 이 기기의 서명 키를 복구할 수 없습니다. 새 키를 시작할 수 있습니다. 기존 항목은 계속 표시되지만 대체됨으로 표시됩니다.';
+  String get backupReminderBannerTitle => 'Save a copy of your books';
 
   @override
-  String get iConfirmBooksValid => '현재 장부가 유효함을 확인합니다';
+  String get backupReminderSaveAction => 'Save a copy';
+
+  @override
+  String get backupReminderLaterAction => 'Later';
+
+  @override
+  String get settingsBackupReminder => 'Copy reminder';
+
+  @override
+  String get settingsBackupReminderBlurb =>
+      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+
+  @override
+  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+
+  @override
+  String get settingsBackupReminderDays => 'Remind after this many days';
+
+  @override
+  String get settingsBackupReminderEntries =>
+      'Remind after this many new entries';
+
+  @override
+  String get settingsBackupReminderSnoozeDays =>
+      'Hide for this many days after Later';
+
+  @override
+  String get settingsBackupReminderSnoozeEntries =>
+      'Hide for this many new entries after Later';
 
   @override
   String get whyWeDontEdit => '기존 항목을 수정하지 않는 이유';
@@ -1197,10 +1127,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get errorGeneric => '문제가 발생했습니다. 다시 시도하세요.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      '이 복구 구문 또는 키스토어 파일은 이 데이터베이스의 서명 신원과 일치하지 않습니다.';
-
-  @override
   String get errorInvalidLedgerBackup => '이 파일은 유효한 Smara 백업이 아닙니다.';
 
   @override
@@ -1215,30 +1141,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return '이 파일을 Smara 백업으로 열 수 없습니다: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity => '이 백업은 이 기기의 서명 신원과 다른 신원에 속합니다.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => '이는 재무 계좌가 아닙니다.';
@@ -1492,15 +1394,6 @@ class AppLocalizationsKo extends AppLocalizations {
       '이 백업을 복원할 수 없습니다 - 암호가 틀렸거나 Smara 백업 파일이 아닙니다.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired => '금액, 계좌, 분류가 필요합니다.';
 
   @override
@@ -1549,15 +1442,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get validationInvalidTemplate => '유효하지 않은 템플릿입니다.';
 
   @override
-  String get validationWrongKeystorePassphrase => '이 키스토어 파일의 암호가 틀렸습니다.';
-
-  @override
-  String get validationInvalidKeystoreFile => '유효한 키스토어 파일이 아닌 것 같습니다.';
-
-  @override
-  String get validationRestorePhraseFailed => '그 복구 구문으로 복원할 수 없습니다.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return '이 기기에서 서명 키를 생성할 수 없습니다: $detail';
   }
@@ -1568,14 +1452,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => '마이그레이션에 실패했습니다. 다시 시도하세요.';
-
-  @override
   String get validationChooseBackupFile => '먼저 백업 파일을 선택하세요.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => '암호를 입력하세요.';
@@ -1598,11 +1475,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => '유효한 금액을 입력하세요.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return '단어 $n이(가) 저장된 구문과 일치하지 않습니다. 확인 후 다시 시도하세요.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive => '매수 수량과 단가는 양수여야 합니다.';
@@ -1939,4 +1811,60 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => '암호';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Impossible d''exporter le fichier de clés. Vous pouvez ignorer cette étape.",
-  "enterPassphraseToProtect": "Saisissez une phrase secrète pour protéger le fichier.",
   "homeTapWhenArrived": "Appuyez lorsque vous savez ce qui est arrivé",
   "homeReturnedTo": "Retourné à {name}",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Votre phrase de récupération",
-  "recoveryPhraseConfirmTitle": "Confirmez votre phrase",
-  "recoveryPhraseBlurb": "Ces 24 mots sont le seul moyen de récupérer votre historique de transactions si cet appareil est perdu, réinitialisé ou remplacé. Smara Accounting n''a pas de serveur et ne peut pas les récupérer à votre place.\n\nSi vous perdez cet appareil et cette phrase ensemble, chaque transaction que vous avez enregistrée devient définitivement invérifiable.",
-  "recoveryPhraseWriteDown": "Notez ces mots dans l''ordre et conservez-les dans un endroit sûr, séparé de cet appareil.",
-  "iveSavedRecoveryPhrase": "J''ai enregistré ma phrase de récupération",
-  "confirmPhraseBlurb": "Saisissez les mots demandés de la phrase que vous venez d''enregistrer.",
-  "wordNumber": "Mot n° {n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "Exporter le fichier de clés",
-  "keystoreExportBlurb": "En plus de votre phrase de récupération, vous pouvez enregistrer un fichier de clés chiffré protégé par une phrase secrète de votre choix. Ceci est facultatif - votre phrase de récupération seule suffit toujours à restaurer votre clé de signature.",
-  "keystorePassphrase": "Phrase secrète",
-  "exportKeystoreFile": "Exporter le fichier de clés",
   "chooseLanguageTitle": "Choisissez votre langue",
   "chooseLanguageBlurb": "Tout dans l''application s''affichera dans cette langue. Vous pourrez la changer plus tard dans les Réglages.",
-  "chooseLanguageBip39Notice": "Votre phrase de récupération sera affichée en anglais. Elle utilise un petit ensemble de mots standard reconnus partout par les outils de récupération, qui n''est pas encore disponible dans cette langue.",
   "chooseCurrencyTitle": "Choisissez votre devise",
   "chooseCurrencyBlurb": "Pour l''instant, chaque groupe de comptes (Trésorerie et équivalents de trésorerie, Retraite et pension, etc.) utilise cette devise unique. Vous pourrez toujours ajouter des comptes dans une autre devise plus tard en créant un nouveau groupe pour celle-ci.",
   "currencyBackfillTitle": "Choisissez une devise pour les groupes existants",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "Nommez votre compte",
   "firstAccountBlurb": "Voici le compte déjà créé pour vous - donnez-lui un nom que vous reconnaissez, comme celui de votre banque. Vous enregistrerez ensuite une dépense ou une recette, puis protégerez l''appareil avec votre phrase de récupération.",
   "whatsMainAccountCalled": "Comment s''appelle votre compte principal ?",
-  "restoreTitle": "Restaurer la clé de signature",
-  "restoreBlurb": "Cet appareil possède des livres existants, mais aucune clé de signature correspondante. Restaurez-la à partir de votre phrase de récupération enregistrée ou de votre fichier de clés - vos données se vérifieront normalement, et rien ne sera re-signé ni modifié.",
-  "recoveryPhrase24": "Phrase de récupération (les 24 mots)",
-  "keystoreFile": "Fichier de clés",
-  "keystoreFileContents": "Contenu du fichier de clés",
-  "optionalBackupFile": "Fichier de sauvegarde facultatif",
-  "iDontHavePhrase": "Je n''ai ni ma phrase de récupération ni le fichier de clés",
-  "migrationTitle": "Migrer vers une nouvelle clé",
-  "migrationBlurb": "Sans votre phrase de récupération ou votre fichier de clés, la clé de signature de cet appareil ne peut pas être récupérée. Vous pouvez créer une nouvelle clé. Les anciennes écritures restent visibles mais sont remplacées.",
-  "iConfirmBooksValid": "Je confirme que les livres actuels sont valides",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "Pourquoi nous ne modifions pas les anciennes écritures",
   "whyWeDontEditBody": "Lorsque vous corrigez une erreur, nous conservons la ligne d''origine et ajoutons une correction à côté au lieu de modifier ce que vous avez déjà saisi. Ainsi, votre historique montre toujours exactement ce qui s''est passé et quand vous l''avez corrigé — rien ne change discrètement dans votre dos.",
   "lockTitle": "Déverrouiller",
@@ -563,7 +571,6 @@
   "none": "Aucun",
   "currency": "Devise",
   "errorGeneric": "Une erreur s''est produite. Réessayez.",
-  "errorSigningIdentityMismatch": "Cette phrase de récupération ou ce fichier de clés ne correspond à aucune identité de signature dans cette base de données.",
   "errorInvalidLedgerBackup": "Ce fichier n''est pas une sauvegarde Smara valide.",
   "errorInvalidLedgerBackupNoIdentity": "Cette sauvegarde n''a pas d''identité de signature - ce n''est pas une sauvegarde Smara valide.",
   "errorInvalidLedgerBackupUnverified": "Cette sauvegarde n''a pas été vérifiée comme des livres intacts, elle n''a donc pas été restaurée.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Cette sauvegarde appartient à une identité de signature différente de celle de cet appareil.",
   "errorAccountNotFinancial": "Ce n''est pas un compte financier.",
   "errorAccountArchived": "Ce compte est masqué.",
   "errorAccountNotArchived": "Ce compte n''est pas masqué.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "La catégorie doit être Revenu ou Dépense.",
   "validationOnlyExpenseHasMonthlyLimit": "Seule une catégorie de dépense peut avoir une limite mensuelle.",
   "validationInvalidTemplate": "Modèle non valide.",
-  "validationWrongKeystorePassphrase": "Phrase secrète incorrecte pour ce fichier de clés.",
-  "validationInvalidKeystoreFile": "Cela ne ressemble pas à un fichier de clés valide.",
-  "validationRestorePhraseFailed": "Impossible de restaurer à partir de cette phrase de récupération.",
   "validationGenerateKeyFailed": "Impossible de générer une clé de signature sur cet appareil : {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "Échec de la migration. Réessayez.",
   "validationChooseBackupFile": "Choisissez d''abord un fichier de sauvegarde.",
   "validationPassphraseRequired": "Saisissez une phrase secrète.",
   "validationPinsDoNotMatch": "Les deux codes PIN ne correspondent pas.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Saisissez un montant valide.",
-  "validationConfirmWordMismatch": "Le mot {n} ne correspond pas à votre phrase enregistrée. Vérifiez-le et réessayez.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "La quantité achetée et le prix unitaire doivent être positifs.",
   "errorInstrumentArchived": "Impossible d''acheter un instrument masqué.",
   "errorNonCashCannotIncludeBrokerage": "Les acquisitions hors trésorerie ne peuvent pas inclure de frais de courtage.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "Phrase secrète",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
