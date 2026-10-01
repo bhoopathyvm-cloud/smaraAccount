@@ -4142,6 +4142,9 @@ final class _CsvImportFakePlatformFile extends PlatformFile {
   Future<int> length() async => _bytes.length;
 
   @override
+  int? lengthSync() => _bytes.length;
+
+  @override
   Future<Uint8List> readAsBytes() async => _bytes;
 
   @override
@@ -4162,6 +4165,7 @@ class _CsvImportFakeFilePickerPlatform extends FilePickerPlatform {
     Function(FilePickerStatus)? onFileLoading,
     int compressionQuality = 0,
     AndroidOptions androidOptions = const AndroidOptions(),
+    DarwinOptions darwinOptions = const DarwinOptions(),
     WindowsOptions windowsOptions = const WindowsOptions(),
     LinuxOptions linuxOptions = const LinuxOptions(),
     WebOptions webOptions = const WebOptions(),
@@ -4186,6 +4190,9 @@ final class _OfxImportFakePlatformFile extends PlatformFile {
   Future<int> length() async => _bytes.length;
 
   @override
+  int? lengthSync() => _bytes.length;
+
+  @override
   Future<Uint8List> readAsBytes() async => _bytes;
 
   @override
@@ -4206,6 +4213,7 @@ class _OfxImportFakeFilePickerPlatform extends FilePickerPlatform {
     Function(FilePickerStatus)? onFileLoading,
     int compressionQuality = 0,
     AndroidOptions androidOptions = const AndroidOptions(),
+    DarwinOptions darwinOptions = const DarwinOptions(),
     WindowsOptions windowsOptions = const WindowsOptions(),
     LinuxOptions linuxOptions = const LinuxOptions(),
     WebOptions webOptions = const WebOptions(),
@@ -4230,6 +4238,9 @@ final class _OrganizationFakePlatformFile extends PlatformFile {
   Future<int> length() async => _bytes.length;
 
   @override
+  int? lengthSync() => _bytes.length;
+
+  @override
   Future<Uint8List> readAsBytes() async => _bytes;
 
   @override
@@ -4250,6 +4261,7 @@ class _OrganizationFakeFilePickerPlatform extends FilePickerPlatform {
     Function(FilePickerStatus)? onFileLoading,
     int compressionQuality = 0,
     AndroidOptions androidOptions = const AndroidOptions(),
+    DarwinOptions darwinOptions = const DarwinOptions(),
     WindowsOptions windowsOptions = const WindowsOptions(),
     LinuxOptions linuxOptions = const LinuxOptions(),
     WebOptions webOptions = const WebOptions(),
@@ -4295,6 +4307,7 @@ class _RecordingFilePickerPlatform extends FilePickerPlatform {
     Function(FilePickerStatus)? onFileLoading,
     int compressionQuality = 0,
     AndroidOptions androidOptions = const AndroidOptions(),
+    DarwinOptions darwinOptions = const DarwinOptions(),
     WindowsOptions windowsOptions = const WindowsOptions(),
     LinuxOptions linuxOptions = const LinuxOptions(),
     WebOptions webOptions = const WebOptions(),
@@ -4317,6 +4330,9 @@ final class _LedgerBackupFakePlatformFile extends PlatformFile {
 
   @override
   Future<int> length() async => _bytes.length;
+
+  @override
+  int? lengthSync() => _bytes.length;
 
   @override
   Future<Uint8List> readAsBytes() async => _bytes;
