@@ -860,71 +860,71 @@ class AppLocalizationsHu extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'Könyveim folytatása ezen a telefonon';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'Ezek a könyvek az aláírókulcsuk nélkül érkeztek erre a telefonra. Folytathatja őket egy új kulccsal ezen a telefonon, vagy helyreállíthatja őket egy mentett másolatból.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'Könyveim folytatása ezen a telefonon';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'Helyreállítás másolatból';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'Másolat mentése a könyveimről';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'Eszközelőzmények';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'Még nincs folytatás. Ha egy új telefonon folytatja a könyveit, itt jelennek meg.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'A könyvei $date napon folytatódtak ezen a telefonon';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'A könyvei $continuedDate napon folytatódtak ezen a telefonon ($copyDate napon mentett másolatból)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'Mentsen másolatot a könyveiről';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'Másolat mentése';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'Később';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'Másolat-emlékeztető';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'Egy idő után vagy sok új tétel után finoman emlékeztetjük, hogy mentsen másolatot a könyveiről. A mentett másolat az egyetlen módja a könyvek visszaszerzésének, ha elveszíti ezt a telefont.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'Emlékeztessen másolat mentésére';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'Emlékeztetés ennyi nap után';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'Emlékeztetés ennyi új tétel után';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      'Elrejtés ennyi napra a „Később” után';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      'Elrejtés ennyi új tételig a „Később” után';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2079,54 +2079,54 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'Ez lecseréli a telefon összes tételét és a könyvek beállításait ($counts). Semmi sem olvad össze. A nyelv és a feloldási beállítások ezen a telefonon maradnak.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'Előbb mentsen másolatot';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count tétel';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count számla';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count kategória';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count számlacsoport';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count kedvezményezett';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count kategóriaszabály';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count importprofil';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count ismétlődő sablon';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count értékpapír';
   }
 }

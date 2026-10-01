@@ -836,71 +836,67 @@ class AppLocalizationsZh extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => '在此手机上继续使用我的账本';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      '这些账本来到此手机时没有带签名密钥。你可以用此手机的新密钥继续使用，或改为从已保存的副本恢复。';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => '在此手机上继续使用我的账本';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => '从副本恢复';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => '保存我的账本副本';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => '设备历史';
 
   @override
-  String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+  String get deviceHistoryEmpty => '暂无延续记录。在新手机上继续使用账本后，会显示在这里。';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return '你的账本于 $date 在此手机上继续';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return '你的账本于 $continuedDate 在此手机上继续（来自 $copyDate 保存的副本）';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => '保存账本副本';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => '保存副本';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => '稍后';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => '副本提醒';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      '过一段时间或新增许多记录后，我们会温和地提醒你保存账本副本。如果此手机丢失，已保存的副本是找回账本的唯一方法。';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => '提醒我保存副本';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => '多少天后提醒';
 
   @override
-  String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+  String get settingsBackupReminderEntries => '新增多少条记录后提醒';
 
   @override
-  String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+  String get settingsBackupReminderSnoozeDays => '点“稍后”后隐藏的天数';
 
   @override
-  String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+  String get settingsBackupReminderSnoozeEntries => '点“稍后”后隐藏到新增多少条记录';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -1962,54 +1958,54 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return '这将替换此手机上的所有记录和账本设置（$counts），不会合并。你的语言和解锁设置会保留在此手机上。';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => '先保存副本';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count 条记录';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count 个账户';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count 个类别';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count 个账户组';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count 个收款人';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count 条类别规则';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count 个导入配置';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count 个周期模板';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count 个投资品种';
   }
 }

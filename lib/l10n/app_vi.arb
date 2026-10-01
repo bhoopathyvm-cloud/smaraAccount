@@ -413,14 +413,14 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "continueBooksTitle": "Tiếp tục sổ sách của tôi trên điện thoại này",
+  "continueBooksBlurb": "Sổ sách này đã đến điện thoại này mà không có khóa ký. Bạn có thể tiếp tục với một khóa mới cho điện thoại này, hoặc khôi phục từ một bản sao đã lưu.",
+  "continueBooksAction": "Tiếp tục sổ sách của tôi trên điện thoại này",
+  "restoreFromCopyAction": "Khôi phục từ bản sao",
+  "saveBooksCopyAction": "Lưu một bản sao sổ sách của tôi",
+  "deviceHistoryTitle": "Lịch sử thiết bị",
+  "deviceHistoryEmpty": "Chưa có lần tiếp tục nào. Khi bạn tiếp tục sổ sách trên điện thoại mới, chúng sẽ hiện ở đây.",
+  "deviceHistoryContinuedOn": "Sổ sách của bạn được tiếp tục trên điện thoại này vào {date}",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "Sổ sách của bạn được tiếp tục trên điện thoại này vào {continuedDate} (từ bản sao lưu ngày {copyDate})",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "Lưu một bản sao sổ sách của bạn",
+  "backupReminderSaveAction": "Lưu bản sao",
+  "backupReminderLaterAction": "Để sau",
+  "settingsBackupReminder": "Nhắc lưu bản sao",
+  "settingsBackupReminderBlurb": "Chúng tôi sẽ nhẹ nhàng nhắc bạn lưu bản sao sổ sách sau một thời gian hoặc sau nhiều mục mới. Bản sao đã lưu là cách duy nhất để lấy lại sổ sách nếu mất điện thoại này.",
+  "settingsBackupReminderEnabled": "Nhắc tôi lưu bản sao",
+  "settingsBackupReminderDays": "Nhắc sau số ngày này",
+  "settingsBackupReminderEntries": "Nhắc sau số mục mới này",
+  "settingsBackupReminderSnoozeDays": "Ẩn trong số ngày này sau khi chọn Để sau",
+  "settingsBackupReminderSnoozeEntries": "Ẩn trong số mục mới này sau khi chọn Để sau",
   "whyWeDontEdit": "Vì sao chúng tôi không sửa các mục cũ",
   "whyWeDontEditBody": "Khi bạn sửa một sai sót, chúng tôi giữ nguyên dòng cũ và thêm một điều chỉnh bên cạnh nó, thay vì thay đổi những gì bạn đã nhập. Nhờ vậy lịch sử của bạn luôn cho thấy chính xác điều gì đã xảy ra và khi nào bạn đã sửa nó — không có gì âm thầm thay đổi sau lưng bạn.",
   "lockTitle": "Mở khóa",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "Cụm mật khẩu",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "Thao tác này sẽ thay thế mọi mục và cài đặt sổ sách trên điện thoại này ({counts}). Không gộp. Ngôn ngữ và cài đặt mở khóa của bạn vẫn giữ trên điện thoại này.",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "Lưu bản sao trước",
+  "replaceCountEntries": "{count} mục",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} tài khoản",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} danh mục",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} nhóm tài khoản",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} người nhận",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} quy tắc danh mục",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} hồ sơ nhập",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} mẫu định kỳ",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} công cụ đầu tư",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

@@ -850,71 +850,71 @@ class AppLocalizationsSat extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱨᱮ ᱤᱧᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱦᱟ ᱥᱮᱱ ᱢᱮ';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'ᱱᱚᱶᱟ ᱦᱤᱥᱟᱹᱵ ᱠᱚ ᱟᱡᱟᱜ ᱥᱟᱦᱤ ᱪᱟᱹᱵᱤ ᱵᱟᱹᱱᱩᱜ ᱛᱮ ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱨᱮ ᱦᱤᱡᱩᱜ ᱠᱟᱱᱟ᱾ ᱟᱢ ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱞᱟᱹᱜᱤᱫ ᱱᱟᱶᱟ ᱪᱟᱹᱵᱤ ᱥᱟᱶ ᱞᱟᱦᱟ ᱥᱮᱱ ᱫᱟᱲᱮᱭᱟᱜ ᱟ, ᱟᱨ ᱵᱟᱝ ᱥᱟᱺᱪᱟᱣ ᱠᱚᱯᱤ ᱠᱷᱚᱱ ᱨᱩᱣᱟᱹᱲ ᱫᱟᱲᱮᱭᱟᱜ ᱟ᱾';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱨᱮ ᱤᱧᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱦᱟ ᱥᱮᱱ ᱢᱮ';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'ᱠᱚᱯᱤ ᱠᱷᱚᱱ ᱨᱩᱣᱟᱹᱲ ᱢᱮ';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'ᱤᱧᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱠᱚᱯᱤ ᱥᱟᱺᱪᱟᱣ ᱢᱮ';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'ᱰᱤᱵᱟᱤᱥ ᱱᱟᱜᱟᱢ';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'ᱱᱤᱛ ᱦᱟᱹᱵᱤᱡ ᱡᱟᱦᱟᱸ ᱞᱟᱦᱟ ᱥᱮᱱ ᱵᱟᱹᱱᱩᱜ ᱟ᱾ ᱱᱟᱶᱟ ᱯᱷᱚᱱ ᱨᱮ ᱦᱤᱥᱟᱹᱵ ᱞᱟᱦᱟ ᱥᱮᱱ ᱠᱟᱛᱮ ᱱᱚᱸᱰᱮ ᱧᱮᱞᱚᱜ ᱟ᱾';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'ᱟᱢᱟᱜ ᱦᱤᱥᱟᱹᱵ $date ᱨᱮ ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱨᱮ ᱞᱟᱦᱟ ᱥᱮᱱ ᱮᱱᱟ';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'ᱟᱢᱟᱜ ᱦᱤᱥᱟᱹᱵ $continuedDate ᱨᱮ ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱨᱮ ᱞᱟᱦᱟ ᱥᱮᱱ ᱮᱱᱟ ($copyDate ᱨᱮ ᱥᱟᱺᱪᱟᱣ ᱠᱚᱯᱤ ᱠᱷᱚᱱ)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'ᱟᱢᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱠᱚᱯᱤ ᱥᱟᱺᱪᱟᱣ ᱢᱮ';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'ᱠᱚᱯᱤ ᱥᱟᱺᱪᱟᱣ ᱢᱮ';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'ᱛᱟᱭᱚᱢ ᱛᱮ';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'ᱠᱚᱯᱤ ᱩᱭᱦᱟᱹᱨ';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'ᱠᱤᱪᱷᱩ ᱚᱠᱛᱚ ᱛᱟᱭᱚᱢ ᱟᱨ ᱵᱟᱝ ᱟᱭᱢᱟ ᱱᱟᱶᱟ ᱮᱱᱴᱨᱤ ᱛᱟᱭᱚᱢ ᱟᱵᱚ ᱟᱢ ᱦᱤᱥᱟᱹᱵ ᱨᱮᱭᱟᱜ ᱠᱚᱯᱤ ᱥᱟᱺᱪᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱩᱭᱦᱟᱹᱨ ᱮᱢᱟᱢᱟᱵᱚ᱾ ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱟᱫᱚᱜ ᱠᱷᱟᱱ ᱦᱤᱥᱟᱹᱵ ᱨᱩᱣᱟᱹᱲ ᱧᱟᱢ ᱞᱟᱹᱜᱤᱫ ᱥᱟᱺᱪᱟᱣ ᱠᱚᱯᱤ ᱜᱮ ᱢᱤᱫ ᱦᱚᱨ᱾';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'ᱠᱚᱯᱤ ᱥᱟᱺᱪᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱩᱭᱦᱟᱹᱨ ᱮᱢ ᱢᱮ';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'ᱱᱚᱣᱟ ᱢᱟᱦᱟᱸ ᱛᱟᱭᱚᱢ ᱩᱭᱦᱟᱹᱨ ᱮᱢ ᱢᱮ';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'ᱱᱚᱣᱟ ᱱᱟᱶᱟ ᱮᱱᱴᱨᱤ ᱛᱟᱭᱚᱢ ᱩᱭᱦᱟᱹᱨ ᱮᱢ ᱢᱮ';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      '\'ᱛᱟᱭᱚᱢ ᱛᱮ\' ᱛᱟᱭᱚᱢ ᱱᱚᱣᱟ ᱢᱟᱦᱟᱸ ᱩᱠᱩ ᱢᱮ';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      '\'ᱛᱟᱭᱚᱢ ᱛᱮ\' ᱛᱟᱭᱚᱢ ᱱᱚᱣᱟ ᱱᱟᱶᱟ ᱮᱱᱴᱨᱤ ᱦᱟᱹᱵᱤᱡ ᱩᱠᱩ ᱢᱮ';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2057,54 +2057,54 @@ class AppLocalizationsSat extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'ᱱᱚᱶᱟ ᱫᱚ ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱨᱮᱭᱟᱜ ᱡᱚᱛᱚ ᱮᱱᱴᱨᱤ ᱟᱨ ᱦᱤᱥᱟᱹᱵ ᱥᱮᱴᱤᱝ ᱵᱚᱫᱚᱞ ᱟᱭ ($counts)᱾ ᱡᱟᱦᱟᱸᱱᱟᱜ ᱦᱚᱸ ᱢᱤᱫ ᱵᱟᱝ ᱦᱩᱭᱩᱜ ᱟ᱾ ᱟᱢᱟᱜ ᱯᱟᱹᱨᱥᱤ ᱟᱨ ᱟᱱᱞᱚᱠ ᱥᱮᱴᱤᱝ ᱱᱚᱶᱟ ᱯᱷᱚᱱ ᱨᱮ ᱜᱮ ᱛᱟᱦᱮᱸᱱᱟ᱾';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'ᱯᱟᱹᱦᱤᱞ ᱠᱚᱯᱤ ᱥᱟᱺᱪᱟᱣ ᱢᱮ';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count ᱮᱱᱴᱨᱤ';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count ᱮᱠᱟᱣᱩᱱᱴ';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count ᱡᱟᱹᱛ';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count ᱮᱠᱟᱣᱩᱱᱴ ᱜᱟᱫᱮᱞ';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count ᱧᱟᱢᱤᱭᱟᱹ';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count ᱡᱟᱹᱛ ᱟᱹᱭᱤᱱ';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count ᱟᱹᱜᱩ ᱯᱨᱚᱯᱷᱟᱭᱤᱞ';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count ᱫᱚᱦᱲᱟ ᱴᱮᱢᱯᱞᱮᱴ';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count ᱵᱮᱵᱚᱥᱟᱭ ᱦᱟᱹᱛᱤᱭᱟᱹᱨ';
   }
 }

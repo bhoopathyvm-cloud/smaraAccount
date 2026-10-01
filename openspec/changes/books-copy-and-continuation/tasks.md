@@ -41,8 +41,9 @@
 ## 7. Localization (43 languages)
 
 - [x] 7.1 Remove phrase, keystore, bundle and migration strings from `lib/l10n/app_en.arb`; add copy for save, restore, warning (entries and the books' settings replaced, counts, "Save a copy first"), Continuation, success screen, reminder banner and settings, and Device history in household wording; verify `flutter gen-l10n` succeeds
-- [~] 7.2 Translate the new strings into all 42 other ARB files and remove the deleted keys from them and from `lib/l10n/untranslated.json`; verify `test/l10n/curated_locale_smoke_test.dart`, `test/l10n/locale_packs_test.dart` and `test/acceptance_locale_fixtures_test.dart` pass and `untranslated.json` has no entries for the new keys
+- [x] 7.2 Translate the new strings into all 42 other ARB files and remove the deleted keys from them and from `lib/l10n/untranslated.json`; verify `test/l10n/curated_locale_smoke_test.dart`, `test/l10n/locale_packs_test.dart` and `test/acceptance_locale_fixtures_test.dart` pass and `untranslated.json` has no entries for the new keys
   <!-- 2026-10-01: reopened — about 30 of this change's 39 new keys (books copy, continuation, device history, reminder, replace warning) are still the English text in all 42 non-English ARB files; translations are outstanding. -->
+  <!-- 2026-10-01: done — the 30 remaining keys (+ booksCopyPassphrase where missing) translated into all 42 locales with placeholders checked; no deleted keys remain in any ARB or in untranslated.json; curated_locale_smoke_test, locale_packs_test and acceptance_locale_fixtures_test pass; full flutter test 987 passed. Lower-resource locales (brx, doi, kok, ks, mai, mni, sa, sat) are best-effort and would benefit from native review, as for the original i18n pass. -->
 - [x] 7.3 Update `integration_test/acceptance/support/locale_fixtures.dart` and `acceptance_locale.dart` for the new and removed strings; verify `flutter test test/acceptance_locale_fixtures_test.dart` passes
 
 ## 8. Integration and acceptance suites
@@ -63,6 +64,7 @@
   <!-- 2026-10-01: store tests use pumpSmaraApp (ActiveBooksSession) and capture `14_books_copy` (Settings → Books copy) instead of the recovery screen; `tool/capture_store_screenshots.sh -c iphone-6.9in` on the iPhone 17 Pro Max simulator wrote all 19 shots. -->
 - [x] 8.10 Run the full acceptance suite after the refactor, per CLAUDE.md: `tool/run_acceptance_tests.sh -d macos`; verify all groups pass
   <!-- 2026-10-01: `tool/run_acceptance_tests.sh -d macos` — 45 passed, 1 skipped (manual linked_devices_physical). Also on Android SM X230: onboarding, identity_restore, home_and_lock pass; books_copy 4/5 (first-launch restore case fails on Android only — in-process reset leaves the active books-set pointer; open). -->
+- [ ] 8.10a Android: the `books_copy` acceptance case "restore on first launch" fails on Android (4 of 5 pass) because the in-process device reset keeps the active books-set pointer; fix the harness (or app) so the case passes, or prove it is harness-only with a real fresh-install run; verify `tool/run_acceptance_tests.sh -d <android-device> books_copy` passes 5/5
 - [ ] 8.11 Run the localized acceptance runner (`tool/run_localized_acceptance_tests.sh -d macos books_copy`) and the suite for one non-Latin and one right-to-left locale (`tool/run_acceptance_tests.sh -d macos -l hi` and `-l ar`); verify all pass
 - [ ] 8.12 Device runs for the keychain/Keystore change: on an iOS device or simulator and on Android, install the previous release, record entries, update to this build, and confirm the key is re-saved and books keep verifying; then reset keychain only and confirm Continuation; record results in this task
 

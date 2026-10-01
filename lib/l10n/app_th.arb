@@ -413,14 +413,14 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "continueBooksTitle": "ใช้สมุดบัญชีของฉันต่อบนโทรศัพท์เครื่องนี้",
+  "continueBooksBlurb": "สมุดบัญชีนี้มาถึงโทรศัพท์เครื่องนี้โดยไม่มีกุญแจลงนาม คุณสามารถใช้ต่อด้วยกุญแจใหม่สำหรับโทรศัพท์เครื่องนี้ หรือกู้คืนจากสำเนาที่บันทึกไว้แทน",
+  "continueBooksAction": "ใช้สมุดบัญชีของฉันต่อบนโทรศัพท์เครื่องนี้",
+  "restoreFromCopyAction": "กู้คืนจากสำเนา",
+  "saveBooksCopyAction": "บันทึกสำเนาสมุดบัญชีของฉัน",
+  "deviceHistoryTitle": "ประวัติอุปกรณ์",
+  "deviceHistoryEmpty": "ยังไม่มีการใช้ต่อ เมื่อคุณใช้สมุดบัญชีต่อบนโทรศัพท์เครื่องใหม่ จะแสดงที่นี่",
+  "deviceHistoryContinuedOn": "สมุดบัญชีของคุณใช้ต่อบนโทรศัพท์เครื่องนี้เมื่อ {date}",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "สมุดบัญชีของคุณใช้ต่อบนโทรศัพท์เครื่องนี้เมื่อ {continuedDate} (จากสำเนาที่บันทึกเมื่อ {copyDate})",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "บันทึกสำเนาสมุดบัญชีของคุณ",
+  "backupReminderSaveAction": "บันทึกสำเนา",
+  "backupReminderLaterAction": "ภายหลัง",
+  "settingsBackupReminder": "การเตือนสำเนา",
+  "settingsBackupReminderBlurb": "เราจะเตือนให้คุณบันทึกสำเนาสมุดบัญชีเมื่อผ่านไปสักระยะหรือหลังมีรายการใหม่จำนวนมาก สำเนาที่บันทึกไว้เป็นวิธีเดียวที่จะกู้สมุดบัญชีคืนหากโทรศัพท์เครื่องนี้หาย",
+  "settingsBackupReminderEnabled": "เตือนให้บันทึกสำเนา",
+  "settingsBackupReminderDays": "เตือนหลังจากจำนวนวันนี้",
+  "settingsBackupReminderEntries": "เตือนหลังจากรายการใหม่จำนวนนี้",
+  "settingsBackupReminderSnoozeDays": "ซ่อนเป็นจำนวนวันนี้หลังกดภายหลัง",
+  "settingsBackupReminderSnoozeEntries": "ซ่อนจนมีรายการใหม่จำนวนนี้หลังกดภายหลัง",
   "whyWeDontEdit": "ทำไมเราจึงไม่แก้ไขรายการเก่า",
   "whyWeDontEditBody": "เมื่อคุณแก้ไขข้อผิดพลาด เราจะเก็บรายการเดิมไว้และเพิ่มรายการแก้ไขต่อท้าย แทนที่จะเปลี่ยนสิ่งที่คุณบันทึกไปแล้ว วิธีนี้ทำให้ประวัติของคุณแสดงสิ่งที่เกิดขึ้นจริงเสมอ รวมถึงเวลาที่คุณแก้ไข — ไม่มีอะไรถูกเปลี่ยนแปลงอย่างเงียบ ๆ โดยที่คุณไม่รู้",
   "lockTitle": "ปลดล็อก",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "วลีรหัสผ่าน",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "การดำเนินการนี้จะแทนที่รายการทั้งหมดและการตั้งค่าสมุดบัญชีบนโทรศัพท์เครื่องนี้ ({counts}) โดยไม่รวมกัน ภาษาและการตั้งค่าการปลดล็อกของคุณยังอยู่บนโทรศัพท์เครื่องนี้",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "บันทึกสำเนาก่อน",
+  "replaceCountEntries": "{count} รายการ",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} บัญชี",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} หมวดหมู่",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} กลุ่มบัญชี",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} ผู้รับเงิน",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} กฎหมวดหมู่",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} โปรไฟล์นำเข้า",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} แม่แบบที่เกิดซ้ำ",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} หลักทรัพย์",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

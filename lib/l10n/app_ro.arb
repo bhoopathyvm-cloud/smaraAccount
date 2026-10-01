@@ -413,14 +413,14 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "continueBooksTitle": "Continuă registrele mele pe acest telefon",
+  "continueBooksBlurb": "Aceste registre au ajuns pe acest telefon fără cheia lor de semnare. Le poți continua cu o cheie nouă pentru acest telefon sau poți restaura dintr-o copie salvată.",
+  "continueBooksAction": "Continuă registrele mele pe acest telefon",
+  "restoreFromCopyAction": "Restaurează dintr-o copie",
+  "saveBooksCopyAction": "Salvează o copie a registrelor mele",
+  "deviceHistoryTitle": "Istoricul dispozitivului",
+  "deviceHistoryEmpty": "Încă nu există continuări. Când continui registrele pe un telefon nou, vor apărea aici.",
+  "deviceHistoryContinuedOn": "Registrele tale au continuat pe acest telefon la {date}",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "Registrele tale au continuat pe acest telefon la {continuedDate} (dintr-o copie salvată la {copyDate})",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "Salvează o copie a registrelor",
+  "backupReminderSaveAction": "Salvează o copie",
+  "backupReminderLaterAction": "Mai târziu",
+  "settingsBackupReminder": "Memento pentru copie",
+  "settingsBackupReminderBlurb": "Îți vom aminti să salvezi o copie a registrelor după o vreme sau după multe înregistrări noi. O copie salvată este singura cale de a recupera registrele dacă pierzi acest telefon.",
+  "settingsBackupReminderEnabled": "Amintește-mi să salvez o copie",
+  "settingsBackupReminderDays": "Amintește după atâtea zile",
+  "settingsBackupReminderEntries": "Amintește după atâtea înregistrări noi",
+  "settingsBackupReminderSnoozeDays": "Ascunde atâtea zile după „Mai târziu”",
+  "settingsBackupReminderSnoozeEntries": "Ascunde pentru atâtea înregistrări noi după „Mai târziu”",
   "whyWeDontEdit": "De ce nu edităm înregistrările vechi",
   "whyWeDontEditBody": "Când corectați o greșeală, păstrăm linia veche și adăugăm o corecție lângă ea, în loc să schimbăm ce ați introdus deja. Astfel, istoricul dvs. arată mereu exact ce s-a întâmplat și când ați corectat - nimic nu se schimbă pe ascuns.",
   "lockTitle": "Deblochează",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "Frază de acces",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "Aceasta va înlocui toate înregistrările și setările registrelor de pe acest telefon ({counts}). Nu se combină nimic. Limba și setările de deblocare rămân pe acest telefon.",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "Salvează mai întâi o copie",
+  "replaceCountEntries": "{count} înregistrări",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} conturi",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} categorii",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} grupuri de conturi",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} beneficiari",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} reguli de categorie",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} profiluri de import",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} șabloane recurente",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} instrumente",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {
