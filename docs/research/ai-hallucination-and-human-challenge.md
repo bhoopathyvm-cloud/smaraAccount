@@ -333,3 +333,38 @@ keystore file, and a device migration bundle." It came from "the
 - NTSB material on automation dependency: not checked; FAA SAFO 13002 is
   enough for the analogy.
 - Parasuraman and Manzey abstract wording: not verified (see A10).
+
+---
+
+## Addendum (2026-10-01): signing-key sources for the rewritten post
+
+**NIST SP 800-57 Part 1 Rev. 5, *Recommendation for Key Management***
+(May 2020), Appendix B.3.1. <https://doi.org/10.6028/NIST.SP.800-57pt1r5>
+Status: **verified** (text extracted from the PDF).
+- B.3.1.1: "In general, private signature keys shall not be archived …
+  Key backup is not usually desirable for the private key of a signing
+  key pair since support for the non-reputability of the signature comes
+  into question."
+- B.3.1.1: "Instead of backing up the private signature key, a second
+  private signature key and corresponding public key could be generated".
+- B.3.1.2: "It is appropriate to backup or archive a public
+  signature-verification key for as long as required in order to verify
+  the information signed by the corresponding private signature key."
+- Relevance: this is the tester's question, "isn't the public key
+  enough?", as an official recommendation.
+
+**NIST IR 8202, *Blockchain Technology Overview*** (October 2018).
+<https://doi.org/10.6028/NIST.IR.8202>
+Status: **verified.**
+- "Each block is cryptographically linked to the previous one (making it
+  tamper evident)".
+
+**NIST FIPS 186-5, *Digital Signature Standard*** (February 3, 2023).
+<https://doi.org/10.6028/NIST.FIPS.186-5>
+Status: **verified.** Section 7 specifies EdDSA, the algorithm family
+behind Ed25519, which the app uses.
+
+**NIST doesn't publish accounting standards.** "Never erase; correct with
+a new entry" is traditional bookkeeping practice. National rules (for
+example the Swiss GeBüV and the German GoBD) were not checked at the
+primary source, so the post states the practice without citing a law.
