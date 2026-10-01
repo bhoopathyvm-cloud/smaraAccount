@@ -2555,8 +2555,13 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(l10n.settingsTitle).hitTestable(),
-          () => find.text(l10n.settingsFetchMarketPrices).evaluate().isNotEmpty,
+          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
           innerTries: 150,
+        );
+        // Below the books switcher and linked-devices sections.
+        await scrollSettingsUntilVisible(
+          tester,
+          find.text(l10n.settingsFetchMarketPrices),
         );
         bool marketFetchOff() {
           final tiles = find.byType(SwitchListTile).evaluate();
@@ -2644,12 +2649,11 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(l10n.settingsTitle).hitTestable(),
-          () => find
-              .text(l10n.settingsFavouriteResearchTool)
-              .evaluate()
-              .isNotEmpty,
+          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
           innerTries: 150,
         );
+        // Below the books switcher and linked-devices sections.
+        await scrollSettingsUntilVisible(tester, researchToolDropdown());
 
         await tapReliably(
           tester,
@@ -4380,6 +4384,12 @@ void main() {
           tester,
           () => shellNavIcon(TablerIcons.receipt),
           () => find.byType(RegisterView).evaluate().isNotEmpty,
+        );
+        await pumpUntilFound(
+          tester,
+          find.text(
+            englishAppLocalizations.splitCounterpartMore('Other Expense', '1'),
+          ),
         );
         // Split rows summarize as "first category +N more", not every name -
         // asserted in English regardless of `kAcceptanceLocaleTag`: this is
