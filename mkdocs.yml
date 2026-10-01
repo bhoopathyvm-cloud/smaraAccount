@@ -17,7 +17,7 @@ nav:
   - Blog:
       - From a Weekend Idea to a Shipping Product: blog/00-from-a-weekend-idea-to-a-shipping-product.md
       - The Words in the Code Are the Model: blog/13-the-words-in-the-code-are-the-model.md
-      - The 24 Words Nobody Needed: blog/14-ai-is-an-amplifier-not-the-pilot.md
+      - Are You Sure Your AI Is Right?: blog/14-ai-is-an-amplifier-not-the-pilot.md
   - About: about.md
 
 theme:
