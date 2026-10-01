@@ -175,4 +175,71 @@ void main() {
       expect(exported.containsKey('backupReminderSnoozeUntil'), isFalse);
     });
   });
+
+  group('importBooksSettings', () {
+    test('applies books settings from a copy', () async {
+      final repository = SettingsRepository();
+      await repository.importBooksSettings({
+        'referenceRateLookupEnabled': true,
+        'referenceRateProvider': 'openErApi',
+        'marketPriceFetchEnabled': false,
+        'quoteProvider': 'stooq',
+        'defaultExchange': 'LSE',
+        'firstWeekSetupCompleted': true,
+      });
+
+      expect(await repository.isReferenceRateLookupEnabled(), isTrue);
+      expect(
+        await repository.selectedProvider(),
+        equals(ExchangeRateProvider.openErApi),
+      );
+      expect(await repository.isMarketPriceFetchEnabled(), isFalse);
+      expect(await repository.isFirstWeekSetupCompleted(), isTrue);
+      expect(await repository.defaultExchangeCode(), equals('LSE'));
+    });
+
+    test('never overwrites device settings carried in a hostile map', () async {
+      final repository = SettingsRepository();
+      await repository.setPreferredLocaleTag('hi');
+      await repository.setSelectedResearchTool(ResearchTool.claude);
+      await repository.setAppLockEnabled(true);
+      await repository.setAppLockTimeoutMinutes(15);
+      await repository.setBackupReminderEnabled(false);
+      await repository.setBackupReminderDays(10);
+      await repository.recordBooksCopySaved(
+        at: DateTime.utc(2026, 2, 1),
+        entryCount: 7,
+      );
+
+      await repository.importBooksSettings({
+        'preferredLocaleTag': 'ta',
+        'researchTool': 'chatgpt',
+        'appLockEnabled': false,
+        'appLockTimeoutMinutes': 1,
+        'backupReminderEnabled': true,
+        'backupReminderDays': 99,
+        'lastCopySavedAt': '2099-01-01T00:00:00.000Z',
+        'entryCountAtLastCopy': 9999,
+        'referenceRateLookupEnabled': true,
+        'firstWeekSetupCompleted': true,
+      });
+
+      expect(await repository.preferredLocaleTag(), equals('hi'));
+      expect(
+        await repository.selectedResearchTool(),
+        equals(ResearchTool.claude),
+      );
+      expect(await repository.isAppLockEnabled(), isTrue);
+      expect(await repository.appLockTimeoutMinutes(), equals(15));
+      expect(await repository.isBackupReminderEnabled(), isFalse);
+      expect(await repository.backupReminderDays(), equals(10));
+      expect(
+        await repository.lastCopySavedAt(),
+        equals(DateTime.utc(2026, 2, 1)),
+      );
+      expect(await repository.entryCountAtLastCopy(), equals(7));
+      expect(await repository.isReferenceRateLookupEnabled(), isTrue);
+      expect(await repository.isFirstWeekSetupCompleted(), isTrue);
+    });
+  });
 }
