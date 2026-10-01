@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "{n}. szó",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "Válassz nyelvet",
   "chooseLanguageBlurb": "Az alkalmazás mindene ezen a nyelven fog megjelenni. Később a Beállításokban megváltoztathatod.",
   "chooseCurrencyTitle": "Válassza ki a pénznemét",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "Nevezze el a számláját",
   "firstAccountBlurb": "Ez az a számla, amely már be van állítva Önnek - adjon neki egy Ön számára ismerős nevet, például a bankjáét. Ezután rögzít egy Kiadást vagy Bevételt, majd megvédi az eszközt a helyreállítási kifejezésével.",
   "whatsMainAccountCalled": "Mi a fő számlájának a neve?",
-  "optionalBackupFile": "Opcionális biztonsági mentés fájl",
-  "iConfirmBooksValid": "Megerősítem, hogy a jelenlegi könyvek érvényesek",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "Miért nem szerkesztjük a régi tételeket",
   "whyWeDontEditBody": "Amikor kijavít egy hibát, megtartjuk a régi sort, és egy korrekciót adunk hozzá mellé, ahelyett hogy megváltoztatnánk, amit már beírt. Így az előzményei mindig pontosan mutatják, mi történt, és mikor javította ki — semmi sem változik csendben a háta mögött.",
   "lockTitle": "Feloldás",
@@ -542,7 +571,6 @@
   "none": "Nincs",
   "currency": "Pénznem",
   "errorGeneric": "Hiba történt. Próbálja újra.",
-  "errorSigningIdentityMismatch": "Ez a helyreállítási kifejezés vagy kulcstartó fájl nem egyezik egyetlen aláíró identitással sem ebben az adatbázisban.",
   "errorInvalidLedgerBackup": "Ez a fájl nem érvényes Smara biztonsági mentés.",
   "errorInvalidLedgerBackupNoIdentity": "Ennek a biztonsági mentésnek nincs aláíró identitása - ez nem érvényes Smara biztonsági mentés.",
   "errorInvalidLedgerBackupUnverified": "Ez a biztonsági mentés nem igazolódott sértetlen könyvekként, ezért nem lett visszaállítva.",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Ez a biztonsági mentés egy másik aláíró identitáshoz tartozik, mint amelyik ezen az eszközön van.",
   "errorAccountNotFinancial": "Ez nem pénzügyi számla.",
   "errorAccountArchived": "Az a számla el van rejtve.",
   "errorAccountNotArchived": "Az a számla nincs elrejtve.",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "A kategóriának bevételnek vagy kiadásnak kell lennie.",
   "validationOnlyExpenseHasMonthlyLimit": "Csak kiadási kategóriának lehet havi kerete.",
   "validationInvalidTemplate": "Érvénytelen sablon.",
-  "validationWrongKeystorePassphrase": "Hibás jelmondat ehhez a kulcstartó fájlhoz.",
-  "validationInvalidKeystoreFile": "Ez nem tűnik érvényes kulcstartó fájlnak.",
-  "validationRestorePhraseFailed": "Nem sikerült visszaállítani abból a helyreállítási kifejezésből.",
   "validationGenerateKeyFailed": "Nem sikerült aláíró kulcsot generálni ezen az eszközön: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "A migráció sikertelen volt. Kérjük, próbálja újra.",
   "validationChooseBackupFile": "Először válasszon biztonsági mentés fájlt.",
   "validationPassphraseRequired": "Adjon meg egy jelmondatot.",
   "validationPinsDoNotMatch": "A két PIN nem egyezik.",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Adjon meg egy érvényes összeget.",
-  "validationConfirmWordMismatch": "A(z) {n}. szó nem egyezik az elmentett kifejezésével. Ellenőrizze, és próbálja újra.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "A vételi mennyiségnek és az egységárnak pozitívnak kell lennie.",
   "errorInstrumentArchived": "Nem vásárolható archivált eszköz.",
   "errorNonCashCannotIncludeBrokerage": "Nem készpénzes szerzések nem tartalmazhatnak bróker jutalékot.",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "Jelmondat",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "Jelmondat"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

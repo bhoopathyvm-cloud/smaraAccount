@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import '../../../../data/repositories/books_copy_repository.dart';
 import '../../../../domain/investment/exchange_registry.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/quote_provider.dart';
@@ -12,8 +12,8 @@ import '../../../../domain/models/research_tool.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
-import '../../../core/destructive_confirmation.dart';
 import '../../../../l10n/l10n.dart';
+import '../../setup_choice/views/books_copy_restored_success_dialog.dart';
 import '../view_models/settings_view_model.dart';
 
 /// Views are lean. No business logic, no Repository calls. Listen to the
@@ -602,11 +602,12 @@ class SettingsView extends StatelessWidget {
                         return;
                       }
 
-                      final confirmed = await confirmDestructiveAction(
+                      final counts = await viewModel.replacementCounts();
+                      if (!dialogContext.mounted) return;
+                      final confirmed = await _confirmReplaceBooks(
                         context: dialogContext,
-                        title: l10n.replaceBooksTitle,
-                        message: l10n.replaceBooksBody,
-                        confirmLabel: l10n.actionReplace,
+                        viewModel: viewModel,
+                        counts: counts,
                       );
                       if (!confirmed) return;
 
@@ -620,7 +621,9 @@ class SettingsView extends StatelessWidget {
                           Navigator.of(dialogContext).pop();
                         }
                         if (pageContext.mounted) {
-                          _showRestoredSuccessDialog(pageContext);
+                          await showBooksCopyRestoredSuccessDialog(
+                            pageContext,
+                          );
                         }
                       } else {
                         setDialogState(() {
@@ -635,6 +638,82 @@ class SettingsView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> _confirmReplaceBooks({
+    required BuildContext context,
+    required SettingsViewModel viewModel,
+    required BooksReplacementCounts counts,
+  }) async {
+    final l10n = l10nOf(context);
+    final summary = _replacementCountsSummary(l10n, counts);
+    final message = summary.isEmpty
+        ? l10n.replaceBooksBody
+        : l10n.replaceBooksWarning(summary);
+
+    while (true) {
+      if (!context.mounted) return false;
+      final choice = await showDialog<String>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(l10n.replaceBooksTitle),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop('cancel'),
+              child: Text(l10n.actionCancel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop('saveFirst'),
+              child: Text(l10n.saveCopyFirstAction),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(dialogContext).pop('replace'),
+              child: Text(l10n.actionReplace),
+            ),
+          ],
+        ),
+      );
+      if (choice == 'replace') return true;
+      if (choice != 'saveFirst') return false;
+      if (!context.mounted) return false;
+      await _showSaveBackupDialog(context, viewModel);
+    }
+  }
+
+  String _replacementCountsSummary(
+    AppLocalizations l10n,
+    BooksReplacementCounts counts,
+  ) {
+    final parts = <String>[];
+    if (counts.entries > 0) {
+      parts.add(l10n.replaceCountEntries(counts.entries));
+    }
+    if (counts.categories > 0) {
+      parts.add(l10n.replaceCountCategories(counts.categories));
+    }
+    if (counts.financialAccounts > 0) {
+      parts.add(l10n.replaceCountAccounts(counts.financialAccounts));
+    }
+    if (counts.userAccountGroups > 0) {
+      parts.add(l10n.replaceCountGroups(counts.userAccountGroups));
+    }
+    if (counts.payees > 0) {
+      parts.add(l10n.replaceCountPayees(counts.payees));
+    }
+    if (counts.categoryRules > 0) {
+      parts.add(l10n.replaceCountCategoryRules(counts.categoryRules));
+    }
+    if (counts.csvImportProfiles > 0) {
+      parts.add(l10n.replaceCountCsvProfiles(counts.csvImportProfiles));
+    }
+    if (counts.recurringTemplates > 0) {
+      parts.add(l10n.replaceCountRecurringTemplates(counts.recurringTemplates));
+    }
+    if (counts.instruments > 0) {
+      parts.add(l10n.replaceCountInstruments(counts.instruments));
+    }
+    return parts.join(', ');
   }
 
   Future<void> _showSetPinDialog(
@@ -794,29 +873,6 @@ class SettingsView extends StatelessWidget {
     );
   }
 
-  void _showRestoredSuccessDialog(BuildContext context) {
-    final l10n = l10nOf(context);
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.backupRestored),
-        content: Text(l10n.backupRestoredBody),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              if (Platform.isAndroid || Platform.isIOS) {
-                SystemNavigator.pop();
-              } else {
-                exit(0);
-              }
-            },
-            child: Text(l10n.actionCloseApp),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 String _exchangeRateProviderLabel(

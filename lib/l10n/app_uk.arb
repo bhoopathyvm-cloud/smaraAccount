@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "Слово №{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "Оберіть свою мову",
   "chooseLanguageBlurb": "Усе в застосунку відображатиметься цією мовою. Ви можете змінити це пізніше в Налаштуваннях.",
   "chooseCurrencyTitle": "Виберіть вашу валюту",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "Назвіть свій рахунок",
   "firstAccountBlurb": "Це рахунок, який уже налаштований для вас - дайте йому назву, яку ви впізнаєте, наприклад назву вашого банку. Далі ви запишете одну операцію Витрачено або Отримано, а потім захистите пристрій своєю відновлювальною фразою.",
   "whatsMainAccountCalled": "Як називається ваш основний рахунок?",
-  "optionalBackupFile": "Необов''язковий файл резервної копії",
-  "iConfirmBooksValid": "Я підтверджую, що поточні книги дійсні",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "Чому ми не редагуємо старі записи",
   "whyWeDontEditBody": "Коли ви виправляєте помилку, ми зберігаємо старий рядок і додаємо виправлення поруч із ним, замість того щоб змінювати те, що ви вже ввели. Так ваша історія завжди показує, що саме сталося і коли ви це виправили — нічого не змінюється непомітно у вас за спиною.",
   "lockTitle": "Розблокувати",
@@ -542,7 +571,6 @@
   "none": "Немає",
   "currency": "Валюта",
   "errorGeneric": "Щось пішло не так. Спробуйте ще раз.",
-  "errorSigningIdentityMismatch": "Ця відновлювальна фраза або файл keystore не відповідає жодному ідентифікатору підпису в цій базі даних.",
   "errorInvalidLedgerBackup": "Цей файл не є дійсною резервною копією Smara.",
   "errorInvalidLedgerBackupNoIdentity": "Ця резервна копія не має ідентифікатора підпису - вона не є дійсною резервною копією Smara.",
   "errorInvalidLedgerBackupUnverified": "Цю резервну копію не вдалося перевірити як цілісні книги, тому її не було відновлено.",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Ця резервна копія належить іншому ідентифікатору підпису, ніж той, що на цьому пристрої.",
   "errorAccountNotFinancial": "Це не фінансовий рахунок.",
   "errorAccountArchived": "Цей рахунок приховано.",
   "errorAccountNotArchived": "Цей рахунок не приховано.",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "Категорія має бути Дохід або Витрата.",
   "validationOnlyExpenseHasMonthlyLimit": "Лише категорія Витрата може мати місячний ліміт.",
   "validationInvalidTemplate": "Недійсний шаблон.",
-  "validationWrongKeystorePassphrase": "Неправильна парольна фраза для цього файлу keystore.",
-  "validationInvalidKeystoreFile": "Це не схоже на дійсний файл keystore.",
-  "validationRestorePhraseFailed": "Не вдалося відновити з цієї відновлювальної фрази.",
   "validationGenerateKeyFailed": "Не вдалося згенерувати ключ підпису на цьому пристрої: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "Міграція не вдалася. Спробуйте ще раз.",
   "validationChooseBackupFile": "Спочатку виберіть файл резервної копії.",
   "validationPassphraseRequired": "Введіть парольну фразу.",
   "validationPinsDoNotMatch": "Два PIN-коди не збігаються.",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Введіть дійсну суму.",
-  "validationConfirmWordMismatch": "Слово {n} не збігається з вашою збереженою фразою. Перевірте і спробуйте ще раз.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "Кількість купівлі та ціна за одиницю мають бути додатними.",
   "errorInstrumentArchived": "Неможливо купити прихований інструмент.",
   "errorNonCashCannotIncludeBrokerage": "Негрошові надходження не можуть містити брокерську комісію.",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "Парольна фраза",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "Парольна фраза"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

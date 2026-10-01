@@ -784,11 +784,6 @@ class AppLocalizationsSa extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'पदम् #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'स्वभाषां चिनुत';
 
   @override
@@ -828,9 +823,6 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -898,13 +890,6 @@ class AppLocalizationsSa extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'ऐच्छिका प्रतिलिपिसञ्चिका';
-
-  @override
-  String get iConfirmBooksValid =>
-      'अहं निश्चिनोमि यत् सम्प्रति लेखाः वैध सन्ति';
 
   @override
   String get whyWeDontEdit => 'वयं पुरातनप्रविष्टीः किमर्थं न सम्पादयामः';
@@ -1159,10 +1144,6 @@ class AppLocalizationsSa extends AppLocalizations {
   String get errorGeneric => 'किमपि अशुद्धम् अभवत्। पुनः प्रयतताम्।';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'इदं स्मृतिवाक्यं अथवा कुञ्जिकाभाण्डारसञ्चिका अस्मिन् दत्तांशकोशे कस्याश्चिदपि हस्ताक्षरपरिचयस्य सह न मेलति।';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'इयं सञ्चिका वैधा स्मारा-प्रतिलिपिः नास्ति।';
 
@@ -1178,31 +1159,6 @@ class AppLocalizationsSa extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'इयं सञ्चिका स्मारा-प्रतिलिपिरूपेण उद्घाटयितुं न शक्यते स्म: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'इयं प्रतिलिपिः अस्मात् यन्त्रस्य हस्ताक्षरपरिचयात् भिन्नस्य परिचयस्य अस्ति।';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'सः वित्तीयः लेखः नास्ति।';
@@ -1493,15 +1449,6 @@ class AppLocalizationsSa extends AppLocalizations {
       'इयं प्रतिलिपिः पुनःस्थापयितुं न शक्यते स्म - अशुद्धं स्मृतिवाक्यम्, अथवा इयं स्मारा-प्रतिलिपिः नास्ति।';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'राशिः, लेखः, वर्गश्च आवश्यकाः।';
 
@@ -1558,18 +1505,6 @@ class AppLocalizationsSa extends AppLocalizations {
   String get validationInvalidTemplate => 'अवैधः साञ्चः।';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'अस्याः कुञ्जिकाभाण्डारसञ्चिकायाः कृते अशुद्धं स्मृतिवाक्यम्।';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'इदं वैधा कुञ्जिकाभाण्डारसञ्चिका इव न दृश्यते।';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'तस्मात् स्मृतिवाक्यात् पुनःस्थापयितुं न शक्यते स्म।';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'अस्मिन् यन्त्रे हस्ताक्षरकुञ्जिकां जनयितुं न शक्यते स्म: $detail';
   }
@@ -1580,15 +1515,7 @@ class AppLocalizationsSa extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'प्रव्रजनं विफलम्। कृपया पुनः प्रयतताम्।';
-
-  @override
   String get validationChooseBackupFile => 'प्रथमं प्रतिलिपिसञ्चिका चीयताम्।';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'स्मृतिवाक्यं प्रविश्यताम्।';
@@ -1611,11 +1538,6 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'वैधां राशिं प्रविशतु।';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'पदम् $n भवतः रक्षितया वाक्यया सह न मेलति। परीक्ष्य पुनः प्रयतताम्।';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1963,4 +1885,57 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'स्मृतिवाक्यम्';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

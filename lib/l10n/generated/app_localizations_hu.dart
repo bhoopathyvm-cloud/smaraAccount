@@ -792,11 +792,6 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return '$n. szó';
-  }
-
-  @override
   String get chooseLanguageTitle => 'Válassz nyelvet';
 
   @override
@@ -837,9 +832,6 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -907,13 +899,6 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'Opcionális biztonsági mentés fájl';
-
-  @override
-  String get iConfirmBooksValid =>
-      'Megerősítem, hogy a jelenlegi könyvek érvényesek';
 
   @override
   String get whyWeDontEdit => 'Miért nem szerkesztjük a régi tételeket';
@@ -1170,10 +1155,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get errorGeneric => 'Hiba történt. Próbálja újra.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'Ez a helyreállítási kifejezés vagy kulcstartó fájl nem egyezik egyetlen aláíró identitással sem ebben az adatbázisban.';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'Ez a fájl nem érvényes Smara biztonsági mentés.';
 
@@ -1189,31 +1170,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'Ez a fájl nem nyitható meg Smara biztonsági mentésként: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'Ez a biztonsági mentés egy másik aláíró identitáshoz tartozik, mint amelyik ezen az eszközön van.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'Ez nem pénzügyi számla.';
@@ -1510,15 +1466,6 @@ class AppLocalizationsHu extends AppLocalizations {
       'Ez a biztonsági mentés nem állítható vissza - rossz jelmondat, vagy nem Smara biztonsági mentés fájl.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'Az összeg, a számla és a kategória kötelező.';
 
@@ -1579,18 +1526,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get validationInvalidTemplate => 'Érvénytelen sablon.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'Hibás jelmondat ehhez a kulcstartó fájlhoz.';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'Ez nem tűnik érvényes kulcstartó fájlnak.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'Nem sikerült visszaállítani abból a helyreállítási kifejezésből.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'Nem sikerült aláíró kulcsot generálni ezen az eszközön: $detail';
   }
@@ -1601,16 +1536,8 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'A migráció sikertelen volt. Kérjük, próbálja újra.';
-
-  @override
   String get validationChooseBackupFile =>
       'Először válasszon biztonsági mentés fájlt.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'Adjon meg egy jelmondatot.';
@@ -1633,11 +1560,6 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'Adjon meg egy érvényes összeget.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'A(z) $n. szó nem egyezik az elmentett kifejezésével. Ellenőrizze, és próbálja újra.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1984,4 +1906,57 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'Jelmondat';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

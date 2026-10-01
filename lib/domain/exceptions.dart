@@ -22,24 +22,6 @@ class InvalidTransactionAmountException implements Exception {
   String toString() => message;
 }
 
-/// Thrown by [LedgerRepository.restoreIdentity] when the re-derived key's
-/// public key doesn't match any [SigningIdentity] already on record - the
-/// recovery phrase or keystore file doesn't belong to this database.
-class SigningIdentityMismatchException implements Exception {
-  SigningIdentityMismatchException(
-    this.message, {
-    this.code = AppErrorCode.signingIdentityMismatch,
-    this.params = const {},
-  });
-
-  final String message;
-  final AppErrorCode code;
-  final Map<String, String> params;
-
-  @override
-  String toString() => message;
-}
-
 class InvalidTransferException implements Exception {
   InvalidTransferException(
     this.message, {
@@ -167,64 +149,6 @@ class InvalidLedgerBackupException implements Exception {
   InvalidLedgerBackupException(
     this.message, {
     this.code = AppErrorCode.invalidLedgerBackup,
-    this.params = const {},
-  });
-
-  final String message;
-  final AppErrorCode code;
-  final Map<String, String> params;
-
-  @override
-  String toString() => message;
-}
-
-/// Thrown by [LedgerBackupRepository.restoreLedgerBackup] when the backup's
-/// active signing identity differs from this device's own active identity
-/// (ledger-backup-restore design.md Decision 4) - restoring it would
-/// combine two different identities' books, not restore the user's own.
-class ForeignBackupIdentityException implements Exception {
-  ForeignBackupIdentityException(
-    this.message, {
-    this.code = AppErrorCode.foreignBackupIdentity,
-    this.params = const {},
-  });
-
-  final String message;
-  final AppErrorCode code;
-  final Map<String, String> params;
-
-  @override
-  String toString() => message;
-}
-
-/// Thrown by [DeviceMigrationBundleRepository.importBundle] when the
-/// decrypted contents don't open as a valid Smara device migration bundle
-/// at all (wrong file selected, corrupted, a mismatched database/key
-/// pairing, or the passphrase decrypted garbage that happened to pass the
-/// AEAD tag on some other file format).
-class InvalidDeviceMigrationBundleException implements Exception {
-  InvalidDeviceMigrationBundleException(
-    this.message, {
-    this.code = AppErrorCode.invalidDeviceMigrationBundle,
-    this.params = const {},
-  });
-
-  final String message;
-  final AppErrorCode code;
-  final Map<String, String> params;
-
-  @override
-  String toString() => message;
-}
-
-/// Thrown by [DeviceMigrationBundleRepository.importBundle] when the
-/// bundle's signing identity differs from this device's own active
-/// identity - importing it would combine two different identities'
-/// books, not restore the user's own.
-class ForeignDeviceMigrationBundleIdentityException implements Exception {
-  ForeignDeviceMigrationBundleIdentityException(
-    this.message, {
-    this.code = AppErrorCode.foreignDeviceMigrationBundleIdentity,
     this.params = const {},
   });
 

@@ -11,10 +11,9 @@ import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/domain/time/iso_date.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
-import 'package:smara_accounting/data/repositories/device_migration_bundle_repository.dart';
+import 'package:smara_accounting/data/repositories/books_copy_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/investment_repository.dart';
-import 'package:smara_accounting/data/repositories/ledger_backup_repository.dart';
 import 'package:smara_accounting/data/repositories/ledger_chain_verifier.dart';
 import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/payee_repository.dart';
@@ -29,11 +28,10 @@ import 'package:smara_accounting/ui/core/app_theme.dart';
 import 'package:smara_accounting/ui/features/account_management/view_models/account_management_view_model.dart';
 import 'package:smara_accounting/ui/features/category_management/view_models/category_management_view_model.dart';
 import 'package:smara_accounting/ui/features/home/view_models/home_view_model.dart';
-import 'package:smara_accounting/ui/features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
+import 'package:smara_accounting/ui/features/continuation/view_models/continuation_view_model.dart';
 import 'package:smara_accounting/ui/features/register/view_models/register_view_model.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
-import 'package:smara_accounting/ui/features/restore/view_models/restore_identity_view_model.dart';
-import 'package:smara_accounting/ui/features/settings/views/recovery_phrase_view.dart';
+import 'package:smara_accounting/ui/features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'package:smara_accounting/ui/features/summary/view_models/summary_view_model.dart';
 import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 
@@ -517,139 +515,7 @@ void main() {
   });
 
   testWidgets(
-    'reinstall with the recovery phrase restores the identity without re-signing',
-    (tester) async {
-      final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
-      addTearDown(freshDb.close);
-      final firstKeys = SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      );
-      final firstInstallRepository = LedgerRepository(
-        database: freshDb,
-        signingKeyService: firstKeys,
-      );
-
-      // Skip the first-week-setup wizard gate (unrelated to what this test
-      // covers) so Confirm below lands straight on Home, matching every
-      // other test's setUp() in this file.
-      await SettingsRepository().setFirstWeekSetupCompleted(true);
-
-      // First launch: walk the real onboarding UI. Onboarding no longer
-      // blocks on any recovery/backup step (device-migration-bundle) - New
-      // Setup -> language -> currency (which commits the identity) -> the
-      // starter account's name -> a guided first entry -> Home directly.
-      await pumpApp(
-        tester,
-        buildAppFor(firstInstallRepository, freshDb, firstKeys),
-      );
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      // SetupChoiceView.
-      await tester.tap(find.text('New setup'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      // LanguageSelectionView: selection is mandatory - confirm the
-      // pre-highlighted "Device language" row before Continue enables.
-      await tester.tap(find.text('Device language'));
-      await tester.pump();
-      await tester.tap(find.text('Continue'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      // CurrencySelectionView: defaults to USD, so Continue needs no input.
-      await tester.tap(find.text('Continue'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      // FirstAccountNameView: defaults to a starter account name, so
-      // Continue needs no input here either.
-      await tester.tap(find.text('Continue'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      // RecordTransactionView (the guided first entry) - this becomes the
-      // entry this test proves survives restore intact below.
-      await tester.enterText(find.byType(TextField).first, '10');
-      await tester.pump();
-      await tester.tap(find.byType(DropdownButtonFormField<String>).last);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(find.text('Salary').last);
-      await tester.pump();
-      await tester.tap(find.text('Save'));
-      // Saving now lands straight on Home - no acknowledgment screen
-      // follows (device-migration-bundle).
-      await pumpUntilFound(
-        tester,
-        find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
-      );
-      expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
-
-      final originalEntry =
-          (await firstInstallRepository.watchEntries().first).single;
-
-      // The recovery phrase is no longer shown automatically - fetch it
-      // from Settings instead, same as completeOnboardingWithGuidedEntry
-      // does for the acceptance suite.
-      await tester.tap(find.byTooltip('Settings'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.text('View recovery phrase'));
-      await pumpUntilFound(tester, find.byType(RecoveryPhraseView));
-
-      final phraseView = tester.widget<RecoveryPhraseView>(
-        find.byType(RecoveryPhraseView),
-      );
-      final words = phraseView.viewModel.words;
-      expect(words, hasLength(24));
-
-      // Back twice: RecoveryPhraseView, then Settings, landing on Home.
-      await tester.tap(find.byTooltip('Back'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.byTooltip('Back'));
-      await pumpUntilFound(
-        tester,
-        find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
-      );
-      expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
-
-      // Reinstall: same database file, fresh secure storage (the private
-      // key is gone from this "device").
-      final reinstalledKeys = SigningKeyService(
-        secureStorage: InMemorySecureKeyStorage(),
-      );
-      final reinstalledRepository = LedgerRepository(
-        database: freshDb,
-        signingKeyService: reinstalledKeys,
-      );
-      await pumpApp(
-        tester,
-        buildAppFor(reinstalledRepository, freshDb, reinstalledKeys),
-      );
-      await pumpUntilFound(tester, find.text('Restore signing key'));
-      expect(find.text('Restore signing key'), findsOneWidget);
-
-      await tester.enterText(find.byType(TextField).first, words.join(' '));
-      await tester.tap(find.text('Restore'));
-      await pumpUntilFound(
-        tester,
-        find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
-      );
-      expect(find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'), findsOneWidget);
-
-      final entries = await reinstalledRepository.watchEntries().first;
-      expect(entries, hasLength(1));
-      expect(entries.single.entryHash, equals(originalEntry.entryHash));
-      expect(entries.single.signature, equals(originalEntry.signature));
-      expect(entries.single.isVerified, isTrue);
-    },
-  );
-
-  testWidgets(
-    'true key loss: migrating re-signs history under a new identity end to end',
+    'keychain loss continues books under a new this-device identity',
     (tester) async {
       final categories = await categoryRepository.watchCategories().first;
       final incomeId = categories
@@ -663,13 +529,9 @@ void main() {
         financialAccountId: accounts.first.id,
         transactionDate: DateTime(2026, 1, 15),
       );
-      final legacy = (await repository.watchEntries().first).firstWhere(
-        (e) => e.id != seedEntryId,
-      );
       final oldIdentity = (await identityRepository.currentIdentity())!;
 
-      // Simulate true key loss: same database, brand new secure storage,
-      // and no recovery phrase or keystore file to restore from.
+      // Simulate keychain loss: same database, empty secure storage.
       final postLossKeys = SigningKeyService(
         secureStorage: InMemorySecureKeyStorage(),
       );
@@ -678,30 +540,13 @@ void main() {
         signingKeyService: postLossKeys,
       );
       await pumpApp(tester, buildAppFor(postLossRepository, db, postLossKeys));
-      await pumpUntilFound(tester, find.text('Restore signing key'));
-      expect(find.text('Restore signing key'), findsOneWidget);
+      await pumpUntilFound(tester, find.text('Continue my books on this phone'));
+      expect(find.text('Continue my books on this phone'), findsWidgets);
+      expect(find.text('Restore from a copy'), findsOneWidget);
 
       await tester.tap(
-        find.text('I don\'t have my recovery phrase or keystore file'),
+        find.widgetWithText(ElevatedButton, 'Continue my books on this phone'),
       );
-      await pumpUntilFound(tester, find.text('Migrate to a new key'));
-      expect(find.text('Migrate to a new key'), findsWidgets);
-
-      final checkbox = find.byType(CheckboxListTile);
-      await tester.ensureVisible(checkbox);
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(checkbox);
-      await tester.pump();
-
-      final migrateButton = find.widgetWithText(
-        ElevatedButton,
-        'Migrate to a new key',
-      );
-      await tester.ensureVisible(migrateButton);
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.tap(migrateButton);
-      // Migration re-signs every entry (async crypto per entry) before the
-      // redirect chain runs again for /home.
       await pumpUntilFound(
         tester,
         find.text('WHAT YOU HAVE MINUS WHAT YOU OWE'),
@@ -718,35 +563,20 @@ void main() {
       );
       final newIdentity = (await postLossIdentity.currentIdentity())!;
       expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
-      expect(newIdentity.supersedesIdentityId, equals(oldIdentity.identityId));
+      expect(newIdentity.continuesIdentityId, equals(oldIdentity.identityId));
 
       final entries = await postLossRepository.watchEntries().first;
-      // 4, not 2: migration re-signs every active entry, including the
-      // shared setUp's own seed entry - seed, legacy, migrated-seed,
-      // migrated-legacy.
-      expect(entries, hasLength(4));
-      final migrated = entries.firstWhere(
-        (e) => e.migratedFromEntryId == legacy.id,
-      );
+      expect(entries.length, greaterThanOrEqualTo(2));
       expect(
-        migrated.postings.map((p) => p.amountMinor).toSet(),
-        equals(legacy.postings.map((p) => p.amountMinor).toSet()),
+        entries.any((e) => e.signedByIdentityId == oldIdentity.identityId),
+        isTrue,
+        reason: 'earlier identity entries remain and still verify',
       );
-
-      final summary = await postLossRepository
-          .watchSummary(
-            start: DateTime(2020, 1, 1),
-            end: DateTime(2030, 12, 31),
-          )
-          .first;
-      // The legacy entry is excluded from active totals - only the
-      // migrated replacement counts.
-      expect(summary.totalIncomeMinor, equals(1000));
 
       final events = await postLossRepository.watchIntegrityEvents().first;
       expect(
         events.any(
-          (e) => e.eventType == IntegrityEventType.keyMigrationConfirmed,
+          (e) => e.eventType == IntegrityEventType.identityContinued,
         ),
         isTrue,
       );
@@ -754,205 +584,29 @@ void main() {
   );
 
   testWidgets(
-    'tapping Transfer from an account\'s register opens Transfer with that account pre-selected',
+    'first launch offers New setup and Restore from a copy, with no phrase step',
     (tester) async {
-      await accountRepository.createFinancialAccount(
-        name: 'Savings',
-        type: AccountType.asset,
-        groupId: groupCashEquivalentsId,
+      final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+      addTearDown(freshDb.close);
+      final freshKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
       );
-
-      await pumpApp(tester, buildApp());
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      await tester.tap(find.text('Register'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      // Select "Savings" as the register's viewed account before opening
-      // Transfer, so the pre-selected source can be distinguished from
-      // whatever TransferViewModel would have defaulted to on its own.
-      await tester.tap(find.byType(DropdownButtonFormField<String>));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.text('Savings').last);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      await tester.tap(find.byIcon(TablerIcons.arrowsExchange));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(find.byType(TransferView), findsOneWidget);
-      // StatefulShellRoute.indexedStack keeps the Register screen (and its
-      // own account dropdown, also showing "Savings") mounted underneath
-      // the pushed Transfer screen, so the "From account" match is scoped
-      // to TransferView specifically rather than searched for globally.
-      expect(
-        find.descendant(
-          of: find.byType(TransferView),
-          matching: find.widgetWithText(
-            DropdownButtonFormField<String>,
-            'Savings',
-          ),
-        ),
-        findsOneWidget,
+      final freshLedger = LedgerRepository(
+        database: freshDb,
+        signingKeyService: freshKeys,
       );
+      await SettingsRepository().setFirstWeekSetupCompleted(true);
+      await pumpApp(tester, buildAppFor(freshLedger, freshDb, freshKeys));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.text('New setup'), findsOneWidget);
+      expect(find.text('Restore from a copy'), findsOneWidget);
+      expect(find.textContaining('recovery phrase'), findsNothing);
+      expect(find.textContaining('keystore'), findsNothing);
     },
   );
 
-  testWidgets(
-    'navigating from Home to a different account while Register is already showing one does not throw',
-    (tester) async {
-      // Regression for a setState()-during-build hazard: app_router.dart's
-      // Register route builder used to call RegisterViewModel.selectAccount
-      // (which calls notifyListeners()) synchronously inside go_router's
-      // own builder - fine on first navigation, but if Register's
-      // ListenableBuilder is already mounted (as it is here, thanks to
-      // StatefulShellRoute keeping every branch alive) and the user taps a
-      // different account, that becomes a rebuild-during-build.
-      await accountRepository.createFinancialAccount(
-        name: 'Savings',
-        type: AccountType.asset,
-        groupId: groupCashEquivalentsId,
-      );
-
-      await pumpApp(tester, buildApp());
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      await tester.tap(find.text('Cash & Bank'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-      expect(tester.takeException(), isNull);
-      expect(
-        find.widgetWithText(DropdownButtonFormField<String>, 'Cash & Bank'),
-        findsOneWidget,
-      );
-
-      await tester.tap(find.text('Home'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      await tester.tap(find.text('Savings'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      expect(tester.takeException(), isNull);
-      expect(
-        find.widgetWithText(DropdownButtonFormField<String>, 'Savings'),
-        findsOneWidget,
-      );
-    },
-  );
-
-  testWidgets(
-    'user-created group archive lifecycle: blocked while active, allowed once empty, historical account still resolves it',
-    (tester) async {
-      // Setup goes through the Repository directly (not the "Create group"
-      // dialog) - several other tests in this file do the same for
-      // account/group setup (e.g. "Euro Savings" above); this test's focus
-      // is the archive lifecycle and its effect on pickers, not the create
-      // dialog itself.
-      final group = await accountRepository.createAccountGroup(
-        name: 'Business',
-        kind: AccountGroupKind.assetGroup,
-        currency: 'USD',
-      );
-      await accountRepository.createFinancialAccount(
-        name: 'Business Checking',
-        type: AccountType.asset,
-        groupId: group.id,
-      );
-
-      await pumpApp(tester, buildApp());
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      await tester.tap(find.text('Accounts'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
-
-      expect(find.text('Business'), findsOneWidget);
-      expect(find.text('Business Checking'), findsOneWidget);
-
-      // PopupMenuButton's default icon is platform-adaptive (more_horiz on
-      // macOS, more_vert elsewhere), so byIcon is unreliable here; its
-      // default tooltip ("Show menu", from MaterialLocalizations) is
-      // stable across platforms. Render order at this point: [0] Cash &
-      // Bank's own account popup, [1] the Business group's own popup, [2]
-      // Business Checking's account popup (groups render before their
-      // member accounts).
-      final popups = find.byTooltip('Show menu');
-
-      // Archiving the group while it still has an active account is
-      // rejected.
-      await tester.tap(popups.at(1));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.text('Hide'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(
-        find.text('Cannot hide a group that still has active accounts.'),
-        findsOneWidget,
-      );
-
-      // Archive the account (via Repository - the account's own archive
-      // flow is already covered elsewhere), then the group archives
-      // successfully through the UI.
-      final businessAccounts = await accountRepository
-          .watchFinancialAccounts(includeArchived: true)
-          .first;
-      final businessAccountId = businessAccounts
-          .firstWhere((a) => a.name == 'Business Checking')
-          .id;
-      await accountRepository.archiveFinancialAccount(businessAccountId);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      // Business Checking is now archived (no popup of its own), so only
-      // two popups remain: Cash & Bank's, then the Business group's.
-      await tester.tap(popups.last);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.text('Hide'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.widgetWithText(OutlinedButton, 'Hide'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      // The group and its historical account both stay visible, labeled
-      // as archived.
-      expect(find.text('Business'), findsOneWidget);
-      expect(find.text('Business Checking'), findsOneWidget);
-
-      // But the archived group no longer offers itself as a reassignment
-      // target: opening Cash & Bank's "Reassign group" picker (its is now
-      // the only remaining popup) shows exactly one "Business" text on
-      // screen (the archived group's own section header) - if it were
-      // still offered, a second one would appear inside the open dropdown
-      // menu.
-      await tester.tap(popups.first);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.text('Reassign group'));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-      await tester.tap(find.byType(DropdownButtonFormField<String>));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(find.text('Business'), findsOneWidget);
-    },
-  );
-}
 
 Widget buildAppFor(
   LedgerRepository repository,
@@ -982,15 +636,12 @@ Widget buildAppFor(
     database: database,
     ledgerRepository: repository,
   );
-  final ledgerBackupRepository = LedgerBackupRepository(
+  final settingsRepository = SettingsRepository();
+  final booksCopyRepository = BooksCopyRepository(
     database: database,
     identityRepository: identityRepository,
     signingKeyService: signingKeyService,
-  );
-  final deviceMigrationBundleRepository = DeviceMigrationBundleRepository(
-    database: database,
-    identityRepository: identityRepository,
-    signingKeyService: signingKeyService,
+    settingsRepository: settingsRepository,
   );
   final statementImportRepository = StatementImportRepository(
     database: database,
@@ -1010,10 +661,7 @@ Widget buildAppFor(
       Provider<RecurringTemplateRepository>.value(
         value: recurringTemplateRepository,
       ),
-      Provider<LedgerBackupRepository>.value(value: ledgerBackupRepository),
-      Provider<DeviceMigrationBundleRepository>.value(
-        value: deviceMigrationBundleRepository,
-      ),
+      Provider<BooksCopyRepository>.value(value: booksCopyRepository),
       ChangeNotifierProvider(
         create: (_) => RegisterViewModel(
           ledgerRepository: repository,
@@ -1032,15 +680,15 @@ Widget buildAppFor(
             CategoryManagementViewModel(categoryRepository: categoryRepository),
       ),
       ChangeNotifierProvider(
-        create: (_) => RecoveryPhraseSetupViewModel(
+        create: (_) => ContinuationViewModel(
           identityRepository: identityRepository,
           chainVerifier: chainVerifier,
+          booksCopyRepository: booksCopyRepository,
         ),
       ),
       ChangeNotifierProvider(
-        create: (_) => RestoreIdentityViewModel(
-          identityRepository: identityRepository,
-          chainVerifier: chainVerifier,
+        create: (_) => BundleImportViewModel(
+          booksCopyRepository: booksCopyRepository,
         ),
       ),
       ChangeNotifierProvider(
@@ -1058,7 +706,6 @@ Widget buildAppFor(
     ],
     child: Builder(
       builder: (context) {
-        final settingsRepository = SettingsRepository();
         return MaterialApp.router(
           theme: buildAppTheme(),
           routerConfig: buildAppRouter(
@@ -1069,8 +716,7 @@ Widget buildAppFor(
             identityRepository,
             chainVerifier,
             investmentRepository,
-            ledgerBackupRepository,
-            deviceMigrationBundleRepository,
+            booksCopyRepository,
             statementImportRepository,
             settingsRepository,
             AppLockController(settingsRepository: settingsRepository),

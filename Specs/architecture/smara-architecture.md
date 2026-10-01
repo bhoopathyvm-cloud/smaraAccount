@@ -23,7 +23,9 @@ discovery, with no relay and no internet-hosted component. It is explicitly
 **out of scope** for the current phase and is not reflected in the diagrams
 below — see `openspec/changes/` for when that capability is scoped. Moving
 books to a new device today is done with a one-file, passphrase-protected
-**device migration bundle** (`device-migration-bundle` spec), not sync.
+**Books Copy** (`books-copy` / books-copy-and-continuation), not sync. The
+private signing key never leaves the device; Continuation continues books
+under a new this-device key when the matching private key is missing.
 
 ---
 
@@ -70,14 +72,14 @@ folders holding a live SQLite file — relevant again once sync is scoped).
 | State management / DI   | Provider, ViewModels extend `ChangeNotifier`  | Lightweight, Flutter-team maintained, minimal ceremony for a v1 of this size |
 | Local database          | Drift (typed, reactive layer over `sqlite3`)  | Reactive streams suit a live-updating register/summary view; generated, typed migrations; one dependency covers every target platform without a separate desktop shim |
 | Secure key storage      | `flutter_secure_storage`                      | Signing key and app-lock PIN hash live in the OS keychain/keystore (Keychain, Android Keystore, libsecret on Linux), never in the SQLite file |
-| Signing / crypto        | `cryptography` (Ed25519, PBKDF2, AES-GCM)     | Entry signing and hash chaining; PIN hashing; passphrase-encrypted backup, keystore, and device-migration-bundle files |
+| Signing / crypto        | `cryptography` (Ed25519, PBKDF2, AES-GCM)     | Entry signing and hash chaining; PIN hashing; passphrase-encrypted Books Copy files |
 | Localization            | `flutter_localizations` + `intl` (gen-l10n)   | 43 locales (`lib/l10n/app_<tag>.arb`, English is the template); money formatting follows each currency's own convention, not the UI locale |
 | App lock                | `local_auth`                                  | Optional biometric convenience on top of the PIN |
 | Network (opt-in lookups)| `http`                                        | Reference exchange rates and market quotes only — see Security & Privacy Stance |
 | Routing                 | `go_router` (declarative)                     | Matches the `flutter-setup-declarative-routing` skill; adopted from the start so deep-linking/back-stack behavior doesn't need retrofitting later |
 | Backend                 | None                                          | Explicit product principle — no server, no cloud storage, no telemetry, no analytics |
 | Sync (future, deferred) | LAN-only peer-to-peer, no relay, no server    | Scoped as its own later OpenSpec change; not designed or implemented yet |
-| Data-at-rest encryption | Not for the live database                     | The live SQLite file is not encrypted (device/OS security protects it); exported backups and device migration bundles are passphrase-encrypted. Revisit only if a spec requires it |
+| Data-at-rest encryption | Not for the live database                     | The live SQLite file is not encrypted (device/OS security protects it); exported Books Copies are passphrase-encrypted. Revisit only if a spec requires it |
 
 ### Testing tools (mapped to downloaded skills)
 
@@ -107,7 +109,7 @@ lib/
 │   ├── repositories/    # One repository per domain concept (identity,
 │   │                    #   ledger, accounts, categories, payees, recurring
 │   │                    #   templates, investments, settings, backup,
-│   │                    #   device migration bundle, statement import) plus
+│   │                    #   Books Copy, statement import) plus
 │   │                    #   the deep modules they compose: LedgerPosting,
 │   │                    #   LedgerChainStore, LedgerChainVerifier,
 │   │                    #   AccountChartReader, InvestmentTradePosting,
@@ -118,8 +120,8 @@ lib/
 ├── domain/              # Pure Dart — never touches Drift
 │   ├── models/          # Domain models and closed-set enums
 │   ├── crypto/          # Signing identity, Ed25519, canonical hashing,
-│   │                    #   recovery phrase, keystore file, secure storage
-│   ├── backup/          # Ledger backup file, device migration bundle file
+│   │                    #   secure storage (this-device-only)
+│   ├── backup/          # Books Copy file (legacy backup/bundle readers)
 │   ├── account/ correction/ record_transaction/ recurring/ transfer/
 │   │                    # Mutable per-flow drafts owned by a ViewModel
 │   ├── register/ summary/ home/ ledger_export/
@@ -151,8 +153,8 @@ lib/
 │       ├── payee_management/  recurring_template_management/
 │       ├── holdings/
 │       ├── statement_import/
-│       └── settings/            # incl. recovery phrase, keystore export,
-│                                #   device migration bundle export
+│       └── settings/            # incl. Books Copy save/restore, Device
+│                                #   history, copy reminder
 └── main.dart            # Provider/ProxyProvider DI graph
 
 test/              # mirrors lib/ — unit + widget tests
@@ -251,14 +253,11 @@ AUTHENTICATION:
   or OS-level device security.
 
 KEY MATERIAL & EXPORTS:
-  The signing key lives only in OS secure storage. The user may
-  optionally export it as a 24-word recovery phrase or a
-  passphrase-encrypted keystore file (Settings > Recovery & identity;
-  never a blocking onboarding step). A passphrase-encrypted ledger
-  backup carries books only, never key material. A device migration
-  bundle deliberately carries both books and key in one
-  passphrase-encrypted file for one-step device moves — a broader
-  exposure the export screen discloses.
+  The signing key lives only in OS secure storage and never leaves the
+  device (no recovery phrase or keystore export). A passphrase-encrypted
+  Books Copy carries books and books settings only, never key material.
+  Restoring a copy replaces rather than merges; Continuation continues
+  books under a new this-device key when the private key is missing.
 ```
 
 The signed-history model follows common integrity and audit-log patterns:

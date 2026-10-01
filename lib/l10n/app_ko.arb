@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "단어 #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "언어를 선택하세요",
   "chooseLanguageBlurb": "앱의 모든 내용이 이 언어로 표시됩니다. 나중에 설정에서 변경할 수 있습니다.",
   "chooseCurrencyTitle": "통화 선택",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "계좌 이름 지정",
   "firstAccountBlurb": "이미 설정된 계좌입니다 — 은행처럼 알아볼 수 있는 이름을 지정하세요. 다음으로 지출 또는 수입을 하나 기록한 뒤 복구 구문으로 기기를 보호합니다.",
   "whatsMainAccountCalled": "주 계좌의 이름은 무엇인가요?",
-  "optionalBackupFile": "선택적 백업 파일",
-  "iConfirmBooksValid": "현재 장부가 유효함을 확인합니다",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "기존 항목을 수정하지 않는 이유",
   "whyWeDontEditBody": "실수를 바로잡을 때 이미 입력한 내용을 바꾸는 대신 기존 줄은 그대로 두고 그 옆에 정정 항목을 추가합니다. 이렇게 하면 이력이 항상 실제로 일어난 일과 언제 수정했는지를 정확히 보여주며, 뒤에서 몰래 바뀌는 일이 없습니다.",
   "lockTitle": "잠금 해제",
@@ -542,7 +571,6 @@
   "none": "없음",
   "currency": "통화",
   "errorGeneric": "문제가 발생했습니다. 다시 시도하세요.",
-  "errorSigningIdentityMismatch": "이 복구 구문 또는 키스토어 파일은 이 데이터베이스의 서명 신원과 일치하지 않습니다.",
   "errorInvalidLedgerBackup": "이 파일은 유효한 Smara 백업이 아닙니다.",
   "errorInvalidLedgerBackupNoIdentity": "이 백업에는 서명 신원이 없습니다 - 유효한 Smara 백업이 아닙니다.",
   "errorInvalidLedgerBackupUnverified": "이 백업은 온전한 장부로 검증되지 않아 복원되지 않았습니다.",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "이 백업은 이 기기의 서명 신원과 다른 신원에 속합니다.",
   "errorAccountNotFinancial": "이는 재무 계좌가 아닙니다.",
   "errorAccountArchived": "그 계좌는 숨겨져 있습니다.",
   "errorAccountNotArchived": "그 계좌는 숨겨져 있지 않습니다.",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "분류는 수입 또는 지출이어야 합니다.",
   "validationOnlyExpenseHasMonthlyLimit": "지출 분류만 월 한도를 가질 수 있습니다.",
   "validationInvalidTemplate": "유효하지 않은 템플릿입니다.",
-  "validationWrongKeystorePassphrase": "이 키스토어 파일의 암호가 틀렸습니다.",
-  "validationInvalidKeystoreFile": "유효한 키스토어 파일이 아닌 것 같습니다.",
-  "validationRestorePhraseFailed": "그 복구 구문으로 복원할 수 없습니다.",
   "validationGenerateKeyFailed": "이 기기에서 서명 키를 생성할 수 없습니다: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "마이그레이션에 실패했습니다. 다시 시도하세요.",
   "validationChooseBackupFile": "먼저 백업 파일을 선택하세요.",
   "validationPassphraseRequired": "암호를 입력하세요.",
   "validationPinsDoNotMatch": "두 PIN이 일치하지 않습니다.",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "유효한 금액을 입력하세요.",
-  "validationConfirmWordMismatch": "단어 {n}이(가) 저장된 구문과 일치하지 않습니다. 확인 후 다시 시도하세요.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "매수 수량과 단가는 양수여야 합니다.",
   "errorInstrumentArchived": "숨겨진 종목은 매수할 수 없습니다.",
   "errorNonCashCannotIncludeBrokerage": "비현금 취득에는 매매 수수료를 포함할 수 없습니다.",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "암호",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "암호"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

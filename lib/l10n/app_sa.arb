@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "पदम् #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "स्वभाषां चिनुत",
   "chooseLanguageBlurb": "अनुप्रयोगे सर्वं एतस्यां भाषायां दृश्यते। भवन्तः पश्चात् सेटिंग्ज़ मध्ये एतत् परिवर्तयितुं शक्नुवन्ति।",
   "chooseCurrencyTitle": "भवतः मुद्रा चीयताम्",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "भवतः लेखस्य नाम ददातु",
   "firstAccountBlurb": "अयं भवदर्थं पूर्वमेव स्थापितः लेखः अस्ति - तस्मै परिचितं नाम ददातु, यथा भवतः बैंकस्य नाम। भवान् अग्रे एकं व्ययं वा आयं वा लेखिष्यति, ततः स्मृतिवाक्येन यन्त्रं रक्षिष्यति।",
   "whatsMainAccountCalled": "भवतः मुख्यलेखस्य नाम किम्?",
-  "optionalBackupFile": "ऐच्छिका प्रतिलिपिसञ्चिका",
-  "iConfirmBooksValid": "अहं निश्चिनोमि यत् सम्प्रति लेखाः वैध सन्ति",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "वयं पुरातनप्रविष्टीः किमर्थं न सम्पादयामः",
   "whyWeDontEditBody": "यदा भवान् त्रुटिं शोधयति, तदा वयं पुरातनां पङ्क्तिं रक्षामः तथा तस्याः समीपे शुद्धिं योजयामः, न तु भवता पूर्वं प्रविष्टं परिवर्तयामः। एवं भवतः इतिहासः सर्वदा दर्शयति यत् किं जातम् तथा कदा भवता शोधितम् — किमपि गुप्तरूपेण न परिवर्तते।",
   "lockTitle": "उद्घाटनम्",
@@ -542,7 +571,6 @@
   "none": "न कोऽपि",
   "currency": "मुद्रा",
   "errorGeneric": "किमपि अशुद्धम् अभवत्। पुनः प्रयतताम्।",
-  "errorSigningIdentityMismatch": "इदं स्मृतिवाक्यं अथवा कुञ्जिकाभाण्डारसञ्चिका अस्मिन् दत्तांशकोशे कस्याश्चिदपि हस्ताक्षरपरिचयस्य सह न मेलति।",
   "errorInvalidLedgerBackup": "इयं सञ्चिका वैधा स्मारा-प्रतिलिपिः नास्ति।",
   "errorInvalidLedgerBackupNoIdentity": "अस्यां प्रतिलिपौ हस्ताक्षरपरिचयः नास्ति - इयं वैधा स्मारा-प्रतिलिपिः नास्ति।",
   "errorInvalidLedgerBackupUnverified": "इयं प्रतिलिपिः अखण्डलेखरूपेण न प्रमाणिता, अतः न पुनःस्थापिता।",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "इयं प्रतिलिपिः अस्मात् यन्त्रस्य हस्ताक्षरपरिचयात् भिन्नस्य परिचयस्य अस्ति।",
   "errorAccountNotFinancial": "सः वित्तीयः लेखः नास्ति।",
   "errorAccountArchived": "सः लेखः गुप्तः अस्ति।",
   "errorAccountNotArchived": "सः लेखः गुप्तः नास्ति।",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "वर्गः आयः वा व्ययः वा भवेत्।",
   "validationOnlyExpenseHasMonthlyLimit": "केवलं व्ययवर्गस्य एव मासिकसीमा भवितुम् अर्हति।",
   "validationInvalidTemplate": "अवैधः साञ्चः।",
-  "validationWrongKeystorePassphrase": "अस्याः कुञ्जिकाभाण्डारसञ्चिकायाः कृते अशुद्धं स्मृतिवाक्यम्।",
-  "validationInvalidKeystoreFile": "इदं वैधा कुञ्जिकाभाण्डारसञ्चिका इव न दृश्यते।",
-  "validationRestorePhraseFailed": "तस्मात् स्मृतिवाक्यात् पुनःस्थापयितुं न शक्यते स्म।",
   "validationGenerateKeyFailed": "अस्मिन् यन्त्रे हस्ताक्षरकुञ्जिकां जनयितुं न शक्यते स्म: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "प्रव्रजनं विफलम्। कृपया पुनः प्रयतताम्।",
   "validationChooseBackupFile": "प्रथमं प्रतिलिपिसञ्चिका चीयताम्।",
   "validationPassphraseRequired": "स्मृतिवाक्यं प्रविश्यताम्।",
   "validationPinsDoNotMatch": "द्वौ पिनौ न मेलतः।",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "वैधां राशिं प्रविशतु।",
-  "validationConfirmWordMismatch": "पदम् {n} भवतः रक्षितया वाक्यया सह न मेलति। परीक्ष्य पुनः प्रयतताम्।",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "क्रयस्य परिमाणम् एकमूल्यं च धनात्मके भवेताम्।",
   "errorInstrumentArchived": "गुप्तं साधनं क्रेतुं न शक्यते।",
   "errorNonCashCannotIncludeBrokerage": "अनगदार्जनेषु दलालशुल्कं समाविष्टं भवितुम् न अर्हति।",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "स्मृतिवाक्यम्",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "स्मृतिवाक्यम्"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

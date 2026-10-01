@@ -1620,12 +1620,6 @@ abstract class AppLocalizations {
   /// **'{qty} units · '**
   String holdingsUnitsCost(String qty);
 
-  /// No description provided for @wordNumber.
-  ///
-  /// In en, this message translates to:
-  /// **'Word #{n}'**
-  String wordNumber(String n);
-
   /// No description provided for @chooseLanguageTitle.
   ///
   /// In en, this message translates to:
@@ -1697,12 +1691,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New setup'**
   String get actionNewSetup;
-
-  /// No description provided for @actionImportFromBackup.
-  ///
-  /// In en, this message translates to:
-  /// **'Import from backup'**
-  String get actionImportFromBackup;
 
   /// No description provided for @continueBooksTitle.
   ///
@@ -1817,18 +1805,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hide for this many new entries after Later'**
   String get settingsBackupReminderSnoozeEntries;
-
-  /// No description provided for @optionalBackupFile.
-  ///
-  /// In en, this message translates to:
-  /// **'Optional backup file'**
-  String get optionalBackupFile;
-
-  /// No description provided for @iConfirmBooksValid.
-  ///
-  /// In en, this message translates to:
-  /// **'I confirm the current books are valid'**
-  String get iConfirmBooksValid;
 
   /// No description provided for @whyWeDontEdit.
   ///
@@ -1953,7 +1929,7 @@ abstract class AppLocalizations {
   /// No description provided for @replaceBooksBody.
   ///
   /// In en, this message translates to:
-  /// **'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.'**
+  /// **'This replaces all entries and the books\'\' settings on this phone with the copy — it does not merge. Your language and unlock settings stay on this phone. Close and reopen the app afterwards.'**
   String get replaceBooksBody;
 
   /// No description provided for @chooseBackupFileFirst.
@@ -1965,13 +1941,13 @@ abstract class AppLocalizations {
   /// No description provided for @backupRestored.
   ///
   /// In en, this message translates to:
-  /// **'Backup restored'**
+  /// **'Books restored'**
   String get backupRestored;
 
   /// No description provided for @backupRestoredBody.
   ///
   /// In en, this message translates to:
-  /// **'Your books have been restored. Close and reopen the app to continue.'**
+  /// **'Your books have been restored on this phone. Entries you make later on the other device will not appear here. To bring those over later, save a new copy there and restore it here — that replaces this phone\'\'s books. Close and reopen the app to continue.'**
   String get backupRestoredBody;
 
   /// No description provided for @fixThisEntry.
@@ -2292,12 +2268,6 @@ abstract class AppLocalizations {
   /// **'Something went wrong. Please try again.'**
   String get errorGeneric;
 
-  /// No description provided for @errorSigningIdentityMismatch.
-  ///
-  /// In en, this message translates to:
-  /// **'This recovery phrase or keystore file does not match any signing identity in this database.'**
-  String get errorSigningIdentityMismatch;
-
   /// No description provided for @errorInvalidLedgerBackup.
   ///
   /// In en, this message translates to:
@@ -2321,42 +2291,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This file could not be opened as a Smara backup: {detail}'**
   String errorInvalidLedgerBackupUnreadable(String detail);
-
-  /// No description provided for @errorForeignBackupIdentity.
-  ///
-  /// In en, this message translates to:
-  /// **'This backup belongs to a different signing identity than the one on this device.'**
-  String get errorForeignBackupIdentity;
-
-  /// No description provided for @errorInvalidDeviceMigrationBundle.
-  ///
-  /// In en, this message translates to:
-  /// **'This file is not a valid Smara device migration bundle.'**
-  String get errorInvalidDeviceMigrationBundle;
-
-  /// No description provided for @errorInvalidDeviceMigrationBundleNoIdentity.
-  ///
-  /// In en, this message translates to:
-  /// **'This bundle has no signing identity - it is not a valid Smara device migration bundle.'**
-  String get errorInvalidDeviceMigrationBundleNoIdentity;
-
-  /// No description provided for @errorInvalidDeviceMigrationBundleUnverified.
-  ///
-  /// In en, this message translates to:
-  /// **'This bundle did not verify as intact books, so it was not imported.'**
-  String get errorInvalidDeviceMigrationBundleUnverified;
-
-  /// No description provided for @errorInvalidDeviceMigrationBundleUnreadable.
-  ///
-  /// In en, this message translates to:
-  /// **'This file could not be opened as a Smara device migration bundle: {detail}'**
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail);
-
-  /// No description provided for @errorForeignDeviceMigrationBundleIdentity.
-  ///
-  /// In en, this message translates to:
-  /// **'This bundle belongs to a different signing identity than the one already set up on this device.'**
-  String get errorForeignDeviceMigrationBundleIdentity;
 
   /// No description provided for @errorAccountNotFinancial.
   ///
@@ -2808,18 +2742,6 @@ abstract class AppLocalizations {
   /// **'Could not restore this backup - wrong passphrase, or not a Smara backup file.'**
   String get errorBackupRestoreFailed;
 
-  /// No description provided for @errorDeviceMigrationBundleCreateFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not create the device migration bundle: {detail}'**
-  String errorDeviceMigrationBundleCreateFailed(String detail);
-
-  /// No description provided for @errorDeviceMigrationBundleImportFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.'**
-  String get errorDeviceMigrationBundleImportFailed;
-
   /// No description provided for @validationAmountAccountCategoryRequired.
   ///
   /// In en, this message translates to:
@@ -2916,24 +2838,6 @@ abstract class AppLocalizations {
   /// **'Invalid template.'**
   String get validationInvalidTemplate;
 
-  /// No description provided for @validationWrongKeystorePassphrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Wrong passphrase for this keystore file.'**
-  String get validationWrongKeystorePassphrase;
-
-  /// No description provided for @validationInvalidKeystoreFile.
-  ///
-  /// In en, this message translates to:
-  /// **'That doesn\'\'t look like a valid keystore file.'**
-  String get validationInvalidKeystoreFile;
-
-  /// No description provided for @validationRestorePhraseFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not restore from that recovery phrase.'**
-  String get validationRestorePhraseFailed;
-
   /// No description provided for @validationGenerateKeyFailed.
   ///
   /// In en, this message translates to:
@@ -2946,23 +2850,11 @@ abstract class AppLocalizations {
   /// **'Could not save this currency: {detail}'**
   String validationSaveCurrencyFailed(String detail);
 
-  /// No description provided for @validationMigrationFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Migration failed. Please try again.'**
-  String get validationMigrationFailed;
-
   /// No description provided for @validationChooseBackupFile.
   ///
   /// In en, this message translates to:
   /// **'Choose a backup file first.'**
   String get validationChooseBackupFile;
-
-  /// No description provided for @validationChooseDeviceMigrationBundleFile.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a device migration bundle file first.'**
-  String get validationChooseDeviceMigrationBundleFile;
 
   /// No description provided for @validationPassphraseRequired.
   ///
@@ -2999,12 +2891,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter a valid amount.'**
   String get validationEnterValidAmount;
-
-  /// No description provided for @validationConfirmWordMismatch.
-  ///
-  /// In en, this message translates to:
-  /// **'Word {n} doesn\'\'t match your saved phrase. Check it and try again.'**
-  String validationConfirmWordMismatch(String n);
 
   /// No description provided for @errorBuyQuantityAndPriceMustBePositive.
   ///
@@ -3531,6 +3417,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passphrase'**
   String get booksCopyPassphrase;
+
+  /// No description provided for @replaceBooksWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This will replace all entries and the books\'\' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.'**
+  String replaceBooksWarning(String counts);
+
+  /// No description provided for @saveCopyFirstAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a copy first'**
+  String get saveCopyFirstAction;
+
+  /// No description provided for @replaceCountEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} entries'**
+  String replaceCountEntries(int count);
+
+  /// No description provided for @replaceCountAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} accounts'**
+  String replaceCountAccounts(int count);
+
+  /// No description provided for @replaceCountCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} categories'**
+  String replaceCountCategories(int count);
+
+  /// No description provided for @replaceCountGroups.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} account groups'**
+  String replaceCountGroups(int count);
+
+  /// No description provided for @replaceCountPayees.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} payees'**
+  String replaceCountPayees(int count);
+
+  /// No description provided for @replaceCountCategoryRules.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} category rules'**
+  String replaceCountCategoryRules(int count);
+
+  /// No description provided for @replaceCountCsvProfiles.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} import profiles'**
+  String replaceCountCsvProfiles(int count);
+
+  /// No description provided for @replaceCountRecurringTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} recurring templates'**
+  String replaceCountRecurringTemplates(int count);
+
+  /// No description provided for @replaceCountInstruments.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} instruments'**
+  String replaceCountInstruments(int count);
 }
 
 class _AppLocalizationsDelegate

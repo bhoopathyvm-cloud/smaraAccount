@@ -783,11 +783,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'Word #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'Choose your language';
 
   @override
@@ -827,9 +822,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -899,12 +891,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get optionalBackupFile => 'Optional backup file';
-
-  @override
-  String get iConfirmBooksValid => 'I confirm the current books are valid';
-
-  @override
   String get whyWeDontEdit => 'Why we don’t edit old entries';
 
   @override
@@ -968,17 +954,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get replaceBooksBody =>
-      'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
+      'This replaces all entries and the books\' settings on this phone with the copy — it does not merge. Your language and unlock settings stay on this phone. Close and reopen the app afterwards.';
 
   @override
   String get chooseBackupFileFirst => 'Choose a books copy file first.';
 
   @override
-  String get backupRestored => 'Backup restored';
+  String get backupRestored => 'Books restored';
 
   @override
   String get backupRestoredBody =>
-      'Your books have been restored. Close and reopen the app to continue.';
+      'Your books have been restored on this phone. Entries you make later on the other device will not appear here. To bring those over later, save a new copy there and restore it here — that replaces this phone\'s books. Close and reopen the app to continue.';
 
   @override
   String get fixThisEntry => 'Fix this entry';
@@ -1156,10 +1142,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorGeneric => 'Something went wrong. Please try again.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'This recovery phrase or keystore file does not match any signing identity in this database.';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'This file is not a valid Smara backup.';
 
@@ -1175,31 +1157,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'This file could not be opened as a Smara backup: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'This backup belongs to a different signing identity than the one on this device.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'That is not a financial account.';
@@ -1492,15 +1449,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Could not restore this backup - wrong passphrase, or not a Smara backup file.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'Amount, account, and category are required.';
 
@@ -1560,18 +1508,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get validationInvalidTemplate => 'Invalid template.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'Wrong passphrase for this keystore file.';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'That doesn\'t look like a valid keystore file.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'Could not restore from that recovery phrase.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'Could not generate a signing key on this device: $detail';
   }
@@ -1582,14 +1518,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => 'Migration failed. Please try again.';
-
-  @override
   String get validationChooseBackupFile => 'Choose a backup file first.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'Enter a passphrase.';
@@ -1612,11 +1541,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'Enter a valid amount.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'Word $n doesn\'t match your saved phrase. Check it and try again.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1963,4 +1887,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'Passphrase';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

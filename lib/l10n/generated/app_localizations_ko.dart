@@ -774,11 +774,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return '단어 #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => '언어를 선택하세요';
 
   @override
@@ -818,9 +813,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -888,12 +880,6 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => '선택적 백업 파일';
-
-  @override
-  String get iConfirmBooksValid => '현재 장부가 유효함을 확인합니다';
 
   @override
   String get whyWeDontEdit => '기존 항목을 수정하지 않는 이유';
@@ -1141,10 +1127,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get errorGeneric => '문제가 발생했습니다. 다시 시도하세요.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      '이 복구 구문 또는 키스토어 파일은 이 데이터베이스의 서명 신원과 일치하지 않습니다.';
-
-  @override
   String get errorInvalidLedgerBackup => '이 파일은 유효한 Smara 백업이 아닙니다.';
 
   @override
@@ -1159,30 +1141,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return '이 파일을 Smara 백업으로 열 수 없습니다: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity => '이 백업은 이 기기의 서명 신원과 다른 신원에 속합니다.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => '이는 재무 계좌가 아닙니다.';
@@ -1436,15 +1394,6 @@ class AppLocalizationsKo extends AppLocalizations {
       '이 백업을 복원할 수 없습니다 - 암호가 틀렸거나 Smara 백업 파일이 아닙니다.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired => '금액, 계좌, 분류가 필요합니다.';
 
   @override
@@ -1493,15 +1442,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get validationInvalidTemplate => '유효하지 않은 템플릿입니다.';
 
   @override
-  String get validationWrongKeystorePassphrase => '이 키스토어 파일의 암호가 틀렸습니다.';
-
-  @override
-  String get validationInvalidKeystoreFile => '유효한 키스토어 파일이 아닌 것 같습니다.';
-
-  @override
-  String get validationRestorePhraseFailed => '그 복구 구문으로 복원할 수 없습니다.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return '이 기기에서 서명 키를 생성할 수 없습니다: $detail';
   }
@@ -1512,14 +1452,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => '마이그레이션에 실패했습니다. 다시 시도하세요.';
-
-  @override
   String get validationChooseBackupFile => '먼저 백업 파일을 선택하세요.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => '암호를 입력하세요.';
@@ -1542,11 +1475,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => '유효한 금액을 입력하세요.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return '단어 $n이(가) 저장된 구문과 일치하지 않습니다. 확인 후 다시 시도하세요.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive => '매수 수량과 단가는 양수여야 합니다.';
@@ -1886,4 +1814,57 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => '암호';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

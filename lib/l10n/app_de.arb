@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "Wort Nr. {n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "Wähle deine Sprache",
   "chooseLanguageBlurb": "Die gesamte App wird in dieser Sprache angezeigt. Du kannst sie später in den Einstellungen ändern.",
   "chooseCurrencyTitle": "Wählen Sie Ihre Währung",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "Benennen Sie Ihr Konto",
   "firstAccountBlurb": "Dies ist das bereits für Sie eingerichtete Konto – geben Sie ihm einen Namen, den Sie erkennen, wie Ihre Bank. Sie erfassen als Nächstes ein Ausgegeben oder Erhalten und schützen dann das Gerät mit Ihrer Wiederherstellungsphrase.",
   "whatsMainAccountCalled": "Wie heißt Ihr Hauptkonto?",
-  "optionalBackupFile": "Optionale Sicherungsdatei",
-  "iConfirmBooksValid": "Ich bestätige, dass die aktuellen Bücher gültig sind",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "Warum wir alte Einträge nicht bearbeiten",
   "whyWeDontEditBody": "Wenn Sie einen Fehler korrigieren, behalten wir die alte Zeile und fügen daneben eine Korrektur hinzu, statt zu ändern, was Sie bereits eingegeben haben. So zeigt Ihr Verlauf immer genau, was passiert ist und wann Sie es korrigiert haben — nichts ändert sich heimlich im Hintergrund.",
   "lockTitle": "Entsperren",
@@ -542,7 +571,6 @@
   "none": "Keine",
   "currency": "Währung",
   "errorGeneric": "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
-  "errorSigningIdentityMismatch": "Diese Wiederherstellungsphrase oder Keystore-Datei stimmt mit keiner Signieridentität in dieser Datenbank überein.",
   "errorInvalidLedgerBackup": "Diese Datei ist keine gültige Smara-Sicherung.",
   "errorInvalidLedgerBackupNoIdentity": "Diese Sicherung hat keine Signieridentität – sie ist keine gültige Smara-Sicherung.",
   "errorInvalidLedgerBackupUnverified": "Diese Sicherung wurde nicht als intakte Bücher verifiziert, daher wurde sie nicht wiederhergestellt.",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Diese Sicherung gehört zu einer anderen Signieridentität als der auf diesem Gerät.",
   "errorAccountNotFinancial": "Das ist kein Finanzkonto.",
   "errorAccountArchived": "Dieses Konto ist ausgeblendet.",
   "errorAccountNotArchived": "Dieses Konto ist nicht ausgeblendet.",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "Die Kategorie muss Einnahmen oder Ausgaben sein.",
   "validationOnlyExpenseHasMonthlyLimit": "Nur eine Ausgabenkategorie kann ein Monatslimit haben.",
   "validationInvalidTemplate": "Ungültige Vorlage.",
-  "validationWrongKeystorePassphrase": "Falsche Passphrase für diese Keystore-Datei.",
-  "validationInvalidKeystoreFile": "Das sieht nicht wie eine gültige Keystore-Datei aus.",
-  "validationRestorePhraseFailed": "Von dieser Wiederherstellungsphrase konnte nicht wiederhergestellt werden.",
   "validationGenerateKeyFailed": "Auf diesem Gerät konnte kein Signierschlüssel erzeugt werden: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration fehlgeschlagen. Bitte erneut versuchen.",
   "validationChooseBackupFile": "Wählen Sie zuerst eine Sicherungsdatei aus.",
   "validationPassphraseRequired": "Geben Sie eine Passphrase ein.",
   "validationPinsDoNotMatch": "Die beiden PINs stimmen nicht überein.",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Geben Sie einen gültigen Betrag ein.",
-  "validationConfirmWordMismatch": "Wort {n} stimmt nicht mit Ihrer gespeicherten Phrase überein. Überprüfen Sie es und versuchen Sie es erneut.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "Kaufmenge und Stückpreis müssen positiv sein.",
   "errorInstrumentArchived": "Ein ausgeblendetes Instrument kann nicht gekauft werden.",
   "errorNonCashCannotIncludeBrokerage": "Unbare Erwerbe können keine Courtage enthalten.",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "Passphrase",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "Passphrase"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

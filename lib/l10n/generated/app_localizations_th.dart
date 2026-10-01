@@ -781,11 +781,6 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'คำที่ #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'เลือกภาษาของคุณ';
 
   @override
@@ -825,9 +820,6 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -895,12 +887,6 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'ไฟล์สำรอง (ไม่บังคับ)';
-
-  @override
-  String get iConfirmBooksValid => 'ฉันยืนยันว่าบัญชีปัจจุบันถูกต้อง';
 
   @override
   String get whyWeDontEdit => 'ทำไมเราจึงไม่แก้ไขรายการเก่า';
@@ -1154,10 +1140,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String get errorGeneric => 'เกิดข้อผิดพลาด โปรดลองอีกครั้ง';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'วลีกู้คืนหรือไฟล์ keystore นี้ไม่ตรงกับตัวตนลงลายเซ็นใดในฐานข้อมูลนี้';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'ไฟล์นี้ไม่ใช่ข้อมูลสำรองของ Smara ที่ถูกต้อง';
 
@@ -1173,31 +1155,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'ไม่สามารถเปิดไฟล์นี้เป็นข้อมูลสำรองของ Smara ได้: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'ข้อมูลสำรองนี้เป็นของตัวตนลงลายเซ็นที่แตกต่างจากที่มีอยู่ในอุปกรณ์นี้';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'นั่นไม่ใช่บัญชีการเงิน';
@@ -1483,15 +1440,6 @@ class AppLocalizationsTh extends AppLocalizations {
       'ไม่สามารถกู้คืนข้อมูลสำรองนี้ได้ - วลีรหัสผ่านไม่ถูกต้อง หรือไม่ใช่ไฟล์สำรองของ Smara';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'ต้องระบุจำนวนเงิน บัญชี และหมวดหมู่';
 
@@ -1547,18 +1495,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String get validationInvalidTemplate => 'แม่แบบไม่ถูกต้อง';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'วลีรหัสผ่านของไฟล์ keystore นี้ไม่ถูกต้อง';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'นั่นดูไม่ใช่ไฟล์ keystore ที่ถูกต้อง';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'ไม่สามารถกู้คืนจากวลีกู้คืนนั้นได้';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'ไม่สามารถสร้างกุญแจลงลายเซ็นบนอุปกรณ์นี้ได้: $detail';
   }
@@ -1569,14 +1505,7 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => 'การย้ายกุญแจล้มเหลว โปรดลองอีกครั้ง';
-
-  @override
   String get validationChooseBackupFile => 'เลือกไฟล์สำรองก่อน';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'ป้อนวลีรหัสผ่าน';
@@ -1599,11 +1528,6 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'ป้อนจำนวนเงินที่ถูกต้อง';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'คำที่ $n ไม่ตรงกับวลีที่คุณบันทึกไว้ ตรวจสอบแล้วลองอีกครั้ง';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1951,4 +1875,57 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'วลีรหัสผ่าน';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

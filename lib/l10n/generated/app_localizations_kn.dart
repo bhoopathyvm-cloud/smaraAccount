@@ -786,11 +786,6 @@ class AppLocalizationsKn extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'ಪದ #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ';
 
   @override
@@ -831,9 +826,6 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -901,13 +893,6 @@ class AppLocalizationsKn extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'ಐಚ್ಛಿಕ ಬ್ಯಾಕಪ್ ಫೈಲ್';
-
-  @override
-  String get iConfirmBooksValid =>
-      'ಪ್ರಸ್ತುತ ಪುಸ್ತಕಗಳು ಮಾನ್ಯವಾಗಿವೆ ಎಂದು ನಾನು ದೃಢೀಕರಿಸುತ್ತೇನೆ';
 
   @override
   String get whyWeDontEdit => 'ನಾವು ಹಳೆಯ ನಮೂದುಗಳನ್ನು ಏಕೆ ಸಂಪಾದಿಸುವುದಿಲ್ಲ';
@@ -1163,10 +1148,6 @@ class AppLocalizationsKn extends AppLocalizations {
   String get errorGeneric => 'ಏನೋ ತಪ್ಪಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'ಈ ರಿಕವರಿ ಫ್ರೇಸ್ ಅಥವಾ ಕೀಸ್ಟೋರ್ ಫೈಲ್ ಈ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಯಾವುದೇ ಸಹಿ ಗುರುತಿಗೆ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ.';
-
-  @override
   String get errorInvalidLedgerBackup => 'ಈ ಫೈಲ್ ಮಾನ್ಯ ಸ್ಮಾರ ಬ್ಯಾಕಪ್ ಅಲ್ಲ.';
 
   @override
@@ -1181,31 +1162,6 @@ class AppLocalizationsKn extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'ಈ ಫೈಲ್ ಅನ್ನು ಸ್ಮಾರ ಬ್ಯಾಕಪ್ ಆಗಿ ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'ಈ ಬ್ಯಾಕಪ್ ಈ ಸಾಧನದಲ್ಲಿರುವುದಕ್ಕಿಂತ ಭಿನ್ನವಾದ ಸಹಿ ಗುರುತಿಗೆ ಸೇರಿದೆ.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'ಅದು ಹಣಕಾಸು ಖಾತೆ ಅಲ್ಲ.';
@@ -1499,15 +1455,6 @@ class AppLocalizationsKn extends AppLocalizations {
       'ಈ ಬ್ಯಾಕಪ್ ಅನ್ನು ಮರುಸ್ಥಾಪಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ - ತಪ್ಪಾದ ಪಾಸ್‌ಫ್ರೇಸ್, ಅಥವಾ ಸ್ಮಾರ ಬ್ಯಾಕಪ್ ಫೈಲ್ ಅಲ್ಲ.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'ಮೊತ್ತ, ಖಾತೆ ಮತ್ತು ವರ್ಗ ಅಗತ್ಯವಿದೆ.';
 
@@ -1565,18 +1512,6 @@ class AppLocalizationsKn extends AppLocalizations {
   String get validationInvalidTemplate => 'ಅಮಾನ್ಯ ಟೆಂಪ್ಲೇಟ್.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'ಈ ಕೀಸ್ಟೋರ್ ಫೈಲ್‌ಗೆ ತಪ್ಪಾದ ಪಾಸ್‌ಫ್ರೇಸ್.';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'ಇದು ಮಾನ್ಯ ಕೀಸ್ಟೋರ್ ಫೈಲ್‌ನಂತೆ ಕಾಣಿಸುತ್ತಿಲ್ಲ.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'ಆ ರಿಕವರಿ ಫ್ರೇಸ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'ಈ ಸಾಧನದಲ್ಲಿ ಸಹಿ ಕೀಲಿಯನ್ನು ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: $detail';
   }
@@ -1587,15 +1522,7 @@ class AppLocalizationsKn extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'ಮೈಗ್ರೇಶನ್ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
-
-  @override
   String get validationChooseBackupFile => 'ಮೊದಲು ಬ್ಯಾಕಪ್ ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'ಪಾಸ್‌ಫ್ರೇಸ್ ನಮೂದಿಸಿ.';
@@ -1618,11 +1545,6 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'ಮಾನ್ಯ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'ಪದ $n ನಿಮ್ಮ ಉಳಿಸಿದ ಫ್ರೇಸ್‌ಗೆ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ. ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1970,4 +1892,57 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'ಪಾಸ್‌ಫ್ರೇಸ್';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

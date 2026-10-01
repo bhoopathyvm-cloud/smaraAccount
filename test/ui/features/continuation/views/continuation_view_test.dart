@@ -27,6 +27,32 @@ void main() {
 
       expect(find.text('Continue my books on this phone'), findsWidgets);
       expect(find.text('Restore from a copy'), findsOneWidget);
+      expect(find.textContaining('without their signing key'), findsOneWidget);
     },
   );
+
+  testWidgets('tapping Restore from a copy invokes the callback', (
+    tester,
+  ) async {
+    var restoreTapped = false;
+    final viewModel = ContinuationViewModel(
+      identityRepository: MockIdentityRepository(),
+      chainVerifier: MockLedgerChainVerifier(),
+      booksCopyRepository: MockBooksCopyRepository(),
+    );
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ContinuationView(
+          viewModel: viewModel,
+          onContinued: () {},
+          onRestoreFromCopy: () => restoreTapped = true,
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Restore from a copy'));
+    await tester.pump();
+    expect(restoreTapped, isTrue);
+  });
 }

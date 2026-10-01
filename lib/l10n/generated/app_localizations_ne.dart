@@ -785,11 +785,6 @@ class AppLocalizationsNe extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'शब्द #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'आफ्नो भाषा छान्नुहोस्';
 
   @override
@@ -830,9 +825,6 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -900,12 +892,6 @@ class AppLocalizationsNe extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'वैकल्पिक ब्याकअप फाइल';
-
-  @override
-  String get iConfirmBooksValid => 'म पुष्टि गर्छु कि हालका खाता मान्य छन्';
 
   @override
   String get whyWeDontEdit => 'हामी पुराना प्रविष्टिहरू किन सम्पादन गर्दैनौं';
@@ -1162,10 +1148,6 @@ class AppLocalizationsNe extends AppLocalizations {
   String get errorGeneric => 'केही गडबड भयो। कृपया फेरि प्रयास गर्नुहोस्।';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'यो रिकभरी फ्रेज वा किस्टोर फाइल यो डाटाबेसको कुनै पनि साइनिङ परिचयसँग मिल्दैन।';
-
-  @override
   String get errorInvalidLedgerBackup => 'यो फाइल मान्य स्मारा ब्याकअप होइन।';
 
   @override
@@ -1180,31 +1162,6 @@ class AppLocalizationsNe extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'यो फाइल स्मारा ब्याकअपको रूपमा खोल्न सकिएन: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'यो ब्याकअप यस यन्त्रमा भएको भन्दा फरक साइनिङ परिचयको हो।';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'त्यो वित्तीय खाता होइन।';
@@ -1495,15 +1452,6 @@ class AppLocalizationsNe extends AppLocalizations {
       'यो ब्याकअप पुनर्स्थापना गर्न सकिएन - गलत पासफ्रेज, वा स्मारा ब्याकअप फाइल होइन।';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'रकम, खाता, र श्रेणी आवश्यक छन्।';
 
@@ -1561,18 +1509,6 @@ class AppLocalizationsNe extends AppLocalizations {
   String get validationInvalidTemplate => 'अमान्य टेम्प्लेट।';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'यो किस्टोर फाइलका लागि गलत पासफ्रेज।';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'त्यो मान्य किस्टोर फाइल जस्तो देखिँदैन।';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'त्यो रिकभरी फ्रेजबाट पुनर्स्थापना गर्न सकिएन।';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'यो यन्त्रमा साइनिङ की उत्पन्न गर्न सकिएन: $detail';
   }
@@ -1583,15 +1519,7 @@ class AppLocalizationsNe extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'माइग्रेसन असफल भयो। कृपया फेरि प्रयास गर्नुहोस्।';
-
-  @override
   String get validationChooseBackupFile => 'पहिले ब्याकअप फाइल छान्नुहोस्।';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'पासफ्रेज प्रविष्ट गर्नुहोस्।';
@@ -1614,11 +1542,6 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'मान्य रकम प्रविष्ट गर्नुहोस्।';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'शब्द $n तपाईंको सुरक्षित फ्रेजसँग मिल्दैन। जाँच गरेर फेरि प्रयास गर्नुहोस्।';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1966,4 +1889,57 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'पासफ्रेज';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

@@ -782,11 +782,6 @@ class AppLocalizationsSat extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'ᱠᱟᱴᱷᱟ #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'आम रेयाक़ पासनाव कुड़ी कुरुमुटे';
 
   @override
@@ -827,9 +822,6 @@ class AppLocalizationsSat extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -897,13 +889,6 @@ class AppLocalizationsSat extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'ᱮᱴᱠᱮᱛᱮ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ';
-
-  @override
-  String get iConfirmBooksValid =>
-      'ᱟᱭᱧ ᱪᱮᱛᱟᱱ ᱟᱭᱮᱱᱟ ᱡᱮ ᱱᱤᱛᱚᱜ ᱨᱮᱭᱟᱜ ᱦᱤᱥᱟᱹᱵ ᱚᱞ ᱫᱚ ᱴᱷᱤᱠ ᱠᱟᱱᱟ';
 
   @override
   String get whyWeDontEdit => 'ᱚᱠᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱮ ᱯᱩᱨᱟᱹᱱ ᱚᱞ ᱵᱟᱭ ᱮᱰᱤᱴ ᱮᱫᱟᱞᱮ';
@@ -1160,10 +1145,6 @@ class AppLocalizationsSat extends AppLocalizations {
   String get errorGeneric => 'ᱪᱮᱫᱟᱜ ᱵᱟᱝ ᱴᱷᱤᱠ᱾ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'ᱱᱚᱶᱟ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱥᱮ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱫᱚ ᱱᱚᱶᱟ ᱰᱟᱴᱟᱵᱮᱥ ᱨᱮ ᱚᱠᱟ ᱦᱚᱸ ᱥᱟᱭᱤᱱ ᱠᱤ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡ ᱠᱟᱱᱟ᱾';
-
-  @override
   String get errorInvalidLedgerBackup => 'ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ ᱴᱷᱤᱠ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱵᱟᱝᱟ᱾';
 
   @override
@@ -1178,31 +1159,6 @@ class AppLocalizationsSat extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'ᱱᱚᱶᱟ ᱯᱷᱟᱭᱞ ᱫᱚ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱞᱮᱠᱷᱟ ᱠᱷᱩᱞᱟᱹ ᱵᱟᱭ ᱦᱩᱭᱮᱱᱟ: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱫᱚ ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮᱭᱟᱜ ᱥᱟᱭᱤᱱ ᱠᱤ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱠᱷᱚᱱ ᱮᱴᱟᱜ ᱠᱟᱱ ᱟᱭᱰᱮᱱᱴᱤᱴᱤ ᱨᱮᱭᱟᱜ ᱠᱟᱱᱟ᱾';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'ᱚᱱᱟ ᱫᱚ ᱴᱚᱠᱟ ᱦᱤᱥᱟᱹᱵ ᱵᱟᱝᱟ᱾';
@@ -1492,15 +1448,6 @@ class AppLocalizationsSat extends AppLocalizations {
       'ᱱᱚᱶᱟ ᱵᱮᱠᱟᱯ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ - ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱭ ᱴᱷᱤᱠ, ᱥᱮ ᱴᱷᱤᱠ ᱥᱢᱟᱨᱟ ᱵᱮᱠᱟᱯ ᱵᱟᱝᱟ᱾';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'ᱮᱞ, ᱦᱤᱥᱟᱹᱵ, ᱟᱨ ᱡᱟᱹᱛ ᱫᱚᱨᱠᱟᱨ᱾';
 
@@ -1558,18 +1505,6 @@ class AppLocalizationsSat extends AppLocalizations {
   String get validationInvalidTemplate => 'ᱴᱮᱢᱯᱞᱮᱴ ᱵᱟᱭ ᱴᱷᱤᱠ᱾';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'ᱱᱚᱶᱟ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱞᱟᱹᱜᱤᱫ ᱯᱟᱥᱣᱟᱨᱰ ᱵᱟᱭ ᱴᱷᱤᱠ᱾';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'ᱱᱚᱶᱟ ᱫᱚ ᱴᱷᱤᱠ ᱠᱤᱥᱴᱳᱨ ᱯᱷᱟᱭᱞ ᱞᱮᱠᱷᱟ ᱵᱟᱭ ᱧᱮᱞᱚᱜᱼᱟ᱾';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'ᱚᱱᱟ ᱨᱤᱠᱟᱣᱨᱤ ᱯᱷᱨᱮᱡ ᱠᱷᱚᱱ ᱯᱩᱱᱚᱛᱷᱟᱯᱚᱱ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ᱾';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'ᱱᱚᱶᱟ ᱰᱮᱶᱟᱭᱤᱥ ᱨᱮ ᱥᱟᱭᱤᱱ ᱠᱤ ᱵᱮᱱᱟᱣ ᱵᱟᱭ ᱫᱟᱲᱮᱭᱟᱜ ᱮᱱᱟ: $detail';
   }
@@ -1580,15 +1515,7 @@ class AppLocalizationsSat extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'ᱢᱟᱭᱭᱚᱨᱮᱥᱚᱱ ᱵᱟᱭ ᱴᱷᱤᱠ ᱦᱩᱭᱮᱱᱟ᱾ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾';
-
-  @override
   String get validationChooseBackupFile => 'ᱯᱟᱦᱤᱞᱮ ᱢᱤᱫ ᱵᱮᱠᱟᱯ ᱯᱷᱟᱭᱞ ᱵᱟᱪᱷᱟᱣ ᱢᱮ᱾';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'ᱯᱟᱥᱣᱟᱨᱰ ᱚᱞ ᱢᱮ᱾';
@@ -1611,11 +1538,6 @@ class AppLocalizationsSat extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'ᱴᱷᱤᱠ ᱮᱞ ᱚᱞ ᱢᱮ᱾';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'ᱠᱟᱴᱷᱟ $n ᱫᱚ ᱟᱢ ᱨᱮᱭᱟᱜ ᱥᱟᱺᱪᱟᱣ ᱠᱟᱱ ᱯᱷᱨᱮᱡ ᱥᱟᱶᱛᱮ ᱵᱟᱭ ᱦᱮᱡᱟ᱾ ᱧᱮᱞ ᱢᱮ ᱟᱨ ᱫᱚᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ᱾';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1962,4 +1884,57 @@ class AppLocalizationsSat extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'ᱯᱟᱥᱣᱟᱨᱰ';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

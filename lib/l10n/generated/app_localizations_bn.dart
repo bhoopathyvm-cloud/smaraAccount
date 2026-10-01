@@ -783,11 +783,6 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'শব্দ #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'আপনার ভাষা বেছে নিন';
 
   @override
@@ -828,9 +823,6 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -898,12 +890,6 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'ঐচ্ছিক ব্যাকআপ ফাইল';
-
-  @override
-  String get iConfirmBooksValid => 'আমি নিশ্চিত করছি যে বর্তমান হিসাব বৈধ';
 
   @override
   String get whyWeDontEdit => 'কেন আমরা পুরনো এন্ট্রি সম্পাদনা করি না';
@@ -1157,10 +1143,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String get errorGeneric => 'কিছু ভুল হয়েছে। আবার চেষ্টা করুন।';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'এই পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইলটি এই ডাটাবেসের কোনো সাইনিং পরিচয়ের সাথে মেলে না।';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'এই ফাইলটি একটি বৈধ স্মারা ব্যাকআপ নয়।';
 
@@ -1176,31 +1158,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'এই ফাইলটি স্মারা ব্যাকআপ হিসেবে খোলা যায়নি: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'এই ব্যাকআপটি এই ডিভাইসে থাকা পরিচয়ের চেয়ে ভিন্ন একটি সাইনিং পরিচয়ের।';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'এটি একটি আর্থিক হিসাব নয়।';
@@ -1493,15 +1450,6 @@ class AppLocalizationsBn extends AppLocalizations {
       'এই ব্যাকআপ পুনরুদ্ধার করা যায়নি - ভুল পাসফ্রেজ, অথবা স্মারা ব্যাকআপ ফাইল নয়।';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'পরিমাণ, হিসাব, এবং বিভাগ প্রয়োজন।';
 
@@ -1559,18 +1507,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String get validationInvalidTemplate => 'অবৈধ টেমপ্লেট।';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'এই কীস্টোর ফাইলের জন্য ভুল পাসফ্রেজ।';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'এটি একটি বৈধ কীস্টোর ফাইলের মতো মনে হচ্ছে না।';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'সেই পুনরুদ্ধার বাক্যাংশ থেকে পুনরুদ্ধার করা যায়নি।';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'এই ডিভাইসে একটি সাইনিং কী তৈরি করা যায়নি: $detail';
   }
@@ -1581,15 +1517,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'মাইগ্রেশন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।';
-
-  @override
   String get validationChooseBackupFile => 'প্রথমে একটি ব্যাকআপ ফাইল বেছে নিন।';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'একটি পাসফ্রেজ লিখুন।';
@@ -1612,11 +1540,6 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'একটি বৈধ পরিমাণ লিখুন।';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'শব্দ $n আপনার সংরক্ষিত বাক্যাংশের সাথে মেলে না। এটি পরীক্ষা করে আবার চেষ্টা করুন।';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1963,4 +1886,57 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'পাসফ্রেজ';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "सोदोब #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "नोंथांनि रादाब सायख",
   "chooseLanguageBlurb": "एपखौ जोबथानो जायखि सब रादाबाव नुनो मोनबाय। नोंथाङा उनि उनाव सेटिंसआव सोलायनो हायो।",
   "chooseCurrencyTitle": "नोंथांनि करेंसी सायख",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "नोंथांनि खातानि मुं थि",
   "firstAccountBlurb": "बेयो नोंथांखायनो सिगाংनिफ्राय बेवस्था खालामबाय खाता - बेखौ नोंथांयो सिनायथिनाय मुं गुदि नोंथांनि बेंकनि मुं थि। नोंथांयो सिगां सा फोजाब एबा मोननाय दर्ज खालामनांगौ, बादि डिभाइसखौ नोंथांनि रिकभरि फ्रेजजों रोखाथाब।",
   "whatsMainAccountCalled": "नोंथांनि गाहाय खातानि मुं मा?",
-  "optionalBackupFile": "जरूरी नङानाय बैकअप फाइल",
-  "iConfirmBooksValid": "आं दानिनि बुखि थार जागोन गोदान खालामदों",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "बुखिय गोबां जोबथानाय एंट्री मानो सुद्रांथियै",
   "whyWeDontEditBody": "नोंथांयो सा गोरोन्थि सुद्रिबाब्ला, बुयो जोबथा लाइनखौ थिना दोनानै बेनि सोदोबसार सुद्रिनाय दाजाबदों, नोंथांयो दाजाबबाय बेखौ सोलायनाय नङा। बेनि थाखाय नोंथांनि इतिहासा जायखिजाबाय आरो मानाव सुद्रिबाय बेखौ थार दिन्थिनाय थादों — नोंथांनि गिबारि गोयै कुनैबो सोलायाखै।",
   "lockTitle": "अनलाक",
@@ -542,7 +571,6 @@
   "none": "जायेंगा",
   "currency": "करेंसी",
   "errorGeneric": "माबा गोरोन्थि जाबाय। नोगोर फिन नाजा।",
-  "errorSigningIdentityMismatch": "बे रिकभरि फ्रेज एबा कीस्टोर फाइला बे डाटाबेसआव कुनैबो साइनिं परिचयजों मिलाखै।",
   "errorInvalidLedgerBackup": "बे फाइला थार स्मारा बैकअप नङा।",
   "errorInvalidLedgerBackupNoIdentity": "बे बैकअपआव साइनिं परिचय जायेंगा - बेयो थार स्मारा बैकअप नङा।",
   "errorInvalidLedgerBackupUnverified": "बे बैकअपा गोरोबथि बुखि बादि गोदान जायाखै, बेखायनो फिन दिनाखै।",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "बे बैकअपा बे डिभाइसआव थानाय बिनिफ्राय अलग सा साइनिं परिचयनि।",
   "errorAccountNotFinancial": "बेयो सा वित्तीय खाता नङा।",
   "errorAccountArchived": "बे खाताया गुमुरबाय।",
   "errorAccountNotArchived": "बे खाताया गुमुराखै।",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "थाखोया आय एबा फोरजाब जानांगौ।",
   "validationOnlyExpenseHasMonthlyLimit": "फोरजाब थाखोखिनि दान-दाननि सिमा दंनो हागोन।",
   "validationInvalidTemplate": "गोरोन्थि टेम्पलेट।",
-  "validationWrongKeystorePassphrase": "बे कीस्टोर फाइलखायनो गोरोन्थि पासफ्रेज।",
-  "validationInvalidKeystoreFile": "बेयो थार कीस्टोर फाइल बादि नुयैआ।",
-  "validationRestorePhraseFailed": "बे रिकभरि फ्रेजनिफ्राय फिन दिननो हायाखै।",
   "validationGenerateKeyFailed": "बे डिभाइसआव साइनिं की जनरेट खालामनो हायाखै: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "पुनर्गठन फेल जाबाय। नोगोर फिन नाजा।",
   "validationChooseBackupFile": "सिगां सा बैकअप फाइल सायख।",
   "validationPassphraseRequired": "सा पासफ्रेज बागार।",
   "validationPinsDoNotMatch": "दुखान पिना मिलेआखै।",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "सा थार राशि बागार।",
-  "validationConfirmWordMismatch": "सोदोब {n} नोंथांनि थिनाबाय फ्रेजजों मिलेआखै। बेखौ सोदोबसार खालामनानै फिन नाजा।",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "फोजाब मान आरो यूनिट दामा पजिभ होनांगौ।",
   "errorInstrumentArchived": "गुमुरबाय साधन फोजाबनो हायाखै।",
   "errorNonCashCannotIncludeBrokerage": "रां नङा मोननायआव ब्रोकरेज सोमावनो हायाखै।",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "पासफ्रेज",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "पासफ्रेज"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

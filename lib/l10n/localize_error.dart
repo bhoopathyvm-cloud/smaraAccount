@@ -5,7 +5,6 @@ import 'generated/app_localizations.dart';
   return switch (error) {
     AppFailure f => (code: f.code, params: f.params),
     InvalidTransactionAmountException e => (code: e.code, params: e.params),
-    SigningIdentityMismatchException e => (code: e.code, params: e.params),
     InvalidTransferException e => (code: e.code, params: e.params),
     InvalidOpeningBalanceException e => (code: e.code, params: e.params),
     AccountGroupException e => (code: e.code, params: e.params),
@@ -14,12 +13,6 @@ import 'generated/app_localizations.dart';
     OfxParseException e => (code: e.code, params: e.params),
     CsvParseException e => (code: e.code, params: e.params),
     InvalidLedgerBackupException e => (code: e.code, params: e.params),
-    ForeignBackupIdentityException e => (code: e.code, params: e.params),
-    InvalidDeviceMigrationBundleException e => (code: e.code, params: e.params),
-    ForeignDeviceMigrationBundleIdentityException e => (
-      code: e.code,
-      params: e.params,
-    ),
     InvestmentException e => (code: e.code, params: e.params),
     AlreadyReversedException e => (code: e.code, params: e.params),
     _ => null,
@@ -64,7 +57,6 @@ String localizeError(
   String p(String key, [String fallback = '']) => params[key] ?? fallback;
   return switch (code) {
     AppErrorCode.generic => l10n.errorGeneric,
-    AppErrorCode.signingIdentityMismatch => l10n.errorSigningIdentityMismatch,
     AppErrorCode.invalidLedgerBackup => l10n.errorInvalidLedgerBackup,
     AppErrorCode.invalidLedgerBackupNoIdentity =>
       l10n.errorInvalidLedgerBackupNoIdentity,
@@ -72,19 +64,6 @@ String localizeError(
       l10n.errorInvalidLedgerBackupUnverified,
     AppErrorCode.invalidLedgerBackupUnreadable =>
       l10n.errorInvalidLedgerBackupUnreadable(_detailFor(l10n, params)),
-    AppErrorCode.foreignBackupIdentity => l10n.errorForeignBackupIdentity,
-    AppErrorCode.invalidDeviceMigrationBundle =>
-      l10n.errorInvalidDeviceMigrationBundle,
-    AppErrorCode.invalidDeviceMigrationBundleNoIdentity =>
-      l10n.errorInvalidDeviceMigrationBundleNoIdentity,
-    AppErrorCode.invalidDeviceMigrationBundleUnverified =>
-      l10n.errorInvalidDeviceMigrationBundleUnverified,
-    AppErrorCode.invalidDeviceMigrationBundleUnreadable =>
-      l10n.errorInvalidDeviceMigrationBundleUnreadable(
-        _detailFor(l10n, params),
-      ),
-    AppErrorCode.foreignDeviceMigrationBundleIdentity =>
-      l10n.errorForeignDeviceMigrationBundleIdentity,
     AppErrorCode.accountNotFinancial => l10n.errorAccountNotFinancial,
     AppErrorCode.accountArchived => l10n.errorAccountArchived,
     AppErrorCode.accountNotArchived => l10n.errorAccountNotArchived,
@@ -194,10 +173,6 @@ String localizeError(
       _detailFor(l10n, params),
     ),
     AppErrorCode.backupRestoreFailed => l10n.errorBackupRestoreFailed,
-    AppErrorCode.deviceMigrationBundleCreateFailed =>
-      l10n.errorDeviceMigrationBundleCreateFailed(_detailFor(l10n, params)),
-    AppErrorCode.deviceMigrationBundleImportFailed =>
-      l10n.errorDeviceMigrationBundleImportFailed,
     AppErrorCode.validationAmountAccountCategoryRequired =>
       l10n.validationAmountAccountCategoryRequired,
     AppErrorCode.validationAmountAccountRequired =>
@@ -224,20 +199,11 @@ String localizeError(
     AppErrorCode.validationOnlyExpenseHasMonthlyLimit =>
       l10n.validationOnlyExpenseHasMonthlyLimit,
     AppErrorCode.validationInvalidTemplate => l10n.validationInvalidTemplate,
-    AppErrorCode.validationWrongKeystorePassphrase =>
-      l10n.validationWrongKeystorePassphrase,
-    AppErrorCode.validationInvalidKeystoreFile =>
-      l10n.validationInvalidKeystoreFile,
-    AppErrorCode.validationRestorePhraseFailed =>
-      l10n.validationRestorePhraseFailed,
     AppErrorCode.validationGenerateKeyFailed =>
       l10n.validationGenerateKeyFailed(_detailFor(l10n, params)),
     AppErrorCode.validationSaveCurrencyFailed =>
       l10n.validationSaveCurrencyFailed(_detailFor(l10n, params)),
-    AppErrorCode.validationMigrationFailed => l10n.validationMigrationFailed,
     AppErrorCode.validationChooseBackupFile => l10n.validationChooseBackupFile,
-    AppErrorCode.validationChooseDeviceMigrationBundleFile =>
-      l10n.validationChooseDeviceMigrationBundleFile,
     AppErrorCode.validationPassphraseRequired =>
       l10n.validationPassphraseRequired,
     AppErrorCode.validationPinsDoNotMatch => l10n.validationPinsDoNotMatch,
@@ -249,8 +215,6 @@ String localizeError(
     AppErrorCode.validationTransferSavedFeeFailed =>
       l10n.validationTransferSavedFeeFailed(_detailFor(l10n, params)),
     AppErrorCode.validationEnterValidAmount => l10n.validationEnterValidAmount,
-    AppErrorCode.validationConfirmWordMismatch =>
-      l10n.validationConfirmWordMismatch(p('n')),
   };
 }
 

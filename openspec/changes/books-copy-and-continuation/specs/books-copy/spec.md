@@ -2,6 +2,12 @@
 
 Let a person save one passphrase-protected copy of their books and restore it on this or any device, for backup, for moving to a new phone, or for giving a copy to someone. The copy never contains a private key, so no one has to manage a key.
 
+## Background References
+
+- [NIST: integrity](https://csrc.nist.gov/glossary/term/integrity)
+- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+- [IRS electronic accounting records FAQ](https://www.irs.gov/businesses/small-businesses-self-employed/use-of-electronic-accounting-software-records-frequently-asked-questions-and-answers)
+
 ## ADDED Requirements
 
 ### Requirement: Books Copy Contents

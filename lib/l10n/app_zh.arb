@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "第 {n} 个单词",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "选择你的语言",
   "chooseLanguageBlurb": "应用中的所有内容都将以此语言显示。你可以稍后在设置中更改。",
   "chooseCurrencyTitle": "选择您的货币",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "为您的账户命名",
   "firstAccountBlurb": "这是已为您预先设置好的账户——为它取一个您能认出的名字，比如您的银行名称。接下来您会记录一笔支出或收入，然后用恢复短语保护此设备。",
   "whatsMainAccountCalled": "您的主要账户叫什么名字？",
-  "optionalBackupFile": "可选备份文件",
-  "iConfirmBooksValid": "我确认当前账本有效",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "我们为什么不修改旧条目",
   "whyWeDontEditBody": "当您更正一个错误时，我们会保留原有的记录行，并在旁边添加一条更正记录，而不是改动您已经录入的内容。这样，您的历史记录始终能准确显示实际发生了什么，以及您何时做了更正——不会有任何内容在您不知情的情况下被悄悄改变。",
   "lockTitle": "解锁",
@@ -542,7 +571,6 @@
   "none": "无",
   "currency": "货币",
   "errorGeneric": "出错了，请重试。",
-  "errorSigningIdentityMismatch": "此恢复短语或密钥库文件与此数据库中的任何签名身份都不匹配。",
   "errorInvalidLedgerBackup": "此文件不是有效的 Smara 备份。",
   "errorInvalidLedgerBackupNoIdentity": "此备份没有签名身份——它不是有效的 Smara 备份。",
   "errorInvalidLedgerBackupUnverified": "此备份未能验证为完整的账本，因此未被恢复。",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "此备份属于与本设备不同的签名身份。",
   "errorAccountNotFinancial": "该账户不是财务账户。",
   "errorAccountArchived": "该账户已被隐藏。",
   "errorAccountNotArchived": "该账户未被隐藏。",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "分类必须是收入或支出。",
   "validationOnlyExpenseHasMonthlyLimit": "只有支出分类才能设置月度限额。",
   "validationInvalidTemplate": "模板无效。",
-  "validationWrongKeystorePassphrase": "此密钥库文件的密码短语错误。",
-  "validationInvalidKeystoreFile": "该文件看起来不是有效的密钥库文件。",
-  "validationRestorePhraseFailed": "无法从该恢复短语恢复。",
   "validationGenerateKeyFailed": "无法在此设备上生成签名密钥：{detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "迁移失败。请重试。",
   "validationChooseBackupFile": "请先选择一个备份文件。",
   "validationPassphraseRequired": "请输入密码短语。",
   "validationPinsDoNotMatch": "两次输入的 PIN 不一致。",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "请输入有效金额。",
-  "validationConfirmWordMismatch": "第 {n} 个单词与您保存的恢复短语不匹配。请检查后重试。",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "买入数量和单价必须为正数。",
   "errorInstrumentArchived": "无法买入已隐藏的投资标的。",
   "errorNonCashCannotIncludeBrokerage": "非现金取得不能包含经纪费。",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "密码短语",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "密码短语"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
@@ -11,6 +9,7 @@ import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../view_models/bundle_import_view_model.dart';
+import 'books_copy_restored_success_dialog.dart';
 
 /// Startup "Restore from a copy" screen (books-copy-and-continuation).
 /// Reached from [SetupChoiceView] or [/continue], before any matching
@@ -65,32 +64,8 @@ class _BundleImportViewState extends State<BundleImportView> {
     );
     if (!mounted) return;
     if (ok) {
-      _showImportedSuccessDialog(context);
+      await showBooksCopyRestoredSuccessDialog(context);
     }
-  }
-
-  void _showImportedSuccessDialog(BuildContext context) {
-    final l10n = l10nOf(context);
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.backupRestored),
-        content: Text(l10n.backupRestoredBody),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              if (Platform.isAndroid || Platform.isIOS) {
-                SystemNavigator.pop();
-              } else {
-                exit(0);
-              }
-            },
-            child: Text(l10n.actionCloseApp),
-          ),
-        ],
-      ),
-    );
   }
 
   @override

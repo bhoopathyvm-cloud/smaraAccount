@@ -773,11 +773,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return '単語 #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => '言語を選んでください';
 
   @override
@@ -816,9 +811,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -886,12 +878,6 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => '任意のバックアップファイル';
-
-  @override
-  String get iConfirmBooksValid => '現在の帳簿が正しいことを確認しました';
 
   @override
   String get whyWeDontEdit => '古い項目を編集しない理由';
@@ -1140,10 +1126,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get errorGeneric => '問題が発生しました。もう一度お試しください。';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'このリカバリーフレーズまたはキーストアファイルは、このデータベース内のどの署名アイデンティティとも一致しません。';
-
-  @override
   String get errorInvalidLedgerBackup => 'このファイルは有効なSmaraのバックアップではありません。';
 
   @override
@@ -1158,31 +1140,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'このファイルをSmaraのバックアップとして開けませんでした: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'このバックアップは、この端末のものとは異なる署名アイデンティティに属しています。';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'それは財務口座ではありません。';
@@ -1436,15 +1393,6 @@ class AppLocalizationsJa extends AppLocalizations {
       'このバックアップを復元できませんでした - パスフレーズが間違っているか、Smaraのバックアップファイルではありません。';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired => '金額、口座、カテゴリは必須です。';
 
   @override
@@ -1494,15 +1442,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get validationInvalidTemplate => '無効なテンプレートです。';
 
   @override
-  String get validationWrongKeystorePassphrase => 'このキーストアファイルのパスフレーズが違います。';
-
-  @override
-  String get validationInvalidKeystoreFile => 'これは有効なキーストアファイルではないようです。';
-
-  @override
-  String get validationRestorePhraseFailed => 'そのリカバリーフレーズから復元できませんでした。';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'この端末で署名鍵を生成できませんでした: $detail';
   }
@@ -1513,14 +1452,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => '移行に失敗しました。もう一度お試しください。';
-
-  @override
   String get validationChooseBackupFile => '先にバックアップファイルを選択してください。';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'パスフレーズを入力してください。';
@@ -1543,11 +1475,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => '有効な金額を入力してください。';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return '単語$nが保存したフレーズと一致しません。確認してもう一度お試しください。';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive => '買いの数量と単価は正の値にしてください。';
@@ -1886,4 +1813,57 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'パスフレーズ';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

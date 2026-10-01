@@ -88,20 +88,16 @@ local ledger database to a file you choose. That file is books, not your
 signing key. Restoring it replaces local books; it does not transplant a
 key from another identity.
 
-**Recovery phrase and keystore file** (optional, Settings → Recovery &
-identity) let you back up your signing key yourself — as 24 words you
-write down, or as a passphrase-encrypted file. Neither contains your
-books.
+**Books Copy** (optional, Settings) writes a passphrase-encrypted copy of your books to a location you choose. It does not include your private signing key. Restoring a copy replaces the books on this device.
 
-**Device migration bundle** (optional, same Settings section) writes one
-passphrase-encrypted file containing **both** your books and your signing
+**both** your books and your signing
 key, so you can move to a new device in one step. Anyone with that file
 *and* its passphrase could read your books and sign entries as you, so
 keep the passphrase separate from the file. The app never uploads it.
 
 **Export CSV** writes transaction rows you choose (including whether each
 row still verifies) to a file you choose. It does not include the signing
-key, recovery phrase, or keystore file.
+private signing key. A lost device can only be recovered from a saved Books Copy.
 
 **Hide balances in the app switcher** (optional) covers the app's content
 while it is in the background; nothing is sent anywhere.

@@ -785,11 +785,6 @@ class AppLocalizationsTe extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'పదం #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'మీ భాషను ఎంచుకోండి';
 
   @override
@@ -830,9 +825,6 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -900,13 +892,6 @@ class AppLocalizationsTe extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'ఐచ్ఛిక బ్యాకప్ ఫైల్';
-
-  @override
-  String get iConfirmBooksValid =>
-      'ప్రస్తుత ఖాతా పుస్తకాలు చెల్లుబాటు అవుతాయని నేను నిర్ధారిస్తున్నాను';
 
   @override
   String get whyWeDontEdit => 'మేము పాత ఎంట్రీలను ఎందుకు సవరించము';
@@ -1161,10 +1146,6 @@ class AppLocalizationsTe extends AppLocalizations {
   String get errorGeneric => 'ఏదో తప్పు జరిగింది. దయచేసి మళ్లీ ప్రయత్నించండి.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'ఈ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ ఈ డేటాబేస్‌లోని ఏ సైనింగ్ ఐడెంటిటీతోనూ సరిపోలడం లేదు.';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'ఈ ఫైల్ చెల్లుబాటు అయ్యే స్మారా బ్యాకప్ కాదు.';
 
@@ -1180,31 +1161,6 @@ class AppLocalizationsTe extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'ఈ ఫైల్‌ను స్మారా బ్యాకప్‌గా తెరవలేకపోయాము: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'ఈ బ్యాకప్ ఈ పరికరంలో ఉన్న దానికంటే వేరే సైనింగ్ ఐడెంటిటీకి చెందినది.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'అది ఆర్థిక ఖాతా కాదు.';
@@ -1496,15 +1452,6 @@ class AppLocalizationsTe extends AppLocalizations {
       'ఈ బ్యాకప్‌ను పునరుద్ధరించలేకపోయాము - తప్పు పాస్‌ఫ్రేజ్, లేదా ఇది స్మారా బ్యాకప్ ఫైల్ కాదు.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'మొత్తం, ఖాతా, మరియు వర్గం అవసరం.';
 
@@ -1562,18 +1509,6 @@ class AppLocalizationsTe extends AppLocalizations {
   String get validationInvalidTemplate => 'చెల్లని టెంప్లేట్.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'ఈ కీస్టోర్ ఫైల్ కోసం తప్పు పాస్‌ఫ్రేజ్.';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'అది చెల్లుబాటు అయ్యే కీస్టోర్ ఫైల్‌లా కనిపించడం లేదు.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'ఆ రికవరీ పదబంధం నుండి పునరుద్ధరించలేకపోయాము.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'ఈ పరికరంలో సైనింగ్ కీని సృష్టించలేకపోయాము: $detail';
   }
@@ -1584,15 +1519,7 @@ class AppLocalizationsTe extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'మైగ్రేషన్ విఫలమైంది. దయచేసి మళ్లీ ప్రయత్నించండి.';
-
-  @override
   String get validationChooseBackupFile => 'మొదట బ్యాకప్ ఫైల్‌ను ఎంచుకోండి.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.';
@@ -1615,11 +1542,6 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'సరైన మొత్తాన్ని నమోదు చేయండి.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'పదం $n మీ సేవ్ చేసిన పదబంధంతో సరిపోలడం లేదు. దాన్ని తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1966,4 +1888,57 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'పాస్‌ఫ్రేజ్';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

@@ -50,7 +50,7 @@ ISIN only), and a one-time listing search when an instrument is added
 
 The device's signing identity lives in the OS-level secure keystore, not
 in the SQLite file itself — the user can optionally back it up (recovery
-phrase, keystore file, or a books-plus-key device migration bundle) — and
+Books Copy (books only, never the private key) — and
 every posted journal entry is signed and hash-chained so that tampering
 with a past entry breaks verification from that point forward, detected
 the next time the app starts.

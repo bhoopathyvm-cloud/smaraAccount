@@ -262,7 +262,7 @@
   "accountName": "ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ",
   "createAccount": "ꯑꯦꯀꯥꯎꯟꯠ ꯁꯦꯝꯒꯠꯂꯨ",
   "createGroup": "ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ",
-  "editGroup": "ꯒ꯭ꯔꯨꯞ ꯑꯣꯡꯗꯣꯛꯎ",
+  "editGroup": "ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ",
   "renameAccount": "ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ",
   "renameCategory": "ꯃꯆꯦꯠꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ",
   "addCategory": "ꯃꯆꯦꯠ ꯍꯥꯞꯆꯤꯟ",
@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "ꯋꯥꯍꯩ #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "নহাক্কী লোন খল্লু",
   "chooseLanguageBlurb": "এপ্তা মায়োক্কী য়াম্না অসিগী লোন অসিদা উৎকনি। নহাক্না মতুংদা সেটিংসতা মসি হোংবা য়াই।",
   "chooseCurrencyTitle": "ꯅꯍꯥꯛꯀꯤ ꯀꯔꯦꯟꯁꯤ ꯈꯪꯗꯣꯛꯎ",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "ꯅꯍꯥꯛꯀꯤ ꯑꯦꯀꯥꯎꯟꯠꯗ ꯃꯤꯡ ꯄꯤꯎ",
   "firstAccountBlurb": "ꯃꯁꯤ ꯅꯍꯥꯛꯀꯤꯗꯃꯛ ꯍꯧꯖꯤꯛ ꯁꯦꯝꯖꯔꯕ ꯑꯦꯀꯥꯎꯟꯠꯅꯤ - ꯅꯍꯥꯛꯀꯤ ꯕꯦꯡꯛ ꯒꯨꯝꯅ ꯈꯪꯅꯕ ꯃꯤꯡ ꯑꯃ ꯄꯤꯎ. ꯃꯇꯨꯡꯗ ꯆꯥꯗꯤꯡꯈꯤꯕ ꯅꯠꯇ꯭ꯔꯒ ꯐꯪꯈꯤꯕ ꯑꯃꯈꯛ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯒꯅꯤ, ꯃꯗꯨꯒꯤ ꯃꯇꯨꯡꯗ ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖꯅ ꯗꯤꯚꯥꯏꯁ ꯁꯦꯀꯤꯎꯔ ꯇꯧꯒꯅꯤ.",
   "whatsMainAccountCalled": "ꯅꯍꯥꯛꯀꯤ ꯃꯄꯨꯡ ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ ꯀꯔꯤꯅꯣ?",
-  "optionalBackupFile": "ꯑꯣꯞꯁꯟꯦꯜ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ",
-  "iConfirmBooksValid": "ꯍꯧꯖꯤꯛꯀꯤ ꯂꯦꯈꯥ ꯑꯁꯤ ꯆꯨꯝꯅꯩ ꯍꯥꯌꯅ ꯑꯩ ꯀꯅꯐꯔꯃ ꯇꯧꯏ",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "ꯑꯔꯤꯕ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯀꯔꯤꯅ ꯑꯩꯈꯣꯏꯅ ꯁꯦꯝꯒꯠꯂꯗꯦ",
   "whyWeDontEditBody": "ꯑꯍꯨꯃ ꯑꯃ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯄ ꯃꯇꯃꯗ, ꯅꯍꯥꯛꯅ ꯍꯥꯞꯆꯤꯟꯈꯤꯕ ꯑꯗꯨ ꯑꯣꯡꯗꯣꯛꯗꯅ ꯑꯩꯈꯣꯏꯅ ꯑꯔꯤꯕ ꯂꯥꯏꯅ ꯑꯗꯨ ꯊꯝꯏ ꯑꯃꯁꯨꯡ ꯃꯅꯨꯡꯗ ꯆꯦꯛꯁꯤꯟꯕ ꯑꯃ ꯍꯥꯞꯆꯤꯟꯏ. ꯃꯗꯨꯅ ꯀꯔꯤ ꯊꯣꯛꯈꯤꯕꯗ ꯑꯃꯁꯨꯡ ꯀꯔꯃꯗ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯄ ꯅꯍꯥꯛꯀꯤ ꯍꯤꯁꯇꯔꯤꯅ ꯃꯇꯝ ꯄꯨꯝꯅꯃꯛ ꯑꯆꯨꯝꯅ ꯎꯠꯂꯤ — ꯅꯍꯥꯛ ꯈꯪꯗꯕ ꯑꯃꯇꯥ ꯂꯣꯠꯅ ꯑꯣꯡꯗꯣꯛꯗꯦ.",
   "lockTitle": "ꯑꯟꯂꯣꯛ",
@@ -542,7 +571,6 @@
   "none": "ꯑꯃꯇꯥ ꯂꯩꯇꯦ",
   "currency": "ꯀꯔꯦꯟꯁꯤ",
   "errorGeneric": "ꯑꯔꯥꯟꯕ ꯊꯣꯛꯈꯤ. ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.",
-  "errorSigningIdentityMismatch": "ꯔꯤꯀꯋꯔꯤ ꯐ꯭ꯔꯦꯖ ꯑꯁꯤ ꯅꯠꯇ꯭ꯔꯒ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯑꯁꯤ ꯗꯥꯇꯥꯕꯦꯁ ꯑꯁꯤꯗ ꯁꯥꯏꯅꯤꯡ ꯑꯥꯏꯗꯦꯟꯇꯤꯇꯤ ꯑꯃꯒꯤꯗꯒꯤꯅ ꯆꯨꯝꯗꯦ.",
   "errorInvalidLedgerBackup": "ꯐꯥꯏꯂ ꯑꯁꯤ ꯆꯨꯝꯅꯕ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯅꯠꯇꯦ.",
   "errorInvalidLedgerBackupNoIdentity": "ꯕꯦꯀꯑꯞ ꯑꯁꯤꯗ ꯁꯥꯏꯅꯤꯡ ꯑꯥꯏꯗꯦꯟꯇꯤꯇꯤ ꯂꯩꯇꯦ - ꯃꯁꯤ ꯆꯨꯝꯅꯕ ꯁ꯭ꯃꯥꯔꯥ ꯕꯦꯀꯑꯞ ꯅꯠꯇꯦ.",
   "errorInvalidLedgerBackupUnverified": "ꯕꯦꯀꯑꯞ ꯑꯁꯤ ꯑꯆꯨꯝꯕ ꯂꯦꯈꯥ ꯑꯣꯏꯅ ꯀꯅꯐꯔꯃ ꯇꯧꯗ꯭ꯔꯦ, ꯃꯔꯝꯗ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯗ꯭ꯔꯦ.",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "ꯕꯦꯀꯑꯞ ꯑꯁꯤ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯒꯤ ꯅꯠꯇ꯭ꯔꯕ ꯑꯇꯣꯞꯄ ꯁꯥꯏꯅꯤꯡ ꯑꯥꯏꯗꯦꯟꯇꯤꯇꯤ ꯑꯃꯒꯤꯅꯤ.",
   "errorAccountNotFinancial": "ꯑꯗꯨ ꯐꯤꯅꯦꯟꯁꯤꯌꯦꯜ ꯑꯦꯀꯥꯎꯟꯠ ꯅꯠꯇꯦ.",
   "errorAccountArchived": "ꯑꯦꯀꯥꯎꯟꯠ ꯑꯗꯨ ꯂꯣꯠꯂꯦ.",
   "errorAccountNotArchived": "ꯑꯦꯀꯥꯎꯟꯠ ꯑꯗꯨ ꯂꯣꯠꯗ꯭ꯔꯦ.",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "ꯃꯆꯦꯠ ꯑꯁꯤ ꯏꯅꯀꯝ ꯅꯠꯇ꯭ꯔꯒ ꯑꯦꯛꯁꯄꯦꯟꯁ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
   "validationOnlyExpenseHasMonthlyLimit": "ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ ꯈꯛꯇꯅ ꯊꯥ ꯈꯨꯗꯤꯡꯒꯤ ꯂꯤꯃꯤꯠ ꯂꯩꯕ ꯌꯥꯏ.",
   "validationInvalidTemplate": "ꯇꯦꯝꯄ꯭ꯂꯦꯠ ꯑꯔꯥꯟꯕ.",
-  "validationWrongKeystorePassphrase": "ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯑꯁꯤꯒꯤꯗꯃꯛ ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯔꯥꯟꯕ.",
-  "validationInvalidKeystoreFile": "ꯃꯁꯤ ꯆꯨꯝꯅꯕ ꯀꯤꯁꯇꯣꯔ ꯐꯥꯏꯂ ꯒꯨꯝꯅ ꯎꯗꯦ.",
-  "validationRestorePhraseFailed": "ꯐ꯭ꯔꯦꯖ ꯑꯗꯨꯗꯒꯤ ꯍꯟꯅ ꯄꯨꯛꯅꯤꯡ ꯆꯪꯗꯣꯛꯄ ꯉꯝꯗ꯭ꯔꯦ.",
   "validationGenerateKeyFailed": "ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗ ꯁꯥꯏꯅꯤꯡ ꯀꯤ ꯁꯦꯝꯒꯠꯄ ꯉꯝꯗ꯭ꯔꯦ: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "ꯃꯥꯏꯒ꯭ꯔꯦꯁꯟ ꯉꯝꯗ꯭ꯔꯦ. ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.",
   "validationChooseBackupFile": "ꯍꯟꯖꯤꯛ ꯕꯦꯀꯑꯞ ꯐꯥꯏꯂ ꯑꯃ ꯈꯪꯗꯣꯛꯎ.",
   "validationPassphraseRequired": "ꯄꯥꯁꯐ꯭ꯔꯦꯖ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.",
   "validationPinsDoNotMatch": "PIN ꯑꯅꯤꯃꯛ ꯆꯨꯝꯗꯦ.",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "ꯆꯨꯝꯅꯕ ꯁꯦꯟꯐꯝ ꯑꯃ ꯆꯪꯗꯣꯛꯎ.",
-  "validationConfirmWordMismatch": "ꯋꯥꯍꯩ {n} ꯅꯍꯥꯛꯀꯤ ꯊꯝꯖꯔꯕ ꯐ꯭ꯔꯦꯖ ꯒ ꯆꯨꯝꯗꯦ. ꯌꯦꯡꯁꯤꯟꯗꯨꯅ ꯑꯃꯨꯛ ꯍꯟꯅ ꯍꯣꯠꯅꯧ.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "ꯂꯩꯕꯤꯕꯒꯤ ꯆꯪ ꯑꯃꯁꯨꯡ ꯏꯨꯅꯤꯠ ꯗꯥꯝ ꯄꯣꯖꯤꯇꯤꯕ ꯑꯣꯏꯒꯗꯕꯅꯤ.",
   "errorInstrumentArchived": "ꯂꯣꯠꯂꯕ ꯏꯟꯁ꯭ꯇ꯭ꯔꯨꯃꯦꯟꯠ ꯂꯩꯕꯤꯕ ꯌꯥꯗꯦ.",
   "errorNonCashCannotIncludeBrokerage": "ꯀꯦꯁ ꯅꯠꯇ꯭ꯕ ꯂꯧꯕꯗ ꯕ꯭ꯔꯣꯀꯔꯦꯖ ꯌꯥꯎꯅꯕ ꯌꯥꯗꯦ.",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "ꯄꯥꯁꯐ꯭ꯔꯦꯖ",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "ꯄꯥꯁꯐ꯭ꯔꯦꯖ"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "Perkataan #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "Pilih bahasa anda",
   "chooseLanguageBlurb": "Semua dalam aplikasi akan dipaparkan dalam bahasa ini. Anda boleh menukarnya kemudian dalam Tetapan.",
   "chooseCurrencyTitle": "Pilih mata wang anda",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "Namakan akaun anda",
   "firstAccountBlurb": "Ini ialah akaun yang telah disediakan untuk anda - berikan nama yang anda kenali, seperti bank anda. Anda akan merekod satu Perbelanjaan atau Penerimaan seterusnya, kemudian melindungi peranti dengan frasa pemulihan anda.",
   "whatsMainAccountCalled": "Apakah nama akaun utama anda?",
-  "optionalBackupFile": "Fail sandaran pilihan",
-  "iConfirmBooksValid": "Saya mengesahkan buku semasa adalah sah",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "Mengapa kami tidak mengedit entri lama",
   "whyWeDontEditBody": "Apabila anda membetulkan kesilapan, kami mengekalkan baris lama dan menambah pembetulan di sebelahnya dan bukannya mengubah apa yang telah anda masukkan. Dengan itu sejarah anda sentiasa menunjukkan dengan tepat apa yang berlaku dan bila anda membetulkannya — tiada apa berubah secara senyap di belakang anda.",
   "lockTitle": "Buka kunci",
@@ -542,7 +571,6 @@
   "none": "Tiada",
   "currency": "Mata wang",
   "errorGeneric": "Sesuatu tidak kena. Sila cuba lagi.",
-  "errorSigningIdentityMismatch": "Frasa pemulihan atau fail simpanan kunci ini tidak sepadan dengan mana-mana identiti tandatangan dalam pangkalan data ini.",
   "errorInvalidLedgerBackup": "Fail ini bukan sandaran Smara yang sah.",
   "errorInvalidLedgerBackupNoIdentity": "Sandaran ini tiada identiti tandatangan - ia bukan sandaran Smara yang sah.",
   "errorInvalidLedgerBackupUnverified": "Sandaran ini tidak disahkan sebagai buku yang utuh, jadi ia tidak dipulihkan.",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Sandaran ini adalah milik identiti tandatangan yang berbeza daripada yang ada pada peranti ini.",
   "errorAccountNotFinancial": "Itu bukan akaun kewangan.",
   "errorAccountArchived": "Akaun itu tersembunyi.",
   "errorAccountNotArchived": "Akaun itu tidak tersembunyi.",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "Kategori mesti Pendapatan atau Perbelanjaan.",
   "validationOnlyExpenseHasMonthlyLimit": "Hanya kategori Perbelanjaan boleh mempunyai had bulanan.",
   "validationInvalidTemplate": "Templat tidak sah.",
-  "validationWrongKeystorePassphrase": "Frasa laluan salah untuk fail simpanan kunci ini.",
-  "validationInvalidKeystoreFile": "Itu tidak kelihatan seperti fail simpanan kunci yang sah.",
-  "validationRestorePhraseFailed": "Tidak dapat memulihkan daripada frasa pemulihan itu.",
   "validationGenerateKeyFailed": "Tidak dapat menjana kunci tandatangan pada peranti ini: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "Migrasi gagal. Sila cuba lagi.",
   "validationChooseBackupFile": "Pilih fail sandaran dahulu.",
   "validationPassphraseRequired": "Masukkan frasa laluan.",
   "validationPinsDoNotMatch": "Kedua-dua PIN tidak sepadan.",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Masukkan jumlah yang sah.",
-  "validationConfirmWordMismatch": "Perkataan {n} tidak sepadan dengan frasa anda yang disimpan. Semak dan cuba lagi.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "Kuantiti pembelian dan harga seunit mesti positif.",
   "errorInstrumentArchived": "Tidak boleh membeli instrumen yang tersembunyi.",
   "errorNonCashCannotIncludeBrokerage": "Pemerolehan bukan tunai tidak boleh termasuk brokeraj.",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "Frasa laluan",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "Frasa laluan"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

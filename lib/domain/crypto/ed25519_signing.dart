@@ -11,9 +11,9 @@ class Ed25519Signing {
 
   static final _algorithm = Ed25519();
 
-  /// The Ed25519 seed length in bytes. [RecoveryPhrase.seed] and the
-  /// keystore file format both carry exactly this many bytes as the
-  /// deterministic private-key material.
+  /// The Ed25519 seed length in bytes. Secure storage and key generation
+  /// both use exactly this many bytes as the deterministic private-key
+  /// material.
   static const seedLength = 32;
 
   /// Generates a fresh, random key pair (first-install path - spec:
@@ -24,9 +24,8 @@ class Ed25519Signing {
   }
 
   /// Deterministically derives the same key pair from a 32-byte seed every
-  /// time it's called with the same seed (recovery-phrase / keystore-file
-  /// re-derivation path - spec: "Recoverable Reinstall or Device
-  /// Migration").
+  /// time it's called with the same seed (e.g. reloading the this-device
+  /// key from secure storage after a relaunch).
   Future<KeyMaterial> keyPairFromSeed(List<int> seed) async {
     if (seed.length < seedLength) {
       throw ArgumentError(

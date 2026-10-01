@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "Word #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "Choose your language",
   "chooseLanguageBlurb": "Everything in the app will show in this language. You can change it later in Settings.",
   "chooseCurrencyTitle": "Choose your currency",
@@ -421,7 +413,6 @@
   "setupChoiceTitle": "Welcome to Smara Accounting",
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
-  "actionImportFromBackup": "Import from backup",
   "continueBooksTitle": "Continue my books on this phone",
   "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
   "continueBooksAction": "Continue my books on this phone",
@@ -458,8 +449,6 @@
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
   "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "optionalBackupFile": "Optional backup file",
-  "iConfirmBooksValid": "I confirm the current books are valid",
   "whyWeDontEdit": "Why we don’t edit old entries",
   "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a correction next to it instead of changing what you already entered. That way your history always shows exactly what happened and when you fixed it — nothing quietly changes behind your back.",
   "lockTitle": "Unlock",
@@ -480,10 +469,10 @@
   "paidFromCard": "Paid from card",
   "choosePassphraseTitle": "Choose a passphrase to protect this copy. There is no recovery if you forget it.",
   "replaceBooksTitle": "Replace your local books?",
-  "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
+  "replaceBooksBody": "This replaces all entries and the books'' settings on this phone with the copy — it does not merge. Your language and unlock settings stay on this phone. Close and reopen the app afterwards.",
   "chooseBackupFileFirst": "Choose a books copy file first.",
-  "backupRestored": "Backup restored",
-  "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
+  "backupRestored": "Books restored",
+  "backupRestoredBody": "Your books have been restored on this phone. Entries you make later on the other device will not appear here. To bring those over later, save a new copy there and restore it here — that replaces this phone''s books. Close and reopen the app to continue.",
   "fixThisEntry": "Fix this entry",
   "fixBlurb": "The old line stays exactly as it was. Confirming adds a reversing line and the corrected one.",
   "importStatementTitle": "Import Statement",
@@ -582,7 +571,6 @@
   "none": "None",
   "currency": "Currency",
   "errorGeneric": "Something went wrong. Please try again.",
-  "errorSigningIdentityMismatch": "This recovery phrase or keystore file does not match any signing identity in this database.",
   "errorInvalidLedgerBackup": "This file is not a valid Smara backup.",
   "errorInvalidLedgerBackupNoIdentity": "This backup has no signing identity - it is not a valid Smara backup.",
   "errorInvalidLedgerBackupUnverified": "This backup did not verify as intact books, so it was not restored.",
@@ -594,19 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "This backup belongs to a different signing identity than the one on this device.",
-  "errorInvalidDeviceMigrationBundle": "This file is not a valid Smara device migration bundle.",
-  "errorInvalidDeviceMigrationBundleNoIdentity": "This bundle has no signing identity - it is not a valid Smara device migration bundle.",
-  "errorInvalidDeviceMigrationBundleUnverified": "This bundle did not verify as intact books, so it was not imported.",
-  "errorInvalidDeviceMigrationBundleUnreadable": "This file could not be opened as a Smara device migration bundle: {detail}",
-  "@errorInvalidDeviceMigrationBundleUnreadable": {
-    "placeholders": {
-      "detail": {
-        "type": "String"
-      }
-    }
-  },
-  "errorForeignDeviceMigrationBundleIdentity": "This bundle belongs to a different signing identity than the one already set up on this device.",
   "errorAccountNotFinancial": "That is not a financial account.",
   "errorAccountArchived": "That account is hidden.",
   "errorAccountNotArchived": "That account is not hidden.",
@@ -741,15 +716,6 @@
     }
   },
   "errorBackupRestoreFailed": "Could not restore this backup - wrong passphrase, or not a Smara backup file.",
-  "errorDeviceMigrationBundleCreateFailed": "Could not create the device migration bundle: {detail}",
-  "@errorDeviceMigrationBundleCreateFailed": {
-    "placeholders": {
-      "detail": {
-        "type": "String"
-      }
-    }
-  },
-  "errorDeviceMigrationBundleImportFailed": "Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.",
   "validationAmountAccountCategoryRequired": "Amount, account, and category are required.",
   "validationAmountAccountRequired": "Amount and account are required.",
   "validationSplitLineIncomplete": "Every split line needs a category and an amount.",
@@ -766,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "Category must be Income or Expense.",
   "validationOnlyExpenseHasMonthlyLimit": "Only an Expense category can have a monthly limit.",
   "validationInvalidTemplate": "Invalid template.",
-  "validationWrongKeystorePassphrase": "Wrong passphrase for this keystore file.",
-  "validationInvalidKeystoreFile": "That doesn''t look like a valid keystore file.",
-  "validationRestorePhraseFailed": "Could not restore from that recovery phrase.",
   "validationGenerateKeyFailed": "Could not generate a signing key on this device: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -785,9 +748,7 @@
       }
     }
   },
-  "validationMigrationFailed": "Migration failed. Please try again.",
   "validationChooseBackupFile": "Choose a backup file first.",
-  "validationChooseDeviceMigrationBundleFile": "Choose a device migration bundle file first.",
   "validationPassphraseRequired": "Enter a passphrase.",
   "validationPinsDoNotMatch": "The two PINs do not match.",
   "validationFeePositiveWithCategory": "A transfer fee must be a positive amount with an expense category selected.",
@@ -801,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Enter a valid amount.",
-  "validationConfirmWordMismatch": "Word {n} doesn''t match your saved phrase. Check it and try again.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "Buy quantity and unit price must be positive.",
   "errorInstrumentArchived": "Cannot buy an archived instrument.",
   "errorNonCashCannotIncludeBrokerage": "Non-cash acquisitions cannot include brokerage.",
@@ -1122,5 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "booksCopyPassphrase": "Passphrase"
+  "booksCopyPassphrase": "Passphrase",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

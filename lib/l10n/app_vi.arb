@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "Từ số {n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "Chọn ngôn ngữ của bạn",
   "chooseLanguageBlurb": "Mọi thứ trong ứng dụng sẽ hiển thị bằng ngôn ngữ này. Bạn có thể thay đổi sau trong Cài đặt.",
   "chooseCurrencyTitle": "Chọn đơn vị tiền tệ của bạn",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "Đặt tên cho tài khoản của bạn",
   "firstAccountBlurb": "Đây là tài khoản đã được thiết lập sẵn cho bạn - hãy đặt cho nó một cái tên bạn dễ nhận ra, như tên ngân hàng của bạn. Tiếp theo bạn sẽ ghi nhận một khoản Chi hoặc Thu, sau đó bảo vệ thiết bị bằng cụm từ khôi phục của bạn.",
   "whatsMainAccountCalled": "Tài khoản chính của bạn tên là gì?",
-  "optionalBackupFile": "Tệp sao lưu (không bắt buộc)",
-  "iConfirmBooksValid": "Tôi xác nhận sổ sách hiện tại là hợp lệ",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "Vì sao chúng tôi không sửa các mục cũ",
   "whyWeDontEditBody": "Khi bạn sửa một sai sót, chúng tôi giữ nguyên dòng cũ và thêm một điều chỉnh bên cạnh nó, thay vì thay đổi những gì bạn đã nhập. Nhờ vậy lịch sử của bạn luôn cho thấy chính xác điều gì đã xảy ra và khi nào bạn đã sửa nó — không có gì âm thầm thay đổi sau lưng bạn.",
   "lockTitle": "Mở khóa",
@@ -542,7 +571,6 @@
   "none": "Không có",
   "currency": "Đơn vị tiền tệ",
   "errorGeneric": "Đã xảy ra lỗi. Thử lại.",
-  "errorSigningIdentityMismatch": "Cụm từ khôi phục hoặc tệp keystore này không khớp với bất kỳ danh tính ký nào trong cơ sở dữ liệu này.",
   "errorInvalidLedgerBackup": "Tệp này không phải là bản sao lưu Smara hợp lệ.",
   "errorInvalidLedgerBackupNoIdentity": "Bản sao lưu này không có danh tính ký - đây không phải bản sao lưu Smara hợp lệ.",
   "errorInvalidLedgerBackupUnverified": "Bản sao lưu này không được xác minh là sổ sách nguyên vẹn, nên đã không được khôi phục.",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Bản sao lưu này thuộc về một danh tính ký khác với danh tính trên thiết bị này.",
   "errorAccountNotFinancial": "Đó không phải là tài khoản tài chính.",
   "errorAccountArchived": "Tài khoản đó đang bị ẩn.",
   "errorAccountNotArchived": "Tài khoản đó không bị ẩn.",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "Danh mục phải là Thu nhập hoặc Chi tiêu.",
   "validationOnlyExpenseHasMonthlyLimit": "Chỉ danh mục Chi tiêu mới có thể có hạn mức hàng tháng.",
   "validationInvalidTemplate": "Mẫu không hợp lệ.",
-  "validationWrongKeystorePassphrase": "Sai cụm mật khẩu cho tệp keystore này.",
-  "validationInvalidKeystoreFile": "Tệp đó có vẻ không phải là tệp keystore hợp lệ.",
-  "validationRestorePhraseFailed": "Không thể khôi phục từ cụm từ khôi phục đó.",
   "validationGenerateKeyFailed": "Không thể tạo khóa ký trên thiết bị này: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "Di chuyển khóa thất bại. Vui lòng thử lại.",
   "validationChooseBackupFile": "Hãy chọn một tệp sao lưu trước.",
   "validationPassphraseRequired": "Nhập một cụm mật khẩu.",
   "validationPinsDoNotMatch": "Hai mã PIN không khớp nhau.",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Nhập một số tiền hợp lệ.",
-  "validationConfirmWordMismatch": "Từ số {n} không khớp với cụm từ đã lưu của bạn. Hãy kiểm tra lại và thử lại.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "Số lượng mua và đơn giá phải là số dương.",
   "errorInstrumentArchived": "Không thể mua một công cụ đầu tư đã bị ẩn.",
   "errorNonCashCannotIncludeBrokerage": "Giao dịch mua phi tiền mặt không thể có phí môi giới.",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "Cụm mật khẩu",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "Cụm mật khẩu"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

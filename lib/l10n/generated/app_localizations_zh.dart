@@ -770,11 +770,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return '第 $n 个单词';
-  }
-
-  @override
   String get chooseLanguageTitle => '选择你的语言';
 
   @override
@@ -813,9 +808,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -883,12 +875,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => '可选备份文件';
-
-  @override
-  String get iConfirmBooksValid => '我确认当前账本有效';
 
   @override
   String get whyWeDontEdit => '我们为什么不修改旧条目';
@@ -1135,9 +1121,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorGeneric => '出错了，请重试。';
 
   @override
-  String get errorSigningIdentityMismatch => '此恢复短语或密钥库文件与此数据库中的任何签名身份都不匹配。';
-
-  @override
   String get errorInvalidLedgerBackup => '此文件不是有效的 Smara 备份。';
 
   @override
@@ -1151,30 +1134,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return '无法将此文件作为 Smara 备份打开：$detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity => '此备份属于与本设备不同的签名身份。';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => '该账户不是财务账户。';
@@ -1418,15 +1377,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorBackupRestoreFailed => '无法恢复此备份——密码短语错误，或该文件不是 Smara 备份文件。';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired => '需要填写金额、账户和分类。';
 
   @override
@@ -1475,15 +1425,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get validationInvalidTemplate => '模板无效。';
 
   @override
-  String get validationWrongKeystorePassphrase => '此密钥库文件的密码短语错误。';
-
-  @override
-  String get validationInvalidKeystoreFile => '该文件看起来不是有效的密钥库文件。';
-
-  @override
-  String get validationRestorePhraseFailed => '无法从该恢复短语恢复。';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return '无法在此设备上生成签名密钥：$detail';
   }
@@ -1494,14 +1435,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => '迁移失败。请重试。';
-
-  @override
   String get validationChooseBackupFile => '请先选择一个备份文件。';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => '请输入密码短语。';
@@ -1522,11 +1456,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => '请输入有效金额。';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return '第 $n 个单词与您保存的恢复短语不匹配。请检查后重试。';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive => '买入数量和单价必须为正数。';
@@ -1860,4 +1789,57 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => '密码短语';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

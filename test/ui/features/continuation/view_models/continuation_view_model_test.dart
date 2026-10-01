@@ -51,4 +51,43 @@ void main() {
     verify(identityRepository.continueBooks()).called(1);
     verify(chainVerifier.verifyChain()).called(1);
   });
+
+  test('restoreFromCopy delegates to BooksCopyRepository', () async {
+    when(
+      booksCopyRepository.restoreBooksCopy(
+        fileContents: anyNamed('fileContents'),
+        passphrase: anyNamed('passphrase'),
+      ),
+    ).thenAnswer((_) async {});
+
+    final ok = await viewModel.restoreFromCopy(
+      fileContents: '{"kind":"smara-books-copy"}',
+      passphrase: 'secret',
+    );
+
+    expect(ok, isTrue);
+    verify(
+      booksCopyRepository.restoreBooksCopy(
+        fileContents: '{"kind":"smara-books-copy"}',
+        passphrase: 'secret',
+      ),
+    ).called(1);
+  });
+
+  test('restoreFromCopy records a failure when the repository throws', () async {
+    when(
+      booksCopyRepository.restoreBooksCopy(
+        fileContents: anyNamed('fileContents'),
+        passphrase: anyNamed('passphrase'),
+      ),
+    ).thenThrow(Exception('bad passphrase'));
+
+    final ok = await viewModel.restoreFromCopy(
+      fileContents: 'nope',
+      passphrase: 'wrong',
+    );
+
+    expect(ok, isFalse);
+    expect(viewModel.failure, isNotNull);
+  });
 }

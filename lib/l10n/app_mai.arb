@@ -401,14 +401,6 @@
       }
     }
   },
-  "wordNumber": "शब्द #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "chooseLanguageTitle": "अपन भाषा चुनू",
   "chooseLanguageBlurb": "ऐपमे सभटा एहि भाषामे देखल जायत। अहाँ बादमे सेटिंगमे एकरा बदलि सकैत छी।",
   "chooseCurrencyTitle": "अपन मुद्रा चुनू",
@@ -418,8 +410,45 @@
   "firstAccountTitle": "अपन खाताक नाम राखू",
   "firstAccountBlurb": "ई अहाँक लेल पहिने सँ सेटअप कएल गेल खाता अछि - एकरा एहन नाम दिअ जकरा अहाँ पहिचानू, जेना अपन बैंक। अहाँ आब एकटा खर्च वा प्राप्त दर्ज करब, फेर अपन रिकवरी वाक्यांश सँ डिवाइस सुरक्षित करब।",
   "whatsMainAccountCalled": "अहाँक मुख्य खाताक नाम की अछि?",
-  "optionalBackupFile": "वैकल्पिक बैकअप फाइल",
-  "iConfirmBooksValid": "हम पुष्टि करैत छी जे वर्तमान बही मान्य अछि",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "हमसभ किएक पुरान प्रविष्टि संपादित नहि करैत छी",
   "whyWeDontEditBody": "जखन अहाँ कोनो गलती ठीक करैत छी, हमसभ पुरान लाइन राखैत छी आ ओकर बगल मे एकटा सुधार जोड़ैत छी, अहाँ जे पहिने सँ दर्ज कएने छी ओकरा बदलबाक बजाय। एहि तरहें अहाँक इतिहास सदिखन ठीक-ठीक देखबैत अछि जे की भेल आ अहाँ कहिया सुधारल - किछु सेहो अहाँक पाछू चुपचाप नहि बदलैत अछि।",
   "lockTitle": "अनलॉक",
@@ -542,7 +571,6 @@
   "none": "किछु नहि",
   "currency": "मुद्रा",
   "errorGeneric": "किछु गलत भेल। कृपया पुनः कोशिश करू।",
-  "errorSigningIdentityMismatch": "ई रिकवरी वाक्यांश वा कीस्टोर फाइल एहि डाटाबेस मे कोनो साइनिंग पहचान सँ मेल नहि खाइत अछि।",
   "errorInvalidLedgerBackup": "ई फाइल एकटा वैध स्मारा बैकअप नहि अछि।",
   "errorInvalidLedgerBackupNoIdentity": "एहि बैकअप मे कोनो साइनिंग पहचान नहि अछि - ई एकटा वैध स्मारा बैकअप नहि अछि।",
   "errorInvalidLedgerBackupUnverified": "ई बैकअप संपूर्ण बहीक रूप मे सत्यापित नहि भेल, तें ई पुनर्स्थापित नहि भेल।",
@@ -554,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "ई बैकअप एहि डिवाइस पर बला सँ भिन्न साइनिंग पहचानक अछि।",
   "errorAccountNotFinancial": "ई एकटा वित्तीय खाता नहि अछि।",
   "errorAccountArchived": "ओ खाता छिपाओल अछि।",
   "errorAccountNotArchived": "ओ खाता छिपाओल नहि अछि।",
@@ -705,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "श्रेणी आय वा व्यय होएबाक चाही।",
   "validationOnlyExpenseHasMonthlyLimit": "केवल व्यय श्रेणी मे मासिक सीमा भऽ सकैत अछि।",
   "validationInvalidTemplate": "अमान्य टेम्पलेट।",
-  "validationWrongKeystorePassphrase": "एहि कीस्टोर फाइल लेल गलत पासफ्रेज।",
-  "validationInvalidKeystoreFile": "ई एकटा वैध कीस्टोर फाइल जेहन नहि लगैत अछि।",
-  "validationRestorePhraseFailed": "ओहि रिकवरी वाक्यांश सँ पुनर्स्थापित नहि भऽ सकल।",
   "validationGenerateKeyFailed": "एहि डिवाइस पर साइनिंग की उत्पन्न नहि भऽ सकल: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -724,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "माइग्रेशन असफल भेल। कृपया पुनः कोशिश करू।",
   "validationChooseBackupFile": "पहिने एकटा बैकअप फाइल चुनू।",
   "validationPassphraseRequired": "एकटा पासफ्रेज दर्ज करू।",
   "validationPinsDoNotMatch": "दुनू PIN मेल नहि खाइत अछि।",
@@ -739,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "एकटा वैध राशि दर्ज करू।",
-  "validationConfirmWordMismatch": "शब्द {n} अहाँक सहेजल वाक्यांश सँ मेल नहि खाइत अछि। जाँच कऽ फेर कोशिश करू।",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "खरीद मात्रा आ इकाई मूल्य धनात्मक होएबाक चाही।",
   "errorInstrumentArchived": "छिपाओल इंस्ट्रूमेंट खरीदल नहि जा सकैत अछि।",
   "errorNonCashCannotIncludeBrokerage": "गैर-नगद अधिग्रहण मे ब्रोकरेज शामिल नहि भऽ सकैत अछि।",
@@ -1060,35 +1075,86 @@
   },
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
-  "@deviceHistoryContinuedOn": {
+  "booksCopyPassphrase": "पासफ्रेज",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
     "placeholders": {
-      "date": {
+      "counts": {
         "type": "String"
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
-  "@deviceHistoryContinuedFromCopy": {
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
     "placeholders": {
-      "continuedDate": {
-        "type": "String"
-      },
-      "copyDate": {
-        "type": "String"
+      "count": {
+        "type": "int"
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "booksCopyPassphrase": "पासफ्रेज"
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

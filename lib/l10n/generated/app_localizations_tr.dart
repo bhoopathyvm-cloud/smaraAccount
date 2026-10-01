@@ -787,11 +787,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String wordNumber(String n) {
-    return 'Kelime #$n';
-  }
-
-  @override
   String get chooseLanguageTitle => 'Dilinizi seçin';
 
   @override
@@ -832,9 +827,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get actionNewSetup => 'New setup';
-
-  @override
-  String get actionImportFromBackup => 'Import from backup';
 
   @override
   String get continueBooksTitle => 'Continue my books on this phone';
@@ -902,13 +894,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get settingsBackupReminderSnoozeEntries =>
       'Hide for this many new entries after Later';
-
-  @override
-  String get optionalBackupFile => 'İsteğe bağlı yedek dosyası';
-
-  @override
-  String get iConfirmBooksValid =>
-      'Mevcut defterlerin geçerli olduğunu onaylıyorum';
 
   @override
   String get whyWeDontEdit => 'Neden eski kayıtları düzenlemiyoruz';
@@ -1164,10 +1149,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get errorGeneric => 'Bir şeyler ters gitti. Tekrar deneyin.';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'Bu kurtarma ifadesi veya keystore dosyası bu veritabanındaki hiçbir imzalama kimliğiyle eşleşmiyor.';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'Bu dosya geçerli bir Smara yedeği değil.';
 
@@ -1183,31 +1164,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'Bu dosya bir Smara yedeği olarak açılamadı: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'Bu yedek, bu cihazdakinden farklı bir imzalama kimliğine ait.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'Bu finansal bir hesap değil.';
@@ -1497,15 +1453,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bu yedek geri yüklenemedi - yanlış parola veya geçerli bir Smara yedek dosyası değil.';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'Tutar, hesap ve kategori gereklidir.';
 
@@ -1563,18 +1510,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get validationInvalidTemplate => 'Geçersiz şablon.';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'Bu keystore dosyası için yanlış parola.';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'Bu geçerli bir keystore dosyasına benzemiyor.';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'Bu kurtarma ifadesinden geri yükleme yapılamadı.';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'Bu cihazda imzalama anahtarı oluşturulamadı: $detail';
   }
@@ -1585,15 +1520,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'Geçiş başarısız oldu. Lütfen tekrar deneyin.';
-
-  @override
   String get validationChooseBackupFile => 'Önce bir yedek dosyası seçin.';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'Bir parola girin.';
@@ -1616,11 +1543,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'Geçerli bir tutar girin.';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return '$n. kelime kayıtlı ifadenizle eşleşmiyor. Kontrol edip tekrar deneyin.';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -1967,4 +1889,57 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get booksCopyPassphrase => 'Parola';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }
