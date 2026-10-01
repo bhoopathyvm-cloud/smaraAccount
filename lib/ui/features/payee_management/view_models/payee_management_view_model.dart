@@ -8,8 +8,10 @@ import '../../../../domain/models/payee.dart';
 /// Minimal add/rename/delete for payees (payees-and-spending-memory tasks.md
 /// 1.2: "CRUD (minimal, inline or in Settings) for payees").
 class PayeeManagementViewModel extends ChangeNotifier {
-  PayeeManagementViewModel({required PayeeRepository payeeRepository})
-    : _payeeRepository = payeeRepository {
+  PayeeManagementViewModel({
+    required PayeeRepository payeeRepository,
+    this.booksGeneration = 0,
+  }) : _payeeRepository = payeeRepository {
     _subscription = _payeeRepository.watchPayees().listen((payees) {
       _payees = payees;
       notifyListeners();
@@ -17,6 +19,9 @@ class PayeeManagementViewModel extends ChangeNotifier {
   }
 
   final PayeeRepository _payeeRepository;
+
+  /// Books-set generation this ViewModel was built for.
+  final int booksGeneration;
   late final StreamSubscription<List<Payee>> _subscription;
 
   List<Payee> _payees = const [];

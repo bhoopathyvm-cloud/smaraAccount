@@ -3,6 +3,8 @@ import 'package:drift/native.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
+import 'package:smara_accounting/data/database/tables/linked_devices_table.dart';
+import 'package:smara_accounting/data/database/tables/membership_notices_table.dart';
 import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
     show ImportSource;
 import 'package:smara_accounting/data/repositories/account_repository.dart';
@@ -454,7 +456,243 @@ sqlite3.Database _openV16Database() {
   return db;
 }
 
+/// Built by taking [_openV16Database] and hand-applying the
+/// schemaVersion-17 migration SQL (`instruments.resolved_symbol` /
+/// `exchange`) so onUpgrade(17, 18) can be exercised for Continuation
+/// columns on `signing_identities`.
+sqlite3.Database _openV17Database() {
+  final db = _openV16Database();
+  db.execute('''
+    ALTER TABLE instruments ADD COLUMN resolved_symbol TEXT NULL;
+    ALTER TABLE instruments ADD COLUMN exchange TEXT NULL;
+    PRAGMA user_version = 17;
+  ''');
+  return db;
+}
+
+/// Built by taking [_openV17Database] and hand-applying the schemaVersion-18
+/// Continuation columns so onUpgrade(18, 19) can be exercised for
+/// linked-devices tables.
+sqlite3.Database _openV18Database() {
+  final db = _openV17Database();
+  db.execute('''
+    ALTER TABLE signing_identities ADD COLUMN continued_at INTEGER NULL;
+    ALTER TABLE signing_identities ADD COLUMN continues_identity_id TEXT NULL
+      REFERENCES signing_identities(identity_id);
+    PRAGMA user_version = 18;
+  ''');
+  return db;
+}
+
 void main() {
+  group('onUpgrade from schemaVersion 18', () {
+    test(
+      'creates linked-devices tables without disturbing existing identities',
+      () async {
+        final v18 = _openV18Database();
+        v18.execute(
+          '''
+          INSERT INTO signing_identities (
+            identity_id, public_key, created_at,
+            supersedes_identity_id, superseded_at, acknowledged_at,
+            continued_at, continues_identity_id
+          ) VALUES (?, ?, 0, NULL, NULL, 0, NULL, NULL);
+          ''',
+          [
+            'id-keep',
+            Uint8List.fromList([1, 2, 3]),
+          ],
+        );
+
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v18));
+        addTearDown(db.close);
+
+        final identity = await (db.select(
+          db.signingIdentities,
+        )..where((t) => t.identityId.equals('id-keep'))).getSingle();
+        expect(identity.publicKey, equals([1, 2, 3]));
+        expect(identity.continuesIdentityId, isNull);
+        expect(identity.continuedAt, isNull);
+
+        // New tables exist and accept rows.
+        await db
+            .into(db.booksSetMetadata)
+            .insert(
+              BooksSetMetadataCompanion.insert(
+                id: 'set-a',
+                displayName: 'Household',
+              ),
+            );
+        await db
+            .into(db.linkedDevices)
+            .insert(
+              LinkedDevicesCompanion.insert(
+                deviceId: 'device-1',
+                displayName: 'Phone',
+                signingIdentityId: 'id-keep',
+                deviceCertFingerprint: 'fp',
+                role: LinkedDeviceRole.owner,
+              ),
+            );
+        await db
+            .into(db.ledgerIdentityChainTips)
+            .insert(
+              LedgerIdentityChainTipsCompanion.insert(
+                identityId: 'id-keep',
+                nextDeviceChainSequence: 1,
+              ),
+            );
+        await db
+            .into(db.accounts)
+            .insert(
+              AccountsCompanion.insert(
+                id: const Value('cat-1'),
+                name: 'Groceries',
+                type: AccountType.expense,
+              ),
+            );
+        await db
+            .into(db.categoryTranslations)
+            .insert(
+              CategoryTranslationsCompanion.insert(
+                categoryId: 'cat-1',
+                locale: 'de',
+                name: 'Lebensmittel',
+                updatedAt: DateTime.fromMillisecondsSinceEpoch(0),
+              ),
+            );
+        await db
+            .into(db.accounts)
+            .insert(
+              AccountsCompanion.insert(
+                id: const Value('cat-2'),
+                name: 'Food',
+                type: AccountType.expense,
+              ),
+            );
+        await db
+            .into(db.categoryMergeMap)
+            .insert(
+              CategoryMergeMapCompanion.insert(
+                absorbedCategoryId: 'cat-2',
+                survivorCategoryId: 'cat-1',
+                mergedAt: DateTime.fromMillisecondsSinceEpoch(0),
+              ),
+            );
+
+        expect(await db.select(db.booksSetMetadata).get(), hasLength(1));
+        expect(await db.select(db.linkedDevices).get(), hasLength(1));
+        expect(await db.select(db.ledgerIdentityChainTips).get(), hasLength(1));
+        expect(await db.select(db.categoryTranslations).get(), hasLength(1));
+        expect(await db.select(db.categoryMergeMap).get(), hasLength(1));
+
+        // schemaVersion 20 tables (membership notices + join requests).
+        await db
+            .into(db.membershipNotices)
+            .insert(
+              MembershipNoticesCompanion.insert(
+                noticeId: 'n1',
+                kind: MembershipNoticeKind.deviceAdded,
+                relatedDisplayName: const Value('Phone'),
+              ),
+            );
+        await db
+            .into(db.pendingJoinRequests)
+            .insert(
+              PendingJoinRequestsCompanion.insert(
+                requestId: 'r1',
+                requesterDeviceId: 'd2',
+                requesterDisplayName: 'Other',
+                signingPublicKey: Uint8List.fromList([4, 5, 6]),
+                deviceCertDer: Uint8List.fromList([7, 8]),
+                deviceCertFingerprint: 'fp2',
+                booksSetId: 'set-a',
+              ),
+            );
+        expect(await db.select(db.membershipNotices).get(), hasLength(1));
+        expect(await db.select(db.pendingJoinRequests).get(), hasLength(1));
+
+        // schemaVersion 21: same device_chain_sequence allowed on two identities.
+        await db
+            .into(db.signingIdentities)
+            .insert(
+              SigningIdentitiesCompanion.insert(
+                identityId: const Value('id-peer'),
+                publicKey: Uint8List.fromList([9, 9, 9]),
+                createdAt: Value(DateTime.fromMillisecondsSinceEpoch(0)),
+              ),
+            );
+        await db
+            .into(db.journalEntries)
+            .insert(
+              JournalEntriesCompanion.insert(
+                id: const Value('e-local'),
+                transactionDate: '2026-01-01',
+                recordedAt: DateTime.fromMillisecondsSinceEpoch(0),
+                deviceChainSequence: 0,
+                previousEntryHash: Uint8List(32),
+                entryHash: Uint8List.fromList(List.filled(32, 1)),
+                signedByIdentityId: 'id-keep',
+                signature: Uint8List.fromList(List.filled(64, 2)),
+              ),
+            );
+        await db
+            .into(db.journalEntries)
+            .insert(
+              JournalEntriesCompanion.insert(
+                id: const Value('e-peer'),
+                transactionDate: '2026-01-01',
+                recordedAt: DateTime.fromMillisecondsSinceEpoch(0),
+                deviceChainSequence: 0,
+                previousEntryHash: Uint8List(32),
+                entryHash: Uint8List.fromList(List.filled(32, 3)),
+                signedByIdentityId: 'id-peer',
+                signature: Uint8List.fromList(List.filled(64, 4)),
+              ),
+            );
+        expect(await db.select(db.journalEntries).get(), hasLength(2));
+      },
+    );
+  });
+
+  group('onUpgrade from schemaVersion 17', () {
+    test(
+      'existing identities keep their values and gain null continuation columns',
+      () async {
+        final v17 = _openV17Database();
+        v17.execute(
+          '''
+          INSERT INTO signing_identities (
+            identity_id, public_key, created_at,
+            supersedes_identity_id, superseded_at, acknowledged_at
+          ) VALUES (?, ?, 0, NULL, NULL, 0);
+          ''',
+          [
+            'id-keep',
+            Uint8List.fromList([9, 8, 7]),
+          ],
+        );
+
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v17));
+        addTearDown(db.close);
+
+        final row = await (db.select(
+          db.signingIdentities,
+        )..where((t) => t.identityId.equals('id-keep'))).getSingle();
+        expect(row.publicKey, equals([9, 8, 7]));
+        expect(row.createdAt, equals(DateTime.fromMillisecondsSinceEpoch(0)));
+        expect(row.supersedesIdentityId, isNull);
+        expect(row.supersededAt, isNull);
+        expect(row.continuesIdentityId, isNull);
+        expect(row.continuedAt, isNull);
+        expect(
+          row.acknowledgedAt,
+          equals(DateTime.fromMillisecondsSinceEpoch(0)),
+        );
+      },
+    );
+  });
+
   group('onUpgrade from schemaVersion 16', () {
     test(
       'existing instruments upgrade cleanly and a resolved symbol is settable',
@@ -683,7 +921,8 @@ void main() {
     );
 
     test(
-      'a freshly committed identity after the upgrade starts unacknowledged',
+      'a freshly committed identity after the upgrade is already acknowledged '
+      '(recovery-phrase acknowledgment retired)',
       () async {
         final v11 = _openV11Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v11));
@@ -710,7 +949,7 @@ void main() {
         );
 
         final identity = await identityRepository.currentIdentity();
-        expect(identity!.acknowledgedAt, isNull);
+        expect(identity!.acknowledgedAt, isNotNull);
       },
     );
   });

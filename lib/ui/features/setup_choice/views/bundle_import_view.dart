@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
@@ -11,10 +9,11 @@ import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../view_models/bundle_import_view_model.dart';
+import 'books_copy_restored_success_dialog.dart';
 
-/// Startup Import From Backup screen (spec: `device-migration-bundle`).
-/// Reached only from [SetupChoiceView], before any signing identity
-/// exists on this device.
+/// Startup "Restore from a copy" screen (books-copy-and-continuation).
+/// Reached from [SetupChoiceView] or [/continue], before any matching
+/// signing key exists on this device.
 class BundleImportView extends StatefulWidget {
   const BundleImportView({super.key, required this.viewModel});
 
@@ -44,7 +43,7 @@ class _BundleImportViewState extends State<BundleImportView> {
     final l10n = l10nOf(context);
     final file = _pickedFile;
     if (file == null) {
-      setState(() => _localError = l10n.chooseDeviceMigrationBundleFileFirst);
+      setState(() => _localError = l10n.chooseBackupFileFirst);
       return;
     }
     setState(() => _localError = null);
@@ -52,7 +51,7 @@ class _BundleImportViewState extends State<BundleImportView> {
     final confirmed = await confirmDestructiveAction(
       context: context,
       title: l10n.replaceBooksTitle,
-      message: l10n.importDeviceMigrationBundleBlurb,
+      message: l10n.restoreBackupBlurb,
       confirmLabel: l10n.actionImport,
     );
     if (!confirmed || !mounted) return;
@@ -65,32 +64,8 @@ class _BundleImportViewState extends State<BundleImportView> {
     );
     if (!mounted) return;
     if (ok) {
-      _showImportedSuccessDialog(context);
+      await showBooksCopyRestoredSuccessDialog(context);
     }
-  }
-
-  void _showImportedSuccessDialog(BuildContext context) {
-    final l10n = l10nOf(context);
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.deviceMigrationBundleImported),
-        content: Text(l10n.deviceMigrationBundleImportedBody),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              if (Platform.isAndroid || Platform.isIOS) {
-                SystemNavigator.pop();
-              } else {
-                exit(0);
-              }
-            },
-            child: Text(l10n.actionCloseApp),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -99,7 +74,7 @@ class _BundleImportViewState extends State<BundleImportView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n.importDeviceMigrationBundleTitle,
+          l10n.restoreFromCopyAction,
           style: AppTypography.headerTitle,
         ),
         backgroundColor: AppColors.primary,
@@ -113,10 +88,7 @@ class _BundleImportViewState extends State<BundleImportView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  l10n.importDeviceMigrationBundleBlurb,
-                  style: AppTypography.body,
-                ),
+                Text(l10n.restoreBackupBlurb, style: AppTypography.body),
                 const SizedBox(height: AppSpacing.large),
                 OutlinedButton(
                   onPressed: widget.viewModel.isImporting ? null : _pickFile,
@@ -131,7 +103,7 @@ class _BundleImportViewState extends State<BundleImportView> {
                   controller: _passphraseController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: l10n.keystorePassphrase,
+                    labelText: l10n.booksCopyPassphrase,
                   ),
                 ),
                 if ((_localError ?? widget.viewModel.errorMessageFor(l10n)) !=

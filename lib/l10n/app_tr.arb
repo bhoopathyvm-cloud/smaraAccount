@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Keystore dosyası dışa aktarılamadı. Bu adımı atlayabilirsiniz.",
-  "enterPassphraseToProtect": "Dosyayı korumak için bir parola girin.",
   "homeTapWhenArrived": "Ne geldiğini öğrendiğinizde dokunun",
   "homeReturnedTo": "{name} hesabına iade edildi",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Kurtarma ifadeniz",
-  "recoveryPhraseConfirmTitle": "İfadenizi onaylayın",
-  "recoveryPhraseBlurb": "Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Accounting''in bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.",
-  "recoveryPhraseWriteDown": "Bu kelimeleri sırasıyla yazın ve bu cihazdan ayrı, güvenli bir yerde saklayın.",
-  "iveSavedRecoveryPhrase": "Kurtarma ifademi kaydettim",
-  "confirmPhraseBlurb": "Az önce kaydettiğiniz ifadeden istenen kelimeleri girin.",
-  "wordNumber": "Kelime #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "Keystore dosyasını dışa aktar",
-  "keystoreExportBlurb": "Kurtarma ifadenize ek olarak, seçtiğiniz bir parolayla korunan şifrelenmiş bir keystore dosyası kaydedebilirsiniz. Bu isteğe bağlıdır - imzalama anahtarınızı geri yüklemek için tek başına kurtarma ifadeniz her zaman yeterlidir.",
-  "keystorePassphrase": "Parola",
-  "exportKeystoreFile": "Keystore dosyasını dışa aktar",
   "chooseLanguageTitle": "Dilinizi seçin",
   "chooseLanguageBlurb": "Uygulamadaki her şey bu dilde gösterilecek. Daha sonra Ayarlar''dan değiştirebilirsiniz.",
-  "chooseLanguageBip39Notice": "Kurtarma ifadeniz İngilizce gösterilecek. Bu, her yerdeki kurtarma araçları tarafından tanınan küçük bir standart kelime kümesi kullanır ve bu dilde henüz mevcut değildir.",
   "chooseCurrencyTitle": "Para biriminizi seçin",
   "chooseCurrencyBlurb": "Her hesap grubu (Nakit ve nakit benzerleri, Emeklilik ve emekli maaşı vb.) şimdilik bu tek para birimini kullanır. Farklı bir para birimi için yeni bir grup oluşturarak daha sonra da farklı para biriminde hesap ekleyebilirsiniz.",
   "currencyBackfillTitle": "Mevcut gruplar için bir para birimi seçin",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "Hesabınızı adlandırın",
   "firstAccountBlurb": "Bu, sizin için zaten kurulmuş olan hesap - bankanız gibi tanıyacağınız bir ad verin. Ardından bir Harcama veya Gelir kaydedecek, sonra da cihazı kurtarma ifadenizle koruyacaksınız.",
   "whatsMainAccountCalled": "Ana hesabınızın adı ne?",
-  "restoreTitle": "İmzalama anahtarını geri yükle",
-  "restoreBlurb": "Bu cihazda mevcut defterler var, ancak eşleşen bir imzalama anahtarı yok. Kaydettiğiniz kurtarma ifadesinden veya keystore dosyasından geri yükleyin - verileriniz normal şekilde doğrulanacak ve hiçbir şey yeniden imzalanmayacak veya değiştirilmeyecek.",
-  "recoveryPhrase24": "Kurtarma ifadesi (24 kelimenin tamamı)",
-  "keystoreFile": "Keystore dosyası",
-  "keystoreFileContents": "Keystore dosyası içeriği",
-  "optionalBackupFile": "İsteğe bağlı yedek dosyası",
-  "iDontHavePhrase": "Kurtarma ifadem veya keystore dosyam yok",
-  "migrationTitle": "Yeni bir anahtara geçiş yap",
-  "migrationBlurb": "Kurtarma ifadeniz veya keystore dosyanız olmadan bu cihazın imzalama anahtarı kurtarılamaz. Yeni bir anahtarla başlayabilirsiniz. Eski kayıtlar görünür kalır ancak geçersiz kılınır.",
-  "iConfirmBooksValid": "Mevcut defterlerin geçerli olduğunu onaylıyorum",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "Neden eski kayıtları düzenlemiyoruz",
   "whyWeDontEditBody": "Bir hatayı düzelttiğinizde, zaten girdiğinizi değiştirmek yerine eski satırı tutar ve yanına bir düzeltme ekleriz. Böylece geçmişiniz her zaman tam olarak ne olduğunu ve ne zaman düzelttiğinizi gösterir — hiçbir şey arka planda sessizce değişmez.",
   "lockTitle": "Kilidi aç",
@@ -563,7 +571,6 @@
   "none": "Yok",
   "currency": "Para birimi",
   "errorGeneric": "Bir şeyler ters gitti. Tekrar deneyin.",
-  "errorSigningIdentityMismatch": "Bu kurtarma ifadesi veya keystore dosyası bu veritabanındaki hiçbir imzalama kimliğiyle eşleşmiyor.",
   "errorInvalidLedgerBackup": "Bu dosya geçerli bir Smara yedeği değil.",
   "errorInvalidLedgerBackupNoIdentity": "Bu yedekte imzalama kimliği yok - geçerli bir Smara yedeği değil.",
   "errorInvalidLedgerBackupUnverified": "Bu yedek, bozulmamış defterler olarak doğrulanamadı, bu nedenle geri yüklenmedi.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Bu yedek, bu cihazdakinden farklı bir imzalama kimliğine ait.",
   "errorAccountNotFinancial": "Bu finansal bir hesap değil.",
   "errorAccountArchived": "Bu hesap gizli.",
   "errorAccountNotArchived": "Bu hesap gizli değil.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "Kategori Gelir veya Gider olmalıdır.",
   "validationOnlyExpenseHasMonthlyLimit": "Yalnızca bir Gider kategorisi aylık limite sahip olabilir.",
   "validationInvalidTemplate": "Geçersiz şablon.",
-  "validationWrongKeystorePassphrase": "Bu keystore dosyası için yanlış parola.",
-  "validationInvalidKeystoreFile": "Bu geçerli bir keystore dosyasına benzemiyor.",
-  "validationRestorePhraseFailed": "Bu kurtarma ifadesinden geri yükleme yapılamadı.",
   "validationGenerateKeyFailed": "Bu cihazda imzalama anahtarı oluşturulamadı: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "Geçiş başarısız oldu. Lütfen tekrar deneyin.",
   "validationChooseBackupFile": "Önce bir yedek dosyası seçin.",
   "validationPassphraseRequired": "Bir parola girin.",
   "validationPinsDoNotMatch": "İki PIN eşleşmiyor.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Geçerli bir tutar girin.",
-  "validationConfirmWordMismatch": "{n}. kelime kayıtlı ifadenizle eşleşmiyor. Kontrol edip tekrar deneyin.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "Alış miktarı ve birim fiyat pozitif olmalıdır.",
   "errorInstrumentArchived": "Gizlenmiş bir enstrüman satın alınamaz.",
   "errorNonCashCannotIncludeBrokerage": "Nakit dışı edinimler komisyon içeremez.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "Parola",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -9,6 +9,12 @@
          overlay, so without this line here the app silently loses all
          network access the moment it's built for the Play Store. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Linked devices: local-network / nearby Wi-Fi for mDNS peer discovery. -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES"
+        android:usesPermissionFlags="neverForLocation"/>
     <application
         android:label="Smara Accounting"
         android:name="${applicationName}"

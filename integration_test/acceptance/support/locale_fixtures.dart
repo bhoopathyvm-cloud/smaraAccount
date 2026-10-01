@@ -1,5 +1,7 @@
 /// Test-authored strings the acceptance suite types into the app during a
 /// run - a new group/account name, a first-week-setup account name, a
+/// (Books Copy / Continuation / reminder chrome resolves via
+/// `l10nFor` / AppLocalizations, not this file.)
 /// recurring-template name, a payee name, and a description/search-term
 /// pair. None of these have an existing `AppLocalizations` entry (unlike
 /// the app's own seeded system names - "Salary", "Cash & Bank", etc. -

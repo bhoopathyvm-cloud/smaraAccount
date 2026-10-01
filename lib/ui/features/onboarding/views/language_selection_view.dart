@@ -1,8 +1,6 @@
-import 'package:bip39_mnemonic/bip39_mnemonic.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/crypto/bip39_language_for_locale.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
@@ -64,10 +62,6 @@ class _LanguageSelectionViewState extends State<LanguageSelectionView> {
   Widget build(BuildContext context) {
     final l10n = l10nOf(context);
     final localeController = context.watch<LocaleController>();
-    final effectiveLanguageCode = Localizations.localeOf(context).languageCode;
-    final showsBip39Notice =
-        effectiveLanguageCode != 'en' &&
-        bip39LanguageForLocale(effectiveLanguageCode) == Language.english;
 
     return Scaffold(
       appBar: AppBar(
@@ -101,19 +95,6 @@ class _LanguageSelectionViewState extends State<LanguageSelectionView> {
               ],
             ),
           ),
-          if (showsBip39Notice)
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.large,
-                vertical: AppSpacing.medium,
-              ),
-              child: Text(
-                l10n.chooseLanguageBip39Notice,
-                style: AppTypography.metadata.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-            ),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.large),
             child: ElevatedButton(

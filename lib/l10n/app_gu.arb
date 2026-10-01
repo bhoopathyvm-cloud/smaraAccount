@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "કીસ્ટોર ફાઇલ નિકાસ કરી શકાઈ નહીં. તમે આ પગલું છોડી શકો છો.",
-  "enterPassphraseToProtect": "ફાઇલને સુરક્ષિત કરવા માટે પાસફ્રેઝ દાખલ કરો.",
   "homeTapWhenArrived": "શું આવ્યું તે ખબર પડે ત્યારે ટેપ કરો",
   "homeReturnedTo": "{name} ને પરત",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "તમારી રિકવરી ફ્રેઝ",
-  "recoveryPhraseConfirmTitle": "તમારી ફ્રેઝ પુષ્ટિ કરો",
-  "recoveryPhraseBlurb": "જો આ ડિવાઇસ ખોવાઈ જાય, રીસેટ થાય અથવા બદલાય, તો તમારો વ્યવહાર ઇતિહાસ પુનઃપ્રાપ્ત કરવાનો આ 24 શબ્દો જ એકમાત્ર માર્ગ છે. Smara Accounting પાસે કોઈ સર્વર નથી અને તે તમારા માટે તેમને પુનઃપ્રાપ્ત કરી શકતું નથી.\n\nજો તમે આ ડિવાઇસ અને આ ફ્રેઝ બંને ગુમાવો, તો તમે નોંધેલો દરેક વ્યવહાર કાયમ માટે અચકાસી ન શકાય તેવો બની જાય છે.",
-  "recoveryPhraseWriteDown": "આ શબ્દો ક્રમમાં લખો અને તેમને આ ડિવાઇસથી અલગ, સુરક્ષિત જગ્યાએ સાચવો.",
-  "iveSavedRecoveryPhrase": "મેં મારી રિકવરી ફ્રેઝ સાચવી લીધી છે",
-  "confirmPhraseBlurb": "તમે હમણાં જ સાચવેલી ફ્રેઝમાંથી માંગેલા શબ્દો દાખલ કરો.",
-  "wordNumber": "શબ્દ #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "કીસ્ટોર ફાઇલ નિકાસ કરો",
-  "keystoreExportBlurb": "તમારી રિકવરી ફ્રેઝ ઉપરાંત, તમે તમે પસંદ કરેલા પાસફ્રેઝથી સુરક્ષિત એન્ક્રિપ્ટેડ કીસ્ટોર ફાઇલ સાચવી શકો છો. આ વૈકલ્પિક છે - તમારી સાઇનિંગ કી પુનઃસ્થાપિત કરવા માટે એકલી રિકવરી ફ્રેઝ હંમેશા પૂરતી છે.",
-  "keystorePassphrase": "પાસફ્રેઝ",
-  "exportKeystoreFile": "કીસ્ટોર ફાઇલ નિકાસ કરો",
   "chooseLanguageTitle": "તમારી ભાષા પસંદ કરો",
   "chooseLanguageBlurb": "એપમાં બધું આ ભાષામાં દેખાશે. તમે પછીથી સેટિંગ્સમાં તેને બદલી શકો છો.",
-  "chooseLanguageBip39Notice": "તમારો રિકવરી શબ્દસમૂહ અંગ્રેજીમાં બતાવવામાં આવશે. તે દરેક જગ્યાએ રિકવરી ટૂલ્સ દ્વારા ઓળખાતા પ્રમાણભૂત શબ્દોના નાના સમૂહનો ઉપયોગ કરે છે, જે આ ભાષામાં હજુ ઉપલબ્ધ નથી.",
   "chooseCurrencyTitle": "તમારું ચલણ પસંદ કરો",
   "chooseCurrencyBlurb": "હાલમાં દરેક ખાતા જૂથ (રોકડ અને રોકડ સમકક્ષ, પેન્શન અને નિવૃત્તિ, વગેરે) આ એક જ ચલણનો ઉપયોગ કરે છે. તમે પછીથી તેના માટે નવું જૂથ બનાવીને અલગ ચલણમાં ખાતાં ઉમેરી શકો છો.",
   "currencyBackfillTitle": "હાલના જૂથો માટે ચલણ પસંદ કરો",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "તમારા ખાતાનું નામ આપો",
   "firstAccountBlurb": "આ ખાતું તમારા માટે પહેલેથી સેટ થયેલું છે - તેને તમારી બેંક જેવું ઓળખી શકાય તેવું નામ આપો. પછી તમે એક ખર્ચ અથવા પ્રાપ્તિ નોંધશો, ત્યારબાદ તમારી રિકવરી ફ્રેઝ વડે ડિવાઇસને સુરક્ષિત કરશો.",
   "whatsMainAccountCalled": "તમારા મુખ્ય ખાતાનું નામ શું છે?",
-  "restoreTitle": "સાઇનિંગ કી પુનઃસ્થાપિત કરો",
-  "restoreBlurb": "આ ડિવાઇસમાં હાલના ચોપડા છે, પરંતુ કોઈ મેળ ખાતી સાઇનિંગ કી નથી. તમારી સાચવેલી રિકવરી ફ્રેઝ અથવા કીસ્ટોર ફાઇલમાંથી તેને પુનઃસ્થાપિત કરો - તમારો ડેટા સામાન્ય રીતે ચકાસાશે, અને કંઈપણ ફરીથી સાઇન કે બદલાશે નહીં.",
-  "recoveryPhrase24": "રિકવરી ફ્રેઝ (બધા 24 શબ્દો)",
-  "keystoreFile": "કીસ્ટોર ફાઇલ",
-  "keystoreFileContents": "કીસ્ટોર ફાઇલની સામગ્રી",
-  "optionalBackupFile": "વૈકલ્પિક બેકઅપ ફાઇલ",
-  "iDontHavePhrase": "મારી પાસે મારી રિકવરી ફ્રેઝ કે કીસ્ટોર ફાઇલ નથી",
-  "migrationTitle": "નવી કીમાં સ્થળાંતર કરો",
-  "migrationBlurb": "તમારી રિકવરી ફ્રેઝ અથવા કીસ્ટોર ફાઇલ વગર, આ ડિવાઇસની સાઇનિંગ કી પુનઃપ્રાપ્ત કરી શકાતી નથી. તમે નવી કીથી શરૂઆત કરી શકો છો. જૂની એન્ટ્રીઓ દેખાતી રહેશે પણ બદલાયેલી ગણાશે.",
-  "iConfirmBooksValid": "હું પુષ્ટિ કરું છું કે વર્તમાન ચોપડા માન્ય છે",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "અમે જૂની એન્ટ્રીઓ કેમ સંપાદિત નથી કરતા",
   "whyWeDontEditBody": "જ્યારે તમે ભૂલ સુધારો છો, ત્યારે અમે જૂની લાઇન રાખીએ છીએ અને તમે પહેલેથી દાખલ કરેલું બદલવાને બદલે તેની બાજુમાં સુધારો ઉમેરીએ છીએ. આ રીતે તમારો ઇતિહાસ હંમેશા બરાબર બતાવે છે કે શું થયું અને તમે ક્યારે તેને સુધાર્યું — તમારી જાણ બહાર કંઈ ચૂપચાપ બદલાતું નથી.",
   "lockTitle": "અનલૉક કરો",
@@ -563,7 +571,6 @@
   "none": "કોઈ નહીં",
   "currency": "ચલણ",
   "errorGeneric": "કંઈક ખોટું થયું. ફરી પ્રયાસ કરો.",
-  "errorSigningIdentityMismatch": "આ રિકવરી ફ્રેઝ અથવા કીસ્ટોર ફાઇલ આ ડેટાબેઝમાં કોઈ સાઇનિંગ ઓળખ સાથે મેળ ખાતી નથી.",
   "errorInvalidLedgerBackup": "આ ફાઇલ માન્ય Smara બેકઅપ નથી.",
   "errorInvalidLedgerBackupNoIdentity": "આ બેકઅપમાં કોઈ સાઇનિંગ ઓળખ નથી - તે માન્ય Smara બેકઅપ નથી.",
   "errorInvalidLedgerBackupUnverified": "આ બેકઅપ સંપૂર્ણ ચોપડા તરીકે ચકાસાયું ન હતું, તેથી તે પુનઃસ્થાપિત થયું નહીં.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "આ બેકઅપ આ ડિવાઇસ પરની ઓળખ કરતાં અલગ સાઇનિંગ ઓળખની છે.",
   "errorAccountNotFinancial": "તે નાણાકીય ખાતું નથી.",
   "errorAccountArchived": "તે ખાતું છુપાયેલું છે.",
   "errorAccountNotArchived": "તે ખાતું છુપાયેલું નથી.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "શ્રેણી આવક અથવા ખર્ચ હોવી જોઈએ.",
   "validationOnlyExpenseHasMonthlyLimit": "ફક્ત ખર્ચ શ્રેણી માસિક મર્યાદા ધરાવી શકે છે.",
   "validationInvalidTemplate": "અમાન્ય ટેમ્પલેટ.",
-  "validationWrongKeystorePassphrase": "આ કીસ્ટોર ફાઇલ માટે ખોટો પાસફ્રેઝ.",
-  "validationInvalidKeystoreFile": "તે માન્ય કીસ્ટોર ફાઇલ જેવું લાગતું નથી.",
-  "validationRestorePhraseFailed": "તે રિકવરી ફ્રેઝમાંથી પુનઃસ્થાપિત કરી શકાયું નહીં.",
   "validationGenerateKeyFailed": "આ ડિવાઇસ પર સાઇનિંગ કી બનાવી શકાઈ નહીં: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "સ્થળાંતર નિષ્ફળ ગયું. ફરી પ્રયાસ કરો.",
   "validationChooseBackupFile": "પહેલા બેકઅપ ફાઇલ પસંદ કરો.",
   "validationPassphraseRequired": "પાસફ્રેઝ દાખલ કરો.",
   "validationPinsDoNotMatch": "બંને PIN મેળ ખાતા નથી.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "માન્ય રકમ દાખલ કરો.",
-  "validationConfirmWordMismatch": "શબ્દ {n} તમારી સાચવેલી ફ્રેઝ સાથે મેળ ખાતો નથી. તપાસો અને ફરી પ્રયાસ કરો.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "ખરીદી જથ્થો અને એકમ ભાવ ધનાત્મક હોવા જોઈએ.",
   "errorInstrumentArchived": "છુપાયેલું ઇન્સ્ટ્રુમેન્ટ ખરીદી શકાતું નથી.",
   "errorNonCashCannotIncludeBrokerage": "બિન-રોકડ ખરીદીમાં બ્રોકરેજનો સમાવેશ ન થઈ શકે.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "પાસફ્રેઝ",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

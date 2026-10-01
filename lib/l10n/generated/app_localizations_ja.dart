@@ -211,23 +211,6 @@ class AppLocalizationsJa extends AppLocalizations {
       '選んだ場所に帳簿の暗号化コピーを保存する、またはそこから復元します。これは署名鍵をバックアップするリカバリーフレーズやキーストアファイルとは別のもので、帳簿そのものをバックアップするわけではありません。';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'ロック';
 
   @override
@@ -418,12 +401,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get keystoreExportFailed => 'キーストアファイルを書き出せませんでした。この手順はスキップできます。';
-
-  @override
-  String get enterPassphraseToProtect => 'ファイルを保護するパスフレーズを入力してください。';
-
-  @override
   String get homeTapWhenArrived => '何が届いたか分かったらタップしてください';
 
   @override
@@ -589,6 +566,32 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get monthlyLimitBlurb => 'この支出カテゴリに対する、月初からの任意の支出目安です。';
+
+  @override
+  String get translateCategoryWithAi => 'Translate with AI';
+
+  @override
+  String get addCategoryTranslation => 'Add translation';
+
+  @override
+  String get categoryTranslationLocale => 'Language';
+
+  @override
+  String get categoryTranslationName => 'Translated name';
+
+  @override
+  String get mergeCategories => 'Merge categories';
+
+  @override
+  String get mergeCategoriesSuggested =>
+      'These categories look the same. Merge them?';
+
+  @override
+  String get categoryDefaultLanguage => 'Default language for category names';
+
+  @override
+  String get categoryDefaultLanguageSubtitle =>
+      'Shared across linked devices. Each device still shows its own language when a translation exists.';
 
   @override
   String get manageCategoryRules => 'カテゴリルールを管理';
@@ -796,89 +799,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'リカバリーフレーズ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'フレーズを確認';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'この24個の単語は、この端末を紛失・初期化・交換した場合に取引履歴を復元する唯一の方法です。Smara家計簿にはサーバーがなく、代わりに復元することはできません。\n\nこの端末とこのフレーズを両方失うと、記録したすべての取引は永久に検証できなくなります。';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'これらの単語を順番に書き留め、この端末とは別の安全な場所に保管してください。';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'リカバリーフレーズを保存しました';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb => '先ほど保存したフレーズから指定された単語を入力してください。';
-
-  @override
-  String wordNumber(String n) {
-    return '単語 #$n';
-  }
-
-  @override
-  String get keystoreExportTitle => 'キーストアファイルを書き出す';
-
-  @override
-  String get keystoreExportBlurb =>
-      'リカバリーフレーズに加えて、任意のパスフレーズで保護した暗号化キーストアファイルを保存できます。これは任意です - リカバリーフレーズだけでも常に署名鍵を復元するのに十分です。';
-
-  @override
-  String get keystorePassphrase => 'パスフレーズ';
-
-  @override
-  String get exportKeystoreFile => 'キーストアファイルを書き出す';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
-
-  @override
   String get chooseLanguageTitle => '言語を選んでください';
 
   @override
   String get chooseLanguageBlurb => 'アプリのすべての表示がこの言語になります。後で設定から変更できます。';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      '回復フレーズは英語で表示されます。これはどこでも回復ツールが認識する少数の標準的な単語を使用しており、この言語ではまだ利用できません。';
 
   @override
   String get chooseCurrencyTitle => '通貨を選択してください';
@@ -915,39 +839,215 @@ class AppLocalizationsJa extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get actionImportFromBackup => 'Import from backup';
+  String get continueBooksTitle => 'Continue my books on this phone';
 
   @override
-  String get restoreTitle => '署名鍵を復元';
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
 
   @override
-  String get restoreBlurb =>
-      'この端末には既存の帳簿がありますが、一致する署名鍵がありません。保存したリカバリーフレーズまたはキーストアファイルから復元してください - データは通常どおり検証され、何も再署名や変更はされません。';
+  String get continueBooksAction => 'Continue my books on this phone';
 
   @override
-  String get recoveryPhrase24 => 'リカバリーフレーズ（24個すべての単語）';
+  String get restoreFromCopyAction => 'Restore from a copy';
 
   @override
-  String get keystoreFile => 'キーストアファイル';
+  String get saveBooksCopyAction => 'Save a copy of my books';
 
   @override
-  String get keystoreFileContents => 'キーストアファイルの内容';
+  String get deviceHistoryTitle => 'Device history';
 
   @override
-  String get optionalBackupFile => '任意のバックアップファイル';
+  String get deviceHistoryEmpty =>
+      'No Continuations yet. When you continue books on a new phone, they will show up here.';
 
   @override
-  String get iDontHavePhrase => 'リカバリーフレーズもキーストアファイルもありません';
+  String deviceHistoryContinuedOn(String date) {
+    return 'Your books continued on this phone on $date';
+  }
 
   @override
-  String get migrationTitle => '新しい鍵に移行';
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
+    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+  }
 
   @override
-  String get migrationBlurb =>
-      'リカバリーフレーズもキーストアファイルもない場合、この端末の署名鍵は復元できません。新しい鍵を開始できます。古い項目は表示されたままですが、置き換え済みとなります。';
+  String get backupReminderBannerTitle => 'Save a copy of your books';
 
   @override
-  String get iConfirmBooksValid => '現在の帳簿が正しいことを確認しました';
+  String get backupReminderSaveAction => 'Save a copy';
+
+  @override
+  String get backupReminderLaterAction => 'Later';
+
+  @override
+  String get settingsBackupReminder => 'Copy reminder';
+
+  @override
+  String get settingsBackupReminderBlurb =>
+      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+
+  @override
+  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+
+  @override
+  String get settingsBackupReminderDays => 'Remind after this many days';
+
+  @override
+  String get settingsBackupReminderEntries =>
+      'Remind after this many new entries';
+
+  @override
+  String get settingsBackupReminderSnoozeDays =>
+      'Hide for this many days after Later';
+
+  @override
+  String get settingsBackupReminderSnoozeEntries =>
+      'Hide for this many new entries after Later';
+
+  @override
+  String get settingsBooksSwitcher => 'Books on this device';
+
+  @override
+  String get settingsBooksSwitcherBlurb =>
+      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+
+  @override
+  String get settingsBooksSwitcherActive => 'Open now';
+
+  @override
+  String get settingsBooksSwitcherSwitch => 'Switch';
+
+  @override
+  String get settingsBooksSwitcherCreate => 'New books';
+
+  @override
+  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+
+  @override
+  String get settingsBooksSwitcherNameLabel => 'Name';
+
+  @override
+  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+
+  @override
+  String settingsBooksSwitcherRemoveBody(String name) {
+    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+  }
+
+  @override
+  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+
+  @override
+  String get settingsLinkedDevices => 'Linked devices';
+
+  @override
+  String get settingsLinkedDevicesCatchUp =>
+      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+
+  @override
+  String get settingsLinkedDevicesPermissionSentence =>
+      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+
+  @override
+  String get settingsLinkedDevicesAddDevice => 'Add a device';
+
+  @override
+  String get settingsLinkedDevicesContinue => 'Continue';
+
+  @override
+  String get settingsLinkedDevicesRoleOwner => 'Owner';
+
+  @override
+  String get settingsLinkedDevicesRoleMember => 'Member';
+
+  @override
+  String get settingsLinkedDevicesCanAdd => 'May add devices';
+
+  @override
+  String get settingsLinkedDevicesErasePending => 'Erase pending';
+
+  @override
+  String settingsLinkedDevicesErasedOn(String date) {
+    return 'Erased on $date';
+  }
+
+  @override
+  String get settingsLinkedDevicesSuggestSecondOwner =>
+      'These books have only one Owner. Consider making another linked device an Owner too.';
+
+  @override
+  String get settingsLinkedDevicesJoinSameWifi =>
+      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+
+  @override
+  String get settingsLinkedDevicesApproveJoin => 'Approve';
+
+  @override
+  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+
+  @override
+  String settingsLinkedDevicesPendingJoin(String name) {
+    return '$name wants to join these books';
+  }
+
+  @override
+  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+
+  @override
+  String get settingsLinkedDevicesSyncNow => 'Sync now';
+
+  @override
+  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+
+  @override
+  String membershipNoticeDeviceAdded(String name) {
+    return 'A device was added: $name';
+  }
+
+  @override
+  String membershipNoticeDeviceRemoved(String name) {
+    return 'A device was removed: $name';
+  }
+
+  @override
+  String membershipNoticeErasePending(String name) {
+    return 'Erase pending for $name';
+  }
+
+  @override
+  String membershipNoticeErased(String name, String date) {
+    return 'Erased $name on $date';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerClaimed(String name) {
+    return '$name claimed sole ownership';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerCancelled(String name) {
+    return 'Sole-Owner claim for $name was cancelled';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerEffective(String name) {
+    return '$name is now an Owner';
+  }
+
+  @override
+  String membershipNoticeEntryNotAccepted(String name) {
+    return 'Not accepted: couldn\'t be verified (from $name)';
+  }
+
+  @override
+  String membershipNoticeOwnerVerificationAlert(String name) {
+    return 'A record from $name could not be verified and was not accepted';
+  }
+
+  @override
+  String get membershipNoticeCompetingFixCheck =>
+      'Two Fixes for the same entry were resolved — please check';
 
   @override
   String get whyWeDontEdit => '古い項目を編集しない理由';
@@ -1196,10 +1296,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get errorGeneric => '問題が発生しました。もう一度お試しください。';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'このリカバリーフレーズまたはキーストアファイルは、このデータベース内のどの署名アイデンティティとも一致しません。';
-
-  @override
   String get errorInvalidLedgerBackup => 'このファイルは有効なSmaraのバックアップではありません。';
 
   @override
@@ -1214,31 +1310,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'このファイルをSmaraのバックアップとして開けませんでした: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'このバックアップは、この端末のものとは異なる署名アイデンティティに属しています。';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'それは財務口座ではありません。';
@@ -1492,15 +1563,6 @@ class AppLocalizationsJa extends AppLocalizations {
       'このバックアップを復元できませんでした - パスフレーズが間違っているか、Smaraのバックアップファイルではありません。';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired => '金額、口座、カテゴリは必須です。';
 
   @override
@@ -1550,15 +1612,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get validationInvalidTemplate => '無効なテンプレートです。';
 
   @override
-  String get validationWrongKeystorePassphrase => 'このキーストアファイルのパスフレーズが違います。';
-
-  @override
-  String get validationInvalidKeystoreFile => 'これは有効なキーストアファイルではないようです。';
-
-  @override
-  String get validationRestorePhraseFailed => 'そのリカバリーフレーズから復元できませんでした。';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'この端末で署名鍵を生成できませんでした: $detail';
   }
@@ -1569,14 +1622,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed => '移行に失敗しました。もう一度お試しください。';
-
-  @override
   String get validationChooseBackupFile => '先にバックアップファイルを選択してください。';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'パスフレーズを入力してください。';
@@ -1599,11 +1645,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => '有効な金額を入力してください。';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return '単語$nが保存したフレーズと一致しません。確認してもう一度お試しください。';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive => '買いの数量と単価は正の値にしてください。';
@@ -1939,4 +1980,60 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'パスフレーズ';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

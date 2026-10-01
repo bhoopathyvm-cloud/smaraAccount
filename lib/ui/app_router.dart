@@ -2,12 +2,12 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../data/books_set/active_books_session.dart';
 import '../data/repositories/account_repository.dart';
+import '../data/repositories/books_copy_repository.dart';
 import '../data/repositories/category_repository.dart';
-import '../data/repositories/device_migration_bundle_repository.dart';
 import '../data/repositories/identity_repository.dart';
 import '../data/repositories/investment_repository.dart';
-import '../data/repositories/ledger_backup_repository.dart';
 import '../data/repositories/ledger_chain_verifier.dart';
 import '../data/repositories/ledger_repository.dart';
 import '../data/repositories/payee_repository.dart';
@@ -24,6 +24,8 @@ import 'features/account_management/view_models/account_management_view_model.da
 import 'features/account_management/views/account_management_view.dart';
 import 'features/category_management/view_models/category_management_view_model.dart';
 import 'features/category_management/views/category_management_view.dart';
+import 'features/continuation/view_models/continuation_view_model.dart';
+import 'features/continuation/views/continuation_view.dart';
 import 'features/correction_wizard/view_models/correction_view_model.dart';
 import 'features/correction_wizard/views/correction_view.dart';
 import 'features/first_week_setup/view_models/first_week_setup_view_model.dart';
@@ -34,11 +36,9 @@ import 'features/holdings/view_models/holdings_view_model.dart';
 import 'features/holdings/views/holdings_view.dart';
 import 'features/lock/view_models/lock_view_model.dart';
 import 'features/lock/views/lock_view.dart';
-import 'features/migration/view_models/key_loss_migration_view_model.dart';
-import 'features/migration/views/key_loss_migration_view.dart';
 import 'features/onboarding/view_models/currency_backfill_view_model.dart';
 import 'features/onboarding/view_models/first_account_name_view_model.dart';
-import 'features/onboarding/view_models/recovery_phrase_setup_view_model.dart';
+import 'features/onboarding/view_models/first_identity_setup_view_model.dart';
 import 'features/onboarding/views/currency_backfill_view.dart';
 import 'features/onboarding/views/currency_selection_view.dart';
 import 'features/onboarding/views/first_account_name_view.dart';
@@ -52,13 +52,15 @@ import 'features/record_transaction/views/record_transaction_view.dart';
 import 'features/register/view_models/register_row.dart';
 import 'features/register/view_models/register_view_model.dart';
 import 'features/register/views/register_view.dart';
-import 'features/restore/view_models/restore_identity_view_model.dart';
-import 'features/restore/views/restore_identity_view.dart';
+import 'features/settings/view_models/books_switcher_view_model.dart';
+import 'features/settings/view_models/device_history_view_model.dart';
+import 'features/settings/view_models/linked_devices_view_model.dart';
 import 'features/settings/view_models/settings_view_model.dart';
-import 'features/settings/views/device_migration_bundle_export_view.dart';
-import 'features/settings/views/keystore_export_view.dart';
-import 'features/settings/views/recovery_phrase_view.dart';
+import 'features/settings/views/device_history_view.dart';
 import 'features/settings/views/settings_view.dart';
+import '../data/repositories/membership_repository.dart';
+import '../data/books_set/books_set_paths.dart';
+import '../domain/linked_devices/local_network_permission.dart';
 import 'features/settle_pending_transfer/views/settle_pending_transfer_route.dart';
 import 'features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'features/setup_choice/views/bundle_import_view.dart';
@@ -71,11 +73,10 @@ import 'features/transfer/view_models/transfer_view_model.dart';
 import 'features/transfer/views/transfer_view.dart';
 
 /// Gates every navigation on the device signing identity's state (spec:
-/// "Device Signing Identity", "Optional Recovery and Backup Setup",
-/// "Recoverable Reinstall or Device Migration", "Startup Integrity
-/// Verification", and `device-migration-bundle`'s "Startup Setup
-/// Choice"). Redirect decisions live in [AppNavigationPolicy]; this
-/// function registers routes and forwards.
+/// "Device Signing Identity", books-copy-and-continuation, "Startup
+/// Integrity Verification", and "Startup Setup Choice"). Redirect
+/// decisions live in [AppNavigationPolicy]; this function registers
+/// routes and forwards.
 GoRouter buildAppRouter(
   LedgerRepository ledgerRepository,
   AccountRepository accountRepository,
@@ -84,8 +85,7 @@ GoRouter buildAppRouter(
   IdentityRepository identityRepository,
   LedgerChainVerifier chainVerifier,
   InvestmentRepository investmentRepository,
-  LedgerBackupRepository ledgerBackupRepository,
-  DeviceMigrationBundleRepository deviceMigrationBundleRepository,
+  BooksCopyRepository booksCopyRepository,
   StatementImportRepository statementImportRepository,
   SettingsRepository settingsRepository,
   AppLockController appLockController,
@@ -115,7 +115,7 @@ GoRouter buildAppRouter(
         path: AppNavPaths.setupChoice,
         builder: (context, state) => SetupChoiceView(
           onNewSetup: () => context.go(AppNavPaths.language),
-          onImportFromBackup: () => context.push(AppNavPaths.importBackup),
+          onRestoreFromCopy: () => context.push(AppNavPaths.importBackup),
         ),
       ),
       GoRoute(
@@ -132,7 +132,7 @@ GoRouter buildAppRouter(
       GoRoute(
         path: AppNavPaths.currency,
         builder: (context, state) => CurrencySelectionView(
-          viewModel: context.read<RecoveryPhraseSetupViewModel>(),
+          viewModel: context.read<FirstIdentitySetupViewModel>(),
           onFinished: () => context.go(AppNavPaths.firstAccount),
         ),
       ),
@@ -158,28 +158,6 @@ GoRouter buildAppRouter(
         ),
       ),
       GoRoute(
-        path: '/settings/recovery-phrase',
-        builder: (context, state) => RecoveryPhraseView(
-          viewModel: context.read<RecoveryPhraseSetupViewModel>(),
-        ),
-      ),
-      GoRoute(
-        path: '/settings/keystore-export',
-        builder: (context, state) => KeystoreExportView(
-          viewModel: context.read<RecoveryPhraseSetupViewModel>(),
-        ),
-      ),
-      GoRoute(
-        path: '/settings/device-migration-bundle-export',
-        // Reuses the live SettingsViewModel already active on /settings
-        // (passed via `extra`) rather than constructing a fresh one, so
-        // isExportingBundle/failure state survive the push/pop and
-        // Settings doesn't re-run _load() pointlessly for this screen.
-        builder: (context, state) => DeviceMigrationBundleExportView(
-          viewModel: state.extra! as SettingsViewModel,
-        ),
-      ),
-      GoRoute(
         path: AppNavPaths.setupWizard,
         builder: (context, state) => FirstWeekSetupView(
           viewModel: FirstWeekSetupViewModel(
@@ -199,21 +177,11 @@ GoRouter buildAppRouter(
         ),
       ),
       GoRoute(
-        path: AppNavPaths.restore,
-        builder: (context, state) => RestoreIdentityView(
-          viewModel: context.read<RestoreIdentityViewModel>(),
-          onRestored: () => context.go(AppNavPaths.home),
-          onNoRecoveryMaterial: () => context.push(AppNavPaths.migrate),
-        ),
-      ),
-      GoRoute(
-        path: AppNavPaths.migrate,
-        builder: (context, state) => KeyLossMigrationView(
-          viewModel: KeyLossMigrationViewModel(
-            ledgerRepository: ledgerRepository,
-            identityRepository: identityRepository,
-          ),
-          onMigrated: () => context.go(AppNavPaths.home),
+        path: AppNavPaths.continuePath,
+        builder: (context, state) => ContinuationView(
+          viewModel: context.read<ContinuationViewModel>(),
+          onContinued: () => context.go(AppNavPaths.home),
+          onRestoreFromCopy: () => context.push(AppNavPaths.importBackup),
         ),
       ),
       GoRoute(
@@ -312,28 +280,41 @@ GoRouter buildAppRouter(
         builder: (context, state) {
           final viewModel = SettingsViewModel(
             settingsRepository: settingsRepository,
-            ledgerBackupRepository: ledgerBackupRepository,
-            deviceMigrationBundleRepository: deviceMigrationBundleRepository,
+            booksCopyRepository: booksCopyRepository,
             appLockService: context.read<AppLockService>(),
             biometricAuthenticator: context.read<BiometricAuthenticator>(),
             appLockController: appLockController,
             localeController: context.read<LocaleController>(),
           );
+          final booksSwitcher = BooksSwitcherViewModel(
+            session: context.read<ActiveBooksSession>(),
+          );
+          final linkedDevices = LinkedDevicesViewModel(
+            membershipRepository: context.read<MembershipRepository>(),
+            settingsRepository: settingsRepository,
+            booksSetStore: context.read<BooksSetStore>(),
+            localNetworkPermission: context.read<LocalNetworkPermission>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
+          );
           return SettingsView(
             viewModel: viewModel,
+            booksSwitcherViewModel: booksSwitcher,
+            linkedDevicesViewModel: linkedDevices,
             onOpenPayees: () => context.push('/payees'),
             onOpenRecurringTemplates: () =>
                 context.push('/recurring-templates'),
-            onOpenRecoveryPhrase: () =>
-                context.push('/settings/recovery-phrase'),
-            onOpenKeystoreExport: () =>
-                context.push('/settings/keystore-export'),
-            onOpenDeviceMigrationBundleExport: () => context.push(
-              '/settings/device-migration-bundle-export',
-              extra: viewModel,
-            ),
+            onOpenDeviceHistory: () => context.push('/device-history'),
           );
         },
+      ),
+      GoRoute(
+        path: '/device-history',
+        builder: (context, state) => DeviceHistoryView(
+          viewModel: DeviceHistoryViewModel(
+            ledgerRepository: ledgerRepository,
+            membershipRepository: context.read<MembershipRepository>(),
+          ),
+        ),
       ),
       GoRoute(
         path: '/payees',
@@ -368,6 +349,7 @@ GoRouter buildAppRouter(
                     '${Uri.encodeQueryComponent(pendingTransferId)}',
                   ),
                   onOpenSettings: () => context.push('/settings'),
+                  onSaveBooksCopy: () => context.push('/settings'),
                   onSpent: () =>
                       context.push('/record-transaction?direction=spent'),
                   onReceived: () =>

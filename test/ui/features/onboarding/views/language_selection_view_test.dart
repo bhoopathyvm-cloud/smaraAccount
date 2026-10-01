@@ -134,31 +134,15 @@ void main() {
     },
   );
 
-  testWidgets(
-    'shows the BIP39 English-fallback notice for a language without an '
-    'official wordlist, but not for one that has one',
-    (tester) async {
-      final controller = await _loadedController();
-      await tester.pumpWidget(_harness(controller));
-      await tester.pumpAndSettle();
+  testWidgets('language list shows endonyms and no recovery-phrase notice', (
+    tester,
+  ) async {
+    final controller = await _loadedController();
+    await tester.pumpWidget(_harness(controller));
+    await tester.pumpAndSettle();
 
-      final en = lookupAppLocalizations(const Locale('en'));
-      expect(find.text(en.chooseLanguageBip39Notice), findsNothing);
-
-      await tester.tap(find.text('हिन्दी'));
-      await tester.pumpAndSettle();
-      final hi = lookupAppLocalizations(const Locale('hi'));
-      expect(find.text(hi.chooseLanguageBip39Notice), findsOneWidget);
-
-      await tester.dragUntilVisible(
-        find.text('Français'),
-        find.byType(ListView),
-        const Offset(0, -300),
-      );
-      await tester.tap(find.text('Français'));
-      await tester.pumpAndSettle();
-      final fr = lookupAppLocalizations(const Locale('fr'));
-      expect(find.text(fr.chooseLanguageBip39Notice), findsNothing);
-    },
-  );
+    expect(find.text('हिन्दी'), findsOneWidget);
+    expect(find.textContaining('recovery phrase'), findsNothing);
+    expect(find.textContaining('BIP39'), findsNothing);
+  });
 }

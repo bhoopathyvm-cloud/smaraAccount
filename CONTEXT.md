@@ -1,10 +1,12 @@
 # SMARA Account
 
-Household books on one device: a signed, double-entry ledger under the
-hood, surfaced to the user as a plain record of what they spent and
-received. History never quietly rewrites itself — corrections are new
-entries, not edits. See `docs/household-term-map.md` for the mapping from
-the ledger vocabulary below to the household words the UI actually shows.
+Household and small-business books on one or more Linked devices: a
+signed, double-entry ledger under the hood, surfaced to the user as a
+plain record of what they spent and received. History never quietly
+rewrites itself — corrections are new entries, not edits. Devices that
+share the same books catch up over the same Wi-Fi (Peer Sync) with no
+server. See `docs/household-term-map.md` for the mapping from the ledger
+vocabulary below to the household words the UI actually shows.
 
 ## Language
 
@@ -141,7 +143,8 @@ therefore not the trusted tip).
 The root of a Chain: the well-defined 32-zero-byte previous-hash
 (`genesisPreviousEntryHash`) that the Chain's first entry links back to. A
 key Migration establishes a fresh trust root by starting the new identity's
-Chain from genesis again.
+Chain from genesis again. Continuation keeps the existing chain tip (or
+trusted tip) and does not rewrite history.
 
 **Device Chain Sequence**:
 The unique, monotonic per-device counter (`deviceChainSequence`) stamped on
@@ -152,9 +155,10 @@ _Avoid_: index, row number (it is device-wide and never reset, unlike a
 per-Chain position).
 
 **Integrity Event**:
-An append-only audit-log row recording a chain break, re-anchor, or key
-migration. Distinct from a Journal Entry — it records something that
-happened to the ledger's trust chain, never a movement of money.
+An append-only audit-log row recording a chain break, re-anchor,
+Continuation, or (historically) key migration. Distinct from a Journal
+Entry — it records something that happened to the ledger's trust chain,
+never a movement of money.
 
 **Verification**:
 The derived, re-checkable judgment of whether a Journal Entry's hash,
@@ -185,35 +189,76 @@ keeps the same identity and only steps around the damaged tail.
 _Avoid_: repair, restore, heal (re-anchoring abandons the broken tail, it
 does not fix it).
 
-**Recovery Phrase** / **Keystore File**:
-Two optional, identity-only exports of the Signing Identity's key: a
-24-word BIP39 phrase (always English words) or a passphrase-encrypted
-file. Neither carries books. Both live in Settings → Recovery & identity
-and are never a blocking onboarding step.
+**Books Copy**:
+A passphrase-encrypted file of the complete books (ledger database plus
+books settings such as reference rates) — never the private signing key,
+and never device settings (language, App Lock, reminder state, research
+tool). Saving and restoring is how books move between phones or are
+backed up. Restoring always replaces this phone's books; it does not
+merge.
+_Avoid_: snapshot, bundle, sync file, ledger backup (retired name).
 
-**Ledger Backup**:
-A passphrase-encrypted copy of the ledger database — books only, never
-key material. Restoring replaces local books; it is rejected onto a
-device whose active Signing Identity differs from the backup's.
-_Avoid_: bundle (see Device Migration Bundle), sync.
+**Restore** (from a Books Copy):
+Replacing this phone's books with a saved Books Copy (from first launch
+or Settings). After a successful restore this phone Continues under its
+own new Signing Identity. Later entries made on the other device do not
+appear here; bringing them over means saving a new copy there and
+restoring it here (which replaces again).
+_Avoid_: sync, merge, import key, adoption, pairing, transfer.
 
-**Device Migration Bundle**:
-One passphrase-encrypted file carrying **both** the ledger database and
-the private key material, so importing it on a new device yields
-immediately verified, immediately record-capable books with no separate
-key-restore step. A deliberate, disclosed trade-off: file + passphrase
-together allow reading the books *and* signing as the user. Imported via
-**Import from backup** at the Setup Choice or exported from Settings.
-_Avoid_: backup (a Ledger Backup carries no key), sync, clone.
+**Continuation**:
+Starting a new this-device-only Signing Identity that continues earlier
+books when this phone holds books without a matching private key (for
+example after a keychain reset, or after restoring a Books Copy). Earlier
+entries keep verifying under their original identities; new entries are
+signed by the new identity. Recorded as an `IDENTITY_CONTINUED` Integrity
+Event and shown in Device history.
+_Avoid_: migration, adoption, pairing, transfer, re-sign history.
 
-**Migration** (key migration):
-The process of re-creating a Signing Identity's entries under a new
-identity after true key loss. A migrated entry is marked
-`isSupersededByMigration` and excluded from active balances, but remains
-visible in history.
-_Avoid_: Reversal (migration replaces an identity's whole chain;
-Reversal cancels one entry); Device Migration Bundle (moving the *same*
-identity to a new device, not replacing it).
+**Migration** (historical key migration):
+Earlier versions could re-create a Signing Identity's entries under a new
+identity after true key loss. Entries superseded by that process
+(`isSupersededByMigration`) still verify and remain visible, but are
+excluded from active balances. New key loss uses Continuation instead —
+history is not rewritten.
+_Avoid_: using Migration for current Continuations or Books Copy restore.
+
+### Linked devices & books sets
+
+**Linked Device**:
+A phone, tablet, or computer that is a member of the same books. Each
+Linked Device keeps its own Signing Identity and signs only the entries it
+records; Peer Sync *adds* the others' signed records and never edits them.
+_Avoid_: paired device, synced account, shared login, multi-user account,
+cloud member.
+
+**Peer Sync**:
+Catching up Linked Devices over the same Wi-Fi — discovery and transfer
+stay on the local network, device to device, with no server, cloud, or
+relay. Runs when both apps are open on that Wi-Fi, and when someone taps
+Sync now.
+_Avoid_: cloud sync, internet sync, relay, push sync, background server.
+
+**Owner**:
+A Linked Device role that may add and remove devices or people, decide who
+may add others, erase a removed device, and make other devices Owners.
+_Avoid_: admin, superuser, account holder (Owner is a device role on these
+books, not a cloud login).
+
+**Member**:
+A Linked Device role that records and Fixes entries and manages categories,
+but does not perform Owner-only membership actions unless the Owner has
+granted that device permission to add others.
+_Avoid_: user, guest, collaborator (prefer Member).
+
+**Books Set**:
+One fully separate set of books on a device (its own database file, Signing
+Identity key material, Linked Devices, and Books Copies). The books
+switcher lists sets by a user-visible name (for example "My household" and
+"Acme Ltd – travel") and switches which set Home, Register, and Linked
+devices refer to.
+_Avoid_: workspace, tenant, profile, multi-account (a Books Set is separate
+books, not a login profile).
 
 ### App lock
 
@@ -352,21 +397,22 @@ _Avoid_: template (that word is taken by Recurring Template).
 
 **Setup Choice**:
 The first-launch screen, shown before any Signing Identity exists:
-**New setup** (ordinary onboarding) or **Import from backup** (restore a
-Device Migration Bundle and land directly in verified books).
+**New setup** (ordinary onboarding) or **Restore from a copy** (restore a
+Books Copy and land in verified books, continued under this phone's own
+new key).
 
 **Onboarding** (New setup):
 Language (mandatory pick, device language pre-highlighted) → base
 currency → name the main Financial Account → record the guided First
 Entry, then straight into the app. The Signing Identity is generated
-silently in the background; no recovery-phrase step blocks or follows.
+silently for this device only; there is no recovery-phrase or keystore
+step.
 
 **Deferred Onboarding** (historical):
 The earlier flow that let a new user record a First Entry *before* a
-mandatory recovery-phrase acknowledgment. Superseded by
-`device-migration-bundle`: the acknowledgment no longer exists, so there
-is nothing left to defer. The term survives only in the
-`deferred-onboarding` spec name.
+mandatory recovery-phrase acknowledgment. Superseded: the signing key
+never leaves the device, and onboarding has no phrase step. The term
+survives only in the `deferred-onboarding` spec name.
 _Avoid_: using it for current onboarding (say Onboarding).
 
 **First Entry**:

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 /// macOS keep whatever system keyboard is already active).
 ///
 /// Fields that must stay Latin-or-digit only (ISO currency codes, PIN,
-/// BIP39 recovery words, ticker/ISIN) MUST NOT use this widget with
+/// ticker/ISIN) MUST NOT use this widget with
 /// [latinOnly] false - pass `latinOnly: true`, or use a plain [TextField]
 /// with its own restricting `inputFormatters`, so no Indic/CJK/Arabic IME
 /// hint is ever attached to them
@@ -41,7 +41,7 @@ class AppTextField extends StatelessWidget {
   final int? maxLines;
   final bool autofocus;
 
-  /// True for ISO currency, PIN, BIP39, ticker/ISIN, and similar fields
+  /// True for ISO currency, PIN, ticker/ISIN, and similar fields
   /// that must never carry a non-Latin IME hint.
   final bool latinOnly;
 

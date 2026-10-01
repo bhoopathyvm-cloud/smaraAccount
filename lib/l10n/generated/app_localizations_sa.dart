@@ -212,23 +212,6 @@ class AppLocalizationsSa extends AppLocalizations {
       'स्वेच्छास्थाने भवतः लेखानां गुप्तां प्रतिलिपिं रक्ष, अथवा तस्याः पुनःस्थापनं कुरु। इयं भवतः स्मृतिवाक्यात् अथवा कुञ्जिकाभाण्डाराद् भिन्ना अस्ति, ये भवतः हस्ताक्षरकुञ्जिकां रक्षतः, न तु लेखान्।';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'निरोधः';
 
   @override
@@ -423,14 +406,6 @@ class AppLocalizationsSa extends AppLocalizations {
   }
 
   @override
-  String get keystoreExportFailed =>
-      'कुञ्जिकाभाण्डारसञ्चिका निर्यातयितुं न शक्यते स्म। भवान् इमं सोपानम् उपेक्षितुं शक्नोति।';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'सञ्चिकारक्षणाय स्मृतिवाक्यं प्रविश्यताम्।';
-
-  @override
   String get homeTapWhenArrived => 'यदा जानाति यत् किम् आगतम्, तदा स्पृश्यताम्';
 
   @override
@@ -598,6 +573,32 @@ class AppLocalizationsSa extends AppLocalizations {
   @override
   String get monthlyLimitBlurb =>
       'अस्य व्ययवर्गस्य कृते मासारभ्य अद्यपर्यन्तव्ययस्य ऐच्छिकः निर्देशकः।';
+
+  @override
+  String get translateCategoryWithAi => 'Translate with AI';
+
+  @override
+  String get addCategoryTranslation => 'Add translation';
+
+  @override
+  String get categoryTranslationLocale => 'Language';
+
+  @override
+  String get categoryTranslationName => 'Translated name';
+
+  @override
+  String get mergeCategories => 'Merge categories';
+
+  @override
+  String get mergeCategoriesSuggested =>
+      'These categories look the same. Merge them?';
+
+  @override
+  String get categoryDefaultLanguage => 'Default language for category names';
+
+  @override
+  String get categoryDefaultLanguageSubtitle =>
+      'Shared across linked devices. Each device still shows its own language when a translation exists.';
 
   @override
   String get manageCategoryRules => 'वर्गनियमानां व्यवस्थापनम्';
@@ -809,91 +810,11 @@ class AppLocalizationsSa extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'भवतः स्मृतिवाक्यम्';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'भवतः वाक्यं निश्चीयताम्';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'एतानि चतुर्विंशतिः पदानि एव भवतः व्यवहारेतिहासं पुनः प्राप्तुम् एकः उपायः, यदि इदं यन्त्रं नष्टं, पुनःस्थापितं, वा परिवर्तितं भवेत्। स्मारा-लेखे सेवकः नास्ति, अतः तानि भवदर्थं पुनः प्राप्तुं न शक्नोति।\n\nयदि भवान् इदं यन्त्रं तथा इमां वाक्यं युगपत् नाशयति, तर्हि भवता लिखितः प्रत्येकः व्यवहारः सर्वदाकृते अप्रमाणनीयः भवति।';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'एतानि पदानि क्रमेण लिखतु तथा तानि सुरक्षितस्थाने, अस्मात् यन्त्रात् पृथक्, संरक्ष्यताम्।';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'मया स्वकीयं स्मृतिवाक्यं रक्षितम्';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'भवता इदानीं रक्षितायाः वाक्यायाः पृष्टानि पदानि प्रविश्यन्ताम्।';
-
-  @override
-  String wordNumber(String n) {
-    return 'पदम् #$n';
-  }
-
-  @override
-  String get keystoreExportTitle => 'कुञ्जिकाभाण्डारसञ्चिकायाः निर्यातः';
-
-  @override
-  String get keystoreExportBlurb =>
-      'स्मृतिवाक्येन सह, भवान् स्वचयितेन स्मृतिवाक्येन रक्षितां गुप्तां कुञ्जिकाभाण्डारसञ्चिकाम् अपि रक्षितुं शक्नोति। इदम् ऐच्छिकम् - भवतः हस्ताक्षरकुञ्जिकां पुनःस्थापयितुं केवलं स्मृतिवाक्यम् एव सर्वदा पर्याप्तम्।';
-
-  @override
-  String get keystorePassphrase => 'स्मृतिवाक्यम्';
-
-  @override
-  String get exportKeystoreFile => 'कुञ्जिकाभाण्डारसञ्चिका निर्यात्यताम्';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
-
-  @override
   String get chooseLanguageTitle => 'स्वभाषां चिनुत';
 
   @override
   String get chooseLanguageBlurb =>
       'अनुप्रयोगे सर्वं एतस्यां भाषायां दृश्यते। भवन्तः पश्चात् सेटिंग्ज़ मध्ये एतत् परिवर्तयितुं शक्नुवन्ति।';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'भवतः पुनर्प्राप्ति-वाक्यं आङ्ग्लभाषायां दर्श्यते। एतत् सर्वत्र पुनर्प्राप्ति-साधनैः ज्ञायमानानां मानक-शब्दानां लघु-समूहं उपयुङ्क्ते, यत् एतस्यां भाषायां अद्यापि उपलब्धं नास्ति।';
 
   @override
   String get chooseCurrencyTitle => 'भवतः मुद्रा चीयताम्';
@@ -930,41 +851,215 @@ class AppLocalizationsSa extends AppLocalizations {
   String get actionNewSetup => 'New setup';
 
   @override
-  String get actionImportFromBackup => 'Import from backup';
+  String get continueBooksTitle => 'Continue my books on this phone';
 
   @override
-  String get restoreTitle => 'हस्ताक्षरकुञ्जिकायाः पुनःस्थापनम्';
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
 
   @override
-  String get restoreBlurb =>
-      'अस्मिन् यन्त्रे विद्यमानलेखाः सन्ति, परन्तु समरूपा हस्ताक्षरकुञ्जिका नास्ति। भवतः रक्षितात् स्मृतिवाक्यात् अथवा कुञ्जिकाभाण्डारसञ्चिकातः तां पुनःस्थापयतु - भवतः दत्तांशः सामान्यरूपेण प्रमाण्यते, न किमपि पुनः हस्ताक्षरितं वा परिवर्तितं भविष्यति।';
+  String get continueBooksAction => 'Continue my books on this phone';
 
   @override
-  String get recoveryPhrase24 => 'स्मृतिवाक्यम् (सर्वाणि चतुर्विंशतिः पदानि)';
+  String get restoreFromCopyAction => 'Restore from a copy';
 
   @override
-  String get keystoreFile => 'कुञ्जिकाभाण्डारसञ्चिका';
+  String get saveBooksCopyAction => 'Save a copy of my books';
 
   @override
-  String get keystoreFileContents => 'कुञ्जिकाभाण्डारसञ्चिकायाः विषयः';
+  String get deviceHistoryTitle => 'Device history';
 
   @override
-  String get optionalBackupFile => 'ऐच्छिका प्रतिलिपिसञ्चिका';
+  String get deviceHistoryEmpty =>
+      'No Continuations yet. When you continue books on a new phone, they will show up here.';
 
   @override
-  String get iDontHavePhrase =>
-      'मम स्मृतिवाक्यं वा कुञ्जिकाभाण्डारसञ्चिका वा नास्ति';
+  String deviceHistoryContinuedOn(String date) {
+    return 'Your books continued on this phone on $date';
+  }
 
   @override
-  String get migrationTitle => 'नूतनकुञ्जिकां प्रति प्रव्रजनम्';
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
+    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+  }
 
   @override
-  String get migrationBlurb =>
-      'भवतः स्मृतिवाक्यं विना कुञ्जिकाभाण्डारसञ्चिकां वा विना, अस्य यन्त्रस्य हस्ताक्षरकुञ्जिका पुनः प्राप्तुं न शक्यते। भवान् नूतनां कुञ्जिकाम् आरभेत। पुरातनप्रविष्टयः दृश्याः तिष्ठन्ति, परन्तु प्रतिस्थापिताः भवन्ति।';
+  String get backupReminderBannerTitle => 'Save a copy of your books';
 
   @override
-  String get iConfirmBooksValid =>
-      'अहं निश्चिनोमि यत् सम्प्रति लेखाः वैध सन्ति';
+  String get backupReminderSaveAction => 'Save a copy';
+
+  @override
+  String get backupReminderLaterAction => 'Later';
+
+  @override
+  String get settingsBackupReminder => 'Copy reminder';
+
+  @override
+  String get settingsBackupReminderBlurb =>
+      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+
+  @override
+  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+
+  @override
+  String get settingsBackupReminderDays => 'Remind after this many days';
+
+  @override
+  String get settingsBackupReminderEntries =>
+      'Remind after this many new entries';
+
+  @override
+  String get settingsBackupReminderSnoozeDays =>
+      'Hide for this many days after Later';
+
+  @override
+  String get settingsBackupReminderSnoozeEntries =>
+      'Hide for this many new entries after Later';
+
+  @override
+  String get settingsBooksSwitcher => 'Books on this device';
+
+  @override
+  String get settingsBooksSwitcherBlurb =>
+      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+
+  @override
+  String get settingsBooksSwitcherActive => 'Open now';
+
+  @override
+  String get settingsBooksSwitcherSwitch => 'Switch';
+
+  @override
+  String get settingsBooksSwitcherCreate => 'New books';
+
+  @override
+  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+
+  @override
+  String get settingsBooksSwitcherNameLabel => 'Name';
+
+  @override
+  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+
+  @override
+  String settingsBooksSwitcherRemoveBody(String name) {
+    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+  }
+
+  @override
+  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+
+  @override
+  String get settingsLinkedDevices => 'Linked devices';
+
+  @override
+  String get settingsLinkedDevicesCatchUp =>
+      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+
+  @override
+  String get settingsLinkedDevicesPermissionSentence =>
+      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+
+  @override
+  String get settingsLinkedDevicesAddDevice => 'Add a device';
+
+  @override
+  String get settingsLinkedDevicesContinue => 'Continue';
+
+  @override
+  String get settingsLinkedDevicesRoleOwner => 'Owner';
+
+  @override
+  String get settingsLinkedDevicesRoleMember => 'Member';
+
+  @override
+  String get settingsLinkedDevicesCanAdd => 'May add devices';
+
+  @override
+  String get settingsLinkedDevicesErasePending => 'Erase pending';
+
+  @override
+  String settingsLinkedDevicesErasedOn(String date) {
+    return 'Erased on $date';
+  }
+
+  @override
+  String get settingsLinkedDevicesSuggestSecondOwner =>
+      'These books have only one Owner. Consider making another linked device an Owner too.';
+
+  @override
+  String get settingsLinkedDevicesJoinSameWifi =>
+      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+
+  @override
+  String get settingsLinkedDevicesApproveJoin => 'Approve';
+
+  @override
+  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+
+  @override
+  String settingsLinkedDevicesPendingJoin(String name) {
+    return '$name wants to join these books';
+  }
+
+  @override
+  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+
+  @override
+  String get settingsLinkedDevicesSyncNow => 'Sync now';
+
+  @override
+  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+
+  @override
+  String membershipNoticeDeviceAdded(String name) {
+    return 'A device was added: $name';
+  }
+
+  @override
+  String membershipNoticeDeviceRemoved(String name) {
+    return 'A device was removed: $name';
+  }
+
+  @override
+  String membershipNoticeErasePending(String name) {
+    return 'Erase pending for $name';
+  }
+
+  @override
+  String membershipNoticeErased(String name, String date) {
+    return 'Erased $name on $date';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerClaimed(String name) {
+    return '$name claimed sole ownership';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerCancelled(String name) {
+    return 'Sole-Owner claim for $name was cancelled';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerEffective(String name) {
+    return '$name is now an Owner';
+  }
+
+  @override
+  String membershipNoticeEntryNotAccepted(String name) {
+    return 'Not accepted: couldn\'t be verified (from $name)';
+  }
+
+  @override
+  String membershipNoticeOwnerVerificationAlert(String name) {
+    return 'A record from $name could not be verified and was not accepted';
+  }
+
+  @override
+  String get membershipNoticeCompetingFixCheck =>
+      'Two Fixes for the same entry were resolved — please check';
 
   @override
   String get whyWeDontEdit => 'वयं पुरातनप्रविष्टीः किमर्थं न सम्पादयामः';
@@ -1219,10 +1314,6 @@ class AppLocalizationsSa extends AppLocalizations {
   String get errorGeneric => 'किमपि अशुद्धम् अभवत्। पुनः प्रयतताम्।';
 
   @override
-  String get errorSigningIdentityMismatch =>
-      'इदं स्मृतिवाक्यं अथवा कुञ्जिकाभाण्डारसञ्चिका अस्मिन् दत्तांशकोशे कस्याश्चिदपि हस्ताक्षरपरिचयस्य सह न मेलति।';
-
-  @override
   String get errorInvalidLedgerBackup =>
       'इयं सञ्चिका वैधा स्मारा-प्रतिलिपिः नास्ति।';
 
@@ -1238,31 +1329,6 @@ class AppLocalizationsSa extends AppLocalizations {
   String errorInvalidLedgerBackupUnreadable(String detail) {
     return 'इयं सञ्चिका स्मारा-प्रतिलिपिरूपेण उद्घाटयितुं न शक्यते स्म: $detail';
   }
-
-  @override
-  String get errorForeignBackupIdentity =>
-      'इयं प्रतिलिपिः अस्मात् यन्त्रस्य हस्ताक्षरपरिचयात् भिन्नस्य परिचयस्य अस्ति।';
-
-  @override
-  String get errorInvalidDeviceMigrationBundle =>
-      'This file is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleNoIdentity =>
-      'This bundle has no signing identity - it is not a valid Smara device migration bundle.';
-
-  @override
-  String get errorInvalidDeviceMigrationBundleUnverified =>
-      'This bundle did not verify as intact books, so it was not imported.';
-
-  @override
-  String errorInvalidDeviceMigrationBundleUnreadable(String detail) {
-    return 'This file could not be opened as a Smara device migration bundle: $detail';
-  }
-
-  @override
-  String get errorForeignDeviceMigrationBundleIdentity =>
-      'This bundle belongs to a different signing identity than the one already set up on this device.';
 
   @override
   String get errorAccountNotFinancial => 'सः वित्तीयः लेखः नास्ति।';
@@ -1553,15 +1619,6 @@ class AppLocalizationsSa extends AppLocalizations {
       'इयं प्रतिलिपिः पुनःस्थापयितुं न शक्यते स्म - अशुद्धं स्मृतिवाक्यम्, अथवा इयं स्मारा-प्रतिलिपिः नास्ति।';
 
   @override
-  String errorDeviceMigrationBundleCreateFailed(String detail) {
-    return 'Could not create the device migration bundle: $detail';
-  }
-
-  @override
-  String get errorDeviceMigrationBundleImportFailed =>
-      'Could not import this bundle - wrong passphrase, or not a Smara device migration bundle.';
-
-  @override
   String get validationAmountAccountCategoryRequired =>
       'राशिः, लेखः, वर्गश्च आवश्यकाः।';
 
@@ -1618,18 +1675,6 @@ class AppLocalizationsSa extends AppLocalizations {
   String get validationInvalidTemplate => 'अवैधः साञ्चः।';
 
   @override
-  String get validationWrongKeystorePassphrase =>
-      'अस्याः कुञ्जिकाभाण्डारसञ्चिकायाः कृते अशुद्धं स्मृतिवाक्यम्।';
-
-  @override
-  String get validationInvalidKeystoreFile =>
-      'इदं वैधा कुञ्जिकाभाण्डारसञ्चिका इव न दृश्यते।';
-
-  @override
-  String get validationRestorePhraseFailed =>
-      'तस्मात् स्मृतिवाक्यात् पुनःस्थापयितुं न शक्यते स्म।';
-
-  @override
   String validationGenerateKeyFailed(String detail) {
     return 'अस्मिन् यन्त्रे हस्ताक्षरकुञ्जिकां जनयितुं न शक्यते स्म: $detail';
   }
@@ -1640,15 +1685,7 @@ class AppLocalizationsSa extends AppLocalizations {
   }
 
   @override
-  String get validationMigrationFailed =>
-      'प्रव्रजनं विफलम्। कृपया पुनः प्रयतताम्।';
-
-  @override
   String get validationChooseBackupFile => 'प्रथमं प्रतिलिपिसञ्चिका चीयताम्।';
-
-  @override
-  String get validationChooseDeviceMigrationBundleFile =>
-      'Choose a device migration bundle file first.';
 
   @override
   String get validationPassphraseRequired => 'स्मृतिवाक्यं प्रविश्यताम्।';
@@ -1671,11 +1708,6 @@ class AppLocalizationsSa extends AppLocalizations {
 
   @override
   String get validationEnterValidAmount => 'वैधां राशिं प्रविशतु।';
-
-  @override
-  String validationConfirmWordMismatch(String n) {
-    return 'पदम् $n भवतः रक्षितया वाक्यया सह न मेलति। परीक्ष्य पुनः प्रयतताम्।';
-  }
 
   @override
   String get errorBuyQuantityAndPriceMustBePositive =>
@@ -2020,4 +2052,60 @@ class AppLocalizationsSa extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'स्मृतिवाक्यम्';
+
+  @override
+  String replaceBooksWarning(String counts) {
+    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+  }
+
+  @override
+  String get saveCopyFirstAction => 'Save a copy first';
+
+  @override
+  String replaceCountEntries(int count) {
+    return '$count entries';
+  }
+
+  @override
+  String replaceCountAccounts(int count) {
+    return '$count accounts';
+  }
+
+  @override
+  String replaceCountCategories(int count) {
+    return '$count categories';
+  }
+
+  @override
+  String replaceCountGroups(int count) {
+    return '$count account groups';
+  }
+
+  @override
+  String replaceCountPayees(int count) {
+    return '$count payees';
+  }
+
+  @override
+  String replaceCountCategoryRules(int count) {
+    return '$count category rules';
+  }
+
+  @override
+  String replaceCountCsvProfiles(int count) {
+    return '$count import profiles';
+  }
+
+  @override
+  String replaceCountRecurringTemplates(int count) {
+    return '$count recurring templates';
+  }
+
+  @override
+  String replaceCountInstruments(int count) {
+    return '$count instruments';
+  }
 }

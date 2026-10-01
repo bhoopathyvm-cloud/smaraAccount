@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import '../../../../data/repositories/books_copy_repository.dart';
 import '../../../../domain/investment/exchange_registry.dart';
 import '../../../../domain/models/exchange_rate_provider.dart';
 import '../../../../domain/models/quote_provider.dart';
@@ -12,9 +12,13 @@ import '../../../../domain/models/research_tool.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
-import '../../../core/destructive_confirmation.dart';
 import '../../../../l10n/l10n.dart';
+import '../../setup_choice/views/books_copy_restored_success_dialog.dart';
 import '../view_models/settings_view_model.dart';
+import '../view_models/books_switcher_view_model.dart';
+import '../view_models/linked_devices_view_model.dart';
+import 'books_switcher_section.dart';
+import 'linked_devices_section.dart';
 
 /// Views are lean. No business logic, no Repository calls. Listen to the
 /// ViewModel; render what it exposes (smara-tech-guidelines.md).
@@ -22,14 +26,21 @@ class SettingsView extends StatelessWidget {
   const SettingsView({
     super.key,
     required this.viewModel,
+    this.booksSwitcherViewModel,
+    this.linkedDevicesViewModel,
     this.onOpenPayees,
     this.onOpenRecurringTemplates,
-    this.onOpenRecoveryPhrase,
-    this.onOpenKeystoreExport,
-    this.onOpenDeviceMigrationBundleExport,
+    this.onOpenDeviceHistory,
   });
 
   final SettingsViewModel viewModel;
+
+  /// Optional books switcher (linked-devices). Omitted in tests that only
+  /// cover other Settings sections.
+  final BooksSwitcherViewModel? booksSwitcherViewModel;
+
+  /// Optional Linked devices section (linked-devices task 4.2).
+  final LinkedDevicesViewModel? linkedDevicesViewModel;
 
   /// payees-and-spending-memory: opens the minimal payee CRUD screen.
   final VoidCallback? onOpenPayees;
@@ -37,16 +48,8 @@ class SettingsView extends StatelessWidget {
   /// recurring-templates: opens the recurring template CRUD screen.
   final VoidCallback? onOpenRecurringTemplates;
 
-  /// device-migration-bundle: opens the recovery phrase display screen -
-  /// optional, reachable at any time, never blocking.
-  final VoidCallback? onOpenRecoveryPhrase;
-
-  /// device-migration-bundle: opens the keystore file export screen.
-  final VoidCallback? onOpenKeystoreExport;
-
-  /// device-migration-bundle: opens the device migration bundle export
-  /// screen - books and signing key together, for moving to a new device.
-  final VoidCallback? onOpenDeviceMigrationBundleExport;
+  /// books-copy-and-continuation: opens Device history (stub until wired).
+  final VoidCallback? onOpenDeviceHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +75,14 @@ class SettingsView extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(AppSpacing.large),
             children: [
+              if (booksSwitcherViewModel != null) ...[
+                BooksSwitcherSection(viewModel: booksSwitcherViewModel!),
+                const SizedBox(height: AppSpacing.xLarge),
+              ],
+              if (linkedDevicesViewModel != null) ...[
+                LinkedDevicesSection(viewModel: linkedDevicesViewModel!),
+                const SizedBox(height: AppSpacing.xLarge),
+              ],
               if (viewModel.localeController != null) ...[
                 Text(l10n.settingsLanguage, style: AppTypography.sectionLabel),
                 const SizedBox(height: AppSpacing.base),
@@ -223,34 +234,95 @@ class SettingsView extends StatelessWidget {
                 onPressed: viewModel.isBackingUp
                     ? null
                     : () => _showSaveBackupDialog(context, viewModel),
-                child: Text(l10n.actionSaveBackup),
+                child: Text(l10n.saveBooksCopyAction),
               ),
               const SizedBox(height: AppSpacing.small),
               OutlinedButton(
                 onPressed: viewModel.isRestoring
                     ? null
                     : () => _showRestoreBackupDialog(context, viewModel),
-                child: Text(l10n.actionRestoreBackup),
+                child: Text(l10n.restoreFromCopyAction),
               ),
+              if (onOpenDeviceHistory != null) ...[
+                const SizedBox(height: AppSpacing.small),
+                OutlinedButton(
+                  onPressed: onOpenDeviceHistory,
+                  child: Text(l10n.deviceHistoryTitle),
+                ),
+              ],
               const SizedBox(height: AppSpacing.xLarge),
-              Text(l10n.settingsRecovery, style: AppTypography.sectionLabel),
+              Text(
+                l10n.settingsBackupReminder,
+                style: AppTypography.sectionLabel,
+              ),
               const SizedBox(height: AppSpacing.base),
-              Text(l10n.settingsRecoveryBlurb, style: AppTypography.metadata),
+              Text(
+                l10n.settingsBackupReminderBlurb,
+                style: AppTypography.metadata,
+              ),
               const SizedBox(height: AppSpacing.medium),
-              OutlinedButton(
-                onPressed: onOpenRecoveryPhrase,
-                child: Text(l10n.settingsViewRecoveryPhrase),
+              SwitchListTile(
+                title: Text(l10n.settingsBackupReminderEnabled),
+                value: viewModel.backupReminderEnabled,
+                onChanged: viewModel.setBackupReminderEnabled,
               ),
-              const SizedBox(height: AppSpacing.small),
-              OutlinedButton(
-                onPressed: onOpenKeystoreExport,
-                child: Text(l10n.settingsExportKeystoreFile),
-              ),
-              const SizedBox(height: AppSpacing.small),
-              OutlinedButton(
-                onPressed: onOpenDeviceMigrationBundleExport,
-                child: Text(l10n.settingsExportDeviceMigrationBundle),
-              ),
+              if (viewModel.backupReminderEnabled) ...[
+                TextFormField(
+                  initialValue: '${viewModel.backupReminderDays}',
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsBackupReminderDays,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (raw) {
+                    final days = int.tryParse(raw);
+                    if (days != null && days > 0) {
+                      viewModel.setBackupReminderDays(days);
+                    }
+                  },
+                ),
+                const SizedBox(height: AppSpacing.small),
+                TextFormField(
+                  initialValue: '${viewModel.backupReminderEntries}',
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsBackupReminderEntries,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (raw) {
+                    final entries = int.tryParse(raw);
+                    if (entries != null && entries > 0) {
+                      viewModel.setBackupReminderEntries(entries);
+                    }
+                  },
+                ),
+                const SizedBox(height: AppSpacing.small),
+                TextFormField(
+                  initialValue: '${viewModel.backupReminderSnoozeDays}',
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsBackupReminderSnoozeDays,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (raw) {
+                    final days = int.tryParse(raw);
+                    if (days != null && days > 0) {
+                      viewModel.setBackupReminderSnoozeDays(days);
+                    }
+                  },
+                ),
+                const SizedBox(height: AppSpacing.small),
+                TextFormField(
+                  initialValue: '${viewModel.backupReminderSnoozeEntries}',
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsBackupReminderSnoozeEntries,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (raw) {
+                    final entries = int.tryParse(raw);
+                    if (entries != null && entries > 0) {
+                      viewModel.setBackupReminderSnoozeEntries(entries);
+                    }
+                  },
+                ),
+              ],
               const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsLock, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
@@ -382,7 +454,7 @@ class SettingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: Text(l10n.actionSaveBackup),
+          title: Text(l10n.saveBooksCopyAction),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -392,7 +464,9 @@ class SettingsView extends StatelessWidget {
               TextField(
                 controller: passphraseController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: l10n.keystorePassphrase),
+                decoration: InputDecoration(
+                  labelText: l10n.booksCopyPassphrase,
+                ),
               ),
               if (statusMessage != null) ...[
                 const SizedBox(height: AppSpacing.medium),
@@ -443,10 +517,10 @@ class SettingsView extends StatelessWidget {
                       }
 
                       final fileName =
-                          'smara-backup-'
-                          '${DateTime.now().millisecondsSinceEpoch}.smarabackup';
+                          'smara-books-copy-'
+                          '${DateTime.now().millisecondsSinceEpoch}.smaracopy';
                       await FilePicker.saveFile(
-                        dialogTitle: l10n.actionSaveBackup,
+                        dialogTitle: l10n.saveBooksCopyAction,
                         fileName: fileName,
                         bytes: Uint8List.fromList(utf8.encode(contents)),
                       );
@@ -477,7 +551,7 @@ class SettingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: Text(l10n.actionRestoreBackup),
+          title: Text(l10n.restoreFromCopyAction),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -508,7 +582,7 @@ class SettingsView extends StatelessWidget {
                   controller: passphraseController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: l10n.keystorePassphrase,
+                    labelText: l10n.booksCopyPassphrase,
                   ),
                 ),
                 if (statusMessage != null) ...[
@@ -554,11 +628,12 @@ class SettingsView extends StatelessWidget {
                         return;
                       }
 
-                      final confirmed = await confirmDestructiveAction(
+                      final counts = await viewModel.replacementCounts();
+                      if (!dialogContext.mounted) return;
+                      final confirmed = await _confirmReplaceBooks(
                         context: dialogContext,
-                        title: l10n.replaceBooksTitle,
-                        message: l10n.replaceBooksBody,
-                        confirmLabel: l10n.actionReplace,
+                        viewModel: viewModel,
+                        counts: counts,
                       );
                       if (!confirmed) return;
 
@@ -572,7 +647,7 @@ class SettingsView extends StatelessWidget {
                           Navigator.of(dialogContext).pop();
                         }
                         if (pageContext.mounted) {
-                          _showRestoredSuccessDialog(pageContext);
+                          await showBooksCopyRestoredSuccessDialog(pageContext);
                         }
                       } else {
                         setDialogState(() {
@@ -587,6 +662,82 @@ class SettingsView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> _confirmReplaceBooks({
+    required BuildContext context,
+    required SettingsViewModel viewModel,
+    required BooksReplacementCounts counts,
+  }) async {
+    final l10n = l10nOf(context);
+    final summary = _replacementCountsSummary(l10n, counts);
+    final message = summary.isEmpty
+        ? l10n.replaceBooksBody
+        : l10n.replaceBooksWarning(summary);
+
+    while (true) {
+      if (!context.mounted) return false;
+      final choice = await showDialog<String>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(l10n.replaceBooksTitle),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop('cancel'),
+              child: Text(l10n.actionCancel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop('saveFirst'),
+              child: Text(l10n.saveCopyFirstAction),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(dialogContext).pop('replace'),
+              child: Text(l10n.actionReplace),
+            ),
+          ],
+        ),
+      );
+      if (choice == 'replace') return true;
+      if (choice != 'saveFirst') return false;
+      if (!context.mounted) return false;
+      await _showSaveBackupDialog(context, viewModel);
+    }
+  }
+
+  String _replacementCountsSummary(
+    AppLocalizations l10n,
+    BooksReplacementCounts counts,
+  ) {
+    final parts = <String>[];
+    if (counts.entries > 0) {
+      parts.add(l10n.replaceCountEntries(counts.entries));
+    }
+    if (counts.categories > 0) {
+      parts.add(l10n.replaceCountCategories(counts.categories));
+    }
+    if (counts.financialAccounts > 0) {
+      parts.add(l10n.replaceCountAccounts(counts.financialAccounts));
+    }
+    if (counts.userAccountGroups > 0) {
+      parts.add(l10n.replaceCountGroups(counts.userAccountGroups));
+    }
+    if (counts.payees > 0) {
+      parts.add(l10n.replaceCountPayees(counts.payees));
+    }
+    if (counts.categoryRules > 0) {
+      parts.add(l10n.replaceCountCategoryRules(counts.categoryRules));
+    }
+    if (counts.csvImportProfiles > 0) {
+      parts.add(l10n.replaceCountCsvProfiles(counts.csvImportProfiles));
+    }
+    if (counts.recurringTemplates > 0) {
+      parts.add(l10n.replaceCountRecurringTemplates(counts.recurringTemplates));
+    }
+    if (counts.instruments > 0) {
+      parts.add(l10n.replaceCountInstruments(counts.instruments));
+    }
+    return parts.join(', ');
   }
 
   Future<void> _showSetPinDialog(
@@ -742,30 +893,6 @@ class SettingsView extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  void _showRestoredSuccessDialog(BuildContext context) {
-    final l10n = l10nOf(context);
-    showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.backupRestored),
-        content: Text(l10n.backupRestoredBody),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              if (Platform.isAndroid || Platform.isIOS) {
-                SystemNavigator.pop();
-              } else {
-                exit(0);
-              }
-            },
-            child: Text(l10n.actionCloseApp),
-          ),
-        ],
       ),
     );
   }

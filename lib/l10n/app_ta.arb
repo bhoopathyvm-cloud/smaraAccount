@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "கீஸ்டோர் கோப்பை ஏற்றுமதி செய்ய முடியவில்லை. இந்த படியைத் தவிர்க்கலாம்.",
-  "enterPassphraseToProtect": "கோப்பைப் பாதுகாக்க ஒரு கடவுச்சொல்லை உள்ளிடவும்.",
   "homeTapWhenArrived": "என்ன வந்தது என்று தெரிந்தவுடன் தட்டவும்",
   "homeReturnedTo": "{name} க்குத் திரும்பியது",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "உங்கள் மீட்பு சொற்றொடர்",
-  "recoveryPhraseConfirmTitle": "உங்கள் சொற்றொடரை உறுதிப்படுத்தவும்",
-  "recoveryPhraseBlurb": "இந்த சாதனம் தொலைந்தால், மீட்டமைக்கப்பட்டால் அல்லது மாற்றப்பட்டால், உங்கள் பரிவர்த்தனை வரலாற்றை மீட்டெடுக்க இந்த 24 சொற்களே ஒரே வழி. ஸ்மாரா கணக்கியலுக்கு சேவையகம் இல்லை, மேலும் அவற்றை உங்களுக்காக மீட்டெடுக்க முடியாது.\n\nஇந்த சாதனத்தையும் இந்த சொற்றொடரையும் ஒன்றாக இழந்தால், நீங்கள் பதிவு செய்த ஒவ்வொரு பரிவர்த்தனையும் நிரந்தரமாக சரிபார்க்க முடியாததாகிவிடும்.",
-  "recoveryPhraseWriteDown": "இந்த சொற்களை வரிசைப்படி எழுதி, இந்த சாதனத்திலிருந்து தனியாக பாதுகாப்பான இடத்தில் வைக்கவும்.",
-  "iveSavedRecoveryPhrase": "நான் எனது மீட்பு சொற்றொடரை சேமித்துவிட்டேன்",
-  "confirmPhraseBlurb": "நீங்கள் இப்போது சேமித்த சொற்றொடரிலிருந்து கேட்கப்பட்ட சொற்களை உள்ளிடவும்.",
-  "wordNumber": "சொல் #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "கீஸ்டோர் கோப்பை ஏற்றுமதி செய்",
-  "keystoreExportBlurb": "உங்கள் மீட்பு சொற்றொடருடன், நீங்கள் தேர்ந்தெடுக்கும் ஒரு கடவுச்சொல்லால் பாதுகாக்கப்பட்ட மறையாக்கம் செய்யப்பட்ட கீஸ்டோர் கோப்பையும் சேமிக்கலாம். இது விருப்பத்தேர்வு - உங்கள் மீட்பு சொற்றொடர் மட்டுமே உங்கள் கையொப்பக் கோப்பை மீட்டமைக்க எப்போதும் போதுமானது.",
-  "keystorePassphrase": "கடவுச்சொல்",
-  "exportKeystoreFile": "கீஸ்டோர் கோப்பை ஏற்றுமதி செய்",
   "chooseLanguageTitle": "உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்",
   "chooseLanguageBlurb": "ஆப்பில் உள்ள அனைத்தும் இந்த மொழியில் காட்டப்படும். இதை பின்னர் அமைப்புகளில் மாற்றலாம்.",
-  "chooseLanguageBip39Notice": "உங்கள் மீட்பு சொற்றொடர் ஆங்கிலத்தில் காட்டப்படும். இது எல்லா இடங்களிலும் மீட்பு கருவிகளால் அடையாளம் காணப்படும் ஒரு சிறிய தரப்படுத்தப்பட்ட சொற்களின் தொகுப்பைப் பயன்படுத்துகிறது, இது இந்த மொழியில் இன்னும் கிடைக்கவில்லை.",
   "chooseCurrencyTitle": "உங்கள் நாணயத்தைத் தேர்ந்தெடுக்கவும்",
   "chooseCurrencyBlurb": "ஒவ்வொரு கணக்குக் குழுவும் (பணம் & பண இணையானவை, ஓய்வூதியம் & ஓய்வு, முதலியன) தற்போது இந்த ஒரு நாணயத்தைப் பயன்படுத்துகிறது. அதற்கான புதிய குழுவை உருவாக்குவதன் மூலம் பின்னர் வேறு நாணயத்தில் கணக்குகளைச் சேர்க்கலாம்.",
   "currencyBackfillTitle": "தற்போதுள்ள குழுக்களுக்கான நாணயத்தைத் தேர்ந்தெடுக்கவும்",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "உங்கள் கணக்குக்குப் பெயரிடுங்கள்",
   "firstAccountBlurb": "இது உங்களுக்காக ஏற்கனவே அமைக்கப்பட்ட கணக்கு - உங்கள் வங்கி போன்று நீங்கள் அடையாளம் காணும் பெயரைக் கொடுங்கள். அடுத்து ஒரு செலவு அல்லது பெறுதலைப் பதிவு செய்வீர்கள், பின்னர் உங்கள் மீட்பு சொற்றொடருடன் சாதனத்தைப் பாதுகாப்பீர்கள்.",
   "whatsMainAccountCalled": "உங்கள் முதன்மைக் கணக்கின் பெயர் என்ன?",
-  "restoreTitle": "கையொப்பக் கீயை மீட்டமை",
-  "restoreBlurb": "இந்த சாதனத்தில் ஏற்கனவே கணக்குகள் உள்ளன, ஆனால் பொருந்தும் கையொப்பக் கீ இல்லை. உங்கள் சேமித்த மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பிலிருந்து அதை மீட்டமைக்கவும் - உங்கள் தரவு வழக்கம் போல சரிபார்க்கப்படும், மேலும் எதுவும் மீண்டும் கையொப்பமிடப்படாது அல்லது மாற்றப்படாது.",
-  "recoveryPhrase24": "மீட்பு சொற்றொடர் (அனைத்து 24 சொற்களும்)",
-  "keystoreFile": "கீஸ்டோர் கோப்பு",
-  "keystoreFileContents": "கீஸ்டோர் கோப்பு உள்ளடக்கங்கள்",
-  "optionalBackupFile": "விருப்பத்தேர்வு காப்புப் பிரதி கோப்பு",
-  "iDontHavePhrase": "என்னிடம் என் மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பு இல்லை",
-  "migrationTitle": "புதிய கீக்கு இடம்பெயர்",
-  "migrationBlurb": "உங்கள் மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பு இல்லாமல், இந்த சாதனத்தின் கையொப்பக் கீயை மீட்டமைக்க முடியாது. நீங்கள் புதிய கீயைத் தொடங்கலாம். பழைய பதிவுகள் தெரியும், ஆனால் மாற்றப்பட்டதாகக் குறிக்கப்படும்.",
-  "iConfirmBooksValid": "தற்போதைய கணக்குகள் செல்லுபடியாகும் என்று உறுதிப்படுத்துகிறேன்",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "பழைய பதிவுகளை நாங்கள் ஏன் திருத்துவதில்லை",
   "whyWeDontEditBody": "நீங்கள் ஒரு தவறைச் சரிசெய்யும்போது, நாங்கள் பழைய வரியை வைத்திருந்து, நீங்கள் ஏற்கனவே உள்ளிட்டதை மாற்றுவதற்குப் பதிலாக அதற்கு அடுத்ததாக ஒரு திருத்தத்தைச் சேர்க்கிறோம். அதனால் உங்கள் வரலாறு எப்போதும் என்ன நடந்தது, எப்போது சரிசெய்தீர்கள் என்பதைத் துல்லியமாகக் காட்டுகிறது — உங்களுக்குத் தெரியாமல் எதுவும் மாறாது.",
   "lockTitle": "திற",
@@ -563,7 +571,6 @@
   "none": "ஏதுமில்லை",
   "currency": "நாணயம்",
   "errorGeneric": "ஏதோ தவறு நடந்தது. மீண்டும் முயற்சிக்கவும்.",
-  "errorSigningIdentityMismatch": "இந்த மீட்பு சொற்றொடர் அல்லது கீஸ்டோர் கோப்பு இந்தத் தரவுத்தளத்தில் உள்ள எந்த கையொப்ப அடையாளத்துடனும் பொருந்தவில்லை.",
   "errorInvalidLedgerBackup": "இந்த கோப்பு செல்லுபடியாகும் ஸ்மாரா காப்புப்பிரதி அல்ல.",
   "errorInvalidLedgerBackupNoIdentity": "இந்த காப்புப்பிரதிக்கு கையொப்ப அடையாளம் இல்லை - இது செல்லுபடியாகும் ஸ்மாரா காப்புப்பிரதி அல்ல.",
   "errorInvalidLedgerBackupUnverified": "இந்த காப்புப்பிரதி முழுமையான கணக்குகளாக சரிபார்க்கப்படவில்லை, எனவே அது மீட்டமைக்கப்படவில்லை.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "இந்த காப்புப்பிரதி இந்த சாதனத்தில் உள்ளதை விட வேறு கையொப்ப அடையாளத்திற்குச் சொந்தமானது.",
   "errorAccountNotFinancial": "அது ஒரு நிதிக் கணக்கு அல்ல.",
   "errorAccountArchived": "அந்த கணக்கு மறைக்கப்பட்டுள்ளது.",
   "errorAccountNotArchived": "அந்த கணக்கு மறைக்கப்படவில்லை.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "வகை வருமானமாகவோ செலவாகவோ இருக்க வேண்டும்.",
   "validationOnlyExpenseHasMonthlyLimit": "செலவு வகைக்கு மட்டுமே மாத வரம்பு இருக்க முடியும்.",
   "validationInvalidTemplate": "தவறான வார்ப்புரு.",
-  "validationWrongKeystorePassphrase": "இந்த கீஸ்டோர் கோப்பிற்கான தவறான கடவுச்சொல்.",
-  "validationInvalidKeystoreFile": "அது செல்லுபடியாகும் கீஸ்டோர் கோப்பு போல் தெரியவில்லை.",
-  "validationRestorePhraseFailed": "அந்த மீட்பு சொற்றொடரிலிருந்து மீட்டமைக்க முடியவில்லை.",
   "validationGenerateKeyFailed": "இந்த சாதனத்தில் கையொப்பக் கீயை உருவாக்க முடியவில்லை: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "இடம்பெயர்வு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.",
   "validationChooseBackupFile": "முதலில் காப்புப் பிரதி கோப்பைத் தேர்ந்தெடுக்கவும்.",
   "validationPassphraseRequired": "ஒரு கடவுச்சொல்லை உள்ளிடவும்.",
   "validationPinsDoNotMatch": "இரண்டு PIN களும் பொருந்தவில்லை.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "செல்லுபடியாகும் தொகையை உள்ளிடவும்.",
-  "validationConfirmWordMismatch": "சொல் {n} உங்கள் சேமித்த சொற்றொடருடன் பொருந்தவில்லை. அதைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "வாங்குதல் அளவும் அலகு விலையும் நேர்மறையாக இருக்க வேண்டும்.",
   "errorInstrumentArchived": "மறைக்கப்பட்ட கருவியை வாங்க முடியாது.",
   "errorNonCashCannotIncludeBrokerage": "பணமில்லாத கையகப்படுத்துதல்களில் தரகு கட்டணத்தை சேர்க்க முடியாது.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "கடவுச்சொல்",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

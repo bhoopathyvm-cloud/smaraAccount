@@ -12,16 +12,14 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockSettingsRepository repository;
-  late MockLedgerBackupRepository ledgerBackupRepository;
-  late MockDeviceMigrationBundleRepository deviceMigrationBundleRepository;
+  late MockBooksCopyRepository booksCopyRepository;
   late MockAppLockService appLockService;
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockAppLockController appLockController;
 
   setUp(() {
     repository = MockSettingsRepository();
-    ledgerBackupRepository = MockLedgerBackupRepository();
-    deviceMigrationBundleRepository = MockDeviceMigrationBundleRepository();
+    booksCopyRepository = MockBooksCopyRepository();
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     appLockController = MockAppLockController();
@@ -50,19 +48,21 @@ void main() {
     when(repository.isAppLockEnabled()).thenAnswer((_) async => false);
     when(repository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
     when(repository.isAppLockBiometricEnabled()).thenAnswer((_) async => false);
+    when(repository.isBackupReminderEnabled()).thenAnswer((_) async => true);
+    when(repository.backupReminderDays()).thenAnswer((_) async => 30);
+    when(repository.backupReminderEntries()).thenAnswer((_) async => 500);
+    when(repository.backupReminderSnoozeDays()).thenAnswer((_) async => 7);
+    when(repository.backupReminderSnoozeEntries()).thenAnswer((_) async => 500);
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
   });
 
   Future<SettingsViewModel> pumpSettings(
     WidgetTester tester, {
-    VoidCallback? onOpenRecoveryPhrase,
-    VoidCallback? onOpenKeystoreExport,
-    VoidCallback? onOpenDeviceMigrationBundleExport,
+    VoidCallback? onOpenDeviceHistory,
   }) async {
     final viewModel = SettingsViewModel(
       settingsRepository: repository,
-      ledgerBackupRepository: ledgerBackupRepository,
-      deviceMigrationBundleRepository: deviceMigrationBundleRepository,
+      booksCopyRepository: booksCopyRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -77,9 +77,7 @@ void main() {
       MaterialApp(
         home: SettingsView(
           viewModel: viewModel,
-          onOpenRecoveryPhrase: onOpenRecoveryPhrase,
-          onOpenKeystoreExport: onOpenKeystoreExport,
-          onOpenDeviceMigrationBundleExport: onOpenDeviceMigrationBundleExport,
+          onOpenDeviceHistory: onOpenDeviceHistory,
         ),
       ),
     );
@@ -200,16 +198,16 @@ void main() {
   });
 
   testWidgets(
-    'Save backup opens a passphrase dialog; an empty passphrase blocks it '
+    'Save a copy opens a passphrase dialog; an empty passphrase blocks it '
     'without calling the Repository',
     (tester) async {
       await pumpSettings(tester);
 
-      await tapScrolled(tester, find.text('Save backup'));
+      await tapScrolled(tester, find.text('Save a copy of my books'));
       await tester.pumpAndSettle();
       expect(
         find.text(
-          'Choose a passphrase to protect this backup. There is no recovery if you forget it.',
+          'Choose a passphrase to protect this copy. There is no recovery if you forget it.',
         ),
         findsOneWidget,
       );
@@ -219,30 +217,32 @@ void main() {
 
       expect(find.text('Enter a passphrase.'), findsOneWidget);
       verifyNever(
-        ledgerBackupRepository.exportLedgerBackup(
-          passphrase: anyNamed('passphrase'),
-        ),
+        booksCopyRepository.saveBooksCopy(passphrase: anyNamed('passphrase')),
       );
     },
   );
 
   testWidgets(
-    'Restore backup opens a dialog; Restore is blocked until a file is '
+    'Restore from a copy opens a dialog; Restore is blocked until a file is '
     'chosen, without calling the Repository',
     (tester) async {
       await pumpSettings(tester);
 
-      await tapScrolled(tester, find.text('Restore backup'));
+      await tapScrolled(tester, find.text('Restore from a copy'));
       await tester.pumpAndSettle();
       expect(find.text('Choose file'), findsOneWidget);
 
-      await tester.enterText(find.byType(TextField), 'hunter2');
+      final dialogField = find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.byType(TextField),
+      );
+      await tester.enterText(dialogField, 'hunter2');
       await tester.tap(find.widgetWithText(ElevatedButton, 'Restore'));
       await tester.pump();
 
-      expect(find.text('Choose a backup file first.'), findsOneWidget);
+      expect(find.text('Choose a books copy file first.'), findsOneWidget);
       verifyNever(
-        ledgerBackupRepository.restoreLedgerBackup(
+        booksCopyRepository.restoreBooksCopy(
           fileContents: anyNamed('fileContents'),
           passphrase: anyNamed('passphrase'),
         ),
@@ -250,33 +250,19 @@ void main() {
     },
   );
 
-  testWidgets(
-    'all three recovery-and-identity screens are reachable and none of '
-    'them are ever disabled or gated on the others (device-migration-bundle)',
-    (tester) async {
-      var openedRecoveryPhrase = false;
-      var openedKeystoreExport = false;
-      var openedBundleExport = false;
-      await pumpSettings(
-        tester,
-        onOpenRecoveryPhrase: () => openedRecoveryPhrase = true,
-        onOpenKeystoreExport: () => openedKeystoreExport = true,
-        onOpenDeviceMigrationBundleExport: () => openedBundleExport = true,
-      );
+  testWidgets('Device history is reachable when the callback is wired', (
+    tester,
+  ) async {
+    var openedDeviceHistory = false;
+    await pumpSettings(
+      tester,
+      onOpenDeviceHistory: () => openedDeviceHistory = true,
+    );
 
-      await tapScrolled(tester, find.text('View recovery phrase'));
-      await tester.pump();
-      expect(openedRecoveryPhrase, isTrue);
-
-      await tapScrolled(tester, find.text('Export keystore file'));
-      await tester.pump();
-      expect(openedKeystoreExport, isTrue);
-
-      await tapScrolled(tester, find.text('Export device migration bundle'));
-      await tester.pump();
-      expect(openedBundleExport, isTrue);
-    },
-  );
+    await tapScrolled(tester, find.text('Device history'));
+    await tester.pump();
+    expect(openedDeviceHistory, isTrue);
+  });
 
   testWidgets('turning on Require unlock opens a set-PIN dialog; matching PINs '
       'enable app lock', (tester) async {
@@ -288,7 +274,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Set a PIN'), findsOneWidget);
 
-    final fields = find.byType(TextField);
+    final fields = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
     await tester.enterText(fields.at(0), '4242');
     await tester.enterText(fields.at(1), '4242');
     await tester.tap(find.widgetWithText(ElevatedButton, 'Set PIN'));
@@ -307,7 +296,10 @@ void main() {
     await tapScrolled(tester, find.text('Require unlock to open the app'));
     await tester.pumpAndSettle();
 
-    final fields = find.byType(TextField);
+    final fields = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
     await tester.enterText(fields.at(0), '4242');
     await tester.enterText(fields.at(1), '9999');
     await tester.tap(find.widgetWithText(ElevatedButton, 'Set PIN'));
@@ -369,8 +361,7 @@ void main() {
     Uri? launched;
     final viewModel = SettingsViewModel(
       settingsRepository: repository,
-      ledgerBackupRepository: ledgerBackupRepository,
-      deviceMigrationBundleRepository: deviceMigrationBundleRepository,
+      booksCopyRepository: booksCopyRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -405,8 +396,7 @@ void main() {
     (tester) async {
       final viewModel = SettingsViewModel(
         settingsRepository: repository,
-        ledgerBackupRepository: ledgerBackupRepository,
-        deviceMigrationBundleRepository: deviceMigrationBundleRepository,
+        booksCopyRepository: booksCopyRepository,
         appLockService: appLockService,
         biometricAuthenticator: biometricAuthenticator,
         appLockController: appLockController,

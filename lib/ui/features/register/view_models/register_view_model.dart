@@ -25,6 +25,7 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required AccountRepository accountRepository,
     required CategoryRepository categoryRepository,
     String? initialAccountId,
+    this.booksGeneration = 0,
   }) : _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
        _categoryRepository = categoryRepository {
@@ -47,6 +48,9 @@ class RegisterViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
   final CategoryRepository _categoryRepository;
+
+  /// Books-set generation this ViewModel was built for.
+  final int booksGeneration;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<AccountCurrencyCatalog> _currenciesSubscription;
   StreamSubscription<List<JournalEntry>>? _entriesSubscription;

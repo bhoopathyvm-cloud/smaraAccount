@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
+import 'package:smara_accounting/domain/investment/exchange_registry.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 import 'package:smara_accounting/domain/models/quote_provider.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
@@ -10,8 +11,7 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockSettingsRepository settingsRepository;
-  late MockLedgerBackupRepository ledgerBackupRepository;
-  late MockDeviceMigrationBundleRepository deviceMigrationBundleRepository;
+  late MockBooksCopyRepository booksCopyRepository;
   late MockAppLockService appLockService;
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockAppLockController appLockController;
@@ -19,8 +19,7 @@ void main() {
 
   setUp(() {
     settingsRepository = MockSettingsRepository();
-    ledgerBackupRepository = MockLedgerBackupRepository();
-    deviceMigrationBundleRepository = MockDeviceMigrationBundleRepository();
+    booksCopyRepository = MockBooksCopyRepository();
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     appLockController = MockAppLockController();
@@ -39,11 +38,33 @@ void main() {
     when(
       settingsRepository.selectedResearchTool(),
     ).thenAnswer((_) async => ResearchTool.chatGpt);
+    when(
+      settingsRepository.selectedDefaultExchange(
+        deviceRegion: anyNamed('deviceRegion'),
+      ),
+    ).thenAnswer((_) async => exchangeForCode('US')!);
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
+    when(settingsRepository.isAppLockEnabled()).thenAnswer((_) async => false);
+    when(settingsRepository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
+    when(
+      settingsRepository.isAppLockBiometricEnabled(),
+    ).thenAnswer((_) async => false);
+    when(
+      settingsRepository.isBackupReminderEnabled(),
+    ).thenAnswer((_) async => true);
+    when(settingsRepository.backupReminderDays()).thenAnswer((_) async => 30);
+    when(
+      settingsRepository.backupReminderEntries(),
+    ).thenAnswer((_) async => 500);
+    when(
+      settingsRepository.backupReminderSnoozeDays(),
+    ).thenAnswer((_) async => 7);
+    when(
+      settingsRepository.backupReminderSnoozeEntries(),
+    ).thenAnswer((_) async => 500);
     viewModel = SettingsViewModel(
       settingsRepository: settingsRepository,
-      ledgerBackupRepository: ledgerBackupRepository,
-      deviceMigrationBundleRepository: deviceMigrationBundleRepository,
+      booksCopyRepository: booksCopyRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -53,23 +74,19 @@ void main() {
   group('exportBackup', () {
     test('returns the encrypted contents on success', () async {
       when(
-        ledgerBackupRepository.exportLedgerBackup(
-          passphrase: anyNamed('passphrase'),
-        ),
-      ).thenAnswer((_) async => '{"kind":"smara-ledger-backup"}');
+        booksCopyRepository.saveBooksCopy(passphrase: anyNamed('passphrase')),
+      ).thenAnswer((_) async => '{"kind":"smara-books-copy"}');
 
       final result = await viewModel.exportBackup(passphrase: 'hunter2');
 
-      expect(result, equals('{"kind":"smara-ledger-backup"}'));
+      expect(result, equals('{"kind":"smara-books-copy"}'));
       expect(viewModel.backupErrorMessage, isNull);
       expect(viewModel.isBackingUp, isFalse);
     });
 
     test('returns null and sets an error message on failure', () async {
       when(
-        ledgerBackupRepository.exportLedgerBackup(
-          passphrase: anyNamed('passphrase'),
-        ),
+        booksCopyRepository.saveBooksCopy(passphrase: anyNamed('passphrase')),
       ).thenThrow(Exception('disk full'));
 
       final result = await viewModel.exportBackup(passphrase: 'hunter2');
@@ -77,47 +94,13 @@ void main() {
       expect(result, isNull);
       expect(viewModel.backupErrorMessage, isNotNull);
       expect(viewModel.isBackingUp, isFalse);
-    });
-  });
-
-  group('exportDeviceMigrationBundle', () {
-    test('returns the encrypted contents on success', () async {
-      when(
-        deviceMigrationBundleRepository.exportBundle(
-          passphrase: anyNamed('passphrase'),
-        ),
-      ).thenAnswer((_) async => '{"kind":"smara-device-migration-bundle"}');
-
-      final result = await viewModel.exportDeviceMigrationBundle(
-        passphrase: 'hunter2',
-      );
-
-      expect(result, equals('{"kind":"smara-device-migration-bundle"}'));
-      expect(viewModel.backupErrorMessage, isNull);
-      expect(viewModel.isExportingBundle, isFalse);
-    });
-
-    test('returns null and sets an error message on failure', () async {
-      when(
-        deviceMigrationBundleRepository.exportBundle(
-          passphrase: anyNamed('passphrase'),
-        ),
-      ).thenThrow(Exception('disk full'));
-
-      final result = await viewModel.exportDeviceMigrationBundle(
-        passphrase: 'hunter2',
-      );
-
-      expect(result, isNull);
-      expect(viewModel.backupErrorMessage, isNotNull);
-      expect(viewModel.isExportingBundle, isFalse);
     });
   });
 
   group('restoreBackup', () {
     test('returns true on success', () async {
       when(
-        ledgerBackupRepository.restoreLedgerBackup(
+        booksCopyRepository.restoreBooksCopy(
           fileContents: anyNamed('fileContents'),
           passphrase: anyNamed('passphrase'),
         ),
@@ -134,37 +117,10 @@ void main() {
     });
 
     test(
-      'surfaces ForeignBackupIdentityException as a plain-language message',
-      () async {
-        when(
-          ledgerBackupRepository.restoreLedgerBackup(
-            fileContents: anyNamed('fileContents'),
-            passphrase: anyNamed('passphrase'),
-          ),
-        ).thenThrow(
-          ForeignBackupIdentityException('belongs to a different identity'),
-        );
-
-        final ok = await viewModel.restoreBackup(
-          fileContents: '{}',
-          passphrase: 'hunter2',
-        );
-
-        expect(ok, isFalse);
-        expect(
-          viewModel.backupErrorMessage,
-          equals(
-            'This backup belongs to a different signing identity than the one on this device.',
-          ),
-        );
-      },
-    );
-
-    test(
       'surfaces InvalidLedgerBackupException as a plain-language message',
       () async {
         when(
-          ledgerBackupRepository.restoreLedgerBackup(
+          booksCopyRepository.restoreBooksCopy(
             fileContents: anyNamed('fileContents'),
             passphrase: anyNamed('passphrase'),
           ),
@@ -187,7 +143,7 @@ void main() {
       'any other failure (e.g. wrong passphrase) surfaces a generic message',
       () async {
         when(
-          ledgerBackupRepository.restoreLedgerBackup(
+          booksCopyRepository.restoreBooksCopy(
             fileContents: anyNamed('fileContents'),
             passphrase: anyNamed('passphrase'),
           ),

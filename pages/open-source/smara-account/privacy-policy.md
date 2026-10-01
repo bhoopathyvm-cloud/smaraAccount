@@ -5,7 +5,7 @@ the app actually does with information — not a generic template. It is
 the same document linked from the app's Settings screen and from App
 Store / Play Store listings.
 
-Last updated: 27 September 2026.
+Last updated: 1 October 2026.
 
 ## There is no Smara Account server or account
 
@@ -37,8 +37,9 @@ and, for the PIN hash, the same secure storage as the signing key).
 
 ## Network lookups
 
-The app can make **three** kinds of network request, all to predefined
-public providers. Each is described in Settings, sends as little as
+The app can make **four** kinds of network activity. Three are optional
+lookups to predefined public providers; the fourth is local-network only
+for Linked devices. Each is described in Settings, sends as little as
 possible, and never includes your balances, payees, descriptions, or how
 many of an investment you hold or what you paid.
 
@@ -60,6 +61,8 @@ many of an investment you hold or what you paid.
    exchange listing you hold (or, if you were offline, during a later
    price refresh while quotes are on). The request is that identifier
    only.
+4. **Linked devices discovery and peer sync** — only on your local Wi-Fi.
+   See Linked devices below. This path does not use the public internet.
 
 If a lookup fails, the app keeps working with what it already has. These
 lookups never post or change a ledger entry.
@@ -72,6 +75,16 @@ cost, or account. Opening this Privacy Policy from Settings also uses
 your browser.
 Smara Account does not send that prompt to a Smara server; the third-party
 site's own privacy policy applies once the browser is open.
+
+## Linked devices on your Wi-Fi
+
+**Linked devices** lets several devices in the household keep the same
+books. Discovery uses Bonjour / local-network APIs on this Wi-Fi only.
+**Sync** (including Sync now) exchanges signed ledger entries and shared
+books metadata device-to-device over an encrypted local connection. Nothing
+in that flow leaves the LAN: there is no Smara server, no cloud account,
+and no internet relay for discovery or sync. Books Copy remains the way to
+carry books when devices are not on the same Wi-Fi.
 
 ## Face ID, Touch ID, and other biometrics
 
@@ -88,20 +101,16 @@ local ledger database to a file you choose. That file is books, not your
 signing key. Restoring it replaces local books; it does not transplant a
 key from another identity.
 
-**Recovery phrase and keystore file** (optional, Settings → Recovery &
-identity) let you back up your signing key yourself — as 24 words you
-write down, or as a passphrase-encrypted file. Neither contains your
-books.
+**Books Copy** (optional, Settings) writes a passphrase-encrypted copy of your books to a location you choose. It does not include your private signing key. Restoring a copy replaces the books on this device.
 
-**Device migration bundle** (optional, same Settings section) writes one
-passphrase-encrypted file containing **both** your books and your signing
+**both** your books and your signing
 key, so you can move to a new device in one step. Anyone with that file
 *and* its passphrase could read your books and sign entries as you, so
 keep the passphrase separate from the file. The app never uploads it.
 
 **Export CSV** writes transaction rows you choose (including whether each
 row still verifies) to a file you choose. It does not include the signing
-key, recovery phrase, or keystore file.
+private signing key. A lost device can only be recovered from a saved Books Copy.
 
 **Hide balances in the app switcher** (optional) covers the app's content
 while it is in the background; nothing is sent anywhere.
@@ -112,17 +121,18 @@ records.
 ## Cryptography (export compliance)
 
 The app uses standard cryptography to sign and verify ledger entries, to
-hash the app-lock PIN, and to encrypt the backup, keystore, and device
-migration files you choose to save. It does not use cryptography to scramble
-network traffic, does not ship a proprietary algorithm, and is not a
-cryptography product. That is the same story declared in the iOS
+hash the app-lock PIN, to encrypt the backup, keystore, and device
+migration files you choose to save, and to protect device-to-device sync
+on the local network. It does not ship a proprietary algorithm and is not
+a cryptography product. That is the same story declared in the iOS
 export-compliance flag (`ITSAppUsesNonExemptEncryption` = false).
 
 ## What we do not do
 
 The app does not sell data, does not show ads, does not use a crash or
 analytics SDK, and does not share ledger contents with a third party as
-part of recording or displaying your books.
+part of recording or displaying your books. Linked-devices discovery and
+sync never upload books to the internet.
 
 ## Contact
 

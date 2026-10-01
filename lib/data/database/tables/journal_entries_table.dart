@@ -27,10 +27,10 @@ class JournalEntries extends Table {
 
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
-  /// Gapless, ascending position in this device's chain (ledger-integrity-signing
-  /// design.md - named `device_chain_sequence`, not `sequence`, for the
-  /// per-device chain this becomes once multi-device sync exists).
-  IntColumn get deviceChainSequence => integer().unique()();
+  /// Gapless, ascending position in this signing identity's chain
+  /// (per-identity uniqueness with [signedByIdentityId] — linked-devices
+  /// multi-chain sync).
+  IntColumn get deviceChainSequence => integer()();
 
   /// 32 zero bytes for the genesis entry (see [genesisPreviousEntryHash] in
   /// domain/crypto/entry_canonical_hash.dart) - never an arbitrary null.
@@ -51,4 +51,9 @@ class JournalEntries extends Table {
 
   @override
   Set<Column> get primaryKey => {id};
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {signedByIdentityId, deviceChainSequence},
+  ];
 }

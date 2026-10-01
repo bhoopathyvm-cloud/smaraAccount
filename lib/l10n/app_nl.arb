@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Het keystore-bestand kon niet worden geëxporteerd. Je kunt deze stap overslaan.",
-  "enterPassphraseToProtect": "Voer een wachtwoordzin in om het bestand te beveiligen.",
   "homeTapWhenArrived": "Tik zodra je weet wat er is aangekomen",
   "homeReturnedTo": "Teruggestort naar {name}",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Je herstelzin",
-  "recoveryPhraseConfirmTitle": "Bevestig je zin",
-  "recoveryPhraseBlurb": "Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.",
-  "recoveryPhraseWriteDown": "Schrijf deze woorden in volgorde op en bewaar ze op een veilige plek, gescheiden van dit toestel.",
-  "iveSavedRecoveryPhrase": "Ik heb mijn herstelzin opgeslagen",
-  "confirmPhraseBlurb": "Voer de gevraagde woorden in uit de zin die je zojuist hebt opgeslagen.",
-  "wordNumber": "Woord #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "Keystore-bestand exporteren",
-  "keystoreExportBlurb": "Naast je herstelzin kun je een versleuteld keystore-bestand opslaan, beveiligd met een wachtwoordzin naar keuze. Dit is optioneel - je herstelzin alleen is altijd genoeg om je ondertekeningssleutel te herstellen.",
-  "keystorePassphrase": "Wachtwoordzin",
-  "exportKeystoreFile": "Keystore-bestand exporteren",
   "chooseLanguageTitle": "Kies je taal",
   "chooseLanguageBlurb": "Alles in de app wordt in deze taal weergegeven. Je kunt dit later wijzigen in Instellingen.",
-  "chooseLanguageBip39Notice": "Je herstelzin wordt in het Engels weergegeven. Deze gebruikt een kleine set standaardwoorden die overal door hersteltools worden herkend, en die nog niet beschikbaar is in deze taal.",
   "chooseCurrencyTitle": "Kies je valuta",
   "chooseCurrencyBlurb": "Elke rekeninggroep (Liquide middelen, Pensioen, enz.) gebruikt voorlopig deze ene valuta. Je kunt later nog rekeningen in een andere valuta toevoegen door er een nieuwe groep voor aan te maken.",
   "currencyBackfillTitle": "Kies een valuta voor bestaande groepen",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "Geef je rekening een naam",
   "firstAccountBlurb": "Dit is de rekening die al voor je is aangemaakt - geef hem een naam die je herkent, zoals je bank. Hierna registreer je één Uitgave of Ontvangst, en beveilig je daarna het toestel met je herstelzin.",
   "whatsMainAccountCalled": "Hoe heet je hoofdrekening?",
-  "restoreTitle": "Ondertekeningssleutel herstellen",
-  "restoreBlurb": "Dit toestel heeft al een boekhouding, maar geen bijpassende ondertekeningssleutel. Herstel deze vanuit je opgeslagen herstelzin of keystore-bestand - je gegevens worden gewoon geverifieerd en er wordt niets opnieuw ondertekend of gewijzigd.",
-  "recoveryPhrase24": "Herstelzin (alle 24 woorden)",
-  "keystoreFile": "Keystore-bestand",
-  "keystoreFileContents": "Inhoud keystore-bestand",
-  "optionalBackupFile": "Optioneel back-upbestand",
-  "iDontHavePhrase": "Ik heb mijn herstelzin of keystore-bestand niet",
-  "migrationTitle": "Migreren naar een nieuwe sleutel",
-  "migrationBlurb": "Zonder je herstelzin of keystore-bestand kan de ondertekeningssleutel van dit toestel niet worden hersteld. Je kunt een nieuwe sleutel starten. Oude boekingen blijven zichtbaar maar worden vervangen.",
-  "iConfirmBooksValid": "Ik bevestig dat de huidige boekhouding klopt",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "Waarom we oude boekingen niet bewerken",
   "whyWeDontEditBody": "Als je een fout corrigeert, laten we de oude regel staan en voegen we er een correctie naast toe, in plaats van te wijzigen wat je al had ingevoerd. Zo toont je geschiedenis altijd precies wat er is gebeurd en wanneer je het hebt gecorrigeerd — er verandert nooit iets stiekem achter je rug.",
   "lockTitle": "Ontgrendelen",
@@ -563,7 +571,6 @@
   "none": "Geen",
   "currency": "Valuta",
   "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
-  "errorSigningIdentityMismatch": "Deze herstelzin of dit keystore-bestand komt niet overeen met een ondertekeningsidentiteit in deze database.",
   "errorInvalidLedgerBackup": "Dit bestand is geen geldige Smara-back-up.",
   "errorInvalidLedgerBackupNoIdentity": "Deze back-up heeft geen ondertekeningsidentiteit - het is geen geldige Smara-back-up.",
   "errorInvalidLedgerBackupUnverified": "Deze back-up kon niet worden geverifieerd als intacte boekhouding en is daarom niet hersteld.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Deze back-up hoort bij een andere ondertekeningsidentiteit dan die op dit toestel.",
   "errorAccountNotFinancial": "Dat is geen financiële rekening.",
   "errorAccountArchived": "Die rekening is verborgen.",
   "errorAccountNotArchived": "Die rekening is niet verborgen.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "Categorie moet Inkomsten of Uitgaven zijn.",
   "validationOnlyExpenseHasMonthlyLimit": "Alleen een uitgavencategorie kan een maandlimiet hebben.",
   "validationInvalidTemplate": "Ongeldig sjabloon.",
-  "validationWrongKeystorePassphrase": "Onjuiste wachtwoordzin voor dit keystore-bestand.",
-  "validationInvalidKeystoreFile": "Dat lijkt geen geldig keystore-bestand te zijn.",
-  "validationRestorePhraseFailed": "Herstellen vanuit die herstelzin is mislukt.",
   "validationGenerateKeyFailed": "Er kon geen ondertekeningssleutel worden gegenereerd op dit toestel: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "Migratie mislukt. Probeer het opnieuw.",
   "validationChooseBackupFile": "Kies eerst een back-upbestand.",
   "validationPassphraseRequired": "Voer een wachtwoordzin in.",
   "validationPinsDoNotMatch": "De twee pincodes komen niet overeen.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Voer een geldig bedrag in.",
-  "validationConfirmWordMismatch": "Woord {n} komt niet overeen met je opgeslagen zin. Controleer het en probeer het opnieuw.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "Aankoophoeveelheid en eenheidsprijs moeten positief zijn.",
   "errorInstrumentArchived": "Een gearchiveerd instrument kan niet worden gekocht.",
   "errorNonCashCannotIncludeBrokerage": "Niet-cash verwervingen kunnen geen brokerkosten bevatten.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "Wachtwoordzin",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Nu s-a putut exporta fișierul keystore. Puteți omite acest pas.",
-  "enterPassphraseToProtect": "Introduceți o frază de acces pentru a proteja fișierul.",
   "homeTapWhenArrived": "Atingeți când știți ce a ajuns",
   "homeReturnedTo": "Returnat la {name}",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Fraza dvs. de recuperare",
-  "recoveryPhraseConfirmTitle": "Confirmați fraza",
-  "recoveryPhraseBlurb": "Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Accounting nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.",
-  "recoveryPhraseWriteDown": "Notați aceste cuvinte în ordine și păstrați-le într-un loc sigur, separat de acest dispozitiv.",
-  "iveSavedRecoveryPhrase": "Mi-am salvat fraza de recuperare",
-  "confirmPhraseBlurb": "Introduceți cuvintele solicitate din fraza pe care tocmai ați salvat-o.",
-  "wordNumber": "Cuvântul nr. {n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "Exportă fișierul keystore",
-  "keystoreExportBlurb": "Pe lângă fraza de recuperare, puteți salva un fișier keystore criptat, protejat de o frază de acces aleasă de dvs. Acest lucru este opțional - fraza de recuperare este întotdeauna suficientă pentru a restaura cheia de semnare.",
-  "keystorePassphrase": "Frază de acces",
-  "exportKeystoreFile": "Exportă fișierul keystore",
   "chooseLanguageTitle": "Alege limba ta",
   "chooseLanguageBlurb": "Totul în aplicație va fi afișat în această limbă. O poți schimba mai târziu din Setări.",
-  "chooseLanguageBip39Notice": "Fraza ta de recuperare va fi afișată în engleză. Aceasta folosește un set mic de cuvinte standard recunoscute peste tot de instrumentele de recuperare, care nu este încă disponibil în această limbă.",
   "chooseCurrencyTitle": "Alegeți moneda",
   "chooseCurrencyBlurb": "Fiecare grup de conturi (Numerar și echivalente de numerar, Pensie și pensionare etc.) folosește deocamdată această monedă unică. Puteți adăuga totuși conturi într-o monedă diferită mai târziu, creând un grup nou pentru aceasta.",
   "currencyBackfillTitle": "Alegeți o monedă pentru grupurile existente",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "Denumiți contul",
   "firstAccountBlurb": "Acesta este contul deja configurat pentru dvs. - dați-i un nume pe care îl recunoașteți, cum ar fi cel al băncii dvs. În continuare veți înregistra o Cheltuială sau o Încasare, apoi veți proteja dispozitivul cu fraza de recuperare.",
   "whatsMainAccountCalled": "Cum se numește contul dvs. principal?",
-  "restoreTitle": "Restaurați cheia de semnare",
-  "restoreBlurb": "Acest dispozitiv are registre existente, dar nicio cheie de semnare corespunzătoare. Restaurați-o din fraza de recuperare salvată sau din fișierul keystore - datele dvs. se vor verifica normal, iar nimic nu va fi resemnat sau modificat.",
-  "recoveryPhrase24": "Fraza de recuperare (toate cele 24 de cuvinte)",
-  "keystoreFile": "Fișier keystore",
-  "keystoreFileContents": "Conținutul fișierului keystore",
-  "optionalBackupFile": "Fișier de rezervă opțional",
-  "iDontHavePhrase": "Nu am fraza de recuperare sau fișierul keystore",
-  "migrationTitle": "Migrează la o cheie nouă",
-  "migrationBlurb": "Fără fraza de recuperare sau fișierul keystore, cheia de semnare a acestui dispozitiv nu poate fi recuperată. Puteți începe o cheie nouă. Înregistrările vechi rămân vizibile, dar sunt înlocuite.",
-  "iConfirmBooksValid": "Confirm că registrele actuale sunt valide",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "De ce nu edităm înregistrările vechi",
   "whyWeDontEditBody": "Când corectați o greșeală, păstrăm linia veche și adăugăm o corecție lângă ea, în loc să schimbăm ce ați introdus deja. Astfel, istoricul dvs. arată mereu exact ce s-a întâmplat și când ați corectat - nimic nu se schimbă pe ascuns.",
   "lockTitle": "Deblochează",
@@ -563,7 +571,6 @@
   "none": "Niciunul",
   "currency": "Monedă",
   "errorGeneric": "A apărut o eroare. Încercați din nou.",
-  "errorSigningIdentityMismatch": "Această frază de recuperare sau fișier keystore nu se potrivește cu nicio identitate de semnare din această bază de date.",
   "errorInvalidLedgerBackup": "Acest fișier nu este o copie de rezervă Smara validă.",
   "errorInvalidLedgerBackupNoIdentity": "Această copie de rezervă nu are identitate de semnare - nu este o copie de rezervă Smara validă.",
   "errorInvalidLedgerBackupUnverified": "Această copie de rezervă nu s-a verificat ca registre intacte, așa că nu a fost restaurată.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "Această copie de rezervă aparține unei identități de semnare diferite de cea de pe acest dispozitiv.",
   "errorAccountNotFinancial": "Acesta nu este un cont financiar.",
   "errorAccountArchived": "Acest cont este ascuns.",
   "errorAccountNotArchived": "Acest cont nu este ascuns.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "Categoria trebuie să fie Venit sau Cheltuială.",
   "validationOnlyExpenseHasMonthlyLimit": "Doar o categorie de cheltuieli poate avea o limită lunară.",
   "validationInvalidTemplate": "Șablon nevalid.",
-  "validationWrongKeystorePassphrase": "Frază de acces greșită pentru acest fișier keystore.",
-  "validationInvalidKeystoreFile": "Acesta nu pare a fi un fișier keystore valid.",
-  "validationRestorePhraseFailed": "Nu s-a putut restaura din acea frază de recuperare.",
   "validationGenerateKeyFailed": "Nu s-a putut genera o cheie de semnare pe acest dispozitiv: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "Migrarea a eșuat. Încercați din nou.",
   "validationChooseBackupFile": "Alegeți mai întâi un fișier de rezervă.",
   "validationPassphraseRequired": "Introduceți o frază de acces.",
   "validationPinsDoNotMatch": "Cele două coduri PIN nu se potrivesc.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "Introduceți o sumă validă.",
-  "validationConfirmWordMismatch": "Cuvântul {n} nu se potrivește cu fraza salvată. Verificați-l și încercați din nou.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "Cantitatea și prețul unitar de cumpărare trebuie să fie pozitive.",
   "errorInstrumentArchived": "Nu se poate cumpăra un instrument arhivat.",
   "errorNonCashCannotIncludeBrokerage": "Achizițiile non-monetare nu pot include comision de brokeraj.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "Frază de acces",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -33,67 +33,57 @@ It does not prove that every transaction was truthful when entered, and it
 does not replace your device passcode, app lock, or backups. It means the
 stored history cannot be quietly rewritten later without the app noticing.
 
-## Your recovery phrase, keystore file, and device migration bundle
+## Saving a copy of your books
 
 Every device generates its own signing key, and every transaction you
-record is signed with it. This is what makes the ledger tamper-evident —
-there is no server and no account recovery. **If you lose this device
-without having backed up your signing key, every transaction you've
-recorded becomes permanently unverifiable.** There is no way for anyone,
-including the app's author, to recover it for you.
+record is signed with it. The private key **never leaves this phone** —
+there is no recovery phrase, keystore file, or cloud account. **If you
+lose this phone without a saved copy of your books, those books cannot
+be recovered.** A Books Copy is the only way to move books to another
+phone or recover after loss.
 
-None of the following is required to keep using the app — recording
-transactions, navigating anywhere, and reopening the app all work
-immediately, with nothing to complete first. You get three ways to
-protect your key, all reachable any time from Settings → Recovery &
-identity:
+From Settings you can:
 
-- **Recovery phrase** — a 24-word phrase you write down on paper. This
-  alone is always enough to restore your signing key on a new device
-  (see [Restoring on a new device or after a reinstall](#restoring-on-a-new-device-or-after-a-reinstall)
-  below), but not your books — you'd still need a books backup (see
-  Settings below) or the device's own data to go with it.
-- **Keystore file** — a passphrase-encrypted file containing just the key.
-  Also identity-only, same as the phrase, just file-based instead of
-  words on paper.
-- **Device migration bundle** — a single passphrase-encrypted file
-  containing your books *and* your signing key together. This is the
-  fastest way to move to a new device: importing it there restores
-  everything in one step, with nothing else to restore afterward. Because
-  it carries both together, anyone who obtained this file *and* its
-  passphrase could both read your books and sign new entries as you — a
-  larger exposure than the recovery phrase or a books-only backup alone.
-  Keep the passphrase somewhere separate from the file, such as a
-  password manager.
+- **Save a copy of my books** — writes a passphrase-encrypted file of
+  your books (and the books' settings such as reference rates) to a
+  place you choose. It does **not** include your signing key, language,
+  or unlock settings. There is no recovery if you forget the passphrase.
+- **Restore from a copy** — replaces the books on this phone with the
+  copy. It does not merge. You will see what will be replaced (entry and
+  master-data counts) and can **Save a copy first**. After restore, this
+  phone continues under its own new key. Entries you make later on the
+  other device will not appear here; bringing them over means saving a
+  new copy there and restoring it here (which replaces again).
+- **Device history** — plain-language list of Continuations on this
+  phone (for example when books continued after a keychain reset or a
+  restore).
+- **Copy reminder** — optional gentle reminders by days or by number of
+  new entries, with snooze.
 
-If you ever lose all of these, the app still has an escape hatch (see
-[True key loss](#true-key-loss) below), but it comes with a real
-trade-off: everything recorded before that point can no longer be proven
-untampered, only preserved as a read-only historical record.
+Older ledger-backup and device-migration-bundle files from earlier app
+versions can still be restored as a Books Copy; any private key inside a
+legacy bundle is discarded.
 
 ## Onboarding
 
 On first launch, the app asks you to choose:
 
 - **New setup** — starting fresh on this device.
-- **Import from backup** — moving from another device, using a device
-  migration bundle you exported there (see Settings below).
+- **Restore from a copy** — bring in books from a saved copy (or a
+  legacy backup / migration-bundle file).
 
 Choosing **New setup** walks you through:
 
 1. **Language** — pick the app's language from a list of every language it
    supports, each shown in its own script. Your device's language is
    pre-highlighted; confirming it counts as your choice. You must pick one
-   to continue — there's no way to skip this screen. If your chosen
-   language doesn't yet have a security-standard word list for the
-   recovery phrase (most languages don't), you'll see a plain notice here
-   saying the phrase will be in English, and why. You can always change
+   to continue — there's no way to skip this screen. You can always change
    the language later in Settings.
 2. **Currency** — pick your base currency. The list starts pre-filled with
    a sensible guess based on the language you just chose (editable, not
    enforced) and becomes the currency of the starter account groups (Cash
    & cash equivalents, Credit & short-term debt, etc.) created for you,
-   and generates your device's signing key automatically in the
+   and generates this phone's signing key automatically in the
    background.
 3. **Name your main account** — a starter account is created for you;
    give it a name you recognize, like your bank.
@@ -102,13 +92,20 @@ Choosing **New setup** walks you through:
 
 That entry is a real, permanently signed transaction from the moment it
 posts — not a demo. Once it's recorded, you land in the app with nothing
-further to complete — no forced screen follows. Your recovery phrase,
-keystore file, and device migration bundle are all optional and waiting
-for you in Settings whenever you want them.
+further to complete.
 
-Choosing **Import from backup** instead skips all of the above: pick your
-device migration bundle file and enter its passphrase, and you land
-directly in your restored books, ready to record a new entry immediately.
+Choosing **Restore from a copy** instead skips all of the above: pick
+your copy file and enter its passphrase, and you land in your restored
+books after continuing under this phone's own new key, ready to record a
+new entry.
+
+### Continuing on a new phone
+
+If this phone has books but no matching signing key (for example after a
+keychain reset, or after restoring a copy), you see **Continue my books
+on this phone** or **Restore from a copy**. Continuing keeps your
+existing entries and signs new ones with a new this-phone key. Device
+history records the Continuation.
 
 ## Setting up your accounts
 
@@ -127,36 +124,20 @@ ever appears once.
 
 ## Restoring on a new device or after a reinstall
 
-The simplest way to move to a new device: export a **device migration
-bundle** from Settings on your old device beforehand, then choose
-**Import from backup** at startup on the new one (see
-[Onboarding](#onboarding) above). One file, one passphrase, and you're
-immediately back to recording entries — no separate steps. Importing
-**replaces** whatever is on the new device with the bundle's books and
-key; it never merges the two.
+The simplest way to move to a new phone: **Save a copy of my books** from
+Settings on your old phone, then choose **Restore from a copy** at
+startup on the new one (see [Onboarding](#onboarding) above). One file,
+one passphrase. Restoring **replaces** whatever is on the new phone with
+the copy's books; it never merges. This phone then continues under its
+own new signing key. Entries you make later on the old phone will not
+appear here — save a new copy there and restore it here to bring them
+over (which replaces again).
 
-If you don't have a device migration bundle — say, you already restored
-your books some other way (a Save backup/Restore backup file, or the
-device's own backup mechanism) and the app now has your existing books
-but no matching local signing key — it shows a **Restore signing key**
-screen instead. Choose either:
-
-- **Recovery phrase** — paste all 24 words.
-- **Keystore file** — paste the file's contents and the passphrase you set
-  when exporting it.
-
-Restoring only re-derives and matches your existing key — it never
-re-signs or alters any entry.
-
-### True key loss
-
-If you don't have your recovery phrase or keystore file, tap "I don't have
-my recovery phrase or keystore file" on the restore screen. You'll review
-every existing entry and explicitly confirm the books look correct, then
-the app generates a brand-new key and re-signs everything under it. This
-re-establishes trust **going forward only** — it does not retroactively
-prove earlier entries were never tampered with. The original entries are
-kept, unchanged, as a read-only historical record.
+If this phone already has books but no matching signing key (for example
+after a keychain reset), you see **Continue my books on this phone** or
+**Restore from a copy**. Continuing keeps your existing entries and signs
+new ones with a new this-phone key. See Device history for a plain-language
+list of Continuations.
 
 ## Home
 
@@ -249,6 +230,18 @@ category to bring it back into the picker again — hiding isn't a
 one-way trip. A starter set already covers common household spending,
 including Groceries, Rent/Mortgage, Utilities, Transport, Food out,
 Phone, and Health.
+
+Shared books can set a **default language** for category names, plus
+optional translations. Each device shows its language's translation when
+one exists, otherwise the default name. **Translate with AI** hands only
+that category name to your chosen research tool (nothing else from the
+books). Categories with the same name and type in any language merge
+automatically; when a translation matches another category, the app may
+suggest a merge. You can also **Merge categories** by hand. Merged
+categories show as one in lists and totals; past entries keep their
+original links so signatures stay valid. A device that joins existing
+books skips the starter category set and uses the categories already in
+those books.
 
 ### Monthly limits
 
@@ -505,8 +498,8 @@ account's name; for an opening balance, "Opening balance"), whether it
 was spent or received, the amount, the currency, and whether the entry's
 signature still verifies. A split transaction exports one row per
 category, each with that category's own share of the total, not the
-whole amount repeated. The export never includes your recovery phrase,
-keystore, or any other signing-key material — only the same
+whole amount repeated. The export never includes your signing key or any
+other private-key material — only the same
 date/description/category/amount data the Register itself already shows
 you. The verification column is useful when handing records to an
 accountant or reviewing old exports because it tells the reader whether
@@ -540,9 +533,8 @@ period-over-period read on where money went.
   - **Errors and skipped rows**: validation messages, the reasons a bank
     statement row was skipped during import, and other in-app messages
     follow your language too.
-  - **What still stays in English**: your 24-word recovery phrase is
-    always English words, by design — do not expect or attempt a
-    translated recovery phrase. Ledger amounts follow the *currency's*
+  - **Currency formatting**: ledger amounts follow each amount's own
+    currency conventions (grouping, decimals), not the app language.
     own formatting convention, not your chosen language (a rupee amount
     formats the same way regardless of your language setting). Payee
     names, memos, and descriptions you've already typed are kept exactly
@@ -564,40 +556,52 @@ period-over-period read on where money went.
   used to fill in or validate the amount you actually enter.
 - **Rate provider**: which predefined provider to use when the lookup
   above is enabled.
-- **Save backup**: writes an encrypted copy of your books to a location
-  you choose, protected by a passphrase you pick. This backs up your
-  *books* (accounts, categories, entries) — it's separate from your
-  recovery phrase or keystore file, which back up your *signing key*.
-  There's no way to recover the backup if you forget its passphrase.
-- **Restore backup**: pick a backup file and its passphrase to restore
-  from it. Restoring **replaces** everything currently in the app — it
-  never merges with what's already there — after an explicit
-  confirmation naming what will be replaced. A backup restores onto a
-  device with no identity of its own (a fresh install) or onto the same
-  device it came from; restoring a backup that belongs to a different
-  signing identity than the one already set up on this device is
-  rejected, since that would combine two different people's books rather
-  than restore your own. Right after a successful restore, the app closes
-  so you can reopen it and continue — the restored books are immediately
-  readable and fully verified, but recording a new entry still needs the
-  matching signing key restored separately, via recovery phrase or
-  keystore.
-- **Recovery & identity** — three optional, independent ways to protect
-  your signing key, none of them required to keep using the app (see
-  [Your recovery phrase, keystore file, and device migration bundle](#your-recovery-phrase-keystore-file-and-device-migration-bundle)
-  above):
-  - **View recovery phrase**: shows the 24-word phrase again, whenever you
-    want. An identity restored from a keystore file, a recovery phrase, or
-    a device migration bundle instead of generated fresh on this device
-    has no phrase of its own to show here.
-  - **Export keystore file**: writes a passphrase-encrypted file containing
-    just your signing key.
-  - **Export device migration bundle**: writes a single passphrase-encrypted
-    file containing both your books and your signing key together, for
-    moving to a new device in one step (see
-    [Restoring on a new device or after a reinstall](#restoring-on-a-new-device-or-after-a-reinstall)
-    above). Because it carries both together, protect its passphrase at
-    least as carefully as the file itself.
+- **Save a copy of my books**: writes an encrypted copy of your books to a
+  location you choose, protected by a passphrase you pick. This backs up
+  your *books* (accounts, categories, entries, and books settings) — never
+  your signing key, language, or unlock settings. There's no way to
+  recover the copy if you forget its passphrase.
+- **Restore from a copy**: pick a copy file and its passphrase. Restoring
+  **replaces** the books and books settings on this phone — it never
+  merges — after an explicit confirmation that lists what will be replaced
+  and offers **Save a copy first**. Language and App Lock stay on this
+  phone. After a successful restore, close and reopen the app; this phone
+  continues under its own new key. Entries made later on the other device
+  do not appear here.
+- **Device history**: Continuations on this phone in plain words.
+- **Copy reminder**: optional reminders by days or by new entries.
+
+- **Books on this device**: several fully separate books sets on one
+  phone or computer (each with its own signing key, history, Linked
+  devices, and Books Copies). Switch which set is open; Home and Register
+  then show only that set. Creating new books starts a fresh set; removing
+  a set deletes it from this device after confirmation.
+- **Linked devices**: share the *same* books across phones and computers
+  that are members of that set. Each device keeps its own signing key.
+  Devices catch up when both have Smara open on the **same Wi-Fi** — nothing
+  goes to the internet for discovery or sync, and there is no cloud sync
+  service. Tap **Sync now** to catch up immediately when a peer is nearby.
+  First open of Linked devices explains local-network permission before the
+  system prompt: Smara only needs to find your other devices on this Wi-Fi.
+  - **Add a device**: show a QR code in person on the same Wi-Fi (public
+    keys and device certificates only — never the private key). Or restore
+    a Books Copy on the new device, then send a join request that an
+    already-linked device approves with one tap.
+  - **Owner / Member**: an Owner adds and removes devices, may erase a
+    removed device, and can make others Owners. A Member records and Fixes
+    entries and manages categories. If the last Owner is gone, a Member can
+    claim ownership; it takes effect after 7 days unless an Owner objects.
+  - **Remove and erase**: a removed device gets nothing new from that
+    moment; its earlier records stay. Erase is honest — **Erase pending**
+    until that device is on the same Wi-Fi again, then **Erased on \<date\>**.
+    For a lost phone, use Apple's or Google's Find my device / Erase.
+  - **Notices** (added/removed device, unverified records, competing Fixes,
+    erase status) appear on Home and in Device history at the next sync —
+    there is no push server.
+  - Records that fail verification are never accepted ("Not accepted:
+    couldn't be verified"). Competing Fixes keep the earlier Fix; the later
+    one is cancelled by a new record and both people are asked to check.
+
 - **Require unlock to open the app**: off by default. Turning it on asks
   you to set a PIN (at least 4 characters); from then on, opening the app
   or returning to it after the idle timeout requires that PIN. Turning it

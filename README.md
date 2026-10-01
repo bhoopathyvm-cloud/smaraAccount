@@ -20,8 +20,15 @@ others. It comes with **no liability and no support** from the author.
 The ledger is deliberately designed so entries cannot be manipulated manually — this is the whole point of the project, not an afterthought.
 
 - Every entry is signed with a key generated and stored on the user's own device, and chained to the entry before it.
-- Users can optionally back this key up from Settings — as a 24-word recovery phrase, a passphrase-encrypted keystore file, or a device migration bundle that carries books and key together for moving to a new device. The app never transmits it anywhere.
-- **If the signing key is lost with no backup, it cannot be recovered.** The app can re-sign the existing books under a brand-new key after the user reviews and confirms them, but trust restarts from that point: earlier entries are kept only as a read-only historical record that can no longer be proven untampered.
+- The private signing key never leaves the device — there is no recovery
+  phrase or keystore export. Users back up **books** with a passphrase-
+  protected Books Copy from Settings (books and books settings only —
+  never the key, language, or App Lock settings).
+- **If the device is lost without a saved Books Copy, the books cannot be
+  recovered.** If books are present without a matching key (for example
+  after a keychain reset), Continuation continues them under a new
+  this-device key; earlier entries keep verifying under their original
+  identities.
 
 This tradeoff is intentional: without a recoverable key, there's no backdoor for editing history, which is what makes the transaction log genuinely immutable rather than immutable-in-name-only.
 

@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "تعذر تصدير ملف مخزن المفاتيح. يمكنك تخطي هذه الخطوة.",
-  "enterPassphraseToProtect": "أدخل عبارة مرور لحماية الملف.",
   "homeTapWhenArrived": "اضغط عندما تعرف ما وصل",
   "homeReturnedTo": "أُعيد إلى {name}",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "عبارة الاسترداد الخاصة بك",
-  "recoveryPhraseConfirmTitle": "أكّد عبارتك",
-  "recoveryPhraseBlurb": "هذه الكلمات الـ24 هي الطريقة الوحيدة لاسترداد سجل معاملاتك في حال فقدان هذا الجهاز أو إعادة ضبطه أو استبداله. سمارا للحسابات لا تملك خادماً ولا يمكنها استرداد هذه الكلمات نيابة عنك.\n\nإذا فقدت هذا الجهاز وهذه العبارة معاً، تصبح كل معاملة سجّلتها غير قابلة للتحقق بشكل دائم.",
-  "recoveryPhraseWriteDown": "دوّن هذه الكلمات بالترتيب واحفظها في مكان آمن ومنفصل عن هذا الجهاز.",
-  "iveSavedRecoveryPhrase": "لقد حفظت عبارة الاسترداد الخاصة بي",
-  "confirmPhraseBlurb": "أدخل الكلمات المطلوبة من العبارة التي حفظتها للتو.",
-  "wordNumber": "الكلمة رقم {n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "تصدير ملف مخزن المفاتيح",
-  "keystoreExportBlurb": "بالإضافة إلى عبارة الاسترداد، يمكنك حفظ ملف مخزن مفاتيح مشفر محمي بعبارة مرور تختارها. هذا اختياري - عبارة الاسترداد وحدها كافية دائماً لاستعادة مفتاح التوقيع الخاص بك.",
-  "keystorePassphrase": "عبارة المرور",
-  "exportKeystoreFile": "تصدير ملف مخزن المفاتيح",
   "chooseLanguageTitle": "اختر لغتك",
   "chooseLanguageBlurb": "سيظهر كل شيء في التطبيق بهذه اللغة. يمكنك تغييرها لاحقًا من الإعدادات.",
-  "chooseLanguageBip39Notice": "سيتم عرض عبارة الاسترداد الخاصة بك باللغة الإنجليزية. فهي تستخدم مجموعة صغيرة من الكلمات القياسية التي تتعرف عليها أدوات الاسترداد في كل مكان، وهي غير متوفرة بعد بهذه اللغة.",
   "chooseCurrencyTitle": "اختر عملتك",
   "chooseCurrencyBlurb": "كل مجموعة حسابات (النقد وما في حكمه، التقاعد والمعاش، إلخ) تستخدم هذه العملة الواحدة حالياً. يمكنك لاحقاً إضافة حسابات بعملة مختلفة عبر إنشاء مجموعة جديدة لها.",
   "currencyBackfillTitle": "اختر عملة للمجموعات الحالية",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "سمِّ حسابك",
   "firstAccountBlurb": "هذا هو الحساب المُعدّ لك مسبقاً - أعطه اسماً تتعرف عليه، مثل اسم بنكك. ستُسجّل عملية صرف أو استلام واحدة تالياً، ثم تحمي الجهاز بعبارة الاسترداد الخاصة بك.",
   "whatsMainAccountCalled": "ما اسم حسابك الرئيسي؟",
-  "restoreTitle": "استعادة مفتاح التوقيع",
-  "restoreBlurb": "يحتوي هذا الجهاز على دفاتر موجودة، لكن بلا مفتاح توقيع مطابق. استعده من عبارة الاسترداد أو ملف مخزن المفاتيح المحفوظين لديك - ستتحقق بياناتك بشكل طبيعي، ولن يُعاد توقيع أو تعديل أي شيء.",
-  "recoveryPhrase24": "عبارة الاسترداد (الكلمات الـ24 كاملة)",
-  "keystoreFile": "ملف مخزن المفاتيح",
-  "keystoreFileContents": "محتويات ملف مخزن المفاتيح",
-  "optionalBackupFile": "ملف نسخة احتياطية اختياري",
-  "iDontHavePhrase": "ليس لدي عبارة الاسترداد أو ملف مخزن المفاتيح",
-  "migrationTitle": "الترحيل إلى مفتاح جديد",
-  "migrationBlurb": "بدون عبارة الاسترداد أو ملف مخزن المفاتيح، لا يمكن استعادة مفتاح التوقيع الخاص بهذا الجهاز. يمكنك بدء مفتاح جديد. تبقى القيود القديمة مرئية لكن تصبح مُستبدلة.",
-  "iConfirmBooksValid": "أؤكد أن الدفاتر الحالية صحيحة",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "لماذا لا نُعدّل القيود القديمة",
   "whyWeDontEditBody": "عندما تصحح خطأً، نُبقي على السطر القديم ونضيف تصحيحاً بجانبه بدلاً من تغيير ما أدخلته بالفعل. بهذه الطريقة يُظهر سجلك دائماً بالضبط ما حدث ومتى صححته — لا شيء يتغير خفية من ورائك.",
   "lockTitle": "فتح القفل",
@@ -563,7 +571,6 @@
   "none": "لا شيء",
   "currency": "العملة",
   "errorGeneric": "حدث خطأ. حاول مرة أخرى.",
-  "errorSigningIdentityMismatch": "عبارة الاسترداد أو ملف مخزن المفاتيح هذا لا يطابق أي هوية توقيع في قاعدة البيانات هذه.",
   "errorInvalidLedgerBackup": "هذا الملف ليس نسخة احتياطية صالحة من سمارا.",
   "errorInvalidLedgerBackupNoIdentity": "هذه النسخة الاحتياطية بلا هوية توقيع - وهي ليست نسخة احتياطية صالحة من سمارا.",
   "errorInvalidLedgerBackupUnverified": "لم يتم التحقق من هذه النسخة الاحتياطية كدفاتر سليمة، لذا لم تُستعد.",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "تنتمي هذه النسخة الاحتياطية إلى هوية توقيع مختلفة عن الموجودة على هذا الجهاز.",
   "errorAccountNotFinancial": "هذا ليس حساباً مالياً.",
   "errorAccountArchived": "هذا الحساب مخفي.",
   "errorAccountNotArchived": "هذا الحساب غير مخفي.",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "يجب أن تكون الفئة دخلاً أو مصروفاً.",
   "validationOnlyExpenseHasMonthlyLimit": "يمكن فقط لفئة المصروفات أن يكون لها حد شهري.",
   "validationInvalidTemplate": "قالب غير صالح.",
-  "validationWrongKeystorePassphrase": "عبارة مرور خاطئة لملف مخزن المفاتيح هذا.",
-  "validationInvalidKeystoreFile": "هذا لا يبدو كملف مخزن مفاتيح صالح.",
-  "validationRestorePhraseFailed": "تعذر الاستعادة من عبارة الاسترداد تلك.",
   "validationGenerateKeyFailed": "تعذر توليد مفتاح توقيع على هذا الجهاز: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "فشل الترحيل. حاول مرة أخرى من فضلك.",
   "validationChooseBackupFile": "اختر ملف نسخة احتياطية أولاً.",
   "validationPassphraseRequired": "أدخل عبارة مرور.",
   "validationPinsDoNotMatch": "الرمزان غير متطابقين.",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "أدخل مبلغاً صالحاً.",
-  "validationConfirmWordMismatch": "الكلمة {n} لا تطابق عبارتك المحفوظة. تحقق منها وحاول مرة أخرى.",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "يجب أن تكون كمية الشراء وسعر الوحدة موجبين.",
   "errorInstrumentArchived": "لا يمكن شراء أداة مالية مخفية.",
   "errorNonCashCannotIncludeBrokerage": "عمليات الاقتناء غير النقدية لا يمكن أن تتضمن عمولة وساطة.",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "عبارة المرور",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/account.dart';
+import '../../../../domain/shared_categories/category_merge.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
@@ -96,7 +97,31 @@ class CategoryManagementView extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n.renameCategory),
-        content: AppTextField(controller: controller, autofocus: true),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AppTextField(controller: controller, autofocus: true),
+            const SizedBox(height: AppSpacing.medium),
+            TextButton(
+              onPressed: () async {
+                final result = await viewModel.translateWithAi(
+                  controller.text.trim().isEmpty
+                      ? category.name
+                      : controller.text.trim(),
+                );
+                if (!context.mounted) return;
+                final message = result == ResearchLaunchResult.opened
+                    ? l10n.openedFavouriteResearchTool
+                    : l10n.translateCategoryWithAi;
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(message)));
+              },
+              child: Text(l10n.translateCategoryWithAi),
+            ),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -116,6 +141,159 @@ class CategoryManagementView extends StatelessWidget {
             child: Text(l10n.actionSave),
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _showTranslationDialog(
+    BuildContext context,
+    Account category,
+  ) async {
+    final l10n = l10nOf(context);
+    final localeController = TextEditingController();
+    final nameController = TextEditingController();
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.addCategoryTranslation),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: localeController,
+              decoration: InputDecoration(
+                labelText: l10n.categoryTranslationLocale,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.medium),
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: l10n.categoryTranslationName,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(l10n.actionCancel),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final locale = localeController.text.trim();
+              final name = nameController.text.trim();
+              if (locale.isEmpty || name.isEmpty) return;
+              final suggestion = await viewModel.setTranslation(
+                categoryId: category.id,
+                locale: locale,
+                name: name,
+              );
+              if (!dialogContext.mounted) return;
+              Navigator.of(dialogContext).pop();
+              if (suggestion != null && context.mounted) {
+                await _confirmSuggestedMerge(context, suggestion);
+              }
+            },
+            child: Text(l10n.actionSave),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _confirmSuggestedMerge(
+    BuildContext context,
+    CategoryMergeCandidate suggestion,
+  ) async {
+    final l10n = l10nOf(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.mergeCategories),
+        content: Text(l10n.mergeCategoriesSuggested),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.actionCancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(l10n.mergeCategories),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await viewModel.mergeCategories(
+        survivorCategoryId: suggestion.survivorId,
+        absorbedCategoryId: suggestion.absorbedId,
+      );
+    }
+  }
+
+  Future<void> _showMergeDialog(BuildContext context) async {
+    final l10n = l10nOf(context);
+    final categories = viewModel.categories.where((c) => !c.archived).toList();
+    if (categories.length < 2) return;
+    Account? survivor = categories.first;
+    Account? absorbed = categories[1];
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: Text(l10n.mergeCategories),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DropdownButtonFormField<Account>(
+                initialValue: survivor,
+                decoration: InputDecoration(labelText: l10n.category),
+                items: [
+                  for (final c in categories)
+                    DropdownMenuItem(
+                      value: c,
+                      child: Text(viewModel.displayNameFor(c)),
+                    ),
+                ],
+                onChanged: (value) => setDialogState(() => survivor = value),
+              ),
+              const SizedBox(height: AppSpacing.medium),
+              DropdownButtonFormField<Account>(
+                initialValue: absorbed,
+                decoration: InputDecoration(labelText: l10n.category),
+                items: [
+                  for (final c in categories)
+                    DropdownMenuItem(
+                      value: c,
+                      child: Text(viewModel.displayNameFor(c)),
+                    ),
+                ],
+                onChanged: (value) => setDialogState(() => absorbed = value),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(l10n.actionCancel),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final a = survivor;
+                final b = absorbed;
+                if (a == null || b == null || a.id == b.id) return;
+                if (a.type != b.type) return;
+                await viewModel.mergeCategories(
+                  survivorCategoryId: a.id,
+                  absorbedCategoryId: b.id,
+                );
+                if (dialogContext.mounted) Navigator.of(dialogContext).pop();
+              },
+              child: Text(l10n.mergeCategories),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -211,11 +389,29 @@ class CategoryManagementView extends StatelessWidget {
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'categories-fab',
-        onPressed: () => _showAddDialog(context),
-        backgroundColor: AppColors.primary,
-        child: const Icon(TablerIcons.plus, color: AppColors.cardBackground),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          FloatingActionButton.extended(
+            heroTag: 'categories-merge-fab',
+            onPressed: () => _showMergeDialog(context),
+            backgroundColor: AppColors.cardBackground,
+            foregroundColor: AppColors.primary,
+            label: Text(l10nOf(context).mergeCategories),
+            icon: const Icon(TablerIcons.gitMerge),
+          ),
+          const SizedBox(height: AppSpacing.medium),
+          FloatingActionButton(
+            heroTag: 'categories-fab',
+            onPressed: () => _showAddDialog(context),
+            backgroundColor: AppColors.primary,
+            child: const Icon(
+              TablerIcons.plus,
+              color: AppColors.cardBackground,
+            ),
+          ),
+        ],
       ),
       body: ListenableBuilder(
         listenable: viewModel,
@@ -233,7 +429,7 @@ class CategoryManagementView extends StatelessWidget {
                 child: ListTile(
                   leading: Icon(TablerIcons.tag, color: AppColors.textPrimary),
                   title: Text(
-                    localizeStoredName(l10n, category.name),
+                    viewModel.displayNameFor(category),
                     style: AppTypography.cardTitle,
                   ),
                   subtitle: Column(
@@ -265,6 +461,13 @@ class CategoryManagementView extends StatelessWidget {
                       : Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            IconButton(
+                              icon: const Icon(TablerIcons.language),
+                              tooltip: l10n.addCategoryTranslation,
+                              color: AppColors.textSecondary,
+                              onPressed: () =>
+                                  _showTranslationDialog(context, category),
+                            ),
                             if (category.type == AccountType.expense)
                               IconButton(
                                 icon: const Icon(TablerIcons.target),

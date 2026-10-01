@@ -9,7 +9,7 @@ void main() {
       MaterialApp(
         home: SetupChoiceView(
           onNewSetup: () => newSetupTapped = true,
-          onImportFromBackup: () {},
+          onRestoreFromCopy: () {},
         ),
       ),
     );
@@ -20,22 +20,22 @@ void main() {
     expect(newSetupTapped, isTrue);
   });
 
-  testWidgets('tapping Import From Backup invokes onImportFromBackup', (
+  testWidgets('tapping Restore from a copy invokes onRestoreFromCopy', (
     tester,
   ) async {
-    var importTapped = false;
+    var restoreTapped = false;
     await tester.pumpWidget(
       MaterialApp(
         home: SetupChoiceView(
           onNewSetup: () {},
-          onImportFromBackup: () => importTapped = true,
+          onRestoreFromCopy: () => restoreTapped = true,
         ),
       ),
     );
 
-    await tester.tap(find.text('Import from backup'));
+    await tester.tap(find.text('Restore from a copy'));
     await tester.pump();
 
-    expect(importTapped, isTrue);
+    expect(restoreTapped, isTrue);
   });
 }

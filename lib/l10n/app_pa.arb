@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਨਹੀਂ ਹੋ ਸਕੀ। ਤੁਸੀਂ ਇਹ ਕਦਮ ਛੱਡ ਸਕਦੇ ਹੋ।",
-  "enterPassphraseToProtect": "ਫਾਈਲ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ ਇੱਕ ਪਾਸਫਰੇਜ਼ ਦਰਜ ਕਰੋ।",
   "homeTapWhenArrived": "ਜਦੋਂ ਪਤਾ ਲੱਗੇ ਕਿ ਕੀ ਪਹੁੰਚਿਆ ਤਾਂ ਟੈਪ ਕਰੋ",
   "homeReturnedTo": "{name} ਨੂੰ ਵਾਪਸ ਕੀਤਾ ਗਿਆ",
   "@homeReturnedTo": {
@@ -403,27 +401,8 @@
       }
     }
   },
-  "recoveryPhraseTitle": "ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼",
-  "recoveryPhraseConfirmTitle": "ਆਪਣੇ ਵਾਕੰਸ਼ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
-  "recoveryPhraseBlurb": "ਇਹ 24 ਸ਼ਬਦ ਹੀ ਇਕਲੌਤਾ ਤਰੀਕਾ ਹਨ ਜਿਸ ਨਾਲ ਤੁਸੀਂ ਆਪਣੇ ਲੈਣ-ਦੇਣ ਦਾ ਇਤਿਹਾਸ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ ਹੋ ਜੇਕਰ ਇਹ ਡਿਵਾਈਸ ਗੁਆਚ ਜਾਂਦੀ, ਰੀਸੈੱਟ ਹੁੰਦੀ, ਜਾਂ ਬਦਲੀ ਜਾਂਦੀ ਹੈ। ਸਮਾਰਾ ਖਾਤਾ ਦਾ ਕੋਈ ਸਰਵਰ ਨਹੀਂ ਹੈ ਅਤੇ ਇਹ ਤੁਹਾਡੇ ਲਈ ਉਹਨਾਂ ਨੂੰ ਮੁੜ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕਰ ਸਕਦਾ।\n\nਜੇਕਰ ਤੁਸੀਂ ਇਹ ਡਿਵਾਈਸ ਅਤੇ ਇਹ ਵਾਕੰਸ਼ ਇਕੱਠੇ ਗੁਆ ਦਿੰਦੇ ਹੋ, ਤਾਂ ਤੁਹਾਡੇ ਦੁਆਰਾ ਰਿਕਾਰਡ ਕੀਤਾ ਹਰ ਲੈਣ-ਦੇਣ ਸਥਾਈ ਤੌਰ ਉੱਤੇ ਅਪ੍ਰਮਾਣਿਤ ਹੋ ਜਾਂਦਾ ਹੈ।",
-  "recoveryPhraseWriteDown": "ਇਹ ਸ਼ਬਦ ਕ੍ਰਮ ਵਿੱਚ ਲਿਖੋ ਅਤੇ ਇਹਨਾਂ ਨੂੰ ਇਸ ਡਿਵਾਈਸ ਤੋਂ ਵੱਖਰੀ, ਸੁਰੱਖਿਅਤ ਥਾਂ ਉੱਤੇ ਰੱਖੋ।",
-  "iveSavedRecoveryPhrase": "ਮੈਂ ਆਪਣਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਸੰਭਾਲ ਲਿਆ ਹੈ",
-  "confirmPhraseBlurb": "ਤੁਹਾਡੇ ਵੱਲੋਂ ਹੁਣੇ ਸੰਭਾਲੇ ਵਾਕੰਸ਼ ਵਿੱਚੋਂ ਮੰਗੇ ਗਏ ਸ਼ਬਦ ਦਰਜ ਕਰੋ।",
-  "wordNumber": "ਸ਼ਬਦ #{n}",
-  "@wordNumber": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
-  "keystoreExportTitle": "ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਕਰੋ",
-  "keystoreExportBlurb": "ਆਪਣੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਦੇ ਨਾਲ, ਤੁਸੀਂ ਆਪਣੀ ਪਸੰਦ ਦੇ ਪਾਸਫਰੇਜ਼ ਨਾਲ ਸੁਰੱਖਿਅਤ ਇੱਕ ਇਨਕ੍ਰਿਪਟਡ ਕੀਸਟੋਰ ਫਾਈਲ ਵੀ ਸੰਭਾਲ ਸਕਦੇ ਹੋ। ਇਹ ਵਿਕਲਪਿਕ ਹੈ - ਇਕੱਲਾ ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਹੀ ਹਮੇਸ਼ਾ ਤੁਹਾਡੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਬਹਾਲ ਕਰਨ ਲਈ ਕਾਫ਼ੀ ਹੈ।",
-  "keystorePassphrase": "ਪਾਸਫਰੇਜ਼",
-  "exportKeystoreFile": "ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਕਰੋ",
   "chooseLanguageTitle": "ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ",
   "chooseLanguageBlurb": "ਐਪ ਵਿੱਚ ਸਭ ਕੁਝ ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਦਿਖੇਗਾ। ਤੁਸੀਂ ਬਾਅਦ ਵਿੱਚ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇਸਨੂੰ ਬਦਲ ਸਕਦੇ ਹੋ।",
-  "chooseLanguageBip39Notice": "ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ ਦਿਖਾਇਆ ਜਾਵੇਗਾ। ਇਹ ਹਰ ਥਾਂ ਰਿਕਵਰੀ ਟੂਲਾਂ ਦੁਆਰਾ ਪਛਾਣੇ ਜਾਂਦੇ ਮਿਆਰੀ ਸ਼ਬਦਾਂ ਦੇ ਇੱਕ ਛੋਟੇ ਸਮੂਹ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ, ਜੋ ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਅਜੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।",
   "chooseCurrencyTitle": "ਆਪਣੀ ਮੁਦਰਾ ਚੁਣੋ",
   "chooseCurrencyBlurb": "ਹਰ ਖਾਤਾ ਗਰੁੱਪ (ਨਕਦ ਅਤੇ ਨਕਦ ਸਮਾਨ, ਪੈਨਸ਼ਨ ਅਤੇ ਰਿਟਾਇਰਮੈਂਟ, ਆਦਿ) ਹੁਣ ਲਈ ਇਹ ਇੱਕੋ ਮੁਦਰਾ ਵਰਤਦਾ ਹੈ। ਤੁਸੀਂ ਬਾਅਦ ਵਿੱਚ ਇਸ ਲਈ ਇੱਕ ਨਵਾਂ ਗਰੁੱਪ ਬਣਾ ਕੇ ਵੱਖਰੀ ਮੁਦਰਾ ਵਿੱਚ ਖਾਤੇ ਜੋੜ ਸਕਦੇ ਹੋ।",
   "currencyBackfillTitle": "ਮੌਜੂਦਾ ਗਰੁੱਪਾਂ ਲਈ ਇੱਕ ਮੁਦਰਾ ਚੁਣੋ",
@@ -431,16 +410,45 @@
   "firstAccountTitle": "ਆਪਣੇ ਖਾਤੇ ਦਾ ਨਾਮ ਦਿਓ",
   "firstAccountBlurb": "ਇਹ ਖਾਤਾ ਪਹਿਲਾਂ ਹੀ ਤੁਹਾਡੇ ਲਈ ਸੈੱਟ ਕੀਤਾ ਗਿਆ ਹੈ - ਇਸਨੂੰ ਇੱਕ ਜਾਣਿਆ-ਪਛਾਣਿਆ ਨਾਮ ਦਿਓ, ਜਿਵੇਂ ਤੁਹਾਡਾ ਬੈਂਕ। ਤੁਸੀਂ ਅੱਗੇ ਇੱਕ ਖਰਚ ਜਾਂ ਪ੍ਰਾਪਤੀ ਰਿਕਾਰਡ ਕਰੋਗੇ, ਫਿਰ ਆਪਣੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਨਾਲ ਡਿਵਾਈਸ ਦੀ ਸੁਰੱਖਿਆ ਕਰੋਗੇ।",
   "whatsMainAccountCalled": "ਤੁਹਾਡੇ ਮੁੱਖ ਖਾਤੇ ਦਾ ਨਾਮ ਕੀ ਹੈ?",
-  "restoreTitle": "ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਬਹਾਲ ਕਰੋ",
-  "restoreBlurb": "ਇਸ ਡਿਵਾਈਸ ਵਿੱਚ ਪਹਿਲਾਂ ਤੋਂ ਖਾਤੇ ਹਨ, ਪਰ ਕੋਈ ਮੇਲ ਖਾਂਦੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਨਹੀਂ। ਇਸਨੂੰ ਆਪਣੇ ਸੰਭਾਲੇ ਹੋਏ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਤੋਂ ਬਹਾਲ ਕਰੋ - ਤੁਹਾਡਾ ਡਾਟਾ ਆਮ ਤੌਰ ਉੱਤੇ ਪ੍ਰਮਾਣਿਤ ਹੋਵੇਗਾ, ਅਤੇ ਕੁਝ ਵੀ ਮੁੜ-ਸਾਈਨ ਜਾਂ ਬਦਲਿਆ ਨਹੀਂ ਜਾਵੇਗਾ।",
-  "recoveryPhrase24": "ਰਿਕਵਰੀ ਵਾਕੰਸ਼ (ਸਾਰੇ 24 ਸ਼ਬਦ)",
-  "keystoreFile": "ਕੀਸਟੋਰ ਫਾਈਲ",
-  "keystoreFileContents": "ਕੀਸਟੋਰ ਫਾਈਲ ਸਮੱਗਰੀ",
-  "optionalBackupFile": "ਵਿਕਲਪਿਕ ਬੈਕਅੱਪ ਫਾਈਲ",
-  "iDontHavePhrase": "ਮੇਰੇ ਕੋਲ ਮੇਰਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਨਹੀਂ ਹੈ",
-  "migrationTitle": "ਇੱਕ ਨਵੀਂ ਕੁੰਜੀ ਵਿੱਚ ਮਾਈਗ੍ਰੇਟ ਕਰੋ",
-  "migrationBlurb": "ਆਪਣੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਤੋਂ ਬਿਨਾਂ, ਇਸ ਡਿਵਾਈਸ ਦੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਮੁੜ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ। ਤੁਸੀਂ ਇੱਕ ਨਵੀਂ ਕੁੰਜੀ ਸ਼ੁਰੂ ਕਰ ਸਕਦੇ ਹੋ। ਪੁਰਾਣੀਆਂ ਐਂਟਰੀਆਂ ਦਿਖਾਈ ਦਿੰਦੀਆਂ ਰਹਿਣਗੀਆਂ ਪਰ ਬਦਲੀਆਂ ਗਈਆਂ ਮੰਨੀਆਂ ਜਾਣਗੀਆਂ।",
-  "iConfirmBooksValid": "ਮੈਂ ਪੁਸ਼ਟੀ ਕਰਦਾ/ਕਰਦੀ ਹਾਂ ਕਿ ਮੌਜੂਦਾ ਕਿਤਾਬਾਂ ਵੈਧ ਹਨ",
+  "setupChoiceTitle": "Welcome to Smara Accounting",
+  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
+  "actionNewSetup": "New setup",
+  "continueBooksTitle": "Continue my books on this phone",
+  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
+  "continueBooksAction": "Continue my books on this phone",
+  "restoreFromCopyAction": "Restore from a copy",
+  "saveBooksCopyAction": "Save a copy of my books",
+  "deviceHistoryTitle": "Device history",
+  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
+  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "@deviceHistoryContinuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "@deviceHistoryContinuedFromCopy": {
+    "placeholders": {
+      "continuedDate": {
+        "type": "String"
+      },
+      "copyDate": {
+        "type": "String"
+      }
+    }
+  },
+  "backupReminderBannerTitle": "Save a copy of your books",
+  "backupReminderSaveAction": "Save a copy",
+  "backupReminderLaterAction": "Later",
+  "settingsBackupReminder": "Copy reminder",
+  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
+  "settingsBackupReminderEnabled": "Remind me to save a copy",
+  "settingsBackupReminderDays": "Remind after this many days",
+  "settingsBackupReminderEntries": "Remind after this many new entries",
+  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
   "whyWeDontEdit": "ਅਸੀਂ ਪੁਰਾਣੀਆਂ ਐਂਟਰੀਆਂ ਕਿਉਂ ਸੰਪਾਦਿਤ ਨਹੀਂ ਕਰਦੇ",
   "whyWeDontEditBody": "ਜਦੋਂ ਤੁਸੀਂ ਕੋਈ ਗਲਤੀ ਠੀਕ ਕਰਦੇ ਹੋ, ਅਸੀਂ ਪੁਰਾਣੀ ਲਾਈਨ ਨੂੰ ਰੱਖਦੇ ਹਾਂ ਅਤੇ ਤੁਹਾਡੇ ਵੱਲੋਂ ਪਹਿਲਾਂ ਹੀ ਦਰਜ ਕੀਤੇ ਗਏ ਨੂੰ ਬਦਲਣ ਦੀ ਬਜਾਏ ਇਸਦੇ ਨਾਲ ਇੱਕ ਸੁਧਾਰ ਜੋੜਦੇ ਹਾਂ। ਇਸ ਤਰ੍ਹਾਂ ਤੁਹਾਡਾ ਇਤਿਹਾਸ ਹਮੇਸ਼ਾ ਬਿਲਕੁਲ ਦਿਖਾਉਂਦਾ ਹੈ ਕਿ ਕੀ ਹੋਇਆ ਅਤੇ ਤੁਸੀਂ ਕਦੋਂ ਇਸਨੂੰ ਠੀਕ ਕੀਤਾ — ਤੁਹਾਡੀ ਪਿੱਠ ਪਿੱਛੇ ਚੁੱਪਚਾਪ ਕੁਝ ਨਹੀਂ ਬਦਲਦਾ।",
   "lockTitle": "ਅਨਲੌਕ",
@@ -563,7 +571,6 @@
   "none": "ਕੋਈ ਨਹੀਂ",
   "currency": "ਮੁਦਰਾ",
   "errorGeneric": "ਕੁਝ ਗਲਤ ਹੋ ਗਿਆ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
-  "errorSigningIdentityMismatch": "ਇਹ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਇਸ ਡਾਟਾਬੇਸ ਵਿੱਚ ਕਿਸੇ ਵੀ ਸਾਈਨਿੰਗ ਪਛਾਣ ਨਾਲ ਮੇਲ ਨਹੀਂ ਖਾਂਦੀ।",
   "errorInvalidLedgerBackup": "ਇਹ ਫਾਈਲ ਇੱਕ ਵੈਧ ਸਮਾਰਾ ਬੈਕਅੱਪ ਨਹੀਂ ਹੈ।",
   "errorInvalidLedgerBackupNoIdentity": "ਇਸ ਬੈਕਅੱਪ ਦੀ ਕੋਈ ਸਾਈਨਿੰਗ ਪਛਾਣ ਨਹੀਂ ਹੈ - ਇਹ ਇੱਕ ਵੈਧ ਸਮਾਰਾ ਬੈਕਅੱਪ ਨਹੀਂ ਹੈ।",
   "errorInvalidLedgerBackupUnverified": "ਇਹ ਬੈਕਅੱਪ ਇੱਕ ਬਰਕਰਾਰ ਕਿਤਾਬਾਂ ਵਜੋਂ ਪ੍ਰਮਾਣਿਤ ਨਹੀਂ ਹੋਇਆ, ਇਸ ਲਈ ਇਹ ਬਹਾਲ ਨਹੀਂ ਕੀਤਾ ਗਿਆ।",
@@ -575,7 +582,6 @@
       }
     }
   },
-  "errorForeignBackupIdentity": "ਇਹ ਬੈਕਅੱਪ ਇਸ ਡਿਵਾਈਸ ਵਾਲੀ ਪਛਾਣ ਤੋਂ ਵੱਖਰੀ ਸਾਈਨਿੰਗ ਪਛਾਣ ਨਾਲ ਸਬੰਧਤ ਹੈ।",
   "errorAccountNotFinancial": "ਉਹ ਇੱਕ ਵਿੱਤੀ ਖਾਤਾ ਨਹੀਂ ਹੈ।",
   "errorAccountArchived": "ਉਹ ਖਾਤਾ ਲੁਕਿਆ ਹੋਇਆ ਹੈ।",
   "errorAccountNotArchived": "ਉਹ ਖਾਤਾ ਲੁਕਿਆ ਹੋਇਆ ਨਹੀਂ ਹੈ।",
@@ -726,9 +732,6 @@
   "validationCategoryMustBeIncomeOrExpense": "ਸ਼੍ਰੇਣੀ ਆਮਦਨ ਜਾਂ ਖਰਚ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
   "validationOnlyExpenseHasMonthlyLimit": "ਸਿਰਫ਼ ਇੱਕ ਖਰਚ ਸ਼੍ਰੇਣੀ ਦੀ ਮਾਸਿਕ ਸੀਮਾ ਹੋ ਸਕਦੀ ਹੈ।",
   "validationInvalidTemplate": "ਅਵੈਧ ਟੈਂਪਲੇਟ।",
-  "validationWrongKeystorePassphrase": "ਇਸ ਕੀਸਟੋਰ ਫਾਈਲ ਲਈ ਗਲਤ ਪਾਸਫਰੇਜ਼।",
-  "validationInvalidKeystoreFile": "ਇਹ ਵੈਧ ਕੀਸਟੋਰ ਫਾਈਲ ਵਰਗੀ ਨਹੀਂ ਲੱਗਦੀ।",
-  "validationRestorePhraseFailed": "ਉਸ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਤੋਂ ਬਹਾਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।",
   "validationGenerateKeyFailed": "ਇਸ ਡਿਵਾਈਸ ਉੱਤੇ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਤਿਆਰ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ: {detail}",
   "@validationGenerateKeyFailed": {
     "placeholders": {
@@ -745,7 +748,6 @@
       }
     }
   },
-  "validationMigrationFailed": "ਮਾਈਗ੍ਰੇਸ਼ਨ ਅਸਫਲ ਹੋਈ। ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
   "validationChooseBackupFile": "ਪਹਿਲਾਂ ਇੱਕ ਬੈਕਅੱਪ ਫਾਈਲ ਚੁਣੋ।",
   "validationPassphraseRequired": "ਇੱਕ ਪਾਸਫਰੇਜ਼ ਦਰਜ ਕਰੋ।",
   "validationPinsDoNotMatch": "ਦੋਵੇਂ ਪਿੰਨ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ।",
@@ -760,14 +762,6 @@
     }
   },
   "validationEnterValidAmount": "ਇੱਕ ਵੈਧ ਰਕਮ ਦਰਜ ਕਰੋ।",
-  "validationConfirmWordMismatch": "ਸ਼ਬਦ {n} ਤੁਹਾਡੇ ਸੰਭਾਲੇ ਵਾਕੰਸ਼ ਨਾਲ ਮੇਲ ਨਹੀਂ ਖਾਂਦਾ। ਇਸਨੂੰ ਜਾਂਚੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
-  "@validationConfirmWordMismatch": {
-    "placeholders": {
-      "n": {
-        "type": "String"
-      }
-    }
-  },
   "errorBuyQuantityAndPriceMustBePositive": "ਖਰੀਦ ਮਾਤਰਾ ਅਤੇ ਯੂਨਿਟ ਕੀਮਤ ਧਨਾਤਮਕ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ।",
   "errorInstrumentArchived": "ਲੁਕੇ ਹੋਏ ਇੰਸਟਰੂਮੈਂਟ ਨੂੰ ਖਰੀਦਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।",
   "errorNonCashCannotIncludeBrokerage": "ਗੈਰ-ਨਕਦ ਪ੍ਰਾਪਤੀਆਂ ਵਿੱਚ ਬ੍ਰੋਕਰੇਜ ਸ਼ਾਮਲ ਨਹੀਂ ਹੋ ਸਕਦਾ।",
@@ -1080,5 +1074,87 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "ਪਾਸਫਰੇਜ਼",
+  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "@replaceBooksWarning": {
+    "placeholders": {
+      "counts": {
+        "type": "String"
+      }
+    }
+  },
+  "saveCopyFirstAction": "Save a copy first",
+  "replaceCountEntries": "{count} entries",
+  "@replaceCountEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountAccounts": "{count} accounts",
+  "@replaceCountAccounts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategories": "{count} categories",
+  "@replaceCountCategories": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountGroups": "{count} account groups",
+  "@replaceCountGroups": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountPayees": "{count} payees",
+  "@replaceCountPayees": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCategoryRules": "{count} category rules",
+  "@replaceCountCategoryRules": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountCsvProfiles": "{count} import profiles",
+  "@replaceCountCsvProfiles": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "@replaceCountRecurringTemplates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceCountInstruments": "{count} instruments",
+  "@replaceCountInstruments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
