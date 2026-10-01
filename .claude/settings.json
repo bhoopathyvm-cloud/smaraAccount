@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/tool/agent-hooks/format_dart_file.sh",
+            "timeout": 60,
+            "statusMessage": "Formatting the edited Dart file"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/tool/agent-hooks/format_all_dart.sh",
+            "timeout": 120,
+            "statusMessage": "Checking Dart formatting before finishing"
+          }
+        ]
+      }
+    ]
+  }
+}

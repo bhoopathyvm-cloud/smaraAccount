@@ -5,5 +5,5 @@
     "dockerfile": "Dockerfile",
     "context": "."
   },
-  "install": "flutter pub get"
+  "install": "flutter pub get && git config core.hooksPath tool/git-hooks"
 }
