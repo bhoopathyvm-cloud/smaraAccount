@@ -1,4 +1,4 @@
-# LinkedIn post: AI Is an Amplifier, Not the Pilot
+# LinkedIn post: The 24 Words Nobody Needed
 
 Companion post for `pages/blog/14-ai-is-an-amplifier-not-the-pilot.md`.
 Publish it once the blog post is live at the URL below. Keep it under

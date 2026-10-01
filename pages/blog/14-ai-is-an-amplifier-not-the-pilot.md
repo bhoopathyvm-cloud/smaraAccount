@@ -1,129 +1,138 @@
-# AI Is an Amplifier, Not the Pilot
+# The 24 Words Nobody Needed
 
-**AI made me much faster. It also helped me build, very carefully, a
-feature my users didn't need, because I never questioned it. AI
-amplifies what you bring to it, including your mistakes. The decisions
-still have to be yours.**
+I was reading the user guide of my own app when one line stopped me:
 
-## How the app grew
+> *Recovery phrase — a 24-word phrase you write down on paper.*
 
-Smara Account started in July as a weekend idea: a household money app
-that keeps your records on your phone, with no cloud and no
-subscription. I built it mostly by talking to AI coding assistants.
+I tried to picture an ordinary person doing that. Opening a money app
+for the first time, being handed 24 random words, finding a pen,
+copying them carefully, and then keeping that paper safe for years.
 
-Within months it was a real app: tested, in 43 languages, with real
-testers. Every step went faster than I could have managed alone. This
-post is about the one thing speed didn't give me.
+Then a more uncomfortable question arrived. *Why did I build this?*
 
-## The idea I never questioned
+## Day one
 
-The app protects your records with a secret key, so that nobody can
-quietly change your history later. The obvious worry: what if you lose
-your phone, and the key with it?
+Smara Account began in July as a weekend idea: a simple household money
+app that keeps your records on your own phone. No cloud, no
+subscription. I built it mostly by talking to AI coding assistants, and
+it grew faster than I ever could have managed alone.
 
-The very first plan, written together with an AI on day one, had a
-neat answer. When you start the app, it shows you **24 words**. You
-write them on paper and keep them safe. With those words you can bring
-your key back on a new phone. The plan said you couldn't skip this
-step.
+On the very first day, the AI and I wrote the plan together. The app
+would protect your records with a secret key, so nobody could quietly
+change your history. And if you lost your phone? The plan had a neat
+answer: show every new user 24 words to write down. With them, you
+could bring the key back. The step could not be skipped.
 
-It sounded professional, secure and well thought out. I accepted it.
+It sounded secure. It sounded professional. It sounded like something a
+serious app should have.
 
-From then on, every step built on that idea. The AI built the 24-word
-screen carefully. Later came a second option, a key file protected by a
-password. Later still came a third: a special file for moving to a new
-phone. Each addition was well made. Not once did anyone
-ask whether ordinary people needed any of it, including me.
+I nodded and moved on.
 
-## What the questions changed
+## The machine kept building
 
-The first push came from testers in September. They complained that the
-app wouldn't let them start until they had dealt with the 24 words. So
-the step became optional. But the feature stayed.
+That's the thing about working with AI: once an idea is in the plan, it
+gets built, and built well.
 
-Then, while reviewing the user guide, I finally asked the simple
-questions:
+The 24-word screen came out polished. Then came a second option, a key
+file protected by a password, in case paper wasn't your thing. Then a
+third: a special file for moving to a new phone. Every piece was tested
+and careful. Every piece made the original idea look more solid.
 
-- Who will actually keep a piece of paper with 24 words on it?
-- If I get a new phone, do those words bring back my records? *(No.
-  They only bring back the key. You also need a separate copy of your
-  records, and its password.)*
-- Then why do we need the words at all?
+Nobody asked whether ordinary people needed any of it. Not the AI. Not
+me.
 
-When I challenged it, the AI didn't defend the old design. It checked
-the code and gave me the facts. Together we worked through dozens of
-questions, one round at a time, until every part was clear.
+In September, the testers grumbled. The project notes from that week
+put it bluntly: "Testers are complaining about this wall." They couldn't start using the app until they had dealt with
+the 24 words. So we made the step optional.
 
-The result is simpler *and* safer. The secret key now **never leaves the
-phone**. There are no words to write down and no key file to manage.
-There's just one thing for ordinary people: "Save a copy of my books."
-A new phone checks that copy is genuine and carries on with its own
-key.
+But the feature stayed. We had treated the symptom, not the question.
 
-Months of careful work went into a feature that a few honest
-questions replaced.
+## The questions
 
-## Why the AI didn't stop me
+Sitting with that line in the user guide, I finally asked the questions
+I should have asked on day one:
 
-I don't think the AI did anything "wrong" here. It did exactly what it
-was asked, very well. That's the problem.
+*Who will actually keep a piece of paper with 24 words on it?*
 
-- **AI can be confidently wrong.** The U.S. standards body NIST calls it
-  "confabulation": "confidently stated but erroneous or false content."
-  OpenAI's own researchers explain that models "sometimes guess when
-  uncertain" instead of admitting doubt, because their training rewards
-  guessing.
-- **AI tends to agree with you.** Researchers at Anthropic found that
-  both people and AI training systems often prefer "convincingly-written
-  sycophantic responses over correct ones." An AI is more likely to
-  polish your idea than to question it.
-- **Trusting AI makes us check less.** A study by Microsoft Research and
-  Carnegie Mellon found that "higher confidence in GenAI is associated
-  with less critical thinking."
+*If I get a new phone, do those words bring my records back?*
 
-None of this is a reason to stop using AI. It's a reason to stay awake
-while you do.
+The answer to the second one surprised me. No. The words only bring
+back the key. To get your records back, you also need a separate copy of
+them, and its password. So the 24 words, on their own, save nothing.
 
-## An amplifier, like an aircraft
+When I put this to the AI, it didn't defend the old design. It went into
+the code and laid out the facts. Then we did something I should have
+done months earlier: we went through the whole design, question by
+question, dozens of them, until I understood every part.
 
-A plane crosses an ocean in hours instead of weeks, but it doesn't
-choose where you're going. Autopilot made flying safer, yet the U.S.
-aviation authority, the FAA, warned airlines that relying on it all the
-time can weaken pilots' ability to "quickly recover the aircraft" when
-something goes wrong. That's why pilots still practise flying by hand.
+The design that came out is almost embarrassingly simple. The secret key
+will never leave the phone. Nothing to write down, no key file to
+manage. Ordinary people get one button: "Save a copy of my books." A
+new phone checks the copy is genuine and carries on with its own key.
+I'm building it now.
+
+Months of careful work, replaced by a few honest questions.
+
+## Why didn't the AI stop me?
+
+I don't blame the AI. It did exactly what I asked, very well. That was
+the problem.
+
+Researchers have names for what happened. The U.S. standards body NIST
+describes AI output that is "confidently stated but erroneous". OpenAI's
+own researchers explain that models "sometimes guess when uncertain"
+instead of admitting doubt. Researchers at Anthropic found that people,
+and the systems used to train AI, often prefer "convincingly-written
+sycophantic responses over correct ones". In plain words, AI tends to
+agree with you.
+
+And the more we trust it, the less we check. A study by Microsoft
+Research and Carnegie Mellon found that "higher confidence in GenAI is
+associated with less critical thinking."
+
+That was me on day one: confident in the AI, and not thinking hard
+enough.
+
+## The engine and the pilot
+
+A plane crosses an ocean in hours instead of weeks. But it doesn't
+choose where you go. Autopilot made flying safer, yet the U.S. aviation
+authority warned airlines that relying on it all the time can weaken a
+pilot's ability to "quickly recover the aircraft" when something goes
+wrong. So pilots still practise flying by hand.
 
 An excavator does the work of fifty people with shovels. It still needs
 someone who knows where the foundations go.
 
-AI is the same. Google's 2025 DORA report on software teams says it
-plainly: "AI doesn't fix a team; it amplifies what's already there." A
-good question becomes a great answer faster. An unchallenged assumption
-becomes a well-built mistake faster.
+AI is the same kind of machine. Google's 2025 DORA report on software
+teams puts it simply: "AI doesn't fix a team; it amplifies what's
+already there." A good question becomes a great answer, faster. An
+unchallenged idea becomes a well-built mistake, faster.
 
-The cost of trusting it blindly is real. In 2023, lawyers in New York
-were fined after submitting court cases that ChatGPT had invented. The
-judge noted there is nothing wrong with using a reliable AI tool, but
-that the rules give people a "gatekeeping role" over what they hand
-in.
+Sometimes the cost is public. In 2023, lawyers in New York were fined
+for handing a court cases that ChatGPT had made up. The judge's point
+wasn't the AI. It was that nobody checked.
 
-## My rules now
+## What I do now
 
 1. **Understand every detail.** If I can't explain a decision in my own
-   words, it isn't decided yet.
+   words, it isn't decided.
 2. **Challenge what I don't understand.** "Why?" and "Who needs this?"
-   are the most useful questions I can ask.
-3. **Ask for the source.** Where does this come from? Is there a study,
-   a document, a line of code? Then read it myself.
-4. **Learn until I'm convinced by facts**, not by how confident the
-   answer sounds.
-5. **Then decide, myself.** The AI suggests. I decide.
+   are my best questions.
+3. **Ask for the source.** A study, a document, a line of code. Then
+   read it myself.
+4. **Learn until the facts convince me**, not how confident the answer
+   sounds.
+5. **Then decide, myself.**
 
-Even Anthropic, which makes the AI I use most, tells its users not to
-rely on it "as a singular source of truth."
+Even Anthropic, the company behind the AI I use most, tells its users
+not to rely on it "as a singular source of truth."
 
 AI let me build in months what would have taken me years. But it flew
-exactly where I pointed it, including the wrong way, until I started
-asking questions. AI is the engine. You are still the pilot.
+exactly where I pointed it, the wrong way included, until I started
+asking questions.
+
+AI is the engine. You are still the pilot.
 
 ## References
 
