@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cross_file/cross_file.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_picker_platform_interface/file_picker_platform_interface.dart';
@@ -7,9 +10,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smara_accounting/data/books_set/books_set_paths.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
+import 'package:smara_accounting/domain/backup/books_copy_file.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:smara_accounting/l10n/l10n.dart' show englishAppLocalizations;
@@ -29,6 +35,7 @@ import 'package:url_launcher_platform_interface/link.dart';
 import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
 
 import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
+import '../../test/domain/backup/legacy_backup_encrypt.dart';
 import 'support/acceptance_harness.dart';
 import 'support/acceptance_locale.dart';
 import 'support/locale_fixtures.dart';
@@ -70,6 +77,215 @@ void main() {
   final otherIncomeCategory = l10n.systemCategoryOtherIncome;
   final otherExpenseCategory = l10n.systemCategoryOtherExpense;
   final cashBankAccount = l10n.systemAccountCashBank;
+
+  // --- Books Copy helpers shared by books_copy, identity_restore and
+  // home_and_lock (books-copy-and-continuation). ---
+  const backupPassphrase = 'correct-horse-battery-staple';
+
+  /// The Settings gear lives on Home's app bar only.
+  Future<void> goHome(WidgetTester tester) => tapReliably(
+    tester,
+    () => shellNavIcon(TablerIcons.home),
+    () => find.byTooltip(l10n.settingsTitle).evaluate().isNotEmpty,
+  );
+
+  Future<void> openSettingsBackupSection(
+    WidgetTester tester,
+    Finder target,
+  ) async {
+    // Detected by content, not the title: right after a dialog closes its
+    // fading barrier still absorbs hit tests.
+    final settingsOpen =
+        find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty ||
+        find.text(l10n.settingsBackup).evaluate().isNotEmpty;
+    if (!settingsOpen) {
+      await goHome(tester);
+      await tapReliably(
+        tester,
+        () => find.byTooltip(l10n.settingsTitle),
+        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+      );
+    }
+    await scrollSettingsUntilVisible(tester, target);
+  }
+
+  Future<Uint8List> exportBackupThroughGui(
+    WidgetTester tester,
+    AppLocalizations l10n,
+    _RecordingFilePickerPlatform fakePicker, {
+    required String passphrase,
+  }) async {
+    await openSettingsBackupSection(
+      tester,
+      find.widgetWithText(ElevatedButton, l10n.saveBooksCopyAction),
+    );
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(ElevatedButton, l10n.saveBooksCopyAction),
+      () => find.text(l10n.booksCopyPassphrase).evaluate().isNotEmpty,
+    );
+    await enterTextReliably(
+      tester,
+      () => find.byType(TextField).first,
+      passphrase,
+      () {
+        final field =
+            find.byType(TextField).evaluate().first.widget as TextField;
+        return field.controller?.text == passphrase;
+      },
+    );
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(ElevatedButton, l10n.actionSave),
+      () => fakePicker.lastSavedBytes != null,
+    );
+    final bytes = fakePicker.lastSavedBytes;
+    if (bytes == null) fail('Save a copy never captured any bytes');
+    await tapReliably(
+      tester,
+      () => find.byTooltip(materialL10n(tester).backButtonTooltip),
+      () => find.text(l10n.settingsTitle).evaluate().isEmpty,
+    );
+    return bytes;
+  }
+
+  /// Settings → "Restore from a copy" with [bytes] as the picked file, up to
+  /// and including tapping Replace on the counted warning. The caller
+  /// asserts on what follows (success dialog, or an error in the dialog).
+  Future<void> restoreCopyThroughSettings(
+    WidgetTester tester,
+    _RecordingFilePickerPlatform fakePicker, {
+    required Uint8List bytes,
+    required String fileName,
+    required String passphrase,
+    void Function()? onReplaceWarningShown,
+  }) async {
+    fakePicker.nextPickedFile = _LedgerBackupFakePlatformFile(
+      name: fileName,
+      bytes: bytes,
+    );
+    await openSettingsBackupSection(
+      tester,
+      find.widgetWithText(OutlinedButton, l10n.restoreFromCopyAction),
+    );
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(OutlinedButton, l10n.restoreFromCopyAction),
+      () => find.text(l10n.actionChooseFile).evaluate().isNotEmpty,
+    );
+    await tapReliably(
+      tester,
+      () => find.text(l10n.actionChooseFile),
+      () => find.text(fileName).evaluate().isNotEmpty,
+    );
+    await enterTextReliably(
+      tester,
+      () => find.byType(TextField).last,
+      passphrase,
+      () {
+        final field =
+            find.byType(TextField).evaluate().last.widget as TextField;
+        return field.controller?.text == passphrase;
+      },
+    );
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(ElevatedButton, l10n.actionRestore),
+      () => find.text(l10n.replaceBooksTitle).evaluate().isNotEmpty,
+    );
+    onReplaceWarningShown?.call();
+    await tapReliably(
+      tester,
+      () => find.widgetWithText(ElevatedButton, l10n.actionReplace),
+      () => find.text(l10n.replaceBooksTitle).evaluate().isEmpty,
+      innerTries: 150,
+    );
+  }
+
+  /// A restore closes the database and asks the user to reopen the app;
+  /// exit(0) can't run inside the test process, so relaunch the widget
+  /// tree instead. The restore deletes this phone's now-orphaned key, so
+  /// the app lands on Continuation - continue to Home.
+  Future<void> relaunchAndContinueAfterRestore(WidgetTester tester) async {
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+    await pumpSmaraApp(tester);
+    await tester.pump();
+    await pumpUntilFound(tester, find.byType(ContinuationView), maxTries: 40);
+    if (find.byType(ContinuationView).evaluate().isNotEmpty) {
+      await tapReliably(
+        tester,
+        () => find.widgetWithText(ElevatedButton, l10n.continueBooksAction),
+        () => find
+            .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
+            .evaluate()
+            .isNotEmpty,
+        innerTries: 150,
+      );
+    }
+    await pumpUntilFound(
+      tester,
+      find.text(l10n.homeWhatYouHaveMinusWhatYouOwe),
+    );
+  }
+
+  /// Records a [amountText] Other income entry through the Register FAB
+  /// and waits until it is listed - proves the books accept a new signed
+  /// entry (e.g. after a restore or a Continuation).
+  Future<void> recordReceivedThroughRegister(
+    WidgetTester tester,
+    String amountText,
+  ) async {
+    await tapReliably(
+      tester,
+      () => shellNavIcon(TablerIcons.receipt),
+      () => find.byType(RegisterView).evaluate().isNotEmpty,
+    );
+    await tapReliably(
+      tester,
+      () => find.byType(FloatingActionButton).hitTestable(),
+      () => find.text(l10n.captureReceived).evaluate().isNotEmpty,
+    );
+    await tapReliably(
+      tester,
+      () => find.text(l10n.captureReceived),
+      () => find.byType(RecordTransactionView).evaluate().isNotEmpty,
+    );
+    await pumpUntilFound(tester, find.text(cashBankAccount));
+    Finder amountField() => find
+        .descendant(
+          of: find.byType(RecordTransactionView),
+          matching: find.byType(TextField),
+        )
+        .first;
+    var saved = false;
+    for (var attempt = 0; attempt < 3 && !saved; attempt++) {
+      await enterTextReliably(tester, amountField, amountText, () {
+        final field = amountField().evaluate().single.widget as TextField;
+        return field.controller?.text == amountText;
+      });
+      await selectDropdownOption(
+        tester,
+        fieldLabel: l10n.category,
+        optionText: otherIncomeCategory,
+      );
+      try {
+        await tapReliably(
+          tester,
+          () => find.descendant(
+            of: find.byType(RecordTransactionView),
+            matching: find.text(l10n.actionSave),
+          ),
+          () => find.byType(RecordTransactionView).evaluate().isEmpty,
+          innerTries: 60,
+        );
+        saved = true;
+      } catch (_) {
+        if (attempt == 2) rethrow;
+      }
+    }
+    await pumpUntilFound(tester, find.text('+$amountText'));
+  }
 
   group('account_currency', () {
     // Real-build acceptance coverage for `account-currency` (design.md
@@ -290,11 +506,14 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       // Mutate the stored row directly - not through the app - exactly
-      // mimicking direct SQLite file access outside the app
-      // (drift_flutter names the file "<name>.sqlite"; app_database.dart
-      // uses name: 'smara_accounting').
+      // mimicking direct SQLite file access outside the app. Each books
+      // set lives at books/<booksSetId>/ledger.sqlite (BooksSetPaths).
+      final activeSetId = (await BooksSetStore().activeBooksSetId())!;
       final dbFile = sqlite3.open(
-        '${(await getApplicationSupportDirectory()).path}/smara_accounting.sqlite',
+        BooksSetPaths.databaseFile(
+          await getApplicationSupportDirectory(),
+          activeSetId,
+        ).path,
       );
       dbFile.execute(
         "UPDATE journal_entries SET description = 'tampered outside the app'",
@@ -1101,6 +1320,8 @@ void main() {
           () => shellNavIcon(TablerIcons.wallet),
           () => find.byTooltip(l10n.createGroup).evaluate().isNotEmpty,
         );
+        // The FAB mounts before the account list streams in from disk.
+        await pumpUntilFound(tester, find.text(cashBankAccount));
         expect(find.text(cashBankAccount), findsOneWidget);
         expect(find.text(l10n.systemGroupCashEquivalents), findsOneWidget);
         await tester.drag(find.byType(ListView).first, const Offset(0, -2000));
@@ -1112,44 +1333,12 @@ void main() {
       timeout: const Timeout(Duration(minutes: 5)),
     );
 
-    testWidgets('locking and unlocking the app via PIN through the real GUI', (
-      tester,
-    ) async {
-      addTearDown(() => resetToFreshDevice(tester));
-
-      await completeOnboardingWithGuidedEntry(
+    Future<void> setPinThroughSettings(WidgetTester tester) async {
+      // Lock sits below Backup, under the live window's fold.
+      await openSettingsBackupSection(
         tester,
-        amountText: '1000',
-        categoryName: salaryCategory,
+        find.widgetWithText(SwitchListTile, l10n.settingsRequireUnlock),
       );
-
-      // Settings body is a lazily-built ListView: sections below the fold
-      // (Backup, Lock, …) are not in the element tree until scrolled into
-      // the cache extent. Wait for a top-of-list marker, not settingsBackup.
-      await tapReliably(
-        tester,
-        () => find.byTooltip(l10n.settingsTitle),
-        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
-      );
-      // Lock is below Backup, below the live window's fold (design.md
-      // Risks). Drag the settings ListView itself - the same pattern
-      // already relied on elsewhere in this suite - rather than a
-      // fixed screen coordinate: on a real iPhone, whose screen
-      // dimensions differ from the desktop/simulator window this was
-      // originally tuned against, a coordinate-based drag was observed
-      // to land outside the scrollable region entirely and do nothing.
-      for (
-        var i = 0;
-        i < 6 &&
-            find
-                .widgetWithText(SwitchListTile, l10n.settingsRequireUnlock)
-                .evaluate()
-                .isEmpty;
-        i++
-      ) {
-        await tester.drag(find.byType(ListView).first, const Offset(0, -150));
-        await tester.pump(const Duration(milliseconds: 300));
-      }
       await tapReliably(
         tester,
         () => find.widgetWithText(SwitchListTile, l10n.settingsRequireUnlock),
@@ -1190,15 +1379,9 @@ void main() {
         () => find.widgetWithText(ElevatedButton, l10n.actionSetPin),
         () => find.text(l10n.setPinTitle).evaluate().isEmpty,
       );
+    }
 
-      // Enabling the PIN doesn't itself lock the session
-      // (AppLockController.markUnlocked is only ever called from a
-      // successful unlock) - simulating a relaunch is what the router's
-      // redirect guard catches and sends to /lock.
-      await simulateRelaunch(tester);
-      await pumpUntilFound(tester, find.text(l10n.lockScreenTitle));
-      expect(find.text(l10n.lockScreenTitle), findsOneWidget);
-
+    Future<void> unlockWithPin(WidgetTester tester) async {
       // Unlock via the real Lock UI (acceptance-app-lock-unlock).
       await enterTextReliably(
         tester,
@@ -1224,10 +1407,182 @@ void main() {
             .isNotEmpty,
         innerTries: 200,
       );
+    }
+
+    final prefs = SharedPreferencesAsync();
+
+    testWidgets('locking and unlocking the app via PIN through the real GUI', (
+      tester,
+    ) async {
+      addTearDown(() => resetToFreshDevice(tester));
+
+      await completeOnboardingWithGuidedEntry(
+        tester,
+        amountText: '1000',
+        categoryName: salaryCategory,
+      );
+
+      await setPinThroughSettings(tester);
+
+      // Enabling the PIN doesn't itself lock the session
+      // (AppLockController.markUnlocked is only ever called from a
+      // successful unlock) - simulating a relaunch is what the router's
+      // redirect guard catches and sends to /lock.
+      await simulateRelaunch(tester);
+      await pumpUntilFound(tester, find.text(l10n.lockScreenTitle));
+      expect(find.text(l10n.lockScreenTitle), findsOneWidget);
+
+      await unlockWithPin(tester);
       expect(find.text(l10n.homeWhatYouHaveMinusWhatYouOwe), findsOneWidget);
 
       await tester.pump(const Duration(seconds: 2));
     }, timeout: const Timeout(Duration(minutes: 5)));
+
+    testWidgets(
+      'the copy reminder appears after the entry threshold, Later hides it, '
+      'and saving a copy clears it',
+      (tester) async {
+        final defaultPicker = FilePickerPlatform.instance;
+        addTearDown(() {
+          FilePickerPlatform.instance = defaultPicker;
+          return resetToFreshDevice(tester);
+        });
+        final fakePicker = _RecordingFilePickerPlatform();
+        FilePickerPlatform.instance = fakePicker;
+
+        await completeOnboardingWithGuidedEntry(
+          tester,
+          amountText: '250',
+          categoryName: salaryCategory,
+        );
+        // The user-adjustable thresholds, lowered so one entry crosses them
+        // (the 30-day / 500-entry defaults are unit-tested). Set after
+        // onboarding and picked up on relaunch, so the banner can't appear
+        // under the guided-entry screen mid-typing.
+        await prefs.setInt('backupReminderEntries', 1);
+        await prefs.setInt('backupReminderSnoozeEntries', 1);
+        await simulateRelaunch(tester);
+        await pumpUntilFound(tester, find.text(l10n.backupReminderBannerTitle));
+        expect(find.text(l10n.backupReminderBannerTitle), findsOneWidget);
+
+        // Later: hidden, and still hidden after a relaunch.
+        await tapReliably(
+          tester,
+          () => find.widgetWithText(TextButton, l10n.backupReminderLaterAction),
+          () => find.text(l10n.backupReminderBannerTitle).evaluate().isEmpty,
+        );
+        await simulateRelaunch(tester);
+        await pumpUntilFound(
+          tester,
+          find.text(l10n.homeWhatYouHaveMinusWhatYouOwe),
+        );
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(milliseconds: 200));
+        }
+        expect(find.text(l10n.backupReminderBannerTitle), findsNothing);
+
+        // One more entry passes the snooze; the banner returns.
+        await recordReceivedThroughRegister(tester, '5.00');
+        await goHome(tester);
+        await pumpUntilFound(tester, find.text(l10n.backupReminderBannerTitle));
+        expect(find.text(l10n.backupReminderBannerTitle), findsOneWidget);
+
+        // "Save a copy" from the banner, then back on Home: cleared.
+        await tapReliably(
+          tester,
+          () => find.widgetWithText(
+            ElevatedButton,
+            l10n.backupReminderSaveAction,
+          ),
+          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+        );
+        await exportBackupThroughGui(
+          tester,
+          l10n,
+          fakePicker,
+          passphrase: backupPassphrase,
+        );
+        await pumpUntilFound(
+          tester,
+          find.text(l10n.homeWhatYouHaveMinusWhatYouOwe),
+        );
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(milliseconds: 200));
+        }
+        expect(find.text(l10n.backupReminderBannerTitle), findsNothing);
+
+        await tester.pump(const Duration(seconds: 2));
+      },
+      timeout: const Timeout(Duration(minutes: 6)),
+    );
+
+    testWidgets(
+      'App Lock and the app language stay on this phone after a restore',
+      (tester) async {
+        final defaultPicker = FilePickerPlatform.instance;
+        addTearDown(() {
+          FilePickerPlatform.instance = defaultPicker;
+          return resetToFreshDevice(tester);
+        });
+        final fakePicker = _RecordingFilePickerPlatform();
+        FilePickerPlatform.instance = fakePicker;
+
+        await completeOnboardingWithGuidedEntry(
+          tester,
+          amountText: '250',
+          categoryName: salaryCategory,
+        );
+        // Saved while App Lock is off; turned on afterwards.
+        final copyBytes = await exportBackupThroughGui(
+          tester,
+          l10n,
+          fakePicker,
+          passphrase: backupPassphrase,
+        );
+        await setPinThroughSettings(tester);
+        await tapReliably(
+          tester,
+          () => find.byTooltip(materialL10n(tester).backButtonTooltip),
+          () => find.text(l10n.settingsFetchFxRates).evaluate().isEmpty,
+        );
+        // Leaving Settings with a fresh PIN routes through the lock screen.
+        await pumpUntilFound(tester, find.text(l10n.lockScreenTitle));
+        if (find.text(l10n.lockScreenTitle).evaluate().isNotEmpty) {
+          await unlockWithPin(tester);
+        }
+        final languageBefore = await prefs.getString('preferredLocaleTag');
+
+        await restoreCopyThroughSettings(
+          tester,
+          fakePicker,
+          bytes: copyBytes,
+          fileName: 'my-books.smarabookscopy',
+          passphrase: backupPassphrase,
+        );
+        await pumpUntilFound(tester, find.text(l10n.backupRestored));
+
+        // Reopen: Continuation (the orphaned key was removed), then the
+        // lock screen - the copy did not replace App Lock.
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pump();
+        await pumpSmaraApp(tester);
+        await tester.pump();
+        await pumpUntilFound(tester, find.byType(ContinuationView));
+        await tapReliably(
+          tester,
+          () => find.widgetWithText(ElevatedButton, l10n.continueBooksAction),
+          () => find.text(l10n.lockScreenTitle).evaluate().isNotEmpty,
+          innerTries: 150,
+        );
+        expect(find.text(l10n.lockScreenTitle), findsOneWidget);
+        await unlockWithPin(tester);
+        expect(find.text(l10n.homeWhatYouHaveMinusWhatYouOwe), findsOneWidget);
+        expect(await prefs.getString('preferredLocaleTag'), languageBefore);
+
+        await tester.pump(const Duration(seconds: 2));
+      },
+      timeout: const Timeout(Duration(minutes: 6)),
+    );
   });
 
   group('identity_restore', () {
@@ -1279,21 +1634,36 @@ void main() {
           reason: 'Continuation must keep existing entries',
         );
 
+        // The next entry is signed by the new this-device identity and
+        // chains onto the earlier identity's last entry.
+        await recordReceivedThroughRegister(tester, '5.00');
+        expect(find.text('+250.00'), findsOneWidget);
+        expect(find.byIcon(TablerIcons.lock), findsNothing);
+
         // Device history lists the Continuation in plain words.
-        await tapReliably(
+        await openSettingsBackupSection(
           tester,
-          () => find.byTooltip(l10n.settingsTitle),
-          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+          find.widgetWithText(OutlinedButton, l10n.deviceHistoryTitle),
         );
-        await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
-        await tester.pump(const Duration(milliseconds: 300));
         await tapReliably(
           tester,
           () => find.widgetWithText(OutlinedButton, l10n.deviceHistoryTitle),
           () => find.byType(DeviceHistoryView).evaluate().isNotEmpty,
           innerTries: 150,
         );
-        expect(find.textContaining('continued on this phone'), findsOneWidget);
+        await pumpUntilFound(
+          tester,
+          find.textContaining(staticPrefixOf(l10n.deviceHistoryContinuedOn)),
+        );
+        expect(
+          find.descendant(
+            of: find.byType(DeviceHistoryView),
+            matching: find.textContaining(
+              staticPrefixOf(l10n.deviceHistoryContinuedOn),
+            ),
+          ),
+          findsOneWidget,
+        );
 
         await tester.pump(const Duration(seconds: 2));
       },
@@ -2421,7 +2791,6 @@ void main() {
     // copy through Settings and restoring it (round trip). Foreign-
     // identity rejection is gone — restoring always replaces. Fakes the
     // platform file picker the same way csv_import/ofx_import do.
-    const backupPassphrase = 'correct-horse-battery-staple';
     late final FilePickerPlatform defaultFilePickerPlatform;
 
     setUpAll(() async {
@@ -2465,59 +2834,6 @@ void main() {
         () => find.byType(AlertDialog).evaluate().isEmpty,
         innerTries: 150,
       );
-    }
-
-    Future<Uint8List> exportBackupThroughGui(
-      WidgetTester tester,
-      AppLocalizations l10n,
-      _RecordingFilePickerPlatform fakePicker, {
-      required String passphrase,
-    }) async {
-      // Top-of-list marker: Backup itself is below the fold and not yet
-      // mounted in the lazily-built Settings ListView.
-      await tapReliably(
-        tester,
-        () => find.byTooltip(l10n.settingsTitle),
-        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
-      );
-      // Settings has many sections above Backup (language, FX/market-price
-      // toggles, research tool) - below the live window's fold (design.md
-      // Risks). Dragging from either the ListView's own render box or a
-      // specific text widget's computed center was observed to derive wildly
-      // wrong offsets on this screen (massive overshoot, or a center outside
-      // the live window's own 800x600 bounds) on different runs - dragging
-      // from a fixed point known to sit over the list's body sidesteps
-      // whatever is miscomputing those.
-      await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
-      await tester.pump(const Duration(milliseconds: 300));
-      await tapReliably(
-        tester,
-        () => find.widgetWithText(ElevatedButton, l10n.saveBooksCopyAction),
-        () => find.text(l10n.booksCopyPassphrase).evaluate().isNotEmpty,
-      );
-      await enterTextReliably(
-        tester,
-        () => find.byType(TextField).first,
-        passphrase,
-        () {
-          final field =
-              find.byType(TextField).evaluate().first.widget as TextField;
-          return field.controller?.text == passphrase;
-        },
-      );
-      await tapReliably(
-        tester,
-        () => find.widgetWithText(ElevatedButton, l10n.actionSave),
-        () => fakePicker.lastSavedBytes != null,
-      );
-      final bytes = fakePicker.lastSavedBytes;
-      if (bytes == null) fail('Save a copy never captured any bytes');
-      await tapReliably(
-        tester,
-        () => find.byTooltip(materialL10n(tester).backButtonTooltip),
-        () => find.text(l10n.settingsTitle).evaluate().isEmpty,
-      );
-      return bytes;
     }
 
     testWidgets(
@@ -2568,8 +2884,10 @@ void main() {
           () => find.byTooltip(l10n.settingsTitle),
           () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
         );
-        await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
-        await tester.pump(const Duration(milliseconds: 300));
+        await scrollSettingsUntilVisible(
+          tester,
+          find.widgetWithText(OutlinedButton, l10n.restoreFromCopyAction),
+        );
         await tapReliably(
           tester,
           () => find.widgetWithText(OutlinedButton, l10n.restoreFromCopyAction),
@@ -2605,26 +2923,14 @@ void main() {
           () => find.text(l10n.backupRestored).evaluate().isNotEmpty,
           innerTries: 150,
         );
-        expect(
-          find.textContaining(
-            'Entries you make later on the other device will not appear here',
-          ),
-          findsOneWidget,
-        );
+        expect(find.text(l10n.backupRestoredBody), findsOneWidget);
 
         // restoreBackup() closes the database connection and expects the
         // real app to be relaunched (SettingsViewModel's own doc comment) -
         // the success dialog's own button does that via exit(0)/
         // SystemNavigator.pop(), neither safe to actually invoke from inside
         // this test process, so this simulates the relaunch directly instead.
-        await tester.pumpWidget(const SizedBox.shrink());
-        await tester.pump();
-        await pumpSmaraApp(tester);
-        await tester.pump();
-        await pumpUntilFound(
-          tester,
-          find.text(l10n.homeWhatYouHaveMinusWhatYouOwe),
-        );
+        await relaunchAndContinueAfterRestore(tester);
 
         // Exact match: "+250.00" (the entry row) vs. "250.00" (the running
         // balance subtitle next to it) are two separate Text widgets that
@@ -2691,8 +2997,6 @@ void main() {
 
         // Full reset onto a different device, then onboard fresh there.
         await resetToFreshDevice(tester);
-        await pumpSmaraApp(tester);
-        await tester.pump();
         await completeOnboardingWithGuidedEntry(
           tester,
           amountText: '800',
@@ -2709,8 +3013,10 @@ void main() {
           () => find.byTooltip(l10n.settingsTitle),
           () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
         );
-        await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
-        await tester.pump(const Duration(milliseconds: 300));
+        await scrollSettingsUntilVisible(
+          tester,
+          find.widgetWithText(OutlinedButton, l10n.restoreFromCopyAction),
+        );
         await tapReliably(
           tester,
           () => find.widgetWithText(OutlinedButton, l10n.restoreFromCopyAction),
@@ -2745,35 +3051,9 @@ void main() {
           () => find.text(l10n.backupRestored).evaluate().isNotEmpty,
           innerTries: 150,
         );
-        expect(
-          find.textContaining(
-            'Entries you make later on the other device will not appear here',
-          ),
-          findsOneWidget,
-        );
+        expect(find.text(l10n.backupRestoredBody), findsOneWidget);
 
-        await tester.pumpWidget(const SizedBox.shrink());
-        await tester.pump();
-        await pumpSmaraApp(tester);
-        await tester.pump();
-        // After restore the private key was deleted; Continuation or Home
-        // after continue — pump until either continue or home chrome.
-        await pumpUntilFound(
-          tester,
-          find.byType(ContinuationView),
-          maxTries: 40,
-        );
-        if (find.byType(ContinuationView).evaluate().isNotEmpty) {
-          await tapReliably(
-            tester,
-            () => find.widgetWithText(ElevatedButton, l10n.continueBooksAction),
-            () => find
-                .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
-                .evaluate()
-                .isNotEmpty,
-            innerTries: 150,
-          );
-        }
+        await relaunchAndContinueAfterRestore(tester);
         await tester.tap(find.byIcon(TablerIcons.receipt).first);
         await pumpUntilFound(tester, find.text('+250.00'));
         expect(
@@ -2788,6 +3068,297 @@ void main() {
       },
       timeout: const Timeout(Duration(minutes: 5)),
     );
+
+    /// Decrypts [copyBytes], hands its database to [mutate] as a raw SQLite
+    /// file (outside the app), and re-encrypts it under the same passphrase.
+    Future<BooksCopyContents> decryptCopy(Uint8List copyBytes) =>
+        BooksCopyFile.decrypt(
+          fileContents: utf8.decode(copyBytes),
+          passphrase: backupPassphrase,
+        );
+
+    Future<Uint8List> tamperedCopyOf(Uint8List copyBytes) async {
+      final contents = await decryptCopy(copyBytes);
+      final dir = await Directory.systemTemp.createTemp('smara-tamper-');
+      try {
+        final file = File('${dir.path}/copy.sqlite');
+        await file.writeAsBytes(contents.databaseBytes);
+        final raw = sqlite3.open(file.path);
+        raw.execute('PRAGMA journal_mode = DELETE');
+        raw.execute(
+          "UPDATE journal_entries SET description = 'tampered outside the app'",
+        );
+        raw.close();
+        final encoded = await BooksCopyFile.encrypt(
+          databaseBytes: await file.readAsBytes(),
+          settings: contents.settings,
+          passphrase: backupPassphrase,
+        );
+        return Uint8List.fromList(utf8.encode(encoded));
+      } finally {
+        await dir.delete(recursive: true);
+      }
+    }
+
+    /// First-launch "Restore from a copy" (Setup choice) with [bytes].
+    Future<void> restoreCopyOnFirstLaunch(
+      WidgetTester tester,
+      _RecordingFilePickerPlatform fakePicker, {
+      required Uint8List bytes,
+      required String fileName,
+    }) async {
+      fakePicker.nextPickedFile = _LedgerBackupFakePlatformFile(
+        name: fileName,
+        bytes: bytes,
+      );
+      await pumpSmaraApp(tester);
+      await tester.pump();
+      await pumpUntilFound(tester, find.byType(SetupChoiceView));
+      await tapReliably(
+        tester,
+        () => find.text(l10n.restoreFromCopyAction),
+        () => find.text(l10n.actionChooseFile).evaluate().isNotEmpty,
+      );
+      await tapReliably(
+        tester,
+        () => find.text(l10n.actionChooseFile),
+        () => find.text(fileName).evaluate().isNotEmpty,
+      );
+      await enterTextReliably(
+        tester,
+        () => find.byType(TextField).last,
+        backupPassphrase,
+        () {
+          final field =
+              find.byType(TextField).evaluate().last.widget as TextField;
+          return field.controller?.text == backupPassphrase;
+        },
+      );
+      await tapReliably(
+        tester,
+        () => find.widgetWithText(ElevatedButton, l10n.actionImport),
+        () => find.text(l10n.replaceBooksTitle).evaluate().isNotEmpty,
+      );
+      await tapReliably(
+        tester,
+        () => find.widgetWithText(OutlinedButton, l10n.actionImport),
+        () => find.text(l10n.backupRestored).evaluate().isNotEmpty,
+        innerTries: 150,
+      );
+      expect(find.text(l10n.backupRestoredBody), findsOneWidget);
+    }
+
+    testWidgets('save a copy, reset the device, restore it on first launch, '
+        'then keep recording', (tester) async {
+      addTearDown(() {
+        FilePickerPlatform.instance = defaultFilePickerPlatform;
+        return resetToFreshDevice(tester);
+      });
+      final fakePicker = _RecordingFilePickerPlatform();
+      FilePickerPlatform.instance = fakePicker;
+
+      await completeOnboardingWithGuidedEntry(
+        tester,
+        amountText: '250',
+        categoryName: salaryCategory,
+      );
+      final copyBytes = await exportBackupThroughGui(
+        tester,
+        l10n,
+        fakePicker,
+        passphrase: backupPassphrase,
+      );
+
+      // A lost phone: nothing left but the saved copy.
+      await resetToFreshDevice(tester);
+      await restoreCopyOnFirstLaunch(
+        tester,
+        fakePicker,
+        bytes: copyBytes,
+        fileName: 'my-books.smarabookscopy',
+      );
+      await relaunchAndContinueAfterRestore(tester);
+
+      // Same balance on Home, same entry in the register.
+      await pumpUntilFound(tester, find.textContaining(RegExp(r'250[.,]00')));
+      expect(find.textContaining(RegExp(r'250[.,]00')), findsWidgets);
+      await recordReceivedThroughRegister(tester, '5.00');
+      expect(find.text('+250.00'), findsOneWidget);
+      expect(find.byIcon(TablerIcons.lock), findsNothing);
+
+      await tester.pump(const Duration(seconds: 2));
+    }, timeout: const Timeout(Duration(minutes: 6)));
+
+    testWidgets(
+      'Settings restore warns with counts and offers Save a copy first; '
+      'a tampered copy and a wrong passphrase leave the device untouched',
+      (tester) async {
+        addTearDown(() {
+          FilePickerPlatform.instance = defaultFilePickerPlatform;
+          return resetToFreshDevice(tester);
+        });
+        final fakePicker = _RecordingFilePickerPlatform();
+        FilePickerPlatform.instance = fakePicker;
+
+        await completeOnboardingWithGuidedEntry(
+          tester,
+          amountText: '250',
+          categoryName: salaryCategory,
+        );
+        final copyBytes = await exportBackupThroughGui(
+          tester,
+          l10n,
+          fakePicker,
+          passphrase: backupPassphrase,
+        );
+        await recordReceivedThroughRegister(tester, '5.00');
+
+        // Tampered copy: the counted warning shows, then verification
+        // refuses the copy.
+        await restoreCopyThroughSettings(
+          tester,
+          fakePicker,
+          bytes: await tamperedCopyOf(copyBytes),
+          fileName: 'tampered.smarabookscopy',
+          passphrase: backupPassphrase,
+          onReplaceWarningShown: () {
+            expect(
+              find.textContaining(staticPrefixOf(l10n.replaceBooksWarning)),
+              findsOneWidget,
+              reason: 'the warning lists what will be replaced',
+            );
+            expect(find.text(l10n.replaceBooksBody), findsNothing);
+            expect(
+              find.widgetWithText(TextButton, l10n.saveCopyFirstAction),
+              findsOneWidget,
+            );
+          },
+        );
+        await pumpUntilFound(
+          tester,
+          find.text(l10n.errorInvalidLedgerBackupUnverified),
+        );
+        expect(
+          find.text(l10n.errorInvalidLedgerBackupUnverified),
+          findsOneWidget,
+        );
+        await tapReliably(
+          tester,
+          () => find.widgetWithText(TextButton, l10n.actionCancel),
+          () => find.text(l10n.actionChooseFile).evaluate().isEmpty,
+        );
+
+        // Wrong passphrase on the genuine copy.
+        await restoreCopyThroughSettings(
+          tester,
+          fakePicker,
+          bytes: copyBytes,
+          fileName: 'my-books.smarabookscopy',
+          passphrase: 'not-the-passphrase',
+        );
+        await pumpUntilFound(tester, find.text(l10n.errorBackupRestoreFailed));
+        expect(find.text(l10n.errorBackupRestoreFailed), findsOneWidget);
+        await tapReliably(
+          tester,
+          () => find.widgetWithText(TextButton, l10n.actionCancel),
+          () => find.text(l10n.actionChooseFile).evaluate().isEmpty,
+        );
+
+        // Untouched: both entries still here and the books still verify.
+        await tapReliably(
+          tester,
+          () => find.byTooltip(materialL10n(tester).backButtonTooltip),
+          () => find.text(l10n.settingsTitle).evaluate().isEmpty,
+        );
+        await tapReliably(
+          tester,
+          () => shellNavIcon(TablerIcons.receipt),
+          () => find.byType(RegisterView).evaluate().isNotEmpty,
+        );
+        await pumpUntilFound(tester, find.text('+5.00'));
+        expect(find.text('+250.00'), findsOneWidget);
+        expect(find.text('+5.00'), findsOneWidget);
+        expect(find.byIcon(TablerIcons.lock), findsNothing);
+
+        await tester.pump(const Duration(seconds: 2));
+      },
+      timeout: const Timeout(Duration(minutes: 6)),
+    );
+
+    testWidgets('a legacy device-migration bundle restores without its key', (
+      tester,
+    ) async {
+      addTearDown(() {
+        FilePickerPlatform.instance = defaultFilePickerPlatform;
+        return resetToFreshDevice(tester);
+      });
+      final fakePicker = _RecordingFilePickerPlatform();
+      FilePickerPlatform.instance = fakePicker;
+
+      await completeOnboardingWithGuidedEntry(
+        tester,
+        amountText: '250',
+        categoryName: salaryCategory,
+      );
+      final copyBytes = await exportBackupThroughGui(
+        tester,
+        l10n,
+        fakePicker,
+        passphrase: backupPassphrase,
+      );
+      final contents = await decryptCopy(copyBytes);
+      final bundle = await encryptLegacyDeviceMigrationBundle(
+        databaseBytes: contents.databaseBytes,
+        privateKeySeed: List<int>.filled(32, 7),
+        passphrase: backupPassphrase,
+      );
+
+      await resetToFreshDevice(tester);
+      await restoreCopyOnFirstLaunch(
+        tester,
+        fakePicker,
+        bytes: Uint8List.fromList(utf8.encode(bundle)),
+        fileName: 'old-phone.smarabundle',
+      );
+
+      // The bundle's key is discarded, never adopted: this phone has no
+      // key for these books and offers Continuation.
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+      await pumpSmaraApp(tester);
+      await tester.pump();
+      await pumpUntilFound(tester, find.byType(ContinuationView));
+      expect(find.byType(ContinuationView), findsOneWidget);
+      await tapReliably(
+        tester,
+        () => find.widgetWithText(ElevatedButton, l10n.continueBooksAction),
+        () =>
+            find
+                .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
+                .evaluate()
+                .isNotEmpty ||
+            find.text(l10n.firstWeekTitle).evaluate().isNotEmpty,
+        innerTries: 150,
+      );
+      // A legacy bundle carries no books settings, so the optional
+      // first-week setup wizard isn't marked done yet.
+      if (find.text(l10n.firstWeekTitle).evaluate().isNotEmpty) {
+        await tapReliably(
+          tester,
+          () => find.widgetWithText(ElevatedButton, l10n.actionFinish),
+          () => find
+              .text(l10n.homeWhatYouHaveMinusWhatYouOwe)
+              .evaluate()
+              .isNotEmpty,
+          innerTries: 150,
+        );
+      }
+      await tester.tap(find.byIcon(TablerIcons.receipt).first);
+      await pumpUntilFound(tester, find.text('+250.00'));
+      expect(find.text('+250.00'), findsOneWidget);
+
+      await tester.pump(const Duration(seconds: 2));
+    }, timeout: const Timeout(Duration(minutes: 6)));
   });
 
   group('ofx_import', () {

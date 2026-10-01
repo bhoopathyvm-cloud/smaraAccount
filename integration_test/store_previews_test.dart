@@ -116,7 +116,7 @@ void main() {
     await fast.relaunchToHome();
     await fast.clip('tour_11_settings', () async {
       await slow.openSettings();
-      await slow.scrollSettingsTo(find.text(l10n.settingsRecovery));
+      await slow.scrollSettingsTo(find.text(l10n.settingsBackup));
       await slow.pause(2);
       await slow.scrollSettingsTo(find.text(l10n.settingsLock));
       await slow.pause(2);

@@ -143,6 +143,12 @@ void main() {
       await service.deleteStoredKey();
       expect(await service.loadStoredKeyMaterial(), isNull);
     });
+
+    test('is a no-op when no key is stored (first-launch restore)', () async {
+      storage.throwOnDeleteOfMissingKey = true;
+      await service.deleteStoredKey();
+      expect(await service.loadStoredKeyMaterial(), isNull);
+    });
   });
 
   group('books-set key namespacing', () {

@@ -170,16 +170,22 @@ class _BackupReminderBanner extends StatelessWidget {
             children: [
               Text(l10n.backupReminderBannerTitle, style: AppTypography.body),
               const SizedBox(height: AppSpacing.medium),
+              // Expanded: the app theme gives buttons an infinite minimum
+              // width (Size.fromHeight), which a bare Row can't lay out.
               Row(
                 children: [
-                  ElevatedButton(
-                    onPressed: onSaveCopy,
-                    child: Text(l10n.backupReminderSaveAction),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: onSaveCopy,
+                      child: Text(l10n.backupReminderSaveAction),
+                    ),
                   ),
                   const SizedBox(width: AppSpacing.small),
-                  TextButton(
-                    onPressed: () => onLater(),
-                    child: Text(l10n.backupReminderLaterAction),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () => onLater(),
+                      child: Text(l10n.backupReminderLaterAction),
+                    ),
                   ),
                 ],
               ),
