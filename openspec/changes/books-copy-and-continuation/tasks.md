@@ -63,7 +63,7 @@
 
 ## 9. CI
 
-- [ ] 9.1 `flutter-ci.yml` runs the new and updated unit/widget tests (`flutter test`); verify the PR's CI run is green
+- [x] 9.1 `flutter-ci.yml` runs the new and updated unit/widget tests (`flutter test`); verify the PR's CI run is green
 - [ ] 9.2 `acceptance-suite-nightly.yml` runs the renamed/new acceptance groups on Linux for its locale matrix; verify with a manual `workflow_dispatch` run that passes
 - [ ] 9.3 `localized-smoke.yml` covers the new strings via `curated_locale_smoke_test.dart` and `acceptance_locale_fixtures_test.dart`; verify the PR's run is green
 - [ ] 9.4 `linux-desktop.yml` still builds with the removed dependency and new code; verify the PR's run is green
