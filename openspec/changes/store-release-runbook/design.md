@@ -1,82 +1,132 @@
 ## Context
 
-See proposal.md for why. Today, Play closed-testing updates and TestFlight
-uploads are possible, but the procedure is split across
-`docs/release/checklist.md`, `docs/release/android-upload-keystore.md`,
-`CONTRIBUTING.md`, and archived launch-readiness notes. Current
-`pubspec.yaml` is `1.0.0+3`; build `3` was already uploaded for iOS, so
-any new runbook must treat build-number monotonicity as a hard rule.
+See proposal.md for why. Decisions below were settled in a grilling
+session (Q1–Q32) on 2026-09-27. Facts they rest on:
 
-Constraints: documentation-only; no automation of Play Console or App
-Store Connect; keep deep keystore material in the existing keystore doc.
+- iOS and macOS share one App Store Connect record and bundle id
+  `com.smaraaccounting.smaraAccounting` (team `PLUT6R5W2W`); Android is
+  `com.smaraaccounting.smara_accounting`.
+- `pubspec.yaml`'s `+N` drives iOS `CFBundleVersion`, macOS, and Android
+  `versionCode` together. Current: `1.0.0+3`, set in `4156b8b` (#178),
+  which produced the iOS build submitted for review and the Play upload.
+- A reused Apple build number can report `Upload succeeded` while no
+  build ever appears in App Store Connect (seen with iOS build 2).
+- Prior macOS App Store validator rejections, already fixed: error 90285
+  (`keychain-access-groups` entitlement), 90242 (missing
+  `LSApplicationCategoryType`), and the encryption-documentation prompt
+  (missing `ITSAppUsesNonExemptEncryption`).
+- `pub` accepts a zero-padded version such as `2026.09.0+4`.
+- `acceptance-suite-nightly.yml` now schedules weekly (`0 3 * * 0`).
 
 ## Goals / Non-Goals
 
 **Goals:**
-- One ordered runbook a release owner can follow without hunting archives.
-- Clear shared prep → Play → TestFlight structure with project-specific
-  paths, bundle id, and known failure modes.
-- Discoverability via checklist + CONTRIBUTING links.
+- One ordered runbook covering Play, iOS, and macOS end to end, with each
+  step marked 🤖 (command) or 👤 (console-only).
+- Defined versioning, tagging, and release-record conventions.
+- Maintained, reproducible English store-listing sources and screenshots.
 
 **Non-Goals:**
-- Automating uploads (fastlane, CI store deploy).
-- Changing signing configs, entitlements, or listing assets.
-- Replacing `localized-release-verification` gates or rewriting the
-  keystore enrollment history.
-- macOS App Store re-upload steps in this first cut (iOS TestFlight + Play
-  closed testing only), unless a short "out of scope / see prior notes"
-  pointer is useful.
+- Store automation (fastlane, App Store Connect / Play Developer APIs,
+  service-account keys). Apple uploads via `xcodebuild` are the only
+  scripted uploads.
+- Localized store listings or localized "What's new" (English only).
+- Changing signing configs, entitlements, or app code.
 
 ## Decisions
 
-### 1. Single runbook file at `docs/release/store-release-runbook.md`
+### 1. Single runbook, all three platforms, every release
+`docs/release/store-release-runbook.md`. Every release ships iOS, macOS,
+and Android with the same version and build (one codebase, one build
+number). The checklist stays the gate document; the keystore doc stays
+the Android signing deep-dive.
 
-**Alternatives:** fold into `checklist.md`; split Play vs Apple docs;
-live only in CONTRIBUTING.
+### 2. Calendar versioning `YYYY.MM.N`, shared monotonic build number
+Version is year, zero-padded month, and a per-month release counter
+starting at 0 (`2026.10.0`, `2026.10.1`, `2026.11.0`). The build number
+`+N` is shared by all stores and only ever increases across versions:
+next build = highest `v*` tag's build + 1; a number is never reused even
+if one store did not receive it. `2026.x` sorts above `1.0.0`, so
+Apple/Play ordering holds.
+- **Risk:** App Store Connect acceptance of a leading zero (`09`) is not
+  yet verified; the first release is `2026.10.0` (two-digit month), and
+  the runbook flags the first single-digit month release for checking.
 
-**Decision:** one dedicated runbook. The checklist stays the gate
-document; the keystore doc stays the signing deep-dive; CONTRIBUTING
-stays the pointer. Splitting Play/Apple would force the shared version-
-bump rules to be duplicated.
+### 3. Releases only from `main`; tags + GitHub Release as release record
+After both release gates pass on a `main` commit: 🤖 create annotated tag
+`v<version>+<build>` and a **draft** GitHub Release whose notes hold the
+gate evidence (workflow run URL, commit, macOS run result) and English
+release notes (from PRs merged since the previous tag). Upload only from
+that tagged commit. Publish the Release once all stores accept the build.
+A store rejection is fixed on `main` and shipped as a new build number.
+Backfill `v1.0.0+3` on `4156b8b`.
 
-### 2. Checklist style with copy-pasteable commands
+### 4. Locale gate: manual dispatch on the candidate
+The scheduled acceptance run is weekly, so the release owner always
+dispatches `acceptance-suite-nightly.yml` (`workflow_dispatch`, owner-only)
+on the candidate commit and requires all locale jobs green. macOS English
+baseline stays unchanged. Workflow display name becomes "Acceptance Suite
+Weekly"; filename unchanged to keep run-history and doc links.
 
-Numbered steps and fenced commands for `flutter build appbundle`, version
-bump location, and the Xcode/CLI archive path already proven in
-`app-store-launch-readiness` archives. Prefer "do this" over background
-essays; put pitfalls (reused `CFBundleVersion`, waiting for TestFlight
-processing) as callouts next to the step they affect.
+### 5. Apple: both CLI and Organizer paths, committed ExportOptions
+`ios/ExportOptions.plist` and `macos/ExportOptions.plist` (method
+`app-store-connect`, destination `upload`, team `PLUT6R5W2W`, automatic
+signing). CLI path: `flutter build ipa`/`xcodebuild archive` then
+`xcodebuild -exportArchive -exportOptionsPlist …`. Organizer path:
+Archive → Distribute App → App Store Connect → Upload. Wait for
+processing, then TestFlight groups, then submit for review.
+**Automatic release** after approval, **no phased release**.
 
-### 3. Link, don't duplicate, keystore and gate docs
+### 6. Play: closed testing, then staged production 20% → 100%
+Build the AAB, 👤 upload to the closed testing track and roll out to
+testers; then promote to production at 20%, and to 100% after 3 days.
+Stores are submitted independently (no cross-store sequencing).
 
-Play section: build + console rollout steps here; "first-time keystore /
-Play App Signing" → `android-upload-keystore.md`. Shared prep: "complete
-gates" → `checklist.md`.
+### 7. Store listing: maintained English sources and screenshot tool
+Move `store-listing-draft.md`, `app-privacy-draft.md`,
+`content-rating-and-data-safety-draft.md`, the Play icon/feature graphic,
+and all screenshot folders from the archived change into
+`docs/release/store-listing/` (screenshots under `screenshots/<class>/`,
+committed so listing changes are reviewable). The archive copy stays
+frozen. Promote `capture-screenshots.dart.reference` to
+`integration_test/store_screenshots_test.dart` (analyzed by
+`flutter analyze`; not invoked by `run_acceptance_tests.sh` or CI) with a
+`tool/capture_store_screenshots.sh -d <device> [-o <dir>]` wrapper.
+Each release runs a listing check: if Home, Register, Accounts, or
+Settings changed visually, or a feature named in the description
+changed, recapture every size class and update the text; if the privacy
+policy changed, re-cross-check the App Privacy / Data Safety answers.
 
-### 4. Document both Xcode and CLI for iOS
-
-Owners already used both. Xcode first for ease; CLI second with the
-`xcodebuild archive` / `-exportArchive` upload pattern from prior
-success. Bundle id: `com.smaraaccounting.smaraAccounting`.
+### 8. Store media: 19 screenshots, 3 Apple previews, one captioned tour
+Screenshots and previews are driven by shared GUI flows
+(`integration_test/store_media/`) and a host controller
+(`tool/store_media.py`) that reacts to `STORE_MEDIA` markers the test
+prints: `xcrun simctl io` / `adb` capture real device pixels with a clean
+status bar. Integration-test screenshots were rejected because on mobile
+they reach the host only when the test ends, so they cannot time a screen
+recording. Each automated class gets 19 screenshots in store-priority
+order (App Store max 10, Play max 8). iOS classes get three App Store
+previews (record, fix, invest; 15–30 s, exact preview resolution, 30 fps,
+silent AAC). One captioned 1920×1080 tour (11 chapters, status and nav
+bars cropped so it is platform-neutral) serves as the Play promo video
+via YouTube and is embedded on the website; the App Store text points to
+the website, never to YouTube/Android/Play (guideline 2.3.10). Captions
+are rendered with Pillow because Homebrew ffmpeg lacks `drawtext`.
+Videos are generated under `build/store_media/`, not committed.
 
 ## Risks / Trade-offs
 
-- **[Risk]** Console UI labels drift over time. → **Mitigation:** describe
-  intent ("Closed testing → Create new release") plus artifact paths that
-  do not change; revisit when a release owner hits a renamed screen.
-- **[Risk]** Runbook goes stale after the next version bump convention
-  change. → **Mitigation:** state the rule (monotonic `+N`), not a fixed
-  next number.
-- **[Trade-off]** Omitting macOS App Store upload keeps the first version
-  short; macOS can be a follow-up section later.
+- **[Risk]** Console UI labels drift. → Describe intent plus stable
+  artifact paths; fix the runbook when a renamed screen is hit.
+- **[Risk]** Screenshot test drifts from acceptance helpers. → It is
+  analyzed in CI, so helper API changes break it loudly.
+- **[Trade-off]** No phased Apple release: a regression reaches all Apple
+  users on approval; TestFlight is the only pre-release exposure.
+- **[Trade-off]** Screenshots are binary files in the repo (~28 small
+  PNGs); accepted for reviewable listing diffs.
 
 ## Migration Plan
 
-1. Add `docs/release/store-release-runbook.md`.
-2. Update `docs/release/checklist.md` platform steps and
-   `CONTRIBUTING.md` Store release section to link it.
-3. No runtime migration; rollback = delete the runbook and revert links.
-
-## Open Questions
-
-- None for this cut; macOS App Store steps deferred intentionally.
+1. Add runbook, ExportOptions files, listing directory, screenshot tool.
+2. Update checklist, CONTRIBUTING, docs wording, workflow display name.
+3. Tag `v1.0.0+3`. Rollback = revert the commits and delete the tag.
