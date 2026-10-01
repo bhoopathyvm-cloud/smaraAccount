@@ -1654,13 +1654,13 @@ void main() {
         );
         await pumpUntilFound(
           tester,
-          find.textContaining(staticPrefixOf(l10n.deviceHistoryContinuedOn)),
+          find.textContaining(staticTextOf(l10n.deviceHistoryContinuedOn)),
         );
         expect(
           find.descendant(
             of: find.byType(DeviceHistoryView),
             matching: find.textContaining(
-              staticPrefixOf(l10n.deviceHistoryContinuedOn),
+              staticTextOf(l10n.deviceHistoryContinuedOn),
             ),
           ),
           findsOneWidget,
@@ -1949,7 +1949,7 @@ void main() {
         await tester.tap(find.text(materialL10n(tester).okButtonLabel));
         await pumpUntilFound(
           tester,
-          find.textContaining(staticPrefixOf(l10n.lockedUntilDate)),
+          find.textContaining(staticTextOf(l10n.lockedUntilDate)),
         );
       }
       await tapReliably(
@@ -2336,13 +2336,13 @@ void main() {
           tester,
           () => find.widgetWithText(ElevatedButton, l10n.actionRecordSell),
           () => find
-              .textContaining(staticPrefixOf(l10n.errorLockedUntil))
+              .textContaining(staticTextOf(l10n.errorLockedUntil))
               .evaluate()
               .isNotEmpty,
           innerTries: 150,
         );
         expect(
-          find.textContaining(staticPrefixOf(l10n.errorLockedUntil)),
+          find.textContaining(staticTextOf(l10n.errorLockedUntil)),
           findsOneWidget,
         );
         await tapReliably(
@@ -3235,7 +3235,7 @@ void main() {
           passphrase: backupPassphrase,
           onReplaceWarningShown: () {
             expect(
-              find.textContaining(staticPrefixOf(l10n.replaceBooksWarning)),
+              find.textContaining(staticTextOf(l10n.replaceBooksWarning)),
               findsOneWidget,
               reason: 'the warning lists what will be replaced',
             );
@@ -4366,7 +4366,7 @@ void main() {
           },
         );
         expect(
-          find.textContaining(staticPrefixOf(l10n.homeRemaining)),
+          find.textContaining(staticTextOf(l10n.homeRemaining)),
           findsOneWidget,
         );
         expect(find.textContaining('40.00'), findsWidgets);
@@ -4550,9 +4550,13 @@ void main() {
       // button below it is still off-screen and not yet built.
       await scrollSettingsUntilVisible(
         tester,
-        find.text(l10n.settingsBooksSwitcherCreate),
+        find.text(l10n.settingsBooksSwitcher),
       );
       expect(find.text(l10n.settingsBooksSwitcher), findsOneWidget);
+      await scrollSettingsUntilVisible(
+        tester,
+        find.text(l10n.settingsBooksSwitcherCreate),
+      );
       expect(find.text(l10n.settingsBooksSwitcherCreate), findsWidgets);
       await tester.pump(const Duration(seconds: 2));
     }, timeout: const Timeout(Duration(minutes: 5)));

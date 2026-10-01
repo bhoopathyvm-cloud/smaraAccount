@@ -442,8 +442,15 @@ String localizedDay(String localeTag, int day) {
 /// "...until 2026-10-15." once a real date fills that gap - a real bug
 /// this suite's own full-locale run caught after seeming to work for
 /// `lockedUntilDate`, whose placeholder happens to be at the end).
-String staticPrefixOf(String Function(String) template) =>
-    template('￿').split('￿').first;
+///
+/// Returns the longest fixed part, not just the text before the placeholder:
+/// many languages put the placeholder first ("{date}에 ..." in Korean,
+/// "{date}にこの..." in Japanese), where the prefix is empty and would match
+/// every text on screen.
+String staticTextOf(String Function(String) template) {
+  final parts = template('￿').split('￿');
+  return parts.reduce((a, b) => b.trim().length > a.trim().length ? b : a);
+}
 
 /// Shell destinations on a wide window are a [NavigationRail] whose
 /// unselected labels are not hit-testable (`labelType: selected`). Tap the

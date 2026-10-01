@@ -1,5 +1,5 @@
+import '../../../core/date_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/home_overview.dart';
@@ -209,8 +209,7 @@ class _MembershipNoticeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = l10nOf(context);
-    final locale = Localizations.localeOf(context).toString();
-    final dateFormat = DateFormat.yMMMd(locale);
+    final dateFormat = mediumDateFormatFor(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.large,
