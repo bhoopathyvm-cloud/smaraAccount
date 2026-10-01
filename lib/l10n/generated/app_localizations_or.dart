@@ -573,6 +573,32 @@ class AppLocalizationsOr extends AppLocalizations {
       'ଏହି ଖର୍ଚ୍ଚ ବର୍ଗ ପାଇଁ ଏକ ଇଚ୍ଛାଧୀନ ମାସ-ପର୍ଯ୍ୟନ୍ତ ଖର୍ଚ୍ଚ ମାର୍ଗଦର୍ଶିକା।';
 
   @override
+  String get translateCategoryWithAi => 'Translate with AI';
+
+  @override
+  String get addCategoryTranslation => 'Add translation';
+
+  @override
+  String get categoryTranslationLocale => 'Language';
+
+  @override
+  String get categoryTranslationName => 'Translated name';
+
+  @override
+  String get mergeCategories => 'Merge categories';
+
+  @override
+  String get mergeCategoriesSuggested =>
+      'These categories look the same. Merge them?';
+
+  @override
+  String get categoryDefaultLanguage => 'Default language for category names';
+
+  @override
+  String get categoryDefaultLanguageSubtitle =>
+      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+
+  @override
   String get manageCategoryRules => 'ବର୍ଗ ନିୟମ ପରିଚାଳନା କରନ୍ତୁ';
 
   @override

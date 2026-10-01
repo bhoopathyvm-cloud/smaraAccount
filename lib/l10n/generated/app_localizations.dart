@@ -1236,6 +1236,54 @@ abstract class AppLocalizations {
   /// **'An optional month-to-date spending guide for this expense category.'**
   String get monthlyLimitBlurb;
 
+  /// No description provided for @translateCategoryWithAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate with AI'**
+  String get translateCategoryWithAi;
+
+  /// No description provided for @addCategoryTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add translation'**
+  String get addCategoryTranslation;
+
+  /// No description provided for @categoryTranslationLocale.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get categoryTranslationLocale;
+
+  /// No description provided for @categoryTranslationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Translated name'**
+  String get categoryTranslationName;
+
+  /// No description provided for @mergeCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge categories'**
+  String get mergeCategories;
+
+  /// No description provided for @mergeCategoriesSuggested.
+  ///
+  /// In en, this message translates to:
+  /// **'These categories look the same. Merge them?'**
+  String get mergeCategoriesSuggested;
+
+  /// No description provided for @categoryDefaultLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Default language for category names'**
+  String get categoryDefaultLanguage;
+
+  /// No description provided for @categoryDefaultLanguageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared across linked devices. Each device still shows its own language when a translation exists.'**
+  String get categoryDefaultLanguageSubtitle;
+
   /// No description provided for @manageCategoryRules.
   ///
   /// In en, this message translates to:

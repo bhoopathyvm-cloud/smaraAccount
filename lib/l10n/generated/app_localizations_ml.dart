@@ -579,6 +579,32 @@ class AppLocalizationsMl extends AppLocalizations {
       'ഈ ചെലവ് വിഭാഗത്തിന് ഒരു ഓപ്ഷണൽ മാസം-തുടങ്ങി-ഇന്നുവരെയുള്ള ചെലവ് സൂചകം.';
 
   @override
+  String get translateCategoryWithAi => 'Translate with AI';
+
+  @override
+  String get addCategoryTranslation => 'Add translation';
+
+  @override
+  String get categoryTranslationLocale => 'Language';
+
+  @override
+  String get categoryTranslationName => 'Translated name';
+
+  @override
+  String get mergeCategories => 'Merge categories';
+
+  @override
+  String get mergeCategoriesSuggested =>
+      'These categories look the same. Merge them?';
+
+  @override
+  String get categoryDefaultLanguage => 'Default language for category names';
+
+  @override
+  String get categoryDefaultLanguageSubtitle =>
+      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+
+  @override
   String get manageCategoryRules => 'വിഭാഗ നിയമങ്ങൾ കൈകാര്യം ചെയ്യുക';
 
   @override

@@ -575,6 +575,32 @@ class AppLocalizationsSa extends AppLocalizations {
       'अस्य व्ययवर्गस्य कृते मासारभ्य अद्यपर्यन्तव्ययस्य ऐच्छिकः निर्देशकः।';
 
   @override
+  String get translateCategoryWithAi => 'Translate with AI';
+
+  @override
+  String get addCategoryTranslation => 'Add translation';
+
+  @override
+  String get categoryTranslationLocale => 'Language';
+
+  @override
+  String get categoryTranslationName => 'Translated name';
+
+  @override
+  String get mergeCategories => 'Merge categories';
+
+  @override
+  String get mergeCategoriesSuggested =>
+      'These categories look the same. Merge them?';
+
+  @override
+  String get categoryDefaultLanguage => 'Default language for category names';
+
+  @override
+  String get categoryDefaultLanguageSubtitle =>
+      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+
+  @override
   String get manageCategoryRules => 'वर्गनियमानां व्यवस्थापनम्';
 
   @override

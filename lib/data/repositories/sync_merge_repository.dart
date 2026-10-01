@@ -208,7 +208,8 @@ class SyncMergeRepository implements SyncLedgerView {
   }
 
   /// Applies MetadataOps with per-field LWW. Settings ops only apply when the
-  /// field is a books setting (task 6.5).
+  /// field is a books setting (task 6.5). Category translation ops persist to
+  /// `category_translations` (shared-categories task 7.1).
   Future<List<MetadataOperation>> applyMetadataOps(MetadataOps ops) async {
     final filtered = <MetadataOperation>[];
     for (final op in ops.operations) {
@@ -225,7 +226,58 @@ class SyncMergeRepository implements SyncLedgerView {
     metadataState
       ..clear()
       ..addEntries(merged.map((o) => MapEntry(MetadataLww.fieldKey(o), o)));
+
+    for (final op in merged) {
+      await _persistMetadataOp(op);
+    }
     return merged;
+  }
+
+  Future<void> _persistMetadataOp(MetadataOperation op) async {
+    switch (op.entityType) {
+      case 'settings':
+        if (op.field == 'defaultCategoryLocale' && op.value is String) {
+          final row = await (_db.select(
+            _db.booksSetMetadata,
+          )..limit(1)).getSingleOrNull();
+          if (row != null) {
+            await (_db.update(
+              _db.booksSetMetadata,
+            )..where((t) => t.id.equals(row.id))).write(
+              BooksSetMetadataCompanion(
+                defaultCategoryLocale: Value(op.value! as String),
+              ),
+            );
+          }
+        }
+      case 'category_translation':
+        final name = op.value;
+        if (name is! String || name.trim().isEmpty) return;
+        await _db
+            .into(_db.categoryTranslations)
+            .insertOnConflictUpdate(
+              CategoryTranslationsCompanion.insert(
+                categoryId: op.entityId,
+                locale: op.field,
+                name: name.trim(),
+                updatedAt: op.updatedAt,
+              ),
+            );
+      case 'category_merge':
+        final survivorId = op.value;
+        if (survivorId is! String || survivorId.isEmpty) return;
+        await _db
+            .into(_db.categoryMergeMap)
+            .insertOnConflictUpdate(
+              CategoryMergeMapCompanion.insert(
+                absorbedCategoryId: op.entityId,
+                survivorCategoryId: survivorId,
+                mergedAt: op.updatedAt,
+              ),
+            );
+      default:
+        break;
+    }
   }
 
   Future<JournalEntryRow?> _findDuplicate({

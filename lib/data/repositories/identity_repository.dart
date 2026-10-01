@@ -93,9 +93,14 @@ class IdentityRepository {
   ///
   /// [currency] (ISO 4217, e.g. 'USD') is chosen during onboarding and
   /// applied to all starter groups.
+  ///
+  /// Pass [seedStarterCategories]: false when linking into existing books
+  /// (QR / approved join) so New-setup starters are not inserted
+  /// (shared-categories task 7.4).
   Future<SigningIdentity> confirmFirstIdentity(
     GeneratedIdentity generated, {
     required String currency,
+    bool seedStarterCategories = true,
   }) async {
     late IdentityRow row;
     await _db.transaction(() async {
@@ -109,7 +114,10 @@ class IdentityRepository {
           );
       await _chain.loadState();
       await _chain.ensureIdentityTip(row.identityId);
-      await _requireAccountRepository().seedOnboardingBooks(currency: currency);
+      await _requireAccountRepository().seedOnboardingBooks(
+        currency: currency,
+        seedStarterCategories: seedStarterCategories,
+      );
     });
     return _toDomainIdentity(row);
   }

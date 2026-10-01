@@ -42,16 +42,16 @@
 
 ## 7. Shared categories
 
-- [ ] 7.1 Category default language (books setting) + `category_translations` CRUD; display prefers app-locale translation then default — verify unit and widget tests for fallback and translation sync via MetadataOps
-- [ ] 7.2 "Translate with AI" handoff passes only the category name through the Research Tool path — verify unit test that the prompt/clipboard payload contains only that text
-- [ ] 7.3 Automatic merge on same name+type across languages, suggested merge when a translation matches, manual "Merge categories"; UI/totals use merge map; postings keep original ids — verify merge tests and that entry hashes still verify
-- [ ] 7.4 Joining device skips starter categories (`seedStarterCategories: false`) and uses received catalog — verify join/onboarding test that starters are not inserted on successful link into existing books
+- [x] 7.1 Category default language (books setting) + `category_translations` CRUD; display prefers app-locale translation then default — verify unit and widget tests for fallback and translation sync via MetadataOps
+- [x] 7.2 "Translate with AI" handoff passes only the category name through the Research Tool path — verify unit test that the prompt/clipboard payload contains only that text
+- [x] 7.3 Automatic merge on same name+type across languages, suggested merge when a translation matches, manual "Merge categories"; UI/totals use merge map; postings keep original ids — verify merge tests and that entry hashes still verify
+- [x] 7.4 Joining device skips starter categories (`seedStarterCategories: false`) and uses received catalog — verify join/onboarding test that starters are not inserted on successful link into existing books
 
 ## 8. Platform permissions, privacy, sandbox
 
-- [ ] 8.1 iOS/macOS Info.plist local-network usage strings and Bonjour entitlements; Android local-network/nearby permissions as required — verify plist/entitlements/manifest contain the declarations and match the in-app sentence
-- [ ] 8.2 Update privacy policy page for LAN discovery/sync (nothing leaves the LAN; no server) and keep ios-privacy-compliance declarations consistent — verify a doc review checklist / grep that policy mentions Linked devices LAN sync
-- [ ] 8.3 macOS sandbox entitlements include minimum Bonjour/local-network client rights; confirm sandboxed build still saves Books Copies — verify entitlements file and existing sandbox file-export scenarios still apply
+- [x] 8.1 iOS/macOS Info.plist local-network usage strings and Bonjour entitlements; Android local-network/nearby permissions as required — verify plist/entitlements/manifest contain the declarations and match the in-app sentence
+- [x] 8.2 Update privacy policy page for LAN discovery/sync (nothing leaves the LAN; no server) and keep ios-privacy-compliance declarations consistent — verify a doc review checklist / grep that policy mentions Linked devices LAN sync
+- [x] 8.3 macOS sandbox entitlements include minimum Bonjour/local-network client rights; confirm sandboxed build still saves Books Copies — verify entitlements file and existing sandbox file-export scenarios still apply
 
 ## 9. Dual-device harness and acceptance
 

@@ -11,11 +11,30 @@ import '../../../../mocks.mocks.dart';
 // Mocks the Repository rather than using a real Drift database: see
 // register_view_test.dart's file comment for why testWidgets + real
 // native DB I/O hangs indefinitely instead of settling.
+
+void stubCategoryRepositoryExtras(MockCategoryRepository repository) {
+  when(repository.defaultCategoryLocale()).thenAnswer((_) async => 'en');
+  when(
+    repository.displayNameFor(any, appLocale: anyNamed('appLocale')),
+  ).thenAnswer((invocation) async {
+    final account = invocation.positionalArguments.first as Account;
+    return account.name;
+  });
+  when(repository.suggestedMerges()).thenAnswer((_) async => const []);
+  when(
+    repository.watchCategoryTotals(
+      start: anyNamed('start'),
+      end: anyNamed('end'),
+    ),
+  ).thenAnswer((_) => Stream.value(const <CategoryTotal>[]));
+}
+
 void main() {
   testWidgets(
     'archived categories stay visible without rename/archive actions',
     (tester) async {
       final repository = MockCategoryRepository();
+      stubCategoryRepositoryExtras(repository);
       when(
         repository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
@@ -70,6 +89,7 @@ void main() {
     tester,
   ) async {
     final repository = MockCategoryRepository();
+    stubCategoryRepositoryExtras(repository);
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer(
@@ -107,6 +127,7 @@ void main() {
     tester,
   ) async {
     final repository = MockCategoryRepository();
+    stubCategoryRepositoryExtras(repository);
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer(
@@ -159,6 +180,7 @@ void main() {
       'shows none',
       (tester) async {
         final repository = MockCategoryRepository();
+        stubCategoryRepositoryExtras(repository);
         when(
           repository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
@@ -209,6 +231,7 @@ void main() {
       tester,
     ) async {
       final repository = MockCategoryRepository();
+      stubCategoryRepositoryExtras(repository);
       when(
         repository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
@@ -247,6 +270,7 @@ void main() {
       'setting a limit through the dialog calls through to the repository',
       (tester) async {
         final repository = MockCategoryRepository();
+        stubCategoryRepositoryExtras(repository);
         when(
           repository.watchCategories(
             includeArchived: anyNamed('includeArchived'),
@@ -288,6 +312,7 @@ void main() {
       tester,
     ) async {
       final repository = MockCategoryRepository();
+      stubCategoryRepositoryExtras(repository);
       when(
         repository.watchCategories(
           includeArchived: anyNamed('includeArchived'),
@@ -323,6 +348,7 @@ void main() {
       'repository',
       (tester) async {
         final repository = MockCategoryRepository();
+        stubCategoryRepositoryExtras(repository);
         when(
           repository.watchCategories(
             includeArchived: anyNamed('includeArchived'),

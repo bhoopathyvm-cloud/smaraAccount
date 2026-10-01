@@ -568,6 +568,32 @@ class AppLocalizationsKo extends AppLocalizations {
   String get monthlyLimitBlurb => '이 지출 분류에 대한 이번 달 누적 지출 가이드로, 선택 사항입니다.';
 
   @override
+  String get translateCategoryWithAi => 'Translate with AI';
+
+  @override
+  String get addCategoryTranslation => 'Add translation';
+
+  @override
+  String get categoryTranslationLocale => 'Language';
+
+  @override
+  String get categoryTranslationName => 'Translated name';
+
+  @override
+  String get mergeCategories => 'Merge categories';
+
+  @override
+  String get mergeCategoriesSuggested =>
+      'These categories look the same. Merge them?';
+
+  @override
+  String get categoryDefaultLanguage => 'Default language for category names';
+
+  @override
+  String get categoryDefaultLanguageSubtitle =>
+      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+
+  @override
   String get manageCategoryRules => '분류 규칙 관리';
 
   @override

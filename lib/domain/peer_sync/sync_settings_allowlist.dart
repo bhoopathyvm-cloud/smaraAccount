@@ -12,6 +12,7 @@ class SyncSettingsAllowlist {
     'quoteProvider',
     'defaultExchange',
     'firstWeekSetupCompleted',
+    'defaultCategoryLocale',
   };
 
   /// Device-only keys that must never apply from a peer.
