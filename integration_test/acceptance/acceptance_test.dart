@@ -27,6 +27,7 @@ import 'package:smara_accounting/ui/features/recurring_template_management/views
 import 'package:smara_accounting/ui/features/register/views/register_row_tile.dart';
 import 'package:smara_accounting/ui/features/register/views/register_view.dart';
 import 'package:smara_accounting/ui/features/continuation/views/continuation_view.dart';
+import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/ui/features/settings/views/device_history_view.dart';
 import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -3115,6 +3116,12 @@ void main() {
         name: fileName,
         bytes: bytes,
       );
+      // A reset wipes the language preference, and a restore never brings
+      // one (it is a device setting). Model a new phone already set to the
+      // run's language, so the first-launch screen speaks it.
+      if (kAcceptanceLocaleTag != 'en') {
+        await SettingsRepository().setPreferredLocaleTag(kAcceptanceLocaleTag);
+      }
       await pumpSmaraApp(tester);
       await tester.pump();
       await pumpUntilFound(tester, find.byType(SetupChoiceView));
