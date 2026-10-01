@@ -64,15 +64,19 @@
   <!-- 2026-10-01: store tests use pumpSmaraApp (ActiveBooksSession) and capture `14_books_copy` (Settings → Books copy) instead of the recovery screen; `tool/capture_store_screenshots.sh -c iphone-6.9in` on the iPhone 17 Pro Max simulator wrote all 19 shots. -->
 - [x] 8.10 Run the full acceptance suite after the refactor, per CLAUDE.md: `tool/run_acceptance_tests.sh -d macos`; verify all groups pass
   <!-- 2026-10-01: `tool/run_acceptance_tests.sh -d macos` — 45 passed, 1 skipped (manual linked_devices_physical). Also on Android SM X230: onboarding, identity_restore, home_and_lock pass; books_copy 4/5 (first-launch restore case fails on Android only — in-process reset leaves the active books-set pointer; open). -->
-- [ ] 8.10a Android: the `books_copy` acceptance case "restore on first launch" fails on Android (4 of 5 pass) because the in-process device reset keeps the active books-set pointer; fix the harness (or app) so the case passes, or prove it is harness-only with a real fresh-install run; verify `tool/run_acceptance_tests.sh -d <android-device> books_copy` passes 5/5
-- [ ] 8.11 Run the localized acceptance runner (`tool/run_localized_acceptance_tests.sh -d macos books_copy`) and the suite for one non-Latin and one right-to-left locale (`tool/run_acceptance_tests.sh -d macos -l hi` and `-l ar`); verify all pass
+- [x] 8.10a Android: the `books_copy` acceptance case "restore on first launch" fails on Android (4 of 5 pass) because the in-process device reset keeps the active books-set pointer; fix the harness (or app) so the case passes, or prove it is harness-only with a real fresh-install run; verify `tool/run_acceptance_tests.sh -d <android-device> books_copy` passes 5/5
+  <!-- 2026-10-01: passes 5/5 on the Android tablet (SM X230, Android 16) in all 9 curated locales (ar, ur, hi, ja, zh, ko, fr, de, as) via `tool/run_localized_acceptance_tests.sh -d RZGL42CPNGP books_copy`, after the restore test models a phone already set to the run's language (#216). -->
+- [x] 8.11 Run the localized acceptance runner (`tool/run_localized_acceptance_tests.sh -d macos books_copy`) and the suite for one non-Latin and one right-to-left locale (`tool/run_acceptance_tests.sh -d macos -l hi` and `-l ar`); verify all pass
+  <!-- 2026-10-01 on macOS: `run_localized_acceptance_tests.sh -d macos books_copy` passed 8/9 locales; ja failed only after macOS reported 'Failed to foreground app' and passed 5/5 on rerun. `run_acceptance_tests.sh -d macos -l hi`: 45 passed, 1 skipped (manual linked_devices_physical); `-l ar`: 45 passed, 1 skipped. The same suites on the Android tablet found keyboard-overflow bugs in seven dialogs, fixed in this PR (see 8.11a). -->
+- [ ] 8.11a Android tablet, full suite in hi and ar: re-run `tool/run_acceptance_tests.sh -d RZGL42CPNGP -l hi` and `-l ar` after the dialog scroll fix and record the results (before the fix: 41-42 passed, 3-4 failed on RenderFlex overflows in Edit group, category and statement-import dialogs)
 - [ ] 8.12 Device runs for the keychain/Keystore change: on an iOS device or simulator and on Android, install the previous release, record entries, update to this build, and confirm the key is re-saved and books keep verifying; then reset keychain only and confirm Continuation; record results in this task
 
 ## 9. CI
 
 - [x] 9.1 `flutter-ci.yml` runs the new and updated unit/widget tests (`flutter test`); verify the PR's CI run is green
 - [ ] 9.2 `acceptance-suite-nightly.yml` runs the renamed/new acceptance groups on Linux for its locale matrix; verify with a manual `workflow_dispatch` run that passes
-- [ ] 9.3 `localized-smoke.yml` covers the new strings via `curated_locale_smoke_test.dart` and `acceptance_locale_fixtures_test.dart`; verify the PR's run is green
+- [x] 9.3 `localized-smoke.yml` covers the new strings via `curated_locale_smoke_test.dart` and `acceptance_locale_fixtures_test.dart`; verify the PR's run is green
+  <!-- 2026-10-01: Localized Smoke workflow_dispatch on the #216 branch (run 36896024181) completed successfully. -->
 - [ ] 9.4 `linux-desktop.yml` still builds with the removed dependency and new code; verify the PR's run is green
 
 ## 10. Documentation
