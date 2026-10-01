@@ -14,6 +14,10 @@ class InMemorySecureKeyStorage implements SecureKeyStorage {
   /// the existing key still succeeds, then the re-save read-back fails.
   bool corruptReadBackAfterWrite = false;
 
+  /// When true, [delete] of a key that isn't stored throws, like the
+  /// macOS legacy Keychain does (errSecMissingEntitlement, -34018).
+  bool throwOnDeleteOfMissingKey = false;
+
   int writeCount = 0;
   int _writesSinceCorruptFlag = 0;
 
@@ -43,5 +47,10 @@ class InMemorySecureKeyStorage implements SecureKeyStorage {
   }
 
   @override
-  Future<void> delete(String key) async => _values.remove(key);
+  Future<void> delete(String key) async {
+    if (throwOnDeleteOfMissingKey && !_values.containsKey(key)) {
+      throw StateError('no keychain item for $key');
+    }
+    _values.remove(key);
+  }
 }

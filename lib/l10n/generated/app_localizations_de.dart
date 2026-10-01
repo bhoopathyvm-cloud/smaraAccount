@@ -850,81 +850,84 @@ class AppLocalizationsDe extends AppLocalizations {
   String get whatsMainAccountCalled => 'Wie heißt Ihr Hauptkonto?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Willkommen bei Smara Buchhaltung';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Neu anfangen oder von einem anderen Gerät umziehen?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Neu einrichten';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'Meine Bücher auf diesem Telefon fortführen';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'Diese Bücher sind ohne ihren Signierschlüssel auf diesem Telefon angekommen. Sie können sie mit einem neuen Schlüssel für dieses Telefon fortführen oder stattdessen aus einer gespeicherten Kopie wiederherstellen.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction =>
+      'Meine Bücher auf diesem Telefon fortführen';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'Aus einer Kopie wiederherstellen';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'Eine Kopie meiner Bücher speichern';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'Geräteverlauf';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'Noch keine Fortführungen. Wenn Sie Bücher auf einem neuen Telefon fortführen, erscheinen sie hier.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'Ihre Bücher wurden am $date auf diesem Telefon fortgeführt';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'Ihre Bücher wurden am $continuedDate auf diesem Telefon fortgeführt (aus einer Kopie vom $copyDate)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle =>
+      'Speichern Sie eine Kopie Ihrer Bücher';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'Kopie speichern';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'Später';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'Kopie-Erinnerung';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'Wir erinnern Sie nach einiger Zeit oder nach vielen neuen Einträgen daran, eine Kopie Ihrer Bücher zu speichern. Eine gespeicherte Kopie ist der einzige Weg, Ihre Bücher wiederherzustellen, wenn dieses Telefon verloren geht.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled =>
+      'An das Speichern einer Kopie erinnern';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'Erinnern nach so vielen Tagen';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'Erinnern nach so vielen neuen Einträgen';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      'Nach „Später“ so viele Tage ausblenden';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      'Nach „Später“ für so viele neue Einträge ausblenden';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2090,54 +2093,54 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'Dadurch werden alle Einträge und die Einstellungen der Bücher auf diesem Telefon ersetzt ($counts). Es wird nichts zusammengeführt. Ihre Sprache und Entsperr-Einstellungen bleiben auf diesem Telefon.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'Zuerst eine Kopie speichern';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count Einträge';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count Konten';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count Kategorien';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count Kontogruppen';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count Zahlungsempfänger';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count Kategorieregeln';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count Importprofile';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count wiederkehrende Vorlagen';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count Wertpapiere';
   }
 }

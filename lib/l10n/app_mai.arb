@@ -410,17 +410,17 @@
   "firstAccountTitle": "अपन खाताक नाम राखू",
   "firstAccountBlurb": "ई अहाँक लेल पहिने सँ सेटअप कएल गेल खाता अछि - एकरा एहन नाम दिअ जकरा अहाँ पहिचानू, जेना अपन बैंक। अहाँ आब एकटा खर्च वा प्राप्त दर्ज करब, फेर अपन रिकवरी वाक्यांश सँ डिवाइस सुरक्षित करब।",
   "whatsMainAccountCalled": "अहाँक मुख्य खाताक नाम की अछि?",
-  "setupChoiceTitle": "Welcome to Smara Accounting",
-  "setupChoiceBlurb": "Starting fresh, or moving from another device?",
-  "actionNewSetup": "New setup",
-  "continueBooksTitle": "Continue my books on this phone",
-  "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
-  "continueBooksAction": "Continue my books on this phone",
-  "restoreFromCopyAction": "Restore from a copy",
-  "saveBooksCopyAction": "Save a copy of my books",
-  "deviceHistoryTitle": "Device history",
-  "deviceHistoryEmpty": "No Continuations yet. When you continue books on a new phone, they will show up here.",
-  "deviceHistoryContinuedOn": "Your books continued on this phone on {date}",
+  "setupChoiceTitle": "स्मारा खाता मे अहाँक स्वागत अछि",
+  "setupChoiceBlurb": "नव शुरुआत, वा दोसर डिवाइस सँ आबि रहल छी?",
+  "actionNewSetup": "नव सेटअप",
+  "continueBooksTitle": "एहि फोन पर हमर बही जारी राखू",
+  "continueBooksBlurb": "ई बही अपन हस्ताक्षर कुंजी बिना एहि फोन पर आएल अछि। अहाँ एहि फोनक नव कुंजी संग एकरा जारी राखि सकैत छी, वा एकर बदला सहेजल प्रति सँ पुनर्स्थापित क'' सकैत छी।",
+  "continueBooksAction": "एहि फोन पर हमर बही जारी राखू",
+  "restoreFromCopyAction": "प्रति सँ पुनर्स्थापित करू",
+  "saveBooksCopyAction": "हमर बहीक प्रति सहेजू",
+  "deviceHistoryTitle": "डिवाइस इतिहास",
+  "deviceHistoryEmpty": "एखन धरि कोनो निरंतरता नहि। नव फोन पर बही जारी राखब तँ एतय देखाएत।",
+  "deviceHistoryContinuedOn": "अहाँक बही {date} केँ एहि फोन पर जारी राखल गेल",
   "@deviceHistoryContinuedOn": {
     "placeholders": {
       "date": {
@@ -428,7 +428,7 @@
       }
     }
   },
-  "deviceHistoryContinuedFromCopy": "Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})",
+  "deviceHistoryContinuedFromCopy": "अहाँक बही {continuedDate} केँ एहि फोन पर जारी राखल गेल ({copyDate} केँ सहेजल प्रति सँ)",
   "@deviceHistoryContinuedFromCopy": {
     "placeholders": {
       "continuedDate": {
@@ -439,16 +439,16 @@
       }
     }
   },
-  "backupReminderBannerTitle": "Save a copy of your books",
-  "backupReminderSaveAction": "Save a copy",
-  "backupReminderLaterAction": "Later",
-  "settingsBackupReminder": "Copy reminder",
-  "settingsBackupReminderBlurb": "We''ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.",
-  "settingsBackupReminderEnabled": "Remind me to save a copy",
-  "settingsBackupReminderDays": "Remind after this many days",
-  "settingsBackupReminderEntries": "Remind after this many new entries",
-  "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "backupReminderBannerTitle": "अपन बहीक प्रति सहेजू",
+  "backupReminderSaveAction": "प्रति सहेजू",
+  "backupReminderLaterAction": "बादमे",
+  "settingsBackupReminder": "प्रति स्मरण",
+  "settingsBackupReminderBlurb": "किछु समयक बाद वा बहुत नव प्रविष्टिक बाद हम अहाँकेँ बहीक प्रति सहेजबाक याद दिआएब। ई फोन हेरा जाए तँ बही वापस पएबाक एकमात्र उपाय सहेजल प्रति अछि।",
+  "settingsBackupReminderEnabled": "प्रति सहेजबाक याद दिआउ",
+  "settingsBackupReminderDays": "एतेक दिनक बाद याद दिआउ",
+  "settingsBackupReminderEntries": "एतेक नव प्रविष्टिक बाद याद दिआउ",
+  "settingsBackupReminderSnoozeDays": "''बादमे'' क बाद एतेक दिन नुकाउ",
+  "settingsBackupReminderSnoozeEntries": "''बादमे'' क बाद एतेक नव प्रविष्टि धरि नुकाउ",
   "whyWeDontEdit": "हमसभ किएक पुरान प्रविष्टि संपादित नहि करैत छी",
   "whyWeDontEditBody": "जखन अहाँ कोनो गलती ठीक करैत छी, हमसभ पुरान लाइन राखैत छी आ ओकर बगल मे एकटा सुधार जोड़ैत छी, अहाँ जे पहिने सँ दर्ज कएने छी ओकरा बदलबाक बजाय। एहि तरहें अहाँक इतिहास सदिखन ठीक-ठीक देखबैत अछि जे की भेल आ अहाँ कहिया सुधारल - किछु सेहो अहाँक पाछू चुपचाप नहि बदलैत अछि।",
   "lockTitle": "अनलॉक",
@@ -1076,7 +1076,7 @@
   "confirmListingSkip": "Skip — save as typed",
   "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
   "booksCopyPassphrase": "पासफ्रेज",
-  "replaceBooksWarning": "This will replace all entries and the books'' settings on this phone ({counts}). It does not merge. Your language and unlock settings stay on this phone.",
+  "replaceBooksWarning": "एहि सँ एहि फोनक सभ प्रविष्टि आ बहीक सेटिंग बदलि जाएत ({counts})। किछु मिलाओल नहि जाएत। अहाँक भाषा आ अनलॉक सेटिंग एहि फोन पर रहत।",
   "@replaceBooksWarning": {
     "placeholders": {
       "counts": {
@@ -1084,8 +1084,8 @@
       }
     }
   },
-  "saveCopyFirstAction": "Save a copy first",
-  "replaceCountEntries": "{count} entries",
+  "saveCopyFirstAction": "पहिने प्रति सहेजू",
+  "replaceCountEntries": "{count} प्रविष्टि",
   "@replaceCountEntries": {
     "placeholders": {
       "count": {
@@ -1093,7 +1093,7 @@
       }
     }
   },
-  "replaceCountAccounts": "{count} accounts",
+  "replaceCountAccounts": "{count} खाता",
   "@replaceCountAccounts": {
     "placeholders": {
       "count": {
@@ -1101,7 +1101,7 @@
       }
     }
   },
-  "replaceCountCategories": "{count} categories",
+  "replaceCountCategories": "{count} श्रेणी",
   "@replaceCountCategories": {
     "placeholders": {
       "count": {
@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "replaceCountGroups": "{count} account groups",
+  "replaceCountGroups": "{count} खाता समूह",
   "@replaceCountGroups": {
     "placeholders": {
       "count": {
@@ -1117,7 +1117,7 @@
       }
     }
   },
-  "replaceCountPayees": "{count} payees",
+  "replaceCountPayees": "{count} प्राप्तकर्ता",
   "@replaceCountPayees": {
     "placeholders": {
       "count": {
@@ -1125,7 +1125,7 @@
       }
     }
   },
-  "replaceCountCategoryRules": "{count} category rules",
+  "replaceCountCategoryRules": "{count} श्रेणी नियम",
   "@replaceCountCategoryRules": {
     "placeholders": {
       "count": {
@@ -1133,7 +1133,7 @@
       }
     }
   },
-  "replaceCountCsvProfiles": "{count} import profiles",
+  "replaceCountCsvProfiles": "{count} आयात प्रोफाइल",
   "@replaceCountCsvProfiles": {
     "placeholders": {
       "count": {
@@ -1141,7 +1141,7 @@
       }
     }
   },
-  "replaceCountRecurringTemplates": "{count} recurring templates",
+  "replaceCountRecurringTemplates": "{count} आवर्ती टेम्पलेट",
   "@replaceCountRecurringTemplates": {
     "placeholders": {
       "count": {
@@ -1149,7 +1149,7 @@
       }
     }
   },
-  "replaceCountInstruments": "{count} instruments",
+  "replaceCountInstruments": "{count} निवेश साधन",
   "@replaceCountInstruments": {
     "placeholders": {
       "count": {

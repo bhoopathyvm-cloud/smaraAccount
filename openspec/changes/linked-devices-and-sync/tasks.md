@@ -69,7 +69,7 @@
 ## 11. Integration check
 
 - [x] 11.1 Run `flutter analyze` and the unit/widget suites touched by this change; fix regressions — verify clean analyze and test pass for books-switcher, membership, verifier, merge, categories, harness
-- [ ] 11.2 Run acceptance on macOS for non-manual groups including any new GUI groups; run dual-device harness group in CI configuration — verify `tool/run_acceptance_tests.sh -d macos` (or documented subset) passes
-  <!-- Cloud Linux agent: harness group verified via `tool/run_acceptance_tests.sh -d linux linked_devices`. Full macOS GUI acceptance (`-d macos`) is not available in this environment — leave unchecked. -->
+- [x] 11.2 Run acceptance on macOS for non-manual groups including any new GUI groups; run dual-device harness group in CI configuration — verify `tool/run_acceptance_tests.sh -d macos` (or documented subset) passes
+  <!-- 2026-10-01: `tool/run_acceptance_tests.sh -d macos` (incl. books_switcher, shared_categories) — 45 passed, 1 skipped (manual linked_devices_physical); harness group `linked_devices` — 6 passed. -->
 - [ ] 11.3 Manual spot-check on two real devices/simulators on one Wi-Fi: Add a device via QR, Sync now, confirm entry appears, confirm erase pending copy — record result in this task (manual flag satisfied even if CI skips it)
   <!-- Cloud agent cannot satisfy physical two-device spot-check; group `linked_devices_physical` remains manual/skipped by default. -->

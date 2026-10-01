@@ -253,7 +253,7 @@ class CategoryManagementView extends StatelessWidget {
                   for (final c in categories)
                     DropdownMenuItem(
                       value: c,
-                      child: Text(viewModel.displayNameFor(c)),
+                      child: Text(viewModel.displayNameFor(c, l10n)),
                     ),
                 ],
                 onChanged: (value) => setDialogState(() => survivor = value),
@@ -266,7 +266,7 @@ class CategoryManagementView extends StatelessWidget {
                   for (final c in categories)
                     DropdownMenuItem(
                       value: c,
-                      child: Text(viewModel.displayNameFor(c)),
+                      child: Text(viewModel.displayNameFor(c, l10n)),
                     ),
                 ],
                 onChanged: (value) => setDialogState(() => absorbed = value),
@@ -429,7 +429,7 @@ class CategoryManagementView extends StatelessWidget {
                 child: ListTile(
                   leading: Icon(TablerIcons.tag, color: AppColors.textPrimary),
                   title: Text(
-                    viewModel.displayNameFor(category),
+                    viewModel.displayNameFor(category, l10n),
                     style: AppTypography.cardTitle,
                   ),
                   subtitle: Column(

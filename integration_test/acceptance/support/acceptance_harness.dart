@@ -1,18 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smara_accounting/data/books_set/active_books_session.dart';
+import 'package:smara_accounting/data/books_set/books_set_paths.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
+import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:smara_accounting/l10n/locale_endonyms.dart';
 import 'package:smara_accounting/main.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/first_account_name_view.dart';
 import 'package:smara_accounting/ui/features/onboarding/views/language_selection_view.dart';
 import 'package:smara_accounting/ui/features/record_transaction/views/record_transaction_view.dart';
+import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
@@ -58,6 +64,29 @@ const _secureStorageKeys = [
   'app_lock_pin_record',
 ];
 
+/// [_secureStorageKeys] plus the per-books-set signing key of every books
+/// set on disk: since linked-devices-and-sync, `SigningKeyService` stores
+/// each set's seed under `ledger_signing_private_key_seed:<booksSetId>`.
+/// Must run before the database directory (which names the sets) is
+/// deleted.
+Future<List<String>> _allSecureStorageKeys() async {
+  final setIds = <String>{};
+  final active = await BooksSetStore().activeBooksSetId();
+  if (active != null && active.isNotEmpty) setIds.add(active);
+  final booksRoot = BooksSetPaths.booksRoot(
+    await getApplicationSupportDirectory(),
+  );
+  if (booksRoot.existsSync()) {
+    for (final entity in booksRoot.listSync()) {
+      if (entity is Directory) setIds.add(p.basename(entity.path));
+    }
+  }
+  return [
+    ..._secureStorageKeys,
+    for (final id in setIds) SigningKeyService.storageKeyFor(id),
+  ];
+}
+
 /// Wipes every artifact a run of the real app leaves on this host: its
 /// Application Support directory (home to the real Drift database file,
 /// matching `app_database.dart`'s `_openConnection`), every real OS
@@ -89,8 +118,9 @@ Future<void> resetToFreshDevice([WidgetTester? tester]) async {
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
   }
+  final keys = await _allSecureStorageKeys();
   await _deleteDatabaseDirectory();
-  for (final key in _secureStorageKeys) {
+  for (final key in keys) {
     try {
       await _secureStorage.delete(key: key);
     } on PlatformException {
@@ -112,7 +142,7 @@ Future<void> clearSigningKeyOnly(WidgetTester tester) async {
   await tester.pump(const Duration(seconds: 2));
   await tester.pumpWidget(const SizedBox.shrink());
   await tester.pump();
-  for (final key in _secureStorageKeys) {
+  for (final key in await _allSecureStorageKeys()) {
     try {
       await _secureStorage.delete(key: key);
     } on PlatformException {
@@ -210,6 +240,28 @@ Future<void> scrollUntilVisible(
   }
   await tester.ensureVisible(target);
   await tester.pump(const Duration(milliseconds: 200));
+}
+
+/// Scrolls the Settings screen until [target] is hit-testable. Settings is
+/// pushed over Home, whose own ListView stays mounted underneath, so
+/// dragging `find.byType(ListView).first` (what [scrollUntilVisible] does)
+/// can drag the wrong list. Drags from the screen centre (over Settings'
+/// body, on a phone as on the 800x600 desktop window) in steps shorter
+/// than any screen instead, so the target can't be skipped however many
+/// sections (books switcher, linked devices, ...) sit above it.
+Future<void> scrollSettingsUntilVisible(
+  WidgetTester tester,
+  Finder target,
+) async {
+  final view = tester.view;
+  final center = (view.physicalSize / view.devicePixelRatio).center(
+    Offset.zero,
+  );
+  for (var i = 0; i < 20; i++) {
+    if (target.hitTestable().evaluate().isNotEmpty) return;
+    await tester.dragFrom(center, const Offset(0, -200));
+    await tester.pump(const Duration(milliseconds: 250));
+  }
 }
 
 /// Enters [text] into whatever [fieldTarget] resolves to, then polls (like
@@ -390,8 +442,15 @@ String localizedDay(String localeTag, int day) {
 /// "...until 2026-10-15." once a real date fills that gap - a real bug
 /// this suite's own full-locale run caught after seeming to work for
 /// `lockedUntilDate`, whose placeholder happens to be at the end).
-String staticPrefixOf(String Function(String) template) =>
-    template('￿').split('￿').first;
+///
+/// Returns the longest fixed part, not just the text before the placeholder:
+/// many languages put the placeholder first ("{date}에 ..." in Korean,
+/// "{date}にこの..." in Japanese), where the prefix is empty and would match
+/// every text on screen.
+String staticTextOf(String Function(String) template) {
+  final parts = template('￿').split('￿');
+  return parts.reduce((a, b) => b.trim().length > a.trim().length ? b : a);
+}
 
 /// Shell destinations on a wide window are a [NavigationRail] whose
 /// unselected labels are not hit-testable (`labelType: selected`). Tap the
@@ -460,9 +519,10 @@ Future<void> completeOnboardingWithGuidedEntry(
   }
   await onScreen?.call('setup_choice');
 
+  final setupL10n = setupChoiceL10n(tester);
   await tapReliably(
     tester,
-    () => find.text(l10n.actionNewSetup),
+    () => find.text(setupL10n.actionNewSetup),
     () => find.byType(LanguageSelectionView).evaluate().isNotEmpty,
   );
 
@@ -922,3 +982,9 @@ Future<void> recordCashFundedBuyThroughGui(
     await pumpUntilFound(tester, find.text(l10n.errorInsufficientCash));
   }
 }
+
+/// The localizations the first-launch Setup Choice screen is actually shown
+/// in. That screen comes before the language picker, so it speaks the
+/// device's own language, which need not be the run's ACCEPTANCE_LOCALE.
+AppLocalizations setupChoiceL10n(WidgetTester tester) =>
+    AppLocalizations.of(tester.element(find.byType(SetupChoiceView)))!;

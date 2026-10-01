@@ -1,5 +1,5 @@
+import '../../../core/date_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/home_overview.dart';
@@ -170,16 +170,22 @@ class _BackupReminderBanner extends StatelessWidget {
             children: [
               Text(l10n.backupReminderBannerTitle, style: AppTypography.body),
               const SizedBox(height: AppSpacing.medium),
+              // Expanded: the app theme gives buttons an infinite minimum
+              // width (Size.fromHeight), which a bare Row can't lay out.
               Row(
                 children: [
-                  ElevatedButton(
-                    onPressed: onSaveCopy,
-                    child: Text(l10n.backupReminderSaveAction),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: onSaveCopy,
+                      child: Text(l10n.backupReminderSaveAction),
+                    ),
                   ),
                   const SizedBox(width: AppSpacing.small),
-                  TextButton(
-                    onPressed: () => onLater(),
-                    child: Text(l10n.backupReminderLaterAction),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () => onLater(),
+                      child: Text(l10n.backupReminderLaterAction),
+                    ),
                   ),
                 ],
               ),
@@ -203,8 +209,7 @@ class _MembershipNoticeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = l10nOf(context);
-    final locale = Localizations.localeOf(context).toString();
-    final dateFormat = DateFormat.yMMMd(locale);
+    final dateFormat = mediumDateFormatFor(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.large,

@@ -8,6 +8,7 @@ import 'package:smara_accounting/domain/models/pending_transfer.dart';
 import 'package:smara_accounting/domain/models/recurring_template.dart';
 import 'package:smara_accounting/domain/models/summary.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
+import 'package:smara_accounting/ui/core/app_theme.dart';
 import 'package:smara_accounting/ui/features/home/view_models/home_view_model.dart';
 import 'package:smara_accounting/ui/features/home/views/home_view.dart';
 
@@ -560,6 +561,9 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        // The real theme: its full-width buttons once broke the banner's
+        // Row layout.
+        theme: buildAppTheme(),
         home: HomeView(
           viewModel: viewModel,
           onAccountTap: (_) {},
@@ -569,6 +573,7 @@ void main() {
     );
     await tester.pump();
 
+    expect(tester.takeException(), isNull);
     expect(find.text('Save a copy of your books'), findsOneWidget);
     expect(find.text('Save a copy'), findsOneWidget);
     expect(find.text('Later'), findsOneWidget);

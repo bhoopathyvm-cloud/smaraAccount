@@ -839,81 +839,80 @@ class AppLocalizationsGu extends AppLocalizations {
   String get whatsMainAccountCalled => 'તમારા મુખ્ય ખાતાનું નામ શું છે?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'સ્મારા ખાતુંમાં આપનું સ્વાગત છે';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'નવેસરથી શરૂઆત, કે બીજા ઉપકરણમાંથી આવી રહ્યા છો?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'નવું સેટઅપ';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'આ ફોન પર મારા ચોપડા ચાલુ રાખો';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'આ ચોપડા તેમની સહી કી વગર આ ફોન પર આવ્યા છે. તમે આ ફોન માટેની નવી કી સાથે તેમને ચાલુ રાખી શકો છો, અથવા તેના બદલે સાચવેલી નકલમાંથી પુનઃસ્થાપિત કરી શકો છો.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'આ ફોન પર મારા ચોપડા ચાલુ રાખો';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'નકલમાંથી પુનઃસ્થાપિત કરો';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'મારા ચોપડાની નકલ સાચવો';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'ઉપકરણ ઇતિહાસ';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'હજી સુધી કંઈ ચાલુ રાખ્યું નથી. નવા ફોન પર ચોપડા ચાલુ રાખશો ત્યારે અહીં દેખાશે.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'તમારા ચોપડા $date ના રોજ આ ફોન પર ચાલુ રહ્યા';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'તમારા ચોપડા $continuedDate ના રોજ આ ફોન પર ચાલુ રહ્યા ($copyDate ના રોજ સાચવેલી નકલમાંથી)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'તમારા ચોપડાની નકલ સાચવો';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'નકલ સાચવો';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'પછીથી';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'નકલ રિમાઇન્ડર';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'થોડા સમય પછી અથવા ઘણી નવી નોંધો પછી અમે તમને ચોપડાની નકલ સાચવવાનું યાદ અપાવીશું. આ ફોન ખોવાઈ જાય તો ચોપડા પાછા મેળવવાનો એકમાત્ર રસ્તો સાચવેલી નકલ છે.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'નકલ સાચવવાનું યાદ અપાવો';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'આટલા દિવસ પછી યાદ અપાવો';
 
   @override
-  String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+  String get settingsBackupReminderEntries => 'આટલી નવી નોંધો પછી યાદ અપાવો';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      '\'પછીથી\' પછી આટલા દિવસ છુપાવો';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      '\'પછીથી\' પછી આટલી નવી નોંધો સુધી છુપાવો';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2055,54 +2054,54 @@ class AppLocalizationsGu extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'આનાથી આ ફોન પરની બધી નોંધો અને ચોપડાના સેટિંગ્સ બદલાઈ જશે ($counts). કંઈ ભેગું કરવામાં આવશે નહીં. તમારી ભાષા અને અનલૉક સેટિંગ્સ આ ફોન પર જ રહેશે.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'પહેલાં નકલ સાચવો';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count નોંધો';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count ખાતાં';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count શ્રેણીઓ';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count ખાતા જૂથો';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count પ્રાપ્તકર્તાઓ';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count શ્રેણી નિયમો';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count આયાત પ્રોફાઇલ';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count પુનરાવર્તિત નમૂના';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count રોકાણ સાધનો';
   }
 }

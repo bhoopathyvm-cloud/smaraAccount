@@ -1,3 +1,4 @@
+import '../../../core/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,8 +18,7 @@ class DeviceHistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = l10nOf(context);
-    final locale = Localizations.localeOf(context).toString();
-    final dateFormat = DateFormat.yMMMd(locale);
+    final dateFormat = mediumDateFormatFor(context);
 
     return Scaffold(
       appBar: AppBar(

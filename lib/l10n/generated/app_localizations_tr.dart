@@ -845,81 +845,82 @@ class AppLocalizationsTr extends AppLocalizations {
   String get whatsMainAccountCalled => 'Ana hesabınızın adı ne?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'Smara Muhasebe uygulamasına hoş geldiniz';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'Sıfırdan mı başlıyorsunuz, yoksa başka bir cihazdan mı geçiyorsunuz?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'Yeni kurulum';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'Defterlerime bu telefonda devam et';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'Bu defterler bu telefona imzalama anahtarları olmadan geldi. Bu telefon için yeni bir anahtarla devam edebilir ya da bunun yerine kaydedilmiş bir kopyadan geri yükleyebilirsiniz.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'Defterlerime bu telefonda devam et';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'Bir kopyadan geri yükle';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'Defterlerimin bir kopyasını kaydet';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'Cihaz geçmişi';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'Henüz devam ettirme yok. Defterlerinize yeni bir telefonda devam ettiğinizde burada görünür.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'Defterleriniz $date tarihinde bu telefonda devam etti';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'Defterleriniz $continuedDate tarihinde bu telefonda devam etti ($copyDate tarihinde kaydedilen kopyadan)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle =>
+      'Defterlerinizin bir kopyasını kaydedin';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'Kopya kaydet';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'Daha sonra';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'Kopya hatırlatıcısı';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'Bir süre sonra veya çok sayıda yeni kayıttan sonra defterlerinizin bir kopyasını kaydetmenizi nazikçe hatırlatırız. Bu telefon kaybolursa defterleri kurtarmanın tek yolu kaydedilmiş bir kopyadır.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'Kopya kaydetmeyi hatırlat';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'Bu kadar gün sonra hatırlat';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'Bu kadar yeni kayıttan sonra hatırlat';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      '“Daha sonra”dan sonra bu kadar gün gizle';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      '“Daha sonra”dan sonra bu kadar yeni kayıt boyunca gizle';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2062,54 +2063,54 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'Bu işlem bu telefondaki tüm kayıtları ve defter ayarlarını değiştirir ($counts). Hiçbir şey birleştirilmez. Diliniz ve kilit açma ayarlarınız bu telefonda kalır.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'Önce bir kopya kaydet';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count kayıt';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count hesap';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count kategori';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count hesap grubu';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count alıcı';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count kategori kuralı';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count içe aktarma profili';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count yinelenen şablon';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count enstrüman';
   }
 }

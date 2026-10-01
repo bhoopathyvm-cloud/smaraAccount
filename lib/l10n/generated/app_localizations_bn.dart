@@ -841,81 +841,81 @@ class AppLocalizationsBn extends AppLocalizations {
   String get whatsMainAccountCalled => 'আপনার প্রধান হিসাবের নাম কী?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'স্মারা হিসাব-এ স্বাগতম';
 
   @override
-  String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+  String get setupChoiceBlurb => 'নতুন করে শুরু, নাকি অন্য ডিভাইস থেকে আসছেন?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'নতুন সেটআপ';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'এই ফোনে আমার হিসাব চালিয়ে যান';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'এই হিসাবগুলো তাদের স্বাক্ষর চাবি ছাড়াই এই ফোনে এসেছে। আপনি এই ফোনের নতুন চাবি দিয়ে এগুলো চালিয়ে যেতে পারেন, অথবা এর বদলে সংরক্ষিত কপি থেকে পুনরুদ্ধার করতে পারেন।';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'এই ফোনে আমার হিসাব চালিয়ে যান';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'কপি থেকে পুনরুদ্ধার করুন';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'আমার হিসাবের একটি কপি সংরক্ষণ করুন';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'ডিভাইসের ইতিহাস';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'এখনও কোনো ধারাবাহিকতা নেই। নতুন ফোনে হিসাব চালিয়ে গেলে এখানে দেখা যাবে।';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'আপনার হিসাব $date তারিখে এই ফোনে চালু রাখা হয়েছে';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'আপনার হিসাব $continuedDate তারিখে এই ফোনে চালু রাখা হয়েছে ($copyDate তারিখে সংরক্ষিত কপি থেকে)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'আপনার হিসাবের একটি কপি সংরক্ষণ করুন';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'কপি সংরক্ষণ করুন';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'পরে';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'কপির অনুস্মারক';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'কিছু সময় পরে বা অনেক নতুন এন্ট্রির পরে আমরা আপনাকে হিসাবের কপি সংরক্ষণ করার কথা মনে করিয়ে দেব। এই ফোন হারালে হিসাব ফিরে পাওয়ার একমাত্র উপায় সংরক্ষিত কপি।';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled =>
+      'কপি সংরক্ষণের কথা মনে করিয়ে দিন';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'এত দিন পরে মনে করিয়ে দিন';
 
   @override
   String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+      'এত নতুন এন্ট্রির পরে মনে করিয়ে দিন';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      '\'পরে\' চাপার পরে এত দিন লুকিয়ে রাখুন';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      '\'পরে\' চাপার পরে এত নতুন এন্ট্রি পর্যন্ত লুকিয়ে রাখুন';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2059,54 +2059,54 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'এতে এই ফোনের সব এন্ট্রি ও হিসাবের সেটিংস প্রতিস্থাপিত হবে ($counts)। কিছুই একত্র করা হবে না। আপনার ভাষা ও আনলক সেটিংস এই ফোনেই থাকবে।';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'আগে একটি কপি সংরক্ষণ করুন';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$countটি এন্ট্রি';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$countটি অ্যাকাউন্ট';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$countটি বিভাগ';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$countটি অ্যাকাউন্ট গ্রুপ';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count জন প্রাপক';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$countটি বিভাগের নিয়ম';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$countটি আমদানি প্রোফাইল';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$countটি পুনরাবৃত্ত টেমপ্লেট';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$countটি বিনিয়োগ উপকরণ';
   }
 }

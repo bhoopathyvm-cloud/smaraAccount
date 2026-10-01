@@ -844,81 +844,80 @@ class AppLocalizationsKn extends AppLocalizations {
   String get whatsMainAccountCalled => 'ನಿಮ್ಮ ಮುಖ್ಯ ಖಾತೆಯ ಹೆಸರೇನು?';
 
   @override
-  String get setupChoiceTitle => 'Welcome to Smara Accounting';
+  String get setupChoiceTitle => 'ಸ್ಮಾರ ಖಾತೆಗೆ ಸ್ವಾಗತ';
 
   @override
   String get setupChoiceBlurb =>
-      'Starting fresh, or moving from another device?';
+      'ಹೊಸದಾಗಿ ಆರಂಭಿಸುತ್ತಿದ್ದೀರಾ, ಅಥವಾ ಬೇರೆ ಸಾಧನದಿಂದ ಬರುತ್ತಿದ್ದೀರಾ?';
 
   @override
-  String get actionNewSetup => 'New setup';
+  String get actionNewSetup => 'ಹೊಸ ಸೆಟಪ್';
 
   @override
-  String get continueBooksTitle => 'Continue my books on this phone';
+  String get continueBooksTitle => 'ಈ ಫೋನ್‌ನಲ್ಲಿ ನನ್ನ ಪುಸ್ತಕಗಳನ್ನು ಮುಂದುವರಿಸಿ';
 
   @override
   String get continueBooksBlurb =>
-      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+      'ಈ ಪುಸ್ತಕಗಳು ಅವುಗಳ ಸಹಿ ಕೀ ಇಲ್ಲದೆ ಈ ಫೋನ್‌ಗೆ ಬಂದಿವೆ. ಈ ಫೋನ್‌ಗಾಗಿ ಹೊಸ ಕೀಯೊಂದಿಗೆ ಇವುಗಳನ್ನು ಮುಂದುವರಿಸಬಹುದು, ಅಥವಾ ಬದಲಿಗೆ ಉಳಿಸಿದ ಪ್ರತಿಯಿಂದ ಮರುಸ್ಥಾಪಿಸಬಹುದು.';
 
   @override
-  String get continueBooksAction => 'Continue my books on this phone';
+  String get continueBooksAction => 'ಈ ಫೋನ್‌ನಲ್ಲಿ ನನ್ನ ಪುಸ್ತಕಗಳನ್ನು ಮುಂದುವರಿಸಿ';
 
   @override
-  String get restoreFromCopyAction => 'Restore from a copy';
+  String get restoreFromCopyAction => 'ಪ್ರತಿಯಿಂದ ಮರುಸ್ಥಾಪಿಸಿ';
 
   @override
-  String get saveBooksCopyAction => 'Save a copy of my books';
+  String get saveBooksCopyAction => 'ನನ್ನ ಪುಸ್ತಕಗಳ ಪ್ರತಿಯನ್ನು ಉಳಿಸಿ';
 
   @override
-  String get deviceHistoryTitle => 'Device history';
+  String get deviceHistoryTitle => 'ಸಾಧನ ಇತಿಹಾಸ';
 
   @override
   String get deviceHistoryEmpty =>
-      'No Continuations yet. When you continue books on a new phone, they will show up here.';
+      'ಇನ್ನೂ ಯಾವುದೇ ಮುಂದುವರಿಕೆ ಇಲ್ಲ. ಹೊಸ ಫೋನ್‌ನಲ್ಲಿ ಪುಸ್ತಕಗಳನ್ನು ಮುಂದುವರಿಸಿದಾಗ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
 
   @override
   String deviceHistoryContinuedOn(String date) {
-    return 'Your books continued on this phone on $date';
+    return 'ನಿಮ್ಮ ಪುಸ್ತಕಗಳು $date ರಂದು ಈ ಫೋನ್‌ನಲ್ಲಿ ಮುಂದುವರಿದಿವೆ';
   }
 
   @override
   String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate) {
-    return 'Your books continued on this phone on $continuedDate (from a copy saved on $copyDate)';
+    return 'ನಿಮ್ಮ ಪುಸ್ತಕಗಳು $continuedDate ರಂದು ಈ ಫೋನ್‌ನಲ್ಲಿ ಮುಂದುವರಿದಿವೆ ($copyDate ರಂದು ಉಳಿಸಿದ ಪ್ರತಿಯಿಂದ)';
   }
 
   @override
-  String get backupReminderBannerTitle => 'Save a copy of your books';
+  String get backupReminderBannerTitle => 'ನಿಮ್ಮ ಪುಸ್ತಕಗಳ ಪ್ರತಿಯನ್ನು ಉಳಿಸಿ';
 
   @override
-  String get backupReminderSaveAction => 'Save a copy';
+  String get backupReminderSaveAction => 'ಪ್ರತಿಯನ್ನು ಉಳಿಸಿ';
 
   @override
-  String get backupReminderLaterAction => 'Later';
+  String get backupReminderLaterAction => 'ನಂತರ';
 
   @override
-  String get settingsBackupReminder => 'Copy reminder';
+  String get settingsBackupReminder => 'ಪ್ರತಿ ಜ್ಞಾಪನೆ';
 
   @override
   String get settingsBackupReminderBlurb =>
-      'We\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.';
+      'ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಅಥವಾ ಹಲವು ಹೊಸ ನಮೂದುಗಳ ನಂತರ ನಿಮ್ಮ ಪುಸ್ತಕಗಳ ಪ್ರತಿಯನ್ನು ಉಳಿಸಲು ನಾವು ನೆನಪಿಸುತ್ತೇವೆ. ಈ ಫೋನ್ ಕಳೆದುಹೋದರೆ ಪುಸ್ತಕಗಳನ್ನು ಮರಳಿ ಪಡೆಯಲು ಉಳಿಸಿದ ಪ್ರತಿಯೇ ಏಕೈಕ ದಾರಿ.';
 
   @override
-  String get settingsBackupReminderEnabled => 'Remind me to save a copy';
+  String get settingsBackupReminderEnabled => 'ಪ್ರತಿ ಉಳಿಸಲು ನೆನಪಿಸಿ';
 
   @override
-  String get settingsBackupReminderDays => 'Remind after this many days';
+  String get settingsBackupReminderDays => 'ಇಷ್ಟು ದಿನಗಳ ನಂತರ ನೆನಪಿಸಿ';
 
   @override
-  String get settingsBackupReminderEntries =>
-      'Remind after this many new entries';
+  String get settingsBackupReminderEntries => 'ಇಷ್ಟು ಹೊಸ ನಮೂದುಗಳ ನಂತರ ನೆನಪಿಸಿ';
 
   @override
   String get settingsBackupReminderSnoozeDays =>
-      'Hide for this many days after Later';
+      '\'ನಂತರ\' ಬಳಿಕ ಇಷ್ಟು ದಿನ ಮರೆಮಾಡಿ';
 
   @override
   String get settingsBackupReminderSnoozeEntries =>
-      'Hide for this many new entries after Later';
+      '\'ನಂತರ\' ಬಳಿಕ ಇಷ್ಟು ಹೊಸ ನಮೂದುಗಳವರೆಗೆ ಮರೆಮಾಡಿ';
 
   @override
   String get settingsBooksSwitcher => 'Books on this device';
@@ -2065,54 +2064,54 @@ class AppLocalizationsKn extends AppLocalizations {
 
   @override
   String replaceBooksWarning(String counts) {
-    return 'This will replace all entries and the books\' settings on this phone ($counts). It does not merge. Your language and unlock settings stay on this phone.';
+    return 'ಇದು ಈ ಫೋನ್‌ನ ಎಲ್ಲಾ ನಮೂದುಗಳು ಮತ್ತು ಪುಸ್ತಕಗಳ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಬದಲಾಯಿಸುತ್ತದೆ ($counts). ಏನನ್ನೂ ವಿಲೀನಗೊಳಿಸಲಾಗುವುದಿಲ್ಲ. ನಿಮ್ಮ ಭಾಷೆ ಮತ್ತು ಅನ್‌ಲಾಕ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಈ ಫೋನ್‌ನಲ್ಲೇ ಉಳಿಯುತ್ತವೆ.';
   }
 
   @override
-  String get saveCopyFirstAction => 'Save a copy first';
+  String get saveCopyFirstAction => 'ಮೊದಲು ಪ್ರತಿಯನ್ನು ಉಳಿಸಿ';
 
   @override
   String replaceCountEntries(int count) {
-    return '$count entries';
+    return '$count ನಮೂದುಗಳು';
   }
 
   @override
   String replaceCountAccounts(int count) {
-    return '$count accounts';
+    return '$count ಖಾತೆಗಳು';
   }
 
   @override
   String replaceCountCategories(int count) {
-    return '$count categories';
+    return '$count ವರ್ಗಗಳು';
   }
 
   @override
   String replaceCountGroups(int count) {
-    return '$count account groups';
+    return '$count ಖಾತೆ ಗುಂಪುಗಳು';
   }
 
   @override
   String replaceCountPayees(int count) {
-    return '$count payees';
+    return '$count ಸ್ವೀಕರಿಸುವವರು';
   }
 
   @override
   String replaceCountCategoryRules(int count) {
-    return '$count category rules';
+    return '$count ವರ್ಗ ನಿಯಮಗಳು';
   }
 
   @override
   String replaceCountCsvProfiles(int count) {
-    return '$count import profiles';
+    return '$count ಆಮದು ಪ್ರೊಫೈಲ್‌ಗಳು';
   }
 
   @override
   String replaceCountRecurringTemplates(int count) {
-    return '$count recurring templates';
+    return '$count ಪುನರಾವರ್ತಿತ ಟೆಂಪ್ಲೇಟ್‌ಗಳು';
   }
 
   @override
   String replaceCountInstruments(int count) {
-    return '$count instruments';
+    return '$count ಹೂಡಿಕೆ ಸಾಧನಗಳು';
   }
 }

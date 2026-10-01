@@ -76,8 +76,7 @@ class StoreMediaFlows {
   /// startup screen). [onboard] continues from here.
   Future<void> launchToSetupChoice() async {
     await SettingsRepository().setFirstWeekSetupCompleted(true);
-    await tester.pumpWidget(const SmaraAccountingApp());
-    await tester.pump();
+    await pumpSmaraApp(tester);
     await pumpUntilFound(tester, find.byType(SetupChoiceView));
     await tester.pump(const Duration(seconds: 1));
   }
@@ -95,8 +94,7 @@ class StoreMediaFlows {
   Future<void> relaunchToHome() async {
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
-    await tester.pumpWidget(const SmaraAccountingApp());
-    await tester.pump();
+    await pumpSmaraApp(tester);
     await pumpUntilFound(
       tester,
       find.text(l10n.homeWhatYouHaveMinusWhatYouOwe),
@@ -433,11 +431,8 @@ class StoreMediaFlows {
   }
 
   Future<void> scrollSettingsTo(Finder target) async {
-    for (var i = 0; i < 14; i++) {
-      if (target.hitTestable().evaluate().isNotEmpty) break;
-      await tester.drag(find.byType(ListView).first, const Offset(0, -220));
-      await tester.pump(const Duration(milliseconds: 250));
-    }
+    // Home's ListView stays mounted under Settings; see the helper.
+    await scrollSettingsUntilVisible(tester, target);
     await tester.ensureVisible(target);
     await pause();
   }
