@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smara_accounting/data/books_set/active_books_session.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/l10n/locale_endonyms.dart';
 import 'package:smara_accounting/main.dart';
@@ -16,6 +17,13 @@ import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_vie
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import 'acceptance_locale.dart';
+
+/// Opens a fresh [ActiveBooksSession] and pumps [SmaraAccountingApp].
+Future<void> pumpSmaraApp(WidgetTester tester) async {
+  final session = await ActiveBooksSession.open();
+  await tester.pumpWidget(SmaraAccountingApp(session: session));
+  await tester.pump();
+}
 
 /// Every `l10n`/system-name lookup in this file and in `acceptance_test.dart`
 /// resolves through [l10nFor]/[kAcceptanceLocaleTag] (acceptance-tests-
@@ -138,8 +146,7 @@ Future<void> simulateRelaunch(WidgetTester tester) async {
   }
   await tester.pumpWidget(const SizedBox.shrink());
   await tester.pump();
-  await tester.pumpWidget(const SmaraAccountingApp());
-  await tester.pump();
+  await pumpSmaraApp(tester);
 }
 
 Future<void> _deleteDatabaseDirectory() async {
@@ -438,8 +445,7 @@ Future<void> completeOnboardingWithGuidedEntry(
     await SettingsRepository().setFirstWeekSetupCompleted(true);
   }
 
-  await tester.pumpWidget(const SmaraAccountingApp());
-  await tester.pump();
+  await pumpSmaraApp(tester);
   await pumpUntilFound(tester, find.byType(SetupChoiceView));
   if (find.byType(SetupChoiceView).evaluate().isEmpty) {
     fail(

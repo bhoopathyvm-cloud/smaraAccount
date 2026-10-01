@@ -504,6 +504,8 @@
     }
   },
   "settingsLinkedDevicesEmpty": "Only this device is linked so far.",
+  "settingsLinkedDevicesSyncNow": "Sync now",
+  "settingsLinkedDevicesSyncNowBusy": "Catching up…",
   "membershipNoticeDeviceAdded": "A device was added: {name}",
   "@membershipNoticeDeviceAdded": {
     "placeholders": {
@@ -563,6 +565,23 @@
       }
     }
   },
+  "membershipNoticeEntryNotAccepted": "Not accepted: couldn''t be verified (from {name})",
+  "@membershipNoticeEntryNotAccepted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "membershipNoticeOwnerVerificationAlert": "A record from {name} could not be verified and was not accepted",
+  "@membershipNoticeOwnerVerificationAlert": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "membershipNoticeCompetingFixCheck": "Two Fixes for the same entry were resolved — please check",
   "whyWeDontEdit": "Why we don’t edit old entries",
   "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a correction next to it instead of changing what you already entered. That way your history always shows exactly what happened and when you fixed it — nothing quietly changes behind your back.",
   "lockTitle": "Unlock",

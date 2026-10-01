@@ -8,24 +8,27 @@
 ## Overview
 
 SmaraAccounting (shipped as **SMARA Account**) is a local-first household
-ledger: a signed, double-entry ledger under the hood, surfaced to the user as
-a plain record of what they spent and received (see `CONTEXT.md` and
-`docs/household-term-map.md`). It is built with Flutter so a single codebase
-runs on macOS, iOS, Android, Linux, and Windows (Linux is validated in CI by
-the nightly acceptance suite; Windows is a scaffolded Flutter target without
-CI validation). All data lives in a local SQLite database on the device.
-There is **no server, no cloud storage, and no network dependency** for the
-application to function.
+and small-business ledger: a signed, double-entry ledger under the hood,
+surfaced to the user as a plain record of what they spent and received
+(see `CONTEXT.md` and `docs/household-term-map.md`). It is built with
+Flutter so a single codebase runs on macOS, iOS, Android, Linux, and
+Windows (Linux is validated in CI by the nightly acceptance suite;
+Windows is a scaffolded Flutter target without CI validation). All data
+lives in a local SQLite database on the device. There is **no server, no
+cloud storage, and no internet dependency** for the books themselves to
+function.
 
-Multi-device synchronization is planned as a **separate, later capability**:
-LAN-only, peer-to-peer, triggered manually or by automatic on-LAN device
-discovery, with no relay and no internet-hosted component. It is explicitly
-**out of scope** for the current phase and is not reflected in the diagrams
-below — see `openspec/changes/` for when that capability is scoped. Moving
-books to a new device today is done with a one-file, passphrase-protected
-**Books Copy** (`books-copy` / books-copy-and-continuation), not sync. The
-private signing key never leaves the device; Continuation continues books
-under a new this-device key when the matching private key is missing.
+**Linked devices / Peer Sync** (when enabled for a books set) lets two or
+more devices that share the same books catch up **on the same Wi-Fi only**:
+mDNS/Bonjour discovery (`_smara._tcp`) and TLS transfer with certificates
+exchanged at join. Nothing is relayed through the internet; Sync now and
+automatic catch-up while both apps are open stay on the LAN. Moving books
+offline still uses a one-file, passphrase-protected **Books Copy**
+(`books-copy` / books-copy-and-continuation). The private signing key never
+leaves its device; Continuation continues books under a new this-device key
+when the matching private key is missing. Several **Books Sets** may live
+on one device (one SQLite file each); the books switcher picks the active
+set.
 
 ---
 
@@ -78,7 +81,7 @@ folders holding a live SQLite file — relevant again once sync is scoped).
 | Network (opt-in lookups)| `http`                                        | Reference exchange rates and market quotes only — see Security & Privacy Stance |
 | Routing                 | `go_router` (declarative)                     | Matches the `flutter-setup-declarative-routing` skill; adopted from the start so deep-linking/back-stack behavior doesn't need retrofitting later |
 | Backend                 | None                                          | Explicit product principle — no server, no cloud storage, no telemetry, no analytics |
-| Sync (future, deferred) | LAN-only peer-to-peer, no relay, no server    | Scoped as its own later OpenSpec change; not designed or implemented yet |
+| Peer Sync               | LAN-only mDNS + TLS pinning, no relay         | Linked devices catch up on the same Wi-Fi; dual-device harness covers CI |
 | Data-at-rest encryption | Not for the live database                     | The live SQLite file is not encrypted (device/OS security protects it); exported Books Copies are passphrase-encrypted. Revisit only if a spec requires it |
 
 ### Testing tools (mapped to downloaded skills)

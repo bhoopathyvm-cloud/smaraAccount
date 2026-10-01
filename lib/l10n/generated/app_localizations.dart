@@ -2010,6 +2010,18 @@ abstract class AppLocalizations {
   /// **'Only this device is linked so far.'**
   String get settingsLinkedDevicesEmpty;
 
+  /// No description provided for @settingsLinkedDevicesSyncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync now'**
+  String get settingsLinkedDevicesSyncNow;
+
+  /// No description provided for @settingsLinkedDevicesSyncNowBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Catching up…'**
+  String get settingsLinkedDevicesSyncNowBusy;
+
   /// No description provided for @membershipNoticeDeviceAdded.
   ///
   /// In en, this message translates to:
@@ -2051,6 +2063,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} is now an Owner'**
   String membershipNoticeSoleOwnerEffective(String name);
+
+  /// No description provided for @membershipNoticeEntryNotAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Not accepted: couldn\'\'t be verified (from {name})'**
+  String membershipNoticeEntryNotAccepted(String name);
+
+  /// No description provided for @membershipNoticeOwnerVerificationAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'A record from {name} could not be verified and was not accepted'**
+  String membershipNoticeOwnerVerificationAlert(String name);
+
+  /// No description provided for @membershipNoticeCompetingFixCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Two Fixes for the same entry were resolved — please check'**
+  String get membershipNoticeCompetingFixCheck;
 
   /// No description provided for @whyWeDontEdit.
   ///

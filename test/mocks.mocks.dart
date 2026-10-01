@@ -1426,11 +1426,13 @@ class MockIdentityRepository extends _i1.Mock
   @override
   _i17.Future<_i6.SigningIdentity> addLinkedPeerIdentity({
     required List<int>? publicKey,
+    String? identityId,
     DateTime? at,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#addLinkedPeerIdentity, [], {
               #publicKey: publicKey,
+              #identityId: identityId,
               #at: at,
             }),
             returnValue: _i17.Future<_i6.SigningIdentity>.value(
@@ -1438,6 +1440,7 @@ class MockIdentityRepository extends _i1.Mock
                 this,
                 Invocation.method(#addLinkedPeerIdentity, [], {
                   #publicKey: publicKey,
+                  #identityId: identityId,
                   #at: at,
                 }),
               ),
@@ -1447,6 +1450,7 @@ class MockIdentityRepository extends _i1.Mock
                 this,
                 Invocation.method(#addLinkedPeerIdentity, [], {
                   #publicKey: publicKey,
+                  #identityId: identityId,
                   #at: at,
                 }),
               ),

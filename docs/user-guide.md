@@ -231,6 +231,18 @@ one-way trip. A starter set already covers common household spending,
 including Groceries, Rent/Mortgage, Utilities, Transport, Food out,
 Phone, and Health.
 
+Shared books can set a **default language** for category names, plus
+optional translations. Each device shows its language's translation when
+one exists, otherwise the default name. **Translate with AI** hands only
+that category name to your chosen research tool (nothing else from the
+books). Categories with the same name and type in any language merge
+automatically; when a translation matches another category, the app may
+suggest a merge. You can also **Merge categories** by hand. Merged
+categories show as one in lists and totals; past entries keep their
+original links so signatures stay valid. A device that joins existing
+books skips the starter category set and uses the categories already in
+those books.
+
 ### Monthly limits
 
 Any Expense category can have an optional monthly spending guide: tap the
@@ -558,6 +570,37 @@ period-over-period read on where money went.
   do not appear here.
 - **Device history**: Continuations on this phone in plain words.
 - **Copy reminder**: optional reminders by days or by new entries.
+
+- **Books on this device**: several fully separate books sets on one
+  phone or computer (each with its own signing key, history, Linked
+  devices, and Books Copies). Switch which set is open; Home and Register
+  then show only that set. Creating new books starts a fresh set; removing
+  a set deletes it from this device after confirmation.
+- **Linked devices**: share the *same* books across phones and computers
+  that are members of that set. Each device keeps its own signing key.
+  Devices catch up when both have Smara open on the **same Wi-Fi** — nothing
+  goes to the internet for discovery or sync, and there is no cloud sync
+  service. Tap **Sync now** to catch up immediately when a peer is nearby.
+  First open of Linked devices explains local-network permission before the
+  system prompt: Smara only needs to find your other devices on this Wi-Fi.
+  - **Add a device**: show a QR code in person on the same Wi-Fi (public
+    keys and device certificates only — never the private key). Or restore
+    a Books Copy on the new device, then send a join request that an
+    already-linked device approves with one tap.
+  - **Owner / Member**: an Owner adds and removes devices, may erase a
+    removed device, and can make others Owners. A Member records and Fixes
+    entries and manages categories. If the last Owner is gone, a Member can
+    claim ownership; it takes effect after 7 days unless an Owner objects.
+  - **Remove and erase**: a removed device gets nothing new from that
+    moment; its earlier records stay. Erase is honest — **Erase pending**
+    until that device is on the same Wi-Fi again, then **Erased on \<date\>**.
+    For a lost phone, use Apple's or Google's Find my device / Erase.
+  - **Notices** (added/removed device, unverified records, competing Fixes,
+    erase status) appear on Home and in Device history at the next sync —
+    there is no push server.
+  - Records that fail verification are never accepted ("Not accepted:
+    couldn't be verified"). Competing Fixes keep the earlier Fix; the later
+    one is cancelled by a new record and both people are asked to check.
 
 - **Require unlock to open the app**: off by default. Turning it on asks
   you to set a PIN (at least 4 characters); from then on, opening the app

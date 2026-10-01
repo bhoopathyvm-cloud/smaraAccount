@@ -1,10 +1,12 @@
 # SMARA Account
 
-Household books on one device: a signed, double-entry ledger under the
-hood, surfaced to the user as a plain record of what they spent and
-received. History never quietly rewrites itself — corrections are new
-entries, not edits. See `docs/household-term-map.md` for the mapping from
-the ledger vocabulary below to the household words the UI actually shows.
+Household and small-business books on one or more Linked devices: a
+signed, double-entry ledger under the hood, surfaced to the user as a
+plain record of what they spent and received. History never quietly
+rewrites itself — corrections are new entries, not edits. Devices that
+share the same books catch up over the same Wi-Fi (Peer Sync) with no
+server. See `docs/household-term-map.md` for the mapping from the ledger
+vocabulary below to the household words the UI actually shows.
 
 ## Language
 
@@ -220,6 +222,43 @@ identity after true key loss. Entries superseded by that process
 excluded from active balances. New key loss uses Continuation instead —
 history is not rewritten.
 _Avoid_: using Migration for current Continuations or Books Copy restore.
+
+### Linked devices & books sets
+
+**Linked Device**:
+A phone, tablet, or computer that is a member of the same books. Each
+Linked Device keeps its own Signing Identity and signs only the entries it
+records; Peer Sync *adds* the others' signed records and never edits them.
+_Avoid_: paired device, synced account, shared login, multi-user account,
+cloud member.
+
+**Peer Sync**:
+Catching up Linked Devices over the same Wi-Fi — discovery and transfer
+stay on the local network, device to device, with no server, cloud, or
+relay. Runs when both apps are open on that Wi-Fi, and when someone taps
+Sync now.
+_Avoid_: cloud sync, internet sync, relay, push sync, background server.
+
+**Owner**:
+A Linked Device role that may add and remove devices or people, decide who
+may add others, erase a removed device, and make other devices Owners.
+_Avoid_: admin, superuser, account holder (Owner is a device role on these
+books, not a cloud login).
+
+**Member**:
+A Linked Device role that records and Fixes entries and manages categories,
+but does not perform Owner-only membership actions unless the Owner has
+granted that device permission to add others.
+_Avoid_: user, guest, collaborator (prefer Member).
+
+**Books Set**:
+One fully separate set of books on a device (its own database file, Signing
+Identity key material, Linked Devices, and Books Copies). The books
+switcher lists sets by a user-visible name (for example "My household" and
+"Acme Ltd – travel") and switches which set Home, Register, and Linked
+devices refer to.
+_Avoid_: workspace, tenant, profile, multi-account (a Books Set is separate
+books, not a login profile).
 
 ### App lock
 

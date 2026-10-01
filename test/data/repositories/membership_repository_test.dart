@@ -215,6 +215,7 @@ void main() {
       final decoded = JoinQrPayload.decode(encoded);
       expect(decoded.booksSetId, 'books-1');
       expect(decoded.hostDeviceId, 'device-a');
+      expect(decoded.hostIdentityId, isNotEmpty);
       expect(decoded.signingPublicKey, isNotEmpty);
       expect(decoded.deviceCertDer, isNotEmpty);
       expect(decoded.joinNonce, isNotEmpty);
@@ -222,8 +223,9 @@ void main() {
       expect(
         () => JoinQrPayload.decode(
           '{"booksSetId":"x","privateKey":"secret","hostDeviceId":"h",'
-          '"hostDisplayName":"n","signingPublicKey":"YQ==","deviceCert":"YQ==",'
-          '"deviceCertFingerprint":"f","roleOffer":"member","joinNonce":"n"}',
+          '"hostDisplayName":"n","hostIdentityId":"id","signingPublicKey":"YQ==",'
+          '"deviceCert":"YQ==","deviceCertFingerprint":"f","roleOffer":"member",'
+          '"joinNonce":"n"}',
         ),
         throwsA(isA<FormatException>()),
       );

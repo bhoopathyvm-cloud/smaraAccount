@@ -72,6 +72,18 @@ class LinkedDevicesSection extends StatelessWidget {
                       : () => _showAddDevice(context),
                   child: Text(l10n.settingsLinkedDevicesAddDevice),
                 ),
+              if (!viewModel.showingPermissionExplanation &&
+                  viewModel.devices.where((d) => d.isActive).length > 1) ...[
+                const SizedBox(height: AppSpacing.medium),
+                ElevatedButton(
+                  onPressed: viewModel.isBusy ? null : viewModel.syncNow,
+                  child: Text(
+                    viewModel.isBusy
+                        ? l10n.settingsLinkedDevicesSyncNowBusy
+                        : l10n.settingsLinkedDevicesSyncNow,
+                  ),
+                ),
+              ],
             ],
             if (viewModel.errorMessage != null) ...[
               const SizedBox(height: AppSpacing.small),

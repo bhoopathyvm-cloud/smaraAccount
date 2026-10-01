@@ -9,6 +9,7 @@ class JoinQrPayload {
     required this.booksSetId,
     required this.hostDeviceId,
     required this.hostDisplayName,
+    required this.hostIdentityId,
     required this.signingPublicKey,
     required this.deviceCertDer,
     required this.deviceCertFingerprint,
@@ -21,6 +22,10 @@ class JoinQrPayload {
   final String booksSetId;
   final String hostDeviceId;
   final String hostDisplayName;
+
+  /// Host Signing Identity id — shared so the joiner stores the same id for
+  /// the host's public key (entries are verified by `signedByIdentityId`).
+  final String hostIdentityId;
 
   /// Host Signing Identity public key bytes (SPKI / raw as stored).
   final List<int> signingPublicKey;
@@ -46,6 +51,7 @@ class JoinQrPayload {
     'booksSetId': booksSetId,
     'hostDeviceId': hostDeviceId,
     'hostDisplayName': hostDisplayName,
+    'hostIdentityId': hostIdentityId,
     'signingPublicKey': base64Encode(signingPublicKey),
     'deviceCert': base64Encode(deviceCertDer),
     'deviceCertFingerprint': deviceCertFingerprint,
@@ -74,6 +80,7 @@ class JoinQrPayload {
     final booksSetId = map['booksSetId'];
     final hostDeviceId = map['hostDeviceId'];
     final hostDisplayName = map['hostDisplayName'];
+    final hostIdentityId = map['hostIdentityId'];
     final signingPublicKeyB64 = map['signingPublicKey'];
     final deviceCertB64 = map['deviceCert'];
     final fingerprint = map['deviceCertFingerprint'];
@@ -84,6 +91,7 @@ class JoinQrPayload {
     if (booksSetId is! String ||
         hostDeviceId is! String ||
         hostDisplayName is! String ||
+        hostIdentityId is! String ||
         signingPublicKeyB64 is! String ||
         deviceCertB64 is! String ||
         fingerprint is! String ||
@@ -106,6 +114,7 @@ class JoinQrPayload {
       booksSetId: booksSetId,
       hostDeviceId: hostDeviceId,
       hostDisplayName: hostDisplayName,
+      hostIdentityId: hostIdentityId,
       signingPublicKey: base64Decode(signingPublicKeyB64),
       deviceCertDer: base64Decode(deviceCertB64),
       deviceCertFingerprint: fingerprint,

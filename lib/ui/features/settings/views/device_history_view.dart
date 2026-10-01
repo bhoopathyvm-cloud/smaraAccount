@@ -100,5 +100,11 @@ String membershipNoticeLabel(
       l10n.membershipNoticeSoleOwnerCancelled(name),
     MembershipNoticeKind.soleOwnerClaimEffective =>
       l10n.membershipNoticeSoleOwnerEffective(name),
+    MembershipNoticeKind.entryNotAccepted =>
+      notice.detail ?? l10n.membershipNoticeEntryNotAccepted(name),
+    MembershipNoticeKind.ownerVerificationAlert =>
+      notice.detail ?? l10n.membershipNoticeOwnerVerificationAlert(name),
+    MembershipNoticeKind.competingFixCheck =>
+      notice.detail ?? l10n.membershipNoticeCompetingFixCheck,
   };
 }

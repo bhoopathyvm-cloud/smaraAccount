@@ -125,17 +125,33 @@ class IdentityRepository {
   /// Registers a peer device's Signing Identity as an active linked signer
   /// without marking anyone `continuedAt` and without touching this device's
   /// private key (linked-devices design Decision 3 — linking ≠ Continuation).
+  ///
+  /// Pass [identityId] when the peer's id is already known from join (QR /
+  /// join-request) so both devices share the same id for that public key —
+  /// sync verification looks up entries by `signedByIdentityId`.
   Future<SigningIdentity> addLinkedPeerIdentity({
     required List<int> publicKey,
+    String? identityId,
     DateTime? at,
   }) async {
     final when = at ?? DateTime.now();
+    if (identityId != null) {
+      final existing = await (_db.select(
+        _db.signingIdentities,
+      )..where((t) => t.identityId.equals(identityId))).getSingleOrNull();
+      if (existing != null) {
+        return _toDomainIdentity(existing);
+      }
+    }
     late IdentityRow row;
     await _db.transaction(() async {
       row = await _db
           .into(_db.signingIdentities)
           .insertReturning(
             SigningIdentitiesCompanion.insert(
+              identityId: identityId != null
+                  ? Value(identityId)
+                  : const Value.absent(),
               publicKey: Uint8List.fromList(publicKey),
               acknowledgedAt: Value(when),
             ),

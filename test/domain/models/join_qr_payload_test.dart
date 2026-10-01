@@ -8,6 +8,7 @@ void main() {
       booksSetId: 'set-1',
       hostDeviceId: 'dev-1',
       hostDisplayName: 'Pad',
+      hostIdentityId: 'id-host-1',
       signingPublicKey: [1, 2, 3, 4],
       deviceCertDer: [9, 8, 7],
       deviceCertFingerprint: 'abc',
@@ -17,6 +18,7 @@ void main() {
     final again = JoinQrPayload.decode(payload.encode());
     expect(again.booksSetId, payload.booksSetId);
     expect(again.hostDeviceId, payload.hostDeviceId);
+    expect(again.hostIdentityId, 'id-host-1');
     expect(again.signingPublicKey, payload.signingPublicKey);
     expect(again.deviceCertDer, payload.deviceCertDer);
     expect(again.roleOffer, LinkedDeviceRole.member);
@@ -33,7 +35,7 @@ void main() {
     expect(
       () => JoinQrPayload.decode(
         '{"v":1,"booksSetId":"s","hostDeviceId":"h","hostDisplayName":"n",'
-        '"signingPublicKey":"YQ==","deviceCert":"YQ==",'
+        '"hostIdentityId":"id","signingPublicKey":"YQ==","deviceCert":"YQ==",'
         '"deviceCertFingerprint":"f","roleOffer":"member","joinNonce":"n",'
         '"secretKey":"bad"}',
       ),

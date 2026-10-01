@@ -34,13 +34,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "as": [
@@ -78,13 +83,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "bn": [
@@ -122,13 +132,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "brx": [
@@ -166,13 +181,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "de": [
@@ -210,13 +230,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "doi": [
@@ -254,13 +279,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "es": [
@@ -298,13 +328,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "fr": [
@@ -342,13 +377,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "gu": [
@@ -386,13 +426,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "hi": [
@@ -430,13 +475,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "hu": [
@@ -474,13 +524,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "id": [
@@ -518,13 +573,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "it": [
@@ -562,13 +622,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ja": [
@@ -606,13 +671,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "kn": [
@@ -650,13 +720,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ko": [
@@ -694,13 +769,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "kok": [
@@ -738,13 +818,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ks": [
@@ -782,13 +867,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "mai": [
@@ -826,13 +916,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ml": [
@@ -870,13 +965,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "mni": [
@@ -914,13 +1014,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "mr": [
@@ -958,13 +1063,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ms": [
@@ -1002,13 +1112,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ne": [
@@ -1046,13 +1161,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "nl": [
@@ -1090,13 +1210,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "or": [
@@ -1134,13 +1259,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "pa": [
@@ -1178,13 +1308,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "pl": [
@@ -1222,13 +1357,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "pt": [
@@ -1266,13 +1406,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ro": [
@@ -1310,13 +1455,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ru": [
@@ -1354,13 +1504,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "sa": [
@@ -1398,13 +1553,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "sat": [
@@ -1442,13 +1602,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "sd": [
@@ -1486,13 +1651,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ta": [
@@ -1530,13 +1700,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "te": [
@@ -1574,13 +1749,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "th": [
@@ -1618,13 +1798,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "tr": [
@@ -1662,13 +1847,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "uk": [
@@ -1706,13 +1896,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "ur": [
@@ -1750,13 +1945,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "vi": [
@@ -1794,13 +1994,18 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ],
 
   "zh": [
@@ -1838,12 +2043,17 @@
     "settingsLinkedDevicesRefuseJoin",
     "settingsLinkedDevicesPendingJoin",
     "settingsLinkedDevicesEmpty",
+    "settingsLinkedDevicesSyncNow",
+    "settingsLinkedDevicesSyncNowBusy",
     "membershipNoticeDeviceAdded",
     "membershipNoticeDeviceRemoved",
     "membershipNoticeErasePending",
     "membershipNoticeErased",
     "membershipNoticeSoleOwnerClaimed",
     "membershipNoticeSoleOwnerCancelled",
-    "membershipNoticeSoleOwnerEffective"
+    "membershipNoticeSoleOwnerEffective",
+    "membershipNoticeEntryNotAccepted",
+    "membershipNoticeOwnerVerificationAlert",
+    "membershipNoticeCompetingFixCheck"
   ]
 }

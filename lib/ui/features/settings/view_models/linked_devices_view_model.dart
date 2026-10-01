@@ -20,6 +20,7 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     LocalNetworkPermission? localNetworkPermission,
     Uuid? uuid,
     this.booksGeneration = 0,
+    this.syncNowAction,
   }) : _membership = membershipRepository,
        _settings = settingsRepository,
        _booksSetStore = booksSetStore,
@@ -34,6 +35,10 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final LocalNetworkPermission _permission;
   final Uuid _uuid;
   final int booksGeneration;
+
+  /// Optional Sync now hook (PeerSyncSession). Null means the button is a
+  /// no-op success until the session is wired in DI.
+  final Future<void> Function()? syncNowAction;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -208,6 +213,22 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     } finally {
       _isBusy = false;
       notifyListeners();
+    }
+  }
+
+  /// Sync now — catch up with linked peers on the same Wi-Fi.
+  Future<void> syncNow() async {
+    if (_isBusy) return;
+    _isBusy = true;
+    notifyListeners();
+    try {
+      await syncNowAction?.call();
+      clearFailure();
+    } catch (e) {
+      setFailure(e);
+    } finally {
+      _isBusy = false;
+      if (!_disposed) notifyListeners();
     }
   }
 

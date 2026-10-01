@@ -13,7 +13,6 @@ import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:smara_accounting/l10n/l10n.dart' show englishAppLocalizations;
-import 'package:smara_accounting/main.dart';
 import 'package:smara_accounting/ui/core/monthly_limit_progress.dart';
 import 'package:smara_accounting/ui/features/holdings/views/holdings_view.dart';
 import 'package:smara_accounting/ui/features/payee_management/views/payee_management_view.dart';
@@ -307,7 +306,7 @@ void main() {
       // Identity/first-week-setup state from completeOnboardingWithGuidedEntry
       // already persisted (real Keychain, real SharedPreferences), so this
       // lands straight on Home rather than re-onboarding.
-      await tester.pumpWidget(const SmaraAccountingApp());
+      await pumpSmaraApp(tester);
       await tester.pump();
       await pumpUntilFound(
         tester,
@@ -987,7 +986,7 @@ void main() {
 
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pump();
-        await tester.pumpWidget(const SmaraAccountingApp());
+        await pumpSmaraApp(tester);
         await tester.pump();
         await pumpUntilFound(
           tester,
@@ -1254,7 +1253,7 @@ void main() {
 
         // Simulate reinstall: same device, database intact, private key gone.
         await clearSigningKeyOnly(tester);
-        await tester.pumpWidget(const SmaraAccountingApp());
+        await pumpSmaraApp(tester);
         await tester.pump();
         await pumpUntilFound(tester, find.byType(ContinuationView));
         expect(find.byType(ContinuationView), findsOneWidget);
@@ -2620,7 +2619,7 @@ void main() {
         // this test process, so this simulates the relaunch directly instead.
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pump();
-        await tester.pumpWidget(const SmaraAccountingApp());
+        await pumpSmaraApp(tester);
         await tester.pump();
         await pumpUntilFound(
           tester,
@@ -2692,7 +2691,7 @@ void main() {
 
         // Full reset onto a different device, then onboard fresh there.
         await resetToFreshDevice(tester);
-        await tester.pumpWidget(const SmaraAccountingApp());
+        await pumpSmaraApp(tester);
         await tester.pump();
         await completeOnboardingWithGuidedEntry(
           tester,
@@ -2755,7 +2754,7 @@ void main() {
 
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pump();
-        await tester.pumpWidget(const SmaraAccountingApp());
+        await pumpSmaraApp(tester);
         await tester.pump();
         // After restore the private key was deleted; Continuation or Home
         // after continue — pump until either continue or home chrome.
@@ -2943,7 +2942,7 @@ void main() {
       'first-launch offers New setup and Restore from a copy, with no phrase step',
       (tester) async {
         addTearDown(() => resetToFreshDevice(tester));
-        await tester.pumpWidget(const SmaraAccountingApp());
+        await pumpSmaraApp(tester);
         await tester.pump();
         await pumpUntilFound(tester, find.byType(SetupChoiceView));
         expect(find.text(l10n.actionNewSetup), findsOneWidget);
@@ -3073,7 +3072,7 @@ void main() {
         // any backup step ever being completed).
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pump();
-        await tester.pumpWidget(const SmaraAccountingApp());
+        await pumpSmaraApp(tester);
         await tester.pump();
 
         await pumpUntilFound(
@@ -3149,7 +3148,7 @@ void main() {
     ) async {
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump();
-      await tester.pumpWidget(const SmaraAccountingApp());
+      await pumpSmaraApp(tester);
       await tester.pump();
       await pumpUntilFound(
         tester,
@@ -3933,6 +3932,87 @@ void main() {
 
       await tester.pump(const Duration(seconds: 2));
     }, timeout: const Timeout(Duration(minutes: 8)));
+  });
+
+  group('books_switcher', () {
+    // GUI smoke: Settings shows the books switcher section (task 9.4).
+    setUpAll(() async {
+      await resetToFreshDevice();
+    });
+
+    testWidgets('Settings lists books switcher after onboarding', (
+      tester,
+    ) async {
+      addTearDown(() => resetToFreshDevice(tester));
+      final l10n = l10nFor(kAcceptanceLocaleTag);
+      await completeOnboardingWithGuidedEntry(
+        tester,
+        amountText: '1000',
+        categoryName: l10n.systemCategorySalary,
+      );
+      await tapReliably(
+        tester,
+        () => find.byTooltip(l10n.settingsTitle),
+        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+      );
+      // Scroll until books switcher section is visible.
+      for (var i = 0; i < 12; i++) {
+        if (find.text(l10n.settingsBooksSwitcher).evaluate().isNotEmpty) break;
+        await tester.dragFrom(const Offset(400, 300), const Offset(0, -250));
+        await tester.pump(const Duration(milliseconds: 300));
+      }
+      expect(find.text(l10n.settingsBooksSwitcher), findsOneWidget);
+      expect(find.text(l10n.settingsBooksSwitcherCreate), findsWidgets);
+      await tester.pump(const Duration(seconds: 2));
+    }, timeout: const Timeout(Duration(minutes: 5)));
+  });
+
+  group('shared_categories', () {
+    // GUI smoke: Categories management exposes merge / translate copy
+    // (task 9.4). Detailed merge rules live in unit tests + harness.
+    setUpAll(() async {
+      await resetToFreshDevice();
+    });
+
+    testWidgets('Categories screen shows after onboarding', (tester) async {
+      addTearDown(() => resetToFreshDevice(tester));
+      final l10n = l10nFor(kAcceptanceLocaleTag);
+      await completeOnboardingWithGuidedEntry(
+        tester,
+        amountText: '1000',
+        categoryName: l10n.systemCategorySalary,
+      );
+      await tapReliably(
+        tester,
+        () => shellNavIcon(TablerIcons.tag),
+        () => find.text(l10n.systemCategoryGroceries).evaluate().isNotEmpty,
+      );
+      expect(find.text(l10n.systemCategoryGroceries), findsWidgets);
+      await tester.pump(const Duration(seconds: 2));
+    }, timeout: const Timeout(Duration(minutes: 5)));
+  });
+
+  group('linked_devices_physical', () {
+    // Manual two-device spot-check (tasks 9.3 / 11.3). Skipped unless
+    // --dart-define=LINKED_DEVICES_PHYSICAL=true. Prerequisites: two
+    // phones/simulators on the same Wi-Fi (mDNS/Bonjour not blocked by
+    // AP client isolation / guest Wi-Fi).
+    const runPhysical = bool.fromEnvironment('LINKED_DEVICES_PHYSICAL');
+
+    testWidgets(
+      'manual: Add a device via QR, Sync now, erase pending (two devices)',
+      (tester) async {
+        fail(
+          'Physical two-device acceptance is a manual checklist: put two '
+          'devices on one Wi-Fi, Add a device via QR, Sync now, confirm an '
+          'entry appears, and confirm erase-pending copy. Not runnable in CI.',
+        );
+      },
+      // Opt in with --dart-define=LINKED_DEVICES_PHYSICAL=true (see
+      // tool/run_acceptance_tests.sh). Default / CI runs skip this group.
+      skip: !runPhysical,
+      timeout: const Timeout(Duration(minutes: 30)),
+    );
   });
 }
 

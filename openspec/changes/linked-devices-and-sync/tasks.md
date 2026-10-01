@@ -55,19 +55,21 @@
 
 ## 9. Dual-device harness and acceptance
 
-- [ ] 9.1 Build two-in-memory-device harness (isolated DB, identity, test certs, in-process or loopback transport) reusable by unit/integration tests — verify harness smoke test creates A/B, links, and syncs one entry
-- [ ] 9.2 Add acceptance/integration group for linked devices covering join, sync, reject bad signature, competing Fix, metadata LWW, erase-pending using the harness — verify the group runs in CI without physical devices
-- [ ] 9.3 Flag physical two-device acceptance as manual (`linked_devices_physical` or equivalent), document Wi-Fi prerequisites, and ensure default `tool/run_acceptance_tests.sh` skips it — verify script help/docs and that default invocation does not require two devices
-- [ ] 9.4 Extend acceptance coverage listing in suite docs/specs wiring so Linked devices, shared categories, and books switcher groups are independently runnable — verify `tool/run_acceptance_tests.sh -d macos <group>` for each new group that is GUI-based, and harness group for sync
+- [x] 9.1 Build two-in-memory-device harness (isolated DB, identity, test certs, in-process or loopback transport) reusable by unit/integration tests — verify harness smoke test creates A/B, links, and syncs one entry
+- [x] 9.2 Add acceptance/integration group for linked devices covering join, sync, reject bad signature, competing Fix, metadata LWW, erase-pending using the harness — verify the group runs in CI without physical devices
+- [x] 9.3 Flag physical two-device acceptance as manual (`linked_devices_physical` or equivalent), document Wi-Fi prerequisites, and ensure default `tool/run_acceptance_tests.sh` skips it — verify script help/docs and that default invocation does not require two devices
+- [x] 9.4 Extend acceptance coverage listing in suite docs/specs wiring so Linked devices, shared categories, and books switcher groups are independently runnable — verify `tool/run_acceptance_tests.sh -d macos <group>` for each new group that is GUI-based, and harness group for sync
 
 ## 10. Localization, docs, glossary
 
-- [ ] 10.1 Add English ARB strings for Linked devices, Add a device, Sync now, catch-up copy, permission sentence, roles, notices, erase pending, category merge/translate, books switcher; run `flutter gen-l10n` — verify gen-l10n succeeds and widget tests use the new keys
-- [ ] 10.2 Update `docs/user-guide.md` for Linked devices, sync, roles, erase, shared categories, books switcher — verify guide sections exist and do not claim a cloud sync service
-- [ ] 10.3 Apply `CONTEXT.md` glossary updates when landing (Linked Device, Peer Sync, Owner, Member, Books Set; widen opening beyond single-device); update `Specs/architecture/smara-architecture.md` optional LAN peer-sync note — verify glossary terms match household tone and avoid banned synonyms from the grilling (_Avoid_ lines)
+- [x] 10.1 Add English ARB strings for Linked devices, Add a device, Sync now, catch-up copy, permission sentence, roles, notices, erase pending, category merge/translate, books switcher; run `flutter gen-l10n` — verify gen-l10n succeeds and widget tests use the new keys
+- [x] 10.2 Update `docs/user-guide.md` for Linked devices, sync, roles, erase, shared categories, books switcher — verify guide sections exist and do not claim a cloud sync service
+- [x] 10.3 Apply `CONTEXT.md` glossary updates when landing (Linked Device, Peer Sync, Owner, Member, Books Set; widen opening beyond single-device); update `Specs/architecture/smara-architecture.md` optional LAN peer-sync note — verify glossary terms match household tone and avoid banned synonyms from the grilling (_Avoid_ lines)
 
 ## 11. Integration check
 
-- [ ] 11.1 Run `flutter analyze` and the unit/widget suites touched by this change; fix regressions — verify clean analyze and test pass for books-switcher, membership, verifier, merge, categories, harness
+- [x] 11.1 Run `flutter analyze` and the unit/widget suites touched by this change; fix regressions — verify clean analyze and test pass for books-switcher, membership, verifier, merge, categories, harness
 - [ ] 11.2 Run acceptance on macOS for non-manual groups including any new GUI groups; run dual-device harness group in CI configuration — verify `tool/run_acceptance_tests.sh -d macos` (or documented subset) passes
+  <!-- Cloud Linux agent: harness group verified via `tool/run_acceptance_tests.sh -d linux linked_devices`. Full macOS GUI acceptance (`-d macos`) is not available in this environment — leave unchecked. -->
 - [ ] 11.3 Manual spot-check on two real devices/simulators on one Wi-Fi: Add a device via QR, Sync now, confirm entry appears, confirm erase pending copy — record result in this task (manual flag satisfied even if CI skips it)
+  <!-- Cloud agent cannot satisfy physical two-device spot-check; group `linked_devices_physical` remains manual/skipped by default. -->

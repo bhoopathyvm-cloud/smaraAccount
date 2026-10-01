@@ -1007,6 +1007,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
 
   @override
+  String get settingsLinkedDevicesSyncNow => 'Sync now';
+
+  @override
+  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'A device was added: $name';
   }
@@ -1040,6 +1046,20 @@ class AppLocalizationsBn extends AppLocalizations {
   String membershipNoticeSoleOwnerEffective(String name) {
     return '$name is now an Owner';
   }
+
+  @override
+  String membershipNoticeEntryNotAccepted(String name) {
+    return 'Not accepted: couldn\'t be verified (from $name)';
+  }
+
+  @override
+  String membershipNoticeOwnerVerificationAlert(String name) {
+    return 'A record from $name could not be verified and was not accepted';
+  }
+
+  @override
+  String get membershipNoticeCompetingFixCheck =>
+      'Two Fixes for the same entry were resolved — please check';
 
   @override
   String get whyWeDontEdit => 'কেন আমরা পুরনো এন্ট্রি সম্পাদনা করি না';

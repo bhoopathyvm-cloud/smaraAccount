@@ -432,6 +432,7 @@ class MembershipRepository {
       booksSetId: booksSetId,
       hostDeviceId: hostDeviceId,
       hostDisplayName: hostDisplayName,
+      hostIdentityId: identity.identityId,
       signingPublicKey: identity.publicKey,
       deviceCertDer: cert.derBytes,
       deviceCertFingerprint: cert.fingerprint,
@@ -449,6 +450,7 @@ class MembershipRepository {
     required String joinerDisplayName,
     required List<int> joinerSigningPublicKey,
     required String joinerDeviceCertFingerprint,
+    String? joinerIdentityId,
     String? peerHint,
   }) async {
     final onLan = await _reachability.arePeersOnLocalNetwork(
@@ -462,6 +464,7 @@ class MembershipRepository {
     }
     final peerIdentity = await _identity.addLinkedPeerIdentity(
       publicKey: joinerSigningPublicKey,
+      identityId: joinerIdentityId,
     );
     return addDevice(
       actorDeviceId: actorDeviceId,
@@ -560,6 +563,7 @@ class MembershipRepository {
     }
     final peerIdentity = await _identity.addLinkedPeerIdentity(
       publicKey: row.signingPublicKey,
+      identityId: null,
     );
     final linked = await addDevice(
       actorDeviceId: actorDeviceId,
