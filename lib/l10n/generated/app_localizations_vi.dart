@@ -2120,4 +2120,86 @@ class AppLocalizationsVi extends AppLocalizations {
   String replaceCountInstruments(int count) {
     return '$count instruments';
   }
+
+  @override
+  String get claimsTitle => 'Claims';
+
+  @override
+  String get claimsReviewTitle => 'Review claims';
+
+  @override
+  String get claimsStatusDraft => 'Draft';
+
+  @override
+  String get claimsStatusSubmitted => 'Submitted';
+
+  @override
+  String get claimsStatusPartlyApproved => 'Partly approved';
+
+  @override
+  String get claimsStatusApproved => 'Approved';
+
+  @override
+  String get claimsStatusPaid => 'Paid';
+
+  @override
+  String get claimsStatusRejected => 'Rejected';
+
+  @override
+  String get claimsApprove => 'Approve';
+
+  @override
+  String get claimsApproveDifferent => 'Approve different amount';
+
+  @override
+  String get claimsReject => 'Reject';
+
+  @override
+  String get claimsReasonRequired => 'A reason is required';
+
+  @override
+  String get claimsAdvances => 'Advances';
+
+  @override
+  String get claimsAddPerson => 'Add a person';
+
+  @override
+  String get claimsRoleApprover => 'Approver';
+
+  @override
+  String get claimsRoleClaimant => 'Claimant';
+
+  @override
+  String claimsBalanceCompanyOwesYou(String company) {
+    return '$company owes you';
+  }
+
+  @override
+  String claimsBalanceYouOweCompany(String company) {
+    return 'You owe $company';
+  }
+
+  @override
+  String claimsBalanceSettled(String company) {
+    return 'Settled with $company';
+  }
+
+  @override
+  String get claimsReceiptRequired =>
+      'A receipt is required for this claim item';
+
+  @override
+  String get claimsReceiptPdfTooLarge =>
+      'This PDF is larger than 5 MB. Choose a smaller file.';
+
+  @override
+  String claimsSpendingHint(String amount, String unit) {
+    return 'Hint: at most $amount per $unit';
+  }
+
+  @override
+  String get claimsNoClaimsYet => 'No claims yet.';
+
+  @override
+  String get claimsNoClaimsToReview => 'No claims to review.';
 }

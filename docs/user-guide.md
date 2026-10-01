@@ -602,6 +602,27 @@ period-over-period read on where money went.
     couldn't be verified"). Competing Fixes keep the earlier Fix; the later
     one is cancelled by a new record and both people are asked to check.
 
+- **Claims (expense claims on company books)**: employees submit Claims with
+  receipts on their phones; the office Approves or Rejects each item and
+  pays. A Claim is **not** a books entry until Approved — Rejected items
+  never touch the books. Submit and catch-up still use the same Wi-Fi Peer
+  Sync as Linked devices (no remote submit, no server).
+  - **Roles**: Owner, Approver, Member, Claimant (a person may hold more
+    than one). Claimant-only sees their own claims, balance ("Acme owes
+    you…" / "You owe Acme…"), payments, advances, and allowed expense
+    categories — not company bank accounts or other people.
+  - **Add a person**: Owner links an employee's phone by QR (default role
+    Claimant). Smara creates an "Owed to \<name\>" liability account
+    automatically.
+  - **Receipts**: camera photo, image, or PDF; company setting "Receipt
+    required above ___"; photos compressed; PDFs up to 5 MB; kept for the
+    life of the books (also in a Books Copy).
+  - **Advances**: payment to the Claimant before claims; approved amounts
+    reduce what is owed.
+  - **Not in this version**: submitting claims off the office Wi-Fi, adding
+    the payment into the employee's household books, mileage, per diem, or
+    receipt OCR.
+
 - **Require unlock to open the app**: off by default. Turning it on asks
   you to set a PIN (at least 4 characters); from then on, opening the app
   or returning to it after the idle timeout requires that PIN. Turning it

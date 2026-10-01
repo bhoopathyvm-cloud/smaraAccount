@@ -1289,5 +1289,50 @@
         "type": "int"
       }
     }
-  }
+  },
+  "claimsTitle": "Claims",
+  "claimsReviewTitle": "Review claims",
+  "claimsStatusDraft": "Draft",
+  "claimsStatusSubmitted": "Submitted",
+  "claimsStatusPartlyApproved": "Partly approved",
+  "claimsStatusApproved": "Approved",
+  "claimsStatusPaid": "Paid",
+  "claimsStatusRejected": "Rejected",
+  "claimsApprove": "Approve",
+  "claimsApproveDifferent": "Approve different amount",
+  "claimsReject": "Reject",
+  "claimsReasonRequired": "A reason is required",
+  "claimsAdvances": "Advances",
+  "claimsAddPerson": "Add a person",
+  "claimsRoleApprover": "Approver",
+  "claimsRoleClaimant": "Claimant",
+  "claimsBalanceCompanyOwesYou": "{company} owes you",
+  "@claimsBalanceCompanyOwesYou": {
+    "placeholders": {
+      "company": { "type": "String" }
+    }
+  },
+  "claimsBalanceYouOweCompany": "You owe {company}",
+  "@claimsBalanceYouOweCompany": {
+    "placeholders": {
+      "company": { "type": "String" }
+    }
+  },
+  "claimsBalanceSettled": "Settled with {company}",
+  "@claimsBalanceSettled": {
+    "placeholders": {
+      "company": { "type": "String" }
+    }
+  },
+  "claimsReceiptRequired": "A receipt is required for this claim item",
+  "claimsReceiptPdfTooLarge": "This PDF is larger than 5 MB. Choose a smaller file.",
+  "claimsSpendingHint": "Hint: at most {amount} per {unit}",
+  "@claimsSpendingHint": {
+    "placeholders": {
+      "amount": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "claimsNoClaimsYet": "No claims yet.",
+  "claimsNoClaimsToReview": "No claims to review."
 }

@@ -1,18 +1,23 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/books_set/active_books_session.dart';
+import '../data/books_set/books_set_paths.dart';
+import '../data/database/app_database.dart';
 import '../data/repositories/account_repository.dart';
 import '../data/repositories/books_copy_repository.dart';
 import '../data/repositories/category_repository.dart';
+import '../data/repositories/claim_repository.dart';
 import '../data/repositories/identity_repository.dart';
 import '../data/repositories/investment_repository.dart';
 import '../data/repositories/ledger_chain_verifier.dart';
 import '../data/repositories/ledger_repository.dart';
+import '../data/repositories/membership_repository.dart';
 import '../data/repositories/payee_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/statement_import_repository.dart';
+import '../domain/linked_devices/local_network_permission.dart';
 import '../l10n/l10n.dart';
 import '../domain/lock/app_lock_service.dart';
 import '../domain/lock/biometric_authenticator.dart';
@@ -24,6 +29,10 @@ import 'features/account_management/view_models/account_management_view_model.da
 import 'features/account_management/views/account_management_view.dart';
 import 'features/category_management/view_models/category_management_view_model.dart';
 import 'features/category_management/views/category_management_view.dart';
+import 'features/claims/view_models/approver_queue_view_model.dart';
+import 'features/claims/view_models/claims_list_view_model.dart';
+import 'features/claims/views/approver_queue_view.dart';
+import 'features/claims/views/claims_list_view.dart';
 import 'features/continuation/view_models/continuation_view_model.dart';
 import 'features/continuation/views/continuation_view.dart';
 import 'features/correction_wizard/view_models/correction_view_model.dart';
@@ -58,9 +67,6 @@ import 'features/settings/view_models/linked_devices_view_model.dart';
 import 'features/settings/view_models/settings_view_model.dart';
 import 'features/settings/views/device_history_view.dart';
 import 'features/settings/views/settings_view.dart';
-import '../data/repositories/membership_repository.dart';
-import '../data/books_set/books_set_paths.dart';
-import '../domain/linked_devices/local_network_permission.dart';
 import 'features/settle_pending_transfer/views/settle_pending_transfer_route.dart';
 import 'features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'features/setup_choice/views/bundle_import_view.dart';
@@ -88,8 +94,10 @@ GoRouter buildAppRouter(
   BooksCopyRepository booksCopyRepository,
   StatementImportRepository statementImportRepository,
   SettingsRepository settingsRepository,
-  AppLockController appLockController,
-) {
+  AppLockController appLockController, {
+  MembershipRepository? membershipRepository,
+}) {
+  final membership = membershipRepository;
   final navigationPolicy = AppNavigationPolicy(
     currentIdentity: identityRepository.currentIdentity,
     hasAnyJournalEntries: ledgerRepository.hasAnyJournalEntries,
@@ -102,6 +110,17 @@ GoRouter buildAppRouter(
     lockScreenRequired: () async {
       await appLockController.policy.ensureLoaded();
       return appLockController.policy.requiresLockScreen;
+    },
+    isClaimantOnlyActiveSet: () async {
+      if (membership == null) return false;
+      final identity = await identityRepository.currentIdentity();
+      if (identity == null) return false;
+      final devices = await membership.listActiveDevices();
+      final mine = devices.where(
+        (d) => d.signingIdentityId == identity.identityId,
+      );
+      if (mine.isEmpty) return false;
+      return mine.first.isClaimantOnly;
     },
   );
 
@@ -304,6 +323,82 @@ GoRouter buildAppRouter(
             onOpenRecurringTemplates: () =>
                 context.push('/recurring-templates'),
             onOpenDeviceHistory: () => context.push('/device-history'),
+          );
+        },
+      ),
+      GoRoute(
+        path: AppNavPaths.claims,
+        builder: (context, state) {
+          final membership = context.read<MembershipRepository>();
+          final claims = context.read<ClaimRepository>();
+          final database = context.read<AppDatabase>();
+          return FutureBuilder(
+            future: () async {
+              final identity = await identityRepository.currentIdentity();
+              final devices = await membership.listActiveDevices();
+              final mine = devices.where(
+                (d) =>
+                    identity != null &&
+                    d.signingIdentityId == identity.identityId,
+              );
+              final deviceId = mine.isNotEmpty
+                  ? mine.first.deviceId
+                  : (devices.isNotEmpty ? devices.first.deviceId : 'local');
+              final meta = await database
+                  .select(database.booksSetMetadata)
+                  .get();
+              final company = meta.isNotEmpty
+                  ? meta.first.displayName
+                  : 'Company';
+              final vm = ClaimsListViewModel(
+                claims: claims,
+                localDeviceId: deviceId,
+                companyDisplayName: company,
+              );
+              await vm.load();
+              return vm;
+            }(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+              return ClaimsListView(viewModel: snapshot.data!);
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: AppNavPaths.approverQueue,
+        builder: (context, state) {
+          final membership = context.read<MembershipRepository>();
+          final claims = context.read<ClaimRepository>();
+          return FutureBuilder(
+            future: () async {
+              final identity = await identityRepository.currentIdentity();
+              final devices = await membership.listActiveDevices();
+              final mine = devices.where(
+                (d) =>
+                    identity != null &&
+                    d.signingIdentityId == identity.identityId,
+              );
+              final deviceId = mine.isNotEmpty ? mine.first.deviceId : 'local';
+              final vm = ApproverQueueViewModel(
+                claims: claims,
+                actorDeviceId: deviceId,
+              );
+              await vm.load();
+              return vm;
+            }(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+              return ApproverQueueView(viewModel: snapshot.data!);
+            },
           );
         },
       ),
