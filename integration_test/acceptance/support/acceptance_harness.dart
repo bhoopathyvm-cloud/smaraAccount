@@ -427,11 +427,16 @@ Finder shellNavIcon(IconData icon) {
 /// recording [amountText] against [categoryName]) -> Home directly. Every
 /// step's ordering and the fixes applied here were hard-won against a
 /// real macOS build - see design.md Risks before changing this sequence.
+///
+/// [onScreen], when given, is awaited at each onboarding screen worth
+/// showing (`'setup_choice'`, `'language'`, `'first_entry'`) so the store
+/// screenshot/preview tools can capture them; acceptance tests omit it.
 Future<void> completeOnboardingWithGuidedEntry(
   WidgetTester tester, {
   required String amountText,
   required String categoryName,
   bool skipFirstWeekSetup = true,
+  Future<void> Function(String screen)? onScreen,
 }) async {
   final l10n = l10nFor(kAcceptanceLocaleTag);
 
@@ -453,6 +458,7 @@ Future<void> completeOnboardingWithGuidedEntry(
       'appeared (device may not have been reset).\n${_visibleTextsDump()}',
     );
   }
+  await onScreen?.call('setup_choice');
 
   await tapReliably(
     tester,
@@ -487,6 +493,7 @@ Future<void> completeOnboardingWithGuidedEntry(
     if (buttons.isEmpty) return false;
     return (buttons.single.widget as ElevatedButton).onPressed != null;
   });
+  await onScreen?.call('language');
 
   await tapReliably(
     tester,
@@ -582,6 +589,7 @@ Future<void> completeOnboardingWithGuidedEntry(
       fieldLabel: l10n.category,
       optionText: categoryName,
     );
+    if (attempt == 0) await onScreen?.call('first_entry');
     // Save is often below the live 800x600 fold (design.md Risks) - a raw
     // tap() hits whatever sits at that offset instead of the button, and
     // the miss is silent enough that a fixed poll just retries forever on

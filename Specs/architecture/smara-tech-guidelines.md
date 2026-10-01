@@ -294,8 +294,9 @@ ACCEPTANCE (integration_test/acceptance/):
     tool/run_acceptance_tests.sh -d <device-id> [-l <locale>] [group]
   after finishing a large change or refactor, before opening a PR
   (CLAUDE.md: full suite on -d macos after each big refactor).
-  Nightly CI (acceptance-suite-nightly.yml) also runs the full suite on
-  Linux once per supported locale (43). It is a release gate
+  Weekly CI (acceptance-suite-nightly.yml, "Acceptance Suite Weekly")
+  also runs the full suite on Linux once per supported locale (43); a
+  manual dispatch on the release candidate is a release gate
   (docs/release/checklist.md), not a pull-request gate.
 
 COVERAGE (dart-collect-coverage):
@@ -394,6 +395,6 @@ CI QUALITY GATES
   tasks.md still has an unchecked/partial task (mirrored locally by
   tool/git-hooks/pre-push). A red check blocks merge — it isn't
   advisory. Non-blocking workflows: acceptance-suite-nightly.yml
-  (release gate), localized-smoke.yml and linux-desktop.yml (manual
+  (weekly; manual dispatch is the release gate), localized-smoke.yml and linux-desktop.yml (manual
   dispatch), pages.yml (website deploy).
 ```
