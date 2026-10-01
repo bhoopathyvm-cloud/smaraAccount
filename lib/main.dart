@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'data/books_set/active_books_session.dart';
 import 'data/database/app_database.dart';
 import 'data/repositories/account_chart_reader.dart';
 import 'data/repositories/account_repository.dart';
 import 'data/repositories/books_copy_repository.dart';
+import 'data/repositories/books_set_repository.dart';
 import 'data/repositories/category_repository.dart';
 import 'data/repositories/identity_repository.dart';
 import 'data/repositories/investment_repository.dart';
@@ -16,6 +18,7 @@ import 'data/repositories/payee_repository.dart';
 import 'data/repositories/recurring_template_repository.dart';
 import 'data/repositories/settings_repository.dart';
 import 'data/repositories/statement_import_repository.dart';
+import 'domain/crypto/signing_key_service.dart';
 import 'l10n/l10n.dart';
 import 'domain/lock/app_lock_service.dart';
 import 'domain/lock/biometric_authenticator.dart';
@@ -34,20 +37,30 @@ import 'ui/features/register/view_models/register_view_model.dart';
 import 'ui/features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'ui/features/summary/view_models/summary_view_model.dart';
 
-void main() {
-  runApp(const SmaraAccountingApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final session = await ActiveBooksSession.open();
+  runApp(SmaraAccountingApp(session: session));
 }
 
 class SmaraAccountingApp extends StatelessWidget {
-  const SmaraAccountingApp({super.key});
+  const SmaraAccountingApp({super.key, required this.session});
+
+  final ActiveBooksSession session;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AppDatabase>(
-          create: (_) => AppDatabase(),
-          dispose: (_, db) => db.close(),
+        ChangeNotifierProvider<ActiveBooksSession>.value(value: session),
+        ProxyProvider<ActiveBooksSession, AppDatabase>(
+          update: (_, session, _) => session.database,
+        ),
+        ProxyProvider<ActiveBooksSession, BooksSetRepository>(
+          update: (_, session, _) => session.booksSets,
+        ),
+        ProxyProvider<ActiveBooksSession, SigningKeyService>(
+          update: (_, session, _) => session.signingKeyService,
         ),
         ProxyProvider<AppDatabase, AccountChartReader>(
           update: (_, db, _) => AccountChartReader(db),
@@ -55,14 +68,19 @@ class SmaraAccountingApp extends StatelessWidget {
         ProxyProvider<AppDatabase, LedgerChainStore>(
           update: (_, db, _) => LedgerChainStore(db),
         ),
-        ProxyProvider3<
+        ProxyProvider4<
           AppDatabase,
           AccountChartReader,
           LedgerChainStore,
+          SigningKeyService,
           LedgerRepository
         >(
-          update: (_, db, chart, chain, _) =>
-              LedgerRepository(database: db, chart: chart, chain: chain),
+          update: (_, db, chart, chain, keys, _) => LedgerRepository(
+            database: db,
+            chart: chart,
+            chain: chain,
+            signingKeyService: keys,
+          ),
         ),
         ProxyProvider3<
           AppDatabase,
@@ -83,34 +101,50 @@ class SmaraAccountingApp extends StatelessWidget {
         ProxyProvider<AppDatabase, PayeeRepository>(
           update: (_, db, _) => PayeeRepository(database: db),
         ),
-        ProxyProvider3<
+        ProxyProvider4<
           AppDatabase,
           AccountRepository,
           LedgerChainStore,
+          SigningKeyService,
           IdentityRepository
         >(
-          update: (_, db, accountRepository, chain, _) => IdentityRepository(
+          update: (_, db, accountRepository, chain, keys, _) =>
+              IdentityRepository(
+                database: db,
+                accountRepository: accountRepository,
+                chain: chain,
+                signingKeyService: keys,
+              ),
+        ),
+        ProxyProvider3<
+          AppDatabase,
+          LedgerChainStore,
+          SigningKeyService,
+          LedgerChainVerifier
+        >(
+          update: (_, db, chain, keys, _) => LedgerChainVerifier(
             database: db,
-            accountRepository: accountRepository,
             chain: chain,
+            signingKeyService: keys,
           ),
         ),
-        ProxyProvider2<AppDatabase, LedgerChainStore, LedgerChainVerifier>(
-          update: (_, db, chain, _) =>
-              LedgerChainVerifier(database: db, chain: chain),
+        ProxyProvider<ActiveBooksSession, SettingsRepository>(
+          update: (_, session, _) =>
+              SettingsRepository(booksSetStore: session.store),
         ),
-        Provider<SettingsRepository>(create: (_) => SettingsRepository()),
-        ProxyProvider3<
+        ProxyProvider4<
           AppDatabase,
           IdentityRepository,
           SettingsRepository,
+          SigningKeyService,
           BooksCopyRepository
         >(
-          update: (_, db, identityRepository, settingsRepository, _) =>
+          update: (_, db, identityRepository, settingsRepository, keys, _) =>
               BooksCopyRepository(
                 database: db,
                 identityRepository: identityRepository,
                 settingsRepository: settingsRepository,
+                signingKeyService: keys,
               ),
         ),
         ProxyProvider3<
@@ -175,7 +209,8 @@ class SmaraAccountingApp extends StatelessWidget {
                 categoryRepository: categoryRepository,
               ),
         ),
-        ChangeNotifierProxyProvider3<
+        ChangeNotifierProxyProvider4<
+          ActiveBooksSession,
           LedgerRepository,
           AccountRepository,
           CategoryRepository,
@@ -185,23 +220,32 @@ class SmaraAccountingApp extends StatelessWidget {
             ledgerRepository: context.read<LedgerRepository>(),
             accountRepository: context.read<AccountRepository>(),
             categoryRepository: context.read<CategoryRepository>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
           ),
           update:
               (
                 _,
+                session,
                 repository,
                 accountRepository,
                 categoryRepository,
                 previous,
-              ) =>
-                  previous ??
-                  RegisterViewModel(
-                    ledgerRepository: repository,
-                    accountRepository: accountRepository,
-                    categoryRepository: categoryRepository,
-                  ),
+              ) {
+                if (previous != null &&
+                    previous.booksGeneration == session.generation) {
+                  return previous;
+                }
+                previous?.dispose();
+                return RegisterViewModel(
+                  ledgerRepository: repository,
+                  accountRepository: accountRepository,
+                  categoryRepository: categoryRepository,
+                  booksGeneration: session.generation,
+                );
+              },
         ),
-        ChangeNotifierProxyProvider2<
+        ChangeNotifierProxyProvider3<
+          ActiveBooksSession,
           LedgerRepository,
           AccountRepository,
           SummaryViewModel
@@ -209,24 +253,41 @@ class SmaraAccountingApp extends StatelessWidget {
           create: (context) => SummaryViewModel(
             ledgerRepository: context.read<LedgerRepository>(),
             accountRepository: context.read<AccountRepository>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
           ),
-          update: (_, repository, accountRepository, previous) =>
-              previous ??
-              SummaryViewModel(
-                ledgerRepository: repository,
-                accountRepository: accountRepository,
-              ),
+          update: (_, session, repository, accountRepository, previous) {
+            if (previous != null &&
+                previous.booksGeneration == session.generation) {
+              return previous;
+            }
+            previous?.dispose();
+            return SummaryViewModel(
+              ledgerRepository: repository,
+              accountRepository: accountRepository,
+              booksGeneration: session.generation,
+            );
+          },
         ),
-        ChangeNotifierProxyProvider<
+        ChangeNotifierProxyProvider2<
+          ActiveBooksSession,
           CategoryRepository,
           CategoryManagementViewModel
         >(
           create: (context) => CategoryManagementViewModel(
             categoryRepository: context.read<CategoryRepository>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
           ),
-          update: (_, repository, previous) =>
-              previous ??
-              CategoryManagementViewModel(categoryRepository: repository),
+          update: (_, session, repository, previous) {
+            if (previous != null &&
+                previous.booksGeneration == session.generation) {
+              return previous;
+            }
+            previous?.dispose();
+            return CategoryManagementViewModel(
+              categoryRepository: repository,
+              booksGeneration: session.generation,
+            );
+          },
         ),
         ChangeNotifierProxyProvider2<
           IdentityRepository,
@@ -272,11 +333,11 @@ class SmaraAccountingApp extends StatelessWidget {
               BundleImportViewModel(booksCopyRepository: booksCopyRepository),
         ),
         ChangeNotifierProxyProvider5<
+          ActiveBooksSession,
           LedgerRepository,
           SettingsRepository,
           CategoryRepository,
           RecurringTemplateRepository,
-          InvestmentRepository,
           HomeViewModel
         >(
           create: (context) => HomeViewModel(
@@ -286,43 +347,74 @@ class SmaraAccountingApp extends StatelessWidget {
             recurringTemplateRepository: context
                 .read<RecurringTemplateRepository>(),
             investmentRepository: context.read<InvestmentRepository>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
           ),
           update:
               (
-                _,
+                context,
+                session,
                 repository,
                 settings,
                 categoryRepository,
                 recurringTemplateRepository,
-                investmentRepository,
                 previous,
-              ) =>
-                  previous ??
-                  HomeViewModel(
-                    ledgerRepository: repository,
-                    settingsRepository: settings,
-                    categoryRepository: categoryRepository,
-                    recurringTemplateRepository: recurringTemplateRepository,
-                    investmentRepository: investmentRepository,
-                  ),
+              ) {
+                if (previous != null &&
+                    previous.booksGeneration == session.generation) {
+                  return previous;
+                }
+                previous?.dispose();
+                return HomeViewModel(
+                  ledgerRepository: repository,
+                  settingsRepository: settings,
+                  categoryRepository: categoryRepository,
+                  recurringTemplateRepository: recurringTemplateRepository,
+                  investmentRepository: context.read<InvestmentRepository>(),
+                  booksGeneration: session.generation,
+                );
+              },
         ),
-        ChangeNotifierProxyProvider<
+        ChangeNotifierProxyProvider2<
+          ActiveBooksSession,
           AccountRepository,
           AccountManagementViewModel
         >(
           create: (context) => AccountManagementViewModel(
             accountRepository: context.read<AccountRepository>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
           ),
-          update: (_, accountRepository, previous) =>
-              previous ??
-              AccountManagementViewModel(accountRepository: accountRepository),
+          update: (_, session, accountRepository, previous) {
+            if (previous != null &&
+                previous.booksGeneration == session.generation) {
+              return previous;
+            }
+            previous?.dispose();
+            return AccountManagementViewModel(
+              accountRepository: accountRepository,
+              booksGeneration: session.generation,
+            );
+          },
         ),
-        ChangeNotifierProxyProvider<PayeeRepository, PayeeManagementViewModel>(
+        ChangeNotifierProxyProvider2<
+          ActiveBooksSession,
+          PayeeRepository,
+          PayeeManagementViewModel
+        >(
           create: (context) => PayeeManagementViewModel(
             payeeRepository: context.read<PayeeRepository>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
           ),
-          update: (_, repository, previous) =>
-              previous ?? PayeeManagementViewModel(payeeRepository: repository),
+          update: (_, session, repository, previous) {
+            if (previous != null &&
+                previous.booksGeneration == session.generation) {
+              return previous;
+            }
+            previous?.dispose();
+            return PayeeManagementViewModel(
+              payeeRepository: repository,
+              booksGeneration: session.generation,
+            );
+          },
         ),
         ChangeNotifierProxyProvider3<
           RecurringTemplateRepository,
@@ -357,7 +449,8 @@ class SmaraAccountingApp extends StatelessWidget {
   }
 }
 
-/// Builds the [GoRouter] exactly once ([initState], not [build]) and hosts
+/// Builds the [GoRouter] once per books-set generation ([initState] plus
+/// rebuild on [ActiveBooksSession.generation] change) and hosts
 /// [MaterialApp.router]. Deliberately a [StatefulWidget], not a [Builder]
 /// watching [LocaleController] directly: a plain `Builder` that both calls
 /// `buildAppRouter` and watches `LocaleController` would rebuild a brand
@@ -369,7 +462,7 @@ class SmaraAccountingApp extends StatelessWidget {
 /// silently wiped the instant it was set). The router doesn't need to
 /// change when locale changes - only `MaterialApp.locale` and the
 /// rendered text do - so this splits "watch locale for display" from
-/// "build the router once."
+/// "build the router once per books set."
 class _AppRouterHost extends StatefulWidget {
   const _AppRouterHost();
 
@@ -380,23 +473,30 @@ class _AppRouterHost extends StatefulWidget {
 class _AppRouterHostState extends State<_AppRouterHost> {
   late final AppLockController _appLockController = context
       .read<AppLockController>();
-  late final GoRouter _router = buildAppRouter(
-    context.read<LedgerRepository>(),
-    context.read<AccountRepository>(),
-    context.read<CategoryRepository>(),
-    context.read<PayeeRepository>(),
-    context.read<IdentityRepository>(),
-    context.read<LedgerChainVerifier>(),
-    context.read<InvestmentRepository>(),
-    context.read<BooksCopyRepository>(),
-    context.read<StatementImportRepository>(),
-    context.read<SettingsRepository>(),
-    _appLockController,
-  );
+  GoRouter? _router;
+  int _booksGeneration = -1;
+
+  GoRouter _buildRouter() {
+    return buildAppRouter(
+      context.read<LedgerRepository>(),
+      context.read<AccountRepository>(),
+      context.read<CategoryRepository>(),
+      context.read<PayeeRepository>(),
+      context.read<IdentityRepository>(),
+      context.read<LedgerChainVerifier>(),
+      context.read<InvestmentRepository>(),
+      context.read<BooksCopyRepository>(),
+      context.read<StatementImportRepository>(),
+      context.read<SettingsRepository>(),
+      _appLockController,
+    );
+  }
 
   @override
   void initState() {
     super.initState();
+    _booksGeneration = context.read<ActiveBooksSession>().generation;
+    _router = _buildRouter();
     _migrateKeyAccessibilityIfNeeded();
   }
 
@@ -410,7 +510,19 @@ class _AppRouterHostState extends State<_AppRouterHost> {
   }
 
   @override
+  void dispose() {
+    _router?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final session = context.watch<ActiveBooksSession>();
+    if (_booksGeneration != session.generation) {
+      _booksGeneration = session.generation;
+      _router?.dispose();
+      _router = _buildRouter();
+    }
     final localeController = context.watch<LocaleController>();
     return SnapshotHidingOverlay(
       appLockController: _appLockController,
@@ -431,7 +543,7 @@ class _AppRouterHostState extends State<_AppRouterHost> {
           final device = locales?.isNotEmpty == true ? locales!.first : null;
           return localeController.resolve(device);
         },
-        routerConfig: _router,
+        routerConfig: _router!,
       ),
     );
   }

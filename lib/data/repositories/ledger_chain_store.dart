@@ -8,6 +8,11 @@ import '../database/tables/ledger_chain_state_table.dart';
 /// Shared trusted-tip and verification-cache persistence for posting and
 /// identity. Talks only to [AppDatabase] so Identity → Account → Ledger
 /// stays acyclic (extract-ledger-chain-store).
+///
+/// Per-identity tips live in [ledgerIdentityChainTips] (linked-devices
+/// multi-chain). The singleton [ledgerChainState] remains the local write
+/// tip mirror used by existing callers and stays aligned with the local
+/// signing identity's tip row.
 class LedgerChainStore {
   LedgerChainStore(this._db);
 
@@ -40,6 +45,45 @@ class LedgerChainStore {
         .insertOnConflictUpdate(
           LedgerChainStateCompanion(
             id: const Value(ledgerChainStateSingletonId),
+            trustedTipEntryId: Value(trustedTipEntryId),
+            trustedTipHash: Value(trustedTipHash),
+            nextDeviceChainSequence: Value(nextDeviceChainSequence),
+          ),
+        );
+  }
+
+  /// Tip row for one signing identity, or null when never written.
+  Future<IdentityChainTipRow?> loadIdentityTip(String identityId) {
+    return (_db.select(
+      _db.ledgerIdentityChainTips,
+    )..where((t) => t.identityId.equals(identityId))).getSingleOrNull();
+  }
+
+  /// Ensures a tip row exists for [identityId] (genesis sequence 0).
+  Future<IdentityChainTipRow> ensureIdentityTip(String identityId) async {
+    final existing = await loadIdentityTip(identityId);
+    if (existing != null) return existing;
+    return _db
+        .into(_db.ledgerIdentityChainTips)
+        .insertReturning(
+          LedgerIdentityChainTipsCompanion.insert(
+            identityId: identityId,
+            nextDeviceChainSequence: 0,
+          ),
+        );
+  }
+
+  Future<void> updateIdentityTip({
+    required String identityId,
+    required String? trustedTipEntryId,
+    required Uint8List? trustedTipHash,
+    required int nextDeviceChainSequence,
+  }) {
+    return _db
+        .into(_db.ledgerIdentityChainTips)
+        .insertOnConflictUpdate(
+          LedgerIdentityChainTipsCompanion(
+            identityId: Value(identityId),
             trustedTipEntryId: Value(trustedTipEntryId),
             trustedTipHash: Value(trustedTipHash),
             nextDeviceChainSequence: Value(nextDeviceChainSequence),
@@ -87,17 +131,34 @@ class LedgerChainStore {
     }
   }
 
-  /// Active (non-superseded, non-continued) signing identity, or null
-  /// before first setup. Read-only db lookup so posting never imports
-  /// [IdentityRepository].
-  Future<SigningIdentity?> currentSigningIdentity() async {
-    final row =
+  /// Active (non-superseded, non-continued) signing identities, newest first.
+  Future<List<SigningIdentity>> activeSigningIdentities() async {
+    final rows =
         await (_db.select(_db.signingIdentities)
               ..where((t) => t.supersededAt.isNull() & t.continuedAt.isNull())
-              ..orderBy([(t) => OrderingTerm.desc(t.createdAt)])
-              ..limit(1))
-            .getSingleOrNull();
-    if (row == null) return null;
+              ..orderBy([(t) => OrderingTerm.desc(t.createdAt)]))
+            .get();
+    return rows.map(_toDomain).toList();
+  }
+
+  /// Active signing identity matching [publicKey], or the newest active
+  /// identity when [publicKey] is null / unmatched (single-device fallback).
+  Future<SigningIdentity?> currentSigningIdentity({
+    List<int>? matchingPublicKey,
+  }) async {
+    final active = await activeSigningIdentities();
+    if (active.isEmpty) return null;
+    if (matchingPublicKey != null) {
+      for (final identity in active) {
+        if (_bytesEqual(identity.publicKey, matchingPublicKey)) {
+          return identity;
+        }
+      }
+    }
+    return active.first;
+  }
+
+  SigningIdentity _toDomain(IdentityRow row) {
     return SigningIdentity(
       identityId: row.identityId,
       publicKey: row.publicKey,
@@ -108,5 +169,13 @@ class LedgerChainStore {
       continuedAt: row.continuedAt,
       acknowledgedAt: row.acknowledgedAt,
     );
+  }
+
+  bool _bytesEqual(List<int> a, List<int> b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 }

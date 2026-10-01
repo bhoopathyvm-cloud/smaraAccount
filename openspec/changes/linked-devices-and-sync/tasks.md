@@ -9,14 +9,14 @@
 ## 2. Books switcher
 
 - [x] 2.1 Implement books-set repository: create set (New setup into a new id), list sets, rename, remove set (delete directory + namespaced key after confirm), switch active set (close Drift connection, open other file) — verify `test/data/repositories/books_set_repository_test.dart` covers independence of two sets' entries and keys
-- [ ] 2.2 Wire books switcher UI (list by user-visible name, switch active set, create/remove) in Settings or shell; after switch, Home/Register/Linked devices refer to the new set — verify widget tests for switcher list and that Home rebuilds against the newly opened database
-- [ ] 2.3 Ensure Books Copy save/restore and backup reminder operate on the active set only — verify unit/widget tests that a copy from set A does not include set B's entries
+- [x] 2.2 Wire books switcher UI (list by user-visible name, switch active set, create/remove) in Settings or shell; after switch, Home/Register/Linked devices refer to the new set — verify widget tests for switcher list and that Home rebuilds against the newly opened database
+- [x] 2.3 Ensure Books Copy save/restore and backup reminder operate on the active set only — verify unit/widget tests that a copy from set A does not include set B's entries
 
 ## 3. Multi-chain verification
 
-- [ ] 3.1 Extend `LedgerChainVerifier` to verify each entry against `signedByIdentityId`'s public key and walk per-identity hash chains; quarantine only the damaged identity's tail — verify repository/verifier tests with two active identities, a break on one chain, and a missing public key failing closed
-- [ ] 3.2 Update identity/chain-state so linked peer identities remain active (not `continuedAt`) when joining; local device still signs only onto its own tip — verify tests that Continuation still sets `continuedAt` on key loss/restore, while linking does not
-- [ ] 3.3 Startup verification uses the multi-chain walk and balances include all verified linked identities' entries — verify existing integrity tests still pass and new multi-identity fixture balances are correct
+- [x] 3.1 Extend `LedgerChainVerifier` to verify each entry against `signedByIdentityId`'s public key and walk per-identity hash chains; quarantine only the damaged identity's tail — verify repository/verifier tests with two active identities, a break on one chain, and a missing public key failing closed
+- [x] 3.2 Update identity/chain-state so linked peer identities remain active (not `continuedAt`) when joining; local device still signs only onto its own tip — verify tests that Continuation still sets `continuedAt` on key loss/restore, while linking does not
+- [x] 3.3 Startup verification uses the multi-chain walk and balances include all verified linked identities' entries — verify existing integrity tests still pass and new multi-identity fixture balances are correct
 
 ## 4. Linked devices membership and roles
 

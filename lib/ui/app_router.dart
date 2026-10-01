@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../data/books_set/active_books_session.dart';
 import '../data/repositories/account_repository.dart';
 import '../data/repositories/books_copy_repository.dart';
 import '../data/repositories/category_repository.dart';
@@ -51,6 +52,7 @@ import 'features/record_transaction/views/record_transaction_view.dart';
 import 'features/register/view_models/register_row.dart';
 import 'features/register/view_models/register_view_model.dart';
 import 'features/register/views/register_view.dart';
+import 'features/settings/view_models/books_switcher_view_model.dart';
 import 'features/settings/view_models/device_history_view_model.dart';
 import 'features/settings/view_models/settings_view_model.dart';
 import 'features/settings/views/device_history_view.dart';
@@ -280,8 +282,12 @@ GoRouter buildAppRouter(
             appLockController: appLockController,
             localeController: context.read<LocaleController>(),
           );
+          final booksSwitcher = BooksSwitcherViewModel(
+            session: context.read<ActiveBooksSession>(),
+          );
           return SettingsView(
             viewModel: viewModel,
+            booksSwitcherViewModel: booksSwitcher,
             onOpenPayees: () => context.push('/payees'),
             onOpenRecurringTemplates: () =>
                 context.push('/recurring-templates'),

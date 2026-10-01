@@ -73,7 +73,7 @@ class BooksSetRepository {
     await BooksSetPaths.ensureBooksSetDirectory(_supportDirectory, setId);
     await _closeActive();
     await _store.setActiveBooksSetId(setId);
-    final db = await _openSet(setId, displayName: displayName);
+    await _openSet(setId, displayName: displayName);
     return BooksSetInfo(id: setId, displayName: displayName, isActive: true);
   }
 

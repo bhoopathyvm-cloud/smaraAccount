@@ -26,6 +26,7 @@ class HomeViewModel extends ChangeNotifier {
     InstrumentQuoteRefresh? quoteRefresh,
     bool refreshInstrumentQuotes = true,
     DateTime Function()? clock,
+    this.booksGeneration = 0,
   }) : _ledgerRepository = ledgerRepository,
        _categoryRepository = categoryRepository,
        _recurringTemplateRepository = recurringTemplateRepository,
@@ -100,6 +101,10 @@ class HomeViewModel extends ChangeNotifier {
   final SettingsRepository? _settingsRepository;
   final DateTime Function() _clock;
   final InstrumentQuoteRefresh? _quoteRefresh;
+
+  /// Books-set generation this ViewModel was built for; DI recreates when
+  /// [ActiveBooksSession.generation] advances after a switch.
+  final int booksGeneration;
   late final StreamSubscription<HomeOverview> _subscription;
   late final StreamSubscription<List<CategoryTotal>>
   _categoryTotalsSubscription;

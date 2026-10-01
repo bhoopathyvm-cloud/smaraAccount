@@ -797,7 +797,10 @@ class LedgerPosting {
     required List<({String accountId, int amountMinor, int lineNumber})>
     postings,
   }) async {
-    final identity = await _chain.currentSigningIdentity();
+    final storedKey = await _signingKeyService.loadStoredKeyMaterial();
+    final identity = await _chain.currentSigningIdentity(
+      matchingPublicKey: storedKey?.publicKey,
+    );
     if (identity == null) {
       throw StateError(
         'No signing identity is set up on this device - '
@@ -806,20 +809,34 @@ class LedgerPosting {
     }
 
     return _db.transaction(() async {
+      final identityTip = await _chain.ensureIdentityTip(identity.identityId);
       final chainState = await _chain.loadState();
-      final priorLastEntry =
+
+      // Prefer this identity's tip for hash linking; fall back to the
+      // singleton for installs that have not yet run multi-chain verify.
+      final tipEntryId =
+          identityTip.trustedTipEntryId ?? chainState.trustedTipEntryId;
+      final tipHash = identityTip.trustedTipHash ?? chainState.trustedTipHash;
+      // Sequence stays globally unique for now (column UNIQUE); take the
+      // max of identity tip and singleton so local writes never collide
+      // with already-inserted peer sequences after sync.
+      final sequence =
+          identityTip.nextDeviceChainSequence >
+              chainState.nextDeviceChainSequence
+          ? identityTip.nextDeviceChainSequence
+          : chainState.nextDeviceChainSequence;
+
+      final priorLastForIdentity =
           await (_db.select(_db.journalEntries)
+                ..where((e) => e.signedByIdentityId.equals(identity.identityId))
                 ..orderBy([(e) => OrderingTerm.desc(e.deviceChainSequence)])
                 ..limit(1))
               .getSingleOrNull();
       final isReanchor =
-          priorLastEntry != null &&
-          priorLastEntry.id != chainState.trustedTipEntryId;
+          priorLastForIdentity != null && priorLastForIdentity.id != tipEntryId;
 
       final previousHash =
-          chainState.trustedTipHash ??
-          Uint8List.fromList(genesisPreviousEntryHash);
-      final sequence = chainState.nextDeviceChainSequence;
+          tipHash ?? Uint8List.fromList(genesisPreviousEntryHash);
       final id = const Uuid().v4();
       final recordedAt = truncateToStoredPrecision(DateTime.now());
 
@@ -891,13 +908,19 @@ class LedgerPosting {
                 eventType: IntegrityEventType.chainReanchored,
                 relatedEntryId: Value(id),
                 detail: Value(
-                  'Re-anchored onto ${chainState.trustedTipEntryId ?? "genesis"} '
+                  'Re-anchored onto ${tipEntryId ?? "genesis"} '
                   'after a chain break; entry $id is the first post-break entry.',
                 ),
               ),
             );
       }
 
+      await _chain.updateIdentityTip(
+        identityId: identity.identityId,
+        trustedTipEntryId: id,
+        trustedTipHash: entryHash,
+        nextDeviceChainSequence: sequence + 1,
+      );
       await _chain.updateState(
         trustedTipEntryId: id,
         trustedTipHash: entryHash,

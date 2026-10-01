@@ -1806,6 +1806,66 @@ abstract class AppLocalizations {
   /// **'Hide for this many new entries after Later'**
   String get settingsBackupReminderSnoozeEntries;
 
+  /// No description provided for @settingsBooksSwitcher.
+  ///
+  /// In en, this message translates to:
+  /// **'Books on this device'**
+  String get settingsBooksSwitcher;
+
+  /// No description provided for @settingsBooksSwitcherBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.'**
+  String get settingsBooksSwitcherBlurb;
+
+  /// No description provided for @settingsBooksSwitcherActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Open now'**
+  String get settingsBooksSwitcherActive;
+
+  /// No description provided for @settingsBooksSwitcherSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch'**
+  String get settingsBooksSwitcherSwitch;
+
+  /// No description provided for @settingsBooksSwitcherCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'New books'**
+  String get settingsBooksSwitcherCreate;
+
+  /// No description provided for @settingsBooksSwitcherCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name these books'**
+  String get settingsBooksSwitcherCreateTitle;
+
+  /// No description provided for @settingsBooksSwitcherNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get settingsBooksSwitcherNameLabel;
+
+  /// No description provided for @settingsBooksSwitcherRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove these books?'**
+  String get settingsBooksSwitcherRemoveTitle;
+
+  /// No description provided for @settingsBooksSwitcherRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This deletes \"{name}\" from this device, including its signing key. Other books on this device are not affected.'**
+  String settingsBooksSwitcherRemoveBody(String name);
+
+  /// No description provided for @settingsBooksSwitcherRemoveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get settingsBooksSwitcherRemoveConfirm;
+
   /// No description provided for @whyWeDontEdit.
   ///
   /// In en, this message translates to:

@@ -891,6 +891,39 @@ class AppLocalizationsSat extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
+  String get settingsBooksSwitcher => 'Books on this device';
+
+  @override
+  String get settingsBooksSwitcherBlurb =>
+      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+
+  @override
+  String get settingsBooksSwitcherActive => 'Open now';
+
+  @override
+  String get settingsBooksSwitcherSwitch => 'Switch';
+
+  @override
+  String get settingsBooksSwitcherCreate => 'New books';
+
+  @override
+  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+
+  @override
+  String get settingsBooksSwitcherNameLabel => 'Name';
+
+  @override
+  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+
+  @override
+  String settingsBooksSwitcherRemoveBody(String name) {
+    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+  }
+
+  @override
+  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+
+  @override
   String get whyWeDontEdit => 'ᱚᱠᱟᱭ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱮ ᱯᱩᱨᱟᱹᱱ ᱚᱞ ᱵᱟᱭ ᱮᱰᱤᱴ ᱮᱫᱟᱞᱮ';
 
   @override

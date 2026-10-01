@@ -449,6 +449,23 @@
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
   "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "settingsBooksSwitcher": "Books on this device",
+  "settingsBooksSwitcherBlurb": "Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.",
+  "settingsBooksSwitcherActive": "Open now",
+  "settingsBooksSwitcherSwitch": "Switch",
+  "settingsBooksSwitcherCreate": "New books",
+  "settingsBooksSwitcherCreateTitle": "Name these books",
+  "settingsBooksSwitcherNameLabel": "Name",
+  "settingsBooksSwitcherRemoveTitle": "Remove these books?",
+  "settingsBooksSwitcherRemoveBody": "This deletes \"{name}\" from this device, including its signing key. Other books on this device are not affected.",
+  "@settingsBooksSwitcherRemoveBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsBooksSwitcherRemoveConfirm": "Remove",
   "whyWeDontEdit": "Why we don’t edit old entries",
   "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a correction next to it instead of changing what you already entered. That way your history always shows exactly what happened and when you fixed it — nothing quietly changes behind your back.",
   "lockTitle": "Unlock",

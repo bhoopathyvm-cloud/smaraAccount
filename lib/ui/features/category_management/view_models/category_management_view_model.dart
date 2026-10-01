@@ -17,8 +17,10 @@ import '../../../../domain/models/summary.dart';
 /// month-to-date spent-vs-limit progress (design.md Decision 2).
 class CategoryManagementViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  CategoryManagementViewModel({required CategoryRepository categoryRepository})
-    : _categoryRepository = categoryRepository {
+  CategoryManagementViewModel({
+    required CategoryRepository categoryRepository,
+    this.booksGeneration = 0,
+  }) : _categoryRepository = categoryRepository {
     _subscription = _categoryRepository
         .watchCategories(includeArchived: true)
         .listen(_onCategories);
@@ -36,6 +38,9 @@ class CategoryManagementViewModel extends ChangeNotifier
   }
 
   final CategoryRepository _categoryRepository;
+
+  /// Books-set generation this ViewModel was built for.
+  final int booksGeneration;
   late final StreamSubscription<List<Account>> _subscription;
   late final StreamSubscription<List<CategoryTotal>>
   _categoryTotalsSubscription;

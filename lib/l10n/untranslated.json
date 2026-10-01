@@ -1,1 +1,547 @@
-{}
+{
+  "ar": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "as": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "bn": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "brx": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "de": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "doi": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "es": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "fr": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "gu": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "hi": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "hu": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "id": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "it": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ja": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "kn": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ko": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "kok": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ks": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "mai": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ml": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "mni": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "mr": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ms": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ne": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "nl": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "or": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "pa": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "pl": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "pt": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ro": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ru": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "sa": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "sat": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "sd": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ta": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "te": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "th": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "tr": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "uk": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "ur": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "vi": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ],
+
+  "zh": [
+    "settingsBooksSwitcher",
+    "settingsBooksSwitcherBlurb",
+    "settingsBooksSwitcherActive",
+    "settingsBooksSwitcherSwitch",
+    "settingsBooksSwitcherCreate",
+    "settingsBooksSwitcherCreateTitle",
+    "settingsBooksSwitcherNameLabel",
+    "settingsBooksSwitcherRemoveTitle",
+    "settingsBooksSwitcherRemoveBody",
+    "settingsBooksSwitcherRemoveConfirm"
+  ]
+}
