@@ -1,0 +1,75 @@
+## 1. Decision record and data model
+
+- [ ] 1.1 Confirm `docs/adr/0004-private-key-never-leaves-the-device.md` matches the shipped design (update it if implementation forced a change); verify by reading it against design.md Decisions 1–7
+- [ ] 1.2 Add nullable `continuesIdentityId` and `continuedAt` columns to `signing_identities`, bump the Drift schema version with a migration, regenerate code; verify `dart run build_runner build` succeeds and `flutter analyze` is clean
+- [ ] 1.3 Extend `test/data/database/app_database_migration_test.dart` to upgrade from the current schema version and assert both columns exist and existing identities keep their values; verify `flutter test test/data/database/app_database_migration_test.dart` passes
+
+## 2. Key storage: this device only
+
+- [ ] 2.1 Set iOS/macOS secure-storage options to this-device-only, non-synchronizable accessibility (keeping ADR 0001's macOS keychain path) in `lib/domain/crypto/secure_key_storage.dart`; verify with a unit test asserting the options passed to the storage
+- [ ] 2.2 Implement the one-time key re-save on first launch after update (read, re-write with new options, read back, compare, then set `keyAccessibilityMigrated`; keep the old item and retry next launch on any failure); verify with unit tests in `test/domain/crypto/signing_key_service_test.dart` for success, write failure, and read-back mismatch, using `test/domain/crypto/in_memory_secure_key_storage.dart`
+- [ ] 2.3 Remove key export paths from `SigningKeyService` (phrase derivation, keystore encode/decode, seed adoption from files); verify `grep -rn "adoptPrivateKeySeed\|toRecoveryPhrase\|KeystoreFile" lib` returns nothing and existing signing tests pass
+
+## 3. Books Copy file and repository
+
+- [ ] 3.1 Add `lib/domain/backup/books_copy_file.dart` (kind `smara-books-copy` v1: encrypted `{db, settings}`) with a reader that also accepts legacy `smara-ledger-backup` and `smara-device-migration-bundle` files, discarding any key; verify with `test/domain/backup/books_copy_file_test.dart` covering round trip, wrong passphrase, corrupt file, legacy backup, and legacy bundle (key discarded, never returned)
+- [ ] 3.2 Add settings export/import to `SettingsRepository` (all preferences except App Lock and device-local reminder state); verify with `test/data/repositories/settings_repository_test.dart` cases proving App Lock keys and reminder state are never exported or overwritten
+- [ ] 3.3 Create `BooksCopyRepository` replacing `LedgerBackupRepository` and `DeviceMigrationBundleRepository`: save (checkpoint, encrypt, record last-copy time and entry count), replacement counts from the current DB, restore pipeline (decrypt → temp DB → full `verifyChain` → swap → apply settings → delete orphaned key), no foreign-identity rejection; verify with `test/data/repositories/books_copy_repository_test.dart` covering save, counts (zero counts omitted), successful replace, tampered copy refused with device untouched, wrong passphrase untouched, legacy files, and settings applied only after a successful swap
+- [ ] 3.4 Delete `ledger_backup_file.dart`, `device_migration_bundle_file.dart` writers, both old repositories and their tests (`test/data/repositories/ledger_backup_restore_test.dart`, `test/data/repositories/device_migration_bundle_test.dart`, `test/domain/backup/device_migration_bundle_file_test.dart`), moving any still-relevant assertions into the new tests; verify `flutter test` passes
+
+## 4. Continuation
+
+- [ ] 4.1 Implement Continuation (new identity with `continuesIdentityId`, previous identity `continuedAt`, chain tip set to the last verified entry or trusted tip, `IDENTITY_CONTINUED` integrity event, no entry rewritten) behind an ADR 0002-compliant seam; verify with `test/data/repositories/identity_continuation_test.dart` covering clean books, damaged tail (quarantined, next entry chains to trusted tip), entries of the earlier identity still verified and counted, next entry signed by the new identity, and restoring a copy onto the phone that still holds its key (no Continuation)
+- [ ] 4.2 Confirm `LedgerChainVerifier` verifies chains spanning several identities across a Continuation and still verifies books containing entries superseded by an earlier migration; verify with tests in `test/data/repositories/ledger_repository_test.dart` using a fixture database with migrated entries
+- [ ] 4.3 Delete `KeyLossMigrationEngine` and `IdentityRepository.migrateToNewIdentityAfterKeyLoss`, `restoreIdentity`, and phrase/keystore restore paths; delete `test/ui/features/migration/**` tests and migration-engine tests; verify `flutter analyze` and `flutter test` pass and the register still marks legacy superseded entries (existing register tests)
+- [ ] 4.4 Update `AppNavigationPolicy` so books-without-matching-key routes to `/continue`; verify with `test/domain/navigation/app_navigation_policy_test.dart` (no route to `/restore` or `/migrate` remains)
+
+## 5. Screens
+
+- [ ] 5.1 First-launch screen: New setup or "Restore from a copy"; replace `lib/ui/features/setup_choice/` bundle import with the Books Copy restore flow; verify with rewritten `test/ui/features/setup_choice/views/setup_choice_view_test.dart` and restore view/view-model tests replacing `bundle_import_view_test.dart` and `bundle_import_view_model_test.dart`
+- [ ] 5.2 Settings: "Save a copy of my books", "Restore from a copy" (warning with counts, entries-and-settings wording, "Save a copy first"), "Device history", reminder settings (days/entries, snooze days/entries, on/off); remove recovery-phrase, keystore and bundle-export entries; verify with updated `test/ui/features/settings/views/settings_view_test.dart` and `test/ui/features/settings/view_models/settings_view_model_test.dart`
+- [ ] 5.3 `/continue` screen ("Continue my books on this phone", "Restore from a copy") and restore success screen explaining the other device; verify with new widget and view-model tests under `test/ui/features/continuation/`
+- [ ] 5.4 Home reminder banner ("Save a copy of your books", "Save a copy", "Later") driven by time-or-usage thresholds and snooze; verify with view-model tests for 30 days, 500 entries (including one large statement import), snooze by 7 days and by 500 entries, reset after saving, disabled, and custom limits, plus a Home widget test
+- [ ] 5.5 Device history list built from `IDENTITY_CONTINUED` events in plain words; verify with a widget test showing "continued on this phone on <date> (from a copy saved on <date>)"
+- [ ] 5.6 Delete `lib/ui/features/restore/`, `lib/ui/features/migration/`, onboarding `recovery_phrase_setup_*`, and Settings `recovery_phrase_view.dart`, `keystore_export_view.dart`, `device_migration_bundle_export_view.dart`, their routes in `app_router.dart`, and their tests (`recovery_phrase_view_test`, `keystore_export_view_test`, `device_migration_bundle_export_view_test`, `restore_identity_view_test`, `restore_identity_view_model_test`, `key_loss_migration_view_test`, `key_loss_migration_view_model_test`, `recovery_phrase_setup_view_model_test`); remove phrase steps from onboarding (`currency_selection_view.dart`); verify onboarding still reaches Home in widget tests
+- [ ] 5.7 Wire `BooksCopyRepository`, Continuation and reminder in `main.dart` with the existing `ProxyProvider` pattern; regenerate `test/mocks.mocks.dart` and update `test/mocks.dart`; verify `flutter test` passes
+
+## 6. Remove recovery phrase and keystore code
+
+- [ ] 6.1 Delete `lib/domain/crypto/recovery_phrase.dart`, `bip39_language_for_locale.dart`, `keystore_file.dart`, their tests (`recovery_phrase_test.dart`, `keystore_file_test.dart`), and the `bip39_mnemonic` dependency; update `test/l10n/language_picker_test.dart` and `test/l10n/locale_packs_test.dart` if they reference BIP39; verify `flutter pub get`, `flutter analyze` and `flutter test` pass and `grep -rni "bip39\|recovery phrase\|keystore" lib` only hits release-signing code unrelated to users
+
+## 7. Localization (43 languages)
+
+- [ ] 7.1 Remove phrase, keystore, bundle and migration strings from `lib/l10n/app_en.arb`; add copy for save, restore, warning (entries and settings replaced, counts, "Save a copy first"), Continuation, success screen, reminder banner and settings, and Device history in household wording; verify `flutter gen-l10n` succeeds
+- [ ] 7.2 Translate the new strings into all 42 other ARB files and remove the deleted keys from them and from `lib/l10n/untranslated.json`; verify `test/l10n/curated_locale_smoke_test.dart`, `test/l10n/locale_packs_test.dart` and `test/acceptance_locale_fixtures_test.dart` pass and `untranslated.json` has no entries for the new keys
+- [ ] 7.3 Update `integration_test/acceptance/support/locale_fixtures.dart` and `acceptance_locale.dart` for the new and removed strings; verify `flutter test test/acceptance_locale_fixtures_test.dart` passes
+
+## 8. Integration and acceptance suites
+
+- [ ] 8.1 `integration_test/acceptance/support/acceptance_harness.dart`: replace helpers that read recovery-phrase words with helpers that save a Books Copy and restore it through the GUI, reset only the keychain (books kept), and reset keychain plus database; verify the harness compiles and existing groups still run
+- [ ] 8.2 Acceptance group `identity_restore`: replace "a lost signing key is restored from the recovery phrase; a wrong phrase is rejected first" with (a) keychain reset keeps books → "Continue my books on this phone" → same register, new entry records, and (b) Device history shows the Continuation; verify `tool/run_acceptance_tests.sh -d macos identity_restore` passes
+- [ ] 8.3 Acceptance group `ledger_backup` (rename to `books_copy`): save a copy → reset device → "Restore from a copy" on first launch → same entries and balances → record a new entry; restore in Settings shows the counted warning and "Save a copy first", then replaces; tampered copy and wrong passphrase are refused with the device untouched; legacy bundle file restores without its key; verify `tool/run_acceptance_tests.sh -d macos books_copy` passes
+- [ ] 8.4 Acceptance group `onboarding`: first-launch screen offers New setup and "Restore from a copy", and no recovery-phrase step appears; verify `tool/run_acceptance_tests.sh -d macos onboarding` passes
+- [ ] 8.5 Acceptance group `home_and_lock`: reminder banner appears after the threshold (using an injected clock or entry count), "Later" hides it, saving a copy clears it; App Lock still works after a restore and its settings were not replaced; verify `tool/run_acceptance_tests.sh -d macos home_and_lock` passes
+- [ ] 8.6 Update the group list in `tool/run_acceptance_tests.sh` and `tool/run_localized_acceptance_tests.sh` for the renamed and new groups; verify both scripts list and run every group
+- [ ] 8.7 `integration_test/app_test.dart`: replace "reinstall with the recovery phrase restores the identity without re-signing" with a save-copy/reset/restore/Continuation scenario, and replace "true key loss: migrating re-signs history under a new identity end to end" with a keychain-loss Continuation scenario; verify `flutter test integration_test/app_test.dart -d macos` passes
+- [ ] 8.8 Confirm `integration_test/instrument_identifier_resolve_test.dart`, `instrument_identifier_live_yahoo_android_test.dart` and `market_quote_currency_test.dart` are unaffected; verify they compile and pass on macOS (the live Yahoo test on Android as before)
+- [ ] 8.9 If PR #198 (store release runbook) has merged: update `integration_test/store_screenshots_test.dart` and `store_previews_test.dart` so no recovery-phrase or keystore screen is captured and the Settings copy screen is; verify `tool/capture_store_screenshots.sh` runs
+- [ ] 8.10 Run the full acceptance suite after the refactor, per CLAUDE.md: `tool/run_acceptance_tests.sh -d macos`; verify all groups pass
+- [ ] 8.11 Run the localized acceptance runner (`tool/run_localized_acceptance_tests.sh -d macos books_copy`) and the suite for one non-Latin and one right-to-left locale (`tool/run_acceptance_tests.sh -d macos -l hi` and `-l ar`); verify all pass
+- [ ] 8.12 Device runs for the keychain/Keystore change: on an iOS device or simulator and on Android, install the previous release, record entries, update to this build, and confirm the key is re-saved and books keep verifying; then reset keychain only and confirm Continuation; record results in this task
+
+## 9. CI
+
+- [ ] 9.1 `flutter-ci.yml` runs the new and updated unit/widget tests (`flutter test`); verify the PR's CI run is green
+- [ ] 9.2 `acceptance-suite-nightly.yml` runs the renamed/new acceptance groups on Linux for its locale matrix; verify with a manual `workflow_dispatch` run that passes
+- [ ] 9.3 `localized-smoke.yml` covers the new strings via `curated_locale_smoke_test.dart` and `acceptance_locale_fixtures_test.dart`; verify the PR's run is green
+- [ ] 9.4 `linux-desktop.yml` still builds with the removed dependency and new code; verify the PR's run is green
+
+## 10. Documentation
+
+- [ ] 10.1 `docs/user-guide.md`: replace recovery phrase, keystore, bundle and ledger backup sections with saving and restoring a copy, the replacement warning, continuing on a new phone, Device history and the reminder; state that a lost device can only be recovered from a saved copy; verify against the `user-guide` spec scenarios
+- [ ] 10.2 `README.md`, `Specs/architecture/smara-architecture.md`, `Specs/architecture/smara-tech-guidelines.md`, `pages/open-source/smara-account/whats-built.md`, `privacy-policy.md` and `architecture.md`: remove recovery phrase, keystore and bundle descriptions and describe the Books Copy and Continuation; verify `grep -rni "recovery phrase\|keystore file\|migration bundle" README.md Specs pages docs` only hits historical/blog content
+- [ ] 10.3 `CONTEXT.md` glossary, applied when the change lands: add Books Copy, Restore, Continuation (with _Avoid_ lines from the grilling: snapshot, bundle, sync file, adoption, pairing, transfer, migration); retire Recovery Phrase / Keystore File, Ledger Backup, Device Migration Bundle and Migration, keeping a note that entries superseded by an earlier migration still verify; update Setup Choice; verify the glossary has no term describing a removed feature as current
+- [ ] 10.4 Before archiving: move `openspec/specs/ledger-backup/spec.md`'s Background References into the `books-copy` main spec so archive can retire `ledger-backup` (the change sets `retire_capabilities: true`); verify `openspec archive books-copy-and-continuation` completes in a dry run on a scratch copy
+- [ ] 10.5 Release note for testers explaining that recovery phrases are no longer used and books continue automatically; verify it is included in the next release's notes
