@@ -10866,7 +10866,7 @@ OVERLAYS = {
         'categoriesTitle': 'ꯃꯆꯦꯠ',
         'accountName': 'ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ',
         'createAccount': 'ꯑꯦꯀꯥꯎꯟꯠ ꯁꯦꯝꯒꯠꯂꯨ',
-        'createGroup': 'ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ',
+        'createGroup': 'ꯑꯅꯧꯕ ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯃꯨ',
         'editGroup': 'ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ',
         'renameAccount': 'ꯑꯦꯀꯥꯎꯟꯠꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ',
         'renameCategory': 'ꯃꯆꯦꯠꯀꯤ ꯃꯤꯡ ꯑꯣꯡꯗꯣꯛꯎ',

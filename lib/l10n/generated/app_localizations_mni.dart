@@ -494,7 +494,7 @@ class AppLocalizationsMni extends AppLocalizations {
   String get createAccount => 'ꯑꯦꯀꯥꯎꯟꯠ ꯁꯦꯝꯒꯠꯂꯨ';
 
   @override
-  String get createGroup => 'ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ';
+  String get createGroup => 'ꯑꯅꯧꯕ ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯃꯨ';
 
   @override
   String get editGroup => 'ꯒ꯭ꯔꯨꯞ ꯁꯦꯝꯒꯠꯂꯨ';

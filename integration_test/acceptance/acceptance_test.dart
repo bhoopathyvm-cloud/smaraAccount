@@ -28,6 +28,7 @@ import 'package:smara_accounting/ui/features/register/views/register_row_tile.da
 import 'package:smara_accounting/ui/features/register/views/register_view.dart';
 import 'package:smara_accounting/ui/features/continuation/views/continuation_view.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
+import 'package:smara_accounting/ui/features/lock/views/lock_view.dart';
 import 'package:smara_accounting/ui/features/settings/views/device_history_view.dart';
 import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -1430,8 +1431,10 @@ void main() {
       // successful unlock) - simulating a relaunch is what the router's
       // redirect guard catches and sends to /lock.
       await simulateRelaunch(tester);
-      await pumpUntilFound(tester, find.text(l10n.lockScreenTitle));
-      expect(find.text(l10n.lockScreenTitle), findsOneWidget);
+      // The lock screen widget itself, not its title: in some languages the
+      // title ("लॉक" in Hindi) is the same word as Settings' Lock entry.
+      await pumpUntilFound(tester, find.byType(LockView));
+      expect(find.byType(LockView), findsOneWidget);
 
       await unlockWithPin(tester);
       expect(find.text(l10n.homeWhatYouHaveMinusWhatYouOwe), findsOneWidget);
@@ -1547,8 +1550,8 @@ void main() {
           () => find.text(l10n.settingsFetchFxRates).evaluate().isEmpty,
         );
         // Leaving Settings with a fresh PIN routes through the lock screen.
-        await pumpUntilFound(tester, find.text(l10n.lockScreenTitle));
-        if (find.text(l10n.lockScreenTitle).evaluate().isNotEmpty) {
+        await pumpUntilFound(tester, find.byType(LockView));
+        if (find.byType(LockView).evaluate().isNotEmpty) {
           await unlockWithPin(tester);
         }
         final languageBefore = await prefs.getString('preferredLocaleTag');
@@ -1572,10 +1575,10 @@ void main() {
         await tapReliably(
           tester,
           () => find.widgetWithText(ElevatedButton, l10n.continueBooksAction),
-          () => find.text(l10n.lockScreenTitle).evaluate().isNotEmpty,
+          () => find.byType(LockView).evaluate().isNotEmpty,
           innerTries: 150,
         );
-        expect(find.text(l10n.lockScreenTitle), findsOneWidget);
+        expect(find.byType(LockView), findsOneWidget);
         await unlockWithPin(tester);
         expect(find.text(l10n.homeWhatYouHaveMinusWhatYouOwe), findsOneWidget);
         expect(await prefs.getString('preferredLocaleTag'), languageBefore);
@@ -4553,6 +4556,9 @@ void main() {
         find.text(l10n.settingsBooksSwitcher),
       );
       expect(find.text(l10n.settingsBooksSwitcher), findsOneWidget);
+      // The section shows a spinner until its list of books has loaded, and
+      // only then the New books button; slower machines need the wait.
+      await pumpUntilFound(tester, find.text(l10n.settingsBooksSwitcherCreate));
       await scrollSettingsUntilVisible(
         tester,
         find.text(l10n.settingsBooksSwitcherCreate),

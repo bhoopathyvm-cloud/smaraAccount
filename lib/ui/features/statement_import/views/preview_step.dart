@@ -66,28 +66,30 @@ class PreviewStep extends StatelessWidget {
         return StatefulBuilder(
           builder: (context, setDialogState) => AlertDialog(
             title: Text(l10n.saveAsRule),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(l10n.saveAsRuleBlurb, style: AppTypography.metadata),
-                const SizedBox(height: AppSpacing.medium),
-                AppTextField(
-                  controller: keywordController,
-                  autofocus: group.isSingleRow,
-                  labelText: l10n.keyword,
-                ),
-                // payees-and-spending-memory: "Saving a rule offers to link a
-                // payee too" - opt-in, pre-checked; declining still saves the
-                // rule exactly as it would without this option.
-                CheckboxListTile(
-                  contentPadding: EdgeInsets.zero,
-                  controlAffinity: ListTileControlAffinity.leading,
-                  title: Text(l10n.alsoRememberPayee),
-                  value: linkPayee,
-                  onChanged: (value) =>
-                      setDialogState(() => linkPayee = value ?? false),
-                ),
-              ],
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(l10n.saveAsRuleBlurb, style: AppTypography.metadata),
+                  const SizedBox(height: AppSpacing.medium),
+                  AppTextField(
+                    controller: keywordController,
+                    autofocus: group.isSingleRow,
+                    labelText: l10n.keyword,
+                  ),
+                  // payees-and-spending-memory: "Saving a rule offers to link a
+                  // payee too" - opt-in, pre-checked; declining still saves the
+                  // rule exactly as it would without this option.
+                  CheckboxListTile(
+                    contentPadding: EdgeInsets.zero,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: Text(l10n.alsoRememberPayee),
+                    value: linkPayee,
+                    onChanged: (value) =>
+                        setDialogState(() => linkPayee = value ?? false),
+                  ),
+                ],
+              ),
             ),
             actions: [
               TextButton(
