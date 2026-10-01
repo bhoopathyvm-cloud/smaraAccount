@@ -20,11 +20,11 @@
 
 ## 4. Linked devices membership and roles
 
-- [ ] 4.1 Implement membership repository: Owner/Member roles, add/remove, erase-pending/erased timestamps, can-add policy, sole-Owner claim with 7-day effective time and Owner objection cancel, second-Owner suggestion flag — verify unit tests for role gates, claim timing, and objection cancel
-- [ ] 4.2 Build Settings "Linked devices" section and "Add a device" entry with catch-up copy and first-open local-network permission sentence — verify widget tests for labels, copy, and that the permission explanation precedes the OS prompt hook
-- [ ] 4.3 Implement QR join payload (signing public key, device cert, books-set id, role offer, join nonce) with no private key bytes; reject join when peers are not on the local network — verify unit tests for payload round-trip and that private key material is absent
-- [ ] 4.4 Implement Books-Copy-then-join-request + one-tap approve/refuse on an already-linked device — verify unit/widget tests for approve links the requester and refuse leaves membership unchanged
-- [ ] 4.5 Membership notices (added/removed/erase status) stored for Home and Device history display at next sync — verify unit tests that notices are created on membership ops and surfaced to the notice feed
+- [x] 4.1 Implement membership repository: Owner/Member roles, add/remove, erase-pending/erased timestamps, can-add policy, sole-Owner claim with 7-day effective time and Owner objection cancel, second-Owner suggestion flag — verify unit tests for role gates, claim timing, and objection cancel
+- [x] 4.2 Build Settings "Linked devices" section and "Add a device" entry with catch-up copy and first-open local-network permission sentence — verify widget tests for labels, copy, and that the permission explanation precedes the OS prompt hook
+- [x] 4.3 Implement QR join payload (signing public key, device cert, books-set id, role offer, join nonce) with no private key bytes; reject join when peers are not on the local network — verify unit tests for payload round-trip and that private key material is absent
+- [x] 4.4 Implement Books-Copy-then-join-request + one-tap approve/refuse on an already-linked device — verify unit/widget tests for approve links the requester and refuse leaves membership unchanged
+- [x] 4.5 Membership notices (added/removed/erase status) stored for Home and Device history display at next sync — verify unit tests that notices are created on membership ops and surfaced to the notice feed
 
 ## 5. Peer discovery and TLS transfer
 

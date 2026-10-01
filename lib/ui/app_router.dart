@@ -54,9 +54,13 @@ import 'features/register/view_models/register_view_model.dart';
 import 'features/register/views/register_view.dart';
 import 'features/settings/view_models/books_switcher_view_model.dart';
 import 'features/settings/view_models/device_history_view_model.dart';
+import 'features/settings/view_models/linked_devices_view_model.dart';
 import 'features/settings/view_models/settings_view_model.dart';
 import 'features/settings/views/device_history_view.dart';
 import 'features/settings/views/settings_view.dart';
+import '../data/repositories/membership_repository.dart';
+import '../data/books_set/books_set_paths.dart';
+import '../domain/linked_devices/local_network_permission.dart';
 import 'features/settle_pending_transfer/views/settle_pending_transfer_route.dart';
 import 'features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'features/setup_choice/views/bundle_import_view.dart';
@@ -285,9 +289,17 @@ GoRouter buildAppRouter(
           final booksSwitcher = BooksSwitcherViewModel(
             session: context.read<ActiveBooksSession>(),
           );
+          final linkedDevices = LinkedDevicesViewModel(
+            membershipRepository: context.read<MembershipRepository>(),
+            settingsRepository: settingsRepository,
+            booksSetStore: context.read<BooksSetStore>(),
+            localNetworkPermission: context.read<LocalNetworkPermission>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
+          );
           return SettingsView(
             viewModel: viewModel,
             booksSwitcherViewModel: booksSwitcher,
+            linkedDevicesViewModel: linkedDevices,
             onOpenPayees: () => context.push('/payees'),
             onOpenRecurringTemplates: () =>
                 context.push('/recurring-templates'),
@@ -298,7 +310,10 @@ GoRouter buildAppRouter(
       GoRoute(
         path: '/device-history',
         builder: (context, state) => DeviceHistoryView(
-          viewModel: DeviceHistoryViewModel(ledgerRepository: ledgerRepository),
+          viewModel: DeviceHistoryViewModel(
+            ledgerRepository: ledgerRepository,
+            membershipRepository: context.read<MembershipRepository>(),
+          ),
         ),
       ),
       GoRoute(

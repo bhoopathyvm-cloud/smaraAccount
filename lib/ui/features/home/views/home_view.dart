@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 
 import '../../../../domain/models/home_overview.dart';
+import '../../../../domain/models/membership_notice.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/summary.dart';
 import '../../../../domain/models/transaction_direction.dart';
@@ -12,6 +14,7 @@ import '../../../core/app_typography.dart';
 import '../../../core/capture_action_sheet.dart';
 import '../../../core/money_formatter.dart';
 import '../../../core/monthly_limit_progress.dart';
+import '../../settings/views/device_history_view.dart';
 import '../view_models/home_view_model.dart';
 
 class HomeView extends StatelessWidget {
@@ -91,6 +94,12 @@ class HomeView extends StatelessWidget {
                 _BackupReminderBanner(
                   onSaveCopy: onSaveBooksCopy,
                   onLater: viewModel.snoozeBackupReminder,
+                ),
+              for (final notice in viewModel.membershipNotices)
+                _MembershipNoticeBanner(
+                  notice: notice,
+                  onDismiss: () =>
+                      viewModel.acknowledgeMembershipNotice(notice.noticeId),
                 ),
               _NetPositions(overview: overview),
               if (viewModel.dueTemplates.isNotEmpty) ...[
@@ -174,6 +183,49 @@ class _BackupReminderBanner extends StatelessWidget {
                   ),
                 ],
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MembershipNoticeBanner extends StatelessWidget {
+  const _MembershipNoticeBanner({
+    required this.notice,
+    required this.onDismiss,
+  });
+
+  final MembershipNotice notice;
+  final VoidCallback onDismiss;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
+    final locale = Localizations.localeOf(context).toString();
+    final dateFormat = DateFormat.yMMMd(locale);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.large,
+        0,
+        AppSpacing.large,
+        AppSpacing.large,
+      ),
+      child: Material(
+        color: AppColors.primary.withValues(alpha: 0.08),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.medium),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  membershipNoticeLabel(l10n, dateFormat, notice),
+                  style: AppTypography.body,
+                ),
+              ),
+              TextButton(onPressed: onDismiss, child: Text(l10n.actionDismiss)),
             ],
           ),
         ),

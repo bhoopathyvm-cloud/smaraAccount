@@ -16,7 +16,9 @@ import '../../../../l10n/l10n.dart';
 import '../../setup_choice/views/books_copy_restored_success_dialog.dart';
 import '../view_models/settings_view_model.dart';
 import '../view_models/books_switcher_view_model.dart';
+import '../view_models/linked_devices_view_model.dart';
 import 'books_switcher_section.dart';
+import 'linked_devices_section.dart';
 
 /// Views are lean. No business logic, no Repository calls. Listen to the
 /// ViewModel; render what it exposes (smara-tech-guidelines.md).
@@ -25,6 +27,7 @@ class SettingsView extends StatelessWidget {
     super.key,
     required this.viewModel,
     this.booksSwitcherViewModel,
+    this.linkedDevicesViewModel,
     this.onOpenPayees,
     this.onOpenRecurringTemplates,
     this.onOpenDeviceHistory,
@@ -35,6 +38,9 @@ class SettingsView extends StatelessWidget {
   /// Optional books switcher (linked-devices). Omitted in tests that only
   /// cover other Settings sections.
   final BooksSwitcherViewModel? booksSwitcherViewModel;
+
+  /// Optional Linked devices section (linked-devices task 4.2).
+  final LinkedDevicesViewModel? linkedDevicesViewModel;
 
   /// payees-and-spending-memory: opens the minimal payee CRUD screen.
   final VoidCallback? onOpenPayees;
@@ -71,6 +77,10 @@ class SettingsView extends StatelessWidget {
             children: [
               if (booksSwitcherViewModel != null) ...[
                 BooksSwitcherSection(viewModel: booksSwitcherViewModel!),
+                const SizedBox(height: AppSpacing.xLarge),
+              ],
+              if (linkedDevicesViewModel != null) ...[
+                LinkedDevicesSection(viewModel: linkedDevicesViewModel!),
                 const SizedBox(height: AppSpacing.xLarge),
               ],
               if (viewModel.localeController != null) ...[

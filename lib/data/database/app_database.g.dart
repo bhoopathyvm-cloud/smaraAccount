@@ -11224,6 +11224,1179 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
   }
 }
 
+class $MembershipNoticesTable extends MembershipNotices
+    with TableInfo<$MembershipNoticesTable, MembershipNoticeRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MembershipNoticesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _noticeIdMeta = const VerificationMeta(
+    'noticeId',
+  );
+  @override
+  late final GeneratedColumn<String> noticeId = GeneratedColumn<String>(
+    'notice_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<MembershipNoticeKind, String>
+  kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  ).withConverter<MembershipNoticeKind>($MembershipNoticesTable.$converterkind);
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _relatedDeviceIdMeta = const VerificationMeta(
+    'relatedDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> relatedDeviceId = GeneratedColumn<String>(
+    'related_device_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _relatedDisplayNameMeta =
+      const VerificationMeta('relatedDisplayName');
+  @override
+  late final GeneratedColumn<String> relatedDisplayName =
+      GeneratedColumn<String>(
+        'related_display_name',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _detailMeta = const VerificationMeta('detail');
+  @override
+  late final GeneratedColumn<String> detail = GeneratedColumn<String>(
+    'detail',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _acknowledgedAtMeta = const VerificationMeta(
+    'acknowledgedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> acknowledgedAt =
+      GeneratedColumn<DateTime>(
+        'acknowledged_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    noticeId,
+    kind,
+    createdAt,
+    relatedDeviceId,
+    relatedDisplayName,
+    detail,
+    acknowledgedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'membership_notices';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MembershipNoticeRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('notice_id')) {
+      context.handle(
+        _noticeIdMeta,
+        noticeId.isAcceptableOrUnknown(data['notice_id']!, _noticeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noticeIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('related_device_id')) {
+      context.handle(
+        _relatedDeviceIdMeta,
+        relatedDeviceId.isAcceptableOrUnknown(
+          data['related_device_id']!,
+          _relatedDeviceIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('related_display_name')) {
+      context.handle(
+        _relatedDisplayNameMeta,
+        relatedDisplayName.isAcceptableOrUnknown(
+          data['related_display_name']!,
+          _relatedDisplayNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('detail')) {
+      context.handle(
+        _detailMeta,
+        detail.isAcceptableOrUnknown(data['detail']!, _detailMeta),
+      );
+    }
+    if (data.containsKey('acknowledged_at')) {
+      context.handle(
+        _acknowledgedAtMeta,
+        acknowledgedAt.isAcceptableOrUnknown(
+          data['acknowledged_at']!,
+          _acknowledgedAtMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {noticeId};
+  @override
+  MembershipNoticeRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MembershipNoticeRow(
+      noticeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notice_id'],
+      )!,
+      kind: $MembershipNoticesTable.$converterkind.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}kind'],
+        )!,
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      relatedDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}related_device_id'],
+      ),
+      relatedDisplayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}related_display_name'],
+      ),
+      detail: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}detail'],
+      ),
+      acknowledgedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}acknowledged_at'],
+      ),
+    );
+  }
+
+  @override
+  $MembershipNoticesTable createAlias(String alias) {
+    return $MembershipNoticesTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<MembershipNoticeKind, String, String>
+  $converterkind = const EnumNameConverter<MembershipNoticeKind>(
+    MembershipNoticeKind.values,
+  );
+}
+
+class MembershipNoticeRow extends DataClass
+    implements Insertable<MembershipNoticeRow> {
+  final String noticeId;
+  final MembershipNoticeKind kind;
+  final DateTime createdAt;
+  final String? relatedDeviceId;
+  final String? relatedDisplayName;
+  final String? detail;
+  final DateTime? acknowledgedAt;
+  const MembershipNoticeRow({
+    required this.noticeId,
+    required this.kind,
+    required this.createdAt,
+    this.relatedDeviceId,
+    this.relatedDisplayName,
+    this.detail,
+    this.acknowledgedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['notice_id'] = Variable<String>(noticeId);
+    {
+      map['kind'] = Variable<String>(
+        $MembershipNoticesTable.$converterkind.toSql(kind),
+      );
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || relatedDeviceId != null) {
+      map['related_device_id'] = Variable<String>(relatedDeviceId);
+    }
+    if (!nullToAbsent || relatedDisplayName != null) {
+      map['related_display_name'] = Variable<String>(relatedDisplayName);
+    }
+    if (!nullToAbsent || detail != null) {
+      map['detail'] = Variable<String>(detail);
+    }
+    if (!nullToAbsent || acknowledgedAt != null) {
+      map['acknowledged_at'] = Variable<DateTime>(acknowledgedAt);
+    }
+    return map;
+  }
+
+  MembershipNoticesCompanion toCompanion(bool nullToAbsent) {
+    return MembershipNoticesCompanion(
+      noticeId: Value(noticeId),
+      kind: Value(kind),
+      createdAt: Value(createdAt),
+      relatedDeviceId: relatedDeviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(relatedDeviceId),
+      relatedDisplayName: relatedDisplayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(relatedDisplayName),
+      detail: detail == null && nullToAbsent
+          ? const Value.absent()
+          : Value(detail),
+      acknowledgedAt: acknowledgedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(acknowledgedAt),
+    );
+  }
+
+  factory MembershipNoticeRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MembershipNoticeRow(
+      noticeId: serializer.fromJson<String>(json['noticeId']),
+      kind: $MembershipNoticesTable.$converterkind.fromJson(
+        serializer.fromJson<String>(json['kind']),
+      ),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      relatedDeviceId: serializer.fromJson<String?>(json['relatedDeviceId']),
+      relatedDisplayName: serializer.fromJson<String?>(
+        json['relatedDisplayName'],
+      ),
+      detail: serializer.fromJson<String?>(json['detail']),
+      acknowledgedAt: serializer.fromJson<DateTime?>(json['acknowledgedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'noticeId': serializer.toJson<String>(noticeId),
+      'kind': serializer.toJson<String>(
+        $MembershipNoticesTable.$converterkind.toJson(kind),
+      ),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'relatedDeviceId': serializer.toJson<String?>(relatedDeviceId),
+      'relatedDisplayName': serializer.toJson<String?>(relatedDisplayName),
+      'detail': serializer.toJson<String?>(detail),
+      'acknowledgedAt': serializer.toJson<DateTime?>(acknowledgedAt),
+    };
+  }
+
+  MembershipNoticeRow copyWith({
+    String? noticeId,
+    MembershipNoticeKind? kind,
+    DateTime? createdAt,
+    Value<String?> relatedDeviceId = const Value.absent(),
+    Value<String?> relatedDisplayName = const Value.absent(),
+    Value<String?> detail = const Value.absent(),
+    Value<DateTime?> acknowledgedAt = const Value.absent(),
+  }) => MembershipNoticeRow(
+    noticeId: noticeId ?? this.noticeId,
+    kind: kind ?? this.kind,
+    createdAt: createdAt ?? this.createdAt,
+    relatedDeviceId: relatedDeviceId.present
+        ? relatedDeviceId.value
+        : this.relatedDeviceId,
+    relatedDisplayName: relatedDisplayName.present
+        ? relatedDisplayName.value
+        : this.relatedDisplayName,
+    detail: detail.present ? detail.value : this.detail,
+    acknowledgedAt: acknowledgedAt.present
+        ? acknowledgedAt.value
+        : this.acknowledgedAt,
+  );
+  MembershipNoticeRow copyWithCompanion(MembershipNoticesCompanion data) {
+    return MembershipNoticeRow(
+      noticeId: data.noticeId.present ? data.noticeId.value : this.noticeId,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      relatedDeviceId: data.relatedDeviceId.present
+          ? data.relatedDeviceId.value
+          : this.relatedDeviceId,
+      relatedDisplayName: data.relatedDisplayName.present
+          ? data.relatedDisplayName.value
+          : this.relatedDisplayName,
+      detail: data.detail.present ? data.detail.value : this.detail,
+      acknowledgedAt: data.acknowledgedAt.present
+          ? data.acknowledgedAt.value
+          : this.acknowledgedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MembershipNoticeRow(')
+          ..write('noticeId: $noticeId, ')
+          ..write('kind: $kind, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('relatedDeviceId: $relatedDeviceId, ')
+          ..write('relatedDisplayName: $relatedDisplayName, ')
+          ..write('detail: $detail, ')
+          ..write('acknowledgedAt: $acknowledgedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    noticeId,
+    kind,
+    createdAt,
+    relatedDeviceId,
+    relatedDisplayName,
+    detail,
+    acknowledgedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MembershipNoticeRow &&
+          other.noticeId == this.noticeId &&
+          other.kind == this.kind &&
+          other.createdAt == this.createdAt &&
+          other.relatedDeviceId == this.relatedDeviceId &&
+          other.relatedDisplayName == this.relatedDisplayName &&
+          other.detail == this.detail &&
+          other.acknowledgedAt == this.acknowledgedAt);
+}
+
+class MembershipNoticesCompanion extends UpdateCompanion<MembershipNoticeRow> {
+  final Value<String> noticeId;
+  final Value<MembershipNoticeKind> kind;
+  final Value<DateTime> createdAt;
+  final Value<String?> relatedDeviceId;
+  final Value<String?> relatedDisplayName;
+  final Value<String?> detail;
+  final Value<DateTime?> acknowledgedAt;
+  final Value<int> rowid;
+  const MembershipNoticesCompanion({
+    this.noticeId = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.relatedDeviceId = const Value.absent(),
+    this.relatedDisplayName = const Value.absent(),
+    this.detail = const Value.absent(),
+    this.acknowledgedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MembershipNoticesCompanion.insert({
+    required String noticeId,
+    required MembershipNoticeKind kind,
+    this.createdAt = const Value.absent(),
+    this.relatedDeviceId = const Value.absent(),
+    this.relatedDisplayName = const Value.absent(),
+    this.detail = const Value.absent(),
+    this.acknowledgedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : noticeId = Value(noticeId),
+       kind = Value(kind);
+  static Insertable<MembershipNoticeRow> custom({
+    Expression<String>? noticeId,
+    Expression<String>? kind,
+    Expression<DateTime>? createdAt,
+    Expression<String>? relatedDeviceId,
+    Expression<String>? relatedDisplayName,
+    Expression<String>? detail,
+    Expression<DateTime>? acknowledgedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (noticeId != null) 'notice_id': noticeId,
+      if (kind != null) 'kind': kind,
+      if (createdAt != null) 'created_at': createdAt,
+      if (relatedDeviceId != null) 'related_device_id': relatedDeviceId,
+      if (relatedDisplayName != null)
+        'related_display_name': relatedDisplayName,
+      if (detail != null) 'detail': detail,
+      if (acknowledgedAt != null) 'acknowledged_at': acknowledgedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MembershipNoticesCompanion copyWith({
+    Value<String>? noticeId,
+    Value<MembershipNoticeKind>? kind,
+    Value<DateTime>? createdAt,
+    Value<String?>? relatedDeviceId,
+    Value<String?>? relatedDisplayName,
+    Value<String?>? detail,
+    Value<DateTime?>? acknowledgedAt,
+    Value<int>? rowid,
+  }) {
+    return MembershipNoticesCompanion(
+      noticeId: noticeId ?? this.noticeId,
+      kind: kind ?? this.kind,
+      createdAt: createdAt ?? this.createdAt,
+      relatedDeviceId: relatedDeviceId ?? this.relatedDeviceId,
+      relatedDisplayName: relatedDisplayName ?? this.relatedDisplayName,
+      detail: detail ?? this.detail,
+      acknowledgedAt: acknowledgedAt ?? this.acknowledgedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (noticeId.present) {
+      map['notice_id'] = Variable<String>(noticeId.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(
+        $MembershipNoticesTable.$converterkind.toSql(kind.value),
+      );
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (relatedDeviceId.present) {
+      map['related_device_id'] = Variable<String>(relatedDeviceId.value);
+    }
+    if (relatedDisplayName.present) {
+      map['related_display_name'] = Variable<String>(relatedDisplayName.value);
+    }
+    if (detail.present) {
+      map['detail'] = Variable<String>(detail.value);
+    }
+    if (acknowledgedAt.present) {
+      map['acknowledged_at'] = Variable<DateTime>(acknowledgedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MembershipNoticesCompanion(')
+          ..write('noticeId: $noticeId, ')
+          ..write('kind: $kind, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('relatedDeviceId: $relatedDeviceId, ')
+          ..write('relatedDisplayName: $relatedDisplayName, ')
+          ..write('detail: $detail, ')
+          ..write('acknowledgedAt: $acknowledgedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PendingJoinRequestsTable extends PendingJoinRequests
+    with TableInfo<$PendingJoinRequestsTable, PendingJoinRequestRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PendingJoinRequestsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _requestIdMeta = const VerificationMeta(
+    'requestId',
+  );
+  @override
+  late final GeneratedColumn<String> requestId = GeneratedColumn<String>(
+    'request_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _requesterDeviceIdMeta = const VerificationMeta(
+    'requesterDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> requesterDeviceId =
+      GeneratedColumn<String>(
+        'requester_device_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _requesterDisplayNameMeta =
+      const VerificationMeta('requesterDisplayName');
+  @override
+  late final GeneratedColumn<String> requesterDisplayName =
+      GeneratedColumn<String>(
+        'requester_display_name',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _signingPublicKeyMeta = const VerificationMeta(
+    'signingPublicKey',
+  );
+  @override
+  late final GeneratedColumn<Uint8List> signingPublicKey =
+      GeneratedColumn<Uint8List>(
+        'signing_public_key',
+        aliasedName,
+        false,
+        type: DriftSqlType.blob,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _deviceCertDerMeta = const VerificationMeta(
+    'deviceCertDer',
+  );
+  @override
+  late final GeneratedColumn<Uint8List> deviceCertDer =
+      GeneratedColumn<Uint8List>(
+        'device_cert_der',
+        aliasedName,
+        false,
+        type: DriftSqlType.blob,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _deviceCertFingerprintMeta =
+      const VerificationMeta('deviceCertFingerprint');
+  @override
+  late final GeneratedColumn<String> deviceCertFingerprint =
+      GeneratedColumn<String>(
+        'device_cert_fingerprint',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _booksSetIdMeta = const VerificationMeta(
+    'booksSetId',
+  );
+  @override
+  late final GeneratedColumn<String> booksSetId = GeneratedColumn<String>(
+    'books_set_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _resolvedAtMeta = const VerificationMeta(
+    'resolvedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> resolvedAt = GeneratedColumn<DateTime>(
+    'resolved_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _approvedMeta = const VerificationMeta(
+    'approved',
+  );
+  @override
+  late final GeneratedColumn<bool> approved = GeneratedColumn<bool>(
+    'approved',
+    aliasedName,
+    true,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("approved" IN (0, 1))',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    requestId,
+    requesterDeviceId,
+    requesterDisplayName,
+    signingPublicKey,
+    deviceCertDer,
+    deviceCertFingerprint,
+    booksSetId,
+    createdAt,
+    resolvedAt,
+    approved,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pending_join_requests';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PendingJoinRequestRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('request_id')) {
+      context.handle(
+        _requestIdMeta,
+        requestId.isAcceptableOrUnknown(data['request_id']!, _requestIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_requestIdMeta);
+    }
+    if (data.containsKey('requester_device_id')) {
+      context.handle(
+        _requesterDeviceIdMeta,
+        requesterDeviceId.isAcceptableOrUnknown(
+          data['requester_device_id']!,
+          _requesterDeviceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_requesterDeviceIdMeta);
+    }
+    if (data.containsKey('requester_display_name')) {
+      context.handle(
+        _requesterDisplayNameMeta,
+        requesterDisplayName.isAcceptableOrUnknown(
+          data['requester_display_name']!,
+          _requesterDisplayNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_requesterDisplayNameMeta);
+    }
+    if (data.containsKey('signing_public_key')) {
+      context.handle(
+        _signingPublicKeyMeta,
+        signingPublicKey.isAcceptableOrUnknown(
+          data['signing_public_key']!,
+          _signingPublicKeyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_signingPublicKeyMeta);
+    }
+    if (data.containsKey('device_cert_der')) {
+      context.handle(
+        _deviceCertDerMeta,
+        deviceCertDer.isAcceptableOrUnknown(
+          data['device_cert_der']!,
+          _deviceCertDerMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceCertDerMeta);
+    }
+    if (data.containsKey('device_cert_fingerprint')) {
+      context.handle(
+        _deviceCertFingerprintMeta,
+        deviceCertFingerprint.isAcceptableOrUnknown(
+          data['device_cert_fingerprint']!,
+          _deviceCertFingerprintMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceCertFingerprintMeta);
+    }
+    if (data.containsKey('books_set_id')) {
+      context.handle(
+        _booksSetIdMeta,
+        booksSetId.isAcceptableOrUnknown(
+          data['books_set_id']!,
+          _booksSetIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_booksSetIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('resolved_at')) {
+      context.handle(
+        _resolvedAtMeta,
+        resolvedAt.isAcceptableOrUnknown(data['resolved_at']!, _resolvedAtMeta),
+      );
+    }
+    if (data.containsKey('approved')) {
+      context.handle(
+        _approvedMeta,
+        approved.isAcceptableOrUnknown(data['approved']!, _approvedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {requestId};
+  @override
+  PendingJoinRequestRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PendingJoinRequestRow(
+      requestId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}request_id'],
+      )!,
+      requesterDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}requester_device_id'],
+      )!,
+      requesterDisplayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}requester_display_name'],
+      )!,
+      signingPublicKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}signing_public_key'],
+      )!,
+      deviceCertDer: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}device_cert_der'],
+      )!,
+      deviceCertFingerprint: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_cert_fingerprint'],
+      )!,
+      booksSetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}books_set_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      resolvedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}resolved_at'],
+      ),
+      approved: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}approved'],
+      ),
+    );
+  }
+
+  @override
+  $PendingJoinRequestsTable createAlias(String alias) {
+    return $PendingJoinRequestsTable(attachedDatabase, alias);
+  }
+}
+
+class PendingJoinRequestRow extends DataClass
+    implements Insertable<PendingJoinRequestRow> {
+  final String requestId;
+  final String requesterDeviceId;
+  final String requesterDisplayName;
+  final Uint8List signingPublicKey;
+  final Uint8List deviceCertDer;
+  final String deviceCertFingerprint;
+  final String booksSetId;
+  final DateTime createdAt;
+  final DateTime? resolvedAt;
+
+  /// Null while pending; true = approved, false = refused.
+  final bool? approved;
+  const PendingJoinRequestRow({
+    required this.requestId,
+    required this.requesterDeviceId,
+    required this.requesterDisplayName,
+    required this.signingPublicKey,
+    required this.deviceCertDer,
+    required this.deviceCertFingerprint,
+    required this.booksSetId,
+    required this.createdAt,
+    this.resolvedAt,
+    this.approved,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['request_id'] = Variable<String>(requestId);
+    map['requester_device_id'] = Variable<String>(requesterDeviceId);
+    map['requester_display_name'] = Variable<String>(requesterDisplayName);
+    map['signing_public_key'] = Variable<Uint8List>(signingPublicKey);
+    map['device_cert_der'] = Variable<Uint8List>(deviceCertDer);
+    map['device_cert_fingerprint'] = Variable<String>(deviceCertFingerprint);
+    map['books_set_id'] = Variable<String>(booksSetId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || resolvedAt != null) {
+      map['resolved_at'] = Variable<DateTime>(resolvedAt);
+    }
+    if (!nullToAbsent || approved != null) {
+      map['approved'] = Variable<bool>(approved);
+    }
+    return map;
+  }
+
+  PendingJoinRequestsCompanion toCompanion(bool nullToAbsent) {
+    return PendingJoinRequestsCompanion(
+      requestId: Value(requestId),
+      requesterDeviceId: Value(requesterDeviceId),
+      requesterDisplayName: Value(requesterDisplayName),
+      signingPublicKey: Value(signingPublicKey),
+      deviceCertDer: Value(deviceCertDer),
+      deviceCertFingerprint: Value(deviceCertFingerprint),
+      booksSetId: Value(booksSetId),
+      createdAt: Value(createdAt),
+      resolvedAt: resolvedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resolvedAt),
+      approved: approved == null && nullToAbsent
+          ? const Value.absent()
+          : Value(approved),
+    );
+  }
+
+  factory PendingJoinRequestRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PendingJoinRequestRow(
+      requestId: serializer.fromJson<String>(json['requestId']),
+      requesterDeviceId: serializer.fromJson<String>(json['requesterDeviceId']),
+      requesterDisplayName: serializer.fromJson<String>(
+        json['requesterDisplayName'],
+      ),
+      signingPublicKey: serializer.fromJson<Uint8List>(
+        json['signingPublicKey'],
+      ),
+      deviceCertDer: serializer.fromJson<Uint8List>(json['deviceCertDer']),
+      deviceCertFingerprint: serializer.fromJson<String>(
+        json['deviceCertFingerprint'],
+      ),
+      booksSetId: serializer.fromJson<String>(json['booksSetId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      resolvedAt: serializer.fromJson<DateTime?>(json['resolvedAt']),
+      approved: serializer.fromJson<bool?>(json['approved']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'requestId': serializer.toJson<String>(requestId),
+      'requesterDeviceId': serializer.toJson<String>(requesterDeviceId),
+      'requesterDisplayName': serializer.toJson<String>(requesterDisplayName),
+      'signingPublicKey': serializer.toJson<Uint8List>(signingPublicKey),
+      'deviceCertDer': serializer.toJson<Uint8List>(deviceCertDer),
+      'deviceCertFingerprint': serializer.toJson<String>(deviceCertFingerprint),
+      'booksSetId': serializer.toJson<String>(booksSetId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'resolvedAt': serializer.toJson<DateTime?>(resolvedAt),
+      'approved': serializer.toJson<bool?>(approved),
+    };
+  }
+
+  PendingJoinRequestRow copyWith({
+    String? requestId,
+    String? requesterDeviceId,
+    String? requesterDisplayName,
+    Uint8List? signingPublicKey,
+    Uint8List? deviceCertDer,
+    String? deviceCertFingerprint,
+    String? booksSetId,
+    DateTime? createdAt,
+    Value<DateTime?> resolvedAt = const Value.absent(),
+    Value<bool?> approved = const Value.absent(),
+  }) => PendingJoinRequestRow(
+    requestId: requestId ?? this.requestId,
+    requesterDeviceId: requesterDeviceId ?? this.requesterDeviceId,
+    requesterDisplayName: requesterDisplayName ?? this.requesterDisplayName,
+    signingPublicKey: signingPublicKey ?? this.signingPublicKey,
+    deviceCertDer: deviceCertDer ?? this.deviceCertDer,
+    deviceCertFingerprint: deviceCertFingerprint ?? this.deviceCertFingerprint,
+    booksSetId: booksSetId ?? this.booksSetId,
+    createdAt: createdAt ?? this.createdAt,
+    resolvedAt: resolvedAt.present ? resolvedAt.value : this.resolvedAt,
+    approved: approved.present ? approved.value : this.approved,
+  );
+  PendingJoinRequestRow copyWithCompanion(PendingJoinRequestsCompanion data) {
+    return PendingJoinRequestRow(
+      requestId: data.requestId.present ? data.requestId.value : this.requestId,
+      requesterDeviceId: data.requesterDeviceId.present
+          ? data.requesterDeviceId.value
+          : this.requesterDeviceId,
+      requesterDisplayName: data.requesterDisplayName.present
+          ? data.requesterDisplayName.value
+          : this.requesterDisplayName,
+      signingPublicKey: data.signingPublicKey.present
+          ? data.signingPublicKey.value
+          : this.signingPublicKey,
+      deviceCertDer: data.deviceCertDer.present
+          ? data.deviceCertDer.value
+          : this.deviceCertDer,
+      deviceCertFingerprint: data.deviceCertFingerprint.present
+          ? data.deviceCertFingerprint.value
+          : this.deviceCertFingerprint,
+      booksSetId: data.booksSetId.present
+          ? data.booksSetId.value
+          : this.booksSetId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      resolvedAt: data.resolvedAt.present
+          ? data.resolvedAt.value
+          : this.resolvedAt,
+      approved: data.approved.present ? data.approved.value : this.approved,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingJoinRequestRow(')
+          ..write('requestId: $requestId, ')
+          ..write('requesterDeviceId: $requesterDeviceId, ')
+          ..write('requesterDisplayName: $requesterDisplayName, ')
+          ..write('signingPublicKey: $signingPublicKey, ')
+          ..write('deviceCertDer: $deviceCertDer, ')
+          ..write('deviceCertFingerprint: $deviceCertFingerprint, ')
+          ..write('booksSetId: $booksSetId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('resolvedAt: $resolvedAt, ')
+          ..write('approved: $approved')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    requestId,
+    requesterDeviceId,
+    requesterDisplayName,
+    $driftBlobEquality.hash(signingPublicKey),
+    $driftBlobEquality.hash(deviceCertDer),
+    deviceCertFingerprint,
+    booksSetId,
+    createdAt,
+    resolvedAt,
+    approved,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PendingJoinRequestRow &&
+          other.requestId == this.requestId &&
+          other.requesterDeviceId == this.requesterDeviceId &&
+          other.requesterDisplayName == this.requesterDisplayName &&
+          $driftBlobEquality.equals(
+            other.signingPublicKey,
+            this.signingPublicKey,
+          ) &&
+          $driftBlobEquality.equals(other.deviceCertDer, this.deviceCertDer) &&
+          other.deviceCertFingerprint == this.deviceCertFingerprint &&
+          other.booksSetId == this.booksSetId &&
+          other.createdAt == this.createdAt &&
+          other.resolvedAt == this.resolvedAt &&
+          other.approved == this.approved);
+}
+
+class PendingJoinRequestsCompanion
+    extends UpdateCompanion<PendingJoinRequestRow> {
+  final Value<String> requestId;
+  final Value<String> requesterDeviceId;
+  final Value<String> requesterDisplayName;
+  final Value<Uint8List> signingPublicKey;
+  final Value<Uint8List> deviceCertDer;
+  final Value<String> deviceCertFingerprint;
+  final Value<String> booksSetId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime?> resolvedAt;
+  final Value<bool?> approved;
+  final Value<int> rowid;
+  const PendingJoinRequestsCompanion({
+    this.requestId = const Value.absent(),
+    this.requesterDeviceId = const Value.absent(),
+    this.requesterDisplayName = const Value.absent(),
+    this.signingPublicKey = const Value.absent(),
+    this.deviceCertDer = const Value.absent(),
+    this.deviceCertFingerprint = const Value.absent(),
+    this.booksSetId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.resolvedAt = const Value.absent(),
+    this.approved = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PendingJoinRequestsCompanion.insert({
+    required String requestId,
+    required String requesterDeviceId,
+    required String requesterDisplayName,
+    required Uint8List signingPublicKey,
+    required Uint8List deviceCertDer,
+    required String deviceCertFingerprint,
+    required String booksSetId,
+    this.createdAt = const Value.absent(),
+    this.resolvedAt = const Value.absent(),
+    this.approved = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : requestId = Value(requestId),
+       requesterDeviceId = Value(requesterDeviceId),
+       requesterDisplayName = Value(requesterDisplayName),
+       signingPublicKey = Value(signingPublicKey),
+       deviceCertDer = Value(deviceCertDer),
+       deviceCertFingerprint = Value(deviceCertFingerprint),
+       booksSetId = Value(booksSetId);
+  static Insertable<PendingJoinRequestRow> custom({
+    Expression<String>? requestId,
+    Expression<String>? requesterDeviceId,
+    Expression<String>? requesterDisplayName,
+    Expression<Uint8List>? signingPublicKey,
+    Expression<Uint8List>? deviceCertDer,
+    Expression<String>? deviceCertFingerprint,
+    Expression<String>? booksSetId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? resolvedAt,
+    Expression<bool>? approved,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (requestId != null) 'request_id': requestId,
+      if (requesterDeviceId != null) 'requester_device_id': requesterDeviceId,
+      if (requesterDisplayName != null)
+        'requester_display_name': requesterDisplayName,
+      if (signingPublicKey != null) 'signing_public_key': signingPublicKey,
+      if (deviceCertDer != null) 'device_cert_der': deviceCertDer,
+      if (deviceCertFingerprint != null)
+        'device_cert_fingerprint': deviceCertFingerprint,
+      if (booksSetId != null) 'books_set_id': booksSetId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (resolvedAt != null) 'resolved_at': resolvedAt,
+      if (approved != null) 'approved': approved,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PendingJoinRequestsCompanion copyWith({
+    Value<String>? requestId,
+    Value<String>? requesterDeviceId,
+    Value<String>? requesterDisplayName,
+    Value<Uint8List>? signingPublicKey,
+    Value<Uint8List>? deviceCertDer,
+    Value<String>? deviceCertFingerprint,
+    Value<String>? booksSetId,
+    Value<DateTime>? createdAt,
+    Value<DateTime?>? resolvedAt,
+    Value<bool?>? approved,
+    Value<int>? rowid,
+  }) {
+    return PendingJoinRequestsCompanion(
+      requestId: requestId ?? this.requestId,
+      requesterDeviceId: requesterDeviceId ?? this.requesterDeviceId,
+      requesterDisplayName: requesterDisplayName ?? this.requesterDisplayName,
+      signingPublicKey: signingPublicKey ?? this.signingPublicKey,
+      deviceCertDer: deviceCertDer ?? this.deviceCertDer,
+      deviceCertFingerprint:
+          deviceCertFingerprint ?? this.deviceCertFingerprint,
+      booksSetId: booksSetId ?? this.booksSetId,
+      createdAt: createdAt ?? this.createdAt,
+      resolvedAt: resolvedAt ?? this.resolvedAt,
+      approved: approved ?? this.approved,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (requestId.present) {
+      map['request_id'] = Variable<String>(requestId.value);
+    }
+    if (requesterDeviceId.present) {
+      map['requester_device_id'] = Variable<String>(requesterDeviceId.value);
+    }
+    if (requesterDisplayName.present) {
+      map['requester_display_name'] = Variable<String>(
+        requesterDisplayName.value,
+      );
+    }
+    if (signingPublicKey.present) {
+      map['signing_public_key'] = Variable<Uint8List>(signingPublicKey.value);
+    }
+    if (deviceCertDer.present) {
+      map['device_cert_der'] = Variable<Uint8List>(deviceCertDer.value);
+    }
+    if (deviceCertFingerprint.present) {
+      map['device_cert_fingerprint'] = Variable<String>(
+        deviceCertFingerprint.value,
+      );
+    }
+    if (booksSetId.present) {
+      map['books_set_id'] = Variable<String>(booksSetId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (resolvedAt.present) {
+      map['resolved_at'] = Variable<DateTime>(resolvedAt.value);
+    }
+    if (approved.present) {
+      map['approved'] = Variable<bool>(approved.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PendingJoinRequestsCompanion(')
+          ..write('requestId: $requestId, ')
+          ..write('requesterDeviceId: $requesterDeviceId, ')
+          ..write('requesterDisplayName: $requesterDisplayName, ')
+          ..write('signingPublicKey: $signingPublicKey, ')
+          ..write('deviceCertDer: $deviceCertDer, ')
+          ..write('deviceCertFingerprint: $deviceCertFingerprint, ')
+          ..write('booksSetId: $booksSetId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('resolvedAt: $resolvedAt, ')
+          ..write('approved: $approved, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -11272,6 +12445,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $BooksSetMetadataTable booksSetMetadata = $BooksSetMetadataTable(
     this,
   );
+  late final $MembershipNoticesTable membershipNotices =
+      $MembershipNoticesTable(this);
+  late final $PendingJoinRequestsTable pendingJoinRequests =
+      $PendingJoinRequestsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -11300,6 +12477,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     categoryTranslations,
     categoryMergeMap,
     booksSetMetadata,
+    membershipNotices,
+    pendingJoinRequests,
   ];
 }
 
@@ -22572,6 +23751,615 @@ typedef $$BooksSetMetadataTableProcessedTableManager =
       BooksSetMetadataRow,
       PrefetchHooks Function()
     >;
+typedef $$MembershipNoticesTableCreateCompanionBuilder =
+    MembershipNoticesCompanion Function({
+      required String noticeId,
+      required MembershipNoticeKind kind,
+      Value<DateTime> createdAt,
+      Value<String?> relatedDeviceId,
+      Value<String?> relatedDisplayName,
+      Value<String?> detail,
+      Value<DateTime?> acknowledgedAt,
+      Value<int> rowid,
+    });
+typedef $$MembershipNoticesTableUpdateCompanionBuilder =
+    MembershipNoticesCompanion Function({
+      Value<String> noticeId,
+      Value<MembershipNoticeKind> kind,
+      Value<DateTime> createdAt,
+      Value<String?> relatedDeviceId,
+      Value<String?> relatedDisplayName,
+      Value<String?> detail,
+      Value<DateTime?> acknowledgedAt,
+      Value<int> rowid,
+    });
+
+class $$MembershipNoticesTableFilterComposer
+    extends Composer<_$AppDatabase, $MembershipNoticesTable> {
+  $$MembershipNoticesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get noticeId => $composableBuilder(
+    column: $table.noticeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    MembershipNoticeKind,
+    MembershipNoticeKind,
+    String
+  >
+  get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get relatedDeviceId => $composableBuilder(
+    column: $table.relatedDeviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get relatedDisplayName => $composableBuilder(
+    column: $table.relatedDisplayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get detail => $composableBuilder(
+    column: $table.detail,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get acknowledgedAt => $composableBuilder(
+    column: $table.acknowledgedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MembershipNoticesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MembershipNoticesTable> {
+  $$MembershipNoticesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get noticeId => $composableBuilder(
+    column: $table.noticeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get relatedDeviceId => $composableBuilder(
+    column: $table.relatedDeviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get relatedDisplayName => $composableBuilder(
+    column: $table.relatedDisplayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get detail => $composableBuilder(
+    column: $table.detail,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get acknowledgedAt => $composableBuilder(
+    column: $table.acknowledgedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MembershipNoticesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MembershipNoticesTable> {
+  $$MembershipNoticesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get noticeId =>
+      $composableBuilder(column: $table.noticeId, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<MembershipNoticeKind, String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get relatedDeviceId => $composableBuilder(
+    column: $table.relatedDeviceId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get relatedDisplayName => $composableBuilder(
+    column: $table.relatedDisplayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get detail =>
+      $composableBuilder(column: $table.detail, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get acknowledgedAt => $composableBuilder(
+    column: $table.acknowledgedAt,
+    builder: (column) => column,
+  );
+}
+
+class $$MembershipNoticesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MembershipNoticesTable,
+          MembershipNoticeRow,
+          $$MembershipNoticesTableFilterComposer,
+          $$MembershipNoticesTableOrderingComposer,
+          $$MembershipNoticesTableAnnotationComposer,
+          $$MembershipNoticesTableCreateCompanionBuilder,
+          $$MembershipNoticesTableUpdateCompanionBuilder,
+          (
+            MembershipNoticeRow,
+            BaseReferences<
+              _$AppDatabase,
+              $MembershipNoticesTable,
+              MembershipNoticeRow
+            >,
+          ),
+          MembershipNoticeRow,
+          PrefetchHooks Function()
+        > {
+  $$MembershipNoticesTableTableManager(
+    _$AppDatabase db,
+    $MembershipNoticesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MembershipNoticesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MembershipNoticesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MembershipNoticesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> noticeId = const Value.absent(),
+                Value<MembershipNoticeKind> kind = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<String?> relatedDeviceId = const Value.absent(),
+                Value<String?> relatedDisplayName = const Value.absent(),
+                Value<String?> detail = const Value.absent(),
+                Value<DateTime?> acknowledgedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MembershipNoticesCompanion(
+                noticeId: noticeId,
+                kind: kind,
+                createdAt: createdAt,
+                relatedDeviceId: relatedDeviceId,
+                relatedDisplayName: relatedDisplayName,
+                detail: detail,
+                acknowledgedAt: acknowledgedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String noticeId,
+                required MembershipNoticeKind kind,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<String?> relatedDeviceId = const Value.absent(),
+                Value<String?> relatedDisplayName = const Value.absent(),
+                Value<String?> detail = const Value.absent(),
+                Value<DateTime?> acknowledgedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MembershipNoticesCompanion.insert(
+                noticeId: noticeId,
+                kind: kind,
+                createdAt: createdAt,
+                relatedDeviceId: relatedDeviceId,
+                relatedDisplayName: relatedDisplayName,
+                detail: detail,
+                acknowledgedAt: acknowledgedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$MembershipNoticesTable, MembershipNoticeRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $MembershipNoticesTable,
+                    MembershipNoticeRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MembershipNoticesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MembershipNoticesTable,
+      MembershipNoticeRow,
+      $$MembershipNoticesTableFilterComposer,
+      $$MembershipNoticesTableOrderingComposer,
+      $$MembershipNoticesTableAnnotationComposer,
+      $$MembershipNoticesTableCreateCompanionBuilder,
+      $$MembershipNoticesTableUpdateCompanionBuilder,
+      (
+        MembershipNoticeRow,
+        BaseReferences<
+          _$AppDatabase,
+          $MembershipNoticesTable,
+          MembershipNoticeRow
+        >,
+      ),
+      MembershipNoticeRow,
+      PrefetchHooks Function()
+    >;
+typedef $$PendingJoinRequestsTableCreateCompanionBuilder =
+    PendingJoinRequestsCompanion Function({
+      required String requestId,
+      required String requesterDeviceId,
+      required String requesterDisplayName,
+      required Uint8List signingPublicKey,
+      required Uint8List deviceCertDer,
+      required String deviceCertFingerprint,
+      required String booksSetId,
+      Value<DateTime> createdAt,
+      Value<DateTime?> resolvedAt,
+      Value<bool?> approved,
+      Value<int> rowid,
+    });
+typedef $$PendingJoinRequestsTableUpdateCompanionBuilder =
+    PendingJoinRequestsCompanion Function({
+      Value<String> requestId,
+      Value<String> requesterDeviceId,
+      Value<String> requesterDisplayName,
+      Value<Uint8List> signingPublicKey,
+      Value<Uint8List> deviceCertDer,
+      Value<String> deviceCertFingerprint,
+      Value<String> booksSetId,
+      Value<DateTime> createdAt,
+      Value<DateTime?> resolvedAt,
+      Value<bool?> approved,
+      Value<int> rowid,
+    });
+
+class $$PendingJoinRequestsTableFilterComposer
+    extends Composer<_$AppDatabase, $PendingJoinRequestsTable> {
+  $$PendingJoinRequestsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get requestId => $composableBuilder(
+    column: $table.requestId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get requesterDeviceId => $composableBuilder(
+    column: $table.requesterDeviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get requesterDisplayName => $composableBuilder(
+    column: $table.requesterDisplayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<Uint8List> get signingPublicKey => $composableBuilder(
+    column: $table.signingPublicKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<Uint8List> get deviceCertDer => $composableBuilder(
+    column: $table.deviceCertDer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceCertFingerprint => $composableBuilder(
+    column: $table.deviceCertFingerprint,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get booksSetId => $composableBuilder(
+    column: $table.booksSetId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get resolvedAt => $composableBuilder(
+    column: $table.resolvedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get approved => $composableBuilder(
+    column: $table.approved,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PendingJoinRequestsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PendingJoinRequestsTable> {
+  $$PendingJoinRequestsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get requestId => $composableBuilder(
+    column: $table.requestId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get requesterDeviceId => $composableBuilder(
+    column: $table.requesterDeviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get requesterDisplayName => $composableBuilder(
+    column: $table.requesterDisplayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get signingPublicKey => $composableBuilder(
+    column: $table.signingPublicKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get deviceCertDer => $composableBuilder(
+    column: $table.deviceCertDer,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceCertFingerprint => $composableBuilder(
+    column: $table.deviceCertFingerprint,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get booksSetId => $composableBuilder(
+    column: $table.booksSetId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get resolvedAt => $composableBuilder(
+    column: $table.resolvedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get approved => $composableBuilder(
+    column: $table.approved,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PendingJoinRequestsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PendingJoinRequestsTable> {
+  $$PendingJoinRequestsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get requestId =>
+      $composableBuilder(column: $table.requestId, builder: (column) => column);
+
+  GeneratedColumn<String> get requesterDeviceId => $composableBuilder(
+    column: $table.requesterDeviceId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get requesterDisplayName => $composableBuilder(
+    column: $table.requesterDisplayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<Uint8List> get signingPublicKey => $composableBuilder(
+    column: $table.signingPublicKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<Uint8List> get deviceCertDer => $composableBuilder(
+    column: $table.deviceCertDer,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get deviceCertFingerprint => $composableBuilder(
+    column: $table.deviceCertFingerprint,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get booksSetId => $composableBuilder(
+    column: $table.booksSetId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get resolvedAt => $composableBuilder(
+    column: $table.resolvedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get approved =>
+      $composableBuilder(column: $table.approved, builder: (column) => column);
+}
+
+class $$PendingJoinRequestsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PendingJoinRequestsTable,
+          PendingJoinRequestRow,
+          $$PendingJoinRequestsTableFilterComposer,
+          $$PendingJoinRequestsTableOrderingComposer,
+          $$PendingJoinRequestsTableAnnotationComposer,
+          $$PendingJoinRequestsTableCreateCompanionBuilder,
+          $$PendingJoinRequestsTableUpdateCompanionBuilder,
+          (
+            PendingJoinRequestRow,
+            BaseReferences<
+              _$AppDatabase,
+              $PendingJoinRequestsTable,
+              PendingJoinRequestRow
+            >,
+          ),
+          PendingJoinRequestRow,
+          PrefetchHooks Function()
+        > {
+  $$PendingJoinRequestsTableTableManager(
+    _$AppDatabase db,
+    $PendingJoinRequestsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PendingJoinRequestsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PendingJoinRequestsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$PendingJoinRequestsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> requestId = const Value.absent(),
+                Value<String> requesterDeviceId = const Value.absent(),
+                Value<String> requesterDisplayName = const Value.absent(),
+                Value<Uint8List> signingPublicKey = const Value.absent(),
+                Value<Uint8List> deviceCertDer = const Value.absent(),
+                Value<String> deviceCertFingerprint = const Value.absent(),
+                Value<String> booksSetId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime?> resolvedAt = const Value.absent(),
+                Value<bool?> approved = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PendingJoinRequestsCompanion(
+                requestId: requestId,
+                requesterDeviceId: requesterDeviceId,
+                requesterDisplayName: requesterDisplayName,
+                signingPublicKey: signingPublicKey,
+                deviceCertDer: deviceCertDer,
+                deviceCertFingerprint: deviceCertFingerprint,
+                booksSetId: booksSetId,
+                createdAt: createdAt,
+                resolvedAt: resolvedAt,
+                approved: approved,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String requestId,
+                required String requesterDeviceId,
+                required String requesterDisplayName,
+                required Uint8List signingPublicKey,
+                required Uint8List deviceCertDer,
+                required String deviceCertFingerprint,
+                required String booksSetId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime?> resolvedAt = const Value.absent(),
+                Value<bool?> approved = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PendingJoinRequestsCompanion.insert(
+                requestId: requestId,
+                requesterDeviceId: requesterDeviceId,
+                requesterDisplayName: requesterDisplayName,
+                signingPublicKey: signingPublicKey,
+                deviceCertDer: deviceCertDer,
+                deviceCertFingerprint: deviceCertFingerprint,
+                booksSetId: booksSetId,
+                createdAt: createdAt,
+                resolvedAt: resolvedAt,
+                approved: approved,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PendingJoinRequestsTable, PendingJoinRequestRow>(
+                    table,
+                  ),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $PendingJoinRequestsTable,
+                    PendingJoinRequestRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PendingJoinRequestsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PendingJoinRequestsTable,
+      PendingJoinRequestRow,
+      $$PendingJoinRequestsTableFilterComposer,
+      $$PendingJoinRequestsTableOrderingComposer,
+      $$PendingJoinRequestsTableAnnotationComposer,
+      $$PendingJoinRequestsTableCreateCompanionBuilder,
+      $$PendingJoinRequestsTableUpdateCompanionBuilder,
+      (
+        PendingJoinRequestRow,
+        BaseReferences<
+          _$AppDatabase,
+          $PendingJoinRequestsTable,
+          PendingJoinRequestRow
+        >,
+      ),
+      PendingJoinRequestRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -22628,4 +24416,8 @@ class $AppDatabaseManager {
       $$CategoryMergeMapTableTableManager(_db, _db.categoryMergeMap);
   $$BooksSetMetadataTableTableManager get booksSetMetadata =>
       $$BooksSetMetadataTableTableManager(_db, _db.booksSetMetadata);
+  $$MembershipNoticesTableTableManager get membershipNotices =>
+      $$MembershipNoticesTableTableManager(_db, _db.membershipNotices);
+  $$PendingJoinRequestsTableTableManager get pendingJoinRequests =>
+      $$PendingJoinRequestsTableTableManager(_db, _db.pendingJoinRequests);
 }

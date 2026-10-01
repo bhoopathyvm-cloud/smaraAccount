@@ -1866,6 +1866,144 @@ abstract class AppLocalizations {
   /// **'Remove'**
   String get settingsBooksSwitcherRemoveConfirm;
 
+  /// No description provided for @settingsLinkedDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked devices'**
+  String get settingsLinkedDevices;
+
+  /// No description provided for @settingsLinkedDevicesCatchUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Your devices catch up when both have Smara open on the same Wi-Fi.'**
+  String get settingsLinkedDevicesCatchUp;
+
+  /// No description provided for @settingsLinkedDevicesPermissionSentence.
+  ///
+  /// In en, this message translates to:
+  /// **'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.'**
+  String get settingsLinkedDevicesPermissionSentence;
+
+  /// No description provided for @settingsLinkedDevicesAddDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a device'**
+  String get settingsLinkedDevicesAddDevice;
+
+  /// No description provided for @settingsLinkedDevicesContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get settingsLinkedDevicesContinue;
+
+  /// No description provided for @settingsLinkedDevicesRoleOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get settingsLinkedDevicesRoleOwner;
+
+  /// No description provided for @settingsLinkedDevicesRoleMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get settingsLinkedDevicesRoleMember;
+
+  /// No description provided for @settingsLinkedDevicesCanAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'May add devices'**
+  String get settingsLinkedDevicesCanAdd;
+
+  /// No description provided for @settingsLinkedDevicesErasePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase pending'**
+  String get settingsLinkedDevicesErasePending;
+
+  /// No description provided for @settingsLinkedDevicesErasedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Erased on {date}'**
+  String settingsLinkedDevicesErasedOn(String date);
+
+  /// No description provided for @settingsLinkedDevicesSuggestSecondOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'These books have only one Owner. Consider making another linked device an Owner too.'**
+  String get settingsLinkedDevicesSuggestSecondOwner;
+
+  /// No description provided for @settingsLinkedDevicesJoinSameWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Both devices must be on the same Wi-Fi. Smara does not join over the internet.'**
+  String get settingsLinkedDevicesJoinSameWifi;
+
+  /// No description provided for @settingsLinkedDevicesApproveJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get settingsLinkedDevicesApproveJoin;
+
+  /// No description provided for @settingsLinkedDevicesRefuseJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Refuse'**
+  String get settingsLinkedDevicesRefuseJoin;
+
+  /// No description provided for @settingsLinkedDevicesPendingJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} wants to join these books'**
+  String settingsLinkedDevicesPendingJoin(String name);
+
+  /// No description provided for @settingsLinkedDevicesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Only this device is linked so far.'**
+  String get settingsLinkedDevicesEmpty;
+
+  /// No description provided for @membershipNoticeDeviceAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'A device was added: {name}'**
+  String membershipNoticeDeviceAdded(String name);
+
+  /// No description provided for @membershipNoticeDeviceRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'A device was removed: {name}'**
+  String membershipNoticeDeviceRemoved(String name);
+
+  /// No description provided for @membershipNoticeErasePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase pending for {name}'**
+  String membershipNoticeErasePending(String name);
+
+  /// No description provided for @membershipNoticeErased.
+  ///
+  /// In en, this message translates to:
+  /// **'Erased {name} on {date}'**
+  String membershipNoticeErased(String name, String date);
+
+  /// No description provided for @membershipNoticeSoleOwnerClaimed.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} claimed sole ownership'**
+  String membershipNoticeSoleOwnerClaimed(String name);
+
+  /// No description provided for @membershipNoticeSoleOwnerCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Sole-Owner claim for {name} was cancelled'**
+  String membershipNoticeSoleOwnerCancelled(String name);
+
+  /// No description provided for @membershipNoticeSoleOwnerEffective.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is now an Owner'**
+  String membershipNoticeSoleOwnerEffective(String name);
+
   /// No description provided for @whyWeDontEdit.
   ///
   /// In en, this message translates to:

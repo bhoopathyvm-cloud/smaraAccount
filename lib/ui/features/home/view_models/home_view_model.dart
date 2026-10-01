@@ -6,6 +6,7 @@ import '../../../../data/instrument_quote_refresh.dart';
 import '../../../../data/repositories/category_repository.dart';
 import '../../../../data/repositories/investment_repository.dart';
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/membership_repository.dart';
 import '../../../../data/repositories/recurring_template_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/backup/backup_reminder_policy.dart';
@@ -13,6 +14,7 @@ import '../../../../domain/models/account.dart';
 import '../../../../domain/models/home_overview.dart';
 import '../../../../domain/models/instrument.dart';
 import '../../../../domain/models/journal_entry.dart';
+import '../../../../domain/models/membership_notice.dart';
 import '../../../../domain/models/recurring_template.dart';
 import '../../../../domain/models/summary.dart';
 
@@ -23,6 +25,7 @@ class HomeViewModel extends ChangeNotifier {
     required RecurringTemplateRepository recurringTemplateRepository,
     required InvestmentRepository investmentRepository,
     SettingsRepository? settingsRepository,
+    MembershipRepository? membershipRepository,
     InstrumentQuoteRefresh? quoteRefresh,
     bool refreshInstrumentQuotes = true,
     DateTime Function()? clock,
@@ -32,6 +35,7 @@ class HomeViewModel extends ChangeNotifier {
        _recurringTemplateRepository = recurringTemplateRepository,
        _investmentRepository = investmentRepository,
        _settingsRepository = settingsRepository,
+       _membershipRepository = membershipRepository,
        _clock = clock ?? DateTime.now,
        _quoteRefresh =
            quoteRefresh ??
@@ -92,6 +96,9 @@ class HomeViewModel extends ChangeNotifier {
         unawaited(_refreshReminder());
       });
     }
+    if (_membershipRepository != null) {
+      unawaited(_refreshMembershipNotices());
+    }
   }
 
   final LedgerRepository _ledgerRepository;
@@ -99,6 +106,7 @@ class HomeViewModel extends ChangeNotifier {
   final RecurringTemplateRepository _recurringTemplateRepository;
   final InvestmentRepository _investmentRepository;
   final SettingsRepository? _settingsRepository;
+  final MembershipRepository? _membershipRepository;
   final DateTime Function() _clock;
   final InstrumentQuoteRefresh? _quoteRefresh;
 
@@ -120,6 +128,30 @@ class HomeViewModel extends ChangeNotifier {
   DateTime? _firstEntryAt;
   bool _showBackupReminder = false;
   bool get showBackupReminder => _showBackupReminder;
+
+  List<MembershipNotice> _membershipNotices = const [];
+  List<MembershipNotice> get membershipNotices => _membershipNotices;
+
+  Future<void> _refreshMembershipNotices() async {
+    final membership = _membershipRepository;
+    if (membership == null) {
+      _membershipNotices = const [];
+      notifyListeners();
+      return;
+    }
+    _membershipNotices = await membership.listNotices(unreadOnly: true);
+    notifyListeners();
+  }
+
+  /// Reloads unread membership notices (e.g. after a sync or Settings visit).
+  Future<void> refreshMembershipNotices() => _refreshMembershipNotices();
+
+  Future<void> acknowledgeMembershipNotice(String noticeId) async {
+    final membership = _membershipRepository;
+    if (membership == null) return;
+    await membership.acknowledgeNotice(noticeId);
+    await _refreshMembershipNotices();
+  }
 
   DateTime? _earliestEntryDate(List<JournalEntry> entries) {
     if (entries.isEmpty) return null;

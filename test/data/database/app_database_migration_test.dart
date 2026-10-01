@@ -4,6 +4,7 @@ import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/data/database/tables/linked_devices_table.dart';
+import 'package:smara_accounting/data/database/tables/membership_notices_table.dart';
 import 'package:smara_accounting/data/database/tables/ofx_import_records_table.dart'
     show ImportSource;
 import 'package:smara_accounting/data/repositories/account_repository.dart';
@@ -584,6 +585,32 @@ void main() {
         expect(await db.select(db.ledgerIdentityChainTips).get(), hasLength(1));
         expect(await db.select(db.categoryTranslations).get(), hasLength(1));
         expect(await db.select(db.categoryMergeMap).get(), hasLength(1));
+
+        // schemaVersion 20 tables (membership notices + join requests).
+        await db
+            .into(db.membershipNotices)
+            .insert(
+              MembershipNoticesCompanion.insert(
+                noticeId: 'n1',
+                kind: MembershipNoticeKind.deviceAdded,
+                relatedDisplayName: const Value('Phone'),
+              ),
+            );
+        await db
+            .into(db.pendingJoinRequests)
+            .insert(
+              PendingJoinRequestsCompanion.insert(
+                requestId: 'r1',
+                requesterDeviceId: 'd2',
+                requesterDisplayName: 'Other',
+                signingPublicKey: Uint8List.fromList([4, 5, 6]),
+                deviceCertDer: Uint8List.fromList([7, 8]),
+                deviceCertFingerprint: 'fp2',
+                booksSetId: 'set-a',
+              ),
+            );
+        expect(await db.select(db.membershipNotices).get(), hasLength(1));
+        expect(await db.select(db.pendingJoinRequests).get(), hasLength(1));
       },
     );
   });

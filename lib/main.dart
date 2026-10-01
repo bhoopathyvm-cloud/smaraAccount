@@ -14,11 +14,14 @@ import 'data/repositories/investment_repository.dart';
 import 'data/repositories/ledger_chain_store.dart';
 import 'data/repositories/ledger_chain_verifier.dart';
 import 'data/repositories/ledger_repository.dart';
+import 'data/repositories/membership_repository.dart';
 import 'data/repositories/payee_repository.dart';
 import 'data/repositories/recurring_template_repository.dart';
 import 'data/repositories/settings_repository.dart';
 import 'data/repositories/statement_import_repository.dart';
+import 'data/books_set/books_set_paths.dart';
 import 'domain/crypto/signing_key_service.dart';
+import 'domain/linked_devices/local_network_permission.dart';
 import 'l10n/l10n.dart';
 import 'domain/lock/app_lock_service.dart';
 import 'domain/lock/biometric_authenticator.dart';
@@ -127,6 +130,16 @@ class SmaraAccountingApp extends StatelessWidget {
             chain: chain,
             signingKeyService: keys,
           ),
+        ),
+        ProxyProvider2<AppDatabase, IdentityRepository, MembershipRepository>(
+          update: (_, db, identity, _) =>
+              MembershipRepository(database: db, identityRepository: identity),
+        ),
+        Provider<LocalNetworkPermission>(
+          create: (_) => FakeLocalNetworkPermission(granted: true),
+        ),
+        ProxyProvider<ActiveBooksSession, BooksSetStore>(
+          update: (_, session, _) => session.store,
         ),
         ProxyProvider<ActiveBooksSession, SettingsRepository>(
           update: (_, session, _) =>
@@ -347,6 +360,7 @@ class SmaraAccountingApp extends StatelessWidget {
             recurringTemplateRepository: context
                 .read<RecurringTemplateRepository>(),
             investmentRepository: context.read<InvestmentRepository>(),
+            membershipRepository: context.read<MembershipRepository>(),
             booksGeneration: context.read<ActiveBooksSession>().generation,
           ),
           update:
@@ -370,6 +384,7 @@ class SmaraAccountingApp extends StatelessWidget {
                   categoryRepository: categoryRepository,
                   recurringTemplateRepository: recurringTemplateRepository,
                   investmentRepository: context.read<InvestmentRepository>(),
+                  membershipRepository: context.read<MembershipRepository>(),
                   booksGeneration: session.generation,
                 );
               },

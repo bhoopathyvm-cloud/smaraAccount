@@ -922,6 +922,97 @@ class AppLocalizationsTh extends AppLocalizations {
   String get settingsBooksSwitcherRemoveConfirm => 'Remove';
 
   @override
+  String get settingsLinkedDevices => 'Linked devices';
+
+  @override
+  String get settingsLinkedDevicesCatchUp =>
+      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+
+  @override
+  String get settingsLinkedDevicesPermissionSentence =>
+      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+
+  @override
+  String get settingsLinkedDevicesAddDevice => 'Add a device';
+
+  @override
+  String get settingsLinkedDevicesContinue => 'Continue';
+
+  @override
+  String get settingsLinkedDevicesRoleOwner => 'Owner';
+
+  @override
+  String get settingsLinkedDevicesRoleMember => 'Member';
+
+  @override
+  String get settingsLinkedDevicesCanAdd => 'May add devices';
+
+  @override
+  String get settingsLinkedDevicesErasePending => 'Erase pending';
+
+  @override
+  String settingsLinkedDevicesErasedOn(String date) {
+    return 'Erased on $date';
+  }
+
+  @override
+  String get settingsLinkedDevicesSuggestSecondOwner =>
+      'These books have only one Owner. Consider making another linked device an Owner too.';
+
+  @override
+  String get settingsLinkedDevicesJoinSameWifi =>
+      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+
+  @override
+  String get settingsLinkedDevicesApproveJoin => 'Approve';
+
+  @override
+  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+
+  @override
+  String settingsLinkedDevicesPendingJoin(String name) {
+    return '$name wants to join these books';
+  }
+
+  @override
+  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+
+  @override
+  String membershipNoticeDeviceAdded(String name) {
+    return 'A device was added: $name';
+  }
+
+  @override
+  String membershipNoticeDeviceRemoved(String name) {
+    return 'A device was removed: $name';
+  }
+
+  @override
+  String membershipNoticeErasePending(String name) {
+    return 'Erase pending for $name';
+  }
+
+  @override
+  String membershipNoticeErased(String name, String date) {
+    return 'Erased $name on $date';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerClaimed(String name) {
+    return '$name claimed sole ownership';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerCancelled(String name) {
+    return 'Sole-Owner claim for $name was cancelled';
+  }
+
+  @override
+  String membershipNoticeSoleOwnerEffective(String name) {
+    return '$name is now an Owner';
+  }
+
+  @override
   String get whyWeDontEdit => 'ทำไมเราจึงไม่แก้ไขรายการเก่า';
 
   @override

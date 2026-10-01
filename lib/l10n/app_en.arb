@@ -466,6 +466,95 @@
     }
   },
   "settingsBooksSwitcherRemoveConfirm": "Remove",
+  "settingsLinkedDevices": "Linked devices",
+  "settingsLinkedDevicesCatchUp": "Your devices catch up when both have Smara open on the same Wi-Fi.",
+  "settingsLinkedDevicesPermissionSentence": "To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.",
+  "settingsLinkedDevicesAddDevice": "Add a device",
+  "settingsLinkedDevicesContinue": "Continue",
+  "settingsLinkedDevicesRoleOwner": "Owner",
+  "settingsLinkedDevicesRoleMember": "Member",
+  "settingsLinkedDevicesCanAdd": "May add devices",
+  "settingsLinkedDevicesErasePending": "Erase pending",
+  "settingsLinkedDevicesErasedOn": "Erased on {date}",
+  "@settingsLinkedDevicesErasedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesSuggestSecondOwner": "These books have only one Owner. Consider making another linked device an Owner too.",
+  "settingsLinkedDevicesJoinSameWifi": "Both devices must be on the same Wi-Fi. Smara does not join over the internet.",
+  "settingsLinkedDevicesApproveJoin": "Approve",
+  "settingsLinkedDevicesRefuseJoin": "Refuse",
+  "settingsLinkedDevicesPendingJoin": "{name} wants to join these books",
+  "@settingsLinkedDevicesPendingJoin": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesEmpty": "Only this device is linked so far.",
+  "membershipNoticeDeviceAdded": "A device was added: {name}",
+  "@membershipNoticeDeviceAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "membershipNoticeDeviceRemoved": "A device was removed: {name}",
+  "@membershipNoticeDeviceRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "membershipNoticeErasePending": "Erase pending for {name}",
+  "@membershipNoticeErasePending": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "membershipNoticeErased": "Erased {name} on {date}",
+  "@membershipNoticeErased": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "membershipNoticeSoleOwnerClaimed": "{name} claimed sole ownership",
+  "@membershipNoticeSoleOwnerClaimed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "membershipNoticeSoleOwnerCancelled": "Sole-Owner claim for {name} was cancelled",
+  "@membershipNoticeSoleOwnerCancelled": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "membershipNoticeSoleOwnerEffective": "{name} is now an Owner",
+  "@membershipNoticeSoleOwnerEffective": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "whyWeDontEdit": "Why we don’t edit old entries",
   "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a correction next to it instead of changing what you already entered. That way your history always shows exactly what happened and when you fixed it — nothing quietly changes behind your back.",
   "lockTitle": "Unlock",

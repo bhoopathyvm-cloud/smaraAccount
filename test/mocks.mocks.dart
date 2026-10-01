@@ -1202,6 +1202,37 @@ class MockIdentityRepository extends _i1.Mock
           as _i17.Future<_i6.SigningIdentity>);
 
   @override
+  _i17.Future<_i6.SigningIdentity> addLinkedPeerIdentity({
+    required List<int>? publicKey,
+    DateTime? at,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#addLinkedPeerIdentity, [], {
+              #publicKey: publicKey,
+              #at: at,
+            }),
+            returnValue: _i17.Future<_i6.SigningIdentity>.value(
+              _FakeSigningIdentity_4(
+                this,
+                Invocation.method(#addLinkedPeerIdentity, [], {
+                  #publicKey: publicKey,
+                  #at: at,
+                }),
+              ),
+            ),
+            returnValueForMissingStub: _i17.Future<_i6.SigningIdentity>.value(
+              _FakeSigningIdentity_4(
+                this,
+                Invocation.method(#addLinkedPeerIdentity, [], {
+                  #publicKey: publicKey,
+                  #at: at,
+                }),
+              ),
+            ),
+          )
+          as _i17.Future<_i6.SigningIdentity>);
+
+  @override
   _i17.Future<_i6.SigningIdentity> continueBooks({DateTime? copySavedAt}) =>
       (super.noSuchMethod(
             Invocation.method(#continueBooks, [], {#copySavedAt: copySavedAt}),

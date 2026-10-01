@@ -25,8 +25,10 @@ import 'tables/journal_entries_table.dart';
 import 'tables/ledger_chain_state_table.dart';
 import 'tables/ledger_identity_chain_tips_table.dart';
 import 'tables/linked_devices_table.dart';
+import 'tables/membership_notices_table.dart';
 import 'tables/ofx_import_records_table.dart';
 import 'tables/payees_table.dart';
+import 'tables/pending_join_requests_table.dart';
 import 'tables/pending_transfers_table.dart';
 import 'tables/postings_table.dart';
 import 'tables/recurring_templates_table.dart';
@@ -77,6 +79,8 @@ const starterExpenseCategories = [
     CategoryTranslations,
     CategoryMergeMap,
     BooksSetMetadata,
+    MembershipNotices,
+    PendingJoinRequests,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -118,7 +122,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 19;
+  int get schemaVersion => 20;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -493,6 +497,13 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(categoryTranslations);
         await m.createTable(categoryMergeMap);
         await m.createTable(booksSetMetadata);
+      }
+
+      if (from < 20) {
+        // linked-devices membership notices + Books-Copy join requests
+        // (tasks 4.4 / 4.5). Additive only.
+        await m.createTable(membershipNotices);
+        await m.createTable(pendingJoinRequests);
       }
     },
   );

@@ -4,35 +4,82 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import '../../../../data/repositories/ledger_repository.dart';
+import '../../../../data/repositories/membership_repository.dart';
 import '../../../../domain/models/integrity_event.dart';
+import '../../../../domain/models/membership_notice.dart';
 
-/// One Continuation row for the Device history list, in plain words.
+/// One row in Device history: Continuation or a membership notice.
+enum DeviceHistoryKind { continuation, membershipNotice }
+
 class DeviceHistoryItem {
-  const DeviceHistoryItem({required this.continuedAt, this.copySavedAt});
+  DeviceHistoryItem.continuation({
+    required DateTime continuedAt,
+    this.copySavedAt,
+  }) : kind = DeviceHistoryKind.continuation,
+       notice = null,
+       continuedAt = continuedAt,
+       occurredAt = continuedAt;
 
-  final DateTime continuedAt;
+  DeviceHistoryItem.membership({required MembershipNotice notice})
+    : kind = DeviceHistoryKind.membershipNotice,
+      continuedAt = null,
+      copySavedAt = null,
+      notice = notice,
+      occurredAt = notice.createdAt;
+
+  final DeviceHistoryKind kind;
+  final DateTime occurredAt;
+  final DateTime? continuedAt;
   final DateTime? copySavedAt;
+  final MembershipNotice? notice;
 }
 
 class DeviceHistoryViewModel extends ChangeNotifier {
-  DeviceHistoryViewModel({required LedgerRepository ledgerRepository})
-    : _ledgerRepository = ledgerRepository {
+  DeviceHistoryViewModel({
+    required LedgerRepository ledgerRepository,
+    MembershipRepository? membershipRepository,
+  }) : _ledgerRepository = ledgerRepository,
+       _membershipRepository = membershipRepository {
     _subscription = _ledgerRepository.watchIntegrityEvents().listen((events) {
-      _items = events
+      _continuationItems = events
           .where((e) => e.eventType == IntegrityEventType.identityContinued)
-          .map(_toItem)
+          .map(_toContinuationItem)
           .toList();
-      notifyListeners();
+      unawaited(_reloadNotices());
     });
+    unawaited(_reloadNotices());
   }
 
   final LedgerRepository _ledgerRepository;
+  final MembershipRepository? _membershipRepository;
   late final StreamSubscription<List<IntegrityEvent>> _subscription;
 
-  List<DeviceHistoryItem> _items = const [];
-  List<DeviceHistoryItem> get items => _items;
+  List<DeviceHistoryItem> _continuationItems = const [];
+  List<DeviceHistoryItem> _noticeItems = const [];
 
-  DeviceHistoryItem _toItem(IntegrityEvent event) {
+  List<DeviceHistoryItem> get items {
+    final combined = [..._continuationItems, ..._noticeItems]
+      ..sort((a, b) => b.occurredAt.compareTo(a.occurredAt));
+    return combined;
+  }
+
+  Future<void> _reloadNotices() async {
+    final membership = _membershipRepository;
+    if (membership == null) {
+      _noticeItems = const [];
+      notifyListeners();
+      return;
+    }
+    final notices = await membership.listNotices();
+    _noticeItems = notices
+        .map((n) => DeviceHistoryItem.membership(notice: n))
+        .toList();
+    notifyListeners();
+  }
+
+  Future<void> refresh() => _reloadNotices();
+
+  DeviceHistoryItem _toContinuationItem(IntegrityEvent event) {
     DateTime? copySavedAt;
     final detail = event.detail;
     if (detail != null && detail.isNotEmpty) {
@@ -46,7 +93,7 @@ class DeviceHistoryViewModel extends ChangeNotifier {
         // Plain-text legacy detail — ignore.
       }
     }
-    return DeviceHistoryItem(
+    return DeviceHistoryItem.continuation(
       continuedAt: event.occurredAt,
       copySavedAt: copySavedAt,
     );

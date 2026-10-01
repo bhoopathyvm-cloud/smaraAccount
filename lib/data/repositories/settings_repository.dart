@@ -34,6 +34,33 @@ class SettingsRepository implements AppLockSettingsStore {
   static const _researchToolKey = 'researchTool';
   static const _defaultExchangeKey = 'defaultExchange';
   static const _preferredLocaleTagKey = 'preferredLocaleTag';
+  static const _localDeviceIdKey = 'localDeviceId';
+  static const _localDeviceDisplayNameKey = 'localDeviceDisplayName';
+  static const _linkedDevicesPermissionExplainedKey =
+      'linkedDevicesPermissionExplained';
+
+  /// Stable this-device id for Linked devices membership (device setting —
+  /// does not sync).
+  Future<String?> localDeviceId() => _preferences.getString(_localDeviceIdKey);
+
+  Future<void> setLocalDeviceId(String id) =>
+      _preferences.setString(_localDeviceIdKey, id);
+
+  Future<String?> localDeviceDisplayName() =>
+      _preferences.getString(_localDeviceDisplayNameKey);
+
+  Future<void> setLocalDeviceDisplayName(String name) =>
+      _preferences.setString(_localDeviceDisplayNameKey, name);
+
+  /// Whether the Linked devices local-network permission sentence was shown.
+  Future<bool> hasLinkedDevicesPermissionExplained() async {
+    return await _preferences.getBool(_linkedDevicesPermissionExplainedKey) ??
+        false;
+  }
+
+  Future<void> setLinkedDevicesPermissionExplained(bool value) {
+    return _preferences.setBool(_linkedDevicesPermissionExplainedKey, value);
+  }
 
   /// Defaults to disabled - this app has never made a network call before
   /// the reference-rate lookup, so the one new network-touching feature is
