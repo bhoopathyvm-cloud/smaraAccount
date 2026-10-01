@@ -28,9 +28,9 @@
 
 ## 5. Peer discovery and TLS transfer
 
-- [ ] 5.1 Advertise/browse mDNS service `_smara._tcp` with TXT books-set id hash, device display name, protocol version; gate on local-network permission — verify unit/integration tests with a fake discovery adapter that two peers filter to the same books set and ignore others
-- [ ] 5.2 Implement TLS sync transport with pinned device certificates from join; refuse unknown certs; payloads are EntryBatch / MetadataOps / NoticeOps without private keys — verify unit tests for pin accept/reject and payload serialization
-- [ ] 5.3 Sync session: when both apps open on same LAN and on "Sync now"; Android brief background sync where OS allows; never use internet relay — verify tests with the in-process transport that Sync now exchanges missing entries and that a "remote network" fake does not connect
+- [x] 5.1 Advertise/browse mDNS service `_smara._tcp` with TXT books-set id hash, device display name, protocol version; gate on local-network permission — verify unit/integration tests with a fake discovery adapter that two peers filter to the same books set and ignore others
+- [x] 5.2 Implement TLS sync transport with pinned device certificates from join; refuse unknown certs; payloads are EntryBatch / MetadataOps / NoticeOps without private keys — verify unit tests for pin accept/reject and payload serialization
+- [x] 5.3 Sync session: when both apps open on same LAN and on "Sync now"; Android brief background sync where OS allows; never use internet relay — verify tests with the in-process transport that Sync now exchanges missing entries and that a "remote network" fake does not connect"
 
 ## 6. Sync merge and conflicts
 
