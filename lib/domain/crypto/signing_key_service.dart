@@ -105,10 +105,7 @@ class SigningKeyService {
   }
 
   Future<void> _storeSeed(List<int> seed) {
-    return _secureStorage.write(
-      privateKeySeedStorageKey,
-      base64Encode(seed),
-    );
+    return _secureStorage.write(privateKeySeedStorageKey, base64Encode(seed));
   }
 }
 

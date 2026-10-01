@@ -279,7 +279,10 @@ class SettingsRepository implements AppLockSettingsStore {
     required DateTime at,
     required int entryCount,
   }) async {
-    await _preferences.setString(_lastCopySavedAtKey, at.toUtc().toIso8601String());
+    await _preferences.setString(
+      _lastCopySavedAtKey,
+      at.toUtc().toIso8601String(),
+    );
     await _preferences.setInt(_entryCountAtLastCopyKey, entryCount);
     await _preferences.remove(_snoozeUntilKey);
     await _preferences.remove(_entryCountAtSnoozeKey);
@@ -299,7 +302,10 @@ class SettingsRepository implements AppLockSettingsStore {
     required DateTime until,
     required int entryCount,
   }) async {
-    await _preferences.setString(_snoozeUntilKey, until.toUtc().toIso8601String());
+    await _preferences.setString(
+      _snoozeUntilKey,
+      until.toUtc().toIso8601String(),
+    );
     await _preferences.setInt(_entryCountAtSnoozeKey, entryCount);
   }
 
@@ -346,8 +352,7 @@ class SettingsRepository implements AppLockSettingsStore {
   }
 
   Future<int> backupReminderSnoozeEntries() async {
-    return await _preferences.getInt(_snoozeEntriesKey) ??
-        defaultSnoozeEntries;
+    return await _preferences.getInt(_snoozeEntriesKey) ?? defaultSnoozeEntries;
   }
 
   Future<void> setBackupReminderSnoozeEntries(int entries) {

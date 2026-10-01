@@ -134,16 +134,15 @@ void main() {
     },
   );
 
-  testWidgets(
-    'language list shows endonyms and no recovery-phrase notice',
-    (tester) async {
-      final controller = await _loadedController();
-      await tester.pumpWidget(_harness(controller));
-      await tester.pumpAndSettle();
+  testWidgets('language list shows endonyms and no recovery-phrase notice', (
+    tester,
+  ) async {
+    final controller = await _loadedController();
+    await tester.pumpWidget(_harness(controller));
+    await tester.pumpAndSettle();
 
-      expect(find.text('हिन्दी'), findsOneWidget);
-      expect(find.textContaining('recovery phrase'), findsNothing);
-      expect(find.textContaining('BIP39'), findsNothing);
-    },
-  );
+    expect(find.text('हिन्दी'), findsOneWidget);
+    expect(find.textContaining('recovery phrase'), findsNothing);
+    expect(find.textContaining('BIP39'), findsNothing);
+  });
 }

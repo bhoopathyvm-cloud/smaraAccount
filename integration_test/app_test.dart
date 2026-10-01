@@ -33,7 +33,6 @@ import 'package:smara_accounting/ui/features/register/view_models/register_view_
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
 import 'package:smara_accounting/ui/features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'package:smara_accounting/ui/features/summary/view_models/summary_view_model.dart';
-import 'package:smara_accounting/ui/features/transfer/views/transfer_view.dart';
 
 import '../test/domain/crypto/in_memory_secure_key_storage.dart';
 
@@ -540,7 +539,10 @@ void main() {
         signingKeyService: postLossKeys,
       );
       await pumpApp(tester, buildAppFor(postLossRepository, db, postLossKeys));
-      await pumpUntilFound(tester, find.text('Continue my books on this phone'));
+      await pumpUntilFound(
+        tester,
+        find.text('Continue my books on this phone'),
+      );
       expect(find.text('Continue my books on this phone'), findsWidgets);
       expect(find.text('Restore from a copy'), findsOneWidget);
 
@@ -575,9 +577,7 @@ void main() {
 
       final events = await postLossRepository.watchIntegrityEvents().first;
       expect(
-        events.any(
-          (e) => e.eventType == IntegrityEventType.identityContinued,
-        ),
+        events.any((e) => e.eventType == IntegrityEventType.identityContinued),
         isTrue,
       );
     },
@@ -606,7 +606,7 @@ void main() {
       expect(find.textContaining('keystore'), findsNothing);
     },
   );
-
+}
 
 Widget buildAppFor(
   LedgerRepository repository,
@@ -687,9 +687,8 @@ Widget buildAppFor(
         ),
       ),
       ChangeNotifierProvider(
-        create: (_) => BundleImportViewModel(
-          booksCopyRepository: booksCopyRepository,
-        ),
+        create: (_) =>
+            BundleImportViewModel(booksCopyRepository: booksCopyRepository),
       ),
       ChangeNotifierProvider(
         create: (_) => HomeViewModel(

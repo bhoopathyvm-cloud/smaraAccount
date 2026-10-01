@@ -292,9 +292,7 @@ GoRouter buildAppRouter(
       GoRoute(
         path: '/device-history',
         builder: (context, state) => DeviceHistoryView(
-          viewModel: DeviceHistoryViewModel(
-            ledgerRepository: ledgerRepository,
-          ),
+          viewModel: DeviceHistoryViewModel(ledgerRepository: ledgerRepository),
         ),
       ),
       GoRoute(

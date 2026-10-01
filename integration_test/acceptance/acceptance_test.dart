@@ -1296,10 +1296,7 @@ void main() {
           () => find.byType(DeviceHistoryView).evaluate().isNotEmpty,
           innerTries: 150,
         );
-        expect(
-          find.textContaining('continued on this phone'),
-          findsOneWidget,
-        );
+        expect(find.textContaining('continued on this phone'), findsOneWidget);
 
         await tester.pump(const Duration(seconds: 2));
       },
@@ -2785,7 +2782,8 @@ void main() {
         expect(
           find.text('+250.00'),
           findsOneWidget,
-          reason: 'restored copy from the other device should replace local books',
+          reason:
+              'restored copy from the other device should replace local books',
         );
         expect(find.text('+800.00'), findsNothing);
 

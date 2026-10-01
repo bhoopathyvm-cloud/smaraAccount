@@ -8,10 +8,7 @@ import '../../../../domain/models/integrity_event.dart';
 
 /// One Continuation row for the Device history list, in plain words.
 class DeviceHistoryItem {
-  const DeviceHistoryItem({
-    required this.continuedAt,
-    this.copySavedAt,
-  });
+  const DeviceHistoryItem({required this.continuedAt, this.copySavedAt});
 
   final DateTime continuedAt;
   final DateTime? copySavedAt;

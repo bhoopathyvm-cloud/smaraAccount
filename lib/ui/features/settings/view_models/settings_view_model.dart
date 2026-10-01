@@ -110,13 +110,14 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     _appLockTimeoutMinutes = await _settingsRepository.appLockTimeoutMinutes();
     _isBiometricEnabled = await _settingsRepository.isAppLockBiometricEnabled();
     _isBiometricAvailable = await _biometricAuthenticator.isAvailable();
-    _backupReminderEnabled = await _settingsRepository.isBackupReminderEnabled();
+    _backupReminderEnabled = await _settingsRepository
+        .isBackupReminderEnabled();
     _backupReminderDays = await _settingsRepository.backupReminderDays();
     _backupReminderEntries = await _settingsRepository.backupReminderEntries();
-    _backupReminderSnoozeDays =
-        await _settingsRepository.backupReminderSnoozeDays();
-    _backupReminderSnoozeEntries =
-        await _settingsRepository.backupReminderSnoozeEntries();
+    _backupReminderSnoozeDays = await _settingsRepository
+        .backupReminderSnoozeDays();
+    _backupReminderSnoozeEntries = await _settingsRepository
+        .backupReminderSnoozeEntries();
     _isLoading = false;
     notifyListeners();
   }

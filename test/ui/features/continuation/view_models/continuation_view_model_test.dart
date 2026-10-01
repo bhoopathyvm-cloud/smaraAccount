@@ -74,20 +74,23 @@ void main() {
     ).called(1);
   });
 
-  test('restoreFromCopy records a failure when the repository throws', () async {
-    when(
-      booksCopyRepository.restoreBooksCopy(
-        fileContents: anyNamed('fileContents'),
-        passphrase: anyNamed('passphrase'),
-      ),
-    ).thenThrow(Exception('bad passphrase'));
+  test(
+    'restoreFromCopy records a failure when the repository throws',
+    () async {
+      when(
+        booksCopyRepository.restoreBooksCopy(
+          fileContents: anyNamed('fileContents'),
+          passphrase: anyNamed('passphrase'),
+        ),
+      ).thenThrow(Exception('bad passphrase'));
 
-    final ok = await viewModel.restoreFromCopy(
-      fileContents: 'nope',
-      passphrase: 'wrong',
-    );
+      final ok = await viewModel.restoreFromCopy(
+        fileContents: 'nope',
+        passphrase: 'wrong',
+      );
 
-    expect(ok, isFalse);
-    expect(viewModel.failure, isNotNull);
-  });
+      expect(ok, isFalse);
+      expect(viewModel.failure, isNotNull);
+    },
+  );
 }

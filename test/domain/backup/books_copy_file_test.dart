@@ -39,10 +39,7 @@ void main() {
         passphrase: passphrase,
       );
       expect(
-        () => BooksCopyFile.decrypt(
-          fileContents: encoded,
-          passphrase: 'wrong',
-        ),
+        () => BooksCopyFile.decrypt(fileContents: encoded, passphrase: 'wrong'),
         throwsA(isA<SecretBoxAuthenticationError>()),
       );
     });

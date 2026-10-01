@@ -217,9 +217,7 @@ void main() {
 
       expect(find.text('Enter a passphrase.'), findsOneWidget);
       verifyNever(
-        booksCopyRepository.saveBooksCopy(
-          passphrase: anyNamed('passphrase'),
-        ),
+        booksCopyRepository.saveBooksCopy(passphrase: anyNamed('passphrase')),
       );
     },
   );
@@ -252,20 +250,19 @@ void main() {
     },
   );
 
-  testWidgets(
-    'Device history is reachable when the callback is wired',
-    (tester) async {
-      var openedDeviceHistory = false;
-      await pumpSettings(
-        tester,
-        onOpenDeviceHistory: () => openedDeviceHistory = true,
-      );
+  testWidgets('Device history is reachable when the callback is wired', (
+    tester,
+  ) async {
+    var openedDeviceHistory = false;
+    await pumpSettings(
+      tester,
+      onOpenDeviceHistory: () => openedDeviceHistory = true,
+    );
 
-      await tapScrolled(tester, find.text('Device history'));
-      await tester.pump();
-      expect(openedDeviceHistory, isTrue);
-    },
-  );
+    await tapScrolled(tester, find.text('Device history'));
+    await tester.pump();
+    expect(openedDeviceHistory, isTrue);
+  });
 
   testWidgets('turning on Require unlock opens a set-PIN dialog; matching PINs '
       'enable app lock', (tester) async {

@@ -18,10 +18,7 @@ void main() {
     (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: SetupChoiceView(
-            onNewSetup: () {},
-            onRestoreFromCopy: () {},
-          ),
+          home: SetupChoiceView(onNewSetup: () {}, onRestoreFromCopy: () {}),
         ),
       );
       expect(find.text('New setup'), findsOneWidget);
@@ -35,10 +32,7 @@ void main() {
       );
       await tester.pumpWidget(
         MaterialApp(
-          home: CurrencySelectionView(
-            viewModel: currencyVm,
-            onFinished: () {},
-          ),
+          home: CurrencySelectionView(viewModel: currencyVm, onFinished: () {}),
         ),
       );
       expect(find.text('Choose your currency'), findsOneWidget);

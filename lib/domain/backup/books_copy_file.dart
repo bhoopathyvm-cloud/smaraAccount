@@ -34,10 +34,7 @@ class BooksCopyFile {
     final secretKey = await _deriveKey(passphrase: passphrase, salt: salt);
 
     final payload = utf8.encode(
-      jsonEncode({
-        'db': base64Encode(databaseBytes),
-        'settings': settings,
-      }),
+      jsonEncode({'db': base64Encode(databaseBytes), 'settings': settings}),
     );
     final box = await AesGcm.with256bits().encrypt(
       payload,
@@ -76,7 +73,10 @@ class BooksCopyFile {
       );
     }
     if (fileKind == legacyDeviceMigrationBundleKind) {
-      final plain = await _decryptRawPayload(json: json, passphrase: passphrase);
+      final plain = await _decryptRawPayload(
+        json: json,
+        passphrase: passphrase,
+      );
       final payload = jsonDecode(utf8.decode(plain)) as Map<String, dynamic>;
       // Discard `key` deliberately - never return or write it.
       return BooksCopyContents(

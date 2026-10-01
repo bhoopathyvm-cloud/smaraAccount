@@ -49,10 +49,7 @@ Future<String> _encryptRaw({
     iterations: iterations,
     bits: 256,
   ).deriveKeyFromPassword(password: passphrase, nonce: salt);
-  final box = await AesGcm.with256bits().encrypt(
-    plain,
-    secretKey: secretKey,
-  );
+  final box = await AesGcm.with256bits().encrypt(plain, secretKey: secretKey);
   return jsonEncode({
     'kind': kind,
     'version': 1,

@@ -24,10 +24,7 @@ class ContinuationView extends StatelessWidget {
     final l10n = l10nOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          l10n.continueBooksTitle,
-          style: AppTypography.headerTitle,
-        ),
+        title: Text(l10n.continueBooksTitle, style: AppTypography.headerTitle),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.cardBackground,
         automaticallyImplyLeading: false,

@@ -25,10 +25,12 @@ abstract class SecureKeyStorage {
 /// which works under ad-hoc signing (ADR 0001).
 class FlutterSecureKeyStorage implements SecureKeyStorage {
   FlutterSecureKeyStorage([FlutterSecureStorage? storage])
-    : _storage = storage ?? FlutterSecureStorage(
-        iOptions: defaultIosOptions,
-        mOptions: defaultMacOsOptions,
-      );
+    : _storage =
+          storage ??
+          FlutterSecureStorage(
+            iOptions: defaultIosOptions,
+            mOptions: defaultMacOsOptions,
+          );
 
   /// Options used for iOS Keychain items. Visible for unit tests.
   static const IOSOptions defaultIosOptions = IOSOptions(

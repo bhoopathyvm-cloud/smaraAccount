@@ -254,12 +254,12 @@ void main() {
           end: anyNamed('end'),
         ),
       ).thenAnswer((_) => Stream.value(const []));
-      when(categoryRepository.watchCategories()).thenAnswer(
-        (_) => Stream.value(const []),
-      );
-      when(recurring.watchDueRecurringTemplates()).thenAnswer(
-        (_) => Stream.value(const []),
-      );
+      when(
+        categoryRepository.watchCategories(),
+      ).thenAnswer((_) => Stream.value(const []));
+      when(
+        recurring.watchDueRecurringTemplates(),
+      ).thenAnswer((_) => Stream.value(const []));
       when(settings.isBackupReminderEnabled()).thenAnswer((_) async => true);
       when(settings.backupReminderDays()).thenAnswer((_) async => 30);
       when(settings.backupReminderEntries()).thenAnswer((_) async => 500);
@@ -274,9 +274,8 @@ void main() {
     test('shows after 30 days from first entry', () async {
       final clock = DateTime.utc(2026, 6, 1);
       when(repository.watchEntries()).thenAnswer(
-        (_) => Stream.value([
-          _entry(transactionDate: DateTime.utc(2026, 5, 1)),
-        ]),
+        (_) =>
+            Stream.value([_entry(transactionDate: DateTime.utc(2026, 5, 1))]),
       );
 
       final viewModel = HomeViewModel(
@@ -295,15 +294,13 @@ void main() {
     });
 
     test('shows after 500 entries since last copy', () async {
-      when(settings.lastCopySavedAt()).thenAnswer(
-        (_) async => DateTime.utc(2026, 5, 20),
-      );
+      when(
+        settings.lastCopySavedAt(),
+      ).thenAnswer((_) async => DateTime.utc(2026, 5, 20));
       when(settings.entryCountAtLastCopy()).thenAnswer((_) async => 0);
-      when(repository.watchEntries()).thenAnswer(
-        (_) => Stream.value(
-          List.generate(500, (_) => _entry()),
-        ),
-      );
+      when(
+        repository.watchEntries(),
+      ).thenAnswer((_) => Stream.value(List.generate(500, (_) => _entry())));
 
       final viewModel = HomeViewModel(
         ledgerRepository: repository,
@@ -321,12 +318,12 @@ void main() {
     });
 
     test('Later snoozes by 7 days', () async {
-      when(settings.lastCopySavedAt()).thenAnswer(
-        (_) async => DateTime.utc(2026, 1, 1),
-      );
-      when(repository.watchEntries()).thenAnswer(
-        (_) => Stream.value([_entry()]),
-      );
+      when(
+        settings.lastCopySavedAt(),
+      ).thenAnswer((_) async => DateTime.utc(2026, 1, 1));
+      when(
+        repository.watchEntries(),
+      ).thenAnswer((_) => Stream.value([_entry()]));
       when(
         settings.snoozeBackupReminder(
           until: anyNamed('until'),
@@ -356,9 +353,9 @@ void main() {
         ),
       ).called(1);
 
-      when(settings.snoozeUntil()).thenAnswer(
-        (_) async => DateTime.utc(2026, 6, 8),
-      );
+      when(
+        settings.snoozeUntil(),
+      ).thenAnswer((_) async => DateTime.utc(2026, 6, 8));
       when(settings.entryCountAtSnooze()).thenAnswer((_) async => 1);
       await viewModel.refreshBackupReminder();
       expect(viewModel.showBackupReminder, isFalse);
@@ -370,12 +367,12 @@ void main() {
 
     test('disabled reminder never shows', () async {
       when(settings.isBackupReminderEnabled()).thenAnswer((_) async => false);
-      when(settings.lastCopySavedAt()).thenAnswer(
-        (_) async => DateTime.utc(2020, 1, 1),
-      );
-      when(repository.watchEntries()).thenAnswer(
-        (_) => Stream.value(List.generate(1000, (_) => _entry())),
-      );
+      when(
+        settings.lastCopySavedAt(),
+      ).thenAnswer((_) async => DateTime.utc(2020, 1, 1));
+      when(
+        repository.watchEntries(),
+      ).thenAnswer((_) => Stream.value(List.generate(1000, (_) => _entry())));
 
       final viewModel = HomeViewModel(
         ledgerRepository: repository,

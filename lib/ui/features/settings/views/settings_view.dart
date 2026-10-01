@@ -230,7 +230,10 @@ class SettingsView extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: AppSpacing.xLarge),
-              Text(l10n.settingsBackupReminder, style: AppTypography.sectionLabel),
+              Text(
+                l10n.settingsBackupReminder,
+                style: AppTypography.sectionLabel,
+              ),
               const SizedBox(height: AppSpacing.base),
               Text(
                 l10n.settingsBackupReminderBlurb,
@@ -440,7 +443,9 @@ class SettingsView extends StatelessWidget {
               TextField(
                 controller: passphraseController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: l10n.booksCopyPassphrase),
+                decoration: InputDecoration(
+                  labelText: l10n.booksCopyPassphrase,
+                ),
               ),
               if (statusMessage != null) ...[
                 const SizedBox(height: AppSpacing.medium),
@@ -621,9 +626,7 @@ class SettingsView extends StatelessWidget {
                           Navigator.of(dialogContext).pop();
                         }
                         if (pageContext.mounted) {
-                          await showBooksCopyRestoredSuccessDialog(
-                            pageContext,
-                          );
+                          await showBooksCopyRestoredSuccessDialog(pageContext);
                         }
                       } else {
                         setDialogState(() {
@@ -872,7 +875,6 @@ class SettingsView extends StatelessWidget {
       ),
     );
   }
-
 }
 
 String _exchangeRateProviderLabel(

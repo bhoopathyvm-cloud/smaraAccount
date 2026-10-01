@@ -163,10 +163,7 @@ class HomeViewModel extends ChangeNotifier {
     if (settings == null) return;
     final snoozeDays = await settings.backupReminderSnoozeDays();
     final until = _clock().add(Duration(days: snoozeDays));
-    await settings.snoozeBackupReminder(
-      until: until,
-      entryCount: _entryCount,
-    );
+    await settings.snoozeBackupReminder(until: until, entryCount: _entryCount);
     await _refreshReminder();
   }
 

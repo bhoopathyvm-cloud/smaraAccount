@@ -32,16 +32,14 @@ class DeviceHistoryView extends StatelessWidget {
           if (items.isEmpty) {
             return Padding(
               padding: const EdgeInsets.all(AppSpacing.large),
-              child: Text(
-                l10n.deviceHistoryEmpty,
-                style: AppTypography.body,
-              ),
+              child: Text(l10n.deviceHistoryEmpty, style: AppTypography.body),
             );
           }
           return ListView.separated(
             padding: const EdgeInsets.all(AppSpacing.large),
             itemCount: items.length,
-            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.medium),
+            separatorBuilder: (_, _) =>
+                const SizedBox(height: AppSpacing.medium),
             itemBuilder: (context, index) {
               final item = items[index];
               final continued = dateFormat.format(item.continuedAt.toLocal());

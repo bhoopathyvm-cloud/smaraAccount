@@ -481,16 +481,18 @@ void main() {
             supersedes_identity_id, superseded_at, acknowledged_at
           ) VALUES (?, ?, 0, NULL, NULL, 0);
           ''',
-          ['id-keep', Uint8List.fromList([9, 8, 7])],
+          [
+            'id-keep',
+            Uint8List.fromList([9, 8, 7]),
+          ],
         );
 
         final db = AppDatabase.forTesting(NativeDatabase.opened(v17));
         addTearDown(db.close);
 
-        final row =
-            await (db.select(db.signingIdentities)
-                  ..where((t) => t.identityId.equals('id-keep')))
-                .getSingle();
+        final row = await (db.select(
+          db.signingIdentities,
+        )..where((t) => t.identityId.equals('id-keep'))).getSingle();
         expect(row.publicKey, equals([9, 8, 7]));
         expect(row.createdAt, equals(DateTime.fromMillisecondsSinceEpoch(0)));
         expect(row.supersedesIdentityId, isNull);

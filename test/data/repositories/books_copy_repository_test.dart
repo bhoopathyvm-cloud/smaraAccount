@@ -140,7 +140,10 @@ void main() {
 
       expect(contents, isNot(contains('privateKey')));
       expect(contents, isNot(contains('seed')));
-      expect(await source.settingsRepository.lastCopySavedAt(), equals(savedAt));
+      expect(
+        await source.settingsRepository.lastCopySavedAt(),
+        equals(savedAt),
+      );
       expect(await source.settingsRepository.entryCountAtLastCopy(), equals(1));
 
       await source.repository.close();
@@ -166,74 +169,74 @@ void main() {
     await seeded.repository.close();
   });
 
-  test(
-    'restore replaces books; foreign identity is allowed; device key is '
-    'cleared so recording needs Continuation',
-    () async {
-      final sourceFile = fileNamed('source.sqlite');
-      final source = await seedRepository(sourceFile);
-      await source.settingsRepository.setReferenceRateLookupEnabled(true);
-      await source.settingsRepository.setFirstWeekSetupCompleted(true);
-      final copy = await source.booksCopyRepository.saveBooksCopy(
-        passphrase: 'passphrase-a',
-        databaseFile: sourceFile,
-      );
-      await source.repository.close();
+  test('restore replaces books; foreign identity is allowed; device key is '
+      'cleared so recording needs Continuation', () async {
+    final sourceFile = fileNamed('source.sqlite');
+    final source = await seedRepository(sourceFile);
+    await source.settingsRepository.setReferenceRateLookupEnabled(true);
+    await source.settingsRepository.setFirstWeekSetupCompleted(true);
+    final copy = await source.booksCopyRepository.saveBooksCopy(
+      passphrase: 'passphrase-a',
+      databaseFile: sourceFile,
+    );
+    await source.repository.close();
 
-      final targetFile = fileNamed('target.sqlite');
-      final target = await seedRepository(targetFile);
-      await target.settingsRepository.setPreferredLocaleTag('hi');
-      await target.settingsRepository.setAppLockEnabled(true);
-      await target.settingsRepository.setReferenceRateLookupEnabled(false);
+    final targetFile = fileNamed('target.sqlite');
+    final target = await seedRepository(targetFile);
+    await target.settingsRepository.setPreferredLocaleTag('hi');
+    await target.settingsRepository.setAppLockEnabled(true);
+    await target.settingsRepository.setReferenceRateLookupEnabled(false);
 
-      await target.booksCopyRepository.restoreBooksCopy(
-        fileContents: copy,
-        passphrase: 'passphrase-a',
-        targetFile: targetFile,
-      );
+    await target.booksCopyRepository.restoreBooksCopy(
+      fileContents: copy,
+      passphrase: 'passphrase-a',
+      targetFile: targetFile,
+    );
 
-      final restored = await openRepository(
-        targetFile,
-        secureStorage: target.secureStorage,
-      );
-      final account =
-          (await restored.accountRepository.watchFinancialAccounts().first)
-              .first;
-      final entries =
-          await restored.repository.watchEntriesForAccount(account.id).first;
-      expect(entries, hasLength(1));
-      expect(entries.single.postings, hasLength(2));
+    final restored = await openRepository(
+      targetFile,
+      secureStorage: target.secureStorage,
+    );
+    final account =
+        (await restored.accountRepository.watchFinancialAccounts().first).first;
+    final entries = await restored.repository
+        .watchEntriesForAccount(account.id)
+        .first;
+    expect(entries, hasLength(1));
+    expect(entries.single.postings, hasLength(2));
 
-      final verification = await restored.chainVerifier.verifyChain();
-      expect(verification.isFullyVerified, isTrue);
+    final verification = await restored.chainVerifier.verifyChain();
+    expect(verification.isFullyVerified, isTrue);
 
-      // Device settings stay; books settings come from the copy.
-      expect(await restored.settingsRepository.preferredLocaleTag(), equals('hi'));
-      expect(await restored.settingsRepository.isAppLockEnabled(), isTrue);
-      expect(
-        await restored.settingsRepository.isReferenceRateLookupEnabled(),
-        isTrue,
-      );
-      expect(
-        await restored.settingsRepository.isFirstWeekSetupCompleted(),
-        isTrue,
-      );
+    // Device settings stay; books settings come from the copy.
+    expect(
+      await restored.settingsRepository.preferredLocaleTag(),
+      equals('hi'),
+    );
+    expect(await restored.settingsRepository.isAppLockEnabled(), isTrue);
+    expect(
+      await restored.settingsRepository.isReferenceRateLookupEnabled(),
+      isTrue,
+    );
+    expect(
+      await restored.settingsRepository.isFirstWeekSetupCompleted(),
+      isTrue,
+    );
 
-      final category =
-          (await restored.categoryRepository.watchCategories().first).first;
-      await expectLater(
-        restored.repository.recordTransaction(
-          amountMinor: 100,
-          direction: TransactionDirection.moneyOut,
-          categoryId: category.id,
-          financialAccountId: account.id,
-          transactionDate: DateTime(2026, 1, 2),
-        ),
-        throwsStateError,
-      );
-      await restored.repository.close();
-    },
-  );
+    final category =
+        (await restored.categoryRepository.watchCategories().first).first;
+    await expectLater(
+      restored.repository.recordTransaction(
+        amountMinor: 100,
+        direction: TransactionDirection.moneyOut,
+        categoryId: category.id,
+        financialAccountId: account.id,
+        transactionDate: DateTime(2026, 1, 2),
+      ),
+      throwsStateError,
+    );
+    await restored.repository.close();
+  });
 
   test(
     'tampered copy is refused and the target file is left untouched',
@@ -279,75 +282,74 @@ void main() {
     },
   );
 
-  test(
-    'wrong passphrase leaves the device untouched',
-    () async {
-      final sourceFile = fileNamed('source.sqlite');
-      final source = await seedRepository(sourceFile);
-      final copy = await source.booksCopyRepository.saveBooksCopy(
-        passphrase: 'the-real-passphrase',
-        databaseFile: sourceFile,
-      );
-      await source.repository.close();
-
-      final targetFile = fileNamed('target.sqlite');
-      final target = await openRepository(targetFile);
-      await target.settingsRepository.setPreferredLocaleTag('ta');
-
-      await expectLater(
-        target.booksCopyRepository.restoreBooksCopy(
-          fileContents: copy,
-          passphrase: 'a-wrong-passphrase',
-          targetFile: targetFile,
-        ),
-        throwsA(anything),
-      );
-
-      expect(await target.identityRepository.currentIdentity(), isNull);
-      expect(await target.settingsRepository.preferredLocaleTag(), equals('ta'));
-      await target.repository.close();
-    },
-  );
-
-  test('legacy ledger backup restores the database and keeps device settings',
-      () async {
+  test('wrong passphrase leaves the device untouched', () async {
     final sourceFile = fileNamed('source.sqlite');
     final source = await seedRepository(sourceFile);
-    await source.repository.close();
-
-    final legacy = await encryptLegacyLedgerBackup(
-      databaseBytes: await sourceFile.readAsBytes(),
-      passphrase: 'legacy-pass',
+    final copy = await source.booksCopyRepository.saveBooksCopy(
+      passphrase: 'the-real-passphrase',
+      databaseFile: sourceFile,
     );
+    await source.repository.close();
 
     final targetFile = fileNamed('target.sqlite');
     final target = await openRepository(targetFile);
-    await target.settingsRepository.setPreferredLocaleTag('fr');
-    await target.settingsRepository.setReferenceRateLookupEnabled(true);
+    await target.settingsRepository.setPreferredLocaleTag('ta');
 
-    await target.booksCopyRepository.restoreBooksCopy(
-      fileContents: legacy,
-      passphrase: 'legacy-pass',
-      targetFile: targetFile,
+    await expectLater(
+      target.booksCopyRepository.restoreBooksCopy(
+        fileContents: copy,
+        passphrase: 'a-wrong-passphrase',
+        targetFile: targetFile,
+      ),
+      throwsA(anything),
     );
 
-    final restored = await openRepository(targetFile);
-    expect(
-      (await restored.repository.watchEntries().first),
-      hasLength(1),
-    );
-    expect(
-      (await restored.chainVerifier.verifyChain()).isFullyVerified,
-      isTrue,
-    );
-    // Legacy files carry no settings — device books settings stay as they were.
-    expect(await restored.settingsRepository.preferredLocaleTag(), equals('fr'));
-    expect(
-      await restored.settingsRepository.isReferenceRateLookupEnabled(),
-      isTrue,
-    );
-    await restored.repository.close();
+    expect(await target.identityRepository.currentIdentity(), isNull);
+    expect(await target.settingsRepository.preferredLocaleTag(), equals('ta'));
+    await target.repository.close();
   });
+
+  test(
+    'legacy ledger backup restores the database and keeps device settings',
+    () async {
+      final sourceFile = fileNamed('source.sqlite');
+      final source = await seedRepository(sourceFile);
+      await source.repository.close();
+
+      final legacy = await encryptLegacyLedgerBackup(
+        databaseBytes: await sourceFile.readAsBytes(),
+        passphrase: 'legacy-pass',
+      );
+
+      final targetFile = fileNamed('target.sqlite');
+      final target = await openRepository(targetFile);
+      await target.settingsRepository.setPreferredLocaleTag('fr');
+      await target.settingsRepository.setReferenceRateLookupEnabled(true);
+
+      await target.booksCopyRepository.restoreBooksCopy(
+        fileContents: legacy,
+        passphrase: 'legacy-pass',
+        targetFile: targetFile,
+      );
+
+      final restored = await openRepository(targetFile);
+      expect((await restored.repository.watchEntries().first), hasLength(1));
+      expect(
+        (await restored.chainVerifier.verifyChain()).isFullyVerified,
+        isTrue,
+      );
+      // Legacy files carry no settings — device books settings stay as they were.
+      expect(
+        await restored.settingsRepository.preferredLocaleTag(),
+        equals('fr'),
+      );
+      expect(
+        await restored.settingsRepository.isReferenceRateLookupEnabled(),
+        isTrue,
+      );
+      await restored.repository.close();
+    },
+  );
 
   test(
     'legacy device migration bundle restores books and discards the key',
@@ -377,14 +379,8 @@ void main() {
       // Key material from the bundle must never land in secure storage.
       expect(storage.writeCount, equals(0));
 
-      final restored = await openRepository(
-        targetFile,
-        secureStorage: storage,
-      );
-      expect(
-        (await restored.repository.watchEntries().first),
-        hasLength(1),
-      );
+      final restored = await openRepository(targetFile, secureStorage: storage);
+      expect((await restored.repository.watchEntries().first), hasLength(1));
       expect(
         (await restored.chainVerifier.verifyChain()).isFullyVerified,
         isTrue,
@@ -399,64 +395,67 @@ void main() {
     },
   );
 
-  test(
-    'books settings apply only after a successful swap',
-    () async {
-      final sourceFile = fileNamed('source.sqlite');
-      final source = await seedRepository(sourceFile);
-      await source.settingsRepository.setFirstWeekSetupCompleted(true);
-      await source.settingsRepository.setSelectedProvider(
-        ExchangeRateProvider.openErApi,
-      );
-      final goodCopy = await source.booksCopyRepository.saveBooksCopy(
-        passphrase: 'ok',
-        databaseFile: sourceFile,
-      );
-      await source.repository.close();
+  test('books settings apply only after a successful swap', () async {
+    final sourceFile = fileNamed('source.sqlite');
+    final source = await seedRepository(sourceFile);
+    await source.settingsRepository.setFirstWeekSetupCompleted(true);
+    await source.settingsRepository.setSelectedProvider(
+      ExchangeRateProvider.openErApi,
+    );
+    final goodCopy = await source.booksCopyRepository.saveBooksCopy(
+      passphrase: 'ok',
+      databaseFile: sourceFile,
+    );
+    await source.repository.close();
 
-      // Build a failing copy by tampering the source after a second seed.
-      final badSourceFile = fileNamed('bad-source.sqlite');
-      final badSource = await seedRepository(badSourceFile);
-      await badSource.repository.close();
-      final badDb = AppDatabase.openFile(badSourceFile);
-      await badDb.customStatement(
-        "UPDATE journal_entries SET entry_hash = "
-        "X'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'",
-      );
-      await badDb.close();
-      final badOpened = await openRepository(badSourceFile);
-      final badCopy = await badOpened.booksCopyRepository.saveBooksCopy(
-        passphrase: 'ok',
-        databaseFile: badSourceFile,
-      );
-      await badOpened.repository.close();
+    // Build a failing copy by tampering the source after a second seed.
+    final badSourceFile = fileNamed('bad-source.sqlite');
+    final badSource = await seedRepository(badSourceFile);
+    await badSource.repository.close();
+    final badDb = AppDatabase.openFile(badSourceFile);
+    await badDb.customStatement(
+      "UPDATE journal_entries SET entry_hash = "
+      "X'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'",
+    );
+    await badDb.close();
+    final badOpened = await openRepository(badSourceFile);
+    final badCopy = await badOpened.booksCopyRepository.saveBooksCopy(
+      passphrase: 'ok',
+      databaseFile: badSourceFile,
+    );
+    await badOpened.repository.close();
 
-      final targetFile = fileNamed('target.sqlite');
-      final target = await openRepository(targetFile);
-      await target.settingsRepository.setFirstWeekSetupCompleted(false);
-      await target.settingsRepository.setSelectedProvider(
-        ExchangeRateProvider.values.first,
-      );
+    final targetFile = fileNamed('target.sqlite');
+    final target = await openRepository(targetFile);
+    await target.settingsRepository.setFirstWeekSetupCompleted(false);
+    await target.settingsRepository.setSelectedProvider(
+      ExchangeRateProvider.values.first,
+    );
 
-      await expectLater(
-        target.booksCopyRepository.restoreBooksCopy(
-          fileContents: badCopy,
-          passphrase: 'ok',
-          targetFile: targetFile,
-        ),
-        throwsA(isA<InvalidLedgerBackupException>()),
-      );
-      expect(await target.settingsRepository.isFirstWeekSetupCompleted(), isFalse);
-
-      await target.booksCopyRepository.restoreBooksCopy(
-        fileContents: goodCopy,
+    await expectLater(
+      target.booksCopyRepository.restoreBooksCopy(
+        fileContents: badCopy,
         passphrase: 'ok',
         targetFile: targetFile,
-      );
+      ),
+      throwsA(isA<InvalidLedgerBackupException>()),
+    );
+    expect(
+      await target.settingsRepository.isFirstWeekSetupCompleted(),
+      isFalse,
+    );
 
-      final after = SettingsRepository();
-      expect(await after.isFirstWeekSetupCompleted(), isTrue);
-      expect(await after.selectedProvider(), equals(ExchangeRateProvider.openErApi));
-    },
-  );
+    await target.booksCopyRepository.restoreBooksCopy(
+      fileContents: goodCopy,
+      passphrase: 'ok',
+      targetFile: targetFile,
+    );
+
+    final after = SettingsRepository();
+    expect(await after.isFirstWeekSetupCompleted(), isTrue);
+    expect(
+      await after.selectedProvider(),
+      equals(ExchangeRateProvider.openErApi),
+    );
+  });
 }

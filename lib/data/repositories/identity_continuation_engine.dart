@@ -43,8 +43,7 @@ class IdentityContinuationEngine {
     }
 
     final stored = await _signingKeyService.loadStoredKeyMaterial();
-    if (stored != null &&
-        _bytesEqual(stored.publicKey, previous.publicKey)) {
+    if (stored != null && _bytesEqual(stored.publicKey, previous.publicKey)) {
       // Restoring a copy onto the phone that still holds its key: no
       // Continuation (design Decision 4 edge case).
       return previous;

@@ -291,7 +291,10 @@ void main() {
 
         final continued = await reinstalledIdentity.continueBooks();
 
-        expect(continued.identityId, isNot(equals(originalIdentity.identityId)));
+        expect(
+          continued.identityId,
+          isNot(equals(originalIdentity.identityId)),
+        );
         expect(
           continued.continuesIdentityId,
           equals(originalIdentity.identityId),
@@ -307,25 +310,19 @@ void main() {
       },
     );
 
-    test(
-      'hasMatchingStoredKey is false after deleteStoredKey',
-      () async {
-        final identity = (await identityRepository.currentIdentity())!;
-        expect(await identityRepository.hasMatchingStoredKey(identity), isTrue);
+    test('hasMatchingStoredKey is false after deleteStoredKey', () async {
+      final identity = (await identityRepository.currentIdentity())!;
+      expect(await identityRepository.hasMatchingStoredKey(identity), isTrue);
 
-        await identityRepository.deleteStoredKey();
+      await identityRepository.deleteStoredKey();
 
-        expect(
-          await identityRepository.hasMatchingStoredKey(identity),
-          isFalse,
-        );
-        // Books identity row is untouched until continueBooks runs.
-        expect(
-          (await identityRepository.currentIdentity())!.identityId,
-          equals(identity.identityId),
-        );
-      },
-    );
+      expect(await identityRepository.hasMatchingStoredKey(identity), isFalse);
+      // Books identity row is untouched until continueBooks runs.
+      expect(
+        (await identityRepository.currentIdentity())!.identityId,
+        equals(identity.identityId),
+      );
+    });
   });
 
   group('recordTransaction', () {
@@ -1866,15 +1863,13 @@ void main() {
         final newIdentity = await identityRepository.continueBooks();
 
         expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
-        expect(
-          newIdentity.continuesIdentityId,
-          equals(oldIdentity.identityId),
-        );
+        expect(newIdentity.continuesIdentityId, equals(oldIdentity.identityId));
         expect(newIdentity.supersedesIdentityId, isNull);
 
-        final previousRow = await (db.select(db.signingIdentities)
-              ..where((t) => t.identityId.equals(oldIdentity.identityId)))
-            .getSingle();
+        final previousRow =
+            await (db.select(db.signingIdentities)
+                  ..where((t) => t.identityId.equals(oldIdentity.identityId)))
+                .getSingle();
         expect(previousRow.continuedAt, isNotNull);
         expect(previousRow.supersededAt, isNull);
 
@@ -1914,43 +1909,40 @@ void main() {
       },
     );
 
-    test(
-      'verifyChain remains fully verified after Continuation, and new '
-      'entries sign under the continued identity',
-      () async {
-        final incomeId = await firstCategoryId(AccountType.income);
-        final accountId = await firstFinancialAccountId();
-        await repository.recordTransaction(
-          amountMinor: 1000,
-          direction: TransactionDirection.moneyIn,
-          categoryId: incomeId,
-          financialAccountId: accountId,
-          transactionDate: DateTime(2026, 1, 15),
-        );
+    test('verifyChain remains fully verified after Continuation, and new '
+        'entries sign under the continued identity', () async {
+      final incomeId = await firstCategoryId(AccountType.income);
+      final accountId = await firstFinancialAccountId();
+      await repository.recordTransaction(
+        amountMinor: 1000,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 15),
+      );
 
-        await identityRepository.deleteStoredKey();
-        final newIdentity = await identityRepository.continueBooks();
-        final result = await chainVerifier.verifyChain();
-        expect(result.isFullyVerified, isTrue);
+      await identityRepository.deleteStoredKey();
+      final newIdentity = await identityRepository.continueBooks();
+      final result = await chainVerifier.verifyChain();
+      expect(result.isFullyVerified, isTrue);
 
-        await repository.recordTransaction(
-          amountMinor: 500,
-          direction: TransactionDirection.moneyIn,
-          categoryId: incomeId,
-          financialAccountId: accountId,
-          transactionDate: DateTime(2026, 1, 16),
-        );
-        final entries = await repository.watchEntries().first;
-        expect(entries, hasLength(2));
-        final newest = entries.firstWhere(
-          (e) => e.signedByIdentityId == newIdentity.identityId,
-        );
-        expect(newest.isVerified, isTrue);
+      await repository.recordTransaction(
+        amountMinor: 500,
+        direction: TransactionDirection.moneyIn,
+        categoryId: incomeId,
+        financialAccountId: accountId,
+        transactionDate: DateTime(2026, 1, 16),
+      );
+      final entries = await repository.watchEntries().first;
+      expect(entries, hasLength(2));
+      final newest = entries.firstWhere(
+        (e) => e.signedByIdentityId == newIdentity.identityId,
+      );
+      expect(newest.isVerified, isTrue);
 
-        final after = await chainVerifier.verifyChain();
-        expect(after.isFullyVerified, isTrue);
-      },
-    );
+      final after = await chainVerifier.verifyChain();
+      expect(after.isFullyVerified, isTrue);
+    });
 
     test(
       'when the stored key still matches, continueBooks is a no-op',
@@ -1991,15 +1983,15 @@ void main() {
               acknowledgedAt: Value(DateTime.now()),
             ),
           );
-      await (db.update(db.signingIdentities)
-            ..where((t) => t.identityId.equals(previous.identityId)))
-          .write(
-            SigningIdentitiesCompanion(supersededAt: Value(DateTime.now())),
-          );
+      await (db.update(
+        db.signingIdentities,
+      )..where((t) => t.identityId.equals(previous.identityId))).write(
+        SigningIdentitiesCompanion(supersededAt: Value(DateTime.now())),
+      );
 
-      final legacyRow = await (db.select(db.journalEntries)
-            ..where((e) => e.id.equals(legacy.id)))
-          .getSingle();
+      final legacyRow = await (db.select(
+        db.journalEntries,
+      )..where((e) => e.id.equals(legacy.id))).getSingle();
       final legacyPostings = await (db.select(
         db.postings,
       )..where((p) => p.entryId.equals(legacy.id))).get();
@@ -2031,7 +2023,9 @@ void main() {
       final entryHash = await hashCanonicalEntry(bytes);
       final signature = await signingKeyService.sign(entryHash);
 
-      await db.into(db.journalEntries).insert(
+      await db
+          .into(db.journalEntries)
+          .insert(
             JournalEntriesCompanion.insert(
               id: Value(newId),
               transactionDate: legacyRow.transactionDate,
@@ -2047,7 +2041,9 @@ void main() {
             ),
           );
       for (final p in legacyPostings) {
-        await db.into(db.postings).insert(
+        await db
+            .into(db.postings)
+            .insert(
               PostingsCompanion.insert(
                 entryId: newId,
                 accountId: p.accountId,

@@ -74,9 +74,7 @@ void main() {
   group('exportBackup', () {
     test('returns the encrypted contents on success', () async {
       when(
-        booksCopyRepository.saveBooksCopy(
-          passphrase: anyNamed('passphrase'),
-        ),
+        booksCopyRepository.saveBooksCopy(passphrase: anyNamed('passphrase')),
       ).thenAnswer((_) async => '{"kind":"smara-books-copy"}');
 
       final result = await viewModel.exportBackup(passphrase: 'hunter2');
@@ -88,9 +86,7 @@ void main() {
 
     test('returns null and sets an error message on failure', () async {
       when(
-        booksCopyRepository.saveBooksCopy(
-          passphrase: anyNamed('passphrase'),
-        ),
+        booksCopyRepository.saveBooksCopy(passphrase: anyNamed('passphrase')),
       ).thenThrow(Exception('disk full'));
 
       final result = await viewModel.exportBackup(passphrase: 'hunter2');

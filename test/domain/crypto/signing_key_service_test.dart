@@ -72,10 +72,7 @@ void main() {
     test('two calls produce different identities', () async {
       final a = await service.generateNewIdentity();
       final b = await service.generateNewIdentity();
-      expect(
-        a.keyMaterial.publicKey,
-        isNot(equals(b.keyMaterial.publicKey)),
-      );
+      expect(a.keyMaterial.publicKey, isNot(equals(b.keyMaterial.publicKey)));
     });
   });
 
