@@ -215,32 +215,34 @@ class AccountManagementView extends StatelessWidget {
         final currencyController = controllers[1];
         return AlertDialog(
           title: Text(l10n.editGroup),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AppTextField(controller: controller, autofocus: true),
-              const SizedBox(height: AppSpacing.medium),
-              TextField(
-                controller: currencyController,
-                enabled: canChangeCurrency,
-                textCapitalization: TextCapitalization.characters,
-                maxLength: 3,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                  TextInputFormatter.withFunction(
-                    (oldValue, newValue) =>
-                        newValue.copyWith(text: newValue.text.toUpperCase()),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppTextField(controller: controller, autofocus: true),
+                const SizedBox(height: AppSpacing.medium),
+                TextField(
+                  controller: currencyController,
+                  enabled: canChangeCurrency,
+                  textCapitalization: TextCapitalization.characters,
+                  maxLength: 3,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                    TextInputFormatter.withFunction(
+                      (oldValue, newValue) =>
+                          newValue.copyWith(text: newValue.text.toUpperCase()),
+                    ),
+                  ],
+                  decoration: InputDecoration(
+                    labelText: l10n.currencyIso,
+                    helperText: canChangeCurrency
+                        ? null
+                        : l10n.errorCannotChangeGroupCurrencyWithAccounts,
+                    helperMaxLines: 2,
                   ),
-                ],
-                decoration: InputDecoration(
-                  labelText: l10n.currencyIso,
-                  helperText: canChangeCurrency
-                      ? null
-                      : l10n.errorCannotChangeGroupCurrencyWithAccounts,
-                  helperMaxLines: 2,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           actions: [
             TextButton(

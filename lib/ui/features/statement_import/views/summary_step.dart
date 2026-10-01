@@ -107,26 +107,29 @@ class CategoryRuleManagementView extends StatelessWidget {
             final l10n = l10nOf(context);
             return AlertDialog(
               title: Text(l10n.editRule),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AppTextField(
-                    controller: keywordController,
-                    autofocus: true,
-                    labelText: l10n.keyword,
-                  ),
-                  const SizedBox(height: AppSpacing.medium),
-                  EntityPickerField<Account>(
-                    labelText: l10n.category,
-                    items: expenseCategories,
-                    idOf: (category) => category.id,
-                    labelOf: (category) =>
-                        localizeStoredName(l10n, category.name),
-                    value: categoryId,
-                    onChanged: (value) =>
-                        setDialogState(() => categoryId = value ?? categoryId),
-                  ),
-                ],
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AppTextField(
+                      controller: keywordController,
+                      autofocus: true,
+                      labelText: l10n.keyword,
+                    ),
+                    const SizedBox(height: AppSpacing.medium),
+                    EntityPickerField<Account>(
+                      labelText: l10n.category,
+                      items: expenseCategories,
+                      idOf: (category) => category.id,
+                      labelOf: (category) =>
+                          localizeStoredName(l10n, category.name),
+                      value: categoryId,
+                      onChanged: (value) => setDialogState(
+                        () => categoryId = value ?? categoryId,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               actions: [
                 TextButton(

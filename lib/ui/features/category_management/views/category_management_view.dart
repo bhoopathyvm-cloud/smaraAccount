@@ -41,30 +41,32 @@ class CategoryManagementView extends StatelessWidget {
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: Text(l10n.addCategory),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(labelText: l10n.name),
-              ),
-              const SizedBox(height: AppSpacing.medium),
-              SegmentedButton<AccountType>(
-                segments: [
-                  ButtonSegment(
-                    value: AccountType.income,
-                    label: Text(l10n.income),
-                  ),
-                  ButtonSegment(
-                    value: AccountType.expense,
-                    label: Text(l10n.expense),
-                  ),
-                ],
-                selected: {type},
-                onSelectionChanged: (selection) =>
-                    setDialogState(() => type = selection.first),
-              ),
-            ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(labelText: l10n.name),
+                ),
+                const SizedBox(height: AppSpacing.medium),
+                SegmentedButton<AccountType>(
+                  segments: [
+                    ButtonSegment(
+                      value: AccountType.income,
+                      label: Text(l10n.income),
+                    ),
+                    ButtonSegment(
+                      value: AccountType.expense,
+                      label: Text(l10n.expense),
+                    ),
+                  ],
+                  selected: {type},
+                  onSelectionChanged: (selection) =>
+                      setDialogState(() => type = selection.first),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -97,30 +99,32 @@ class CategoryManagementView extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n.renameCategory),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            AppTextField(controller: controller, autofocus: true),
-            const SizedBox(height: AppSpacing.medium),
-            TextButton(
-              onPressed: () async {
-                final result = await viewModel.translateWithAi(
-                  controller.text.trim().isEmpty
-                      ? category.name
-                      : controller.text.trim(),
-                );
-                if (!context.mounted) return;
-                final message = result == ResearchLaunchResult.opened
-                    ? l10n.openedFavouriteResearchTool
-                    : l10n.translateCategoryWithAi;
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(message)));
-              },
-              child: Text(l10n.translateCategoryWithAi),
-            ),
-          ],
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AppTextField(controller: controller, autofocus: true),
+              const SizedBox(height: AppSpacing.medium),
+              TextButton(
+                onPressed: () async {
+                  final result = await viewModel.translateWithAi(
+                    controller.text.trim().isEmpty
+                        ? category.name
+                        : controller.text.trim(),
+                  );
+                  if (!context.mounted) return;
+                  final message = result == ResearchLaunchResult.opened
+                      ? l10n.openedFavouriteResearchTool
+                      : l10n.translateCategoryWithAi;
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(message)));
+                },
+                child: Text(l10n.translateCategoryWithAi),
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(
@@ -156,23 +160,25 @@ class CategoryManagementView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(l10n.addCategoryTranslation),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: localeController,
-              decoration: InputDecoration(
-                labelText: l10n.categoryTranslationLocale,
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: localeController,
+                decoration: InputDecoration(
+                  labelText: l10n.categoryTranslationLocale,
+                ),
               ),
-            ),
-            const SizedBox(height: AppSpacing.medium),
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: l10n.categoryTranslationName,
+              const SizedBox(height: AppSpacing.medium),
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: l10n.categoryTranslationName,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         actions: [
           TextButton(
@@ -314,28 +320,30 @@ class CategoryManagementView extends StatelessWidget {
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: Text(l10n.monthlyLimit),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(l10n.monthlyLimitBlurb, style: AppTypography.metadata),
-              const SizedBox(height: AppSpacing.medium),
-              TextField(
-                controller: controller,
-                autofocus: true,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                decoration: InputDecoration(labelText: l10n.monthlyLimitHint),
-              ),
-              if (errorMessage != null) ...[
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(l10n.monthlyLimitBlurb, style: AppTypography.metadata),
                 const SizedBox(height: AppSpacing.medium),
-                Text(
-                  errorMessage!,
-                  style: AppTypography.body.copyWith(color: AppColors.signal),
+                TextField(
+                  controller: controller,
+                  autofocus: true,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  decoration: InputDecoration(labelText: l10n.monthlyLimitHint),
                 ),
+                if (errorMessage != null) ...[
+                  const SizedBox(height: AppSpacing.medium),
+                  Text(
+                    errorMessage!,
+                    style: AppTypography.body.copyWith(color: AppColors.signal),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           actions: [
             TextButton(
