@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'linked_device_role.dart';
 
-/// In-person QR payload for "Add a device". Carries public material only —
-/// never private key bytes (ADR 0004 / linked-devices design Decision 2).
+/// In-person QR payload for "Add a device" / "Add a person". Carries public
+/// material only — never private key bytes (ADR 0004 / linked-devices
+/// design Decision 2; shared-accounts design Decision 6).
 class JoinQrPayload {
   const JoinQrPayload({
     required this.booksSetId,
@@ -16,6 +17,9 @@ class JoinQrPayload {
     required this.roleOffer,
     required this.joinNonce,
     this.protocolVersion = 1,
+    this.personRoles = const {},
+    this.personDisplayName,
+    this.isPersonJoin = false,
   });
 
   final int protocolVersion;
@@ -34,8 +38,19 @@ class JoinQrPayload {
   final List<int> deviceCertDer;
 
   final String deviceCertFingerprint;
+
+  /// Primary role offer (B-compatible). Prefer [personRoles] when set.
   final LinkedDeviceRole roleOffer;
   final String joinNonce;
+
+  /// Role set offered for "Add a person" (default Claimant).
+  final Set<LinkedDeviceRole> personRoles;
+
+  /// Display name for the person being added.
+  final String? personDisplayName;
+
+  /// True when this QR is an "Add a person" offer (vs device).
+  final bool isPersonJoin;
 
   static const _privateKeyKeys = {
     'privateKey',
@@ -57,6 +72,10 @@ class JoinQrPayload {
     'deviceCertFingerprint': deviceCertFingerprint,
     'roleOffer': roleOffer.name,
     'joinNonce': joinNonce,
+    if (personRoles.isNotEmpty)
+      'personRoles': personRoles.map((r) => r.name).toList()..sort(),
+    if (personDisplayName != null) 'personDisplayName': personDisplayName,
+    if (isPersonJoin) 'isPersonJoin': true,
   };
 
   String encode() => jsonEncode(toJson());
@@ -109,6 +128,21 @@ class JoinQrPayload {
       throw FormatException('Unknown role offer: $roleOfferRaw');
     }
 
+    final personRoles = <LinkedDeviceRole>{};
+    final personRolesRaw = map['personRoles'];
+    if (personRolesRaw is List) {
+      for (final item in personRolesRaw) {
+        if (item is! String) {
+          throw const FormatException('personRoles entries must be strings.');
+        }
+        final match = LinkedDeviceRole.values.where((r) => r.name == item);
+        if (match.isEmpty) {
+          throw FormatException('Unknown person role: $item');
+        }
+        personRoles.add(match.first);
+      }
+    }
+
     return JoinQrPayload(
       protocolVersion: version is int ? version : int.parse('$version'),
       booksSetId: booksSetId,
@@ -120,6 +154,9 @@ class JoinQrPayload {
       deviceCertFingerprint: fingerprint,
       roleOffer: roleOffer.first,
       joinNonce: joinNonce,
+      personRoles: personRoles,
+      personDisplayName: map['personDisplayName'] as String?,
+      isPersonJoin: map['isPersonJoin'] == true,
     );
   }
 

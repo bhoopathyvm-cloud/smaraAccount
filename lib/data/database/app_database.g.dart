@@ -9250,6 +9250,18 @@ class $LinkedDevicesTable extends LinkedDevices
         type: DriftSqlType.string,
         requiredDuringInsert: true,
       ).withConverter<LinkedDeviceRole>($LinkedDevicesTable.$converterrole);
+  static const VerificationMeta _rolesCsvMeta = const VerificationMeta(
+    'rolesCsv',
+  );
+  @override
+  late final GeneratedColumn<String> rolesCsv = GeneratedColumn<String>(
+    'roles_csv',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
   static const VerificationMeta _canAddMeta = const VerificationMeta('canAdd');
   @override
   late final GeneratedColumn<bool> canAdd = GeneratedColumn<bool>(
@@ -9263,6 +9275,32 @@ class $LinkedDevicesTable extends LinkedDevices
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _owedToAccountIdMeta = const VerificationMeta(
+    'owedToAccountId',
+  );
+  @override
+  late final GeneratedColumn<String> owedToAccountId = GeneratedColumn<String>(
+    'owed_to_account_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES accounts (id)',
+    ),
+  );
+  static const VerificationMeta _personDisplayNameMeta = const VerificationMeta(
+    'personDisplayName',
+  );
+  @override
+  late final GeneratedColumn<String> personDisplayName =
+      GeneratedColumn<String>(
+        'person_display_name',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _removedAtMeta = const VerificationMeta(
     'removedAt',
   );
@@ -9327,7 +9365,10 @@ class $LinkedDevicesTable extends LinkedDevices
     signingIdentityId,
     deviceCertFingerprint,
     role,
+    rolesCsv,
     canAdd,
+    owedToAccountId,
+    personDisplayName,
     removedAt,
     erasePendingAt,
     erasedAt,
@@ -9387,10 +9428,34 @@ class $LinkedDevicesTable extends LinkedDevices
     } else if (isInserting) {
       context.missing(_deviceCertFingerprintMeta);
     }
+    if (data.containsKey('roles_csv')) {
+      context.handle(
+        _rolesCsvMeta,
+        rolesCsv.isAcceptableOrUnknown(data['roles_csv']!, _rolesCsvMeta),
+      );
+    }
     if (data.containsKey('can_add')) {
       context.handle(
         _canAddMeta,
         canAdd.isAcceptableOrUnknown(data['can_add']!, _canAddMeta),
+      );
+    }
+    if (data.containsKey('owed_to_account_id')) {
+      context.handle(
+        _owedToAccountIdMeta,
+        owedToAccountId.isAcceptableOrUnknown(
+          data['owed_to_account_id']!,
+          _owedToAccountIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('person_display_name')) {
+      context.handle(
+        _personDisplayNameMeta,
+        personDisplayName.isAcceptableOrUnknown(
+          data['person_display_name']!,
+          _personDisplayNameMeta,
+        ),
       );
     }
     if (data.containsKey('removed_at')) {
@@ -9460,10 +9525,22 @@ class $LinkedDevicesTable extends LinkedDevices
           data['${effectivePrefix}role'],
         )!,
       ),
+      rolesCsv: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}roles_csv'],
+      )!,
       canAdd: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}can_add'],
       )!,
+      owedToAccountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}owed_to_account_id'],
+      ),
+      personDisplayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}person_display_name'],
+      ),
       removedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}removed_at'],
@@ -9503,10 +9580,23 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
 
   /// Fingerprint of the device TLS certificate exchanged at join.
   final String deviceCertFingerprint;
+
+  /// Primary role (Owner > Approver > Member > Claimant) for B-compatible
+  /// single-role reads. Prefer [rolesCsv] for capability checks.
   final LinkedDeviceRole role;
+
+  /// Comma-separated role set (design Decision 7). Migrated from [role].
+  final String rolesCsv;
 
   /// Whether this Member may add other devices (Owner policy).
   final bool canAdd;
+
+  /// Liability "Owed to \<name\>" account when this membership is a Claimant.
+  final String? owedToAccountId;
+
+  /// Person display name when joined via "Add a person" (may differ from
+  /// [displayName] device label).
+  final String? personDisplayName;
   final DateTime? removedAt;
   final DateTime? erasePendingAt;
   final DateTime? erasedAt;
@@ -9521,7 +9611,10 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
     required this.signingIdentityId,
     required this.deviceCertFingerprint,
     required this.role,
+    required this.rolesCsv,
     required this.canAdd,
+    this.owedToAccountId,
+    this.personDisplayName,
     this.removedAt,
     this.erasePendingAt,
     this.erasedAt,
@@ -9540,7 +9633,14 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
         $LinkedDevicesTable.$converterrole.toSql(role),
       );
     }
+    map['roles_csv'] = Variable<String>(rolesCsv);
     map['can_add'] = Variable<bool>(canAdd);
+    if (!nullToAbsent || owedToAccountId != null) {
+      map['owed_to_account_id'] = Variable<String>(owedToAccountId);
+    }
+    if (!nullToAbsent || personDisplayName != null) {
+      map['person_display_name'] = Variable<String>(personDisplayName);
+    }
     if (!nullToAbsent || removedAt != null) {
       map['removed_at'] = Variable<DateTime>(removedAt);
     }
@@ -9564,7 +9664,14 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
       signingIdentityId: Value(signingIdentityId),
       deviceCertFingerprint: Value(deviceCertFingerprint),
       role: Value(role),
+      rolesCsv: Value(rolesCsv),
       canAdd: Value(canAdd),
+      owedToAccountId: owedToAccountId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(owedToAccountId),
+      personDisplayName: personDisplayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(personDisplayName),
       removedAt: removedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(removedAt),
@@ -9596,7 +9703,12 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
       role: $LinkedDevicesTable.$converterrole.fromJson(
         serializer.fromJson<String>(json['role']),
       ),
+      rolesCsv: serializer.fromJson<String>(json['rolesCsv']),
       canAdd: serializer.fromJson<bool>(json['canAdd']),
+      owedToAccountId: serializer.fromJson<String?>(json['owedToAccountId']),
+      personDisplayName: serializer.fromJson<String?>(
+        json['personDisplayName'],
+      ),
       removedAt: serializer.fromJson<DateTime?>(json['removedAt']),
       erasePendingAt: serializer.fromJson<DateTime?>(json['erasePendingAt']),
       erasedAt: serializer.fromJson<DateTime?>(json['erasedAt']),
@@ -9617,7 +9729,10 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
       'role': serializer.toJson<String>(
         $LinkedDevicesTable.$converterrole.toJson(role),
       ),
+      'rolesCsv': serializer.toJson<String>(rolesCsv),
       'canAdd': serializer.toJson<bool>(canAdd),
+      'owedToAccountId': serializer.toJson<String?>(owedToAccountId),
+      'personDisplayName': serializer.toJson<String?>(personDisplayName),
       'removedAt': serializer.toJson<DateTime?>(removedAt),
       'erasePendingAt': serializer.toJson<DateTime?>(erasePendingAt),
       'erasedAt': serializer.toJson<DateTime?>(erasedAt),
@@ -9632,7 +9747,10 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
     String? signingIdentityId,
     String? deviceCertFingerprint,
     LinkedDeviceRole? role,
+    String? rolesCsv,
     bool? canAdd,
+    Value<String?> owedToAccountId = const Value.absent(),
+    Value<String?> personDisplayName = const Value.absent(),
     Value<DateTime?> removedAt = const Value.absent(),
     Value<DateTime?> erasePendingAt = const Value.absent(),
     Value<DateTime?> erasedAt = const Value.absent(),
@@ -9644,7 +9762,14 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
     signingIdentityId: signingIdentityId ?? this.signingIdentityId,
     deviceCertFingerprint: deviceCertFingerprint ?? this.deviceCertFingerprint,
     role: role ?? this.role,
+    rolesCsv: rolesCsv ?? this.rolesCsv,
     canAdd: canAdd ?? this.canAdd,
+    owedToAccountId: owedToAccountId.present
+        ? owedToAccountId.value
+        : this.owedToAccountId,
+    personDisplayName: personDisplayName.present
+        ? personDisplayName.value
+        : this.personDisplayName,
     removedAt: removedAt.present ? removedAt.value : this.removedAt,
     erasePendingAt: erasePendingAt.present
         ? erasePendingAt.value
@@ -9668,7 +9793,14 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
           ? data.deviceCertFingerprint.value
           : this.deviceCertFingerprint,
       role: data.role.present ? data.role.value : this.role,
+      rolesCsv: data.rolesCsv.present ? data.rolesCsv.value : this.rolesCsv,
       canAdd: data.canAdd.present ? data.canAdd.value : this.canAdd,
+      owedToAccountId: data.owedToAccountId.present
+          ? data.owedToAccountId.value
+          : this.owedToAccountId,
+      personDisplayName: data.personDisplayName.present
+          ? data.personDisplayName.value
+          : this.personDisplayName,
       removedAt: data.removedAt.present ? data.removedAt.value : this.removedAt,
       erasePendingAt: data.erasePendingAt.present
           ? data.erasePendingAt.value
@@ -9689,7 +9821,10 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
           ..write('signingIdentityId: $signingIdentityId, ')
           ..write('deviceCertFingerprint: $deviceCertFingerprint, ')
           ..write('role: $role, ')
+          ..write('rolesCsv: $rolesCsv, ')
           ..write('canAdd: $canAdd, ')
+          ..write('owedToAccountId: $owedToAccountId, ')
+          ..write('personDisplayName: $personDisplayName, ')
           ..write('removedAt: $removedAt, ')
           ..write('erasePendingAt: $erasePendingAt, ')
           ..write('erasedAt: $erasedAt, ')
@@ -9706,7 +9841,10 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
     signingIdentityId,
     deviceCertFingerprint,
     role,
+    rolesCsv,
     canAdd,
+    owedToAccountId,
+    personDisplayName,
     removedAt,
     erasePendingAt,
     erasedAt,
@@ -9722,7 +9860,10 @@ class LinkedDeviceRow extends DataClass implements Insertable<LinkedDeviceRow> {
           other.signingIdentityId == this.signingIdentityId &&
           other.deviceCertFingerprint == this.deviceCertFingerprint &&
           other.role == this.role &&
+          other.rolesCsv == this.rolesCsv &&
           other.canAdd == this.canAdd &&
+          other.owedToAccountId == this.owedToAccountId &&
+          other.personDisplayName == this.personDisplayName &&
           other.removedAt == this.removedAt &&
           other.erasePendingAt == this.erasePendingAt &&
           other.erasedAt == this.erasedAt &&
@@ -9736,7 +9877,10 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
   final Value<String> signingIdentityId;
   final Value<String> deviceCertFingerprint;
   final Value<LinkedDeviceRole> role;
+  final Value<String> rolesCsv;
   final Value<bool> canAdd;
+  final Value<String?> owedToAccountId;
+  final Value<String?> personDisplayName;
   final Value<DateTime?> removedAt;
   final Value<DateTime?> erasePendingAt;
   final Value<DateTime?> erasedAt;
@@ -9749,7 +9893,10 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
     this.signingIdentityId = const Value.absent(),
     this.deviceCertFingerprint = const Value.absent(),
     this.role = const Value.absent(),
+    this.rolesCsv = const Value.absent(),
     this.canAdd = const Value.absent(),
+    this.owedToAccountId = const Value.absent(),
+    this.personDisplayName = const Value.absent(),
     this.removedAt = const Value.absent(),
     this.erasePendingAt = const Value.absent(),
     this.erasedAt = const Value.absent(),
@@ -9763,7 +9910,10 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
     required String signingIdentityId,
     required String deviceCertFingerprint,
     required LinkedDeviceRole role,
+    this.rolesCsv = const Value.absent(),
     this.canAdd = const Value.absent(),
+    this.owedToAccountId = const Value.absent(),
+    this.personDisplayName = const Value.absent(),
     this.removedAt = const Value.absent(),
     this.erasePendingAt = const Value.absent(),
     this.erasedAt = const Value.absent(),
@@ -9781,7 +9931,10 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
     Expression<String>? signingIdentityId,
     Expression<String>? deviceCertFingerprint,
     Expression<String>? role,
+    Expression<String>? rolesCsv,
     Expression<bool>? canAdd,
+    Expression<String>? owedToAccountId,
+    Expression<String>? personDisplayName,
     Expression<DateTime>? removedAt,
     Expression<DateTime>? erasePendingAt,
     Expression<DateTime>? erasedAt,
@@ -9796,7 +9949,10 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
       if (deviceCertFingerprint != null)
         'device_cert_fingerprint': deviceCertFingerprint,
       if (role != null) 'role': role,
+      if (rolesCsv != null) 'roles_csv': rolesCsv,
       if (canAdd != null) 'can_add': canAdd,
+      if (owedToAccountId != null) 'owed_to_account_id': owedToAccountId,
+      if (personDisplayName != null) 'person_display_name': personDisplayName,
       if (removedAt != null) 'removed_at': removedAt,
       if (erasePendingAt != null) 'erase_pending_at': erasePendingAt,
       if (erasedAt != null) 'erased_at': erasedAt,
@@ -9813,7 +9969,10 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
     Value<String>? signingIdentityId,
     Value<String>? deviceCertFingerprint,
     Value<LinkedDeviceRole>? role,
+    Value<String>? rolesCsv,
     Value<bool>? canAdd,
+    Value<String?>? owedToAccountId,
+    Value<String?>? personDisplayName,
     Value<DateTime?>? removedAt,
     Value<DateTime?>? erasePendingAt,
     Value<DateTime?>? erasedAt,
@@ -9828,7 +9987,10 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
       deviceCertFingerprint:
           deviceCertFingerprint ?? this.deviceCertFingerprint,
       role: role ?? this.role,
+      rolesCsv: rolesCsv ?? this.rolesCsv,
       canAdd: canAdd ?? this.canAdd,
+      owedToAccountId: owedToAccountId ?? this.owedToAccountId,
+      personDisplayName: personDisplayName ?? this.personDisplayName,
       removedAt: removedAt ?? this.removedAt,
       erasePendingAt: erasePendingAt ?? this.erasePendingAt,
       erasedAt: erasedAt ?? this.erasedAt,
@@ -9860,8 +10022,17 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
         $LinkedDevicesTable.$converterrole.toSql(role.value),
       );
     }
+    if (rolesCsv.present) {
+      map['roles_csv'] = Variable<String>(rolesCsv.value);
+    }
     if (canAdd.present) {
       map['can_add'] = Variable<bool>(canAdd.value);
+    }
+    if (owedToAccountId.present) {
+      map['owed_to_account_id'] = Variable<String>(owedToAccountId.value);
+    }
+    if (personDisplayName.present) {
+      map['person_display_name'] = Variable<String>(personDisplayName.value);
     }
     if (removedAt.present) {
       map['removed_at'] = Variable<DateTime>(removedAt.value);
@@ -9894,7 +10065,10 @@ class LinkedDevicesCompanion extends UpdateCompanion<LinkedDeviceRow> {
           ..write('signingIdentityId: $signingIdentityId, ')
           ..write('deviceCertFingerprint: $deviceCertFingerprint, ')
           ..write('role: $role, ')
+          ..write('rolesCsv: $rolesCsv, ')
           ..write('canAdd: $canAdd, ')
+          ..write('owedToAccountId: $owedToAccountId, ')
+          ..write('personDisplayName: $personDisplayName, ')
           ..write('removedAt: $removedAt, ')
           ..write('erasePendingAt: $erasePendingAt, ')
           ..write('erasedAt: $erasedAt, ')
@@ -10933,6 +11107,18 @@ class $BooksSetMetadataTable extends BooksSetMetadata
         requiredDuringInsert: false,
         defaultValue: const Constant('en'),
       );
+  static const VerificationMeta _receiptRequiredAboveMinorMeta =
+      const VerificationMeta('receiptRequiredAboveMinor');
+  @override
+  late final GeneratedColumn<int> receiptRequiredAboveMinor =
+      GeneratedColumn<int>(
+        'receipt_required_above_minor',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: false,
+        defaultValue: const Constant(0),
+      );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -10950,6 +11136,7 @@ class $BooksSetMetadataTable extends BooksSetMetadata
     id,
     displayName,
     defaultCategoryLocale,
+    receiptRequiredAboveMinor,
     createdAt,
   ];
   @override
@@ -10989,6 +11176,15 @@ class $BooksSetMetadataTable extends BooksSetMetadata
         ),
       );
     }
+    if (data.containsKey('receipt_required_above_minor')) {
+      context.handle(
+        _receiptRequiredAboveMinorMeta,
+        receiptRequiredAboveMinor.isAcceptableOrUnknown(
+          data['receipt_required_above_minor']!,
+          _receiptRequiredAboveMinorMeta,
+        ),
+      );
+    }
     if (data.containsKey('created_at')) {
       context.handle(
         _createdAtMeta,
@@ -11016,6 +11212,10 @@ class $BooksSetMetadataTable extends BooksSetMetadata
         DriftSqlType.string,
         data['${effectivePrefix}default_category_locale'],
       )!,
+      receiptRequiredAboveMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}receipt_required_above_minor'],
+      )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -11037,11 +11237,16 @@ class BooksSetMetadataRow extends DataClass
 
   /// Default language for category names (books setting; design Decision 9).
   final String defaultCategoryLocale;
+
+  /// Company-currency amount above which a Claim Item requires a receipt.
+  /// Default 0 = always required (claim-receipts spec).
+  final int receiptRequiredAboveMinor;
   final DateTime createdAt;
   const BooksSetMetadataRow({
     required this.id,
     required this.displayName,
     required this.defaultCategoryLocale,
+    required this.receiptRequiredAboveMinor,
     required this.createdAt,
   });
   @override
@@ -11050,6 +11255,9 @@ class BooksSetMetadataRow extends DataClass
     map['id'] = Variable<String>(id);
     map['display_name'] = Variable<String>(displayName);
     map['default_category_locale'] = Variable<String>(defaultCategoryLocale);
+    map['receipt_required_above_minor'] = Variable<int>(
+      receiptRequiredAboveMinor,
+    );
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -11059,6 +11267,7 @@ class BooksSetMetadataRow extends DataClass
       id: Value(id),
       displayName: Value(displayName),
       defaultCategoryLocale: Value(defaultCategoryLocale),
+      receiptRequiredAboveMinor: Value(receiptRequiredAboveMinor),
       createdAt: Value(createdAt),
     );
   }
@@ -11074,6 +11283,9 @@ class BooksSetMetadataRow extends DataClass
       defaultCategoryLocale: serializer.fromJson<String>(
         json['defaultCategoryLocale'],
       ),
+      receiptRequiredAboveMinor: serializer.fromJson<int>(
+        json['receiptRequiredAboveMinor'],
+      ),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -11084,6 +11296,9 @@ class BooksSetMetadataRow extends DataClass
       'id': serializer.toJson<String>(id),
       'displayName': serializer.toJson<String>(displayName),
       'defaultCategoryLocale': serializer.toJson<String>(defaultCategoryLocale),
+      'receiptRequiredAboveMinor': serializer.toJson<int>(
+        receiptRequiredAboveMinor,
+      ),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -11092,11 +11307,14 @@ class BooksSetMetadataRow extends DataClass
     String? id,
     String? displayName,
     String? defaultCategoryLocale,
+    int? receiptRequiredAboveMinor,
     DateTime? createdAt,
   }) => BooksSetMetadataRow(
     id: id ?? this.id,
     displayName: displayName ?? this.displayName,
     defaultCategoryLocale: defaultCategoryLocale ?? this.defaultCategoryLocale,
+    receiptRequiredAboveMinor:
+        receiptRequiredAboveMinor ?? this.receiptRequiredAboveMinor,
     createdAt: createdAt ?? this.createdAt,
   );
   BooksSetMetadataRow copyWithCompanion(BooksSetMetadataCompanion data) {
@@ -11108,6 +11326,9 @@ class BooksSetMetadataRow extends DataClass
       defaultCategoryLocale: data.defaultCategoryLocale.present
           ? data.defaultCategoryLocale.value
           : this.defaultCategoryLocale,
+      receiptRequiredAboveMinor: data.receiptRequiredAboveMinor.present
+          ? data.receiptRequiredAboveMinor.value
+          : this.receiptRequiredAboveMinor,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
@@ -11118,14 +11339,20 @@ class BooksSetMetadataRow extends DataClass
           ..write('id: $id, ')
           ..write('displayName: $displayName, ')
           ..write('defaultCategoryLocale: $defaultCategoryLocale, ')
+          ..write('receiptRequiredAboveMinor: $receiptRequiredAboveMinor, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, displayName, defaultCategoryLocale, createdAt);
+  int get hashCode => Object.hash(
+    id,
+    displayName,
+    defaultCategoryLocale,
+    receiptRequiredAboveMinor,
+    createdAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -11133,6 +11360,7 @@ class BooksSetMetadataRow extends DataClass
           other.id == this.id &&
           other.displayName == this.displayName &&
           other.defaultCategoryLocale == this.defaultCategoryLocale &&
+          other.receiptRequiredAboveMinor == this.receiptRequiredAboveMinor &&
           other.createdAt == this.createdAt);
 }
 
@@ -11140,12 +11368,14 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
   final Value<String> id;
   final Value<String> displayName;
   final Value<String> defaultCategoryLocale;
+  final Value<int> receiptRequiredAboveMinor;
   final Value<DateTime> createdAt;
   final Value<int> rowid;
   const BooksSetMetadataCompanion({
     this.id = const Value.absent(),
     this.displayName = const Value.absent(),
     this.defaultCategoryLocale = const Value.absent(),
+    this.receiptRequiredAboveMinor = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -11153,6 +11383,7 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
     required String id,
     required String displayName,
     this.defaultCategoryLocale = const Value.absent(),
+    this.receiptRequiredAboveMinor = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -11161,6 +11392,7 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
     Expression<String>? id,
     Expression<String>? displayName,
     Expression<String>? defaultCategoryLocale,
+    Expression<int>? receiptRequiredAboveMinor,
     Expression<DateTime>? createdAt,
     Expression<int>? rowid,
   }) {
@@ -11169,6 +11401,8 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
       if (displayName != null) 'display_name': displayName,
       if (defaultCategoryLocale != null)
         'default_category_locale': defaultCategoryLocale,
+      if (receiptRequiredAboveMinor != null)
+        'receipt_required_above_minor': receiptRequiredAboveMinor,
       if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
     });
@@ -11178,6 +11412,7 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
     Value<String>? id,
     Value<String>? displayName,
     Value<String>? defaultCategoryLocale,
+    Value<int>? receiptRequiredAboveMinor,
     Value<DateTime>? createdAt,
     Value<int>? rowid,
   }) {
@@ -11186,6 +11421,8 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
       displayName: displayName ?? this.displayName,
       defaultCategoryLocale:
           defaultCategoryLocale ?? this.defaultCategoryLocale,
+      receiptRequiredAboveMinor:
+          receiptRequiredAboveMinor ?? this.receiptRequiredAboveMinor,
       createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
     );
@@ -11205,6 +11442,11 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
         defaultCategoryLocale.value,
       );
     }
+    if (receiptRequiredAboveMinor.present) {
+      map['receipt_required_above_minor'] = Variable<int>(
+        receiptRequiredAboveMinor.value,
+      );
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -11220,6 +11462,7 @@ class BooksSetMetadataCompanion extends UpdateCompanion<BooksSetMetadataRow> {
           ..write('id: $id, ')
           ..write('displayName: $displayName, ')
           ..write('defaultCategoryLocale: $defaultCategoryLocale, ')
+          ..write('receiptRequiredAboveMinor: $receiptRequiredAboveMinor, ')
           ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -12400,6 +12643,3345 @@ class PendingJoinRequestsCompanion
   }
 }
 
+class $ClaimsTable extends Claims with TableInfo<$ClaimsTable, ClaimRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClaimsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _claimantDeviceIdMeta = const VerificationMeta(
+    'claimantDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> claimantDeviceId = GeneratedColumn<String>(
+    'claimant_device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES linked_devices (device_id)',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<ClaimStatus, String> status =
+      GeneratedColumn<String>(
+        'status',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<ClaimStatus>($ClaimsTable.$converterstatus);
+  static const VerificationMeta _submittedAtMeta = const VerificationMeta(
+    'submittedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> submittedAt = GeneratedColumn<DateTime>(
+    'submitted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _paidAtMeta = const VerificationMeta('paidAt');
+  @override
+  late final GeneratedColumn<DateTime> paidAt = GeneratedColumn<DateTime>(
+    'paid_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    claimantDeviceId,
+    status,
+    submittedAt,
+    paidAt,
+    createdAt,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'claims';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClaimRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('claimant_device_id')) {
+      context.handle(
+        _claimantDeviceIdMeta,
+        claimantDeviceId.isAcceptableOrUnknown(
+          data['claimant_device_id']!,
+          _claimantDeviceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_claimantDeviceIdMeta);
+    }
+    if (data.containsKey('submitted_at')) {
+      context.handle(
+        _submittedAtMeta,
+        submittedAt.isAcceptableOrUnknown(
+          data['submitted_at']!,
+          _submittedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('paid_at')) {
+      context.handle(
+        _paidAtMeta,
+        paidAt.isAcceptableOrUnknown(data['paid_at']!, _paidAtMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ClaimRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClaimRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      claimantDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}claimant_device_id'],
+      )!,
+      status: $ClaimsTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      submittedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}submitted_at'],
+      ),
+      paidAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}paid_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ClaimsTable createAlias(String alias) {
+    return $ClaimsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<ClaimStatus, String, String> $converterstatus =
+      const EnumNameConverter<ClaimStatus>(ClaimStatus.values);
+}
+
+class ClaimRow extends DataClass implements Insertable<ClaimRow> {
+  final String id;
+  final String claimantDeviceId;
+
+  /// Cached derived status for queries; always recomputed on write paths.
+  final ClaimStatus status;
+  final DateTime? submittedAt;
+  final DateTime? paidAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const ClaimRow({
+    required this.id,
+    required this.claimantDeviceId,
+    required this.status,
+    this.submittedAt,
+    this.paidAt,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['claimant_device_id'] = Variable<String>(claimantDeviceId);
+    {
+      map['status'] = Variable<String>(
+        $ClaimsTable.$converterstatus.toSql(status),
+      );
+    }
+    if (!nullToAbsent || submittedAt != null) {
+      map['submitted_at'] = Variable<DateTime>(submittedAt);
+    }
+    if (!nullToAbsent || paidAt != null) {
+      map['paid_at'] = Variable<DateTime>(paidAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  ClaimsCompanion toCompanion(bool nullToAbsent) {
+    return ClaimsCompanion(
+      id: Value(id),
+      claimantDeviceId: Value(claimantDeviceId),
+      status: Value(status),
+      submittedAt: submittedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(submittedAt),
+      paidAt: paidAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(paidAt),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory ClaimRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClaimRow(
+      id: serializer.fromJson<String>(json['id']),
+      claimantDeviceId: serializer.fromJson<String>(json['claimantDeviceId']),
+      status: $ClaimsTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      submittedAt: serializer.fromJson<DateTime?>(json['submittedAt']),
+      paidAt: serializer.fromJson<DateTime?>(json['paidAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'claimantDeviceId': serializer.toJson<String>(claimantDeviceId),
+      'status': serializer.toJson<String>(
+        $ClaimsTable.$converterstatus.toJson(status),
+      ),
+      'submittedAt': serializer.toJson<DateTime?>(submittedAt),
+      'paidAt': serializer.toJson<DateTime?>(paidAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  ClaimRow copyWith({
+    String? id,
+    String? claimantDeviceId,
+    ClaimStatus? status,
+    Value<DateTime?> submittedAt = const Value.absent(),
+    Value<DateTime?> paidAt = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => ClaimRow(
+    id: id ?? this.id,
+    claimantDeviceId: claimantDeviceId ?? this.claimantDeviceId,
+    status: status ?? this.status,
+    submittedAt: submittedAt.present ? submittedAt.value : this.submittedAt,
+    paidAt: paidAt.present ? paidAt.value : this.paidAt,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  ClaimRow copyWithCompanion(ClaimsCompanion data) {
+    return ClaimRow(
+      id: data.id.present ? data.id.value : this.id,
+      claimantDeviceId: data.claimantDeviceId.present
+          ? data.claimantDeviceId.value
+          : this.claimantDeviceId,
+      status: data.status.present ? data.status.value : this.status,
+      submittedAt: data.submittedAt.present
+          ? data.submittedAt.value
+          : this.submittedAt,
+      paidAt: data.paidAt.present ? data.paidAt.value : this.paidAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimRow(')
+          ..write('id: $id, ')
+          ..write('claimantDeviceId: $claimantDeviceId, ')
+          ..write('status: $status, ')
+          ..write('submittedAt: $submittedAt, ')
+          ..write('paidAt: $paidAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    claimantDeviceId,
+    status,
+    submittedAt,
+    paidAt,
+    createdAt,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClaimRow &&
+          other.id == this.id &&
+          other.claimantDeviceId == this.claimantDeviceId &&
+          other.status == this.status &&
+          other.submittedAt == this.submittedAt &&
+          other.paidAt == this.paidAt &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class ClaimsCompanion extends UpdateCompanion<ClaimRow> {
+  final Value<String> id;
+  final Value<String> claimantDeviceId;
+  final Value<ClaimStatus> status;
+  final Value<DateTime?> submittedAt;
+  final Value<DateTime?> paidAt;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const ClaimsCompanion({
+    this.id = const Value.absent(),
+    this.claimantDeviceId = const Value.absent(),
+    this.status = const Value.absent(),
+    this.submittedAt = const Value.absent(),
+    this.paidAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClaimsCompanion.insert({
+    required String id,
+    required String claimantDeviceId,
+    required ClaimStatus status,
+    this.submittedAt = const Value.absent(),
+    this.paidAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       claimantDeviceId = Value(claimantDeviceId),
+       status = Value(status);
+  static Insertable<ClaimRow> custom({
+    Expression<String>? id,
+    Expression<String>? claimantDeviceId,
+    Expression<String>? status,
+    Expression<DateTime>? submittedAt,
+    Expression<DateTime>? paidAt,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (claimantDeviceId != null) 'claimant_device_id': claimantDeviceId,
+      if (status != null) 'status': status,
+      if (submittedAt != null) 'submitted_at': submittedAt,
+      if (paidAt != null) 'paid_at': paidAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClaimsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? claimantDeviceId,
+    Value<ClaimStatus>? status,
+    Value<DateTime?>? submittedAt,
+    Value<DateTime?>? paidAt,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return ClaimsCompanion(
+      id: id ?? this.id,
+      claimantDeviceId: claimantDeviceId ?? this.claimantDeviceId,
+      status: status ?? this.status,
+      submittedAt: submittedAt ?? this.submittedAt,
+      paidAt: paidAt ?? this.paidAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (claimantDeviceId.present) {
+      map['claimant_device_id'] = Variable<String>(claimantDeviceId.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $ClaimsTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (submittedAt.present) {
+      map['submitted_at'] = Variable<DateTime>(submittedAt.value);
+    }
+    if (paidAt.present) {
+      map['paid_at'] = Variable<DateTime>(paidAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimsCompanion(')
+          ..write('id: $id, ')
+          ..write('claimantDeviceId: $claimantDeviceId, ')
+          ..write('status: $status, ')
+          ..write('submittedAt: $submittedAt, ')
+          ..write('paidAt: $paidAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ClaimItemsTable extends ClaimItems
+    with TableInfo<$ClaimItemsTable, ClaimItemRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClaimItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  static const VerificationMeta _claimIdMeta = const VerificationMeta(
+    'claimId',
+  );
+  @override
+  late final GeneratedColumn<String> claimId = GeneratedColumn<String>(
+    'claim_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES claims (id)',
+    ),
+  );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<String> categoryId = GeneratedColumn<String>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES accounts (id)',
+    ),
+  );
+  static const VerificationMeta _expenseDateMeta = const VerificationMeta(
+    'expenseDate',
+  );
+  @override
+  late final GeneratedColumn<String> expenseDate = GeneratedColumn<String>(
+    'expense_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _paidCurrencyMeta = const VerificationMeta(
+    'paidCurrency',
+  );
+  @override
+  late final GeneratedColumn<String> paidCurrency = GeneratedColumn<String>(
+    'paid_currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _paidAmountMinorMeta = const VerificationMeta(
+    'paidAmountMinor',
+  );
+  @override
+  late final GeneratedColumn<int> paidAmountMinor = GeneratedColumn<int>(
+    'paid_amount_minor',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _employeeStatedRateMeta =
+      const VerificationMeta('employeeStatedRate');
+  @override
+  late final GeneratedColumn<double> employeeStatedRate =
+      GeneratedColumn<double>(
+        'employee_stated_rate',
+        aliasedName,
+        true,
+        type: DriftSqlType.double,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _rateUsedMeta = const VerificationMeta(
+    'rateUsed',
+  );
+  @override
+  late final GeneratedColumn<double> rateUsed = GeneratedColumn<double>(
+    'rate_used',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _companyCurrencyAmountMinorMeta =
+      const VerificationMeta('companyCurrencyAmountMinor');
+  @override
+  late final GeneratedColumn<int> companyCurrencyAmountMinor =
+      GeneratedColumn<int>(
+        'company_currency_amount_minor',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    claimId,
+    categoryId,
+    expenseDate,
+    description,
+    paidCurrency,
+    paidAmountMinor,
+    employeeStatedRate,
+    rateUsed,
+    companyCurrencyAmountMinor,
+    sortOrder,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'claim_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClaimItemRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('claim_id')) {
+      context.handle(
+        _claimIdMeta,
+        claimId.isAcceptableOrUnknown(data['claim_id']!, _claimIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_claimIdMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('expense_date')) {
+      context.handle(
+        _expenseDateMeta,
+        expenseDate.isAcceptableOrUnknown(
+          data['expense_date']!,
+          _expenseDateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_expenseDateMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('paid_currency')) {
+      context.handle(
+        _paidCurrencyMeta,
+        paidCurrency.isAcceptableOrUnknown(
+          data['paid_currency']!,
+          _paidCurrencyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_paidCurrencyMeta);
+    }
+    if (data.containsKey('paid_amount_minor')) {
+      context.handle(
+        _paidAmountMinorMeta,
+        paidAmountMinor.isAcceptableOrUnknown(
+          data['paid_amount_minor']!,
+          _paidAmountMinorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_paidAmountMinorMeta);
+    }
+    if (data.containsKey('employee_stated_rate')) {
+      context.handle(
+        _employeeStatedRateMeta,
+        employeeStatedRate.isAcceptableOrUnknown(
+          data['employee_stated_rate']!,
+          _employeeStatedRateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('rate_used')) {
+      context.handle(
+        _rateUsedMeta,
+        rateUsed.isAcceptableOrUnknown(data['rate_used']!, _rateUsedMeta),
+      );
+    }
+    if (data.containsKey('company_currency_amount_minor')) {
+      context.handle(
+        _companyCurrencyAmountMinorMeta,
+        companyCurrencyAmountMinor.isAcceptableOrUnknown(
+          data['company_currency_amount_minor']!,
+          _companyCurrencyAmountMinorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_companyCurrencyAmountMinorMeta);
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ClaimItemRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClaimItemRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      claimId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}claim_id'],
+      )!,
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_id'],
+      )!,
+      expenseDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}expense_date'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      paidCurrency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}paid_currency'],
+      )!,
+      paidAmountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}paid_amount_minor'],
+      )!,
+      employeeStatedRate: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}employee_stated_rate'],
+      ),
+      rateUsed: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}rate_used'],
+      ),
+      companyCurrencyAmountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}company_currency_amount_minor'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ClaimItemsTable createAlias(String alias) {
+    return $ClaimItemsTable(attachedDatabase, alias);
+  }
+}
+
+class ClaimItemRow extends DataClass implements Insertable<ClaimItemRow> {
+  final String id;
+  final String claimId;
+  final String categoryId;
+
+  /// Calendar date of the expense (YYYY-MM-DD stored as text for stability).
+  final String expenseDate;
+  final String? description;
+  final String paidCurrency;
+  final int paidAmountMinor;
+
+  /// Optional employee card-statement rate (paid → company).
+  final double? employeeStatedRate;
+  final double? rateUsed;
+  final int companyCurrencyAmountMinor;
+  final int sortOrder;
+  final DateTime createdAt;
+  const ClaimItemRow({
+    required this.id,
+    required this.claimId,
+    required this.categoryId,
+    required this.expenseDate,
+    this.description,
+    required this.paidCurrency,
+    required this.paidAmountMinor,
+    this.employeeStatedRate,
+    this.rateUsed,
+    required this.companyCurrencyAmountMinor,
+    required this.sortOrder,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['claim_id'] = Variable<String>(claimId);
+    map['category_id'] = Variable<String>(categoryId);
+    map['expense_date'] = Variable<String>(expenseDate);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['paid_currency'] = Variable<String>(paidCurrency);
+    map['paid_amount_minor'] = Variable<int>(paidAmountMinor);
+    if (!nullToAbsent || employeeStatedRate != null) {
+      map['employee_stated_rate'] = Variable<double>(employeeStatedRate);
+    }
+    if (!nullToAbsent || rateUsed != null) {
+      map['rate_used'] = Variable<double>(rateUsed);
+    }
+    map['company_currency_amount_minor'] = Variable<int>(
+      companyCurrencyAmountMinor,
+    );
+    map['sort_order'] = Variable<int>(sortOrder);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  ClaimItemsCompanion toCompanion(bool nullToAbsent) {
+    return ClaimItemsCompanion(
+      id: Value(id),
+      claimId: Value(claimId),
+      categoryId: Value(categoryId),
+      expenseDate: Value(expenseDate),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      paidCurrency: Value(paidCurrency),
+      paidAmountMinor: Value(paidAmountMinor),
+      employeeStatedRate: employeeStatedRate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(employeeStatedRate),
+      rateUsed: rateUsed == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rateUsed),
+      companyCurrencyAmountMinor: Value(companyCurrencyAmountMinor),
+      sortOrder: Value(sortOrder),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory ClaimItemRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClaimItemRow(
+      id: serializer.fromJson<String>(json['id']),
+      claimId: serializer.fromJson<String>(json['claimId']),
+      categoryId: serializer.fromJson<String>(json['categoryId']),
+      expenseDate: serializer.fromJson<String>(json['expenseDate']),
+      description: serializer.fromJson<String?>(json['description']),
+      paidCurrency: serializer.fromJson<String>(json['paidCurrency']),
+      paidAmountMinor: serializer.fromJson<int>(json['paidAmountMinor']),
+      employeeStatedRate: serializer.fromJson<double?>(
+        json['employeeStatedRate'],
+      ),
+      rateUsed: serializer.fromJson<double?>(json['rateUsed']),
+      companyCurrencyAmountMinor: serializer.fromJson<int>(
+        json['companyCurrencyAmountMinor'],
+      ),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'claimId': serializer.toJson<String>(claimId),
+      'categoryId': serializer.toJson<String>(categoryId),
+      'expenseDate': serializer.toJson<String>(expenseDate),
+      'description': serializer.toJson<String?>(description),
+      'paidCurrency': serializer.toJson<String>(paidCurrency),
+      'paidAmountMinor': serializer.toJson<int>(paidAmountMinor),
+      'employeeStatedRate': serializer.toJson<double?>(employeeStatedRate),
+      'rateUsed': serializer.toJson<double?>(rateUsed),
+      'companyCurrencyAmountMinor': serializer.toJson<int>(
+        companyCurrencyAmountMinor,
+      ),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  ClaimItemRow copyWith({
+    String? id,
+    String? claimId,
+    String? categoryId,
+    String? expenseDate,
+    Value<String?> description = const Value.absent(),
+    String? paidCurrency,
+    int? paidAmountMinor,
+    Value<double?> employeeStatedRate = const Value.absent(),
+    Value<double?> rateUsed = const Value.absent(),
+    int? companyCurrencyAmountMinor,
+    int? sortOrder,
+    DateTime? createdAt,
+  }) => ClaimItemRow(
+    id: id ?? this.id,
+    claimId: claimId ?? this.claimId,
+    categoryId: categoryId ?? this.categoryId,
+    expenseDate: expenseDate ?? this.expenseDate,
+    description: description.present ? description.value : this.description,
+    paidCurrency: paidCurrency ?? this.paidCurrency,
+    paidAmountMinor: paidAmountMinor ?? this.paidAmountMinor,
+    employeeStatedRate: employeeStatedRate.present
+        ? employeeStatedRate.value
+        : this.employeeStatedRate,
+    rateUsed: rateUsed.present ? rateUsed.value : this.rateUsed,
+    companyCurrencyAmountMinor:
+        companyCurrencyAmountMinor ?? this.companyCurrencyAmountMinor,
+    sortOrder: sortOrder ?? this.sortOrder,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  ClaimItemRow copyWithCompanion(ClaimItemsCompanion data) {
+    return ClaimItemRow(
+      id: data.id.present ? data.id.value : this.id,
+      claimId: data.claimId.present ? data.claimId.value : this.claimId,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      expenseDate: data.expenseDate.present
+          ? data.expenseDate.value
+          : this.expenseDate,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      paidCurrency: data.paidCurrency.present
+          ? data.paidCurrency.value
+          : this.paidCurrency,
+      paidAmountMinor: data.paidAmountMinor.present
+          ? data.paidAmountMinor.value
+          : this.paidAmountMinor,
+      employeeStatedRate: data.employeeStatedRate.present
+          ? data.employeeStatedRate.value
+          : this.employeeStatedRate,
+      rateUsed: data.rateUsed.present ? data.rateUsed.value : this.rateUsed,
+      companyCurrencyAmountMinor: data.companyCurrencyAmountMinor.present
+          ? data.companyCurrencyAmountMinor.value
+          : this.companyCurrencyAmountMinor,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimItemRow(')
+          ..write('id: $id, ')
+          ..write('claimId: $claimId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('expenseDate: $expenseDate, ')
+          ..write('description: $description, ')
+          ..write('paidCurrency: $paidCurrency, ')
+          ..write('paidAmountMinor: $paidAmountMinor, ')
+          ..write('employeeStatedRate: $employeeStatedRate, ')
+          ..write('rateUsed: $rateUsed, ')
+          ..write('companyCurrencyAmountMinor: $companyCurrencyAmountMinor, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    claimId,
+    categoryId,
+    expenseDate,
+    description,
+    paidCurrency,
+    paidAmountMinor,
+    employeeStatedRate,
+    rateUsed,
+    companyCurrencyAmountMinor,
+    sortOrder,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClaimItemRow &&
+          other.id == this.id &&
+          other.claimId == this.claimId &&
+          other.categoryId == this.categoryId &&
+          other.expenseDate == this.expenseDate &&
+          other.description == this.description &&
+          other.paidCurrency == this.paidCurrency &&
+          other.paidAmountMinor == this.paidAmountMinor &&
+          other.employeeStatedRate == this.employeeStatedRate &&
+          other.rateUsed == this.rateUsed &&
+          other.companyCurrencyAmountMinor == this.companyCurrencyAmountMinor &&
+          other.sortOrder == this.sortOrder &&
+          other.createdAt == this.createdAt);
+}
+
+class ClaimItemsCompanion extends UpdateCompanion<ClaimItemRow> {
+  final Value<String> id;
+  final Value<String> claimId;
+  final Value<String> categoryId;
+  final Value<String> expenseDate;
+  final Value<String?> description;
+  final Value<String> paidCurrency;
+  final Value<int> paidAmountMinor;
+  final Value<double?> employeeStatedRate;
+  final Value<double?> rateUsed;
+  final Value<int> companyCurrencyAmountMinor;
+  final Value<int> sortOrder;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const ClaimItemsCompanion({
+    this.id = const Value.absent(),
+    this.claimId = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.expenseDate = const Value.absent(),
+    this.description = const Value.absent(),
+    this.paidCurrency = const Value.absent(),
+    this.paidAmountMinor = const Value.absent(),
+    this.employeeStatedRate = const Value.absent(),
+    this.rateUsed = const Value.absent(),
+    this.companyCurrencyAmountMinor = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClaimItemsCompanion.insert({
+    this.id = const Value.absent(),
+    required String claimId,
+    required String categoryId,
+    required String expenseDate,
+    this.description = const Value.absent(),
+    required String paidCurrency,
+    required int paidAmountMinor,
+    this.employeeStatedRate = const Value.absent(),
+    this.rateUsed = const Value.absent(),
+    required int companyCurrencyAmountMinor,
+    this.sortOrder = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : claimId = Value(claimId),
+       categoryId = Value(categoryId),
+       expenseDate = Value(expenseDate),
+       paidCurrency = Value(paidCurrency),
+       paidAmountMinor = Value(paidAmountMinor),
+       companyCurrencyAmountMinor = Value(companyCurrencyAmountMinor);
+  static Insertable<ClaimItemRow> custom({
+    Expression<String>? id,
+    Expression<String>? claimId,
+    Expression<String>? categoryId,
+    Expression<String>? expenseDate,
+    Expression<String>? description,
+    Expression<String>? paidCurrency,
+    Expression<int>? paidAmountMinor,
+    Expression<double>? employeeStatedRate,
+    Expression<double>? rateUsed,
+    Expression<int>? companyCurrencyAmountMinor,
+    Expression<int>? sortOrder,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (claimId != null) 'claim_id': claimId,
+      if (categoryId != null) 'category_id': categoryId,
+      if (expenseDate != null) 'expense_date': expenseDate,
+      if (description != null) 'description': description,
+      if (paidCurrency != null) 'paid_currency': paidCurrency,
+      if (paidAmountMinor != null) 'paid_amount_minor': paidAmountMinor,
+      if (employeeStatedRate != null)
+        'employee_stated_rate': employeeStatedRate,
+      if (rateUsed != null) 'rate_used': rateUsed,
+      if (companyCurrencyAmountMinor != null)
+        'company_currency_amount_minor': companyCurrencyAmountMinor,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClaimItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? claimId,
+    Value<String>? categoryId,
+    Value<String>? expenseDate,
+    Value<String?>? description,
+    Value<String>? paidCurrency,
+    Value<int>? paidAmountMinor,
+    Value<double?>? employeeStatedRate,
+    Value<double?>? rateUsed,
+    Value<int>? companyCurrencyAmountMinor,
+    Value<int>? sortOrder,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return ClaimItemsCompanion(
+      id: id ?? this.id,
+      claimId: claimId ?? this.claimId,
+      categoryId: categoryId ?? this.categoryId,
+      expenseDate: expenseDate ?? this.expenseDate,
+      description: description ?? this.description,
+      paidCurrency: paidCurrency ?? this.paidCurrency,
+      paidAmountMinor: paidAmountMinor ?? this.paidAmountMinor,
+      employeeStatedRate: employeeStatedRate ?? this.employeeStatedRate,
+      rateUsed: rateUsed ?? this.rateUsed,
+      companyCurrencyAmountMinor:
+          companyCurrencyAmountMinor ?? this.companyCurrencyAmountMinor,
+      sortOrder: sortOrder ?? this.sortOrder,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (claimId.present) {
+      map['claim_id'] = Variable<String>(claimId.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<String>(categoryId.value);
+    }
+    if (expenseDate.present) {
+      map['expense_date'] = Variable<String>(expenseDate.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (paidCurrency.present) {
+      map['paid_currency'] = Variable<String>(paidCurrency.value);
+    }
+    if (paidAmountMinor.present) {
+      map['paid_amount_minor'] = Variable<int>(paidAmountMinor.value);
+    }
+    if (employeeStatedRate.present) {
+      map['employee_stated_rate'] = Variable<double>(employeeStatedRate.value);
+    }
+    if (rateUsed.present) {
+      map['rate_used'] = Variable<double>(rateUsed.value);
+    }
+    if (companyCurrencyAmountMinor.present) {
+      map['company_currency_amount_minor'] = Variable<int>(
+        companyCurrencyAmountMinor.value,
+      );
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('claimId: $claimId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('expenseDate: $expenseDate, ')
+          ..write('description: $description, ')
+          ..write('paidCurrency: $paidCurrency, ')
+          ..write('paidAmountMinor: $paidAmountMinor, ')
+          ..write('employeeStatedRate: $employeeStatedRate, ')
+          ..write('rateUsed: $rateUsed, ')
+          ..write('companyCurrencyAmountMinor: $companyCurrencyAmountMinor, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ClaimItemDecisionsTable extends ClaimItemDecisions
+    with TableInfo<$ClaimItemDecisionsTable, ClaimItemDecisionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClaimItemDecisionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  static const VerificationMeta _claimItemIdMeta = const VerificationMeta(
+    'claimItemId',
+  );
+  @override
+  late final GeneratedColumn<String> claimItemId = GeneratedColumn<String>(
+    'claim_item_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES claim_items (id)',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<ClaimItemDecisionKind, String>
+  kind =
+      GeneratedColumn<String>(
+        'kind',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<ClaimItemDecisionKind>(
+        $ClaimItemDecisionsTable.$converterkind,
+      );
+  static const VerificationMeta _approvedAmountMinorMeta =
+      const VerificationMeta('approvedAmountMinor');
+  @override
+  late final GeneratedColumn<int> approvedAmountMinor = GeneratedColumn<int>(
+    'approved_amount_minor',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _reasonMeta = const VerificationMeta('reason');
+  @override
+  late final GeneratedColumn<String> reason = GeneratedColumn<String>(
+    'reason',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _decidedByDeviceIdMeta = const VerificationMeta(
+    'decidedByDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> decidedByDeviceId =
+      GeneratedColumn<String>(
+        'decided_by_device_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES linked_devices (device_id)',
+        ),
+      );
+  static const VerificationMeta _decidedAtMeta = const VerificationMeta(
+    'decidedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> decidedAt = GeneratedColumn<DateTime>(
+    'decided_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _postedEntryIdMeta = const VerificationMeta(
+    'postedEntryId',
+  );
+  @override
+  late final GeneratedColumn<String> postedEntryId = GeneratedColumn<String>(
+    'posted_entry_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES journal_entries (id)',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    claimItemId,
+    kind,
+    approvedAmountMinor,
+    reason,
+    decidedByDeviceId,
+    decidedAt,
+    postedEntryId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'claim_item_decisions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClaimItemDecisionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('claim_item_id')) {
+      context.handle(
+        _claimItemIdMeta,
+        claimItemId.isAcceptableOrUnknown(
+          data['claim_item_id']!,
+          _claimItemIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_claimItemIdMeta);
+    }
+    if (data.containsKey('approved_amount_minor')) {
+      context.handle(
+        _approvedAmountMinorMeta,
+        approvedAmountMinor.isAcceptableOrUnknown(
+          data['approved_amount_minor']!,
+          _approvedAmountMinorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('reason')) {
+      context.handle(
+        _reasonMeta,
+        reason.isAcceptableOrUnknown(data['reason']!, _reasonMeta),
+      );
+    }
+    if (data.containsKey('decided_by_device_id')) {
+      context.handle(
+        _decidedByDeviceIdMeta,
+        decidedByDeviceId.isAcceptableOrUnknown(
+          data['decided_by_device_id']!,
+          _decidedByDeviceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_decidedByDeviceIdMeta);
+    }
+    if (data.containsKey('decided_at')) {
+      context.handle(
+        _decidedAtMeta,
+        decidedAt.isAcceptableOrUnknown(data['decided_at']!, _decidedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_decidedAtMeta);
+    }
+    if (data.containsKey('posted_entry_id')) {
+      context.handle(
+        _postedEntryIdMeta,
+        postedEntryId.isAcceptableOrUnknown(
+          data['posted_entry_id']!,
+          _postedEntryIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ClaimItemDecisionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClaimItemDecisionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      claimItemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}claim_item_id'],
+      )!,
+      kind: $ClaimItemDecisionsTable.$converterkind.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}kind'],
+        )!,
+      ),
+      approvedAmountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}approved_amount_minor'],
+      ),
+      reason: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reason'],
+      ),
+      decidedByDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}decided_by_device_id'],
+      )!,
+      decidedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}decided_at'],
+      )!,
+      postedEntryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}posted_entry_id'],
+      ),
+    );
+  }
+
+  @override
+  $ClaimItemDecisionsTable createAlias(String alias) {
+    return $ClaimItemDecisionsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<ClaimItemDecisionKind, String, String>
+  $converterkind = const EnumNameConverter<ClaimItemDecisionKind>(
+    ClaimItemDecisionKind.values,
+  );
+}
+
+class ClaimItemDecisionRow extends DataClass
+    implements Insertable<ClaimItemDecisionRow> {
+  final String id;
+  final String claimItemId;
+  final ClaimItemDecisionKind kind;
+  final int? approvedAmountMinor;
+  final String? reason;
+  final String decidedByDeviceId;
+  final DateTime decidedAt;
+  final String? postedEntryId;
+  const ClaimItemDecisionRow({
+    required this.id,
+    required this.claimItemId,
+    required this.kind,
+    this.approvedAmountMinor,
+    this.reason,
+    required this.decidedByDeviceId,
+    required this.decidedAt,
+    this.postedEntryId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['claim_item_id'] = Variable<String>(claimItemId);
+    {
+      map['kind'] = Variable<String>(
+        $ClaimItemDecisionsTable.$converterkind.toSql(kind),
+      );
+    }
+    if (!nullToAbsent || approvedAmountMinor != null) {
+      map['approved_amount_minor'] = Variable<int>(approvedAmountMinor);
+    }
+    if (!nullToAbsent || reason != null) {
+      map['reason'] = Variable<String>(reason);
+    }
+    map['decided_by_device_id'] = Variable<String>(decidedByDeviceId);
+    map['decided_at'] = Variable<DateTime>(decidedAt);
+    if (!nullToAbsent || postedEntryId != null) {
+      map['posted_entry_id'] = Variable<String>(postedEntryId);
+    }
+    return map;
+  }
+
+  ClaimItemDecisionsCompanion toCompanion(bool nullToAbsent) {
+    return ClaimItemDecisionsCompanion(
+      id: Value(id),
+      claimItemId: Value(claimItemId),
+      kind: Value(kind),
+      approvedAmountMinor: approvedAmountMinor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(approvedAmountMinor),
+      reason: reason == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reason),
+      decidedByDeviceId: Value(decidedByDeviceId),
+      decidedAt: Value(decidedAt),
+      postedEntryId: postedEntryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(postedEntryId),
+    );
+  }
+
+  factory ClaimItemDecisionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClaimItemDecisionRow(
+      id: serializer.fromJson<String>(json['id']),
+      claimItemId: serializer.fromJson<String>(json['claimItemId']),
+      kind: $ClaimItemDecisionsTable.$converterkind.fromJson(
+        serializer.fromJson<String>(json['kind']),
+      ),
+      approvedAmountMinor: serializer.fromJson<int?>(
+        json['approvedAmountMinor'],
+      ),
+      reason: serializer.fromJson<String?>(json['reason']),
+      decidedByDeviceId: serializer.fromJson<String>(json['decidedByDeviceId']),
+      decidedAt: serializer.fromJson<DateTime>(json['decidedAt']),
+      postedEntryId: serializer.fromJson<String?>(json['postedEntryId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'claimItemId': serializer.toJson<String>(claimItemId),
+      'kind': serializer.toJson<String>(
+        $ClaimItemDecisionsTable.$converterkind.toJson(kind),
+      ),
+      'approvedAmountMinor': serializer.toJson<int?>(approvedAmountMinor),
+      'reason': serializer.toJson<String?>(reason),
+      'decidedByDeviceId': serializer.toJson<String>(decidedByDeviceId),
+      'decidedAt': serializer.toJson<DateTime>(decidedAt),
+      'postedEntryId': serializer.toJson<String?>(postedEntryId),
+    };
+  }
+
+  ClaimItemDecisionRow copyWith({
+    String? id,
+    String? claimItemId,
+    ClaimItemDecisionKind? kind,
+    Value<int?> approvedAmountMinor = const Value.absent(),
+    Value<String?> reason = const Value.absent(),
+    String? decidedByDeviceId,
+    DateTime? decidedAt,
+    Value<String?> postedEntryId = const Value.absent(),
+  }) => ClaimItemDecisionRow(
+    id: id ?? this.id,
+    claimItemId: claimItemId ?? this.claimItemId,
+    kind: kind ?? this.kind,
+    approvedAmountMinor: approvedAmountMinor.present
+        ? approvedAmountMinor.value
+        : this.approvedAmountMinor,
+    reason: reason.present ? reason.value : this.reason,
+    decidedByDeviceId: decidedByDeviceId ?? this.decidedByDeviceId,
+    decidedAt: decidedAt ?? this.decidedAt,
+    postedEntryId: postedEntryId.present
+        ? postedEntryId.value
+        : this.postedEntryId,
+  );
+  ClaimItemDecisionRow copyWithCompanion(ClaimItemDecisionsCompanion data) {
+    return ClaimItemDecisionRow(
+      id: data.id.present ? data.id.value : this.id,
+      claimItemId: data.claimItemId.present
+          ? data.claimItemId.value
+          : this.claimItemId,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      approvedAmountMinor: data.approvedAmountMinor.present
+          ? data.approvedAmountMinor.value
+          : this.approvedAmountMinor,
+      reason: data.reason.present ? data.reason.value : this.reason,
+      decidedByDeviceId: data.decidedByDeviceId.present
+          ? data.decidedByDeviceId.value
+          : this.decidedByDeviceId,
+      decidedAt: data.decidedAt.present ? data.decidedAt.value : this.decidedAt,
+      postedEntryId: data.postedEntryId.present
+          ? data.postedEntryId.value
+          : this.postedEntryId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimItemDecisionRow(')
+          ..write('id: $id, ')
+          ..write('claimItemId: $claimItemId, ')
+          ..write('kind: $kind, ')
+          ..write('approvedAmountMinor: $approvedAmountMinor, ')
+          ..write('reason: $reason, ')
+          ..write('decidedByDeviceId: $decidedByDeviceId, ')
+          ..write('decidedAt: $decidedAt, ')
+          ..write('postedEntryId: $postedEntryId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    claimItemId,
+    kind,
+    approvedAmountMinor,
+    reason,
+    decidedByDeviceId,
+    decidedAt,
+    postedEntryId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClaimItemDecisionRow &&
+          other.id == this.id &&
+          other.claimItemId == this.claimItemId &&
+          other.kind == this.kind &&
+          other.approvedAmountMinor == this.approvedAmountMinor &&
+          other.reason == this.reason &&
+          other.decidedByDeviceId == this.decidedByDeviceId &&
+          other.decidedAt == this.decidedAt &&
+          other.postedEntryId == this.postedEntryId);
+}
+
+class ClaimItemDecisionsCompanion
+    extends UpdateCompanion<ClaimItemDecisionRow> {
+  final Value<String> id;
+  final Value<String> claimItemId;
+  final Value<ClaimItemDecisionKind> kind;
+  final Value<int?> approvedAmountMinor;
+  final Value<String?> reason;
+  final Value<String> decidedByDeviceId;
+  final Value<DateTime> decidedAt;
+  final Value<String?> postedEntryId;
+  final Value<int> rowid;
+  const ClaimItemDecisionsCompanion({
+    this.id = const Value.absent(),
+    this.claimItemId = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.approvedAmountMinor = const Value.absent(),
+    this.reason = const Value.absent(),
+    this.decidedByDeviceId = const Value.absent(),
+    this.decidedAt = const Value.absent(),
+    this.postedEntryId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClaimItemDecisionsCompanion.insert({
+    this.id = const Value.absent(),
+    required String claimItemId,
+    required ClaimItemDecisionKind kind,
+    this.approvedAmountMinor = const Value.absent(),
+    this.reason = const Value.absent(),
+    required String decidedByDeviceId,
+    required DateTime decidedAt,
+    this.postedEntryId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : claimItemId = Value(claimItemId),
+       kind = Value(kind),
+       decidedByDeviceId = Value(decidedByDeviceId),
+       decidedAt = Value(decidedAt);
+  static Insertable<ClaimItemDecisionRow> custom({
+    Expression<String>? id,
+    Expression<String>? claimItemId,
+    Expression<String>? kind,
+    Expression<int>? approvedAmountMinor,
+    Expression<String>? reason,
+    Expression<String>? decidedByDeviceId,
+    Expression<DateTime>? decidedAt,
+    Expression<String>? postedEntryId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (claimItemId != null) 'claim_item_id': claimItemId,
+      if (kind != null) 'kind': kind,
+      if (approvedAmountMinor != null)
+        'approved_amount_minor': approvedAmountMinor,
+      if (reason != null) 'reason': reason,
+      if (decidedByDeviceId != null) 'decided_by_device_id': decidedByDeviceId,
+      if (decidedAt != null) 'decided_at': decidedAt,
+      if (postedEntryId != null) 'posted_entry_id': postedEntryId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClaimItemDecisionsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? claimItemId,
+    Value<ClaimItemDecisionKind>? kind,
+    Value<int?>? approvedAmountMinor,
+    Value<String?>? reason,
+    Value<String>? decidedByDeviceId,
+    Value<DateTime>? decidedAt,
+    Value<String?>? postedEntryId,
+    Value<int>? rowid,
+  }) {
+    return ClaimItemDecisionsCompanion(
+      id: id ?? this.id,
+      claimItemId: claimItemId ?? this.claimItemId,
+      kind: kind ?? this.kind,
+      approvedAmountMinor: approvedAmountMinor ?? this.approvedAmountMinor,
+      reason: reason ?? this.reason,
+      decidedByDeviceId: decidedByDeviceId ?? this.decidedByDeviceId,
+      decidedAt: decidedAt ?? this.decidedAt,
+      postedEntryId: postedEntryId ?? this.postedEntryId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (claimItemId.present) {
+      map['claim_item_id'] = Variable<String>(claimItemId.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(
+        $ClaimItemDecisionsTable.$converterkind.toSql(kind.value),
+      );
+    }
+    if (approvedAmountMinor.present) {
+      map['approved_amount_minor'] = Variable<int>(approvedAmountMinor.value);
+    }
+    if (reason.present) {
+      map['reason'] = Variable<String>(reason.value);
+    }
+    if (decidedByDeviceId.present) {
+      map['decided_by_device_id'] = Variable<String>(decidedByDeviceId.value);
+    }
+    if (decidedAt.present) {
+      map['decided_at'] = Variable<DateTime>(decidedAt.value);
+    }
+    if (postedEntryId.present) {
+      map['posted_entry_id'] = Variable<String>(postedEntryId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimItemDecisionsCompanion(')
+          ..write('id: $id, ')
+          ..write('claimItemId: $claimItemId, ')
+          ..write('kind: $kind, ')
+          ..write('approvedAmountMinor: $approvedAmountMinor, ')
+          ..write('reason: $reason, ')
+          ..write('decidedByDeviceId: $decidedByDeviceId, ')
+          ..write('decidedAt: $decidedAt, ')
+          ..write('postedEntryId: $postedEntryId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ClaimReceiptsTable extends ClaimReceipts
+    with TableInfo<$ClaimReceiptsTable, ClaimReceiptRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClaimReceiptsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  static const VerificationMeta _claimItemIdMeta = const VerificationMeta(
+    'claimItemId',
+  );
+  @override
+  late final GeneratedColumn<String> claimItemId = GeneratedColumn<String>(
+    'claim_item_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES claim_items (id)',
+    ),
+  );
+  static const VerificationMeta _contentTypeMeta = const VerificationMeta(
+    'contentType',
+  );
+  @override
+  late final GeneratedColumn<String> contentType = GeneratedColumn<String>(
+    'content_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fileNameMeta = const VerificationMeta(
+    'fileName',
+  );
+  @override
+  late final GeneratedColumn<String> fileName = GeneratedColumn<String>(
+    'file_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _byteSizeMeta = const VerificationMeta(
+    'byteSize',
+  );
+  @override
+  late final GeneratedColumn<int> byteSize = GeneratedColumn<int>(
+    'byte_size',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _contentHashMeta = const VerificationMeta(
+    'contentHash',
+  );
+  @override
+  late final GeneratedColumn<String> contentHash = GeneratedColumn<String>(
+    'content_hash',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    claimItemId,
+    contentType,
+    fileName,
+    byteSize,
+    contentHash,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'claim_receipts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClaimReceiptRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('claim_item_id')) {
+      context.handle(
+        _claimItemIdMeta,
+        claimItemId.isAcceptableOrUnknown(
+          data['claim_item_id']!,
+          _claimItemIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_claimItemIdMeta);
+    }
+    if (data.containsKey('content_type')) {
+      context.handle(
+        _contentTypeMeta,
+        contentType.isAcceptableOrUnknown(
+          data['content_type']!,
+          _contentTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_contentTypeMeta);
+    }
+    if (data.containsKey('file_name')) {
+      context.handle(
+        _fileNameMeta,
+        fileName.isAcceptableOrUnknown(data['file_name']!, _fileNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fileNameMeta);
+    }
+    if (data.containsKey('byte_size')) {
+      context.handle(
+        _byteSizeMeta,
+        byteSize.isAcceptableOrUnknown(data['byte_size']!, _byteSizeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_byteSizeMeta);
+    }
+    if (data.containsKey('content_hash')) {
+      context.handle(
+        _contentHashMeta,
+        contentHash.isAcceptableOrUnknown(
+          data['content_hash']!,
+          _contentHashMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_contentHashMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ClaimReceiptRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClaimReceiptRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      claimItemId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}claim_item_id'],
+      )!,
+      contentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}content_type'],
+      )!,
+      fileName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}file_name'],
+      )!,
+      byteSize: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}byte_size'],
+      )!,
+      contentHash: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}content_hash'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ClaimReceiptsTable createAlias(String alias) {
+    return $ClaimReceiptsTable(attachedDatabase, alias);
+  }
+}
+
+class ClaimReceiptRow extends DataClass implements Insertable<ClaimReceiptRow> {
+  final String id;
+  final String claimItemId;
+  final String contentType;
+  final String fileName;
+  final int byteSize;
+  final String contentHash;
+  final DateTime createdAt;
+  const ClaimReceiptRow({
+    required this.id,
+    required this.claimItemId,
+    required this.contentType,
+    required this.fileName,
+    required this.byteSize,
+    required this.contentHash,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['claim_item_id'] = Variable<String>(claimItemId);
+    map['content_type'] = Variable<String>(contentType);
+    map['file_name'] = Variable<String>(fileName);
+    map['byte_size'] = Variable<int>(byteSize);
+    map['content_hash'] = Variable<String>(contentHash);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  ClaimReceiptsCompanion toCompanion(bool nullToAbsent) {
+    return ClaimReceiptsCompanion(
+      id: Value(id),
+      claimItemId: Value(claimItemId),
+      contentType: Value(contentType),
+      fileName: Value(fileName),
+      byteSize: Value(byteSize),
+      contentHash: Value(contentHash),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory ClaimReceiptRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClaimReceiptRow(
+      id: serializer.fromJson<String>(json['id']),
+      claimItemId: serializer.fromJson<String>(json['claimItemId']),
+      contentType: serializer.fromJson<String>(json['contentType']),
+      fileName: serializer.fromJson<String>(json['fileName']),
+      byteSize: serializer.fromJson<int>(json['byteSize']),
+      contentHash: serializer.fromJson<String>(json['contentHash']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'claimItemId': serializer.toJson<String>(claimItemId),
+      'contentType': serializer.toJson<String>(contentType),
+      'fileName': serializer.toJson<String>(fileName),
+      'byteSize': serializer.toJson<int>(byteSize),
+      'contentHash': serializer.toJson<String>(contentHash),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  ClaimReceiptRow copyWith({
+    String? id,
+    String? claimItemId,
+    String? contentType,
+    String? fileName,
+    int? byteSize,
+    String? contentHash,
+    DateTime? createdAt,
+  }) => ClaimReceiptRow(
+    id: id ?? this.id,
+    claimItemId: claimItemId ?? this.claimItemId,
+    contentType: contentType ?? this.contentType,
+    fileName: fileName ?? this.fileName,
+    byteSize: byteSize ?? this.byteSize,
+    contentHash: contentHash ?? this.contentHash,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  ClaimReceiptRow copyWithCompanion(ClaimReceiptsCompanion data) {
+    return ClaimReceiptRow(
+      id: data.id.present ? data.id.value : this.id,
+      claimItemId: data.claimItemId.present
+          ? data.claimItemId.value
+          : this.claimItemId,
+      contentType: data.contentType.present
+          ? data.contentType.value
+          : this.contentType,
+      fileName: data.fileName.present ? data.fileName.value : this.fileName,
+      byteSize: data.byteSize.present ? data.byteSize.value : this.byteSize,
+      contentHash: data.contentHash.present
+          ? data.contentHash.value
+          : this.contentHash,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimReceiptRow(')
+          ..write('id: $id, ')
+          ..write('claimItemId: $claimItemId, ')
+          ..write('contentType: $contentType, ')
+          ..write('fileName: $fileName, ')
+          ..write('byteSize: $byteSize, ')
+          ..write('contentHash: $contentHash, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    claimItemId,
+    contentType,
+    fileName,
+    byteSize,
+    contentHash,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClaimReceiptRow &&
+          other.id == this.id &&
+          other.claimItemId == this.claimItemId &&
+          other.contentType == this.contentType &&
+          other.fileName == this.fileName &&
+          other.byteSize == this.byteSize &&
+          other.contentHash == this.contentHash &&
+          other.createdAt == this.createdAt);
+}
+
+class ClaimReceiptsCompanion extends UpdateCompanion<ClaimReceiptRow> {
+  final Value<String> id;
+  final Value<String> claimItemId;
+  final Value<String> contentType;
+  final Value<String> fileName;
+  final Value<int> byteSize;
+  final Value<String> contentHash;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const ClaimReceiptsCompanion({
+    this.id = const Value.absent(),
+    this.claimItemId = const Value.absent(),
+    this.contentType = const Value.absent(),
+    this.fileName = const Value.absent(),
+    this.byteSize = const Value.absent(),
+    this.contentHash = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClaimReceiptsCompanion.insert({
+    this.id = const Value.absent(),
+    required String claimItemId,
+    required String contentType,
+    required String fileName,
+    required int byteSize,
+    required String contentHash,
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : claimItemId = Value(claimItemId),
+       contentType = Value(contentType),
+       fileName = Value(fileName),
+       byteSize = Value(byteSize),
+       contentHash = Value(contentHash);
+  static Insertable<ClaimReceiptRow> custom({
+    Expression<String>? id,
+    Expression<String>? claimItemId,
+    Expression<String>? contentType,
+    Expression<String>? fileName,
+    Expression<int>? byteSize,
+    Expression<String>? contentHash,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (claimItemId != null) 'claim_item_id': claimItemId,
+      if (contentType != null) 'content_type': contentType,
+      if (fileName != null) 'file_name': fileName,
+      if (byteSize != null) 'byte_size': byteSize,
+      if (contentHash != null) 'content_hash': contentHash,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClaimReceiptsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? claimItemId,
+    Value<String>? contentType,
+    Value<String>? fileName,
+    Value<int>? byteSize,
+    Value<String>? contentHash,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return ClaimReceiptsCompanion(
+      id: id ?? this.id,
+      claimItemId: claimItemId ?? this.claimItemId,
+      contentType: contentType ?? this.contentType,
+      fileName: fileName ?? this.fileName,
+      byteSize: byteSize ?? this.byteSize,
+      contentHash: contentHash ?? this.contentHash,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (claimItemId.present) {
+      map['claim_item_id'] = Variable<String>(claimItemId.value);
+    }
+    if (contentType.present) {
+      map['content_type'] = Variable<String>(contentType.value);
+    }
+    if (fileName.present) {
+      map['file_name'] = Variable<String>(fileName.value);
+    }
+    if (byteSize.present) {
+      map['byte_size'] = Variable<int>(byteSize.value);
+    }
+    if (contentHash.present) {
+      map['content_hash'] = Variable<String>(contentHash.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimReceiptsCompanion(')
+          ..write('id: $id, ')
+          ..write('claimItemId: $claimItemId, ')
+          ..write('contentType: $contentType, ')
+          ..write('fileName: $fileName, ')
+          ..write('byteSize: $byteSize, ')
+          ..write('contentHash: $contentHash, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ClaimAdvancesTable extends ClaimAdvances
+    with TableInfo<$ClaimAdvancesTable, ClaimAdvanceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClaimAdvancesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => const Uuid().v4(),
+  );
+  static const VerificationMeta _claimantDeviceIdMeta = const VerificationMeta(
+    'claimantDeviceId',
+  );
+  @override
+  late final GeneratedColumn<String> claimantDeviceId = GeneratedColumn<String>(
+    'claimant_device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES linked_devices (device_id)',
+    ),
+  );
+  static const VerificationMeta _amountMinorMeta = const VerificationMeta(
+    'amountMinor',
+  );
+  @override
+  late final GeneratedColumn<int> amountMinor = GeneratedColumn<int>(
+    'amount_minor',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _paidFromAccountIdMeta = const VerificationMeta(
+    'paidFromAccountId',
+  );
+  @override
+  late final GeneratedColumn<String> paidFromAccountId =
+      GeneratedColumn<String>(
+        'paid_from_account_id',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES accounts (id)',
+        ),
+      );
+  static const VerificationMeta _postedEntryIdMeta = const VerificationMeta(
+    'postedEntryId',
+  );
+  @override
+  late final GeneratedColumn<String> postedEntryId = GeneratedColumn<String>(
+    'posted_entry_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES journal_entries (id)',
+    ),
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _recordedAtMeta = const VerificationMeta(
+    'recordedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> recordedAt = GeneratedColumn<DateTime>(
+    'recorded_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    claimantDeviceId,
+    amountMinor,
+    paidFromAccountId,
+    postedEntryId,
+    description,
+    recordedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'claim_advances';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClaimAdvanceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('claimant_device_id')) {
+      context.handle(
+        _claimantDeviceIdMeta,
+        claimantDeviceId.isAcceptableOrUnknown(
+          data['claimant_device_id']!,
+          _claimantDeviceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_claimantDeviceIdMeta);
+    }
+    if (data.containsKey('amount_minor')) {
+      context.handle(
+        _amountMinorMeta,
+        amountMinor.isAcceptableOrUnknown(
+          data['amount_minor']!,
+          _amountMinorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_amountMinorMeta);
+    }
+    if (data.containsKey('paid_from_account_id')) {
+      context.handle(
+        _paidFromAccountIdMeta,
+        paidFromAccountId.isAcceptableOrUnknown(
+          data['paid_from_account_id']!,
+          _paidFromAccountIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_paidFromAccountIdMeta);
+    }
+    if (data.containsKey('posted_entry_id')) {
+      context.handle(
+        _postedEntryIdMeta,
+        postedEntryId.isAcceptableOrUnknown(
+          data['posted_entry_id']!,
+          _postedEntryIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_postedEntryIdMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('recorded_at')) {
+      context.handle(
+        _recordedAtMeta,
+        recordedAt.isAcceptableOrUnknown(data['recorded_at']!, _recordedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ClaimAdvanceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClaimAdvanceRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      claimantDeviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}claimant_device_id'],
+      )!,
+      amountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_minor'],
+      )!,
+      paidFromAccountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}paid_from_account_id'],
+      )!,
+      postedEntryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}posted_entry_id'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      recordedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}recorded_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ClaimAdvancesTable createAlias(String alias) {
+    return $ClaimAdvancesTable(attachedDatabase, alias);
+  }
+}
+
+class ClaimAdvanceRow extends DataClass implements Insertable<ClaimAdvanceRow> {
+  final String id;
+  final String claimantDeviceId;
+  final int amountMinor;
+  final String paidFromAccountId;
+  final String postedEntryId;
+  final String? description;
+  final DateTime recordedAt;
+  const ClaimAdvanceRow({
+    required this.id,
+    required this.claimantDeviceId,
+    required this.amountMinor,
+    required this.paidFromAccountId,
+    required this.postedEntryId,
+    this.description,
+    required this.recordedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['claimant_device_id'] = Variable<String>(claimantDeviceId);
+    map['amount_minor'] = Variable<int>(amountMinor);
+    map['paid_from_account_id'] = Variable<String>(paidFromAccountId);
+    map['posted_entry_id'] = Variable<String>(postedEntryId);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['recorded_at'] = Variable<DateTime>(recordedAt);
+    return map;
+  }
+
+  ClaimAdvancesCompanion toCompanion(bool nullToAbsent) {
+    return ClaimAdvancesCompanion(
+      id: Value(id),
+      claimantDeviceId: Value(claimantDeviceId),
+      amountMinor: Value(amountMinor),
+      paidFromAccountId: Value(paidFromAccountId),
+      postedEntryId: Value(postedEntryId),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      recordedAt: Value(recordedAt),
+    );
+  }
+
+  factory ClaimAdvanceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClaimAdvanceRow(
+      id: serializer.fromJson<String>(json['id']),
+      claimantDeviceId: serializer.fromJson<String>(json['claimantDeviceId']),
+      amountMinor: serializer.fromJson<int>(json['amountMinor']),
+      paidFromAccountId: serializer.fromJson<String>(json['paidFromAccountId']),
+      postedEntryId: serializer.fromJson<String>(json['postedEntryId']),
+      description: serializer.fromJson<String?>(json['description']),
+      recordedAt: serializer.fromJson<DateTime>(json['recordedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'claimantDeviceId': serializer.toJson<String>(claimantDeviceId),
+      'amountMinor': serializer.toJson<int>(amountMinor),
+      'paidFromAccountId': serializer.toJson<String>(paidFromAccountId),
+      'postedEntryId': serializer.toJson<String>(postedEntryId),
+      'description': serializer.toJson<String?>(description),
+      'recordedAt': serializer.toJson<DateTime>(recordedAt),
+    };
+  }
+
+  ClaimAdvanceRow copyWith({
+    String? id,
+    String? claimantDeviceId,
+    int? amountMinor,
+    String? paidFromAccountId,
+    String? postedEntryId,
+    Value<String?> description = const Value.absent(),
+    DateTime? recordedAt,
+  }) => ClaimAdvanceRow(
+    id: id ?? this.id,
+    claimantDeviceId: claimantDeviceId ?? this.claimantDeviceId,
+    amountMinor: amountMinor ?? this.amountMinor,
+    paidFromAccountId: paidFromAccountId ?? this.paidFromAccountId,
+    postedEntryId: postedEntryId ?? this.postedEntryId,
+    description: description.present ? description.value : this.description,
+    recordedAt: recordedAt ?? this.recordedAt,
+  );
+  ClaimAdvanceRow copyWithCompanion(ClaimAdvancesCompanion data) {
+    return ClaimAdvanceRow(
+      id: data.id.present ? data.id.value : this.id,
+      claimantDeviceId: data.claimantDeviceId.present
+          ? data.claimantDeviceId.value
+          : this.claimantDeviceId,
+      amountMinor: data.amountMinor.present
+          ? data.amountMinor.value
+          : this.amountMinor,
+      paidFromAccountId: data.paidFromAccountId.present
+          ? data.paidFromAccountId.value
+          : this.paidFromAccountId,
+      postedEntryId: data.postedEntryId.present
+          ? data.postedEntryId.value
+          : this.postedEntryId,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      recordedAt: data.recordedAt.present
+          ? data.recordedAt.value
+          : this.recordedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimAdvanceRow(')
+          ..write('id: $id, ')
+          ..write('claimantDeviceId: $claimantDeviceId, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('paidFromAccountId: $paidFromAccountId, ')
+          ..write('postedEntryId: $postedEntryId, ')
+          ..write('description: $description, ')
+          ..write('recordedAt: $recordedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    claimantDeviceId,
+    amountMinor,
+    paidFromAccountId,
+    postedEntryId,
+    description,
+    recordedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClaimAdvanceRow &&
+          other.id == this.id &&
+          other.claimantDeviceId == this.claimantDeviceId &&
+          other.amountMinor == this.amountMinor &&
+          other.paidFromAccountId == this.paidFromAccountId &&
+          other.postedEntryId == this.postedEntryId &&
+          other.description == this.description &&
+          other.recordedAt == this.recordedAt);
+}
+
+class ClaimAdvancesCompanion extends UpdateCompanion<ClaimAdvanceRow> {
+  final Value<String> id;
+  final Value<String> claimantDeviceId;
+  final Value<int> amountMinor;
+  final Value<String> paidFromAccountId;
+  final Value<String> postedEntryId;
+  final Value<String?> description;
+  final Value<DateTime> recordedAt;
+  final Value<int> rowid;
+  const ClaimAdvancesCompanion({
+    this.id = const Value.absent(),
+    this.claimantDeviceId = const Value.absent(),
+    this.amountMinor = const Value.absent(),
+    this.paidFromAccountId = const Value.absent(),
+    this.postedEntryId = const Value.absent(),
+    this.description = const Value.absent(),
+    this.recordedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClaimAdvancesCompanion.insert({
+    this.id = const Value.absent(),
+    required String claimantDeviceId,
+    required int amountMinor,
+    required String paidFromAccountId,
+    required String postedEntryId,
+    this.description = const Value.absent(),
+    required DateTime recordedAt,
+    this.rowid = const Value.absent(),
+  }) : claimantDeviceId = Value(claimantDeviceId),
+       amountMinor = Value(amountMinor),
+       paidFromAccountId = Value(paidFromAccountId),
+       postedEntryId = Value(postedEntryId),
+       recordedAt = Value(recordedAt);
+  static Insertable<ClaimAdvanceRow> custom({
+    Expression<String>? id,
+    Expression<String>? claimantDeviceId,
+    Expression<int>? amountMinor,
+    Expression<String>? paidFromAccountId,
+    Expression<String>? postedEntryId,
+    Expression<String>? description,
+    Expression<DateTime>? recordedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (claimantDeviceId != null) 'claimant_device_id': claimantDeviceId,
+      if (amountMinor != null) 'amount_minor': amountMinor,
+      if (paidFromAccountId != null) 'paid_from_account_id': paidFromAccountId,
+      if (postedEntryId != null) 'posted_entry_id': postedEntryId,
+      if (description != null) 'description': description,
+      if (recordedAt != null) 'recorded_at': recordedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClaimAdvancesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? claimantDeviceId,
+    Value<int>? amountMinor,
+    Value<String>? paidFromAccountId,
+    Value<String>? postedEntryId,
+    Value<String?>? description,
+    Value<DateTime>? recordedAt,
+    Value<int>? rowid,
+  }) {
+    return ClaimAdvancesCompanion(
+      id: id ?? this.id,
+      claimantDeviceId: claimantDeviceId ?? this.claimantDeviceId,
+      amountMinor: amountMinor ?? this.amountMinor,
+      paidFromAccountId: paidFromAccountId ?? this.paidFromAccountId,
+      postedEntryId: postedEntryId ?? this.postedEntryId,
+      description: description ?? this.description,
+      recordedAt: recordedAt ?? this.recordedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (claimantDeviceId.present) {
+      map['claimant_device_id'] = Variable<String>(claimantDeviceId.value);
+    }
+    if (amountMinor.present) {
+      map['amount_minor'] = Variable<int>(amountMinor.value);
+    }
+    if (paidFromAccountId.present) {
+      map['paid_from_account_id'] = Variable<String>(paidFromAccountId.value);
+    }
+    if (postedEntryId.present) {
+      map['posted_entry_id'] = Variable<String>(postedEntryId.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (recordedAt.present) {
+      map['recorded_at'] = Variable<DateTime>(recordedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimAdvancesCompanion(')
+          ..write('id: $id, ')
+          ..write('claimantDeviceId: $claimantDeviceId, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('paidFromAccountId: $paidFromAccountId, ')
+          ..write('postedEntryId: $postedEntryId, ')
+          ..write('description: $description, ')
+          ..write('recordedAt: $recordedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ClaimCategoryAllowlistTable extends ClaimCategoryAllowlist
+    with TableInfo<$ClaimCategoryAllowlistTable, ClaimCategoryAllowlistRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClaimCategoryAllowlistTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<String> categoryId = GeneratedColumn<String>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES accounts (id)',
+    ),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [categoryId, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'claim_category_allowlist';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClaimCategoryAllowlistRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {categoryId};
+  @override
+  ClaimCategoryAllowlistRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClaimCategoryAllowlistRow(
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ClaimCategoryAllowlistTable createAlias(String alias) {
+    return $ClaimCategoryAllowlistTable(attachedDatabase, alias);
+  }
+}
+
+class ClaimCategoryAllowlistRow extends DataClass
+    implements Insertable<ClaimCategoryAllowlistRow> {
+  final String categoryId;
+  final DateTime createdAt;
+  const ClaimCategoryAllowlistRow({
+    required this.categoryId,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['category_id'] = Variable<String>(categoryId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  ClaimCategoryAllowlistCompanion toCompanion(bool nullToAbsent) {
+    return ClaimCategoryAllowlistCompanion(
+      categoryId: Value(categoryId),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory ClaimCategoryAllowlistRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClaimCategoryAllowlistRow(
+      categoryId: serializer.fromJson<String>(json['categoryId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'categoryId': serializer.toJson<String>(categoryId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  ClaimCategoryAllowlistRow copyWith({
+    String? categoryId,
+    DateTime? createdAt,
+  }) => ClaimCategoryAllowlistRow(
+    categoryId: categoryId ?? this.categoryId,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  ClaimCategoryAllowlistRow copyWithCompanion(
+    ClaimCategoryAllowlistCompanion data,
+  ) {
+    return ClaimCategoryAllowlistRow(
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimCategoryAllowlistRow(')
+          ..write('categoryId: $categoryId, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(categoryId, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClaimCategoryAllowlistRow &&
+          other.categoryId == this.categoryId &&
+          other.createdAt == this.createdAt);
+}
+
+class ClaimCategoryAllowlistCompanion
+    extends UpdateCompanion<ClaimCategoryAllowlistRow> {
+  final Value<String> categoryId;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const ClaimCategoryAllowlistCompanion({
+    this.categoryId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClaimCategoryAllowlistCompanion.insert({
+    required String categoryId,
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : categoryId = Value(categoryId);
+  static Insertable<ClaimCategoryAllowlistRow> custom({
+    Expression<String>? categoryId,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (categoryId != null) 'category_id': categoryId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClaimCategoryAllowlistCompanion copyWith({
+    Value<String>? categoryId,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return ClaimCategoryAllowlistCompanion(
+      categoryId: categoryId ?? this.categoryId,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (categoryId.present) {
+      map['category_id'] = Variable<String>(categoryId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimCategoryAllowlistCompanion(')
+          ..write('categoryId: $categoryId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ClaimSpendingHintsTable extends ClaimSpendingHints
+    with TableInfo<$ClaimSpendingHintsTable, ClaimSpendingHintRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ClaimSpendingHintsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<String> categoryId = GeneratedColumn<String>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES accounts (id)',
+    ),
+  );
+  static const VerificationMeta _maxAmountMinorMeta = const VerificationMeta(
+    'maxAmountMinor',
+  );
+  @override
+  late final GeneratedColumn<int> maxAmountMinor = GeneratedColumn<int>(
+    'max_amount_minor',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _unitLabelMeta = const VerificationMeta(
+    'unitLabel',
+  );
+  @override
+  late final GeneratedColumn<String> unitLabel = GeneratedColumn<String>(
+    'unit_label',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    categoryId,
+    maxAmountMinor,
+    unitLabel,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'claim_spending_hints';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ClaimSpendingHintRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('max_amount_minor')) {
+      context.handle(
+        _maxAmountMinorMeta,
+        maxAmountMinor.isAcceptableOrUnknown(
+          data['max_amount_minor']!,
+          _maxAmountMinorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_maxAmountMinorMeta);
+    }
+    if (data.containsKey('unit_label')) {
+      context.handle(
+        _unitLabelMeta,
+        unitLabel.isAcceptableOrUnknown(data['unit_label']!, _unitLabelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_unitLabelMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {categoryId};
+  @override
+  ClaimSpendingHintRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ClaimSpendingHintRow(
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_id'],
+      )!,
+      maxAmountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}max_amount_minor'],
+      )!,
+      unitLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit_label'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ClaimSpendingHintsTable createAlias(String alias) {
+    return $ClaimSpendingHintsTable(attachedDatabase, alias);
+  }
+}
+
+class ClaimSpendingHintRow extends DataClass
+    implements Insertable<ClaimSpendingHintRow> {
+  final String categoryId;
+  final int maxAmountMinor;
+  final String unitLabel;
+  final DateTime createdAt;
+  const ClaimSpendingHintRow({
+    required this.categoryId,
+    required this.maxAmountMinor,
+    required this.unitLabel,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['category_id'] = Variable<String>(categoryId);
+    map['max_amount_minor'] = Variable<int>(maxAmountMinor);
+    map['unit_label'] = Variable<String>(unitLabel);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  ClaimSpendingHintsCompanion toCompanion(bool nullToAbsent) {
+    return ClaimSpendingHintsCompanion(
+      categoryId: Value(categoryId),
+      maxAmountMinor: Value(maxAmountMinor),
+      unitLabel: Value(unitLabel),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory ClaimSpendingHintRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ClaimSpendingHintRow(
+      categoryId: serializer.fromJson<String>(json['categoryId']),
+      maxAmountMinor: serializer.fromJson<int>(json['maxAmountMinor']),
+      unitLabel: serializer.fromJson<String>(json['unitLabel']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'categoryId': serializer.toJson<String>(categoryId),
+      'maxAmountMinor': serializer.toJson<int>(maxAmountMinor),
+      'unitLabel': serializer.toJson<String>(unitLabel),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  ClaimSpendingHintRow copyWith({
+    String? categoryId,
+    int? maxAmountMinor,
+    String? unitLabel,
+    DateTime? createdAt,
+  }) => ClaimSpendingHintRow(
+    categoryId: categoryId ?? this.categoryId,
+    maxAmountMinor: maxAmountMinor ?? this.maxAmountMinor,
+    unitLabel: unitLabel ?? this.unitLabel,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  ClaimSpendingHintRow copyWithCompanion(ClaimSpendingHintsCompanion data) {
+    return ClaimSpendingHintRow(
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      maxAmountMinor: data.maxAmountMinor.present
+          ? data.maxAmountMinor.value
+          : this.maxAmountMinor,
+      unitLabel: data.unitLabel.present ? data.unitLabel.value : this.unitLabel,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimSpendingHintRow(')
+          ..write('categoryId: $categoryId, ')
+          ..write('maxAmountMinor: $maxAmountMinor, ')
+          ..write('unitLabel: $unitLabel, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(categoryId, maxAmountMinor, unitLabel, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ClaimSpendingHintRow &&
+          other.categoryId == this.categoryId &&
+          other.maxAmountMinor == this.maxAmountMinor &&
+          other.unitLabel == this.unitLabel &&
+          other.createdAt == this.createdAt);
+}
+
+class ClaimSpendingHintsCompanion
+    extends UpdateCompanion<ClaimSpendingHintRow> {
+  final Value<String> categoryId;
+  final Value<int> maxAmountMinor;
+  final Value<String> unitLabel;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const ClaimSpendingHintsCompanion({
+    this.categoryId = const Value.absent(),
+    this.maxAmountMinor = const Value.absent(),
+    this.unitLabel = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ClaimSpendingHintsCompanion.insert({
+    required String categoryId,
+    required int maxAmountMinor,
+    required String unitLabel,
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : categoryId = Value(categoryId),
+       maxAmountMinor = Value(maxAmountMinor),
+       unitLabel = Value(unitLabel);
+  static Insertable<ClaimSpendingHintRow> custom({
+    Expression<String>? categoryId,
+    Expression<int>? maxAmountMinor,
+    Expression<String>? unitLabel,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (categoryId != null) 'category_id': categoryId,
+      if (maxAmountMinor != null) 'max_amount_minor': maxAmountMinor,
+      if (unitLabel != null) 'unit_label': unitLabel,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ClaimSpendingHintsCompanion copyWith({
+    Value<String>? categoryId,
+    Value<int>? maxAmountMinor,
+    Value<String>? unitLabel,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return ClaimSpendingHintsCompanion(
+      categoryId: categoryId ?? this.categoryId,
+      maxAmountMinor: maxAmountMinor ?? this.maxAmountMinor,
+      unitLabel: unitLabel ?? this.unitLabel,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (categoryId.present) {
+      map['category_id'] = Variable<String>(categoryId.value);
+    }
+    if (maxAmountMinor.present) {
+      map['max_amount_minor'] = Variable<int>(maxAmountMinor.value);
+    }
+    if (unitLabel.present) {
+      map['unit_label'] = Variable<String>(unitLabel.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ClaimSpendingHintsCompanion(')
+          ..write('categoryId: $categoryId, ')
+          ..write('maxAmountMinor: $maxAmountMinor, ')
+          ..write('unitLabel: $unitLabel, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -12452,6 +16034,16 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $MembershipNoticesTable(this);
   late final $PendingJoinRequestsTable pendingJoinRequests =
       $PendingJoinRequestsTable(this);
+  late final $ClaimsTable claims = $ClaimsTable(this);
+  late final $ClaimItemsTable claimItems = $ClaimItemsTable(this);
+  late final $ClaimItemDecisionsTable claimItemDecisions =
+      $ClaimItemDecisionsTable(this);
+  late final $ClaimReceiptsTable claimReceipts = $ClaimReceiptsTable(this);
+  late final $ClaimAdvancesTable claimAdvances = $ClaimAdvancesTable(this);
+  late final $ClaimCategoryAllowlistTable claimCategoryAllowlist =
+      $ClaimCategoryAllowlistTable(this);
+  late final $ClaimSpendingHintsTable claimSpendingHints =
+      $ClaimSpendingHintsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -12482,6 +16074,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     booksSetMetadata,
     membershipNotices,
     pendingJoinRequests,
+    claims,
+    claimItems,
+    claimItemDecisions,
+    claimReceipts,
+    claimAdvances,
+    claimCategoryAllowlist,
+    claimSpendingHints,
   ];
 }
 
@@ -12885,6 +16484,24 @@ final class $$AccountsTableReferences
     );
   }
 
+  static MultiTypedResultKey<$LinkedDevicesTable, List<LinkedDeviceRow>>
+  _linkedDevicesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.linkedDevices,
+    aliasName: 'accounts__id__linked_devices__owed_to_account_id',
+  );
+
+  $$LinkedDevicesTableProcessedTableManager get linkedDevicesRefs {
+    final manager = $$LinkedDevicesTableTableManager($_db, $_db.linkedDevices)
+        .filter(
+          (f) => f.owedToAccountId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_linkedDevicesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
   static MultiTypedResultKey<
     $CategoryTranslationsTable,
     List<CategoryTranslationRow>
@@ -12904,6 +16521,91 @@ final class $$AccountsTableReferences
 
     final cache = $_typedResult.readTableOrNull(
       _categoryTranslationsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ClaimItemsTable, List<ClaimItemRow>>
+  _claimItemsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.claimItems,
+    aliasName: 'accounts__id__claim_items__category_id',
+  );
+
+  $$ClaimItemsTableProcessedTableManager get claimItemsRefs {
+    final manager = $$ClaimItemsTableTableManager(
+      $_db,
+      $_db.claimItems,
+    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_claimItemsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ClaimAdvancesTable, List<ClaimAdvanceRow>>
+  _claimAdvancesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.claimAdvances,
+    aliasName: 'accounts__id__claim_advances__paid_from_account_id',
+  );
+
+  $$ClaimAdvancesTableProcessedTableManager get claimAdvancesRefs {
+    final manager = $$ClaimAdvancesTableTableManager($_db, $_db.claimAdvances)
+        .filter(
+          (f) => f.paidFromAccountId.id.sqlEquals($_itemColumn<String>('id')!),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_claimAdvancesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ClaimCategoryAllowlistTable,
+    List<ClaimCategoryAllowlistRow>
+  >
+  _claimCategoryAllowlistRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.claimCategoryAllowlist,
+        aliasName: 'accounts__id__claim_category_allowlist__category_id',
+      );
+
+  $$ClaimCategoryAllowlistTableProcessedTableManager
+  get claimCategoryAllowlistRefs {
+    final manager = $$ClaimCategoryAllowlistTableTableManager(
+      $_db,
+      $_db.claimCategoryAllowlist,
+    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _claimCategoryAllowlistRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ClaimSpendingHintsTable,
+    List<ClaimSpendingHintRow>
+  >
+  _claimSpendingHintsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.claimSpendingHints,
+        aliasName: 'accounts__id__claim_spending_hints__category_id',
+      );
+
+  $$ClaimSpendingHintsTableProcessedTableManager get claimSpendingHintsRefs {
+    final manager = $$ClaimSpendingHintsTableTableManager(
+      $_db,
+      $_db.claimSpendingHints,
+    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _claimSpendingHintsRefsTable($_db),
     );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
@@ -13094,6 +16796,31 @@ class $$AccountsTableFilterComposer
     return f(composer);
   }
 
+  Expression<bool> linkedDevicesRefs(
+    Expression<bool> Function($$LinkedDevicesTableFilterComposer f) f,
+  ) {
+    final $$LinkedDevicesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.owedToAccountId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableFilterComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<bool> categoryTranslationsRefs(
     Expression<bool> Function($$CategoryTranslationsTableFilterComposer f) f,
   ) {
@@ -13110,6 +16837,107 @@ class $$AccountsTableFilterComposer
           }) => $$CategoryTranslationsTableFilterComposer(
             $db: $db,
             $table: $db.categoryTranslations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> claimItemsRefs(
+    Expression<bool> Function($$ClaimItemsTableFilterComposer f) f,
+  ) {
+    final $$ClaimItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> claimAdvancesRefs(
+    Expression<bool> Function($$ClaimAdvancesTableFilterComposer f) f,
+  ) {
+    final $$ClaimAdvancesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimAdvances,
+      getReferencedColumn: (t) => t.paidFromAccountId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimAdvancesTableFilterComposer(
+            $db: $db,
+            $table: $db.claimAdvances,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> claimCategoryAllowlistRefs(
+    Expression<bool> Function($$ClaimCategoryAllowlistTableFilterComposer f) f,
+  ) {
+    final $$ClaimCategoryAllowlistTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.claimCategoryAllowlist,
+          getReferencedColumn: (t) => t.categoryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ClaimCategoryAllowlistTableFilterComposer(
+                $db: $db,
+                $table: $db.claimCategoryAllowlist,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<bool> claimSpendingHintsRefs(
+    Expression<bool> Function($$ClaimSpendingHintsTableFilterComposer f) f,
+  ) {
+    final $$ClaimSpendingHintsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimSpendingHints,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimSpendingHintsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimSpendingHints,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -13373,6 +17201,31 @@ class $$AccountsTableAnnotationComposer
     return f(composer);
   }
 
+  Expression<T> linkedDevicesRefs<T extends Object>(
+    Expression<T> Function($$LinkedDevicesTableAnnotationComposer a) f,
+  ) {
+    final $$LinkedDevicesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.owedToAccountId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
   Expression<T> categoryTranslationsRefs<T extends Object>(
     Expression<T> Function($$CategoryTranslationsTableAnnotationComposer a) f,
   ) {
@@ -13390,6 +17243,108 @@ class $$AccountsTableAnnotationComposer
               }) => $$CategoryTranslationsTableAnnotationComposer(
                 $db: $db,
                 $table: $db.categoryTranslations,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> claimItemsRefs<T extends Object>(
+    Expression<T> Function($$ClaimItemsTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimItemsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> claimAdvancesRefs<T extends Object>(
+    Expression<T> Function($$ClaimAdvancesTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimAdvancesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimAdvances,
+      getReferencedColumn: (t) => t.paidFromAccountId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimAdvancesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claimAdvances,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> claimCategoryAllowlistRefs<T extends Object>(
+    Expression<T> Function($$ClaimCategoryAllowlistTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimCategoryAllowlistTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.claimCategoryAllowlist,
+          getReferencedColumn: (t) => t.categoryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ClaimCategoryAllowlistTableAnnotationComposer(
+                $db: $db,
+                $table: $db.claimCategoryAllowlist,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> claimSpendingHintsRefs<T extends Object>(
+    Expression<T> Function($$ClaimSpendingHintsTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimSpendingHintsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.claimSpendingHints,
+          getReferencedColumn: (t) => t.categoryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ClaimSpendingHintsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.claimSpendingHints,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -13419,7 +17374,12 @@ class $$AccountsTableTableManager
             bool investmentLotsRefs,
             bool investmentSellsRefs,
             bool ofxImportRecordsRefs,
+            bool linkedDevicesRefs,
             bool categoryTranslationsRefs,
+            bool claimItemsRefs,
+            bool claimAdvancesRefs,
+            bool claimCategoryAllowlistRefs,
+            bool claimSpendingHintsRefs,
           })
         > {
   $$AccountsTableTableManager(_$AppDatabase db, $AccountsTable table)
@@ -13504,7 +17464,12 @@ class $$AccountsTableTableManager
                 investmentLotsRefs = false,
                 investmentSellsRefs = false,
                 ofxImportRecordsRefs = false,
+                linkedDevicesRefs = false,
                 categoryTranslationsRefs = false,
+                claimItemsRefs = false,
+                claimAdvancesRefs = false,
+                claimCategoryAllowlistRefs = false,
+                claimSpendingHintsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -13513,7 +17478,12 @@ class $$AccountsTableTableManager
                     if (investmentLotsRefs) db.investmentLots,
                     if (investmentSellsRefs) db.investmentSells,
                     if (ofxImportRecordsRefs) db.ofxImportRecords,
+                    if (linkedDevicesRefs) db.linkedDevices,
                     if (categoryTranslationsRefs) db.categoryTranslations,
+                    if (claimItemsRefs) db.claimItems,
+                    if (claimAdvancesRefs) db.claimAdvances,
+                    if (claimCategoryAllowlistRefs) db.claimCategoryAllowlist,
+                    if (claimSpendingHintsRefs) db.claimSpendingHints,
                   ],
                   addJoins:
                       <
@@ -13634,6 +17604,27 @@ class $$AccountsTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (linkedDevicesRefs)
+                        await $_getPrefetchedData<
+                          AccountRow,
+                          $AccountsTable,
+                          LinkedDeviceRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AccountsTableReferences
+                              ._linkedDevicesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AccountsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).linkedDevicesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.owedToAccountId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                       if (categoryTranslationsRefs)
                         await $_getPrefetchedData<
                           AccountRow,
@@ -13649,6 +17640,90 @@ class $$AccountsTableTableManager
                                 table,
                                 p0,
                               ).categoryTranslationsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.categoryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (claimItemsRefs)
+                        await $_getPrefetchedData<
+                          AccountRow,
+                          $AccountsTable,
+                          ClaimItemRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AccountsTableReferences
+                              ._claimItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AccountsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.categoryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (claimAdvancesRefs)
+                        await $_getPrefetchedData<
+                          AccountRow,
+                          $AccountsTable,
+                          ClaimAdvanceRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AccountsTableReferences
+                              ._claimAdvancesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AccountsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimAdvancesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.paidFromAccountId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (claimCategoryAllowlistRefs)
+                        await $_getPrefetchedData<
+                          AccountRow,
+                          $AccountsTable,
+                          ClaimCategoryAllowlistRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AccountsTableReferences
+                              ._claimCategoryAllowlistRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AccountsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimCategoryAllowlistRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.categoryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (claimSpendingHintsRefs)
+                        await $_getPrefetchedData<
+                          AccountRow,
+                          $AccountsTable,
+                          ClaimSpendingHintRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$AccountsTableReferences
+                              ._claimSpendingHintsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$AccountsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimSpendingHintsRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.categoryId == item.id,
@@ -13681,7 +17756,12 @@ typedef $$AccountsTableProcessedTableManager =
         bool investmentLotsRefs,
         bool investmentSellsRefs,
         bool ofxImportRecordsRefs,
+        bool linkedDevicesRefs,
         bool categoryTranslationsRefs,
+        bool claimItemsRefs,
+        bool claimAdvancesRefs,
+        bool claimCategoryAllowlistRefs,
+        bool claimSpendingHintsRefs,
       })
     >;
 typedef $$SigningIdentitiesTableCreateCompanionBuilder =
@@ -14857,6 +18937,48 @@ final class $$JournalEntriesTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<
+    $ClaimItemDecisionsTable,
+    List<ClaimItemDecisionRow>
+  >
+  _claimItemDecisionsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.claimItemDecisions,
+        aliasName: 'journal_entries__id__claim_item_decisions__posted_entry_id',
+      );
+
+  $$ClaimItemDecisionsTableProcessedTableManager get claimItemDecisionsRefs {
+    final manager = $$ClaimItemDecisionsTableTableManager(
+      $_db,
+      $_db.claimItemDecisions,
+    ).filter((f) => f.postedEntryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _claimItemDecisionsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ClaimAdvancesTable, List<ClaimAdvanceRow>>
+  _claimAdvancesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.claimAdvances,
+    aliasName: 'journal_entries__id__claim_advances__posted_entry_id',
+  );
+
+  $$ClaimAdvancesTableProcessedTableManager get claimAdvancesRefs {
+    final manager = $$ClaimAdvancesTableTableManager(
+      $_db,
+      $_db.claimAdvances,
+    ).filter((f) => f.postedEntryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_claimAdvancesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$JournalEntriesTableFilterComposer
@@ -15181,6 +19303,56 @@ class $$JournalEntriesTableFilterComposer
                     $removeJoinBuilderFromRootComposer,
               ),
         );
+    return f(composer);
+  }
+
+  Expression<bool> claimItemDecisionsRefs(
+    Expression<bool> Function($$ClaimItemDecisionsTableFilterComposer f) f,
+  ) {
+    final $$ClaimItemDecisionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimItemDecisions,
+      getReferencedColumn: (t) => t.postedEntryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemDecisionsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimItemDecisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> claimAdvancesRefs(
+    Expression<bool> Function($$ClaimAdvancesTableFilterComposer f) f,
+  ) {
+    final $$ClaimAdvancesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimAdvances,
+      getReferencedColumn: (t) => t.postedEntryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimAdvancesTableFilterComposer(
+            $db: $db,
+            $table: $db.claimAdvances,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
     return f(composer);
   }
 }
@@ -15627,6 +19799,57 @@ class $$JournalEntriesTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> claimItemDecisionsRefs<T extends Object>(
+    Expression<T> Function($$ClaimItemDecisionsTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimItemDecisionsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.claimItemDecisions,
+          getReferencedColumn: (t) => t.postedEntryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ClaimItemDecisionsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.claimItemDecisions,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> claimAdvancesRefs<T extends Object>(
+    Expression<T> Function($$ClaimAdvancesTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimAdvancesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimAdvances,
+      getReferencedColumn: (t) => t.postedEntryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimAdvancesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claimAdvances,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$JournalEntriesTableTableManager
@@ -15654,6 +19877,8 @@ class $$JournalEntriesTableTableManager
             bool investmentSellsRefs,
             bool ofxImportRecordsRefs,
             bool ledgerIdentityChainTipsRefs,
+            bool claimItemDecisionsRefs,
+            bool claimAdvancesRefs,
           })
         > {
   $$JournalEntriesTableTableManager(
@@ -15750,6 +19975,8 @@ class $$JournalEntriesTableTableManager
                 investmentSellsRefs = false,
                 ofxImportRecordsRefs = false,
                 ledgerIdentityChainTipsRefs = false,
+                claimItemDecisionsRefs = false,
+                claimAdvancesRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -15762,6 +19989,8 @@ class $$JournalEntriesTableTableManager
                     if (investmentSellsRefs) db.investmentSells,
                     if (ofxImportRecordsRefs) db.ofxImportRecords,
                     if (ledgerIdentityChainTipsRefs) db.ledgerIdentityChainTips,
+                    if (claimItemDecisionsRefs) db.claimItemDecisions,
+                    if (claimAdvancesRefs) db.claimAdvances,
                   ],
                   addJoins:
                       <
@@ -15997,6 +20226,48 @@ class $$JournalEntriesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (claimItemDecisionsRefs)
+                        await $_getPrefetchedData<
+                          JournalEntryRow,
+                          $JournalEntriesTable,
+                          ClaimItemDecisionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$JournalEntriesTableReferences
+                              ._claimItemDecisionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$JournalEntriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimItemDecisionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.postedEntryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (claimAdvancesRefs)
+                        await $_getPrefetchedData<
+                          JournalEntryRow,
+                          $JournalEntriesTable,
+                          ClaimAdvanceRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$JournalEntriesTableReferences
+                              ._claimAdvancesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$JournalEntriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimAdvancesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.postedEntryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -16029,6 +20300,8 @@ typedef $$JournalEntriesTableProcessedTableManager =
         bool investmentSellsRefs,
         bool ofxImportRecordsRefs,
         bool ledgerIdentityChainTipsRefs,
+        bool claimItemDecisionsRefs,
+        bool claimAdvancesRefs,
       })
     >;
 typedef $$PostingsTableCreateCompanionBuilder =
@@ -21977,7 +26250,10 @@ typedef $$LinkedDevicesTableCreateCompanionBuilder =
       required String signingIdentityId,
       required String deviceCertFingerprint,
       required LinkedDeviceRole role,
+      Value<String> rolesCsv,
       Value<bool> canAdd,
+      Value<String?> owedToAccountId,
+      Value<String?> personDisplayName,
       Value<DateTime?> removedAt,
       Value<DateTime?> erasePendingAt,
       Value<DateTime?> erasedAt,
@@ -21992,7 +26268,10 @@ typedef $$LinkedDevicesTableUpdateCompanionBuilder =
       Value<String> signingIdentityId,
       Value<String> deviceCertFingerprint,
       Value<LinkedDeviceRole> role,
+      Value<String> rolesCsv,
       Value<bool> canAdd,
+      Value<String?> owedToAccountId,
+      Value<String?> personDisplayName,
       Value<DateTime?> removedAt,
       Value<DateTime?> erasePendingAt,
       Value<DateTime?> erasedAt,
@@ -22028,6 +26307,94 @@ final class $$LinkedDevicesTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
+
+  static $AccountsTable _owedToAccountIdTable(_$AppDatabase db) => db.accounts
+      .createAlias('linked_devices__owed_to_account_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager? get owedToAccountId {
+    final $_column = $_itemColumn<String>('owed_to_account_id');
+    if ($_column == null) return null;
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_owedToAccountIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$ClaimsTable, List<ClaimRow>> _claimsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.claims,
+    aliasName: 'linked_devices__device_id__claims__claimant_device_id',
+  );
+
+  $$ClaimsTableProcessedTableManager get claimsRefs {
+    final manager = $$ClaimsTableTableManager($_db, $_db.claims).filter(
+      (f) => f.claimantDeviceId.deviceId.sqlEquals(
+        $_itemColumn<String>('device_id')!,
+      ),
+    );
+
+    final cache = $_typedResult.readTableOrNull(_claimsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ClaimItemDecisionsTable,
+    List<ClaimItemDecisionRow>
+  >
+  _claimItemDecisionsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.claimItemDecisions,
+    aliasName:
+        'linked_devices__device_id__claim_item_decisions__decided_by_device_id',
+  );
+
+  $$ClaimItemDecisionsTableProcessedTableManager get claimItemDecisionsRefs {
+    final manager =
+        $$ClaimItemDecisionsTableTableManager(
+          $_db,
+          $_db.claimItemDecisions,
+        ).filter(
+          (f) => f.decidedByDeviceId.deviceId.sqlEquals(
+            $_itemColumn<String>('device_id')!,
+          ),
+        );
+
+    final cache = $_typedResult.readTableOrNull(
+      _claimItemDecisionsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ClaimAdvancesTable, List<ClaimAdvanceRow>>
+  _claimAdvancesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.claimAdvances,
+    aliasName: 'linked_devices__device_id__claim_advances__claimant_device_id',
+  );
+
+  $$ClaimAdvancesTableProcessedTableManager get claimAdvancesRefs {
+    final manager = $$ClaimAdvancesTableTableManager($_db, $_db.claimAdvances)
+        .filter(
+          (f) => f.claimantDeviceId.deviceId.sqlEquals(
+            $_itemColumn<String>('device_id')!,
+          ),
+        );
+
+    final cache = $_typedResult.readTableOrNull(_claimAdvancesRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$LinkedDevicesTableFilterComposer
@@ -22060,8 +26427,18 @@ class $$LinkedDevicesTableFilterComposer
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
+  ColumnFilters<String> get rolesCsv => $composableBuilder(
+    column: $table.rolesCsv,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<bool> get canAdd => $composableBuilder(
     column: $table.canAdd,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get personDisplayName => $composableBuilder(
+    column: $table.personDisplayName,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -22112,6 +26489,104 @@ class $$LinkedDevicesTableFilterComposer
     );
     return composer;
   }
+
+  $$AccountsTableFilterComposer get owedToAccountId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.owedToAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> claimsRefs(
+    Expression<bool> Function($$ClaimsTableFilterComposer f) f,
+  ) {
+    final $$ClaimsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.deviceId,
+      referencedTable: $db.claims,
+      getReferencedColumn: (t) => t.claimantDeviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimsTableFilterComposer(
+            $db: $db,
+            $table: $db.claims,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> claimItemDecisionsRefs(
+    Expression<bool> Function($$ClaimItemDecisionsTableFilterComposer f) f,
+  ) {
+    final $$ClaimItemDecisionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.deviceId,
+      referencedTable: $db.claimItemDecisions,
+      getReferencedColumn: (t) => t.decidedByDeviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemDecisionsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimItemDecisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> claimAdvancesRefs(
+    Expression<bool> Function($$ClaimAdvancesTableFilterComposer f) f,
+  ) {
+    final $$ClaimAdvancesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.deviceId,
+      referencedTable: $db.claimAdvances,
+      getReferencedColumn: (t) => t.claimantDeviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimAdvancesTableFilterComposer(
+            $db: $db,
+            $table: $db.claimAdvances,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$LinkedDevicesTableOrderingComposer
@@ -22143,8 +26618,18 @@ class $$LinkedDevicesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get rolesCsv => $composableBuilder(
+    column: $table.rolesCsv,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<bool> get canAdd => $composableBuilder(
     column: $table.canAdd,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get personDisplayName => $composableBuilder(
+    column: $table.personDisplayName,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -22195,6 +26680,29 @@ class $$LinkedDevicesTableOrderingComposer
     );
     return composer;
   }
+
+  $$AccountsTableOrderingComposer get owedToAccountId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.owedToAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$LinkedDevicesTableAnnotationComposer
@@ -22222,8 +26730,16 @@ class $$LinkedDevicesTableAnnotationComposer
   GeneratedColumnWithTypeConverter<LinkedDeviceRole, String> get role =>
       $composableBuilder(column: $table.role, builder: (column) => column);
 
+  GeneratedColumn<String> get rolesCsv =>
+      $composableBuilder(column: $table.rolesCsv, builder: (column) => column);
+
   GeneratedColumn<bool> get canAdd =>
       $composableBuilder(column: $table.canAdd, builder: (column) => column);
+
+  GeneratedColumn<String> get personDisplayName => $composableBuilder(
+    column: $table.personDisplayName,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get removedAt =>
       $composableBuilder(column: $table.removedAt, builder: (column) => column);
@@ -22267,6 +26783,105 @@ class $$LinkedDevicesTableAnnotationComposer
         );
     return composer;
   }
+
+  $$AccountsTableAnnotationComposer get owedToAccountId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.owedToAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> claimsRefs<T extends Object>(
+    Expression<T> Function($$ClaimsTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.deviceId,
+      referencedTable: $db.claims,
+      getReferencedColumn: (t) => t.claimantDeviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claims,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> claimItemDecisionsRefs<T extends Object>(
+    Expression<T> Function($$ClaimItemDecisionsTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimItemDecisionsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.deviceId,
+          referencedTable: $db.claimItemDecisions,
+          getReferencedColumn: (t) => t.decidedByDeviceId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ClaimItemDecisionsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.claimItemDecisions,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> claimAdvancesRefs<T extends Object>(
+    Expression<T> Function($$ClaimAdvancesTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimAdvancesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.deviceId,
+      referencedTable: $db.claimAdvances,
+      getReferencedColumn: (t) => t.claimantDeviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimAdvancesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claimAdvances,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$LinkedDevicesTableTableManager
@@ -22282,7 +26897,13 @@ class $$LinkedDevicesTableTableManager
           $$LinkedDevicesTableUpdateCompanionBuilder,
           (LinkedDeviceRow, $$LinkedDevicesTableReferences),
           LinkedDeviceRow,
-          PrefetchHooks Function({bool signingIdentityId})
+          PrefetchHooks Function({
+            bool signingIdentityId,
+            bool owedToAccountId,
+            bool claimsRefs,
+            bool claimItemDecisionsRefs,
+            bool claimAdvancesRefs,
+          })
         > {
   $$LinkedDevicesTableTableManager(_$AppDatabase db, $LinkedDevicesTable table)
     : super(
@@ -22302,7 +26923,10 @@ class $$LinkedDevicesTableTableManager
                 Value<String> signingIdentityId = const Value.absent(),
                 Value<String> deviceCertFingerprint = const Value.absent(),
                 Value<LinkedDeviceRole> role = const Value.absent(),
+                Value<String> rolesCsv = const Value.absent(),
                 Value<bool> canAdd = const Value.absent(),
+                Value<String?> owedToAccountId = const Value.absent(),
+                Value<String?> personDisplayName = const Value.absent(),
                 Value<DateTime?> removedAt = const Value.absent(),
                 Value<DateTime?> erasePendingAt = const Value.absent(),
                 Value<DateTime?> erasedAt = const Value.absent(),
@@ -22315,7 +26939,10 @@ class $$LinkedDevicesTableTableManager
                 signingIdentityId: signingIdentityId,
                 deviceCertFingerprint: deviceCertFingerprint,
                 role: role,
+                rolesCsv: rolesCsv,
                 canAdd: canAdd,
+                owedToAccountId: owedToAccountId,
+                personDisplayName: personDisplayName,
                 removedAt: removedAt,
                 erasePendingAt: erasePendingAt,
                 erasedAt: erasedAt,
@@ -22330,7 +26957,10 @@ class $$LinkedDevicesTableTableManager
                 required String signingIdentityId,
                 required String deviceCertFingerprint,
                 required LinkedDeviceRole role,
+                Value<String> rolesCsv = const Value.absent(),
                 Value<bool> canAdd = const Value.absent(),
+                Value<String?> owedToAccountId = const Value.absent(),
+                Value<String?> personDisplayName = const Value.absent(),
                 Value<DateTime?> removedAt = const Value.absent(),
                 Value<DateTime?> erasePendingAt = const Value.absent(),
                 Value<DateTime?> erasedAt = const Value.absent(),
@@ -22343,7 +26973,10 @@ class $$LinkedDevicesTableTableManager
                 signingIdentityId: signingIdentityId,
                 deviceCertFingerprint: deviceCertFingerprint,
                 role: role,
+                rolesCsv: rolesCsv,
                 canAdd: canAdd,
+                owedToAccountId: owedToAccountId,
+                personDisplayName: personDisplayName,
                 removedAt: removedAt,
                 erasePendingAt: erasePendingAt,
                 erasedAt: erasedAt,
@@ -22359,47 +26992,139 @@ class $$LinkedDevicesTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({signingIdentityId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (signingIdentityId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.signingIdentityId,
-                                referencedTable: $$LinkedDevicesTableReferences
-                                    ._signingIdentityIdTable(db),
-                                referencedColumn: $$LinkedDevicesTableReferences
-                                    ._signingIdentityIdTable(db)
-                                    .identityId,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({
+                signingIdentityId = false,
+                owedToAccountId = false,
+                claimsRefs = false,
+                claimItemDecisionsRefs = false,
+                claimAdvancesRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (claimsRefs) db.claims,
+                    if (claimItemDecisionsRefs) db.claimItemDecisions,
+                    if (claimAdvancesRefs) db.claimAdvances,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (signingIdentityId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.signingIdentityId,
+                                    referencedTable:
+                                        $$LinkedDevicesTableReferences
+                                            ._signingIdentityIdTable(db),
+                                    referencedColumn:
+                                        $$LinkedDevicesTableReferences
+                                            ._signingIdentityIdTable(db)
+                                            .identityId,
+                                  )
+                                  as T;
+                        }
+                        if (owedToAccountId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.owedToAccountId,
+                                    referencedTable:
+                                        $$LinkedDevicesTableReferences
+                                            ._owedToAccountIdTable(db),
+                                    referencedColumn:
+                                        $$LinkedDevicesTableReferences
+                                            ._owedToAccountIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (claimsRefs)
+                        await $_getPrefetchedData<
+                          LinkedDeviceRow,
+                          $LinkedDevicesTable,
+                          ClaimRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LinkedDevicesTableReferences
+                              ._claimsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LinkedDevicesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.claimantDeviceId == item.deviceId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (claimItemDecisionsRefs)
+                        await $_getPrefetchedData<
+                          LinkedDeviceRow,
+                          $LinkedDevicesTable,
+                          ClaimItemDecisionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LinkedDevicesTableReferences
+                              ._claimItemDecisionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LinkedDevicesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimItemDecisionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.decidedByDeviceId == item.deviceId,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (claimAdvancesRefs)
+                        await $_getPrefetchedData<
+                          LinkedDeviceRow,
+                          $LinkedDevicesTable,
+                          ClaimAdvanceRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LinkedDevicesTableReferences
+                              ._claimAdvancesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LinkedDevicesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimAdvancesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.claimantDeviceId == item.deviceId,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -22416,7 +27141,13 @@ typedef $$LinkedDevicesTableProcessedTableManager =
       $$LinkedDevicesTableUpdateCompanionBuilder,
       (LinkedDeviceRow, $$LinkedDevicesTableReferences),
       LinkedDeviceRow,
-      PrefetchHooks Function({bool signingIdentityId})
+      PrefetchHooks Function({
+        bool signingIdentityId,
+        bool owedToAccountId,
+        bool claimsRefs,
+        bool claimItemDecisionsRefs,
+        bool claimAdvancesRefs,
+      })
     >;
 typedef $$LedgerIdentityChainTipsTableCreateCompanionBuilder =
     LedgerIdentityChainTipsCompanion Function({
@@ -23553,6 +28284,7 @@ typedef $$BooksSetMetadataTableCreateCompanionBuilder =
       required String id,
       required String displayName,
       Value<String> defaultCategoryLocale,
+      Value<int> receiptRequiredAboveMinor,
       Value<DateTime> createdAt,
       Value<int> rowid,
     });
@@ -23561,6 +28293,7 @@ typedef $$BooksSetMetadataTableUpdateCompanionBuilder =
       Value<String> id,
       Value<String> displayName,
       Value<String> defaultCategoryLocale,
+      Value<int> receiptRequiredAboveMinor,
       Value<DateTime> createdAt,
       Value<int> rowid,
     });
@@ -23586,6 +28319,11 @@ class $$BooksSetMetadataTableFilterComposer
 
   ColumnFilters<String> get defaultCategoryLocale => $composableBuilder(
     column: $table.defaultCategoryLocale,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get receiptRequiredAboveMinor => $composableBuilder(
+    column: $table.receiptRequiredAboveMinor,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -23619,6 +28357,11 @@ class $$BooksSetMetadataTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get receiptRequiredAboveMinor => $composableBuilder(
+    column: $table.receiptRequiredAboveMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -23644,6 +28387,11 @@ class $$BooksSetMetadataTableAnnotationComposer
 
   GeneratedColumn<String> get defaultCategoryLocale => $composableBuilder(
     column: $table.defaultCategoryLocale,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get receiptRequiredAboveMinor => $composableBuilder(
+    column: $table.receiptRequiredAboveMinor,
     builder: (column) => column,
   );
 
@@ -23691,12 +28439,14 @@ class $$BooksSetMetadataTableTableManager
                 Value<String> id = const Value.absent(),
                 Value<String> displayName = const Value.absent(),
                 Value<String> defaultCategoryLocale = const Value.absent(),
+                Value<int> receiptRequiredAboveMinor = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => BooksSetMetadataCompanion(
                 id: id,
                 displayName: displayName,
                 defaultCategoryLocale: defaultCategoryLocale,
+                receiptRequiredAboveMinor: receiptRequiredAboveMinor,
                 createdAt: createdAt,
                 rowid: rowid,
               ),
@@ -23705,12 +28455,14 @@ class $$BooksSetMetadataTableTableManager
                 required String id,
                 required String displayName,
                 Value<String> defaultCategoryLocale = const Value.absent(),
+                Value<int> receiptRequiredAboveMinor = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => BooksSetMetadataCompanion.insert(
                 id: id,
                 displayName: displayName,
                 defaultCategoryLocale: defaultCategoryLocale,
+                receiptRequiredAboveMinor: receiptRequiredAboveMinor,
                 createdAt: createdAt,
                 rowid: rowid,
               ),
@@ -24363,6 +29115,3330 @@ typedef $$PendingJoinRequestsTableProcessedTableManager =
       PendingJoinRequestRow,
       PrefetchHooks Function()
     >;
+typedef $$ClaimsTableCreateCompanionBuilder =
+    ClaimsCompanion Function({
+      required String id,
+      required String claimantDeviceId,
+      required ClaimStatus status,
+      Value<DateTime?> submittedAt,
+      Value<DateTime?> paidAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+typedef $$ClaimsTableUpdateCompanionBuilder =
+    ClaimsCompanion Function({
+      Value<String> id,
+      Value<String> claimantDeviceId,
+      Value<ClaimStatus> status,
+      Value<DateTime?> submittedAt,
+      Value<DateTime?> paidAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+final class $$ClaimsTableReferences
+    extends BaseReferences<_$AppDatabase, $ClaimsTable, ClaimRow> {
+  $$ClaimsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $LinkedDevicesTable _claimantDeviceIdTable(_$AppDatabase db) => db
+      .linkedDevices
+      .createAlias('claims__claimant_device_id__linked_devices__device_id');
+
+  $$LinkedDevicesTableProcessedTableManager get claimantDeviceId {
+    final $_column = $_itemColumn<String>('claimant_device_id')!;
+
+    final manager = $$LinkedDevicesTableTableManager(
+      $_db,
+      $_db.linkedDevices,
+    ).filter((f) => f.deviceId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_claimantDeviceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$ClaimItemsTable, List<ClaimItemRow>>
+  _claimItemsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.claimItems,
+    aliasName: 'claims__id__claim_items__claim_id',
+  );
+
+  $$ClaimItemsTableProcessedTableManager get claimItemsRefs {
+    final manager = $$ClaimItemsTableTableManager(
+      $_db,
+      $_db.claimItems,
+    ).filter((f) => f.claimId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_claimItemsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ClaimsTableFilterComposer
+    extends Composer<_$AppDatabase, $ClaimsTable> {
+  $$ClaimsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<ClaimStatus, ClaimStatus, String> get status =>
+      $composableBuilder(
+        column: $table.status,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  ColumnFilters<DateTime> get submittedAt => $composableBuilder(
+    column: $table.submittedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get paidAt => $composableBuilder(
+    column: $table.paidAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$LinkedDevicesTableFilterComposer get claimantDeviceId {
+    final $$LinkedDevicesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimantDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableFilterComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> claimItemsRefs(
+    Expression<bool> Function($$ClaimItemsTableFilterComposer f) f,
+  ) {
+    final $$ClaimItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.claimId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ClaimsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClaimsTable> {
+  $$ClaimsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get submittedAt => $composableBuilder(
+    column: $table.submittedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get paidAt => $composableBuilder(
+    column: $table.paidAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$LinkedDevicesTableOrderingComposer get claimantDeviceId {
+    final $$LinkedDevicesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimantDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableOrderingComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClaimsTable> {
+  $$ClaimsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<ClaimStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get submittedAt => $composableBuilder(
+    column: $table.submittedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get paidAt =>
+      $composableBuilder(column: $table.paidAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$LinkedDevicesTableAnnotationComposer get claimantDeviceId {
+    final $$LinkedDevicesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimantDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> claimItemsRefs<T extends Object>(
+    Expression<T> Function($$ClaimItemsTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimItemsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.claimId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ClaimsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClaimsTable,
+          ClaimRow,
+          $$ClaimsTableFilterComposer,
+          $$ClaimsTableOrderingComposer,
+          $$ClaimsTableAnnotationComposer,
+          $$ClaimsTableCreateCompanionBuilder,
+          $$ClaimsTableUpdateCompanionBuilder,
+          (ClaimRow, $$ClaimsTableReferences),
+          ClaimRow,
+          PrefetchHooks Function({bool claimantDeviceId, bool claimItemsRefs})
+        > {
+  $$ClaimsTableTableManager(_$AppDatabase db, $ClaimsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClaimsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClaimsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClaimsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> claimantDeviceId = const Value.absent(),
+                Value<ClaimStatus> status = const Value.absent(),
+                Value<DateTime?> submittedAt = const Value.absent(),
+                Value<DateTime?> paidAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimsCompanion(
+                id: id,
+                claimantDeviceId: claimantDeviceId,
+                status: status,
+                submittedAt: submittedAt,
+                paidAt: paidAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String claimantDeviceId,
+                required ClaimStatus status,
+                Value<DateTime?> submittedAt = const Value.absent(),
+                Value<DateTime?> paidAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimsCompanion.insert(
+                id: id,
+                claimantDeviceId: claimantDeviceId,
+                status: status,
+                submittedAt: submittedAt,
+                paidAt: paidAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ClaimsTable, ClaimRow>(table),
+                  $$ClaimsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({claimantDeviceId = false, claimItemsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [if (claimItemsRefs) db.claimItems],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (claimantDeviceId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.claimantDeviceId,
+                                    referencedTable: $$ClaimsTableReferences
+                                        ._claimantDeviceIdTable(db),
+                                    referencedColumn: $$ClaimsTableReferences
+                                        ._claimantDeviceIdTable(db)
+                                        .deviceId,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (claimItemsRefs)
+                        await $_getPrefetchedData<
+                          ClaimRow,
+                          $ClaimsTable,
+                          ClaimItemRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ClaimsTableReferences
+                              ._claimItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ClaimsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.claimId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ClaimsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClaimsTable,
+      ClaimRow,
+      $$ClaimsTableFilterComposer,
+      $$ClaimsTableOrderingComposer,
+      $$ClaimsTableAnnotationComposer,
+      $$ClaimsTableCreateCompanionBuilder,
+      $$ClaimsTableUpdateCompanionBuilder,
+      (ClaimRow, $$ClaimsTableReferences),
+      ClaimRow,
+      PrefetchHooks Function({bool claimantDeviceId, bool claimItemsRefs})
+    >;
+typedef $$ClaimItemsTableCreateCompanionBuilder =
+    ClaimItemsCompanion Function({
+      Value<String> id,
+      required String claimId,
+      required String categoryId,
+      required String expenseDate,
+      Value<String?> description,
+      required String paidCurrency,
+      required int paidAmountMinor,
+      Value<double?> employeeStatedRate,
+      Value<double?> rateUsed,
+      required int companyCurrencyAmountMinor,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$ClaimItemsTableUpdateCompanionBuilder =
+    ClaimItemsCompanion Function({
+      Value<String> id,
+      Value<String> claimId,
+      Value<String> categoryId,
+      Value<String> expenseDate,
+      Value<String?> description,
+      Value<String> paidCurrency,
+      Value<int> paidAmountMinor,
+      Value<double?> employeeStatedRate,
+      Value<double?> rateUsed,
+      Value<int> companyCurrencyAmountMinor,
+      Value<int> sortOrder,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$ClaimItemsTableReferences
+    extends BaseReferences<_$AppDatabase, $ClaimItemsTable, ClaimItemRow> {
+  $$ClaimItemsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $ClaimsTable _claimIdTable(_$AppDatabase db) =>
+      db.claims.createAlias('claim_items__claim_id__claims__id');
+
+  $$ClaimsTableProcessedTableManager get claimId {
+    final $_column = $_itemColumn<String>('claim_id')!;
+
+    final manager = $$ClaimsTableTableManager(
+      $_db,
+      $_db.claims,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_claimIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $AccountsTable _categoryIdTable(_$AppDatabase db) =>
+      db.accounts.createAlias('claim_items__category_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<String>('category_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $ClaimItemDecisionsTable,
+    List<ClaimItemDecisionRow>
+  >
+  _claimItemDecisionsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.claimItemDecisions,
+        aliasName: 'claim_items__id__claim_item_decisions__claim_item_id',
+      );
+
+  $$ClaimItemDecisionsTableProcessedTableManager get claimItemDecisionsRefs {
+    final manager = $$ClaimItemDecisionsTableTableManager(
+      $_db,
+      $_db.claimItemDecisions,
+    ).filter((f) => f.claimItemId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _claimItemDecisionsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ClaimReceiptsTable, List<ClaimReceiptRow>>
+  _claimReceiptsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.claimReceipts,
+    aliasName: 'claim_items__id__claim_receipts__claim_item_id',
+  );
+
+  $$ClaimReceiptsTableProcessedTableManager get claimReceiptsRefs {
+    final manager = $$ClaimReceiptsTableTableManager(
+      $_db,
+      $_db.claimReceipts,
+    ).filter((f) => f.claimItemId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_claimReceiptsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ClaimItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $ClaimItemsTable> {
+  $$ClaimItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get expenseDate => $composableBuilder(
+    column: $table.expenseDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get paidCurrency => $composableBuilder(
+    column: $table.paidCurrency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get paidAmountMinor => $composableBuilder(
+    column: $table.paidAmountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get employeeStatedRate => $composableBuilder(
+    column: $table.employeeStatedRate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get rateUsed => $composableBuilder(
+    column: $table.rateUsed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get companyCurrencyAmountMinor => $composableBuilder(
+    column: $table.companyCurrencyAmountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ClaimsTableFilterComposer get claimId {
+    final $$ClaimsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimId,
+      referencedTable: $db.claims,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimsTableFilterComposer(
+            $db: $db,
+            $table: $db.claims,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableFilterComposer get categoryId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> claimItemDecisionsRefs(
+    Expression<bool> Function($$ClaimItemDecisionsTableFilterComposer f) f,
+  ) {
+    final $$ClaimItemDecisionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimItemDecisions,
+      getReferencedColumn: (t) => t.claimItemId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemDecisionsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimItemDecisions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> claimReceiptsRefs(
+    Expression<bool> Function($$ClaimReceiptsTableFilterComposer f) f,
+  ) {
+    final $$ClaimReceiptsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimReceipts,
+      getReferencedColumn: (t) => t.claimItemId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimReceiptsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimReceipts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ClaimItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClaimItemsTable> {
+  $$ClaimItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get expenseDate => $composableBuilder(
+    column: $table.expenseDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get paidCurrency => $composableBuilder(
+    column: $table.paidCurrency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get paidAmountMinor => $composableBuilder(
+    column: $table.paidAmountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get employeeStatedRate => $composableBuilder(
+    column: $table.employeeStatedRate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get rateUsed => $composableBuilder(
+    column: $table.rateUsed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get companyCurrencyAmountMinor => $composableBuilder(
+    column: $table.companyCurrencyAmountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ClaimsTableOrderingComposer get claimId {
+    final $$ClaimsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimId,
+      referencedTable: $db.claims,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimsTableOrderingComposer(
+            $db: $db,
+            $table: $db.claims,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableOrderingComposer get categoryId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClaimItemsTable> {
+  $$ClaimItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get expenseDate => $composableBuilder(
+    column: $table.expenseDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get paidCurrency => $composableBuilder(
+    column: $table.paidCurrency,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get paidAmountMinor => $composableBuilder(
+    column: $table.paidAmountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get employeeStatedRate => $composableBuilder(
+    column: $table.employeeStatedRate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get rateUsed =>
+      $composableBuilder(column: $table.rateUsed, builder: (column) => column);
+
+  GeneratedColumn<int> get companyCurrencyAmountMinor => $composableBuilder(
+    column: $table.companyCurrencyAmountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$ClaimsTableAnnotationComposer get claimId {
+    final $$ClaimsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimId,
+      referencedTable: $db.claims,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claims,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableAnnotationComposer get categoryId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> claimItemDecisionsRefs<T extends Object>(
+    Expression<T> Function($$ClaimItemDecisionsTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimItemDecisionsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.claimItemDecisions,
+          getReferencedColumn: (t) => t.claimItemId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ClaimItemDecisionsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.claimItemDecisions,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+
+  Expression<T> claimReceiptsRefs<T extends Object>(
+    Expression<T> Function($$ClaimReceiptsTableAnnotationComposer a) f,
+  ) {
+    final $$ClaimReceiptsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.claimReceipts,
+      getReferencedColumn: (t) => t.claimItemId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimReceiptsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claimReceipts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ClaimItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClaimItemsTable,
+          ClaimItemRow,
+          $$ClaimItemsTableFilterComposer,
+          $$ClaimItemsTableOrderingComposer,
+          $$ClaimItemsTableAnnotationComposer,
+          $$ClaimItemsTableCreateCompanionBuilder,
+          $$ClaimItemsTableUpdateCompanionBuilder,
+          (ClaimItemRow, $$ClaimItemsTableReferences),
+          ClaimItemRow,
+          PrefetchHooks Function({
+            bool claimId,
+            bool categoryId,
+            bool claimItemDecisionsRefs,
+            bool claimReceiptsRefs,
+          })
+        > {
+  $$ClaimItemsTableTableManager(_$AppDatabase db, $ClaimItemsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClaimItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClaimItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClaimItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> claimId = const Value.absent(),
+                Value<String> categoryId = const Value.absent(),
+                Value<String> expenseDate = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String> paidCurrency = const Value.absent(),
+                Value<int> paidAmountMinor = const Value.absent(),
+                Value<double?> employeeStatedRate = const Value.absent(),
+                Value<double?> rateUsed = const Value.absent(),
+                Value<int> companyCurrencyAmountMinor = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimItemsCompanion(
+                id: id,
+                claimId: claimId,
+                categoryId: categoryId,
+                expenseDate: expenseDate,
+                description: description,
+                paidCurrency: paidCurrency,
+                paidAmountMinor: paidAmountMinor,
+                employeeStatedRate: employeeStatedRate,
+                rateUsed: rateUsed,
+                companyCurrencyAmountMinor: companyCurrencyAmountMinor,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String claimId,
+                required String categoryId,
+                required String expenseDate,
+                Value<String?> description = const Value.absent(),
+                required String paidCurrency,
+                required int paidAmountMinor,
+                Value<double?> employeeStatedRate = const Value.absent(),
+                Value<double?> rateUsed = const Value.absent(),
+                required int companyCurrencyAmountMinor,
+                Value<int> sortOrder = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimItemsCompanion.insert(
+                id: id,
+                claimId: claimId,
+                categoryId: categoryId,
+                expenseDate: expenseDate,
+                description: description,
+                paidCurrency: paidCurrency,
+                paidAmountMinor: paidAmountMinor,
+                employeeStatedRate: employeeStatedRate,
+                rateUsed: rateUsed,
+                companyCurrencyAmountMinor: companyCurrencyAmountMinor,
+                sortOrder: sortOrder,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ClaimItemsTable, ClaimItemRow>(table),
+                  $$ClaimItemsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                claimId = false,
+                categoryId = false,
+                claimItemDecisionsRefs = false,
+                claimReceiptsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (claimItemDecisionsRefs) db.claimItemDecisions,
+                    if (claimReceiptsRefs) db.claimReceipts,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (claimId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.claimId,
+                                    referencedTable: $$ClaimItemsTableReferences
+                                        ._claimIdTable(db),
+                                    referencedColumn:
+                                        $$ClaimItemsTableReferences
+                                            ._claimIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (categoryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.categoryId,
+                                    referencedTable: $$ClaimItemsTableReferences
+                                        ._categoryIdTable(db),
+                                    referencedColumn:
+                                        $$ClaimItemsTableReferences
+                                            ._categoryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (claimItemDecisionsRefs)
+                        await $_getPrefetchedData<
+                          ClaimItemRow,
+                          $ClaimItemsTable,
+                          ClaimItemDecisionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ClaimItemsTableReferences
+                              ._claimItemDecisionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ClaimItemsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimItemDecisionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.claimItemId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (claimReceiptsRefs)
+                        await $_getPrefetchedData<
+                          ClaimItemRow,
+                          $ClaimItemsTable,
+                          ClaimReceiptRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ClaimItemsTableReferences
+                              ._claimReceiptsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ClaimItemsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).claimReceiptsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.claimItemId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ClaimItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClaimItemsTable,
+      ClaimItemRow,
+      $$ClaimItemsTableFilterComposer,
+      $$ClaimItemsTableOrderingComposer,
+      $$ClaimItemsTableAnnotationComposer,
+      $$ClaimItemsTableCreateCompanionBuilder,
+      $$ClaimItemsTableUpdateCompanionBuilder,
+      (ClaimItemRow, $$ClaimItemsTableReferences),
+      ClaimItemRow,
+      PrefetchHooks Function({
+        bool claimId,
+        bool categoryId,
+        bool claimItemDecisionsRefs,
+        bool claimReceiptsRefs,
+      })
+    >;
+typedef $$ClaimItemDecisionsTableCreateCompanionBuilder =
+    ClaimItemDecisionsCompanion Function({
+      Value<String> id,
+      required String claimItemId,
+      required ClaimItemDecisionKind kind,
+      Value<int?> approvedAmountMinor,
+      Value<String?> reason,
+      required String decidedByDeviceId,
+      required DateTime decidedAt,
+      Value<String?> postedEntryId,
+      Value<int> rowid,
+    });
+typedef $$ClaimItemDecisionsTableUpdateCompanionBuilder =
+    ClaimItemDecisionsCompanion Function({
+      Value<String> id,
+      Value<String> claimItemId,
+      Value<ClaimItemDecisionKind> kind,
+      Value<int?> approvedAmountMinor,
+      Value<String?> reason,
+      Value<String> decidedByDeviceId,
+      Value<DateTime> decidedAt,
+      Value<String?> postedEntryId,
+      Value<int> rowid,
+    });
+
+final class $$ClaimItemDecisionsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ClaimItemDecisionsTable,
+          ClaimItemDecisionRow
+        > {
+  $$ClaimItemDecisionsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ClaimItemsTable _claimItemIdTable(_$AppDatabase db) => db.claimItems
+      .createAlias('claim_item_decisions__claim_item_id__claim_items__id');
+
+  $$ClaimItemsTableProcessedTableManager get claimItemId {
+    final $_column = $_itemColumn<String>('claim_item_id')!;
+
+    final manager = $$ClaimItemsTableTableManager(
+      $_db,
+      $_db.claimItems,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_claimItemIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $LinkedDevicesTable _decidedByDeviceIdTable(_$AppDatabase db) =>
+      db.linkedDevices.createAlias(
+        'claim_item_decisions__decided_by_device_id__linked_devices__device_id',
+      );
+
+  $$LinkedDevicesTableProcessedTableManager get decidedByDeviceId {
+    final $_column = $_itemColumn<String>('decided_by_device_id')!;
+
+    final manager = $$LinkedDevicesTableTableManager(
+      $_db,
+      $_db.linkedDevices,
+    ).filter((f) => f.deviceId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_decidedByDeviceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $JournalEntriesTable _postedEntryIdTable(_$AppDatabase db) =>
+      db.journalEntries.createAlias(
+        'claim_item_decisions__posted_entry_id__journal_entries__id',
+      );
+
+  $$JournalEntriesTableProcessedTableManager? get postedEntryId {
+    final $_column = $_itemColumn<String>('posted_entry_id');
+    if ($_column == null) return null;
+    final manager = $$JournalEntriesTableTableManager(
+      $_db,
+      $_db.journalEntries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_postedEntryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ClaimItemDecisionsTableFilterComposer
+    extends Composer<_$AppDatabase, $ClaimItemDecisionsTable> {
+  $$ClaimItemDecisionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<
+    ClaimItemDecisionKind,
+    ClaimItemDecisionKind,
+    String
+  >
+  get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<int> get approvedAmountMinor => $composableBuilder(
+    column: $table.approvedAmountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reason => $composableBuilder(
+    column: $table.reason,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get decidedAt => $composableBuilder(
+    column: $table.decidedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ClaimItemsTableFilterComposer get claimItemId {
+    final $$ClaimItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimItemId,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$LinkedDevicesTableFilterComposer get decidedByDeviceId {
+    final $$LinkedDevicesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decidedByDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableFilterComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableFilterComposer get postedEntryId {
+    final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.postedEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimItemDecisionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClaimItemDecisionsTable> {
+  $$ClaimItemDecisionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get approvedAmountMinor => $composableBuilder(
+    column: $table.approvedAmountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reason => $composableBuilder(
+    column: $table.reason,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get decidedAt => $composableBuilder(
+    column: $table.decidedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ClaimItemsTableOrderingComposer get claimItemId {
+    final $$ClaimItemsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimItemId,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableOrderingComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$LinkedDevicesTableOrderingComposer get decidedByDeviceId {
+    final $$LinkedDevicesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decidedByDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableOrderingComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableOrderingComposer get postedEntryId {
+    final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.postedEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimItemDecisionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClaimItemDecisionsTable> {
+  $$ClaimItemDecisionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<ClaimItemDecisionKind, String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<int> get approvedAmountMinor => $composableBuilder(
+    column: $table.approvedAmountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get reason =>
+      $composableBuilder(column: $table.reason, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get decidedAt =>
+      $composableBuilder(column: $table.decidedAt, builder: (column) => column);
+
+  $$ClaimItemsTableAnnotationComposer get claimItemId {
+    final $$ClaimItemsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimItemId,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$LinkedDevicesTableAnnotationComposer get decidedByDeviceId {
+    final $$LinkedDevicesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.decidedByDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableAnnotationComposer get postedEntryId {
+    final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.postedEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimItemDecisionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClaimItemDecisionsTable,
+          ClaimItemDecisionRow,
+          $$ClaimItemDecisionsTableFilterComposer,
+          $$ClaimItemDecisionsTableOrderingComposer,
+          $$ClaimItemDecisionsTableAnnotationComposer,
+          $$ClaimItemDecisionsTableCreateCompanionBuilder,
+          $$ClaimItemDecisionsTableUpdateCompanionBuilder,
+          (ClaimItemDecisionRow, $$ClaimItemDecisionsTableReferences),
+          ClaimItemDecisionRow,
+          PrefetchHooks Function({
+            bool claimItemId,
+            bool decidedByDeviceId,
+            bool postedEntryId,
+          })
+        > {
+  $$ClaimItemDecisionsTableTableManager(
+    _$AppDatabase db,
+    $ClaimItemDecisionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClaimItemDecisionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClaimItemDecisionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClaimItemDecisionsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> claimItemId = const Value.absent(),
+                Value<ClaimItemDecisionKind> kind = const Value.absent(),
+                Value<int?> approvedAmountMinor = const Value.absent(),
+                Value<String?> reason = const Value.absent(),
+                Value<String> decidedByDeviceId = const Value.absent(),
+                Value<DateTime> decidedAt = const Value.absent(),
+                Value<String?> postedEntryId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimItemDecisionsCompanion(
+                id: id,
+                claimItemId: claimItemId,
+                kind: kind,
+                approvedAmountMinor: approvedAmountMinor,
+                reason: reason,
+                decidedByDeviceId: decidedByDeviceId,
+                decidedAt: decidedAt,
+                postedEntryId: postedEntryId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String claimItemId,
+                required ClaimItemDecisionKind kind,
+                Value<int?> approvedAmountMinor = const Value.absent(),
+                Value<String?> reason = const Value.absent(),
+                required String decidedByDeviceId,
+                required DateTime decidedAt,
+                Value<String?> postedEntryId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimItemDecisionsCompanion.insert(
+                id: id,
+                claimItemId: claimItemId,
+                kind: kind,
+                approvedAmountMinor: approvedAmountMinor,
+                reason: reason,
+                decidedByDeviceId: decidedByDeviceId,
+                decidedAt: decidedAt,
+                postedEntryId: postedEntryId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ClaimItemDecisionsTable, ClaimItemDecisionRow>(
+                    table,
+                  ),
+                  $$ClaimItemDecisionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                claimItemId = false,
+                decidedByDeviceId = false,
+                postedEntryId = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (claimItemId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.claimItemId,
+                                    referencedTable:
+                                        $$ClaimItemDecisionsTableReferences
+                                            ._claimItemIdTable(db),
+                                    referencedColumn:
+                                        $$ClaimItemDecisionsTableReferences
+                                            ._claimItemIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (decidedByDeviceId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.decidedByDeviceId,
+                                    referencedTable:
+                                        $$ClaimItemDecisionsTableReferences
+                                            ._decidedByDeviceIdTable(db),
+                                    referencedColumn:
+                                        $$ClaimItemDecisionsTableReferences
+                                            ._decidedByDeviceIdTable(db)
+                                            .deviceId,
+                                  )
+                                  as T;
+                        }
+                        if (postedEntryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.postedEntryId,
+                                    referencedTable:
+                                        $$ClaimItemDecisionsTableReferences
+                                            ._postedEntryIdTable(db),
+                                    referencedColumn:
+                                        $$ClaimItemDecisionsTableReferences
+                                            ._postedEntryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ClaimItemDecisionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClaimItemDecisionsTable,
+      ClaimItemDecisionRow,
+      $$ClaimItemDecisionsTableFilterComposer,
+      $$ClaimItemDecisionsTableOrderingComposer,
+      $$ClaimItemDecisionsTableAnnotationComposer,
+      $$ClaimItemDecisionsTableCreateCompanionBuilder,
+      $$ClaimItemDecisionsTableUpdateCompanionBuilder,
+      (ClaimItemDecisionRow, $$ClaimItemDecisionsTableReferences),
+      ClaimItemDecisionRow,
+      PrefetchHooks Function({
+        bool claimItemId,
+        bool decidedByDeviceId,
+        bool postedEntryId,
+      })
+    >;
+typedef $$ClaimReceiptsTableCreateCompanionBuilder =
+    ClaimReceiptsCompanion Function({
+      Value<String> id,
+      required String claimItemId,
+      required String contentType,
+      required String fileName,
+      required int byteSize,
+      required String contentHash,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$ClaimReceiptsTableUpdateCompanionBuilder =
+    ClaimReceiptsCompanion Function({
+      Value<String> id,
+      Value<String> claimItemId,
+      Value<String> contentType,
+      Value<String> fileName,
+      Value<int> byteSize,
+      Value<String> contentHash,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$ClaimReceiptsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $ClaimReceiptsTable, ClaimReceiptRow> {
+  $$ClaimReceiptsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ClaimItemsTable _claimItemIdTable(_$AppDatabase db) => db.claimItems
+      .createAlias('claim_receipts__claim_item_id__claim_items__id');
+
+  $$ClaimItemsTableProcessedTableManager get claimItemId {
+    final $_column = $_itemColumn<String>('claim_item_id')!;
+
+    final manager = $$ClaimItemsTableTableManager(
+      $_db,
+      $_db.claimItems,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_claimItemIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ClaimReceiptsTableFilterComposer
+    extends Composer<_$AppDatabase, $ClaimReceiptsTable> {
+  $$ClaimReceiptsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get contentType => $composableBuilder(
+    column: $table.contentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fileName => $composableBuilder(
+    column: $table.fileName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get byteSize => $composableBuilder(
+    column: $table.byteSize,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get contentHash => $composableBuilder(
+    column: $table.contentHash,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ClaimItemsTableFilterComposer get claimItemId {
+    final $$ClaimItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimItemId,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimReceiptsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClaimReceiptsTable> {
+  $$ClaimReceiptsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get contentType => $composableBuilder(
+    column: $table.contentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fileName => $composableBuilder(
+    column: $table.fileName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get byteSize => $composableBuilder(
+    column: $table.byteSize,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get contentHash => $composableBuilder(
+    column: $table.contentHash,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ClaimItemsTableOrderingComposer get claimItemId {
+    final $$ClaimItemsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimItemId,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableOrderingComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimReceiptsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClaimReceiptsTable> {
+  $$ClaimReceiptsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get contentType => $composableBuilder(
+    column: $table.contentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get fileName =>
+      $composableBuilder(column: $table.fileName, builder: (column) => column);
+
+  GeneratedColumn<int> get byteSize =>
+      $composableBuilder(column: $table.byteSize, builder: (column) => column);
+
+  GeneratedColumn<String> get contentHash => $composableBuilder(
+    column: $table.contentHash,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$ClaimItemsTableAnnotationComposer get claimItemId {
+    final $$ClaimItemsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimItemId,
+      referencedTable: $db.claimItems,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ClaimItemsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.claimItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimReceiptsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClaimReceiptsTable,
+          ClaimReceiptRow,
+          $$ClaimReceiptsTableFilterComposer,
+          $$ClaimReceiptsTableOrderingComposer,
+          $$ClaimReceiptsTableAnnotationComposer,
+          $$ClaimReceiptsTableCreateCompanionBuilder,
+          $$ClaimReceiptsTableUpdateCompanionBuilder,
+          (ClaimReceiptRow, $$ClaimReceiptsTableReferences),
+          ClaimReceiptRow,
+          PrefetchHooks Function({bool claimItemId})
+        > {
+  $$ClaimReceiptsTableTableManager(_$AppDatabase db, $ClaimReceiptsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClaimReceiptsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClaimReceiptsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClaimReceiptsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> claimItemId = const Value.absent(),
+                Value<String> contentType = const Value.absent(),
+                Value<String> fileName = const Value.absent(),
+                Value<int> byteSize = const Value.absent(),
+                Value<String> contentHash = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimReceiptsCompanion(
+                id: id,
+                claimItemId: claimItemId,
+                contentType: contentType,
+                fileName: fileName,
+                byteSize: byteSize,
+                contentHash: contentHash,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String claimItemId,
+                required String contentType,
+                required String fileName,
+                required int byteSize,
+                required String contentHash,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimReceiptsCompanion.insert(
+                id: id,
+                claimItemId: claimItemId,
+                contentType: contentType,
+                fileName: fileName,
+                byteSize: byteSize,
+                contentHash: contentHash,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ClaimReceiptsTable, ClaimReceiptRow>(table),
+                  $$ClaimReceiptsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({claimItemId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (claimItemId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.claimItemId,
+                                referencedTable: $$ClaimReceiptsTableReferences
+                                    ._claimItemIdTable(db),
+                                referencedColumn: $$ClaimReceiptsTableReferences
+                                    ._claimItemIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ClaimReceiptsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClaimReceiptsTable,
+      ClaimReceiptRow,
+      $$ClaimReceiptsTableFilterComposer,
+      $$ClaimReceiptsTableOrderingComposer,
+      $$ClaimReceiptsTableAnnotationComposer,
+      $$ClaimReceiptsTableCreateCompanionBuilder,
+      $$ClaimReceiptsTableUpdateCompanionBuilder,
+      (ClaimReceiptRow, $$ClaimReceiptsTableReferences),
+      ClaimReceiptRow,
+      PrefetchHooks Function({bool claimItemId})
+    >;
+typedef $$ClaimAdvancesTableCreateCompanionBuilder =
+    ClaimAdvancesCompanion Function({
+      Value<String> id,
+      required String claimantDeviceId,
+      required int amountMinor,
+      required String paidFromAccountId,
+      required String postedEntryId,
+      Value<String?> description,
+      required DateTime recordedAt,
+      Value<int> rowid,
+    });
+typedef $$ClaimAdvancesTableUpdateCompanionBuilder =
+    ClaimAdvancesCompanion Function({
+      Value<String> id,
+      Value<String> claimantDeviceId,
+      Value<int> amountMinor,
+      Value<String> paidFromAccountId,
+      Value<String> postedEntryId,
+      Value<String?> description,
+      Value<DateTime> recordedAt,
+      Value<int> rowid,
+    });
+
+final class $$ClaimAdvancesTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $ClaimAdvancesTable, ClaimAdvanceRow> {
+  $$ClaimAdvancesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $LinkedDevicesTable _claimantDeviceIdTable(_$AppDatabase db) =>
+      db.linkedDevices.createAlias(
+        'claim_advances__claimant_device_id__linked_devices__device_id',
+      );
+
+  $$LinkedDevicesTableProcessedTableManager get claimantDeviceId {
+    final $_column = $_itemColumn<String>('claimant_device_id')!;
+
+    final manager = $$LinkedDevicesTableTableManager(
+      $_db,
+      $_db.linkedDevices,
+    ).filter((f) => f.deviceId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_claimantDeviceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $AccountsTable _paidFromAccountIdTable(_$AppDatabase db) => db.accounts
+      .createAlias('claim_advances__paid_from_account_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get paidFromAccountId {
+    final $_column = $_itemColumn<String>('paid_from_account_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_paidFromAccountIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $JournalEntriesTable _postedEntryIdTable(_$AppDatabase db) => db
+      .journalEntries
+      .createAlias('claim_advances__posted_entry_id__journal_entries__id');
+
+  $$JournalEntriesTableProcessedTableManager get postedEntryId {
+    final $_column = $_itemColumn<String>('posted_entry_id')!;
+
+    final manager = $$JournalEntriesTableTableManager(
+      $_db,
+      $_db.journalEntries,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_postedEntryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ClaimAdvancesTableFilterComposer
+    extends Composer<_$AppDatabase, $ClaimAdvancesTable> {
+  $$ClaimAdvancesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get recordedAt => $composableBuilder(
+    column: $table.recordedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$LinkedDevicesTableFilterComposer get claimantDeviceId {
+    final $$LinkedDevicesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimantDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableFilterComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableFilterComposer get paidFromAccountId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.paidFromAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableFilterComposer get postedEntryId {
+    final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.postedEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableFilterComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimAdvancesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClaimAdvancesTable> {
+  $$ClaimAdvancesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get recordedAt => $composableBuilder(
+    column: $table.recordedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$LinkedDevicesTableOrderingComposer get claimantDeviceId {
+    final $$LinkedDevicesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimantDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableOrderingComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableOrderingComposer get paidFromAccountId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.paidFromAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableOrderingComposer get postedEntryId {
+    final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.postedEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimAdvancesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClaimAdvancesTable> {
+  $$ClaimAdvancesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get recordedAt => $composableBuilder(
+    column: $table.recordedAt,
+    builder: (column) => column,
+  );
+
+  $$LinkedDevicesTableAnnotationComposer get claimantDeviceId {
+    final $$LinkedDevicesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.claimantDeviceId,
+      referencedTable: $db.linkedDevices,
+      getReferencedColumn: (t) => t.deviceId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LinkedDevicesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.linkedDevices,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$AccountsTableAnnotationComposer get paidFromAccountId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.paidFromAccountId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$JournalEntriesTableAnnotationComposer get postedEntryId {
+    final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.postedEntryId,
+      referencedTable: $db.journalEntries,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$JournalEntriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.journalEntries,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimAdvancesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClaimAdvancesTable,
+          ClaimAdvanceRow,
+          $$ClaimAdvancesTableFilterComposer,
+          $$ClaimAdvancesTableOrderingComposer,
+          $$ClaimAdvancesTableAnnotationComposer,
+          $$ClaimAdvancesTableCreateCompanionBuilder,
+          $$ClaimAdvancesTableUpdateCompanionBuilder,
+          (ClaimAdvanceRow, $$ClaimAdvancesTableReferences),
+          ClaimAdvanceRow,
+          PrefetchHooks Function({
+            bool claimantDeviceId,
+            bool paidFromAccountId,
+            bool postedEntryId,
+          })
+        > {
+  $$ClaimAdvancesTableTableManager(_$AppDatabase db, $ClaimAdvancesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClaimAdvancesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClaimAdvancesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClaimAdvancesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> claimantDeviceId = const Value.absent(),
+                Value<int> amountMinor = const Value.absent(),
+                Value<String> paidFromAccountId = const Value.absent(),
+                Value<String> postedEntryId = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<DateTime> recordedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimAdvancesCompanion(
+                id: id,
+                claimantDeviceId: claimantDeviceId,
+                amountMinor: amountMinor,
+                paidFromAccountId: paidFromAccountId,
+                postedEntryId: postedEntryId,
+                description: description,
+                recordedAt: recordedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                required String claimantDeviceId,
+                required int amountMinor,
+                required String paidFromAccountId,
+                required String postedEntryId,
+                Value<String?> description = const Value.absent(),
+                required DateTime recordedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimAdvancesCompanion.insert(
+                id: id,
+                claimantDeviceId: claimantDeviceId,
+                amountMinor: amountMinor,
+                paidFromAccountId: paidFromAccountId,
+                postedEntryId: postedEntryId,
+                description: description,
+                recordedAt: recordedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ClaimAdvancesTable, ClaimAdvanceRow>(table),
+                  $$ClaimAdvancesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                claimantDeviceId = false,
+                paidFromAccountId = false,
+                postedEntryId = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (claimantDeviceId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.claimantDeviceId,
+                                    referencedTable:
+                                        $$ClaimAdvancesTableReferences
+                                            ._claimantDeviceIdTable(db),
+                                    referencedColumn:
+                                        $$ClaimAdvancesTableReferences
+                                            ._claimantDeviceIdTable(db)
+                                            .deviceId,
+                                  )
+                                  as T;
+                        }
+                        if (paidFromAccountId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.paidFromAccountId,
+                                    referencedTable:
+                                        $$ClaimAdvancesTableReferences
+                                            ._paidFromAccountIdTable(db),
+                                    referencedColumn:
+                                        $$ClaimAdvancesTableReferences
+                                            ._paidFromAccountIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (postedEntryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.postedEntryId,
+                                    referencedTable:
+                                        $$ClaimAdvancesTableReferences
+                                            ._postedEntryIdTable(db),
+                                    referencedColumn:
+                                        $$ClaimAdvancesTableReferences
+                                            ._postedEntryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ClaimAdvancesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClaimAdvancesTable,
+      ClaimAdvanceRow,
+      $$ClaimAdvancesTableFilterComposer,
+      $$ClaimAdvancesTableOrderingComposer,
+      $$ClaimAdvancesTableAnnotationComposer,
+      $$ClaimAdvancesTableCreateCompanionBuilder,
+      $$ClaimAdvancesTableUpdateCompanionBuilder,
+      (ClaimAdvanceRow, $$ClaimAdvancesTableReferences),
+      ClaimAdvanceRow,
+      PrefetchHooks Function({
+        bool claimantDeviceId,
+        bool paidFromAccountId,
+        bool postedEntryId,
+      })
+    >;
+typedef $$ClaimCategoryAllowlistTableCreateCompanionBuilder =
+    ClaimCategoryAllowlistCompanion Function({
+      required String categoryId,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$ClaimCategoryAllowlistTableUpdateCompanionBuilder =
+    ClaimCategoryAllowlistCompanion Function({
+      Value<String> categoryId,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$ClaimCategoryAllowlistTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ClaimCategoryAllowlistTable,
+          ClaimCategoryAllowlistRow
+        > {
+  $$ClaimCategoryAllowlistTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $AccountsTable _categoryIdTable(_$AppDatabase db) => db.accounts
+      .createAlias('claim_category_allowlist__category_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<String>('category_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ClaimCategoryAllowlistTableFilterComposer
+    extends Composer<_$AppDatabase, $ClaimCategoryAllowlistTable> {
+  $$ClaimCategoryAllowlistTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AccountsTableFilterComposer get categoryId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimCategoryAllowlistTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClaimCategoryAllowlistTable> {
+  $$ClaimCategoryAllowlistTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$AccountsTableOrderingComposer get categoryId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimCategoryAllowlistTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClaimCategoryAllowlistTable> {
+  $$ClaimCategoryAllowlistTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$AccountsTableAnnotationComposer get categoryId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimCategoryAllowlistTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClaimCategoryAllowlistTable,
+          ClaimCategoryAllowlistRow,
+          $$ClaimCategoryAllowlistTableFilterComposer,
+          $$ClaimCategoryAllowlistTableOrderingComposer,
+          $$ClaimCategoryAllowlistTableAnnotationComposer,
+          $$ClaimCategoryAllowlistTableCreateCompanionBuilder,
+          $$ClaimCategoryAllowlistTableUpdateCompanionBuilder,
+          (ClaimCategoryAllowlistRow, $$ClaimCategoryAllowlistTableReferences),
+          ClaimCategoryAllowlistRow,
+          PrefetchHooks Function({bool categoryId})
+        > {
+  $$ClaimCategoryAllowlistTableTableManager(
+    _$AppDatabase db,
+    $ClaimCategoryAllowlistTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClaimCategoryAllowlistTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ClaimCategoryAllowlistTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ClaimCategoryAllowlistTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> categoryId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimCategoryAllowlistCompanion(
+                categoryId: categoryId,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String categoryId,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimCategoryAllowlistCompanion.insert(
+                categoryId: categoryId,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $ClaimCategoryAllowlistTable,
+                    ClaimCategoryAllowlistRow
+                  >(table),
+                  $$ClaimCategoryAllowlistTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({categoryId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (categoryId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.categoryId,
+                                referencedTable:
+                                    $$ClaimCategoryAllowlistTableReferences
+                                        ._categoryIdTable(db),
+                                referencedColumn:
+                                    $$ClaimCategoryAllowlistTableReferences
+                                        ._categoryIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ClaimCategoryAllowlistTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClaimCategoryAllowlistTable,
+      ClaimCategoryAllowlistRow,
+      $$ClaimCategoryAllowlistTableFilterComposer,
+      $$ClaimCategoryAllowlistTableOrderingComposer,
+      $$ClaimCategoryAllowlistTableAnnotationComposer,
+      $$ClaimCategoryAllowlistTableCreateCompanionBuilder,
+      $$ClaimCategoryAllowlistTableUpdateCompanionBuilder,
+      (ClaimCategoryAllowlistRow, $$ClaimCategoryAllowlistTableReferences),
+      ClaimCategoryAllowlistRow,
+      PrefetchHooks Function({bool categoryId})
+    >;
+typedef $$ClaimSpendingHintsTableCreateCompanionBuilder =
+    ClaimSpendingHintsCompanion Function({
+      required String categoryId,
+      required int maxAmountMinor,
+      required String unitLabel,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+typedef $$ClaimSpendingHintsTableUpdateCompanionBuilder =
+    ClaimSpendingHintsCompanion Function({
+      Value<String> categoryId,
+      Value<int> maxAmountMinor,
+      Value<String> unitLabel,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+final class $$ClaimSpendingHintsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ClaimSpendingHintsTable,
+          ClaimSpendingHintRow
+        > {
+  $$ClaimSpendingHintsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $AccountsTable _categoryIdTable(_$AppDatabase db) => db.accounts
+      .createAlias('claim_spending_hints__category_id__accounts__id');
+
+  $$AccountsTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<String>('category_id')!;
+
+    final manager = $$AccountsTableTableManager(
+      $_db,
+      $_db.accounts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ClaimSpendingHintsTableFilterComposer
+    extends Composer<_$AppDatabase, $ClaimSpendingHintsTable> {
+  $$ClaimSpendingHintsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get maxAmountMinor => $composableBuilder(
+    column: $table.maxAmountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get unitLabel => $composableBuilder(
+    column: $table.unitLabel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$AccountsTableFilterComposer get categoryId {
+    final $$AccountsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableFilterComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimSpendingHintsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ClaimSpendingHintsTable> {
+  $$ClaimSpendingHintsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get maxAmountMinor => $composableBuilder(
+    column: $table.maxAmountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get unitLabel => $composableBuilder(
+    column: $table.unitLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$AccountsTableOrderingComposer get categoryId {
+    final $$AccountsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableOrderingComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimSpendingHintsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ClaimSpendingHintsTable> {
+  $$ClaimSpendingHintsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get maxAmountMinor => $composableBuilder(
+    column: $table.maxAmountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get unitLabel =>
+      $composableBuilder(column: $table.unitLabel, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  $$AccountsTableAnnotationComposer get categoryId {
+    final $$AccountsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.accounts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$AccountsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.accounts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ClaimSpendingHintsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ClaimSpendingHintsTable,
+          ClaimSpendingHintRow,
+          $$ClaimSpendingHintsTableFilterComposer,
+          $$ClaimSpendingHintsTableOrderingComposer,
+          $$ClaimSpendingHintsTableAnnotationComposer,
+          $$ClaimSpendingHintsTableCreateCompanionBuilder,
+          $$ClaimSpendingHintsTableUpdateCompanionBuilder,
+          (ClaimSpendingHintRow, $$ClaimSpendingHintsTableReferences),
+          ClaimSpendingHintRow,
+          PrefetchHooks Function({bool categoryId})
+        > {
+  $$ClaimSpendingHintsTableTableManager(
+    _$AppDatabase db,
+    $ClaimSpendingHintsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ClaimSpendingHintsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ClaimSpendingHintsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ClaimSpendingHintsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> categoryId = const Value.absent(),
+                Value<int> maxAmountMinor = const Value.absent(),
+                Value<String> unitLabel = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimSpendingHintsCompanion(
+                categoryId: categoryId,
+                maxAmountMinor: maxAmountMinor,
+                unitLabel: unitLabel,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String categoryId,
+                required int maxAmountMinor,
+                required String unitLabel,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ClaimSpendingHintsCompanion.insert(
+                categoryId: categoryId,
+                maxAmountMinor: maxAmountMinor,
+                unitLabel: unitLabel,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ClaimSpendingHintsTable, ClaimSpendingHintRow>(
+                    table,
+                  ),
+                  $$ClaimSpendingHintsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({categoryId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (categoryId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.categoryId,
+                                referencedTable:
+                                    $$ClaimSpendingHintsTableReferences
+                                        ._categoryIdTable(db),
+                                referencedColumn:
+                                    $$ClaimSpendingHintsTableReferences
+                                        ._categoryIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ClaimSpendingHintsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ClaimSpendingHintsTable,
+      ClaimSpendingHintRow,
+      $$ClaimSpendingHintsTableFilterComposer,
+      $$ClaimSpendingHintsTableOrderingComposer,
+      $$ClaimSpendingHintsTableAnnotationComposer,
+      $$ClaimSpendingHintsTableCreateCompanionBuilder,
+      $$ClaimSpendingHintsTableUpdateCompanionBuilder,
+      (ClaimSpendingHintRow, $$ClaimSpendingHintsTableReferences),
+      ClaimSpendingHintRow,
+      PrefetchHooks Function({bool categoryId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -24423,4 +32499,21 @@ class $AppDatabaseManager {
       $$MembershipNoticesTableTableManager(_db, _db.membershipNotices);
   $$PendingJoinRequestsTableTableManager get pendingJoinRequests =>
       $$PendingJoinRequestsTableTableManager(_db, _db.pendingJoinRequests);
+  $$ClaimsTableTableManager get claims =>
+      $$ClaimsTableTableManager(_db, _db.claims);
+  $$ClaimItemsTableTableManager get claimItems =>
+      $$ClaimItemsTableTableManager(_db, _db.claimItems);
+  $$ClaimItemDecisionsTableTableManager get claimItemDecisions =>
+      $$ClaimItemDecisionsTableTableManager(_db, _db.claimItemDecisions);
+  $$ClaimReceiptsTableTableManager get claimReceipts =>
+      $$ClaimReceiptsTableTableManager(_db, _db.claimReceipts);
+  $$ClaimAdvancesTableTableManager get claimAdvances =>
+      $$ClaimAdvancesTableTableManager(_db, _db.claimAdvances);
+  $$ClaimCategoryAllowlistTableTableManager get claimCategoryAllowlist =>
+      $$ClaimCategoryAllowlistTableTableManager(
+        _db,
+        _db.claimCategoryAllowlist,
+      );
+  $$ClaimSpendingHintsTableTableManager get claimSpendingHints =>
+      $$ClaimSpendingHintsTableTableManager(_db, _db.claimSpendingHints);
 }

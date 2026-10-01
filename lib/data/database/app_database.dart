@@ -14,6 +14,13 @@ import 'tables/books_set_metadata_table.dart';
 import 'tables/category_merge_map_table.dart';
 import 'tables/category_rules_table.dart';
 import 'tables/category_translations_table.dart';
+import 'tables/claim_advances_table.dart';
+import 'tables/claim_category_allowlist_table.dart';
+import 'tables/claim_item_decisions_table.dart';
+import 'tables/claim_items_table.dart';
+import 'tables/claim_receipts_table.dart';
+import 'tables/claim_spending_hints_table.dart';
+import 'tables/claims_table.dart';
 import 'tables/csv_import_profiles_table.dart';
 import 'tables/entry_verification_cache_table.dart';
 import 'tables/integrity_events_table.dart';
@@ -81,6 +88,13 @@ const starterExpenseCategories = [
     BooksSetMetadata,
     MembershipNotices,
     PendingJoinRequests,
+    Claims,
+    ClaimItems,
+    ClaimItemDecisions,
+    ClaimReceipts,
+    ClaimAdvances,
+    ClaimCategoryAllowlist,
+    ClaimSpendingHints,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -122,7 +136,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 21;
+  int get schemaVersion => 22;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -535,6 +549,49 @@ CREATE TABLE journal_entries__new (
           'ALTER TABLE journal_entries__new RENAME TO journal_entries',
         );
         await customStatement('PRAGMA foreign_keys = ON');
+      }
+
+      if (from < 22) {
+        // shared-accounts-and-expense-claims: role set + owed-to link on
+        // membership; claim / receipt / advance / allowlist / hint tables;
+        // receipt-required threshold on books metadata.
+        //
+        // Guard linked_devices column adds: a DB upgrading from < 19 gets
+        // linked_devices from createTable(linkedDevices) already including
+        // the new columns (current table definition). Only DBs that already
+        // had linked_devices (from >= 19) need addColumn.
+        if (from >= 19) {
+          await m.addColumn(linkedDevices, linkedDevices.rolesCsv);
+          await m.addColumn(linkedDevices, linkedDevices.owedToAccountId);
+          await m.addColumn(linkedDevices, linkedDevices.personDisplayName);
+          await customStatement(
+            "UPDATE linked_devices SET roles_csv = role "
+            "WHERE roles_csv IS NULL OR roles_csv = ''",
+          );
+        } else {
+          // Fresh linked_devices from from < 19 createTable already has
+          // rolesCsv default ''; backfill from role after create.
+          await customStatement(
+            "UPDATE linked_devices SET roles_csv = role "
+            "WHERE roles_csv IS NULL OR roles_csv = ''",
+          );
+        }
+
+        // books_set_metadata: same duplicate-column guard — created at 19.
+        if (from >= 19) {
+          await m.addColumn(
+            booksSetMetadata,
+            booksSetMetadata.receiptRequiredAboveMinor,
+          );
+        }
+
+        await m.createTable(claims);
+        await m.createTable(claimItems);
+        await m.createTable(claimItemDecisions);
+        await m.createTable(claimReceipts);
+        await m.createTable(claimAdvances);
+        await m.createTable(claimCategoryAllowlist);
+        await m.createTable(claimSpendingHints);
       }
     },
   );

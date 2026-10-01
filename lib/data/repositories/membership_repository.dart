@@ -91,7 +91,7 @@ class MembershipRepository {
       displayName: displayName,
       signingIdentityId: identity.identityId,
       deviceCertFingerprint: cert.fingerprint,
-      role: LinkedDeviceRole.owner,
+      roles: {LinkedDeviceRole.owner},
       canAdd: true,
       emitNotice: false,
     );
@@ -101,7 +101,7 @@ class MembershipRepository {
   Future<bool> canAddDevices(String actorDeviceId) async {
     final actor = await findByDeviceId(actorDeviceId);
     if (actor == null || !actor.isActive) return false;
-    if (actor.role == LinkedDeviceRole.owner) return true;
+    if (actor.hasRole(LinkedDeviceRole.owner)) return true;
     return actor.canAdd;
   }
 
@@ -109,14 +109,14 @@ class MembershipRepository {
     final device = await findByDeviceId(deviceId);
     return device != null &&
         device.isActive &&
-        device.role == LinkedDeviceRole.owner;
+        device.hasRole(LinkedDeviceRole.owner);
   }
 
   /// True when books have exactly one active Owner and at least one other
   /// active linked device (spec: Second Owner suggestion).
   Future<bool> shouldSuggestSecondOwner() async {
     final active = await listActiveDevices();
-    final owners = active.where((d) => d.role == LinkedDeviceRole.owner);
+    final owners = active.where((d) => d.hasRole(LinkedDeviceRole.owner));
     return owners.length == 1 && active.length >= 2;
   }
 
@@ -128,7 +128,10 @@ class MembershipRepository {
     required String signingIdentityId,
     required String deviceCertFingerprint,
     LinkedDeviceRole role = LinkedDeviceRole.member,
+    Set<LinkedDeviceRole>? roles,
     bool canAdd = false,
+    String? owedToAccountId,
+    String? personDisplayName,
   }) async {
     if (!await canAddDevices(actorDeviceId)) {
       throw const AppFailure(
@@ -136,7 +139,9 @@ class MembershipRepository {
         debugMessage: 'Not allowed to add a device.',
       );
     }
-    if (role == LinkedDeviceRole.owner && !await isOwner(actorDeviceId)) {
+    final roleSet = roles ?? {role};
+    if (roleSet.contains(LinkedDeviceRole.owner) &&
+        !await isOwner(actorDeviceId)) {
       throw const AppFailure(
         AppErrorCode.generic,
         debugMessage: 'Only an Owner can make another device an Owner.',
@@ -154,8 +159,10 @@ class MembershipRepository {
       displayName: displayName,
       signingIdentityId: signingIdentityId,
       deviceCertFingerprint: deviceCertFingerprint,
-      role: role,
-      canAdd: role == LinkedDeviceRole.owner ? true : canAdd,
+      roles: roleSet,
+      canAdd: roleSet.contains(LinkedDeviceRole.owner) ? true : canAdd,
+      owedToAccountId: owedToAccountId,
+      personDisplayName: personDisplayName,
     );
   }
 
@@ -301,9 +308,15 @@ class MembershipRepository {
     await (_db.update(
       _db.linkedDevices,
     )..where((t) => t.deviceId.equals(targetDeviceId))).write(
-      const LinkedDevicesCompanion(
-        role: Value(LinkedDeviceRole.owner),
-        canAdd: Value(true),
+      LinkedDevicesCompanion(
+        role: const Value(LinkedDeviceRole.owner),
+        rolesCsv: Value(
+          MembershipRoleGates.encodeRoles({
+            ...target.roles,
+            LinkedDeviceRole.owner,
+          }),
+        ),
+        canAdd: const Value(true),
       ),
     );
     return (await findByDeviceId(targetDeviceId))!;
@@ -320,14 +333,14 @@ class MembershipRepository {
         debugMessage: 'Claimant is not an active member.',
       );
     }
-    if (claimant.role == LinkedDeviceRole.owner) {
+    if (claimant.hasRole(LinkedDeviceRole.owner)) {
       throw const AppFailure(
         AppErrorCode.generic,
         debugMessage: 'Claimant is already an Owner.',
       );
     }
     final owners = (await listActiveDevices()).where(
-      (d) => d.role == LinkedDeviceRole.owner,
+      (d) => d.hasRole(LinkedDeviceRole.owner),
     );
     if (owners.isNotEmpty) {
       throw const AppFailure(
@@ -381,20 +394,22 @@ class MembershipRepository {
     final pending = (await listDevices()).where(
       (d) =>
           d.isActive &&
-          d.role == LinkedDeviceRole.member &&
+          !d.hasRole(LinkedDeviceRole.owner) &&
           d.soleOwnerClaimedAt != null,
     );
     final promoted = <LinkedDevice>[];
     for (final claim in pending) {
       final claimedAt = claim.soleOwnerClaimedAt!;
       if (now.isBefore(claimedAt.add(_soleOwnerClaimDelay))) continue;
+      final newRoles = {...claim.roles, LinkedDeviceRole.owner};
       await (_db.update(
         _db.linkedDevices,
       )..where((t) => t.deviceId.equals(claim.deviceId))).write(
-        const LinkedDevicesCompanion(
-          role: Value(LinkedDeviceRole.owner),
-          canAdd: Value(true),
-          soleOwnerClaimedAt: Value(null),
+        LinkedDevicesCompanion(
+          role: const Value(LinkedDeviceRole.owner),
+          rolesCsv: Value(MembershipRoleGates.encodeRoles(newRoles)),
+          canAdd: const Value(true),
+          soleOwnerClaimedAt: const Value(null),
         ),
       );
       await _recordNotice(
@@ -407,12 +422,16 @@ class MembershipRepository {
     return promoted;
   }
 
-  /// Builds a QR payload for "Add a device". Never includes private keys.
+  /// Builds a QR payload for "Add a device" or "Add a person". Never
+  /// includes private keys.
   Future<JoinQrPayload> buildJoinQrPayload({
     required String hostDeviceId,
     required String hostDisplayName,
     required String booksSetId,
     LinkedDeviceRole roleOffer = LinkedDeviceRole.member,
+    Set<LinkedDeviceRole>? personRoles,
+    String? personDisplayName,
+    bool isPersonJoin = false,
   }) async {
     if (!await canAddDevices(hostDeviceId)) {
       throw const AppFailure(
@@ -428,6 +447,10 @@ class MembershipRepository {
       );
     }
     final cert = await _certs.localCertificate(deviceId: hostDeviceId);
+    final roles =
+        personRoles ??
+        (isPersonJoin ? {LinkedDeviceRole.claimant} : {roleOffer});
+    final primary = MembershipRoleGates.primaryRole(roles);
     return JoinQrPayload(
       booksSetId: booksSetId,
       hostDeviceId: hostDeviceId,
@@ -436,8 +459,11 @@ class MembershipRepository {
       signingPublicKey: identity.publicKey,
       deviceCertDer: cert.derBytes,
       deviceCertFingerprint: cert.fingerprint,
-      roleOffer: roleOffer,
+      roleOffer: isPersonJoin ? primary : roleOffer,
       joinNonce: _uuid.v4(),
+      personRoles: roles,
+      personDisplayName: personDisplayName,
+      isPersonJoin: isPersonJoin,
     );
   }
 
@@ -452,6 +478,7 @@ class MembershipRepository {
     required String joinerDeviceCertFingerprint,
     String? joinerIdentityId,
     String? peerHint,
+    String? owedToAccountId,
   }) async {
     final onLan = await _reachability.arePeersOnLocalNetwork(
       peerHint: peerHint ?? payload.hostDeviceId,
@@ -473,6 +500,11 @@ class MembershipRepository {
       signingIdentityId: peerIdentity.identityId,
       deviceCertFingerprint: joinerDeviceCertFingerprint,
       role: payload.roleOffer,
+      roles: payload.personRoles.isNotEmpty
+          ? payload.personRoles
+          : {payload.roleOffer},
+      personDisplayName: payload.personDisplayName,
+      owedToAccountId: owedToAccountId,
     );
   }
 
@@ -641,10 +673,16 @@ class MembershipRepository {
     required String displayName,
     required String signingIdentityId,
     required String deviceCertFingerprint,
-    required LinkedDeviceRole role,
+    required Set<LinkedDeviceRole> roles,
     required bool canAdd,
     bool emitNotice = true,
+    String? owedToAccountId,
+    String? personDisplayName,
   }) async {
+    if (roles.isEmpty) {
+      throw ArgumentError.value(roles, 'roles', 'Role set must not be empty');
+    }
+    final primary = MembershipRoleGates.primaryRole(roles);
     final now = _clock();
     await _db
         .into(_db.linkedDevices)
@@ -654,8 +692,11 @@ class MembershipRepository {
             displayName: displayName,
             signingIdentityId: signingIdentityId,
             deviceCertFingerprint: deviceCertFingerprint,
-            role: role,
+            role: primary,
+            rolesCsv: Value(MembershipRoleGates.encodeRoles(roles)),
             canAdd: Value(canAdd),
+            owedToAccountId: Value(owedToAccountId),
+            personDisplayName: Value(personDisplayName),
             createdAt: Value(now),
             removedAt: const Value(null),
             erasePendingAt: const Value(null),
@@ -694,18 +735,25 @@ class MembershipRepository {
   }
 
   LinkedDevice _toDevice(LinkedDeviceRow row) {
+    final roles = MembershipRoleGates.decodeRoles(
+      row.rolesCsv,
+      legacyRole: row.role,
+    );
     return LinkedDevice(
       deviceId: row.deviceId,
       displayName: row.displayName,
       signingIdentityId: row.signingIdentityId,
       deviceCertFingerprint: row.deviceCertFingerprint,
-      role: row.role,
+      role: MembershipRoleGates.primaryRole(roles),
+      roles: roles,
       canAdd: row.canAdd,
       createdAt: row.createdAt,
       removedAt: row.removedAt,
       erasePendingAt: row.erasePendingAt,
       erasedAt: row.erasedAt,
       soleOwnerClaimedAt: row.soleOwnerClaimedAt,
+      owedToAccountId: row.owedToAccountId,
+      personDisplayName: row.personDisplayName,
     );
   }
 
