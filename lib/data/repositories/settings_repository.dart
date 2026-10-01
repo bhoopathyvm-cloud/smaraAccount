@@ -9,7 +9,7 @@ import '../../domain/models/research_tool.dart';
 /// Plain, non-secret app preferences (currently just the reference
 /// exchange-rate lookup's enable/disable flag and selected provider).
 /// Deliberately not `flutter_secure_storage` - that's reserved for actual
-/// secret material (recovery phrase / signing key), and these values
+/// secret material (signing key), and these values
 /// aren't secrets.
 class SettingsRepository implements AppLockSettingsStore {
   SettingsRepository({SharedPreferencesAsync? preferences})

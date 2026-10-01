@@ -46,6 +46,8 @@
 
 ## 8. Integration and acceptance suites
 
+> Note (cloud agent): harness + `identity_restore` / `books_copy` / `onboarding` / `app_test.dart` code updated for Books Copy and Continuation. Tasks 8.2–8.12 remain unchecked until macOS/device acceptance runs and CI verification complete (not available in this Linux cloud environment).
+
 - [x] 8.1 `integration_test/acceptance/support/acceptance_harness.dart`: replace helpers that read recovery-phrase words with helpers that save a Books Copy and restore it through the GUI, reset only the keychain (books kept), and reset keychain plus database; verify the harness compiles and existing groups still run
 - [ ] 8.2 Acceptance group `identity_restore`: replace "a lost signing key is restored from the recovery phrase; a wrong phrase is rejected first" with (a) keychain reset keeps books → "Continue my books on this phone" → same register, new entry records, and (b) Device history shows the Continuation; verify `tool/run_acceptance_tests.sh -d macos identity_restore` passes
 - [ ] 8.3 Acceptance group `ledger_backup` (rename to `books_copy`): save a copy → reset device → "Restore from a copy" on first launch → same entries and balances → record a new entry; restore in Settings shows the counted warning and "Save a copy first", then replaces; tampered copy and wrong passphrase are refused with the device untouched; legacy bundle file restores without its key; verify `tool/run_acceptance_tests.sh -d macos books_copy` passes
