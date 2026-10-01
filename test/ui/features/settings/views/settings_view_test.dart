@@ -48,6 +48,11 @@ void main() {
     when(repository.isAppLockEnabled()).thenAnswer((_) async => false);
     when(repository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
     when(repository.isAppLockBiometricEnabled()).thenAnswer((_) async => false);
+    when(repository.isBackupReminderEnabled()).thenAnswer((_) async => true);
+    when(repository.backupReminderDays()).thenAnswer((_) async => 30);
+    when(repository.backupReminderEntries()).thenAnswer((_) async => 500);
+    when(repository.backupReminderSnoozeDays()).thenAnswer((_) async => 7);
+    when(repository.backupReminderSnoozeEntries()).thenAnswer((_) async => 500);
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
   });
 
@@ -229,7 +234,11 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Choose file'), findsOneWidget);
 
-      await tester.enterText(find.byType(TextField), 'hunter2');
+      final dialogField = find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.byType(TextField),
+      );
+      await tester.enterText(dialogField, 'hunter2');
       await tester.tap(find.widgetWithText(ElevatedButton, 'Restore'));
       await tester.pump();
 
@@ -268,7 +277,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Set a PIN'), findsOneWidget);
 
-    final fields = find.byType(TextField);
+    final fields = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
     await tester.enterText(fields.at(0), '4242');
     await tester.enterText(fields.at(1), '4242');
     await tester.tap(find.widgetWithText(ElevatedButton, 'Set PIN'));
@@ -287,7 +299,10 @@ void main() {
     await tapScrolled(tester, find.text('Require unlock to open the app'));
     await tester.pumpAndSettle();
 
-    final fields = find.byType(TextField);
+    final fields = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextField),
+    );
     await tester.enterText(fields.at(0), '4242');
     await tester.enterText(fields.at(1), '9999');
     await tester.tap(find.widgetWithText(ElevatedButton, 'Set PIN'));

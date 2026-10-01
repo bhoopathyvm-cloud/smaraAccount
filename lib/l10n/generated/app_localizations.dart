@@ -567,13 +567,13 @@ abstract class AppLocalizations {
   /// No description provided for @settingsBackup.
   ///
   /// In en, this message translates to:
-  /// **'Backup'**
+  /// **'Books copy'**
   String get settingsBackup;
 
   /// No description provided for @settingsBackupBlurb.
   ///
   /// In en, this message translates to:
-  /// **'Save an encrypted copy of your books to a location you choose, or restore from one. This is separate from your recovery phrase or keystore file, which back up your signing key, not your books.'**
+  /// **'Save an encrypted copy of your books to a place you choose, or restore from one. Restoring replaces the books on this phone — it does not merge. Your language and unlock settings stay on this phone.'**
   String get settingsBackupBlurb;
 
   /// No description provided for @settingsRecovery.
@@ -1907,6 +1907,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Device history'**
   String get deviceHistoryTitle;
+
+  /// No description provided for @deviceHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No Continuations yet. When you continue books on a new phone, they will show up here.'**
+  String get deviceHistoryEmpty;
+
+  /// No description provided for @deviceHistoryContinuedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Your books continued on this phone on {date}'**
+  String deviceHistoryContinuedOn(String date);
+
+  /// No description provided for @deviceHistoryContinuedFromCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Your books continued on this phone on {continuedDate} (from a copy saved on {copyDate})'**
+  String deviceHistoryContinuedFromCopy(String continuedDate, String copyDate);
+
+  /// No description provided for @backupReminderBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a copy of your books'**
+  String get backupReminderBannerTitle;
+
+  /// No description provided for @backupReminderSaveAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a copy'**
+  String get backupReminderSaveAction;
+
+  /// No description provided for @backupReminderLaterAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get backupReminderLaterAction;
+
+  /// No description provided for @settingsBackupReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy reminder'**
+  String get settingsBackupReminder;
+
+  /// No description provided for @settingsBackupReminderBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'\'ll gently remind you to save a copy of your books after a while, or after many new entries. A saved copy is the only way to recover books if this phone is lost.'**
+  String get settingsBackupReminderBlurb;
+
+  /// No description provided for @settingsBackupReminderEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me to save a copy'**
+  String get settingsBackupReminderEnabled;
+
+  /// No description provided for @settingsBackupReminderDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind after this many days'**
+  String get settingsBackupReminderDays;
+
+  /// No description provided for @settingsBackupReminderEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind after this many new entries'**
+  String get settingsBackupReminderEntries;
+
+  /// No description provided for @settingsBackupReminderSnoozeDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide for this many days after Later'**
+  String get settingsBackupReminderSnoozeDays;
+
+  /// No description provided for @settingsBackupReminderSnoozeEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide for this many new entries after Later'**
+  String get settingsBackupReminderSnoozeEntries;
 
   /// No description provided for @restoreTitle.
   ///

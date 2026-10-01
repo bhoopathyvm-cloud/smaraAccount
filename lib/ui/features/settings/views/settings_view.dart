@@ -230,6 +230,76 @@ class SettingsView extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: AppSpacing.xLarge),
+              Text(l10n.settingsBackupReminder, style: AppTypography.sectionLabel),
+              const SizedBox(height: AppSpacing.base),
+              Text(
+                l10n.settingsBackupReminderBlurb,
+                style: AppTypography.metadata,
+              ),
+              const SizedBox(height: AppSpacing.medium),
+              SwitchListTile(
+                title: Text(l10n.settingsBackupReminderEnabled),
+                value: viewModel.backupReminderEnabled,
+                onChanged: viewModel.setBackupReminderEnabled,
+              ),
+              if (viewModel.backupReminderEnabled) ...[
+                TextFormField(
+                  initialValue: '${viewModel.backupReminderDays}',
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsBackupReminderDays,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (raw) {
+                    final days = int.tryParse(raw);
+                    if (days != null && days > 0) {
+                      viewModel.setBackupReminderDays(days);
+                    }
+                  },
+                ),
+                const SizedBox(height: AppSpacing.small),
+                TextFormField(
+                  initialValue: '${viewModel.backupReminderEntries}',
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsBackupReminderEntries,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (raw) {
+                    final entries = int.tryParse(raw);
+                    if (entries != null && entries > 0) {
+                      viewModel.setBackupReminderEntries(entries);
+                    }
+                  },
+                ),
+                const SizedBox(height: AppSpacing.small),
+                TextFormField(
+                  initialValue: '${viewModel.backupReminderSnoozeDays}',
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsBackupReminderSnoozeDays,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (raw) {
+                    final days = int.tryParse(raw);
+                    if (days != null && days > 0) {
+                      viewModel.setBackupReminderSnoozeDays(days);
+                    }
+                  },
+                ),
+                const SizedBox(height: AppSpacing.small),
+                TextFormField(
+                  initialValue: '${viewModel.backupReminderSnoozeEntries}',
+                  decoration: InputDecoration(
+                    labelText: l10n.settingsBackupReminderSnoozeEntries,
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (raw) {
+                    final entries = int.tryParse(raw);
+                    if (entries != null && entries > 0) {
+                      viewModel.setBackupReminderSnoozeEntries(entries);
+                    }
+                  },
+                ),
+              ],
+              const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsLock, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
               Text(l10n.settingsLockBlurb, style: AppTypography.metadata),

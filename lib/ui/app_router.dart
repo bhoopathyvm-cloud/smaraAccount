@@ -51,7 +51,9 @@ import 'features/record_transaction/views/record_transaction_view.dart';
 import 'features/register/view_models/register_row.dart';
 import 'features/register/view_models/register_view_model.dart';
 import 'features/register/views/register_view.dart';
+import 'features/settings/view_models/device_history_view_model.dart';
 import 'features/settings/view_models/settings_view_model.dart';
+import 'features/settings/views/device_history_view.dart';
 import 'features/settings/views/settings_view.dart';
 import 'features/settle_pending_transfer/views/settle_pending_transfer_route.dart';
 import 'features/setup_choice/view_models/bundle_import_view_model.dart';
@@ -283,8 +285,17 @@ GoRouter buildAppRouter(
             onOpenPayees: () => context.push('/payees'),
             onOpenRecurringTemplates: () =>
                 context.push('/recurring-templates'),
+            onOpenDeviceHistory: () => context.push('/device-history'),
           );
         },
+      ),
+      GoRoute(
+        path: '/device-history',
+        builder: (context, state) => DeviceHistoryView(
+          viewModel: DeviceHistoryViewModel(
+            ledgerRepository: ledgerRepository,
+          ),
+        ),
       ),
       GoRoute(
         path: '/payees',
@@ -319,6 +330,7 @@ GoRouter buildAppRouter(
                     '${Uri.encodeQueryComponent(pendingTransferId)}',
                   ),
                   onOpenSettings: () => context.push('/settings'),
+                  onSaveBooksCopy: () => context.push('/settings'),
                   onSpent: () =>
                       context.push('/record-transaction?direction=spent'),
                   onReceived: () =>

@@ -110,8 +110,60 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     _appLockTimeoutMinutes = await _settingsRepository.appLockTimeoutMinutes();
     _isBiometricEnabled = await _settingsRepository.isAppLockBiometricEnabled();
     _isBiometricAvailable = await _biometricAuthenticator.isAvailable();
+    _backupReminderEnabled = await _settingsRepository.isBackupReminderEnabled();
+    _backupReminderDays = await _settingsRepository.backupReminderDays();
+    _backupReminderEntries = await _settingsRepository.backupReminderEntries();
+    _backupReminderSnoozeDays =
+        await _settingsRepository.backupReminderSnoozeDays();
+    _backupReminderSnoozeEntries =
+        await _settingsRepository.backupReminderSnoozeEntries();
     _isLoading = false;
     notifyListeners();
+  }
+
+  bool _backupReminderEnabled = true;
+  bool get backupReminderEnabled => _backupReminderEnabled;
+
+  int _backupReminderDays = SettingsRepository.defaultReminderDays;
+  int get backupReminderDays => _backupReminderDays;
+
+  int _backupReminderEntries = SettingsRepository.defaultReminderEntries;
+  int get backupReminderEntries => _backupReminderEntries;
+
+  int _backupReminderSnoozeDays = SettingsRepository.defaultSnoozeDays;
+  int get backupReminderSnoozeDays => _backupReminderSnoozeDays;
+
+  int _backupReminderSnoozeEntries = SettingsRepository.defaultSnoozeEntries;
+  int get backupReminderSnoozeEntries => _backupReminderSnoozeEntries;
+
+  Future<void> setBackupReminderEnabled(bool value) async {
+    _backupReminderEnabled = value;
+    notifyListeners();
+    await _settingsRepository.setBackupReminderEnabled(value);
+  }
+
+  Future<void> setBackupReminderDays(int days) async {
+    _backupReminderDays = days;
+    notifyListeners();
+    await _settingsRepository.setBackupReminderDays(days);
+  }
+
+  Future<void> setBackupReminderEntries(int entries) async {
+    _backupReminderEntries = entries;
+    notifyListeners();
+    await _settingsRepository.setBackupReminderEntries(entries);
+  }
+
+  Future<void> setBackupReminderSnoozeDays(int days) async {
+    _backupReminderSnoozeDays = days;
+    notifyListeners();
+    await _settingsRepository.setBackupReminderSnoozeDays(days);
+  }
+
+  Future<void> setBackupReminderSnoozeEntries(int entries) async {
+    _backupReminderSnoozeEntries = entries;
+    notifyListeners();
+    await _settingsRepository.setBackupReminderSnoozeEntries(entries);
   }
 
   Future<void> setReferenceRateLookupEnabled(bool value) async {

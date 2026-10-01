@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/exceptions.dart';
+import 'package:smara_accounting/domain/investment/exchange_registry.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
 import 'package:smara_accounting/domain/models/quote_provider.dart';
 import 'package:smara_accounting/domain/models/research_tool.dart';
@@ -37,7 +38,30 @@ void main() {
     when(
       settingsRepository.selectedResearchTool(),
     ).thenAnswer((_) async => ResearchTool.chatGpt);
+    when(
+      settingsRepository.selectedDefaultExchange(
+        deviceRegion: anyNamed('deviceRegion'),
+      ),
+    ).thenAnswer((_) async => exchangeForCode('US')!);
     when(biometricAuthenticator.isAvailable()).thenAnswer((_) async => false);
+    when(settingsRepository.isAppLockEnabled()).thenAnswer((_) async => false);
+    when(settingsRepository.appLockTimeoutMinutes()).thenAnswer((_) async => 0);
+    when(
+      settingsRepository.isAppLockBiometricEnabled(),
+    ).thenAnswer((_) async => false);
+    when(
+      settingsRepository.isBackupReminderEnabled(),
+    ).thenAnswer((_) async => true);
+    when(settingsRepository.backupReminderDays()).thenAnswer((_) async => 30);
+    when(
+      settingsRepository.backupReminderEntries(),
+    ).thenAnswer((_) async => 500);
+    when(
+      settingsRepository.backupReminderSnoozeDays(),
+    ).thenAnswer((_) async => 7);
+    when(
+      settingsRepository.backupReminderSnoozeEntries(),
+    ).thenAnswer((_) async => 500);
     viewModel = SettingsViewModel(
       settingsRepository: settingsRepository,
       booksCopyRepository: booksCopyRepository,

@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:smara_accounting/domain/models/account.dart';
 import 'package:smara_accounting/domain/models/home_overview.dart';
+import 'package:smara_accounting/domain/models/journal_entry.dart';
 import 'package:smara_accounting/domain/models/recurring_template.dart';
 import 'package:smara_accounting/domain/models/summary.dart';
 import 'package:smara_accounting/domain/models/transaction_direction.dart';
@@ -241,4 +242,173 @@ void main() {
       expect(viewModel.monthlyLimitFor('expense-2'), isNull);
     });
   });
+
+  group('backup reminder', () {
+    late MockSettingsRepository settings;
+
+    setUp(() {
+      settings = MockSettingsRepository();
+      when(
+        categoryRepository.watchCategoryTotals(
+          start: anyNamed('start'),
+          end: anyNamed('end'),
+        ),
+      ).thenAnswer((_) => Stream.value(const []));
+      when(categoryRepository.watchCategories()).thenAnswer(
+        (_) => Stream.value(const []),
+      );
+      when(recurring.watchDueRecurringTemplates()).thenAnswer(
+        (_) => Stream.value(const []),
+      );
+      when(settings.isBackupReminderEnabled()).thenAnswer((_) async => true);
+      when(settings.backupReminderDays()).thenAnswer((_) async => 30);
+      when(settings.backupReminderEntries()).thenAnswer((_) async => 500);
+      when(settings.backupReminderSnoozeDays()).thenAnswer((_) async => 7);
+      when(settings.backupReminderSnoozeEntries()).thenAnswer((_) async => 500);
+      when(settings.lastCopySavedAt()).thenAnswer((_) async => null);
+      when(settings.entryCountAtLastCopy()).thenAnswer((_) async => 0);
+      when(settings.snoozeUntil()).thenAnswer((_) async => null);
+      when(settings.entryCountAtSnooze()).thenAnswer((_) async => null);
+    });
+
+    test('shows after 30 days from first entry', () async {
+      final clock = DateTime.utc(2026, 6, 1);
+      when(repository.watchEntries()).thenAnswer(
+        (_) => Stream.value([
+          _entry(transactionDate: DateTime.utc(2026, 5, 1)),
+        ]),
+      );
+
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
+        settingsRepository: settings,
+        clock: () => clock,
+      );
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
+      await viewModel.refreshBackupReminder();
+
+      expect(viewModel.showBackupReminder, isTrue);
+    });
+
+    test('shows after 500 entries since last copy', () async {
+      when(settings.lastCopySavedAt()).thenAnswer(
+        (_) async => DateTime.utc(2026, 5, 20),
+      );
+      when(settings.entryCountAtLastCopy()).thenAnswer((_) async => 0);
+      when(repository.watchEntries()).thenAnswer(
+        (_) => Stream.value(
+          List.generate(500, (_) => _entry()),
+        ),
+      );
+
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
+        settingsRepository: settings,
+        clock: () => DateTime.utc(2026, 5, 21),
+      );
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
+      await viewModel.refreshBackupReminder();
+
+      expect(viewModel.showBackupReminder, isTrue);
+    });
+
+    test('Later snoozes by 7 days', () async {
+      when(settings.lastCopySavedAt()).thenAnswer(
+        (_) async => DateTime.utc(2026, 1, 1),
+      );
+      when(repository.watchEntries()).thenAnswer(
+        (_) => Stream.value([_entry()]),
+      );
+      when(
+        settings.snoozeBackupReminder(
+          until: anyNamed('until'),
+          entryCount: anyNamed('entryCount'),
+        ),
+      ).thenAnswer((_) async {});
+
+      var now = DateTime.utc(2026, 6, 1);
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
+        settingsRepository: settings,
+        clock: () => now,
+      );
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
+      await viewModel.refreshBackupReminder();
+      expect(viewModel.showBackupReminder, isTrue);
+
+      await viewModel.snoozeBackupReminder();
+      verify(
+        settings.snoozeBackupReminder(
+          until: DateTime.utc(2026, 6, 8),
+          entryCount: 1,
+        ),
+      ).called(1);
+
+      when(settings.snoozeUntil()).thenAnswer(
+        (_) async => DateTime.utc(2026, 6, 8),
+      );
+      when(settings.entryCountAtSnooze()).thenAnswer((_) async => 1);
+      await viewModel.refreshBackupReminder();
+      expect(viewModel.showBackupReminder, isFalse);
+
+      now = DateTime.utc(2026, 6, 8);
+      await viewModel.refreshBackupReminder();
+      expect(viewModel.showBackupReminder, isTrue);
+    });
+
+    test('disabled reminder never shows', () async {
+      when(settings.isBackupReminderEnabled()).thenAnswer((_) async => false);
+      when(settings.lastCopySavedAt()).thenAnswer(
+        (_) async => DateTime.utc(2020, 1, 1),
+      );
+      when(repository.watchEntries()).thenAnswer(
+        (_) => Stream.value(List.generate(1000, (_) => _entry())),
+      );
+
+      final viewModel = HomeViewModel(
+        ledgerRepository: repository,
+        categoryRepository: categoryRepository,
+        recurringTemplateRepository: recurring,
+        investmentRepository: investment,
+        settingsRepository: settings,
+        clock: () => DateTime.utc(2026, 6, 1),
+      );
+      addTearDown(viewModel.dispose);
+      await Future<void>.delayed(Duration.zero);
+      await viewModel.refreshBackupReminder();
+
+      expect(viewModel.showBackupReminder, isFalse);
+    });
+  });
+}
+
+JournalEntry _entry({DateTime? transactionDate}) {
+  return JournalEntry(
+    id: 'e',
+    transactionDate: transactionDate ?? DateTime.utc(2026, 1, 1),
+    recordedAt: DateTime.utc(2026, 1, 1),
+    description: null,
+    reversesEntryId: null,
+    postings: const [],
+    deviceChainSequence: 0,
+    entryHash: const [1],
+    signedByIdentityId: 'id',
+    signature: const [1],
+    migratedFromEntryId: null,
+    isVerified: true,
+    breakReason: null,
+    isSupersededByMigration: false,
+  );
 }
