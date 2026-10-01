@@ -14,6 +14,11 @@ class BooksSetMetadata extends Table {
   TextColumn get defaultCategoryLocale =>
       text().withDefault(const Constant('en'))();
 
+  /// Company-currency amount above which a Claim Item requires a receipt.
+  /// Default 0 = always required (claim-receipts spec).
+  IntColumn get receiptRequiredAboveMinor =>
+      integer().withDefault(const Constant(0))();
+
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
   @override

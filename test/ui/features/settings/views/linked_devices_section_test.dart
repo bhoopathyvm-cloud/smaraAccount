@@ -98,6 +98,7 @@ void main() {
       expect(viewModel.permissionPromptRequested, isTrue);
       expect(viewModel.showingPermissionExplanation, isFalse);
       expect(find.text('Add a device'), findsOneWidget);
+      expect(find.text('Add a person'), findsOneWidget);
     },
   );
 

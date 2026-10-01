@@ -37,6 +37,7 @@ class BooksSetPaths {
   static const booksDirectoryName = 'books';
   static const databaseFileName = 'ledger.sqlite';
   static const legacyDatabaseFileName = 'smara_accounting.sqlite';
+  static const receiptsDirectoryName = 'receipts';
 
   /// Root directory that holds one subdirectory per books set.
   static Directory booksRoot(Directory supportDirectory) =>
@@ -56,6 +57,37 @@ class BooksSetPaths {
           databaseFileName,
         ),
       );
+
+  /// Directory for Claim receipt blobs: `books/<id>/receipts/`.
+  static Directory receiptsDirectory(
+    Directory supportDirectory,
+    String booksSetId,
+  ) => Directory(
+    p.join(
+      booksSetDirectory(supportDirectory, booksSetId).path,
+      receiptsDirectoryName,
+    ),
+  );
+
+  /// File path for one receipt blob: `books/<id>/receipts/<receiptId>`.
+  static File receiptFile(
+    Directory supportDirectory,
+    String booksSetId,
+    String receiptId,
+  ) => File(
+    p.join(receiptsDirectory(supportDirectory, booksSetId).path, receiptId),
+  );
+
+  static Future<Directory> ensureReceiptsDirectory(
+    Directory supportDirectory,
+    String booksSetId,
+  ) async {
+    final dir = receiptsDirectory(supportDirectory, booksSetId);
+    if (!await dir.exists()) {
+      await dir.create(recursive: true);
+    }
+    return dir;
+  }
 
   /// Legacy single-file path used before linked-devices multi-set layout.
   static File legacyDatabaseFile(Directory supportDirectory) =>

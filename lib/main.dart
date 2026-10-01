@@ -15,6 +15,8 @@ import 'data/repositories/ledger_chain_store.dart';
 import 'data/repositories/ledger_chain_verifier.dart';
 import 'data/repositories/ledger_repository.dart';
 import 'data/repositories/membership_repository.dart';
+import 'data/repositories/claim_person_service.dart';
+import 'data/repositories/claim_repository.dart';
 import 'data/repositories/payee_repository.dart';
 import 'data/repositories/recurring_template_repository.dart';
 import 'data/repositories/settings_repository.dart';
@@ -134,6 +136,30 @@ class SmaraAccountingApp extends StatelessWidget {
         ProxyProvider2<AppDatabase, IdentityRepository, MembershipRepository>(
           update: (_, db, identity, _) =>
               MembershipRepository(database: db, identityRepository: identity),
+        ),
+        ProxyProvider3<
+          AppDatabase,
+          MembershipRepository,
+          LedgerRepository,
+          ClaimRepository
+        >(
+          update: (_, db, membership, ledger, _) => ClaimRepository(
+            database: db,
+            membership: membership,
+            ledger: ledger,
+          ),
+        ),
+        ProxyProvider3<
+          MembershipRepository,
+          AccountRepository,
+          AppDatabase,
+          ClaimPersonService
+        >(
+          update: (_, membership, accounts, db, _) => ClaimPersonService(
+            membership: membership,
+            accounts: accounts,
+            database: db,
+          ),
         ),
         Provider<LocalNetworkPermission>(
           create: (_) => FakeLocalNetworkPermission(granted: true),
@@ -504,6 +530,7 @@ class _AppRouterHostState extends State<_AppRouterHost> {
       context.read<StatementImportRepository>(),
       context.read<SettingsRepository>(),
       _appLockController,
+      membershipRepository: context.read<MembershipRepository>(),
     );
   }
 

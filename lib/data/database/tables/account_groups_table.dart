@@ -12,6 +12,10 @@ const groupCreditShortTermId = 'group_credit_short_term';
 const groupLoansMortgagesId = 'group_loans_mortgages';
 const groupInvestmentsId = 'group_investments';
 
+/// Payables group for auto-created "Owed to \<name\>" Claimant accounts
+/// (shared-accounts-and-expense-claims design Decision 5).
+const groupPeopleOwedId = 'group_people_owed';
+
 @DataClassName('AccountGroupRow')
 class AccountGroups extends Table {
   /// A user-created group has no well-known constant id, so it needs a

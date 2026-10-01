@@ -1289,5 +1289,94 @@
         "type": "int"
       }
     }
-  }
+  },
+  "claimsTitle": "Claims",
+  "claimsReviewTitle": "Review claims",
+  "claimsStatusDraft": "Draft",
+  "claimsStatusSubmitted": "Submitted",
+  "claimsStatusPartlyApproved": "Partly approved",
+  "claimsStatusApproved": "Approved",
+  "claimsStatusPaid": "Paid",
+  "claimsStatusRejected": "Rejected",
+  "claimsApprove": "Approve",
+  "claimsApproveDifferent": "Approve different amount",
+  "claimsReject": "Reject",
+  "claimsReasonRequired": "A reason is required",
+  "claimsAdvances": "Advances",
+  "claimsAddPerson": "Add a person",
+  "claimsRoleApprover": "Approver",
+  "claimsRoleClaimant": "Claimant",
+  "claimsBalanceCompanyOwesYou": "{company} owes you",
+  "@claimsBalanceCompanyOwesYou": {
+    "placeholders": {
+      "company": { "type": "String" }
+    }
+  },
+  "claimsBalanceYouOweCompany": "You owe {company}",
+  "@claimsBalanceYouOweCompany": {
+    "placeholders": {
+      "company": { "type": "String" }
+    }
+  },
+  "claimsBalanceSettled": "Settled with {company}",
+  "@claimsBalanceSettled": {
+    "placeholders": {
+      "company": { "type": "String" }
+    }
+  },
+  "claimsReceiptRequired": "A receipt is required for this claim item",
+  "claimsReceiptPdfTooLarge": "This PDF is larger than 5 MB. Choose a smaller file.",
+  "claimsSpendingHint": "Hint: at most {amount} per {unit}",
+  "@claimsSpendingHint": {
+    "placeholders": {
+      "amount": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "claimsNoClaimsYet": "No claims yet.",
+  "claimsNoClaimsToReview": "No claims to review.",
+  "claimsAdvanceDefault": "Advance",
+  "claimsItemCount": "{count} item(s)",
+  "@claimsItemCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "claimsRejectReasonTitle": "Reject reason",
+  "claimsApproveDifferentReasonTitle": "Approve different amount reason",
+  "claimsPersonNameLabel": "Person name",
+  "claimsRemovePerson": "Remove",
+  "claimsRemovePersonTitle": "Remove {name}?",
+  "@claimsRemovePersonTitle": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "claimsRemovePersonWarning": "{name} has {openClaims} open Claims and a non-zero owed balance. History and receipts stay in these books.",
+  "@claimsRemovePersonWarning": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "openClaims": { "type": "int" }
+    }
+  },
+  "claimsRemovePersonWarningOpenOnly": "{name} has {openClaims} open Claims. History and receipts stay in these books.",
+  "@claimsRemovePersonWarningOpenOnly": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "openClaims": { "type": "int" }
+    }
+  },
+  "claimsRemovePersonWarningBalanceOnly": "{name} has a non-zero owed balance. History and receipts stay in these books.",
+  "@claimsRemovePersonWarningBalanceOnly": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "claimsRemovePersonWarningClean": "Remove {name}? History and receipts stay in these books.",
+  "@claimsRemovePersonWarningClean": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "claimsRemovePersonConfirm": "Remove"
 }
