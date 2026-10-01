@@ -72,6 +72,10 @@ class AppShell extends StatelessWidget {
         return Scaffold(
           body: navigationShell,
           bottomNavigationBar: BottomNavigationBar(
+            // Five destinations would otherwise default to the "shifting"
+            // type, which ignores the navy theme background and leaves the
+            // white selected item invisible on white.
+            type: BottomNavigationBarType.fixed,
             currentIndex: navigationShell.currentIndex,
             onTap: _onSelect,
             items: [

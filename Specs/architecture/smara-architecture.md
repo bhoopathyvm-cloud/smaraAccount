@@ -12,7 +12,7 @@ ledger: a signed, double-entry ledger under the hood, surfaced to the user as
 a plain record of what they spent and received (see `CONTEXT.md` and
 `docs/household-term-map.md`). It is built with Flutter so a single codebase
 runs on macOS, iOS, Android, Linux, and Windows (Linux is validated in CI by
-the nightly acceptance suite; Windows is a scaffolded Flutter target without
+the weekly acceptance suite; Windows is a scaffolded Flutter target without
 CI validation). All data lives in a local SQLite database on the device.
 There is **no server, no cloud storage, and no network dependency** for the
 application to function.
