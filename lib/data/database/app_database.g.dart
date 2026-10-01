@@ -1310,6 +1310,31 @@ class $SigningIdentitiesTable extends SigningIdentities
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _continuedAtMeta = const VerificationMeta(
+    'continuedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> continuedAt = GeneratedColumn<DateTime>(
+    'continued_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _continuesIdentityIdMeta =
+      const VerificationMeta('continuesIdentityId');
+  @override
+  late final GeneratedColumn<String> continuesIdentityId =
+      GeneratedColumn<String>(
+        'continues_identity_id',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES signing_identities (identity_id)',
+        ),
+      );
   static const VerificationMeta _acknowledgedAtMeta = const VerificationMeta(
     'acknowledgedAt',
   );
@@ -1329,6 +1354,8 @@ class $SigningIdentitiesTable extends SigningIdentities
     createdAt,
     supersedesIdentityId,
     supersededAt,
+    continuedAt,
+    continuesIdentityId,
     acknowledgedAt,
   ];
   @override
@@ -1381,6 +1408,24 @@ class $SigningIdentitiesTable extends SigningIdentities
         ),
       );
     }
+    if (data.containsKey('continued_at')) {
+      context.handle(
+        _continuedAtMeta,
+        continuedAt.isAcceptableOrUnknown(
+          data['continued_at']!,
+          _continuedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('continues_identity_id')) {
+      context.handle(
+        _continuesIdentityIdMeta,
+        continuesIdentityId.isAcceptableOrUnknown(
+          data['continues_identity_id']!,
+          _continuesIdentityIdMeta,
+        ),
+      );
+    }
     if (data.containsKey('acknowledged_at')) {
       context.handle(
         _acknowledgedAtMeta,
@@ -1419,6 +1464,14 @@ class $SigningIdentitiesTable extends SigningIdentities
         DriftSqlType.dateTime,
         data['${effectivePrefix}superseded_at'],
       ),
+      continuedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}continued_at'],
+      ),
+      continuesIdentityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}continues_identity_id'],
+      ),
       acknowledgedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}acknowledged_at'],
@@ -1439,11 +1492,19 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
   final String? supersedesIdentityId;
   final DateTime? supersededAt;
 
+  /// When set, this identity was continued by a later identity (see
+  /// [continuesIdentityId] on the successor). Unlike [supersededAt], a
+  /// continued identity's entries stay in balances and remain verified.
+  final DateTime? continuedAt;
+
+  /// The previous active identity this row continues, when this identity
+  /// was created by Continuation rather than first setup or Migration.
+  final String? continuesIdentityId;
+
   /// When the user completed the mandatory recovery-phrase acknowledgment
-  /// for this identity (spec: "Mandatory Recovery Phrase Acknowledgment").
-  /// Null between identity commit and acknowledgment - the window
-  /// `deferred-onboarding-first-entry` introduces so a first-time user can
-  /// record one guided entry before facing the acknowledgment screens.
+  /// for this identity (historical; phrase acknowledgment is removed by
+  /// books-copy-and-continuation). Null for identities that never went
+  /// through that flow.
   final DateTime? acknowledgedAt;
   const IdentityRow({
     required this.identityId,
@@ -1451,6 +1512,8 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
     required this.createdAt,
     this.supersedesIdentityId,
     this.supersededAt,
+    this.continuedAt,
+    this.continuesIdentityId,
     this.acknowledgedAt,
   });
   @override
@@ -1464,6 +1527,12 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
     }
     if (!nullToAbsent || supersededAt != null) {
       map['superseded_at'] = Variable<DateTime>(supersededAt);
+    }
+    if (!nullToAbsent || continuedAt != null) {
+      map['continued_at'] = Variable<DateTime>(continuedAt);
+    }
+    if (!nullToAbsent || continuesIdentityId != null) {
+      map['continues_identity_id'] = Variable<String>(continuesIdentityId);
     }
     if (!nullToAbsent || acknowledgedAt != null) {
       map['acknowledged_at'] = Variable<DateTime>(acknowledgedAt);
@@ -1482,6 +1551,12 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
       supersededAt: supersededAt == null && nullToAbsent
           ? const Value.absent()
           : Value(supersededAt),
+      continuedAt: continuedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(continuedAt),
+      continuesIdentityId: continuesIdentityId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(continuesIdentityId),
       acknowledgedAt: acknowledgedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(acknowledgedAt),
@@ -1501,6 +1576,10 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
         json['supersedesIdentityId'],
       ),
       supersededAt: serializer.fromJson<DateTime?>(json['supersededAt']),
+      continuedAt: serializer.fromJson<DateTime?>(json['continuedAt']),
+      continuesIdentityId: serializer.fromJson<String?>(
+        json['continuesIdentityId'],
+      ),
       acknowledgedAt: serializer.fromJson<DateTime?>(json['acknowledgedAt']),
     );
   }
@@ -1513,6 +1592,8 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'supersedesIdentityId': serializer.toJson<String?>(supersedesIdentityId),
       'supersededAt': serializer.toJson<DateTime?>(supersededAt),
+      'continuedAt': serializer.toJson<DateTime?>(continuedAt),
+      'continuesIdentityId': serializer.toJson<String?>(continuesIdentityId),
       'acknowledgedAt': serializer.toJson<DateTime?>(acknowledgedAt),
     };
   }
@@ -1523,6 +1604,8 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
     DateTime? createdAt,
     Value<String?> supersedesIdentityId = const Value.absent(),
     Value<DateTime?> supersededAt = const Value.absent(),
+    Value<DateTime?> continuedAt = const Value.absent(),
+    Value<String?> continuesIdentityId = const Value.absent(),
     Value<DateTime?> acknowledgedAt = const Value.absent(),
   }) => IdentityRow(
     identityId: identityId ?? this.identityId,
@@ -1532,6 +1615,10 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
         ? supersedesIdentityId.value
         : this.supersedesIdentityId,
     supersededAt: supersededAt.present ? supersededAt.value : this.supersededAt,
+    continuedAt: continuedAt.present ? continuedAt.value : this.continuedAt,
+    continuesIdentityId: continuesIdentityId.present
+        ? continuesIdentityId.value
+        : this.continuesIdentityId,
     acknowledgedAt: acknowledgedAt.present
         ? acknowledgedAt.value
         : this.acknowledgedAt,
@@ -1549,6 +1636,12 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
       supersededAt: data.supersededAt.present
           ? data.supersededAt.value
           : this.supersededAt,
+      continuedAt: data.continuedAt.present
+          ? data.continuedAt.value
+          : this.continuedAt,
+      continuesIdentityId: data.continuesIdentityId.present
+          ? data.continuesIdentityId.value
+          : this.continuesIdentityId,
       acknowledgedAt: data.acknowledgedAt.present
           ? data.acknowledgedAt.value
           : this.acknowledgedAt,
@@ -1563,6 +1656,8 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
           ..write('createdAt: $createdAt, ')
           ..write('supersedesIdentityId: $supersedesIdentityId, ')
           ..write('supersededAt: $supersededAt, ')
+          ..write('continuedAt: $continuedAt, ')
+          ..write('continuesIdentityId: $continuesIdentityId, ')
           ..write('acknowledgedAt: $acknowledgedAt')
           ..write(')'))
         .toString();
@@ -1575,6 +1670,8 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
     createdAt,
     supersedesIdentityId,
     supersededAt,
+    continuedAt,
+    continuesIdentityId,
     acknowledgedAt,
   );
   @override
@@ -1586,6 +1683,8 @@ class IdentityRow extends DataClass implements Insertable<IdentityRow> {
           other.createdAt == this.createdAt &&
           other.supersedesIdentityId == this.supersedesIdentityId &&
           other.supersededAt == this.supersededAt &&
+          other.continuedAt == this.continuedAt &&
+          other.continuesIdentityId == this.continuesIdentityId &&
           other.acknowledgedAt == this.acknowledgedAt);
 }
 
@@ -1595,6 +1694,8 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
   final Value<DateTime> createdAt;
   final Value<String?> supersedesIdentityId;
   final Value<DateTime?> supersededAt;
+  final Value<DateTime?> continuedAt;
+  final Value<String?> continuesIdentityId;
   final Value<DateTime?> acknowledgedAt;
   final Value<int> rowid;
   const SigningIdentitiesCompanion({
@@ -1603,6 +1704,8 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     this.createdAt = const Value.absent(),
     this.supersedesIdentityId = const Value.absent(),
     this.supersededAt = const Value.absent(),
+    this.continuedAt = const Value.absent(),
+    this.continuesIdentityId = const Value.absent(),
     this.acknowledgedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -1612,6 +1715,8 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     this.createdAt = const Value.absent(),
     this.supersedesIdentityId = const Value.absent(),
     this.supersededAt = const Value.absent(),
+    this.continuedAt = const Value.absent(),
+    this.continuesIdentityId = const Value.absent(),
     this.acknowledgedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : publicKey = Value(publicKey);
@@ -1621,6 +1726,8 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     Expression<DateTime>? createdAt,
     Expression<String>? supersedesIdentityId,
     Expression<DateTime>? supersededAt,
+    Expression<DateTime>? continuedAt,
+    Expression<String>? continuesIdentityId,
     Expression<DateTime>? acknowledgedAt,
     Expression<int>? rowid,
   }) {
@@ -1631,6 +1738,9 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
       if (supersedesIdentityId != null)
         'supersedes_identity_id': supersedesIdentityId,
       if (supersededAt != null) 'superseded_at': supersededAt,
+      if (continuedAt != null) 'continued_at': continuedAt,
+      if (continuesIdentityId != null)
+        'continues_identity_id': continuesIdentityId,
       if (acknowledgedAt != null) 'acknowledged_at': acknowledgedAt,
       if (rowid != null) 'rowid': rowid,
     });
@@ -1642,6 +1752,8 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     Value<DateTime>? createdAt,
     Value<String?>? supersedesIdentityId,
     Value<DateTime?>? supersededAt,
+    Value<DateTime?>? continuedAt,
+    Value<String?>? continuesIdentityId,
     Value<DateTime?>? acknowledgedAt,
     Value<int>? rowid,
   }) {
@@ -1651,6 +1763,8 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
       createdAt: createdAt ?? this.createdAt,
       supersedesIdentityId: supersedesIdentityId ?? this.supersedesIdentityId,
       supersededAt: supersededAt ?? this.supersededAt,
+      continuedAt: continuedAt ?? this.continuedAt,
+      continuesIdentityId: continuesIdentityId ?? this.continuesIdentityId,
       acknowledgedAt: acknowledgedAt ?? this.acknowledgedAt,
       rowid: rowid ?? this.rowid,
     );
@@ -1676,6 +1790,14 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
     if (supersededAt.present) {
       map['superseded_at'] = Variable<DateTime>(supersededAt.value);
     }
+    if (continuedAt.present) {
+      map['continued_at'] = Variable<DateTime>(continuedAt.value);
+    }
+    if (continuesIdentityId.present) {
+      map['continues_identity_id'] = Variable<String>(
+        continuesIdentityId.value,
+      );
+    }
     if (acknowledgedAt.present) {
       map['acknowledged_at'] = Variable<DateTime>(acknowledgedAt.value);
     }
@@ -1693,6 +1815,8 @@ class SigningIdentitiesCompanion extends UpdateCompanion<IdentityRow> {
           ..write('createdAt: $createdAt, ')
           ..write('supersedesIdentityId: $supersedesIdentityId, ')
           ..write('supersededAt: $supersededAt, ')
+          ..write('continuedAt: $continuedAt, ')
+          ..write('continuesIdentityId: $continuesIdentityId, ')
           ..write('acknowledgedAt: $acknowledgedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -10228,6 +10352,8 @@ typedef $$SigningIdentitiesTableCreateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<String?> supersedesIdentityId,
       Value<DateTime?> supersededAt,
+      Value<DateTime?> continuedAt,
+      Value<String?> continuesIdentityId,
       Value<DateTime?> acknowledgedAt,
       Value<int> rowid,
     });
@@ -10238,6 +10364,8 @@ typedef $$SigningIdentitiesTableUpdateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<String?> supersedesIdentityId,
       Value<DateTime?> supersededAt,
+      Value<DateTime?> continuedAt,
+      Value<String?> continuesIdentityId,
       Value<DateTime?> acknowledgedAt,
       Value<int> rowid,
     });
@@ -10267,6 +10395,26 @@ final class $$SigningIdentitiesTableReferences
     final item = $_typedResult.readTableOrNull(
       _supersedesIdentityIdTable($_db),
     );
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $SigningIdentitiesTable _continuesIdentityIdTable(
+    _$AppDatabase db,
+  ) => db.signingIdentities.createAlias(
+    'signing_identities__continues_identity_id__signing_identities__identity_id',
+  );
+
+  $$SigningIdentitiesTableProcessedTableManager? get continuesIdentityId {
+    final $_column = $_itemColumn<String>('continues_identity_id');
+    if ($_column == null) return null;
+    final manager = $$SigningIdentitiesTableTableManager(
+      $_db,
+      $_db.signingIdentities,
+    ).filter((f) => f.identityId.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_continuesIdentityIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -10347,6 +10495,11 @@ class $$SigningIdentitiesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<DateTime> get continuedAt => $composableBuilder(
+    column: $table.continuedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<DateTime> get acknowledgedAt => $composableBuilder(
     column: $table.acknowledgedAt,
     builder: (column) => ColumnFilters(column),
@@ -10356,6 +10509,29 @@ class $$SigningIdentitiesTableFilterComposer
     final $$SigningIdentitiesTableFilterComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.supersedesIdentityId,
+      referencedTable: $db.signingIdentities,
+      getReferencedColumn: (t) => t.identityId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SigningIdentitiesTableFilterComposer(
+            $db: $db,
+            $table: $db.signingIdentities,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$SigningIdentitiesTableFilterComposer get continuesIdentityId {
+    final $$SigningIdentitiesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.continuesIdentityId,
       referencedTable: $db.signingIdentities,
       getReferencedColumn: (t) => t.identityId,
       builder:
@@ -10455,6 +10631,11 @@ class $$SigningIdentitiesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get continuedAt => $composableBuilder(
+    column: $table.continuedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get acknowledgedAt => $composableBuilder(
     column: $table.acknowledgedAt,
     builder: (column) => ColumnOrderings(column),
@@ -10464,6 +10645,29 @@ class $$SigningIdentitiesTableOrderingComposer
     final $$SigningIdentitiesTableOrderingComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.supersedesIdentityId,
+      referencedTable: $db.signingIdentities,
+      getReferencedColumn: (t) => t.identityId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SigningIdentitiesTableOrderingComposer(
+            $db: $db,
+            $table: $db.signingIdentities,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$SigningIdentitiesTableOrderingComposer get continuesIdentityId {
+    final $$SigningIdentitiesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.continuesIdentityId,
       referencedTable: $db.signingIdentities,
       getReferencedColumn: (t) => t.identityId,
       builder:
@@ -10509,6 +10713,11 @@ class $$SigningIdentitiesTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<DateTime> get continuedAt => $composableBuilder(
+    column: $table.continuedAt,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<DateTime> get acknowledgedAt => $composableBuilder(
     column: $table.acknowledgedAt,
     builder: (column) => column,
@@ -10519,6 +10728,30 @@ class $$SigningIdentitiesTableAnnotationComposer
         $composerBuilder(
           composer: this,
           getCurrentColumn: (t) => t.supersedesIdentityId,
+          referencedTable: $db.signingIdentities,
+          getReferencedColumn: (t) => t.identityId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$SigningIdentitiesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.signingIdentities,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$SigningIdentitiesTableAnnotationComposer get continuesIdentityId {
+    final $$SigningIdentitiesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.continuesIdentityId,
           referencedTable: $db.signingIdentities,
           getReferencedColumn: (t) => t.identityId,
           builder:
@@ -10604,6 +10837,7 @@ class $$SigningIdentitiesTableTableManager
           IdentityRow,
           PrefetchHooks Function({
             bool supersedesIdentityId,
+            bool continuesIdentityId,
             bool journalEntriesRefs,
             bool integrityEventsRefs,
           })
@@ -10631,6 +10865,8 @@ class $$SigningIdentitiesTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<String?> supersedesIdentityId = const Value.absent(),
                 Value<DateTime?> supersededAt = const Value.absent(),
+                Value<DateTime?> continuedAt = const Value.absent(),
+                Value<String?> continuesIdentityId = const Value.absent(),
                 Value<DateTime?> acknowledgedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SigningIdentitiesCompanion(
@@ -10639,6 +10875,8 @@ class $$SigningIdentitiesTableTableManager
                 createdAt: createdAt,
                 supersedesIdentityId: supersedesIdentityId,
                 supersededAt: supersededAt,
+                continuedAt: continuedAt,
+                continuesIdentityId: continuesIdentityId,
                 acknowledgedAt: acknowledgedAt,
                 rowid: rowid,
               ),
@@ -10649,6 +10887,8 @@ class $$SigningIdentitiesTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<String?> supersedesIdentityId = const Value.absent(),
                 Value<DateTime?> supersededAt = const Value.absent(),
+                Value<DateTime?> continuedAt = const Value.absent(),
+                Value<String?> continuesIdentityId = const Value.absent(),
                 Value<DateTime?> acknowledgedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SigningIdentitiesCompanion.insert(
@@ -10657,6 +10897,8 @@ class $$SigningIdentitiesTableTableManager
                 createdAt: createdAt,
                 supersedesIdentityId: supersedesIdentityId,
                 supersededAt: supersededAt,
+                continuedAt: continuedAt,
+                continuesIdentityId: continuesIdentityId,
                 acknowledgedAt: acknowledgedAt,
                 rowid: rowid,
               ),
@@ -10671,6 +10913,7 @@ class $$SigningIdentitiesTableTableManager
           prefetchHooksCallback:
               ({
                 supersedesIdentityId = false,
+                continuesIdentityId = false,
                 journalEntriesRefs = false,
                 integrityEventsRefs = false,
               }) {
@@ -10707,6 +10950,21 @@ class $$SigningIdentitiesTableTableManager
                                     referencedColumn:
                                         $$SigningIdentitiesTableReferences
                                             ._supersedesIdentityIdTable(db)
+                                            .identityId,
+                                  )
+                                  as T;
+                        }
+                        if (continuesIdentityId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.continuesIdentityId,
+                                    referencedTable:
+                                        $$SigningIdentitiesTableReferences
+                                            ._continuesIdentityIdTable(db),
+                                    referencedColumn:
+                                        $$SigningIdentitiesTableReferences
+                                            ._continuesIdentityIdTable(db)
                                             .identityId,
                                   )
                                   as T;
@@ -10780,6 +11038,7 @@ typedef $$SigningIdentitiesTableProcessedTableManager =
       IdentityRow,
       PrefetchHooks Function({
         bool supersedesIdentityId,
+        bool continuesIdentityId,
         bool journalEntriesRefs,
         bool integrityEventsRefs,
       })

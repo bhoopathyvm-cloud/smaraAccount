@@ -14,7 +14,7 @@ import '../crypto/secure_key_storage.dart';
 /// crypto-storage pattern (design.md Decision 1).
 class AppLockService {
   AppLockService({SecureKeyStorage? secureStorage})
-    : _secureStorage = secureStorage ?? const FlutterSecureKeyStorage();
+    : _secureStorage = secureStorage ?? FlutterSecureKeyStorage();
 
   final SecureKeyStorage _secureStorage;
 

@@ -1,6 +1,7 @@
-/// Append-only audit log event kinds for breaks and migrations.
+/// Append-only audit log event kinds for breaks and continuations.
 enum IntegrityEventType {
   chainBreakDetected,
   chainReanchored,
   keyMigrationConfirmed,
+  identityContinued,
 }

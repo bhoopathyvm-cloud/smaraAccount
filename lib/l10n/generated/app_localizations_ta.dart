@@ -940,6 +940,25 @@ class AppLocalizationsTa extends AppLocalizations {
   String get actionImportFromBackup => 'Import from backup';
 
   @override
+  String get continueBooksTitle => 'Continue my books on this phone';
+
+  @override
+  String get continueBooksBlurb =>
+      'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.';
+
+  @override
+  String get continueBooksAction => 'Continue my books on this phone';
+
+  @override
+  String get restoreFromCopyAction => 'Restore from a copy';
+
+  @override
+  String get saveBooksCopyAction => 'Save a copy of my books';
+
+  @override
+  String get deviceHistoryTitle => 'Device history';
+
+  @override
   String get restoreTitle => 'கையொப்பக் கீயை மீட்டமை';
 
   @override

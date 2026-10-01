@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../domain/crypto/bip39_language_for_locale.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
-import '../view_models/recovery_phrase_setup_view_model.dart';
+import '../view_models/first_identity_setup_view_model.dart';
 
 /// A few common ISO 4217 codes shown as quick picks; any 3-letter code can
-/// be typed instead (multi-currency-support keeps no built-in FX/currency
-/// data source, so this list is purely a UI convenience, not validated
-/// against a canonical registry).
+/// be typed instead.
 const _commonCurrencies = ['USD', 'EUR', 'GBP', 'INR', 'CAD', 'AUD', 'JPY'];
 
-/// First onboarding screen (deferred-onboarding-first-entry): the currency
-/// chosen here seeds all four starter account groups and commits the
-/// signing identity, before the user ever sees the recovery phrase
-/// (multi-currency-support design.md addendum - a group's currency can't
-/// change once it has active accounts, so this choice matters before the
-/// starter financial account is created).
+/// First onboarding screen after New setup: the currency chosen here seeds
+/// all starter account groups and commits the signing identity.
 class CurrencySelectionView extends StatefulWidget {
   const CurrencySelectionView({
     super.key,
@@ -27,7 +20,7 @@ class CurrencySelectionView extends StatefulWidget {
     required this.onFinished,
   });
 
-  final RecoveryPhraseSetupViewModel viewModel;
+  final FirstIdentitySetupViewModel viewModel;
   final VoidCallback onFinished;
 
   @override
@@ -38,11 +31,6 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
   final _controller = TextEditingController();
   bool _defaultSeeded = false;
 
-  // Localizations.localeOf(context) throws if called from initState (the
-  // widget isn't finished mounting yet); didChangeDependencies is the
-  // correct hook for a one-time read of an inherited value. Guarded so a
-  // later dependency change (shouldn't happen on this screen, but
-  // defensively) never overwrites a value the user already edited.
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -63,13 +51,7 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
 
   Future<void> _submit() async {
     if (!_isValid) return;
-    final language = bip39LanguageForLocale(
-      Localizations.localeOf(context).languageCode,
-    );
-    final success = await widget.viewModel.commitIdentity(
-      _controller.text,
-      language: language,
-    );
+    final success = await widget.viewModel.commitIdentity(_controller.text);
     if (success) widget.onFinished();
   }
 

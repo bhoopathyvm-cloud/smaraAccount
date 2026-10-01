@@ -12,20 +12,36 @@ abstract class SecureKeyStorage {
 /// Production implementation, backed by OS secure storage
 /// (Keychain/Keystore/DPAPI).
 ///
+/// iOS/macOS: this-device-only, non-synchronizable accessibility so the
+/// private key never travels in iCloud, Finder, or Quick Start transfers
+/// (ADR 0004 / books-copy-and-continuation).
+///
 /// macOS: `usesDataProtectionKeychain: false` opts out of
 /// `kSecUseDataProtectionKeychain`, which otherwise makes `SecItemAdd`
 /// hang indefinitely (never erroring, never returning) unless the app is
 /// signed under a real Apple Developer Team ID with a matching
 /// `keychain-access-groups` entitlement - not available for local/ad-hoc
 /// signed runs. This falls back to the legacy file-based Keychain API,
-/// which works under ad-hoc signing. Revisit once real code signing is
-/// set up (see the entitlements files' comments).
+/// which works under ad-hoc signing (ADR 0001).
 class FlutterSecureKeyStorage implements SecureKeyStorage {
-  const FlutterSecureKeyStorage([
-    this._storage = const FlutterSecureStorage(
-      mOptions: MacOsOptions(usesDataProtectionKeychain: false),
-    ),
-  ]);
+  FlutterSecureKeyStorage([FlutterSecureStorage? storage])
+    : _storage = storage ?? FlutterSecureStorage(
+        iOptions: defaultIosOptions,
+        mOptions: defaultMacOsOptions,
+      );
+
+  /// Options used for iOS Keychain items. Visible for unit tests.
+  static const IOSOptions defaultIosOptions = IOSOptions(
+    accessibility: KeychainAccessibility.unlocked_this_device,
+    synchronizable: false,
+  );
+
+  /// Options used for macOS Keychain items. Visible for unit tests.
+  static const MacOsOptions defaultMacOsOptions = MacOsOptions(
+    accessibility: KeychainAccessibility.unlocked_this_device,
+    synchronizable: false,
+    usesDataProtectionKeychain: false,
+  );
 
   final FlutterSecureStorage _storage;
 

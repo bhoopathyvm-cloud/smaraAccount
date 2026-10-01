@@ -87,12 +87,13 @@ class LedgerChainStore {
     }
   }
 
-  /// Active (non-superseded) signing identity, or null before first setup.
-  /// Read-only db lookup so posting never imports [IdentityRepository].
+  /// Active (non-superseded, non-continued) signing identity, or null
+  /// before first setup. Read-only db lookup so posting never imports
+  /// [IdentityRepository].
   Future<SigningIdentity?> currentSigningIdentity() async {
     final row =
         await (_db.select(_db.signingIdentities)
-              ..where((t) => t.supersededAt.isNull())
+              ..where((t) => t.supersededAt.isNull() & t.continuedAt.isNull())
               ..orderBy([(t) => OrderingTerm.desc(t.createdAt)])
               ..limit(1))
             .getSingleOrNull();
@@ -103,6 +104,8 @@ class LedgerChainStore {
       createdAt: row.createdAt,
       supersedesIdentityId: row.supersedesIdentityId,
       supersededAt: row.supersededAt,
+      continuesIdentityId: row.continuesIdentityId,
+      continuedAt: row.continuedAt,
       acknowledgedAt: row.acknowledgedAt,
     );
   }

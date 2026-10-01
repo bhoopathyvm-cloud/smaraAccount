@@ -24,9 +24,7 @@ class SettingsView extends StatelessWidget {
     required this.viewModel,
     this.onOpenPayees,
     this.onOpenRecurringTemplates,
-    this.onOpenRecoveryPhrase,
-    this.onOpenKeystoreExport,
-    this.onOpenDeviceMigrationBundleExport,
+    this.onOpenDeviceHistory,
   });
 
   final SettingsViewModel viewModel;
@@ -37,16 +35,8 @@ class SettingsView extends StatelessWidget {
   /// recurring-templates: opens the recurring template CRUD screen.
   final VoidCallback? onOpenRecurringTemplates;
 
-  /// device-migration-bundle: opens the recovery phrase display screen -
-  /// optional, reachable at any time, never blocking.
-  final VoidCallback? onOpenRecoveryPhrase;
-
-  /// device-migration-bundle: opens the keystore file export screen.
-  final VoidCallback? onOpenKeystoreExport;
-
-  /// device-migration-bundle: opens the device migration bundle export
-  /// screen - books and signing key together, for moving to a new device.
-  final VoidCallback? onOpenDeviceMigrationBundleExport;
+  /// books-copy-and-continuation: opens Device history (stub until wired).
+  final VoidCallback? onOpenDeviceHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -223,34 +213,22 @@ class SettingsView extends StatelessWidget {
                 onPressed: viewModel.isBackingUp
                     ? null
                     : () => _showSaveBackupDialog(context, viewModel),
-                child: Text(l10n.actionSaveBackup),
+                child: Text(l10n.saveBooksCopyAction),
               ),
               const SizedBox(height: AppSpacing.small),
               OutlinedButton(
                 onPressed: viewModel.isRestoring
                     ? null
                     : () => _showRestoreBackupDialog(context, viewModel),
-                child: Text(l10n.actionRestoreBackup),
+                child: Text(l10n.restoreFromCopyAction),
               ),
-              const SizedBox(height: AppSpacing.xLarge),
-              Text(l10n.settingsRecovery, style: AppTypography.sectionLabel),
-              const SizedBox(height: AppSpacing.base),
-              Text(l10n.settingsRecoveryBlurb, style: AppTypography.metadata),
-              const SizedBox(height: AppSpacing.medium),
-              OutlinedButton(
-                onPressed: onOpenRecoveryPhrase,
-                child: Text(l10n.settingsViewRecoveryPhrase),
-              ),
-              const SizedBox(height: AppSpacing.small),
-              OutlinedButton(
-                onPressed: onOpenKeystoreExport,
-                child: Text(l10n.settingsExportKeystoreFile),
-              ),
-              const SizedBox(height: AppSpacing.small),
-              OutlinedButton(
-                onPressed: onOpenDeviceMigrationBundleExport,
-                child: Text(l10n.settingsExportDeviceMigrationBundle),
-              ),
+              if (onOpenDeviceHistory != null) ...[
+                const SizedBox(height: AppSpacing.small),
+                OutlinedButton(
+                  onPressed: onOpenDeviceHistory,
+                  child: Text(l10n.deviceHistoryTitle),
+                ),
+              ],
               const SizedBox(height: AppSpacing.xLarge),
               Text(l10n.settingsLock, style: AppTypography.sectionLabel),
               const SizedBox(height: AppSpacing.base),
@@ -382,7 +360,7 @@ class SettingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: Text(l10n.actionSaveBackup),
+          title: Text(l10n.saveBooksCopyAction),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -443,10 +421,10 @@ class SettingsView extends StatelessWidget {
                       }
 
                       final fileName =
-                          'smara-backup-'
-                          '${DateTime.now().millisecondsSinceEpoch}.smarabackup';
+                          'smara-books-copy-'
+                          '${DateTime.now().millisecondsSinceEpoch}.smaracopy';
                       await FilePicker.saveFile(
-                        dialogTitle: l10n.actionSaveBackup,
+                        dialogTitle: l10n.saveBooksCopyAction,
                         fileName: fileName,
                         bytes: Uint8List.fromList(utf8.encode(contents)),
                       );
@@ -477,7 +455,7 @@ class SettingsView extends StatelessWidget {
       context: context,
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: Text(l10n.actionRestoreBackup),
+          title: Text(l10n.restoreFromCopyAction),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

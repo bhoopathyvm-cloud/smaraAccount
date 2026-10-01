@@ -3,8 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../domain/investment/exchange_registry.dart';
 
-import '../../../../data/repositories/device_migration_bundle_repository.dart';
-import '../../../../data/repositories/ledger_backup_repository.dart';
+import '../../../../data/repositories/books_copy_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
@@ -19,24 +18,20 @@ import '../../../core/app_lock_controller.dart';
 const kPrivacyPolicyUrl =
     'https://smara-ai.ch/open-source/smara-account/privacy-policy/';
 
-/// The app's Settings surface: the reference exchange-rate lookup's
-/// enable/disable toggle and predefined-provider selection (design.md
-/// Decision 5), ledger-backup-restore's Save/Restore backup actions, and
-/// app-lock's PIN/biometric/timeout/snapshot-hiding controls. Deliberately
-/// minimal - not a general preferences screen.
+/// The app's Settings surface: reference exchange-rate lookup, Books Copy
+/// save/restore, and app-lock controls. Deliberately minimal - not a
+/// general preferences screen.
 class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   SettingsViewModel({
     required SettingsRepository settingsRepository,
-    required LedgerBackupRepository ledgerBackupRepository,
-    required DeviceMigrationBundleRepository deviceMigrationBundleRepository,
+    required BooksCopyRepository booksCopyRepository,
     required AppLockService appLockService,
     required BiometricAuthenticator biometricAuthenticator,
     required AppLockController appLockController,
     LocaleController? localeController,
     Future<bool> Function(Uri url)? launchUrlFn,
   }) : _settingsRepository = settingsRepository,
-       _ledgerBackupRepository = ledgerBackupRepository,
-       _deviceMigrationBundleRepository = deviceMigrationBundleRepository,
+       _booksCopyRepository = booksCopyRepository,
        _appLockService = appLockService,
        _biometricAuthenticator = biometricAuthenticator,
        _appLockController = appLockController,
@@ -48,8 +43,7 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   final SettingsRepository _settingsRepository;
-  final LedgerBackupRepository _ledgerBackupRepository;
-  final DeviceMigrationBundleRepository _deviceMigrationBundleRepository;
+  final BooksCopyRepository _booksCopyRepository;
   final AppLockService _appLockService;
   final BiometricAuthenticator _biometricAuthenticator;
   final AppLockController _appLockController;
@@ -168,14 +162,14 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
   String? backupErrorMessageFor(AppLocalizations l10n) => errorMessageFor(l10n);
   void clearBackupError() => clearFailure();
 
-  /// Returns the encrypted backup file's contents, or null (with
+  /// Returns the encrypted Books Copy file's contents, or null (with
   /// [backupErrorMessage] set) on failure.
   Future<String?> exportBackup({required String passphrase}) async {
     _isBackingUp = true;
     clearFailure();
     notifyListeners();
     try {
-      final contents = await _ledgerBackupRepository.exportLedgerBackup(
+      final contents = await _booksCopyRepository.saveBooksCopy(
         passphrase: passphrase,
       );
       _isBackingUp = false;
@@ -202,17 +196,13 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     clearFailure();
     notifyListeners();
     try {
-      await _ledgerBackupRepository.restoreLedgerBackup(
+      await _booksCopyRepository.restoreBooksCopy(
         fileContents: fileContents,
         passphrase: passphrase,
       );
       _isRestoring = false;
       notifyListeners();
       return true;
-    } on ForeignBackupIdentityException catch (e) {
-      _isRestoring = false;
-      setFailure(e);
-      return false;
     } on InvalidLedgerBackupException catch (e) {
       _isRestoring = false;
       setFailure(e);
@@ -224,35 +214,10 @@ class SettingsViewModel extends ChangeNotifier with LocalizedErrorMixin {
     }
   }
 
-  bool _isExportingBundle = false;
-  bool get isExportingBundle => _isExportingBundle;
-
-  /// Returns the encrypted device migration bundle's contents (books and
-  /// signing key together, spec: `device-migration-bundle`), or null
-  /// (with [backupErrorMessage] set) on failure.
-  Future<String?> exportDeviceMigrationBundle({
-    required String passphrase,
-  }) async {
-    _isExportingBundle = true;
-    clearFailure();
-    notifyListeners();
-    try {
-      final contents = await _deviceMigrationBundleRepository.exportBundle(
-        passphrase: passphrase,
-      );
-      _isExportingBundle = false;
-      notifyListeners();
-      return contents;
-    } catch (e) {
-      _isExportingBundle = false;
-      setFailure(
-        AppFailure(
-          AppErrorCode.deviceMigrationBundleCreateFailed,
-          debugMessage: '$e',
-        ),
-      );
-      return null;
-    }
+  /// Counts of current-device data a restore will replace (for the
+  /// warning dialog). Zero counts are omitted via [BooksReplacementCounts.nonZero].
+  Future<BooksReplacementCounts> replacementCounts() {
+    return _booksCopyRepository.replacementCounts();
   }
 
   /// Null when [pin] is at least 4 characters and matches [confirm].

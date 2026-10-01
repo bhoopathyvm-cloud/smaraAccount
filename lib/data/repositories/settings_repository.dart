@@ -184,4 +184,181 @@ class SettingsRepository implements AppLockSettingsStore {
   Future<void> setPreferredLocaleTag(String tag) {
     return _preferences.setString(_preferredLocaleTagKey, tag);
   }
+
+  // --- Books Copy: books settings export/import (never device settings) ---
+
+  static const _booksSettingsKeys = {
+    _referenceRateLookupEnabledKey,
+    _referenceRateProviderKey,
+    _marketPriceFetchEnabledKey,
+    _quoteProviderKey,
+    _defaultExchangeKey,
+    _firstWeekSetupCompletedKey,
+  };
+
+  /// Books settings only. Device settings (locale, research tool, App Lock,
+  /// reminder state) are never included.
+  Future<Map<String, Object?>> exportBooksSettings() async {
+    return {
+      _referenceRateLookupEnabledKey: await isReferenceRateLookupEnabled(),
+      _referenceRateProviderKey: (await selectedProvider()).name,
+      _marketPriceFetchEnabledKey: await isMarketPriceFetchEnabled(),
+      _quoteProviderKey: (await selectedQuoteProvider()).name,
+      _defaultExchangeKey: await defaultExchangeCode(),
+      _firstWeekSetupCompletedKey: await isFirstWeekSetupCompleted(),
+    };
+  }
+
+  /// Applies books settings from a Books Copy. Does not touch device
+  /// settings. Unknown keys are ignored.
+  Future<void> importBooksSettings(Map<String, Object?> settings) async {
+    for (final entry in settings.entries) {
+      if (!_booksSettingsKeys.contains(entry.key)) continue;
+      final value = entry.value;
+      switch (entry.key) {
+        case _referenceRateLookupEnabledKey:
+          if (value is bool) await setReferenceRateLookupEnabled(value);
+        case _referenceRateProviderKey:
+          if (value is String) {
+            for (final provider in ExchangeRateProvider.values) {
+              if (provider.name == value) {
+                await setSelectedProvider(provider);
+                break;
+              }
+            }
+          }
+        case _marketPriceFetchEnabledKey:
+          if (value is bool) await setMarketPriceFetchEnabled(value);
+        case _quoteProviderKey:
+          if (value is String) {
+            for (final provider in QuoteProvider.values) {
+              if (provider.name == value) {
+                await setSelectedQuoteProvider(provider);
+                break;
+              }
+            }
+          }
+        case _defaultExchangeKey:
+          if (value is String) {
+            Exchange? exchange;
+            for (final candidate in kExchangeRegistry) {
+              if (candidate.code == value) {
+                exchange = candidate;
+                break;
+              }
+            }
+            if (exchange != null) await setDefaultExchange(exchange);
+          } else if (value == null) {
+            await _preferences.remove(_defaultExchangeKey);
+          }
+        case _firstWeekSetupCompletedKey:
+          if (value is bool) await setFirstWeekSetupCompleted(value);
+      }
+    }
+  }
+
+  // --- Backup reminder (device-local; never exported) ---
+
+  static const _lastCopySavedAtKey = 'lastCopySavedAt';
+  static const _entryCountAtLastCopyKey = 'entryCountAtLastCopy';
+  static const _snoozeUntilKey = 'backupReminderSnoozeUntil';
+  static const _entryCountAtSnoozeKey = 'backupReminderEntryCountAtSnooze';
+  static const _reminderEnabledKey = 'backupReminderEnabled';
+  static const _reminderDaysKey = 'backupReminderDays';
+  static const _reminderEntriesKey = 'backupReminderEntries';
+  static const _snoozeDaysKey = 'backupReminderSnoozeDays';
+  static const _snoozeEntriesKey = 'backupReminderSnoozeEntries';
+  static const _keyAccessibilityMigratedKey = 'keyAccessibilityMigrated';
+
+  static const defaultReminderDays = 30;
+  static const defaultReminderEntries = 500;
+  static const defaultSnoozeDays = 7;
+  static const defaultSnoozeEntries = 500;
+
+  Future<void> recordBooksCopySaved({
+    required DateTime at,
+    required int entryCount,
+  }) async {
+    await _preferences.setString(_lastCopySavedAtKey, at.toUtc().toIso8601String());
+    await _preferences.setInt(_entryCountAtLastCopyKey, entryCount);
+    await _preferences.remove(_snoozeUntilKey);
+    await _preferences.remove(_entryCountAtSnoozeKey);
+  }
+
+  Future<DateTime?> lastCopySavedAt() async {
+    final raw = await _preferences.getString(_lastCopySavedAtKey);
+    if (raw == null) return null;
+    return DateTime.tryParse(raw);
+  }
+
+  Future<int> entryCountAtLastCopy() async {
+    return await _preferences.getInt(_entryCountAtLastCopyKey) ?? 0;
+  }
+
+  Future<void> snoozeBackupReminder({
+    required DateTime until,
+    required int entryCount,
+  }) async {
+    await _preferences.setString(_snoozeUntilKey, until.toUtc().toIso8601String());
+    await _preferences.setInt(_entryCountAtSnoozeKey, entryCount);
+  }
+
+  Future<DateTime?> snoozeUntil() async {
+    final raw = await _preferences.getString(_snoozeUntilKey);
+    if (raw == null) return null;
+    return DateTime.tryParse(raw);
+  }
+
+  Future<int?> entryCountAtSnooze() =>
+      _preferences.getInt(_entryCountAtSnoozeKey);
+
+  Future<bool> isBackupReminderEnabled() async {
+    return await _preferences.getBool(_reminderEnabledKey) ?? true;
+  }
+
+  Future<void> setBackupReminderEnabled(bool value) {
+    return _preferences.setBool(_reminderEnabledKey, value);
+  }
+
+  Future<int> backupReminderDays() async {
+    return await _preferences.getInt(_reminderDaysKey) ?? defaultReminderDays;
+  }
+
+  Future<void> setBackupReminderDays(int days) {
+    return _preferences.setInt(_reminderDaysKey, days);
+  }
+
+  Future<int> backupReminderEntries() async {
+    return await _preferences.getInt(_reminderEntriesKey) ??
+        defaultReminderEntries;
+  }
+
+  Future<void> setBackupReminderEntries(int entries) {
+    return _preferences.setInt(_reminderEntriesKey, entries);
+  }
+
+  Future<int> backupReminderSnoozeDays() async {
+    return await _preferences.getInt(_snoozeDaysKey) ?? defaultSnoozeDays;
+  }
+
+  Future<void> setBackupReminderSnoozeDays(int days) {
+    return _preferences.setInt(_snoozeDaysKey, days);
+  }
+
+  Future<int> backupReminderSnoozeEntries() async {
+    return await _preferences.getInt(_snoozeEntriesKey) ??
+        defaultSnoozeEntries;
+  }
+
+  Future<void> setBackupReminderSnoozeEntries(int entries) {
+    return _preferences.setInt(_snoozeEntriesKey, entries);
+  }
+
+  Future<bool> isKeyAccessibilityMigrated() async {
+    return await _preferences.getBool(_keyAccessibilityMigratedKey) ?? false;
+  }
+
+  Future<void> setKeyAccessibilityMigrated(bool value) {
+    return _preferences.setBool(_keyAccessibilityMigratedKey, value);
+  }
 }

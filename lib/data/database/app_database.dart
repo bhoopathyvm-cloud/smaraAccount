@@ -91,7 +91,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 17;
+  int get schemaVersion => 18;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -431,6 +431,17 @@ class AppDatabase extends _$AppDatabase {
         // 10-16) needs these columns added.
         await m.addColumn(instruments, instruments.resolvedSymbol);
         await m.addColumn(instruments, instruments.exchange);
+      }
+
+      if (from < 18) {
+        // books-copy-and-continuation: Continuation links between signing
+        // identities. Nullable columns only; existing identities stay
+        // current (both null) and keep their values.
+        await m.addColumn(signingIdentities, signingIdentities.continuedAt);
+        await m.addColumn(
+          signingIdentities,
+          signingIdentities.continuesIdentityId,
+        );
       }
     },
   );

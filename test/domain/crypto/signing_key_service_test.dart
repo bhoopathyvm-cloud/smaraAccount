@@ -1,11 +1,36 @@
-import 'package:bip39_mnemonic/bip39_mnemonic.dart';
-import 'package:smara_accounting/domain/crypto/recovery_phrase.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:smara_accounting/domain/crypto/secure_key_storage.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
 import 'package:test/test.dart';
 
 import 'in_memory_secure_key_storage.dart';
 
 void main() {
+  group('FlutterSecureKeyStorage options', () {
+    test('iOS options are this-device-only and non-synchronizable', () {
+      expect(
+        FlutterSecureKeyStorage.defaultIosOptions.accessibility,
+        KeychainAccessibility.unlocked_this_device,
+      );
+      expect(FlutterSecureKeyStorage.defaultIosOptions.synchronizable, isFalse);
+    });
+
+    test('macOS options keep ADR 0001 path and this-device-only access', () {
+      expect(
+        FlutterSecureKeyStorage.defaultMacOsOptions.accessibility,
+        KeychainAccessibility.unlocked_this_device,
+      );
+      expect(
+        FlutterSecureKeyStorage.defaultMacOsOptions.synchronizable,
+        isFalse,
+      );
+      expect(
+        FlutterSecureKeyStorage.defaultMacOsOptions.usesDataProtectionKeychain,
+        isFalse,
+      );
+    });
+  });
+
   late InMemorySecureKeyStorage storage;
   late SigningKeyService service;
 
@@ -16,235 +41,110 @@ void main() {
 
   group('loadStoredKeyMaterial', () {
     test('returns null when no identity has been generated yet', () async {
-      final material = await service.loadStoredKeyMaterial();
-
-      expect(material, isNull);
+      expect(await service.loadStoredKeyMaterial(), isNull);
     });
 
     test('returns the stored key material after generateNewIdentity', () async {
       final generated = await service.generateNewIdentity();
-
       final loaded = await service.loadStoredKeyMaterial();
-
       expect(loaded!.publicKey, equals(generated.keyMaterial.publicKey));
     });
   });
 
   group('generateNewIdentity', () {
-    test(
-      'returns a 24-word phrase that deterministically derives the stored key',
-      () async {
-        final generated = await service.generateNewIdentity();
+    test('stores a usable key pair with no recovery phrase', () async {
+      final generated = await service.generateNewIdentity();
+      expect(generated.keyMaterial.privateKeySeed, hasLength(32));
+      expect(generated.keyMaterial.publicKey, isNotEmpty);
 
-        expect(generated.phrase.words, hasLength(24));
-
-        final rederived = await service.restoreFromRecoveryPhrase(
-          generated.phrase.words,
-        );
-        expect(rederived.publicKey, equals(generated.keyMaterial.publicKey));
-      },
-    );
+      final message = [1, 2, 3, 4];
+      final signature = await service.sign(message);
+      expect(
+        await service.verify(
+          message,
+          signature: signature,
+          publicKey: generated.keyMaterial.publicKey,
+        ),
+        isTrue,
+      );
+    });
 
     test('two calls produce different identities', () async {
       final a = await service.generateNewIdentity();
       final b = await service.generateNewIdentity();
-
-      expect(a.keyMaterial.publicKey, isNot(equals(b.keyMaterial.publicKey)));
-    });
-  });
-
-  group('generateNewIdentity with a non-English language', () {
-    test('produces a French phrase, and restore auto-detects it', () async {
-      final generated = await service.generateNewIdentity(
-        language: Language.french,
-      );
-      expect(generated.phrase.language, Language.french);
       expect(
-        generated.phrase.words.every(Language.french.list.contains),
-        isTrue,
+        a.keyMaterial.publicKey,
+        isNot(equals(b.keyMaterial.publicKey)),
       );
-
-      final restored = await service.restoreFromRecoveryPhrase(
-        generated.phrase.words,
-      );
-      expect(restored.publicKey, equals(generated.keyMaterial.publicKey));
     });
   });
 
-  group('stashPendingPhraseWords / resumePendingIdentity', () {
-    test('resumes an English-generated identity unchanged', () async {
+  group('migrateKeyAccessibilityIfNeeded', () {
+    test('rewrites the key and marks migrated on success', () async {
+      await service.generateNewIdentity();
+      var marked = false;
+      final migrated = await service.migrateKeyAccessibilityIfNeeded(
+        alreadyMigrated: false,
+        markMigrated: () async => marked = true,
+      );
+      expect(migrated, isTrue);
+      expect(marked, isTrue);
+      expect(storage.writeCount, greaterThanOrEqualTo(2));
+      expect(await service.loadStoredKeyMaterial(), isNotNull);
+    });
+
+    test('keeps the key and does not mark when write fails', () async {
       final generated = await service.generateNewIdentity();
-      await service.stashPendingPhraseWords(generated.phrase.words);
-
-      final resumed = await service.resumePendingIdentity();
-
-      expect(resumed, isNotNull);
-      expect(resumed!.phrase.language, Language.english);
+      storage.failNextWriteWith = StateError('write failed');
+      var marked = false;
+      final migrated = await service.migrateKeyAccessibilityIfNeeded(
+        alreadyMigrated: false,
+        markMigrated: () async => marked = true,
+      );
+      expect(migrated, isFalse);
+      expect(marked, isFalse);
       expect(
-        resumed.keyMaterial.publicKey,
+        (await service.loadStoredKeyMaterial())!.publicKey,
         equals(generated.keyMaterial.publicKey),
       );
     });
 
-    test(
-      'resumes a non-English identity using the stashed language, not English',
-      () async {
-        final generated = await service.generateNewIdentity(
-          language: Language.japanese,
-        );
-        await service.stashPendingPhraseWords(
-          generated.phrase.words,
-          language: Language.japanese,
-        );
-
-        final resumed = await service.resumePendingIdentity();
-
-        expect(resumed, isNotNull);
-        expect(resumed!.phrase.language, Language.japanese);
-        expect(
-          resumed.keyMaterial.publicKey,
-          equals(generated.keyMaterial.publicKey),
-        );
-      },
-    );
-
-    test('returns null when nothing is stashed', () async {
-      expect(await service.resumePendingIdentity(), isNull);
-    });
-
-    test('remains readable indefinitely - it is the permanent Settings '
-        'recovery phrase store, not a transient cache', () async {
-      final generated = await service.generateNewIdentity(
-        language: Language.spanish,
+    test('keeps the key and does not mark on read-back mismatch', () async {
+      final generated = await service.generateNewIdentity();
+      storage.corruptReadBackAfterWrite = true;
+      var marked = false;
+      final migrated = await service.migrateKeyAccessibilityIfNeeded(
+        alreadyMigrated: false,
+        markMigrated: () async => marked = true,
       );
-      await service.stashPendingPhraseWords(
-        generated.phrase.words,
-        language: Language.spanish,
-      );
-
-      final resumed = await service.resumePendingIdentity();
-
-      expect(resumed, isNotNull);
+      expect(migrated, isFalse);
+      expect(marked, isFalse);
+      storage.corruptReadBackAfterWrite = false;
       expect(
-        resumed!.keyMaterial.publicKey,
+        (await service.loadStoredKeyMaterial())!.publicKey,
         equals(generated.keyMaterial.publicKey),
       );
     });
-  });
 
-  group('restoreFromRecoveryPhrase', () {
-    test('rejects a phrase with an invalid checksum', () async {
-      final generated = await service.generateNewIdentity();
-      final valid = generated.phrase.words;
-      // Last-word replacement until checksum fails. Adjacent-word swaps
-      // can still be valid (~1/256 for 24-word BIP-39 phrases).
-      List<String>? invalid;
-      for (final candidate in valid) {
-        if (candidate == valid.last) continue;
-        final tampered = [...valid.sublist(0, valid.length - 1), candidate];
-        try {
-          RecoveryPhrase.fromWords(tampered);
-        } on MnemonicInvalidChecksumException {
-          invalid = tampered;
-          break;
-        }
-      }
-      expect(invalid, isNotNull);
-
-      expect(
-        () => service.restoreFromRecoveryPhrase(invalid!),
-        throwsException,
+    test('no-ops when already migrated', () async {
+      await service.generateNewIdentity();
+      final writesBefore = storage.writeCount;
+      var marked = false;
+      final migrated = await service.migrateKeyAccessibilityIfNeeded(
+        alreadyMigrated: true,
+        markMigrated: () async => marked = true,
       );
+      expect(migrated, isFalse);
+      expect(marked, isFalse);
+      expect(storage.writeCount, equals(writesBefore));
     });
   });
 
-  group('sign / verify round trip through the service', () {
-    test(
-      'a message signed with the stored key verifies against its public key',
-      () async {
-        final generated = await service.generateNewIdentity();
-        final message = 'entry content'.codeUnits;
-
-        final signature = await service.sign(message);
-        final isValid = await service.verify(
-          message,
-          signature: signature,
-          publicKey: generated.keyMaterial.publicKey,
-        );
-
-        expect(isValid, isTrue);
-      },
-    );
-
-    test('sign throws when no identity is stored', () async {
-      expect(() => service.sign('anything'.codeUnits), throwsStateError);
-    });
-  });
-
-  group('keystore file export / restore', () {
-    test('exporting then restoring recovers the same key', () async {
-      final generated = await service.generateNewIdentity();
-
-      final file = await service.exportKeystoreFile(
-        passphrase: 'hunter2-hunter2',
-      );
-      final restored = await service.restoreFromKeystoreFile(
-        fileContents: file,
-        passphrase: 'hunter2-hunter2',
-      );
-
-      expect(restored.publicKey, equals(generated.keyMaterial.publicKey));
-    });
-
-    test('export throws when no identity is stored', () async {
-      expect(
-        () => service.exportKeystoreFile(passphrase: 'x'),
-        throwsStateError,
-      );
-    });
-  });
-
-  group('device migration bundle export', () {
-    test(
-      'exported bundle decrypts to the same seed currently stored',
-      () async {
-        final generated = await service.generateNewIdentity();
-        final databaseBytes = List<int>.generate(32, (i) => i);
-
-        final file = await service.exportDeviceMigrationBundle(
-          databaseBytes: databaseBytes,
-          passphrase: 'hunter2-hunter2',
-        );
-        final restored = await service.restoreFromSeed(
-          (await service.loadStoredKeyMaterial())!.privateKeySeed,
-        );
-
-        expect(file, isNotEmpty);
-        expect(restored.publicKey, equals(generated.keyMaterial.publicKey));
-      },
-    );
-
-    test('export throws when no identity is stored', () async {
-      expect(
-        () => service.exportDeviceMigrationBundle(
-          databaseBytes: const [],
-          passphrase: 'x',
-        ),
-        throwsStateError,
-      );
-    });
-  });
-
-  group('restoreFromSeed', () {
-    test('stores the seed and derives the matching key pair', () async {
-      final generated = await service.generateNewIdentity();
-      final seed = (await service.loadStoredKeyMaterial())!.privateKeySeed;
-
-      final restored = await service.restoreFromSeed(seed);
-
-      expect(restored.publicKey, equals(generated.keyMaterial.publicKey));
-      final reloaded = await service.loadStoredKeyMaterial();
-      expect(reloaded!.publicKey, equals(generated.keyMaterial.publicKey));
+  group('deleteStoredKey', () {
+    test('removes the private key from secure storage', () async {
+      await service.generateNewIdentity();
+      await service.deleteStoredKey();
+      expect(await service.loadStoredKeyMaterial(), isNull);
     });
   });
 }

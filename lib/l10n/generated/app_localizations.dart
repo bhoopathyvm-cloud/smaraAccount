@@ -1872,6 +1872,42 @@ abstract class AppLocalizations {
   /// **'Import from backup'**
   String get actionImportFromBackup;
 
+  /// No description provided for @continueBooksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue my books on this phone'**
+  String get continueBooksTitle;
+
+  /// No description provided for @continueBooksBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.'**
+  String get continueBooksBlurb;
+
+  /// No description provided for @continueBooksAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue my books on this phone'**
+  String get continueBooksAction;
+
+  /// No description provided for @restoreFromCopyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from a copy'**
+  String get restoreFromCopyAction;
+
+  /// No description provided for @saveBooksCopyAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a copy of my books'**
+  String get saveBooksCopyAction;
+
+  /// No description provided for @deviceHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device history'**
+  String get deviceHistoryTitle;
+
   /// No description provided for @restoreTitle.
   ///
   /// In en, this message translates to:

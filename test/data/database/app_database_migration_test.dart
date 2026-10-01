@@ -454,7 +454,57 @@ sqlite3.Database _openV16Database() {
   return db;
 }
 
+/// Built by taking [_openV16Database] and hand-applying the
+/// schemaVersion-17 migration SQL (`instruments.resolved_symbol` /
+/// `exchange`) so onUpgrade(17, 18) can be exercised for Continuation
+/// columns on `signing_identities`.
+sqlite3.Database _openV17Database() {
+  final db = _openV16Database();
+  db.execute('''
+    ALTER TABLE instruments ADD COLUMN resolved_symbol TEXT NULL;
+    ALTER TABLE instruments ADD COLUMN exchange TEXT NULL;
+    PRAGMA user_version = 17;
+  ''');
+  return db;
+}
+
 void main() {
+  group('onUpgrade from schemaVersion 17', () {
+    test(
+      'existing identities keep their values and gain null continuation columns',
+      () async {
+        final v17 = _openV17Database();
+        v17.execute(
+          '''
+          INSERT INTO signing_identities (
+            identity_id, public_key, created_at,
+            supersedes_identity_id, superseded_at, acknowledged_at
+          ) VALUES (?, ?, 0, NULL, NULL, 0);
+          ''',
+          ['id-keep', Uint8List.fromList([9, 8, 7])],
+        );
+
+        final db = AppDatabase.forTesting(NativeDatabase.opened(v17));
+        addTearDown(db.close);
+
+        final row =
+            await (db.select(db.signingIdentities)
+                  ..where((t) => t.identityId.equals('id-keep')))
+                .getSingle();
+        expect(row.publicKey, equals([9, 8, 7]));
+        expect(row.createdAt, equals(DateTime.fromMillisecondsSinceEpoch(0)));
+        expect(row.supersedesIdentityId, isNull);
+        expect(row.supersededAt, isNull);
+        expect(row.continuesIdentityId, isNull);
+        expect(row.continuedAt, isNull);
+        expect(
+          row.acknowledgedAt,
+          equals(DateTime.fromMillisecondsSinceEpoch(0)),
+        );
+      },
+    );
+  });
+
   group('onUpgrade from schemaVersion 16', () {
     test(
       'existing instruments upgrade cleanly and a resolved symbol is settable',

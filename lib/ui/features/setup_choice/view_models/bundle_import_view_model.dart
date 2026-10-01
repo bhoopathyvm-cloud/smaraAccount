@@ -1,20 +1,18 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../../data/repositories/device_migration_bundle_repository.dart';
+import '../../../../data/repositories/books_copy_repository.dart';
 import '../../../../domain/exceptions.dart';
 import '../../../../l10n/l10n.dart';
 
-/// Startup Import From Backup path (spec: `device-migration-bundle`).
-/// Unlike [RestoreIdentityViewModel] (key-only restore onto a device that
-/// already has the matching database some other way), this replaces the
-/// database *and* restores the private key together from one file, so
-/// the device is ready to record a new entry immediately on success.
+/// Startup "Restore from a copy" path (books-copy-and-continuation).
+/// Replaces the local database with a Books Copy (or a legacy backup /
+/// bundle with any key discarded). On success the caller must have the
+/// user restart the app.
 class BundleImportViewModel extends ChangeNotifier with LocalizedErrorMixin {
-  BundleImportViewModel({
-    required DeviceMigrationBundleRepository bundleRepository,
-  }) : _bundleRepository = bundleRepository;
+  BundleImportViewModel({required BooksCopyRepository booksCopyRepository})
+    : _booksCopyRepository = booksCopyRepository;
 
-  final DeviceMigrationBundleRepository _bundleRepository;
+  final BooksCopyRepository _booksCopyRepository;
 
   bool _isImporting = false;
   bool get isImporting => _isImporting;
@@ -31,21 +29,17 @@ class BundleImportViewModel extends ChangeNotifier with LocalizedErrorMixin {
     notifyListeners();
 
     try {
-      await _bundleRepository.importBundle(
+      await _booksCopyRepository.restoreBooksCopy(
         fileContents: fileContents,
         passphrase: passphrase,
       );
       _isImporting = false;
       notifyListeners();
       return true;
-    } on InvalidDeviceMigrationBundleException catch (e) {
-      setFailure(e);
-    } on ForeignDeviceMigrationBundleIdentityException catch (e) {
+    } on InvalidLedgerBackupException catch (e) {
       setFailure(e);
     } catch (_) {
-      setFailure(
-        const AppFailure(AppErrorCode.deviceMigrationBundleImportFailed),
-      );
+      setFailure(const AppFailure(AppErrorCode.backupRestoreFailed));
     }
 
     _isImporting = false;

@@ -9,6 +9,8 @@ SigningIdentity _identity() {
     createdAt: DateTime(2026, 1, 1),
     supersedesIdentityId: null,
     supersededAt: null,
+    continuesIdentityId: null,
+    continuedAt: null,
     acknowledgedAt: null,
   );
 }
@@ -69,11 +71,10 @@ void main() {
     expect(await policy.resolve(AppNavPaths.home), isNull);
   });
 
-  test('missing stored key redirects to restore', () async {
+  test('missing stored key redirects to continue', () async {
     final policy = _policy(identity: ready, matchingKey: false);
-    expect(await policy.resolve(AppNavPaths.home), AppNavPaths.restore);
-    expect(await policy.resolve(AppNavPaths.restore), isNull);
-    expect(await policy.resolve(AppNavPaths.migrate), isNull);
+    expect(await policy.resolve(AppNavPaths.home), AppNavPaths.continuePath);
+    expect(await policy.resolve(AppNavPaths.continuePath), isNull);
   });
 
   test('verifyChain runs once per policy instance', () async {
