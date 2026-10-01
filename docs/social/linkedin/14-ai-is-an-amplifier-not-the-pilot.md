@@ -11,15 +11,15 @@ Blog URL: https://smara-ai.ch/blog/14-ai-is-an-amplifier-not-the-pilot/
 
 Are you sure your AI is right? I was sure. That was the problem.
 
-AI made me faster. It also helped me carefully build something my users didn't need.
+My accounting app signs every entry with a digital key, so nobody can secretly change the past.
 
-On day one, my app's plan asked every user to write down 24 secret words. I never questioned it, so the AI kept building on it.
+On day one, the AI insisted the key must be backed up: 24 words every user writes down. I never asked why.
 
-Months later I asked: "Who needs this?" Almost nobody. The new design is simpler and safer.
+Then a tester asked: "To check my entries, isn't the public key enough?"
 
-AI is like an aircraft: it gets you there fast, but you choose where to go.
+He was right. Even NIST advises against backing up private signing keys.
 
-Understand. Question. Ask for sources. Then decide yourself.
+AI is the engine. You are the pilot. Ask one more question.
 
 Full story: https://smara-ai.ch/blog/14-ai-is-an-amplifier-not-the-pilot/
 

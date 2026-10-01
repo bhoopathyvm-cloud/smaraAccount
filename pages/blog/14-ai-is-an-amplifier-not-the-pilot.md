@@ -2,89 +2,90 @@
 
 I was sure. That was the problem.
 
-I was reading the user guide of my own money app when a line stopped
-me: *"a 24-word phrase you write down on paper."*
+## What I wanted to build
 
-I pictured an ordinary person opening the app for the first time,
-handed 24 random words, hunting for a pen, and keeping that paper safe
-for years. Then a worse question came: *why did I build this?*
+Old accounting books had one rule: you never erase. If something was
+wrong, you wrote a correction underneath and signed the page.
 
-## Day one
+I wanted the same thing in a phone app, working like Bitcoin's ledger.
+Every entry is **signed**, not with ink but with a *digital key*:
+a secret only your phone holds. Every entry is also **linked** to the
+one before it. Change one old entry secretly and the chain breaks, and
+the app notices. Mistakes are fixed only by a new correction entry.
 
-On the first day, an AI and I planned the app together. Your records
-would be protected by a secret key. If you lost your phone, 24 words
-would bring the key back. The step couldn't be skipped.
+*For engineers:* each entry is signed with Ed25519 and chained with
+SHA-256 hashes. NIST describes this pattern: records "cryptographically
+linked to the previous one (making it tamper evident)."
 
-It sounded secure and professional. I nodded and moved on.
+## The 24 words
 
-## The machine kept building
+A digital key starts as a huge random number. When I planned the app
+with an AI on day one, the plan said: show every user **24 words**,
+which is that number written as words, and make them write it down.
+If you lose your phone, the words bring the key back.
 
-Once an idea is in the plan, AI builds it, and builds it well. The
-24-word screen came out polished. Then a password-protected key file.
-Then a special file for moving to a new phone. Every piece made the
-idea look more solid.
+The AI was sure the key had to be backed up. It sounded right, so I
+didn't ask why. The AI built it beautifully, then
+added a key file, then a moving file.
 
-Nobody asked whether ordinary people needed any of it. Not the AI. Not
-me.
+## The question
 
-When testers complained that they couldn't start without the 24 words,
-we made the step optional. The feature stayed.
+Then my first tester asked: *"Why do I need these words? To check my
+entries, isn't the public key enough?"*
 
-## The questions
+A digital key comes in two halves. The **private** half signs. The
+**public** half only checks signatures, like comparing a signature with
+the one on an ID card. It isn't secret.
 
-So I finally asked: *If I get a new phone, do those words bring my
-records back?*
+The tester was right. Checking old entries needs only the public half.
+A new phone can simply make its own key and continue. Backing up the
+private half gives you nothing, and anyone who finds the 24 words could
+sign as you.
 
-No. They only bring back the key. Your records need a separate copy
-anyway. The 24 words, on their own, save nothing.
+NIST's key-management standard says the same: "Key backup is not
+usually desirable for the private key of a signing key pair." The
+public key, though, should be kept as long as you need to check
+signatures.
 
-The AI didn't defend the old design. It checked the code and laid out
-the facts. We went through the design question by question until I
-understood every part. The new plan, which I'm building now, is simple:
-the key never leaves the phone, and people get one button, "Save a copy
-of my books."
+So the new design, which I'm building now, is simpler and safer: the
+private key never leaves the phone, and people get one button, "Save a
+copy of my books."
 
 ## Why the AI didn't stop me
 
-It did exactly what I asked. Researchers describe AI output that is
-"confidently stated but erroneous" (NIST), models that "guess when
-uncertain" (OpenAI), and a tendency to agree with the user (Anthropic).
-Worse, "higher confidence in GenAI is associated with less critical
-thinking" (Microsoft Research and Carnegie Mellon).
+AI can be "confidently stated but erroneous" (NIST). It tends to agree
+with you (Anthropic). And the more we trust it, the less we think
+critically (Microsoft Research and Carnegie Mellon).
 
-That was me: sure of the AI, not thinking hard enough.
+## Engine, not pilot
 
-## The engine, not the pilot
+A plane crosses an ocean in hours but doesn't choose where you go. AI
+is the same: Google's DORA report says it "amplifies what's already
+there."
 
-A plane crosses an ocean in hours, but it doesn't choose where you go.
-An excavator replaces fifty shovels, but someone must know where the
-foundations go. AI is that kind of machine. As Google's DORA report
-says, "AI doesn't fix a team; it amplifies what's already there."
+So now: understand every detail, question what you don't understand,
+ask for the source, and decide only when the facts convince you.
 
-## What I do now
+One simple question from a tester was worth more than months of
+confident answers.
 
-1. Understand every detail.
-2. Challenge what I don't understand.
-3. Ask for the source, and read it myself.
-4. Learn until the facts convince me.
-5. Then decide, myself.
-
-AI let me build in months what would have taken years. But it flew
-exactly where I pointed it, the wrong way included.
-
-So, are you sure your AI is right? Ask it one more question.
+Are you sure your AI is right? Ask one more question.
 
 ## References
 
-- NIST, *AI 600-1: Generative AI Profile* (July 2024).
-  <https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf>
-- Kalai et al. (OpenAI), "Why language models hallucinate" (September
-  2025). <https://openai.com/index/why-language-models-hallucinate/>
+- NIST, *SP 800-57 Part 1 Rev. 5: Recommendation for Key Management*
+  (2020), Appendix B.3.1.
+  <https://doi.org/10.6028/NIST.SP.800-57pt1r5>
+- NIST, *IR 8202: Blockchain Technology Overview* (2018).
+  <https://doi.org/10.6028/NIST.IR.8202>
+- NIST, *FIPS 186-5: Digital Signature Standard* (2023), which includes
+  EdDSA (Ed25519). <https://doi.org/10.6028/NIST.FIPS.186-5>
+- NIST, *AI 600-1: Generative AI Profile* (2024).
+  <https://doi.org/10.6028/NIST.AI.600-1>
 - Sharma et al. (Anthropic), "Towards Understanding Sycophancy in
   Language Models" (2023). <https://arxiv.org/abs/2310.13548>
 - Lee et al. (Microsoft Research and Carnegie Mellon), "The Impact of
   Generative AI on Critical Thinking", CHI 2025.
   <https://www.microsoft.com/en-us/research/publication/the-impact-of-generative-ai-on-critical-thinking-self-reported-reductions-in-cognitive-effort-and-confidence-effects-from-a-survey-of-knowledge-workers/>
-- Google Cloud / DORA, "Announcing the 2025 DORA Report" (September
-  2025).
+- Google Cloud / DORA, "Announcing the 2025 DORA Report" (2025).
   <https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report>
