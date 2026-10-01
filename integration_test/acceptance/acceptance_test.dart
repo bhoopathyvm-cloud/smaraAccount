@@ -4556,6 +4556,9 @@ void main() {
         find.text(l10n.settingsBooksSwitcher),
       );
       expect(find.text(l10n.settingsBooksSwitcher), findsOneWidget);
+      // The section shows a spinner until its list of books has loaded, and
+      // only then the New books button; slower machines need the wait.
+      await pumpUntilFound(tester, find.text(l10n.settingsBooksSwitcherCreate));
       await scrollSettingsUntilVisible(
         tester,
         find.text(l10n.settingsBooksSwitcherCreate),
