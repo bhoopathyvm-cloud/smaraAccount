@@ -128,7 +128,7 @@ class _BundleImportViewState extends State<BundleImportView> {
                   controller: _passphraseController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: l10n.keystorePassphrase,
+                    labelText: l10n.booksCopyPassphrase,
                   ),
                 ),
                 if ((_localError ?? widget.viewModel.errorMessageFor(l10n)) !=

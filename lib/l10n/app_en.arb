@@ -66,11 +66,6 @@
   "settingsFavouriteResearchToolSubtitle": "Tapping an instrument name on holdings opens this tool in the browser with a research prompt — not an integration, and not advice.",
   "settingsBackup": "Books copy",
   "settingsBackupBlurb": "Save an encrypted copy of your books to a place you choose, or restore from one. Restoring replaces the books on this phone — it does not merge. Your language and unlock settings stay on this phone.",
-  "settingsRecovery": "Recovery & identity",
-  "settingsRecoveryBlurb": "None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.",
-  "settingsViewRecoveryPhrase": "View recovery phrase",
-  "settingsExportKeystoreFile": "Export keystore file",
-  "settingsExportDeviceMigrationBundle": "Export device migration bundle",
   "settingsLock": "Lock",
   "settingsLockBlurb": "Require a PIN, or biometrics where available, to open the app.",
   "settingsRequireUnlock": "Require unlock to open the app",
@@ -195,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Could not export the keystore file. You can skip this step.",
-  "enterPassphraseToProtect": "Enter a passphrase to protect the file.",
   "homeTapWhenArrived": "Tap when you know what arrived",
   "homeReturnedTo": "Returned to {name}",
   "@homeReturnedTo": {
@@ -408,13 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Your recovery phrase",
-  "recoveryPhraseConfirmTitle": "Confirm your phrase",
-  "recoveryPhraseBlurb": "These 24 words are the only way to recover your transaction history if this device is lost, reset, or replaced. Smara Accounting has no server and cannot recover them for you.\n\nIf you lose this device and this phrase together, every transaction you''ve recorded becomes permanently unverifiable.",
-  "recoveryPhraseWriteDown": "Write these words down in order and store them somewhere safe and separate from this device.",
-  "iveSavedRecoveryPhrase": "I''ve saved my recovery phrase",
-  "noRecoveryPhraseAvailable": "This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.",
-  "confirmPhraseBlurb": "Enter the requested words from the phrase you just saved.",
   "wordNumber": "Word #{n}",
   "@wordNumber": {
     "placeholders": {
@@ -423,22 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Export keystore file",
-  "keystoreExportBlurb": "As well as your recovery phrase, you can save an encrypted keystore file protected by a passphrase you choose. This is optional - your recovery phrase alone is always enough to restore your signing key.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Export keystore file",
-  "deviceMigrationBundleExportTitle": "Export device migration bundle",
-  "deviceMigrationBundleExportBlurb": "This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.",
-  "deviceMigrationBundleFile": "Device migration bundle",
-  "importDeviceMigrationBundleTitle": "Import device migration bundle",
-  "importDeviceMigrationBundleBlurb": "This replaces everything currently in this app with the bundle''s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.",
-  "chooseDeviceMigrationBundleFileFirst": "Choose a device migration bundle file first.",
-  "exportDeviceMigrationBundle": "Export bundle",
-  "deviceMigrationBundleImported": "Bundle imported",
-  "deviceMigrationBundleImportedBody": "Your books and signing key have been restored. Close the app and reopen it to continue.",
   "chooseLanguageTitle": "Choose your language",
   "chooseLanguageBlurb": "Everything in the app will show in this language. You can change it later in Settings.",
-  "chooseLanguageBip39Notice": "Your recovery phrase will be shown in English. It uses a small set of standard words recognized by recovery tools everywhere, which isn''t available yet in this language.",
   "chooseCurrencyTitle": "Choose your currency",
   "chooseCurrencyBlurb": "Every account group (Cash & cash equivalents, Pension & retirement, etc.) uses this one currency for now. You can still add accounts in a different currency later by creating a new group for it.",
   "currencyBackfillTitle": "Choose a currency for existing groups",
@@ -450,7 +422,6 @@
   "setupChoiceBlurb": "Starting fresh, or moving from another device?",
   "actionNewSetup": "New setup",
   "actionImportFromBackup": "Import from backup",
-
   "continueBooksTitle": "Continue my books on this phone",
   "continueBooksBlurb": "These books arrived on this phone without their signing key. You can continue them under a new key for this phone, or restore from a saved copy instead.",
   "continueBooksAction": "Continue my books on this phone",
@@ -487,15 +458,7 @@
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
   "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
-  "restoreTitle": "Restore signing key",
-  "restoreBlurb": "This device has existing books, but no matching signing key. Restore it from your saved recovery phrase or keystore file - your data will verify normally, and nothing will be re-signed or altered.",
-  "recoveryPhrase24": "Recovery phrase (all 24 words)",
-  "keystoreFile": "Keystore file",
-  "keystoreFileContents": "Keystore file contents",
   "optionalBackupFile": "Optional backup file",
-  "iDontHavePhrase": "I don''t have my recovery phrase or keystore file",
-  "migrationTitle": "Migrate to a new key",
-  "migrationBlurb": "Without your recovery phrase or keystore file, this device''s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.",
   "iConfirmBooksValid": "I confirm the current books are valid",
   "whyWeDontEdit": "Why we don’t edit old entries",
   "whyWeDontEditBody": "When you fix a mistake, we keep the old line and add a correction next to it instead of changing what you already entered. That way your history always shows exactly what happened and when you fixed it — nothing quietly changes behind your back.",
@@ -515,10 +478,10 @@
   "cardName": "Card name",
   "paidFromBank": "Paid from bank",
   "paidFromCard": "Paid from card",
-  "choosePassphraseTitle": "Choose a passphrase to protect this backup. There is no recovery if you forget it.",
+  "choosePassphraseTitle": "Choose a passphrase to protect this copy. There is no recovery if you forget it.",
   "replaceBooksTitle": "Replace your local books?",
   "replaceBooksBody": "This replaces everything currently in this app with the backup. Close and reopen the app afterwards.",
-  "chooseBackupFileFirst": "Choose a backup file first.",
+  "chooseBackupFileFirst": "Choose a books copy file first.",
   "backupRestored": "Backup restored",
   "backupRestoredBody": "Your books have been restored. Close and reopen the app to continue.",
   "fixThisEntry": "Fix this entry",
@@ -933,7 +896,7 @@
   "feeOnTopBlurb": "On: the amount above is the total taken from this account; the fee comes out of it.",
   "feeBankBlurb": "An upfront commission charged by your bank or an intermediary.",
   "validationPinMinLength": "PIN must be at least 4 digits.",
-  "restoreBackupBlurb": "This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.",
+  "restoreBackupBlurb": "This replaces the books and the books'' settings on this phone with the copy — it does not merge. Your language and unlock settings stay on this phone. Choose a copy file and enter the passphrase you protected it with.",
   "actionReplace": "Replace",
   "hideAccountBody": "{name} will no longer be available for new transactions.",
   "@hideAccountBody": {
@@ -1158,5 +1121,6 @@
     }
   },
   "confirmListingSkip": "Skip — save as typed",
-  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh."
+  "resolveDeferredSaved": "Saved. The exact market symbol will be resolved on the next price refresh.",
+  "booksCopyPassphrase": "Passphrase"
 }

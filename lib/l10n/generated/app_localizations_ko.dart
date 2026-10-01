@@ -211,23 +211,6 @@ class AppLocalizationsKo extends AppLocalizations {
       '장부의 암호화된 사본을 원하는 위치에 저장하거나 그로부터 복원할 수 있습니다. 이는 서명 키를 백업하는 복구 구문이나 키스토어 파일과는 별개이며, 장부가 아닌 키를 백업합니다.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => '잠금';
 
   @override
@@ -416,12 +399,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String savedToPath(String path) {
     return '$path에 저장됨';
   }
-
-  @override
-  String get keystoreExportFailed => '키스토어 파일을 내보낼 수 없습니다. 이 단계는 건너뛸 수 있습니다.';
-
-  @override
-  String get enterPassphraseToProtect => '파일을 보호할 암호를 입력하세요.';
 
   @override
   String get homeTapWhenArrived => '도착한 금액을 알게 되면 탭하세요';
@@ -797,79 +774,9 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => '복구 구문';
-
-  @override
-  String get recoveryPhraseConfirmTitle => '구문 확인';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      '이 24개의 단어는 이 기기를 분실, 초기화 또는 교체했을 때 거래 내역을 복구할 수 있는 유일한 방법입니다. Smara 회계는 서버가 없으며 이를 대신 복구해 드릴 수 없습니다.\n\n이 기기와 이 구문을 함께 잃어버리면 지금까지 기록한 모든 거래를 영구적으로 검증할 수 없게 됩니다.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      '이 단어들을 순서대로 적어 이 기기와 분리된 안전한 곳에 보관하세요.';
-
-  @override
-  String get iveSavedRecoveryPhrase => '복구 구문을 저장했습니다';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb => '방금 저장한 구문에서 요청된 단어를 입력하세요.';
-
-  @override
   String wordNumber(String n) {
     return '단어 #$n';
   }
-
-  @override
-  String get keystoreExportTitle => '키스토어 파일 내보내기';
-
-  @override
-  String get keystoreExportBlurb =>
-      '복구 구문 외에도, 직접 정한 암호로 보호되는 암호화된 키스토어 파일을 저장할 수 있습니다. 이는 선택 사항입니다 — 복구 구문만으로도 항상 서명 키를 복원하기에 충분합니다.';
-
-  @override
-  String get keystorePassphrase => '암호';
-
-  @override
-  String get exportKeystoreFile => '키스토어 파일 내보내기';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => '언어를 선택하세요';
@@ -877,10 +784,6 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       '앱의 모든 내용이 이 언어로 표시됩니다. 나중에 설정에서 변경할 수 있습니다.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      '복구 문구는 영어로 표시됩니다. 이는 전 세계 복구 도구가 인식하는 표준 단어의 작은 집합을 사용하며, 이 언어에는 아직 제공되지 않습니다.';
 
   @override
   String get chooseCurrencyTitle => '통화 선택';
@@ -987,33 +890,7 @@ class AppLocalizationsKo extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => '서명 키 복원';
-
-  @override
-  String get restoreBlurb =>
-      '이 기기에는 기존 장부가 있지만 일치하는 서명 키가 없습니다. 저장된 복구 구문이나 키스토어 파일로 복원하세요 — 데이터는 정상적으로 검증되며, 다시 서명되거나 변경되지 않습니다.';
-
-  @override
-  String get recoveryPhrase24 => '복구 구문 (24개 단어 전체)';
-
-  @override
-  String get keystoreFile => '키스토어 파일';
-
-  @override
-  String get keystoreFileContents => '키스토어 파일 내용';
-
-  @override
   String get optionalBackupFile => '선택적 백업 파일';
-
-  @override
-  String get iDontHavePhrase => '복구 구문이나 키스토어 파일이 없습니다';
-
-  @override
-  String get migrationTitle => '새 키로 마이그레이션';
-
-  @override
-  String get migrationBlurb =>
-      '복구 구문이나 키스토어 파일이 없으면 이 기기의 서명 키를 복구할 수 없습니다. 새 키를 시작할 수 있습니다. 기존 항목은 계속 표시되지만 대체됨으로 표시됩니다.';
 
   @override
   String get iConfirmBooksValid => '현재 장부가 유효함을 확인합니다';
@@ -2006,4 +1883,7 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => '암호';
 }

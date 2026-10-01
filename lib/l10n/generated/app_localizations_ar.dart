@@ -211,23 +211,6 @@ class AppLocalizationsAr extends AppLocalizations {
       'احفظ نسخة مشفرة من دفاترك في مكان تختاره، أو استعد نسخة من مكان محفوظ. هذا منفصل عن عبارة الاسترداد أو ملف مخزن المفاتيح، اللذين يحفظان مفتاح التوقيع الخاص بك، وليس دفاترك.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'القفل';
 
   @override
@@ -419,13 +402,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String savedToPath(String path) {
     return 'تم الحفظ في $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'تعذر تصدير ملف مخزن المفاتيح. يمكنك تخطي هذه الخطوة.';
-
-  @override
-  String get enterPassphraseToProtect => 'أدخل عبارة مرور لحماية الملف.';
 
   @override
   String get homeTapWhenArrived => 'اضغط عندما تعرف ما وصل';
@@ -806,80 +782,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'عبارة الاسترداد الخاصة بك';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'أكّد عبارتك';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'هذه الكلمات الـ24 هي الطريقة الوحيدة لاسترداد سجل معاملاتك في حال فقدان هذا الجهاز أو إعادة ضبطه أو استبداله. سمارا للحسابات لا تملك خادماً ولا يمكنها استرداد هذه الكلمات نيابة عنك.\n\nإذا فقدت هذا الجهاز وهذه العبارة معاً، تصبح كل معاملة سجّلتها غير قابلة للتحقق بشكل دائم.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'دوّن هذه الكلمات بالترتيب واحفظها في مكان آمن ومنفصل عن هذا الجهاز.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'لقد حفظت عبارة الاسترداد الخاصة بي';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'أدخل الكلمات المطلوبة من العبارة التي حفظتها للتو.';
-
-  @override
   String wordNumber(String n) {
     return 'الكلمة رقم $n';
   }
-
-  @override
-  String get keystoreExportTitle => 'تصدير ملف مخزن المفاتيح';
-
-  @override
-  String get keystoreExportBlurb =>
-      'بالإضافة إلى عبارة الاسترداد، يمكنك حفظ ملف مخزن مفاتيح مشفر محمي بعبارة مرور تختارها. هذا اختياري - عبارة الاسترداد وحدها كافية دائماً لاستعادة مفتاح التوقيع الخاص بك.';
-
-  @override
-  String get keystorePassphrase => 'عبارة المرور';
-
-  @override
-  String get exportKeystoreFile => 'تصدير ملف مخزن المفاتيح';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'اختر لغتك';
@@ -887,10 +792,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'سيظهر كل شيء في التطبيق بهذه اللغة. يمكنك تغييرها لاحقًا من الإعدادات.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'سيتم عرض عبارة الاسترداد الخاصة بك باللغة الإنجليزية. فهي تستخدم مجموعة صغيرة من الكلمات القياسية التي تتعرف عليها أدوات الاسترداد في كل مكان، وهي غير متوفرة بعد بهذه اللغة.';
 
   @override
   String get chooseCurrencyTitle => 'اختر عملتك';
@@ -997,33 +898,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'استعادة مفتاح التوقيع';
-
-  @override
-  String get restoreBlurb =>
-      'يحتوي هذا الجهاز على دفاتر موجودة، لكن بلا مفتاح توقيع مطابق. استعده من عبارة الاسترداد أو ملف مخزن المفاتيح المحفوظين لديك - ستتحقق بياناتك بشكل طبيعي، ولن يُعاد توقيع أو تعديل أي شيء.';
-
-  @override
-  String get recoveryPhrase24 => 'عبارة الاسترداد (الكلمات الـ24 كاملة)';
-
-  @override
-  String get keystoreFile => 'ملف مخزن المفاتيح';
-
-  @override
-  String get keystoreFileContents => 'محتويات ملف مخزن المفاتيح';
-
-  @override
   String get optionalBackupFile => 'ملف نسخة احتياطية اختياري';
-
-  @override
-  String get iDontHavePhrase => 'ليس لدي عبارة الاسترداد أو ملف مخزن المفاتيح';
-
-  @override
-  String get migrationTitle => 'الترحيل إلى مفتاح جديد';
-
-  @override
-  String get migrationBlurb =>
-      'بدون عبارة الاسترداد أو ملف مخزن المفاتيح، لا يمكن استعادة مفتاح التوقيع الخاص بهذا الجهاز. يمكنك بدء مفتاح جديد. تبقى القيود القديمة مرئية لكن تصبح مُستبدلة.';
 
   @override
   String get iConfirmBooksValid => 'أؤكد أن الدفاتر الحالية صحيحة';
@@ -2073,4 +1948,7 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'عبارة المرور';
 }

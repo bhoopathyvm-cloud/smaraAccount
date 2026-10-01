@@ -212,23 +212,6 @@ class AppLocalizationsTe extends AppLocalizations {
       'మీ ఖాతా పుస్తకాల ఎన్‌క్రిప్టెడ్ కాపీని మీరు ఎంచుకున్న ప్రదేశంలో సేవ్ చేయండి, లేదా దాని నుండి పునరుద్ధరించండి. ఇది మీ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ నుండి వేరు, అవి మీ సైనింగ్ కీని బ్యాకప్ చేస్తాయి, మీ ఖాతా పుస్తకాలను కాదు.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'లాక్';
 
   @override
@@ -420,14 +403,6 @@ class AppLocalizationsTe extends AppLocalizations {
   String savedToPath(String path) {
     return '$pathకు సేవ్ చేయబడింది';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయలేకపోయాము. మీరు ఈ దశను దాటవేయవచ్చు.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'ఫైల్‌ను రక్షించడానికి ఒక పాస్‌ఫ్రేజ్‌ను నమోదు చేయండి.';
 
   @override
   String get homeTapWhenArrived => 'ఏమి వచ్చిందో తెలిసినప్పుడు నొక్కండి';
@@ -810,81 +785,9 @@ class AppLocalizationsTe extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'మీ రికవరీ పదబంధం';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'మీ పదబంధాన్ని నిర్ధారించండి';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'ఈ పరికరం పోగొట్టుకుంటే, రీసెట్ చేయబడితే లేదా భర్తీ చేయబడితే మీ లావాదేవీల చరిత్రను తిరిగి పొందడానికి ఈ 24 పదాలు మాత్రమే మార్గం. స్మారా అకౌంటింగ్‌కు సర్వర్ లేదు మరియు వాటిని మీ కోసం తిరిగి పొందలేము.\n\nమీరు ఈ పరికరాన్ని మరియు ఈ పదబంధాన్ని కలిపి కోల్పోతే, మీరు నమోదు చేసిన ప్రతి లావాదేవీ శాశ్వతంగా ధృవీకరించలేనిదిగా మారుతుంది.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'ఈ పదాలను క్రమంలో రాసి, ఈ పరికరం నుండి వేరుగా సురక్షితమైన చోట భద్రపరచండి.';
-
-  @override
-  String get iveSavedRecoveryPhrase =>
-      'నేను నా రికవరీ పదబంధాన్ని సేవ్ చేసుకున్నాను';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'మీరు ఇప్పుడే సేవ్ చేసిన పదబంధం నుండి అడిగిన పదాలను నమోదు చేయండి.';
-
-  @override
   String wordNumber(String n) {
     return 'పదం #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయి';
-
-  @override
-  String get keystoreExportBlurb =>
-      'మీ రికవరీ పదబంధంతో పాటు, మీరు ఎంచుకున్న పాస్‌ఫ్రేజ్‌తో రక్షించబడిన ఎన్‌క్రిప్టెడ్ కీస్టోర్ ఫైల్‌ను కూడా సేవ్ చేయవచ్చు. ఇది ఐచ్ఛికం - మీ సైనింగ్ కీని పునరుద్ధరించడానికి మీ రికవరీ పదబంధం ఒక్కటే ఎల్లప్పుడూ సరిపోతుంది.';
-
-  @override
-  String get keystorePassphrase => 'పాస్‌ఫ్రేజ్';
-
-  @override
-  String get exportKeystoreFile => 'కీస్టోర్ ఫైల్‌ను ఎగుమతి చేయి';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'మీ భాషను ఎంచుకోండి';
@@ -892,10 +795,6 @@ class AppLocalizationsTe extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'యాప్‌లో ప్రతిదీ ఈ భాషలో కనిపిస్తుంది. మీరు తర్వాత సెట్టింగ్‌లలో దీన్ని మార్చవచ్చు.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'మీ రికవరీ పదబంధం ఇంగ్లీషులో చూపబడుతుంది. ఇది ప్రతిచోటా రికవరీ సాధనాల ద్వారా గుర్తించబడే చిన్న ప్రామాణిక పదాల సమితిని ఉపయోగిస్తుంది, ఇది ఈ భాషలో ఇంకా అందుబాటులో లేదు.';
 
   @override
   String get chooseCurrencyTitle => 'మీ కరెన్సీని ఎంచుకోండి';
@@ -1003,34 +902,7 @@ class AppLocalizationsTe extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'సైనింగ్ కీని పునరుద్ధరించు';
-
-  @override
-  String get restoreBlurb =>
-      'ఈ పరికరంలో ఇప్పటికే ఖాతా పుస్తకాలు ఉన్నాయి, కానీ సరిపోలే సైనింగ్ కీ లేదు. మీ సేవ్ చేసిన రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ నుండి దాన్ని పునరుద్ధరించండి - మీ డేటా సాధారణంగా ధృవీకరించబడుతుంది, మరియు ఏదీ మళ్లీ సైన్ చేయబడదు లేదా మార్చబడదు.';
-
-  @override
-  String get recoveryPhrase24 => 'రికవరీ పదబంధం (అన్ని 24 పదాలు)';
-
-  @override
-  String get keystoreFile => 'కీస్టోర్ ఫైల్';
-
-  @override
-  String get keystoreFileContents => 'కీస్టోర్ ఫైల్ కంటెంట్‌లు';
-
-  @override
   String get optionalBackupFile => 'ఐచ్ఛిక బ్యాకప్ ఫైల్';
-
-  @override
-  String get iDontHavePhrase =>
-      'నా వద్ద నా రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ లేదు';
-
-  @override
-  String get migrationTitle => 'కొత్త కీకి మైగ్రేట్ చేయి';
-
-  @override
-  String get migrationBlurb =>
-      'మీ రికవరీ పదబంధం లేదా కీస్టోర్ ఫైల్ లేకుండా, ఈ పరికరం సైనింగ్ కీని పునరుద్ధరించలేము. మీరు కొత్త కీని ప్రారంభించవచ్చు. పాత ఎంట్రీలు కనిపిస్తూనే ఉంటాయి, కానీ భర్తీ చేయబడినట్లు గుర్తించబడతాయి.';
 
   @override
   String get iConfirmBooksValid =>
@@ -2091,4 +1963,7 @@ class AppLocalizationsTe extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'పాస్‌ఫ్రేజ్';
 }

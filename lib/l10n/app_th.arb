@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "ไม่สามารถส่งออกไฟล์ keystore ได้ คุณสามารถข้ามขั้นตอนนี้ได้",
-  "enterPassphraseToProtect": "ป้อนวลีรหัสผ่านเพื่อป้องกันไฟล์",
   "homeTapWhenArrived": "แตะเมื่อคุณทราบว่าได้รับอะไร",
   "homeReturnedTo": "คืนกลับไปยัง {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "วลีกู้คืนของคุณ",
-  "recoveryPhraseConfirmTitle": "ยืนยันวลีของคุณ",
-  "recoveryPhraseBlurb": "24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน Smara Accounting ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร",
-  "recoveryPhraseWriteDown": "จดคำเหล่านี้ตามลำดับและเก็บไว้ในที่ปลอดภัยแยกจากอุปกรณ์นี้",
-  "iveSavedRecoveryPhrase": "ฉันได้บันทึกวลีกู้คืนของฉันแล้ว",
-  "confirmPhraseBlurb": "ป้อนคำที่ระบบขอจากวลีที่คุณเพิ่งบันทึกไว้",
   "wordNumber": "คำที่ #{n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "ส่งออกไฟล์ keystore",
-  "keystoreExportBlurb": "นอกเหนือจากวลีกู้คืนของคุณ คุณสามารถบันทึกไฟล์ keystore ที่เข้ารหัสและป้องกันด้วยวลีรหัสผ่านที่คุณเลือกได้ ขั้นตอนนี้ไม่บังคับ - วลีกู้คืนเพียงอย่างเดียวก็เพียงพอเสมอสำหรับการกู้คืนกุญแจลงลายเซ็นของคุณ",
-  "keystorePassphrase": "วลีรหัสผ่าน",
-  "exportKeystoreFile": "ส่งออกไฟล์ keystore",
   "chooseLanguageTitle": "เลือกภาษาของคุณ",
   "chooseLanguageBlurb": "ทุกอย่างในแอปจะแสดงเป็นภาษานี้ คุณสามารถเปลี่ยนได้ภายหลังในการตั้งค่า",
-  "chooseLanguageBip39Notice": "วลีกู้คืนของคุณจะแสดงเป็นภาษาอังกฤษ ซึ่งใช้ชุดคำมาตรฐานเล็กๆ ที่เครื่องมือกู้คืนทุกที่รู้จัก ซึ่งยังไม่มีให้ใช้งานในภาษานี้",
   "chooseCurrencyTitle": "เลือกสกุลเงินของคุณ",
   "chooseCurrencyBlurb": "กลุ่มบัญชีทุกกลุ่ม (เงินสดและรายการเทียบเท่าเงินสด บำนาญและเกษียณอายุ ฯลฯ) จะใช้สกุลเงินเดียวนี้ไปก่อน คุณยังสามารถเพิ่มบัญชีในสกุลเงินอื่นได้ภายหลังโดยการสร้างกลุ่มใหม่สำหรับสกุลเงินนั้น",
   "currencyBackfillTitle": "เลือกสกุลเงินสำหรับกลุ่มที่มีอยู่",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "ตั้งชื่อบัญชีของคุณ",
   "firstAccountBlurb": "นี่คือบัญชีที่ถูกตั้งค่าไว้ให้คุณแล้ว - ตั้งชื่อที่คุณจำได้ เช่น ชื่อธนาคารของคุณ จากนั้นคุณจะบันทึกรายการจ่ายหรือรับหนึ่งรายการ แล้วปกป้องอุปกรณ์ด้วยวลีกู้คืนของคุณ",
   "whatsMainAccountCalled": "บัญชีหลักของคุณชื่ออะไร?",
-  "restoreTitle": "กู้คืนกุญแจลงลายเซ็น",
-  "restoreBlurb": "อุปกรณ์นี้มีบัญชีอยู่แล้ว แต่ไม่มีกุญแจลงลายเซ็นที่ตรงกัน กู้คืนจากวลีกู้คืนหรือไฟล์ keystore ที่คุณบันทึกไว้ - ข้อมูลของคุณจะยืนยันได้ตามปกติ และจะไม่มีการลงลายเซ็นใหม่หรือเปลี่ยนแปลงใด ๆ",
-  "recoveryPhrase24": "วลีกู้คืน (ครบทั้ง 24 คำ)",
-  "keystoreFile": "ไฟล์ keystore",
-  "keystoreFileContents": "เนื้อหาไฟล์ keystore",
   "optionalBackupFile": "ไฟล์สำรอง (ไม่บังคับ)",
-  "iDontHavePhrase": "ฉันไม่มีวลีกู้คืนหรือไฟล์ keystore",
-  "migrationTitle": "ย้ายไปใช้กุญแจใหม่",
-  "migrationBlurb": "หากไม่มีวลีกู้คืนหรือไฟล์ keystore กุญแจลงลายเซ็นของอุปกรณ์นี้จะไม่สามารถกู้คืนได้ คุณสามารถเริ่มต้นกุญแจใหม่ได้ รายการเก่าจะยังคงมองเห็นได้แต่จะถูกแทนที่",
   "iConfirmBooksValid": "ฉันยืนยันว่าบัญชีปัจจุบันถูกต้อง",
   "whyWeDontEdit": "ทำไมเราจึงไม่แก้ไขรายการเก่า",
   "whyWeDontEditBody": "เมื่อคุณแก้ไขข้อผิดพลาด เราจะเก็บรายการเดิมไว้และเพิ่มรายการแก้ไขต่อท้าย แทนที่จะเปลี่ยนสิ่งที่คุณบันทึกไปแล้ว วิธีนี้ทำให้ประวัติของคุณแสดงสิ่งที่เกิดขึ้นจริงเสมอ รวมถึงเวลาที่คุณแก้ไข — ไม่มีอะไรถูกเปลี่ยนแปลงอย่างเงียบ ๆ โดยที่คุณไม่รู้",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "วลีรหัสผ่าน"
 }

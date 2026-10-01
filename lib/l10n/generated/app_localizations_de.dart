@@ -212,23 +212,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Speichern Sie eine verschlüsselte Kopie Ihrer Bücher an einem selbst gewählten Ort oder stellen Sie sie von dort wieder her. Dies ist getrennt von Ihrer Wiederherstellungsphrase oder Keystore-Datei, die Ihren Signierschlüssel sichern, nicht Ihre Bücher.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Sperre';
 
   @override
@@ -422,14 +405,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String savedToPath(String path) {
     return 'Gespeichert unter $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Die Keystore-Datei konnte nicht exportiert werden. Sie können diesen Schritt überspringen.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Geben Sie eine Passphrase ein, um die Datei zu schützen.';
 
   @override
   String get homeTapWhenArrived =>
@@ -817,81 +792,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'Ihre Wiederherstellungsphrase';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Bestätigen Sie Ihre Phrase';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'Diese 24 Wörter sind die einzige Möglichkeit, Ihren Transaktionsverlauf wiederherzustellen, falls dieses Gerät verloren geht, zurückgesetzt oder ersetzt wird. Smara Buchhaltung hat keinen Server und kann sie nicht für Sie wiederherstellen.\n\nWenn Sie dieses Gerät und diese Phrase zusammen verlieren, wird jede von Ihnen erfasste Transaktion dauerhaft nicht mehr verifizierbar.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Schreiben Sie diese Wörter in der richtigen Reihenfolge auf und bewahren Sie sie sicher und getrennt von diesem Gerät auf.';
-
-  @override
-  String get iveSavedRecoveryPhrase =>
-      'Ich habe meine Wiederherstellungsphrase gespeichert';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Geben Sie die angeforderten Wörter aus der soeben gespeicherten Phrase ein.';
-
-  @override
   String wordNumber(String n) {
     return 'Wort Nr. $n';
   }
-
-  @override
-  String get keystoreExportTitle => 'Keystore-Datei exportieren';
-
-  @override
-  String get keystoreExportBlurb =>
-      'Zusätzlich zu Ihrer Wiederherstellungsphrase können Sie eine verschlüsselte, durch eine selbst gewählte Passphrase geschützte Keystore-Datei speichern. Dies ist optional – Ihre Wiederherstellungsphrase allein reicht immer aus, um Ihren Signierschlüssel wiederherzustellen.';
-
-  @override
-  String get keystorePassphrase => 'Passphrase';
-
-  @override
-  String get exportKeystoreFile => 'Keystore-Datei exportieren';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Wähle deine Sprache';
@@ -899,10 +802,6 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'Die gesamte App wird in dieser Sprache angezeigt. Du kannst sie später in den Einstellungen ändern.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'Deine Wiederherstellungsphrase wird auf Englisch angezeigt. Sie verwendet einen kleinen Satz von Standardwörtern, die überall von Wiederherstellungstools erkannt werden - für diese Sprache gibt es diesen Satz noch nicht.';
 
   @override
   String get chooseCurrencyTitle => 'Wählen Sie Ihre Währung';
@@ -1010,34 +909,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'Signierschlüssel wiederherstellen';
-
-  @override
-  String get restoreBlurb =>
-      'Dieses Gerät hat vorhandene Bücher, aber keinen passenden Signierschlüssel. Stellen Sie ihn aus Ihrer gespeicherten Wiederherstellungsphrase oder Keystore-Datei wieder her – Ihre Daten werden normal verifiziert, und nichts wird neu signiert oder verändert.';
-
-  @override
-  String get recoveryPhrase24 => 'Wiederherstellungsphrase (alle 24 Wörter)';
-
-  @override
-  String get keystoreFile => 'Keystore-Datei';
-
-  @override
-  String get keystoreFileContents => 'Inhalt der Keystore-Datei';
-
-  @override
   String get optionalBackupFile => 'Optionale Sicherungsdatei';
-
-  @override
-  String get iDontHavePhrase =>
-      'Ich habe meine Wiederherstellungsphrase oder Keystore-Datei nicht';
-
-  @override
-  String get migrationTitle => 'Zu einem neuen Schlüssel migrieren';
-
-  @override
-  String get migrationBlurb =>
-      'Ohne Ihre Wiederherstellungsphrase oder Keystore-Datei kann der Signierschlüssel dieses Geräts nicht wiederhergestellt werden. Sie können mit einem neuen Schlüssel beginnen. Alte Einträge bleiben sichtbar, gelten aber als ersetzt.';
 
   @override
   String get iConfirmBooksValid =>
@@ -2120,4 +1992,7 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Passphrase';
 }

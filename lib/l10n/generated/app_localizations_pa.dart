@@ -211,23 +211,6 @@ class AppLocalizationsPa extends AppLocalizations {
       'ਆਪਣੀਆਂ ਕਿਤਾਬਾਂ ਦੀ ਇੱਕ ਇਨਕ੍ਰਿਪਟਡ ਕਾਪੀ ਆਪਣੀ ਪਸੰਦ ਦੇ ਸਥਾਨ ਉੱਤੇ ਸੰਭਾਲੋ, ਜਾਂ ਇਸ ਤੋਂ ਬਹਾਲ ਕਰੋ। ਇਹ ਤੁਹਾਡੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਤੋਂ ਵੱਖਰਾ ਹੈ, ਜੋ ਤੁਹਾਡੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਦਾ ਬੈਕਅੱਪ ਲੈਂਦੇ ਹਨ, ਤੁਹਾਡੀਆਂ ਕਿਤਾਬਾਂ ਦਾ ਨਹੀਂ।';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'ਲੌਕ';
 
   @override
@@ -419,14 +402,6 @@ class AppLocalizationsPa extends AppLocalizations {
   String savedToPath(String path) {
     return '$path ਵਿੱਚ ਸੰਭਾਲਿਆ ਗਿਆ';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਨਹੀਂ ਹੋ ਸਕੀ। ਤੁਸੀਂ ਇਹ ਕਦਮ ਛੱਡ ਸਕਦੇ ਹੋ।';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'ਫਾਈਲ ਨੂੰ ਸੁਰੱਖਿਅਤ ਕਰਨ ਲਈ ਇੱਕ ਪਾਸਫਰੇਜ਼ ਦਰਜ ਕਰੋ।';
 
   @override
   String get homeTapWhenArrived => 'ਜਦੋਂ ਪਤਾ ਲੱਗੇ ਕਿ ਕੀ ਪਹੁੰਚਿਆ ਤਾਂ ਟੈਪ ਕਰੋ';
@@ -808,80 +783,9 @@ class AppLocalizationsPa extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'ਆਪਣੇ ਵਾਕੰਸ਼ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'ਇਹ 24 ਸ਼ਬਦ ਹੀ ਇਕਲੌਤਾ ਤਰੀਕਾ ਹਨ ਜਿਸ ਨਾਲ ਤੁਸੀਂ ਆਪਣੇ ਲੈਣ-ਦੇਣ ਦਾ ਇਤਿਹਾਸ ਮੁੜ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ ਹੋ ਜੇਕਰ ਇਹ ਡਿਵਾਈਸ ਗੁਆਚ ਜਾਂਦੀ, ਰੀਸੈੱਟ ਹੁੰਦੀ, ਜਾਂ ਬਦਲੀ ਜਾਂਦੀ ਹੈ। ਸਮਾਰਾ ਖਾਤਾ ਦਾ ਕੋਈ ਸਰਵਰ ਨਹੀਂ ਹੈ ਅਤੇ ਇਹ ਤੁਹਾਡੇ ਲਈ ਉਹਨਾਂ ਨੂੰ ਮੁੜ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕਰ ਸਕਦਾ।\n\nਜੇਕਰ ਤੁਸੀਂ ਇਹ ਡਿਵਾਈਸ ਅਤੇ ਇਹ ਵਾਕੰਸ਼ ਇਕੱਠੇ ਗੁਆ ਦਿੰਦੇ ਹੋ, ਤਾਂ ਤੁਹਾਡੇ ਦੁਆਰਾ ਰਿਕਾਰਡ ਕੀਤਾ ਹਰ ਲੈਣ-ਦੇਣ ਸਥਾਈ ਤੌਰ ਉੱਤੇ ਅਪ੍ਰਮਾਣਿਤ ਹੋ ਜਾਂਦਾ ਹੈ।';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'ਇਹ ਸ਼ਬਦ ਕ੍ਰਮ ਵਿੱਚ ਲਿਖੋ ਅਤੇ ਇਹਨਾਂ ਨੂੰ ਇਸ ਡਿਵਾਈਸ ਤੋਂ ਵੱਖਰੀ, ਸੁਰੱਖਿਅਤ ਥਾਂ ਉੱਤੇ ਰੱਖੋ।';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'ਮੈਂ ਆਪਣਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਸੰਭਾਲ ਲਿਆ ਹੈ';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'ਤੁਹਾਡੇ ਵੱਲੋਂ ਹੁਣੇ ਸੰਭਾਲੇ ਵਾਕੰਸ਼ ਵਿੱਚੋਂ ਮੰਗੇ ਗਏ ਸ਼ਬਦ ਦਰਜ ਕਰੋ।';
-
-  @override
   String wordNumber(String n) {
     return 'ਸ਼ਬਦ #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਕਰੋ';
-
-  @override
-  String get keystoreExportBlurb =>
-      'ਆਪਣੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਦੇ ਨਾਲ, ਤੁਸੀਂ ਆਪਣੀ ਪਸੰਦ ਦੇ ਪਾਸਫਰੇਜ਼ ਨਾਲ ਸੁਰੱਖਿਅਤ ਇੱਕ ਇਨਕ੍ਰਿਪਟਡ ਕੀਸਟੋਰ ਫਾਈਲ ਵੀ ਸੰਭਾਲ ਸਕਦੇ ਹੋ। ਇਹ ਵਿਕਲਪਿਕ ਹੈ - ਇਕੱਲਾ ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਹੀ ਹਮੇਸ਼ਾ ਤੁਹਾਡੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਬਹਾਲ ਕਰਨ ਲਈ ਕਾਫ਼ੀ ਹੈ।';
-
-  @override
-  String get keystorePassphrase => 'ਪਾਸਫਰੇਜ਼';
-
-  @override
-  String get exportKeystoreFile => 'ਕੀਸਟੋਰ ਫਾਈਲ ਐਕਸਪੋਰਟ ਕਰੋ';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ';
@@ -889,10 +793,6 @@ class AppLocalizationsPa extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'ਐਪ ਵਿੱਚ ਸਭ ਕੁਝ ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਦਿਖੇਗਾ। ਤੁਸੀਂ ਬਾਅਦ ਵਿੱਚ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇਸਨੂੰ ਬਦਲ ਸਕਦੇ ਹੋ।';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ ਦਿਖਾਇਆ ਜਾਵੇਗਾ। ਇਹ ਹਰ ਥਾਂ ਰਿਕਵਰੀ ਟੂਲਾਂ ਦੁਆਰਾ ਪਛਾਣੇ ਜਾਂਦੇ ਮਿਆਰੀ ਸ਼ਬਦਾਂ ਦੇ ਇੱਕ ਛੋਟੇ ਸਮੂਹ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ, ਜੋ ਇਸ ਭਾਸ਼ਾ ਵਿੱਚ ਅਜੇ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।';
 
   @override
   String get chooseCurrencyTitle => 'ਆਪਣੀ ਮੁਦਰਾ ਚੁਣੋ';
@@ -999,34 +899,7 @@ class AppLocalizationsPa extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਬਹਾਲ ਕਰੋ';
-
-  @override
-  String get restoreBlurb =>
-      'ਇਸ ਡਿਵਾਈਸ ਵਿੱਚ ਪਹਿਲਾਂ ਤੋਂ ਖਾਤੇ ਹਨ, ਪਰ ਕੋਈ ਮੇਲ ਖਾਂਦੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਨਹੀਂ। ਇਸਨੂੰ ਆਪਣੇ ਸੰਭਾਲੇ ਹੋਏ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਤੋਂ ਬਹਾਲ ਕਰੋ - ਤੁਹਾਡਾ ਡਾਟਾ ਆਮ ਤੌਰ ਉੱਤੇ ਪ੍ਰਮਾਣਿਤ ਹੋਵੇਗਾ, ਅਤੇ ਕੁਝ ਵੀ ਮੁੜ-ਸਾਈਨ ਜਾਂ ਬਦਲਿਆ ਨਹੀਂ ਜਾਵੇਗਾ।';
-
-  @override
-  String get recoveryPhrase24 => 'ਰਿਕਵਰੀ ਵਾਕੰਸ਼ (ਸਾਰੇ 24 ਸ਼ਬਦ)';
-
-  @override
-  String get keystoreFile => 'ਕੀਸਟੋਰ ਫਾਈਲ';
-
-  @override
-  String get keystoreFileContents => 'ਕੀਸਟੋਰ ਫਾਈਲ ਸਮੱਗਰੀ';
-
-  @override
   String get optionalBackupFile => 'ਵਿਕਲਪਿਕ ਬੈਕਅੱਪ ਫਾਈਲ';
-
-  @override
-  String get iDontHavePhrase =>
-      'ਮੇਰੇ ਕੋਲ ਮੇਰਾ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਨਹੀਂ ਹੈ';
-
-  @override
-  String get migrationTitle => 'ਇੱਕ ਨਵੀਂ ਕੁੰਜੀ ਵਿੱਚ ਮਾਈਗ੍ਰੇਟ ਕਰੋ';
-
-  @override
-  String get migrationBlurb =>
-      'ਆਪਣੇ ਰਿਕਵਰੀ ਵਾਕੰਸ਼ ਜਾਂ ਕੀਸਟੋਰ ਫਾਈਲ ਤੋਂ ਬਿਨਾਂ, ਇਸ ਡਿਵਾਈਸ ਦੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਮੁੜ ਪ੍ਰਾਪਤ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ। ਤੁਸੀਂ ਇੱਕ ਨਵੀਂ ਕੁੰਜੀ ਸ਼ੁਰੂ ਕਰ ਸਕਦੇ ਹੋ। ਪੁਰਾਣੀਆਂ ਐਂਟਰੀਆਂ ਦਿਖਾਈ ਦਿੰਦੀਆਂ ਰਹਿਣਗੀਆਂ ਪਰ ਬਦਲੀਆਂ ਗਈਆਂ ਮੰਨੀਆਂ ਜਾਣਗੀਆਂ।';
 
   @override
   String get iConfirmBooksValid =>
@@ -2090,4 +1963,7 @@ class AppLocalizationsPa extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'ਪਾਸਫਰੇਜ਼';
 }

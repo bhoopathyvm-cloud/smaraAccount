@@ -41,7 +41,7 @@ void main() {
       await tester.tap(find.widgetWithText(ElevatedButton, 'Import'));
       await tester.pump();
 
-      expect(find.text('Choose a backup file first.'), findsOneWidget);
+      expect(find.text('Choose a books copy file first.'), findsOneWidget);
       verifyNever(
         repository.restoreBooksCopy(
           fileContents: anyNamed('fileContents'),

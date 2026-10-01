@@ -211,23 +211,6 @@ class AppLocalizationsJa extends AppLocalizations {
       '選んだ場所に帳簿の暗号化コピーを保存する、またはそこから復元します。これは署名鍵をバックアップするリカバリーフレーズやキーストアファイルとは別のもので、帳簿そのものをバックアップするわけではありません。';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'ロック';
 
   @override
@@ -416,12 +399,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String savedToPath(String path) {
     return '$pathに保存しました';
   }
-
-  @override
-  String get keystoreExportFailed => 'キーストアファイルを書き出せませんでした。この手順はスキップできます。';
-
-  @override
-  String get enterPassphraseToProtect => 'ファイルを保護するパスフレーズを入力してください。';
 
   @override
   String get homeTapWhenArrived => '何が届いたか分かったらタップしてください';
@@ -796,89 +773,15 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'リカバリーフレーズ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'フレーズを確認';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'この24個の単語は、この端末を紛失・初期化・交換した場合に取引履歴を復元する唯一の方法です。Smara家計簿にはサーバーがなく、代わりに復元することはできません。\n\nこの端末とこのフレーズを両方失うと、記録したすべての取引は永久に検証できなくなります。';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'これらの単語を順番に書き留め、この端末とは別の安全な場所に保管してください。';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'リカバリーフレーズを保存しました';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb => '先ほど保存したフレーズから指定された単語を入力してください。';
-
-  @override
   String wordNumber(String n) {
     return '単語 #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'キーストアファイルを書き出す';
-
-  @override
-  String get keystoreExportBlurb =>
-      'リカバリーフレーズに加えて、任意のパスフレーズで保護した暗号化キーストアファイルを保存できます。これは任意です - リカバリーフレーズだけでも常に署名鍵を復元するのに十分です。';
-
-  @override
-  String get keystorePassphrase => 'パスフレーズ';
-
-  @override
-  String get exportKeystoreFile => 'キーストアファイルを書き出す';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => '言語を選んでください';
 
   @override
   String get chooseLanguageBlurb => 'アプリのすべての表示がこの言語になります。後で設定から変更できます。';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      '回復フレーズは英語で表示されます。これはどこでも回復ツールが認識する少数の標準的な単語を使用しており、この言語ではまだ利用できません。';
 
   @override
   String get chooseCurrencyTitle => '通貨を選択してください';
@@ -985,33 +888,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => '署名鍵を復元';
-
-  @override
-  String get restoreBlurb =>
-      'この端末には既存の帳簿がありますが、一致する署名鍵がありません。保存したリカバリーフレーズまたはキーストアファイルから復元してください - データは通常どおり検証され、何も再署名や変更はされません。';
-
-  @override
-  String get recoveryPhrase24 => 'リカバリーフレーズ（24個すべての単語）';
-
-  @override
-  String get keystoreFile => 'キーストアファイル';
-
-  @override
-  String get keystoreFileContents => 'キーストアファイルの内容';
-
-  @override
   String get optionalBackupFile => '任意のバックアップファイル';
-
-  @override
-  String get iDontHavePhrase => 'リカバリーフレーズもキーストアファイルもありません';
-
-  @override
-  String get migrationTitle => '新しい鍵に移行';
-
-  @override
-  String get migrationBlurb =>
-      'リカバリーフレーズもキーストアファイルもない場合、この端末の署名鍵は復元できません。新しい鍵を開始できます。古い項目は表示されたままですが、置き換え済みとなります。';
 
   @override
   String get iConfirmBooksValid => '現在の帳簿が正しいことを確認しました';
@@ -2006,4 +1883,7 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'パスフレーズ';
 }

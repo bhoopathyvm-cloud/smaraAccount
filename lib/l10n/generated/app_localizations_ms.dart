@@ -212,23 +212,6 @@ class AppLocalizationsMs extends AppLocalizations {
       'Simpan salinan tersulit buku anda ke lokasi pilihan anda, atau pulihkan daripadanya. Ini berasingan daripada frasa pemulihan atau fail simpanan kunci anda, yang menyandarkan kunci tandatangan anda, bukan buku anda.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Kunci';
 
   @override
@@ -421,14 +404,6 @@ class AppLocalizationsMs extends AppLocalizations {
   String savedToPath(String path) {
     return 'Disimpan ke $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Fail simpanan kunci tidak dapat dieksport. Anda boleh langkau langkah ini.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Masukkan frasa laluan untuk melindungi fail.';
 
   @override
   String get homeTapWhenArrived => 'Ketik apabila anda tahu apa yang tiba';
@@ -813,81 +788,9 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'Frasa pemulihan anda';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Sahkan frasa anda';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      '24 perkataan ini adalah satu-satunya cara untuk memulihkan sejarah transaksi anda jika peranti ini hilang, ditetapkan semula, atau digantikan. Smara Perakaunan tiada pelayan dan tidak dapat memulihkannya untuk anda.\n\nJika anda kehilangan peranti ini dan frasa ini bersama-sama, setiap transaksi yang anda rekodkan menjadi tidak dapat disahkan secara kekal.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Tuliskan perkataan ini secara berurutan dan simpan di tempat yang selamat serta berasingan daripada peranti ini.';
-
-  @override
-  String get iveSavedRecoveryPhrase =>
-      'Saya telah menyimpan frasa pemulihan saya';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Masukkan perkataan yang diminta daripada frasa yang baru anda simpan.';
-
-  @override
   String wordNumber(String n) {
     return 'Perkataan #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'Eksport fail simpanan kunci';
-
-  @override
-  String get keystoreExportBlurb =>
-      'Selain frasa pemulihan anda, anda boleh menyimpan fail simpanan kunci tersulit yang dilindungi oleh frasa laluan pilihan anda. Ini pilihan - frasa pemulihan anda sahaja sentiasa mencukupi untuk memulihkan kunci tandatangan anda.';
-
-  @override
-  String get keystorePassphrase => 'Frasa laluan';
-
-  @override
-  String get exportKeystoreFile => 'Eksport fail simpanan kunci';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Pilih bahasa anda';
@@ -895,10 +798,6 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'Semua dalam aplikasi akan dipaparkan dalam bahasa ini. Anda boleh menukarnya kemudian dalam Tetapan.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'Frasa pemulihan anda akan dipaparkan dalam bahasa Inggeris. Ia menggunakan set kecil perkataan piawai yang dikenali oleh alat pemulihan di mana-mana sahaja, yang belum lagi tersedia dalam bahasa ini.';
 
   @override
   String get chooseCurrencyTitle => 'Pilih mata wang anda';
@@ -1006,34 +905,7 @@ class AppLocalizationsMs extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'Pulihkan kunci tandatangan';
-
-  @override
-  String get restoreBlurb =>
-      'Peranti ini mempunyai buku sedia ada, tetapi tiada kunci tandatangan yang sepadan. Pulihkannya daripada frasa pemulihan atau fail simpanan kunci anda yang disimpan - data anda akan disahkan seperti biasa, dan tiada apa akan ditandatangani semula atau diubah.';
-
-  @override
-  String get recoveryPhrase24 => 'Frasa pemulihan (semua 24 perkataan)';
-
-  @override
-  String get keystoreFile => 'Fail simpanan kunci';
-
-  @override
-  String get keystoreFileContents => 'Kandungan fail simpanan kunci';
-
-  @override
   String get optionalBackupFile => 'Fail sandaran pilihan';
-
-  @override
-  String get iDontHavePhrase =>
-      'Saya tiada frasa pemulihan atau fail simpanan kunci saya';
-
-  @override
-  String get migrationTitle => 'Hijrah ke kunci baharu';
-
-  @override
-  String get migrationBlurb =>
-      'Tanpa frasa pemulihan atau fail simpanan kunci anda, kunci tandatangan peranti ini tidak dapat dipulihkan. Anda boleh memulakan kunci baharu. Entri lama kekal kelihatan tetapi digantikan.';
 
   @override
   String get iConfirmBooksValid => 'Saya mengesahkan buku semasa adalah sah';
@@ -2094,4 +1966,7 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Frasa laluan';
 }

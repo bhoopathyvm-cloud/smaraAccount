@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Nie udało się wyeksportować pliku magazynu kluczy. Możesz pominąć ten krok.",
-  "enterPassphraseToProtect": "Wprowadź hasło, aby zabezpieczyć plik.",
   "homeTapWhenArrived": "Dotknij, gdy będziesz wiedzieć, co dotarło",
   "homeReturnedTo": "Zwrócono do {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Twoja fraza odzyskiwania",
-  "recoveryPhraseConfirmTitle": "Potwierdź swoją frazę",
-  "recoveryPhraseBlurb": "Te 24 słowa to jedyny sposób na odzyskanie historii transakcji, jeśli to urządzenie zostanie zgubione, zresetowane lub wymienione. Smara Accounting nie ma serwera i nie może ich odzyskać za Ciebie.\n\nJeśli zgubisz to urządzenie razem z tą frazą, każda zapisana przez Ciebie transakcja stanie się trwale niemożliwa do zweryfikowania.",
-  "recoveryPhraseWriteDown": "Zapisz te słowa w podanej kolejności i przechowuj je w bezpiecznym miejscu, osobno od tego urządzenia.",
-  "iveSavedRecoveryPhrase": "Zapisałem/-am moją frazę odzyskiwania",
-  "confirmPhraseBlurb": "Wprowadź żądane słowa z frazy, którą właśnie zapisałeś/-aś.",
   "wordNumber": "Słowo nr {n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Eksportuj plik magazynu kluczy",
-  "keystoreExportBlurb": "Oprócz frazy odzyskiwania możesz zapisać zaszyfrowany plik magazynu kluczy zabezpieczony wybranym przez Ciebie hasłem. To opcjonalne - sama fraza odzyskiwania zawsze wystarczy, aby przywrócić klucz podpisujący.",
-  "keystorePassphrase": "Hasło",
-  "exportKeystoreFile": "Eksportuj plik magazynu kluczy",
   "chooseLanguageTitle": "Wybierz swój język",
   "chooseLanguageBlurb": "Wszystko w aplikacji będzie wyświetlane w tym języku. Możesz to zmienić później w Ustawieniach.",
-  "chooseLanguageBip39Notice": "Twoja fraza odzyskiwania zostanie wyświetlona po angielsku. Używa ona niewielkiego zestawu standardowych słów rozpoznawanych wszędzie przez narzędzia odzyskiwania, który nie jest jeszcze dostępny w tym języku.",
   "chooseCurrencyTitle": "Wybierz swoją walutę",
   "chooseCurrencyBlurb": "Każda grupa kont (Środki pieniężne i ich ekwiwalenty, Emerytura i renta itd.) korzysta na razie z jednej wybranej waluty. Konto w innej walucie możesz dodać później, tworząc dla niego nową grupę.",
   "currencyBackfillTitle": "Wybierz walutę dla istniejących grup",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Nazwij swoje konto",
   "firstAccountBlurb": "To jest konto już dla Ciebie skonfigurowane - nadaj mu rozpoznawalną nazwę, np. nazwę banku. Zaraz zapiszesz jedną transakcję Wydano lub Otrzymano, a potem zabezpieczysz urządzenie frazą odzyskiwania.",
   "whatsMainAccountCalled": "Jak nazywa się Twoje główne konto?",
-  "restoreTitle": "Przywróć klucz podpisujący",
-  "restoreBlurb": "To urządzenie ma istniejące księgi, ale brak pasującego klucza podpisującego. Przywróć go z zapisanej frazy odzyskiwania lub pliku magazynu kluczy - dane zweryfikują się normalnie i nic nie zostanie ponownie podpisane ani zmienione.",
-  "recoveryPhrase24": "Fraza odzyskiwania (wszystkie 24 słowa)",
-  "keystoreFile": "Plik magazynu kluczy",
-  "keystoreFileContents": "Zawartość pliku magazynu kluczy",
   "optionalBackupFile": "Opcjonalny plik kopii zapasowej",
-  "iDontHavePhrase": "Nie mam frazy odzyskiwania ani pliku magazynu kluczy",
-  "migrationTitle": "Migracja do nowego klucza",
-  "migrationBlurb": "Bez frazy odzyskiwania lub pliku magazynu kluczy klucz podpisujący tego urządzenia nie może zostać odzyskany. Możesz rozpocząć nowy klucz. Stare wpisy pozostaną widoczne, ale zostaną zastąpione.",
   "iConfirmBooksValid": "Potwierdzam, że obecne księgi są prawidłowe",
   "whyWeDontEdit": "Dlaczego nie edytujemy starych wpisów",
   "whyWeDontEditBody": "Gdy naprawiasz błąd, zachowujemy starą linię i dodajemy obok niej korektę, zamiast zmieniać to, co już wprowadziłeś/-aś. Dzięki temu Twoja historia zawsze pokazuje dokładnie, co się wydarzyło i kiedy to naprawiłeś/-aś — nic nie zmienia się po cichu w tle.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Hasło"
 }

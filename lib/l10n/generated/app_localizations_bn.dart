@@ -211,23 +211,6 @@ class AppLocalizationsBn extends AppLocalizations {
       'আপনার বেছে নেওয়া কোনো স্থানে আপনার হিসাবের একটি এনক্রিপ্ট করা কপি সংরক্ষণ করুন, বা সেখান থেকে পুনরুদ্ধার করুন। এটি আপনার পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইল থেকে পৃথক, যা আপনার সাইনিং কী ব্যাকআপ করে, আপনার হিসাব নয়।';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'লক';
 
   @override
@@ -419,14 +402,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String savedToPath(String path) {
     return '$path-এ সংরক্ষিত হয়েছে';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'কীস্টোর ফাইল রপ্তানি করা যায়নি। আপনি এই ধাপটি এড়িয়ে যেতে পারেন।';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'ফাইলটি সুরক্ষিত করতে একটি পাসফ্রেজ লিখুন।';
 
   @override
   String get homeTapWhenArrived => 'কী এসেছে জানলে ট্যাপ করুন';
@@ -808,81 +783,9 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'আপনার পুনরুদ্ধার বাক্যাংশ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'আপনার বাক্যাংশ নিশ্চিত করুন';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'এই ২৪টি শব্দ হলো এই ডিভাইসটি হারিয়ে গেলে, রিসেট হলে, বা প্রতিস্থাপিত হলে আপনার লেনদেনের ইতিহাস পুনরুদ্ধার করার একমাত্র উপায়। স্মারা হিসাব-এর কোনো সার্ভার নেই এবং এটি আপনার জন্য সেগুলো পুনরুদ্ধার করতে পারে না।\n\nআপনি যদি এই ডিভাইস এবং এই বাক্যাংশ একসাথে হারান, তাহলে আপনার রেকর্ড করা প্রতিটি লেনদেন স্থায়ীভাবে যাচাই-অযোগ্য হয়ে যাবে।';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'এই শব্দগুলো ক্রমানুসারে লিখে রাখুন এবং এই ডিভাইস থেকে আলাদা কোনো নিরাপদ জায়গায় সংরক্ষণ করুন।';
-
-  @override
-  String get iveSavedRecoveryPhrase =>
-      'আমি আমার পুনরুদ্ধার বাক্যাংশ সংরক্ষণ করেছি';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'আপনি এইমাত্র সংরক্ষণ করা বাক্যাংশ থেকে অনুরোধ করা শব্দগুলো লিখুন।';
-
-  @override
   String wordNumber(String n) {
     return 'শব্দ #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'কীস্টোর ফাইল রপ্তানি করুন';
-
-  @override
-  String get keystoreExportBlurb =>
-      'আপনার পুনরুদ্ধার বাক্যাংশের পাশাপাশি, আপনি নিজের বেছে নেওয়া একটি পাসফ্রেজ দ্বারা সুরক্ষিত একটি এনক্রিপ্ট করা কীস্টোর ফাইল সংরক্ষণ করতে পারেন। এটি ঐচ্ছিক - আপনার পুনরুদ্ধার বাক্যাংশ একাই সবসময় আপনার সাইনিং কী পুনরুদ্ধার করতে যথেষ্ট।';
-
-  @override
-  String get keystorePassphrase => 'পাসফ্রেজ';
-
-  @override
-  String get exportKeystoreFile => 'কীস্টোর ফাইল রপ্তানি করুন';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'আপনার ভাষা বেছে নিন';
@@ -890,10 +793,6 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'অ্যাপের সবকিছু এই ভাষায় দেখা যাবে। আপনি পরে সেটিংসে এটি পরিবর্তন করতে পারবেন।';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'আপনার পুনরুদ্ধার শব্দগুচ্ছ ইংরেজিতে দেখানো হবে। এটি সর্বত্র পুনরুদ্ধার সরঞ্জামগুলি চিনতে পারে এমন একটি ছোট আদর্শ শব্দসেট ব্যবহার করে, যা এই ভাষায় এখনও উপলব্ধ নয়।';
 
   @override
   String get chooseCurrencyTitle => 'আপনার মুদ্রা বেছে নিন';
@@ -1001,34 +900,7 @@ class AppLocalizationsBn extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'সাইনিং কী পুনরুদ্ধার করুন';
-
-  @override
-  String get restoreBlurb =>
-      'এই ডিভাইসে বিদ্যমান হিসাব আছে, কিন্তু মিলে যাওয়া কোনো সাইনিং কী নেই। আপনার সংরক্ষিত পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইল থেকে এটি পুনরুদ্ধার করুন - আপনার তথ্য স্বাভাবিকভাবে যাচাই হবে, এবং কিছুই পুনরায় সাইন বা পরিবর্তিত হবে না।';
-
-  @override
-  String get recoveryPhrase24 => 'পুনরুদ্ধার বাক্যাংশ (সবগুলো ২৪টি শব্দ)';
-
-  @override
-  String get keystoreFile => 'কীস্টোর ফাইল';
-
-  @override
-  String get keystoreFileContents => 'কীস্টোর ফাইলের বিষয়বস্তু';
-
-  @override
   String get optionalBackupFile => 'ঐচ্ছিক ব্যাকআপ ফাইল';
-
-  @override
-  String get iDontHavePhrase =>
-      'আমার কাছে পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইল নেই';
-
-  @override
-  String get migrationTitle => 'একটি নতুন কী-তে মাইগ্রেট করুন';
-
-  @override
-  String get migrationBlurb =>
-      'আপনার পুনরুদ্ধার বাক্যাংশ বা কীস্টোর ফাইল ছাড়া, এই ডিভাইসের সাইনিং কী পুনরুদ্ধার করা যাবে না। আপনি একটি নতুন কী শুরু করতে পারেন। পুরনো এন্ট্রিগুলো দৃশ্যমান থাকবে কিন্তু প্রতিস্থাপিত হবে।';
 
   @override
   String get iConfirmBooksValid => 'আমি নিশ্চিত করছি যে বর্তমান হিসাব বৈধ';
@@ -2088,4 +1960,7 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'পাসফ্রেজ';
 }

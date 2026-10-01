@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "キーストアファイルを書き出せませんでした。この手順はスキップできます。",
-  "enterPassphraseToProtect": "ファイルを保護するパスフレーズを入力してください。",
   "homeTapWhenArrived": "何が届いたか分かったらタップしてください",
   "homeReturnedTo": "{name}へ返金されました",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "リカバリーフレーズ",
-  "recoveryPhraseConfirmTitle": "フレーズを確認",
-  "recoveryPhraseBlurb": "この24個の単語は、この端末を紛失・初期化・交換した場合に取引履歴を復元する唯一の方法です。Smara家計簿にはサーバーがなく、代わりに復元することはできません。\n\nこの端末とこのフレーズを両方失うと、記録したすべての取引は永久に検証できなくなります。",
-  "recoveryPhraseWriteDown": "これらの単語を順番に書き留め、この端末とは別の安全な場所に保管してください。",
-  "iveSavedRecoveryPhrase": "リカバリーフレーズを保存しました",
-  "confirmPhraseBlurb": "先ほど保存したフレーズから指定された単語を入力してください。",
   "wordNumber": "単語 #{n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "キーストアファイルを書き出す",
-  "keystoreExportBlurb": "リカバリーフレーズに加えて、任意のパスフレーズで保護した暗号化キーストアファイルを保存できます。これは任意です - リカバリーフレーズだけでも常に署名鍵を復元するのに十分です。",
-  "keystorePassphrase": "パスフレーズ",
-  "exportKeystoreFile": "キーストアファイルを書き出す",
   "chooseLanguageTitle": "言語を選んでください",
   "chooseLanguageBlurb": "アプリのすべての表示がこの言語になります。後で設定から変更できます。",
-  "chooseLanguageBip39Notice": "回復フレーズは英語で表示されます。これはどこでも回復ツールが認識する少数の標準的な単語を使用しており、この言語ではまだ利用できません。",
   "chooseCurrencyTitle": "通貨を選択してください",
   "chooseCurrencyBlurb": "現時点では、各口座グループ（現金及び現金同等物、年金・退職金など）はこの1つの通貨を使用します。後で新しいグループを作成すれば、別の通貨の口座を追加することもできます。",
   "currencyBackfillTitle": "既存のグループの通貨を選択",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "口座に名前を付ける",
   "firstAccountBlurb": "これはあなたのためにあらかじめ用意された口座です - 銀行名のような、わかりやすい名前を付けてください。次に支出または収入を1件記録し、その後リカバリーフレーズで端末を保護します。",
   "whatsMainAccountCalled": "メインの口座の名前は何ですか？",
-  "restoreTitle": "署名鍵を復元",
-  "restoreBlurb": "この端末には既存の帳簿がありますが、一致する署名鍵がありません。保存したリカバリーフレーズまたはキーストアファイルから復元してください - データは通常どおり検証され、何も再署名や変更はされません。",
-  "recoveryPhrase24": "リカバリーフレーズ（24個すべての単語）",
-  "keystoreFile": "キーストアファイル",
-  "keystoreFileContents": "キーストアファイルの内容",
   "optionalBackupFile": "任意のバックアップファイル",
-  "iDontHavePhrase": "リカバリーフレーズもキーストアファイルもありません",
-  "migrationTitle": "新しい鍵に移行",
-  "migrationBlurb": "リカバリーフレーズもキーストアファイルもない場合、この端末の署名鍵は復元できません。新しい鍵を開始できます。古い項目は表示されたままですが、置き換え済みとなります。",
   "iConfirmBooksValid": "現在の帳簿が正しいことを確認しました",
   "whyWeDontEdit": "古い項目を編集しない理由",
   "whyWeDontEditBody": "誤りを修正するとき、すでに入力した内容を変更するのではなく、古い行をそのまま残し、隣に修正を追加します。こうすることで、何が起きたか、いつ修正したかが履歴に常に正確に表示され、気づかないうちに内容が変わることはありません。",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "パスフレーズ"
 }

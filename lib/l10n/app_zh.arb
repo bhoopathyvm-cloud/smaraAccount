@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "无法导出密钥库文件。您可以跳过此步骤。",
-  "enterPassphraseToProtect": "输入一个密码短语以保护此文件。",
   "homeTapWhenArrived": "确认收到内容后点按",
   "homeReturnedTo": "已退回至 {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "您的恢复短语",
-  "recoveryPhraseConfirmTitle": "确认您的恢复短语",
-  "recoveryPhraseBlurb": "如果此设备丢失、被重置或更换，这 24 个单词是恢复您交易历史的唯一方式。Smara Accounting 没有服务器，无法为您找回这些单词。\n\n如果您同时丢失了这台设备和这个恢复短语，您已记录的每一笔交易都将永久无法验证。",
-  "recoveryPhraseWriteDown": "按顺序写下这些单词，并将其存放在与此设备分开的安全地方。",
-  "iveSavedRecoveryPhrase": "我已保存我的恢复短语",
-  "confirmPhraseBlurb": "输入您刚保存的恢复短语中被要求的单词。",
   "wordNumber": "第 {n} 个单词",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "导出密钥库文件",
-  "keystoreExportBlurb": "除了恢复短语外，您还可以保存一个由您选择的密码短语保护的加密密钥库文件。这是可选的——仅凭您的恢复短语始终足以恢复您的签名密钥。",
-  "keystorePassphrase": "密码短语",
-  "exportKeystoreFile": "导出密钥库文件",
   "chooseLanguageTitle": "选择你的语言",
   "chooseLanguageBlurb": "应用中的所有内容都将以此语言显示。你可以稍后在设置中更改。",
-  "chooseLanguageBip39Notice": "你的恢复短语将以英语显示。它使用的是一小组各地恢复工具都能识别的标准单词，而这套单词目前还没有这种语言的版本。",
   "chooseCurrencyTitle": "选择您的货币",
   "chooseCurrencyBlurb": "目前每个账户分组（现金及现金等价物、养老金与退休金等）都使用这一种货币。您以后仍可以通过创建新的分组来添加使用其他货币的账户。",
   "currencyBackfillTitle": "为现有分组选择货币",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "为您的账户命名",
   "firstAccountBlurb": "这是已为您预先设置好的账户——为它取一个您能认出的名字，比如您的银行名称。接下来您会记录一笔支出或收入，然后用恢复短语保护此设备。",
   "whatsMainAccountCalled": "您的主要账户叫什么名字？",
-  "restoreTitle": "恢复签名密钥",
-  "restoreBlurb": "此设备已有账本，但没有匹配的签名密钥。请从您保存的恢复短语或密钥库文件中恢复它——您的数据将正常通过验证，不会有任何数据被重新签名或更改。",
-  "recoveryPhrase24": "恢复短语（全部 24 个单词）",
-  "keystoreFile": "密钥库文件",
-  "keystoreFileContents": "密钥库文件内容",
   "optionalBackupFile": "可选备份文件",
-  "iDontHavePhrase": "我没有恢复短语或密钥库文件",
-  "migrationTitle": "迁移到新密钥",
-  "migrationBlurb": "如果没有恢复短语或密钥库文件，此设备的签名密钥将无法恢复。您可以创建一个新密钥。旧条目仍会显示，但会被标记为已取代。",
   "iConfirmBooksValid": "我确认当前账本有效",
   "whyWeDontEdit": "我们为什么不修改旧条目",
   "whyWeDontEditBody": "当您更正一个错误时，我们会保留原有的记录行，并在旁边添加一条更正记录，而不是改动您已经录入的内容。这样，您的历史记录始终能准确显示实际发生了什么，以及您何时做了更正——不会有任何内容在您不知情的情况下被悄悄改变。",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "密码短语"
 }

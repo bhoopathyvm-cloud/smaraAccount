@@ -212,23 +212,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Defterlerinizin şifrelenmiş bir kopyasını seçtiğiniz bir konuma kaydedin veya birinden geri yükleyin. Bu, imzalama anahtarınızı yedekleyen kurtarma ifadenizden veya keystore dosyanızdan ayrıdır; defterlerinizi yedeklemez.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Kilit';
 
   @override
@@ -421,14 +404,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String savedToPath(String path) {
     return '$path konumuna kaydedildi';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Keystore dosyası dışa aktarılamadı. Bu adımı atlayabilirsiniz.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Dosyayı korumak için bir parola girin.';
 
   @override
   String get homeTapWhenArrived => 'Ne geldiğini öğrendiğinizde dokunun';
@@ -812,80 +787,9 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'Kurtarma ifadeniz';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'İfadenizi onaylayın';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Accounting\'in bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Bu kelimeleri sırasıyla yazın ve bu cihazdan ayrı, güvenli bir yerde saklayın.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'Kurtarma ifademi kaydettim';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Az önce kaydettiğiniz ifadeden istenen kelimeleri girin.';
-
-  @override
   String wordNumber(String n) {
     return 'Kelime #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'Keystore dosyasını dışa aktar';
-
-  @override
-  String get keystoreExportBlurb =>
-      'Kurtarma ifadenize ek olarak, seçtiğiniz bir parolayla korunan şifrelenmiş bir keystore dosyası kaydedebilirsiniz. Bu isteğe bağlıdır - imzalama anahtarınızı geri yüklemek için tek başına kurtarma ifadeniz her zaman yeterlidir.';
-
-  @override
-  String get keystorePassphrase => 'Parola';
-
-  @override
-  String get exportKeystoreFile => 'Keystore dosyasını dışa aktar';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Dilinizi seçin';
@@ -893,10 +797,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'Uygulamadaki her şey bu dilde gösterilecek. Daha sonra Ayarlar\'dan değiştirebilirsiniz.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'Kurtarma ifadeniz İngilizce gösterilecek. Bu, her yerdeki kurtarma araçları tarafından tanınan küçük bir standart kelime kümesi kullanır ve bu dilde henüz mevcut değildir.';
 
   @override
   String get chooseCurrencyTitle => 'Para biriminizi seçin';
@@ -1004,33 +904,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'İmzalama anahtarını geri yükle';
-
-  @override
-  String get restoreBlurb =>
-      'Bu cihazda mevcut defterler var, ancak eşleşen bir imzalama anahtarı yok. Kaydettiğiniz kurtarma ifadesinden veya keystore dosyasından geri yükleyin - verileriniz normal şekilde doğrulanacak ve hiçbir şey yeniden imzalanmayacak veya değiştirilmeyecek.';
-
-  @override
-  String get recoveryPhrase24 => 'Kurtarma ifadesi (24 kelimenin tamamı)';
-
-  @override
-  String get keystoreFile => 'Keystore dosyası';
-
-  @override
-  String get keystoreFileContents => 'Keystore dosyası içeriği';
-
-  @override
   String get optionalBackupFile => 'İsteğe bağlı yedek dosyası';
-
-  @override
-  String get iDontHavePhrase => 'Kurtarma ifadem veya keystore dosyam yok';
-
-  @override
-  String get migrationTitle => 'Yeni bir anahtara geçiş yap';
-
-  @override
-  String get migrationBlurb =>
-      'Kurtarma ifadeniz veya keystore dosyanız olmadan bu cihazın imzalama anahtarı kurtarılamaz. Yeni bir anahtarla başlayabilirsiniz. Eski kayıtlar görünür kalır ancak geçersiz kılınır.';
 
   @override
   String get iConfirmBooksValid =>
@@ -2090,4 +1964,7 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Parola';
 }

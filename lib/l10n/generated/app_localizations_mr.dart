@@ -211,23 +211,6 @@ class AppLocalizationsMr extends AppLocalizations {
       'तुमच्या हिशोबांची एनक्रिप्टेड प्रत तुम्ही निवडलेल्या ठिकाणी जतन करा, किंवा तेथून पुनर्संचयित करा. हे तुमच्या रिकव्हरी फ्रेज किंवा कीस्टोअर फाइलपेक्षा वेगळे आहे, जी तुमची स्वाक्षरी की बॅकअप करते, हिशोब नव्हे.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'लॉक';
 
   @override
@@ -419,14 +402,6 @@ class AppLocalizationsMr extends AppLocalizations {
   String savedToPath(String path) {
     return '$path येथे जतन केले';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'कीस्टोअर फाइल निर्यात करता आली नाही. तुम्ही ही पायरी वगळू शकता.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'फाइल सुरक्षित करण्यासाठी पासफ्रेज प्रविष्ट करा.';
 
   @override
   String get homeTapWhenArrived => 'काय पोहोचले हे कळल्यावर टॅप करा';
@@ -807,80 +782,9 @@ class AppLocalizationsMr extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'तुमचा रिकव्हरी फ्रेज';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'तुमचा फ्रेज निश्चित करा';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'हे डिव्हाइस हरवले, रीसेट झाले किंवा बदलले गेल्यास तुमचा व्यवहार इतिहास पुन्हा मिळवण्याचा हे २४ शब्द हाच एकमेव मार्ग आहेत. स्मारा अकाउंटिंगला कोणताही सर्व्हर नाही आणि ते तुमच्यासाठी परत मिळवू शकत नाही.\n\nतुम्ही हे डिव्हाइस आणि हा फ्रेज दोन्ही गमावल्यास, तुम्ही नोंदवलेला प्रत्येक व्यवहार कायमचा पडताळता न येणारा होतो.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'हे शब्द क्रमाने लिहून ठेवा आणि या डिव्हाइसपासून वेगळ्या, सुरक्षित ठिकाणी साठवा.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'मी माझा रिकव्हरी फ्रेज जतन केला आहे';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'तुम्ही नुकत्याच जतन केलेल्या फ्रेजमधील विनंती केलेले शब्द प्रविष्ट करा.';
-
-  @override
   String wordNumber(String n) {
     return 'शब्द #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'कीस्टोअर फाइल निर्यात करा';
-
-  @override
-  String get keystoreExportBlurb =>
-      'तुमच्या रिकव्हरी फ्रेजसोबतच, तुम्ही निवडलेल्या पासफ्रेजने संरक्षित एनक्रिप्टेड कीस्टोअर फाइल तुम्ही जतन करू शकता. हे ऐच्छिक आहे - तुमची स्वाक्षरी की पुनर्संचयित करण्यासाठी एकटा रिकव्हरी फ्रेज नेहमीच पुरेसा असतो.';
-
-  @override
-  String get keystorePassphrase => 'पासफ्रेज';
-
-  @override
-  String get exportKeystoreFile => 'कीस्टोअर फाइल निर्यात करा';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'तुमची भाषा निवडा';
@@ -888,10 +792,6 @@ class AppLocalizationsMr extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'अ‍ॅपमधील सर्व काही या भाषेत दिसेल. तुम्ही नंतर सेटिंग्जमध्ये ते बदलू शकता.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'तुमचा रिकव्हरी फ्रेज इंग्रजीत दाखवला जाईल. तो सर्वत्र रिकव्हरी टूल्सद्वारे ओळखल्या जाणाऱ्या थोड्या मानक शब्दांचा वापर करतो, जो या भाषेत अजून उपलब्ध नाही.';
 
   @override
   String get chooseCurrencyTitle => 'तुमचे चलन निवडा';
@@ -998,34 +898,7 @@ class AppLocalizationsMr extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'स्वाक्षरी की पुनर्संचयित करा';
-
-  @override
-  String get restoreBlurb =>
-      'या डिव्हाइसवर विद्यमान हिशोब आहेत, परंतु जुळणारी स्वाक्षरी की नाही. तुमच्या जतन केलेल्या रिकव्हरी फ्रेज किंवा कीस्टोअर फाइलमधून ती पुनर्संचयित करा - तुमचा डेटा नेहमीप्रमाणे पडताळला जाईल, आणि काहीही पुन्हा स्वाक्षरीत किंवा बदलले जाणार नाही.';
-
-  @override
-  String get recoveryPhrase24 => 'रिकव्हरी फ्रेज (सर्व २४ शब्द)';
-
-  @override
-  String get keystoreFile => 'कीस्टोअर फाइल';
-
-  @override
-  String get keystoreFileContents => 'कीस्टोअर फाइल सामग्री';
-
-  @override
   String get optionalBackupFile => 'ऐच्छिक बॅकअप फाइल';
-
-  @override
-  String get iDontHavePhrase =>
-      'माझ्याकडे रिकव्हरी फ्रेज किंवा कीस्टोअर फाइल नाही';
-
-  @override
-  String get migrationTitle => 'नवीन कीकडे स्थलांतर करा';
-
-  @override
-  String get migrationBlurb =>
-      'तुमच्या रिकव्हरी फ्रेज किंवा कीस्टोअर फाइलशिवाय, या डिव्हाइसची स्वाक्षरी की पुनर्प्राप्त करता येणार नाही. तुम्ही नवीन की सुरू करू शकता. जुन्या नोंदी दृश्यमान राहतील पण त्या बदलल्या (सुपरसीड) जातील.';
 
   @override
   String get iConfirmBooksValid => 'मी पुष्टी करतो की सध्याचे हिशोब वैध आहेत';
@@ -2085,4 +1958,7 @@ class AppLocalizationsMr extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'पासफ्रेज';
 }

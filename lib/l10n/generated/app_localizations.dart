@@ -576,36 +576,6 @@ abstract class AppLocalizations {
   /// **'Save an encrypted copy of your books to a place you choose, or restore from one. Restoring replaces the books on this phone — it does not merge. Your language and unlock settings stay on this phone.'**
   String get settingsBackupBlurb;
 
-  /// No description provided for @settingsRecovery.
-  ///
-  /// In en, this message translates to:
-  /// **'Recovery & identity'**
-  String get settingsRecovery;
-
-  /// No description provided for @settingsRecoveryBlurb.
-  ///
-  /// In en, this message translates to:
-  /// **'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.'**
-  String get settingsRecoveryBlurb;
-
-  /// No description provided for @settingsViewRecoveryPhrase.
-  ///
-  /// In en, this message translates to:
-  /// **'View recovery phrase'**
-  String get settingsViewRecoveryPhrase;
-
-  /// No description provided for @settingsExportKeystoreFile.
-  ///
-  /// In en, this message translates to:
-  /// **'Export keystore file'**
-  String get settingsExportKeystoreFile;
-
-  /// No description provided for @settingsExportDeviceMigrationBundle.
-  ///
-  /// In en, this message translates to:
-  /// **'Export device migration bundle'**
-  String get settingsExportDeviceMigrationBundle;
-
   /// No description provided for @settingsLock.
   ///
   /// In en, this message translates to:
@@ -953,18 +923,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved to {path}'**
   String savedToPath(String path);
-
-  /// No description provided for @keystoreExportFailed.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not export the keystore file. You can skip this step.'**
-  String get keystoreExportFailed;
-
-  /// No description provided for @enterPassphraseToProtect.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter a passphrase to protect the file.'**
-  String get enterPassphraseToProtect;
 
   /// No description provided for @homeTapWhenArrived.
   ///
@@ -1662,131 +1620,11 @@ abstract class AppLocalizations {
   /// **'{qty} units · '**
   String holdingsUnitsCost(String qty);
 
-  /// No description provided for @recoveryPhraseTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Your recovery phrase'**
-  String get recoveryPhraseTitle;
-
-  /// No description provided for @recoveryPhraseConfirmTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm your phrase'**
-  String get recoveryPhraseConfirmTitle;
-
-  /// No description provided for @recoveryPhraseBlurb.
-  ///
-  /// In en, this message translates to:
-  /// **'These 24 words are the only way to recover your transaction history if this device is lost, reset, or replaced. Smara Accounting has no server and cannot recover them for you.\n\nIf you lose this device and this phrase together, every transaction you\'\'ve recorded becomes permanently unverifiable.'**
-  String get recoveryPhraseBlurb;
-
-  /// No description provided for @recoveryPhraseWriteDown.
-  ///
-  /// In en, this message translates to:
-  /// **'Write these words down in order and store them somewhere safe and separate from this device.'**
-  String get recoveryPhraseWriteDown;
-
-  /// No description provided for @iveSavedRecoveryPhrase.
-  ///
-  /// In en, this message translates to:
-  /// **'I\'\'ve saved my recovery phrase'**
-  String get iveSavedRecoveryPhrase;
-
-  /// No description provided for @noRecoveryPhraseAvailable.
-  ///
-  /// In en, this message translates to:
-  /// **'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.'**
-  String get noRecoveryPhraseAvailable;
-
-  /// No description provided for @confirmPhraseBlurb.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter the requested words from the phrase you just saved.'**
-  String get confirmPhraseBlurb;
-
   /// No description provided for @wordNumber.
   ///
   /// In en, this message translates to:
   /// **'Word #{n}'**
   String wordNumber(String n);
-
-  /// No description provided for @keystoreExportTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Export keystore file'**
-  String get keystoreExportTitle;
-
-  /// No description provided for @keystoreExportBlurb.
-  ///
-  /// In en, this message translates to:
-  /// **'As well as your recovery phrase, you can save an encrypted keystore file protected by a passphrase you choose. This is optional - your recovery phrase alone is always enough to restore your signing key.'**
-  String get keystoreExportBlurb;
-
-  /// No description provided for @keystorePassphrase.
-  ///
-  /// In en, this message translates to:
-  /// **'Passphrase'**
-  String get keystorePassphrase;
-
-  /// No description provided for @exportKeystoreFile.
-  ///
-  /// In en, this message translates to:
-  /// **'Export keystore file'**
-  String get exportKeystoreFile;
-
-  /// No description provided for @deviceMigrationBundleExportTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Export device migration bundle'**
-  String get deviceMigrationBundleExportTitle;
-
-  /// No description provided for @deviceMigrationBundleExportBlurb.
-  ///
-  /// In en, this message translates to:
-  /// **'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.'**
-  String get deviceMigrationBundleExportBlurb;
-
-  /// No description provided for @deviceMigrationBundleFile.
-  ///
-  /// In en, this message translates to:
-  /// **'Device migration bundle'**
-  String get deviceMigrationBundleFile;
-
-  /// No description provided for @importDeviceMigrationBundleTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Import device migration bundle'**
-  String get importDeviceMigrationBundleTitle;
-
-  /// No description provided for @importDeviceMigrationBundleBlurb.
-  ///
-  /// In en, this message translates to:
-  /// **'This replaces everything currently in this app with the bundle\'\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.'**
-  String get importDeviceMigrationBundleBlurb;
-
-  /// No description provided for @chooseDeviceMigrationBundleFileFirst.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a device migration bundle file first.'**
-  String get chooseDeviceMigrationBundleFileFirst;
-
-  /// No description provided for @exportDeviceMigrationBundle.
-  ///
-  /// In en, this message translates to:
-  /// **'Export bundle'**
-  String get exportDeviceMigrationBundle;
-
-  /// No description provided for @deviceMigrationBundleImported.
-  ///
-  /// In en, this message translates to:
-  /// **'Bundle imported'**
-  String get deviceMigrationBundleImported;
-
-  /// No description provided for @deviceMigrationBundleImportedBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Your books and signing key have been restored. Close the app and reopen it to continue.'**
-  String get deviceMigrationBundleImportedBody;
 
   /// No description provided for @chooseLanguageTitle.
   ///
@@ -1799,12 +1637,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Everything in the app will show in this language. You can change it later in Settings.'**
   String get chooseLanguageBlurb;
-
-  /// No description provided for @chooseLanguageBip39Notice.
-  ///
-  /// In en, this message translates to:
-  /// **'Your recovery phrase will be shown in English. It uses a small set of standard words recognized by recovery tools everywhere, which isn\'\'t available yet in this language.'**
-  String get chooseLanguageBip39Notice;
 
   /// No description provided for @chooseCurrencyTitle.
   ///
@@ -1986,59 +1818,11 @@ abstract class AppLocalizations {
   /// **'Hide for this many new entries after Later'**
   String get settingsBackupReminderSnoozeEntries;
 
-  /// No description provided for @restoreTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Restore signing key'**
-  String get restoreTitle;
-
-  /// No description provided for @restoreBlurb.
-  ///
-  /// In en, this message translates to:
-  /// **'This device has existing books, but no matching signing key. Restore it from your saved recovery phrase or keystore file - your data will verify normally, and nothing will be re-signed or altered.'**
-  String get restoreBlurb;
-
-  /// No description provided for @recoveryPhrase24.
-  ///
-  /// In en, this message translates to:
-  /// **'Recovery phrase (all 24 words)'**
-  String get recoveryPhrase24;
-
-  /// No description provided for @keystoreFile.
-  ///
-  /// In en, this message translates to:
-  /// **'Keystore file'**
-  String get keystoreFile;
-
-  /// No description provided for @keystoreFileContents.
-  ///
-  /// In en, this message translates to:
-  /// **'Keystore file contents'**
-  String get keystoreFileContents;
-
   /// No description provided for @optionalBackupFile.
   ///
   /// In en, this message translates to:
   /// **'Optional backup file'**
   String get optionalBackupFile;
-
-  /// No description provided for @iDontHavePhrase.
-  ///
-  /// In en, this message translates to:
-  /// **'I don\'\'t have my recovery phrase or keystore file'**
-  String get iDontHavePhrase;
-
-  /// No description provided for @migrationTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Migrate to a new key'**
-  String get migrationTitle;
-
-  /// No description provided for @migrationBlurb.
-  ///
-  /// In en, this message translates to:
-  /// **'Without your recovery phrase or keystore file, this device\'\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.'**
-  String get migrationBlurb;
 
   /// No description provided for @iConfirmBooksValid.
   ///
@@ -2157,7 +1941,7 @@ abstract class AppLocalizations {
   /// No description provided for @choosePassphraseTitle.
   ///
   /// In en, this message translates to:
-  /// **'Choose a passphrase to protect this backup. There is no recovery if you forget it.'**
+  /// **'Choose a passphrase to protect this copy. There is no recovery if you forget it.'**
   String get choosePassphraseTitle;
 
   /// No description provided for @replaceBooksTitle.
@@ -2175,7 +1959,7 @@ abstract class AppLocalizations {
   /// No description provided for @chooseBackupFileFirst.
   ///
   /// In en, this message translates to:
-  /// **'Choose a backup file first.'**
+  /// **'Choose a books copy file first.'**
   String get chooseBackupFileFirst;
 
   /// No description provided for @backupRestored.
@@ -3375,7 +3159,7 @@ abstract class AppLocalizations {
   /// No description provided for @restoreBackupBlurb.
   ///
   /// In en, this message translates to:
-  /// **'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.'**
+  /// **'This replaces the books and the books\'\' settings on this phone with the copy — it does not merge. Your language and unlock settings stay on this phone. Choose a copy file and enter the passphrase you protected it with.'**
   String get restoreBackupBlurb;
 
   /// No description provided for @actionReplace.
@@ -3741,6 +3525,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved. The exact market symbol will be resolved on the next price refresh.'**
   String get resolveDeferredSaved;
+
+  /// No description provided for @booksCopyPassphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'Passphrase'**
+  String get booksCopyPassphrase;
 }
 
 class _AppLocalizationsDelegate

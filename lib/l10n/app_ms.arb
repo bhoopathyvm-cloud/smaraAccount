@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Fail simpanan kunci tidak dapat dieksport. Anda boleh langkau langkah ini.",
-  "enterPassphraseToProtect": "Masukkan frasa laluan untuk melindungi fail.",
   "homeTapWhenArrived": "Ketik apabila anda tahu apa yang tiba",
   "homeReturnedTo": "Dikembalikan kepada {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Frasa pemulihan anda",
-  "recoveryPhraseConfirmTitle": "Sahkan frasa anda",
-  "recoveryPhraseBlurb": "24 perkataan ini adalah satu-satunya cara untuk memulihkan sejarah transaksi anda jika peranti ini hilang, ditetapkan semula, atau digantikan. Smara Perakaunan tiada pelayan dan tidak dapat memulihkannya untuk anda.\n\nJika anda kehilangan peranti ini dan frasa ini bersama-sama, setiap transaksi yang anda rekodkan menjadi tidak dapat disahkan secara kekal.",
-  "recoveryPhraseWriteDown": "Tuliskan perkataan ini secara berurutan dan simpan di tempat yang selamat serta berasingan daripada peranti ini.",
-  "iveSavedRecoveryPhrase": "Saya telah menyimpan frasa pemulihan saya",
-  "confirmPhraseBlurb": "Masukkan perkataan yang diminta daripada frasa yang baru anda simpan.",
   "wordNumber": "Perkataan #{n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Eksport fail simpanan kunci",
-  "keystoreExportBlurb": "Selain frasa pemulihan anda, anda boleh menyimpan fail simpanan kunci tersulit yang dilindungi oleh frasa laluan pilihan anda. Ini pilihan - frasa pemulihan anda sahaja sentiasa mencukupi untuk memulihkan kunci tandatangan anda.",
-  "keystorePassphrase": "Frasa laluan",
-  "exportKeystoreFile": "Eksport fail simpanan kunci",
   "chooseLanguageTitle": "Pilih bahasa anda",
   "chooseLanguageBlurb": "Semua dalam aplikasi akan dipaparkan dalam bahasa ini. Anda boleh menukarnya kemudian dalam Tetapan.",
-  "chooseLanguageBip39Notice": "Frasa pemulihan anda akan dipaparkan dalam bahasa Inggeris. Ia menggunakan set kecil perkataan piawai yang dikenali oleh alat pemulihan di mana-mana sahaja, yang belum lagi tersedia dalam bahasa ini.",
   "chooseCurrencyTitle": "Pilih mata wang anda",
   "chooseCurrencyBlurb": "Setiap kumpulan akaun (Tunai & setara tunai, Pencen & persaraan, dsb.) menggunakan satu mata wang ini buat masa ini. Anda masih boleh menambah akaun dalam mata wang berbeza kemudian dengan mencipta kumpulan baharu untuknya.",
   "currencyBackfillTitle": "Pilih mata wang untuk kumpulan sedia ada",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Namakan akaun anda",
   "firstAccountBlurb": "Ini ialah akaun yang telah disediakan untuk anda - berikan nama yang anda kenali, seperti bank anda. Anda akan merekod satu Perbelanjaan atau Penerimaan seterusnya, kemudian melindungi peranti dengan frasa pemulihan anda.",
   "whatsMainAccountCalled": "Apakah nama akaun utama anda?",
-  "restoreTitle": "Pulihkan kunci tandatangan",
-  "restoreBlurb": "Peranti ini mempunyai buku sedia ada, tetapi tiada kunci tandatangan yang sepadan. Pulihkannya daripada frasa pemulihan atau fail simpanan kunci anda yang disimpan - data anda akan disahkan seperti biasa, dan tiada apa akan ditandatangani semula atau diubah.",
-  "recoveryPhrase24": "Frasa pemulihan (semua 24 perkataan)",
-  "keystoreFile": "Fail simpanan kunci",
-  "keystoreFileContents": "Kandungan fail simpanan kunci",
   "optionalBackupFile": "Fail sandaran pilihan",
-  "iDontHavePhrase": "Saya tiada frasa pemulihan atau fail simpanan kunci saya",
-  "migrationTitle": "Hijrah ke kunci baharu",
-  "migrationBlurb": "Tanpa frasa pemulihan atau fail simpanan kunci anda, kunci tandatangan peranti ini tidak dapat dipulihkan. Anda boleh memulakan kunci baharu. Entri lama kekal kelihatan tetapi digantikan.",
   "iConfirmBooksValid": "Saya mengesahkan buku semasa adalah sah",
   "whyWeDontEdit": "Mengapa kami tidak mengedit entri lama",
   "whyWeDontEditBody": "Apabila anda membetulkan kesilapan, kami mengekalkan baris lama dan menambah pembetulan di sebelahnya dan bukannya mengubah apa yang telah anda masukkan. Dengan itu sejarah anda sentiasa menunjukkan dengan tepat apa yang berlaku dan bila anda membetulkannya — tiada apa berubah secara senyap di belakang anda.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Frasa laluan"
 }

@@ -212,23 +212,6 @@ class AppLocalizationsUr extends AppLocalizations {
       'اپنے کھاتوں کی ایک خفیہ کاری شدہ کاپی اپنی منتخب کردہ جگہ پر محفوظ کریں، یا کسی سے بحال کریں۔ یہ آپ کے بحالی فقرے یا کی اسٹور فائل سے الگ ہے، جو آپ کی دستخطی کلید کا بیک اپ لیتے ہیں، آپ کے کھاتوں کا نہیں۔';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'لاک';
 
   @override
@@ -421,14 +404,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String savedToPath(String path) {
     return '$path میں محفوظ ہوا';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'کی اسٹور فائل ایکسپورٹ نہیں ہو سکی۔ آپ یہ مرحلہ چھوڑ سکتے ہیں۔';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'فائل کی حفاظت کے لیے ایک پاس فریز درج کریں۔';
 
   @override
   String get homeTapWhenArrived => 'جب معلوم ہو جائے کہ کیا پہنچا تو ٹیپ کریں';
@@ -810,80 +785,9 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'آپ کا بحالی فقرہ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'اپنے فقرے کی تصدیق کریں';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'یہ 24 الفاظ آپ کی ٹرانزیکشن ہسٹری بحال کرنے کا واحد ذریعہ ہیں اگر یہ آلہ کھو جائے، ری سیٹ ہو جائے، یا تبدیل ہو جائے۔ سمارا اکاؤنٹنگ کا کوئی سرور نہیں ہے اور یہ آپ کے لیے انہیں بحال نہیں کر سکتا۔\n\nاگر آپ یہ آلہ اور یہ فقرہ دونوں کھو دیتے ہیں، تو آپ کی ریکارڈ کردہ ہر ٹرانزیکشن ہمیشہ کے لیے غیر قابل تصدیق ہو جاتی ہے۔';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'یہ الفاظ ترتیب سے لکھ لیں اور انہیں اس آلے سے الگ کسی محفوظ جگہ پر رکھیں۔';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'میں نے اپنا بحالی فقرہ محفوظ کر لیا ہے';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'ابھی محفوظ کیے گئے فقرے سے مطلوبہ الفاظ درج کریں۔';
-
-  @override
   String wordNumber(String n) {
     return 'لفظ #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'کی اسٹور فائل ایکسپورٹ کریں';
-
-  @override
-  String get keystoreExportBlurb =>
-      'اپنے بحالی فقرے کے علاوہ، آپ ایک خفیہ کاری شدہ کی اسٹور فائل بھی محفوظ کر سکتے ہیں جو آپ کے منتخب کردہ پاس فریز سے محفوظ ہو۔ یہ اختیاری ہے - آپ کا بحالی فقرہ اکیلا ہی آپ کی دستخطی کلید بحال کرنے کے لیے ہمیشہ کافی ہے۔';
-
-  @override
-  String get keystorePassphrase => 'پاس فریز';
-
-  @override
-  String get exportKeystoreFile => 'کی اسٹور فائل ایکسپورٹ کریں';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'اپنی زبان منتخب کریں';
@@ -891,10 +795,6 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'ایپ میں سب کچھ اسی زبان میں دکھایا جائے گا۔ آپ بعد میں سیٹنگز میں اسے تبدیل کر سکتے ہیں۔';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'آپ کا ریکوری فقرہ انگریزی میں دکھایا جائے گا۔ یہ ہر جگہ ریکوری ٹولز کے ذریعے پہچانے جانے والے معیاری الفاظ کے ایک چھوٹے مجموعے کا استعمال کرتا ہے، جو اس زبان میں ابھی دستیاب نہیں ہے۔';
 
   @override
   String get chooseCurrencyTitle => 'اپنی کرنسی منتخب کریں';
@@ -1001,33 +901,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'دستخطی کلید بحال کریں';
-
-  @override
-  String get restoreBlurb =>
-      'اس آلے میں پہلے سے کھاتے موجود ہیں، لیکن کوئی مماثل دستخطی کلید نہیں۔ اسے اپنے محفوظ کردہ بحالی فقرے یا کی اسٹور فائل سے بحال کریں - آپ کا ڈیٹا معمول کے مطابق تصدیق ہوگا، اور کچھ بھی دوبارہ دستخط شدہ یا تبدیل نہیں کیا جائے گا۔';
-
-  @override
-  String get recoveryPhrase24 => 'بحالی فقرہ (تمام 24 الفاظ)';
-
-  @override
-  String get keystoreFile => 'کی اسٹور فائل';
-
-  @override
-  String get keystoreFileContents => 'کی اسٹور فائل کا مواد';
-
-  @override
   String get optionalBackupFile => 'اختیاری بیک اپ فائل';
-
-  @override
-  String get iDontHavePhrase => 'میرے پاس بحالی فقرہ یا کی اسٹور فائل نہیں ہے';
-
-  @override
-  String get migrationTitle => 'نئی کلید پر منتقل ہوں';
-
-  @override
-  String get migrationBlurb =>
-      'آپ کے بحالی فقرے یا کی اسٹور فائل کے بغیر، اس آلے کی دستخطی کلید بحال نہیں کی جا سکتی۔ آپ نئی کلید شروع کر سکتے ہیں۔ پرانے اندراجات نظر آتے رہیں گے لیکن منسوخ سمجھے جائیں گے۔';
 
   @override
   String get iConfirmBooksValid =>
@@ -2090,4 +1964,7 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'پاس فریز';
 }

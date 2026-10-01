@@ -207,7 +207,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(
         find.text(
-          'Choose a passphrase to protect this backup. There is no recovery if you forget it.',
+          'Choose a passphrase to protect this copy. There is no recovery if you forget it.',
         ),
         findsOneWidget,
       );
@@ -242,7 +242,7 @@ void main() {
       await tester.tap(find.widgetWithText(ElevatedButton, 'Restore'));
       await tester.pump();
 
-      expect(find.text('Choose a backup file first.'), findsOneWidget);
+      expect(find.text('Choose a books copy file first.'), findsOneWidget);
       verifyNever(
         booksCopyRepository.restoreBooksCopy(
           fileContents: anyNamed('fileContents'),

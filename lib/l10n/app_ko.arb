@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "키스토어 파일을 내보낼 수 없습니다. 이 단계는 건너뛸 수 있습니다.",
-  "enterPassphraseToProtect": "파일을 보호할 암호를 입력하세요.",
   "homeTapWhenArrived": "도착한 금액을 알게 되면 탭하세요",
   "homeReturnedTo": "{name}(으)로 반환됨",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "복구 구문",
-  "recoveryPhraseConfirmTitle": "구문 확인",
-  "recoveryPhraseBlurb": "이 24개의 단어는 이 기기를 분실, 초기화 또는 교체했을 때 거래 내역을 복구할 수 있는 유일한 방법입니다. Smara 회계는 서버가 없으며 이를 대신 복구해 드릴 수 없습니다.\n\n이 기기와 이 구문을 함께 잃어버리면 지금까지 기록한 모든 거래를 영구적으로 검증할 수 없게 됩니다.",
-  "recoveryPhraseWriteDown": "이 단어들을 순서대로 적어 이 기기와 분리된 안전한 곳에 보관하세요.",
-  "iveSavedRecoveryPhrase": "복구 구문을 저장했습니다",
-  "confirmPhraseBlurb": "방금 저장한 구문에서 요청된 단어를 입력하세요.",
   "wordNumber": "단어 #{n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "키스토어 파일 내보내기",
-  "keystoreExportBlurb": "복구 구문 외에도, 직접 정한 암호로 보호되는 암호화된 키스토어 파일을 저장할 수 있습니다. 이는 선택 사항입니다 — 복구 구문만으로도 항상 서명 키를 복원하기에 충분합니다.",
-  "keystorePassphrase": "암호",
-  "exportKeystoreFile": "키스토어 파일 내보내기",
   "chooseLanguageTitle": "언어를 선택하세요",
   "chooseLanguageBlurb": "앱의 모든 내용이 이 언어로 표시됩니다. 나중에 설정에서 변경할 수 있습니다.",
-  "chooseLanguageBip39Notice": "복구 문구는 영어로 표시됩니다. 이는 전 세계 복구 도구가 인식하는 표준 단어의 작은 집합을 사용하며, 이 언어에는 아직 제공되지 않습니다.",
   "chooseCurrencyTitle": "통화 선택",
   "chooseCurrencyBlurb": "현재 모든 계좌 그룹(현금 및 현금성 자산, 연금 및 퇴직 등)은 이 하나의 통화를 사용합니다. 나중에 새 그룹을 만들어 다른 통화의 계좌를 추가할 수 있습니다.",
   "currencyBackfillTitle": "기존 그룹의 통화 선택",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "계좌 이름 지정",
   "firstAccountBlurb": "이미 설정된 계좌입니다 — 은행처럼 알아볼 수 있는 이름을 지정하세요. 다음으로 지출 또는 수입을 하나 기록한 뒤 복구 구문으로 기기를 보호합니다.",
   "whatsMainAccountCalled": "주 계좌의 이름은 무엇인가요?",
-  "restoreTitle": "서명 키 복원",
-  "restoreBlurb": "이 기기에는 기존 장부가 있지만 일치하는 서명 키가 없습니다. 저장된 복구 구문이나 키스토어 파일로 복원하세요 — 데이터는 정상적으로 검증되며, 다시 서명되거나 변경되지 않습니다.",
-  "recoveryPhrase24": "복구 구문 (24개 단어 전체)",
-  "keystoreFile": "키스토어 파일",
-  "keystoreFileContents": "키스토어 파일 내용",
   "optionalBackupFile": "선택적 백업 파일",
-  "iDontHavePhrase": "복구 구문이나 키스토어 파일이 없습니다",
-  "migrationTitle": "새 키로 마이그레이션",
-  "migrationBlurb": "복구 구문이나 키스토어 파일이 없으면 이 기기의 서명 키를 복구할 수 없습니다. 새 키를 시작할 수 있습니다. 기존 항목은 계속 표시되지만 대체됨으로 표시됩니다.",
   "iConfirmBooksValid": "현재 장부가 유효함을 확인합니다",
   "whyWeDontEdit": "기존 항목을 수정하지 않는 이유",
   "whyWeDontEditBody": "실수를 바로잡을 때 이미 입력한 내용을 바꾸는 대신 기존 줄은 그대로 두고 그 옆에 정정 항목을 추가합니다. 이렇게 하면 이력이 항상 실제로 일어난 일과 언제 수정했는지를 정확히 보여주며, 뒤에서 몰래 바뀌는 일이 없습니다.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "암호"
 }

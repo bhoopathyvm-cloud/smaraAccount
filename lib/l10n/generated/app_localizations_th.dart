@@ -211,23 +211,6 @@ class AppLocalizationsTh extends AppLocalizations {
       'บันทึกสำเนาบัญชีของคุณแบบเข้ารหัสไว้ในตำแหน่งที่คุณเลือก หรือกู้คืนจากสำเนานั้น ซึ่งแยกต่างหากจากวลีกู้คืนหรือไฟล์ keystore ที่ใช้สำรองกุญแจลงลายเซ็นของคุณ ไม่ใช่บัญชีของคุณ';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'ล็อก';
 
   @override
@@ -419,13 +402,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String savedToPath(String path) {
     return 'บันทึกไปยัง $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'ไม่สามารถส่งออกไฟล์ keystore ได้ คุณสามารถข้ามขั้นตอนนี้ได้';
-
-  @override
-  String get enterPassphraseToProtect => 'ป้อนวลีรหัสผ่านเพื่อป้องกันไฟล์';
 
   @override
   String get homeTapWhenArrived => 'แตะเมื่อคุณทราบว่าได้รับอะไร';
@@ -805,79 +781,9 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'วลีกู้คืนของคุณ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'ยืนยันวลีของคุณ';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      '24 คำนี้เป็นวิธีเดียวที่จะกู้คืนประวัติรายการของคุณได้ หากอุปกรณ์นี้สูญหาย ถูกรีเซ็ต หรือถูกเปลี่ยน Smara Accounting ไม่มีเซิร์ฟเวอร์และไม่สามารถกู้คืนให้คุณได้\n\nหากคุณทำอุปกรณ์นี้และวลีนี้หายไปพร้อมกัน รายการทุกรายการที่คุณบันทึกไว้จะไม่สามารถยืนยันได้อย่างถาวร';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'จดคำเหล่านี้ตามลำดับและเก็บไว้ในที่ปลอดภัยแยกจากอุปกรณ์นี้';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'ฉันได้บันทึกวลีกู้คืนของฉันแล้ว';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb => 'ป้อนคำที่ระบบขอจากวลีที่คุณเพิ่งบันทึกไว้';
-
-  @override
   String wordNumber(String n) {
     return 'คำที่ #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'ส่งออกไฟล์ keystore';
-
-  @override
-  String get keystoreExportBlurb =>
-      'นอกเหนือจากวลีกู้คืนของคุณ คุณสามารถบันทึกไฟล์ keystore ที่เข้ารหัสและป้องกันด้วยวลีรหัสผ่านที่คุณเลือกได้ ขั้นตอนนี้ไม่บังคับ - วลีกู้คืนเพียงอย่างเดียวก็เพียงพอเสมอสำหรับการกู้คืนกุญแจลงลายเซ็นของคุณ';
-
-  @override
-  String get keystorePassphrase => 'วลีรหัสผ่าน';
-
-  @override
-  String get exportKeystoreFile => 'ส่งออกไฟล์ keystore';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'เลือกภาษาของคุณ';
@@ -885,10 +791,6 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'ทุกอย่างในแอปจะแสดงเป็นภาษานี้ คุณสามารถเปลี่ยนได้ภายหลังในการตั้งค่า';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'วลีกู้คืนของคุณจะแสดงเป็นภาษาอังกฤษ ซึ่งใช้ชุดคำมาตรฐานเล็กๆ ที่เครื่องมือกู้คืนทุกที่รู้จัก ซึ่งยังไม่มีให้ใช้งานในภาษานี้';
 
   @override
   String get chooseCurrencyTitle => 'เลือกสกุลเงินของคุณ';
@@ -995,33 +897,7 @@ class AppLocalizationsTh extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'กู้คืนกุญแจลงลายเซ็น';
-
-  @override
-  String get restoreBlurb =>
-      'อุปกรณ์นี้มีบัญชีอยู่แล้ว แต่ไม่มีกุญแจลงลายเซ็นที่ตรงกัน กู้คืนจากวลีกู้คืนหรือไฟล์ keystore ที่คุณบันทึกไว้ - ข้อมูลของคุณจะยืนยันได้ตามปกติ และจะไม่มีการลงลายเซ็นใหม่หรือเปลี่ยนแปลงใด ๆ';
-
-  @override
-  String get recoveryPhrase24 => 'วลีกู้คืน (ครบทั้ง 24 คำ)';
-
-  @override
-  String get keystoreFile => 'ไฟล์ keystore';
-
-  @override
-  String get keystoreFileContents => 'เนื้อหาไฟล์ keystore';
-
-  @override
   String get optionalBackupFile => 'ไฟล์สำรอง (ไม่บังคับ)';
-
-  @override
-  String get iDontHavePhrase => 'ฉันไม่มีวลีกู้คืนหรือไฟล์ keystore';
-
-  @override
-  String get migrationTitle => 'ย้ายไปใช้กุญแจใหม่';
-
-  @override
-  String get migrationBlurb =>
-      'หากไม่มีวลีกู้คืนหรือไฟล์ keystore กุญแจลงลายเซ็นของอุปกรณ์นี้จะไม่สามารถกู้คืนได้ คุณสามารถเริ่มต้นกุญแจใหม่ได้ รายการเก่าจะยังคงมองเห็นได้แต่จะถูกแทนที่';
 
   @override
   String get iConfirmBooksValid => 'ฉันยืนยันว่าบัญชีปัจจุบันถูกต้อง';
@@ -2072,4 +1948,7 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'วลีรหัสผ่าน';
 }

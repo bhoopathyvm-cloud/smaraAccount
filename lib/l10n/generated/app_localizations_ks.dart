@@ -212,23 +212,6 @@ class AppLocalizationsKs extends AppLocalizations {
       'تُہند حساب ہند اکھ محفوظ نقل تُہند پسند کرنہٕ آمت جایہٕ پؠٹھ محفوظ کریو، یا تِتھی بحال کریو۔ یہ چھ تُہند بازیابی فقرہٕ یا کی سٹور فایلہٕ کِنٕ الگ، یُس تُہند سائننگ کی محفوظ کران، حساب نہٕ۔';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'لاک';
 
   @override
@@ -420,14 +403,6 @@ class AppLocalizationsKs extends AppLocalizations {
   String savedToPath(String path) {
     return '$path منز محفوظ';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'کی سٹور فایل برآمد کرِتھ نہٕ آو. تُہی ہیہ قدم نظر انداز کرِتھ ہیکو.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'فایل محفوظ کرنہٕ خٲطرٕ اکھ پاس فریز درج کریو.';
 
   @override
   String get homeTapWhenArrived => 'کیازِ پہنچ، یہ زٲنتھ ٹیپ کریو';
@@ -807,81 +782,9 @@ class AppLocalizationsKs extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'تُہند بازیابی فقرہٕ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'فقرہٕ تصدیق کریو';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'یم 24 لفظ چھ یگانہٕ طریقہٕ تُہند واردات ہند تاریخ بازیابی کرنہٕ ہند، اگر یہ ڈیوایس گم گژھی، ری سیٹ گژھی، یا بدلاو۔ سمارا حساب چھہ نہٕ سرور تہٕ نہٕ چھ ہیکان یِمن تُہند خٲطرٕ بازیابی کرِتھ۔\n\nاگر تُہی یہ ڈیوایس تہٕ یہ فقرہٕ اکھٹہٕ گم کریو، تہِ تُہند درج کرنہٕ آمژٕ ہر واردات ہمیشہٕ خٲطرٕ غیرتصدیق گژھہٕ.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'یم لفظ ترتیبس منز لِکھیو تہٕ اکہ محفوظ تہٕ ڈیوایسہٕ کِنٕ جدا جایہٕ منز رکھیو.';
-
-  @override
-  String get iveSavedRecoveryPhrase =>
-      'بہٕ چھس می ہند بازیابی فقرہٕ محفوظ کریتھ';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'یم لفظ تُہی مطلوب چھ، یم فقرس منز آسان یم تُہی ہاتہٕ محفوظ کریتھ، یم درج کریو.';
-
-  @override
   String wordNumber(String n) {
     return 'لفظ #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'کی سٹور فایل برآمد کریو';
-
-  @override
-  String get keystoreExportBlurb =>
-      'تُہند بازیابی فقرہٕ ہٕ علاوہٕ، تُہی ہیکو اکھ اِنکرپٹڈ کی سٹور فایل محفوظ کرِتھ یُس تُہند مقرر کرمژٕ پاس فریزہٕ سٟتی محفوظ چھ۔ یہ چھ اختیاری - اکلہٕ بازیابی فقرہٕ چھ ہمیشٕ تُہند سائننگ کی بحال کرنہٕ خٲطرٕ کافی.';
-
-  @override
-  String get keystorePassphrase => 'پاس فریز';
-
-  @override
-  String get exportKeystoreFile => 'کی سٹور فایل برآمد کریو';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'پننٕ زبان ژارٕو';
@@ -889,10 +792,6 @@ class AppLocalizationsKs extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'ایپہٕ منز ساری کہین یم زبانہٕ منٛز ظٲہر گژھی۔ توہہِ کٔرِتھ پتہٕ سیٹنگژَن منٛز یہ بدلاو ہیکِو۔';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'توٚہنٛد ریکوری فقرہٕ انٛگریزی منٛز ظٲہر کرنہٕ آمُت۔ یہ استعمال کران ہے اکھ لوکٕٹ معیاری لفظن ہنٛد سیٹ یم ہر تہِ جاے ریکوری اوزارن ہٕنٛدِس ذریعہٕ پہچانہٕ چھِ، یم اتھ زبانہٕ منٛز وُنی دستیاب چھٕنہٕ۔';
 
   @override
   String get chooseCurrencyTitle => 'تُہند کرنسی ژارٕو';
@@ -999,33 +898,7 @@ class AppLocalizationsKs extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'سائننگ کی بحال کریو';
-
-  @override
-  String get restoreBlurb =>
-      'یتھ ڈیوایسہٕ چھ موجودٕ حساب، مگر برابر سائننگ کی چھہ نہٕ. تُہند محفوظ کرمژٕ بازیابی فقرہٕ یا کی سٹور فایلہٕ سٟتی یہ بحال کریو - تُہند ڈیٹا چھ عام طرحٕ تصدیق گژھان، تہٕ کانہہ چھ نہٕ دوبارہ سائن یا تبدیل گژھان.';
-
-  @override
-  String get recoveryPhrase24 => 'بازیابی فقرہٕ (سٲری 24 لفظ)';
-
-  @override
-  String get keystoreFile => 'کی سٹور فایل';
-
-  @override
-  String get keystoreFileContents => 'کی سٹور فایل ہند مواد';
-
-  @override
   String get optionalBackupFile => 'اختیاری بیک اپ فایل';
-
-  @override
-  String get iDontHavePhrase => 'می پؠٹھ چھہ نہٕ بازیابی فقرہٕ یا کی سٹور فایل';
-
-  @override
-  String get migrationTitle => 'نوی کی خٲطرٕ منتقلی';
-
-  @override
-  String get migrationBlurb =>
-      'بازیابی فقرہٕ یا کی سٹور فایلہٕ بغیر، یتھ ڈیوایسہٕ ہند سائننگ کی چھہ نہٕ بحال گژھنہٕ ہیکان. تُہی ہیکو نوی کی شروع کرِتھ. پُرٲنہٕ اندراج چھ نظر آسان مگر چھ بدلمژٕ ظٲہر.';
 
   @override
   String get iConfirmBooksValid => 'بہٕ چھس تصدیق کران زِ موجودٕ حساب چھ صحیح';
@@ -2075,4 +1948,7 @@ class AppLocalizationsKs extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'پاس فریز';
 }

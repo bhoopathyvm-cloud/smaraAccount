@@ -212,23 +212,6 @@ class AppLocalizationsHu extends AppLocalizations {
       'Mentsen egy titkosított másolatot a könyveiről egy Ön által választott helyre, vagy állítsa vissza onnan. Ez különbözik a helyreállítási kifejezéstől vagy a kulcstartó fájltól, amelyek az aláíró kulcsát mentik, nem a könyveit.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Zárolás';
 
   @override
@@ -424,14 +407,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String savedToPath(String path) {
     return 'Mentve ide: $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Nem sikerült exportálni a kulcstartó fájlt. Ezt a lépést kihagyhatja.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Adjon meg egy jelmondatot a fájl védelméhez.';
 
   @override
   String get homeTapWhenArrived => 'Koppintson, ha tudja, mi érkezett meg';
@@ -817,81 +792,9 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'Az Ön helyreállítási kifejezése';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Erősítse meg a kifejezését';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'Ez a 24 szó az egyetlen módja annak, hogy visszaállítsa tranzakciós előzményeit, ha ez az eszköz elvész, visszaáll az alapállapotba, vagy kicserélik. A Smara Accountingnak nincs szervere, és nem tudja Ön helyett visszaállítani ezeket.\n\nHa ezt az eszközt és ezt a kifejezést együtt elveszti, minden Ön által rögzített tranzakció véglegesen ellenőrizhetetlenné válik.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Írja le ezeket a szavakat sorrendben, és tárolja őket biztonságos helyen, ettől az eszköztől elkülönítve.';
-
-  @override
-  String get iveSavedRecoveryPhrase =>
-      'Elmentettem a helyreállítási kifejezésemet';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Adja meg a kért szavakat az imént elmentett kifejezésből.';
-
-  @override
   String wordNumber(String n) {
     return '$n. szó';
   }
-
-  @override
-  String get keystoreExportTitle => 'Kulcstartó fájl exportálása';
-
-  @override
-  String get keystoreExportBlurb =>
-      'A helyreállítási kifejezés mellett elmenthet egy titkosított kulcstartó fájlt is, amelyet az Ön által választott jelmondat véd. Ez opcionális - a helyreállítási kifejezés önmagában mindig elegendő az aláíró kulcs visszaállításához.';
-
-  @override
-  String get keystorePassphrase => 'Jelmondat';
-
-  @override
-  String get exportKeystoreFile => 'Kulcstartó fájl exportálása';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Válassz nyelvet';
@@ -899,10 +802,6 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'Az alkalmazás mindene ezen a nyelven fog megjelenni. Később a Beállításokban megváltoztathatod.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'A helyreállítási kifejezésed angolul fog megjelenni. Egy olyan kis, szabványos szókészletet használ, amelyet a helyreállító eszközök mindenhol felismernek, és amely ezen a nyelven még nem áll rendelkezésre.';
 
   @override
   String get chooseCurrencyTitle => 'Válassza ki a pénznemét';
@@ -1010,34 +909,7 @@ class AppLocalizationsHu extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'Aláíró kulcs visszaállítása';
-
-  @override
-  String get restoreBlurb =>
-      'Ezen az eszközön léteznek könyvek, de nincs hozzájuk illő aláíró kulcs. Állítsa vissza az elmentett helyreállítási kifejezéséből vagy kulcstartó fájljából - az adatai a szokásos módon ellenőrizhetők lesznek, és semmi sem lesz újra aláírva vagy módosítva.';
-
-  @override
-  String get recoveryPhrase24 => 'Helyreállítási kifejezés (mind a 24 szó)';
-
-  @override
-  String get keystoreFile => 'Kulcstartó fájl';
-
-  @override
-  String get keystoreFileContents => 'Kulcstartó fájl tartalma';
-
-  @override
   String get optionalBackupFile => 'Opcionális biztonsági mentés fájl';
-
-  @override
-  String get iDontHavePhrase =>
-      'Nincs meg a helyreállítási kifejezésem vagy a kulcstartó fájlom';
-
-  @override
-  String get migrationTitle => 'Áttérés új kulcsra';
-
-  @override
-  String get migrationBlurb =>
-      'A helyreállítási kifejezés vagy a kulcstartó fájl nélkül ennek az eszköznek az aláíró kulcsa nem állítható vissza. Elindíthat egy új kulcsot. A régi tételek láthatók maradnak, de felülíródnak.';
 
   @override
   String get iConfirmBooksValid =>
@@ -2109,4 +1981,7 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Jelmondat';
 }

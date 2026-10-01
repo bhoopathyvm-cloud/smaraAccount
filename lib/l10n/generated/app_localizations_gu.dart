@@ -211,23 +211,6 @@ class AppLocalizationsGu extends AppLocalizations {
       'તમારા ચોપડાની એન્ક્રિપ્ટેડ નકલ તમે પસંદ કરેલા સ્થાને સાચવો, અથવા તેમાંથી પુનઃસ્થાપિત કરો. આ તમારી રિકવરી ફ્રેઝ અથવા કીસ્ટોર ફાઇલથી અલગ છે, જે તમારી સાઇનિંગ કીનો બેકઅપ લે છે, તમારા ચોપડાનો નહીં.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'લૉક';
 
   @override
@@ -419,14 +402,6 @@ class AppLocalizationsGu extends AppLocalizations {
   String savedToPath(String path) {
     return '$path માં સાચવ્યું';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'કીસ્ટોર ફાઇલ નિકાસ કરી શકાઈ નહીં. તમે આ પગલું છોડી શકો છો.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'ફાઇલને સુરક્ષિત કરવા માટે પાસફ્રેઝ દાખલ કરો.';
 
   @override
   String get homeTapWhenArrived => 'શું આવ્યું તે ખબર પડે ત્યારે ટેપ કરો';
@@ -807,80 +782,9 @@ class AppLocalizationsGu extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'તમારી રિકવરી ફ્રેઝ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'તમારી ફ્રેઝ પુષ્ટિ કરો';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'જો આ ડિવાઇસ ખોવાઈ જાય, રીસેટ થાય અથવા બદલાય, તો તમારો વ્યવહાર ઇતિહાસ પુનઃપ્રાપ્ત કરવાનો આ 24 શબ્દો જ એકમાત્ર માર્ગ છે. Smara Accounting પાસે કોઈ સર્વર નથી અને તે તમારા માટે તેમને પુનઃપ્રાપ્ત કરી શકતું નથી.\n\nજો તમે આ ડિવાઇસ અને આ ફ્રેઝ બંને ગુમાવો, તો તમે નોંધેલો દરેક વ્યવહાર કાયમ માટે અચકાસી ન શકાય તેવો બની જાય છે.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'આ શબ્દો ક્રમમાં લખો અને તેમને આ ડિવાઇસથી અલગ, સુરક્ષિત જગ્યાએ સાચવો.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'મેં મારી રિકવરી ફ્રેઝ સાચવી લીધી છે';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'તમે હમણાં જ સાચવેલી ફ્રેઝમાંથી માંગેલા શબ્દો દાખલ કરો.';
-
-  @override
   String wordNumber(String n) {
     return 'શબ્દ #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'કીસ્ટોર ફાઇલ નિકાસ કરો';
-
-  @override
-  String get keystoreExportBlurb =>
-      'તમારી રિકવરી ફ્રેઝ ઉપરાંત, તમે તમે પસંદ કરેલા પાસફ્રેઝથી સુરક્ષિત એન્ક્રિપ્ટેડ કીસ્ટોર ફાઇલ સાચવી શકો છો. આ વૈકલ્પિક છે - તમારી સાઇનિંગ કી પુનઃસ્થાપિત કરવા માટે એકલી રિકવરી ફ્રેઝ હંમેશા પૂરતી છે.';
-
-  @override
-  String get keystorePassphrase => 'પાસફ્રેઝ';
-
-  @override
-  String get exportKeystoreFile => 'કીસ્ટોર ફાઇલ નિકાસ કરો';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'તમારી ભાષા પસંદ કરો';
@@ -888,10 +792,6 @@ class AppLocalizationsGu extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'એપમાં બધું આ ભાષામાં દેખાશે. તમે પછીથી સેટિંગ્સમાં તેને બદલી શકો છો.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'તમારો રિકવરી શબ્દસમૂહ અંગ્રેજીમાં બતાવવામાં આવશે. તે દરેક જગ્યાએ રિકવરી ટૂલ્સ દ્વારા ઓળખાતા પ્રમાણભૂત શબ્દોના નાના સમૂહનો ઉપયોગ કરે છે, જે આ ભાષામાં હજુ ઉપલબ્ધ નથી.';
 
   @override
   String get chooseCurrencyTitle => 'તમારું ચલણ પસંદ કરો';
@@ -998,34 +898,7 @@ class AppLocalizationsGu extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'સાઇનિંગ કી પુનઃસ્થાપિત કરો';
-
-  @override
-  String get restoreBlurb =>
-      'આ ડિવાઇસમાં હાલના ચોપડા છે, પરંતુ કોઈ મેળ ખાતી સાઇનિંગ કી નથી. તમારી સાચવેલી રિકવરી ફ્રેઝ અથવા કીસ્ટોર ફાઇલમાંથી તેને પુનઃસ્થાપિત કરો - તમારો ડેટા સામાન્ય રીતે ચકાસાશે, અને કંઈપણ ફરીથી સાઇન કે બદલાશે નહીં.';
-
-  @override
-  String get recoveryPhrase24 => 'રિકવરી ફ્રેઝ (બધા 24 શબ્દો)';
-
-  @override
-  String get keystoreFile => 'કીસ્ટોર ફાઇલ';
-
-  @override
-  String get keystoreFileContents => 'કીસ્ટોર ફાઇલની સામગ્રી';
-
-  @override
   String get optionalBackupFile => 'વૈકલ્પિક બેકઅપ ફાઇલ';
-
-  @override
-  String get iDontHavePhrase =>
-      'મારી પાસે મારી રિકવરી ફ્રેઝ કે કીસ્ટોર ફાઇલ નથી';
-
-  @override
-  String get migrationTitle => 'નવી કીમાં સ્થળાંતર કરો';
-
-  @override
-  String get migrationBlurb =>
-      'તમારી રિકવરી ફ્રેઝ અથવા કીસ્ટોર ફાઇલ વગર, આ ડિવાઇસની સાઇનિંગ કી પુનઃપ્રાપ્ત કરી શકાતી નથી. તમે નવી કીથી શરૂઆત કરી શકો છો. જૂની એન્ટ્રીઓ દેખાતી રહેશે પણ બદલાયેલી ગણાશે.';
 
   @override
   String get iConfirmBooksValid =>
@@ -2084,4 +1957,7 @@ class AppLocalizationsGu extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'પાસફ્રેઝ';
 }

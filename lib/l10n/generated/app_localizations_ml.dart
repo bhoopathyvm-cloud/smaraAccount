@@ -212,23 +212,6 @@ class AppLocalizationsMl extends AppLocalizations {
       'നിങ്ങളുടെ കണക്കുകളുടെ എൻക്രിപ്റ്റഡ് പകർപ്പ് നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന സ്ഥലത്ത് സേവ് ചെയ്യുക, അല്ലെങ്കിൽ അതിൽ നിന്ന് പുനഃസ്ഥാപിക്കുക. ഇത് നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സിൽ നിന്നോ കീസ്റ്റോർ ഫയലിൽ നിന്നോ വ്യത്യസ്തമാണ്, അവ നിങ്ങളുടെ സൈനിംഗ് കീ ബാക്കപ്പ് ചെയ്യുന്നു, കണക്കുകളല്ല.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'ലോക്ക്';
 
   @override
@@ -421,14 +404,6 @@ class AppLocalizationsMl extends AppLocalizations {
   String savedToPath(String path) {
     return '$path-ൽ സേവ് ചെയ്തു';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യാനായില്ല. നിങ്ങൾക്ക് ഈ ഘട്ടം ഒഴിവാക്കാം.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'ഫയൽ സംരക്ഷിക്കാൻ ഒരു പാസ്ഫ്രെയ്സ് നൽകുക.';
 
   @override
   String get homeTapWhenArrived =>
@@ -815,81 +790,9 @@ class AppLocalizationsMl extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സ്';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'നിങ്ങളുടെ ഫ്രെയ്സ് സ്ഥിരീകരിക്കുക';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'ഈ ഡിവൈസ് നഷ്ടപ്പെടുകയോ, റീസെറ്റ് ചെയ്യുകയോ, മാറ്റുകയോ ചെയ്താൽ നിങ്ങളുടെ ഇടപാട് ചരിത്രം വീണ്ടെടുക്കാനുള്ള ഒരേയൊരു വഴിയാണ് ഈ 24 വാക്കുകൾ. സ്മാര അക്കൗണ്ടിംഗിന് സെർവർ ഇല്ല, നിങ്ങൾക്കുവേണ്ടി അവ വീണ്ടെടുക്കാൻ കഴിയില്ല.\n\nഈ ഡിവൈസും ഈ ഫ്രെയ്സും ഒരുമിച്ച് നഷ്ടപ്പെട്ടാൽ, നിങ്ങൾ രേഖപ്പെടുത്തിയ ഓരോ ഇടപാടും എന്നെന്നേക്കുമായി സ്ഥിരീകരിക്കാൻ കഴിയാത്തതായി മാറും.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'ഈ വാക്കുകൾ ക്രമത്തിൽ എഴുതി വയ്ക്കുകയും ഈ ഡിവൈസിൽ നിന്ന് വേറിട്ട സുരക്ഷിതമായ ഒരിടത്ത് സൂക്ഷിക്കുകയും ചെയ്യുക.';
-
-  @override
-  String get iveSavedRecoveryPhrase =>
-      'ഞാൻ എന്റെ റിക്കവറി ഫ്രെയ്സ് സേവ് ചെയ്തു';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'നിങ്ങൾ ഇപ്പോൾ സേവ് ചെയ്ത ഫ്രെയ്സിൽ നിന്ന് ആവശ്യപ്പെട്ട വാക്കുകൾ നൽകുക.';
-
-  @override
   String wordNumber(String n) {
     return 'വാക്ക് #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യുക';
-
-  @override
-  String get keystoreExportBlurb =>
-      'നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സിന് പുറമേ, നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന ഒരു പാസ്ഫ്രെയ്സ് കൊണ്ട് സംരക്ഷിച്ച എൻക്രിപ്റ്റഡ് കീസ്റ്റോർ ഫയലും സേവ് ചെയ്യാം. ഇത് ഓപ്ഷണലാണ് - നിങ്ങളുടെ സൈനിംഗ് കീ പുനഃസ്ഥാപിക്കാൻ റിക്കവറി ഫ്രെയ്സ് മാത്രം എപ്പോഴും മതിയാകും.';
-
-  @override
-  String get keystorePassphrase => 'പാസ്ഫ്രെയ്സ്';
-
-  @override
-  String get exportKeystoreFile => 'കീസ്റ്റോർ ഫയൽ എക്സ്പോർട്ട് ചെയ്യുക';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക';
@@ -897,10 +800,6 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'ആപ്പിലെ എല്ലാം ഈ ഭാഷയിൽ കാണിക്കും. നിങ്ങൾക്ക് പിന്നീട് സെറ്റിംഗ്സിൽ ഇത് മാറ്റാം.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്‌സ് ഇംഗ്ലീഷിൽ കാണിക്കും. എല്ലായിടത്തും റിക്കവറി ടൂളുകൾ തിരിച്ചറിയുന്ന ഒരു ചെറിയ സ്റ്റാൻഡേർഡ് പദസഞ്ചയമാണ് ഇത് ഉപയോഗിക്കുന്നത്, അത് ഈ ഭാഷയിൽ ഇതുവരെ ലഭ്യമല്ല.';
 
   @override
   String get chooseCurrencyTitle => 'നിങ്ങളുടെ കറൻസി തിരഞ്ഞെടുക്കുക';
@@ -1009,34 +908,7 @@ class AppLocalizationsMl extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'സൈനിംഗ് കീ പുനഃസ്ഥാപിക്കുക';
-
-  @override
-  String get restoreBlurb =>
-      'ഈ ഡിവൈസിൽ നിലവിലുള്ള കണക്കുകളുണ്ട്, പക്ഷേ പൊരുത്തപ്പെടുന്ന സൈനിംഗ് കീയില്ല. നിങ്ങളുടെ സേവ് ചെയ്ത റിക്കവറി ഫ്രെയ്സിൽ നിന്നോ കീസ്റ്റോർ ഫയലിൽ നിന്നോ അത് പുനഃസ്ഥാപിക്കുക - നിങ്ങളുടെ ഡാറ്റ സാധാരണ പോലെ സ്ഥിരീകരിക്കും, ഒന്നും വീണ്ടും സൈൻ ചെയ്യുകയോ മാറ്റുകയോ ചെയ്യില്ല.';
-
-  @override
-  String get recoveryPhrase24 => 'റിക്കവറി ഫ്രെയ്സ് (എല്ലാ 24 വാക്കുകളും)';
-
-  @override
-  String get keystoreFile => 'കീസ്റ്റോർ ഫയൽ';
-
-  @override
-  String get keystoreFileContents => 'കീസ്റ്റോർ ഫയലിന്റെ ഉള്ളടക്കം';
-
-  @override
   String get optionalBackupFile => 'ഓപ്ഷണൽ ബാക്കപ്പ് ഫയൽ';
-
-  @override
-  String get iDontHavePhrase =>
-      'എന്റെ കയ്യിൽ റിക്കവറി ഫ്രെയ്സോ കീസ്റ്റോർ ഫയലോ ഇല്ല';
-
-  @override
-  String get migrationTitle => 'പുതിയ കീയിലേക്ക് മൈഗ്രേറ്റ് ചെയ്യുക';
-
-  @override
-  String get migrationBlurb =>
-      'നിങ്ങളുടെ റിക്കവറി ഫ്രെയ്സോ കീസ്റ്റോർ ഫയലോ ഇല്ലാതെ, ഈ ഡിവൈസിന്റെ സൈനിംഗ് കീ വീണ്ടെടുക്കാൻ കഴിയില്ല. നിങ്ങൾക്ക് ഒരു പുതിയ കീ തുടങ്ങാം. പഴയ എൻട്രികൾ ദൃശ്യമായി തുടരും പക്ഷേ അവ മാറ്റിസ്ഥാപിക്കപ്പെടും.';
 
   @override
   String get iConfirmBooksValid =>
@@ -2109,4 +1981,7 @@ class AppLocalizationsMl extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'പാസ്ഫ്രെയ്സ്';
 }

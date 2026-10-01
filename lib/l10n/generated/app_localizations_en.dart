@@ -211,23 +211,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Save an encrypted copy of your books to a place you choose, or restore from one. Restoring replaces the books on this phone — it does not merge. Your language and unlock settings stay on this phone.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Lock';
 
   @override
@@ -419,14 +402,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String savedToPath(String path) {
     return 'Saved to $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Could not export the keystore file. You can skip this step.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Enter a passphrase to protect the file.';
 
   @override
   String get homeTapWhenArrived => 'Tap when you know what arrived';
@@ -808,80 +783,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'Your recovery phrase';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Confirm your phrase';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'These 24 words are the only way to recover your transaction history if this device is lost, reset, or replaced. Smara Accounting has no server and cannot recover them for you.\n\nIf you lose this device and this phrase together, every transaction you\'ve recorded becomes permanently unverifiable.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Write these words down in order and store them somewhere safe and separate from this device.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'I\'ve saved my recovery phrase';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Enter the requested words from the phrase you just saved.';
-
-  @override
   String wordNumber(String n) {
     return 'Word #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'Export keystore file';
-
-  @override
-  String get keystoreExportBlurb =>
-      'As well as your recovery phrase, you can save an encrypted keystore file protected by a passphrase you choose. This is optional - your recovery phrase alone is always enough to restore your signing key.';
-
-  @override
-  String get keystorePassphrase => 'Passphrase';
-
-  @override
-  String get exportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Choose your language';
@@ -889,10 +793,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'Everything in the app will show in this language. You can change it later in Settings.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'Your recovery phrase will be shown in English. It uses a small set of standard words recognized by recovery tools everywhere, which isn\'t available yet in this language.';
 
   @override
   String get chooseCurrencyTitle => 'Choose your currency';
@@ -999,34 +899,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'Restore signing key';
-
-  @override
-  String get restoreBlurb =>
-      'This device has existing books, but no matching signing key. Restore it from your saved recovery phrase or keystore file - your data will verify normally, and nothing will be re-signed or altered.';
-
-  @override
-  String get recoveryPhrase24 => 'Recovery phrase (all 24 words)';
-
-  @override
-  String get keystoreFile => 'Keystore file';
-
-  @override
-  String get keystoreFileContents => 'Keystore file contents';
-
-  @override
   String get optionalBackupFile => 'Optional backup file';
-
-  @override
-  String get iDontHavePhrase =>
-      'I don\'t have my recovery phrase or keystore file';
-
-  @override
-  String get migrationTitle => 'Migrate to a new key';
-
-  @override
-  String get migrationBlurb =>
-      'Without your recovery phrase or keystore file, this device\'s signing key cannot be recovered. You can start a new key. Old entries stay visible but are superseded.';
 
   @override
   String get iConfirmBooksValid => 'I confirm the current books are valid';
@@ -1088,7 +961,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get choosePassphraseTitle =>
-      'Choose a passphrase to protect this backup. There is no recovery if you forget it.';
+      'Choose a passphrase to protect this copy. There is no recovery if you forget it.';
 
   @override
   String get replaceBooksTitle => 'Replace your local books?';
@@ -1098,7 +971,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'This replaces everything currently in this app with the backup. Close and reopen the app afterwards.';
 
   @override
-  String get chooseBackupFileFirst => 'Choose a backup file first.';
+  String get chooseBackupFileFirst => 'Choose a books copy file first.';
 
   @override
   String get backupRestored => 'Backup restored';
@@ -1846,7 +1719,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restoreBackupBlurb =>
-      'This replaces everything currently in this app with the backup — it does not merge. Choose a backup file and enter the passphrase you protected it with.';
+      'This replaces the books and the books\' settings on this phone with the copy — it does not merge. Your language and unlock settings stay on this phone. Choose a copy file and enter the passphrase you protected it with.';
 
   @override
   String get actionReplace => 'Replace';
@@ -2087,4 +1960,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Passphrase';
 }

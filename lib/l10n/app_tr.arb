@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Keystore dosyası dışa aktarılamadı. Bu adımı atlayabilirsiniz.",
-  "enterPassphraseToProtect": "Dosyayı korumak için bir parola girin.",
   "homeTapWhenArrived": "Ne geldiğini öğrendiğinizde dokunun",
   "homeReturnedTo": "{name} hesabına iade edildi",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Kurtarma ifadeniz",
-  "recoveryPhraseConfirmTitle": "İfadenizi onaylayın",
-  "recoveryPhraseBlurb": "Bu cihaz kaybolur, sıfırlanır veya değiştirilirse işlem geçmişinizi kurtarmanın tek yolu bu 24 kelimedir. Smara Accounting''in bir sunucusu yoktur ve bunları sizin için kurtaramaz.\n\nBu cihazı ve bu ifadeyi birlikte kaybederseniz, kaydettiğiniz her işlem kalıcı olarak doğrulanamaz hale gelir.",
-  "recoveryPhraseWriteDown": "Bu kelimeleri sırasıyla yazın ve bu cihazdan ayrı, güvenli bir yerde saklayın.",
-  "iveSavedRecoveryPhrase": "Kurtarma ifademi kaydettim",
-  "confirmPhraseBlurb": "Az önce kaydettiğiniz ifadeden istenen kelimeleri girin.",
   "wordNumber": "Kelime #{n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Keystore dosyasını dışa aktar",
-  "keystoreExportBlurb": "Kurtarma ifadenize ek olarak, seçtiğiniz bir parolayla korunan şifrelenmiş bir keystore dosyası kaydedebilirsiniz. Bu isteğe bağlıdır - imzalama anahtarınızı geri yüklemek için tek başına kurtarma ifadeniz her zaman yeterlidir.",
-  "keystorePassphrase": "Parola",
-  "exportKeystoreFile": "Keystore dosyasını dışa aktar",
   "chooseLanguageTitle": "Dilinizi seçin",
   "chooseLanguageBlurb": "Uygulamadaki her şey bu dilde gösterilecek. Daha sonra Ayarlar''dan değiştirebilirsiniz.",
-  "chooseLanguageBip39Notice": "Kurtarma ifadeniz İngilizce gösterilecek. Bu, her yerdeki kurtarma araçları tarafından tanınan küçük bir standart kelime kümesi kullanır ve bu dilde henüz mevcut değildir.",
   "chooseCurrencyTitle": "Para biriminizi seçin",
   "chooseCurrencyBlurb": "Her hesap grubu (Nakit ve nakit benzerleri, Emeklilik ve emekli maaşı vb.) şimdilik bu tek para birimini kullanır. Farklı bir para birimi için yeni bir grup oluşturarak daha sonra da farklı para biriminde hesap ekleyebilirsiniz.",
   "currencyBackfillTitle": "Mevcut gruplar için bir para birimi seçin",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Hesabınızı adlandırın",
   "firstAccountBlurb": "Bu, sizin için zaten kurulmuş olan hesap - bankanız gibi tanıyacağınız bir ad verin. Ardından bir Harcama veya Gelir kaydedecek, sonra da cihazı kurtarma ifadenizle koruyacaksınız.",
   "whatsMainAccountCalled": "Ana hesabınızın adı ne?",
-  "restoreTitle": "İmzalama anahtarını geri yükle",
-  "restoreBlurb": "Bu cihazda mevcut defterler var, ancak eşleşen bir imzalama anahtarı yok. Kaydettiğiniz kurtarma ifadesinden veya keystore dosyasından geri yükleyin - verileriniz normal şekilde doğrulanacak ve hiçbir şey yeniden imzalanmayacak veya değiştirilmeyecek.",
-  "recoveryPhrase24": "Kurtarma ifadesi (24 kelimenin tamamı)",
-  "keystoreFile": "Keystore dosyası",
-  "keystoreFileContents": "Keystore dosyası içeriği",
   "optionalBackupFile": "İsteğe bağlı yedek dosyası",
-  "iDontHavePhrase": "Kurtarma ifadem veya keystore dosyam yok",
-  "migrationTitle": "Yeni bir anahtara geçiş yap",
-  "migrationBlurb": "Kurtarma ifadeniz veya keystore dosyanız olmadan bu cihazın imzalama anahtarı kurtarılamaz. Yeni bir anahtarla başlayabilirsiniz. Eski kayıtlar görünür kalır ancak geçersiz kılınır.",
   "iConfirmBooksValid": "Mevcut defterlerin geçerli olduğunu onaylıyorum",
   "whyWeDontEdit": "Neden eski kayıtları düzenlemiyoruz",
   "whyWeDontEditBody": "Bir hatayı düzelttiğinizde, zaten girdiğinizi değiştirmek yerine eski satırı tutar ve yanına bir düzeltme ekleriz. Böylece geçmişiniz her zaman tam olarak ne olduğunu ve ne zaman düzelttiğinizi gösterir — hiçbir şey arka planda sessizce değişmez.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Parola"
 }

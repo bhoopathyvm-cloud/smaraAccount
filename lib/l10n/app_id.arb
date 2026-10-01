@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Tidak dapat mengekspor file keystore. Anda dapat melewati langkah ini.",
-  "enterPassphraseToProtect": "Masukkan frasa sandi untuk melindungi file ini.",
   "homeTapWhenArrived": "Ketuk saat Anda tahu apa yang tiba",
   "homeReturnedTo": "Dikembalikan ke {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Frasa pemulihan Anda",
-  "recoveryPhraseConfirmTitle": "Konfirmasi frasa Anda",
-  "recoveryPhraseBlurb": "24 kata ini adalah satu-satunya cara untuk memulihkan riwayat transaksi Anda jika perangkat ini hilang, direset, atau diganti. Smara Accounting tidak memiliki server dan tidak dapat memulihkannya untuk Anda.\n\nJika Anda kehilangan perangkat ini beserta frasa ini, setiap transaksi yang telah Anda catat menjadi tidak dapat diverifikasi secara permanen.",
-  "recoveryPhraseWriteDown": "Tuliskan kata-kata ini secara berurutan dan simpan di tempat yang aman, terpisah dari perangkat ini.",
-  "iveSavedRecoveryPhrase": "Saya telah menyimpan frasa pemulihan saya",
-  "confirmPhraseBlurb": "Masukkan kata-kata yang diminta dari frasa yang baru saja Anda simpan.",
   "wordNumber": "Kata #{n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Ekspor file keystore",
-  "keystoreExportBlurb": "Selain frasa pemulihan Anda, Anda dapat menyimpan file keystore terenkripsi yang dilindungi oleh frasa sandi pilihan Anda. Ini opsional - frasa pemulihan Anda saja selalu cukup untuk memulihkan kunci penandatanganan Anda.",
-  "keystorePassphrase": "Frasa sandi",
-  "exportKeystoreFile": "Ekspor file keystore",
   "chooseLanguageTitle": "Pilih bahasa Anda",
   "chooseLanguageBlurb": "Semua yang ada di aplikasi akan ditampilkan dalam bahasa ini. Anda dapat mengubahnya nanti di Pengaturan.",
-  "chooseLanguageBip39Notice": "Frasa pemulihan Anda akan ditampilkan dalam bahasa Inggris. Frasa ini menggunakan kumpulan kecil kata standar yang dikenali oleh alat pemulihan di mana saja, yang belum tersedia dalam bahasa ini.",
   "chooseCurrencyTitle": "Pilih mata uang Anda",
   "chooseCurrencyBlurb": "Setiap grup akun (Kas & setara kas, Pensiun & dana hari tua, dll.) untuk saat ini menggunakan satu mata uang ini. Anda masih dapat menambahkan akun dalam mata uang lain nanti dengan membuat grup baru untuknya.",
   "currencyBackfillTitle": "Pilih mata uang untuk grup yang sudah ada",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Beri nama akun Anda",
   "firstAccountBlurb": "Ini adalah akun yang sudah disiapkan untuk Anda - beri nama yang Anda kenali, seperti nama bank Anda. Anda akan mencatat satu Pengeluaran atau Pemasukan berikutnya, lalu melindungi perangkat dengan frasa pemulihan Anda.",
   "whatsMainAccountCalled": "Apa nama akun utama Anda?",
-  "restoreTitle": "Pulihkan kunci penandatanganan",
-  "restoreBlurb": "Perangkat ini memiliki pembukuan yang sudah ada, tetapi tidak ada kunci penandatanganan yang cocok. Pulihkan dari frasa pemulihan atau file keystore yang tersimpan - data Anda akan terverifikasi secara normal, dan tidak ada yang akan ditandatangani ulang atau diubah.",
-  "recoveryPhrase24": "Frasa pemulihan (semua 24 kata)",
-  "keystoreFile": "File keystore",
-  "keystoreFileContents": "Isi file keystore",
   "optionalBackupFile": "File cadangan opsional",
-  "iDontHavePhrase": "Saya tidak memiliki frasa pemulihan atau file keystore saya",
-  "migrationTitle": "Migrasi ke kunci baru",
-  "migrationBlurb": "Tanpa frasa pemulihan atau file keystore Anda, kunci penandatanganan perangkat ini tidak dapat dipulihkan. Anda dapat memulai kunci baru. Entri lama tetap terlihat tetapi dianggap digantikan.",
   "iConfirmBooksValid": "Saya mengonfirmasi bahwa pembukuan saat ini valid",
   "whyWeDontEdit": "Mengapa kami tidak mengedit entri lama",
   "whyWeDontEditBody": "Saat Anda memperbaiki kesalahan, kami mempertahankan baris lama dan menambahkan koreksi di sebelahnya alih-alih mengubah apa yang sudah Anda masukkan. Dengan begitu riwayat Anda selalu menunjukkan persis apa yang terjadi dan kapan Anda memperbaikinya — tidak ada yang diam-diam berubah di belakang Anda.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Frasa sandi"
 }

@@ -212,23 +212,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Sla een versleutelde kopie van je boekhouding op een locatie naar keuze op, of herstel er een. Dit is iets anders dan je herstelzin of keystore-bestand, die je ondertekeningssleutel back-uppen, niet je boekhouding.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Vergrendeling';
 
   @override
@@ -421,14 +404,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String savedToPath(String path) {
     return 'Opgeslagen op $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Het keystore-bestand kon niet worden geëxporteerd. Je kunt deze stap overslaan.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Voer een wachtwoordzin in om het bestand te beveiligen.';
 
   @override
   String get homeTapWhenArrived => 'Tik zodra je weet wat er is aangekomen';
@@ -812,80 +787,9 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'Je herstelzin';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Bevestig je zin';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Schrijf deze woorden in volgorde op en bewaar ze op een veilige plek, gescheiden van dit toestel.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'Ik heb mijn herstelzin opgeslagen';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Voer de gevraagde woorden in uit de zin die je zojuist hebt opgeslagen.';
-
-  @override
   String wordNumber(String n) {
     return 'Woord #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'Keystore-bestand exporteren';
-
-  @override
-  String get keystoreExportBlurb =>
-      'Naast je herstelzin kun je een versleuteld keystore-bestand opslaan, beveiligd met een wachtwoordzin naar keuze. Dit is optioneel - je herstelzin alleen is altijd genoeg om je ondertekeningssleutel te herstellen.';
-
-  @override
-  String get keystorePassphrase => 'Wachtwoordzin';
-
-  @override
-  String get exportKeystoreFile => 'Keystore-bestand exporteren';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Kies je taal';
@@ -893,10 +797,6 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'Alles in de app wordt in deze taal weergegeven. Je kunt dit later wijzigen in Instellingen.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'Je herstelzin wordt in het Engels weergegeven. Deze gebruikt een kleine set standaardwoorden die overal door hersteltools worden herkend, en die nog niet beschikbaar is in deze taal.';
 
   @override
   String get chooseCurrencyTitle => 'Kies je valuta';
@@ -1003,34 +903,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'Ondertekeningssleutel herstellen';
-
-  @override
-  String get restoreBlurb =>
-      'Dit toestel heeft al een boekhouding, maar geen bijpassende ondertekeningssleutel. Herstel deze vanuit je opgeslagen herstelzin of keystore-bestand - je gegevens worden gewoon geverifieerd en er wordt niets opnieuw ondertekend of gewijzigd.';
-
-  @override
-  String get recoveryPhrase24 => 'Herstelzin (alle 24 woorden)';
-
-  @override
-  String get keystoreFile => 'Keystore-bestand';
-
-  @override
-  String get keystoreFileContents => 'Inhoud keystore-bestand';
-
-  @override
   String get optionalBackupFile => 'Optioneel back-upbestand';
-
-  @override
-  String get iDontHavePhrase =>
-      'Ik heb mijn herstelzin of keystore-bestand niet';
-
-  @override
-  String get migrationTitle => 'Migreren naar een nieuwe sleutel';
-
-  @override
-  String get migrationBlurb =>
-      'Zonder je herstelzin of keystore-bestand kan de ondertekeningssleutel van dit toestel niet worden hersteld. Je kunt een nieuwe sleutel starten. Oude boekingen blijven zichtbaar maar worden vervangen.';
 
   @override
   String get iConfirmBooksValid =>
@@ -2104,4 +1977,7 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Wachtwoordzin';
 }

@@ -212,23 +212,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Salva una copia cifrata dei tuoi libri contabili in un percorso a tua scelta, oppure ripristinala da lì. Questo è separato dalla tua frase di recupero o dal file keystore, che eseguono il backup della tua chiave di firma, non dei tuoi libri contabili.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Blocco';
 
   @override
@@ -420,14 +403,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String savedToPath(String path) {
     return 'Salvato in $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Non è stato possibile esportare il file keystore. Puoi saltare questo passaggio.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Inserisci una passphrase per proteggere il file.';
 
   @override
   String get homeTapWhenArrived => 'Tocca quando sai cosa è arrivato';
@@ -814,80 +789,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'La tua frase di recupero';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Conferma la tua frase';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'Queste 24 parole sono l\'unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Accounting non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Scrivi queste parole in ordine e conservale in un luogo sicuro, separato da questo dispositivo.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'Ho salvato la mia frase di recupero';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Inserisci le parole richieste dalla frase che hai appena salvato.';
-
-  @override
   String wordNumber(String n) {
     return 'Parola n. $n';
   }
-
-  @override
-  String get keystoreExportTitle => 'Esporta file keystore';
-
-  @override
-  String get keystoreExportBlurb =>
-      'Oltre alla tua frase di recupero, puoi salvare un file keystore cifrato protetto da una passphrase a tua scelta. È opzionale - la tua sola frase di recupero è sempre sufficiente per ripristinare la tua chiave di firma.';
-
-  @override
-  String get keystorePassphrase => 'Passphrase';
-
-  @override
-  String get exportKeystoreFile => 'Esporta file keystore';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Scegli la tua lingua';
@@ -895,10 +799,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'Tutto nell\'app verrà mostrato in questa lingua. Potrai cambiarla più tardi nelle Impostazioni.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'La tua frase di recupero verrà mostrata in inglese. Usa un piccolo insieme di parole standard riconosciute ovunque dagli strumenti di recupero, non ancora disponibile in questa lingua.';
 
   @override
   String get chooseCurrencyTitle => 'Scegli la tua valuta';
@@ -1007,34 +907,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'Ripristina chiave di firma';
-
-  @override
-  String get restoreBlurb =>
-      'Questo dispositivo ha libri contabili esistenti, ma nessuna chiave di firma corrispondente. Ripristinala dalla tua frase di recupero salvata o dal file keystore - i tuoi dati verranno verificati normalmente, e nulla verrà ri-firmato o alterato.';
-
-  @override
-  String get recoveryPhrase24 => 'Frase di recupero (tutte le 24 parole)';
-
-  @override
-  String get keystoreFile => 'File keystore';
-
-  @override
-  String get keystoreFileContents => 'Contenuto del file keystore';
-
-  @override
   String get optionalBackupFile => 'File di backup opzionale';
-
-  @override
-  String get iDontHavePhrase =>
-      'Non ho la mia frase di recupero o il file keystore';
-
-  @override
-  String get migrationTitle => 'Migra a una nuova chiave';
-
-  @override
-  String get migrationBlurb =>
-      'Senza la tua frase di recupero o il file keystore, la chiave di firma di questo dispositivo non può essere recuperata. Puoi avviare una nuova chiave. Le voci precedenti restano visibili ma vengono sostituite.';
 
   @override
   String get iConfirmBooksValid =>
@@ -2106,4 +1979,7 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Passphrase';
 }

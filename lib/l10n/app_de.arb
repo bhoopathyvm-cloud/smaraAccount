@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Die Keystore-Datei konnte nicht exportiert werden. Sie können diesen Schritt überspringen.",
-  "enterPassphraseToProtect": "Geben Sie eine Passphrase ein, um die Datei zu schützen.",
   "homeTapWhenArrived": "Tippen, sobald Sie wissen, was angekommen ist",
   "homeReturnedTo": "Zurück an {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Ihre Wiederherstellungsphrase",
-  "recoveryPhraseConfirmTitle": "Bestätigen Sie Ihre Phrase",
-  "recoveryPhraseBlurb": "Diese 24 Wörter sind die einzige Möglichkeit, Ihren Transaktionsverlauf wiederherzustellen, falls dieses Gerät verloren geht, zurückgesetzt oder ersetzt wird. Smara Buchhaltung hat keinen Server und kann sie nicht für Sie wiederherstellen.\n\nWenn Sie dieses Gerät und diese Phrase zusammen verlieren, wird jede von Ihnen erfasste Transaktion dauerhaft nicht mehr verifizierbar.",
-  "recoveryPhraseWriteDown": "Schreiben Sie diese Wörter in der richtigen Reihenfolge auf und bewahren Sie sie sicher und getrennt von diesem Gerät auf.",
-  "iveSavedRecoveryPhrase": "Ich habe meine Wiederherstellungsphrase gespeichert",
-  "confirmPhraseBlurb": "Geben Sie die angeforderten Wörter aus der soeben gespeicherten Phrase ein.",
   "wordNumber": "Wort Nr. {n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Keystore-Datei exportieren",
-  "keystoreExportBlurb": "Zusätzlich zu Ihrer Wiederherstellungsphrase können Sie eine verschlüsselte, durch eine selbst gewählte Passphrase geschützte Keystore-Datei speichern. Dies ist optional – Ihre Wiederherstellungsphrase allein reicht immer aus, um Ihren Signierschlüssel wiederherzustellen.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Keystore-Datei exportieren",
   "chooseLanguageTitle": "Wähle deine Sprache",
   "chooseLanguageBlurb": "Die gesamte App wird in dieser Sprache angezeigt. Du kannst sie später in den Einstellungen ändern.",
-  "chooseLanguageBip39Notice": "Deine Wiederherstellungsphrase wird auf Englisch angezeigt. Sie verwendet einen kleinen Satz von Standardwörtern, die überall von Wiederherstellungstools erkannt werden - für diese Sprache gibt es diesen Satz noch nicht.",
   "chooseCurrencyTitle": "Wählen Sie Ihre Währung",
   "chooseCurrencyBlurb": "Jede Kontogruppe (Bargeld & Zahlungsmitteläquivalente, Rente & Altersvorsorge usw.) verwendet vorerst diese eine Währung. Sie können später weiterhin Konten in einer anderen Währung hinzufügen, indem Sie dafür eine neue Gruppe anlegen.",
   "currencyBackfillTitle": "Wählen Sie eine Währung für bestehende Gruppen",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Benennen Sie Ihr Konto",
   "firstAccountBlurb": "Dies ist das bereits für Sie eingerichtete Konto – geben Sie ihm einen Namen, den Sie erkennen, wie Ihre Bank. Sie erfassen als Nächstes ein Ausgegeben oder Erhalten und schützen dann das Gerät mit Ihrer Wiederherstellungsphrase.",
   "whatsMainAccountCalled": "Wie heißt Ihr Hauptkonto?",
-  "restoreTitle": "Signierschlüssel wiederherstellen",
-  "restoreBlurb": "Dieses Gerät hat vorhandene Bücher, aber keinen passenden Signierschlüssel. Stellen Sie ihn aus Ihrer gespeicherten Wiederherstellungsphrase oder Keystore-Datei wieder her – Ihre Daten werden normal verifiziert, und nichts wird neu signiert oder verändert.",
-  "recoveryPhrase24": "Wiederherstellungsphrase (alle 24 Wörter)",
-  "keystoreFile": "Keystore-Datei",
-  "keystoreFileContents": "Inhalt der Keystore-Datei",
   "optionalBackupFile": "Optionale Sicherungsdatei",
-  "iDontHavePhrase": "Ich habe meine Wiederherstellungsphrase oder Keystore-Datei nicht",
-  "migrationTitle": "Zu einem neuen Schlüssel migrieren",
-  "migrationBlurb": "Ohne Ihre Wiederherstellungsphrase oder Keystore-Datei kann der Signierschlüssel dieses Geräts nicht wiederhergestellt werden. Sie können mit einem neuen Schlüssel beginnen. Alte Einträge bleiben sichtbar, gelten aber als ersetzt.",
   "iConfirmBooksValid": "Ich bestätige, dass die aktuellen Bücher gültig sind",
   "whyWeDontEdit": "Warum wir alte Einträge nicht bearbeiten",
   "whyWeDontEditBody": "Wenn Sie einen Fehler korrigieren, behalten wir die alte Zeile und fügen daneben eine Korrektur hinzu, statt zu ändern, was Sie bereits eingegeben haben. So zeigt Ihr Verlauf immer genau, was passiert ist und wann Sie es korrigiert haben — nichts ändert sich heimlich im Hintergrund.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Passphrase"
 }

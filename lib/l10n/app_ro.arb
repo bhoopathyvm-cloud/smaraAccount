@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Nu s-a putut exporta fișierul keystore. Puteți omite acest pas.",
-  "enterPassphraseToProtect": "Introduceți o frază de acces pentru a proteja fișierul.",
   "homeTapWhenArrived": "Atingeți când știți ce a ajuns",
   "homeReturnedTo": "Returnat la {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Fraza dvs. de recuperare",
-  "recoveryPhraseConfirmTitle": "Confirmați fraza",
-  "recoveryPhraseBlurb": "Aceste 24 de cuvinte sunt singura modalitate de a recupera istoricul tranzacțiilor dacă acest dispozitiv se pierde, se resetează sau este înlocuit. Smara Accounting nu are server și nu le poate recupera pentru dvs.\n\nDacă pierdeți acest dispozitiv împreună cu această frază, fiecare tranzacție înregistrată devine imposibil de verificat definitiv.",
-  "recoveryPhraseWriteDown": "Notați aceste cuvinte în ordine și păstrați-le într-un loc sigur, separat de acest dispozitiv.",
-  "iveSavedRecoveryPhrase": "Mi-am salvat fraza de recuperare",
-  "confirmPhraseBlurb": "Introduceți cuvintele solicitate din fraza pe care tocmai ați salvat-o.",
   "wordNumber": "Cuvântul nr. {n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Exportă fișierul keystore",
-  "keystoreExportBlurb": "Pe lângă fraza de recuperare, puteți salva un fișier keystore criptat, protejat de o frază de acces aleasă de dvs. Acest lucru este opțional - fraza de recuperare este întotdeauna suficientă pentru a restaura cheia de semnare.",
-  "keystorePassphrase": "Frază de acces",
-  "exportKeystoreFile": "Exportă fișierul keystore",
   "chooseLanguageTitle": "Alege limba ta",
   "chooseLanguageBlurb": "Totul în aplicație va fi afișat în această limbă. O poți schimba mai târziu din Setări.",
-  "chooseLanguageBip39Notice": "Fraza ta de recuperare va fi afișată în engleză. Aceasta folosește un set mic de cuvinte standard recunoscute peste tot de instrumentele de recuperare, care nu este încă disponibil în această limbă.",
   "chooseCurrencyTitle": "Alegeți moneda",
   "chooseCurrencyBlurb": "Fiecare grup de conturi (Numerar și echivalente de numerar, Pensie și pensionare etc.) folosește deocamdată această monedă unică. Puteți adăuga totuși conturi într-o monedă diferită mai târziu, creând un grup nou pentru aceasta.",
   "currencyBackfillTitle": "Alegeți o monedă pentru grupurile existente",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Denumiți contul",
   "firstAccountBlurb": "Acesta este contul deja configurat pentru dvs. - dați-i un nume pe care îl recunoașteți, cum ar fi cel al băncii dvs. În continuare veți înregistra o Cheltuială sau o Încasare, apoi veți proteja dispozitivul cu fraza de recuperare.",
   "whatsMainAccountCalled": "Cum se numește contul dvs. principal?",
-  "restoreTitle": "Restaurați cheia de semnare",
-  "restoreBlurb": "Acest dispozitiv are registre existente, dar nicio cheie de semnare corespunzătoare. Restaurați-o din fraza de recuperare salvată sau din fișierul keystore - datele dvs. se vor verifica normal, iar nimic nu va fi resemnat sau modificat.",
-  "recoveryPhrase24": "Fraza de recuperare (toate cele 24 de cuvinte)",
-  "keystoreFile": "Fișier keystore",
-  "keystoreFileContents": "Conținutul fișierului keystore",
   "optionalBackupFile": "Fișier de rezervă opțional",
-  "iDontHavePhrase": "Nu am fraza de recuperare sau fișierul keystore",
-  "migrationTitle": "Migrează la o cheie nouă",
-  "migrationBlurb": "Fără fraza de recuperare sau fișierul keystore, cheia de semnare a acestui dispozitiv nu poate fi recuperată. Puteți începe o cheie nouă. Înregistrările vechi rămân vizibile, dar sunt înlocuite.",
   "iConfirmBooksValid": "Confirm că registrele actuale sunt valide",
   "whyWeDontEdit": "De ce nu edităm înregistrările vechi",
   "whyWeDontEditBody": "Când corectați o greșeală, păstrăm linia veche și adăugăm o corecție lângă ea, în loc să schimbăm ce ați introdus deja. Astfel, istoricul dvs. arată mereu exact ce s-a întâmplat și când ați corectat - nimic nu se schimbă pe ascuns.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Frază de acces"
 }

@@ -440,7 +440,7 @@ class SettingsView extends StatelessWidget {
               TextField(
                 controller: passphraseController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: l10n.keystorePassphrase),
+                decoration: InputDecoration(labelText: l10n.booksCopyPassphrase),
               ),
               if (statusMessage != null) ...[
                 const SizedBox(height: AppSpacing.medium),
@@ -556,7 +556,7 @@ class SettingsView extends StatelessWidget {
                   controller: passphraseController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: l10n.keystorePassphrase,
+                    labelText: l10n.booksCopyPassphrase,
                   ),
                 ),
                 if (statusMessage != null) ...[

@@ -211,23 +211,6 @@ class AppLocalizationsVi extends AppLocalizations {
       'Lưu một bản sao mã hóa của sổ sách của bạn vào nơi bạn chọn, hoặc khôi phục từ đó. Việc này khác với cụm từ khôi phục hoặc tệp keystore của bạn, vốn sao lưu khóa ký của bạn, chứ không phải sổ sách.';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'Khóa';
 
   @override
@@ -420,14 +403,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String savedToPath(String path) {
     return 'Đã lưu vào $path';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'Không thể xuất tệp keystore. Bạn có thể bỏ qua bước này.';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'Nhập một cụm mật khẩu để bảo vệ tệp này.';
 
   @override
   String get homeTapWhenArrived => 'Chạm khi bạn biết đã nhận được gì';
@@ -813,80 +788,9 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'Cụm từ khôi phục của bạn';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'Xác nhận cụm từ của bạn';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      '24 từ này là cách duy nhất để khôi phục lịch sử giao dịch của bạn nếu thiết bị này bị mất, đặt lại, hoặc thay thế. Smara Accounting không có máy chủ và không thể khôi phục chúng thay bạn.\n\nNếu bạn làm mất cả thiết bị này lẫn cụm từ này, mọi giao dịch bạn đã ghi nhận sẽ vĩnh viễn không thể xác minh được.';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'Ghi lại các từ này theo đúng thứ tự và cất giữ ở nơi an toàn, tách biệt với thiết bị này.';
-
-  @override
-  String get iveSavedRecoveryPhrase => 'Tôi đã lưu cụm từ khôi phục của mình';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'Nhập các từ được yêu cầu từ cụm từ bạn vừa lưu.';
-
-  @override
   String wordNumber(String n) {
     return 'Từ số $n';
   }
-
-  @override
-  String get keystoreExportTitle => 'Xuất tệp keystore';
-
-  @override
-  String get keystoreExportBlurb =>
-      'Ngoài cụm từ khôi phục, bạn có thể lưu một tệp keystore đã mã hóa được bảo vệ bởi cụm mật khẩu do bạn chọn. Việc này không bắt buộc - chỉ riêng cụm từ khôi phục của bạn luôn đủ để khôi phục khóa ký.';
-
-  @override
-  String get keystorePassphrase => 'Cụm mật khẩu';
-
-  @override
-  String get exportKeystoreFile => 'Xuất tệp keystore';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'Chọn ngôn ngữ của bạn';
@@ -894,10 +798,6 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'Mọi thứ trong ứng dụng sẽ hiển thị bằng ngôn ngữ này. Bạn có thể thay đổi sau trong Cài đặt.';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'Cụm từ khôi phục của bạn sẽ được hiển thị bằng tiếng Anh. Cụm từ này sử dụng một tập hợp nhỏ các từ chuẩn được các công cụ khôi phục ở mọi nơi nhận biết, hiện chưa có sẵn trong ngôn ngữ này.';
 
   @override
   String get chooseCurrencyTitle => 'Chọn đơn vị tiền tệ của bạn';
@@ -1005,34 +905,7 @@ class AppLocalizationsVi extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'Khôi phục khóa ký';
-
-  @override
-  String get restoreBlurb =>
-      'Thiết bị này đã có sổ sách, nhưng không có khóa ký phù hợp. Hãy khôi phục nó từ cụm từ khôi phục hoặc tệp keystore đã lưu - dữ liệu của bạn sẽ được xác minh bình thường, và không có gì bị ký lại hay thay đổi.';
-
-  @override
-  String get recoveryPhrase24 => 'Cụm từ khôi phục (đủ 24 từ)';
-
-  @override
-  String get keystoreFile => 'Tệp keystore';
-
-  @override
-  String get keystoreFileContents => 'Nội dung tệp keystore';
-
-  @override
   String get optionalBackupFile => 'Tệp sao lưu (không bắt buộc)';
-
-  @override
-  String get iDontHavePhrase =>
-      'Tôi không có cụm từ khôi phục hoặc tệp keystore';
-
-  @override
-  String get migrationTitle => 'Chuyển sang khóa mới';
-
-  @override
-  String get migrationBlurb =>
-      'Nếu không có cụm từ khôi phục hoặc tệp keystore, khóa ký của thiết bị này không thể khôi phục được. Bạn có thể bắt đầu với một khóa mới. Các mục cũ vẫn hiển thị nhưng sẽ bị thay thế.';
 
   @override
   String get iConfirmBooksValid => 'Tôi xác nhận sổ sách hiện tại là hợp lệ';
@@ -2098,4 +1971,7 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'Cụm mật khẩu';
 }

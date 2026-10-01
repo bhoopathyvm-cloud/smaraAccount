@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "No se pudo exportar el archivo de almacén de claves. Puedes omitir este paso.",
-  "enterPassphraseToProtect": "Introduce una contraseña para proteger el archivo.",
   "homeTapWhenArrived": "Toca cuando sepas qué llegó",
   "homeReturnedTo": "Devuelto a {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Tu frase de recuperación",
-  "recoveryPhraseConfirmTitle": "Confirma tu frase",
-  "recoveryPhraseBlurb": "Estas 24 palabras son la única forma de recuperar tu historial de transacciones si este dispositivo se pierde, se restablece o se sustituye. Smara Accounting no tiene servidor y no puede recuperarlas por ti.\n\nSi pierdes este dispositivo y esta frase juntos, cada transacción que hayas registrado se vuelve permanentemente inverificable.",
-  "recoveryPhraseWriteDown": "Escribe estas palabras en orden y guárdalas en un lugar seguro, separado de este dispositivo.",
-  "iveSavedRecoveryPhrase": "He guardado mi frase de recuperación",
-  "confirmPhraseBlurb": "Introduce las palabras solicitadas de la frase que acabas de guardar.",
   "wordNumber": "Palabra n.º {n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Exportar archivo de almacén de claves",
-  "keystoreExportBlurb": "Además de tu frase de recuperación, puedes guardar un archivo de almacén de claves cifrado protegido por una contraseña que elijas. Esto es opcional - tu frase de recuperación por sí sola siempre es suficiente para restaurar tu clave de firma.",
-  "keystorePassphrase": "Contraseña",
-  "exportKeystoreFile": "Exportar archivo de almacén de claves",
   "chooseLanguageTitle": "Elige tu idioma",
   "chooseLanguageBlurb": "Todo en la aplicación se mostrará en este idioma. Puedes cambiarlo más tarde en Ajustes.",
-  "chooseLanguageBip39Notice": "Tu frase de recuperación se mostrará en inglés. Usa un pequeño conjunto de palabras estándar reconocidas por herramientas de recuperación en todo el mundo, que aún no está disponible en este idioma.",
   "chooseCurrencyTitle": "Elige tu moneda",
   "chooseCurrencyBlurb": "Por ahora, cada grupo de cuentas (Efectivo y equivalentes de efectivo, Pensión y jubilación, etc.) usa esta única moneda. Más adelante podrás añadir cuentas en otra moneda creando un nuevo grupo para ella.",
   "currencyBackfillTitle": "Elige una moneda para los grupos existentes",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Ponle nombre a tu cuenta",
   "firstAccountBlurb": "Esta es la cuenta que ya está creada para ti - dale un nombre que reconozcas, como tu banco. A continuación registrarás un gasto o un ingreso, y luego protegerás el dispositivo con tu frase de recuperación.",
   "whatsMainAccountCalled": "¿Cómo se llama tu cuenta principal?",
-  "restoreTitle": "Restaurar clave de firma",
-  "restoreBlurb": "Este dispositivo tiene libros existentes, pero ninguna clave de firma coincidente. Restáurala desde tu frase de recuperación guardada o tu archivo de almacén de claves - tus datos se verificarán con normalidad y nada se volverá a firmar ni se alterará.",
-  "recoveryPhrase24": "Frase de recuperación (las 24 palabras)",
-  "keystoreFile": "Archivo de almacén de claves",
-  "keystoreFileContents": "Contenido del archivo de almacén de claves",
   "optionalBackupFile": "Archivo de copia de seguridad opcional",
-  "iDontHavePhrase": "No tengo mi frase de recuperación ni el archivo de almacén de claves",
-  "migrationTitle": "Migrar a una nueva clave",
-  "migrationBlurb": "Sin tu frase de recuperación o tu archivo de almacén de claves, la clave de firma de este dispositivo no se puede recuperar. Puedes empezar con una clave nueva. Las entradas antiguas siguen visibles, pero quedan sustituidas.",
   "iConfirmBooksValid": "Confirmo que los libros actuales son válidos",
   "whyWeDontEdit": "Por qué no editamos las entradas antiguas",
   "whyWeDontEditBody": "Cuando corriges un error, conservamos la línea original y añadimos una corrección junto a ella en lugar de cambiar lo que ya introdujiste. Así tu historial siempre muestra exactamente qué sucedió y cuándo lo corregiste — nada cambia en silencio a tus espaldas.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Contraseña"
 }

@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Non è stato possibile esportare il file keystore. Puoi saltare questo passaggio.",
-  "enterPassphraseToProtect": "Inserisci una passphrase per proteggere il file.",
   "homeTapWhenArrived": "Tocca quando sai cosa è arrivato",
   "homeReturnedTo": "Restituito a {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "La tua frase di recupero",
-  "recoveryPhraseConfirmTitle": "Conferma la tua frase",
-  "recoveryPhraseBlurb": "Queste 24 parole sono l''unico modo per recuperare la cronologia delle tue transazioni se questo dispositivo viene perso, ripristinato o sostituito. Smara Accounting non ha un server e non può recuperarle per te.\n\nSe perdi questo dispositivo insieme a questa frase, ogni transazione che hai registrato diventa permanentemente non verificabile.",
-  "recoveryPhraseWriteDown": "Scrivi queste parole in ordine e conservale in un luogo sicuro, separato da questo dispositivo.",
-  "iveSavedRecoveryPhrase": "Ho salvato la mia frase di recupero",
-  "confirmPhraseBlurb": "Inserisci le parole richieste dalla frase che hai appena salvato.",
   "wordNumber": "Parola n. {n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Esporta file keystore",
-  "keystoreExportBlurb": "Oltre alla tua frase di recupero, puoi salvare un file keystore cifrato protetto da una passphrase a tua scelta. È opzionale - la tua sola frase di recupero è sempre sufficiente per ripristinare la tua chiave di firma.",
-  "keystorePassphrase": "Passphrase",
-  "exportKeystoreFile": "Esporta file keystore",
   "chooseLanguageTitle": "Scegli la tua lingua",
   "chooseLanguageBlurb": "Tutto nell''app verrà mostrato in questa lingua. Potrai cambiarla più tardi nelle Impostazioni.",
-  "chooseLanguageBip39Notice": "La tua frase di recupero verrà mostrata in inglese. Usa un piccolo insieme di parole standard riconosciute ovunque dagli strumenti di recupero, non ancora disponibile in questa lingua.",
   "chooseCurrencyTitle": "Scegli la tua valuta",
   "chooseCurrencyBlurb": "Per ora ogni gruppo di conti (Liquidità e mezzi equivalenti, Pensione e previdenza, ecc.) usa questa unica valuta. Potrai comunque aggiungere conti in una valuta diversa in seguito, creando un nuovo gruppo per essa.",
   "currencyBackfillTitle": "Scegli una valuta per i gruppi esistenti",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Dai un nome al tuo conto",
   "firstAccountBlurb": "Questo è il conto già impostato per te - dagli un nome che riconosci, come la tua banca. Registrerai una voce di Speso o Ricevuto, poi proteggerai il dispositivo con la tua frase di recupero.",
   "whatsMainAccountCalled": "Come si chiama il tuo conto principale?",
-  "restoreTitle": "Ripristina chiave di firma",
-  "restoreBlurb": "Questo dispositivo ha libri contabili esistenti, ma nessuna chiave di firma corrispondente. Ripristinala dalla tua frase di recupero salvata o dal file keystore - i tuoi dati verranno verificati normalmente, e nulla verrà ri-firmato o alterato.",
-  "recoveryPhrase24": "Frase di recupero (tutte le 24 parole)",
-  "keystoreFile": "File keystore",
-  "keystoreFileContents": "Contenuto del file keystore",
   "optionalBackupFile": "File di backup opzionale",
-  "iDontHavePhrase": "Non ho la mia frase di recupero o il file keystore",
-  "migrationTitle": "Migra a una nuova chiave",
-  "migrationBlurb": "Senza la tua frase di recupero o il file keystore, la chiave di firma di questo dispositivo non può essere recuperata. Puoi avviare una nuova chiave. Le voci precedenti restano visibili ma vengono sostituite.",
   "iConfirmBooksValid": "Confermo che i libri contabili attuali sono validi",
   "whyWeDontEdit": "Perché non modifichiamo le voci precedenti",
   "whyWeDontEditBody": "Quando correggi un errore, manteniamo la vecchia riga e aggiungiamo una correzione accanto ad essa, invece di modificare quello che hai già inserito. In questo modo la tua cronologia mostra sempre esattamente cosa è successo e quando lo hai corretto — nulla cambia silenziosamente alle tue spalle.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Passphrase"
 }

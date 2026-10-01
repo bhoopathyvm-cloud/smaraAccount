@@ -190,8 +190,6 @@
       }
     }
   },
-  "keystoreExportFailed": "Het keystore-bestand kon niet worden geëxporteerd. Je kunt deze stap overslaan.",
-  "enterPassphraseToProtect": "Voer een wachtwoordzin in om het bestand te beveiligen.",
   "homeTapWhenArrived": "Tik zodra je weet wat er is aangekomen",
   "homeReturnedTo": "Teruggestort naar {name}",
   "@homeReturnedTo": {
@@ -403,12 +401,6 @@
       }
     }
   },
-  "recoveryPhraseTitle": "Je herstelzin",
-  "recoveryPhraseConfirmTitle": "Bevestig je zin",
-  "recoveryPhraseBlurb": "Deze 24 woorden zijn de enige manier om je transactiegeschiedenis te herstellen als dit toestel verloren, gereset of vervangen wordt. Smara Accounting heeft geen server en kan ze niet voor je herstellen.\n\nAls je dit toestel en deze zin samen kwijtraakt, wordt elke transactie die je hebt geregistreerd permanent onverifieerbaar.",
-  "recoveryPhraseWriteDown": "Schrijf deze woorden in volgorde op en bewaar ze op een veilige plek, gescheiden van dit toestel.",
-  "iveSavedRecoveryPhrase": "Ik heb mijn herstelzin opgeslagen",
-  "confirmPhraseBlurb": "Voer de gevraagde woorden in uit de zin die je zojuist hebt opgeslagen.",
   "wordNumber": "Woord #{n}",
   "@wordNumber": {
     "placeholders": {
@@ -417,13 +409,8 @@
       }
     }
   },
-  "keystoreExportTitle": "Keystore-bestand exporteren",
-  "keystoreExportBlurb": "Naast je herstelzin kun je een versleuteld keystore-bestand opslaan, beveiligd met een wachtwoordzin naar keuze. Dit is optioneel - je herstelzin alleen is altijd genoeg om je ondertekeningssleutel te herstellen.",
-  "keystorePassphrase": "Wachtwoordzin",
-  "exportKeystoreFile": "Keystore-bestand exporteren",
   "chooseLanguageTitle": "Kies je taal",
   "chooseLanguageBlurb": "Alles in de app wordt in deze taal weergegeven. Je kunt dit later wijzigen in Instellingen.",
-  "chooseLanguageBip39Notice": "Je herstelzin wordt in het Engels weergegeven. Deze gebruikt een kleine set standaardwoorden die overal door hersteltools worden herkend, en die nog niet beschikbaar is in deze taal.",
   "chooseCurrencyTitle": "Kies je valuta",
   "chooseCurrencyBlurb": "Elke rekeninggroep (Liquide middelen, Pensioen, enz.) gebruikt voorlopig deze ene valuta. Je kunt later nog rekeningen in een andere valuta toevoegen door er een nieuwe groep voor aan te maken.",
   "currencyBackfillTitle": "Kies een valuta voor bestaande groepen",
@@ -431,15 +418,7 @@
   "firstAccountTitle": "Geef je rekening een naam",
   "firstAccountBlurb": "Dit is de rekening die al voor je is aangemaakt - geef hem een naam die je herkent, zoals je bank. Hierna registreer je één Uitgave of Ontvangst, en beveilig je daarna het toestel met je herstelzin.",
   "whatsMainAccountCalled": "Hoe heet je hoofdrekening?",
-  "restoreTitle": "Ondertekeningssleutel herstellen",
-  "restoreBlurb": "Dit toestel heeft al een boekhouding, maar geen bijpassende ondertekeningssleutel. Herstel deze vanuit je opgeslagen herstelzin of keystore-bestand - je gegevens worden gewoon geverifieerd en er wordt niets opnieuw ondertekend of gewijzigd.",
-  "recoveryPhrase24": "Herstelzin (alle 24 woorden)",
-  "keystoreFile": "Keystore-bestand",
-  "keystoreFileContents": "Inhoud keystore-bestand",
   "optionalBackupFile": "Optioneel back-upbestand",
-  "iDontHavePhrase": "Ik heb mijn herstelzin of keystore-bestand niet",
-  "migrationTitle": "Migreren naar een nieuwe sleutel",
-  "migrationBlurb": "Zonder je herstelzin of keystore-bestand kan de ondertekeningssleutel van dit toestel niet worden hersteld. Je kunt een nieuwe sleutel starten. Oude boekingen blijven zichtbaar maar worden vervangen.",
   "iConfirmBooksValid": "Ik bevestig dat de huidige boekhouding klopt",
   "whyWeDontEdit": "Waarom we oude boekingen niet bewerken",
   "whyWeDontEditBody": "Als je een fout corrigeert, laten we de oude regel staan en voegen we er een correctie naast toe, in plaats van te wijzigen wat je al had ingevoerd. Zo toont je geschiedenis altijd precies wat er is gebeurd en wanneer je het hebt gecorrigeerd — er verandert nooit iets stiekem achter je rug.",
@@ -1110,5 +1089,6 @@
   "settingsBackupReminderDays": "Remind after this many days",
   "settingsBackupReminderEntries": "Remind after this many new entries",
   "settingsBackupReminderSnoozeDays": "Hide for this many days after Later",
-  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later"
+  "settingsBackupReminderSnoozeEntries": "Hide for this many new entries after Later",
+  "booksCopyPassphrase": "Wachtwoordzin"
 }

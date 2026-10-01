@@ -40,7 +40,7 @@
 
 ## 7. Localization (43 languages)
 
-- [ ] 7.1 Remove phrase, keystore, bundle and migration strings from `lib/l10n/app_en.arb`; add copy for save, restore, warning (entries and the books' settings replaced, counts, "Save a copy first"), Continuation, success screen, reminder banner and settings, and Device history in household wording; verify `flutter gen-l10n` succeeds
+- [x] 7.1 Remove phrase, keystore, bundle and migration strings from `lib/l10n/app_en.arb`; add copy for save, restore, warning (entries and the books' settings replaced, counts, "Save a copy first"), Continuation, success screen, reminder banner and settings, and Device history in household wording; verify `flutter gen-l10n` succeeds
 - [ ] 7.2 Translate the new strings into all 42 other ARB files and remove the deleted keys from them and from `lib/l10n/untranslated.json`; verify `test/l10n/curated_locale_smoke_test.dart`, `test/l10n/locale_packs_test.dart` and `test/acceptance_locale_fixtures_test.dart` pass and `untranslated.json` has no entries for the new keys
 - [ ] 7.3 Update `integration_test/acceptance/support/locale_fixtures.dart` and `acceptance_locale.dart` for the new and removed strings; verify `flutter test test/acceptance_locale_fixtures_test.dart` passes
 

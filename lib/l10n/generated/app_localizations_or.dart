@@ -211,23 +211,6 @@ class AppLocalizationsOr extends AppLocalizations {
       'ଆପଣଙ୍କ ଖାତାର ଏକ ଏନକ୍ରିପ୍ଟ କପି ଆପଣଙ୍କ ପସନ୍ଦର ସ୍ଥାନରେ ସଞ୍ଚୟ କରନ୍ତୁ, କିମ୍ବା ସେଥିରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏହା ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ଠାରୁ ଅଲଗା, ଯାହା ଆପଣଙ୍କ ସାଇନିଂ କୀ ର ବ୍ୟାକଅପ୍ ରଖେ, ଆପଣଙ୍କ ଖାତାର ନୁହେଁ।';
 
   @override
-  String get settingsRecovery => 'Recovery & identity';
-
-  @override
-  String get settingsRecoveryBlurb =>
-      'None of these are required to keep using the app. View your recovery phrase, export an encrypted keystore file, or export a device migration bundle to move to a new device in one step.';
-
-  @override
-  String get settingsViewRecoveryPhrase => 'View recovery phrase';
-
-  @override
-  String get settingsExportKeystoreFile => 'Export keystore file';
-
-  @override
-  String get settingsExportDeviceMigrationBundle =>
-      'Export device migration bundle';
-
-  @override
   String get settingsLock => 'ଲକ୍';
 
   @override
@@ -419,14 +402,6 @@ class AppLocalizationsOr extends AppLocalizations {
   String savedToPath(String path) {
     return '$path ରେ ସଞ୍ଚୟ ହେଲା';
   }
-
-  @override
-  String get keystoreExportFailed =>
-      'କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ରପ୍ତାନୀ ହୋଇପାରିଲା ନାହିଁ। ଆପଣ ଏହି ପାଦକ୍ଷେପ ଛାଡ଼ିପାରିବେ।';
-
-  @override
-  String get enterPassphraseToProtect =>
-      'ଫାଇଲ୍‌କୁ ସୁରକ୍ଷିତ କରିବାକୁ ଏକ ପାସଫ୍ରେଜ୍ ପ୍ରବେଶ କରନ୍ତୁ।';
 
   @override
   String get homeTapWhenArrived => 'କଣ ପହଞ୍ଚିଲା ଜାଣିଲେ ଟାପ୍ କରନ୍ତୁ';
@@ -807,81 +782,9 @@ class AppLocalizationsOr extends AppLocalizations {
   }
 
   @override
-  String get recoveryPhraseTitle => 'ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ';
-
-  @override
-  String get recoveryPhraseConfirmTitle => 'ଆପଣଙ୍କ ବାକ୍ୟାଂଶ ନିଶ୍ଚିତ କରନ୍ତୁ';
-
-  @override
-  String get recoveryPhraseBlurb =>
-      'ଏହି ୨୪ଟି ଶବ୍ଦ ହେଉଛି ଆପଣଙ୍କ ଡିଭାଇସ୍ ହଜିଗଲେ, ରିସେଟ୍ ହେଲେ, କିମ୍ବା ବଦଳାଗଲେ ଆପଣଙ୍କ କାରବାର ଇତିହାସ ପୁନରୁଦ୍ଧାର କରିବାର ଏକମାତ୍ର ଉପାୟ। ସ୍ମାରା ଖାତାର କୌଣସି ସର୍ଭର ନାହିଁ ଏବଂ ଏହା ଆପଣଙ୍କ ପାଇଁ ସେଗୁଡ଼ିକୁ ପୁନରୁଦ୍ଧାର କରିପାରିବ ନାହିଁ।\n\nଯଦି ଆପଣ ଏହି ଡିଭାଇସ୍ ଏବଂ ଏହି ବାକ୍ୟାଂଶ ଏକାସାଙ୍ଗରେ ହରାଇଦିଅନ୍ତି, ତେବେ ଆପଣ ରେକର୍ଡ କରିଥିବା ପ୍ରତ୍ୟେକ କାରବାର ସ୍ଥାୟୀ ଭାବେ ଅଯାଞ୍ଚିତ ହୋଇଯିବ।';
-
-  @override
-  String get recoveryPhraseWriteDown =>
-      'ଏହି ଶବ୍ଦଗୁଡ଼ିକୁ କ୍ରମରେ ଲେଖି ରଖନ୍ତୁ ଏବଂ ସେଗୁଡ଼ିକୁ ଏହି ଡିଭାଇସ୍ ଠାରୁ ଅଲଗା ଏକ ସୁରକ୍ଷିତ ସ୍ଥାନରେ ରଖନ୍ତୁ।';
-
-  @override
-  String get iveSavedRecoveryPhrase =>
-      'ମୁଁ ମୋର ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ ସଞ୍ଚୟ କରିସାରିଛି';
-
-  @override
-  String get noRecoveryPhraseAvailable =>
-      'This identity has no recovery phrase to show - it was set up from a keystore file, a recovery phrase, or a device migration bundle instead of generated on this device.';
-
-  @override
-  String get confirmPhraseBlurb =>
-      'ଆପଣ ଏବେ ସଞ୍ଚୟ କରିଥିବା ବାକ୍ୟାଂଶରୁ ମାଗାଯାଇଥିବା ଶବ୍ଦଗୁଡ଼ିକ ପ୍ରବେଶ କରନ୍ତୁ।';
-
-  @override
   String wordNumber(String n) {
     return 'ଶବ୍ଦ #$n';
   }
-
-  @override
-  String get keystoreExportTitle => 'କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ରପ୍ତାନୀ କରନ୍ତୁ';
-
-  @override
-  String get keystoreExportBlurb =>
-      'ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ ସହିତ, ଆପଣ ଆପଣଙ୍କ ପସନ୍ଦର ଏକ ପାସଫ୍ରେଜ୍ ଦ୍ୱାରା ସୁରକ୍ଷିତ ଏକ ଏନକ୍ରିପ୍ଟ କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ମଧ୍ୟ ସଞ୍ଚୟ କରିପାରିବେ। ଏହା ଇଚ୍ଛାଧୀନ - ଏକମାତ୍ର ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ ସର୍ବଦା ଆପଣଙ୍କ ସାଇନିଂ କୀ ପୁନଃସ୍ଥାପନ କରିବାକୁ ଯଥେଷ୍ଟ।';
-
-  @override
-  String get keystorePassphrase => 'ପାସଫ୍ରେଜ୍';
-
-  @override
-  String get exportKeystoreFile => 'କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ରପ୍ତାନୀ କରନ୍ତୁ';
-
-  @override
-  String get deviceMigrationBundleExportTitle =>
-      'Export device migration bundle';
-
-  @override
-  String get deviceMigrationBundleExportBlurb =>
-      'This single file contains both your books and your signing key, protected by a passphrase you choose. Move it to a new device and import it there to continue exactly where you left off - no separate recovery phrase step needed.\n\nBecause it carries both together, anyone who gets this file and its passphrase could read your books and sign new entries as you - a larger exposure than your recovery phrase or a books-only backup alone. Keep the passphrase somewhere separate from the file, such as a password manager.';
-
-  @override
-  String get deviceMigrationBundleFile => 'Device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleTitle =>
-      'Import device migration bundle';
-
-  @override
-  String get importDeviceMigrationBundleBlurb =>
-      'This replaces everything currently in this app with the bundle\'s books, and restores its signing key - it does not merge. Choose a device migration bundle file and enter the passphrase you protected it with.';
-
-  @override
-  String get chooseDeviceMigrationBundleFileFirst =>
-      'Choose a device migration bundle file first.';
-
-  @override
-  String get exportDeviceMigrationBundle => 'Export bundle';
-
-  @override
-  String get deviceMigrationBundleImported => 'Bundle imported';
-
-  @override
-  String get deviceMigrationBundleImportedBody =>
-      'Your books and signing key have been restored. Close the app and reopen it to continue.';
 
   @override
   String get chooseLanguageTitle => 'ଆପଣଙ୍କ ଭାଷା ବାଛନ୍ତୁ';
@@ -889,10 +792,6 @@ class AppLocalizationsOr extends AppLocalizations {
   @override
   String get chooseLanguageBlurb =>
       'ଆପ୍‌ର ସବୁକିଛି ଏହି ଭାଷାରେ ଦେଖାଯିବ। ଆପଣ ପରେ ସେଟିଂସରେ ଏହାକୁ ବଦଳାଇ ପାରିବେ।';
-
-  @override
-  String get chooseLanguageBip39Notice =>
-      'ଆପଣଙ୍କ ରିକଭରି ବାକ୍ୟାଂଶ ଇଂରାଜୀରେ ଦେଖାଯିବ। ଏହା ସବୁଠାରେ ରିକଭରି ଉପକରଣ ଦ୍ୱାରା ଚିହ୍ନାଯାଉଥିବା ଛୋଟ ମାନକ ଶବ୍ଦଗୁଡ଼ିକର ଏକ ସେଟ୍ ବ୍ୟବହାର କରେ, ଯାହା ଏହି ଭାଷାରେ ଏପର୍ଯ୍ୟନ୍ତ ଉପଲବ୍ଧ ନାହିଁ।';
 
   @override
   String get chooseCurrencyTitle => 'ଆପଣଙ୍କ ମୁଦ୍ରା ବାଛନ୍ତୁ';
@@ -1000,34 +899,7 @@ class AppLocalizationsOr extends AppLocalizations {
       'Hide for this many new entries after Later';
 
   @override
-  String get restoreTitle => 'ସାଇନିଂ କୀ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ';
-
-  @override
-  String get restoreBlurb =>
-      'ଏହି ଡିଭାଇସ୍‌ରେ ପୂର୍ବରୁ ଖାତା ଅଛି, କିନ୍ତୁ ମେଳଖାଉଥିବା ସାଇନିଂ କୀ ନାହିଁ। ଆପଣଙ୍କ ସଞ୍ଚିତ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍‌ରୁ ଏହାକୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ - ଆପଣଙ୍କ ଡାଟା ସାଧାରଣ ଭାବେ ଯାଞ୍ଚ ହେବ, ଏବଂ କିଛି ପୁନଃ-ସାଇନ୍ କିମ୍ବା ପରିବର୍ତ୍ତିତ ହେବ ନାହିଁ।';
-
-  @override
-  String get recoveryPhrase24 => 'ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ (ସମସ୍ତ ୨୪ ଶବ୍ଦ)';
-
-  @override
-  String get keystoreFile => 'କୀ-ଷ୍ଟୋର ଫାଇଲ୍';
-
-  @override
-  String get keystoreFileContents => 'କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ବିଷୟବସ୍ତୁ';
-
-  @override
   String get optionalBackupFile => 'ଇଚ୍ଛାଧୀନ ବ୍ୟାକଅପ୍ ଫାଇଲ୍';
-
-  @override
-  String get iDontHavePhrase =>
-      'ମୋ ପାଖରେ ମୋର ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ନାହିଁ';
-
-  @override
-  String get migrationTitle => 'ଏକ ନୂଆ କୀକୁ ମାଇଗ୍ରେଟ୍ କରନ୍ତୁ';
-
-  @override
-  String get migrationBlurb =>
-      'ଆପଣଙ୍କ ପୁନରୁଦ୍ଧାର ବାକ୍ୟାଂଶ କିମ୍ବା କୀ-ଷ୍ଟୋର ଫାଇଲ୍ ବିନା, ଏହି ଡିଭାଇସ୍‌ର ସାଇନିଂ କୀ ପୁନରୁଦ୍ଧାର କରାଯାଇପାରିବ ନାହିଁ। ଆପଣ ଏକ ନୂଆ କୀ ଆରମ୍ଭ କରିପାରିବେ। ପୁରୁଣା ଏଣ୍ଟ୍ରି ଦେଖାଯିବାରେ ରହିବ କିନ୍ତୁ ପ୍ରତିସ୍ଥାପିତ ହେବ।';
 
   @override
   String get iConfirmBooksValid =>
@@ -2091,4 +1963,7 @@ class AppLocalizationsOr extends AppLocalizations {
   @override
   String get resolveDeferredSaved =>
       'Saved. The exact market symbol will be resolved on the next price refresh.';
+
+  @override
+  String get booksCopyPassphrase => 'ପାସଫ୍ରେଜ୍';
 }
