@@ -73,3 +73,20 @@
   <!-- 2026-10-01: `tool/run_acceptance_tests.sh -d macos` (incl. books_switcher, shared_categories) — 45 passed, 1 skipped (manual linked_devices_physical); harness group `linked_devices` — 6 passed. -->
 - [ ] 11.3 Manual spot-check on two real devices/simulators on one Wi-Fi: Add a device via QR, Sync now, confirm entry appears, confirm erase pending copy — record result in this task (manual flag satisfied even if CI skips it)
   <!-- Cloud agent cannot satisfy physical two-device spot-check; group `linked_devices_physical` remains manual/skipped by default. -->
+
+## 12. Gaps found in review (2026-10-01)
+
+A comparison with the duplicate proposal `linked-devices` (#209), and a check of the code on `main`, found that several boxes above were ticked against test seams, not working device-to-device behavior. These tasks keep the change open until two real devices can share books.
+
+- [ ] 12.1 Real TLS transport: implement the `SecureSocket`/`SecureServerSocket` adapter behind `SyncTransport` with certificate pinning (only `InProcessSyncTransport` exists; `sync_transport.dart` says "Real SecureSocket adapters land later"); verify with a loopback-socket test that a pinned peer connects and an unknown certificate is refused
+- [ ] 12.2 Real mDNS discovery: a Bonjour/NSD adapter for `_smara._tcp` (advertise and browse) plus a direct-address fallback when discovery is blocked; verify on macOS ↔ iOS and macOS ↔ Android on one Wi-Fi
+- [ ] 12.3 QR join screens: show the join payload as a QR code and scan it with the camera (no QR rendering or scanning exists in `lib/`); make the join payload expire after 2 minutes and refuse reuse; show the same short check code on both screens before any data flows; verify with widget tests using a fake scanner and a unit test for expiry and reuse
+- [ ] 12.4 Wire "Sync now" and automatic sync on app foreground to the real transport (`syncNowAction` is never supplied, so the button does nothing in the app); verify on two devices that an entry recorded on one appears on the other
+- [ ] 12.5 Emit `MetadataOperation`s from every local master-data write (categories, accounts, groups, payees, rules, templates, limits, books settings); nothing emits them today; verify with a repository test that a local rename produces an operation that a second database applies
+- [ ] 12.6 Persist last-write-wins state (`SyncMergeRepository.metadataState` is in memory only, so a restart forgets which change won) and order operations by a hybrid logical clock instead of the device's wall clock; verify that an older operation arriving after a restart cannot overwrite a newer field, and that clock skew between devices cannot reverse the winner
+- [ ] 12.7 Removal enforcement: refuse entries signed by a removed device after its removal (no check exists in the merge path); verify with a sync-merge test
+- [ ] 12.8 Erase on next contact: when a removed device with a pending erase meets a linked device, erase its copy of the books and report "Erased on <date>" back (only the pending/erased timestamps exist); verify with a two-instance harness test
+- [ ] 12.9 Android background sync where the system allows it (no WorkManager or equivalent exists); verify an Android-only scheduling test, or record a decision to drop it from the spec
+- [ ] 12.10 Show the books set's name in the switcher instead of its raw id (noted in PR #216); verify with a widget test
+- [ ] 12.11 Translate this change's 46 new strings (Linked devices, notices, books switcher, category translation and merge) into all 42 non-English ARB files and clear them from `lib/l10n/untranslated.json`; verify `test/l10n/locale_packs_test.dart` and the localized smoke workflow
+- [ ] 12.12 After 12.1–12.8, re-run 11.3 on real devices (two phones and a Mac on one Wi-Fi) and record the results
