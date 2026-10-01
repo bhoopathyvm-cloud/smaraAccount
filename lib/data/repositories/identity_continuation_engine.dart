@@ -72,8 +72,16 @@ class IdentityContinuationEngine {
       final chainState = await _chain.loadState();
       // Tip already points at the trusted (last verified) entry after
       // verifyChain; keep sequence counter and tip so the next entry
-      // chains there.
+      // chains there. Continuation starts a new identity tip at genesis
+      // hash-link target = previous tip hash, but sequence continues.
       await _chain.updateState(
+        trustedTipEntryId: chainState.trustedTipEntryId,
+        trustedTipHash: chainState.trustedTipHash,
+        nextDeviceChainSequence: chainState.nextDeviceChainSequence,
+      );
+      await _chain.ensureIdentityTip(newRow.identityId);
+      await _chain.updateIdentityTip(
+        identityId: newRow.identityId,
         trustedTipEntryId: chainState.trustedTipEntryId,
         trustedTipHash: chainState.trustedTipHash,
         nextDeviceChainSequence: chainState.nextDeviceChainSequence,

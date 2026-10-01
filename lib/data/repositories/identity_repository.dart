@@ -63,9 +63,14 @@ class IdentityRepository {
     return accounts;
   }
 
-  /// The active (non-superseded, non-continued) signing identity, or null
-  /// if none has been generated/confirmed yet - the true-first-launch state.
-  Future<SigningIdentity?> currentIdentity() => _chain.currentSigningIdentity();
+  /// The active (non-superseded, non-continued) signing identity that
+  /// matches this device's stored private key, or the newest active
+  /// identity when no key is stored yet. Peer linked identities stay
+  /// active but are not returned here.
+  Future<SigningIdentity?> currentIdentity() async {
+    final stored = await _signingKeyService.loadStoredKeyMaterial();
+    return _chain.currentSigningIdentity(matchingPublicKey: stored?.publicKey);
+  }
 
   /// Whether this device's secure storage currently holds the private key
   /// matching [identity]. False means either no key is stored at all, or
@@ -88,9 +93,14 @@ class IdentityRepository {
   ///
   /// [currency] (ISO 4217, e.g. 'USD') is chosen during onboarding and
   /// applied to all starter groups.
+  ///
+  /// Pass [seedStarterCategories]: false when linking into existing books
+  /// (QR / approved join) so New-setup starters are not inserted
+  /// (shared-categories task 7.4).
   Future<SigningIdentity> confirmFirstIdentity(
     GeneratedIdentity generated, {
     required String currency,
+    bool seedStarterCategories = true,
   }) async {
     late IdentityRow row;
     await _db.transaction(() async {
@@ -103,7 +113,50 @@ class IdentityRepository {
             ),
           );
       await _chain.loadState();
-      await _requireAccountRepository().seedOnboardingBooks(currency: currency);
+      await _chain.ensureIdentityTip(row.identityId);
+      await _requireAccountRepository().seedOnboardingBooks(
+        currency: currency,
+        seedStarterCategories: seedStarterCategories,
+      );
+    });
+    return _toDomainIdentity(row);
+  }
+
+  /// Registers a peer device's Signing Identity as an active linked signer
+  /// without marking anyone `continuedAt` and without touching this device's
+  /// private key (linked-devices design Decision 3 — linking ≠ Continuation).
+  ///
+  /// Pass [identityId] when the peer's id is already known from join (QR /
+  /// join-request) so both devices share the same id for that public key —
+  /// sync verification looks up entries by `signedByIdentityId`.
+  Future<SigningIdentity> addLinkedPeerIdentity({
+    required List<int> publicKey,
+    String? identityId,
+    DateTime? at,
+  }) async {
+    final when = at ?? DateTime.now();
+    if (identityId != null) {
+      final existing = await (_db.select(
+        _db.signingIdentities,
+      )..where((t) => t.identityId.equals(identityId))).getSingleOrNull();
+      if (existing != null) {
+        return _toDomainIdentity(existing);
+      }
+    }
+    late IdentityRow row;
+    await _db.transaction(() async {
+      row = await _db
+          .into(_db.signingIdentities)
+          .insertReturning(
+            SigningIdentitiesCompanion.insert(
+              identityId: identityId != null
+                  ? Value(identityId)
+                  : const Value.absent(),
+              publicKey: Uint8List.fromList(publicKey),
+              acknowledgedAt: Value(when),
+            ),
+          );
+      await _chain.ensureIdentityTip(row.identityId);
     });
     return _toDomainIdentity(row);
   }

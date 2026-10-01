@@ -144,4 +144,45 @@ void main() {
       expect(await service.loadStoredKeyMaterial(), isNull);
     });
   });
+
+  group('books-set key namespacing', () {
+    test('migrateLegacyKeyToBooksSet moves the seed once', () async {
+      await storage.write(
+        SigningKeyService.privateKeySeedStorageKey,
+        'legacy-seed',
+      );
+      await SigningKeyService.migrateLegacyKeyToBooksSet(
+        secureStorage: storage,
+        booksSetId: 'set-1',
+      );
+      expect(
+        await storage.read(SigningKeyService.privateKeySeedStorageKey),
+        isNull,
+      );
+      expect(
+        await storage.read(SigningKeyService.storageKeyFor('set-1')),
+        'legacy-seed',
+      );
+    });
+
+    test('scoped service reads and writes the namespaced key', () async {
+      final scoped = SigningKeyService(
+        secureStorage: storage,
+        booksSetId: 'set-1',
+      );
+      final generated = await scoped.generateNewIdentity();
+      expect(
+        await storage.read(SigningKeyService.storageKeyFor('set-1')),
+        isNotNull,
+      );
+      expect(
+        await storage.read(SigningKeyService.privateKeySeedStorageKey),
+        isNull,
+      );
+      expect(
+        (await scoped.loadStoredKeyMaterial())!.publicKey,
+        generated.keyMaterial.publicKey,
+      );
+    });
+  });
 }

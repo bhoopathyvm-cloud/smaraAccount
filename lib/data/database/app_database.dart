@@ -2,15 +2,18 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:drift_flutter/drift_flutter.dart';
-import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../domain/crypto/secure_key_storage.dart';
 import '../../domain/models/transaction_direction.dart';
+import '../books_set/books_set_paths.dart';
 import 'tables/account_groups_table.dart';
 import 'tables/accounts_table.dart';
+import 'tables/books_set_metadata_table.dart';
+import 'tables/category_merge_map_table.dart';
 import 'tables/category_rules_table.dart';
+import 'tables/category_translations_table.dart';
 import 'tables/csv_import_profiles_table.dart';
 import 'tables/entry_verification_cache_table.dart';
 import 'tables/integrity_events_table.dart';
@@ -20,8 +23,12 @@ import 'tables/investment_lots_table.dart';
 import 'tables/investment_sells_table.dart';
 import 'tables/journal_entries_table.dart';
 import 'tables/ledger_chain_state_table.dart';
+import 'tables/ledger_identity_chain_tips_table.dart';
+import 'tables/linked_devices_table.dart';
+import 'tables/membership_notices_table.dart';
 import 'tables/ofx_import_records_table.dart';
 import 'tables/payees_table.dart';
+import 'tables/pending_join_requests_table.dart';
 import 'tables/pending_transfers_table.dart';
 import 'tables/postings_table.dart';
 import 'tables/recurring_templates_table.dart';
@@ -67,6 +74,13 @@ const starterExpenseCategories = [
     CategoryRules,
     Payees,
     RecurringTemplates,
+    LinkedDevices,
+    LedgerIdentityChainTips,
+    CategoryTranslations,
+    CategoryMergeMap,
+    BooksSetMetadata,
+    MembershipNotices,
+    PendingJoinRequests,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -81,17 +95,34 @@ class AppDatabase extends _$AppDatabase {
   /// ledger database, not just bytes that happened to decrypt).
   AppDatabase.openFile(File file) : super(NativeDatabase(file));
 
-  /// The real database file's on-disk location - the single source of
-  /// truth [_openConnection] and ledger-backup-restore's export/restore
-  /// both resolve from, so they can never drift apart.
-  static Future<File> resolveDatabaseFile() async {
-    final dir = await getApplicationSupportDirectory();
+  /// The active books set's database file under
+  /// `books/<booksSetId>/ledger.sqlite`. Runs the one-time legacy single-
+  /// file move when needed (linked-devices design Decision 4).
+  static Future<File> resolveDatabaseFile({
+    String? booksSetId,
+    Directory? supportDirectory,
+    BooksSetStore? booksSetStore,
+    SecureKeyStorage? secureStorage,
+  }) async {
+    final dir = supportDirectory ?? await getApplicationSupportDirectory();
     await dir.create(recursive: true);
-    return File(p.join(dir.path, 'smara_accounting.sqlite'));
+    final store = booksSetStore ?? BooksSetStore();
+    await BooksSetPaths.migrateLegacyLayoutIfNeeded(
+      supportDirectory: dir,
+      store: store,
+      secureStorage: secureStorage ?? FlutterSecureKeyStorage(),
+    );
+    var id = booksSetId ?? await store.activeBooksSetId();
+    if (id == null) {
+      id = const Uuid().v4();
+      await store.setActiveBooksSetId(id);
+    }
+    await BooksSetPaths.ensureBooksSetDirectory(dir, id);
+    return BooksSetPaths.databaseFile(dir, id);
   }
 
   @override
-  int get schemaVersion => 18;
+  int get schemaVersion => 21;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -452,6 +483,59 @@ class AppDatabase extends _$AppDatabase {
           );
         }
       }
+
+      if (from < 19) {
+        // linked-devices-and-sync: membership, per-identity chain tips,
+        // category translations / merge map, and books-set metadata.
+        // Additive tables only. The on-disk move of the legacy single
+        // SQLite file into books/<id>/ is handled outside Drift by
+        // BooksSetPaths.migrateLegacyLayoutIfNeeded before open.
+        // ledger_chain_state singleton tip is kept; identity tips are
+        // populated by later multi-chain tasks (3.x).
+        await m.createTable(linkedDevices);
+        await m.createTable(ledgerIdentityChainTips);
+        await m.createTable(categoryTranslations);
+        await m.createTable(categoryMergeMap);
+        await m.createTable(booksSetMetadata);
+      }
+
+      if (from < 20) {
+        // linked-devices membership notices + Books-Copy join requests
+        // (tasks 4.4 / 4.5). Additive only.
+        await m.createTable(membershipNotices);
+        await m.createTable(pendingJoinRequests);
+      }
+
+      if (from < 21) {
+        // Peer sync: device_chain_sequence is unique per signing identity,
+        // not globally — two devices may each have sequence 1.
+        await customStatement('PRAGMA foreign_keys = OFF');
+        await customStatement('''
+CREATE TABLE journal_entries__new (
+  id TEXT NOT NULL PRIMARY KEY,
+  transaction_date TEXT NOT NULL,
+  recorded_at INTEGER NOT NULL,
+  description TEXT NULL,
+  reverses_entry_id TEXT NULL REFERENCES journal_entries__new(id),
+  created_at INTEGER NOT NULL DEFAULT (CAST(strftime('%s', 'now') AS INTEGER)),
+  device_chain_sequence INTEGER NOT NULL,
+  previous_entry_hash BLOB NOT NULL,
+  entry_hash BLOB NOT NULL,
+  signed_by_identity_id TEXT NOT NULL REFERENCES signing_identities(identity_id),
+  signature BLOB NOT NULL,
+  migrated_from_entry_id TEXT NULL REFERENCES journal_entries__new(id),
+  UNIQUE (signed_by_identity_id, device_chain_sequence)
+);
+''');
+        await customStatement(
+          'INSERT INTO journal_entries__new SELECT * FROM journal_entries',
+        );
+        await customStatement('DROP TABLE journal_entries');
+        await customStatement(
+          'ALTER TABLE journal_entries__new RENAME TO journal_entries',
+        );
+        await customStatement('PRAGMA foreign_keys = ON');
+      }
     },
   );
 
@@ -473,20 +557,13 @@ class AppDatabase extends _$AppDatabase {
 }
 
 QueryExecutor _openConnection() {
-  return driftDatabase(
-    name: 'smara_accounting',
-    native: DriftNativeOptions(
-      // The default (getApplicationDocumentsDirectory) resolves to the
-      // real ~/Documents on desktop, which macOS's privacy protection
-      // (TCC) blocks unsigned/ad-hoc dev builds from opening - causing an
-      // unhandled SqliteException(14) during startup routing. Application
-      // Support isn't TCC-protected and is the correct home for a
-      // private local database anyway.
-      databaseDirectory: () async {
-        final dir = await getApplicationSupportDirectory();
-        await dir.create(recursive: true);
-        return dir;
-      },
-    ),
-  );
+  // Resolve the active books-set path (and run the one-time legacy move)
+  // lazily so SharedPreferences / path_provider are available. Application
+  // Support isn't TCC-protected on macOS and is the correct home for a
+  // private local database (same rationale as the prior driftDatabase
+  // databaseDirectory override).
+  return LazyDatabase(() async {
+    final file = await AppDatabase.resolveDatabaseFile();
+    return NativeDatabase.createInBackground(file);
+  });
 }

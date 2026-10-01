@@ -13,6 +13,7 @@ class SummaryViewModel extends ChangeNotifier {
   SummaryViewModel({
     required LedgerRepository ledgerRepository,
     required AccountRepository accountRepository,
+    this.booksGeneration = 0,
   }) : _ledgerRepository = ledgerRepository,
        _accountRepository = accountRepository,
        _start = _startOfMonth(DateTime.now()),
@@ -33,6 +34,9 @@ class SummaryViewModel extends ChangeNotifier {
 
   final LedgerRepository _ledgerRepository;
   final AccountRepository _accountRepository;
+
+  /// Books-set generation this ViewModel was built for.
+  final int booksGeneration;
   StreamSubscription<LedgerSummary>? _subscription;
   late final StreamSubscription<List<Account>> _accountsSubscription;
 

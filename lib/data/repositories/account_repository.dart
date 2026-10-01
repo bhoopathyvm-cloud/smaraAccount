@@ -642,11 +642,18 @@ class AccountRepository {
   }
 
   /// Seeds the five system groups, Opening Balance Equity, Transfers in
-  /// transit, the first cash account, and starter income/expense
+  /// transit, the first cash account, and optionally starter income/expense
   /// categories. Called from [IdentityRepository.confirmFirstIdentity]
   /// after the signing identity exists (architecture-deepening design.md
   /// D1a) — starter books must not exist before that identity.
-  Future<void> seedOnboardingBooks({required String currency}) async {
+  ///
+  /// Pass [seedStarterCategories]: false when joining existing books so the
+  /// device uses the received catalog instead of duplicating starters
+  /// (shared-categories / linked-devices-and-sync task 7.4).
+  Future<void> seedOnboardingBooks({
+    required String currency,
+    bool seedStarterCategories = true,
+  }) async {
     final seeds = <(String id, String name, AccountGroupKind kind, int order)>[
       (
         groupCashEquivalentsId,
@@ -715,19 +722,21 @@ class AccountRepository {
             groupId: const Value(groupCashEquivalentsId),
           ),
         );
-    for (final name in starterIncomeCategories) {
-      await _db
-          .into(_db.accounts)
-          .insert(
-            AccountsCompanion.insert(name: name, type: AccountType.income),
-          );
-    }
-    for (final name in starterExpenseCategories) {
-      await _db
-          .into(_db.accounts)
-          .insert(
-            AccountsCompanion.insert(name: name, type: AccountType.expense),
-          );
+    if (seedStarterCategories) {
+      for (final name in starterIncomeCategories) {
+        await _db
+            .into(_db.accounts)
+            .insert(
+              AccountsCompanion.insert(name: name, type: AccountType.income),
+            );
+      }
+      for (final name in starterExpenseCategories) {
+        await _db
+            .into(_db.accounts)
+            .insert(
+              AccountsCompanion.insert(name: name, type: AccountType.expense),
+            );
+      }
     }
   }
 }

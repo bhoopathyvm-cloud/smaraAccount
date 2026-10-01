@@ -5,6 +5,8 @@ import '../../domain/lock/app_lock_settings_store.dart';
 import '../../domain/models/exchange_rate_provider.dart';
 import '../../domain/models/quote_provider.dart';
 import '../../domain/models/research_tool.dart';
+import '../../domain/peer_sync/sync_settings_allowlist.dart';
+import '../books_set/books_set_paths.dart';
 
 /// Plain, non-secret app preferences (currently just the reference
 /// exchange-rate lookup's enable/disable flag and selected provider).
@@ -12,10 +14,14 @@ import '../../domain/models/research_tool.dart';
 /// secret material (signing key), and these values
 /// aren't secrets.
 class SettingsRepository implements AppLockSettingsStore {
-  SettingsRepository({SharedPreferencesAsync? preferences})
-    : _preferences = preferences ?? SharedPreferencesAsync();
+  SettingsRepository({
+    SharedPreferencesAsync? preferences,
+    BooksSetStore? booksSetStore,
+  }) : _preferences = preferences ?? SharedPreferencesAsync(),
+       _booksSetStore = booksSetStore;
 
   final SharedPreferencesAsync _preferences;
+  final BooksSetStore? _booksSetStore;
 
   static const _referenceRateLookupEnabledKey = 'referenceRateLookupEnabled';
   static const _referenceRateProviderKey = 'referenceRateProvider';
@@ -29,6 +35,33 @@ class SettingsRepository implements AppLockSettingsStore {
   static const _researchToolKey = 'researchTool';
   static const _defaultExchangeKey = 'defaultExchange';
   static const _preferredLocaleTagKey = 'preferredLocaleTag';
+  static const _localDeviceIdKey = 'localDeviceId';
+  static const _localDeviceDisplayNameKey = 'localDeviceDisplayName';
+  static const _linkedDevicesPermissionExplainedKey =
+      'linkedDevicesPermissionExplained';
+
+  /// Stable this-device id for Linked devices membership (device setting —
+  /// does not sync).
+  Future<String?> localDeviceId() => _preferences.getString(_localDeviceIdKey);
+
+  Future<void> setLocalDeviceId(String id) =>
+      _preferences.setString(_localDeviceIdKey, id);
+
+  Future<String?> localDeviceDisplayName() =>
+      _preferences.getString(_localDeviceDisplayNameKey);
+
+  Future<void> setLocalDeviceDisplayName(String name) =>
+      _preferences.setString(_localDeviceDisplayNameKey, name);
+
+  /// Whether the Linked devices local-network permission sentence was shown.
+  Future<bool> hasLinkedDevicesPermissionExplained() async {
+    return await _preferences.getBool(_linkedDevicesPermissionExplainedKey) ??
+        false;
+  }
+
+  Future<void> setLinkedDevicesPermissionExplained(bool value) {
+    return _preferences.setBool(_linkedDevicesPermissionExplainedKey, value);
+  }
 
   /// Defaults to disabled - this app has never made a network call before
   /// the reference-rate lookup, so the one new network-touching feature is
@@ -187,14 +220,7 @@ class SettingsRepository implements AppLockSettingsStore {
 
   // --- Books Copy: books settings export/import (never device settings) ---
 
-  static const _booksSettingsKeys = {
-    _referenceRateLookupEnabledKey,
-    _referenceRateProviderKey,
-    _marketPriceFetchEnabledKey,
-    _quoteProviderKey,
-    _defaultExchangeKey,
-    _firstWeekSetupCompletedKey,
-  };
+  static const _booksSettingsKeys = SyncSettingsAllowlist.booksSettingsKeys;
 
   /// Books settings only. Device settings (locale, research tool, App Lock,
   /// reminder state) are never included.
@@ -258,6 +284,9 @@ class SettingsRepository implements AppLockSettingsStore {
   }
 
   // --- Backup reminder (device-local; never exported) ---
+  // Threshold prefs (enabled/days/entries) are device-wide. Last-copy and
+  // snooze counters are keyed by active books set so a copy of set A does
+  // not silence the reminder for set B (linked-devices design Decision 4).
 
   static const _lastCopySavedAtKey = 'lastCopySavedAt';
   static const _entryCountAtLastCopyKey = 'entryCountAtLastCopy';
@@ -275,26 +304,43 @@ class SettingsRepository implements AppLockSettingsStore {
   static const defaultSnoozeDays = 7;
   static const defaultSnoozeEntries = 500;
 
+  Future<String> _scopedReminderKey(String base) async {
+    final setId = await _booksSetStore?.activeBooksSetId();
+    if (setId == null || setId.isEmpty) return base;
+    return '$base:$setId';
+  }
+
   Future<void> recordBooksCopySaved({
     required DateTime at,
     required int entryCount,
   }) async {
     await _preferences.setString(
-      _lastCopySavedAtKey,
+      await _scopedReminderKey(_lastCopySavedAtKey),
       at.toUtc().toIso8601String(),
     );
-    await _preferences.setInt(_entryCountAtLastCopyKey, entryCount);
-    await _preferences.remove(_snoozeUntilKey);
-    await _preferences.remove(_entryCountAtSnoozeKey);
+    await _preferences.setInt(
+      await _scopedReminderKey(_entryCountAtLastCopyKey),
+      entryCount,
+    );
+    await _preferences.remove(await _scopedReminderKey(_snoozeUntilKey));
+    await _preferences.remove(await _scopedReminderKey(_entryCountAtSnoozeKey));
   }
 
   Future<DateTime?> lastCopySavedAt() async {
-    final raw = await _preferences.getString(_lastCopySavedAtKey);
+    final scoped = await _preferences.getString(
+      await _scopedReminderKey(_lastCopySavedAtKey),
+    );
+    // Fall back to unscoped legacy key when this set has no scoped value.
+    final raw = scoped ?? await _preferences.getString(_lastCopySavedAtKey);
     if (raw == null) return null;
     return DateTime.tryParse(raw);
   }
 
   Future<int> entryCountAtLastCopy() async {
+    final scoped = await _preferences.getInt(
+      await _scopedReminderKey(_entryCountAtLastCopyKey),
+    );
+    if (scoped != null) return scoped;
     return await _preferences.getInt(_entryCountAtLastCopyKey) ?? 0;
   }
 
@@ -303,20 +349,30 @@ class SettingsRepository implements AppLockSettingsStore {
     required int entryCount,
   }) async {
     await _preferences.setString(
-      _snoozeUntilKey,
+      await _scopedReminderKey(_snoozeUntilKey),
       until.toUtc().toIso8601String(),
     );
-    await _preferences.setInt(_entryCountAtSnoozeKey, entryCount);
+    await _preferences.setInt(
+      await _scopedReminderKey(_entryCountAtSnoozeKey),
+      entryCount,
+    );
   }
 
   Future<DateTime?> snoozeUntil() async {
-    final raw = await _preferences.getString(_snoozeUntilKey);
+    final scoped = await _preferences.getString(
+      await _scopedReminderKey(_snoozeUntilKey),
+    );
+    final raw = scoped ?? await _preferences.getString(_snoozeUntilKey);
     if (raw == null) return null;
     return DateTime.tryParse(raw);
   }
 
-  Future<int?> entryCountAtSnooze() =>
-      _preferences.getInt(_entryCountAtSnoozeKey);
+  Future<int?> entryCountAtSnooze() async {
+    final scoped = await _preferences.getInt(
+      await _scopedReminderKey(_entryCountAtSnoozeKey),
+    );
+    return scoped ?? await _preferences.getInt(_entryCountAtSnoozeKey);
+  }
 
   Future<bool> isBackupReminderEnabled() async {
     return await _preferences.getBool(_reminderEnabledKey) ?? true;

@@ -10,8 +10,10 @@ import '../../../../domain/models/account_group.dart';
 
 class AccountManagementViewModel extends ChangeNotifier
     with LocalizedErrorMixin {
-  AccountManagementViewModel({required AccountRepository accountRepository})
-    : _accountRepository = accountRepository {
+  AccountManagementViewModel({
+    required AccountRepository accountRepository,
+    this.booksGeneration = 0,
+  }) : _accountRepository = accountRepository {
     _accountsSubscription = _accountRepository
         .watchFinancialAccounts(includeArchived: true)
         .listen((accounts) {
@@ -27,6 +29,9 @@ class AccountManagementViewModel extends ChangeNotifier
   }
 
   final AccountRepository _accountRepository;
+
+  /// Books-set generation this ViewModel was built for.
+  final int booksGeneration;
   late final StreamSubscription<List<Account>> _accountsSubscription;
   late final StreamSubscription<List<AccountGroup>> _groupsSubscription;
 

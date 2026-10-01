@@ -22,6 +22,20 @@ void main() {
     when(
       repository.watchCategories(includeArchived: anyNamed('includeArchived')),
     ).thenAnswer((_) => Stream.value([salary]));
+    when(
+      repository.watchCategoryTotals(
+        start: anyNamed('start'),
+        end: anyNamed('end'),
+      ),
+    ).thenAnswer((_) => Stream.value(const <CategoryTotal>[]));
+    when(repository.defaultCategoryLocale()).thenAnswer((_) async => 'en');
+    when(
+      repository.displayNameFor(any, appLocale: anyNamed('appLocale')),
+    ).thenAnswer((invocation) async {
+      final account = invocation.positionalArguments.first as Account;
+      return account.name;
+    });
+    when(repository.suggestedMerges()).thenAnswer((_) async => const []);
   });
 
   test(

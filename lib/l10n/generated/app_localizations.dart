@@ -1236,6 +1236,54 @@ abstract class AppLocalizations {
   /// **'An optional month-to-date spending guide for this expense category.'**
   String get monthlyLimitBlurb;
 
+  /// No description provided for @translateCategoryWithAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate with AI'**
+  String get translateCategoryWithAi;
+
+  /// No description provided for @addCategoryTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add translation'**
+  String get addCategoryTranslation;
+
+  /// No description provided for @categoryTranslationLocale.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get categoryTranslationLocale;
+
+  /// No description provided for @categoryTranslationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Translated name'**
+  String get categoryTranslationName;
+
+  /// No description provided for @mergeCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Merge categories'**
+  String get mergeCategories;
+
+  /// No description provided for @mergeCategoriesSuggested.
+  ///
+  /// In en, this message translates to:
+  /// **'These categories look the same. Merge them?'**
+  String get mergeCategoriesSuggested;
+
+  /// No description provided for @categoryDefaultLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Default language for category names'**
+  String get categoryDefaultLanguage;
+
+  /// No description provided for @categoryDefaultLanguageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared across linked devices. Each device still shows its own language when a translation exists.'**
+  String get categoryDefaultLanguageSubtitle;
+
   /// No description provided for @manageCategoryRules.
   ///
   /// In en, this message translates to:
@@ -1805,6 +1853,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hide for this many new entries after Later'**
   String get settingsBackupReminderSnoozeEntries;
+
+  /// No description provided for @settingsBooksSwitcher.
+  ///
+  /// In en, this message translates to:
+  /// **'Books on this device'**
+  String get settingsBooksSwitcher;
+
+  /// No description provided for @settingsBooksSwitcherBlurb.
+  ///
+  /// In en, this message translates to:
+  /// **'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.'**
+  String get settingsBooksSwitcherBlurb;
+
+  /// No description provided for @settingsBooksSwitcherActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Open now'**
+  String get settingsBooksSwitcherActive;
+
+  /// No description provided for @settingsBooksSwitcherSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch'**
+  String get settingsBooksSwitcherSwitch;
+
+  /// No description provided for @settingsBooksSwitcherCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'New books'**
+  String get settingsBooksSwitcherCreate;
+
+  /// No description provided for @settingsBooksSwitcherCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name these books'**
+  String get settingsBooksSwitcherCreateTitle;
+
+  /// No description provided for @settingsBooksSwitcherNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get settingsBooksSwitcherNameLabel;
+
+  /// No description provided for @settingsBooksSwitcherRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove these books?'**
+  String get settingsBooksSwitcherRemoveTitle;
+
+  /// No description provided for @settingsBooksSwitcherRemoveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This deletes \"{name}\" from this device, including its signing key. Other books on this device are not affected.'**
+  String settingsBooksSwitcherRemoveBody(String name);
+
+  /// No description provided for @settingsBooksSwitcherRemoveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get settingsBooksSwitcherRemoveConfirm;
+
+  /// No description provided for @settingsLinkedDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked devices'**
+  String get settingsLinkedDevices;
+
+  /// No description provided for @settingsLinkedDevicesCatchUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Your devices catch up when both have Smara open on the same Wi-Fi.'**
+  String get settingsLinkedDevicesCatchUp;
+
+  /// No description provided for @settingsLinkedDevicesPermissionSentence.
+  ///
+  /// In en, this message translates to:
+  /// **'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.'**
+  String get settingsLinkedDevicesPermissionSentence;
+
+  /// No description provided for @settingsLinkedDevicesAddDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a device'**
+  String get settingsLinkedDevicesAddDevice;
+
+  /// No description provided for @settingsLinkedDevicesContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get settingsLinkedDevicesContinue;
+
+  /// No description provided for @settingsLinkedDevicesRoleOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get settingsLinkedDevicesRoleOwner;
+
+  /// No description provided for @settingsLinkedDevicesRoleMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get settingsLinkedDevicesRoleMember;
+
+  /// No description provided for @settingsLinkedDevicesCanAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'May add devices'**
+  String get settingsLinkedDevicesCanAdd;
+
+  /// No description provided for @settingsLinkedDevicesErasePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase pending'**
+  String get settingsLinkedDevicesErasePending;
+
+  /// No description provided for @settingsLinkedDevicesErasedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Erased on {date}'**
+  String settingsLinkedDevicesErasedOn(String date);
+
+  /// No description provided for @settingsLinkedDevicesSuggestSecondOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'These books have only one Owner. Consider making another linked device an Owner too.'**
+  String get settingsLinkedDevicesSuggestSecondOwner;
+
+  /// No description provided for @settingsLinkedDevicesJoinSameWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Both devices must be on the same Wi-Fi. Smara does not join over the internet.'**
+  String get settingsLinkedDevicesJoinSameWifi;
+
+  /// No description provided for @settingsLinkedDevicesApproveJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get settingsLinkedDevicesApproveJoin;
+
+  /// No description provided for @settingsLinkedDevicesRefuseJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Refuse'**
+  String get settingsLinkedDevicesRefuseJoin;
+
+  /// No description provided for @settingsLinkedDevicesPendingJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} wants to join these books'**
+  String settingsLinkedDevicesPendingJoin(String name);
+
+  /// No description provided for @settingsLinkedDevicesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Only this device is linked so far.'**
+  String get settingsLinkedDevicesEmpty;
+
+  /// No description provided for @settingsLinkedDevicesSyncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync now'**
+  String get settingsLinkedDevicesSyncNow;
+
+  /// No description provided for @settingsLinkedDevicesSyncNowBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Catching up…'**
+  String get settingsLinkedDevicesSyncNowBusy;
+
+  /// No description provided for @membershipNoticeDeviceAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'A device was added: {name}'**
+  String membershipNoticeDeviceAdded(String name);
+
+  /// No description provided for @membershipNoticeDeviceRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'A device was removed: {name}'**
+  String membershipNoticeDeviceRemoved(String name);
+
+  /// No description provided for @membershipNoticeErasePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase pending for {name}'**
+  String membershipNoticeErasePending(String name);
+
+  /// No description provided for @membershipNoticeErased.
+  ///
+  /// In en, this message translates to:
+  /// **'Erased {name} on {date}'**
+  String membershipNoticeErased(String name, String date);
+
+  /// No description provided for @membershipNoticeSoleOwnerClaimed.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} claimed sole ownership'**
+  String membershipNoticeSoleOwnerClaimed(String name);
+
+  /// No description provided for @membershipNoticeSoleOwnerCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Sole-Owner claim for {name} was cancelled'**
+  String membershipNoticeSoleOwnerCancelled(String name);
+
+  /// No description provided for @membershipNoticeSoleOwnerEffective.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is now an Owner'**
+  String membershipNoticeSoleOwnerEffective(String name);
+
+  /// No description provided for @membershipNoticeEntryNotAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Not accepted: couldn\'\'t be verified (from {name})'**
+  String membershipNoticeEntryNotAccepted(String name);
+
+  /// No description provided for @membershipNoticeOwnerVerificationAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'A record from {name} could not be verified and was not accepted'**
+  String membershipNoticeOwnerVerificationAlert(String name);
+
+  /// No description provided for @membershipNoticeCompetingFixCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Two Fixes for the same entry were resolved — please check'**
+  String get membershipNoticeCompetingFixCheck;
 
   /// No description provided for @whyWeDontEdit.
   ///

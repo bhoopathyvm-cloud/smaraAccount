@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../data/books_set/active_books_session.dart';
 import '../data/repositories/account_repository.dart';
 import '../data/repositories/books_copy_repository.dart';
 import '../data/repositories/category_repository.dart';
@@ -51,10 +52,15 @@ import 'features/record_transaction/views/record_transaction_view.dart';
 import 'features/register/view_models/register_row.dart';
 import 'features/register/view_models/register_view_model.dart';
 import 'features/register/views/register_view.dart';
+import 'features/settings/view_models/books_switcher_view_model.dart';
 import 'features/settings/view_models/device_history_view_model.dart';
+import 'features/settings/view_models/linked_devices_view_model.dart';
 import 'features/settings/view_models/settings_view_model.dart';
 import 'features/settings/views/device_history_view.dart';
 import 'features/settings/views/settings_view.dart';
+import '../data/repositories/membership_repository.dart';
+import '../data/books_set/books_set_paths.dart';
+import '../domain/linked_devices/local_network_permission.dart';
 import 'features/settle_pending_transfer/views/settle_pending_transfer_route.dart';
 import 'features/setup_choice/view_models/bundle_import_view_model.dart';
 import 'features/setup_choice/views/bundle_import_view.dart';
@@ -280,8 +286,20 @@ GoRouter buildAppRouter(
             appLockController: appLockController,
             localeController: context.read<LocaleController>(),
           );
+          final booksSwitcher = BooksSwitcherViewModel(
+            session: context.read<ActiveBooksSession>(),
+          );
+          final linkedDevices = LinkedDevicesViewModel(
+            membershipRepository: context.read<MembershipRepository>(),
+            settingsRepository: settingsRepository,
+            booksSetStore: context.read<BooksSetStore>(),
+            localNetworkPermission: context.read<LocalNetworkPermission>(),
+            booksGeneration: context.read<ActiveBooksSession>().generation,
+          );
           return SettingsView(
             viewModel: viewModel,
+            booksSwitcherViewModel: booksSwitcher,
+            linkedDevicesViewModel: linkedDevices,
             onOpenPayees: () => context.push('/payees'),
             onOpenRecurringTemplates: () =>
                 context.push('/recurring-templates'),
@@ -292,7 +310,10 @@ GoRouter buildAppRouter(
       GoRoute(
         path: '/device-history',
         builder: (context, state) => DeviceHistoryView(
-          viewModel: DeviceHistoryViewModel(ledgerRepository: ledgerRepository),
+          viewModel: DeviceHistoryViewModel(
+            ledgerRepository: ledgerRepository,
+            membershipRepository: context.read<MembershipRepository>(),
+          ),
         ),
       ),
       GoRoute(

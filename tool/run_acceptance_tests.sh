@@ -19,11 +19,13 @@
 # Usage:
 #   tool/run_acceptance_tests.sh -d <device-id> [-l <locale-tag>] [group]
 #
-#   -d <device-id>   Required. The target to run against - a macOS build,
-#                    a booted iOS Simulator, or a running Android
-#                    emulator/device. One target per invocation - this
-#                    never runs against more than one platform at a time
-#                    (spec: "Target Device Is Selectable Per Run").
+#   -d <device-id>   Required for GUI groups. The target to run against - a
+#                    macOS build, a booted iOS Simulator, a Linux desktop
+#                    build, or a running Android emulator/device. One target
+#                    per invocation - this never runs against more than one
+#                    platform at a time (spec: "Target Device Is Selectable
+#                    Per Run"). For the in-process `linked_devices` harness
+#                    group, -d is accepted but unused (no GUI / no device).
 #   -l <locale-tag>  Optional. Drives onboarding's language screen to this
 #                    locale instead of "Same as device", and resolves every
 #                    UI-text assertion and typed-in fixture string against
@@ -42,7 +44,25 @@
 #                    acceptance_test.dart (e.g. "core_ledger", "currency",
 #                    "csv_import" - the former per-file names, now group
 #                    names) via `flutter test --plain-name`. Omit to run
-#                    every group.
+#                    every non-manual group.
+#
+# Capability groups (independently runnable):
+#   core_ledger, account_currency, currency_transfers, csv_import,
+#   ofx_import, onboarding, identity_restore, organization, home_and_lock,
+#   group_archive, investment_holdings, investment_research, books_copy,
+#   books_switcher, shared_categories,
+#   linked_devices          — in-process DualDeviceHarness (CI, no device)
+#   linked_devices_physical — MANUAL only (two devices on one Wi-Fi)
+#
+# Manual group `linked_devices_physical`:
+#   Requires two phones/simulators on the same Wi-Fi. Guest Wi-Fi / AP
+#   client isolation often blocks mDNS/Bonjour — use a normal LAN. Default
+#   invocations (no group, or any group other than linked_devices_physical)
+#   skip it. To opt in:
+#     tool/run_acceptance_tests.sh -d <device> linked_devices_physical
+#   which passes --dart-define=LINKED_DEVICES_PHYSICAL=true. The physical
+#   case is still a developer checklist until automated dual-device GUI
+#   exists; the harness group covers join/sync/merge in CI instead.
 #
 # Examples:
 #   tool/run_acceptance_tests.sh -d macos
@@ -50,6 +70,9 @@
 #   tool/run_acceptance_tests.sh -d emulator-5554 currency
 #   tool/run_acceptance_tests.sh -d macos -l ja
 #   tool/run_acceptance_tests.sh -d macos -l ar onboarding
+#   tool/run_acceptance_tests.sh -d linux linked_devices
+#   tool/run_acceptance_tests.sh -d macos books_switcher
+#   tool/run_acceptance_tests.sh -d macos shared_categories
 #
 # To run the full suite once per curated locale in one command, see
 # tool/run_localized_acceptance_tests.sh instead.
@@ -58,6 +81,8 @@
 # reachable target - run it after the step below for each platform):
 #   macOS:            already listed as "macos" whenever this Mac can run
 #                      Flutter desktop builds - no extra step needed.
+#   Linux desktop:    listed as "linux" on a Linux host with Flutter
+#                      desktop enabled.
 #   iOS Simulator:     open -a Simulator (boots the last-used simulator,
 #                      or pick one in Xcode > Open Developer Tool >
 #                      Simulator), then `flutter devices`.
@@ -79,6 +104,10 @@ set -eu
 
 usage() {
   echo "Usage: $0 -d <device-id> [-l <locale-tag>] [group]" >&2
+  echo "Groups include: core_ledger, books_copy, books_switcher," >&2
+  echo "  shared_categories, linked_devices (harness/CI)," >&2
+  echo "  linked_devices_physical (manual, two devices on one Wi-Fi)." >&2
+  echo "Default (no group) skips linked_devices_physical." >&2
   echo "Run '$0 --help' style comments at the top of this script for device-id discovery and locale tags." >&2
 }
 
@@ -123,19 +152,54 @@ group="${1:-}"
 
 repo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 test_file="$repo_root/integration_test/acceptance/acceptance_test.dart"
+harness_file="$repo_root/test/harness/linked_devices_acceptance_test.dart"
+
+# linked_devices: in-process DualDeviceHarness — no GUI device required.
+if [ "$group" = "linked_devices" ]; then
+  echo "Running linked_devices harness (in-process, no physical devices; -d '$device_id' unused):"
+  echo
+  status=0
+  flutter test "$harness_file" || status=$?
+  if [ "$status" -eq 0 ]; then
+    echo "Acceptance suite passed."
+  else
+    echo "Acceptance suite failed." >&2
+  fi
+  exit "$status"
+fi
+
+extra_defines=""
+if [ "$group" = "linked_devices_physical" ]; then
+  echo "NOTE: linked_devices_physical is MANUAL."
+  echo "Prerequisites: two phones/simulators on the same Wi-Fi"
+  echo "(not guest Wi-Fi / AP client isolation — mDNS must work)."
+  echo "Opting in with --dart-define=LINKED_DEVICES_PHYSICAL=true."
+  echo
+  extra_defines="--dart-define=LINKED_DEVICES_PHYSICAL=true"
+fi
 
 if [ -n "$group" ]; then
   echo "Running acceptance tests on device '$device_id' (locale: '$locale_tag', group: '$group'):"
 else
   echo "Running acceptance tests on device '$device_id' (locale: '$locale_tag'):"
+  echo "(Skipping linked_devices_physical — manual two-device group; pass it explicitly to opt in.)"
 fi
 echo
 
 status=0
 if [ -n "$group" ]; then
-  flutter test "$test_file" -d "$device_id" --dart-define=ACCEPTANCE_LOCALE="$locale_tag" --plain-name "$group" || status=$?
+  # shellcheck disable=SC2086
+  flutter test "$test_file" -d "$device_id" \
+    --dart-define=ACCEPTANCE_LOCALE="$locale_tag" \
+    $extra_defines \
+    --plain-name "$group" || status=$?
 else
-  flutter test "$test_file" -d "$device_id" --dart-define=ACCEPTANCE_LOCALE="$locale_tag" || status=$?
+  # Default full run: exclude the manual physical group by name filter is
+  # not available as a negative; the group's tests are skip:true unless
+  # LINKED_DEVICES_PHYSICAL is set, so a plain full run never requires
+  # two devices.
+  flutter test "$test_file" -d "$device_id" \
+    --dart-define=ACCEPTANCE_LOCALE="$locale_tag" || status=$?
 fi
 
 if [ "$status" -eq 0 ]; then
