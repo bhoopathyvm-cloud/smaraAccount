@@ -733,7 +733,8 @@ void main() {
     );
 
     test(
-      'a freshly committed identity after the upgrade starts unacknowledged',
+      'a freshly committed identity after the upgrade is already acknowledged '
+      '(recovery-phrase acknowledgment retired)',
       () async {
         final v11 = _openV11Database();
         final db = AppDatabase.forTesting(NativeDatabase.opened(v11));
@@ -760,7 +761,7 @@ void main() {
         );
 
         final identity = await identityRepository.currentIdentity();
-        expect(identity!.acknowledgedAt, isNull);
+        expect(identity!.acknowledgedAt, isNotNull);
       },
     );
   });

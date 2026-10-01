@@ -244,59 +244,8 @@ void main() {
     });
 
     test(
-      'restoreIdentity on a reinstalled device with the recovery phrase matches the original identity',
-      () async {
-        // Simulate a device that already has a confirmed identity and a
-        // database file with history - capture the phrase the way
-        // onboarding would have shown it to the user.
-        final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
-        addTearDown(freshDb.close);
-        final firstKeys = SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        );
-        final firstInstallRepository = LedgerRepository(
-          database: freshDb,
-          signingKeyService: firstKeys,
-        );
-        final firstInstallIdentity = identityFor(
-          freshDb,
-          firstKeys,
-          firstInstallRepository,
-        );
-        final generated = await firstInstallIdentity.generateFirstIdentity();
-        final originalIdentity = await firstInstallIdentity
-            .confirmFirstIdentity(generated, currency: 'USD');
-
-        // Reinstall: same database file, fresh secure storage (a new
-        // SigningKeyService with empty InMemorySecureKeyStorage), same
-        // Repository pointed at the same underlying db.
-        final reinstalledKeys = SigningKeyService(
-          secureStorage: InMemorySecureKeyStorage(),
-        );
-        final reinstalledRepository = LedgerRepository(
-          database: freshDb,
-          signingKeyService: reinstalledKeys,
-        );
-        final reinstalledIdentity = identityFor(
-          freshDb,
-          reinstalledKeys,
-          reinstalledRepository,
-        );
-
-        final restored = await reinstalledIdentity.restoreIdentity(
-          recoveryPhraseWords: generated.phrase.words,
-        );
-
-        expect(restored.identityId, equals(originalIdentity.identityId));
-        expect(
-          await reinstalledIdentity.hasMatchingStoredKey(restored),
-          isTrue,
-        );
-      },
-    );
-
-    test(
-      'restoreIdentity on a reinstalled device with the keystore file matches the original identity',
+      'after keychain loss on the same books, continueBooks creates a '
+      'Continuation and hasMatchingStoredKey is true for the new identity',
       () async {
         final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
         addTearDown(freshDb.close);
@@ -315,10 +264,9 @@ void main() {
         final generated = await firstInstallIdentity.generateFirstIdentity();
         final originalIdentity = await firstInstallIdentity
             .confirmFirstIdentity(generated, currency: 'USD');
-        final keystoreFile = await firstInstallIdentity.exportKeystoreFile(
-          passphrase: 'hunter2-hunter2',
-        );
 
+        // Reinstall / keychain wipe: same database file, empty secure
+        // storage — Continuation, not phrase/keystore restore.
         final reinstalledKeys = SigningKeyService(
           secureStorage: InMemorySecureKeyStorage(),
         );
@@ -332,32 +280,42 @@ void main() {
           reinstalledRepository,
         );
 
-        final restored = await reinstalledIdentity.restoreIdentity(
-          keystoreFileContents: keystoreFile,
-          keystorePassphrase: 'hunter2-hunter2',
+        expect(
+          await reinstalledIdentity.hasMatchingStoredKey(originalIdentity),
+          isFalse,
         );
 
-        expect(restored.identityId, equals(originalIdentity.identityId));
+        final continued = await reinstalledIdentity.continueBooks();
+
+        expect(continued.identityId, isNot(equals(originalIdentity.identityId)));
         expect(
-          await reinstalledIdentity.hasMatchingStoredKey(restored),
+          continued.continuesIdentityId,
+          equals(originalIdentity.identityId),
+        );
+        expect(
+          await reinstalledIdentity.hasMatchingStoredKey(continued),
           isTrue,
+        );
+        expect(
+          (await reinstalledIdentity.currentIdentity())!.identityId,
+          equals(continued.identityId),
         );
       },
     );
 
     test(
-      'restoreIdentity throws when the phrase does not belong to this database',
+      'hasMatchingStoredKey is false after deleteStoredKey',
       () async {
         final identity = (await identityRepository.currentIdentity())!;
-        final unrelated = await identityRepository.generateFirstIdentity();
+        expect(await identityRepository.hasMatchingStoredKey(identity), isTrue);
+
+        await identityRepository.deleteStoredKey();
 
         expect(
-          () => identityRepository.restoreIdentity(
-            recoveryPhraseWords: unrelated.phrase.words,
-          ),
-          throwsA(isA<SigningIdentityMismatchException>()),
+          await identityRepository.hasMatchingStoredKey(identity),
+          isFalse,
         );
-        // Sanity: the original identity is still on record, untouched.
+        // Books identity row is untouched until continueBooks runs.
         expect(
           (await identityRepository.currentIdentity())!.identityId,
           equals(identity.identityId),
@@ -1885,9 +1843,9 @@ void main() {
     );
   });
 
-  group('migrateToNewIdentityAfterKeyLoss', () {
+  group('continueBooks', () {
     test(
-      're-signs every active entry under a new identity, preserving content',
+      'after key loss, creates a Continuation without rewriting entries',
       () async {
         final incomeId = await firstCategoryId(AccountType.income);
         await repository.recordTransaction(
@@ -1900,38 +1858,35 @@ void main() {
         final legacy = (await repository.watchEntries().first).single;
         final oldIdentity = (await identityRepository.currentIdentity())!;
 
-        await identityRepository.migrateToNewIdentityAfterKeyLoss();
+        await identityRepository.deleteStoredKey();
+        final newIdentity = await identityRepository.continueBooks();
 
-        final newIdentity = (await identityRepository.currentIdentity())!;
         expect(newIdentity.identityId, isNot(equals(oldIdentity.identityId)));
         expect(
-          newIdentity.supersedesIdentityId,
+          newIdentity.continuesIdentityId,
           equals(oldIdentity.identityId),
         );
+        expect(newIdentity.supersedesIdentityId, isNull);
+
+        final previousRow = await (db.select(db.signingIdentities)
+              ..where((t) => t.identityId.equals(oldIdentity.identityId)))
+            .getSingle();
+        expect(previousRow.continuedAt, isNotNull);
+        expect(previousRow.supersededAt, isNull);
 
         final entries = await repository.watchEntries().first;
-        expect(entries, hasLength(2));
-        final migrated = entries.firstWhere(
-          (e) => e.migratedFromEntryId == legacy.id,
-        );
+        expect(entries, hasLength(1));
+        expect(entries.single.id, equals(legacy.id));
         expect(
-          migrated.postings.map((p) => p.amountMinor).toSet(),
-          equals(legacy.postings.map((p) => p.amountMinor).toSet()),
+          entries.single.signedByIdentityId,
+          equals(oldIdentity.identityId),
         );
-        expect(migrated.signedByIdentityId, equals(newIdentity.identityId));
-        // device_chain_sequence is UNIQUE across the whole table (design.md)
-        // and never scoped per identity, so migration continues the counter
-        // rather than restarting at 0 - it must differ from the legacy
-        // entry's own sequence number, which stays exactly as posted.
-        expect(
-          migrated.deviceChainSequence,
-          isNot(equals(legacy.deviceChainSequence)),
-        );
+        expect(entries.single.migratedFromEntryId, isNull);
       },
     );
 
     test(
-      'legacy entries are excluded from the post-migration summary',
+      'after Continuation, summary still counts original entries once',
       () async {
         final incomeId = await firstCategoryId(AccountType.income);
         await repository.recordTransaction(
@@ -1942,7 +1897,8 @@ void main() {
           transactionDate: DateTime(2026, 1, 15),
         );
 
-        await identityRepository.migrateToNewIdentityAfterKeyLoss();
+        await identityRepository.deleteStoredKey();
+        await identityRepository.continueBooks();
 
         final summary = await repository
             .watchSummary(
@@ -1950,51 +1906,55 @@ void main() {
               end: DateTime(2030, 12, 31),
             )
             .first;
-        // Both the legacy and the migrated entry post +1000/-1000 for
-        // income - if the legacy one weren't excluded, this would double
-        // count to 2000.
         expect(summary.totalIncomeMinor, equals(1000));
       },
     );
 
     test(
-      'a startup verifyChain after migration does not flag the migrated entry as a chain break',
+      'verifyChain remains fully verified after Continuation, and new '
+      'entries sign under the continued identity',
       () async {
-        // Regression test: the migrated entry's previous_entry_hash is a
-        // fresh genesis (a new identity cannot chain onto the
-        // unrecoverable old identity's hash), while device_chain_sequence
-        // keeps incrementing across the boundary. verifyChain() must
-        // recognize a migratedFromEntryId-marked entry as a legitimate new
-        // chain root, not a broken link - this exact scenario is what the
-        // real app runs into via app_router.dart's redirect immediately
-        // after a migration completes.
         final incomeId = await firstCategoryId(AccountType.income);
+        final accountId = await firstFinancialAccountId();
         await repository.recordTransaction(
           amountMinor: 1000,
           direction: TransactionDirection.moneyIn,
           categoryId: incomeId,
-          financialAccountId: await firstFinancialAccountId(),
+          financialAccountId: accountId,
           transactionDate: DateTime(2026, 1, 15),
         );
 
-        await identityRepository.migrateToNewIdentityAfterKeyLoss();
+        await identityRepository.deleteStoredKey();
+        final newIdentity = await identityRepository.continueBooks();
         final result = await chainVerifier.verifyChain();
-
         expect(result.isFullyVerified, isTrue);
 
-        final entries = await repository.watchEntries().first;
-        final migrated = entries.firstWhere(
-          (e) => e.migratedFromEntryId != null,
+        await repository.recordTransaction(
+          amountMinor: 500,
+          direction: TransactionDirection.moneyIn,
+          categoryId: incomeId,
+          financialAccountId: accountId,
+          transactionDate: DateTime(2026, 1, 16),
         );
-        expect(migrated.isVerified, isTrue);
+        final entries = await repository.watchEntries().first;
+        expect(entries, hasLength(2));
+        final newest = entries.firstWhere(
+          (e) => e.signedByIdentityId == newIdentity.identityId,
+        );
+        expect(newest.isVerified, isTrue);
 
-        final summary = await repository
-            .watchSummary(
-              start: DateTime(2020, 1, 1),
-              end: DateTime(2030, 12, 31),
-            )
-            .first;
-        expect(summary.totalIncomeMinor, equals(1000));
+        final after = await chainVerifier.verifyChain();
+        expect(after.isFullyVerified, isTrue);
+      },
+    );
+
+    test(
+      'when the stored key still matches, continueBooks is a no-op',
+      () async {
+        final before = (await identityRepository.currentIdentity())!;
+        final after = await identityRepository.continueBooks();
+        expect(after.identityId, equals(before.identityId));
+        expect(after.continuesIdentityId, isNull);
       },
     );
   });

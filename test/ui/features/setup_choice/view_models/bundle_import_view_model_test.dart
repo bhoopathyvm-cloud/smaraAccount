@@ -6,25 +6,25 @@ import 'package:smara_accounting/ui/features/setup_choice/view_models/bundle_imp
 import '../../../../mocks.mocks.dart';
 
 void main() {
-  late MockDeviceMigrationBundleRepository repository;
+  late MockBooksCopyRepository repository;
   late BundleImportViewModel viewModel;
 
   setUp(() {
-    repository = MockDeviceMigrationBundleRepository();
-    viewModel = BundleImportViewModel(bundleRepository: repository);
+    repository = MockBooksCopyRepository();
+    viewModel = BundleImportViewModel(booksCopyRepository: repository);
   });
 
   group('importBundle', () {
     test('returns true on success', () async {
       when(
-        repository.importBundle(
+        repository.restoreBooksCopy(
           fileContents: anyNamed('fileContents'),
           passphrase: anyNamed('passphrase'),
         ),
       ).thenAnswer((_) async {});
 
       final result = await viewModel.importBundle(
-        fileContents: '{"kind":"smara-device-migration-bundle"}',
+        fileContents: '{"kind":"smara-books-copy"}',
         passphrase: 'hunter2',
       );
 
@@ -33,36 +33,13 @@ void main() {
       expect(viewModel.isImporting, isFalse);
     });
 
-    test(
-      'surfaces a foreign identity as errorMessage without rethrowing',
-      () async {
-        when(
-          repository.importBundle(
-            fileContents: anyNamed('fileContents'),
-            passphrase: anyNamed('passphrase'),
-          ),
-        ).thenThrow(
-          ForeignDeviceMigrationBundleIdentityException('different identity'),
-        );
-
-        final result = await viewModel.importBundle(
-          fileContents: '{}',
-          passphrase: 'hunter2',
-        );
-
-        expect(result, isFalse);
-        expect(viewModel.errorMessage, isNotNull);
-        expect(viewModel.isImporting, isFalse);
-      },
-    );
-
-    test('surfaces an invalid bundle as errorMessage', () async {
+    test('surfaces an invalid copy as errorMessage', () async {
       when(
-        repository.importBundle(
+        repository.restoreBooksCopy(
           fileContents: anyNamed('fileContents'),
           passphrase: anyNamed('passphrase'),
         ),
-      ).thenThrow(InvalidDeviceMigrationBundleException('not a bundle'));
+      ).thenThrow(InvalidLedgerBackupException('not a valid copy'));
 
       final result = await viewModel.importBundle(
         fileContents: '{}',
@@ -71,11 +48,12 @@ void main() {
 
       expect(result, isFalse);
       expect(viewModel.errorMessage, isNotNull);
+      expect(viewModel.isImporting, isFalse);
     });
 
     test('surfaces a wrong passphrase as a generic errorMessage', () async {
       when(
-        repository.importBundle(
+        repository.restoreBooksCopy(
           fileContents: anyNamed('fileContents'),
           passphrase: anyNamed('passphrase'),
         ),

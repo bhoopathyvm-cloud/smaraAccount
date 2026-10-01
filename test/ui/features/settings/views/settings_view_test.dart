@@ -12,16 +12,14 @@ import '../../../../mocks.mocks.dart';
 
 void main() {
   late MockSettingsRepository repository;
-  late MockLedgerBackupRepository ledgerBackupRepository;
-  late MockDeviceMigrationBundleRepository deviceMigrationBundleRepository;
+  late MockBooksCopyRepository booksCopyRepository;
   late MockAppLockService appLockService;
   late MockBiometricAuthenticator biometricAuthenticator;
   late MockAppLockController appLockController;
 
   setUp(() {
     repository = MockSettingsRepository();
-    ledgerBackupRepository = MockLedgerBackupRepository();
-    deviceMigrationBundleRepository = MockDeviceMigrationBundleRepository();
+    booksCopyRepository = MockBooksCopyRepository();
     appLockService = MockAppLockService();
     biometricAuthenticator = MockBiometricAuthenticator();
     appLockController = MockAppLockController();
@@ -55,14 +53,11 @@ void main() {
 
   Future<SettingsViewModel> pumpSettings(
     WidgetTester tester, {
-    VoidCallback? onOpenRecoveryPhrase,
-    VoidCallback? onOpenKeystoreExport,
-    VoidCallback? onOpenDeviceMigrationBundleExport,
+    VoidCallback? onOpenDeviceHistory,
   }) async {
     final viewModel = SettingsViewModel(
       settingsRepository: repository,
-      ledgerBackupRepository: ledgerBackupRepository,
-      deviceMigrationBundleRepository: deviceMigrationBundleRepository,
+      booksCopyRepository: booksCopyRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -77,9 +72,7 @@ void main() {
       MaterialApp(
         home: SettingsView(
           viewModel: viewModel,
-          onOpenRecoveryPhrase: onOpenRecoveryPhrase,
-          onOpenKeystoreExport: onOpenKeystoreExport,
-          onOpenDeviceMigrationBundleExport: onOpenDeviceMigrationBundleExport,
+          onOpenDeviceHistory: onOpenDeviceHistory,
         ),
       ),
     );
@@ -200,12 +193,12 @@ void main() {
   });
 
   testWidgets(
-    'Save backup opens a passphrase dialog; an empty passphrase blocks it '
+    'Save a copy opens a passphrase dialog; an empty passphrase blocks it '
     'without calling the Repository',
     (tester) async {
       await pumpSettings(tester);
 
-      await tapScrolled(tester, find.text('Save backup'));
+      await tapScrolled(tester, find.text('Save a copy of my books'));
       await tester.pumpAndSettle();
       expect(
         find.text(
@@ -219,7 +212,7 @@ void main() {
 
       expect(find.text('Enter a passphrase.'), findsOneWidget);
       verifyNever(
-        ledgerBackupRepository.exportLedgerBackup(
+        booksCopyRepository.saveBooksCopy(
           passphrase: anyNamed('passphrase'),
         ),
       );
@@ -227,12 +220,12 @@ void main() {
   );
 
   testWidgets(
-    'Restore backup opens a dialog; Restore is blocked until a file is '
+    'Restore from a copy opens a dialog; Restore is blocked until a file is '
     'chosen, without calling the Repository',
     (tester) async {
       await pumpSettings(tester);
 
-      await tapScrolled(tester, find.text('Restore backup'));
+      await tapScrolled(tester, find.text('Restore from a copy'));
       await tester.pumpAndSettle();
       expect(find.text('Choose file'), findsOneWidget);
 
@@ -242,7 +235,7 @@ void main() {
 
       expect(find.text('Choose a backup file first.'), findsOneWidget);
       verifyNever(
-        ledgerBackupRepository.restoreLedgerBackup(
+        booksCopyRepository.restoreBooksCopy(
           fileContents: anyNamed('fileContents'),
           passphrase: anyNamed('passphrase'),
         ),
@@ -251,30 +244,17 @@ void main() {
   );
 
   testWidgets(
-    'all three recovery-and-identity screens are reachable and none of '
-    'them are ever disabled or gated on the others (device-migration-bundle)',
+    'Device history is reachable when the callback is wired',
     (tester) async {
-      var openedRecoveryPhrase = false;
-      var openedKeystoreExport = false;
-      var openedBundleExport = false;
+      var openedDeviceHistory = false;
       await pumpSettings(
         tester,
-        onOpenRecoveryPhrase: () => openedRecoveryPhrase = true,
-        onOpenKeystoreExport: () => openedKeystoreExport = true,
-        onOpenDeviceMigrationBundleExport: () => openedBundleExport = true,
+        onOpenDeviceHistory: () => openedDeviceHistory = true,
       );
 
-      await tapScrolled(tester, find.text('View recovery phrase'));
+      await tapScrolled(tester, find.text('Device history'));
       await tester.pump();
-      expect(openedRecoveryPhrase, isTrue);
-
-      await tapScrolled(tester, find.text('Export keystore file'));
-      await tester.pump();
-      expect(openedKeystoreExport, isTrue);
-
-      await tapScrolled(tester, find.text('Export device migration bundle'));
-      await tester.pump();
-      expect(openedBundleExport, isTrue);
+      expect(openedDeviceHistory, isTrue);
     },
   );
 
@@ -369,8 +349,7 @@ void main() {
     Uri? launched;
     final viewModel = SettingsViewModel(
       settingsRepository: repository,
-      ledgerBackupRepository: ledgerBackupRepository,
-      deviceMigrationBundleRepository: deviceMigrationBundleRepository,
+      booksCopyRepository: booksCopyRepository,
       appLockService: appLockService,
       biometricAuthenticator: biometricAuthenticator,
       appLockController: appLockController,
@@ -405,8 +384,7 @@ void main() {
     (tester) async {
       final viewModel = SettingsViewModel(
         settingsRepository: repository,
-        ledgerBackupRepository: ledgerBackupRepository,
-        deviceMigrationBundleRepository: deviceMigrationBundleRepository,
+        booksCopyRepository: booksCopyRepository,
         appLockService: appLockService,
         biometricAuthenticator: biometricAuthenticator,
         appLockController: appLockController,

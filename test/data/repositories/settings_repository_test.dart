@@ -5,6 +5,7 @@ import 'package:shared_preferences_platform_interface/shared_preferences_async_p
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/domain/investment/exchange_registry.dart';
 import 'package:smara_accounting/domain/models/exchange_rate_provider.dart';
+import 'package:smara_accounting/domain/models/research_tool.dart';
 
 void main() {
   setUp(() {
@@ -114,5 +115,64 @@ void main() {
         );
       },
     );
+  });
+
+  group('exportBooksSettings', () {
+    test('includes only books settings keys', () async {
+      final repository = SettingsRepository();
+      await repository.setReferenceRateLookupEnabled(true);
+      await repository.setSelectedProvider(ExchangeRateProvider.openErApi);
+      await repository.setMarketPriceFetchEnabled(false);
+      await repository.setDefaultExchange(exchangeForCode('LSE')!);
+      await repository.setFirstWeekSetupCompleted(true);
+
+      final exported = await repository.exportBooksSettings();
+
+      expect(
+        exported.keys.toSet(),
+        equals({
+          'referenceRateLookupEnabled',
+          'referenceRateProvider',
+          'marketPriceFetchEnabled',
+          'quoteProvider',
+          'defaultExchange',
+          'firstWeekSetupCompleted',
+        }),
+      );
+      expect(exported['referenceRateLookupEnabled'], isTrue);
+      expect(exported['referenceRateProvider'], equals('openErApi'));
+      expect(exported['marketPriceFetchEnabled'], isFalse);
+      expect(exported['defaultExchange'], equals('LSE'));
+      expect(exported['firstWeekSetupCompleted'], isTrue);
+    });
+
+    test('never includes device settings even when they are set', () async {
+      final repository = SettingsRepository();
+      await repository.setPreferredLocaleTag('ta');
+      await repository.setSelectedResearchTool(ResearchTool.claude);
+      await repository.setAppLockEnabled(true);
+      await repository.setAppLockTimeoutMinutes(5);
+      await repository.setAppLockBiometricEnabled(true);
+      await repository.recordBooksCopySaved(
+        at: DateTime.utc(2026, 1, 15),
+        entryCount: 42,
+      );
+      await repository.setBackupReminderEnabled(false);
+
+      final exported = await repository.exportBooksSettings();
+
+      expect(exported.containsKey('preferredLocaleTag'), isFalse);
+      expect(exported.containsKey('researchTool'), isFalse);
+      expect(exported.containsKey('appLockEnabled'), isFalse);
+      expect(exported.containsKey('appLockTimeoutMinutes'), isFalse);
+      expect(exported.containsKey('appLockBiometricEnabled'), isFalse);
+      expect(exported.containsKey('hideAppSwitcherSnapshot'), isFalse);
+      expect(exported.containsKey('lastCopySavedAt'), isFalse);
+      expect(exported.containsKey('entryCountAtLastCopy'), isFalse);
+      expect(exported.containsKey('backupReminderEnabled'), isFalse);
+      expect(exported.containsKey('backupReminderDays'), isFalse);
+      expect(exported.containsKey('backupReminderEntries'), isFalse);
+      expect(exported.containsKey('backupReminderSnoozeUntil'), isFalse);
+    });
   });
 }
