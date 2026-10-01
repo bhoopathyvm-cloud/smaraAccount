@@ -611,6 +611,46 @@ void main() {
             );
         expect(await db.select(db.membershipNotices).get(), hasLength(1));
         expect(await db.select(db.pendingJoinRequests).get(), hasLength(1));
+
+        // schemaVersion 21: same device_chain_sequence allowed on two identities.
+        await db
+            .into(db.signingIdentities)
+            .insert(
+              SigningIdentitiesCompanion.insert(
+                identityId: const Value('id-peer'),
+                publicKey: Uint8List.fromList([9, 9, 9]),
+                createdAt: Value(DateTime.fromMillisecondsSinceEpoch(0)),
+              ),
+            );
+        await db
+            .into(db.journalEntries)
+            .insert(
+              JournalEntriesCompanion.insert(
+                id: const Value('e-local'),
+                transactionDate: '2026-01-01',
+                recordedAt: DateTime.fromMillisecondsSinceEpoch(0),
+                deviceChainSequence: 0,
+                previousEntryHash: Uint8List(32),
+                entryHash: Uint8List.fromList(List.filled(32, 1)),
+                signedByIdentityId: 'id-keep',
+                signature: Uint8List.fromList(List.filled(64, 2)),
+              ),
+            );
+        await db
+            .into(db.journalEntries)
+            .insert(
+              JournalEntriesCompanion.insert(
+                id: const Value('e-peer'),
+                transactionDate: '2026-01-01',
+                recordedAt: DateTime.fromMillisecondsSinceEpoch(0),
+                deviceChainSequence: 0,
+                previousEntryHash: Uint8List(32),
+                entryHash: Uint8List.fromList(List.filled(32, 3)),
+                signedByIdentityId: 'id-peer',
+                signature: Uint8List.fromList(List.filled(64, 4)),
+              ),
+            );
+        expect(await db.select(db.journalEntries).get(), hasLength(2));
       },
     );
   });

@@ -30,15 +30,15 @@
 
 - [x] 5.1 Advertise/browse mDNS service `_smara._tcp` with TXT books-set id hash, device display name, protocol version; gate on local-network permission — verify unit/integration tests with a fake discovery adapter that two peers filter to the same books set and ignore others
 - [x] 5.2 Implement TLS sync transport with pinned device certificates from join; refuse unknown certs; payloads are EntryBatch / MetadataOps / NoticeOps without private keys — verify unit tests for pin accept/reject and payload serialization
-- [x] 5.3 Sync session: when both apps open on same LAN and on "Sync now"; Android brief background sync where OS allows; never use internet relay — verify tests with the in-process transport that Sync now exchanges missing entries and that a "remote network" fake does not connect"
+- [x] 5.3 Sync session: when both apps open on same LAN and on "Sync now"; Android brief background sync where OS allows; never use internet relay — verify tests with the in-process transport that Sync now exchanges missing entries and that a "remote network" fake does not connect
 
 ## 6. Sync merge and conflicts
 
-- [ ] 6.1 Entry merge inserts peer-signed rows never editing existing ones; skip duplicates by identity + `deviceChainSequence` — verify merge tests that A's entry appears on B unchanged on A
-- [ ] 6.2 Reject entries that fail verification; record "Not accepted: couldn't be verified (from \<device\>)" and Owner alert notice — verify tests with a tampered signature
-- [ ] 6.3 Competing Fixes: first Fix wins by `(recordedAt, signedByIdentityId, entryId)`; loser cancelled by a new signed cancel record; both sides get a check notice — verify deterministic winner tests
-- [ ] 6.4 Metadata last-write-wins per field for category/account ops with identity tie-break — verify field-independent merge tests
-- [ ] 6.5 Apply MetadataOps for shared books settings only; device settings never overwrite from peer — verify settings allowlist tests aligned with Books Copy split
+- [x] 6.1 Entry merge inserts peer-signed rows never editing existing ones; skip duplicates by identity + `deviceChainSequence` — verify merge tests that A's entry appears on B unchanged on A
+- [x] 6.2 Reject entries that fail verification; record "Not accepted: couldn't be verified (from \<device\>)" and Owner alert notice — verify tests with a tampered signature
+- [x] 6.3 Competing Fixes: first Fix wins by `(recordedAt, signedByIdentityId, entryId)`; loser cancelled by a new signed cancel record; both sides get a check notice — verify deterministic winner tests
+- [x] 6.4 Metadata last-write-wins per field for category/account ops with identity tie-break — verify field-independent merge tests
+- [x] 6.5 Apply MetadataOps for shared books settings only; device settings never overwrite from peer — verify settings allowlist tests aligned with Books Copy split
 
 ## 7. Shared categories
 

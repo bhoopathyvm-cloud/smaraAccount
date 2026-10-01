@@ -5,6 +5,7 @@ import '../../domain/lock/app_lock_settings_store.dart';
 import '../../domain/models/exchange_rate_provider.dart';
 import '../../domain/models/quote_provider.dart';
 import '../../domain/models/research_tool.dart';
+import '../../domain/peer_sync/sync_settings_allowlist.dart';
 import '../books_set/books_set_paths.dart';
 
 /// Plain, non-secret app preferences (currently just the reference
@@ -219,14 +220,7 @@ class SettingsRepository implements AppLockSettingsStore {
 
   // --- Books Copy: books settings export/import (never device settings) ---
 
-  static const _booksSettingsKeys = {
-    _referenceRateLookupEnabledKey,
-    _referenceRateProviderKey,
-    _marketPriceFetchEnabledKey,
-    _quoteProviderKey,
-    _defaultExchangeKey,
-    _firstWeekSetupCompletedKey,
-  };
+  static const _booksSettingsKeys = SyncSettingsAllowlist.booksSettingsKeys;
 
   /// Books settings only. Device settings (locale, research tool, App Lock,
   /// reminder state) are never included.

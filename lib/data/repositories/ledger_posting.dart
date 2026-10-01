@@ -817,14 +817,8 @@ class LedgerPosting {
       final tipEntryId =
           identityTip.trustedTipEntryId ?? chainState.trustedTipEntryId;
       final tipHash = identityTip.trustedTipHash ?? chainState.trustedTipHash;
-      // Sequence stays globally unique for now (column UNIQUE); take the
-      // max of identity tip and singleton so local writes never collide
-      // with already-inserted peer sequences after sync.
-      final sequence =
-          identityTip.nextDeviceChainSequence >
-              chainState.nextDeviceChainSequence
-          ? identityTip.nextDeviceChainSequence
-          : chainState.nextDeviceChainSequence;
+      // Per-identity sequences (composite unique with signedByIdentityId).
+      final sequence = identityTip.nextDeviceChainSequence;
 
       final priorLastForIdentity =
           await (_db.select(_db.journalEntries)

@@ -122,7 +122,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 20;
+  int get schemaVersion => 21;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -504,6 +504,37 @@ class AppDatabase extends _$AppDatabase {
         // (tasks 4.4 / 4.5). Additive only.
         await m.createTable(membershipNotices);
         await m.createTable(pendingJoinRequests);
+      }
+
+      if (from < 21) {
+        // Peer sync: device_chain_sequence is unique per signing identity,
+        // not globally — two devices may each have sequence 1.
+        await customStatement('PRAGMA foreign_keys = OFF');
+        await customStatement('''
+CREATE TABLE journal_entries__new (
+  id TEXT NOT NULL PRIMARY KEY,
+  transaction_date TEXT NOT NULL,
+  recorded_at INTEGER NOT NULL,
+  description TEXT NULL,
+  reverses_entry_id TEXT NULL REFERENCES journal_entries__new(id),
+  created_at INTEGER NOT NULL DEFAULT (CAST(strftime('%s', 'now') AS INTEGER)),
+  device_chain_sequence INTEGER NOT NULL,
+  previous_entry_hash BLOB NOT NULL,
+  entry_hash BLOB NOT NULL,
+  signed_by_identity_id TEXT NOT NULL REFERENCES signing_identities(identity_id),
+  signature BLOB NOT NULL,
+  migrated_from_entry_id TEXT NULL REFERENCES journal_entries__new(id),
+  UNIQUE (signed_by_identity_id, device_chain_sequence)
+);
+''');
+        await customStatement(
+          'INSERT INTO journal_entries__new SELECT * FROM journal_entries',
+        );
+        await customStatement('DROP TABLE journal_entries');
+        await customStatement(
+          'ALTER TABLE journal_entries__new RENAME TO journal_entries',
+        );
+        await customStatement('PRAGMA foreign_keys = ON');
       }
     },
   );

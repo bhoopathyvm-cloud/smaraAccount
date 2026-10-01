@@ -1911,6 +1911,60 @@ class MockExchangeRateService extends _i1.Mock
 class MockSettingsRepository extends _i1.Mock
     implements _i41.SettingsRepository {
   @override
+  _i17.Future<String?> localDeviceId() =>
+      (super.noSuchMethod(
+            Invocation.method(#localDeviceId, []),
+            returnValue: _i17.Future<String?>.value(),
+            returnValueForMissingStub: _i17.Future<String?>.value(),
+          )
+          as _i17.Future<String?>);
+
+  @override
+  _i17.Future<void> setLocalDeviceId(String? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#setLocalDeviceId, [id]),
+            returnValue: _i17.Future<void>.value(),
+            returnValueForMissingStub: _i17.Future<void>.value(),
+          )
+          as _i17.Future<void>);
+
+  @override
+  _i17.Future<String?> localDeviceDisplayName() =>
+      (super.noSuchMethod(
+            Invocation.method(#localDeviceDisplayName, []),
+            returnValue: _i17.Future<String?>.value(),
+            returnValueForMissingStub: _i17.Future<String?>.value(),
+          )
+          as _i17.Future<String?>);
+
+  @override
+  _i17.Future<void> setLocalDeviceDisplayName(String? name) =>
+      (super.noSuchMethod(
+            Invocation.method(#setLocalDeviceDisplayName, [name]),
+            returnValue: _i17.Future<void>.value(),
+            returnValueForMissingStub: _i17.Future<void>.value(),
+          )
+          as _i17.Future<void>);
+
+  @override
+  _i17.Future<bool> hasLinkedDevicesPermissionExplained() =>
+      (super.noSuchMethod(
+            Invocation.method(#hasLinkedDevicesPermissionExplained, []),
+            returnValue: _i17.Future<bool>.value(false),
+            returnValueForMissingStub: _i17.Future<bool>.value(false),
+          )
+          as _i17.Future<bool>);
+
+  @override
+  _i17.Future<void> setLinkedDevicesPermissionExplained(bool? value) =>
+      (super.noSuchMethod(
+            Invocation.method(#setLinkedDevicesPermissionExplained, [value]),
+            returnValue: _i17.Future<void>.value(),
+            returnValueForMissingStub: _i17.Future<void>.value(),
+          )
+          as _i17.Future<void>);
+
+  @override
   _i17.Future<bool> isReferenceRateLookupEnabled() =>
       (super.noSuchMethod(
             Invocation.method(#isReferenceRateLookupEnabled, []),

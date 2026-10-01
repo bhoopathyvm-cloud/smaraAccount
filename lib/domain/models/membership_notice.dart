@@ -1,5 +1,5 @@
-/// Kind of membership / erase notice shown on Home and Device history
-/// after the next sync (linked-devices spec: Membership Notices).
+/// Kind of membership / erase / sync notice shown on Home and Device history
+/// after the next sync (linked-devices + peer-sync specs).
 enum MembershipNoticeKind {
   deviceAdded,
   deviceRemoved,
@@ -8,6 +8,15 @@ enum MembershipNoticeKind {
   soleOwnerClaimed,
   soleOwnerClaimCancelled,
   soleOwnerClaimEffective,
+
+  /// Entry from a peer failed verification and was not accepted.
+  entryNotAccepted,
+
+  /// Owner alert that an unverified batch was refused.
+  ownerVerificationAlert,
+
+  /// Competing Fixes resolved; people should check the result.
+  competingFixCheck,
 }
 
 /// A user-visible membership notice stored in the books database.

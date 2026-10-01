@@ -1908,7 +1908,6 @@ class $JournalEntriesTable extends JournalEntries
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
   static const VerificationMeta _previousEntryHashMeta = const VerificationMeta(
     'previousEntryHash',
@@ -2109,6 +2108,10 @@ class $JournalEntriesTable extends JournalEntries
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {signedByIdentityId, deviceChainSequence},
+  ];
+  @override
   JournalEntryRow map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return JournalEntryRow(
@@ -2183,9 +2186,9 @@ class JournalEntryRow extends DataClass implements Insertable<JournalEntryRow> {
   final String? reversesEntryId;
   final DateTime createdAt;
 
-  /// Gapless, ascending position in this device's chain (ledger-integrity-signing
-  /// design.md - named `device_chain_sequence`, not `sequence`, for the
-  /// per-device chain this becomes once multi-device sync exists).
+  /// Gapless, ascending position in this signing identity's chain
+  /// (per-identity uniqueness with [signedByIdentityId] — linked-devices
+  /// multi-chain sync).
   final int deviceChainSequence;
 
   /// 32 zero bytes for the genesis entry (see [genesisPreviousEntryHash] in
