@@ -1,69 +1,133 @@
 ## Purpose
 
-Let an employee claim business expenses from company books and let the accounting team decide each item, pay, and manage advances, so that only what the company accepted and paid enters the books.
+Let employees submit travel and other expense Claims with receipts on
+their phones, and let the office approve or reject each item and pay —
+creating ordinary books records only on approval — without a server.
 
 ## ADDED Requirements
 
-### Requirement: A Claim Is a Request Outside the Books
-A Claimant SHALL be able to create a Claim made of one or more Claim Items, each with a date, an expense category from the company's allowed list, an amount in the currency paid, a description and receipts. A Claim and its items SHALL NOT create any journal entry until an item is approved.
+### Requirement: Claim Is Outside the Books Until Approved
+A Claim is a list of Claim Items with receipts and a status. The system SHALL NOT post Journal Entries for a Claim or Claim Item until an Approver or Owner approves that item. Rejected items SHALL NEVER create Journal Entries.
 
-#### Scenario: A draft claim leaves the books unchanged
-- **WHEN** a Claimant creates a claim with three items and saves it as a draft
-- **THEN** the company books contain no new entry
+#### Scenario: Draft and submitted claims do not appear in the register
+- **WHEN** a Claimant saves or submits a Claim with items
+- **THEN** the company books register gains no Journal Entry for those items
+- **AND** the Claim is stored in the company Books Set as a Claim, not as a posted entry
+
+#### Scenario: Rejected item never posts
+- **WHEN** an Approver rejects a Claim Item with a reason
+- **THEN** no Journal Entry is created for that item
+- **AND** the rejection reason is stored for the Claimant to see
+
+### Requirement: Approval Creates Expense and Owed-To Entries
+When an Approver or Owner approves a Claim Item (at the submitted amount or a different amount), the system SHALL post a balanced Journal Entry for the approved company-currency amount between the chosen expense Category and the Claimant's "Owed to \<name\>" liability Financial Account.
+
+#### Scenario: Approve posts expense and liability
+- **WHEN** an Approver approves a Claim Item for 120 in company currency against Travel
+- **THEN** a Journal Entry posts Travel expense 120 and Owed to that Claimant 120
+- **AND** the entry is signed by the Approver's device Signing Identity
+
+#### Scenario: Approve different amount requires a reason
+- **WHEN** an Approver approves a Claim Item for an amount different from the submitted company-currency amount
+- **THEN** the system requires a reason before posting
+- **AND** the posted amount is the Approver's amount, not the submitted amount
+
+### Requirement: Payment Clears Owed-To Against Bank
+When the office records a payment to a Claimant for approved amounts, the system SHALL post a balanced Journal Entry between that Claimant's "Owed to \<name\>" liability and a chosen company bank or cash Financial Account.
+
+#### Scenario: Payment posts liability and bank
+- **WHEN** an Approver pays 120 owed to a Claimant from the company checking account
+- **THEN** a Journal Entry posts Owed to that Claimant −120 and checking −120 (asset reduced)
+- **AND** the Claimant's visible balance updates after sync
+
+### Requirement: Per-Item Approve Reject or Different Amount
+Each Claim Item SHALL be decided separately: Approve, Approve a different amount (reason required), or Reject (reason required). The Claim's status SHALL follow from its items.
+
+#### Scenario: Mixed decisions yield partly approved
+- **WHEN** one item on a Claim is approved and another is still undecided
+- **THEN** the Claim status is Partly approved
+
+#### Scenario: Reject requires a reason
+- **WHEN** an Approver chooses Reject on a Claim Item
+- **THEN** the system does not complete the decision until a reason is provided
 
 ### Requirement: Claim Statuses
-A Claim SHALL have the status Draft, Submitted, Partly approved, Approved or Paid. The status SHALL follow from its items. It is Draft until submitted, then Submitted until every item is decided. It is Partly approved when items are decided but some are rejected or reduced. It is Approved when every item is approved in full. It is Paid when the approved total has been paid.
+A Claim SHALL expose status among Draft, Submitted, Partly approved, Approved, Paid, and Rejected (every item rejected). Claimants SHALL see these statuses on their own claims.
 
-#### Scenario: Status follows the items
-- **WHEN** an Approver approves two items and rejects one item of a submitted claim
-- **THEN** the claim's status is Partly approved
+#### Scenario: Submit moves draft to submitted
+- **WHEN** a Claimant submits a Draft Claim that meets receipt and category rules
+- **THEN** the Claim status becomes Submitted
 
-### Requirement: A Decision for Each Item
-An Approver SHALL decide each submitted item separately: Approve, Approve a different amount, or Reject. A reason SHALL be required when the amount changes or the item is rejected. The Claimant SHALL see every decision and reason.
+#### Scenario: Paid after full settlement
+- **WHEN** every approved amount on a Claim has been settled by payment or advance offset
+- **THEN** the Claim status becomes Paid
 
-#### Scenario: Reduced amount with a reason
-- **WHEN** an Approver approves a hotel item of 180 as 150 with the reason "Hotel limit is 150 per night"
-- **THEN** the item shows 150 approved and the reason on the Claimant's device after syncing
+#### Scenario: All items rejected
+- **WHEN** every Claim Item on a Claim has been rejected
+- **THEN** the Claim status is Rejected
+- **AND** no amount is owed for that Claim
 
-#### Scenario: A reason is required
-- **WHEN** an Approver tries to reject an item without a reason
-- **THEN** the rejection is not saved until a reason is entered
+### Requirement: Claimant Sees Only Their Slice
+A person whose role on the books is Claimant only SHALL see their own claims and statuses, rejection reasons, their balance with the company, payments made to them, and the expense categories allowed for claims. They SHALL NOT see company bank accounts, other employees' claims, or other parts of the books.
 
-### Requirement: Approval and Payment Create the Accounting Records
-Approving an item SHALL post one signed entry in the company books: the approved amount to the item's expense category, owed to the Claimant's "Owed to <name>" account. Recording a payment SHALL post a signed entry from the chosen company bank or cash account to the Claimant's "Owed to" account. A rejected item SHALL NOT post any entry. Changing a decision after it was posted SHALL use the normal Fix, never an edit.
+#### Scenario: Claimant home shows own claims and balance
+- **WHEN** a Claimant-only user opens the company Books Set
+- **THEN** they see their claims, statuses, and balance copy such as "Acme owes you…" or "You owe Acme…"
+- **AND** they do not see company bank balances or other people's names in a people list
 
-#### Scenario: An approved taxi receipt
-- **WHEN** an Approver approves a taxi item of 40
-- **THEN** the company books contain an entry of 40 to "Travel" owed to "Owed to Ravi"
+#### Scenario: Claimant cannot open bank register
+- **WHEN** a Claimant-only user attempts to navigate to a company bank account register
+- **THEN** the system denies that navigation
 
-#### Scenario: Paying the claim
-- **WHEN** an Approver records a payment of 230 from the company bank account to Ravi
-- **THEN** the books contain that entry, "Owed to Ravi" is reduced by 230, and the claim shows Paid on Ravi's device after syncing
+### Requirement: Claim Category Allowlist
+The company books SHALL maintain the set of expense Categories allowed on Claims. Claimants SHALL pick only from that allowlist when adding Claim Items.
 
-### Requirement: Foreign-Currency Items
-A Claimant SHALL record each item in the currency paid. The Claimant MAY enter the exchange rate from their card statement. Otherwise the app SHALL propose its reference rate for the item's date. The Approver SHALL see both currencies and the rate, and MAY correct the rate. The books SHALL record the approved amount in the company's currency.
+#### Scenario: Disallowed category is not offered
+- **WHEN** a Claimant adds a Claim Item
+- **THEN** only allowlisted expense Categories appear
+- **AND** categories not on the allowlist cannot be selected
 
-#### Scenario: Dollars claimed in euro books
-- **WHEN** Ravi claims 80 USD at a card rate of 0.92 and the Approver approves it
-- **THEN** the books record 73.60 EUR and the item shows 80 USD at 0.92
+### Requirement: Foreign Currency Claim Items
+A Claim Item SHALL be recorded in the currency paid. The Claimant MAY enter a card-statement rate; otherwise the system SHALL use the app's rate for the expense date when available. The Approver SHALL see both currencies and MAY correct the rate. The books SHALL record the approved company-currency amount.
 
-### Requirement: Advances
-An Approver SHALL be able to record an advance paid to a Claimant before a trip. Approved items SHALL reduce the advance. The Claimant's balance SHALL show either what the company owes them or what they owe the company.
+#### Scenario: Employee-stated rate is used until Approver changes it
+- **WHEN** a Claimant enters a paid-currency amount and a statement rate
+- **THEN** the item shows the implied company-currency amount using that rate
+- **AND** the Approver can change the rate before approving
 
-#### Scenario: Advance larger than claims
-- **WHEN** Ravi received an advance of 300 and items of 280 are approved
-- **THEN** Ravi's balance shows "You owe Acme 20"
+#### Scenario: Missing rate uses app rate for the date
+- **WHEN** the Claimant leaves the rate blank and the app has a rate for that expense date
+- **THEN** the item uses that app rate for the company-currency amount
 
-### Requirement: Spending-Limit Hints
-An Owner SHALL be able to set an optional claim limit per allowed category, for example "Hotel at most 150 per night". The limit SHALL be shown as a hint to the Claimant while entering an item and to the Approver while deciding it. It SHALL NOT change any amount automatically.
+### Requirement: Advances Reduce What Is Owed
+The system SHALL support Advances: payments to a Claimant before Claims. Approved Claim amounts SHALL reduce the Advance / owed balance. Claimant balance copy SHALL reflect either direction (company owes Claimant, or Claimant owes company).
 
-#### Scenario: A hint, not a rule
-- **WHEN** Ravi enters a hotel item of 180 where the limit is 150
-- **THEN** the app shows "Above the 150 limit" and still saves 180 for the Approver to decide
+#### Scenario: Advance then approved claim
+- **WHEN** the office records an Advance of 200 to a Claimant and later approves a Claim Item for 80
+- **THEN** the Claimant's balance reflects the remaining Advance against approved amounts
+- **AND** the Claimant can see the Advance and the approved Claim after sync
 
-### Requirement: Submitting Works Over the Shared Wi-Fi
-A Claimant SHALL be able to prepare and submit claims at any time. Submitted claims and their receipts SHALL reach the company's linked devices only over the same Wi-Fi, under the rules of `linked-devices`. The claim SHALL show "Waiting to send" until it has been delivered.
+### Requirement: Spending Limit Hints Are Not Enforced
+Optional per-category spending limits for Claims (for example a maximum per night) SHALL be shown as hints to the Claimant and the Approver. The system SHALL NOT block submit or approve because a hint is exceeded.
 
-#### Scenario: Submitted while travelling
-- **WHEN** Ravi submits a claim from a hotel
-- **THEN** it shows "Waiting to send" and is delivered the next time his phone and a company device have Smara open on the office Wi-Fi
+#### Scenario: Over-hint still submittable
+- **WHEN** a Claimant enters an amount above a category's Claim spending-limit hint
+- **THEN** the UI shows the hint
+- **AND** the Claimant can still submit
+- **AND** the Approver can still approve
+
+### Requirement: Claims Submit Only on Office Wi-Fi Sync
+Claims prepared away from the office SHALL reach Approver devices only when Peer Sync runs on the same Wi-Fi. The system SHALL NOT offer an internet or relay path to submit Claims.
+
+#### Scenario: Submit waits for sync on same Wi-Fi
+- **WHEN** a Claimant marks a Claim Submitted while off the office network
+- **THEN** Approver devices do not receive it until both sync on the same Wi-Fi
+- **AND** no server is used to deliver the Claim
+
+### Requirement: No Household Books Reimbursement in First Version
+Recording a payment for a Claim SHALL NOT create entries in the Claimant's household Books Set.
+
+#### Scenario: Payment stays in company books only
+- **WHEN** the office pays an approved Claim
+- **THEN** only the company Books Set gains the payment Journal Entry
+- **AND** the Claimant's household Books Set is unchanged

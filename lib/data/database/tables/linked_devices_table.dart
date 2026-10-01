@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import '../../../domain/models/linked_device_role.dart';
+import 'accounts_table.dart';
 import 'signing_identities_table.dart';
 
 export '../../../domain/models/linked_device_role.dart';
@@ -19,10 +20,23 @@ class LinkedDevices extends Table {
   /// Fingerprint of the device TLS certificate exchanged at join.
   TextColumn get deviceCertFingerprint => text()();
 
+  /// Primary role (Owner > Approver > Member > Claimant) for B-compatible
+  /// single-role reads. Prefer [rolesCsv] for capability checks.
   TextColumn get role => textEnum<LinkedDeviceRole>()();
+
+  /// Comma-separated role set (design Decision 7). Migrated from [role].
+  TextColumn get rolesCsv => text().withDefault(const Constant(''))();
 
   /// Whether this Member may add other devices (Owner policy).
   BoolColumn get canAdd => boolean().withDefault(const Constant(false))();
+
+  /// Liability "Owed to \<name\>" account when this membership is a Claimant.
+  TextColumn get owedToAccountId =>
+      text().nullable().references(Accounts, #id)();
+
+  /// Person display name when joined via "Add a person" (may differ from
+  /// [displayName] device label).
+  TextColumn get personDisplayName => text().nullable()();
 
   DateTimeColumn get removedAt => dateTime().nullable()();
 

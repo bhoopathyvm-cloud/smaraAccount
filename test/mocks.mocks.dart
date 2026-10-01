@@ -2040,12 +2040,14 @@ class MockBooksCopyRepository extends _i1.Mock
     required String? passphrase,
     _i39.File? databaseFile,
     DateTime? now,
+    _i39.Directory? supportDirectory,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#saveBooksCopy, [], {
               #passphrase: passphrase,
               #databaseFile: databaseFile,
               #now: now,
+              #supportDirectory: supportDirectory,
             }),
             returnValue: _i17.Future<String>.value(
               _i20.dummyValue<String>(
@@ -2054,6 +2056,7 @@ class MockBooksCopyRepository extends _i1.Mock
                   #passphrase: passphrase,
                   #databaseFile: databaseFile,
                   #now: now,
+                  #supportDirectory: supportDirectory,
                 }),
               ),
             ),
@@ -2064,6 +2067,7 @@ class MockBooksCopyRepository extends _i1.Mock
                   #passphrase: passphrase,
                   #databaseFile: databaseFile,
                   #now: now,
+                  #supportDirectory: supportDirectory,
                 }),
               ),
             ),
@@ -2095,12 +2099,14 @@ class MockBooksCopyRepository extends _i1.Mock
     required String? fileContents,
     required String? passphrase,
     _i39.File? targetFile,
+    _i39.Directory? supportDirectory,
   }) =>
       (super.noSuchMethod(
             Invocation.method(#restoreBooksCopy, [], {
               #fileContents: fileContents,
               #passphrase: passphrase,
               #targetFile: targetFile,
+              #supportDirectory: supportDirectory,
             }),
             returnValue: _i17.Future<void>.value(),
             returnValueForMissingStub: _i17.Future<void>.value(),

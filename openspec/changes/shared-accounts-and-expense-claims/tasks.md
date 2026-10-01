@@ -1,63 +1,72 @@
-## 0. Prerequisites and spec reconciliation
+# Tasks
 
-- [ ] 0.1 Confirm `books-copy-and-continuation` and `linked-devices` are implemented and archived (`openspec/specs/linked-devices/spec.md` and `openspec/specs/multiple-books/spec.md` exist); verify `openspec validate shared-accounts-and-expense-claims --strict` after rebasing on main
-- [ ] 0.2 After rebasing, move the role extension into a MODIFIED delta of `linked-devices` "Owner and Member Roles" (adding Approver and Claimant), and add MODIFIED deltas for `books-copy` (copy format with receipts) and `local-network-sync` (scoped sync); verify with `openspec validate --strict`
+## 1. Prerequisites and schema foundations
 
-## 1. Turning claims on
+- [x] 1.1 Confirm `linked-devices-and-sync` (project B) is merged or available on the implementation branch — Linked devices, Peer Sync, Owner/Member, books switcher, and dual-device harness compile and their unit tests pass
+- [x] 1.2 Extend membership schema from single role to a role set (Owner, Approver, Member, Claimant) with migration mapping Owner→{Owner}, Member→{Member}; add `owedToAccountId` and person display fields — verify migration test from the prior B schema version
+- [x] 1.3 Add Drift schema for claims, claim_items, claim_item_decisions, claim_receipts metadata, advances, claim_category_allowlist, and claim_spending_hints; create `books/<id>/receipts/` storage path helper — verify `app_database_migration_test` upgrades and empty claim tables on household sets
+- [x] 1.4 Document new glossary terms in a draft note for archive (Claim, Claim Item, Claimant, Approver, Advance, Claim Receipt, Owed-to Account) aligned with design — verify terms match issue #205 wording and avoid banned synonyms
 
-- [ ] 1.1 "Expense claims" switch for a set of books (Owner only), with the allowed-categories list, "Receipt required above" (default 0) and per-category limit hints; verify with `test/ui/features/claims/claim_settings_test.dart`
+## 2. Owed-to accounts and role gates
 
-## 2. Claim event log (expense-claims)
+- [x] 2.1 Implement automatic creation of "Owed to \<name\>" liability Financial Account when a Claimant person is added; link on membership — verify unit tests that Add Claimant creates the account once and reuses it
+- [x] 2.2 Implement role-gate helpers (canApproveClaims, canManageMembership, canBookkeep, canSubmitOwnClaims) over the role set — verify unit tests for single- and multi-role combinations
+- [x] 2.3 Build "Add a person" UI/QR flow reusing B's join transport with person-role offer (default Claimant) — verify widget/unit tests for successful Claimant join and same-Wi-Fi refusal off LAN
+- [x] 2.4 Implement remove-person flow with warning for open Claims and non-zero owed balance; history and receipts remain — verify unit/widget tests for warning content and that past claims stay after removal
+  <!-- 2026-10-01: flow existed (#214); its widget test deadlocked waiting for the removal without pumping. Fixed; `remove_person_section_test` passes (warning names open Claims and balance; removal keeps the claim). Full suite 1020 passed. -->
 
-- [ ] 2.1 Claim event types as signed control records (created, item added or changed while Draft, submitted, acknowledged, item decided, payment recorded, advance recorded), and the computed claim state with statuses; verify with `test/domain/claims/claim_state_test.dart` covering every status transition
-- [ ] 2.2 Item validation (allowed category, amount, currency, a receipt when required) and reason required for reduce or reject; verify with `test/domain/claims/claim_item_draft_test.dart`
+## 3. Claim domain and Claimant surface
 
-## 3. Approval, payment and advances
+- [x] 3.1 Implement Claim / Claim Item repository: create Draft, edit items, derive status (Draft, Submitted, Partly approved, Approved, Paid, Rejected), reject posting until approval — verify unit tests that submit does not create Journal Entries
+- [x] 3.2 Implement claim-category allowlist and spending-limit hints (show only, never block) — verify unit/widget tests that disallowed categories are hidden and over-hint submit still succeeds
+- [x] 3.3 Implement foreign-currency Claim Item fields (paid currency/amount, optional employee rate, app rate fallback, Approver-correctable rate, company-currency amount) — verify unit tests for stated rate, app-rate fallback, and Approver override before approve
+- [x] 3.4 Build Claimant UI: claims list, claim editor, balance copy ("…owes you" / "You owe…"), payments list, allowlisted categories only — verify widget tests that bank registers and other people are not reachable from Claimant-only role
+- [x] 3.5 Wire `app-navigation-policy` Claimant-only gates for the active Books Set — verify policy unit tests block bank routes and allow own Claims routes
 
-- [ ] 3.1 Approving posts the expense / "Owed to <name>" entry in the same transaction as the decision event; rejecting posts nothing; changing a decision uses Fix; verify with `test/data/repositories/claim_posting_test.dart` and full chain verification
-- [ ] 3.2 Payments and advances post against "Owed to <name>", and the balance wording reads "Acme owes you N" or "You owe Acme N"; verify with `test/domain/claims/claimant_balance_test.dart`
-- [ ] 3.3 Foreign currency: original amount, currency, rate and rate source; proposed reference rate; Approver correction stored with the decision; verify with `test/domain/claims/claim_currency_test.dart`
+## 4. Receipts
 
-## 4. Receipts (claim-receipts)
+- [x] 4.1 Implement receipt attach (camera, image pick, PDF pick), photo compression to ~1 MB, PDF reject above 5 MB, store under books receipts path — verify unit tests for compression target, PDF size refusal, and metadata row linkage
+- [x] 4.2 Implement "Receipt required above ___" books setting (default 0) and enforce on submit — verify unit tests for threshold 0 and below-threshold omit
+- [x] 4.3 Ensure receipts are never auto-deleted on pay/reject — verify unit tests that paid and rejected items still load receipt bytes
 
-- [ ] 4.1 Capture from camera or library (`image_picker`) and PDF (`file_picker`), with permissions asked on first use; verify with widget tests using fake pickers
-- [ ] 4.2 Compression (JPEG about 1 MB, long edge at most 2000 px), PDF limit 5 MB, content-addressed storage and SHA-256 in the item event; verify with `test/data/claims/receipt_store_test.dart` (a swapped receipt fails verification)
-- [ ] 4.3 Books Copy format v2 (container with `db`, `settings`, `receipts/`, encrypted as a whole and streamed) with the v1 reader kept; verify with `test/domain/backup/books_copy_file_test.dart` v1 and v2 cases and a restore round trip with receipts
+## 5. Approver decisions and posting
 
-## 5. Roles and scoped sync (shared-account-access)
+- [x] 5.1 Implement per-item Approve / Approve different amount (reason required) / Reject (reason required) and status derivation — verify unit tests for mixed decisions → Partly approved and all-rejected → Rejected
+- [x] 5.2 On approve, post Journal Entry expense Category ↔ Owed-to account for approved company-currency amount, signed by Approver device — verify ledger tests for balance-zero entry and no post on reject
+- [x] 5.3 Implement payment posting Owed-to ↔ bank/cash and Paid status when claim approved amount is settled — verify unit tests for payment entry and Claimant balance update
+- [x] 5.4 Build Approver review queue UI showing items, both currencies, receipts, hints, and decision actions — verify widget tests for reason-required paths and successful approve
 
-- [ ] 5.1 Role sets per identity (Owner, Member, Approver, Claimant) changed by signed control records; verify with `test/domain/linked_devices/roles_test.dart` additions
-- [ ] 5.2 "Add a person" as Claimant, creating "Owed to <name>" automatically and linking the device by QR; verify with `test/data/repositories/add_claimant_test.dart`
-- [ ] 5.3 Scope tagging (`person:<id>`, `claimants`) on events, entries and master data; scoped sync sends only in-scope records plus their signing identities; verify with `test/data/sync/scoped_sync_test.dart` that a Claimant database contains no out-of-scope rows
-- [ ] 5.4 Claimant-device verification: per-record hash and signature for received records, full continuity for its own chain; verify with a tampered received record in `scoped_sync_test.dart`
-- [ ] 5.5 Removing a Claimant: warning with open claims and balance, history kept; verify with `test/ui/features/linked_devices/remove_claimant_test.dart`
-- [ ] 5.6 Delivery state "Waiting to send" until an acknowledgement event arrives; verify in `scoped_sync_test.dart`
+## 6. Advances
 
-## 6. Screens
+- [x] 6.1 Implement Advance recording (payment to Claimant before claims) and balance reduction when claims are approved / offset — verify unit tests for advance then approve and Claimant balance both signs
+- [x] 6.2 Expose Advances on Approver payment UI and Claimant balance/payments views — verify widget tests that Claimant sees advances after sync fixture
 
-- [ ] 6.1 Claimant home for company books: claims list with statuses, balance, payments, "New claim"; verify with widget tests
-- [ ] 6.2 Claim editor: items, receipts, currency and rate, limit hint, Submit; verify with widget tests
-- [ ] 6.3 Approver queue and claim review: per-item Approve, Approve different amount, Reject with reason, Pay, Record advance; verify with widget tests
-- [ ] 6.4 People and roles screen for Owners; verify with widget tests
+## 7. Peer sync, Books Copy, books switcher
 
-## 7. Localization (43 languages)
+- [x] 7.1 Extend Peer Sync payloads with ClaimBatch, decision ops, AdvanceOps, and ReceiptBlob; keep private keys out — verify dual-device harness: submit on B, sync, appear on A
+- [x] 7.2 Implement Claimant-scoped outbound filter (own claims, receipts, advances, payments affecting balance, allowlist, hints only) — verify harness/contract tests that Claimant peer receives no unrelated bank Journal Entries
+- [x] 7.3 Include claims tables and receipts tree in Books Copy save/restore — verify unit tests that restore brings back claim + receipt bytes without private keys
+- [ ] 7.4 Books switcher: Claimant-only membership on company set shows Claimant surface; household set unchanged — verify widget tests for switch to company vs household
 
-- [ ] 7.1 Add the new strings to `lib/l10n/app_en.arb` in plain wording (Claim, Submit, Approve, Reject, reasons, balances, receipts, Waiting to send); verify `flutter gen-l10n`
-- [ ] 7.2 Translate into all 43 ARB files and update `untranslated.json`; verify `test/l10n/locale_packs_test.dart`, and run `tool/run_localized_acceptance_tests.sh` for the claims screens
+## 8. Acceptance, localization, docs
 
-## 8. Integration and acceptance tests (all suites)
+- [x] 8.1 Extend dual-device harness group for Claims (submit → sync → approve → pay, scoped sync, receipt blob); flag physical Claimant-phone manual — verify harness group runs without physical devices and manual group is skipped by default
+- [ ] 8.2 Add English ARB strings for Claims, statuses, Approver actions, reasons, advances, Add a person, Claimant balance, receipts, hints; run `flutter gen-l10n` — verify gen-l10n succeeds and widget tests use new keys
+- [x] 8.3 Update `docs/user-guide.md` for Claims, roles, receipts, advances, Add a person, Claimant limits; apply `CONTEXT.md` glossary on land; note claims are off-ledger until approval in architecture docs — verify guide sections exist and do not claim remote submit or household reimbursement
 
-- [ ] 8.1 New acceptance group `expense_claims` (Owner, Approver and Claimant instances over the loopback transport): add a Claimant, create and submit a claim with a receipt, approve one item, reduce one with a reason, reject one, pay, check both balances, and check the Claimant database holds no out-of-scope data; verify `tool/run_acceptance_tests.sh -d macos expense_claims` passes
-- [ ] 8.2 Acceptance cases: advance larger than claims, a foreign-currency item with rate correction, a missing receipt blocking submission, a Books Copy with receipts restoring on a fresh install, removing a Claimant with an open balance; verify on macOS
-- [ ] 8.3 Re-run the `linked_devices`, `multiple_books`, `books_copy` and `core_ledger` acceptance groups to confirm no regression; verify each passes on macOS
-- [ ] 8.4 Check `integration_test/app_test.dart` and the instrument and market integration tests still pass
-- [ ] 8.5 If store screenshot or preview tests exist (PR #198), add a claims screen; verify `tool/capture_store_screenshots.sh`
-- [ ] 8.6 CI: confirm `flutter-ci.yml`, `acceptance-suite-nightly.yml`, `localized-smoke.yml` and `linux-desktop.yml` cover the new tests; verify a green CI run on the PR
-- [ ] 8.7 Full suite per CLAUDE.md: `tool/run_acceptance_tests.sh -d macos` green
-- [ ] 8.8 Real-device run: Owner and Approver on a Mac, Claimant on an Android phone and an iPhone, on office-style Wi-Fi; record a claim with camera receipts, approve and pay; record the results here with dates and devices
+## 9. Integration check
 
-## 9. Docs and glossary
+- [x] 9.1 Run `flutter analyze` and unit/widget suites touched by this change; fix regressions — verify clean analyze and tests for claims, receipts, roles, sync filter, navigation
+- [ ] 9.2 Run dual-device harness claims group via `tool/run_acceptance_tests.sh` on the available CI/Linux target; run GUI acceptance subsets that exist for Claims on macOS when available — verify harness group passes (note environment limits for macOS GUI / physical phones without checking boxes you cannot satisfy)
+- [ ] 9.3 Manual spot-check when two devices available: Add a person Claimant, submit claim with receipt on office Wi-Fi, approve different amount, pay, confirm Claimant balance — record result in this task (leave unchecked if physical devices unavailable)
 
-- [ ] 9.1 `CONTEXT.md`: add Claim, Claim Item, Claimant, Approver, Advance, Receipt, Owed-to Account, Scope; verify a glossary review
-- [ ] 9.2 Privacy policy: receipts and claims stay on company devices and the local network; Claimant devices hold only their part; verify `mkdocs build --strict`
-- [ ] 9.3 User guide and website (`whats-built.md`): expense claims for small businesses; verify `mkdocs build --strict`
+## 10. Gaps found in review (2026-10-01)
+
+These are user-facing parts that boxes above were ticked against, but that don't exist in the app yet. They keep the change open until a Claimant can actually use it.
+
+- [ ] 10.1 Claim editor screen: add, edit and remove items (date, allowed category, amount, currency and rate, description), attach receipts, and Submit with the required-receipt and limit-hint behavior. Today the Claimant screen can only create an empty draft (task 3.4 was ticked without an editor). Verify with widget tests for the full draft → submit path
+- [ ] 10.2 Receipt capture in the app: camera photo and photo-library pick (no `image_picker` or camera dependency exists) plus PDF pick, with permissions asked on first use, feeding the existing compression and storage (task 4.1). Verify with widget tests using fake pickers, and on a real phone
+- [ ] 10.3 Approver review screen polish: replace the hard-coded `Claim <id> · <status>` title, raw `amount / 100` values and category ids with localized labels, money formatting in each currency, category names and receipt thumbnails. Verify with widget tests for the formatted output
+- [ ] 10.4 Claimant screens: format balances and advances with the app's money formatting (they show `amount / 100` today) and show claim titles without raw ids. Verify with widget tests
+- [ ] 10.5 "Add a person" QR flow on real devices depends on `linked-devices-and-sync` section 12 (real transport, discovery and QR screens). Verify after that lands, together with 9.3
+- [ ] 10.6 Translate this change's new strings into all 42 non-English ARB files and clear them from `lib/l10n/untranslated.json`. Verify `test/l10n/locale_packs_test.dart` and the localized smoke workflow

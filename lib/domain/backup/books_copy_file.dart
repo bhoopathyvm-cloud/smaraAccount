@@ -23,18 +23,27 @@ class BooksCopyFile {
   static const _saltLength = 16;
 
   /// Encrypts [databaseBytes] and [settings] under [passphrase] as a
-  /// `smara-books-copy` v1 file.
+  /// `smara-books-copy` v1 file. Optional [receiptsById] maps receipt id →
+  /// raw bytes (Claim receipts under `books/<id>/receipts/`).
   static Future<String> encrypt({
     required List<int> databaseBytes,
     required Map<String, Object?> settings,
     required String passphrase,
+    Map<String, List<int>> receiptsById = const {},
   }) async {
     final random = Random.secure();
     final salt = List<int>.generate(_saltLength, (_) => random.nextInt(256));
     final secretKey = await _deriveKey(passphrase: passphrase, salt: salt);
 
     final payload = utf8.encode(
-      jsonEncode({'db': base64Encode(databaseBytes), 'settings': settings}),
+      jsonEncode({
+        'db': base64Encode(databaseBytes),
+        'settings': settings,
+        if (receiptsById.isNotEmpty)
+          'receipts': {
+            for (final e in receiptsById.entries) e.key: base64Encode(e.value),
+          },
+      }),
     );
     final box = await AesGcm.with256bits().encrypt(
       payload,
@@ -109,9 +118,19 @@ class BooksCopyFile {
         settings[key.toString()] = value;
       });
     }
+    final receiptsRaw = payload['receipts'];
+    final receipts = <String, List<int>>{};
+    if (receiptsRaw is Map) {
+      receiptsRaw.forEach((key, value) {
+        if (value is String) {
+          receipts[key.toString()] = base64Decode(value);
+        }
+      });
+    }
     return BooksCopyContents(
       databaseBytes: base64Decode(payload['db'] as String),
       settings: settings,
+      receiptsById: receipts,
       sourceKind: BooksCopySourceKind.booksCopy,
     );
   }
@@ -160,11 +179,15 @@ class BooksCopyContents {
     required this.databaseBytes,
     required this.settings,
     required this.sourceKind,
+    this.receiptsById = const {},
   });
 
   final Uint8List databaseBytes;
   final Map<String, Object?> settings;
   final BooksCopySourceKind sourceKind;
+
+  /// Claim receipt blobs keyed by receipt id (empty for legacy copies).
+  final Map<String, List<int>> receiptsById;
 }
 
 enum BooksCopySourceKind {

@@ -15,6 +15,41 @@ abstract final class AppNavPaths {
   static const lock = '/lock';
   static const home = '/home';
 
+  /// Claimant-only surface (shared-accounts-and-expense-claims).
+  static const claims = '/claims';
+  static const claimEditor = '/claims/edit';
+  static const claimDetail = '/claims/detail';
+  static const claimantBalance = '/claims/balance';
+  static const approverQueue = '/claims/review';
+  static const settings = '/settings';
+
+  /// Routes a Claimant-only membership may open on company books.
+  static const claimantAllowed = {
+    claims,
+    claimEditor,
+    claimDetail,
+    claimantBalance,
+    home,
+    lock,
+    settings,
+  };
+
+  /// Bookkeeping routes Claimant-only must not open.
+  static const bookkeepingBlockedForClaimant = {
+    '/register',
+    '/accounts',
+    '/categories',
+    '/summary',
+    '/transfer',
+    '/record-transaction',
+    '/import-statement',
+    '/payees',
+    '/recurring-templates',
+    '/holdings',
+    '/fix',
+    approverQueue,
+  };
+
   /// Reachable before any signing identity exists (books-copy-and-
   /// continuation: "Startup Setup Choice") - the choice screen itself,
   /// the restore-from-copy flow (which never generates an identity of its
@@ -53,13 +88,16 @@ class AppNavigationPolicy {
     required Future<bool> Function() needsCurrencyBackfill,
     required Future<bool> Function() isFirstWeekSetupCompleted,
     required Future<bool> Function() lockScreenRequired,
+    Future<bool> Function()? isClaimantOnlyActiveSet,
   }) : _currentIdentity = currentIdentity,
        _hasAnyJournalEntries = hasAnyJournalEntries,
        _hasMatchingStoredKey = hasMatchingStoredKey,
        _verifyChain = verifyChain,
        _needsCurrencyBackfill = needsCurrencyBackfill,
        _isFirstWeekSetupCompleted = isFirstWeekSetupCompleted,
-       _lockScreenRequired = lockScreenRequired;
+       _lockScreenRequired = lockScreenRequired,
+       _isClaimantOnlyActiveSet =
+           isClaimantOnlyActiveSet ?? (() async => false);
 
   final Future<SigningIdentity?> Function() _currentIdentity;
   final Future<bool> Function() _hasAnyJournalEntries;
@@ -68,6 +106,7 @@ class AppNavigationPolicy {
   final Future<bool> Function() _needsCurrencyBackfill;
   final Future<bool> Function() _isFirstWeekSetupCompleted;
   final Future<bool> Function() _lockScreenRequired;
+  final Future<bool> Function() _isClaimantOnlyActiveSet;
 
   var _hasVerifiedThisSession = false;
 
@@ -128,8 +167,46 @@ class AppNavigationPolicy {
         isCurrencyBackfillRoute ||
         isSetupWizardRoute ||
         isLockRoute) {
+      // Claimant-only: land on Claims, not full Home bookkeeping.
+      if (await _isClaimantOnlyActiveSet()) {
+        return AppNavPaths.claims;
+      }
       return AppNavPaths.home;
     }
+
+    // Claimant-only gates on the active Books Set (task 3.5).
+    if (await _isClaimantOnlyActiveSet()) {
+      if (matchedLocation == AppNavPaths.home) {
+        return AppNavPaths.claims;
+      }
+      if (!_claimantMayOpen(matchedLocation)) {
+        return AppNavPaths.claims;
+      }
+      return null;
+    }
+
     return null;
+  }
+
+  /// Whether a Claimant-only user may open [location] (unit-testable without
+  /// the full resolve gate chain).
+  bool claimantMayOpen(String location) => _claimantMayOpen(location);
+
+  bool _claimantMayOpen(String location) {
+    if (location == AppNavPaths.approverQueue ||
+        location.startsWith('${AppNavPaths.approverQueue}/')) {
+      return false;
+    }
+    if (AppNavPaths.claimantAllowed.contains(location)) return true;
+    if (location.startsWith('${AppNavPaths.claims}/')) return true;
+    if (location.startsWith('/register')) return false;
+    if (location.startsWith('/holdings')) return false;
+    for (final blocked in AppNavPaths.bookkeepingBlockedForClaimant) {
+      if (location == blocked || location.startsWith('$blocked/')) {
+        return false;
+      }
+    }
+    // Unknown routes: deny for Claimant-only (fail closed).
+    return false;
   }
 }

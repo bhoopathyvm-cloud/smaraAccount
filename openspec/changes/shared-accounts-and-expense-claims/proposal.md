@@ -1,79 +1,134 @@
 ## Why
 
-Small businesses want to run travel expenses in Smara. Today, an employee keeps paper receipts, fills in a spreadsheet, and waits for the accounting team to type it all in again. With Linked Devices (`linked-devices`, #209), a company can give each employee their own account on their own phone. The employee records costs with receipt photos, the claims sync on the office Wi-Fi, the accounting team decides item by item, and the payment syncs back. The design was settled in a grilling session and recorded in issue #205.
+A small business that runs travel expenses in Smara today has no way for
+employees to submit receipts on their phones and for the office to
+approve and pay them inside the same books. Project B (`linked-devices-
+and-sync`) gave Linked devices, Peer Sync on Wi-Fi, Owner/Member roles,
+and several Books Sets on one device — the foundation employees need to
+hold company books beside household books. This change is project C of
+the three agreed in the 2026-10 grilling session (issue #205): shared
+accounts and expense claims, still with no server.
 
 ## What Changes
 
-- **Claims, outside the books until approved.** An employee's expense items form a **Claim**: a list with receipts and a status, outside the books.
-  - **Approval** creates records in the company books ("Travel expense 120 / Owed to Ravi 120").
-  - **Payment** creates "Owed to Ravi −120 / Bank −120".
-  - **Rejected items** never touch the books.
-- **Statuses:** Draft, Submitted, Partly approved, Approved, Paid. The claim's status follows from its items.
-- **A decision for each item:**
-  - Approve.
-  - Approve a different amount (a reason is required).
-  - Reject (a reason is required).
-- **Receipts.**
-  - **Capture:** a camera photo, or a picked image or PDF.
-  - **Required?** A company setting "Receipt required above ___", default 0, meaning always required.
-  - **Size:** photos compressed to roughly 1 MB; PDFs kept as they are up to 5 MB.
-  - **Storage:** inside the books, synced over Wi-Fi, included in a Books Copy, and kept for as long as the books exist.
-- **Foreign currency.** An item is recorded in the currency paid. The employee may type the card-statement rate; otherwise the app's rate for the expense date is used. The approver sees both currencies and can correct the rate, and the books record the approved company-currency amount.
-- **Advances.** A payment to an employee before a trip. Approved claims reduce what they owe back. Their balance shows "Acme owes you 30" or "You owe Acme 20".
-- **Roles for company books** (extending the Owner and Member roles from `linked-devices`):
+- **Claims outside the books until approved.** An employee's items form a
+  **Claim** (list with receipts and status). Approval creates journal
+  entries in the company books ("Travel expense / Owed to \<name\>");
+  payment creates ("Owed to \<name\> / Bank"). Rejected items never
+  touch the books.
+- **Claimant sees only their slice.** Their own claims and statuses
+  (Draft, Submitted, Partly approved, Approved, Paid), rejection
+  reasons, balance ("Acme owes you…" / "You owe Acme…"), payments to
+  them, and the expense categories the company allows for claims. They
+  never see company bank accounts, other employees, or the rest of the
+  books.
+- **Per-item decisions.** Approver (or Owner) chooses Approve, Approve a
+  different amount (reason required), or Reject (reason required) per
+  item. Claim status follows from its items.
+- **Receipts.** Camera photo, or picked image/PDF; company setting
+  "Receipt required above ___" (default 0 = always); photos compressed
+  to ~1 MB; PDFs kept as-is up to 5 MB; stored inside the books, synced
+  over Wi-Fi, included in a Books Copy; kept as long as the books
+  exist.
+- **Foreign currency on claim items.** Recorded in the currency paid;
+  optional card-statement rate from the employee, else the app's rate
+  for the expense date; Approver sees both currencies and can correct
+  the rate; books post the approved company-currency amount.
+- **Roles** extending B: **Owner**, **Approver** (accounting),
+  **Member** (bookkeeping), **Claimant** (employee). One person can hold
+  several roles.
+- **Advances.** Payment to the employee before claims; approved claims
+  reduce the advance balance.
+- **Submit on office Wi-Fi.** Claims prepared on the road arrive at the
+  office only on the office Wi-Fi (B's Wi-Fi-only rule).
+- **Add a person.** Owner links an employee's phone by QR with role
+  Claimant; "Owed to \<name\>" is created automatically.
+- **Employee leaving.** Owner is warned about open claims and balances,
+  and can still remove them; history and receipts stay in the company
+  books.
+- **Spending limits as hints only.** Optional per-category limits (e.g.
+  "Hotel at most 150 per night") shown to Approver and Claimant; never
+  enforced automatically.
+- **No personal-books reimbursement in v1.** Approved payments do not
+  appear in the employee's household Books Set.
 
-  | Role | Can |
-  |---|---|
-  | **Owner** | Everything |
-  | **Approver** | Review, approve, adjust, reject and record payments |
-  | **Member** | Normal bookkeeping |
-  | **Claimant** | Only their own claims and balance |
-
-  One person can hold several roles.
-- **What a Claimant sees:**
-  - their claims and statuses;
-  - the reasons for decisions;
-  - their balance and the payments made to them;
-  - the expense categories the company allows for claims.
-
-  They never see company bank accounts, other employees, or any other part of the books.
-- **Adding an employee.** "Add a person", choose the role Claimant, and link their phone by QR code. The account "Owed to <name>" is created automatically.
-- **An employee leaving.** The Owner is warned about open claims and balances, and can still remove them. History and receipts stay.
-- **Spending limits as hints.** Optional per-category limits ("Hotel at most 150 per night") are shown as hints to both sides and are never enforced automatically.
-- **Submitting.** Claims are prepared anywhere. They arrive on the office Wi-Fi, under the same-Wi-Fi rule from `linked-devices`.
-- **Not in this version:**
-  - mileage;
-  - per-diem allowances;
-  - reading amounts from receipts automatically;
-  - claim reports as PDF or CSV;
-  - adding reimbursements to the employee's household books;
-  - remote submission.
+**Out of scope (follow-ups, not this change):** mileage, daily
+allowances / per diem, automatic receipt OCR / AI amount reading, PDF or
+CSV claim reports, "Add this payment to my household books", and
+submitting claims outside office Wi-Fi.
 
 ## Capabilities
 
 ### New Capabilities
-- `expense-claims`: the claim lifecycle, item decisions, statuses, accounting records on approval and payment, foreign currency, advances, spending-limit hints, and submitting on the shared Wi-Fi.
-- `claim-receipts`: capturing, requiring, compressing, storing, syncing and keeping receipt images and PDFs.
-- `shared-account-access`: the Approver and Claimant roles, partial visibility so a Claimant's device receives only their part of the books, adding an employee with an automatic "Owed to" account, and removing a departing employee.
+- `expense-claims`: Claim lifecycle outside the ledger until approval;
+  claim items with per-item approve / approve-different-amount / reject;
+  claim statuses; posting on approval and on payment; advances;
+  Claimant-visible balance and payments; company claim-category
+  allowlist; foreign-currency claim items; spending-limit hints;
+  Claimant-restricted surface of company books.
+- `claim-receipts`: attaching camera photos, picked images, or PDFs to
+  claim items; receipt-required threshold setting; photo compression and
+  PDF size cap; storage inside the books; Peer Sync and Books Copy
+  inclusion; retention for the life of the books.
 
 ### Modified Capabilities
-None. This change builds on `linked-devices` (#209), whose capabilities are not yet in `openspec/specs/`. The roles and visibility rules extending `linked-devices` are therefore specified in `shared-account-access`, and are reconciled when both changes are archived (see tasks 0.1 and 0.2).
+- `linked-devices`: extend membership roles with Approver and Claimant;
+  "Add a person" (QR link for a person, not only a device); automatic
+  "Owed to \<name\>" Financial Account on Claimant join; remove-person
+  flow with open-claims / balance warning.
+- `peer-sync`: sync claim payloads, receipt blobs, and advance metadata
+  over the same Wi-Fi path; Claimant peers receive only their own claims
+  and related payments / balance, not full books.
+- `books-copy`: a Books Copy of company books includes claims history and
+  receipt attachments for that set.
+- `books-switcher`: a device may hold household books and company books;
+  when the active set is company books and the person's role is Claimant
+  only, the UI is the Claimant surface (not full bookkeeping).
+- `app-navigation-policy`: Claimant-only role gates navigation away from
+  bank accounts, other people, and full register/settings that expose
+  company books beyond claims.
+- `acceptance-test-suite`: dual-device harness coverage for claim submit /
+  sync / approve / pay; Claimant visibility assertions; physical
+  Claimant-phone runs stay manual.
+- `user-guide`: documents Claims, roles (Owner / Approver / Member /
+  Claimant), receipts, advances, Add a person, and Claimant limits.
+- `household-product-positioning`: product promise includes small-
+  business expense claims on Linked devices, still with no server
+  holding books or keys.
 
 ## Impact
 
-- **Depends on:** `books-copy-and-continuation` and `linked-devices` being implemented and archived first.
-- **Database:**
-  - claims, claim items, decisions and receipt blobs;
-  - advance links, and Approver and Claimant roles;
-  - per-category claim-limit hints;
-  - use of the `visibility_scope` hook from `linked-devices` for partial sync.
-- **Sync:** a Claimant's device exchanges only records in its own scope. That needs per-scope verification, because the device does not hold the whole chain set.
-- **Platform:** camera and photo-library permissions, plus a file picker for PDFs.
-- **UI:**
-  - **Claimant home:** claims, balance, payments.
-  - **Claim editor:** items, receipts, currency.
-  - **Approver screens:** queue, item decisions, payment, advances.
-  - **Settings:** company claim settings, people and roles.
-- **Localization:** new strings in all 43 languages.
-- **Docs:** `CONTEXT.md` (Claim, Claim Item, Claimant, Approver, Advance, Receipt), privacy policy (receipts stay on devices and the local network), user guide and website.
-- **Tests:** unit, widget, integration and acceptance suites, with multi-device scenarios over the loopback transport, plus real-device runs.
+- **Code added (high level):**
+  - claim / claim-item / advance domain models and repositories
+    (outside posted journal entries until approval);
+  - approval and payment posting into company books (expense category +
+    "Owed to \<name\>" liability; then liability + bank);
+  - receipt capture, compression, and blob storage keyed to claim items
+    inside the books set;
+  - Claimant Home / claim list / claim editor UI; Approver review queue;
+  - role gates for Approver and Claimant on top of B's Owner/Member;
+  - "Add a person" QR flow reusing B's join transport with a person-role
+    offer.
+- **Code changed:**
+  - linked-device membership schema (role enum, person vs device,
+    owed-to account id);
+  - peer-sync payloads (ClaimBatch, ReceiptBlob, AdvanceOps) and
+    Claimant-scoped sync filter;
+  - Books Copy export/import for receipt blobs and claim tables;
+  - books switcher / navigation when active set is Claimant-only;
+  - Settings for receipt threshold, claim categories, spending-limit
+    hints.
+- **Localization:** ARB strings for Claims, statuses, Approver actions,
+  reasons, advances, Add a person, Claimant balance copy, receipt
+  prompts, and spending-limit hints.
+- **Tests:** unit/widget for claim lifecycle and posting; dual-device
+  harness for submit→sync→approve→pay; Claimant visibility tests;
+  acceptance groups for claims (CI harness + manual physical).
+- **Docs:** `CONTEXT.md` glossary (Claim, Claim Item, Claimant,
+  Approver, Advance, Claim Receipt, Owed-to Account), user guide,
+  architecture note that claims are not journal entries until approved.
+- **Dependencies:** camera / image_picker / file picker already used or
+  equivalent; image compression; no new backend service.
+- **Prerequisite:** builds on `linked-devices-and-sync` (project B):
+  Linked devices, Peer Sync, Owner/Member, books switcher. Do not ship
+  Claims before those land.

@@ -5,6 +5,7 @@ import 'package:path/path.dart' as p;
 import '../../domain/backup/books_copy_file.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/exceptions.dart';
+import '../books_set/books_set_paths.dart';
 import '../database/app_database.dart';
 import 'identity_repository.dart';
 import 'ledger_chain_verifier.dart';
@@ -79,15 +80,21 @@ class BooksCopyRepository {
     required String passphrase,
     File? databaseFile,
     DateTime? now,
+    Directory? supportDirectory,
   }) async {
     await _db.customStatement('PRAGMA wal_checkpoint(TRUNCATE)');
     final file = databaseFile ?? await AppDatabase.resolveDatabaseFile();
     final bytes = await file.readAsBytes();
     final settings = await _settingsRepository.exportBooksSettings();
+    final receipts = await _readReceipts(
+      supportDirectory: supportDirectory,
+      databaseFile: file,
+    );
     final encoded = await BooksCopyFile.encrypt(
       databaseBytes: bytes,
       settings: settings,
       passphrase: passphrase,
+      receiptsById: receipts,
     );
     final entryCount = await _countRows(_db.journalEntries.actualTableName);
     await _settingsRepository.recordBooksCopySaved(
@@ -95,6 +102,40 @@ class BooksCopyRepository {
       entryCount: entryCount,
     );
     return encoded;
+  }
+
+  /// Receipts live beside the books set's database
+  /// (`books/<id>/receipts/` next to `books/<id>/ledger.sqlite`).
+  static Directory _receiptsBeside(File databaseFile) => Directory(
+    p.join(databaseFile.parent.path, BooksSetPaths.receiptsDirectoryName),
+  );
+
+  Future<Directory?> _receiptsDirectory({
+    Directory? supportDirectory,
+    required File databaseFile,
+  }) async {
+    if (supportDirectory == null) return _receiptsBeside(databaseFile);
+    final booksSetId = await BooksSetStore().activeBooksSetId();
+    if (booksSetId == null) return null;
+    return BooksSetPaths.receiptsDirectory(supportDirectory, booksSetId);
+  }
+
+  Future<Map<String, List<int>>> _readReceipts({
+    Directory? supportDirectory,
+    required File databaseFile,
+  }) async {
+    final dir = await _receiptsDirectory(
+      supportDirectory: supportDirectory,
+      databaseFile: databaseFile,
+    );
+    if (dir == null || !await dir.exists()) return const {};
+    final out = <String, List<int>>{};
+    await for (final entity in dir.list()) {
+      if (entity is File) {
+        out[p.basename(entity.path)] = await entity.readAsBytes();
+      }
+    }
+    return out;
   }
 
   /// Counts of current-device data that a restore will replace.
@@ -124,6 +165,7 @@ class BooksCopyRepository {
     required String fileContents,
     required String passphrase,
     File? targetFile,
+    Directory? supportDirectory,
   }) async {
     final contents = await BooksCopyFile.decrypt(
       fileContents: fileContents,
@@ -187,6 +229,22 @@ class BooksCopyRepository {
     for (final suffix in ['-wal', '-shm', '-journal']) {
       final sidecar = File('${resolvedTargetFile.path}$suffix');
       if (await sidecar.exists()) await sidecar.delete();
+    }
+
+    // Restore Claim receipt blobs beside the database (task 7.3).
+    if (contents.receiptsById.isNotEmpty) {
+      final dir = await _receiptsDirectory(
+        supportDirectory: supportDirectory,
+        databaseFile: resolvedTargetFile,
+      );
+      if (dir != null) {
+        await dir.create(recursive: true);
+        for (final entry in contents.receiptsById.entries) {
+          await File(
+            p.join(dir.path, entry.key),
+          ).writeAsBytes(entry.value, flush: true);
+        }
+      }
     }
 
     // Settings apply only after a successful swap (design Decision 2).

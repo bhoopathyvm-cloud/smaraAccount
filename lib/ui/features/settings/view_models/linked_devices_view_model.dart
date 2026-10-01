@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../data/books_set/books_set_paths.dart';
+import '../../../../data/repositories/claim_person_service.dart';
+import '../../../../data/repositories/claim_repository.dart';
 import '../../../../data/repositories/membership_repository.dart';
 import '../../../../data/repositories/settings_repository.dart';
 import '../../../../domain/app_error.dart';
@@ -9,14 +11,18 @@ import '../../../../domain/linked_devices/local_network_permission.dart';
 import '../../../../domain/models/join_qr_payload.dart';
 import '../../../../domain/models/join_request.dart';
 import '../../../../domain/models/linked_device.dart';
+import '../../../../domain/models/linked_device_role.dart';
 import '../../../../l10n/l10n.dart';
 
-/// Settings "Linked devices" section state (tasks 4.2–4.4).
+/// Settings "Linked devices" section state (tasks 4.2–4.4), plus Add /
+/// Remove a person (shared-accounts tasks 2.3–2.4).
 class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   LinkedDevicesViewModel({
     required MembershipRepository membershipRepository,
     required SettingsRepository settingsRepository,
     required BooksSetStore booksSetStore,
+    ClaimPersonService? claimPersonService,
+    ClaimRepository? claimRepository,
     LocalNetworkPermission? localNetworkPermission,
     Uuid? uuid,
     this.booksGeneration = 0,
@@ -24,6 +30,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }) : _membership = membershipRepository,
        _settings = settingsRepository,
        _booksSetStore = booksSetStore,
+       _people = claimPersonService,
+       _claims = claimRepository,
        _permission = localNetworkPermission ?? FakeLocalNetworkPermission(),
        _uuid = uuid ?? const Uuid() {
     _load();
@@ -32,6 +40,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final MembershipRepository _membership;
   final SettingsRepository _settings;
   final BooksSetStore _booksSetStore;
+  final ClaimPersonService? _people;
+  final ClaimRepository? _claims;
   final LocalNetworkPermission _permission;
   final Uuid _uuid;
   final int booksGeneration;
@@ -63,6 +73,9 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   bool _canAdd = false;
   bool get canAdd => _canAdd;
+
+  bool _canManageMembership = false;
+  bool get canManageMembership => _canManageMembership;
 
   bool _suggestSecondOwner = false;
   bool get suggestSecondOwner => _suggestSecondOwner;
@@ -102,6 +115,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
       final local = await _membership.findByDeviceId(_localDeviceId!);
       _canAdd =
           local != null && await _membership.canAddDevices(_localDeviceId!);
+      _canManageMembership =
+          local != null && MembershipRoleGates.canManageMembership(local.roles);
       _suggestSecondOwner = await _membership.shouldSuggestSecondOwner();
       clearFailure();
     } catch (e) {
@@ -169,9 +184,98 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     }
   }
 
+  /// Builds an "Add a person" QR (default Claimant). Requires
+  /// [ClaimPersonService].
+  Future<JoinQrPayload?> startAddPerson({
+    required String personDisplayName,
+  }) async {
+    if (_isBusy || _localDeviceId == null || _people == null) return null;
+    final name = personDisplayName.trim();
+    if (name.isEmpty) return null;
+    _isBusy = true;
+    notifyListeners();
+    try {
+      final booksSetId = await _booksSetStore.activeBooksSetId();
+      if (booksSetId == null) {
+        setFailure(
+          const AppFailure(
+            AppErrorCode.generic,
+            debugMessage: 'No active books set.',
+          ),
+        );
+        return null;
+      }
+      final displayName =
+          await _settings.localDeviceDisplayName() ?? 'This device';
+      _activeJoinQr = await _people.buildAddPersonQr(
+        hostDeviceId: _localDeviceId!,
+        hostDisplayName: displayName,
+        booksSetId: booksSetId,
+        personDisplayName: name,
+      );
+      clearFailure();
+      return _activeJoinQr;
+    } catch (e) {
+      setFailure(e);
+      return null;
+    } finally {
+      _isBusy = false;
+      notifyListeners();
+    }
+  }
+
   void clearActiveJoinQr() {
     _activeJoinQr = null;
     notifyListeners();
+  }
+
+  /// Open-claims / owed-balance warning before remove (task 2.4).
+  Future<({int openClaims, int balanceMinor})?> removalWarningFor(
+    String targetDeviceId,
+  ) async {
+    if (_claims == null) {
+      return (openClaims: 0, balanceMinor: 0);
+    }
+    try {
+      return await _claims.removalWarning(targetDeviceId: targetDeviceId);
+    } catch (e) {
+      setFailure(e);
+      return null;
+    }
+  }
+
+  /// Removes a person after the Owner confirms the warning. Past claims and
+  /// receipts remain in the books.
+  Future<bool> removePerson(String targetDeviceId) async {
+    if (_isBusy || _localDeviceId == null) return false;
+    _isBusy = true;
+    notifyListeners();
+    try {
+      final warning = _claims == null
+          ? (openClaims: 0, balanceMinor: 0)
+          : await _claims.removalWarning(targetDeviceId: targetDeviceId);
+      if (_people != null) {
+        await _people.removePerson(
+          actorDeviceId: _localDeviceId!,
+          targetDeviceId: targetDeviceId,
+          balanceMinor: warning.balanceMinor,
+        );
+      } else {
+        await _membership.removeDevice(
+          actorDeviceId: _localDeviceId!,
+          targetDeviceId: targetDeviceId,
+        );
+      }
+      await _load();
+      clearFailure();
+      return true;
+    } catch (e) {
+      setFailure(e);
+      return false;
+    } finally {
+      _isBusy = false;
+      notifyListeners();
+    }
   }
 
   Future<bool> approveJoin(String requestId) async {

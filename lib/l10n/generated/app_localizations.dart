@@ -3759,6 +3759,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} instruments'**
   String replaceCountInstruments(int count);
+
+  /// No description provided for @claimsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Claims'**
+  String get claimsTitle;
+
+  /// No description provided for @claimsReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review claims'**
+  String get claimsReviewTitle;
+
+  /// No description provided for @claimsStatusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get claimsStatusDraft;
+
+  /// No description provided for @claimsStatusSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get claimsStatusSubmitted;
+
+  /// No description provided for @claimsStatusPartlyApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Partly approved'**
+  String get claimsStatusPartlyApproved;
+
+  /// No description provided for @claimsStatusApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get claimsStatusApproved;
+
+  /// No description provided for @claimsStatusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get claimsStatusPaid;
+
+  /// No description provided for @claimsStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get claimsStatusRejected;
+
+  /// No description provided for @claimsApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get claimsApprove;
+
+  /// No description provided for @claimsApproveDifferent.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve different amount'**
+  String get claimsApproveDifferent;
+
+  /// No description provided for @claimsReject.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get claimsReject;
+
+  /// No description provided for @claimsReasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A reason is required'**
+  String get claimsReasonRequired;
+
+  /// No description provided for @claimsAdvances.
+  ///
+  /// In en, this message translates to:
+  /// **'Advances'**
+  String get claimsAdvances;
+
+  /// No description provided for @claimsAddPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a person'**
+  String get claimsAddPerson;
+
+  /// No description provided for @claimsRoleApprover.
+  ///
+  /// In en, this message translates to:
+  /// **'Approver'**
+  String get claimsRoleApprover;
+
+  /// No description provided for @claimsRoleClaimant.
+  ///
+  /// In en, this message translates to:
+  /// **'Claimant'**
+  String get claimsRoleClaimant;
+
+  /// No description provided for @claimsBalanceCompanyOwesYou.
+  ///
+  /// In en, this message translates to:
+  /// **'{company} owes you'**
+  String claimsBalanceCompanyOwesYou(String company);
+
+  /// No description provided for @claimsBalanceYouOweCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'You owe {company}'**
+  String claimsBalanceYouOweCompany(String company);
+
+  /// No description provided for @claimsBalanceSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'Settled with {company}'**
+  String claimsBalanceSettled(String company);
+
+  /// No description provided for @claimsReceiptRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'A receipt is required for this claim item'**
+  String get claimsReceiptRequired;
+
+  /// No description provided for @claimsReceiptPdfTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'This PDF is larger than 5 MB. Choose a smaller file.'**
+  String get claimsReceiptPdfTooLarge;
+
+  /// No description provided for @claimsSpendingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hint: at most {amount} per {unit}'**
+  String claimsSpendingHint(String amount, String unit);
+
+  /// No description provided for @claimsNoClaimsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No claims yet.'**
+  String get claimsNoClaimsYet;
+
+  /// No description provided for @claimsNoClaimsToReview.
+  ///
+  /// In en, this message translates to:
+  /// **'No claims to review.'**
+  String get claimsNoClaimsToReview;
+
+  /// No description provided for @claimsAdvanceDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance'**
+  String get claimsAdvanceDefault;
+
+  /// No description provided for @claimsItemCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} item(s)'**
+  String claimsItemCount(int count);
+
+  /// No description provided for @claimsRejectReasonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject reason'**
+  String get claimsRejectReasonTitle;
+
+  /// No description provided for @claimsApproveDifferentReasonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve different amount reason'**
+  String get claimsApproveDifferentReasonTitle;
+
+  /// No description provided for @claimsPersonNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Person name'**
+  String get claimsPersonNameLabel;
+
+  /// No description provided for @claimsRemovePerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get claimsRemovePerson;
+
+  /// No description provided for @claimsRemovePersonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}?'**
+  String claimsRemovePersonTitle(String name);
+
+  /// No description provided for @claimsRemovePersonWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has {openClaims} open Claims and a non-zero owed balance. History and receipts stay in these books.'**
+  String claimsRemovePersonWarning(String name, int openClaims);
+
+  /// No description provided for @claimsRemovePersonWarningOpenOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has {openClaims} open Claims. History and receipts stay in these books.'**
+  String claimsRemovePersonWarningOpenOnly(String name, int openClaims);
+
+  /// No description provided for @claimsRemovePersonWarningBalanceOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has a non-zero owed balance. History and receipts stay in these books.'**
+  String claimsRemovePersonWarningBalanceOnly(String name);
+
+  /// No description provided for @claimsRemovePersonWarningClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {name}? History and receipts stay in these books.'**
+  String claimsRemovePersonWarningClean(String name);
+
+  /// No description provided for @claimsRemovePersonConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get claimsRemovePersonConfirm;
 }
 
 class _AppLocalizationsDelegate
