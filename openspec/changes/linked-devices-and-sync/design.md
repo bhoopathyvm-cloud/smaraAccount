@@ -40,6 +40,8 @@ See proposal.md for motivation. Constraints that shape this design:
 - Push notifications, accounts, or any hosted relay.
 - Encrypting the live SQLite file at rest (unchanged stance).
 - Automatic sync while both devices are off or on different networks.
+- OS-scheduled background sync (WorkManager / BGTaskScheduler, etc.) —
+  see Decision 11.
 - Rewriting or re-signing history to "unify" chains.
 
 ## Decisions
@@ -162,6 +164,16 @@ See proposal.md for motivation. Constraints that shape this design:
     sentence from the issue, then the OS local-network prompt. Android
     may use nearby/Wi-Fi permissions as required by API level; same
     user-facing sentence first.
+
+11. **No Android background sync / WorkManager.** Dropped the earlier
+    "MAY sync briefly while backgrounded" idea. Sync already requires
+    both devices open on the same Wi-Fi so mDNS discovery and the
+    pinned TLS session can run; a periodic WorkManager job cannot find
+    a peer that is not advertising, so it would mostly wake the device
+    for no catch-up and fight the honest "both open" screen copy.
+    Catch-up while both are foregrounded, plus Sync now, is enough.
+    Spec updated accordingly (peer-sync "Sync When Both Open Plus Sync
+    Now"; task 12.9).
 
 ## Risks / Trade-offs
 

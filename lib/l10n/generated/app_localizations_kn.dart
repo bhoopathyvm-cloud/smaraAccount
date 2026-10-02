@@ -953,6 +953,11 @@ class AppLocalizationsKn extends AppLocalizations {
   String get settingsBooksSwitcherRemoveConfirm => 'Remove';
 
   @override
+  String settingsBooksSwitcherFallbackName(int number) {
+    return 'Books $number';
+  }
+
+  @override
   String get settingsLinkedDevices => 'Linked devices';
 
   @override

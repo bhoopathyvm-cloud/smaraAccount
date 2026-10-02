@@ -103,6 +103,30 @@ void main() {
     );
   });
 
+  test(
+    'openActive leaves unnamed sets with empty displayName, not the id',
+    () async {
+      await repository.openActive();
+      final listed = await repository.listSets();
+      expect(listed, hasLength(1));
+      expect(listed.single.displayName, isEmpty);
+      expect(listed.single.hasUserVisibleName, isFalse);
+      expect(listed.single.displayName, isNot(equals(listed.single.id)));
+    },
+  );
+
+  test('legacy UUID-as-name is treated as unnamed when listing', () async {
+    final set = await repository.createSet(
+      displayName: 'temp',
+      id: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+    );
+    // Simulate older builds that stored the raw id as the display name.
+    await repository.renameSet(set.id, set.id);
+    final listed = await repository.listSets();
+    expect(listed.single.displayName, isEmpty);
+    expect(listed.single.hasUserVisibleName, isFalse);
+  });
+
   test('two sets keep entries and signing keys independent', () async {
     final setA = await repository.createSet(displayName: 'Set A', id: 'set-a');
     final keysA = repository.signingKeyServiceFor(setA.id);

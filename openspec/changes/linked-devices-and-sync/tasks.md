@@ -94,7 +94,8 @@ A comparison with the duplicate proposal `linked-devices` (#209), and a check of
   <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
 - [ ] 12.8 Erase on next contact: when a removed device with a pending erase meets a linked device, erase its copy of the books and report "Erased on <date>" back (only the pending/erased timestamps exist); verify with a two-instance harness test
   <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
-- [ ] 12.9 Android background sync where the system allows it (no WorkManager or equivalent exists); verify an Android-only scheduling test, or record a decision to drop it from the spec
-- [ ] 12.10 Show the books set's name in the switcher instead of its raw id (noted in PR #216); verify with a widget test
+- [x] 12.9 Android background sync where the system allows it (no WorkManager or equivalent exists); verify an Android-only scheduling test, or record a decision to drop it from the spec
+  <!-- Decision (2026-10-03): drop from peer-sync. Sync needs both apps open on the same Wi-Fi for mDNS + pinned TLS; WorkManager would mostly wake for no peer and contradicts the "both open" copy. See design.md Decision 11; peer-sync / proposal updated. -->
+- [x] 12.10 Show the books set's name in the switcher instead of its raw id (noted in PR #216); verify with a widget test
 - [ ] 12.11 Translate this change's 46 new strings (Linked devices, notices, books switcher, category translation and merge) into all 42 non-English ARB files and clear them from `lib/l10n/untranslated.json`; verify `test/l10n/locale_packs_test.dart` and the localized smoke workflow
 - [ ] 12.12 After 12.1–12.8, re-run 11.3 on real devices (two phones and a Mac on one Wi-Fi) and record the results
