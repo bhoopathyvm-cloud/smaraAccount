@@ -1378,5 +1378,40 @@
       "name": { "type": "String" }
     }
   },
-  "claimsRemovePersonConfirm": "Remove"
+  "claimsRemovePersonConfirm": "Remove",
+  "claimsEditorTitle": "Edit claim",
+  "claimsSubmit": "Submit",
+  "claimsAddItem": "Add item",
+  "claimsEditItem": "Edit item",
+  "claimsNoItemsYet": "Add at least one item before submitting.",
+  "claimsNoAllowlistedCategories": "No expense categories are allowed for claims yet.",
+  "claimsCategoryLabel": "Category",
+  "claimsExpenseDateLabel": "Expense date",
+  "claimsPaidAmountLabel": "Amount paid",
+  "claimsPaidCurrencyLabel": "Currency paid",
+  "claimsRateOptionalLabel": "Rate (optional)",
+  "claimsCompanyAmountLabel": "Amount in {currency}",
+  "@claimsCompanyAmountLabel": {
+    "placeholders": {
+      "currency": { "type": "String" }
+    }
+  },
+  "claimsDescriptionLabel": "Description",
+  "claimsAttachCamera": "Take photo",
+  "claimsAttachGallery": "Choose photo",
+  "claimsAttachPdf": "Choose PDF",
+  "claimsReceiptAttached": "Receipt: {fileName}",
+  "@claimsReceiptAttached": {
+    "placeholders": {
+      "fileName": { "type": "String" }
+    }
+  },
+  "claimsReceiptRequiredHint": "A receipt is required for this amount.",
+  "claimsReceiptPermissionSentence": "To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.",
+  "claimsReviewClaimHeading": "Claim · {status}",
+  "@claimsReviewClaimHeading": {
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  }
 }

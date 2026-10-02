@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../domain/navigation/app_navigation_policy.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../core/money_formatter.dart';
 import '../view_models/claims_list_view_model.dart';
 
 /// Claimant home: own claims, balance copy, advances.
 class ClaimsListView extends StatelessWidget {
-  const ClaimsListView({super.key, required this.viewModel});
+  const ClaimsListView({
+    super.key,
+    required this.viewModel,
+    this.companyCurrency = 'USD',
+    this.onOpenEditor,
+  });
 
   final ClaimsListViewModel viewModel;
+  final String companyCurrency;
+
+  /// When set, FAB / draft tap use this instead of go_router (widget tests).
+  final void Function(String claimId)? onOpenEditor;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +36,10 @@ class ClaimsListView extends StatelessWidget {
           appBar: AppBar(title: Text(l10n.claimsTitle)),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
-              await viewModel.createDraft();
+              final draft = await viewModel.createDraft();
               await viewModel.load();
+              if (!context.mounted) return;
+              _openEditor(context, draft.id);
             },
             child: const Icon(Icons.add),
           ),
@@ -38,7 +52,8 @@ class ClaimsListView extends StatelessWidget {
               ),
               if (viewModel.balanceMinor != 0)
                 Text(
-                  (viewModel.balanceMinor.abs() / 100).toStringAsFixed(2),
+                  '${formatAmountMinor(viewModel.balanceMinor.abs(), companyCurrency)}'
+                  ' $companyCurrency',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
               const SizedBox(height: 16),
@@ -49,7 +64,10 @@ class ClaimsListView extends StatelessWidget {
                 ),
                 ...viewModel.advances.map(
                   (a) => ListTile(
-                    title: Text((a.amountMinor / 100).toStringAsFixed(2)),
+                    title: Text(
+                      '${formatAmountMinor(a.amountMinor, companyCurrency)}'
+                      ' $companyCurrency',
+                    ),
                     subtitle: Text(a.description ?? l10n.claimsAdvanceDefault),
                   ),
                 ),
@@ -58,17 +76,22 @@ class ClaimsListView extends StatelessWidget {
               if (viewModel.items.isEmpty)
                 Text(l10n.claimsNoClaimsYet)
               else
-                ...viewModel.items.map(
-                  (c) => ListTile(
+                ...viewModel.items.map((c) {
+                  final date = c.submittedAt ?? c.createdAt;
+                  final dateLabel =
+                      '${date.year}-'
+                      '${date.month.toString().padLeft(2, '0')}-'
+                      '${date.day.toString().padLeft(2, '0')}';
+                  return ListTile(
                     title: Text(
                       ClaimsListViewModel.statusLabel(c.status, l10n),
                     ),
                     subtitle: Text(
-                      '${l10n.claimsItemCount(c.items.length)}'
-                      ' · ${c.id.substring(0, 8)}',
+                      '${l10n.claimsItemCount(c.items.length)} · $dateLabel',
                     ),
-                  ),
-                ),
+                    onTap: () => _openEditor(context, c.id),
+                  );
+                }),
               if (viewModel.error != null)
                 Text(
                   viewModel.error!,
@@ -78,6 +101,16 @@ class ClaimsListView extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _openEditor(BuildContext context, String claimId) {
+    if (onOpenEditor != null) {
+      onOpenEditor!(claimId);
+      return;
+    }
+    context.push(
+      '${AppNavPaths.claimEditor}?claimId=${Uri.encodeQueryComponent(claimId)}',
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +11,9 @@ import '../data/repositories/account_repository.dart';
 import '../data/repositories/books_copy_repository.dart';
 import '../data/repositories/category_repository.dart';
 import '../data/repositories/claim_person_service.dart';
+import '../data/repositories/claim_receipt_store.dart';
 import '../data/repositories/claim_repository.dart';
+import '../domain/claims/claim_receipt_picker.dart';
 import '../data/repositories/identity_repository.dart';
 import '../data/repositories/investment_repository.dart';
 import '../data/repositories/ledger_chain_verifier.dart';
@@ -19,6 +23,7 @@ import '../data/repositories/payee_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/statement_import_repository.dart';
 import '../domain/linked_devices/local_network_permission.dart';
+import '../domain/models/account_type.dart';
 import '../l10n/l10n.dart';
 import '../domain/lock/app_lock_service.dart';
 import '../domain/lock/biometric_authenticator.dart';
@@ -31,8 +36,10 @@ import 'features/account_management/views/account_management_view.dart';
 import 'features/category_management/view_models/category_management_view_model.dart';
 import 'features/category_management/views/category_management_view.dart';
 import 'features/claims/view_models/approver_queue_view_model.dart';
+import 'features/claims/view_models/claim_editor_view_model.dart';
 import 'features/claims/view_models/claims_list_view_model.dart';
 import 'features/claims/views/approver_queue_view.dart';
+import 'features/claims/views/claim_editor_view.dart';
 import 'features/claims/views/claims_list_view.dart';
 import 'features/continuation/view_models/continuation_view_model.dart';
 import 'features/continuation/views/continuation_view.dart';
@@ -353,12 +360,97 @@ GoRouter buildAppRouter(
               final company = meta.isNotEmpty
                   ? meta.first.displayName
                   : 'Company';
+              final accountGroups = await database
+                  .select(database.accountGroups)
+                  .get();
+              final companyCurrency =
+                  accountGroups
+                      .map((g) => g.currency)
+                      .whereType<String>()
+                      .firstOrNull ??
+                  'USD';
               final vm = ClaimsListViewModel(
                 claims: claims,
                 localDeviceId: deviceId,
                 companyDisplayName: company,
               );
               await vm.load();
+              return (vm: vm, currency: companyCurrency);
+            }(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+              final data = snapshot.data!;
+              return ClaimsListView(
+                viewModel: data.vm,
+                companyCurrency: data.currency,
+              );
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: AppNavPaths.claimEditor,
+        builder: (context, state) {
+          final claimId = state.uri.queryParameters['claimId'];
+          if (claimId == null || claimId.isEmpty) {
+            return Scaffold(
+              appBar: AppBar(),
+              body: const Center(child: Text('Missing claimId')),
+            );
+          }
+          final membership = context.read<MembershipRepository>();
+          final claims = context.read<ClaimRepository>();
+          final receipts = context.read<ClaimReceiptStore>();
+          final picker = context.read<ClaimReceiptPicker>();
+          final settings = context.read<SettingsRepository>();
+          final categories = context.read<CategoryRepository>();
+          final database = context.read<AppDatabase>();
+          return FutureBuilder(
+            future: () async {
+              final identity = await identityRepository.currentIdentity();
+              final devices = await membership.listActiveDevices();
+              final mine = devices.where(
+                (d) =>
+                    identity != null &&
+                    d.signingIdentityId == identity.identityId,
+              );
+              final deviceId = mine.isNotEmpty
+                  ? mine.first.deviceId
+                  : (devices.isNotEmpty ? devices.first.deviceId : 'local');
+              final accountGroups = await database
+                  .select(database.accountGroups)
+                  .get();
+              final companyCurrency =
+                  accountGroups
+                      .map((g) => g.currency)
+                      .whereType<String>()
+                      .firstOrNull ??
+                  'USD';
+              final allowedIds = await claims.allowlistedCategoryIds();
+              final allCats = await categories.watchCategories().first;
+              final expense = allCats
+                  .where((c) => c.type == AccountType.expense)
+                  .toList();
+              final allowlisted = allowedIds.isEmpty
+                  ? expense.map((c) => (id: c.id, name: c.name)).toList()
+                  : expense
+                        .where((c) => allowedIds.contains(c.id))
+                        .map((c) => (id: c.id, name: c.name))
+                        .toList();
+              final vm = ClaimEditorViewModel(
+                claims: claims,
+                receipts: receipts,
+                picker: picker,
+                settings: settings,
+                claimId: claimId,
+                actorDeviceId: deviceId,
+                companyCurrency: companyCurrency,
+              );
+              await vm.load(categories: allowlisted);
               return vm;
             }(),
             builder: (context, snapshot) {
@@ -367,7 +459,16 @@ GoRouter buildAppRouter(
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              return ClaimsListView(viewModel: snapshot.data!);
+              return ClaimEditorView(
+                viewModel: snapshot.data!,
+                onSubmitted: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.go(AppNavPaths.claims);
+                  }
+                },
+              );
             },
           );
         },
@@ -377,6 +478,9 @@ GoRouter buildAppRouter(
         builder: (context, state) {
           final membership = context.read<MembershipRepository>();
           final claims = context.read<ClaimRepository>();
+          final categories = context.read<CategoryRepository>();
+          final receipts = context.read<ClaimReceiptStore>();
+          final database = context.read<AppDatabase>();
           return FutureBuilder(
             future: () async {
               final identity = await identityRepository.currentIdentity();
@@ -387,12 +491,42 @@ GoRouter buildAppRouter(
                     d.signingIdentityId == identity.identityId,
               );
               final deviceId = mine.isNotEmpty ? mine.first.deviceId : 'local';
+              final accountGroups = await database
+                  .select(database.accountGroups)
+                  .get();
+              final companyCurrency =
+                  accountGroups
+                      .map((g) => g.currency)
+                      .whereType<String>()
+                      .firstOrNull ??
+                  'USD';
+              final allCats = await categories.watchCategories().first;
+              final nameMap = {for (final c in allCats) c.id: c.name};
               final vm = ApproverQueueViewModel(
                 claims: claims,
                 actorDeviceId: deviceId,
               );
               await vm.load();
-              return vm;
+              final thumbs = <String, Uint8List>{};
+              for (final claim in vm.queue) {
+                for (final item in claim.items) {
+                  final receipt = item.receipt;
+                  if (receipt == null) continue;
+                  if (!receipt.contentType.startsWith('image/')) continue;
+                  try {
+                    final bytes = await receipts.readBytes(receipt.id);
+                    thumbs[item.id] = Uint8List.fromList(bytes);
+                  } catch (_) {
+                    // Missing blob is fine; icon fallback in the view.
+                  }
+                }
+              }
+              return (
+                vm: vm,
+                currency: companyCurrency,
+                names: nameMap,
+                thumbs: thumbs,
+              );
             }(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -400,7 +534,13 @@ GoRouter buildAppRouter(
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              return ApproverQueueView(viewModel: snapshot.data!);
+              final data = snapshot.data!;
+              return ApproverQueueView(
+                viewModel: data.vm,
+                companyCurrency: data.currency,
+                categoryNames: data.names,
+                receiptThumbnails: data.thumbs,
+              );
             },
           );
         },
