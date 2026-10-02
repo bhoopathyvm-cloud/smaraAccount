@@ -454,15 +454,21 @@ void main() {
         // for a finder scoped to that row.
         await tester.pump(const Duration(milliseconds: 500));
 
+        Finder salaryHideButton() => find.descendant(
+          of: find.ancestor(
+            of: find.text(salaryCategory),
+            matching: find.byType(ListTile),
+          ),
+          matching: find.widgetWithText(OutlinedButton, l10n.actionHide),
+        );
+        // On a short phone screen (iPhone SE) "Salary" sits below the fold
+        // of the lazily built categories list - the "Salary" found above
+        // can be Home's, still mounted behind this tab.
+        await scrollSettingsUntilVisible(tester, salaryHideButton());
+
         await tapReliably(
           tester,
-          () => find.descendant(
-            of: find.ancestor(
-              of: find.text(salaryCategory),
-              matching: find.byType(ListTile),
-            ),
-            matching: find.widgetWithText(OutlinedButton, l10n.actionHide),
-          ),
+          salaryHideButton,
           () => find.text(l10n.hideCategoryTitle).evaluate().isNotEmpty,
         );
 

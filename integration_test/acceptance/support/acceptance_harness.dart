@@ -834,11 +834,16 @@ Future<void> createInvestmentAccountThroughGui(
   await tapReliably(
     tester,
     () => find.widgetWithText(ElevatedButton, l10n.actionCreate),
-    () =>
-        find.text(l10n.createAccount).evaluate().isEmpty &&
-        find.widgetWithText(ListTile, name).evaluate().isNotEmpty,
+    () => find.text(l10n.createAccount).evaluate().isEmpty,
     innerTries: 150,
   );
+
+  // On a short phone screen (iPhone SE, 375x667) the new account's group
+  // sits below the fold of the lazily built Accounts list, so its ListTile
+  // isn't built until scrolled to. Drag from the screen centre rather than
+  // `find.byType(ListView).first`, which can be another shell tab's list.
+  await scrollSettingsUntilVisible(tester, find.widgetWithText(ListTile, name));
+  expect(find.widgetWithText(ListTile, name), findsOneWidget);
 }
 
 /// Home → tap the investment account (pushes `/holdings/:id`).
@@ -853,6 +858,12 @@ Future<void> openHoldingsFor(WidgetTester tester, String accountName) async {
     tester,
     () => shellNavIcon(TablerIcons.home),
     () => find.text(l10n.homeWhatYouHaveMinusWhatYouOwe).evaluate().isNotEmpty,
+  );
+
+  // Home's list can push the account below the fold on a short screen.
+  await scrollSettingsUntilVisible(
+    tester,
+    find.widgetWithText(ListTile, accountName),
   );
 
   await tapReliably(

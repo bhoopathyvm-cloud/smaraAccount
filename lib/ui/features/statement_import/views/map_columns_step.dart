@@ -111,11 +111,15 @@ class _MapColumnsStepState extends State<MapColumnsStep> {
         children: [
           if (viewModel.profiles.isNotEmpty) ...[
             DropdownButtonFormField<CsvImportProfile>(
+              isExpanded: true,
               initialValue: null,
               decoration: InputDecoration(labelText: l10n.useSavedProfile),
               items: [
                 for (final profile in viewModel.profiles)
-                  DropdownMenuItem(value: profile, child: Text(profile.name)),
+                  DropdownMenuItem(
+                    value: profile,
+                    child: Text(profile.name, overflow: TextOverflow.ellipsis),
+                  ),
               ],
               onChanged: (profile) {
                 if (profile == null) return;
@@ -164,11 +168,18 @@ class _MapColumnsStepState extends State<MapColumnsStep> {
           ),
           const SizedBox(height: AppSpacing.medium),
           DropdownButtonFormField<int>(
+            isExpanded: true,
             initialValue: viewModel.csvDateColumnIndex,
             decoration: InputDecoration(labelText: l10n.dateColumn),
             items: [
               for (final i in columnIndexes)
-                DropdownMenuItem(value: i, child: Text(_columnLabel(l10n, i))),
+                DropdownMenuItem(
+                  value: i,
+                  child: Text(
+                    _columnLabel(l10n, i),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
             ],
             onChanged: (value) =>
                 viewModel.updateCsvMapping(dateColumnIndex: value),
@@ -207,16 +218,23 @@ class _MapColumnsStepState extends State<MapColumnsStep> {
           // a SegmentedButton's fixed-width row on a narrower window,
           // and a dropdown matches every other field on this screen.
           DropdownButtonFormField<CsvAmountConvention>(
+            isExpanded: true,
             initialValue: viewModel.csvAmountConvention,
             decoration: InputDecoration(labelText: l10n.amountConvention),
             items: [
               DropdownMenuItem(
                 value: CsvAmountConvention.signedColumn,
-                child: Text(l10n.signedAmountColumn),
+                child: Text(
+                  l10n.signedAmountColumn,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               DropdownMenuItem(
                 value: CsvAmountConvention.debitCreditColumns,
-                child: Text(l10n.separateDebitCredit),
+                child: Text(
+                  l10n.separateDebitCredit,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
             onChanged: (value) {
@@ -228,13 +246,17 @@ class _MapColumnsStepState extends State<MapColumnsStep> {
           const SizedBox(height: AppSpacing.medium),
           if (viewModel.csvAmountConvention == CsvAmountConvention.signedColumn)
             DropdownButtonFormField<int>(
+              isExpanded: true,
               initialValue: viewModel.csvSignedAmountColumnIndex,
               decoration: InputDecoration(labelText: l10n.amountColumn),
               items: [
                 for (final i in columnIndexes)
                   DropdownMenuItem(
                     value: i,
-                    child: Text(_columnLabel(l10n, i)),
+                    child: Text(
+                      _columnLabel(l10n, i),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
               ],
               onChanged: (value) =>
@@ -242,13 +264,17 @@ class _MapColumnsStepState extends State<MapColumnsStep> {
             )
           else ...[
             DropdownButtonFormField<int>(
+              isExpanded: true,
               initialValue: viewModel.csvDebitColumnIndex,
               decoration: InputDecoration(labelText: l10n.debitColumn),
               items: [
                 for (final i in columnIndexes)
                   DropdownMenuItem(
                     value: i,
-                    child: Text(_columnLabel(l10n, i)),
+                    child: Text(
+                      _columnLabel(l10n, i),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
               ],
               onChanged: (value) =>
@@ -256,13 +282,17 @@ class _MapColumnsStepState extends State<MapColumnsStep> {
             ),
             const SizedBox(height: AppSpacing.medium),
             DropdownButtonFormField<int>(
+              isExpanded: true,
               initialValue: viewModel.csvCreditColumnIndex,
               decoration: InputDecoration(labelText: l10n.creditColumn),
               items: [
                 for (final i in columnIndexes)
                   DropdownMenuItem(
                     value: i,
-                    child: Text(_columnLabel(l10n, i)),
+                    child: Text(
+                      _columnLabel(l10n, i),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
               ],
               onChanged: (value) =>
@@ -271,12 +301,22 @@ class _MapColumnsStepState extends State<MapColumnsStep> {
           ],
           const SizedBox(height: AppSpacing.large),
           DropdownButtonFormField<int?>(
+            isExpanded: true,
             initialValue: viewModel.csvReferenceIdColumnIndex,
             decoration: InputDecoration(labelText: l10n.referenceIdColumn),
             items: [
-              DropdownMenuItem(value: null, child: Text(l10n.none)),
+              DropdownMenuItem(
+                value: null,
+                child: Text(l10n.none, overflow: TextOverflow.ellipsis),
+              ),
               for (final i in columnIndexes)
-                DropdownMenuItem(value: i, child: Text(_columnLabel(l10n, i))),
+                DropdownMenuItem(
+                  value: i,
+                  child: Text(
+                    _columnLabel(l10n, i),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
             ],
             onChanged: (value) =>
                 viewModel.updateCsvMapping(referenceIdColumnIndex: value),

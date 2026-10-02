@@ -249,35 +249,45 @@ class CategoryManagementView extends StatelessWidget {
       builder: (dialogContext) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: Text(l10n.mergeCategories),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButtonFormField<Account>(
-                initialValue: survivor,
-                decoration: InputDecoration(labelText: l10n.category),
-                items: [
-                  for (final c in categories)
-                    DropdownMenuItem(
-                      value: c,
-                      child: Text(viewModel.displayNameFor(c, l10n)),
-                    ),
-                ],
-                onChanged: (value) => setDialogState(() => survivor = value),
-              ),
-              const SizedBox(height: AppSpacing.medium),
-              DropdownButtonFormField<Account>(
-                initialValue: absorbed,
-                decoration: InputDecoration(labelText: l10n.category),
-                items: [
-                  for (final c in categories)
-                    DropdownMenuItem(
-                      value: c,
-                      child: Text(viewModel.displayNameFor(c, l10n)),
-                    ),
-                ],
-                onChanged: (value) => setDialogState(() => absorbed = value),
-              ),
-            ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButtonFormField<Account>(
+                  isExpanded: true,
+                  initialValue: survivor,
+                  decoration: InputDecoration(labelText: l10n.category),
+                  items: [
+                    for (final c in categories)
+                      DropdownMenuItem(
+                        value: c,
+                        child: Text(
+                          viewModel.displayNameFor(c, l10n),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                  ],
+                  onChanged: (value) => setDialogState(() => survivor = value),
+                ),
+                const SizedBox(height: AppSpacing.medium),
+                DropdownButtonFormField<Account>(
+                  isExpanded: true,
+                  initialValue: absorbed,
+                  decoration: InputDecoration(labelText: l10n.category),
+                  items: [
+                    for (final c in categories)
+                      DropdownMenuItem(
+                        value: c,
+                        child: Text(
+                          viewModel.displayNameFor(c, l10n),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                  ],
+                  onChanged: (value) => setDialogState(() => absorbed = value),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(

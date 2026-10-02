@@ -87,6 +87,7 @@ class SettingsView extends StatelessWidget {
                 Text(l10n.settingsLanguage, style: AppTypography.sectionLabel),
                 const SizedBox(height: AppSpacing.base),
                 DropdownButtonFormField<String>(
+                  isExpanded: true,
                   initialValue:
                       viewModel.localeController!.overrideLocale == null
                       ? kSystemLocalePreference
@@ -97,12 +98,18 @@ class SettingsView extends StatelessWidget {
                   items: [
                     DropdownMenuItem(
                       value: kSystemLocalePreference,
-                      child: Text(l10n.settingsLanguageSystem),
+                      child: Text(
+                        l10n.settingsLanguageSystem,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     for (final tag in kSupportedLocaleTags)
                       DropdownMenuItem(
                         value: tag,
-                        child: Text(endonymForLocaleTag(tag)),
+                        child: Text(
+                          endonymForLocaleTag(tag),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                   ],
                   onChanged: (tag) {
@@ -124,6 +131,7 @@ class SettingsView extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.large),
               DropdownButtonFormField<ExchangeRateProvider>(
+                isExpanded: true,
                 initialValue: viewModel.selectedProvider,
                 decoration: InputDecoration(
                   labelText: l10n.settingsRateProvider,
@@ -132,7 +140,10 @@ class SettingsView extends StatelessWidget {
                   for (final provider in ExchangeRateProvider.values)
                     DropdownMenuItem(
                       value: provider,
-                      child: Text(_exchangeRateProviderLabel(l10n, provider)),
+                      child: Text(
+                        _exchangeRateProviderLabel(l10n, provider),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                 ],
                 onChanged: viewModel.referenceRateLookupEnabled
@@ -155,6 +166,7 @@ class SettingsView extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.large),
               DropdownButtonFormField<QuoteProvider>(
+                isExpanded: true,
                 initialValue: viewModel.selectedQuoteProvider,
                 decoration: InputDecoration(
                   labelText: l10n.settingsMarketPriceProvider,
@@ -163,7 +175,10 @@ class SettingsView extends StatelessWidget {
                   for (final provider in QuoteProvider.values)
                     DropdownMenuItem(
                       value: provider,
-                      child: Text(_quoteProviderLabel(l10n, provider)),
+                      child: Text(
+                        _quoteProviderLabel(l10n, provider),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                 ],
                 onChanged: viewModel.marketPriceFetchEnabled
@@ -204,6 +219,7 @@ class SettingsView extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.xLarge),
               DropdownButtonFormField<ResearchTool>(
+                isExpanded: true,
                 initialValue: viewModel.selectedResearchTool,
                 decoration: InputDecoration(
                   labelText: l10n.settingsFavouriteResearchTool,
@@ -212,7 +228,10 @@ class SettingsView extends StatelessWidget {
                   for (final tool in ResearchTool.values)
                     DropdownMenuItem(
                       value: tool,
-                      child: Text(_researchToolLabel(l10n, tool)),
+                      child: Text(
+                        _researchToolLabel(l10n, tool),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                 ],
                 onChanged: (tool) {
@@ -342,6 +361,7 @@ class SettingsView extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.medium),
                 DropdownButtonFormField<int>(
+                  isExpanded: true,
                   initialValue: viewModel.appLockTimeoutMinutes,
                   decoration: InputDecoration(
                     labelText: l10n.settingsLockAfter,
@@ -349,19 +369,31 @@ class SettingsView extends StatelessWidget {
                   items: [
                     DropdownMenuItem(
                       value: 0,
-                      child: Text(l10n.settingsLockImmediately),
+                      child: Text(
+                        l10n.settingsLockImmediately,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     DropdownMenuItem(
                       value: 1,
-                      child: Text(l10n.settingsLock1Minute),
+                      child: Text(
+                        l10n.settingsLock1Minute,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     DropdownMenuItem(
                       value: 5,
-                      child: Text(l10n.settingsLock5Minutes),
+                      child: Text(
+                        l10n.settingsLock5Minutes,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     DropdownMenuItem(
                       value: 15,
-                      child: Text(l10n.settingsLock15Minutes),
+                      child: Text(
+                        l10n.settingsLock15Minutes,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                   onChanged: (minutes) {
