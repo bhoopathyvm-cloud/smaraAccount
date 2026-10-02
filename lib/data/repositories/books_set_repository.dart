@@ -43,9 +43,16 @@ class BooksSetRepository {
   final Uuid _uuid;
 
   AppDatabase? _activeDatabase;
+  String? _activeBooksSetId;
 
   /// Currently open active-set database, if this repository opened one.
   AppDatabase? get activeDatabase => _activeDatabase;
+
+  /// Id of the currently open books set, if any (sync; set in [_openSet]).
+  String? get activeBooksSetId => _activeBooksSetId;
+
+  /// App support directory used for books / receipts paths.
+  Directory get supportDirectory => _supportDirectory;
 
   /// Ensures legacy layout is migrated, then opens the active set's database.
   Future<AppDatabase> openActive() async {
@@ -170,6 +177,7 @@ class BooksSetRepository {
     final file = BooksSetPaths.databaseFile(_supportDirectory, booksSetId);
     final db = AppDatabase.openFile(file);
     _activeDatabase = db;
+    _activeBooksSetId = booksSetId;
     // Touch the database so migrations (including schema 19 tables) run
     // before callers insert metadata or entries.
     await db.customSelect('SELECT 1').get();
@@ -260,6 +268,7 @@ class BooksSetRepository {
   Future<void> _closeActive() async {
     final db = _activeDatabase;
     _activeDatabase = null;
+    _activeBooksSetId = null;
     if (db != null) {
       await db.close();
     }

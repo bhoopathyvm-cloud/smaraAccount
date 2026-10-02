@@ -119,6 +119,97 @@ class ClaimRepository {
     return (await _loadItem(id))!;
   }
 
+  /// Updates a Draft Claim Item. Only the Claimant who owns the claim may
+  /// edit; amounts must stay positive when provided.
+  Future<ClaimItem> updateItem({
+    required String claimItemId,
+    required String actorDeviceId,
+    String? categoryId,
+    DateTime? expenseDate,
+    String? paidCurrency,
+    int? paidAmountMinor,
+    int? companyCurrencyAmountMinor,
+    String? description,
+    bool clearDescription = false,
+    double? employeeStatedRate,
+    bool clearEmployeeStatedRate = false,
+    double? rateUsed,
+  }) async {
+    final existing = await _requireItem(claimItemId);
+    await _requireEditableClaim(existing.claimId, actorDeviceId);
+    if (categoryId != null) {
+      await _requireAllowlisted(categoryId);
+    }
+    final nextPaid = paidAmountMinor ?? existing.paidAmountMinor;
+    final nextCompany =
+        companyCurrencyAmountMinor ?? existing.companyCurrencyAmountMinor;
+    if (nextPaid <= 0 || nextCompany <= 0) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'Claim item amounts must be positive.',
+      );
+    }
+    final nextPaidCurrency = paidCurrency ?? existing.paidCurrency;
+    final nextStatedRate = clearEmployeeStatedRate
+        ? null
+        : (employeeStatedRate ?? existing.employeeStatedRate);
+    final resolvedRate =
+        rateUsed ??
+        nextStatedRate ??
+        (nextPaidCurrency.isNotEmpty && nextPaid > 0
+            ? nextCompany / nextPaid
+            : existing.rateUsed);
+    await (_db.update(
+      _db.claimItems,
+    )..where((t) => t.id.equals(claimItemId))).write(
+      ClaimItemsCompanion(
+        categoryId: categoryId != null
+            ? Value(categoryId)
+            : const Value.absent(),
+        expenseDate: expenseDate != null
+            ? Value(dateOnly(expenseDate))
+            : const Value.absent(),
+        description: clearDescription
+            ? const Value(null)
+            : (description != null ? Value(description) : const Value.absent()),
+        paidCurrency: paidCurrency != null
+            ? Value(paidCurrency)
+            : const Value.absent(),
+        paidAmountMinor: paidAmountMinor != null
+            ? Value(paidAmountMinor)
+            : const Value.absent(),
+        employeeStatedRate:
+            clearEmployeeStatedRate || employeeStatedRate != null
+            ? Value(nextStatedRate)
+            : const Value.absent(),
+        rateUsed: Value(resolvedRate),
+        companyCurrencyAmountMinor: companyCurrencyAmountMinor != null
+            ? Value(companyCurrencyAmountMinor)
+            : const Value.absent(),
+      ),
+    );
+    await _touch(existing.claimId);
+    return (await _loadItem(claimItemId))!;
+  }
+
+  /// Removes a Draft Claim Item. Receipt metadata rows for the item are
+  /// removed for FK integrity; receipt blob files remain on disk (Decision 8
+  /// never auto-deletes blobs).
+  Future<void> removeItem({
+    required String claimItemId,
+    required String actorDeviceId,
+  }) async {
+    final existing = await _requireItem(claimItemId);
+    await _requireEditableClaim(existing.claimId, actorDeviceId);
+    await (_db.delete(
+      _db.claimReceipts,
+    )..where((t) => t.claimItemId.equals(claimItemId))).go();
+    await (_db.delete(
+      _db.claimItems,
+    )..where((t) => t.id.equals(claimItemId))).go();
+    await _touch(existing.claimId);
+  }
+
   Future<void> updateItemRate({
     required String claimItemId,
     required String actorDeviceId,

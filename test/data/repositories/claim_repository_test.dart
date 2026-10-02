@@ -542,4 +542,40 @@ void main() {
       expect(bytes, isNotEmpty);
     },
   );
+
+  test('updateItem and removeItem work on draft only for claimant', () async {
+    await addClaimantRavi();
+    final claim = await claims.createDraft(claimantDeviceId: 'ravi-device');
+    final item = await claims.addItem(
+      claimId: claim.id,
+      actorDeviceId: 'ravi-device',
+      categoryId: travelCategoryId,
+      expenseDate: DateTime(2026, 3, 10),
+      paidCurrency: 'USD',
+      paidAmountMinor: 1000,
+      companyCurrencyAmountMinor: 1000,
+      description: 'Taxi',
+    );
+    final updated = await claims.updateItem(
+      claimItemId: item.id,
+      actorDeviceId: 'ravi-device',
+      paidAmountMinor: 2500,
+      companyCurrencyAmountMinor: 2500,
+      description: 'Taxi airport',
+    );
+    expect(updated.paidAmountMinor, 2500);
+    expect(updated.description, 'Taxi airport');
+
+    await expectLater(
+      claims.updateItem(
+        claimItemId: item.id,
+        actorDeviceId: 'owner-device',
+        description: 'Nope',
+      ),
+      throwsA(isA<AppFailure>()),
+    );
+
+    await claims.removeItem(claimItemId: item.id, actorDeviceId: 'ravi-device');
+    expect((await claims.getClaim(claim.id))!.items, isEmpty);
+  });
 }
