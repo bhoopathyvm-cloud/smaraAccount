@@ -2274,4 +2274,73 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get claimsRemovePersonConfirm => 'Remove';
+
+  @override
+  String get claimsEditorTitle => 'Edit claim';
+
+  @override
+  String get claimsSubmit => 'Submit';
+
+  @override
+  String get claimsAddItem => 'Add item';
+
+  @override
+  String get claimsEditItem => 'Edit item';
+
+  @override
+  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+
+  @override
+  String get claimsNoAllowlistedCategories =>
+      'No expense categories are allowed for claims yet.';
+
+  @override
+  String get claimsCategoryLabel => 'Category';
+
+  @override
+  String get claimsExpenseDateLabel => 'Expense date';
+
+  @override
+  String get claimsPaidAmountLabel => 'Amount paid';
+
+  @override
+  String get claimsPaidCurrencyLabel => 'Currency paid';
+
+  @override
+  String get claimsRateOptionalLabel => 'Rate (optional)';
+
+  @override
+  String claimsCompanyAmountLabel(String currency) {
+    return 'Amount in $currency';
+  }
+
+  @override
+  String get claimsDescriptionLabel => 'Description';
+
+  @override
+  String get claimsAttachCamera => 'Take photo';
+
+  @override
+  String get claimsAttachGallery => 'Choose photo';
+
+  @override
+  String get claimsAttachPdf => 'Choose PDF';
+
+  @override
+  String claimsReceiptAttached(String fileName) {
+    return 'Receipt: $fileName';
+  }
+
+  @override
+  String get claimsReceiptRequiredHint =>
+      'A receipt is required for this amount.';
+
+  @override
+  String get claimsReceiptPermissionSentence =>
+      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+
+  @override
+  String claimsReviewClaimHeading(String status) {
+    return 'Claim · $status';
+  }
 }

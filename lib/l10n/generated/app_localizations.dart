@@ -3975,6 +3975,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove'**
   String get claimsRemovePersonConfirm;
+
+  /// No description provided for @claimsEditorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit claim'**
+  String get claimsEditorTitle;
+
+  /// No description provided for @claimsSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get claimsSubmit;
+
+  /// No description provided for @claimsAddItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add item'**
+  String get claimsAddItem;
+
+  /// No description provided for @claimsEditItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit item'**
+  String get claimsEditItem;
+
+  /// No description provided for @claimsNoItemsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one item before submitting.'**
+  String get claimsNoItemsYet;
+
+  /// No description provided for @claimsNoAllowlistedCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'No expense categories are allowed for claims yet.'**
+  String get claimsNoAllowlistedCategories;
+
+  /// No description provided for @claimsCategoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get claimsCategoryLabel;
+
+  /// No description provided for @claimsExpenseDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense date'**
+  String get claimsExpenseDateLabel;
+
+  /// No description provided for @claimsPaidAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount paid'**
+  String get claimsPaidAmountLabel;
+
+  /// No description provided for @claimsPaidCurrencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency paid'**
+  String get claimsPaidCurrencyLabel;
+
+  /// No description provided for @claimsRateOptionalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate (optional)'**
+  String get claimsRateOptionalLabel;
+
+  /// No description provided for @claimsCompanyAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount in {currency}'**
+  String claimsCompanyAmountLabel(String currency);
+
+  /// No description provided for @claimsDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get claimsDescriptionLabel;
+
+  /// No description provided for @claimsAttachCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Take photo'**
+  String get claimsAttachCamera;
+
+  /// No description provided for @claimsAttachGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose photo'**
+  String get claimsAttachGallery;
+
+  /// No description provided for @claimsAttachPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose PDF'**
+  String get claimsAttachPdf;
+
+  /// No description provided for @claimsReceiptAttached.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt: {fileName}'**
+  String claimsReceiptAttached(String fileName);
+
+  /// No description provided for @claimsReceiptRequiredHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A receipt is required for this amount.'**
+  String get claimsReceiptRequiredHint;
+
+  /// No description provided for @claimsReceiptPermissionSentence.
+  ///
+  /// In en, this message translates to:
+  /// **'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.'**
+  String get claimsReceiptPermissionSentence;
+
+  /// No description provided for @claimsReviewClaimHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim · {status}'**
+  String claimsReviewClaimHeading(String status);
 }
 
 class _AppLocalizationsDelegate

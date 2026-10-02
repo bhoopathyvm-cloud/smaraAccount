@@ -39,6 +39,8 @@ class SettingsRepository implements AppLockSettingsStore {
   static const _localDeviceDisplayNameKey = 'localDeviceDisplayName';
   static const _linkedDevicesPermissionExplainedKey =
       'linkedDevicesPermissionExplained';
+  static const _claimsReceiptPermissionExplainedKey =
+      'claimsReceiptPermissionExplained';
 
   /// Stable this-device id for Linked devices membership (device setting —
   /// does not sync).
@@ -61,6 +63,16 @@ class SettingsRepository implements AppLockSettingsStore {
 
   Future<void> setLinkedDevicesPermissionExplained(bool value) {
     return _preferences.setBool(_linkedDevicesPermissionExplainedKey, value);
+  }
+
+  /// Whether the Claim receipt camera/photos permission sentence was shown.
+  Future<bool> hasClaimsReceiptPermissionExplained() async {
+    return await _preferences.getBool(_claimsReceiptPermissionExplainedKey) ??
+        false;
+  }
+
+  Future<void> setClaimsReceiptPermissionExplained(bool value) {
+    return _preferences.setBool(_claimsReceiptPermissionExplainedKey, value);
   }
 
   /// Defaults to disabled - this app has never made a network call before

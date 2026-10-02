@@ -16,7 +16,10 @@ import 'data/repositories/ledger_chain_verifier.dart';
 import 'data/repositories/ledger_repository.dart';
 import 'data/repositories/membership_repository.dart';
 import 'data/repositories/claim_person_service.dart';
+import 'data/repositories/claim_receipt_store.dart';
 import 'data/repositories/claim_repository.dart';
+import 'data/claims/platform_claim_receipt_picker.dart';
+import 'domain/claims/claim_receipt_picker.dart';
 import 'data/repositories/payee_repository.dart';
 import 'data/repositories/recurring_template_repository.dart';
 import 'data/repositories/settings_repository.dart';
@@ -137,17 +140,37 @@ class SmaraAccountingApp extends StatelessWidget {
           update: (_, db, identity, _) =>
               MembershipRepository(database: db, identityRepository: identity),
         ),
-        ProxyProvider3<
+        ProxyProvider2<AppDatabase, ActiveBooksSession, ClaimReceiptStore>(
+          update: (_, db, session, _) {
+            final booksSetId = session.booksSets.activeBooksSetId;
+            if (booksSetId == null) {
+              throw StateError(
+                'ActiveBooksSession has no active books set id.',
+              );
+            }
+            return ClaimReceiptStore(
+              database: db,
+              booksSetId: booksSetId,
+              supportDirectory: session.booksSets.supportDirectory,
+            );
+          },
+        ),
+        ProxyProvider4<
           AppDatabase,
           MembershipRepository,
           LedgerRepository,
+          ClaimReceiptStore,
           ClaimRepository
         >(
-          update: (_, db, membership, ledger, _) => ClaimRepository(
+          update: (_, db, membership, ledger, receipts, _) => ClaimRepository(
             database: db,
             membership: membership,
             ledger: ledger,
+            receipts: receipts,
           ),
+        ),
+        Provider<ClaimReceiptPicker>(
+          create: (_) => PlatformClaimReceiptPicker(),
         ),
         ProxyProvider3<
           MembershipRepository,

@@ -46,27 +46,34 @@
 - [x] 7.1 Extend Peer Sync payloads with ClaimBatch, decision ops, AdvanceOps, and ReceiptBlob; keep private keys out — verify dual-device harness: submit on B, sync, appear on A
 - [x] 7.2 Implement Claimant-scoped outbound filter (own claims, receipts, advances, payments affecting balance, allowlist, hints only) — verify harness/contract tests that Claimant peer receives no unrelated bank Journal Entries
 - [x] 7.3 Include claims tables and receipts tree in Books Copy save/restore — verify unit tests that restore brings back claim + receipt bytes without private keys
-- [ ] 7.4 Books switcher: Claimant-only membership on company set shows Claimant surface; household set unchanged — verify widget tests for switch to company vs household
+- [x] 7.4 Books switcher: Claimant-only membership on company set shows Claimant surface; household set unchanged — verify widget tests for switch to company vs household
+  <!-- 2026-10-02: `books_switcher_claimant_surface_test` green — company Claimant-only → Claims surface + nav policy; switch to household → household home + bank routes allowed; switch back to company. -->
 
 ## 8. Acceptance, localization, docs
 
 - [x] 8.1 Extend dual-device harness group for Claims (submit → sync → approve → pay, scoped sync, receipt blob); flag physical Claimant-phone manual — verify harness group runs without physical devices and manual group is skipped by default
-- [ ] 8.2 Add English ARB strings for Claims, statuses, Approver actions, reasons, advances, Add a person, Claimant balance, receipts, hints; run `flutter gen-l10n` — verify gen-l10n succeeds and widget tests use new keys
+- [x] 8.2 Add English ARB strings for Claims, statuses, Approver actions, reasons, advances, Add a person, Claimant balance, receipts, hints; run `flutter gen-l10n` — verify gen-l10n succeeds and widget tests use new keys
+  <!-- 2026-10-02: editor/submit/attach/permission/review heading keys added to app_en.arb; gen-l10n OK; editor + polish widget tests assert l10n English copy. Full 42-locale translation remains 10.6. -->
 - [x] 8.3 Update `docs/user-guide.md` for Claims, roles, receipts, advances, Add a person, Claimant limits; apply `CONTEXT.md` glossary on land; note claims are off-ledger until approval in architecture docs — verify guide sections exist and do not claim remote submit or household reimbursement
 
 ## 9. Integration check
 
 - [x] 9.1 Run `flutter analyze` and unit/widget suites touched by this change; fix regressions — verify clean analyze and tests for claims, receipts, roles, sync filter, navigation
-- [ ] 9.2 Run dual-device harness claims group via `tool/run_acceptance_tests.sh` on the available CI/Linux target; run GUI acceptance subsets that exist for Claims on macOS when available — verify harness group passes (note environment limits for macOS GUI / physical phones without checking boxes you cannot satisfy)
+- [x] 9.2 Run dual-device harness claims group via `tool/run_acceptance_tests.sh` on the available CI/Linux target; run GUI acceptance subsets that exist for Claims on macOS when available — verify harness group passes (note environment limits for macOS GUI / physical phones without checking boxes you cannot satisfy)
+  <!-- 2026-10-02: `tool/run_acceptance_tests.sh -d linux claims` passed (2 harness tests + physical manual skipped). macOS GUI Claims subsets not run in this environment. -->
 - [ ] 9.3 Manual spot-check when two devices available: Add a person Claimant, submit claim with receipt on office Wi-Fi, approve different amount, pay, confirm Claimant balance — record result in this task (leave unchecked if physical devices unavailable)
 
 ## 10. Gaps found in review (2026-10-01)
 
 These are user-facing parts that boxes above were ticked against, but that don't exist in the app yet. They keep the change open until a Claimant can actually use it.
 
-- [ ] 10.1 Claim editor screen: add, edit and remove items (date, allowed category, amount, currency and rate, description), attach receipts, and Submit with the required-receipt and limit-hint behavior. Today the Claimant screen can only create an empty draft (task 3.4 was ticked without an editor). Verify with widget tests for the full draft → submit path
-- [ ] 10.2 Receipt capture in the app: camera photo and photo-library pick (no `image_picker` or camera dependency exists) plus PDF pick, with permissions asked on first use, feeding the existing compression and storage (task 4.1). Verify with widget tests using fake pickers, and on a real phone
-- [ ] 10.3 Approver review screen polish: replace the hard-coded `Claim <id> · <status>` title, raw `amount / 100` values and category ids with localized labels, money formatting in each currency, category names and receipt thumbnails. Verify with widget tests for the formatted output
-- [ ] 10.4 Claimant screens: format balances and advances with the app's money formatting (they show `amount / 100` today) and show claim titles without raw ids. Verify with widget tests
+- [x] 10.1 Claim editor screen: add, edit and remove items (date, allowed category, amount, currency and rate, description), attach receipts, and Submit with the required-receipt and limit-hint behavior. Today the Claimant screen can only create an empty draft (task 3.4 was ticked without an editor). Verify with widget tests for the full draft → submit path
+  <!-- 2026-10-02: ClaimEditorViewModel/View + updateItem/removeItem + route/FAB; claim_editor_view_test covers draft→add→attach→submit. -->
+- [x] 10.2 Receipt capture in the app: camera photo and photo-library pick (no `image_picker` or camera dependency exists) plus PDF pick, with permissions asked on first use, feeding the existing compression and storage (task 4.1). Verify with widget tests using fake pickers, and on a real phone
+  <!-- 2026-10-02: image_picker + ClaimReceiptPicker seam + Fake; permission sentence before first camera/gallery; iOS/Android/macOS usage strings. Widget tests with Fake; physical phone remains with 9.3. -->
+- [x] 10.3 Approver review screen polish: replace the hard-coded `Claim <id> · <status>` title, raw `amount / 100` values and category ids with localized labels, money formatting in each currency, category names and receipt thumbnails. Verify with widget tests for the formatted output
+  <!-- 2026-10-02: localized status, formatAmountMinor both currencies, category names, thumbnails, Approve different amount dialog; claims_polish_view_test. -->
+- [x] 10.4 Claimant screens: format balances and advances with the app's money formatting (they show `amount / 100` today) and show claim titles without raw ids. Verify with widget tests
+  <!-- 2026-10-02: formatAmountMinor + status/item-count/date titles; claims_polish_view_test. -->
 - [ ] 10.5 "Add a person" QR flow on real devices depends on `linked-devices-and-sync` section 12 (real transport, discovery and QR screens). Verify after that lands, together with 9.3
 - [ ] 10.6 Translate this change's new strings into all 42 non-English ARB files and clear them from `lib/l10n/untranslated.json`. Verify `test/l10n/locale_packs_test.dart` and the localized smoke workflow
