@@ -75,10 +75,12 @@
 ## 9. CI
 
 - [x] 9.1 `flutter-ci.yml` runs the new and updated unit/widget tests (`flutter test`); verify the PR's CI run is green
-- [ ] 9.2 `acceptance-suite-nightly.yml` runs the renamed/new acceptance groups on Linux for its locale matrix; verify with a manual `workflow_dispatch` run that passes
+- [x] 9.2 `acceptance-suite-nightly.yml` runs the renamed/new acceptance groups on Linux for its locale matrix; verify with a manual `workflow_dispatch` run that passes
+  <!-- 2026-10-02: Acceptance Suite Weekly workflow_dispatch on books-copy-verification-2 (run 36911560203) passed for all 43 locales. -->
 - [x] 9.3 `localized-smoke.yml` covers the new strings via `curated_locale_smoke_test.dart` and `acceptance_locale_fixtures_test.dart`; verify the PR's run is green
   <!-- 2026-10-01: Localized Smoke workflow_dispatch on the #216 branch (run 36896024181) completed successfully. -->
-- [ ] 9.4 `linux-desktop.yml` still builds with the removed dependency and new code; verify the PR's run is green
+- [x] 9.4 `linux-desktop.yml` still builds with the removed dependency and new code; verify the PR's run is green
+  <!-- 2026-10-02: Linux Desktop workflow_dispatch on books-copy-verification-2 (run 36911564978) passed. -->
 
 ## 10. Documentation
 
