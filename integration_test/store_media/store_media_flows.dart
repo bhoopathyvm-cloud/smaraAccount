@@ -5,6 +5,7 @@
 // acceptance harness, so what the stores show is what the app does.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:smara_accounting/ui/features/settings/views/settings_view.dart';
 import 'package:smara_accounting/l10n/generated/app_localizations.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/main.dart';
@@ -425,7 +426,7 @@ class StoreMediaFlows {
     await tapReliably(
       tester,
       () => find.byTooltip(l10n.settingsTitle),
-      () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+      () => find.byType(SettingsView).evaluate().isNotEmpty,
     );
     await pause();
   }
