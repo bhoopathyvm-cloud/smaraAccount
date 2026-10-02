@@ -11,6 +11,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smara_accounting/ui/features/settings/views/settings_view.dart';
 import 'package:smara_accounting/data/books_set/books_set_paths.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
@@ -98,14 +99,14 @@ void main() {
     // Detected by content, not the title: right after a dialog closes its
     // fading barrier still absorbs hit tests.
     final settingsOpen =
-        find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty ||
+        find.byType(SettingsView).evaluate().isNotEmpty ||
         find.text(l10n.settingsBackup).evaluate().isNotEmpty;
     if (!settingsOpen) {
       await goHome(tester);
       await tapReliably(
         tester,
         () => find.byTooltip(l10n.settingsTitle),
-        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+        () => find.byType(SettingsView).evaluate().isNotEmpty,
       );
     }
     await scrollSettingsUntilVisible(tester, target);
@@ -454,15 +455,21 @@ void main() {
         // for a finder scoped to that row.
         await tester.pump(const Duration(milliseconds: 500));
 
+        Finder salaryHideButton() => find.descendant(
+          of: find.ancestor(
+            of: find.text(salaryCategory),
+            matching: find.byType(ListTile),
+          ),
+          matching: find.widgetWithText(OutlinedButton, l10n.actionHide),
+        );
+        // On a short phone screen (iPhone SE) "Salary" sits below the fold
+        // of the lazily built categories list - the "Salary" found above
+        // can be Home's, still mounted behind this tab.
+        await scrollSettingsUntilVisible(tester, salaryHideButton());
+
         await tapReliably(
           tester,
-          () => find.descendant(
-            of: find.ancestor(
-              of: find.text(salaryCategory),
-              matching: find.byType(ListTile),
-            ),
-            matching: find.widgetWithText(OutlinedButton, l10n.actionHide),
-          ),
+          salaryHideButton,
           () => find.text(l10n.hideCategoryTitle).evaluate().isNotEmpty,
         );
 
@@ -1498,7 +1505,7 @@ void main() {
             ElevatedButton,
             l10n.backupReminderSaveAction,
           ),
-          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+          () => find.byType(SettingsView).evaluate().isNotEmpty,
         );
         await exportBackupThroughGui(
           tester,
@@ -1547,7 +1554,7 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(materialL10n(tester).backButtonTooltip),
-          () => find.text(l10n.settingsFetchFxRates).evaluate().isEmpty,
+          () => find.byType(SettingsView).evaluate().isEmpty,
         );
         // Leaving Settings with a fresh PIN routes through the lock screen.
         await pumpUntilFound(tester, find.byType(LockView));
@@ -2559,7 +2566,7 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(l10n.settingsTitle).hitTestable(),
-          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+          () => find.byType(SettingsView).evaluate().isNotEmpty,
           innerTries: 150,
         );
         // Below the books switcher and linked-devices sections.
@@ -2653,7 +2660,7 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(l10n.settingsTitle).hitTestable(),
-          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+          () => find.byType(SettingsView).evaluate().isNotEmpty,
           innerTries: 150,
         );
         // Below the books switcher and linked-devices sections.
@@ -2890,7 +2897,7 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(l10n.settingsTitle),
-          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+          () => find.byType(SettingsView).evaluate().isNotEmpty,
         );
         await scrollSettingsUntilVisible(
           tester,
@@ -3019,7 +3026,7 @@ void main() {
         await tapReliably(
           tester,
           () => find.byTooltip(l10n.settingsTitle),
-          () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+          () => find.byType(SettingsView).evaluate().isNotEmpty,
         );
         await scrollSettingsUntilVisible(
           tester,
@@ -3701,7 +3708,7 @@ void main() {
       await tapReliably(
         tester,
         () => find.byTooltip(l10n.settingsTitle),
-        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+        () => find.byType(SettingsView).evaluate().isNotEmpty,
       );
     }
 
@@ -4546,7 +4553,7 @@ void main() {
       await tapReliably(
         tester,
         () => find.byTooltip(l10n.settingsTitle),
-        () => find.text(l10n.settingsFetchFxRates).evaluate().isNotEmpty,
+        () => find.byType(SettingsView).evaluate().isNotEmpty,
       );
       // Scroll from the screen centre until the section's own "New books"
       // button is on screen - the title alone can be visible while the

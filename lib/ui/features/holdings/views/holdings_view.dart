@@ -490,13 +490,17 @@ class HoldingsView extends StatelessWidget {
                       ),
                       const SizedBox(height: AppSpacing.medium),
                       DropdownButtonFormField<InstrumentKind>(
+                        isExpanded: true,
                         initialValue: draft.newKind,
                         decoration: InputDecoration(labelText: l10n.kindLabel),
                         items: [
                           for (final kind in InstrumentKind.values)
                             DropdownMenuItem(
                               value: kind,
-                              child: Text(instrumentKindLabel(l10n, kind)),
+                              child: Text(
+                                instrumentKindLabel(l10n, kind),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                         ],
                         onChanged: (kind) {
