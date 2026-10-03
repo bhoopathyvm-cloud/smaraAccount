@@ -568,30 +568,29 @@ class AppLocalizationsJa extends AppLocalizations {
   String get monthlyLimitBlurb => 'この支出カテゴリに対する、月初からの任意の支出目安です。';
 
   @override
-  String get translateCategoryWithAi => 'Translate with AI';
+  String get translateCategoryWithAi => 'AIで翻訳';
 
   @override
-  String get addCategoryTranslation => 'Add translation';
+  String get addCategoryTranslation => '翻訳を追加';
 
   @override
-  String get categoryTranslationLocale => 'Language';
+  String get categoryTranslationLocale => '言語';
 
   @override
-  String get categoryTranslationName => 'Translated name';
+  String get categoryTranslationName => '翻訳名';
 
   @override
-  String get mergeCategories => 'Merge categories';
+  String get mergeCategories => 'カテゴリを統合';
 
   @override
-  String get mergeCategoriesSuggested =>
-      'These categories look the same. Merge them?';
+  String get mergeCategoriesSuggested => 'これらのカテゴリは同じように見えます。統合しますか？';
 
   @override
-  String get categoryDefaultLanguage => 'Default language for category names';
+  String get categoryDefaultLanguage => 'カテゴリ名の既定の言語';
 
   @override
   String get categoryDefaultLanguageSubtitle =>
-      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+      'リンクされたデバイス間で共有されます。翻訳がある場合、各デバイスは引き続き自分の言語で表示します。';
 
   @override
   String get manageCategoryRules => 'カテゴリルールを管理';
@@ -902,153 +901,153 @@ class AppLocalizationsJa extends AppLocalizations {
       '「後で」の後、新しい記録がこの件数になるまで表示しない';
 
   @override
-  String get settingsBooksSwitcher => 'Books on this device';
+  String get settingsBooksSwitcher => 'この端末の帳簿';
 
   @override
   String get settingsBooksSwitcherBlurb =>
-      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+      '帳簿のセットごとに署名キーと履歴があります。切り替えるとそのセットを開き、ホームと明細にはその項目だけが表示されます。';
 
   @override
-  String get settingsBooksSwitcherActive => 'Open now';
+  String get settingsBooksSwitcherActive => '開いています';
 
   @override
-  String get settingsBooksSwitcherSwitch => 'Switch';
+  String get settingsBooksSwitcherSwitch => '切り替え';
 
   @override
-  String get settingsBooksSwitcherCreate => 'New books';
+  String get settingsBooksSwitcherCreate => '新しい帳簿';
 
   @override
-  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+  String get settingsBooksSwitcherCreateTitle => 'この帳簿に名前を付ける';
 
   @override
-  String get settingsBooksSwitcherNameLabel => 'Name';
+  String get settingsBooksSwitcherNameLabel => '名前';
 
   @override
-  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+  String get settingsBooksSwitcherRemoveTitle => 'この帳簿を削除しますか？';
 
   @override
   String settingsBooksSwitcherRemoveBody(String name) {
-    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+    return '署名キーを含め、この端末から「$name」を削除します。この端末の他の帳簿には影響しません。';
   }
 
   @override
-  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+  String get settingsBooksSwitcherRemoveConfirm => '削除';
 
   @override
   String settingsBooksSwitcherFallbackName(int number) {
-    return 'Books $number';
+    return '帳簿 $number';
   }
 
   @override
-  String get settingsLinkedDevices => 'Linked devices';
+  String get settingsLinkedDevices => 'リンクされたデバイス';
 
   @override
   String get settingsLinkedDevicesCatchUp =>
-      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+      '同じ Wi-Fi で両方のデバイスが Smara を開いていると、互いに追いつきます。';
 
   @override
   String get settingsLinkedDevicesPermissionSentence =>
-      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+      '帳簿を共有するには、Smara がこの Wi-Fi 上の他のデバイスを見つける必要があります。インターネットには何も送信されません。';
 
   @override
-  String get settingsLinkedDevicesAddDevice => 'Add a device';
+  String get settingsLinkedDevicesAddDevice => 'デバイスを追加';
 
   @override
-  String get settingsLinkedDevicesContinue => 'Continue';
+  String get settingsLinkedDevicesContinue => '続ける';
 
   @override
-  String get settingsLinkedDevicesRoleOwner => 'Owner';
+  String get settingsLinkedDevicesRoleOwner => 'オーナー';
 
   @override
-  String get settingsLinkedDevicesRoleMember => 'Member';
+  String get settingsLinkedDevicesRoleMember => 'メンバー';
 
   @override
-  String get settingsLinkedDevicesCanAdd => 'May add devices';
+  String get settingsLinkedDevicesCanAdd => 'デバイスを追加できる';
 
   @override
-  String get settingsLinkedDevicesErasePending => 'Erase pending';
+  String get settingsLinkedDevicesErasePending => '消去待ち';
 
   @override
   String settingsLinkedDevicesErasedOn(String date) {
-    return 'Erased on $date';
+    return '$date に消去済み';
   }
 
   @override
   String get settingsLinkedDevicesSuggestSecondOwner =>
-      'These books have only one Owner. Consider making another linked device an Owner too.';
+      'この帳簿にはオーナーが1人だけです。別のリンク済みデバイスもオーナーにすることを検討してください。';
 
   @override
   String get settingsLinkedDevicesJoinSameWifi =>
-      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+      '両方のデバイスが同じ Wi-Fi 上にある必要があります。Smara はインターネット経由では参加しません。';
 
   @override
-  String get settingsLinkedDevicesApproveJoin => 'Approve';
+  String get settingsLinkedDevicesApproveJoin => '承認';
 
   @override
-  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+  String get settingsLinkedDevicesRefuseJoin => '拒否';
 
   @override
   String settingsLinkedDevicesPendingJoin(String name) {
-    return '$name wants to join these books';
+    return '$name がこの帳簿への参加を希望しています';
   }
 
   @override
-  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+  String get settingsLinkedDevicesEmpty => '今のところこのデバイスだけがリンクされています。';
 
   @override
-  String get settingsLinkedDevicesSyncNow => 'Sync now';
+  String get settingsLinkedDevicesSyncNow => '今すぐ同期';
 
   @override
-  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+  String get settingsLinkedDevicesSyncNowBusy => '追いついています…';
 
   @override
   String membershipNoticeDeviceAdded(String name) {
-    return 'A device was added: $name';
+    return 'デバイスが追加されました: $name';
   }
 
   @override
   String membershipNoticeDeviceRemoved(String name) {
-    return 'A device was removed: $name';
+    return 'デバイスが削除されました: $name';
   }
 
   @override
   String membershipNoticeErasePending(String name) {
-    return 'Erase pending for $name';
+    return '$name の消去待ち';
   }
 
   @override
   String membershipNoticeErased(String name, String date) {
-    return 'Erased $name on $date';
+    return '$date に $name を消去しました';
   }
 
   @override
   String membershipNoticeSoleOwnerClaimed(String name) {
-    return '$name claimed sole ownership';
+    return '$name が単独オーナー権限を請求しました';
   }
 
   @override
   String membershipNoticeSoleOwnerCancelled(String name) {
-    return 'Sole-Owner claim for $name was cancelled';
+    return '$name の単独オーナー請求が取り消されました';
   }
 
   @override
   String membershipNoticeSoleOwnerEffective(String name) {
-    return '$name is now an Owner';
+    return '$name がオーナーになりました';
   }
 
   @override
   String membershipNoticeEntryNotAccepted(String name) {
-    return 'Not accepted: couldn\'t be verified (from $name)';
+    return '未受理: 検証できませんでした（$name から）';
   }
 
   @override
   String membershipNoticeOwnerVerificationAlert(String name) {
-    return 'A record from $name could not be verified and was not accepted';
+    return '$name からの記録を検証できず、受理されませんでした';
   }
 
   @override
   String get membershipNoticeCompetingFixCheck =>
-      'Two Fixes for the same entry were resolved — please check';
+      '同じ項目に対する2件の修正が解決されました — 確認してください';
 
   @override
   String get whyWeDontEdit => '古い項目を編集しない理由';
@@ -2039,202 +2038,198 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get claimsTitle => 'Claims';
+  String get claimsTitle => '経費申請';
 
   @override
-  String get claimsReviewTitle => 'Review claims';
+  String get claimsReviewTitle => '申請を確認';
 
   @override
-  String get claimsStatusDraft => 'Draft';
+  String get claimsStatusDraft => '下書き';
 
   @override
-  String get claimsStatusSubmitted => 'Submitted';
+  String get claimsStatusSubmitted => '提出済み';
 
   @override
-  String get claimsStatusPartlyApproved => 'Partly approved';
+  String get claimsStatusPartlyApproved => '一部承認';
 
   @override
-  String get claimsStatusApproved => 'Approved';
+  String get claimsStatusApproved => '承認済み';
 
   @override
-  String get claimsStatusPaid => 'Paid';
+  String get claimsStatusPaid => '支払済み';
 
   @override
-  String get claimsStatusRejected => 'Rejected';
+  String get claimsStatusRejected => '却下';
 
   @override
-  String get claimsApprove => 'Approve';
+  String get claimsApprove => '承認';
 
   @override
-  String get claimsApproveDifferent => 'Approve different amount';
+  String get claimsApproveDifferent => '別の金額で承認';
 
   @override
-  String get claimsReject => 'Reject';
+  String get claimsReject => '却下';
 
   @override
-  String get claimsReasonRequired => 'A reason is required';
+  String get claimsReasonRequired => '理由が必要です';
 
   @override
-  String get claimsAdvances => 'Advances';
+  String get claimsAdvances => '仮払い';
 
   @override
-  String get claimsAddPerson => 'Add a person';
+  String get claimsAddPerson => '人を追加';
 
   @override
-  String get claimsRoleApprover => 'Approver';
+  String get claimsRoleApprover => '承認者';
 
   @override
-  String get claimsRoleClaimant => 'Claimant';
+  String get claimsRoleClaimant => '申請者';
 
   @override
   String claimsBalanceCompanyOwesYou(String company) {
-    return '$company owes you';
+    return '$company の未払い（あなたへ）';
   }
 
   @override
   String claimsBalanceYouOweCompany(String company) {
-    return 'You owe $company';
+    return 'あなたが $company に未払い';
   }
 
   @override
   String claimsBalanceSettled(String company) {
-    return 'Settled with $company';
+    return '$company と精算済み';
   }
 
   @override
-  String get claimsReceiptRequired =>
-      'A receipt is required for this claim item';
+  String get claimsReceiptRequired => 'この申請項目には領収書が必要です';
 
   @override
   String get claimsReceiptPdfTooLarge =>
-      'This PDF is larger than 5 MB. Choose a smaller file.';
+      'この PDF は 5 MB を超えています。小さいファイルを選んでください。';
 
   @override
   String claimsSpendingHint(String amount, String unit) {
-    return 'Hint: at most $amount per $unit';
+    return 'ヒント: $unit あたり最大 $amount';
   }
 
   @override
-  String get claimsNoClaimsYet => 'No claims yet.';
+  String get claimsNoClaimsYet => '申請はまだありません。';
 
   @override
-  String get claimsNoClaimsToReview => 'No claims to review.';
+  String get claimsNoClaimsToReview => '確認する申請はありません。';
 
   @override
-  String get claimsAdvanceDefault => 'Advance';
+  String get claimsAdvanceDefault => '仮払い';
 
   @override
   String claimsItemCount(int count) {
-    return '$count item(s)';
+    return '$count 件';
   }
 
   @override
-  String get claimsRejectReasonTitle => 'Reject reason';
+  String get claimsRejectReasonTitle => '却下理由';
 
   @override
-  String get claimsApproveDifferentReasonTitle =>
-      'Approve different amount reason';
+  String get claimsApproveDifferentReasonTitle => '別金額で承認する理由';
 
   @override
-  String get claimsPersonNameLabel => 'Person name';
+  String get claimsPersonNameLabel => '氏名';
 
   @override
-  String get claimsRemovePerson => 'Remove';
+  String get claimsRemovePerson => '削除';
 
   @override
   String claimsRemovePersonTitle(String name) {
-    return 'Remove $name?';
+    return '$name を削除しますか？';
   }
 
   @override
   String claimsRemovePersonWarning(String name, int openClaims) {
-    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+    return '$name には未完了の経費申請が $openClaims 件あり、残高もゼロではありません。履歴と領収書はこの帳簿に残ります。';
   }
 
   @override
   String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
-    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+    return '$name には未完了の経費申請が $openClaims 件あります。履歴と領収書はこの帳簿に残ります。';
   }
 
   @override
   String claimsRemovePersonWarningBalanceOnly(String name) {
-    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+    return '$name の残高はゼロではありません。履歴と領収書はこの帳簿に残ります。';
   }
 
   @override
   String claimsRemovePersonWarningClean(String name) {
-    return 'Remove $name? History and receipts stay in these books.';
+    return '$name を削除しますか？履歴と領収書はこの帳簿に残ります。';
   }
 
   @override
-  String get claimsRemovePersonConfirm => 'Remove';
+  String get claimsRemovePersonConfirm => '削除';
 
   @override
-  String get claimsEditorTitle => 'Edit claim';
+  String get claimsEditorTitle => '申請を編集';
 
   @override
-  String get claimsSubmit => 'Submit';
+  String get claimsSubmit => '提出';
 
   @override
-  String get claimsAddItem => 'Add item';
+  String get claimsAddItem => '項目を追加';
 
   @override
-  String get claimsEditItem => 'Edit item';
+  String get claimsEditItem => '項目を編集';
 
   @override
-  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+  String get claimsNoItemsYet => '提出する前に、少なくとも1件の項目を追加してください。';
 
   @override
-  String get claimsNoAllowlistedCategories =>
-      'No expense categories are allowed for claims yet.';
+  String get claimsNoAllowlistedCategories => '経費申請で使える支出カテゴリがまだありません。';
 
   @override
-  String get claimsCategoryLabel => 'Category';
+  String get claimsCategoryLabel => 'カテゴリ';
 
   @override
-  String get claimsExpenseDateLabel => 'Expense date';
+  String get claimsExpenseDateLabel => '支出日';
 
   @override
-  String get claimsPaidAmountLabel => 'Amount paid';
+  String get claimsPaidAmountLabel => '支払額';
 
   @override
-  String get claimsPaidCurrencyLabel => 'Currency paid';
+  String get claimsPaidCurrencyLabel => '支払通貨';
 
   @override
-  String get claimsRateOptionalLabel => 'Rate (optional)';
+  String get claimsRateOptionalLabel => 'レート（任意）';
 
   @override
   String claimsCompanyAmountLabel(String currency) {
-    return 'Amount in $currency';
+    return '$currency での金額';
   }
 
   @override
-  String get claimsDescriptionLabel => 'Description';
+  String get claimsDescriptionLabel => '説明';
 
   @override
-  String get claimsAttachCamera => 'Take photo';
+  String get claimsAttachCamera => '写真を撮る';
 
   @override
-  String get claimsAttachGallery => 'Choose photo';
+  String get claimsAttachGallery => '写真を選ぶ';
 
   @override
-  String get claimsAttachPdf => 'Choose PDF';
+  String get claimsAttachPdf => 'PDF を選ぶ';
 
   @override
   String claimsReceiptAttached(String fileName) {
-    return 'Receipt: $fileName';
+    return '領収書: $fileName';
   }
 
   @override
-  String get claimsReceiptRequiredHint =>
-      'A receipt is required for this amount.';
+  String get claimsReceiptRequiredHint => 'この金額には領収書が必要です。';
 
   @override
   String get claimsReceiptPermissionSentence =>
-      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+      '領収書の写真を添付するには、Smara がカメラまたはフォトライブラリへのアクセスを必要とします。写真はお使いのデバイス上のこの帳簿に残ります。';
 
   @override
   String claimsReviewClaimHeading(String status) {
-    return 'Claim · $status';
+    return '申請 · $status';
   }
 }

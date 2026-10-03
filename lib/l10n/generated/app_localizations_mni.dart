@@ -571,30 +571,30 @@ class AppLocalizationsMni extends AppLocalizations {
       'ꯑꯦꯛꯁꯄꯦꯟꯁ ꯃꯆꯦꯠ ꯑꯁꯤꯒꯤꯗꯃꯛ ꯑꯣꯞꯁꯟꯦꯜ ꯊꯥꯒꯤ ꯆꯥꯗꯤꯡꯒꯤ ꯃꯥꯔꯤ.';
 
   @override
-  String get translateCategoryWithAi => 'Translate with AI';
+  String get translateCategoryWithAi => 'AI ꯒꯤ ꯃꯇꯦꯡꯅꯥ ꯍꯟꯗꯣꯀꯄꯥ꯫';
 
   @override
-  String get addCategoryTranslation => 'Add translation';
+  String get addCategoryTranslation => 'ꯍꯟꯗꯣꯀꯄꯥ ꯍꯥꯄꯆꯤꯅꯕꯥ꯫';
 
   @override
-  String get categoryTranslationLocale => 'Language';
+  String get categoryTranslationLocale => 'ꯂꯣꯜ';
 
   @override
-  String get categoryTranslationName => 'Translated name';
+  String get categoryTranslationName => 'ꯍꯟꯗꯣꯀꯄꯥ ꯃꯃꯤꯡ꯫';
 
   @override
-  String get mergeCategories => 'Merge categories';
+  String get mergeCategories => 'ꯃꯆꯦꯠ ꯃꯔꯖ ꯇꯧꯕꯥ꯫';
 
   @override
   String get mergeCategoriesSuggested =>
-      'These categories look the same. Merge them?';
+      'ꯍꯥꯌꯔꯤꯕꯥ ꯃꯆꯦꯠꯁꯤꯡ ꯑꯁꯤ ꯑꯃꯒꯥ ꯑꯃꯒꯥ ꯃꯥꯟꯅꯩ꯫ ꯃꯈꯣꯌꯁꯤꯡ ꯑꯁꯤ ꯃꯔꯖ ꯇꯧꯕꯥ?';
 
   @override
-  String get categoryDefaultLanguage => 'Default language for category names';
+  String get categoryDefaultLanguage => 'ꯃꯆꯦꯠ ꯃꯤꯡꯁꯤꯡꯒꯤꯗꯃꯛ ꯗꯤꯐꯣꯜꯇ ꯂꯣꯜ꯫';
 
   @override
   String get categoryDefaultLanguageSubtitle =>
-      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+      'ꯂꯤꯉ꯭ꯛ ꯇꯧꯔꯕꯥ ꯗꯤꯚꯥꯏꯁꯁꯤꯡꯒꯤ ꯃꯔꯛꯇꯥ ꯁꯦꯌꯔ ꯇꯧꯏ꯫ ꯗꯤꯚꯥꯏꯁ ꯈꯨꯗꯤꯡꯃꯛ ꯍꯧꯖꯤꯀꯁꯨ ꯍꯟꯗꯣꯀꯄꯥ ꯑꯃꯥ ꯂꯩꯔꯀꯄꯥ ꯃꯇꯃꯗꯥ ꯃꯁꯥꯒꯤ ꯂꯣꯜ ꯎꯠꯂꯤ꯫';
 
   @override
   String get manageCategoryRules => 'ꯃꯆꯦꯠꯀꯤ ꯑꯌꯥꯝꯕ ꯃꯦꯅꯦꯖ ꯇꯧ';
@@ -915,153 +915,154 @@ class AppLocalizationsMni extends AppLocalizations {
       '\'ꯃꯇꯨꯡꯗꯥ\' ꯃꯇꯨꯡꯗꯥ ꯑꯅꯧꯕ ꯑꯦꯟꯠꯔꯤ ꯑꯁꯨꯛ ꯐꯥꯑꯣꯕ ꯂꯣꯠꯊꯣꯛꯎ';
 
   @override
-  String get settingsBooksSwitcher => 'Books on this device';
+  String get settingsBooksSwitcher => 'ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯒꯤ ꯃꯅꯨꯡꯗꯥ ꯂꯦꯈꯥ';
 
   @override
   String get settingsBooksSwitcherBlurb =>
-      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+      'ꯃꯔꯨꯑꯣꯏꯕꯥ ꯁꯦꯠ ꯈꯨꯗꯤꯡꯃꯛꯀꯤ ꯃꯁꯥꯒꯤ ꯑꯣꯏꯕꯥ ꯁꯥꯏꯟ ꯇꯧꯕꯒꯤ ꯄꯨꯋꯥꯔꯤ ꯂꯩ꯫ ꯁꯦꯠ ꯇꯧꯕꯥ ꯁꯣꯏꯆ ꯇꯧꯕꯥ — ꯅꯦꯝꯅꯥ ꯂꯩꯕꯥ ꯑꯃꯁꯨꯡ ꯑꯦꯟꯇꯁꯤꯡꯒꯤ ꯑꯦꯟꯇꯁꯤꯡꯅꯥ ꯃꯁꯤꯒꯤ ꯈꯣꯟꯖꯦꯂꯁꯤꯡ ꯈꯛꯇꯃꯛ ꯎꯠꯂꯤ꯫';
 
   @override
-  String get settingsBooksSwitcherActive => 'Open now';
+  String get settingsBooksSwitcherActive => 'ꯍꯧꯖꯤꯛ ꯍꯥꯡꯗꯣꯛꯂꯦ꯫';
 
   @override
-  String get settingsBooksSwitcherSwitch => 'Switch';
+  String get settingsBooksSwitcherSwitch => 'ꯑꯣꯟꯊꯣꯛꯄ';
 
   @override
-  String get settingsBooksSwitcherCreate => 'New books';
+  String get settingsBooksSwitcherCreate => 'ꯑꯅꯧꯕ ꯂꯦꯈꯥ';
 
   @override
-  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+  String get settingsBooksSwitcherCreateTitle => 'ꯃꯃꯤꯡ ꯂꯦꯈꯥ ꯍꯥꯌꯅꯥ ꯀꯧꯏ꯫';
 
   @override
-  String get settingsBooksSwitcherNameLabel => 'Name';
+  String get settingsBooksSwitcherNameLabel => 'ꯃꯤꯡ';
 
   @override
-  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+  String get settingsBooksSwitcherRemoveTitle => 'ꯂꯦꯈꯥ ꯂꯧꯊꯣꯀꯄꯥ?';
 
   @override
   String settingsBooksSwitcherRemoveBody(String name) {
-    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+    return 'ꯃꯁꯤꯅꯥ ꯃꯁꯤꯒꯤ ꯁꯥꯏꯟ ꯇꯧꯕꯥ ꯀꯤ ꯌꯥꯑꯣꯅꯥ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯗꯒꯤ \"$name\" ꯃꯨꯠꯊꯠꯂꯤ꯫ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤꯒꯤ ꯑꯇꯣꯞꯄꯥ ꯂꯦꯈꯥ ꯁꯤꯡ ꯑꯁꯤ ꯁꯣꯀꯍꯜꯂꯣꯏ꯫';
   }
 
   @override
-  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+  String get settingsBooksSwitcherRemoveConfirm => 'ꯂꯧꯊꯣꯛꯄ';
 
   @override
   String settingsBooksSwitcherFallbackName(int number) {
-    return 'Books $number';
+    return 'ꯂꯦꯈꯥ $number';
   }
 
   @override
-  String get settingsLinkedDevices => 'Linked devices';
+  String get settingsLinkedDevices => 'ꯂꯤꯉ꯭ꯛ ꯇꯧꯔꯕꯥ ꯗꯤꯚꯥꯏꯁꯁꯤꯡ꯫';
 
   @override
   String get settingsLinkedDevicesCatchUp =>
-      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+      'ꯑꯅꯤꯃꯛꯅꯥ ꯆꯞ ꯃꯥꯟꯅꯕꯥ Wi-Fiꯗꯥ Smara ꯍꯥꯡꯗꯣꯀꯄꯥ ꯃꯇꯃꯗꯥ ꯅꯍꯥꯛꯀꯤ ꯗꯤꯚꯥꯏꯁꯁꯤꯡ ꯁꯤꯉ꯭ꯛ ꯇꯧꯏ꯫';
 
   @override
   String get settingsLinkedDevicesPermissionSentence =>
-      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+      'ꯅꯍꯥꯛꯀꯤ ꯂꯦꯈꯥ ꯁꯦꯌꯔ ꯇꯧꯅꯕꯒꯤꯗꯃꯛ, Smaraꯅꯥ Wi-Fi ꯑꯁꯤꯗꯥ ꯅꯍꯥꯛꯀꯤ ꯑꯇꯣꯞꯄꯥ ꯗꯤꯚꯥꯏꯁꯁꯤꯡ ꯊꯤꯕꯥ ꯃꯊꯧ ꯇꯥꯏ꯫ ꯀꯔꯤꯒꯨꯝꯕꯥ ꯑꯃꯠꯇꯥ ꯏꯟꯇꯔꯅꯦꯠꯇꯥ ꯆꯪꯗꯦ꯫';
 
   @override
-  String get settingsLinkedDevicesAddDevice => 'Add a device';
+  String get settingsLinkedDevicesAddDevice => 'ꯗꯤꯚꯥꯏꯁ ꯑꯃꯥ ꯍꯥꯄꯆꯤꯜꯂꯨ꯫';
 
   @override
-  String get settingsLinkedDevicesContinue => 'Continue';
+  String get settingsLinkedDevicesContinue => 'ꯃꯈꯥ ꯆꯠꯊꯕ';
 
   @override
-  String get settingsLinkedDevicesRoleOwner => 'Owner';
+  String get settingsLinkedDevicesRoleOwner => 'ꯃꯄꯨ';
 
   @override
-  String get settingsLinkedDevicesRoleMember => 'Member';
+  String get settingsLinkedDevicesRoleMember => 'ꯃꯦꯝꯕꯔ ꯑꯣꯏꯔꯤ꯫';
 
   @override
-  String get settingsLinkedDevicesCanAdd => 'May add devices';
+  String get settingsLinkedDevicesCanAdd => 'ꯗꯤꯚꯥꯏꯁꯁꯤꯡ ꯍꯥꯄꯆꯤꯅꯕꯥ ꯌꯥꯏ꯫';
 
   @override
-  String get settingsLinkedDevicesErasePending => 'Erase pending';
+  String get settingsLinkedDevicesErasePending => 'ꯄꯦꯟꯗꯤꯡ ꯃꯨꯠꯊꯠꯄꯥ꯫';
 
   @override
   String settingsLinkedDevicesErasedOn(String date) {
-    return 'Erased on $date';
+    return '$dateꯗꯥ ꯃꯨꯠꯊꯠꯈ꯭ꯔꯦ꯫';
   }
 
   @override
   String get settingsLinkedDevicesSuggestSecondOwner =>
-      'These books have only one Owner. Consider making another linked device an Owner too.';
+      'ꯃꯄꯥꯟ ꯂꯩꯕꯥꯀꯁꯤꯡꯗꯥ Owner ꯑꯃꯈꯛꯇꯃꯛ ꯂꯩ꯫ ꯑꯇꯣꯞꯄꯥ ꯂꯤꯉ꯭ꯛ ꯇꯧꯔꯕꯥ ꯗꯤꯚꯥꯏꯁ ꯑꯃꯁꯨ ꯑꯣꯅꯔ ꯑꯃꯥ ꯑꯣꯏꯍꯟꯅꯕꯥ ꯈꯟꯅꯕꯤꯌꯨ꯫';
 
   @override
   String get settingsLinkedDevicesJoinSameWifi =>
-      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+      'ꯗꯤꯚꯥꯏꯁ ꯑꯅꯤꯃꯛ ꯆꯞ ꯃꯥꯟꯅꯕꯥ Wi-Fiꯗꯥ ꯂꯩꯒꯗꯕꯅꯤ꯫ Smara ꯑꯁꯤ ꯏꯟꯇꯔꯅꯦꯇꯀꯤ ꯈꯨꯠꯊꯥꯡꯗꯥ ꯌꯥꯑꯣꯗꯦ꯫';
 
   @override
-  String get settingsLinkedDevicesApproveJoin => 'Approve';
+  String get settingsLinkedDevicesApproveJoin => 'ꯑꯌꯥꯕ ꯄꯤꯕ';
 
   @override
-  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+  String get settingsLinkedDevicesRefuseJoin => 'ꯌꯥꯅꯤꯡꯗꯕ';
 
   @override
   String settingsLinkedDevicesPendingJoin(String name) {
-    return '$name wants to join these books';
+    return '$nameꯅꯥ ꯂꯦꯈꯥꯗꯥ ꯌꯥꯑꯣꯕꯥ ꯄꯥꯝꯃꯤ꯫';
   }
 
   @override
-  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+  String get settingsLinkedDevicesEmpty =>
+      'ꯍꯧꯖꯤꯛ ꯐꯥꯑꯣꯕꯗꯥ ꯗꯤꯚꯥꯏꯁ ꯑꯁꯤ ꯈꯛꯇꯃꯛ ꯂꯤꯉ꯭ꯛ ꯇꯧꯈ꯭ꯔꯦ꯫';
 
   @override
-  String get settingsLinkedDevicesSyncNow => 'Sync now';
+  String get settingsLinkedDevicesSyncNow => 'ꯍꯧꯖꯤꯛ ꯁꯤꯉ꯭ꯛ ꯇꯧꯔꯦ꯫';
 
   @override
-  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+  String get settingsLinkedDevicesSyncNowBusy => 'ꯁꯤꯉ꯭ꯛ ꯇꯧꯕꯥ…';
 
   @override
   String membershipNoticeDeviceAdded(String name) {
-    return 'A device was added: $name';
+    return 'ꯗꯤꯚꯥꯏꯁ ꯑꯃꯥ ꯍꯥꯄꯆꯤꯅꯈꯤ: $name';
   }
 
   @override
   String membershipNoticeDeviceRemoved(String name) {
-    return 'A device was removed: $name';
+    return 'ꯗꯤꯚꯥꯏꯁ ꯑꯃꯥ ꯂꯧꯊꯣꯀꯈꯤ: $name';
   }
 
   @override
   String membershipNoticeErasePending(String name) {
-    return 'Erase pending for $name';
+    return '$nameꯒꯤꯗꯃꯛꯇꯥ ꯄꯦꯟꯗꯤꯡ ꯇꯧꯔꯤꯕꯥ ꯃꯨꯠꯊꯠꯄꯥ꯫';
   }
 
   @override
   String membershipNoticeErased(String name, String date) {
-    return 'Erased $name on $date';
+    return '$dateꯗꯥ $name ꯃꯨꯠꯊꯠꯈ꯭ꯔꯦ꯫';
   }
 
   @override
   String membershipNoticeSoleOwnerClaimed(String name) {
-    return '$name claimed sole ownership';
+    return '$nameꯅꯥ ꯁꯣꯜ ꯑꯣꯅꯔꯁꯤꯞ ꯀ꯭ꯂꯦꯝ ꯇꯧꯈꯤ꯫';
   }
 
   @override
   String membershipNoticeSoleOwnerCancelled(String name) {
-    return 'Sole-Owner claim for $name was cancelled';
+    return '$nameꯒꯤꯗꯃꯛꯇꯥ ꯁꯣꯜ-ꯑꯣꯅꯔ ꯀ꯭ꯂꯦꯝ ꯑꯗꯨ ꯀꯦꯟꯁꯦꯜ ꯇꯧꯈꯤ꯫';
   }
 
   @override
   String membershipNoticeSoleOwnerEffective(String name) {
-    return '$name is now an Owner';
+    return '$name ꯑꯁꯤ ꯍꯧꯖꯤꯛ ꯑꯣꯅꯔ ꯑꯣꯏꯔꯦ꯫';
   }
 
   @override
   String membershipNoticeEntryNotAccepted(String name) {
-    return 'Not accepted: couldn\'t be verified (from $name)';
+    return 'ꯌꯥꯈꯤꯗꯦ: ꯚꯦꯔꯤꯐꯥꯏ ꯇꯧꯕꯥ ꯉꯃꯈꯤꯗꯦ ($nameꯗꯒꯤ)';
   }
 
   @override
   String membershipNoticeOwnerVerificationAlert(String name) {
-    return 'A record from $name could not be verified and was not accepted';
+    return '$nameꯗꯒꯤ ꯔꯦꯀꯣꯔꯗ ꯑꯃꯥ ꯚꯦꯔꯤꯐꯥꯏ ꯇꯧꯕꯥ ꯉꯃꯈꯤꯗꯦ ꯑꯃꯁꯨꯡ ꯌꯥꯈꯤꯗꯦ꯫';
   }
 
   @override
   String get membershipNoticeCompetingFixCheck =>
-      'Two Fixes for the same entry were resolved — please check';
+      'ꯆꯞ ꯃꯥꯟꯅꯕꯥ ꯑꯦꯟꯠꯔꯤꯒꯤꯗꯃꯛ ꯆꯦꯛꯁꯤꯟꯗꯣꯛꯎ ꯑꯅꯤ ꯔꯤꯖꯣꯂꯕ ꯇꯧꯈ꯭ꯔꯦ — ꯆꯥꯅꯕꯤꯗꯨꯅꯥ ꯆꯦꯛ ꯇꯧꯕꯤꯌꯨ꯫';
 
   @override
   String get whyWeDontEdit => 'ꯑꯔꯤꯕ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯀꯔꯤꯅ ꯑꯩꯈꯣꯏꯅ ꯁꯦꯝꯒꯠꯂꯗꯦ';
@@ -2104,202 +2105,202 @@ class AppLocalizationsMni extends AppLocalizations {
   }
 
   @override
-  String get claimsTitle => 'Claims';
+  String get claimsTitle => 'ꯀ꯭ꯂꯦꯝ ꯇꯧꯕꯥ꯫';
 
   @override
-  String get claimsReviewTitle => 'Review claims';
+  String get claimsReviewTitle => 'ꯀ꯭ꯂꯦꯃꯁꯤꯡ ꯔꯤꯚꯤꯌꯨ ꯇꯧꯕꯥ꯫';
 
   @override
-  String get claimsStatusDraft => 'Draft';
+  String get claimsStatusDraft => 'ꯑꯍꯥꯟꯕꯒꯤ ꯏꯊꯣꯛꯄ';
 
   @override
-  String get claimsStatusSubmitted => 'Submitted';
+  String get claimsStatusSubmitted => 'ꯄꯤꯁꯤꯅꯈ꯭ꯔꯦ꯫';
 
   @override
-  String get claimsStatusPartlyApproved => 'Partly approved';
+  String get claimsStatusPartlyApproved => 'ꯁꯔꯨꯛ ꯈꯔꯗꯤ ꯑꯌꯥꯕꯥ ꯄꯤꯈ꯭ꯔꯦ꯫';
 
   @override
-  String get claimsStatusApproved => 'Approved';
+  String get claimsStatusApproved => 'ꯌꯥꯔꯕ';
 
   @override
-  String get claimsStatusPaid => 'Paid';
+  String get claimsStatusPaid => 'ꯁꯦꯜ ꯄꯤꯈ꯭ꯔꯦ';
 
   @override
-  String get claimsStatusRejected => 'Rejected';
+  String get claimsStatusRejected => 'ꯔꯤꯖꯦꯛꯇ ꯇꯧꯈꯤ꯫';
 
   @override
-  String get claimsApprove => 'Approve';
+  String get claimsApprove => 'ꯑꯌꯥꯕ ꯄꯤꯕ';
 
   @override
-  String get claimsApproveDifferent => 'Approve different amount';
+  String get claimsApproveDifferent => 'ꯇꯣꯉꯥꯟ-ꯇꯣꯉꯥꯅꯕꯥ ꯁꯦꯅꯐꯃꯁꯤꯡ ꯑꯦꯞꯔꯨꯚ ꯇꯧꯕꯥ꯫';
 
   @override
-  String get claimsReject => 'Reject';
+  String get claimsReject => 'ꯈꯠꯇꯣꯛꯄ';
 
   @override
-  String get claimsReasonRequired => 'A reason is required';
+  String get claimsReasonRequired => 'ꯃꯔꯝ ꯑꯃꯥ ꯃꯊꯧ ꯇꯥꯏ꯫';
 
   @override
-  String get claimsAdvances => 'Advances';
+  String get claimsAdvances => 'ꯑꯦꯗꯚꯥꯟꯁꯁꯤꯡ꯫';
 
   @override
-  String get claimsAddPerson => 'Add a person';
+  String get claimsAddPerson => 'ꯃꯤꯑꯣꯏ ꯑꯃꯥ ꯍꯥꯄꯆꯤꯜꯂꯨ꯫';
 
   @override
-  String get claimsRoleApprover => 'Approver';
+  String get claimsRoleApprover => 'ꯑꯦꯞꯔꯨꯚꯔ ꯇꯧꯕꯥ꯫';
 
   @override
-  String get claimsRoleClaimant => 'Claimant';
+  String get claimsRoleClaimant => 'ꯀ꯭ꯂꯦꯝ ꯇꯧꯔꯤꯕꯥ ꯃꯤꯑꯣꯏ꯫';
 
   @override
   String claimsBalanceCompanyOwesYou(String company) {
-    return '$company owes you';
+    return '$companyꯅꯥ ꯑꯗꯣꯃꯗꯥ ꯔ꯭ꯏꯟ ꯄꯤꯔꯤ꯫';
   }
 
   @override
   String claimsBalanceYouOweCompany(String company) {
-    return 'You owe $company';
+    return 'ꯅꯍꯥꯛꯅꯥ ꯔ꯭ꯏꯟ ꯂꯩꯔꯤ $company꯫';
   }
 
   @override
   String claimsBalanceSettled(String company) {
-    return 'Settled with $company';
+    return '$companyꯒꯥ ꯂꯣꯌꯅꯅꯥ ꯁꯦꯇꯜ ꯇꯧꯈꯤ꯫';
   }
 
   @override
   String get claimsReceiptRequired =>
-      'A receipt is required for this claim item';
+      'ꯀ꯭ꯂꯦꯝ ꯑꯥꯏꯇꯦꯝ ꯑꯁꯤꯒꯤꯗꯃꯛꯇꯥ ꯔꯤꯁꯤꯞꯇ ꯑꯃꯥ ꯃꯊꯧ ꯇꯥꯏ꯫';
 
   @override
   String get claimsReceiptPdfTooLarge =>
-      'This PDF is larger than 5 MB. Choose a smaller file.';
+      'ꯃꯁꯤꯒꯤ PDF ꯑꯁꯤ MB ꯵ꯗꯒꯤ ꯍꯦꯟꯅꯥ ꯆꯥꯎꯏ꯫ ꯑꯄꯤꯀꯄꯥ ꯐꯥꯏꯜ ꯑꯃꯥ ꯈꯜꯂꯨ꯫';
 
   @override
   String claimsSpendingHint(String amount, String unit) {
-    return 'Hint: at most $amount per $unit';
+    return 'ꯍꯤꯟꯇ: $unit ꯑꯃꯗꯥ ꯈ꯭ꯕꯥꯏꯗꯒꯤ ꯌꯥꯝꯅꯥ $amount꯫';
   }
 
   @override
-  String get claimsNoClaimsYet => 'No claims yet.';
+  String get claimsNoClaimsYet => 'ꯍꯧꯖꯤꯛ ꯐꯥꯑꯣꯕꯥ ꯀ꯭ꯂꯦꯝ ꯑꯃꯠꯇꯥ ꯇꯧꯈꯤꯗꯦ꯫';
 
   @override
-  String get claimsNoClaimsToReview => 'No claims to review.';
+  String get claimsNoClaimsToReview => 'ꯔꯤꯚꯤꯌꯨ ꯇꯧꯅꯕꯥ ꯀ꯭ꯂꯦꯝ ꯑꯃꯠꯇꯥ ꯂꯩꯇꯦ꯫';
 
   @override
-  String get claimsAdvanceDefault => 'Advance';
+  String get claimsAdvanceDefault => 'ꯃꯥꯡꯖꯧꯅꯅ';
 
   @override
   String claimsItemCount(int count) {
-    return '$count item(s)';
+    return '$count ꯑꯥꯏꯇꯦꯝ(ꯁꯤꯡ)';
   }
 
   @override
-  String get claimsRejectReasonTitle => 'Reject reason';
+  String get claimsRejectReasonTitle => 'ꯃꯔꯝ ꯑꯗꯨ ꯌꯥꯗꯕꯥ꯫';
 
   @override
   String get claimsApproveDifferentReasonTitle =>
-      'Approve different amount reason';
+      'ꯇꯣꯉꯥꯟ-ꯇꯣꯉꯥꯅꯕꯥ ꯑꯦꯃꯥꯎꯟꯇ ꯃꯔꯃꯁꯤꯡ ꯑꯦꯞꯔꯨꯚ ꯇꯧꯕꯥ꯫';
 
   @override
-  String get claimsPersonNameLabel => 'Person name';
+  String get claimsPersonNameLabel => 'ꯃꯤꯑꯣꯏ ꯑꯃꯒꯤ ꯃꯃꯤꯡ꯫';
 
   @override
-  String get claimsRemovePerson => 'Remove';
+  String get claimsRemovePerson => 'ꯂꯧꯊꯣꯛꯄ';
 
   @override
   String claimsRemovePersonTitle(String name) {
-    return 'Remove $name?';
+    return '$name ꯂꯧꯊꯣꯀꯄꯥ?';
   }
 
   @override
   String claimsRemovePersonWarning(String name, int openClaims) {
-    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+    return '$nameꯗꯥ $openClaims ꯑꯣꯄꯟ ꯀ꯭ꯂꯦꯃꯁꯤꯡ ꯑꯃꯁꯨꯡ ꯅꯟ-ꯖꯤꯔꯣ ꯑꯣꯋꯦꯗ ꯕꯦꯂꯦꯟꯁ ꯂꯩ꯫ ꯄꯨꯋꯥꯔꯤ ꯑꯃꯁꯨꯡ ꯔꯤꯁꯤꯠꯁꯤꯡ ꯑꯁꯤ ꯂꯦꯈꯥꯗꯥ ꯂꯩꯔꯤ꯫';
   }
 
   @override
   String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
-    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+    return '$nameꯗꯥ $openClaims ꯑꯣꯄꯟ ꯀ꯭ꯂꯦꯃꯁꯤꯡ ꯂꯩ꯫ ꯄꯨꯋꯥꯔꯤ ꯑꯃꯁꯨꯡ ꯔꯤꯁꯤꯠꯁꯤꯡ ꯑꯁꯤ ꯂꯦꯈꯥꯗꯥ ꯂꯩꯔꯤ꯫';
   }
 
   @override
   String claimsRemovePersonWarningBalanceOnly(String name) {
-    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+    return '$nameꯗꯥ ꯅꯟ-ꯖꯤꯔꯣ ꯑꯣꯋꯦꯗ ꯕꯦꯂꯦꯟꯁ ꯂꯩ꯫ ꯄꯨꯋꯥꯔꯤ ꯑꯃꯁꯨꯡ ꯔꯤꯁꯤꯠꯁꯤꯡ ꯑꯁꯤ ꯂꯦꯈꯥꯗꯥ ꯂꯩꯔꯤ꯫';
   }
 
   @override
   String claimsRemovePersonWarningClean(String name) {
-    return 'Remove $name? History and receipts stay in these books.';
+    return '$name ꯂꯧꯊꯣꯀꯄꯥ? ꯄꯨꯋꯥꯔꯤ ꯑꯃꯁꯨꯡ ꯔꯤꯁꯤꯠꯁꯤꯡ ꯑꯁꯤ ꯂꯦꯈꯥꯗꯥ ꯂꯩꯔꯤ꯫';
   }
 
   @override
-  String get claimsRemovePersonConfirm => 'Remove';
+  String get claimsRemovePersonConfirm => 'ꯂꯧꯊꯣꯛꯄ';
 
   @override
-  String get claimsEditorTitle => 'Edit claim';
+  String get claimsEditorTitle => 'ꯀ꯭ꯂꯦꯝ ꯑꯗꯨ ꯑꯦꯗꯤꯠ ꯇꯧꯕꯥ꯫';
 
   @override
-  String get claimsSubmit => 'Submit';
+  String get claimsSubmit => 'ꯊꯥꯖꯤꯟꯕ';
 
   @override
-  String get claimsAddItem => 'Add item';
+  String get claimsAddItem => 'ꯑꯥꯏꯇꯦꯝ ꯍꯥꯄꯆꯤꯅꯕꯥ꯫';
 
   @override
-  String get claimsEditItem => 'Edit item';
+  String get claimsEditItem => 'ꯑꯥꯏꯇꯦꯝ ꯑꯦꯗꯤꯠ ꯇꯧꯕꯥ꯫';
 
   @override
-  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+  String get claimsNoItemsYet =>
+      'ꯁꯕꯃꯤꯠ ꯇꯧꯗ꯭ꯔꯤꯉꯩ ꯃꯃꯥꯡꯗꯥ ꯌꯥꯃꯗ꯭ꯔꯕꯗꯥ ꯑꯥꯏꯇꯦꯝ ꯑꯃꯥ ꯍꯥꯄꯆꯤꯜꯂꯨ꯫';
 
   @override
   String get claimsNoAllowlistedCategories =>
-      'No expense categories are allowed for claims yet.';
+      'ꯍꯧꯖꯤꯛ ꯐꯥꯑꯣꯕꯗꯥ ꯀ꯭ꯂꯦꯝ ꯇꯧꯅꯕꯒꯤꯗꯃꯛꯇꯥ ꯆꯥꯗꯤꯡ ꯑꯃꯠꯇꯥ ꯃꯆꯦꯠꯅꯥ ꯑꯌꯥꯕꯥ ꯄꯤꯗ꯭ꯔꯤ꯫';
 
   @override
-  String get claimsCategoryLabel => 'Category';
+  String get claimsCategoryLabel => 'ꯃꯆꯦꯠ';
 
   @override
-  String get claimsExpenseDateLabel => 'Expense date';
+  String get claimsExpenseDateLabel => 'ꯆꯥꯗꯤꯡ ꯇꯧꯕꯒꯤ ꯇꯥꯡ꯫';
 
   @override
-  String get claimsPaidAmountLabel => 'Amount paid';
+  String get claimsPaidAmountLabel => 'ꯄꯤꯈꯤꯕꯥ ꯁꯦꯅꯐꯝ꯫';
 
   @override
-  String get claimsPaidCurrencyLabel => 'Currency paid';
+  String get claimsPaidCurrencyLabel => 'ꯁꯦꯜ ꯄꯤꯕꯥ꯫';
 
   @override
-  String get claimsRateOptionalLabel => 'Rate (optional)';
+  String get claimsRateOptionalLabel => 'ꯔꯦꯠ (ꯑꯣꯄꯁꯅꯦꯜ) ꯴.';
 
   @override
   String claimsCompanyAmountLabel(String currency) {
-    return 'Amount in $currency';
+    return '$currencyꯗꯥ ꯂꯩꯕꯥ ꯁꯦꯅꯐꯝ꯫';
   }
 
   @override
-  String get claimsDescriptionLabel => 'Description';
+  String get claimsDescriptionLabel => 'ꯋꯥꯔꯣꯜ';
 
   @override
-  String get claimsAttachCamera => 'Take photo';
+  String get claimsAttachCamera => 'ꯐꯣꯇꯣ ꯂꯧꯕꯥ꯫';
 
   @override
-  String get claimsAttachGallery => 'Choose photo';
+  String get claimsAttachGallery => 'ꯐꯣꯇꯣ ꯈꯅꯕꯤꯌꯨ꯫';
 
   @override
-  String get claimsAttachPdf => 'Choose PDF';
+  String get claimsAttachPdf => 'PDF ꯈꯜꯂꯨ꯫';
 
   @override
   String claimsReceiptAttached(String fileName) {
-    return 'Receipt: $fileName';
+    return 'ꯔꯤꯁꯤꯠ ꯇꯧꯕꯥ: $fileName';
   }
 
   @override
-  String get claimsReceiptRequiredHint =>
-      'A receipt is required for this amount.';
+  String get claimsReceiptRequiredHint => 'ꯁꯦꯅꯐꯝ ꯑꯁꯤꯒꯤꯗꯃꯛꯇꯥ ꯔꯤꯁꯤꯠ ꯑꯃꯥ ꯃꯊꯧ ꯇꯥꯏ꯫';
 
   @override
   String get claimsReceiptPermissionSentence =>
-      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+      'ꯔꯤꯁꯤꯞꯇ ꯐꯣꯇꯣ ꯑꯃꯥ ꯑꯦꯇꯦꯆ ꯇꯧꯅꯕꯒꯤꯗꯃꯛ, Smaraꯅꯥ ꯅꯍꯥꯛꯀꯤ ꯀꯦꯃꯦꯔꯥ ꯅꯠꯠꯔꯒꯥ ꯐꯣꯇꯣ ꯂꯥꯏꯕ꯭ꯔꯦꯔꯤꯗꯥ ꯑꯦꯛꯁꯦꯁ ꯇꯧꯕꯥ ꯃꯊꯧ ꯇꯥꯏ꯫ ꯐꯣꯇꯣꯁꯤꯡ ꯑꯗꯨ ꯅꯍꯥꯛꯀꯤ ꯗꯤꯚꯥꯏꯁꯁꯤꯡꯗꯥ ꯂꯦꯈꯥ ꯗꯥ ꯂꯩ꯫';
 
   @override
   String claimsReviewClaimHeading(String status) {
-    return 'Claim · $status';
+    return 'ꯀ꯭ꯂꯦꯝ ꯇꯧꯕꯥ · $status';
   }
 }

@@ -572,30 +572,30 @@ class AppLocalizationsAr extends AppLocalizations {
       'دليل إنفاق اختياري لهذا الشهر حتى تاريخه لهذه الفئة من المصروفات.';
 
   @override
-  String get translateCategoryWithAi => 'Translate with AI';
+  String get translateCategoryWithAi => 'الترجمة بالذكاء الاصطناعي';
 
   @override
-  String get addCategoryTranslation => 'Add translation';
+  String get addCategoryTranslation => 'إضافة ترجمة';
 
   @override
-  String get categoryTranslationLocale => 'Language';
+  String get categoryTranslationLocale => 'اللغة';
 
   @override
-  String get categoryTranslationName => 'Translated name';
+  String get categoryTranslationName => 'الاسم المترجم';
 
   @override
-  String get mergeCategories => 'Merge categories';
+  String get mergeCategories => 'دمج التصنيفات';
 
   @override
   String get mergeCategoriesSuggested =>
-      'These categories look the same. Merge them?';
+      'تبدو هذه التصنيفات متشابهة. هل تريد دمجها؟';
 
   @override
-  String get categoryDefaultLanguage => 'Default language for category names';
+  String get categoryDefaultLanguage => 'اللغة الافتراضية لأسماء التصنيفات';
 
   @override
   String get categoryDefaultLanguageSubtitle =>
-      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+      'مشتركة عبر الأجهزة المرتبطة. يعرض كل جهاز لغته الخاصة عندما تتوفر ترجمة.';
 
   @override
   String get manageCategoryRules => 'إدارة قواعد الفئات';
@@ -915,153 +915,153 @@ class AppLocalizationsAr extends AppLocalizations {
       'الإخفاء لهذا العدد من القيود الجديدة بعد «لاحقًا»';
 
   @override
-  String get settingsBooksSwitcher => 'Books on this device';
+  String get settingsBooksSwitcher => 'الدفاتر على هذا الجهاز';
 
   @override
   String get settingsBooksSwitcherBlurb =>
-      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+      'لكل مجموعة دفاتر مفتاح توقيع وسجل خاص بها. التبديل يفتح تلك المجموعة — تعرض الرئيسية والسجل قيودها فقط.';
 
   @override
-  String get settingsBooksSwitcherActive => 'Open now';
+  String get settingsBooksSwitcherActive => 'مفتوحة الآن';
 
   @override
-  String get settingsBooksSwitcherSwitch => 'Switch';
+  String get settingsBooksSwitcherSwitch => 'تبديل';
 
   @override
-  String get settingsBooksSwitcherCreate => 'New books';
+  String get settingsBooksSwitcherCreate => 'دفاتر جديدة';
 
   @override
-  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+  String get settingsBooksSwitcherCreateTitle => 'سمِّ هذه الدفاتر';
 
   @override
-  String get settingsBooksSwitcherNameLabel => 'Name';
+  String get settingsBooksSwitcherNameLabel => 'الاسم';
 
   @override
-  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+  String get settingsBooksSwitcherRemoveTitle => 'إزالة هذه الدفاتر؟';
 
   @override
   String settingsBooksSwitcherRemoveBody(String name) {
-    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+    return 'يحذف هذا \"$name\" من هذا الجهاز، بما في ذلك مفتاح التوقيع. لا تتأثر الدفاتر الأخرى على هذا الجهاز.';
   }
 
   @override
-  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+  String get settingsBooksSwitcherRemoveConfirm => 'إزالة';
 
   @override
   String settingsBooksSwitcherFallbackName(int number) {
-    return 'Books $number';
+    return 'دفاتر $number';
   }
 
   @override
-  String get settingsLinkedDevices => 'Linked devices';
+  String get settingsLinkedDevices => 'الأجهزة المرتبطة';
 
   @override
   String get settingsLinkedDevicesCatchUp =>
-      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+      'تتزامن أجهزتك عندما يكون Smara مفتوحاً على الجهازين وعلى نفس شبكة Wi-Fi.';
 
   @override
   String get settingsLinkedDevicesPermissionSentence =>
-      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+      'لمشاركة دفاترك، يحتاج Smara إلى العثور على أجهزتك الأخرى على شبكة Wi-Fi هذه. لا يُرسل شيء إلى الإنترنت.';
 
   @override
-  String get settingsLinkedDevicesAddDevice => 'Add a device';
+  String get settingsLinkedDevicesAddDevice => 'إضافة جهاز';
 
   @override
-  String get settingsLinkedDevicesContinue => 'Continue';
+  String get settingsLinkedDevicesContinue => 'متابعة';
 
   @override
-  String get settingsLinkedDevicesRoleOwner => 'Owner';
+  String get settingsLinkedDevicesRoleOwner => 'مالك';
 
   @override
-  String get settingsLinkedDevicesRoleMember => 'Member';
+  String get settingsLinkedDevicesRoleMember => 'عضو';
 
   @override
-  String get settingsLinkedDevicesCanAdd => 'May add devices';
+  String get settingsLinkedDevicesCanAdd => 'يمكنه إضافة أجهزة';
 
   @override
-  String get settingsLinkedDevicesErasePending => 'Erase pending';
+  String get settingsLinkedDevicesErasePending => 'المسح معلّق';
 
   @override
   String settingsLinkedDevicesErasedOn(String date) {
-    return 'Erased on $date';
+    return 'مُسح في $date';
   }
 
   @override
   String get settingsLinkedDevicesSuggestSecondOwner =>
-      'These books have only one Owner. Consider making another linked device an Owner too.';
+      'لهذه الدفاتر مالك واحد فقط. فكّر في جعل جهاز مرتبط آخر مالكاً أيضاً.';
 
   @override
   String get settingsLinkedDevicesJoinSameWifi =>
-      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+      'يجب أن يكون الجهازان على نفس شبكة Wi-Fi. لا ينضم Smara عبر الإنترنت.';
 
   @override
-  String get settingsLinkedDevicesApproveJoin => 'Approve';
+  String get settingsLinkedDevicesApproveJoin => 'موافقة';
 
   @override
-  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+  String get settingsLinkedDevicesRefuseJoin => 'رفض';
 
   @override
   String settingsLinkedDevicesPendingJoin(String name) {
-    return '$name wants to join these books';
+    return '$name يريد الانضمام إلى هذه الدفاتر';
   }
 
   @override
-  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+  String get settingsLinkedDevicesEmpty => 'هذا الجهاز فقط مرتبط حتى الآن.';
 
   @override
-  String get settingsLinkedDevicesSyncNow => 'Sync now';
+  String get settingsLinkedDevicesSyncNow => 'مزامنة الآن';
 
   @override
-  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+  String get settingsLinkedDevicesSyncNowBusy => 'جارٍ التحديث…';
 
   @override
   String membershipNoticeDeviceAdded(String name) {
-    return 'A device was added: $name';
+    return 'أُضيف جهاز: $name';
   }
 
   @override
   String membershipNoticeDeviceRemoved(String name) {
-    return 'A device was removed: $name';
+    return 'أُزيل جهاز: $name';
   }
 
   @override
   String membershipNoticeErasePending(String name) {
-    return 'Erase pending for $name';
+    return 'المسح معلّق لـ $name';
   }
 
   @override
   String membershipNoticeErased(String name, String date) {
-    return 'Erased $name on $date';
+    return 'مُسح $name في $date';
   }
 
   @override
   String membershipNoticeSoleOwnerClaimed(String name) {
-    return '$name claimed sole ownership';
+    return 'طالب $name بالملكية المنفردة';
   }
 
   @override
   String membershipNoticeSoleOwnerCancelled(String name) {
-    return 'Sole-Owner claim for $name was cancelled';
+    return 'أُلغي طلب الملكية المنفردة لـ $name';
   }
 
   @override
   String membershipNoticeSoleOwnerEffective(String name) {
-    return '$name is now an Owner';
+    return '$name أصبح مالكاً الآن';
   }
 
   @override
   String membershipNoticeEntryNotAccepted(String name) {
-    return 'Not accepted: couldn\'t be verified (from $name)';
+    return 'لم يُقبل: تعذّر التحقق (من $name)';
   }
 
   @override
   String membershipNoticeOwnerVerificationAlert(String name) {
-    return 'A record from $name could not be verified and was not accepted';
+    return 'تعذّر التحقق من سجل من $name ولم يُقبل';
   }
 
   @override
   String get membershipNoticeCompetingFixCheck =>
-      'Two Fixes for the same entry were resolved — please check';
+      'تم حل تصحيحين لنفس القيد — يُرجى المراجعة';
 
   @override
   String get whyWeDontEdit => 'لماذا لا نُعدّل القيود القديمة';
@@ -2104,202 +2104,199 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get claimsTitle => 'Claims';
+  String get claimsTitle => 'المطالبات';
 
   @override
-  String get claimsReviewTitle => 'Review claims';
+  String get claimsReviewTitle => 'مراجعة المطالبات';
 
   @override
-  String get claimsStatusDraft => 'Draft';
+  String get claimsStatusDraft => 'مسودة';
 
   @override
-  String get claimsStatusSubmitted => 'Submitted';
+  String get claimsStatusSubmitted => 'مُقدَّمة';
 
   @override
-  String get claimsStatusPartlyApproved => 'Partly approved';
+  String get claimsStatusPartlyApproved => 'موافقة جزئية';
 
   @override
-  String get claimsStatusApproved => 'Approved';
+  String get claimsStatusApproved => 'موافق عليها';
 
   @override
-  String get claimsStatusPaid => 'Paid';
+  String get claimsStatusPaid => 'مدفوعة';
 
   @override
-  String get claimsStatusRejected => 'Rejected';
+  String get claimsStatusRejected => 'مرفوضة';
 
   @override
-  String get claimsApprove => 'Approve';
+  String get claimsApprove => 'موافقة';
 
   @override
-  String get claimsApproveDifferent => 'Approve different amount';
+  String get claimsApproveDifferent => 'الموافقة بمبلغ مختلف';
 
   @override
-  String get claimsReject => 'Reject';
+  String get claimsReject => 'رفض';
 
   @override
-  String get claimsReasonRequired => 'A reason is required';
+  String get claimsReasonRequired => 'السبب مطلوب';
 
   @override
-  String get claimsAdvances => 'Advances';
+  String get claimsAdvances => 'السلف';
 
   @override
-  String get claimsAddPerson => 'Add a person';
+  String get claimsAddPerson => 'إضافة شخص';
 
   @override
-  String get claimsRoleApprover => 'Approver';
+  String get claimsRoleApprover => 'موافق';
 
   @override
-  String get claimsRoleClaimant => 'Claimant';
+  String get claimsRoleClaimant => 'مقدّم المطالبة';
 
   @override
   String claimsBalanceCompanyOwesYou(String company) {
-    return '$company owes you';
+    return '$company مدين لك';
   }
 
   @override
   String claimsBalanceYouOweCompany(String company) {
-    return 'You owe $company';
+    return 'أنت مدين لـ $company';
   }
 
   @override
   String claimsBalanceSettled(String company) {
-    return 'Settled with $company';
+    return 'مُسوّى مع $company';
   }
 
   @override
-  String get claimsReceiptRequired =>
-      'A receipt is required for this claim item';
+  String get claimsReceiptRequired => 'إيصال مطلوب لبند المطالبة هذا';
 
   @override
   String get claimsReceiptPdfTooLarge =>
-      'This PDF is larger than 5 MB. Choose a smaller file.';
+      'ملف PDF هذا أكبر من 5 MB. اختر ملفاً أصغر.';
 
   @override
   String claimsSpendingHint(String amount, String unit) {
-    return 'Hint: at most $amount per $unit';
+    return 'تلميح: بحد أقصى $amount لكل $unit';
   }
 
   @override
-  String get claimsNoClaimsYet => 'No claims yet.';
+  String get claimsNoClaimsYet => 'لا توجد مطالبات بعد.';
 
   @override
-  String get claimsNoClaimsToReview => 'No claims to review.';
+  String get claimsNoClaimsToReview => 'لا توجد مطالبات للمراجعة.';
 
   @override
-  String get claimsAdvanceDefault => 'Advance';
+  String get claimsAdvanceDefault => 'سلفة';
 
   @override
   String claimsItemCount(int count) {
-    return '$count item(s)';
+    return '$count بند/بنود';
   }
 
   @override
-  String get claimsRejectReasonTitle => 'Reject reason';
+  String get claimsRejectReasonTitle => 'سبب الرفض';
 
   @override
-  String get claimsApproveDifferentReasonTitle =>
-      'Approve different amount reason';
+  String get claimsApproveDifferentReasonTitle => 'سبب الموافقة بمبلغ مختلف';
 
   @override
-  String get claimsPersonNameLabel => 'Person name';
+  String get claimsPersonNameLabel => 'اسم الشخص';
 
   @override
-  String get claimsRemovePerson => 'Remove';
+  String get claimsRemovePerson => 'إزالة';
 
   @override
   String claimsRemovePersonTitle(String name) {
-    return 'Remove $name?';
+    return 'إزالة $name؟';
   }
 
   @override
   String claimsRemovePersonWarning(String name, int openClaims) {
-    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+    return 'لدى $name $openClaims مطالبة مفتوحة ورصيد مستحق غير صفري. يبقى السجل والإيصالات في هذه الدفاتر.';
   }
 
   @override
   String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
-    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+    return 'لدى $name $openClaims مطالبة مفتوحة. يبقى السجل والإيصالات في هذه الدفاتر.';
   }
 
   @override
   String claimsRemovePersonWarningBalanceOnly(String name) {
-    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+    return 'لدى $name رصيد مستحق غير صفري. يبقى السجل والإيصالات في هذه الدفاتر.';
   }
 
   @override
   String claimsRemovePersonWarningClean(String name) {
-    return 'Remove $name? History and receipts stay in these books.';
+    return 'إزالة $name؟ يبقى السجل والإيصالات في هذه الدفاتر.';
   }
 
   @override
-  String get claimsRemovePersonConfirm => 'Remove';
+  String get claimsRemovePersonConfirm => 'إزالة';
 
   @override
-  String get claimsEditorTitle => 'Edit claim';
+  String get claimsEditorTitle => 'تعديل المطالبة';
 
   @override
-  String get claimsSubmit => 'Submit';
+  String get claimsSubmit => 'إرسال';
 
   @override
-  String get claimsAddItem => 'Add item';
+  String get claimsAddItem => 'إضافة بند';
 
   @override
-  String get claimsEditItem => 'Edit item';
+  String get claimsEditItem => 'تعديل البند';
 
   @override
-  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+  String get claimsNoItemsYet => 'أضف بنداً واحداً على الأقل قبل الإرسال.';
 
   @override
   String get claimsNoAllowlistedCategories =>
-      'No expense categories are allowed for claims yet.';
+      'لا توجد تصنيفات مصروفات مسموح بها للمطالبات بعد.';
 
   @override
-  String get claimsCategoryLabel => 'Category';
+  String get claimsCategoryLabel => 'التصنيف';
 
   @override
-  String get claimsExpenseDateLabel => 'Expense date';
+  String get claimsExpenseDateLabel => 'تاريخ المصروف';
 
   @override
-  String get claimsPaidAmountLabel => 'Amount paid';
+  String get claimsPaidAmountLabel => 'المبلغ المدفوع';
 
   @override
-  String get claimsPaidCurrencyLabel => 'Currency paid';
+  String get claimsPaidCurrencyLabel => 'عملة الدفع';
 
   @override
-  String get claimsRateOptionalLabel => 'Rate (optional)';
+  String get claimsRateOptionalLabel => 'السعر (اختياري)';
 
   @override
   String claimsCompanyAmountLabel(String currency) {
-    return 'Amount in $currency';
+    return 'المبلغ بـ $currency';
   }
 
   @override
-  String get claimsDescriptionLabel => 'Description';
+  String get claimsDescriptionLabel => 'الوصف';
 
   @override
-  String get claimsAttachCamera => 'Take photo';
+  String get claimsAttachCamera => 'التقاط صورة';
 
   @override
-  String get claimsAttachGallery => 'Choose photo';
+  String get claimsAttachGallery => 'اختيار صورة';
 
   @override
-  String get claimsAttachPdf => 'Choose PDF';
+  String get claimsAttachPdf => 'اختيار PDF';
 
   @override
   String claimsReceiptAttached(String fileName) {
-    return 'Receipt: $fileName';
+    return 'الإيصال: $fileName';
   }
 
   @override
-  String get claimsReceiptRequiredHint =>
-      'A receipt is required for this amount.';
+  String get claimsReceiptRequiredHint => 'إيصال مطلوب لهذا المبلغ.';
 
   @override
   String get claimsReceiptPermissionSentence =>
-      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+      'لإرفاق صورة إيصال، يحتاج Smara إلى الوصول إلى الكاميرا أو مكتبة الصور. تبقى الصور في هذه الدفاتر على أجهزتك.';
 
   @override
   String claimsReviewClaimHeading(String status) {
-    return 'Claim · $status';
+    return 'مطالبة · $status';
   }
 }

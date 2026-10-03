@@ -566,30 +566,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get monthlyLimitBlurb => '该支出分类的可选月度累计支出参考值。';
 
   @override
-  String get translateCategoryWithAi => 'Translate with AI';
+  String get translateCategoryWithAi => '用 AI 翻译';
 
   @override
-  String get addCategoryTranslation => 'Add translation';
+  String get addCategoryTranslation => '添加翻译';
 
   @override
-  String get categoryTranslationLocale => 'Language';
+  String get categoryTranslationLocale => '语言';
 
   @override
-  String get categoryTranslationName => 'Translated name';
+  String get categoryTranslationName => '译名';
 
   @override
-  String get mergeCategories => 'Merge categories';
+  String get mergeCategories => '合并分类';
 
   @override
-  String get mergeCategoriesSuggested =>
-      'These categories look the same. Merge them?';
+  String get mergeCategoriesSuggested => '这些分类看起来相同。要合并吗？';
 
   @override
-  String get categoryDefaultLanguage => 'Default language for category names';
+  String get categoryDefaultLanguage => '分类名称的默认语言';
 
   @override
-  String get categoryDefaultLanguageSubtitle =>
-      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+  String get categoryDefaultLanguageSubtitle => '在已关联的设备间共享。若有翻译，各设备仍显示自己的语言。';
 
   @override
   String get manageCategoryRules => '管理分类规则';
@@ -898,153 +896,152 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsBackupReminderSnoozeEntries => '点“稍后”后隐藏到新增多少条记录';
 
   @override
-  String get settingsBooksSwitcher => 'Books on this device';
+  String get settingsBooksSwitcher => '本机账本';
 
   @override
   String get settingsBooksSwitcherBlurb =>
-      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+      '每套账本都有自己的签名密钥和历史。切换会打开该套账本——首页和流水只显示其条目。';
 
   @override
-  String get settingsBooksSwitcherActive => 'Open now';
+  String get settingsBooksSwitcherActive => '当前打开';
 
   @override
-  String get settingsBooksSwitcherSwitch => 'Switch';
+  String get settingsBooksSwitcherSwitch => '切换';
 
   @override
-  String get settingsBooksSwitcherCreate => 'New books';
+  String get settingsBooksSwitcherCreate => '新建账本';
 
   @override
-  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+  String get settingsBooksSwitcherCreateTitle => '为这些账本命名';
 
   @override
-  String get settingsBooksSwitcherNameLabel => 'Name';
+  String get settingsBooksSwitcherNameLabel => '名称';
 
   @override
-  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+  String get settingsBooksSwitcherRemoveTitle => '移除此账本？';
 
   @override
   String settingsBooksSwitcherRemoveBody(String name) {
-    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+    return '这将从本机删除“$name”，包括其签名密钥。本机上的其他账本不受影响。';
   }
 
   @override
-  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+  String get settingsBooksSwitcherRemoveConfirm => '移除';
 
   @override
   String settingsBooksSwitcherFallbackName(int number) {
-    return 'Books $number';
+    return '账本 $number';
   }
 
   @override
-  String get settingsLinkedDevices => 'Linked devices';
+  String get settingsLinkedDevices => '已关联设备';
 
   @override
   String get settingsLinkedDevicesCatchUp =>
-      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+      '当两台设备都在同一 Wi-Fi 上打开 Smara 时，会彼此同步追赶。';
 
   @override
   String get settingsLinkedDevicesPermissionSentence =>
-      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+      '要共享账本，Smara 需要在此 Wi-Fi 上找到你的其他设备。不会向互联网发送任何内容。';
 
   @override
-  String get settingsLinkedDevicesAddDevice => 'Add a device';
+  String get settingsLinkedDevicesAddDevice => '添加设备';
 
   @override
-  String get settingsLinkedDevicesContinue => 'Continue';
+  String get settingsLinkedDevicesContinue => '继续';
 
   @override
-  String get settingsLinkedDevicesRoleOwner => 'Owner';
+  String get settingsLinkedDevicesRoleOwner => '所有者';
 
   @override
-  String get settingsLinkedDevicesRoleMember => 'Member';
+  String get settingsLinkedDevicesRoleMember => '成员';
 
   @override
-  String get settingsLinkedDevicesCanAdd => 'May add devices';
+  String get settingsLinkedDevicesCanAdd => '可添加设备';
 
   @override
-  String get settingsLinkedDevicesErasePending => 'Erase pending';
+  String get settingsLinkedDevicesErasePending => '待抹除';
 
   @override
   String settingsLinkedDevicesErasedOn(String date) {
-    return 'Erased on $date';
+    return '已于 $date 抹除';
   }
 
   @override
   String get settingsLinkedDevicesSuggestSecondOwner =>
-      'These books have only one Owner. Consider making another linked device an Owner too.';
+      '这些账本只有一位所有者。建议将另一台已关联设备也设为所有者。';
 
   @override
   String get settingsLinkedDevicesJoinSameWifi =>
-      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+      '两台设备必须位于同一 Wi-Fi。Smara 不会通过互联网加入。';
 
   @override
-  String get settingsLinkedDevicesApproveJoin => 'Approve';
+  String get settingsLinkedDevicesApproveJoin => '批准';
 
   @override
-  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+  String get settingsLinkedDevicesRefuseJoin => '拒绝';
 
   @override
   String settingsLinkedDevicesPendingJoin(String name) {
-    return '$name wants to join these books';
+    return '$name 想加入这些账本';
   }
 
   @override
-  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+  String get settingsLinkedDevicesEmpty => '目前只有此设备已关联。';
 
   @override
-  String get settingsLinkedDevicesSyncNow => 'Sync now';
+  String get settingsLinkedDevicesSyncNow => '立即同步';
 
   @override
-  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+  String get settingsLinkedDevicesSyncNowBusy => '正在追赶…';
 
   @override
   String membershipNoticeDeviceAdded(String name) {
-    return 'A device was added: $name';
+    return '已添加设备：$name';
   }
 
   @override
   String membershipNoticeDeviceRemoved(String name) {
-    return 'A device was removed: $name';
+    return '已移除设备：$name';
   }
 
   @override
   String membershipNoticeErasePending(String name) {
-    return 'Erase pending for $name';
+    return '$name 待抹除';
   }
 
   @override
   String membershipNoticeErased(String name, String date) {
-    return 'Erased $name on $date';
+    return '已于 $date 抹除 $name';
   }
 
   @override
   String membershipNoticeSoleOwnerClaimed(String name) {
-    return '$name claimed sole ownership';
+    return '$name 申领了唯一所有者身份';
   }
 
   @override
   String membershipNoticeSoleOwnerCancelled(String name) {
-    return 'Sole-Owner claim for $name was cancelled';
+    return '$name 的唯一所有者申领已取消';
   }
 
   @override
   String membershipNoticeSoleOwnerEffective(String name) {
-    return '$name is now an Owner';
+    return '$name 现已成为所有者';
   }
 
   @override
   String membershipNoticeEntryNotAccepted(String name) {
-    return 'Not accepted: couldn\'t be verified (from $name)';
+    return '未接受：无法验证（来自 $name）';
   }
 
   @override
   String membershipNoticeOwnerVerificationAlert(String name) {
-    return 'A record from $name could not be verified and was not accepted';
+    return '来自 $name 的一条记录无法验证，未被接受';
   }
 
   @override
-  String get membershipNoticeCompetingFixCheck =>
-      'Two Fixes for the same entry were resolved — please check';
+  String get membershipNoticeCompetingFixCheck => '同一条目的两条更正已处理完毕——请检查';
 
   @override
   String get whyWeDontEdit => '我们为什么不修改旧条目';
@@ -2014,202 +2011,197 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get claimsTitle => 'Claims';
+  String get claimsTitle => '报销';
 
   @override
-  String get claimsReviewTitle => 'Review claims';
+  String get claimsReviewTitle => '审核报销';
 
   @override
-  String get claimsStatusDraft => 'Draft';
+  String get claimsStatusDraft => '草稿';
 
   @override
-  String get claimsStatusSubmitted => 'Submitted';
+  String get claimsStatusSubmitted => '已提交';
 
   @override
-  String get claimsStatusPartlyApproved => 'Partly approved';
+  String get claimsStatusPartlyApproved => '部分批准';
 
   @override
-  String get claimsStatusApproved => 'Approved';
+  String get claimsStatusApproved => '已批准';
 
   @override
-  String get claimsStatusPaid => 'Paid';
+  String get claimsStatusPaid => '已支付';
 
   @override
-  String get claimsStatusRejected => 'Rejected';
+  String get claimsStatusRejected => '已驳回';
 
   @override
-  String get claimsApprove => 'Approve';
+  String get claimsApprove => '批准';
 
   @override
-  String get claimsApproveDifferent => 'Approve different amount';
+  String get claimsApproveDifferent => '按不同金额批准';
 
   @override
-  String get claimsReject => 'Reject';
+  String get claimsReject => '驳回';
 
   @override
-  String get claimsReasonRequired => 'A reason is required';
+  String get claimsReasonRequired => '必须填写原因';
 
   @override
-  String get claimsAdvances => 'Advances';
+  String get claimsAdvances => '预支';
 
   @override
-  String get claimsAddPerson => 'Add a person';
+  String get claimsAddPerson => '添加人员';
 
   @override
-  String get claimsRoleApprover => 'Approver';
+  String get claimsRoleApprover => '审批人';
 
   @override
-  String get claimsRoleClaimant => 'Claimant';
+  String get claimsRoleClaimant => '申请人';
 
   @override
   String claimsBalanceCompanyOwesYou(String company) {
-    return '$company owes you';
+    return '$company 欠你';
   }
 
   @override
   String claimsBalanceYouOweCompany(String company) {
-    return 'You owe $company';
+    return '你欠 $company';
   }
 
   @override
   String claimsBalanceSettled(String company) {
-    return 'Settled with $company';
+    return '已与 $company 结清';
   }
 
   @override
-  String get claimsReceiptRequired =>
-      'A receipt is required for this claim item';
+  String get claimsReceiptRequired => '此报销项目需要收据';
 
   @override
-  String get claimsReceiptPdfTooLarge =>
-      'This PDF is larger than 5 MB. Choose a smaller file.';
+  String get claimsReceiptPdfTooLarge => '此 PDF 大于 5 MB。请选择更小的文件。';
 
   @override
   String claimsSpendingHint(String amount, String unit) {
-    return 'Hint: at most $amount per $unit';
+    return '提示：每 $unit 最多 $amount';
   }
 
   @override
-  String get claimsNoClaimsYet => 'No claims yet.';
+  String get claimsNoClaimsYet => '暂无报销。';
 
   @override
-  String get claimsNoClaimsToReview => 'No claims to review.';
+  String get claimsNoClaimsToReview => '没有待审核的报销。';
 
   @override
-  String get claimsAdvanceDefault => 'Advance';
+  String get claimsAdvanceDefault => '预支';
 
   @override
   String claimsItemCount(int count) {
-    return '$count item(s)';
+    return '$count 项';
   }
 
   @override
-  String get claimsRejectReasonTitle => 'Reject reason';
+  String get claimsRejectReasonTitle => '驳回原因';
 
   @override
-  String get claimsApproveDifferentReasonTitle =>
-      'Approve different amount reason';
+  String get claimsApproveDifferentReasonTitle => '按不同金额批准的原因';
 
   @override
-  String get claimsPersonNameLabel => 'Person name';
+  String get claimsPersonNameLabel => '姓名';
 
   @override
-  String get claimsRemovePerson => 'Remove';
+  String get claimsRemovePerson => '移除';
 
   @override
   String claimsRemovePersonTitle(String name) {
-    return 'Remove $name?';
+    return '移除 $name？';
   }
 
   @override
   String claimsRemovePersonWarning(String name, int openClaims) {
-    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+    return '$name 有 $openClaims 笔未结报销，且欠款余额不为零。历史记录和收据仍保留在这些账本中。';
   }
 
   @override
   String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
-    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+    return '$name 有 $openClaims 笔未结报销。历史记录和收据仍保留在这些账本中。';
   }
 
   @override
   String claimsRemovePersonWarningBalanceOnly(String name) {
-    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+    return '$name 的欠款余额不为零。历史记录和收据仍保留在这些账本中。';
   }
 
   @override
   String claimsRemovePersonWarningClean(String name) {
-    return 'Remove $name? History and receipts stay in these books.';
+    return '移除 $name？历史记录和收据仍保留在这些账本中。';
   }
 
   @override
-  String get claimsRemovePersonConfirm => 'Remove';
+  String get claimsRemovePersonConfirm => '移除';
 
   @override
-  String get claimsEditorTitle => 'Edit claim';
+  String get claimsEditorTitle => '编辑报销';
 
   @override
-  String get claimsSubmit => 'Submit';
+  String get claimsSubmit => '提交';
 
   @override
-  String get claimsAddItem => 'Add item';
+  String get claimsAddItem => '添加项目';
 
   @override
-  String get claimsEditItem => 'Edit item';
+  String get claimsEditItem => '编辑项目';
 
   @override
-  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+  String get claimsNoItemsYet => '提交前请至少添加一个项目。';
 
   @override
-  String get claimsNoAllowlistedCategories =>
-      'No expense categories are allowed for claims yet.';
+  String get claimsNoAllowlistedCategories => '尚无允许用于报销的支出分类。';
 
   @override
-  String get claimsCategoryLabel => 'Category';
+  String get claimsCategoryLabel => '分类';
 
   @override
-  String get claimsExpenseDateLabel => 'Expense date';
+  String get claimsExpenseDateLabel => '支出日期';
 
   @override
-  String get claimsPaidAmountLabel => 'Amount paid';
+  String get claimsPaidAmountLabel => '实付金额';
 
   @override
-  String get claimsPaidCurrencyLabel => 'Currency paid';
+  String get claimsPaidCurrencyLabel => '实付货币';
 
   @override
-  String get claimsRateOptionalLabel => 'Rate (optional)';
+  String get claimsRateOptionalLabel => '汇率（可选）';
 
   @override
   String claimsCompanyAmountLabel(String currency) {
-    return 'Amount in $currency';
+    return '$currency 金额';
   }
 
   @override
-  String get claimsDescriptionLabel => 'Description';
+  String get claimsDescriptionLabel => '说明';
 
   @override
-  String get claimsAttachCamera => 'Take photo';
+  String get claimsAttachCamera => '拍照';
 
   @override
-  String get claimsAttachGallery => 'Choose photo';
+  String get claimsAttachGallery => '选择照片';
 
   @override
-  String get claimsAttachPdf => 'Choose PDF';
+  String get claimsAttachPdf => '选择 PDF';
 
   @override
   String claimsReceiptAttached(String fileName) {
-    return 'Receipt: $fileName';
+    return '收据：$fileName';
   }
 
   @override
-  String get claimsReceiptRequiredHint =>
-      'A receipt is required for this amount.';
+  String get claimsReceiptRequiredHint => '此金额需要收据。';
 
   @override
   String get claimsReceiptPermissionSentence =>
-      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+      '要附加收据照片，Smara 需要访问你的相机或照片图库。照片会保留在你设备上的这些账本中。';
 
   @override
   String claimsReviewClaimHeading(String status) {
-    return 'Claim · $status';
+    return '报销 · $status';
   }
 }

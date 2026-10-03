@@ -575,30 +575,30 @@ class AppLocalizationsVi extends AppLocalizations {
       'Một mức chi tiêu tham khảo tùy chọn tính từ đầu tháng cho danh mục chi tiêu này.';
 
   @override
-  String get translateCategoryWithAi => 'Translate with AI';
+  String get translateCategoryWithAi => 'Dịch bằng AI';
 
   @override
-  String get addCategoryTranslation => 'Add translation';
+  String get addCategoryTranslation => 'Thêm bản dịch';
 
   @override
-  String get categoryTranslationLocale => 'Language';
+  String get categoryTranslationLocale => 'Ngôn ngữ';
 
   @override
-  String get categoryTranslationName => 'Translated name';
+  String get categoryTranslationName => 'Tên đã dịch';
 
   @override
-  String get mergeCategories => 'Merge categories';
+  String get mergeCategories => 'Gộp danh mục';
 
   @override
   String get mergeCategoriesSuggested =>
-      'These categories look the same. Merge them?';
+      'Các danh mục này trông giống nhau. Gộp lại?';
 
   @override
-  String get categoryDefaultLanguage => 'Default language for category names';
+  String get categoryDefaultLanguage => 'Ngôn ngữ mặc định cho tên danh mục';
 
   @override
   String get categoryDefaultLanguageSubtitle =>
-      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+      'Dùng chung trên các thiết bị liên kết. Mỗi thiết bị vẫn hiển thị ngôn ngữ của mình khi có bản dịch.';
 
   @override
   String get manageCategoryRules => 'Quản lý quy tắc danh mục';
@@ -923,153 +923,154 @@ class AppLocalizationsVi extends AppLocalizations {
       'Ẩn trong số mục mới này sau khi chọn Để sau';
 
   @override
-  String get settingsBooksSwitcher => 'Books on this device';
+  String get settingsBooksSwitcher => 'Sổ sách trên thiết bị này';
 
   @override
   String get settingsBooksSwitcherBlurb =>
-      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+      'Mỗi bộ sổ sách có khóa ký và lịch sử riêng. Chuyển sẽ mở bộ đó — Trang chủ và Sổ chỉ hiện các mục của bộ đó.';
 
   @override
-  String get settingsBooksSwitcherActive => 'Open now';
+  String get settingsBooksSwitcherActive => 'Đang mở';
 
   @override
-  String get settingsBooksSwitcherSwitch => 'Switch';
+  String get settingsBooksSwitcherSwitch => 'Chuyển';
 
   @override
-  String get settingsBooksSwitcherCreate => 'New books';
+  String get settingsBooksSwitcherCreate => 'Sổ sách mới';
 
   @override
-  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+  String get settingsBooksSwitcherCreateTitle => 'Đặt tên sổ sách này';
 
   @override
-  String get settingsBooksSwitcherNameLabel => 'Name';
+  String get settingsBooksSwitcherNameLabel => 'Tên';
 
   @override
-  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+  String get settingsBooksSwitcherRemoveTitle => 'Gỡ sổ sách này?';
 
   @override
   String settingsBooksSwitcherRemoveBody(String name) {
-    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+    return 'Thao tác này xóa \"$name\" khỏi thiết bị này, gồm cả khóa ký. Các sổ sách khác trên thiết bị này không bị ảnh hưởng.';
   }
 
   @override
-  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+  String get settingsBooksSwitcherRemoveConfirm => 'Gỡ';
 
   @override
   String settingsBooksSwitcherFallbackName(int number) {
-    return 'Books $number';
+    return 'Sổ sách $number';
   }
 
   @override
-  String get settingsLinkedDevices => 'Linked devices';
+  String get settingsLinkedDevices => 'Thiết bị liên kết';
 
   @override
   String get settingsLinkedDevicesCatchUp =>
-      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+      'Các thiết bị của bạn bắt kịp nhau khi cả hai đều mở Smara trên cùng Wi-Fi.';
 
   @override
   String get settingsLinkedDevicesPermissionSentence =>
-      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+      'Để chia sẻ sổ sách, Smara cần tìm các thiết bị khác của bạn trên Wi-Fi này. Không có gì được gửi lên internet.';
 
   @override
-  String get settingsLinkedDevicesAddDevice => 'Add a device';
+  String get settingsLinkedDevicesAddDevice => 'Thêm thiết bị';
 
   @override
-  String get settingsLinkedDevicesContinue => 'Continue';
+  String get settingsLinkedDevicesContinue => 'Tiếp tục';
 
   @override
-  String get settingsLinkedDevicesRoleOwner => 'Owner';
+  String get settingsLinkedDevicesRoleOwner => 'Chủ sở hữu';
 
   @override
-  String get settingsLinkedDevicesRoleMember => 'Member';
+  String get settingsLinkedDevicesRoleMember => 'Thành viên';
 
   @override
-  String get settingsLinkedDevicesCanAdd => 'May add devices';
+  String get settingsLinkedDevicesCanAdd => 'Được thêm thiết bị';
 
   @override
-  String get settingsLinkedDevicesErasePending => 'Erase pending';
+  String get settingsLinkedDevicesErasePending => 'Đang chờ xóa';
 
   @override
   String settingsLinkedDevicesErasedOn(String date) {
-    return 'Erased on $date';
+    return 'Đã xóa vào $date';
   }
 
   @override
   String get settingsLinkedDevicesSuggestSecondOwner =>
-      'These books have only one Owner. Consider making another linked device an Owner too.';
+      'Sổ sách này chỉ có một Chủ sở hữu. Hãy cân nhắc đặt thêm một thiết bị liên kết khác làm Chủ sở hữu.';
 
   @override
   String get settingsLinkedDevicesJoinSameWifi =>
-      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+      'Cả hai thiết bị phải ở cùng Wi-Fi. Smara không liên kết qua internet.';
 
   @override
-  String get settingsLinkedDevicesApproveJoin => 'Approve';
+  String get settingsLinkedDevicesApproveJoin => 'Chấp thuận';
 
   @override
-  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+  String get settingsLinkedDevicesRefuseJoin => 'Từ chối';
 
   @override
   String settingsLinkedDevicesPendingJoin(String name) {
-    return '$name wants to join these books';
+    return '$name muốn tham gia sổ sách này';
   }
 
   @override
-  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+  String get settingsLinkedDevicesEmpty =>
+      'Mới chỉ có thiết bị này được liên kết.';
 
   @override
-  String get settingsLinkedDevicesSyncNow => 'Sync now';
+  String get settingsLinkedDevicesSyncNow => 'Đồng bộ ngay';
 
   @override
-  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+  String get settingsLinkedDevicesSyncNowBusy => 'Đang bắt kịp…';
 
   @override
   String membershipNoticeDeviceAdded(String name) {
-    return 'A device was added: $name';
+    return 'Đã thêm thiết bị: $name';
   }
 
   @override
   String membershipNoticeDeviceRemoved(String name) {
-    return 'A device was removed: $name';
+    return 'Đã gỡ thiết bị: $name';
   }
 
   @override
   String membershipNoticeErasePending(String name) {
-    return 'Erase pending for $name';
+    return 'Đang chờ xóa cho $name';
   }
 
   @override
   String membershipNoticeErased(String name, String date) {
-    return 'Erased $name on $date';
+    return 'Đã xóa $name vào $date';
   }
 
   @override
   String membershipNoticeSoleOwnerClaimed(String name) {
-    return '$name claimed sole ownership';
+    return '$name đã yêu cầu quyền sở hữu duy nhất';
   }
 
   @override
   String membershipNoticeSoleOwnerCancelled(String name) {
-    return 'Sole-Owner claim for $name was cancelled';
+    return 'Yêu cầu Chủ sở hữu duy nhất cho $name đã bị hủy';
   }
 
   @override
   String membershipNoticeSoleOwnerEffective(String name) {
-    return '$name is now an Owner';
+    return '$name hiện là Chủ sở hữu';
   }
 
   @override
   String membershipNoticeEntryNotAccepted(String name) {
-    return 'Not accepted: couldn\'t be verified (from $name)';
+    return 'Không chấp nhận: không thể xác minh (từ $name)';
   }
 
   @override
   String membershipNoticeOwnerVerificationAlert(String name) {
-    return 'A record from $name could not be verified and was not accepted';
+    return 'Một bản ghi từ $name không thể xác minh và không được chấp nhận';
   }
 
   @override
   String get membershipNoticeCompetingFixCheck =>
-      'Two Fixes for the same entry were resolved — please check';
+      'Hai lần Sửa cho cùng một mục đã được xử lý — vui lòng kiểm tra';
 
   @override
   String get whyWeDontEdit => 'Vì sao chúng tôi không sửa các mục cũ';
@@ -2127,202 +2128,199 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get claimsTitle => 'Claims';
+  String get claimsTitle => 'Đề nghị thanh toán';
 
   @override
-  String get claimsReviewTitle => 'Review claims';
+  String get claimsReviewTitle => 'Duyệt đề nghị';
 
   @override
-  String get claimsStatusDraft => 'Draft';
+  String get claimsStatusDraft => 'Nháp';
 
   @override
-  String get claimsStatusSubmitted => 'Submitted';
+  String get claimsStatusSubmitted => 'Đã gửi';
 
   @override
-  String get claimsStatusPartlyApproved => 'Partly approved';
+  String get claimsStatusPartlyApproved => 'Duyệt một phần';
 
   @override
-  String get claimsStatusApproved => 'Approved';
+  String get claimsStatusApproved => 'Đã duyệt';
 
   @override
-  String get claimsStatusPaid => 'Paid';
+  String get claimsStatusPaid => 'Đã thanh toán';
 
   @override
-  String get claimsStatusRejected => 'Rejected';
+  String get claimsStatusRejected => 'Từ chối';
 
   @override
-  String get claimsApprove => 'Approve';
+  String get claimsApprove => 'Duyệt';
 
   @override
-  String get claimsApproveDifferent => 'Approve different amount';
+  String get claimsApproveDifferent => 'Duyệt số tiền khác';
 
   @override
-  String get claimsReject => 'Reject';
+  String get claimsReject => 'Từ chối';
 
   @override
-  String get claimsReasonRequired => 'A reason is required';
+  String get claimsReasonRequired => 'Cần có lý do';
 
   @override
-  String get claimsAdvances => 'Advances';
+  String get claimsAdvances => 'Tạm ứng';
 
   @override
-  String get claimsAddPerson => 'Add a person';
+  String get claimsAddPerson => 'Thêm người';
 
   @override
-  String get claimsRoleApprover => 'Approver';
+  String get claimsRoleApprover => 'Người duyệt';
 
   @override
-  String get claimsRoleClaimant => 'Claimant';
+  String get claimsRoleClaimant => 'Người đề nghị';
 
   @override
   String claimsBalanceCompanyOwesYou(String company) {
-    return '$company owes you';
+    return '$company nợ bạn';
   }
 
   @override
   String claimsBalanceYouOweCompany(String company) {
-    return 'You owe $company';
+    return 'Bạn nợ $company';
   }
 
   @override
   String claimsBalanceSettled(String company) {
-    return 'Settled with $company';
+    return 'Đã tất toán với $company';
   }
 
   @override
-  String get claimsReceiptRequired =>
-      'A receipt is required for this claim item';
+  String get claimsReceiptRequired => 'Cần biên lai cho mục đề nghị này';
 
   @override
   String get claimsReceiptPdfTooLarge =>
-      'This PDF is larger than 5 MB. Choose a smaller file.';
+      'PDF này lớn hơn 5 MB. Chọn tệp nhỏ hơn.';
 
   @override
   String claimsSpendingHint(String amount, String unit) {
-    return 'Hint: at most $amount per $unit';
+    return 'Gợi ý: tối đa $amount mỗi $unit';
   }
 
   @override
-  String get claimsNoClaimsYet => 'No claims yet.';
+  String get claimsNoClaimsYet => 'Chưa có đề nghị nào.';
 
   @override
-  String get claimsNoClaimsToReview => 'No claims to review.';
+  String get claimsNoClaimsToReview => 'Không có đề nghị nào để duyệt.';
 
   @override
-  String get claimsAdvanceDefault => 'Advance';
+  String get claimsAdvanceDefault => 'Tạm ứng';
 
   @override
   String claimsItemCount(int count) {
-    return '$count item(s)';
+    return '$count mục';
   }
 
   @override
-  String get claimsRejectReasonTitle => 'Reject reason';
+  String get claimsRejectReasonTitle => 'Lý do từ chối';
 
   @override
-  String get claimsApproveDifferentReasonTitle =>
-      'Approve different amount reason';
+  String get claimsApproveDifferentReasonTitle => 'Lý do duyệt số tiền khác';
 
   @override
-  String get claimsPersonNameLabel => 'Person name';
+  String get claimsPersonNameLabel => 'Tên người';
 
   @override
-  String get claimsRemovePerson => 'Remove';
+  String get claimsRemovePerson => 'Gỡ';
 
   @override
   String claimsRemovePersonTitle(String name) {
-    return 'Remove $name?';
+    return 'Gỡ $name?';
   }
 
   @override
   String claimsRemovePersonWarning(String name, int openClaims) {
-    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+    return '$name còn $openClaims Đề nghị thanh toán đang mở và số dư nợ khác 0. Lịch sử và biên lai vẫn giữ trong sổ sách này.';
   }
 
   @override
   String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
-    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+    return '$name còn $openClaims Đề nghị thanh toán đang mở. Lịch sử và biên lai vẫn giữ trong sổ sách này.';
   }
 
   @override
   String claimsRemovePersonWarningBalanceOnly(String name) {
-    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+    return '$name còn số dư nợ khác 0. Lịch sử và biên lai vẫn giữ trong sổ sách này.';
   }
 
   @override
   String claimsRemovePersonWarningClean(String name) {
-    return 'Remove $name? History and receipts stay in these books.';
+    return 'Gỡ $name? Lịch sử và biên lai vẫn giữ trong sổ sách này.';
   }
 
   @override
-  String get claimsRemovePersonConfirm => 'Remove';
+  String get claimsRemovePersonConfirm => 'Gỡ';
 
   @override
-  String get claimsEditorTitle => 'Edit claim';
+  String get claimsEditorTitle => 'Sửa đề nghị';
 
   @override
-  String get claimsSubmit => 'Submit';
+  String get claimsSubmit => 'Gửi';
 
   @override
-  String get claimsAddItem => 'Add item';
+  String get claimsAddItem => 'Thêm mục';
 
   @override
-  String get claimsEditItem => 'Edit item';
+  String get claimsEditItem => 'Sửa mục';
 
   @override
-  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+  String get claimsNoItemsYet => 'Thêm ít nhất một mục trước khi gửi.';
 
   @override
   String get claimsNoAllowlistedCategories =>
-      'No expense categories are allowed for claims yet.';
+      'Chưa có danh mục chi phí nào được phép dùng cho đề nghị thanh toán.';
 
   @override
-  String get claimsCategoryLabel => 'Category';
+  String get claimsCategoryLabel => 'Danh mục';
 
   @override
-  String get claimsExpenseDateLabel => 'Expense date';
+  String get claimsExpenseDateLabel => 'Ngày chi';
 
   @override
-  String get claimsPaidAmountLabel => 'Amount paid';
+  String get claimsPaidAmountLabel => 'Số tiền đã trả';
 
   @override
-  String get claimsPaidCurrencyLabel => 'Currency paid';
+  String get claimsPaidCurrencyLabel => 'Tiền tệ đã trả';
 
   @override
-  String get claimsRateOptionalLabel => 'Rate (optional)';
+  String get claimsRateOptionalLabel => 'Tỷ giá (tùy chọn)';
 
   @override
   String claimsCompanyAmountLabel(String currency) {
-    return 'Amount in $currency';
+    return 'Số tiền theo $currency';
   }
 
   @override
-  String get claimsDescriptionLabel => 'Description';
+  String get claimsDescriptionLabel => 'Mô tả';
 
   @override
-  String get claimsAttachCamera => 'Take photo';
+  String get claimsAttachCamera => 'Chụp ảnh';
 
   @override
-  String get claimsAttachGallery => 'Choose photo';
+  String get claimsAttachGallery => 'Chọn ảnh';
 
   @override
-  String get claimsAttachPdf => 'Choose PDF';
+  String get claimsAttachPdf => 'Chọn PDF';
 
   @override
   String claimsReceiptAttached(String fileName) {
-    return 'Receipt: $fileName';
+    return 'Biên lai: $fileName';
   }
 
   @override
-  String get claimsReceiptRequiredHint =>
-      'A receipt is required for this amount.';
+  String get claimsReceiptRequiredHint => 'Cần biên lai cho số tiền này.';
 
   @override
   String get claimsReceiptPermissionSentence =>
-      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+      'Để đính kèm ảnh biên lai, Smara cần quyền truy cập máy ảnh hoặc thư viện ảnh. Ảnh vẫn nằm trong sổ sách này trên các thiết bị của bạn.';
 
   @override
   String claimsReviewClaimHeading(String status) {
-    return 'Claim · $status';
+    return 'Đề nghị · $status';
   }
 }

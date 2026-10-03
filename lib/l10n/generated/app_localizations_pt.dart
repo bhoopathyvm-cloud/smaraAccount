@@ -576,30 +576,31 @@ class AppLocalizationsPt extends AppLocalizations {
       'Um guia opcional de despesas do mês até à data para esta categoria de despesa.';
 
   @override
-  String get translateCategoryWithAi => 'Translate with AI';
+  String get translateCategoryWithAi => 'Traduzir com IA';
 
   @override
-  String get addCategoryTranslation => 'Add translation';
+  String get addCategoryTranslation => 'Adicionar tradução';
 
   @override
-  String get categoryTranslationLocale => 'Language';
+  String get categoryTranslationLocale => 'Idioma';
 
   @override
-  String get categoryTranslationName => 'Translated name';
+  String get categoryTranslationName => 'Nome traduzido';
 
   @override
-  String get mergeCategories => 'Merge categories';
+  String get mergeCategories => 'Fundir categorias';
 
   @override
   String get mergeCategoriesSuggested =>
-      'These categories look the same. Merge them?';
+      'Estas categorias parecem iguais. Fundi-las?';
 
   @override
-  String get categoryDefaultLanguage => 'Default language for category names';
+  String get categoryDefaultLanguage =>
+      'Idioma predefinido para os nomes das categorias';
 
   @override
   String get categoryDefaultLanguageSubtitle =>
-      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+      'Partilhado entre os dispositivos ligados. Cada dispositivo continua a mostrar o seu próprio idioma quando existe uma tradução.';
 
   @override
   String get manageCategoryRules => 'Gerir regras de categorias';
@@ -922,153 +923,154 @@ class AppLocalizationsPt extends AppLocalizations {
       'Ocultar durante estes lançamentos novos após «Mais tarde»';
 
   @override
-  String get settingsBooksSwitcher => 'Books on this device';
+  String get settingsBooksSwitcher => 'Livros neste dispositivo';
 
   @override
   String get settingsBooksSwitcherBlurb =>
-      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+      'Cada conjunto de livros tem a sua própria chave de assinatura e histórico. Ao mudar, esse conjunto abre — Início e Registo mostram apenas os seus lançamentos.';
 
   @override
-  String get settingsBooksSwitcherActive => 'Open now';
+  String get settingsBooksSwitcherActive => 'Aberto agora';
 
   @override
-  String get settingsBooksSwitcherSwitch => 'Switch';
+  String get settingsBooksSwitcherSwitch => 'Mudar';
 
   @override
-  String get settingsBooksSwitcherCreate => 'New books';
+  String get settingsBooksSwitcherCreate => 'Novos livros';
 
   @override
-  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+  String get settingsBooksSwitcherCreateTitle => 'Dar nome a estes livros';
 
   @override
-  String get settingsBooksSwitcherNameLabel => 'Name';
+  String get settingsBooksSwitcherNameLabel => 'Nome';
 
   @override
-  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+  String get settingsBooksSwitcherRemoveTitle => 'Remover estes livros?';
 
   @override
   String settingsBooksSwitcherRemoveBody(String name) {
-    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+    return 'Isto elimina \"$name\" deste dispositivo, incluindo a chave de assinatura. Os outros livros neste dispositivo não são afetados.';
   }
 
   @override
-  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+  String get settingsBooksSwitcherRemoveConfirm => 'Remover';
 
   @override
   String settingsBooksSwitcherFallbackName(int number) {
-    return 'Books $number';
+    return 'Livros $number';
   }
 
   @override
-  String get settingsLinkedDevices => 'Linked devices';
+  String get settingsLinkedDevices => 'Dispositivos ligados';
 
   @override
   String get settingsLinkedDevicesCatchUp =>
-      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+      'Os seus dispositivos atualizam-se quando ambos têm o Smara aberto na mesma Wi-Fi.';
 
   @override
   String get settingsLinkedDevicesPermissionSentence =>
-      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+      'Para partilhar os seus livros, o Smara precisa de encontrar os seus outros dispositivos nesta Wi-Fi. Nada vai para a Internet.';
 
   @override
-  String get settingsLinkedDevicesAddDevice => 'Add a device';
+  String get settingsLinkedDevicesAddDevice => 'Adicionar um dispositivo';
 
   @override
-  String get settingsLinkedDevicesContinue => 'Continue';
+  String get settingsLinkedDevicesContinue => 'Continuar';
 
   @override
-  String get settingsLinkedDevicesRoleOwner => 'Owner';
+  String get settingsLinkedDevicesRoleOwner => 'Proprietário';
 
   @override
-  String get settingsLinkedDevicesRoleMember => 'Member';
+  String get settingsLinkedDevicesRoleMember => 'Membro';
 
   @override
-  String get settingsLinkedDevicesCanAdd => 'May add devices';
+  String get settingsLinkedDevicesCanAdd => 'Pode adicionar dispositivos';
 
   @override
-  String get settingsLinkedDevicesErasePending => 'Erase pending';
+  String get settingsLinkedDevicesErasePending => 'Eliminação pendente';
 
   @override
   String settingsLinkedDevicesErasedOn(String date) {
-    return 'Erased on $date';
+    return 'Eliminado em $date';
   }
 
   @override
   String get settingsLinkedDevicesSuggestSecondOwner =>
-      'These books have only one Owner. Consider making another linked device an Owner too.';
+      'Estes livros têm apenas um Proprietário. Considere tornar também Proprietário outro dispositivo ligado.';
 
   @override
   String get settingsLinkedDevicesJoinSameWifi =>
-      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+      'Ambos os dispositivos têm de estar na mesma Wi-Fi. O Smara não se junta pela Internet.';
 
   @override
-  String get settingsLinkedDevicesApproveJoin => 'Approve';
+  String get settingsLinkedDevicesApproveJoin => 'Aprovar';
 
   @override
-  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+  String get settingsLinkedDevicesRefuseJoin => 'Recusar';
 
   @override
   String settingsLinkedDevicesPendingJoin(String name) {
-    return '$name wants to join these books';
+    return '$name quer juntar-se a estes livros';
   }
 
   @override
-  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+  String get settingsLinkedDevicesEmpty =>
+      'Até agora só este dispositivo está ligado.';
 
   @override
-  String get settingsLinkedDevicesSyncNow => 'Sync now';
+  String get settingsLinkedDevicesSyncNow => 'Sincronizar agora';
 
   @override
-  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+  String get settingsLinkedDevicesSyncNowBusy => 'A atualizar…';
 
   @override
   String membershipNoticeDeviceAdded(String name) {
-    return 'A device was added: $name';
+    return 'Foi adicionado um dispositivo: $name';
   }
 
   @override
   String membershipNoticeDeviceRemoved(String name) {
-    return 'A device was removed: $name';
+    return 'Foi removido um dispositivo: $name';
   }
 
   @override
   String membershipNoticeErasePending(String name) {
-    return 'Erase pending for $name';
+    return 'Eliminação pendente para $name';
   }
 
   @override
   String membershipNoticeErased(String name, String date) {
-    return 'Erased $name on $date';
+    return 'Eliminado $name em $date';
   }
 
   @override
   String membershipNoticeSoleOwnerClaimed(String name) {
-    return '$name claimed sole ownership';
+    return '$name reivindicou a propriedade exclusiva';
   }
 
   @override
   String membershipNoticeSoleOwnerCancelled(String name) {
-    return 'Sole-Owner claim for $name was cancelled';
+    return 'O pedido de Proprietário único de $name foi cancelado';
   }
 
   @override
   String membershipNoticeSoleOwnerEffective(String name) {
-    return '$name is now an Owner';
+    return '$name é agora Proprietário';
   }
 
   @override
   String membershipNoticeEntryNotAccepted(String name) {
-    return 'Not accepted: couldn\'t be verified (from $name)';
+    return 'Não aceite: não foi possível verificar (de $name)';
   }
 
   @override
   String membershipNoticeOwnerVerificationAlert(String name) {
-    return 'A record from $name could not be verified and was not accepted';
+    return 'Um registo de $name não pôde ser verificado e não foi aceite';
   }
 
   @override
   String get membershipNoticeCompetingFixCheck =>
-      'Two Fixes for the same entry were resolved — please check';
+      'Duas Correções do mesmo lançamento foram resolvidas — verifique';
 
   @override
   String get whyWeDontEdit => 'Porque não editamos lançamentos antigos';
@@ -2133,202 +2135,203 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get claimsTitle => 'Claims';
+  String get claimsTitle => 'Pedidos de reembolso';
 
   @override
-  String get claimsReviewTitle => 'Review claims';
+  String get claimsReviewTitle => 'Rever pedidos de reembolso';
 
   @override
-  String get claimsStatusDraft => 'Draft';
+  String get claimsStatusDraft => 'Rascunho';
 
   @override
-  String get claimsStatusSubmitted => 'Submitted';
+  String get claimsStatusSubmitted => 'Submetido';
 
   @override
-  String get claimsStatusPartlyApproved => 'Partly approved';
+  String get claimsStatusPartlyApproved => 'Parcialmente aprovado';
 
   @override
-  String get claimsStatusApproved => 'Approved';
+  String get claimsStatusApproved => 'Aprovado';
 
   @override
-  String get claimsStatusPaid => 'Paid';
+  String get claimsStatusPaid => 'Pago';
 
   @override
-  String get claimsStatusRejected => 'Rejected';
+  String get claimsStatusRejected => 'Rejeitado';
 
   @override
-  String get claimsApprove => 'Approve';
+  String get claimsApprove => 'Aprovar';
 
   @override
-  String get claimsApproveDifferent => 'Approve different amount';
+  String get claimsApproveDifferent => 'Aprovar valor diferente';
 
   @override
-  String get claimsReject => 'Reject';
+  String get claimsReject => 'Rejeitar';
 
   @override
-  String get claimsReasonRequired => 'A reason is required';
+  String get claimsReasonRequired => 'É necessário um motivo';
 
   @override
-  String get claimsAdvances => 'Advances';
+  String get claimsAdvances => 'Adiantamentos';
 
   @override
-  String get claimsAddPerson => 'Add a person';
+  String get claimsAddPerson => 'Adicionar uma pessoa';
 
   @override
-  String get claimsRoleApprover => 'Approver';
+  String get claimsRoleApprover => 'Aprovador';
 
   @override
-  String get claimsRoleClaimant => 'Claimant';
+  String get claimsRoleClaimant => 'Requerente';
 
   @override
   String claimsBalanceCompanyOwesYou(String company) {
-    return '$company owes you';
+    return '$company deve-lhe';
   }
 
   @override
   String claimsBalanceYouOweCompany(String company) {
-    return 'You owe $company';
+    return 'Deve a $company';
   }
 
   @override
   String claimsBalanceSettled(String company) {
-    return 'Settled with $company';
+    return 'Acertado com $company';
   }
 
   @override
   String get claimsReceiptRequired =>
-      'A receipt is required for this claim item';
+      'É necessário um recibo para este item do pedido de reembolso';
 
   @override
   String get claimsReceiptPdfTooLarge =>
-      'This PDF is larger than 5 MB. Choose a smaller file.';
+      'Este PDF é maior do que 5 MB. Escolha um ficheiro mais pequeno.';
 
   @override
   String claimsSpendingHint(String amount, String unit) {
-    return 'Hint: at most $amount per $unit';
+    return 'Sugestão: no máximo $amount por $unit';
   }
 
   @override
-  String get claimsNoClaimsYet => 'No claims yet.';
+  String get claimsNoClaimsYet => 'Ainda não há pedidos de reembolso.';
 
   @override
-  String get claimsNoClaimsToReview => 'No claims to review.';
+  String get claimsNoClaimsToReview =>
+      'Não há pedidos de reembolso para rever.';
 
   @override
-  String get claimsAdvanceDefault => 'Advance';
+  String get claimsAdvanceDefault => 'Adiantamento';
 
   @override
   String claimsItemCount(int count) {
-    return '$count item(s)';
+    return '$count item(ns)';
   }
 
   @override
-  String get claimsRejectReasonTitle => 'Reject reason';
+  String get claimsRejectReasonTitle => 'Motivo da rejeição';
 
   @override
-  String get claimsApproveDifferentReasonTitle =>
-      'Approve different amount reason';
+  String get claimsApproveDifferentReasonTitle => 'Motivo do valor diferente';
 
   @override
-  String get claimsPersonNameLabel => 'Person name';
+  String get claimsPersonNameLabel => 'Nome da pessoa';
 
   @override
-  String get claimsRemovePerson => 'Remove';
+  String get claimsRemovePerson => 'Remover';
 
   @override
   String claimsRemovePersonTitle(String name) {
-    return 'Remove $name?';
+    return 'Remover $name?';
   }
 
   @override
   String claimsRemovePersonWarning(String name, int openClaims) {
-    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+    return '$name tem $openClaims pedidos de reembolso abertos e um saldo em dívida. O histórico e os recibos ficam nestes livros.';
   }
 
   @override
   String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
-    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+    return '$name tem $openClaims pedidos de reembolso abertos. O histórico e os recibos ficam nestes livros.';
   }
 
   @override
   String claimsRemovePersonWarningBalanceOnly(String name) {
-    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+    return '$name tem um saldo em dívida. O histórico e os recibos ficam nestes livros.';
   }
 
   @override
   String claimsRemovePersonWarningClean(String name) {
-    return 'Remove $name? History and receipts stay in these books.';
+    return 'Remover $name? O histórico e os recibos ficam nestes livros.';
   }
 
   @override
-  String get claimsRemovePersonConfirm => 'Remove';
+  String get claimsRemovePersonConfirm => 'Remover';
 
   @override
-  String get claimsEditorTitle => 'Edit claim';
+  String get claimsEditorTitle => 'Editar pedido de reembolso';
 
   @override
-  String get claimsSubmit => 'Submit';
+  String get claimsSubmit => 'Submeter';
 
   @override
-  String get claimsAddItem => 'Add item';
+  String get claimsAddItem => 'Adicionar item';
 
   @override
-  String get claimsEditItem => 'Edit item';
+  String get claimsEditItem => 'Editar item';
 
   @override
-  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+  String get claimsNoItemsYet =>
+      'Adicione pelo menos um item antes de submeter.';
 
   @override
   String get claimsNoAllowlistedCategories =>
-      'No expense categories are allowed for claims yet.';
+      'Ainda não há categorias de despesa permitidas para pedidos de reembolso.';
 
   @override
-  String get claimsCategoryLabel => 'Category';
+  String get claimsCategoryLabel => 'Categoria';
 
   @override
-  String get claimsExpenseDateLabel => 'Expense date';
+  String get claimsExpenseDateLabel => 'Data da despesa';
 
   @override
-  String get claimsPaidAmountLabel => 'Amount paid';
+  String get claimsPaidAmountLabel => 'Valor pago';
 
   @override
-  String get claimsPaidCurrencyLabel => 'Currency paid';
+  String get claimsPaidCurrencyLabel => 'Moeda paga';
 
   @override
-  String get claimsRateOptionalLabel => 'Rate (optional)';
+  String get claimsRateOptionalLabel => 'Taxa (opcional)';
 
   @override
   String claimsCompanyAmountLabel(String currency) {
-    return 'Amount in $currency';
+    return 'Valor em $currency';
   }
 
   @override
-  String get claimsDescriptionLabel => 'Description';
+  String get claimsDescriptionLabel => 'Descrição';
 
   @override
-  String get claimsAttachCamera => 'Take photo';
+  String get claimsAttachCamera => 'Tirar foto';
 
   @override
-  String get claimsAttachGallery => 'Choose photo';
+  String get claimsAttachGallery => 'Escolher foto';
 
   @override
-  String get claimsAttachPdf => 'Choose PDF';
+  String get claimsAttachPdf => 'Escolher PDF';
 
   @override
   String claimsReceiptAttached(String fileName) {
-    return 'Receipt: $fileName';
+    return 'Recibo: $fileName';
   }
 
   @override
   String get claimsReceiptRequiredHint =>
-      'A receipt is required for this amount.';
+      'É necessário um recibo para este valor.';
 
   @override
   String get claimsReceiptPermissionSentence =>
-      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+      'Para anexar uma foto do recibo, o Smara precisa de acesso à sua câmara ou biblioteca de fotos. As fotos ficam nestes livros nos seus dispositivos.';
 
   @override
   String claimsReviewClaimHeading(String status) {
-    return 'Claim · $status';
+    return 'Pedido de reembolso · $status';
   }
 }

@@ -573,30 +573,30 @@ class AppLocalizationsPa extends AppLocalizations {
       'ਇਸ ਖਰਚ ਸ਼੍ਰੇਣੀ ਲਈ ਇੱਕ ਵਿਕਲਪਿਕ ਮਹੀਨੇ-ਤੱਕ-ਹੁਣ ਖਰਚ ਗਾਈਡ।';
 
   @override
-  String get translateCategoryWithAi => 'Translate with AI';
+  String get translateCategoryWithAi => 'AI ਨਾਲ ਅਨੁਵਾਦ ਕਰੋ';
 
   @override
-  String get addCategoryTranslation => 'Add translation';
+  String get addCategoryTranslation => 'ਅਨੁਵਾਦ ਸ਼ਾਮਲ ਕਰੋ';
 
   @override
-  String get categoryTranslationLocale => 'Language';
+  String get categoryTranslationLocale => 'ਭਾਸ਼ਾ';
 
   @override
-  String get categoryTranslationName => 'Translated name';
+  String get categoryTranslationName => 'ਅਨੁਵਾਦਿਤ ਨਾਮ';
 
   @override
-  String get mergeCategories => 'Merge categories';
+  String get mergeCategories => 'ਸ਼੍ਰੇਣੀਆਂ ਨੂੰ ਮਿਲਾਓ';
 
   @override
   String get mergeCategoriesSuggested =>
-      'These categories look the same. Merge them?';
+      'ਇਹ ਸ਼੍ਰੇਣੀਆਂ ਇੱਕੋ ਜਿਹੀਆਂ ਦਿਖਾਈ ਦਿੰਦੀਆਂ ਹਨ। ਉਹਨਾਂ ਨੂੰ ਮਿਲਾਉਣਾ ਹੈ?';
 
   @override
-  String get categoryDefaultLanguage => 'Default language for category names';
+  String get categoryDefaultLanguage => 'ਸ਼੍ਰੇਣੀ ਦੇ ਨਾਵਾਂ ਲਈ ਮੂਲ ਭਾਸ਼ਾ';
 
   @override
   String get categoryDefaultLanguageSubtitle =>
-      'Shared across linked devices. Each device still shows its own language when a translation exists.';
+      'ਲਿੰਕ ਕੀਤੇ ਡੀਵਾਈਸਾਂ ਵਿੱਚ ਸਾਂਝਾ ਕੀਤਾ ਗਿਆ। ਜਦੋਂ ਅਨੁਵਾਦ ਮੌਜੂਦ ਹੁੰਦਾ ਹੈ ਤਾਂ ਹਰੇਕ ਡਿਵਾਈਸ ਅਜੇ ਵੀ ਆਪਣੀ ਭਾਸ਼ਾ ਦਿਖਾਉਂਦੀ ਹੈ।';
 
   @override
   String get manageCategoryRules => 'ਸ਼੍ਰੇਣੀ ਨਿਯਮ ਪ੍ਰਬੰਧਿਤ ਕਰੋ';
@@ -917,153 +917,153 @@ class AppLocalizationsPa extends AppLocalizations {
       '\'ਬਾਅਦ ਵਿੱਚ\' ਤੋਂ ਬਾਅਦ ਇੰਨੀਆਂ ਨਵੀਆਂ ਐਂਟਰੀਆਂ ਤੱਕ ਲੁਕਾਓ';
 
   @override
-  String get settingsBooksSwitcher => 'Books on this device';
+  String get settingsBooksSwitcher => 'ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਕਿਤਾਬਾਂ';
 
   @override
   String get settingsBooksSwitcherBlurb =>
-      'Each set of books has its own signing key and history. Switching opens that set — Home and Register show only its entries.';
+      'ਕਿਤਾਬਾਂ ਦੇ ਹਰੇਕ ਸੈੱਟ ਦੀ ਆਪਣੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਅਤੇ ਇਤਿਹਾਸ ਹੈ। ਸਵਿਚ ਕਰਨ ਨਾਲ ਉਹ ਸੈੱਟ ਖੁੱਲ੍ਹਦਾ ਹੈ — ਹੋਮ ਅਤੇ ਰਜਿਸਟਰ ਸਿਰਫ਼ ਇਸਦੀਆਂ ਐਂਟਰੀਆਂ ਦਿਖਾਉਂਦੇ ਹਨ।';
 
   @override
-  String get settingsBooksSwitcherActive => 'Open now';
+  String get settingsBooksSwitcherActive => 'ਹੁਣ ਖੋਲ੍ਹੋ';
 
   @override
-  String get settingsBooksSwitcherSwitch => 'Switch';
+  String get settingsBooksSwitcherSwitch => 'ਸਵਿੱਚ ਕਰੋ';
 
   @override
-  String get settingsBooksSwitcherCreate => 'New books';
+  String get settingsBooksSwitcherCreate => 'ਨਵੀਆਂ ਕਿਤਾਬਾਂ';
 
   @override
-  String get settingsBooksSwitcherCreateTitle => 'Name these books';
+  String get settingsBooksSwitcherCreateTitle => 'ਇਹਨਾਂ ਕਿਤਾਬਾਂ ਦੇ ਨਾਮ ਦੱਸੋ';
 
   @override
-  String get settingsBooksSwitcherNameLabel => 'Name';
+  String get settingsBooksSwitcherNameLabel => 'ਨਾਮ';
 
   @override
-  String get settingsBooksSwitcherRemoveTitle => 'Remove these books?';
+  String get settingsBooksSwitcherRemoveTitle => 'ਇਹਨਾਂ ਕਿਤਾਬਾਂ ਨੂੰ ਹਟਾਉਣਾ ਹੈ?';
 
   @override
   String settingsBooksSwitcherRemoveBody(String name) {
-    return 'This deletes \"$name\" from this device, including its signing key. Other books on this device are not affected.';
+    return 'ਇਹ ਇਸ ਡਿਵਾਈਸ ਤੋਂ \"$name\" ਨੂੰ ਹਟਾਉਂਦਾ ਹੈ, ਇਸਦੀ ਸਾਈਨਿੰਗ ਕੁੰਜੀ ਸਮੇਤ। ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਹੋਰ ਕਿਤਾਬਾਂ ਪ੍ਰਭਾਵਿਤ ਨਹੀਂ ਹੁੰਦੀਆਂ ਹਨ।';
   }
 
   @override
-  String get settingsBooksSwitcherRemoveConfirm => 'Remove';
+  String get settingsBooksSwitcherRemoveConfirm => 'ਹਟਾਓ';
 
   @override
   String settingsBooksSwitcherFallbackName(int number) {
-    return 'Books $number';
+    return 'ਕਿਤਾਬਾਂ $number';
   }
 
   @override
-  String get settingsLinkedDevices => 'Linked devices';
+  String get settingsLinkedDevices => 'ਲਿੰਕ ਕੀਤੇ ਯੰਤਰ';
 
   @override
   String get settingsLinkedDevicesCatchUp =>
-      'Your devices catch up when both have Smara open on the same Wi-Fi.';
+      'ਤੁਹਾਡੀਆਂ ਡਿਵਾਈਸਾਂ ਉਦੋਂ ਫੜੀਆਂ ਜਾਂਦੀਆਂ ਹਨ ਜਦੋਂ ਦੋਵੇਂ ਇੱਕੋ Wi-Fi \'ਤੇ Smara ਖੁੱਲ੍ਹਦੇ ਹਨ।';
 
   @override
   String get settingsLinkedDevicesPermissionSentence =>
-      'To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.';
+      'ਤੁਹਾਡੀਆਂ ਕਿਤਾਬਾਂ ਨੂੰ ਸਾਂਝਾ ਕਰਨ ਲਈ, Smara ਨੂੰ ਇਸ Wi-Fi \'ਤੇ ਤੁਹਾਡੀਆਂ ਹੋਰ ਡਿਵਾਈਸਾਂ ਲੱਭਣ ਦੀ ਲੋੜ ਹੈ। ਇੰਟਰਨੈੱਟ \'ਤੇ ਕੁਝ ਵੀ ਨਹੀਂ ਜਾਂਦਾ।';
 
   @override
-  String get settingsLinkedDevicesAddDevice => 'Add a device';
+  String get settingsLinkedDevicesAddDevice => 'ਇੱਕ ਡਿਵਾਈਸ ਜੋੜੋ';
 
   @override
-  String get settingsLinkedDevicesContinue => 'Continue';
+  String get settingsLinkedDevicesContinue => 'ਜਾਰੀ ਰੱਖੋ';
 
   @override
-  String get settingsLinkedDevicesRoleOwner => 'Owner';
+  String get settingsLinkedDevicesRoleOwner => 'ਮਾਲਕ';
 
   @override
-  String get settingsLinkedDevicesRoleMember => 'Member';
+  String get settingsLinkedDevicesRoleMember => 'ਮੈਂਬਰ';
 
   @override
-  String get settingsLinkedDevicesCanAdd => 'May add devices';
+  String get settingsLinkedDevicesCanAdd => 'ਡਿਵਾਈਸਾਂ ਨੂੰ ਜੋੜ ਸਕਦਾ ਹੈ';
 
   @override
-  String get settingsLinkedDevicesErasePending => 'Erase pending';
+  String get settingsLinkedDevicesErasePending => 'ਬਕਾਇਆ ਮਿਟਾਓ';
 
   @override
   String settingsLinkedDevicesErasedOn(String date) {
-    return 'Erased on $date';
+    return '$date ਨੂੰ ਮਿਟਾਇਆ ਗਿਆ';
   }
 
   @override
   String get settingsLinkedDevicesSuggestSecondOwner =>
-      'These books have only one Owner. Consider making another linked device an Owner too.';
+      'ਇਹਨਾਂ ਕਿਤਾਬਾਂ ਦਾ ਸਿਰਫ਼ ਇੱਕ ਹੀ ਮਾਲਕ ਹੈ। ਕਿਸੇ ਹੋਰ ਲਿੰਕ ਕੀਤੀ ਡਿਵਾਈਸ ਨੂੰ ਵੀ ਮਾਲਕ ਬਣਾਉਣ ਬਾਰੇ ਵਿਚਾਰ ਕਰੋ।';
 
   @override
   String get settingsLinkedDevicesJoinSameWifi =>
-      'Both devices must be on the same Wi-Fi. Smara does not join over the internet.';
+      'ਦੋਵੇਂ ਡਿਵਾਈਸਾਂ ਇੱਕੋ Wi-Fi \'ਤੇ ਹੋਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ। Smara ਇੰਟਰਨੈੱਟ \'ਤੇ ਸ਼ਾਮਲ ਨਹੀਂ ਹੁੰਦਾ ਹੈ।';
 
   @override
-  String get settingsLinkedDevicesApproveJoin => 'Approve';
+  String get settingsLinkedDevicesApproveJoin => 'ਮਨਜ਼ੂਰ ਕਰੋ';
 
   @override
-  String get settingsLinkedDevicesRefuseJoin => 'Refuse';
+  String get settingsLinkedDevicesRefuseJoin => 'ਇਨਕਾਰ';
 
   @override
   String settingsLinkedDevicesPendingJoin(String name) {
-    return '$name wants to join these books';
+    return '$name ਇਹਨਾਂ ਕਿਤਾਬਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਣਾ ਚਾਹੁੰਦਾ ਹੈ';
   }
 
   @override
-  String get settingsLinkedDevicesEmpty => 'Only this device is linked so far.';
+  String get settingsLinkedDevicesEmpty => 'ਹੁਣ ਤੱਕ ਸਿਰਫ਼ ਇਹ ਡਿਵਾਈਸ ਲਿੰਕ ਹੈ।';
 
   @override
-  String get settingsLinkedDevicesSyncNow => 'Sync now';
+  String get settingsLinkedDevicesSyncNow => 'ਹੁਣੇ ਸਿੰਕ ਕਰੋ';
 
   @override
-  String get settingsLinkedDevicesSyncNowBusy => 'Catching up…';
+  String get settingsLinkedDevicesSyncNowBusy => 'ਫੜਿਆ ਜਾ ਰਿਹਾ ਹੈ...';
 
   @override
   String membershipNoticeDeviceAdded(String name) {
-    return 'A device was added: $name';
+    return 'ਇੱਕ ਡਿਵਾਈਸ ਜੋੜੀ ਗਈ ਸੀ: $name';
   }
 
   @override
   String membershipNoticeDeviceRemoved(String name) {
-    return 'A device was removed: $name';
+    return 'ਇੱਕ ਡਿਵਾਈਸ ਹਟਾਈ ਗਈ ਸੀ: $name';
   }
 
   @override
   String membershipNoticeErasePending(String name) {
-    return 'Erase pending for $name';
+    return '$name ਲਈ ਲੰਬਿਤ ਮਿਟਾਓ';
   }
 
   @override
   String membershipNoticeErased(String name, String date) {
-    return 'Erased $name on $date';
+    return '$name ਨੂੰ $date ਨੂੰ ਮਿਟਾਇਆ';
   }
 
   @override
   String membershipNoticeSoleOwnerClaimed(String name) {
-    return '$name claimed sole ownership';
+    return '$name ਨੇ ਇਕੱਲੇ ਮਾਲਕੀ ਦਾ ਦਾਅਵਾ ਕੀਤਾ';
   }
 
   @override
   String membershipNoticeSoleOwnerCancelled(String name) {
-    return 'Sole-Owner claim for $name was cancelled';
+    return '$name ਲਈ ਇਕੱਲੇ-ਮਾਲਕ ਦਾ ਦਾਅਵਾ ਰੱਦ ਕਰ ਦਿੱਤਾ ਗਿਆ ਸੀ';
   }
 
   @override
   String membershipNoticeSoleOwnerEffective(String name) {
-    return '$name is now an Owner';
+    return '$name ਹੁਣ ਇੱਕ ਮਾਲਕ ਹੈ';
   }
 
   @override
   String membershipNoticeEntryNotAccepted(String name) {
-    return 'Not accepted: couldn\'t be verified (from $name)';
+    return 'ਸਵੀਕਾਰ ਨਹੀਂ ਕੀਤਾ ਗਿਆ: ਤਸਦੀਕ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ ($name ਤੋਂ)';
   }
 
   @override
   String membershipNoticeOwnerVerificationAlert(String name) {
-    return 'A record from $name could not be verified and was not accepted';
+    return '$name ਤੋਂ ਇੱਕ ਰਿਕਾਰਡ ਦੀ ਪੁਸ਼ਟੀ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕੀ ਅਤੇ ਸਵੀਕਾਰ ਨਹੀਂ ਕੀਤਾ ਗਿਆ';
   }
 
   @override
   String get membershipNoticeCompetingFixCheck =>
-      'Two Fixes for the same entry were resolved — please check';
+      'ਇੱਕੋ ਐਂਟਰੀ ਲਈ ਦੋ ਠੀਕ ਕਰਨ ਹੱਲ ਹੋ ਗਏ — ਕਿਰਪਾ ਕਰਕੇ ਜਾਂਚੋ';
 
   @override
   String get whyWeDontEdit => 'ਅਸੀਂ ਪੁਰਾਣੀਆਂ ਐਂਟਰੀਆਂ ਕਿਉਂ ਸੰਪਾਦਿਤ ਨਹੀਂ ਕਰਦੇ';
@@ -2118,202 +2118,202 @@ class AppLocalizationsPa extends AppLocalizations {
   }
 
   @override
-  String get claimsTitle => 'Claims';
+  String get claimsTitle => 'ਦਾਅਵੇ';
 
   @override
-  String get claimsReviewTitle => 'Review claims';
+  String get claimsReviewTitle => 'ਦਾਅਵਿਆਂ ਦੀ ਸਮੀਖਿਆ ਕਰੋ';
 
   @override
-  String get claimsStatusDraft => 'Draft';
+  String get claimsStatusDraft => 'ਡਰਾਫਟ';
 
   @override
-  String get claimsStatusSubmitted => 'Submitted';
+  String get claimsStatusSubmitted => 'ਪੇਸ਼ ਕੀਤਾ';
 
   @override
-  String get claimsStatusPartlyApproved => 'Partly approved';
+  String get claimsStatusPartlyApproved => 'ਅੰਸ਼ਕ ਤੌਰ \'ਤੇ ਮਨਜ਼ੂਰ ਕੀਤਾ ਗਿਆ';
 
   @override
-  String get claimsStatusApproved => 'Approved';
+  String get claimsStatusApproved => 'ਮਨਜ਼ੂਰ ਕੀਤਾ ਗਿਆ';
 
   @override
-  String get claimsStatusPaid => 'Paid';
+  String get claimsStatusPaid => 'ਭੁਗਤਾਨ ਕੀਤਾ';
 
   @override
-  String get claimsStatusRejected => 'Rejected';
+  String get claimsStatusRejected => 'ਅਸਵੀਕਾਰ ਕੀਤਾ ਗਿਆ';
 
   @override
-  String get claimsApprove => 'Approve';
+  String get claimsApprove => 'ਮਨਜ਼ੂਰ ਕਰੋ';
 
   @override
-  String get claimsApproveDifferent => 'Approve different amount';
+  String get claimsApproveDifferent => 'ਵੱਖਰੀ ਰਕਮ ਨੂੰ ਮਨਜ਼ੂਰੀ ਦਿਓ';
 
   @override
-  String get claimsReject => 'Reject';
+  String get claimsReject => 'ਅਸਵੀਕਾਰ ਕਰੋ';
 
   @override
-  String get claimsReasonRequired => 'A reason is required';
+  String get claimsReasonRequired => 'ਇੱਕ ਕਾਰਨ ਦੀ ਲੋੜ ਹੈ';
 
   @override
-  String get claimsAdvances => 'Advances';
+  String get claimsAdvances => 'ਐਡਵਾਂਸ';
 
   @override
-  String get claimsAddPerson => 'Add a person';
+  String get claimsAddPerson => 'ਇੱਕ ਵਿਅਕਤੀ ਨੂੰ ਸ਼ਾਮਲ ਕਰੋ';
 
   @override
-  String get claimsRoleApprover => 'Approver';
+  String get claimsRoleApprover => 'ਪ੍ਰਵਾਨਗੀ ਦੇਣ ਵਾਲਾ';
 
   @override
-  String get claimsRoleClaimant => 'Claimant';
+  String get claimsRoleClaimant => 'ਦਾਅਵੇਦਾਰ';
 
   @override
   String claimsBalanceCompanyOwesYou(String company) {
-    return '$company owes you';
+    return '$company ਤੁਹਾਡਾ ਦੇਣਦਾਰ ਹੈ';
   }
 
   @override
   String claimsBalanceYouOweCompany(String company) {
-    return 'You owe $company';
+    return 'ਤੁਸੀਂ $company ਦੇਣਦਾਰ ਹੋ';
   }
 
   @override
   String claimsBalanceSettled(String company) {
-    return 'Settled with $company';
+    return '$company ਨਾਲ ਸੈਟਲ';
   }
 
   @override
   String get claimsReceiptRequired =>
-      'A receipt is required for this claim item';
+      'ਇਸ ਦਾਅਵੇ ਵਾਲੀ ਆਈਟਮ ਲਈ ਇੱਕ ਰਸੀਦ ਦੀ ਲੋੜ ਹੈ';
 
   @override
   String get claimsReceiptPdfTooLarge =>
-      'This PDF is larger than 5 MB. Choose a smaller file.';
+      'ਇਹ PDF 5 MB ਤੋਂ ਵੱਡੀ ਹੈ। ਇੱਕ ਛੋਟੀ ਫਾਈਲ ਚੁਣੋ।';
 
   @override
   String claimsSpendingHint(String amount, String unit) {
-    return 'Hint: at most $amount per $unit';
+    return 'ਸੰਕੇਤ: ਵੱਧ ਤੋਂ ਵੱਧ $amount ਪ੍ਰਤੀ $unit';
   }
 
   @override
-  String get claimsNoClaimsYet => 'No claims yet.';
+  String get claimsNoClaimsYet => 'ਅਜੇ ਤੱਕ ਕੋਈ ਦਾਅਵਾ ਨਹੀਂ।';
 
   @override
-  String get claimsNoClaimsToReview => 'No claims to review.';
+  String get claimsNoClaimsToReview => 'ਸਮੀਖਿਆ ਕਰਨ ਲਈ ਕੋਈ ਦਾਅਵੇ ਨਹੀਂ।';
 
   @override
-  String get claimsAdvanceDefault => 'Advance';
+  String get claimsAdvanceDefault => 'ਐਡਵਾਂਸ';
 
   @override
   String claimsItemCount(int count) {
-    return '$count item(s)';
+    return '$count ਆਈਟਮਾਂ';
   }
 
   @override
-  String get claimsRejectReasonTitle => 'Reject reason';
+  String get claimsRejectReasonTitle => 'ਕਾਰਨ ਨੂੰ ਅਸਵੀਕਾਰ ਕਰੋ';
 
   @override
   String get claimsApproveDifferentReasonTitle =>
-      'Approve different amount reason';
+      'ਵੱਖ-ਵੱਖ ਰਕਮ ਦੇ ਕਾਰਨ ਨੂੰ ਮਨਜ਼ੂਰੀ ਦਿਓ';
 
   @override
-  String get claimsPersonNameLabel => 'Person name';
+  String get claimsPersonNameLabel => 'ਵਿਅਕਤੀ ਦਾ ਨਾਮ';
 
   @override
-  String get claimsRemovePerson => 'Remove';
+  String get claimsRemovePerson => 'ਹਟਾਓ';
 
   @override
   String claimsRemovePersonTitle(String name) {
-    return 'Remove $name?';
+    return '$name ਨੂੰ ਹਟਾਉਣਾ ਹੈ?';
   }
 
   @override
   String claimsRemovePersonWarning(String name, int openClaims) {
-    return '$name has $openClaims open Claims and a non-zero owed balance. History and receipts stay in these books.';
+    return '$name ਕੋਲ $openClaims ਖੁੱਲੇ ਦਾਅਵੇ ਅਤੇ ਇੱਕ ਗੈਰ-ਜ਼ੀਰੋ ਬਕਾਇਆ ਬਕਾਇਆ ਹੈ। ਇਤਿਹਾਸ ਅਤੇ ਰਸੀਦਾਂ ਇਨ੍ਹਾਂ ਕਿਤਾਬਾਂ ਵਿੱਚ ਰਹਿੰਦੀਆਂ ਹਨ।';
   }
 
   @override
   String claimsRemovePersonWarningOpenOnly(String name, int openClaims) {
-    return '$name has $openClaims open Claims. History and receipts stay in these books.';
+    return '$name ਕੋਲ $openClaims ਖੁੱਲ੍ਹੇ ਦਾਅਵੇ ਹਨ। ਇਤਿਹਾਸ ਅਤੇ ਰਸੀਦਾਂ ਇਨ੍ਹਾਂ ਕਿਤਾਬਾਂ ਵਿੱਚ ਰਹਿੰਦੀਆਂ ਹਨ।';
   }
 
   @override
   String claimsRemovePersonWarningBalanceOnly(String name) {
-    return '$name has a non-zero owed balance. History and receipts stay in these books.';
+    return '$name ਕੋਲ ਇੱਕ ਗੈਰ-ਜ਼ੀਰੋ ਬਕਾਇਆ ਬਕਾਇਆ ਹੈ। ਇਤਿਹਾਸ ਅਤੇ ਰਸੀਦਾਂ ਇਨ੍ਹਾਂ ਕਿਤਾਬਾਂ ਵਿੱਚ ਰਹਿੰਦੀਆਂ ਹਨ।';
   }
 
   @override
   String claimsRemovePersonWarningClean(String name) {
-    return 'Remove $name? History and receipts stay in these books.';
+    return '$name ਨੂੰ ਹਟਾਉਣਾ ਹੈ? ਇਤਿਹਾਸ ਅਤੇ ਰਸੀਦਾਂ ਇਨ੍ਹਾਂ ਕਿਤਾਬਾਂ ਵਿੱਚ ਰਹਿੰਦੀਆਂ ਹਨ।';
   }
 
   @override
-  String get claimsRemovePersonConfirm => 'Remove';
+  String get claimsRemovePersonConfirm => 'ਹਟਾਓ';
 
   @override
-  String get claimsEditorTitle => 'Edit claim';
+  String get claimsEditorTitle => 'ਦਾਅਵੇ ਦਾ ਸੰਪਾਦਨ ਕਰੋ';
 
   @override
-  String get claimsSubmit => 'Submit';
+  String get claimsSubmit => 'ਜਮ੍ਹਾਂ ਕਰੋ';
 
   @override
-  String get claimsAddItem => 'Add item';
+  String get claimsAddItem => 'ਆਈਟਮ ਸ਼ਾਮਲ ਕਰੋ';
 
   @override
-  String get claimsEditItem => 'Edit item';
+  String get claimsEditItem => 'ਆਈਟਮ ਦਾ ਸੰਪਾਦਨ ਕਰੋ';
 
   @override
-  String get claimsNoItemsYet => 'Add at least one item before submitting.';
+  String get claimsNoItemsYet =>
+      'ਸਪੁਰਦ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਘੱਟੋ-ਘੱਟ ਇੱਕ ਆਈਟਮ ਸ਼ਾਮਲ ਕਰੋ।';
 
   @override
   String get claimsNoAllowlistedCategories =>
-      'No expense categories are allowed for claims yet.';
+      'ਦਾਅਵਿਆਂ ਲਈ ਅਜੇ ਤੱਕ ਕਿਸੇ ਖਰਚੇ ਦੀਆਂ ਸ਼੍ਰੇਣੀਆਂ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ।';
 
   @override
-  String get claimsCategoryLabel => 'Category';
+  String get claimsCategoryLabel => 'ਸ਼੍ਰੇਣੀ';
 
   @override
-  String get claimsExpenseDateLabel => 'Expense date';
+  String get claimsExpenseDateLabel => 'ਖਰਚੇ ਦੀ ਮਿਤੀ';
 
   @override
-  String get claimsPaidAmountLabel => 'Amount paid';
+  String get claimsPaidAmountLabel => 'ਭੁਗਤਾਨ ਕੀਤੀ ਰਕਮ';
 
   @override
-  String get claimsPaidCurrencyLabel => 'Currency paid';
+  String get claimsPaidCurrencyLabel => 'ਮੁਦਰਾ ਦਾ ਭੁਗਤਾਨ ਕੀਤਾ ਗਿਆ';
 
   @override
-  String get claimsRateOptionalLabel => 'Rate (optional)';
+  String get claimsRateOptionalLabel => 'ਦਰ (ਵਿਕਲਪਿਕ)';
 
   @override
   String claimsCompanyAmountLabel(String currency) {
-    return 'Amount in $currency';
+    return '$currency ਵਿੱਚ ਰਕਮ';
   }
 
   @override
-  String get claimsDescriptionLabel => 'Description';
+  String get claimsDescriptionLabel => 'ਵਰਣਨ';
 
   @override
-  String get claimsAttachCamera => 'Take photo';
+  String get claimsAttachCamera => 'ਫੋਟੋ ਲਓ';
 
   @override
-  String get claimsAttachGallery => 'Choose photo';
+  String get claimsAttachGallery => 'ਫੋਟੋ ਚੁਣੋ';
 
   @override
-  String get claimsAttachPdf => 'Choose PDF';
+  String get claimsAttachPdf => 'PDF ਚੁਣੋ';
 
   @override
   String claimsReceiptAttached(String fileName) {
-    return 'Receipt: $fileName';
+    return 'ਰਸੀਦ: $fileName';
   }
 
   @override
-  String get claimsReceiptRequiredHint =>
-      'A receipt is required for this amount.';
+  String get claimsReceiptRequiredHint => 'ਇਸ ਰਕਮ ਲਈ ਇੱਕ ਰਸੀਦ ਦੀ ਲੋੜ ਹੈ।';
 
   @override
   String get claimsReceiptPermissionSentence =>
-      'To attach a receipt photo, Smara needs access to your camera or photo library. Photos stay in these books on your devices.';
+      'ਇੱਕ ਰਸੀਦ ਦੀ ਫੋਟੋ ਨੱਥੀ ਕਰਨ ਲਈ, Smara ਨੂੰ ਤੁਹਾਡੇ ਕੈਮਰੇ ਜਾਂ ਫੋਟੋ ਲਾਇਬ੍ਰੇਰੀ ਤੱਕ ਪਹੁੰਚ ਦੀ ਲੋੜ ਹੈ। ਫੋਟੋਆਂ ਤੁਹਾਡੀਆਂ ਡਿਵਾਈਸਾਂ \'ਤੇ ਇਹਨਾਂ ਕਿਤਾਬਾਂ ਵਿੱਚ ਰਹਿੰਦੀਆਂ ਹਨ।';
 
   @override
   String claimsReviewClaimHeading(String status) {
-    return 'Claim · $status';
+    return 'ਦਾਅਵਾ · $status';
   }
 }
