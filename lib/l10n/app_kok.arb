@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "म्हजे क्लेम मर्यादा",
+  "claimsMyLimits": "म्हजे मर्यादा",
+  "claimsPersonalLimitsHeading": "तुमच्या वैयक्तिक मर्यादा",
+  "claimsCompanyLimitsHeading": "कंपनी मर्यादा",
+  "claimsBalancesHeading": "फारीक करपाच्यो शिल्लकी",
+  "claimsPayBalance": "{amount} फारीक करात",
+  "claimsRecordPayment": "पेमेंट नोंद करात",
   "claimsAboveLimit": "{limit} की सीमा से ऊपर",
   "@claimsAboveLimit": {
     "placeholders": {

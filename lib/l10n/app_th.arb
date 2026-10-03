@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "วงเงินการเบิกของฉัน",
+  "claimsMyLimits": "วงเงินของฉัน",
+  "claimsPersonalLimitsHeading": "วงเงินส่วนบุคคลของคุณ",
+  "claimsCompanyLimitsHeading": "วงเงินบริษัท",
+  "claimsBalancesHeading": "ยอดคงเหลือที่ต้องเคลียร์",
+  "claimsPayBalance": "ชำระ {amount}",
+  "claimsRecordPayment": "บันทึกการชำระเงิน",
   "claimsAboveLimit": "เกินวงเงิน {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

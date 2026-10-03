@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "आंनि क्लेम सिमाफोर",
+  "claimsMyLimits": "आंनि सिमाफोर",
+  "claimsPersonalLimitsHeading": "नोंथांनि गावनि सिमाफोर",
+  "claimsCompanyLimitsHeading": "कम्पानिनि सिमाफोर",
+  "claimsBalancesHeading": "फारिख खालामनांगौ बेलेंसफोर",
+  "claimsPayBalance": "{amount} बिबार",
+  "claimsRecordPayment": "पेमेन्ट दर्ज खालाम",
   "claimsAboveLimit": "{limit} की सीमा से ऊपर",
   "@claimsAboveLimit": {
     "placeholders": {

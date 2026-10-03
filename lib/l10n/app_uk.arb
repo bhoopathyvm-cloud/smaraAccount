@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Мої ліміти заявок",
+  "claimsMyLimits": "Мої ліміти",
+  "claimsPersonalLimitsHeading": "Ваші особисті ліміти",
+  "claimsCompanyLimitsHeading": "Ліміти компанії",
+  "claimsBalancesHeading": "Баланси до розрахунку",
+  "claimsPayBalance": "Оплатити {amount}",
+  "claimsRecordPayment": "Записати оплату",
   "claimsAboveLimit": "Вище ліміту {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

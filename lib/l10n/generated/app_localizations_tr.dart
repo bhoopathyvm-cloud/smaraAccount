@@ -2289,27 +2289,27 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'Masraf limitlerim';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'Limitlerim';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'Kişisel limitleriniz';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'Şirket limitleri';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'Mahsuplaşılacak bakiyeler';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount öde';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'Ödeme kaydet';
 
   @override
   String claimsAboveLimit(String limit) {

@@ -2310,27 +2310,27 @@ class AppLocalizationsRo extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'Limitele mele de decontare';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'Limitele mele';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'Limitele dvs. personale';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'Limite ale companiei';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'Solduri de decontat';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return 'Plătește $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'Înregistrează plata';
 
   @override
   String claimsAboveLimit(String limit) {

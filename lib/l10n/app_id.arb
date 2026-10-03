@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Batas klaim saya",
+  "claimsMyLimits": "Batas saya",
+  "claimsPersonalLimitsHeading": "Batas pribadi Anda",
+  "claimsCompanyLimitsHeading": "Batas perusahaan",
+  "claimsBalancesHeading": "Saldo yang harus dilunasi",
+  "claimsPayBalance": "Bayar {amount}",
+  "claimsRecordPayment": "Catat pembayaran",
   "claimsAboveLimit": "Di atas batas {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

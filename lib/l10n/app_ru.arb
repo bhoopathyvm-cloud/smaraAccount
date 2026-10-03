@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Мои лимиты заявок",
+  "claimsMyLimits": "Мои лимиты",
+  "claimsPersonalLimitsHeading": "Ваши личные лимиты",
+  "claimsCompanyLimitsHeading": "Лимиты компании",
+  "claimsBalancesHeading": "Балансы к расчёту",
+  "claimsPayBalance": "Оплатить {amount}",
+  "claimsRecordPayment": "Записать оплату",
   "claimsAboveLimit": "Выше лимита {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

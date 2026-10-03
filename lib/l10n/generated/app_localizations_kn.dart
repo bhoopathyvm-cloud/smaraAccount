@@ -2293,27 +2293,27 @@ class AppLocalizationsKn extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'ನನ್ನ ಕ್ಲೇಮ್ ಮಿತಿಗಳು';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'ನನ್ನ ಮಿತಿಗಳು';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಮಿತಿಗಳು';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'ಕಂಪನಿ ಮಿತಿಗಳು';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'ಇತ್ಯರ್ಥಗೊಳಿಸಬೇಕಾದ ಬ್ಯಾಲೆನ್ಸ್ಗಳು';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount ಪಾವತಿ';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'ಪಾವತಿ ದಾಖಲಿಸಿ';
 
   @override
   String claimsAboveLimit(String limit) {

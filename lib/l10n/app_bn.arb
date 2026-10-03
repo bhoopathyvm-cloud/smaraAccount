@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "আমার দাবির সীমা",
+  "claimsMyLimits": "আমার সীমা",
+  "claimsPersonalLimitsHeading": "আপনার ব্যক্তিগত সীমা",
+  "claimsCompanyLimitsHeading": "কোম্পানির সীমা",
+  "claimsBalancesHeading": "নিষ্পত্তিযোগ্য ব্যালেন্স",
+  "claimsPayBalance": "{amount} পরিশোধ করুন",
+  "claimsRecordPayment": "পেমেন্ট রেকর্ড করুন",
   "claimsAboveLimit": "{limit} সীমার উপরে",
   "@claimsAboveLimit": {
     "placeholders": {

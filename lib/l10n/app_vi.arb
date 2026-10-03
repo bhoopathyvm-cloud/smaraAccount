@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Hạn mức hoàn ứng của tôi",
+  "claimsMyLimits": "Hạn mức của tôi",
+  "claimsPersonalLimitsHeading": "Hạn mức cá nhân của bạn",
+  "claimsCompanyLimitsHeading": "Hạn mức công ty",
+  "claimsBalancesHeading": "Số dư cần tất toán",
+  "claimsPayBalance": "Thanh toán {amount}",
+  "claimsRecordPayment": "Ghi nhận thanh toán",
   "claimsAboveLimit": "Vượt hạn mức {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

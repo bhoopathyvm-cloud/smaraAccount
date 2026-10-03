@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "我的报销限额",
+  "claimsMyLimits": "我的限额",
+  "claimsPersonalLimitsHeading": "你的个人限额",
+  "claimsCompanyLimitsHeading": "公司限额",
+  "claimsBalancesHeading": "待结清余额",
+  "claimsPayBalance": "支付 {amount}",
+  "claimsRecordPayment": "记录付款",
   "claimsAboveLimit": "超过 {limit} 限额",
   "@claimsAboveLimit": {
     "placeholders": {

@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "मेरा दाबी सीमाहरू",
+  "claimsMyLimits": "मेरा सीमाहरू",
+  "claimsPersonalLimitsHeading": "तपाईंका व्यक्तिगत सीमाहरू",
+  "claimsCompanyLimitsHeading": "कम्पनी सीमाहरू",
+  "claimsBalancesHeading": "फछ्र्यौट गर्नुपर्ने ब्यालेन्स",
+  "claimsPayBalance": "{amount} तिर्नुहोस",
+  "claimsRecordPayment": "भुक्तानी रेकर्ड गर्नुहोस",
   "claimsAboveLimit": "{limit} सीमाभन्दा माथि",
   "@claimsAboveLimit": {
     "placeholders": {

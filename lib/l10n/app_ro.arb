@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Limitele mele de decontare",
+  "claimsMyLimits": "Limitele mele",
+  "claimsPersonalLimitsHeading": "Limitele dvs. personale",
+  "claimsCompanyLimitsHeading": "Limite ale companiei",
+  "claimsBalancesHeading": "Solduri de decontat",
+  "claimsPayBalance": "Plătește {amount}",
+  "claimsRecordPayment": "Înregistrează plata",
   "claimsAboveLimit": "Peste limita de {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

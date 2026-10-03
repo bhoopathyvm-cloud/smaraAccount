@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Meine Anspruchsgrenzen",
+  "claimsMyLimits": "Meine Grenzen",
+  "claimsPersonalLimitsHeading": "Ihre persönlichen Grenzen",
+  "claimsCompanyLimitsHeading": "Unternehmensgrenzen",
+  "claimsBalancesHeading": "Auszugleichende Salden",
+  "claimsPayBalance": "{amount} bezahlen",
+  "claimsRecordPayment": "Zahlung erfassen",
   "claimsAboveLimit": "Über der Grenze von {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

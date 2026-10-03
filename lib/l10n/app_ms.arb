@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Had tuntutan saya",
+  "claimsMyLimits": "Had saya",
+  "claimsPersonalLimitsHeading": "Had peribadi anda",
+  "claimsCompanyLimitsHeading": "Had syarikat",
+  "claimsBalancesHeading": "Baki untuk diselesaikan",
+  "claimsPayBalance": "Bayar {amount}",
+  "claimsRecordPayment": "Rekod bayaran",
   "claimsAboveLimit": "Melebihi had {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

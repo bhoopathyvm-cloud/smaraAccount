@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "내 청구 한도",
+  "claimsMyLimits": "내 한도",
+  "claimsPersonalLimitsHeading": "개인 한도",
+  "claimsCompanyLimitsHeading": "회사 한도",
+  "claimsBalancesHeading": "정산할 잔액",
+  "claimsPayBalance": "{amount} 결제",
+  "claimsRecordPayment": "지급 기록",
   "claimsAboveLimit": "{limit} 한도 초과",
   "@claimsAboveLimit": {
     "placeholders": {

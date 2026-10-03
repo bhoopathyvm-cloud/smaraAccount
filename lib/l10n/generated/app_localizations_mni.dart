@@ -2275,27 +2275,27 @@ class AppLocalizationsMni extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'ꯑꯩꯒꯤ ꯀ꯭ꯂꯦꯝ ꯂꯤꯃꯤꯠ';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'ꯑꯩꯒꯤ ꯂꯤꯃꯤꯠ';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'ꯅꯍꯥꯛꯀꯤ ꯄꯔꯁꯣꯅꯦꯜ ꯂꯤꯃꯤꯠ';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'ꯀꯝꯄꯅꯤ ꯂꯤꯃꯤꯠ';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'ꯁꯦꯇꯜ ꯇꯧꯒꯗꯕ ꯕꯦꯂꯦꯟꯁ';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount ꯄꯤꯔꯨ';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'ꯄꯦꯝꯦꯟꯠ ꯏꯔꯤꯛꯀꯣꯔꯗ ꯊꯝꯂꯨ';
 
   @override
   String claimsAboveLimit(String limit) {

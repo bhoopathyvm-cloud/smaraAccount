@@ -2289,27 +2289,27 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'میری دعوے کی حدیں';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'میری حدیں';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'آپ کی ذاتی حدیں';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'کمپنی کی حدیں';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'تصفیے کے لیے بیلنس';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount ادا کریں';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'ادائیگی ریکارڈ کریں';
 
   @override
   String claimsAboveLimit(String limit) {

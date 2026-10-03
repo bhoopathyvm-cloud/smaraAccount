@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Mis límites de gastos",
+  "claimsMyLimits": "Mis límites",
+  "claimsPersonalLimitsHeading": "Tus límites personales",
+  "claimsCompanyLimitsHeading": "Límites de la empresa",
+  "claimsBalancesHeading": "Saldos por liquidar",
+  "claimsPayBalance": "Pagar {amount}",
+  "claimsRecordPayment": "Registrar pago",
   "claimsAboveLimit": "Por encima del límite de {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Saját igénylési limitek",
+  "claimsMyLimits": "Saját limitek",
+  "claimsPersonalLimitsHeading": "Az Ön személyes limitjei",
+  "claimsCompanyLimitsHeading": "Céges limitek",
+  "claimsBalancesHeading": "Rendezendő egyenlegek",
+  "claimsPayBalance": "{amount} kifizetése",
+  "claimsRecordPayment": "Kifizetés rögzítése",
   "claimsAboveLimit": "A {limit} limit felett",
   "@claimsAboveLimit": {
     "placeholders": {

@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Masraf limitlerim",
+  "claimsMyLimits": "Limitlerim",
+  "claimsPersonalLimitsHeading": "Kişisel limitleriniz",
+  "claimsCompanyLimitsHeading": "Şirket limitleri",
+  "claimsBalancesHeading": "Mahsuplaşılacak bakiyeler",
+  "claimsPayBalance": "{amount} öde",
+  "claimsRecordPayment": "Ödeme kaydet",
   "claimsAboveLimit": "{limit} limitinin üzerinde",
   "@claimsAboveLimit": {
     "placeholders": {

@@ -2206,27 +2206,27 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => '내 청구 한도';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => '내 한도';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => '개인 한도';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => '회사 한도';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => '정산할 잔액';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount 결제';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => '지급 기록';
 
   @override
   String claimsAboveLimit(String limit) {

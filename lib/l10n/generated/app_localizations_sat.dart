@@ -2286,27 +2286,27 @@ class AppLocalizationsSat extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'ᱤᱧᱟᱜ ᱫᱟᱹᱵᱤ ᱥᱤᱢᱟ';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'ᱤᱧᱟᱜ ᱥᱤᱢᱟ';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'ᱟᱢᱟᱜ ᱱᱤᱡᱚᱨ ᱥᱤᱢᱟ';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'ᱠᱚᱢᱯᱟᱱᱤ ᱥᱤᱢᱟ';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ ᱵᱮᱞᱮᱸᱥ';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount ᱵᱷᱚᱨᱚ ᱢᱮ';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'ᱯᱮᱢᱮᱱᱴ ᱚᱞ ᱢᱮ';
 
   @override
   String claimsAboveLimit(String limit) {

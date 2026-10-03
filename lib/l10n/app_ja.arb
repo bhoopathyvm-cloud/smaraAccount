@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "自分の申請限度額",
+  "claimsMyLimits": "自分の限度額",
+  "claimsPersonalLimitsHeading": "個人の限度額",
+  "claimsCompanyLimitsHeading": "会社の限度額",
+  "claimsBalancesHeading": "精算する残高",
+  "claimsPayBalance": "{amount} を支払う",
+  "claimsRecordPayment": "支払いを記録",
   "claimsAboveLimit": "{limit} の限度を超過",
   "@claimsAboveLimit": {
     "placeholders": {

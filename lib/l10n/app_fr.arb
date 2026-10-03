@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Mes plafonds de notes de frais",
+  "claimsMyLimits": "Mes plafonds",
+  "claimsPersonalLimitsHeading": "Vos plafonds personnels",
+  "claimsCompanyLimitsHeading": "Plafonds de l''entreprise",
+  "claimsBalancesHeading": "Soldes à régler",
+  "claimsPayBalance": "Payer {amount}",
+  "claimsRecordPayment": "Enregistrer un paiement",
   "claimsAboveLimit": "Au-dessus du plafond de {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

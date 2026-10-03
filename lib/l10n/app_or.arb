@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "ମୋର ଦାବି ସୀମା",
+  "claimsMyLimits": "ମୋର ସୀମା",
+  "claimsPersonalLimitsHeading": "ଆପଣଙ୍କ ବ୍ୟକ୍ତିଗତ ସୀମା",
+  "claimsCompanyLimitsHeading": "କମ୍ପାନୀ ସୀମା",
+  "claimsBalancesHeading": "ସମାଧାନ କରିବାକୁ ଥିବା ବାକି",
+  "claimsPayBalance": "{amount} ପେମେଣ୍ଟ କରନ୍ତୁ",
+  "claimsRecordPayment": "ପେମେଣ୍ଟ ରେକର୍ଡ କରନ୍ତୁ",
   "claimsAboveLimit": "{limit} की सीमा से ऊपर",
   "@claimsAboveLimit": {
     "placeholders": {

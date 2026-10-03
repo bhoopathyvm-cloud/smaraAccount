@@ -2298,27 +2298,27 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'Hạn mức hoàn ứng của tôi';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'Hạn mức của tôi';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'Hạn mức cá nhân của bạn';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'Hạn mức công ty';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'Số dư cần tất toán';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return 'Thanh toán $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'Ghi nhận thanh toán';
 
   @override
   String claimsAboveLimit(String limit) {

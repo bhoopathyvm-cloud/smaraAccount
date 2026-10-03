@@ -2310,27 +2310,27 @@ class AppLocalizationsTa extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'என் கோரிக்கை வரம்புகள்';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'என் வரம்புகள்';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'உங்கள் தனிப்பட்ட வரம்புகள்';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'நிறுவன வரம்புகள்';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'தீர்க்க வேண்டிய இருப்புகள்';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount செலுத்து';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'பணம் செலுத்தலைப் பதிவு செய்';
 
   @override
   String claimsAboveLimit(String limit) {

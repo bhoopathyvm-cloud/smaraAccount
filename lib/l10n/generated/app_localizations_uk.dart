@@ -2302,27 +2302,27 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'Мої ліміти заявок';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'Мої ліміти';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'Ваші особисті ліміти';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'Ліміти компанії';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'Баланси до розрахунку';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return 'Оплатити $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'Записати оплату';
 
   @override
   String claimsAboveLimit(String limit) {

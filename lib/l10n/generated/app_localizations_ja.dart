@@ -2205,27 +2205,27 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => '自分の申請限度額';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => '自分の限度額';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => '個人の限度額';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => '会社の限度額';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => '精算する残高';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount を支払う';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => '支払いを記録';
 
   @override
   String claimsAboveLimit(String limit) {

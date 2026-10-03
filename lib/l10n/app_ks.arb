@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "میون دعوے کی حدیں",
+  "claimsMyLimits": "میون حدیں",
+  "claimsPersonalLimitsHeading": "تُہن॑ز ذاتی حدیں",
+  "claimsCompanyLimitsHeading": "کمپنی ہن॑ز حدیں",
+  "claimsBalancesHeading": "تصفیہ کرنہٕ واجنہٕ بیلنس",
+  "claimsPayBalance": "{amount} ادا کریو",
+  "claimsRecordPayment": "ادائیگی درج کریو",
   "claimsAboveLimit": "{limit} کی حد سے اوپر",
   "@claimsAboveLimit": {
     "placeholders": {

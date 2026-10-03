@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "منهنجون دعويٰ جون حدون",
+  "claimsMyLimits": "منهنجون حدون",
+  "claimsPersonalLimitsHeading": "توهان جون ذاتي حدون",
+  "claimsCompanyLimitsHeading": "ڪمپني جون حدون",
+  "claimsBalancesHeading": "سيٽل ڪرڻ وارا بيلنس",
+  "claimsPayBalance": "{amount} ادا ڪريو",
+  "claimsRecordPayment": "ادائگي رڪارڊ ڪريو",
   "claimsAboveLimit": "{limit} کی حد سے اوپر",
   "@claimsAboveLimit": {
     "placeholders": {

@@ -2273,27 +2273,27 @@ class AppLocalizationsKs extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'میون دعوے کی حدیں';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'میون حدیں';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'تُہن॑ز ذاتی حدیں';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'کمپنی ہن॑ز حدیں';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'تصفیہ کرنہٕ واجنہٕ بیلنس';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount ادا کریو';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'ادائیگی درج کریو';
 
   @override
   String claimsAboveLimit(String limit) {

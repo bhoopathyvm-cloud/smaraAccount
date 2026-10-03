@@ -2275,27 +2275,27 @@ class AppLocalizationsBrx extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'आंनि क्लेम सिमाफोर';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'आंनि सिमाफोर';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'नोंथांनि गावनि सिमाफोर';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'कम्पानिनि सिमाफोर';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'फारिख खालामनांगौ बेलेंसफोर';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount बिबार';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'पेमेन्ट दर्ज खालाम';
 
   @override
   String claimsAboveLimit(String limit) {

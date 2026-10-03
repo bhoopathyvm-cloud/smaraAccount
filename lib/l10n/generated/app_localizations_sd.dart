@@ -2280,27 +2280,27 @@ class AppLocalizationsSd extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'منهنجون دعويٰ جون حدون';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'منهنجون حدون';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'توهان جون ذاتي حدون';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'ڪمپني جون حدون';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'سيٽل ڪرڻ وارا بيلنس';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount ادا ڪريو';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'ادائگي رڪارڊ ڪريو';
 
   @override
   String claimsAboveLimit(String limit) {

@@ -2286,27 +2286,27 @@ class AppLocalizationsOr extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'ମୋର ଦାବି ସୀମା';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'ମୋର ସୀମା';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'ଆପଣଙ୍କ ବ୍ୟକ୍ତିଗତ ସୀମା';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'କମ୍ପାନୀ ସୀମା';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'ସମାଧାନ କରିବାକୁ ଥିବା ବାକି';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount ପେମେଣ୍ଟ କରନ୍ତୁ';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'ପେମେଣ୍ଟ ରେକର୍ଡ କରନ୍ତୁ';
 
   @override
   String claimsAboveLimit(String limit) {

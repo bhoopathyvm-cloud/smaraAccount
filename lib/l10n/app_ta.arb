@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "என் கோரிக்கை வரம்புகள்",
+  "claimsMyLimits": "என் வரம்புகள்",
+  "claimsPersonalLimitsHeading": "உங்கள் தனிப்பட்ட வரம்புகள்",
+  "claimsCompanyLimitsHeading": "நிறுவன வரம்புகள்",
+  "claimsBalancesHeading": "தீர்க்க வேண்டிய இருப்புகள்",
+  "claimsPayBalance": "{amount} செலுத்து",
+  "claimsRecordPayment": "பணம் செலுத்தலைப் பதிவு செய்",
   "claimsAboveLimit": "{limit} வரம்புக்கு மேல்",
   "@claimsAboveLimit": {
     "placeholders": {

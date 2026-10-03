@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Mijn declaratielimieten",
+  "claimsMyLimits": "Mijn limieten",
+  "claimsPersonalLimitsHeading": "Jouw persoonlijke limieten",
+  "claimsCompanyLimitsHeading": "Bedrijfslimieten",
+  "claimsBalancesHeading": "Te vereffenen saldi",
+  "claimsPayBalance": "Betaal {amount}",
+  "claimsRecordPayment": "Betaling registreren",
   "claimsAboveLimit": "Boven de limiet van {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

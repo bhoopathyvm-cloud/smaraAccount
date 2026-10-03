@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "حدود مطالباتي",
+  "claimsMyLimits": "حدودي",
+  "claimsPersonalLimitsHeading": "حدودك الشخصية",
+  "claimsCompanyLimitsHeading": "حدود الشركة",
+  "claimsBalancesHeading": "أرصدة للتسوية",
+  "claimsPayBalance": "سداد {amount}",
+  "claimsRecordPayment": "تسجيل دفعة",
   "claimsAboveLimit": "فوق حد {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

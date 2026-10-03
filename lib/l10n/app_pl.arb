@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "Moje limity roszczeń",
+  "claimsMyLimits": "Moje limity",
+  "claimsPersonalLimitsHeading": "Twoje osobiste limity",
+  "claimsCompanyLimitsHeading": "Limity firmowe",
+  "claimsBalancesHeading": "Salda do rozliczenia",
+  "claimsPayBalance": "Zapłać {amount}",
+  "claimsRecordPayment": "Zapisz płatność",
   "claimsAboveLimit": "Powyżej limitu {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

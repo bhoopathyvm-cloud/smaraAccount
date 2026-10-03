@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "ನನ್ನ ಕ್ಲೇಮ್ ಮಿತಿಗಳು",
+  "claimsMyLimits": "ನನ್ನ ಮಿತಿಗಳು",
+  "claimsPersonalLimitsHeading": "ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಮಿತಿಗಳು",
+  "claimsCompanyLimitsHeading": "ಕಂಪನಿ ಮಿತಿಗಳು",
+  "claimsBalancesHeading": "ಇತ್ಯರ್ಥಗೊಳಿಸಬೇಕಾದ ಬ್ಯಾಲೆನ್ಸ್ಗಳು",
+  "claimsPayBalance": "{amount} ಪಾವತಿ",
+  "claimsRecordPayment": "ಪಾವತಿ ದಾಖಲಿಸಿ",
   "claimsAboveLimit": "{limit} ಮಿತಿಗಿಂತ ಮೇಲೆ",
   "@claimsAboveLimit": {
     "placeholders": {

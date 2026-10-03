@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "I miei limiti delle note spese",
+  "claimsMyLimits": "I miei limiti",
+  "claimsPersonalLimitsHeading": "I tuoi limiti personali",
+  "claimsCompanyLimitsHeading": "Limiti aziendali",
+  "claimsBalancesHeading": "Saldi da saldare",
+  "claimsPayBalance": "Paga {amount}",
+  "claimsRecordPayment": "Registra pagamento",
   "claimsAboveLimit": "Oltre il limite di {limit}",
   "@claimsAboveLimit": {
     "placeholders": {

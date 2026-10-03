@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "ਮੇਰੀਆਂ ਦਾਅਵਾ ਸੀਮਾਵਾਂ",
+  "claimsMyLimits": "ਮੇਰੀਆਂ ਸੀਮਾਵਾਂ",
+  "claimsPersonalLimitsHeading": "ਤੁਹਾਡੀਆਂ ਨਿੱਜੀ ਸੀਮਾਵਾਂ",
+  "claimsCompanyLimitsHeading": "ਕੰਪਨੀ ਸੀਮਾਵਾਂ",
+  "claimsBalancesHeading": "ਨਿਪਟਾਉਣ ਲਈ ਬਕਾਇਆ",
+  "claimsPayBalance": "{amount} ਭੁਗਤਾਨ ਕਰੋ",
+  "claimsRecordPayment": "ਭੁਗਤਾਨ ਰਿਕਾਰਡ ਕਰੋ",
   "claimsAboveLimit": "{limit} ਸੀਮਾ ਤੋਂ ਉੱਪਰ",
   "@claimsAboveLimit": {
     "placeholders": {

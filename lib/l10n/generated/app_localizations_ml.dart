@@ -2311,27 +2311,27 @@ class AppLocalizationsMl extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'എന്റെ ക്ലെയിം പരിധികൾ';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'എന്റെ പരിധികൾ';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'നിങ്ങളുടെ വ്യക്തിഗത പരിധികൾ';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'കമ്പനി പരിധികൾ';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'തീർപ്പാക്കേണ്ട ബാലൻസുകൾ';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '$amount അടയ്ക്കുക';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'പേയ്മെന്റ് രേഖപ്പെടുത്തുക';
 
   @override
   String claimsAboveLimit(String limit) {

@@ -2273,27 +2273,27 @@ class AppLocalizationsTh extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'วงเงินการเบิกของฉัน';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'วงเงินของฉัน';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'วงเงินส่วนบุคคลของคุณ';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'วงเงินบริษัท';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'ยอดคงเหลือที่ต้องเคลียร์';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return 'ชำระ $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'บันทึกการชำระเงิน';
 
   @override
   String claimsAboveLimit(String limit) {

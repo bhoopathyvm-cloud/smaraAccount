@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "मम दावसीमाः",
+  "claimsMyLimits": "मम सीमाः",
+  "claimsPersonalLimitsHeading": "भवतः वैयक्तिकसीमाः",
+  "claimsCompanyLimitsHeading": "कम्पनीसीमाः",
+  "claimsBalancesHeading": "निपटनीयाः शेषाः",
+  "claimsPayBalance": "{amount} शोधयतु",
+  "claimsRecordPayment": "भुगतानं लिख्यताम्",
   "claimsAboveLimit": "{limit} की सीमा से ऊपर",
   "@claimsAboveLimit": {
     "placeholders": {

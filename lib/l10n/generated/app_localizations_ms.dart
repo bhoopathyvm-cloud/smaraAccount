@@ -2295,27 +2295,27 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'Had tuntutan saya';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'Had saya';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'Had peribadi anda';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'Had syarikat';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'Baki untuk diselesaikan';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return 'Bayar $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'Rekod bayaran';
 
   @override
   String claimsAboveLimit(String limit) {

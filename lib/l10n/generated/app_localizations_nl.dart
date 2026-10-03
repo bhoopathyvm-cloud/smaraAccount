@@ -2306,27 +2306,27 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'Mijn declaratielimieten';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'Mijn limieten';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'Jouw persoonlijke limieten';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'Bedrijfslimieten';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'Te vereffenen saldi';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return 'Betaal $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'Betaling registreren';
 
   @override
   String claimsAboveLimit(String limit) {

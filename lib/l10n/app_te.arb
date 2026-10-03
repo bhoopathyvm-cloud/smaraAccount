@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "నా క్లెయిమ్ పరిమితులు",
+  "claimsMyLimits": "నా పరిమితులు",
+  "claimsPersonalLimitsHeading": "మీ వ్యక్తిగత పరిమితులు",
+  "claimsCompanyLimitsHeading": "కంపెనీ పరిమితులు",
+  "claimsBalancesHeading": "సెటిల్ చేయాల్సిన నిల్వలు",
+  "claimsPayBalance": "{amount} చెల్లించు",
+  "claimsRecordPayment": "చెల్లింపు నమోదు చేయి",
   "claimsAboveLimit": "{limit} పరిమితి కంటే ఎక్కువ",
   "@claimsAboveLimit": {
     "placeholders": {

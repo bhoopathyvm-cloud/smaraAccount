@@ -2272,27 +2272,27 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'حدود مطالباتي';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'حدودي';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'حدودك الشخصية';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'حدود الشركة';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'أرصدة للتسوية';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return 'سداد $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'تسجيل دفعة';
 
   @override
   String claimsAboveLimit(String limit) {

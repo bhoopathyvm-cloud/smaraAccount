@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "মোৰ দাবীৰ সীমা",
+  "claimsMyLimits": "মোৰ সীমা",
+  "claimsPersonalLimitsHeading": "আপোনাৰ ব্যক্তিগত সীমা",
+  "claimsCompanyLimitsHeading": "কোম্পানীৰ সীমা",
+  "claimsBalancesHeading": "নিষ্পত্তি কৰিবলগীয়া বেলেঞ্চ",
+  "claimsPayBalance": "{amount} পৰিশোধ কৰক",
+  "claimsRecordPayment": "পৰিশোধ লিপিবদ্ধ কৰক",
   "claimsAboveLimit": "{limit} সীমার উপরে",
   "@claimsAboveLimit": {
     "placeholders": {

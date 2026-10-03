@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "ᱤᱧᱟᱜ ᱫᱟᱹᱵᱤ ᱥᱤᱢᱟ",
+  "claimsMyLimits": "ᱤᱧᱟᱜ ᱥᱤᱢᱟ",
+  "claimsPersonalLimitsHeading": "ᱟᱢᱟᱜ ᱱᱤᱡᱚᱨ ᱥᱤᱢᱟ",
+  "claimsCompanyLimitsHeading": "ᱠᱚᱢᱯᱟᱱᱤ ᱥᱤᱢᱟ",
+  "claimsBalancesHeading": "ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ ᱵᱮᱞᱮᱸᱥ",
+  "claimsPayBalance": "{amount} ᱵᱷᱚᱨᱚ ᱢᱮ",
+  "claimsRecordPayment": "ᱯᱮᱢᱮᱱᱴ ᱚᱞ ᱢᱮ",
   "claimsAboveLimit": "{limit} की सीमा से ऊपर",
   "@claimsAboveLimit": {
     "placeholders": {

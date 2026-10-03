@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "میری دعوے کی حدیں",
+  "claimsMyLimits": "میری حدیں",
+  "claimsPersonalLimitsHeading": "آپ کی ذاتی حدیں",
+  "claimsCompanyLimitsHeading": "کمپنی کی حدیں",
+  "claimsBalancesHeading": "تصفیے کے لیے بیلنس",
+  "claimsPayBalance": "{amount} ادا کریں",
+  "claimsRecordPayment": "ادائیگی ریکارڈ کریں",
   "claimsAboveLimit": "{limit} کی حد سے اوپر",
   "@claimsAboveLimit": {
     "placeholders": {

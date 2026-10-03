@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "મારી દાવાની મર્યાદાઓ",
+  "claimsMyLimits": "મારી મર્યાદાઓ",
+  "claimsPersonalLimitsHeading": "તમારી વ્યક્તિગત મર્યાદાઓ",
+  "claimsCompanyLimitsHeading": "કંપનીની મર્યાદાઓ",
+  "claimsBalancesHeading": "પતાવટ કરવાના બેલેન્સ",
+  "claimsPayBalance": "{amount} ચૂકવો",
+  "claimsRecordPayment": "ચુકવણી નોંધો",
   "claimsAboveLimit": "{limit} મર્યાદાથી વધુ",
   "@claimsAboveLimit": {
     "placeholders": {

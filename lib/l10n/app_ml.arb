@@ -1304,6 +1304,13 @@
       }
     }
   },
+  "claimsMyLimitsTitle": "എന്റെ ക്ലെയിം പരിധികൾ",
+  "claimsMyLimits": "എന്റെ പരിധികൾ",
+  "claimsPersonalLimitsHeading": "നിങ്ങളുടെ വ്യക്തിഗത പരിധികൾ",
+  "claimsCompanyLimitsHeading": "കമ്പനി പരിധികൾ",
+  "claimsBalancesHeading": "തീർപ്പാക്കേണ്ട ബാലൻസുകൾ",
+  "claimsPayBalance": "{amount} അടയ്ക്കുക",
+  "claimsRecordPayment": "പേയ്മെന്റ് രേഖപ്പെടുത്തുക",
   "claimsAboveLimit": "{limit} പരിധിക്ക് മുകളിൽ",
   "@claimsAboveLimit": {
     "placeholders": {

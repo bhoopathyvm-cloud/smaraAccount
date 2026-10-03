@@ -2171,27 +2171,27 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => '我的报销限额';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => '我的限额';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => '你的个人限额';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => '公司限额';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => '待结清余额';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return '支付 $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => '记录付款';
 
   @override
   String claimsAboveLimit(String limit) {

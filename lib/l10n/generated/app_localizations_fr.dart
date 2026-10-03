@@ -2326,27 +2326,27 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get claimsMyLimitsTitle => 'My claim limits';
+  String get claimsMyLimitsTitle => 'Mes plafonds de notes de frais';
 
   @override
-  String get claimsMyLimits => 'My limits';
+  String get claimsMyLimits => 'Mes plafonds';
 
   @override
-  String get claimsPersonalLimitsHeading => 'Your personal limits';
+  String get claimsPersonalLimitsHeading => 'Vos plafonds personnels';
 
   @override
-  String get claimsCompanyLimitsHeading => 'Company limits';
+  String get claimsCompanyLimitsHeading => 'Plafonds de l\'entreprise';
 
   @override
-  String get claimsBalancesHeading => 'Balances to settle';
+  String get claimsBalancesHeading => 'Soldes à régler';
 
   @override
   String claimsPayBalance(String amount) {
-    return 'Pay $amount';
+    return 'Payer $amount';
   }
 
   @override
-  String get claimsRecordPayment => 'Record payment';
+  String get claimsRecordPayment => 'Enregistrer un paiement';
 
   @override
   String claimsAboveLimit(String limit) {
