@@ -11,6 +11,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smara_accounting/ui/features/category_management/views/category_management_view.dart';
 import 'package:smara_accounting/ui/features/settings/views/settings_view.dart';
 import 'package:smara_accounting/data/books_set/books_set_paths.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
@@ -3546,6 +3547,81 @@ void main() {
         await tester.pump(const Duration(seconds: 1));
       },
       timeout: const Timeout(Duration(minutes: 3)),
+    );
+
+    testWidgets(
+      'double-tapping Continue on the currency step seeds the starter books once',
+      (tester) async {
+        addTearDown(() => resetToFreshDevice(tester));
+
+        await completeOnboardingWithGuidedEntry(
+          tester,
+          amountText: '10',
+          categoryName: salaryCategory,
+          doubleTapCurrencyContinue: true,
+        );
+
+        // Categories: every row title is unique. The list is sorted, so a
+        // duplicated seed shows up as adjacent repeats; read every row
+        // while scrolling so a short phone screen can't hide one.
+        await tapReliably(
+          tester,
+          () => shellNavIcon(TablerIcons.tag),
+          () => find.byType(CategoryManagementView).evaluate().isNotEmpty,
+        );
+        await tester.pump(const Duration(milliseconds: 500));
+        final seen = <String>[];
+        void collectTitles() {
+          for (final tile
+              in find
+                  .descendant(
+                    of: find.byType(CategoryManagementView),
+                    matching: find.byType(ListTile),
+                  )
+                  .evaluate()) {
+            final title = (tile.widget as ListTile).title;
+            if (title is Text && title.data != null) seen.add(title.data!);
+          }
+        }
+
+        collectTitles();
+        for (var i = 0; i < 8; i++) {
+          await tester.dragFrom(
+            tester.getCenter(find.byType(CategoryManagementView)),
+            const Offset(0, -250),
+          );
+          await tester.pump(const Duration(milliseconds: 250));
+          collectTitles();
+        }
+        final titles = seen.toSet();
+        expect(titles, isNotEmpty);
+        // A title seen on several scroll passes is the same row; a real
+        // duplicate is two rows with that title in one pass.
+        for (final title in titles) {
+          final rows = find.descendant(
+            of: find.byType(CategoryManagementView),
+            matching: find.widgetWithText(ListTile, title),
+          );
+          expect(
+            rows.evaluate().length,
+            lessThanOrEqualTo(1),
+            reason: 'category "$title" was seeded more than once',
+          );
+        }
+
+        // Accounts: the starter cash account exists once.
+        await tapReliably(
+          tester,
+          () => shellNavIcon(TablerIcons.wallet),
+          () => find.text(l10n.systemAccountCashBank).evaluate().isNotEmpty,
+        );
+        expect(
+          find.widgetWithText(ListTile, l10n.systemAccountCashBank),
+          findsOneWidget,
+        );
+        await tester.pump(const Duration(seconds: 1));
+      },
+      timeout: const Timeout(Duration(minutes: 4)),
     );
 
     testWidgets(
