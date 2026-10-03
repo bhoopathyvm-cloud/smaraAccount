@@ -64,9 +64,10 @@ class IdentityRepository {
   }
 
   /// The active (non-superseded, non-continued) signing identity that
-  /// matches this device's stored private key, or the newest active
-  /// identity when no key is stored yet. Peer linked identities stay
-  /// active but are not returned here.
+  /// matches this device's stored private key, or — when no key is stored
+  /// yet — the identity aligned with the local write tip (see
+  /// [LedgerChainStore.currentSigningIdentity]). Peer linked identities
+  /// stay active but are not returned here.
   Future<SigningIdentity?> currentIdentity() async {
     final stored = await _signingKeyService.loadStoredKeyMaterial();
     return _chain.currentSigningIdentity(matchingPublicKey: stored?.publicKey);
