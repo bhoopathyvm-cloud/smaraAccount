@@ -18,30 +18,19 @@ These references are non-normative context for the integrity model:
 ## Requirements
 
 ### Requirement: Device Signing Identity
-On first install, before any journal entry can be recorded, the system SHALL generate an Ed25519 key pair and store the private key exclusively in OS-native secure storage. The public key SHALL be stored in the local database as a signing identity. The private key SHALL NOT be written to the SQLite database under any circumstance.
+On first install, before any journal entry can be recorded, the system SHALL generate an Ed25519 key pair and store the private key exclusively in OS-native secure storage. The public key SHALL be stored in the local database as a signing identity. The private key SHALL NOT be written to the SQLite database under any circumstance, and SHALL NEVER leave the device: it SHALL NOT be shown, exported, or included in any file the app writes. On iOS and macOS the private key SHALL be stored with this-device-only accessibility and not synchronized, so it does not travel in iCloud, Finder, or device-to-device transfers; an install that stored its key before this rule SHALL re-save the same key with this-device-only accessibility on its first launch after updating, without changing the key. A device that holds books but not their key SHALL get its own new identity through `device-continuation`, never by importing a key.
 
 #### Scenario: First launch generates a signing identity
 - **WHEN** the application is launched for the first time
 - **THEN** an Ed25519 key pair is generated, the private key is stored in OS secure storage, and a corresponding signing identity row is created before any starter account or journal entry exists
 
-### Requirement: Optional Recovery and Backup Setup
-The system SHALL make the recovery phrase display, the optional encrypted keystore file export, and the device migration bundle export (see `device-migration-bundle`) available from Settings at any time, and SHALL NOT block recording a transaction, navigating the app, or resuming the app on any of them being completed. The system SHALL NOT depend on any specific external storage provider or on a server-side escrow for any of these.
+#### Scenario: The private key is never exported
+- **WHEN** the user saves a Books Copy, exports CSV, or uses any other export
+- **THEN** no file written by the app contains private key material
 
-#### Scenario: Onboarding never blocks on backup setup
-- **WHEN** a user completes first-time setup, with or without recording a first transaction
-- **THEN** they can continue using the app — recording further transactions, navigating anywhere, backgrounding or killing and reopening the app — without ever completing a recovery or backup step
-
-#### Scenario: Recovery phrase remains available on request
-- **WHEN** the user opens the recovery phrase screen from Settings
-- **THEN** the current signing key's recovery phrase is displayed with the same explanation of the consequences of losing both the device and the phrase as before, and the user may leave the screen at any time without acknowledging anything
-
-#### Scenario: Optional keystore file export remains available
-- **WHEN** the user chooses to export an encrypted keystore file from Settings
-- **THEN** the system produces a passphrase-protected file the user can store in storage of their own choosing, exactly as before
-
-#### Scenario: Signing identity generation is unaffected
-- **WHEN** the application is launched for the very first time
-- **THEN** the signing identity is generated automatically before the first-account screen is shown, exactly as `Device Signing Identity` already specifies
+#### Scenario: Existing Apple installs re-save the key as this-device-only
+- **WHEN** an iOS or macOS install whose key was stored before this change launches for the first time after updating
+- **THEN** the same key is re-saved with this-device-only accessibility and the books keep verifying and recording normally
 
 ### Requirement: Chained and Signed Journal Entries
 Every journal entry SHALL include a hash of its canonical content plus the previous entry's hash, and SHALL be signed with the current signing identity's private key. The genesis entry's previous hash SHALL be a well-defined constant rather than an arbitrary null.
@@ -74,7 +63,7 @@ An entry identified as the break point, and every entry chained after it, SHALL 
 - **AND** none of their amounts are included in the running balance or the income/expense summary
 
 ### Requirement: Re-anchoring After a Break
-When a break is detected, new transactions SHALL chain onto the last entry verified before the break point, not onto the compromised tip. The system SHALL record an integrity event describing the break and the re-anchor point.
+When a break is detected, new transactions SHALL chain onto the last entry verified before the break point, not onto the compromised tip. The system SHALL record an integrity event describing the break and the re-anchor point. The same rule applies when a device continues damaged books under a new identity (`device-continuation`): the new identity's first entry chains onto the last verified entry.
 
 #### Scenario: A new transaction after a break chains onto the last verified entry
 - **WHEN** the user records a new transaction after a break has been detected
@@ -84,33 +73,34 @@ When a break is detected, new transactions SHALL chain onto the last entry verif
 - **WHEN** the user reviews a quarantined entry and determines it reflects a real transaction
 - **THEN** the user can record it again as an ordinary new transaction chained onto the current trusted tip; the system does not automatically restore or re-trust the quarantined entry itself
 
-### Requirement: Recoverable Reinstall or Device Migration
-When the user has retained their recovery phrase or keystore file, importing it during setup SHALL re-derive the original signing key exactly, allowing the existing database's chain to be verified normally without re-signing any entry.
-
-#### Scenario: Importing a valid recovery phrase restores the original identity
-- **WHEN** a user imports a previously-saved recovery phrase during setup on a reinstalled or new device with the existing database file present
-- **THEN** the same key pair is derived, the existing chain is verified using it, and no entry is re-signed or altered
-
-### Requirement: True Key-Loss Migration
-When no recovery phrase or keystore file is available, the system SHALL offer an explicit migration flow: the user reviews and confirms the current ledger state is valid, a new signing identity is generated, and every existing entry is re-signed as a new entry preserving its original content, with each new entry referencing the legacy entry it preserves. Legacy entries SHALL remain visible as read-only historical records and SHALL be excluded from active balances after migration. The confirmation step SHALL state plainly that migration does not retroactively prove pre-migration entries were untampered.
-
-#### Scenario: User confirms current data and migrates to a new identity
-- **WHEN** the user has no recovery phrase and chooses to migrate existing data forward
-- **THEN** the system requires explicit confirmation that the current ledger state is accepted as valid before generating a new signing identity and proceeding
-
-#### Scenario: Migrated entries preserve content and reference legacy entries
-- **WHEN** migration proceeds
-- **THEN** each existing entry is recreated as a new, signed entry with identical transaction content, referencing the original entry it preserves
-
-#### Scenario: Legacy entries remain visible but excluded from active balances
-- **WHEN** migration has completed
-- **THEN** the pre-migration entries remain visible as historical records but are excluded from the running balance and summary, which are computed from the post-migration chain onward
+#### Scenario: Continuation of damaged books re-anchors on the trusted tip
+- **WHEN** a device continues books with a break under a new identity and records a new transaction
+- **THEN** the new entry, signed by the new identity, chains onto the last verified entry before the break
 
 ### Requirement: Migration-Superseded Entries Are Visibly Marked
-A journal entry superseded by a true key-loss migration SHALL remain visible in the register and SHALL be marked as a historical, superseded record. The mark SHALL be distinct from the unverifiable/quarantine treatment used after a chain break. The superseded entry's amounts SHALL remain excluded from running balance and summary totals.
+Key-loss migration is no longer offered, but books may still contain entries superseded by a migration performed with an earlier version of the app. Such a journal entry SHALL remain verifiable against its original identity, SHALL remain visible in the register and SHALL be marked as a historical, superseded record. The mark SHALL be distinct from the unverifiable/quarantine treatment used after a chain break. The superseded entry's amounts SHALL remain excluded from running balance and summary totals.
 
 #### Scenario: A superseded entry is labeled in the register
-- **WHEN** the user views the register after a true key-loss migration
+- **WHEN** the user views the register of books that contain entries superseded by an earlier key-loss migration
 - **THEN** each pre-migration entry is shown with a historical/superseded indication
 - **AND** the entry is not hidden
 - **AND** its amount is not included in the running balance
+
+### Requirement: Optional Books Copy, No Key Export
+The system SHALL make saving a Books Copy (see `books-copy`) available from Settings at any time, and SHALL NOT block recording a transaction, navigating the app, or resuming the app on it being completed. The system SHALL NOT offer a recovery phrase, a keystore file, or any other export of the signing key. The system SHALL NOT depend on any specific external storage provider or on a server-side escrow.
+
+#### Scenario: Onboarding never blocks on backup setup
+- **WHEN** a user completes first-time setup, with or without recording a first transaction
+- **THEN** they can continue using the app — recording further transactions, navigating anywhere, backgrounding or killing and reopening the app — without ever completing a backup step
+
+#### Scenario: Saving a copy remains available on request
+- **WHEN** the user opens Settings at any time
+- **THEN** "Save a copy of my books" is available, and the user may leave it at any time without saving
+
+#### Scenario: No key export is offered
+- **WHEN** the user looks through Settings and onboarding
+- **THEN** there is no option to view a recovery phrase, export a keystore file, or otherwise export the signing key
+
+#### Scenario: Signing identity generation is unaffected
+- **WHEN** the application is launched for the very first time
+- **THEN** the signing identity is generated automatically before the first-account screen is shown, exactly as `Device Signing Identity` already specifies

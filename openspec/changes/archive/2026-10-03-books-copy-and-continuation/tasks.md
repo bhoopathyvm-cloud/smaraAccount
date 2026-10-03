@@ -70,16 +70,19 @@
   <!-- 2026-10-01 on macOS: `run_localized_acceptance_tests.sh -d macos books_copy` passed 8/9 locales; ja failed only after macOS reported 'Failed to foreground app' and passed 5/5 on rerun. `run_acceptance_tests.sh -d macos -l hi`: 45 passed, 1 skipped (manual linked_devices_physical); `-l ar`: 45 passed, 1 skipped. The same suites on the Android tablet found keyboard-overflow bugs in seven dialogs, fixed in this PR (see 8.11a). -->
 - [x] 8.11a Android tablet, full suite in hi and ar: re-run `tool/run_acceptance_tests.sh -d RZGL42CPNGP -l hi` and `-l ar` after the dialog scroll fix and record the results (before the fix: 41-42 passed, 3-4 failed on RenderFlex overflows in Edit group, category and statement-import dialogs)
   <!-- 2026-10-01 on the Android tablet (SM X230, Android 16), after the dialog scroll fix and the LockView finder: `-l hi` 45 passed, 1 skipped (manual linked_devices_physical); `-l ar` 45 passed, 1 skipped. -->
-- [ ] 8.12 Device runs for the keychain/Keystore change: on an iOS device or simulator and on Android, install the previous release, record entries, update to this build, and confirm the key is re-saved and books keep verifying; then reset keychain only and confirm Continuation; record results in this task
+- [x] 8.12 Device runs for the keychain/Keystore change: on an iOS device or simulator and on Android, install the previous release, record entries, update to this build, and confirm the key is re-saved and books keep verifying; then reset keychain only and confirm Continuation; record results in this task
   <!-- 2026-10-02: iOS — iPhone SE (2nd gen, iOS 17.6.1), release builds. Installed v1.0.0+3, set up books and recorded 2 entries, then updated to this build in place (data kept). Result: all entries kept, but the original key was NOT re-saved: the app showed "Continue my books on this phone" and, on tap, continued the books under a new identity (identityContinued event; `keyAccessibilityMigrated` set to true). Cause: flutter_secure_storage_darwin 0.4.1 puts kSecAttrAccessible in the lookup, so a read with the new `unlocked_this_device` options does not match the item v1.0.0+3 wrote with the default (`unlocked`); the re-save sees "no key", marks itself done, and the app takes the Continuation path. The old key stays orphaned in the keychain. Decision (user, 2026-10-02): accepted as-is — one Continuation prompt per books set on update is fine as long as no entries are lost. The keychain-only reset → Continuation path was effectively exercised by the same run. Still open: the Android run. -->
+  <!-- 2026-10-03: Android — Samsung SM X230 (Android 16), debug builds of v1.0.0+3 and main 2c430c9 (release builds need the upload keystore; Keystore behaviour is the same). Set up books, recorded Received 500 Salary and Spent 42 Groceries (458.00 USD), updated in place: opened straight to Home, same single signing identity, 2 entries, no Continuation, books moved to files/books/<id>/. Then cleared only the app's secure storage (FlutterSecureStorage.xml) and relaunched: "Continue my books on this phone" appeared; continuing kept 458.00 USD and both entries, with an identityContinued event and a second identity. iOS result above (Continuation prompt instead of a re-save) was accepted by the user on 2026-10-02. -->
 
 ## 9. CI
 
 - [x] 9.1 `flutter-ci.yml` runs the new and updated unit/widget tests (`flutter test`); verify the PR's CI run is green
-- [ ] 9.2 `acceptance-suite-nightly.yml` runs the renamed/new acceptance groups on Linux for its locale matrix; verify with a manual `workflow_dispatch` run that passes
+- [x] 9.2 `acceptance-suite-nightly.yml` runs the renamed/new acceptance groups on Linux for its locale matrix; verify with a manual `workflow_dispatch` run that passes
+  <!-- 2026-10-03: workflow_dispatch on main (run 37066437965) succeeded, all 43 locale jobs green. -->
 - [x] 9.3 `localized-smoke.yml` covers the new strings via `curated_locale_smoke_test.dart` and `acceptance_locale_fixtures_test.dart`; verify the PR's run is green
   <!-- 2026-10-01: Localized Smoke workflow_dispatch on the #216 branch (run 36896024181) completed successfully. -->
-- [ ] 9.4 `linux-desktop.yml` still builds with the removed dependency and new code; verify the PR's run is green
+- [x] 9.4 `linux-desktop.yml` still builds with the removed dependency and new code; verify the PR's run is green
+  <!-- 2026-10-03: workflow_dispatch on main (run 37066440414) succeeded. -->
 
 ## 10. Documentation
 
