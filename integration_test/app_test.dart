@@ -8,6 +8,9 @@ import 'package:integration_test/integration_test.dart';
 import 'package:provider/provider.dart';
 import 'package:tabler_icons_plus/tabler_icons_plus.dart';
 import 'package:smara_accounting/data/database/app_database.dart';
+import 'package:smara_accounting/l10n/generated/app_localizations.dart';
+import 'package:smara_accounting/ui/features/onboarding/views/currency_selection_view.dart';
+import 'package:smara_accounting/ui/features/onboarding/view_models/first_identity_setup_view_model.dart';
 import 'package:smara_accounting/data/database/tables/account_groups_table.dart';
 import 'package:smara_accounting/data/database/tables/accounts_table.dart';
 import 'package:smara_accounting/domain/time/iso_date.dart';
@@ -157,6 +160,70 @@ void main() {
   });
 
   Widget buildApp() => buildAppFor(repository, db, signingKeyService);
+
+  testWidgets(
+    'double-tapping Continue on the currency step seeds the starter books once',
+    (tester) async {
+      // Fresh books, separate from the shared fixture above: this exercises
+      // the real CurrencySelectionView -> FirstIdentitySetupViewModel ->
+      // IdentityRepository path on the device. Two taps with no frame in
+      // between once seeded every starter category twice on a real tablet.
+      final freshDb = AppDatabase.forTesting(NativeDatabase.memory());
+      addTearDown(freshDb.close);
+      final freshKeys = SigningKeyService(
+        secureStorage: InMemorySecureKeyStorage(),
+      );
+      final freshLedger = LedgerRepository(
+        database: freshDb,
+        signingKeyService: freshKeys,
+      );
+      final viewModel = FirstIdentitySetupViewModel(
+        identityRepository: IdentityRepository(
+          database: freshDb,
+          accountRepository: AccountRepository(
+            database: freshDb,
+            ledgerRepository: freshLedger,
+          ),
+          signingKeyService: freshKeys,
+        ),
+        chainVerifier: LedgerChainVerifier(
+          database: freshDb,
+          signingKeyService: freshKeys,
+        ),
+      );
+      var finished = 0;
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: const Locale('en'),
+          home: CurrencySelectionView(
+            viewModel: viewModel,
+            onFinished: () => finished++,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final continueButton = find.widgetWithText(ElevatedButton, 'Continue');
+      await tester.tap(continueButton);
+      await tester.tap(continueButton, warnIfMissed: false);
+      for (var i = 0; i < 50 && finished == 0; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+
+      expect(finished, greaterThanOrEqualTo(1));
+      expect(
+        await freshDb.select(freshDb.signingIdentities).get(),
+        hasLength(1),
+      );
+      final names = [
+        for (final account in await freshDb.select(freshDb.accounts).get())
+          account.name,
+      ];
+      expect(names.toSet().length, names.length, reason: '$names');
+    },
+  );
 
   testWidgets('record money in updates the register and running balance', (
     tester,

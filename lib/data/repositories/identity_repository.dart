@@ -104,11 +104,22 @@ class IdentityRepository {
   }) async {
     late IdentityRow row;
     await _db.transaction(() async {
+      // Idempotent for the same key: a repeated confirm (e.g. a double tap
+      // on onboarding's last step) must not add a second identity or a
+      // second set of starter accounts and categories.
+      final publicKey = Uint8List.fromList(generated.keyMaterial.publicKey);
+      final existing = await (_db.select(
+        _db.signingIdentities,
+      )..where((t) => t.publicKey.equals(publicKey))).getSingleOrNull();
+      if (existing != null) {
+        row = existing;
+        return;
+      }
       row = await _db
           .into(_db.signingIdentities)
           .insertReturning(
             SigningIdentitiesCompanion.insert(
-              publicKey: Uint8List.fromList(generated.keyMaterial.publicKey),
+              publicKey: publicKey,
               acknowledgedAt: Value(DateTime.now()),
             ),
           );

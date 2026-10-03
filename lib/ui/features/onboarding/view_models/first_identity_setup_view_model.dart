@@ -42,8 +42,22 @@ class FirstIdentitySetupViewModel extends ChangeNotifier
     notifyListeners();
   }
 
+  Future<bool>? _commitInFlight;
+  bool _committed = false;
+
   /// Commits the signing identity with starter account groups in [currency].
-  Future<bool> commitIdentity(String currency) async {
+  ///
+  /// Safe against double taps: a call made while a commit is running gets
+  /// that commit's result, and a call after a successful commit does
+  /// nothing, so the starter books are never seeded twice.
+  Future<bool> commitIdentity(String currency) {
+    if (_committed) return Future.value(true);
+    return _commitInFlight ??= _commit(
+      currency,
+    ).whenComplete(() => _commitInFlight = null);
+  }
+
+  Future<bool> _commit(String currency) async {
     await ensureGenerated();
     final generated = _generated;
     if (generated == null) return false;
@@ -58,6 +72,7 @@ class FirstIdentitySetupViewModel extends ChangeNotifier
     );
     await _chainVerifier.verifyChain();
 
+    _committed = true;
     _isSubmitting = false;
     notifyListeners();
     return true;

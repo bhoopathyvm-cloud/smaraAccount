@@ -496,6 +496,7 @@ Future<void> completeOnboardingWithGuidedEntry(
   required String categoryName,
   bool skipFirstWeekSetup = true,
   Future<void> Function(String screen)? onScreen,
+  bool doubleTapCurrencyContinue = false,
 }) async {
   final l10n = l10nFor(kAcceptanceLocaleTag);
 
@@ -593,14 +594,26 @@ Future<void> completeOnboardingWithGuidedEntry(
     },
   );
 
-  await tapReliably(
-    tester,
-    () => find.descendant(
-      of: find.byType(CurrencySelectionView),
-      matching: find.text(l10n.actionContinue),
-    ),
-    () => find.byType(FirstAccountNameView).evaluate().isNotEmpty,
+  final currencyContinue = find.descendant(
+    of: find.byType(CurrencySelectionView),
+    matching: find.text(l10n.actionContinue),
   );
+  if (doubleTapCurrencyContinue) {
+    // Two taps with no frame in between, like an impatient double tap or
+    // two people tapping one shared device: the starter books must still
+    // be seeded once (a real tablet run seeded every category twice).
+    await tester.ensureVisible(currencyContinue);
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.tap(currencyContinue, warnIfMissed: false);
+    await tester.tap(currencyContinue, warnIfMissed: false);
+    await pumpUntilFound(tester, find.byType(FirstAccountNameView));
+  } else {
+    await tapReliably(
+      tester,
+      () => currencyContinue,
+      () => find.byType(FirstAccountNameView).evaluate().isNotEmpty,
+    );
+  }
 
   await tapReliably(
     tester,
