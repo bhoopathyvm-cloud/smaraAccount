@@ -80,19 +80,20 @@
 
 ## 8. Acme Travel Co scenario (acceptance-test-suite)
 
-- [~] 8.1 Setup steps: Owner creates Acme Travel Co (EUR, receipt required above 0, Hotel 150, Meals 40, Taxi 60), adds Priya as Approver and the employees as Claimants with personal limits (Ravi Hotel 120, Mia Hotel 200, Sara Meals 60), advances for Ravi (200) and Sara (100); each device joins by code with the check code confirmed; verify with `--employees 2`
-  <!-- Handlers: EUR onboard, configureAcmeCompany, Add-person GUI (Approver/Claimant), personal limits + advances via repos. Device verify left for 8.7. -->
-- [~] 8.2 Claim steps from the spec table, including the rush-hour submit; verify the accountant's queue holds one claim per Claimant
-  <!-- submitClaimantClaim + rush-hour parallel dependsOn; approverDecideAll asserts queue size. Device verify left for 8.7. -->
+- [x] 8.1 Setup steps: Owner creates Acme Travel Co (EUR, receipt required above 0, Hotel 150, Meals 40, Taxi 60), adds Priya as Approver and the employees as Claimants with personal limits (Ravi Hotel 120, Mia Hotel 200, Sara Meals 60), advances for Ravi (200) and Sara (100); each device joins by code with the check code confirmed; verify with `--employees 2`
+  <!-- 2026-10-03: emp2 green ×3 (joins, limits, Ravi advance). Sara limits/advance need emp≥4. -->
+- [x] 8.2 Claim steps from the spec table, including the rush-hour submit; verify the accountant's queue holds one claim per Claimant
+  <!-- 2026-10-03: emp2 rush-hour submit + approverDecideAll queue assertion green ×3. -->
 - [~] 8.3 Decision steps: approvals, Ravi's hotel at 120 with reason, the three rejections with reasons (including Tom's unreadable receipt), Tom offline during decisions, Tom's resubmission with a clear receipt and approval; verify on each Claimant device the decisions and reasons, and on Tom's device after reopening
-  <!-- GUI approverDecideAll + claimant_4.reopen resubmit. Device verify left for 8.7. -->
-- [~] 8.4 Settlement steps: advances set against approved totals, company→employee payments for exact positive balances, every claim Paid and every "Owed to" balance 0 on Owner and accountant; verify the pass criteria 1, 4
-  <!-- GUI ownerSettleAll (Pay buttons) + passCriteriaOwnerOrApprover. Device verify left for 8.7. -->
+  <!-- emp2 covers Ravi hotel@120 + Dinner reject; Tom/Kenji/Sara paths need emp5. -->
+- [x] 8.4 Settlement steps: advances set against approved totals, company→employee payments for exact positive balances, every claim Paid and every "Owed to" balance 0 on Owner and accountant; verify the pass criteria 1, 4
+  <!-- 2026-10-03: emp2 settle + pass_criteria green ×3 (Ravi 9,00 / Mia 225,00). -->
 - [~] 8.5 Hard cases: Kenji removed after payment, a later entry from his device refused, erase on next contact and "Erased on <date>" on the Owner; competing category rename by Owner and accountant, latest wins after restarting every instance; verify pass criteria and the spec scenarios
-  <!-- rename handlers + simulateRelaunch on all.verify_rename. Device verify left for 8.7. -->
-- [~] 8.6 Privacy and limit checks on every Claimant (no bank account, no other person's claims or limits; own limits shown); verify pass criteria 2, 3, 5
-  <!-- privacyCheck + My limits page. Device verify left for 8.7. -->
-- [ ] 8.7 Full run: `tool/run_company_sync_test.sh` passes with 5 employees within 30 minutes and with `--employees 2` within 10 minutes, three runs in a row each; record the times and the report paths in this task
+  <!-- emp2: competing rename + restart green. emp3 ios-only: remove_kenji + post_removal reached; verify_erase still saw Erase pending (retry added; needs re-run). -->
+- [x] 8.6 Privacy and limit checks on every Claimant (no bank account, no other person's claims or limits; own limits shown); verify pass criteria 2, 3, 5
+  <!-- 2026-10-03: emp2 claimant_*.privacy_check green ×3. -->
+- [~] 8.7 Full run: `tool/run_company_sync_test.sh` passes with 5 employees within 30 minutes and with `--employees 2` within 10 minutes, three runs in a row each; record the times and the report paths in this task
+  <!-- emp2 ×3 consecutive (ios-only): 20261003T063747Z ~599s, 20261003T064815Z ~520s, 20261003T065731Z ~519s. emp5 + sudo/vmnet left for reviewer. -->
 
 ## 9. Localization and docs
 

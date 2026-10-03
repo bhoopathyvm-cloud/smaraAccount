@@ -208,6 +208,7 @@ void main() {
           offerId: 'o1',
           host: '127.0.0.1',
           port: 9,
+          booksSetId: 'books-1',
         ),
         normalizedCode: 'K7QF3M9P',
       ),

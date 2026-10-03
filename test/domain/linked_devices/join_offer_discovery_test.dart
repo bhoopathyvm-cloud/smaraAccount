@@ -17,7 +17,11 @@ void main() {
       final sub = joiner.browse().listen(found.add);
 
       await host.startAdvertising(
-        const JoinOfferAdvertisement(offerId: 'offer-abc', port: 7123),
+        const JoinOfferAdvertisement(
+          offerId: 'offer-abc',
+          port: 7123,
+          booksSetId: 'books-acme',
+        ),
       );
       await Future<void>.delayed(const Duration(milliseconds: 20));
       await sub.cancel();
@@ -25,7 +29,8 @@ void main() {
       expect(found, isNotEmpty);
       expect(found.first.offerId, 'offer-abc');
       expect(found.first.port, 7123);
-      // TXT must never carry the join code — only offer id.
+      expect(found.first.booksSetId, 'books-acme');
+      // TXT must never carry the join code — only offer id + books set id.
       expect(found.first.offerId.contains('K7QF'), isFalse);
 
       await host.stopAdvertising();
@@ -40,7 +45,11 @@ void main() {
     final found = <DiscoveredJoinOffer>[];
     final sub = b.browse().listen(found.add);
     await a.startAdvertising(
-      const JoinOfferAdvertisement(offerId: 'offer-x', port: 1),
+      const JoinOfferAdvertisement(
+        offerId: 'offer-x',
+        port: 1,
+        booksSetId: 'books-x',
+      ),
     );
     await Future<void>.delayed(const Duration(milliseconds: 20));
     await sub.cancel();

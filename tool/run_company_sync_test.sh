@@ -55,6 +55,12 @@ PY
 }
 NEED_GB=2
 if [[ "$DRY" -eq 0 ]]; then NEED_GB=5; fi
+# ios-only skips Android emulators; a lighter floor fits 16 GB hosts mid-cast.
+# Count reclaimable pages (inactive/purgeable) already; 2 GB free+reclaimable
+# is enough to start emp2/3 — sims reclaim further as the cast proceeds.
+if [[ "$IOS_ONLY" -eq 1 && "$DRY" -eq 0 && "$EMPLOYEES" -lt 5 ]]; then
+  NEED_GB=2
+fi
 if [[ "$EMPLOYEES" -ge 5 && "$DRY" -eq 0 ]]; then NEED_GB=10; fi
 FREE="$(free_gb)"
 echo "Free memory ~${FREE} GB (need >= ${NEED_GB})"
@@ -299,6 +305,7 @@ DEFINES=(
   --dart-define=COMPANY_SYNC_CONDUCTOR="$CONDUCTOR_URL"
   --dart-define=COMPANY_SYNC_ARTIFACTS="$REPORT_DIR"
   --dart-define=COMPANY_SYNC_EMPLOYEES="$EMPLOYEES"
+  --dart-define=COMPANY_SYNC_FIXTURES="$ROOT/test_fixtures/receipts"
 )
 if [[ "$DRY" -eq 1 ]]; then
   DEFINES+=(--dart-define=COMPANY_SYNC_DRY_RUN=true)

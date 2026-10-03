@@ -250,6 +250,26 @@ class AccountRepository {
               ),
             );
       }
+      // Peer sync needs create ops — rename-only emit left Owed-to accounts
+      // invisible to Approvers after Add-a-person.
+      await _emit(
+        entityType: 'account',
+        entityId: created.id,
+        field: 'type',
+        value: type.name,
+      );
+      await _emit(
+        entityType: 'account',
+        entityId: created.id,
+        field: 'name',
+        value: name,
+      );
+      await _emit(
+        entityType: 'account',
+        entityId: created.id,
+        field: 'groupId',
+        value: groupId,
+      );
     });
 
     if (openingBalanceMinor != null) {

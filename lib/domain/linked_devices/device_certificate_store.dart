@@ -29,6 +29,17 @@ class DeviceCertificate {
 
 abstract class DeviceCertificateStore {
   Future<DeviceCertificate> localCertificate({required String deviceId});
+
+  /// Remembers a peer's public certificate (DER/PEM, never a private key)
+  /// so [TlsSyncTransport.listen] can trust it during client-cert TLS.
+  /// Membership only stores fingerprints; the PEM must come from join.
+  Future<void> rememberPeerCertificate(DeviceCertificate certificate) async {}
+
+  /// Public material for [fingerprint], when previously [rememberPeerCertificate]
+  /// was called (or the fingerprint belongs to a local identity).
+  Future<DeviceCertificate?> certificateForFingerprint(
+    String fingerprint,
+  ) async => null;
 }
 
 class FakeDeviceCertificateStore implements DeviceCertificateStore {
@@ -36,6 +47,7 @@ class FakeDeviceCertificateStore implements DeviceCertificateStore {
 
   final Uuid _uuid;
   final Map<String, DeviceCertificate> _cache = {};
+  final Map<String, DeviceCertificate> _byFingerprint = {};
 
   @override
   Future<DeviceCertificate> localCertificate({required String deviceId}) async {
@@ -50,6 +62,22 @@ class FakeDeviceCertificateStore implements DeviceCertificateStore {
         .join();
     final cert = DeviceCertificate(derBytes: der, fingerprint: fingerprint);
     _cache[deviceId] = cert;
+    _byFingerprint[fingerprint] = cert;
     return cert;
   }
+
+  @override
+  Future<void> rememberPeerCertificate(DeviceCertificate certificate) async {
+    if (certificate.derBytes.isEmpty && certificate.certificatePem == null) {
+      return;
+    }
+    final fp = certificate.fingerprint;
+    if (fp.isEmpty) return;
+    _byFingerprint[fp] = certificate;
+  }
+
+  @override
+  Future<DeviceCertificate?> certificateForFingerprint(
+    String fingerprint,
+  ) async => _byFingerprint[fingerprint];
 }

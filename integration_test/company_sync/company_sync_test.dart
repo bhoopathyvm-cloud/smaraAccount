@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:smara_accounting/domain/models/linked_device_role.dart';
 import 'package:smara_accounting/l10n/l10n.dart';
+import 'package:smara_accounting/ui/features/claims/views/claims_list_view.dart';
 import 'package:smara_accounting/ui/features/settings/views/join_code_entry_panel.dart';
 import 'package:smara_accounting/ui/features/settings/views/join_qr_offer_panel.dart';
 import 'package:smara_accounting/ui/features/setup_choice/views/setup_choice_view.dart';
@@ -99,6 +100,10 @@ Future<void> _runRole({
   required bool dryRun,
   required int employees,
 }) async {
+  companySyncConductor = client;
+  companySyncRole = role;
+  companySyncEmployees = employees;
+  installSyncDebugLogger(role);
   final steps = _stepsForRole(role, dryRun: dryRun, employees: employees);
   for (final stepId in steps) {
     await client.awaitPermission(stepId);
@@ -218,6 +223,7 @@ Future<void> _executeStep({
         categoryName: englishAppLocalizations.systemCategorySalary,
         currencyCode: dryRun ? 'USD' : 'EUR',
       );
+      await publishSyncEndpoint(tester, client, role: role);
       return;
 
     case 'owner.publish_join':
@@ -259,6 +265,7 @@ Future<void> _executeStep({
         client: client,
         peerKey: 'check_code_approver',
       );
+      await publishSyncEndpoint(tester, client, role: role);
       return;
 
     case 'owner.confirm_claimant_0':
@@ -289,6 +296,7 @@ Future<void> _executeStep({
         client: client,
         peerKey: 'check_code_claimant_$index',
       );
+      await publishSyncEndpoint(tester, client, role: role);
       return;
 
     case 'owner.verify_sync':
@@ -303,6 +311,9 @@ Future<void> _executeStep({
 
     case final join when join.endsWith('.join'):
       await _joinByCode(tester, client, role: role);
+      // After adopting company books, advertise a direct sync endpoint so
+      // ClaimBatch can flow Claimant ↔ Owner ↔ Approver without mDNS.
+      await publishSyncEndpoint(tester, client, role: role);
       return;
 
     case 'claimant_0.submit':
@@ -495,7 +506,31 @@ Future<void> _joinByCode(
   await client.putValue('check_code_$role', check);
   await client.waitValue('check_code_owner_for_check_code_$role');
   await tapReliably(tester, () => match, () => match.evaluate().isEmpty);
-  await tester.pump(const Duration(seconds: 2));
+  // confirmJoinCodeMatch opens the joined books set after the dialog closes.
+  // Pump so ProxyProviders rebuild against the new AppDatabase before Sync.
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 300));
+  if (role.startsWith('claimant')) {
+    await pumpUntilFound(tester, find.byType(ClaimsListView), maxTries: 200);
+  } else {
+    // Approver / Add-a-device: Claims, Home, or Settings with books switcher.
+    for (var i = 0; i < 200; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+      final onClaims = find.byType(ClaimsListView).evaluate().isNotEmpty;
+      final onHome = find.byTooltip(l10n.settingsTitle).evaluate().isNotEmpty;
+      final linkedGone = find
+          .text(l10n.settingsLinkedDevices)
+          .evaluate()
+          .isEmpty;
+      final switcher = find
+          .text(l10n.settingsBooksSwitcher)
+          .evaluate()
+          .isNotEmpty;
+      if (onClaims || (onHome && linkedGone) || switcher) break;
+    }
+  }
+  await tester.pump(const Duration(milliseconds: 200));
+  await syncNow(tester);
 }
 
 Future<void> _recordSimpleExpense(

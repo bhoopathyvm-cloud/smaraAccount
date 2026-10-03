@@ -10,7 +10,9 @@ import 'device_certificate_store.dart';
 import 'join_code.dart';
 import 'join_code_crypto.dart';
 import 'join_code_lookup.dart';
+import 'join_completion.dart';
 import 'join_offer_discovery.dart';
+import 'reserved_join_identity.dart';
 
 /// Length-prefixed JSON frames for join-by-code over unpinned TLS (task 4.4).
 class _JoinFrame {
@@ -93,6 +95,7 @@ class JoinCodeHostAccepted {
     required this.joinerDisplayName,
     required this.joinerSigningPublicKey,
     required this.joinerDeviceCertFingerprint,
+    this.joinerDeviceCertDer = const [],
     this.joinerIdentityId,
   });
 
@@ -101,6 +104,9 @@ class JoinCodeHostAccepted {
   final String joinerDisplayName;
   final List<int> joinerSigningPublicKey;
   final String joinerDeviceCertFingerprint;
+
+  /// Joiner TLS certificate DER (public) so the host can trust Sync now.
+  final List<int> joinerDeviceCertDer;
   final String? joinerIdentityId;
 }
 
@@ -113,6 +119,7 @@ class JoinCodeHost {
     InternetAddress? bindAddress,
     this.confirmCheckCode,
     this.onJoinAccepted,
+    this.loadBootstrapMetadata,
   }) : bindAddress = bindAddress ?? InternetAddress.anyIPv4;
 
   final DeviceCertificate localCertificate;
@@ -127,6 +134,10 @@ class JoinCodeHost {
   /// Called after both sides confirm, before the payload frame is sent, so
   /// the host can [MembershipRepository.acceptJoinFromQr].
   final Future<void> Function(JoinCodeHostAccepted accepted)? onJoinAccepted;
+
+  /// Optional snapshot of host MetadataOps sent after the payload so the
+  /// joiner receives categories/accounts without a separate Sync now.
+  final Future<List<MetadataOperation>> Function()? loadBootstrapMetadata;
 
   JoinQrPayload? _payload;
   List<int>? _inviterPublicKey;
@@ -157,7 +168,11 @@ class JoinCodeHost {
     );
     _port = _server!.port;
     await discovery.startAdvertising(
-      JoinOfferAdvertisement(offerId: code.offerId, port: _port!),
+      JoinOfferAdvertisement(
+        offerId: code.offerId,
+        port: _port!,
+        booksSetId: payload.booksSetId,
+      ),
     );
     // Bonjour / port scanners can open TCP without completing TLS. Those
     // HandshakeExceptions must not escape into the Flutter test zone or the
@@ -202,6 +217,10 @@ class JoinCodeHost {
           hello['joinerDisplayName'] as String? ?? 'Joining device';
       final joinerCertFingerprint =
           hello['joinerCertFingerprint'] as String? ?? '';
+      final joinerCertDerB64 = hello['joinerCertDer'] as String?;
+      final joinerCertDer = joinerCertDerB64 == null || joinerCertDerB64.isEmpty
+          ? const <int>[]
+          : base64Decode(joinerCertDerB64);
       final joinerIdentityId = hello['joinerIdentityId'] as String?;
       final inviterNonce = _randomNonce();
       final inviterPublicKey = _inviterPublicKey!;
@@ -300,6 +319,7 @@ class JoinCodeHost {
             joinerDisplayName: joinerDisplayName,
             joinerSigningPublicKey: joinerPublicKey,
             joinerDeviceCertFingerprint: joinerCertFingerprint,
+            joinerDeviceCertDer: joinerCertDer,
             joinerIdentityId: joinerIdentityId,
           ),
         );
@@ -312,6 +332,14 @@ class JoinCodeHost {
       await _JoinFrame.send(socket, {
         'type': 'payload',
         'payload': jsonDecode(encoded),
+      });
+      final loadBootstrap = loadBootstrapMetadata;
+      final bootstrap = loadBootstrap == null
+          ? const <MetadataOperation>[]
+          : await loadBootstrap();
+      await _JoinFrame.send(socket, {
+        'type': 'bootstrap_meta',
+        'operations': bootstrap.map((o) => o.toJson()).toList(),
       });
       await socket.close();
     } catch (_) {
@@ -339,11 +367,10 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
   SecureJoinCodeLookup({
     required this.discovery,
     required this.localCertificate,
-    required this.joinerPublicKey,
+    required this.resolveJoinerIdentity,
     required this.joinerDeviceId,
     required this.joinerDisplayName,
     required this.joinerCertFingerprint,
-    this.joinerIdentityId,
     this.browseTimeout = const Duration(seconds: 3),
     this.bindAddress,
   });
@@ -353,11 +380,14 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
 
   final JoinOfferDiscovery discovery;
   final DeviceCertificate localCertificate;
-  final List<int> joinerPublicKey;
+
+  /// Reserves (or loads) this device's Signing Identity for the books set
+  /// named in the host's welcome frame — before hello is sent.
+  final Future<ReservedJoinIdentity> Function(String booksSetId)
+  resolveJoinerIdentity;
   final String joinerDeviceId;
   final String joinerDisplayName;
   final String joinerCertFingerprint;
-  final String? joinerIdentityId;
   final Duration browseTimeout;
   final InternetAddress? bindAddress;
 
@@ -428,6 +458,15 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
           ),
         );
     try {
+      // Reserve this books set's Signing Identity before hello so the host
+      // pins the key that will sign the joined set (never the household key).
+      if (offer.booksSetId.isEmpty) {
+        throw const _JoinLookupException(JoinCodeLookupError.notFound);
+      }
+      final reserved = await resolveJoinerIdentity(offer.booksSetId);
+      final joinerPublicKey = reserved.publicKey;
+      final joinerIdentityId = reserved.identityId;
+
       final joinerNonce = _randomNonce();
       await _JoinFrame.send(socket, {
         'type': 'hello',
@@ -436,7 +475,9 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
         'joinerDeviceId': joinerDeviceId,
         'joinerDisplayName': joinerDisplayName,
         'joinerCertFingerprint': joinerCertFingerprint,
-        if (joinerIdentityId != null) 'joinerIdentityId': joinerIdentityId,
+        if (localCertificate.derBytes.isNotEmpty)
+          'joinerCertDer': base64Encode(localCertificate.derBytes),
+        'joinerIdentityId': joinerIdentityId,
       });
       final challenge = await receiveFrame();
       if (challenge['type'] == 'error') {
@@ -500,9 +541,32 @@ class SecureJoinCodeLookup implements JoinCodeLookup {
               throw StateError('Join payload contained private key material.');
             }
             final payload = JoinQrPayload.decode(raw);
+            var bootstrap = const <MetadataOperation>[];
+            try {
+              final bootMsg = await _JoinFrame.receive(
+                chunks,
+                buffer,
+              ).timeout(const Duration(seconds: 5));
+              if (bootMsg['type'] == 'bootstrap_meta') {
+                final opsRaw = bootMsg['operations'];
+                if (opsRaw is List) {
+                  bootstrap = [
+                    for (final o in opsRaw)
+                      MetadataOperation.fromJson(
+                        Map<String, dynamic>.from(o as Map),
+                      ),
+                  ];
+                }
+              }
+            } on TimeoutException {
+              // Older hosts omit bootstrap; Sync now remains the fallback.
+            }
             await socket.close();
             await chunks.cancel();
-            return payload;
+            return JoinCompletion(
+              payload: payload,
+              bootstrapMetadata: bootstrap,
+            );
           },
           cancelJoin: () async {
             try {

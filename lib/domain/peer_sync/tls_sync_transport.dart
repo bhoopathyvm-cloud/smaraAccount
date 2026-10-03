@@ -10,6 +10,9 @@ import 'certificate_pinning.dart';
 import 'sync_payloads.dart';
 import 'sync_transport.dart';
 
+/// Optional diagnostic sink for company-sync / integration debugging.
+void Function(String message)? tlsSyncDebugLog;
+
 /// Length-prefixed JSON over [SecureSocket] with certificate pinning
 /// (linked-devices task 12.1 / design Decision 2).
 class TlsSyncTransport implements SyncTransport {
@@ -43,8 +46,9 @@ class TlsSyncTransport implements SyncTransport {
       throw UnknownCertificateException(remote.certificate.fingerprint);
     }
 
-    // Trust anchors are optional: [onBadCertificate] enforces the pin set so
-    // Sync now can connect using only fingerprints from membership.
+    // Prefer peer PEMs in the trust store when known (from join). Client-side
+    // [onBadCertificate] still enforces the fingerprint pin set so connect
+    // works when only the remote fingerprint is known.
     final context = _securityContext(
       local.certificate,
       pinnedCertificates: [
@@ -89,10 +93,10 @@ class TlsSyncTransport implements SyncTransport {
     List<DeviceCertificate> pinnedCertificates = const [],
   }) async {
     await stopListening();
-    // Request (but do not require) a client cert so peers that only have
-    // fingerprints in membership still pin-check after the handshake —
-    // OS TLS would refuse unknown client certs if requireClientCertificate
-    // were true without peer PEMs in the trust store.
+    // Request a client cert and pin-check after handshake. Peer PEMs must be
+    // supplied in [pinnedCertificates] (remembered at join) — BoringSSL still
+    // verifies presented client certs against the trust store even when
+    // [requireClientCertificate] is false.
     final context = _securityContext(
       local.certificate,
       pinnedCertificates: [...pinnedCertificates, local.certificate],
@@ -108,34 +112,50 @@ class TlsSyncTransport implements SyncTransport {
     );
     onBound?.call(_server!.port);
 
-    _acceptSub = _server!.listen((socket) async {
-      try {
-        final peerCert = socket.peerCertificate;
-        if (peerCert == null) {
-          await socket.close();
-          return;
-        }
-        final fp = fingerprintOfDer(peerCert.der);
-        if (pinning.checkFingerprint(fp) != PinCheckResult.accepted) {
-          await socket.close();
-          return;
-        }
-        final remote = SyncPeerIdentity(
-          deviceId: 'peer-$fp',
-          certificate: DeviceCertificate(
-            derBytes: peerCert.der,
-            fingerprint: fp,
-          ),
-          host: socket.remoteAddress.address,
-          port: socket.remotePort,
-        );
-        await onSession(_TlsSyncConnection(socket: socket, remote: remote));
-      } catch (_) {
+    _acceptSub = _server!.listen(
+      (socket) async {
         try {
-          await socket.close();
-        } catch (_) {}
-      }
-    });
+          final peerCert = socket.peerCertificate;
+          if (peerCert == null) {
+            tlsSyncDebugLog?.call(
+              'inbound TLS rejected: no client certificate',
+            );
+            await socket.close();
+            return;
+          }
+          final fp = fingerprintOfDer(peerCert.der);
+          if (pinning.checkFingerprint(fp) != PinCheckResult.accepted) {
+            tlsSyncDebugLog?.call(
+              'inbound TLS rejected: unknown fingerprint $fp '
+              '(pins=${pinnedFingerprints.length})',
+            );
+            await socket.close();
+            return;
+          }
+          final remote = SyncPeerIdentity(
+            deviceId: 'peer-$fp',
+            certificate: DeviceCertificate(
+              derBytes: peerCert.der,
+              fingerprint: fp,
+            ),
+            host: socket.remoteAddress.address,
+            port: socket.remotePort,
+          );
+          await onSession(_TlsSyncConnection(socket: socket, remote: remote));
+        } catch (e, st) {
+          tlsSyncDebugLog?.call('inbound TLS session error: $e\n$st');
+          try {
+            await socket.close();
+          } catch (_) {}
+        }
+      },
+      // Failed TLS handshakes (stale pins, wrong peer) must not escape as
+      // unhandled async errors — they abort Flutter integration tests.
+      onError: (Object e, StackTrace st) {
+        tlsSyncDebugLog?.call('inbound TLS handshake error: $e\n$st');
+      },
+      cancelOnError: false,
+    );
   }
 
   @override

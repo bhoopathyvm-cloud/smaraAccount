@@ -154,6 +154,7 @@ void main() {
             offerId: 'o1',
             host: '10.0.0.2',
             port: 7123,
+            booksSetId: 'books-1',
           ),
           normalizedCode: 'K7QF3M9P',
         ),

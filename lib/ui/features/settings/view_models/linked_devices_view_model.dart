@@ -5,12 +5,16 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../data/books_set/active_books_session.dart';
 import '../../../../data/books_set/books_set_paths.dart';
+import '../../../../data/books_set/joined_books_seeder.dart';
 import '../../../../data/repositories/claim_person_service.dart';
 import '../../../../data/repositories/claim_repository.dart';
 import '../../../../data/repositories/identity_repository.dart';
 import '../../../../data/repositories/membership_repository.dart';
+import '../../../../data/repositories/metadata_outbox.dart';
 import '../../../../data/repositories/settings_repository.dart';
+import '../../../../data/repositories/sync_merge_repository.dart';
 import '../../../../domain/app_error.dart';
 import '../../../../domain/linked_devices/device_certificate_store.dart';
 import '../../../../domain/linked_devices/join_code.dart';
@@ -22,6 +26,7 @@ import '../../../../domain/models/join_qr_payload.dart';
 import '../../../../domain/models/join_request.dart';
 import '../../../../domain/models/linked_device.dart';
 import '../../../../domain/models/linked_device_role.dart';
+import '../../../../domain/peer_sync/sync_payloads.dart';
 import '../../../../l10n/l10n.dart';
 
 /// Settings "Linked devices" section state (tasks 4.2–4.4), plus Add /
@@ -31,6 +36,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     required MembershipRepository membershipRepository,
     required SettingsRepository settingsRepository,
     required BooksSetStore booksSetStore,
+    ActiveBooksSession? booksSession,
+    MetadataOutbox? metadataOutbox,
     ClaimPersonService? claimPersonService,
     ClaimRepository? claimRepository,
     LocalNetworkPermission? localNetworkPermission,
@@ -45,6 +52,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }) : _membership = membershipRepository,
        _settings = settingsRepository,
        _booksSetStore = booksSetStore,
+       _booksSession = booksSession,
+       _outbox = metadataOutbox,
        _people = claimPersonService,
        _claims = claimRepository,
        _permission = localNetworkPermission ?? FakeLocalNetworkPermission(),
@@ -59,6 +68,8 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   final MembershipRepository _membership;
   final SettingsRepository _settings;
   final BooksSetStore _booksSetStore;
+  final ActiveBooksSession? _booksSession;
+  final MetadataOutbox? _outbox;
   final ClaimPersonService? _people;
   final ClaimRepository? _claims;
   final LocalNetworkPermission _permission;
@@ -136,6 +147,9 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
   /// Offer id of the active join code (for company-sync direct connect).
   String? get activeJoinOfferId => _joinCodes.active?.offerId;
+
+  /// Books set id for the active join offer (joiner reserves identity for it).
+  String? get activeJoinOfferBooksSetId => _activeJoinQr?.booksSetId;
 
   bool _disposed = false;
 
@@ -324,20 +338,36 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
             joinerDisplayName: accepted.joinerDisplayName,
             joinerSigningPublicKey: accepted.joinerSigningPublicKey,
             joinerDeviceCertFingerprint: accepted.joinerDeviceCertFingerprint,
+            joinerDeviceCertDer: accepted.joinerDeviceCertDer,
             joinerIdentityId: accepted.joinerIdentityId,
           );
         } else {
-          await _membership.acceptJoinFromQr(
+          final linked = await _membership.acceptJoinFromQr(
             actorDeviceId: _localDeviceId!,
             payload: accepted.payload,
             joinerDeviceId: accepted.joinerDeviceId,
             joinerDisplayName: accepted.joinerDisplayName,
             joinerSigningPublicKey: accepted.joinerSigningPublicKey,
             joinerDeviceCertFingerprint: accepted.joinerDeviceCertFingerprint,
+            joinerDeviceCertDer: accepted.joinerDeviceCertDer,
             joinerIdentityId: accepted.joinerIdentityId,
+          );
+          await people?.emitLinkedDeviceMetadata(
+            linked,
+            signingPublicKey: accepted.joinerSigningPublicKey,
+            deviceCertDer: accepted.joinerDeviceCertDer,
           );
         }
         await _load();
+      },
+      loadBootstrapMetadata: () async {
+        final outbox = _outbox;
+        if (outbox == null) return const <MetadataOperation>[];
+        // linked_device ops are for peer Sync now (Approver learning Claimants).
+        // Applying them in join bootstrap can overwrite the joiner's freshly
+        // seeded Signing Identity / roles before the Provider tree rebuilds.
+        final all = await outbox.listAll();
+        return all.where((o) => o.entityType != 'linked_device').toList();
       },
     );
     await _joinHost!.start(
@@ -369,11 +399,13 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
           }
         }
       }
+      final booksSetId = _activeJoinQr?.booksSetId ?? '';
       final payload = jsonEncode({
         'hosts': hosts,
         'host': '127.0.0.1',
         'port': port,
         'offerId': code.offerId,
+        'booksSetId': booksSetId,
       });
       if (artifactsRoot.isNotEmpty) {
         final dir = Directory('$artifactsRoot/conductor');
@@ -486,7 +518,7 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
   }
 
   /// After check-code confirm on the join-by-code path, completes the payload
-  /// exchange (task 4.4) and prepares the joiner like a scanned QR.
+  /// exchange (task 4.4) and opens the joined books set on this device.
   Future<bool> confirmJoinCodeMatch() async {
     final pending = _pendingJoinCodeSuccess;
     if (pending == null || _isBusy) return false;
@@ -495,8 +527,11 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     try {
       final complete = pending.completeJoin;
       if (complete != null) {
-        final payload = await complete();
-        await _membership.prepareJoinerFromScannedQr(payload);
+        final completion = await complete();
+        await _adoptJoinedBooks(
+          completion.payload,
+          bootstrapMetadata: completion.bootstrapMetadata,
+        );
       }
       _pendingJoinCodeSuccess = null;
       clearFailure();
@@ -543,15 +578,15 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
     return payload;
   }
 
-  /// After the user confirms the check code, remember the host identity from
-  /// the scanned QR (joiner side). Host still completes [acceptJoinFromQr]
+  /// After the user confirms the check code, open the joined books set on
+  /// this device (joiner side). Host still completes [acceptJoinFromQr]
   /// once the joiner's certificate is exchanged over the LAN.
   Future<bool> registerHostFromScannedJoin(JoinQrPayload payload) async {
     if (_isBusy) return false;
     _isBusy = true;
     notifyListeners();
     try {
-      await _membership.prepareJoinerFromScannedQr(payload);
+      await _adoptJoinedBooks(payload);
       clearFailure();
       return true;
     } catch (e) {
@@ -561,6 +596,64 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
       _isBusy = false;
       if (!_disposed) notifyListeners();
     }
+  }
+
+  /// Opens [payload.booksSetId] (keeping the previous set in the switcher),
+  /// seeds Claimant/Member membership, and leaves the joiner in that set.
+  Future<void> _adoptJoinedBooks(
+    JoinQrPayload payload, {
+    List<MetadataOperation> bootstrapMetadata = const [],
+  }) async {
+    final session = _booksSession;
+    if (session == null) {
+      // Widget tests / fakes without a multi-set session: pin host only.
+      await _membership.prepareJoinerFromScannedQr(payload);
+      return;
+    }
+    final localDeviceId = _localDeviceId ?? await _ensureLocalDeviceId();
+    final displayName =
+        await _settings.localDeviceDisplayName() ?? 'This device';
+    var currency = 'USD';
+    try {
+      final row = await session.database
+          .customSelect(
+            'SELECT currency FROM account_groups '
+            'WHERE currency IS NOT NULL AND currency != \'\' LIMIT 1',
+          )
+          .getSingleOrNull();
+      final value = row?.read<String>('currency');
+      if (value != null && value.isNotEmpty) currency = value;
+    } catch (_) {}
+
+    // Ensure this books set already has its own Signing Identity (created
+    // before hello on the join-by-code path; reserved here for QR-only).
+    await session.reserveJoinIdentity(
+      booksSetId: payload.booksSetId,
+      currency: currency,
+    );
+
+    await session.openJoinedSet(
+      booksSetId: payload.booksSetId,
+      seed: (db, keys) async {
+        await JoinedBooksSeeder.seed(
+          database: db,
+          signingKeyService: keys,
+          certificateStore: _certs,
+          payload: payload,
+          localDeviceId: localDeviceId,
+          localDisplayName: displayName,
+          currency: currency,
+        );
+        if (bootstrapMetadata.isEmpty) return;
+        final merge = SyncMergeRepository(
+          database: db,
+          signingKeyService: keys,
+        );
+        await merge.applyMetadataOps(
+          MetadataOps(operations: bootstrapMetadata),
+        );
+      },
+    );
   }
 
   /// Open-claims / owed-balance warning before remove (task 2.4).

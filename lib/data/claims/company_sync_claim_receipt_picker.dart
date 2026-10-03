@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import '../../domain/claims/claim_receipt_picker.dart';
@@ -6,6 +7,10 @@ import '../../domain/claims/claim_receipt_picker.dart';
 /// attach receipts through the real gallery / PDF buttons without a camera.
 ///
 /// Selected by `--dart-define=COMPANY_SYNC_TEST=true` in [main.dart].
+///
+/// Known fixtures are embedded so iOS simulator Claimants (whose app cwd is
+/// not the repo root) still get bytes. Optional host paths remain as a
+/// fallback for macOS / local debugging.
 class CompanySyncClaimReceiptPicker implements ClaimReceiptPicker {
   CompanySyncClaimReceiptPicker({
     this.fixturesRoot = 'test_fixtures/receipts',
@@ -35,7 +40,21 @@ class CompanySyncClaimReceiptPicker implements ClaimReceiptPicker {
   }
 
   ClaimReceiptPickResult? _read(String fileName, String contentType) {
-    final candidates = [
+    final embedded = _embeddedBytes(fileName);
+    if (embedded != null) {
+      return ClaimReceiptPickResult(
+        bytes: embedded,
+        contentType: contentType,
+        fileName: fileName,
+      );
+    }
+
+    final absoluteRoot = const String.fromEnvironment(
+      'COMPANY_SYNC_FIXTURES',
+      defaultValue: '',
+    );
+    final candidates = <String>[
+      if (absoluteRoot.isNotEmpty) '$absoluteRoot/$fileName',
       '$fixturesRoot/$fileName',
       '../$fixturesRoot/$fileName',
     ];
@@ -51,4 +70,30 @@ class CompanySyncClaimReceiptPicker implements ClaimReceiptPicker {
     }
     return null;
   }
+
+  /// Bytes for the seeded fixtures under [test_fixtures/receipts].
+  static List<int>? _embeddedBytes(String fileName) {
+    switch (fileName) {
+      case 'hotel_receipt.jpg':
+      case 'meal_receipt.jpg':
+      // Tom's "unreadable" label is the file name; content only needs to attach.
+      case 'unreadable_receipt.jpg':
+        return _tinyJpeg;
+      case 'train_receipt.pdf':
+        return _tinyPdf;
+      default:
+        return null;
+    }
+  }
+
+  /// Exact bytes of [test_fixtures/receipts/hotel_receipt.jpg] (1×1 JPEG).
+  static final List<int> _tinyJpeg = base64Decode(
+    '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8U'
+    'HRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/wAALCAABAAEBAREA'
+    '/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/9oACAEBAAA/AH//2Q==',
+  );
+
+  static final List<int> _tinyPdf = utf8.encode(
+    '%PDF-1.1\n1 0 obj<<>>endobj\ntrailer<<>>\n%%EOF\n',
+  );
 }

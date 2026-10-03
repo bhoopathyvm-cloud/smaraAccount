@@ -6,6 +6,7 @@ import 'package:smara_accounting/domain/linked_devices/join_code.dart';
 import 'package:smara_accounting/domain/linked_devices/join_code_lookup.dart';
 import 'package:smara_accounting/domain/linked_devices/join_code_session.dart';
 import 'package:smara_accounting/domain/linked_devices/join_offer_discovery.dart';
+import 'package:smara_accounting/domain/linked_devices/reserved_join_identity.dart';
 import 'package:smara_accounting/domain/models/join_qr_payload.dart';
 import 'package:smara_accounting/domain/peer_sync/tls_sync_transport.dart';
 import 'package:test/test.dart';
@@ -75,23 +76,33 @@ void main() {
 
       final joinerIdentity = await harness.b.identity.currentIdentity();
       expect(joinerIdentity, isNotNull);
+      ReservedJoinIdentity? helloIdentity;
 
       final lookup = SecureJoinCodeLookup(
         discovery: joinerDiscovery,
         localCertificate: tlsJoiner,
-        joinerPublicKey: joinerIdentity!.publicKey,
+        resolveJoinerIdentity: (booksSetId) async {
+          expect(booksSetId, qr.booksSetId);
+          helloIdentity = ReservedJoinIdentity(
+            booksSetId: booksSetId,
+            identityId: joinerIdentity!.identityId,
+            publicKey: joinerIdentity.publicKey,
+          );
+          return helloIdentity!;
+        },
         joinerDeviceId: harness.b.deviceId,
         joinerDisplayName: harness.b.displayName,
         joinerCertFingerprint: harness.b.certificate.fingerprint,
-        joinerIdentityId: joinerIdentity.identityId,
         browseTimeout: const Duration(milliseconds: 200),
       );
 
       final result = await lookup.lookup(code.display.toLowerCase());
       expect(result.isSuccess, isTrue, reason: '${result.error}');
       expect(result.success!.checkCode.length, 6);
+      expect(helloIdentity, isNotNull);
 
-      final payload = await result.success!.completeJoin!();
+      final completion = await result.success!.completeJoin!();
+      final payload = completion.payload;
       expect(payload.hostDeviceId, qr.hostDeviceId);
       expect(payload.deviceCertFingerprint, qr.deviceCertFingerprint);
       expect(payload.booksSetId, qr.booksSetId);
@@ -108,9 +119,9 @@ void main() {
         payload: payload,
         joinerDeviceId: harness.b.deviceId,
         joinerDisplayName: harness.b.displayName,
-        joinerSigningPublicKey: joinerIdentity.publicKey,
+        joinerSigningPublicKey: helloIdentity!.publicKey,
         joinerDeviceCertFingerprint: harness.b.certificate.fingerprint,
-        joinerIdentityId: joinerIdentity.identityId,
+        joinerIdentityId: helloIdentity!.identityId,
       );
 
       final onA = await harness.a.membership.listActiveDevices();
@@ -120,6 +131,7 @@ void main() {
       );
       final pinned = onA.firstWhere((d) => d.deviceId == harness.b.deviceId);
       expect(pinned.deviceCertFingerprint, harness.b.certificate.fingerprint);
+      expect(pinned.signingIdentityId, helloIdentity!.identityId);
 
       // Reused code is refused.
       final again = await lookup.lookup(code.raw);
@@ -169,11 +181,14 @@ void main() {
       final lookup = SecureJoinCodeLookup(
         discovery: joinerDiscovery,
         localCertificate: tlsJoiner,
-        joinerPublicKey: joinerIdentity!.publicKey,
+        resolveJoinerIdentity: (booksSetId) async => ReservedJoinIdentity(
+          booksSetId: booksSetId,
+          identityId: joinerIdentity!.identityId,
+          publicKey: joinerIdentity.publicKey,
+        ),
         joinerDeviceId: harness.b.deviceId,
         joinerDisplayName: harness.b.displayName,
         joinerCertFingerprint: harness.b.certificate.fingerprint,
-        joinerIdentityId: joinerIdentity.identityId,
         browseTimeout: const Duration(milliseconds: 200),
       );
 

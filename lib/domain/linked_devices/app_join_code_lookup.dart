@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../../data/repositories/identity_repository.dart';
+import '../../data/books_set/active_books_session.dart';
 import '../../data/repositories/settings_repository.dart';
 import 'device_certificate_store.dart';
 import 'join_code_lookup.dart';
 import 'join_code_session.dart';
 import 'join_offer_discovery.dart';
+import 'reserved_join_identity.dart';
 
-/// Production [JoinCodeLookup] that resolves local device identity at lookup
-/// time and runs [SecureJoinCodeLookup] over Bonjour offers.
+/// Production [JoinCodeLookup] that reserves a Signing Identity for the
+/// offered books set (from the host welcome frame) before hello, then runs
+/// [SecureJoinCodeLookup] over Bonjour offers.
 ///
 /// Under `COMPANY_SYNC_TEST`, prefers a conductor-relayed join offer (HTTP),
 /// then a host-written `join_offer.json`, so iOS Simulator ↔ macOS dry runs
@@ -20,19 +22,19 @@ class AppJoinCodeLookup implements JoinCodeLookup {
     required JoinOfferDiscovery discovery,
     required DeviceCertificateStore certificates,
     required SettingsRepository settings,
-    required IdentityRepository identity,
+    required ActiveBooksSession booksSession,
     this.browseTimeout = const Duration(seconds: 8),
     HttpClient? httpClient,
   }) : _discovery = discovery,
        _certificates = certificates,
        _settings = settings,
-       _identity = identity,
+       _booksSession = booksSession,
        _http = httpClient;
 
   final JoinOfferDiscovery _discovery;
   final DeviceCertificateStore _certificates;
   final SettingsRepository _settings;
-  final IdentityRepository _identity;
+  final ActiveBooksSession _booksSession;
   final Duration browseTimeout;
   final HttpClient? _http;
 
@@ -48,10 +50,6 @@ class AppJoinCodeLookup implements JoinCodeLookup {
     if (deviceId == null || deviceId.isEmpty) {
       return const JoinCodeLookupResult.failure(JoinCodeLookupError.notFound);
     }
-    final identity = await _identity.currentIdentity();
-    if (identity == null) {
-      return const JoinCodeLookupResult.failure(JoinCodeLookupError.notFound);
-    }
     final cert = await _certificates.localCertificate(deviceId: deviceId);
     final displayName =
         await _settings.localDeviceDisplayName() ?? 'This device';
@@ -64,11 +62,10 @@ class AppJoinCodeLookup implements JoinCodeLookup {
     final secure = SecureJoinCodeLookup(
       discovery: discovery,
       localCertificate: cert,
-      joinerPublicKey: identity.publicKey,
+      resolveJoinerIdentity: _reserveForJoin,
       joinerDeviceId: deviceId,
       joinerDisplayName: displayName,
       joinerCertFingerprint: cert.fingerprint,
-      joinerIdentityId: identity.identityId,
       // Fixed conductor offers complete immediately; keep Bonjour at 8s.
       browseTimeout: discovery is _FixedJoinOfferDiscovery
           ? const Duration(seconds: 2)
@@ -94,6 +91,27 @@ class AppJoinCodeLookup implements JoinCodeLookup {
       await _debugPut('join_lookup_result', 'throw_$e');
       rethrow;
     }
+  }
+
+  Future<ReservedJoinIdentity> _reserveForJoin(String booksSetId) async {
+    var currency = 'USD';
+    try {
+      final row = await _booksSession.database
+          .customSelect(
+            'SELECT currency FROM account_groups '
+            'WHERE currency IS NOT NULL AND currency != \'\' LIMIT 1',
+          )
+          .getSingleOrNull();
+      final value = row?.read<String>('currency');
+      if (value != null && value.isNotEmpty) currency = value;
+    } catch (_) {}
+    final reserved = await _booksSession.reserveJoinIdentity(
+      booksSetId: booksSetId,
+      currency: currency,
+    );
+    await _debugPut('join_reserved_identity', reserved.identityId);
+    await _debugPut('join_reserved_books', booksSetId);
+    return reserved;
   }
 
   Future<void> _debugPut(String key, String value) async {
@@ -157,7 +175,9 @@ class AppJoinCodeLookup implements JoinCodeLookup {
   JoinOfferDiscovery? _discoveryFromOfferMap(Map<String, dynamic> map) {
     final port = map['port'] as int?;
     final offerId = map['offerId'] as String?;
+    final booksSetId = map['booksSetId'] as String?;
     if (port == null || offerId == null) return null;
+    if (booksSetId == null || booksSetId.isEmpty) return null;
     final hosts = <String>[];
     final listed = map['hosts'];
     if (listed is List) {
@@ -183,7 +203,12 @@ class AppJoinCodeLookup implements JoinCodeLookup {
     if (hosts.isEmpty) return null;
     return _FixedJoinOfferDiscovery([
       for (final host in hosts)
-        DiscoveredJoinOffer(offerId: offerId, host: host, port: port),
+        DiscoveredJoinOffer(
+          offerId: offerId,
+          host: host,
+          port: port,
+          booksSetId: booksSetId,
+        ),
     ]);
   }
 }

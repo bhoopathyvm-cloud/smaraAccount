@@ -91,6 +91,7 @@ class AppNavigationPolicy {
     required Future<bool> Function() isFirstWeekSetupCompleted,
     required Future<bool> Function() lockScreenRequired,
     Future<bool> Function()? isClaimantOnlyActiveSet,
+    Future<bool> Function()? isJoinedLinkedSet,
   }) : _currentIdentity = currentIdentity,
        _hasAnyJournalEntries = hasAnyJournalEntries,
        _hasMatchingStoredKey = hasMatchingStoredKey,
@@ -99,7 +100,8 @@ class AppNavigationPolicy {
        _isFirstWeekSetupCompleted = isFirstWeekSetupCompleted,
        _lockScreenRequired = lockScreenRequired,
        _isClaimantOnlyActiveSet =
-           isClaimantOnlyActiveSet ?? (() async => false);
+           isClaimantOnlyActiveSet ?? (() async => false),
+       _isJoinedLinkedSet = isJoinedLinkedSet ?? (() async => false);
 
   final Future<SigningIdentity?> Function() _currentIdentity;
   final Future<bool> Function() _hasAnyJournalEntries;
@@ -109,6 +111,10 @@ class AppNavigationPolicy {
   final Future<bool> Function() _isFirstWeekSetupCompleted;
   final Future<bool> Function() _lockScreenRequired;
   final Future<bool> Function() _isClaimantOnlyActiveSet;
+
+  /// True when this device already joined peer books (host + local in
+  /// membership). Skips New-setup first-entry; catalog arrives via sync.
+  final Future<bool> Function() _isJoinedLinkedSet;
 
   var _hasVerifiedThisSession = false;
 
@@ -131,8 +137,11 @@ class AppNavigationPolicy {
     // through to the ordinary key-match/backfill/setup-wizard/lock checks
     // below, the same whether it came from New Setup or from a restore-
     // from-copy that already has entries of its own.
+    //
+    // Joined linked sets (Add-a-device / Add-a-person) also skip: the set
+    // is empty until peer sync delivers the host's books.
     final hasRecordedFirstEntry = await _hasAnyJournalEntries();
-    if (!hasRecordedFirstEntry) {
+    if (!hasRecordedFirstEntry && !await _isJoinedLinkedSet()) {
       return matchedLocation == AppNavPaths.firstAccount ||
               matchedLocation == AppNavPaths.firstEntry
           ? null

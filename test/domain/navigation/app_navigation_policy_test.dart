@@ -22,6 +22,8 @@ AppNavigationPolicy _policy({
   bool needsBackfill = false,
   bool setupCompleted = true,
   bool lockRequired = false,
+  bool joinedLinked = false,
+  bool claimantOnly = false,
   void Function()? onVerify,
 }) {
   return AppNavigationPolicy(
@@ -34,6 +36,8 @@ AppNavigationPolicy _policy({
     needsCurrencyBackfill: () async => needsBackfill,
     isFirstWeekSetupCompleted: () async => setupCompleted,
     lockScreenRequired: () async => lockRequired,
+    isJoinedLinkedSet: () async => joinedLinked,
+    isClaimantOnlyActiveSet: () async => claimantOnly,
   );
 }
 
@@ -62,6 +66,33 @@ void main() {
       expect(await policy.resolve(AppNavPaths.home), AppNavPaths.firstAccount);
       expect(await policy.resolve(AppNavPaths.firstAccount), isNull);
       expect(await policy.resolve(AppNavPaths.firstEntry), isNull);
+    },
+  );
+
+  test(
+    'joined linked set with no local entries skips first-account onboarding',
+    () async {
+      final policy = _policy(
+        identity: _identity(),
+        hasEntries: false,
+        joinedLinked: true,
+      );
+      expect(await policy.resolve(AppNavPaths.home), isNull);
+      expect(await policy.resolve(AppNavPaths.firstAccount), AppNavPaths.home);
+    },
+  );
+
+  test(
+    'joined Claimant-only with no entries lands on Claims, not first-account',
+    () async {
+      final policy = _policy(
+        identity: _identity(),
+        hasEntries: false,
+        joinedLinked: true,
+        claimantOnly: true,
+      );
+      expect(await policy.resolve(AppNavPaths.home), AppNavPaths.claims);
+      expect(await policy.resolve(AppNavPaths.claims), isNull);
     },
   );
 

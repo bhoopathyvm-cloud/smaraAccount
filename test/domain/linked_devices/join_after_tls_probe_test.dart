@@ -6,6 +6,7 @@ import 'package:smara_accounting/domain/linked_devices/join_code.dart';
 import 'package:smara_accounting/domain/linked_devices/join_code_session.dart';
 import 'package:smara_accounting/domain/linked_devices/join_offer_discovery.dart';
 import 'package:smara_accounting/domain/linked_devices/persisting_device_certificate_store.dart';
+import 'package:smara_accounting/domain/linked_devices/reserved_join_identity.dart';
 
 import '../../domain/crypto/in_memory_secure_key_storage.dart';
 import '../../harness/dual_device_harness.dart';
@@ -71,11 +72,14 @@ void main() {
       final lookup = SecureJoinCodeLookup(
         discovery: joinerDiscovery,
         localCertificate: tlsJoiner,
-        joinerPublicKey: joinerIdentity.publicKey,
+        resolveJoinerIdentity: (booksSetId) async => ReservedJoinIdentity(
+          booksSetId: booksSetId,
+          identityId: joinerIdentity.identityId,
+          publicKey: joinerIdentity.publicKey,
+        ),
         joinerDeviceId: harness.b.deviceId,
         joinerDisplayName: harness.b.displayName,
         joinerCertFingerprint: tlsJoiner.fingerprint,
-        joinerIdentityId: joinerIdentity.identityId,
         browseTimeout: const Duration(milliseconds: 200),
       );
       final result = await lookup.lookup(code.display);

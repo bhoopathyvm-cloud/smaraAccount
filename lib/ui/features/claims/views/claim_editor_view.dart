@@ -5,7 +5,6 @@ import '../../../../domain/models/claim_item.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/money_formatter.dart';
-import '../../../core/system_inset_padding.dart';
 import '../view_models/claim_editor_view_model.dart';
 import '../view_models/claims_list_view_model.dart';
 
@@ -84,7 +83,7 @@ class ClaimEditorView extends StatelessWidget {
                 )
               : null,
           body: ListView(
-            padding: scrollPaddingAvoidingSystemInsets(context),
+            padding: const EdgeInsets.all(AppSpacing.large),
             children: [
               Text(status, style: Theme.of(context).textTheme.titleMedium),
               if (viewModel.error != null) ...[
@@ -126,220 +125,249 @@ class ClaimEditorView extends StatelessWidget {
       );
       return;
     }
-    var categoryId = existing?.categoryId ?? categories.first.id;
-    final amountController = TextEditingController(
+    // Controllers live on [_ClaimItemSheet] State so they survive the
+    // bottom-sheet exit animation (disposing when showModalBottomSheet's
+    // future completes races the still-mounted route).
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => _ClaimItemSheet(
+        viewModel: viewModel,
+        categories: categories,
+        existing: existing,
+      ),
+    );
+  }
+}
+
+/// Owns TextEditingControllers for the add/edit-item sheet.
+class _ClaimItemSheet extends StatefulWidget {
+  const _ClaimItemSheet({
+    required this.viewModel,
+    required this.categories,
+    this.existing,
+  });
+
+  final ClaimEditorViewModel viewModel;
+  final List<({String id, String name})> categories;
+  final ClaimItem? existing;
+
+  @override
+  State<_ClaimItemSheet> createState() => _ClaimItemSheetState();
+}
+
+class _ClaimItemSheetState extends State<_ClaimItemSheet> {
+  late String _categoryId;
+  late DateTime _expenseDate;
+  late final TextEditingController _amountController;
+  late final TextEditingController _companyAmountController;
+  late final TextEditingController _currencyController;
+  late final TextEditingController _rateController;
+  late final TextEditingController _descriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+    final existing = widget.existing;
+    final vm = widget.viewModel;
+    _categoryId = existing?.categoryId ?? widget.categories.first.id;
+    _expenseDate = existing?.expenseDate ?? DateTime.now();
+    _amountController = TextEditingController(
       text: existing == null
           ? ''
           : formatAmountMinor(existing.paidAmountMinor, existing.paidCurrency),
     );
-    final companyAmountController = TextEditingController(
+    _companyAmountController = TextEditingController(
       text: existing == null
           ? ''
           : formatAmountMinor(
               existing.companyCurrencyAmountMinor,
-              viewModel.companyCurrency,
+              vm.companyCurrency,
             ),
     );
-    final currencyController = TextEditingController(
-      text: existing?.paidCurrency ?? viewModel.companyCurrency,
+    _currencyController = TextEditingController(
+      text: existing?.paidCurrency ?? vm.companyCurrency,
     );
-    final rateController = TextEditingController(
+    _rateController = TextEditingController(
       text: existing?.employeeStatedRate?.toString() ?? '',
     );
-    final descriptionController = TextEditingController(
+    _descriptionController = TextEditingController(
       text: existing?.description ?? '',
     );
-    var expenseDate = existing?.expenseDate ?? DateTime.now();
+  }
 
-    final saved = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) {
-        return StatefulBuilder(
-          builder: (ctx, setLocal) {
-            final hint = viewModel.spendingHintFor(categoryId);
-            return SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: AppSpacing.large,
-                  right: AppSpacing.large,
-                  top: AppSpacing.large,
-                  bottom:
-                      MediaQuery.viewInsetsOf(ctx).bottom + AppSpacing.large,
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _companyAmountController.dispose();
+    _currencyController.dispose();
+    _rateController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  void _save(BuildContext context) {
+    final vm = widget.viewModel;
+    final existing = widget.existing;
+    final paidCurrency = _currencyController.text.trim();
+    final paid = parseAmountToMinor(
+      _amountController.text,
+      paidCurrency.isEmpty ? vm.companyCurrency : paidCurrency,
+    );
+    final company = parseAmountToMinor(
+      _companyAmountController.text,
+      vm.companyCurrency,
+    );
+    if (paid == null || company == null || paid <= 0 || company <= 0) {
+      return;
+    }
+    final rateText = _rateController.text.trim();
+    final rate = rateText.isEmpty ? null : double.tryParse(rateText);
+    final desc = _descriptionController.text.trim();
+    Navigator.pop(context);
+    if (existing == null) {
+      vm.addItem(
+        categoryId: _categoryId,
+        expenseDate: _expenseDate,
+        paidCurrency: paidCurrency.isEmpty ? vm.companyCurrency : paidCurrency,
+        paidAmountMinor: paid,
+        companyCurrencyAmountMinor: company,
+        description: desc.isEmpty ? null : desc,
+        employeeStatedRate: rate,
+      );
+    } else {
+      vm.updateItem(
+        claimItemId: existing.id,
+        categoryId: _categoryId,
+        expenseDate: _expenseDate,
+        paidCurrency: paidCurrency.isEmpty ? vm.companyCurrency : paidCurrency,
+        paidAmountMinor: paid,
+        companyCurrencyAmountMinor: company,
+        description: desc.isEmpty ? null : desc,
+        clearDescription: desc.isEmpty,
+        employeeStatedRate: rate,
+        clearEmployeeStatedRate: rate == null,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = l10nOf(context);
+    final vm = widget.viewModel;
+    final existing = widget.existing;
+    final hint = vm.spendingHintFor(_categoryId);
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: AppSpacing.large,
+          right: AppSpacing.large,
+          top: AppSpacing.large,
+          bottom: MediaQuery.viewInsetsOf(context).bottom + AppSpacing.large,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                existing == null ? l10n.claimsAddItem : l10n.claimsEditItem,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: AppSpacing.medium),
+              DropdownButtonFormField<String>(
+                initialValue: _categoryId,
+                decoration: InputDecoration(
+                  labelText: l10n.claimsCategoryLabel,
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        existing == null
-                            ? l10n.claimsAddItem
-                            : l10n.claimsEditItem,
-                        style: Theme.of(ctx).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: AppSpacing.medium),
-                      DropdownButtonFormField<String>(
-                        initialValue: categoryId,
-                        decoration: InputDecoration(
-                          labelText: l10n.claimsCategoryLabel,
-                        ),
-                        items: [
-                          for (final c in categories)
-                            DropdownMenuItem(value: c.id, child: Text(c.name)),
-                        ],
-                        onChanged: (v) {
-                          if (v == null) return;
-                          setLocal(() => categoryId = v);
-                        },
-                      ),
-                      if (hint != null) ...[
-                        const SizedBox(height: AppSpacing.base),
-                        Text(
-                          l10n.claimsSpendingHint(
-                            formatAmountMinor(
-                              hint.maxAmountMinor,
-                              viewModel.companyCurrency,
-                            ),
-                            hint.unitLabel,
-                          ),
-                          style: Theme.of(ctx).textTheme.bodySmall,
-                        ),
-                      ],
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: Text(l10n.claimsExpenseDateLabel),
-                        subtitle: Text(
-                          '${expenseDate.year}-'
-                          '${expenseDate.month.toString().padLeft(2, '0')}-'
-                          '${expenseDate.day.toString().padLeft(2, '0')}',
-                        ),
-                        onTap: () async {
-                          final picked = await showDatePicker(
-                            context: ctx,
-                            initialDate: expenseDate,
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                          );
-                          if (picked != null) {
-                            setLocal(() => expenseDate = picked);
-                          }
-                        },
-                      ),
-                      TextField(
-                        controller: amountController,
-                        decoration: InputDecoration(
-                          labelText: l10n.claimsPaidAmountLabel,
-                        ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                      ),
-                      TextField(
-                        controller: currencyController,
-                        decoration: InputDecoration(
-                          labelText: l10n.claimsPaidCurrencyLabel,
-                        ),
-                      ),
-                      TextField(
-                        controller: rateController,
-                        decoration: InputDecoration(
-                          labelText: l10n.claimsRateOptionalLabel,
-                        ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                      ),
-                      TextField(
-                        controller: companyAmountController,
-                        decoration: InputDecoration(
-                          labelText: l10n.claimsCompanyAmountLabel(
-                            viewModel.companyCurrency,
-                          ),
-                        ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                      ),
-                      TextField(
-                        controller: descriptionController,
-                        decoration: InputDecoration(
-                          labelText: l10n.claimsDescriptionLabel,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.medium),
-                      ElevatedButton(
-                        onPressed: () {
-                          final paidCurrency = currencyController.text.trim();
-                          final paid = parseAmountToMinor(
-                            amountController.text,
-                            paidCurrency.isEmpty
-                                ? viewModel.companyCurrency
-                                : paidCurrency,
-                          );
-                          final company = parseAmountToMinor(
-                            companyAmountController.text,
-                            viewModel.companyCurrency,
-                          );
-                          if (paid == null ||
-                              company == null ||
-                              paid <= 0 ||
-                              company <= 0) {
-                            return;
-                          }
-                          final rateText = rateController.text.trim();
-                          final rate = rateText.isEmpty
-                              ? null
-                              : double.tryParse(rateText);
-                          final desc = descriptionController.text.trim();
-                          Navigator.pop(ctx, true);
-                          if (existing == null) {
-                            viewModel.addItem(
-                              categoryId: categoryId,
-                              expenseDate: expenseDate,
-                              paidCurrency: paidCurrency.isEmpty
-                                  ? viewModel.companyCurrency
-                                  : paidCurrency,
-                              paidAmountMinor: paid,
-                              companyCurrencyAmountMinor: company,
-                              description: desc.isEmpty ? null : desc,
-                              employeeStatedRate: rate,
-                            );
-                          } else {
-                            viewModel.updateItem(
-                              claimItemId: existing.id,
-                              categoryId: categoryId,
-                              expenseDate: expenseDate,
-                              paidCurrency: paidCurrency.isEmpty
-                                  ? viewModel.companyCurrency
-                                  : paidCurrency,
-                              paidAmountMinor: paid,
-                              companyCurrencyAmountMinor: company,
-                              description: desc.isEmpty ? null : desc,
-                              clearDescription: desc.isEmpty,
-                              employeeStatedRate: rate,
-                              clearEmployeeStatedRate: rate == null,
-                            );
-                          }
-                        },
-                        child: Text(l10n.actionSave),
-                      ),
-                    ],
+                items: [
+                  for (final c in widget.categories)
+                    DropdownMenuItem(value: c.id, child: Text(c.name)),
+                ],
+                onChanged: (v) {
+                  if (v == null) return;
+                  setState(() => _categoryId = v);
+                },
+              ),
+              if (hint != null) ...[
+                const SizedBox(height: AppSpacing.base),
+                Text(
+                  l10n.claimsSpendingHint(
+                    formatAmountMinor(hint.maxAmountMinor, vm.companyCurrency),
+                    hint.unitLabel,
                   ),
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n.claimsExpenseDateLabel),
+                subtitle: Text(
+                  '${_expenseDate.year}-'
+                  '${_expenseDate.month.toString().padLeft(2, '0')}-'
+                  '${_expenseDate.day.toString().padLeft(2, '0')}',
+                ),
+                onTap: () async {
+                  final picked = await showDatePicker(
+                    context: context,
+                    initialDate: _expenseDate,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (picked != null) {
+                    setState(() => _expenseDate = picked);
+                  }
+                },
+              ),
+              TextField(
+                controller: _amountController,
+                decoration: InputDecoration(
+                  labelText: l10n.claimsPaidAmountLabel,
+                ),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
                 ),
               ),
-            );
-          },
-        );
-      },
+              TextField(
+                controller: _currencyController,
+                decoration: InputDecoration(
+                  labelText: l10n.claimsPaidCurrencyLabel,
+                ),
+              ),
+              TextField(
+                controller: _rateController,
+                decoration: InputDecoration(
+                  labelText: l10n.claimsRateOptionalLabel,
+                ),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+              ),
+              TextField(
+                controller: _companyAmountController,
+                decoration: InputDecoration(
+                  labelText: l10n.claimsCompanyAmountLabel(vm.companyCurrency),
+                ),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
+              ),
+              TextField(
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  labelText: l10n.claimsDescriptionLabel,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.medium),
+              ElevatedButton(
+                onPressed: () => _save(context),
+                child: Text(l10n.actionSave),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
-    amountController.dispose();
-    companyAmountController.dispose();
-    currencyController.dispose();
-    rateController.dispose();
-    descriptionController.dispose();
-    // ignore unused; sheet returns whether save was pressed
-    saved;
   }
 }
 

@@ -241,9 +241,19 @@ class SmaraAccountingApp extends StatelessWidget {
             reachability: context.read<LocalNetworkReachability>(),
           ),
         ),
-        ProxyProvider2<AppDatabase, SigningKeyService, SyncMergeRepository>(
-          update: (_, db, keys, _) =>
-              SyncMergeRepository(database: db, signingKeyService: keys),
+        ProxyProvider4<
+          AppDatabase,
+          SigningKeyService,
+          MetadataOutbox,
+          DeviceCertificateStore,
+          SyncMergeRepository
+        >(
+          update: (_, db, keys, outbox, certs, _) => SyncMergeRepository(
+            database: db,
+            signingKeyService: keys,
+            metadataOutbox: outbox,
+            certificates: certs,
+          ),
         ),
         ProxyProvider2<AppDatabase, ActiveBooksSession, ClaimReceiptStore>(
           update: (_, db, session, _) {
@@ -283,17 +293,22 @@ class SmaraAccountingApp extends StatelessWidget {
             return PlatformClaimReceiptPicker();
           },
         ),
-        ProxyProvider3<
+        ProxyProvider5<
           MembershipRepository,
           AccountRepository,
           AppDatabase,
+          MetadataOutbox,
+          IdentityIdSource,
           ClaimPersonService
         >(
-          update: (_, membership, accounts, db, _) => ClaimPersonService(
-            membership: membership,
-            accounts: accounts,
-            database: db,
-          ),
+          update: (_, membership, accounts, db, outbox, identitySource, _) =>
+              ClaimPersonService(
+                membership: membership,
+                accounts: accounts,
+                database: db,
+                outbox: outbox,
+                currentIdentityId: identitySource.current,
+              ),
         ),
         ProxyProvider<ActiveBooksSession, BooksSetStore>(
           update: (_, session, _) => session.store,
@@ -459,7 +474,8 @@ class SmaraAccountingApp extends StatelessWidget {
                     previous.booksGeneration == session.generation) {
                   return previous;
                 }
-                previous?.dispose();
+                // Do not dispose [previous] here — ChangeNotifierProxyProvider
+                // disposes the prior notifier when update returns a new one.
                 return RegisterViewModel(
                   ledgerRepository: repository,
                   accountRepository: accountRepository,
@@ -484,7 +500,6 @@ class SmaraAccountingApp extends StatelessWidget {
                 previous.booksGeneration == session.generation) {
               return previous;
             }
-            previous?.dispose();
             return SummaryViewModel(
               ledgerRepository: repository,
               accountRepository: accountRepository,
@@ -506,7 +521,6 @@ class SmaraAccountingApp extends StatelessWidget {
                 previous.booksGeneration == session.generation) {
               return previous;
             }
-            previous?.dispose();
             return CategoryManagementViewModel(
               categoryRepository: repository,
               booksGeneration: session.generation,
@@ -588,7 +602,8 @@ class SmaraAccountingApp extends StatelessWidget {
                     previous.booksGeneration == session.generation) {
                   return previous;
                 }
-                previous?.dispose();
+                // Do not dispose [previous] here — ChangeNotifierProxyProvider
+                // disposes the prior notifier when update returns a new one.
                 return HomeViewModel(
                   ledgerRepository: repository,
                   settingsRepository: settings,
@@ -614,7 +629,6 @@ class SmaraAccountingApp extends StatelessWidget {
                 previous.booksGeneration == session.generation) {
               return previous;
             }
-            previous?.dispose();
             return AccountManagementViewModel(
               accountRepository: accountRepository,
               booksGeneration: session.generation,
@@ -635,7 +649,6 @@ class SmaraAccountingApp extends StatelessWidget {
                 previous.booksGeneration == session.generation) {
               return previous;
             }
-            previous?.dispose();
             return PayeeManagementViewModel(
               payeeRepository: repository,
               booksGeneration: session.generation,
@@ -764,6 +777,22 @@ class _AppRouterHostState extends State<_AppRouterHost>
       _booksGeneration = session.generation;
       _router?.dispose();
       _router = _buildRouter();
+      // Restart advertise/browse against the newly active books set (join
+      // and books-switcher both bump generation), then pull catch-up so a
+      // newly joined Claimant receives categories before Claims opens.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        unawaited(() async {
+          try {
+            final sync = context.read<PeerSyncService>();
+            await sync.startForeground();
+            await sync.syncNow();
+          } catch (_) {
+            // Post-join catch-up is best-effort; failures must not abort the
+            // Flutter test / UI isolate.
+          }
+        }());
+      });
     }
     final localeController = context.watch<LocaleController>();
     return SnapshotHidingOverlay(

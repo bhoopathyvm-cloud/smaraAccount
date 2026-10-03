@@ -9,6 +9,7 @@ import '../../domain/models/join_request.dart';
 import '../../domain/models/linked_device.dart';
 import '../../domain/models/linked_device_role.dart';
 import '../../domain/models/membership_notice.dart';
+import '../../domain/peer_sync/tls_sync_transport.dart';
 import '../database/app_database.dart';
 import 'identity_repository.dart';
 
@@ -482,6 +483,7 @@ class MembershipRepository {
     required String joinerDisplayName,
     required List<int> joinerSigningPublicKey,
     required String joinerDeviceCertFingerprint,
+    List<int> joinerDeviceCertDer = const [],
     String? joinerIdentityId,
     String? peerHint,
     String? owedToAccountId,
@@ -519,6 +521,15 @@ class MembershipRepository {
       publicKey: joinerSigningPublicKey,
       identityId: joinerIdentityId,
     );
+    if (joinerDeviceCertDer.isNotEmpty) {
+      await _certs.rememberPeerCertificate(
+        DeviceCertificate(
+          derBytes: joinerDeviceCertDer,
+          fingerprint: joinerDeviceCertFingerprint,
+          certificatePem: TlsSyncTransport.derToPem(joinerDeviceCertDer),
+        ),
+      );
+    }
     final device = await addDevice(
       actorDeviceId: actorDeviceId,
       deviceId: joinerDeviceId,
@@ -558,6 +569,58 @@ class MembershipRepository {
       publicKey: payload.signingPublicKey,
       identityId: payload.hostIdentityId,
     );
+    if (payload.deviceCertDer.isNotEmpty) {
+      await _certs.rememberPeerCertificate(
+        DeviceCertificate(
+          derBytes: payload.deviceCertDer,
+          fingerprint: payload.deviceCertFingerprint,
+          certificatePem: TlsSyncTransport.derToPem(payload.deviceCertDer),
+        ),
+      );
+    }
+  }
+
+  /// Seeds host Owner + local member rows on a freshly opened joined books
+  /// set (joiner side). Does not require an existing Owner actor — the set
+  /// is empty until this runs. Idempotent when both rows already exist.
+  Future<void> seedJoinerMembership({
+    required JoinQrPayload payload,
+    required String localDeviceId,
+    required String localDisplayName,
+    required String localSigningIdentityId,
+    required String localDeviceCertFingerprint,
+    Set<LinkedDeviceRole>? localRoles,
+  }) async {
+    final roles =
+        localRoles ??
+        (payload.personRoles.isNotEmpty
+            ? payload.personRoles
+            : {payload.roleOffer});
+    final host = await findByDeviceId(payload.hostDeviceId);
+    if (host == null || !host.isActive) {
+      await _insertMember(
+        deviceId: payload.hostDeviceId,
+        displayName: payload.hostDisplayName,
+        signingIdentityId: payload.hostIdentityId,
+        deviceCertFingerprint: payload.deviceCertFingerprint,
+        roles: {LinkedDeviceRole.owner},
+        canAdd: true,
+        emitNotice: false,
+      );
+    }
+    final local = await findByDeviceId(localDeviceId);
+    if (local == null || !local.isActive) {
+      await _insertMember(
+        deviceId: localDeviceId,
+        displayName: localDisplayName,
+        signingIdentityId: localSigningIdentityId,
+        deviceCertFingerprint: localDeviceCertFingerprint,
+        roles: roles,
+        canAdd: roles.contains(LinkedDeviceRole.owner),
+        emitNotice: false,
+        personDisplayName: payload.personDisplayName,
+      );
+    }
   }
 
   /// Creates a join request after restoring a Books Copy.
@@ -649,6 +712,15 @@ class MembershipRepository {
       publicKey: row.signingPublicKey,
       identityId: null,
     );
+    if (row.deviceCertDer.isNotEmpty) {
+      await _certs.rememberPeerCertificate(
+        DeviceCertificate(
+          derBytes: row.deviceCertDer,
+          fingerprint: row.deviceCertFingerprint,
+          certificatePem: TlsSyncTransport.derToPem(row.deviceCertDer),
+        ),
+      );
+    }
     final linked = await addDevice(
       actorDeviceId: actorDeviceId,
       deviceId: row.requesterDeviceId,

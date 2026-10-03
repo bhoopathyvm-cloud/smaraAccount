@@ -13,7 +13,12 @@ class JoinCode {
        expiresAt = createdAt.toUtc().add(joinCodeTtl);
 
   /// How long a freshly shown code remains acceptable.
-  static const joinCodeTtl = Duration(minutes: 2);
+  /// Production TTL is 2 minutes (linked-devices task 12.3). Company-sync
+  /// cold simulator boots can exceed that between Owner publish and joiner
+  /// lookup, so the harness uses 5 minutes under `COMPANY_SYNC_TEST`.
+  static const joinCodeTtl = bool.fromEnvironment('COMPANY_SYNC_TEST')
+      ? Duration(minutes: 5)
+      : Duration(minutes: 2);
 
   /// 31 symbols without 0/O/1/I/L.
   static const alphabet = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';

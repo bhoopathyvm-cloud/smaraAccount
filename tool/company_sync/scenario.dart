@@ -72,11 +72,14 @@ List<CompanySyncStep> acmeTravelScenario({int employees = 2}) {
       id: 'owner.configure_limits',
       role: 'owner',
       dependsOn: ['owner.create_company'],
+      timeout: Duration(minutes: 5),
     ),
     const CompanySyncStep(
       id: 'approver.ready',
       role: 'approver',
+      // Waits through create_company (cold macOS build can exceed 2 minutes).
       dependsOn: ['owner.configure_limits'],
+      timeout: Duration(minutes: 10),
     ),
     const CompanySyncStep(
       id: 'approver.join',
@@ -89,7 +92,7 @@ List<CompanySyncStep> acmeTravelScenario({int employees = 2}) {
       role: 'owner',
       // Parallel with approver.join (value-relay handshake).
       dependsOn: ['owner.configure_limits'],
-      timeout: Duration(minutes: 5),
+      timeout: Duration(minutes: 10),
     ),
   ];
 
@@ -99,19 +102,25 @@ List<CompanySyncStep> acmeTravelScenario({int employees = 2}) {
         ? 'owner.confirm_approver'
         : 'owner.confirm_claimant_${i - 1}';
     steps.addAll([
-      CompanySyncStep(id: '$role.ready', role: role, dependsOn: [priorConfirm]),
+      CompanySyncStep(
+        id: '$role.ready',
+        role: role,
+        dependsOn: [priorConfirm],
+        // Prior confirm can wait on a slow check-code handshake.
+        timeout: const Duration(minutes: 10),
+      ),
       CompanySyncStep(
         id: '$role.join',
         role: role,
         dependsOn: ['$role.ready'],
-        timeout: const Duration(minutes: 5),
+        timeout: const Duration(minutes: 8),
       ),
       CompanySyncStep(
         id: 'owner.confirm_$role',
         role: 'owner',
         // Parallel with $role.join.
         dependsOn: [priorConfirm],
-        timeout: const Duration(minutes: 5),
+        timeout: const Duration(minutes: 8),
       ),
     ]);
   }
@@ -184,35 +193,41 @@ List<CompanySyncStep> acmeTravelScenario({int employees = 2}) {
       id: 'owner.competing_rename',
       role: 'owner',
       dependsOn: [if (n >= 3) 'owner.verify_erase' else 'owner.settle'],
+      // Claimants/Approver may already be waiting on this chain; keep headroom
+      // above owner.settle (10m) so permission waits do not abort early.
+      timeout: const Duration(minutes: 15),
     ),
     CompanySyncStep(
       id: 'approver.competing_rename',
       role: 'approver',
       dependsOn: [if (n >= 3) 'owner.verify_erase' else 'owner.settle'],
+      timeout: const Duration(minutes: 15),
     ),
     const CompanySyncStep(
       id: 'all.verify_rename',
       role: 'owner',
       dependsOn: ['owner.competing_rename', 'approver.competing_rename'],
-      timeout: Duration(minutes: 5),
+      timeout: Duration(minutes: 10),
     ),
     for (var i = 0; i < n; i++)
       CompanySyncStep(
         id: 'claimant_$i.privacy_check',
         role: 'claimant_$i',
+        // Requested right after submit; must outlast settle + renames.
         dependsOn: const ['all.verify_rename'],
+        timeout: const Duration(minutes: 20),
       ),
     CompanySyncStep(
       id: 'owner.pass_criteria',
       role: 'owner',
       dependsOn: [for (var i = 0; i < n; i++) 'claimant_$i.privacy_check'],
-      timeout: const Duration(minutes: 5),
+      timeout: const Duration(minutes: 10),
     ),
     CompanySyncStep(
       id: 'approver.pass_criteria',
       role: 'approver',
       dependsOn: [for (var i = 0; i < n; i++) 'claimant_$i.privacy_check'],
-      timeout: const Duration(minutes: 5),
+      timeout: const Duration(minutes: 10),
     ),
   ]);
 

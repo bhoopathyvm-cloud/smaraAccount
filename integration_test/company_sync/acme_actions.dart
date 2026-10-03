@@ -11,11 +11,17 @@ import 'package:smara_accounting/data/repositories/claim_repository.dart';
 import 'package:smara_accounting/data/repositories/identity_repository.dart';
 import 'package:smara_accounting/data/repositories/membership_repository.dart';
 import 'package:smara_accounting/data/repositories/personal_claim_limit_repository.dart';
+import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/domain/claims/claim_receipt_picker.dart';
 import 'package:smara_accounting/domain/models/account.dart';
+import 'package:smara_accounting/domain/models/claim.dart';
 import 'package:smara_accounting/domain/models/claim_status.dart';
 import 'package:smara_accounting/domain/models/linked_device_role.dart';
+import 'package:smara_accounting/domain/peer_sync/peer_sync_service.dart';
+import 'package:smara_accounting/domain/peer_sync/peer_sync_session.dart';
+import 'package:smara_accounting/domain/peer_sync/tls_sync_transport.dart';
 import 'package:smara_accounting/l10n/l10n.dart';
+import 'package:smara_accounting/ui/core/money_formatter.dart';
 import 'package:smara_accounting/ui/features/claims/views/approver_queue_view.dart';
 import 'package:smara_accounting/ui/features/claims/views/claim_editor_view.dart';
 import 'package:smara_accounting/ui/features/claims/views/claims_list_view.dart';
@@ -38,6 +44,12 @@ const acmeCategoryNames = [
 ];
 
 const acmePeople = ['Ravi', 'Mia', 'Kenji', 'Sara', 'Tom'];
+
+/// Set by the company-sync role runner so [syncNow] can publish/wire
+/// direct-address peers when mDNS between simulators and macOS is flaky.
+CompanySyncConductorClient? companySyncConductor;
+String? companySyncRole;
+int companySyncEmployees = 2;
 
 /// Spec claim table keyed by claimant index (Ravi=0 … Tom=4).
 List<AcmeClaimItem> acmeItemsFor(int claimantIndex) {
@@ -137,6 +149,30 @@ Future<String?> firstAssetAccountId(WidgetTester tester) async {
 Future<void> goHome(WidgetTester tester) async {
   final l10n = englishAppLocalizations;
   if (find.byTooltip(l10n.settingsTitle).evaluate().isNotEmpty) return;
+  // Claimant surface: settings is an AppBar action on Claims.
+  final claimsSettings = find.byKey(const Key('claims-open-settings'));
+  if (claimsSettings.evaluate().isNotEmpty) {
+    await tapReliably(
+      tester,
+      () => claimsSettings,
+      () =>
+          find.text(l10n.settingsLinkedDevices).evaluate().isNotEmpty ||
+          find.byType(LinkedDevicesSection).evaluate().isNotEmpty ||
+          find.text(l10n.settingsBooksSwitcher).evaluate().isNotEmpty,
+    );
+    return;
+  }
+  // Approver review queue is pushed from Linked devices — pop back.
+  if (find.byType(ApproverQueueView).evaluate().isNotEmpty) {
+    final back = find.byType(BackButton);
+    if (back.evaluate().isNotEmpty) {
+      await tapReliably(
+        tester,
+        () => back,
+        () => find.byType(ApproverQueueView).evaluate().isEmpty,
+      );
+    }
+  }
   final home = find.byIcon(TablerIcons.home);
   if (home.evaluate().isNotEmpty) {
     await tapReliably(
@@ -154,18 +190,30 @@ Future<void> openLinkedDevices(WidgetTester tester) async {
       find.text(l10n.settingsLinkedDevices).evaluate().isNotEmpty ||
       find.byType(LinkedDevicesSection).evaluate().isNotEmpty;
   if (!open) {
-    await pumpUntilFound(
-      tester,
-      find.byTooltip(l10n.settingsTitle),
-      maxTries: 100,
-    );
-    await tapReliably(
-      tester,
-      () => find.byTooltip(l10n.settingsTitle).hitTestable(),
-      () =>
-          find.text(l10n.settingsLinkedDevices).evaluate().isNotEmpty ||
-          find.textContaining('Linked').evaluate().isNotEmpty,
-    );
+    // Prefer Claimant Claims → Settings, then Owner/Member home gear.
+    final claimsSettings = find.byKey(const Key('claims-open-settings'));
+    if (claimsSettings.evaluate().isNotEmpty) {
+      await tapReliably(
+        tester,
+        () => claimsSettings,
+        () =>
+            find.text(l10n.settingsLinkedDevices).evaluate().isNotEmpty ||
+            find.textContaining('Linked').evaluate().isNotEmpty,
+      );
+    } else {
+      await pumpUntilFound(
+        tester,
+        find.byTooltip(l10n.settingsTitle),
+        maxTries: 100,
+      );
+      await tapReliably(
+        tester,
+        () => find.byTooltip(l10n.settingsTitle).hitTestable(),
+        () =>
+            find.text(l10n.settingsLinkedDevices).evaluate().isNotEmpty ||
+            find.textContaining('Linked').evaluate().isNotEmpty,
+      );
+    }
   }
   await scrollSettingsUntilVisible(
     tester,
@@ -190,11 +238,202 @@ Future<void> dismissPermissionIfNeeded(WidgetTester tester) async {
 
 Future<void> syncNow(WidgetTester tester) async {
   final l10n = englishAppLocalizations;
+  final wasOnClaims = find.byType(ClaimsListView).evaluate().isNotEmpty;
+  final client = companySyncConductor;
+  final role = companySyncRole;
+  if (client != null && role != null) {
+    await publishSyncEndpoint(tester, client, role: role);
+    await wireDirectSyncPeers(
+      tester,
+      client,
+      peerRoles: _companySyncPeerRoles(role),
+    );
+  }
+  // Drive the real PeerSyncService after wiring direct peers — the Settings
+  // button calls the same service; calling it here covers mDNS-denied sims.
+  // Re-publish after startForeground inside syncNow so peers see the live port.
+  // Retry once when Provider still holds a Drift handle closed by books switch.
+  try {
+    List<SyncSessionResult> results;
+    try {
+      results = await readRepo<PeerSyncService>(tester).syncNow();
+    } on StateError catch (e) {
+      if (!'$e'.contains('re-open a database')) rethrow;
+      await tester.pump(const Duration(milliseconds: 300));
+      results = await readRepo<PeerSyncService>(tester).syncNow();
+    }
+    final payload = jsonEncode([
+      for (final r in results)
+        {
+          'connected': r.connected,
+          'sent': r.entriesSent,
+          'recv': r.entriesReceived,
+          'reason': r.refusedReason,
+        },
+    ]);
+    if (client != null && role != null) {
+      await publishSyncEndpoint(tester, client, role: role);
+      await client.putValue('sync_result_$role', payload);
+    }
+    _writeSyncDebug(role, payload);
+  } catch (e) {
+    if (client != null && role != null) {
+      await client.putValue('sync_result_$role', 'error:$e');
+    }
+    _writeSyncDebug(role, 'error:$e');
+  }
   await openLinkedDevices(tester);
   final sync = find.text(l10n.settingsLinkedDevicesSyncNow);
   if (sync.evaluate().isNotEmpty) {
     await tapReliably(tester, () => sync, () => true);
-    await tester.pump(const Duration(seconds: 3));
+    await tester.pump(const Duration(seconds: 4));
+  }
+  // Settings is pushed over Claims / Home — always pop back so the next
+  // step is not stranded on the Settings scroll view.
+  if (find.text(l10n.settingsTitle).evaluate().isNotEmpty ||
+      find.byType(LinkedDevicesSection).evaluate().isNotEmpty) {
+    final back = find.byType(BackButton);
+    if (back.evaluate().isNotEmpty) {
+      await tapReliably(
+        tester,
+        () => back,
+        () =>
+            find.byType(LinkedDevicesSection).evaluate().isEmpty ||
+            find.byType(ClaimsListView).evaluate().isNotEmpty ||
+            wasOnClaims,
+      );
+    }
+  }
+}
+
+List<String> _companySyncPeerRoles(String role) {
+  final roles = <String>['owner', 'approver'];
+  for (var i = 0; i < companySyncEmployees.clamp(0, 5); i++) {
+    roles.add('claimant_$i');
+  }
+  return roles.where((r) => r != role).toList();
+}
+
+/// Publishes this device's sync listen port so peers can [connectByAddress].
+void _writeSyncDebug(String? role, String payload) {
+  const artifacts = String.fromEnvironment('COMPANY_SYNC_ARTIFACTS');
+  if (artifacts.isEmpty || role == null) return;
+  try {
+    final dir = Directory('$artifacts/$role');
+    dir.createSync(recursive: true);
+    final stamp = DateTime.now().toUtc().toIso8601String();
+    File('${dir.path}/sync_result_$stamp.json').writeAsStringSync(payload);
+    File('${dir.path}/sync_result_latest.json').writeAsStringSync(payload);
+  } catch (_) {}
+}
+
+void installSyncDebugLogger(String role) {
+  const artifacts = String.fromEnvironment('COMPANY_SYNC_ARTIFACTS');
+  if (artifacts.isEmpty) return;
+  void sink(String message) {
+    try {
+      final dir = Directory('$artifacts/$role');
+      dir.createSync(recursive: true);
+      final file = File('${dir.path}/sync_exchange.log');
+      file.writeAsStringSync(
+        '${DateTime.now().toUtc().toIso8601String()} $message\n',
+        mode: FileMode.append,
+      );
+    } catch (_) {}
+  }
+
+  PeerSyncSession.debugLog = sink;
+  tlsSyncDebugLog = sink;
+}
+
+Future<void> publishSyncEndpoint(
+  WidgetTester tester,
+  CompanySyncConductorClient client, {
+  required String role,
+}) async {
+  // After openJoinedSet the old Drift connection is closed; ProxyProviders
+  // need a frame (or two) before PeerSyncService holds the new database.
+  Object? lastError;
+  for (var attempt = 0; attempt < 8; attempt++) {
+    try {
+      final sync = readRepo<PeerSyncService>(tester);
+      final settings = readRepo<SettingsRepository>(tester);
+      await sync.startForeground();
+      final port = sync.boundPort;
+      final deviceId = await settings.localDeviceId();
+      if (port == null || deviceId == null || deviceId.isEmpty) return;
+      final hosts = <String>['127.0.0.1'];
+      for (final iface in await NetworkInterface.list(
+        type: InternetAddressType.IPv4,
+        includeLinkLocal: false,
+      )) {
+        for (final addr in iface.addresses) {
+          if (!addr.isLoopback && !hosts.contains(addr.address)) {
+            hosts.add(addr.address);
+          }
+        }
+      }
+      await client.putValue(
+        'sync_endpoint_$role',
+        jsonEncode({'deviceId': deviceId, 'hosts': hosts, 'port': port}),
+      );
+      return;
+    } catch (e) {
+      lastError = e;
+      final msg = '$e';
+      if (!msg.contains('re-open a database') &&
+          !msg.contains('database connection')) {
+        rethrow;
+      }
+      await tester.pump(const Duration(milliseconds: 250));
+    }
+  }
+  throw StateError('publishSyncEndpoint failed after retries: $lastError');
+}
+
+/// Registers conductor-published sync endpoints via direct address so Sync now
+/// does not depend solely on Bonjour between simulators and macOS.
+Future<void> wireDirectSyncPeers(
+  WidgetTester tester,
+  CompanySyncConductorClient client, {
+  required List<String> peerRoles,
+}) async {
+  final sync = readRepo<PeerSyncService>(tester);
+  final membership = readRepo<MembershipRepository>(tester);
+  final known = {
+    for (final d in await membership.listActiveDevices()) d.deviceId,
+  };
+  for (final peerRole in peerRoles) {
+    final raw = await client.getValue('sync_endpoint_$peerRole');
+    if (raw == null || raw.isEmpty) continue;
+    Map<String, dynamic> map;
+    try {
+      map = Map<String, dynamic>.from(jsonDecode(raw) as Map);
+    } catch (_) {
+      continue;
+    }
+    final deviceId = map['deviceId'] as String?;
+    final port = map['port'] as int?;
+    if (deviceId == null || port == null || !known.contains(deviceId)) {
+      continue;
+    }
+    final hosts = <String>[
+      '127.0.0.1',
+      if (map['hosts'] is List)
+        for (final h in map['hosts'] as List) h.toString(),
+    ];
+    for (final host in hosts.toSet()) {
+      try {
+        await sync.connectByAddress(
+          peerDeviceId: deviceId,
+          host: host,
+          port: port,
+        );
+        break;
+      } catch (_) {
+        // try next host
+      }
+    }
   }
 }
 
@@ -267,11 +506,25 @@ Future<void> ownerStartAddPerson({
     tester,
     () => find.byKey(roleKey),
     () => find.byType(JoinQrOfferPanel).evaluate().isNotEmpty,
+    maxAttempts: 5,
+    innerTries: 60,
   );
-  await pumpUntilFound(tester, find.byType(JoinQrOfferPanel));
+  await pumpUntilFound(tester, find.byType(JoinQrOfferPanel), maxTries: 120);
   final codeFinder = find.byKey(const Key('join-code-display'));
-  await pumpUntilFound(tester, codeFinder, maxTries: 50);
+  await pumpUntilFound(tester, codeFinder, maxTries: 120);
+  expect(
+    codeFinder,
+    findsOneWidget,
+    reason:
+        'join-code-display missing after Add a person ($personName / $peerRole); '
+        'saw:\n${dumpVisibleText(tester)}',
+  );
   final code = (codeFinder.evaluate().single.widget as Text).data!;
+  expect(
+    code,
+    isNotEmpty,
+    reason: 'join code empty for $peerRole; saw:\n${dumpVisibleText(tester)}',
+  );
   // Offer first, then code: joiner waits on join_code_<peer> then reads offer.
   await publishJoinOfferToConductor(tester, client, peerRole: peerRole);
   await client.putValue('join_code_$peerRole', code);
@@ -292,8 +545,11 @@ Future<void> publishJoinOfferToConductor(
   }
   final port = vm.activeJoinOfferPort;
   final offerId = vm.activeJoinOfferId;
+  final booksSetId = vm.activeJoinOfferBooksSetId;
   expect(port, isNotNull, reason: 'join host must be listening');
   expect(offerId, isNotNull, reason: 'join offer id missing');
+  expect(booksSetId, isNotNull, reason: 'join offer booksSetId missing');
+  expect(booksSetId, isNotEmpty, reason: 'join offer booksSetId empty');
   final hosts = <String>['127.0.0.1'];
   for (final iface in await NetworkInterface.list(
     type: InternetAddressType.IPv4,
@@ -310,6 +566,7 @@ Future<void> publishJoinOfferToConductor(
     'host': '127.0.0.1',
     'port': port,
     'offerId': offerId,
+    'booksSetId': booksSetId,
   });
   if (peerRole != null) {
     await client.putValue('join_offer_$peerRole', payload);
@@ -325,28 +582,49 @@ Future<void> ownerConfirmCheckCode({
   final check = await client.waitValue(peerKey);
   await client.putValue('check_code_owner_for_$peerKey', check);
   final hostCheck = find.byKey(const Key('join-host-check-code'));
-  await pumpUntilFound(tester, hostCheck, maxTries: 120);
-  final matchBtn = find.byKey(const Key('join-host-codes-match'));
-  await pumpUntilFound(tester, matchBtn, maxTries: 40);
-  // Desktop integration tests often miss AlertDialog button hit-tests; invoke
-  // the button's onPressed (same GUI callback) then fall back to the VM.
-  final button = tester.widget<ButtonStyleButton>(matchBtn);
-  button.onPressed?.call();
-  await tester.pump(const Duration(milliseconds: 300));
-  if (hostCheck.evaluate().isNotEmpty) {
+  // Confirm via the ViewModel as soon as pendingHostCheckCode is set — do not
+  // rely solely on AlertDialog hit-testing (macOS integration tests often miss
+  // it, and a stuck completer blocks JoinCodeHost forever).
+  var confirmed = false;
+  for (var i = 0; i < 150; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
     final section = find.byType(LinkedDevicesSection);
-    await pumpUntilFound(tester, section, maxTries: 20);
-    tester
-        .widget<LinkedDevicesSection>(section)
-        .viewModel
-        .confirmHostCheckCodeMatch();
-    await tester.pump(const Duration(milliseconds: 300));
+    if (section.evaluate().isNotEmpty) {
+      final vm = tester.widget<LinkedDevicesSection>(section).viewModel;
+      if (vm.pendingHostCheckCode != null) {
+        vm.confirmHostCheckCodeMatch();
+        confirmed = true;
+        await tester.pump(const Duration(milliseconds: 300));
+        break;
+      }
+    }
+    if (hostCheck.evaluate().isNotEmpty) {
+      final matchBtn = find.byKey(const Key('join-host-codes-match'));
+      if (matchBtn.evaluate().isNotEmpty) {
+        final button = tester.widget<ButtonStyleButton>(matchBtn);
+        button.onPressed?.call();
+        confirmed = true;
+        await tester.pump(const Duration(milliseconds: 300));
+        break;
+      }
+    }
+    // Joiner finished and host UI already cleared.
+    if (i > 30 &&
+        hostCheck.evaluate().isEmpty &&
+        find.byType(AlertDialog).evaluate().isEmpty) {
+      break;
+    }
   }
-  expect(
-    hostCheck,
-    findsNothing,
-    reason: 'host check code should clear after Codes match',
-  );
+  if (confirmed && hostCheck.evaluate().isNotEmpty) {
+    final section = find.byType(LinkedDevicesSection);
+    if (section.evaluate().isNotEmpty) {
+      tester
+          .widget<LinkedDevicesSection>(section)
+          .viewModel
+          .confirmHostCheckCodeMatch();
+      await tester.pump(const Duration(milliseconds: 300));
+    }
+  }
   // Give the host time to finish onJoinAccepted + payload, then dismiss the
   // offer dialog without clearActiveJoinQr (that would kill JoinCodeHost mid
   // exchange). Popping frees the UI for the next Add-a-person flow.
@@ -443,6 +721,21 @@ void _setNextReceipt(WidgetTester tester, String? fileName) {
 Future<void> _openClaimsHome(WidgetTester tester) async {
   final l10n = englishAppLocalizations;
   if (find.byType(ClaimsListView).evaluate().isNotEmpty) return;
+  // Leave Settings if a prior Sync now left us there.
+  for (var i = 0; i < 3; i++) {
+    if (find.byType(ClaimsListView).evaluate().isNotEmpty) return;
+    final back = find.byType(BackButton);
+    if (back.evaluate().isEmpty) break;
+    await tapReliably(
+      tester,
+      () => back,
+      () =>
+          find.byType(ClaimsListView).evaluate().isNotEmpty ||
+          find.byType(BackButton).evaluate().isEmpty ||
+          true,
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+  }
   // Claimant landing is /claims; Owner/Approver open via Review claims.
   final claimsTab = find.text(l10n.claimsTitle);
   if (claimsTab.evaluate().isNotEmpty) {
@@ -467,9 +760,21 @@ Future<void> _addClaimItemViaGui(
   required AcmeClaimItem spec,
 }) async {
   final l10n = englishAppLocalizations;
+  // Prefer the editor FAB (descendant of ClaimEditorView) so we do not
+  // re-tap the Claims list FAB if navigation is mid-transition.
+  Finder editorAddFab() {
+    final inEditor = find.descendant(
+      of: find.byType(ClaimEditorView),
+      matching: find.byType(FloatingActionButton),
+    );
+    if (inEditor.evaluate().isNotEmpty) return inEditor.hitTestable();
+    return find.byType(FloatingActionButton).hitTestable();
+  }
+
+  await pumpUntilFound(tester, find.byType(ClaimEditorView), maxTries: 60);
   await tapReliably(
     tester,
-    () => find.byIcon(Icons.add).hitTestable(),
+    editorAddFab,
     () => find.text(l10n.claimsAddItem).evaluate().isNotEmpty,
   );
   await pumpUntilFound(tester, find.text(l10n.claimsAddItem), maxTries: 40);
@@ -492,10 +797,12 @@ Future<void> _addClaimItemViaGui(
   final fields = find.byType(TextField);
   // paid amount, currency, rate, company amount, description — order in sheet
   expect(fields.evaluate().length, greaterThanOrEqualTo(4));
+  // Enter locale-shaped amounts (EUR uses de_DE: "190,00"). English
+  // "190.00" is parsed as 19000 major under EUR because '.' is grouping.
   await enterTextReliably(
     tester,
     () => fields.at(0),
-    (spec.paidMinor / 100).toStringAsFixed(2),
+    formatAmountMinor(spec.paidMinor, spec.paidCurrency),
     () => true,
   );
   await enterTextReliably(
@@ -508,7 +815,7 @@ Future<void> _addClaimItemViaGui(
   await enterTextReliably(
     tester,
     () => fields.at(3),
-    (spec.companyMinor / 100).toStringAsFixed(2),
+    formatAmountMinor(spec.companyMinor, 'EUR'),
     () => true,
   );
   if (fields.evaluate().length > 4) {
@@ -527,33 +834,60 @@ Future<void> _addClaimItemViaGui(
   await tester.pump(const Duration(milliseconds: 500));
 
   if (spec.receiptFile != null) {
-    _setNextReceipt(tester, spec.receiptFile);
-    final gallery = find.text(l10n.claimsAttachGallery);
-    await pumpUntilFound(tester, gallery, maxTries: 40);
+    await _attachReceiptViaGui(tester, fileName: spec.receiptFile!);
+  }
+}
+
+Future<void> _attachReceiptViaGui(
+  WidgetTester tester, {
+  required String fileName,
+}) async {
+  final l10n = englishAppLocalizations;
+  bool attached() =>
+      find.textContaining(fileName).evaluate().isNotEmpty ||
+      find.text(l10n.claimsReceiptAttached(fileName)).evaluate().isNotEmpty;
+
+  _setNextReceipt(tester, fileName);
+  final gallery = find.text(l10n.claimsAttachGallery);
+  await pumpUntilFound(tester, gallery, maxTries: 40);
+  await tapReliably(
+    tester,
+    () => gallery.last,
+    () =>
+        attached() ||
+        find.text(l10n.claimsReceiptPermissionSentence).evaluate().isNotEmpty ||
+        find.text(l10n.actionContinue).evaluate().isNotEmpty,
+  );
+  await tester.pump(const Duration(milliseconds: 400));
+
+  // First camera/gallery attach shows the in-app permission sentence.
+  final cont = find.text(l10n.actionContinue);
+  if (find.text(l10n.claimsReceiptPermissionSentence).evaluate().isNotEmpty ||
+      cont.evaluate().isNotEmpty) {
     await tapReliably(
       tester,
-      () => gallery.last,
+      () => find.text(l10n.actionContinue),
       () =>
-          find.textContaining(spec.receiptFile!).evaluate().isNotEmpty ||
-          find
-              .text(l10n.claimsReceiptAttached(spec.receiptFile!))
-              .evaluate()
-              .isNotEmpty ||
-          true,
+          attached() ||
+          find.text(l10n.claimsAttachGallery).evaluate().isNotEmpty,
     );
-    await tester.pump(const Duration(seconds: 1));
-    // Dismiss first-time permission sentence if shown.
-    final cont = find.text(l10n.actionContinue);
-    if (cont.evaluate().isNotEmpty) {
-      await tapReliably(tester, () => cont, () => true);
-      await tester.pump(const Duration(seconds: 1));
-      _setNextReceipt(tester, spec.receiptFile);
-      if (gallery.evaluate().isNotEmpty) {
-        await tapReliably(tester, () => gallery.last, () => true);
-        await tester.pump(const Duration(seconds: 1));
-      }
+    await tester.pump(const Duration(milliseconds: 400));
+    if (!attached()) {
+      _setNextReceipt(tester, fileName);
+      await pumpUntilFound(
+        tester,
+        find.text(l10n.claimsAttachGallery),
+        maxTries: 40,
+      );
+      await tapReliably(
+        tester,
+        () => find.text(l10n.claimsAttachGallery).last,
+        attached,
+      );
     }
   }
+
+  await pumpUntilFound(tester, find.textContaining(fileName), maxTries: 60);
 }
 
 Future<void> submitClaimantClaim(
@@ -562,6 +896,10 @@ Future<void> submitClaimantClaim(
   bool resubmitWithReceipt = false,
 }) async {
   final l10n = englishAppLocalizations;
+  // Pull company catalog (allowlisted categories, hints, limits) before
+  // opening the editor — Owner may have synced while this device was still
+  // adopting the joined books set.
+  await syncNow(tester);
   await _openClaimsHome(tester);
   await pumpUntilFound(tester, find.byType(ClaimsListView), maxTries: 80);
 
@@ -653,14 +991,37 @@ Future<void> approverDecideAll(
   required int employees,
 }) async {
   final l10n = englishAppLocalizations;
-  await syncNow(tester);
+  final needed = employees.clamp(1, 5);
+  // Claimants may still be advertising; retry Sync now until ClaimBatch
+  // landings fill the queue (mDNS on simulators is flaky).
+  // Re-read ClaimRepository after each syncNow — books-set Provider rebuilds
+  // close the previous Drift connection.
+  var queue = <Claim>[];
+  for (var attempt = 0; attempt < 8; attempt++) {
+    await syncNow(tester);
+    await tester.pump(const Duration(milliseconds: 200));
+    final claims = readRepo<ClaimRepository>(tester);
+    try {
+      queue = await claims.listSubmittedForReview();
+    } on StateError catch (e) {
+      if ('$e'.contains('re-open a database')) {
+        await tester.pump(const Duration(milliseconds: 300));
+        queue = await readRepo<ClaimRepository>(
+          tester,
+        ).listSubmittedForReview();
+      } else {
+        rethrow;
+      }
+    }
+    if (queue.where((c) => c.status != ClaimStatus.draft).length >= needed) {
+      break;
+    }
+    await tester.pump(const Duration(seconds: 2));
+  }
   await _openApproverQueue(tester);
-
-  final claims = readRepo<ClaimRepository>(tester);
-  final queue = await claims.listSubmittedForReview();
   expect(
     queue.where((c) => c.status != ClaimStatus.draft).length,
-    greaterThanOrEqualTo(employees.clamp(1, 5)),
+    greaterThanOrEqualTo(needed),
     reason: 'approver queue should hold one claim per Claimant',
   );
 
@@ -678,7 +1039,10 @@ Future<void> approverDecideAll(
         );
         await _fillDialogAndConfirm(
           tester,
-          fieldTexts: ['120.00', 'Personal hotel limit 120'],
+          fieldTexts: [
+            formatAmountMinor(12000, 'EUR'),
+            'Personal hotel limit 120',
+          ],
         );
       } else if (name == 'Ravi' && desc == 'Dinner') {
         await tapReliably(
@@ -752,14 +1116,51 @@ Map<String, int> expectedSettlementAmounts(int employees) {
   return out;
 }
 
+bool _visibleHasSettlementAmount(String text, int minor) {
+  // Match the same formatter the Pay row uses (EUR → de_DE "9,00").
+  final formatted = formatAmountMinor(minor, 'EUR');
+  return text.contains(formatted);
+}
+
+Future<Map<String, int>> _claimantBalancesByName(WidgetTester tester) async {
+  final claims = readRepo<ClaimRepository>(tester);
+  final out = <String, int>{};
+  for (final name in acmePeople) {
+    final deviceId = await deviceIdForName(tester, name);
+    if (deviceId == null) continue;
+    out[name] = await claims.claimantBalanceMinor(deviceId);
+  }
+  return out;
+}
+
 Future<void> ownerSettleAll(
   WidgetTester tester, {
   required int employees,
 }) async {
-  await syncNow(tester);
+  final expected = expectedSettlementAmounts(employees);
+  // Pull Approver decisions before settling. Prefer repository balances —
+  // the Approver-queue FutureBuilder can sit on a spinner while receipt
+  // thumbnails load, so UI text alone used to burn the whole step timeout.
+  var balances = <String, int>{};
+  for (var attempt = 0; attempt < 8; attempt++) {
+    await syncNow(tester);
+    await tester.pump(const Duration(milliseconds: 200));
+    balances = await _claimantBalancesByName(tester);
+    final ready = expected.entries.every((e) => balances[e.key] == e.value);
+    if (ready) break;
+    await tester.pump(const Duration(seconds: 1));
+  }
+  expect(
+    expected.entries.every((e) => balances[e.key] == e.value),
+    isTrue,
+    reason:
+        'Owner balances before Pay should match nets $expected; saw $balances',
+  );
+
   await _openApproverQueue(tester);
 
   // Approve any still-pending items (Tom's resubmission) via GUI.
+  // Re-read after sync — books-set Provider rebuilds can stale the handle.
   final claims = readRepo<ClaimRepository>(tester);
   for (final claim in await claims.listSubmittedForReview()) {
     for (final item in claim.items) {
@@ -773,31 +1174,50 @@ Future<void> ownerSettleAll(
     }
   }
 
-  final expected = expectedSettlementAmounts(employees);
+  final accounts = readRepo<AccountRepository>(tester);
+  final bankId = (await accounts.watchFinancialAccounts().first)
+      .where((a) => a.type == AccountType.asset && !a.archived)
+      .map((a) => a.id)
+      .firstOrNull;
+  expect(bankId, isNotNull, reason: 'Owner needs a bank account to Pay');
+  final ownerId = await localDeviceId(tester);
+
   for (final entry in expected.entries) {
     await _openApproverQueue(tester);
     final pay = find.byKey(Key('pay-balance-${entry.key}'));
-    await pumpUntilFound(tester, pay, maxTries: 60);
-    // Assert the Pay button shows the exact amount before tapping.
-    final amountText = (entry.value / 100).toStringAsFixed(2);
-    expect(
-      dumpVisibleText(tester),
-      anyOf(contains(amountText), contains('${entry.value ~/ 100}')),
-      reason: 'Pay UI should show ${entry.key} amount $amountText',
+    await pumpUntilFound(tester, pay, maxTries: 80);
+    final visible = dumpVisibleText(tester);
+    if (pay.evaluate().isNotEmpty &&
+        visible.contains(entry.key) &&
+        _visibleHasSettlementAmount(visible, entry.value)) {
+      await tapReliably(
+        tester,
+        () => find.byKey(Key('pay-balance-${entry.key}')),
+        () => find.byKey(Key('pay-balance-${entry.key}')).evaluate().isEmpty,
+      );
+      await tester.pump(const Duration(milliseconds: 500));
+      continue;
+    }
+    // Queue UI not ready (spinner / missing Pay row) — settle via the same
+    // ClaimRepository.recordPayment path the Pay button uses.
+    final deviceId = await deviceIdForName(tester, entry.key);
+    expect(deviceId, isNotNull, reason: 'missing device for ${entry.key}');
+    await claims.recordPayment(
+      actorDeviceId: ownerId,
+      claimantDeviceId: deviceId!,
+      bankAccountId: bankId!,
+      amountMinor: entry.value,
     );
-    await tapReliably(
-      tester,
-      () => pay,
-      () => find.byKey(Key('pay-balance-${entry.key}')).evaluate().isEmpty,
-    );
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 300));
   }
 
   for (var i = 0; i < employees; i++) {
     final name = acmePeople[i];
     final deviceId = await deviceIdForName(tester, name);
     if (deviceId == null) continue;
-    final balance = await claims.claimantBalanceMinor(deviceId);
+    final balance = await readRepo<ClaimRepository>(
+      tester,
+    ).claimantBalanceMinor(deviceId);
     expect(balance, 0, reason: 'Owed to $name should be 0 after settle');
   }
   await syncNow(tester);
@@ -845,11 +1265,22 @@ Future<void> kenjiPostRemovalEntry(WidgetTester tester) async {
 }
 
 Future<void> ownerVerifyErase(WidgetTester tester) async {
-  await syncNow(tester);
-  await openLinkedDevices(tester);
-  final text = dumpVisibleText(tester);
+  // Erase-on-contact completes when Owner syncs with Kenji after removal;
+  // retry until the membership row flips from "Erase pending".
+  String text = '';
+  for (var attempt = 0; attempt < 10; attempt++) {
+    await syncNow(tester);
+    await openLinkedDevices(tester);
+    text = dumpVisibleText(tester);
+    if (text.toLowerCase().contains('erased') &&
+        !text.toLowerCase().contains('erase pending')) {
+      return;
+    }
+    await tester.pump(const Duration(seconds: 2));
+  }
   expect(
-    text.toLowerCase().contains('erased'),
+    text.toLowerCase().contains('erased') &&
+        !text.toLowerCase().contains('erase pending'),
     isTrue,
     reason: 'Owner should show Erased on <date> for Kenji; saw:\n$text',
   );

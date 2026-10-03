@@ -1,21 +1,30 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../domain/crypto/entry_canonical_hash.dart';
 import '../../domain/crypto/signing_key_service.dart';
+import '../../domain/linked_devices/device_certificate_store.dart';
+import '../../domain/models/claim_item_decision_kind.dart';
+import '../../domain/models/claim_status.dart';
+import '../../domain/models/linked_device_role.dart';
 import '../../domain/models/membership_notice.dart';
 import '../../domain/models/transaction_direction.dart';
+import '../../domain/peer_sync/claim_sync_payloads.dart';
 import '../../domain/peer_sync/competing_fix_resolver.dart';
 import '../../domain/peer_sync/metadata_lww.dart';
 import '../../domain/peer_sync/peer_sync_session.dart';
 import '../../domain/peer_sync/sync_payloads.dart';
 import '../../domain/peer_sync/sync_settings_allowlist.dart';
+import '../../domain/peer_sync/tls_sync_transport.dart';
 import '../database/app_database.dart';
 import '../database/tables/account_groups_table.dart';
 import '../database/tables/accounts_table.dart';
 import 'ledger_chain_store.dart';
 import 'ledger_posting.dart';
 import 'metadata_clock_store.dart';
+import 'metadata_outbox.dart';
 import 'personal_claim_limit_repository.dart';
 import 'repository_date_utils.dart';
 
@@ -45,6 +54,8 @@ class SyncMergeRepository implements SyncLedgerView {
     required SigningKeyService signingKeyService,
     LedgerChainStore? chain,
     LedgerPosting? posting,
+    MetadataOutbox? metadataOutbox,
+    DeviceCertificateStore? certificates,
     DateTime Function()? clock,
     Uuid? uuid,
     this.localDeviceDisplayName = 'This device',
@@ -52,6 +63,8 @@ class SyncMergeRepository implements SyncLedgerView {
        _keys = signingKeyService,
        _chain = chain ?? LedgerChainStore(database),
        _posting = posting,
+       _outbox = metadataOutbox,
+       _certificates = certificates,
        _clock = clock ?? DateTime.now,
        _uuid = uuid ?? const Uuid();
 
@@ -59,6 +72,8 @@ class SyncMergeRepository implements SyncLedgerView {
   final SigningKeyService _keys;
   final LedgerChainStore _chain;
   final LedgerPosting? _posting;
+  final MetadataOutbox? _outbox;
+  final DeviceCertificateStore? _certificates;
   final DateTime Function() _clock;
   final Uuid _uuid;
   final String localDeviceDisplayName;
@@ -148,7 +163,158 @@ class SyncMergeRepository implements SyncLedgerView {
       fromDeviceId: fromDeviceId,
       fromDeviceDisplayName: fromDeviceId,
     );
+    if (batch.entries.isNotEmpty) {
+      PeerSyncSession.debugLog?.call(
+        'applyEntryBatch from=$fromDeviceId '
+        'offered=${batch.entries.length} '
+        'inserted=${result.insertedCount} '
+        'skipped=${result.skippedDuplicateCount} '
+        'rejected=${result.rejectedCount} '
+        'ids=${batch.entries.map((e) => '${e.signedByIdentityId}#${e.deviceChainSequence}').join(',')}',
+      );
+    }
     return result.insertedCount;
+  }
+
+  @override
+  Future<List<MetadataOperation>> pendingMetadataOperations() async {
+    final outbox = _outbox;
+    if (outbox == null) return const [];
+    return outbox.listAll();
+  }
+
+  @override
+  Future<int> applyPeerMetadataOps(MetadataOps ops) async {
+    final merged = await applyMetadataOps(ops);
+    return merged.length;
+  }
+
+  @override
+  Future<ClaimBatch> pendingClaimBatch() async {
+    final claimRows = await _db.select(_db.claims).get();
+    final claims = <SyncClaim>[];
+    for (final row in claimRows) {
+      final itemRows = await (_db.select(
+        _db.claimItems,
+      )..where((t) => t.claimId.equals(row.id))).get();
+      itemRows.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+      final items = <SyncClaimItem>[];
+      for (final item in itemRows) {
+        final decisionRow = await (_db.select(
+          _db.claimItemDecisions,
+        )..where((t) => t.claimItemId.equals(item.id))).getSingleOrNull();
+        final receiptRow = await (_db.select(
+          _db.claimReceipts,
+        )..where((t) => t.claimItemId.equals(item.id))).getSingleOrNull();
+        items.add(
+          SyncClaimItem(
+            id: item.id,
+            claimId: item.claimId,
+            categoryId: item.categoryId,
+            expenseDate: item.expenseDate,
+            description: item.description,
+            paidCurrency: item.paidCurrency,
+            paidAmountMinor: item.paidAmountMinor,
+            employeeStatedRate: item.employeeStatedRate,
+            rateUsed: item.rateUsed,
+            companyCurrencyAmountMinor: item.companyCurrencyAmountMinor,
+            sortOrder: item.sortOrder,
+            receiptId: receiptRow?.id,
+            decision: decisionRow == null
+                ? null
+                : SyncClaimDecision(
+                    id: decisionRow.id,
+                    claimItemId: decisionRow.claimItemId,
+                    kind: decisionRow.kind.name,
+                    decidedByDeviceId: decisionRow.decidedByDeviceId,
+                    decidedAt: decisionRow.decidedAt,
+                    approvedAmountMinor: decisionRow.approvedAmountMinor,
+                    reason: decisionRow.reason,
+                    postedEntryId: decisionRow.postedEntryId,
+                  ),
+          ),
+        );
+      }
+      claims.add(
+        SyncClaim(
+          id: row.id,
+          claimantDeviceId: row.claimantDeviceId,
+          status: row.status.name,
+          createdAt: row.createdAt,
+          updatedAt: row.updatedAt,
+          submittedAt: row.submittedAt,
+          paidAt: row.paidAt,
+          items: items,
+        ),
+      );
+    }
+    return ClaimBatch(claims: claims);
+  }
+
+  @override
+  Future<int> applyPeerClaimBatch(ClaimBatch batch) async {
+    var applied = 0;
+    for (final claim in batch.claims) {
+      final existing = await (_db.select(
+        _db.claims,
+      )..where((t) => t.id.equals(claim.id))).getSingleOrNull();
+      if (existing != null && !existing.updatedAt.isBefore(claim.updatedAt)) {
+        continue;
+      }
+      final status = ClaimStatus.values.byName(claim.status);
+      await _db
+          .into(_db.claims)
+          .insertOnConflictUpdate(
+            ClaimsCompanion.insert(
+              id: claim.id,
+              claimantDeviceId: claim.claimantDeviceId,
+              status: status,
+              createdAt: Value(claim.createdAt),
+              updatedAt: Value(claim.updatedAt),
+              submittedAt: Value(claim.submittedAt),
+              paidAt: Value(claim.paidAt),
+            ),
+          );
+      for (final item in claim.items) {
+        await _db
+            .into(_db.claimItems)
+            .insertOnConflictUpdate(
+              ClaimItemsCompanion.insert(
+                id: Value(item.id),
+                claimId: item.claimId,
+                categoryId: item.categoryId,
+                expenseDate: item.expenseDate,
+                description: Value(item.description),
+                paidCurrency: item.paidCurrency,
+                paidAmountMinor: item.paidAmountMinor,
+                employeeStatedRate: Value(item.employeeStatedRate),
+                rateUsed: Value(item.rateUsed),
+                companyCurrencyAmountMinor: item.companyCurrencyAmountMinor,
+                sortOrder: Value(item.sortOrder),
+              ),
+            );
+        final decision = item.decision;
+        if (decision != null) {
+          final kind = ClaimItemDecisionKind.values.byName(decision.kind);
+          await _db
+              .into(_db.claimItemDecisions)
+              .insertOnConflictUpdate(
+                ClaimItemDecisionsCompanion.insert(
+                  id: Value(decision.id),
+                  claimItemId: decision.claimItemId,
+                  kind: kind,
+                  decidedByDeviceId: decision.decidedByDeviceId,
+                  decidedAt: decision.decidedAt,
+                  approvedAmountMinor: Value(decision.approvedAmountMinor),
+                  reason: Value(decision.reason),
+                  postedEntryId: Value(decision.postedEntryId),
+                ),
+              );
+        }
+      }
+      applied++;
+    }
+    return applied;
   }
 
   /// Inserts peer-signed rows (never edits existing). Skips duplicates by
@@ -185,6 +351,12 @@ class SyncMergeRepository implements SyncLedgerView {
       final ok = await _verifyPeerEntry(entry);
       if (!ok) {
         rejected++;
+        PeerSyncSession.debugLog?.call(
+          'reject entry id=${entry.id} '
+          'identity=${entry.signedByIdentityId} '
+          'seq=${entry.deviceChainSequence} '
+          'reason=${await _verifyPeerEntryFailureReason(entry)}',
+        );
         await _recordNotAcceptedNotice(
           fromDeviceId: fromDeviceId,
           fromDeviceDisplayName: fromDeviceDisplayName,
@@ -335,19 +507,75 @@ class SyncMergeRepository implements SyncLedgerView {
         }
       case 'account':
         switch (op.field) {
+          case 'type':
+            if (op.value is String) {
+              AccountType? type;
+              for (final candidate in AccountType.values) {
+                if (candidate.name == op.value) {
+                  type = candidate;
+                  break;
+                }
+              }
+              if (type == null) return;
+              final existing = await (_db.select(
+                _db.accounts,
+              )..where((a) => a.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.accounts)
+                    .insert(
+                      AccountsCompanion.insert(
+                        id: Value(op.entityId),
+                        name: 'Account',
+                        type: type,
+                      ),
+                    );
+              }
+            }
           case 'name':
             if (op.value is String) {
-              await (_db.update(_db.accounts)
-                    ..where((a) => a.id.equals(op.entityId)))
-                  .write(AccountsCompanion(name: Value(op.value! as String)));
+              final existing = await (_db.select(
+                _db.accounts,
+              )..where((a) => a.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.accounts)
+                    .insert(
+                      AccountsCompanion.insert(
+                        id: Value(op.entityId),
+                        name: op.value! as String,
+                        type: AccountType.liability,
+                      ),
+                    );
+              } else {
+                await (_db.update(_db.accounts)
+                      ..where((a) => a.id.equals(op.entityId)))
+                    .write(AccountsCompanion(name: Value(op.value! as String)));
+              }
             }
           case 'groupId':
             if (op.value is String) {
-              await (_db.update(
+              final existing = await (_db.select(
                 _db.accounts,
-              )..where((a) => a.id.equals(op.entityId))).write(
-                AccountsCompanion(groupId: Value(op.value! as String)),
-              );
+              )..where((a) => a.id.equals(op.entityId))).getSingleOrNull();
+              if (existing == null) {
+                await _db
+                    .into(_db.accounts)
+                    .insert(
+                      AccountsCompanion.insert(
+                        id: Value(op.entityId),
+                        name: 'Account',
+                        type: AccountType.liability,
+                        groupId: Value(op.value! as String),
+                      ),
+                    );
+              } else {
+                await (_db.update(
+                  _db.accounts,
+                )..where((a) => a.id.equals(op.entityId))).write(
+                  AccountsCompanion(groupId: Value(op.value! as String)),
+                );
+              }
             }
           case 'archivedAt':
             final archivedAt = op.value == null
@@ -357,6 +585,8 @@ class SyncMergeRepository implements SyncLedgerView {
                   ..where((a) => a.id.equals(op.entityId)))
                 .write(AccountsCompanion(archivedAt: Value(archivedAt)));
         }
+      case 'linked_device':
+        await _upsertLinkedDeviceField(op);
       case 'account_group':
         switch (op.field) {
           case 'kind':
@@ -611,6 +841,131 @@ class SyncMergeRepository implements SyncLedgerView {
     }
   }
 
+  Future<void> _upsertLinkedDeviceField(MetadataOperation op) async {
+    final deviceId = op.entityId;
+    if (deviceId.isEmpty) return;
+    final existing = await (_db.select(
+      _db.linkedDevices,
+    )..where((t) => t.deviceId.equals(deviceId))).getSingleOrNull();
+
+    var displayName = existing?.displayName ?? 'Linked device';
+    var signingIdentityId = existing?.signingIdentityId ?? '';
+    var deviceCertFingerprint = existing?.deviceCertFingerprint ?? '';
+    var role = existing?.role ?? LinkedDeviceRole.member;
+    var rolesCsv = existing?.rolesCsv ?? '';
+    var canAdd = existing?.canAdd ?? false;
+    var owedToAccountId = existing?.owedToAccountId;
+    var personDisplayName = existing?.personDisplayName;
+
+    switch (op.field) {
+      case 'displayName':
+        if (op.value is String) displayName = op.value! as String;
+      case 'signingIdentityId':
+        if (op.value is String) signingIdentityId = op.value! as String;
+      case 'signingPublicKey':
+        if (op.value is String && signingIdentityId.isNotEmpty) {
+          final der = base64Decode(op.value! as String);
+          await _db
+              .into(_db.signingIdentities)
+              .insertOnConflictUpdate(
+                SigningIdentitiesCompanion.insert(
+                  identityId: Value(signingIdentityId),
+                  publicKey: Uint8List.fromList(der),
+                ),
+              );
+        }
+        return;
+      case 'deviceCertFingerprint':
+        if (op.value is String) deviceCertFingerprint = op.value! as String;
+      case 'deviceCertDer':
+        if (op.value is String) {
+          final der = base64Decode(op.value! as String);
+          final fp = deviceCertFingerprint.isNotEmpty
+              ? deviceCertFingerprint
+              : TlsSyncTransport.fingerprintOfDer(der);
+          deviceCertFingerprint = fp;
+          final certs = _certificates;
+          if (certs != null) {
+            await certs.rememberPeerCertificate(
+              DeviceCertificate(
+                derBytes: der,
+                fingerprint: fp,
+                certificatePem: TlsSyncTransport.derToPem(der),
+              ),
+            );
+          }
+        }
+      case 'rolesCsv':
+        if (op.value is String) {
+          rolesCsv = op.value! as String;
+          final roles = MembershipRoleGates.decodeRoles(rolesCsv);
+          role = MembershipRoleGates.primaryRole(roles);
+        }
+      case 'role':
+        if (op.value is String) {
+          for (final r in LinkedDeviceRole.values) {
+            if (r.name == op.value) {
+              role = r;
+              if (rolesCsv.isEmpty) {
+                rolesCsv = MembershipRoleGates.encodeRoles({r});
+              }
+              break;
+            }
+          }
+        }
+      case 'canAdd':
+        if (op.value is bool) canAdd = op.value! as bool;
+      case 'owedToAccountId':
+        owedToAccountId = op.value is String ? op.value as String : null;
+      case 'personDisplayName':
+        personDisplayName = op.value is String ? op.value as String : null;
+      default:
+        return;
+    }
+
+    // Field ops arrive one-at-a-time; persist a stub row so later ops can
+    // fill signingIdentityId / fingerprint / owedToAccountId.
+    if (signingIdentityId.isEmpty) {
+      signingIdentityId = 'peer-$deviceId';
+    }
+    if (deviceCertFingerprint.isEmpty) {
+      deviceCertFingerprint = 'pending:$deviceId';
+    }
+    final idRow = await (_db.select(
+      _db.signingIdentities,
+    )..where((t) => t.identityId.equals(signingIdentityId))).getSingleOrNull();
+    if (idRow == null) {
+      await _db
+          .into(_db.signingIdentities)
+          .insert(
+            SigningIdentitiesCompanion.insert(
+              identityId: Value(signingIdentityId),
+              publicKey: Uint8List(32),
+            ),
+          );
+    }
+
+    if (rolesCsv.isEmpty) {
+      rolesCsv = MembershipRoleGates.encodeRoles({role});
+    }
+
+    await _db
+        .into(_db.linkedDevices)
+        .insertOnConflictUpdate(
+          LinkedDevicesCompanion.insert(
+            deviceId: deviceId,
+            displayName: displayName,
+            signingIdentityId: signingIdentityId,
+            deviceCertFingerprint: deviceCertFingerprint,
+            role: role,
+            rolesCsv: Value(rolesCsv),
+            canAdd: Value(canAdd),
+            owedToAccountId: Value(owedToAccountId),
+            personDisplayName: Value(personDisplayName),
+          ),
+        );
+  }
+
   Future<void> _upsertRecurringTemplateField(MetadataOperation op) async {
     final existing = await (_db.select(
       _db.recurringTemplates,
@@ -702,11 +1057,16 @@ class SyncMergeRepository implements SyncLedgerView {
   }
 
   Future<bool> _verifyPeerEntry(SyncJournalEntry entry) async {
+    return (await _verifyPeerEntryFailureReason(entry)) == null;
+  }
+
+  /// Null when [entry] verifies; otherwise a short diagnostic reason.
+  Future<String?> _verifyPeerEntryFailureReason(SyncJournalEntry entry) async {
     final identity =
         await (_db.select(_db.signingIdentities)
               ..where((t) => t.identityId.equals(entry.signedByIdentityId)))
             .getSingleOrNull();
-    if (identity == null) return false;
+    if (identity == null) return 'missing_identity';
 
     final prior =
         await (_db.select(_db.journalEntries)
@@ -725,7 +1085,7 @@ class SyncMergeRepository implements SyncLedgerView {
         ? Uint8List.fromList(genesisPreviousEntryHash)
         : Uint8List.fromList(prior.entryHash);
     if (!_bytesEqual(entry.previousEntryHash, expectedPrevious)) {
-      return false;
+      return 'chain_gap priorSeq=${prior?.deviceChainSequence}';
     }
 
     final canonical = canonicalEntryBytes(
@@ -748,13 +1108,17 @@ class SyncMergeRepository implements SyncLedgerView {
           .toList(),
     );
     final recomputed = await hashCanonicalEntry(canonical);
-    if (!_bytesEqual(recomputed, entry.entryHash)) return false;
+    if (!_bytesEqual(recomputed, entry.entryHash)) return 'hash_mismatch';
 
-    return _keys.verify(
+    final sigOk = await _keys.verify(
       entry.entryHash,
       signature: entry.signature,
       publicKey: identity.publicKey,
     );
+    if (!sigOk) {
+      return 'bad_signature keyLen=${identity.publicKey.length}';
+    }
+    return null;
   }
 
   Future<void> _insertPeerEntry(SyncJournalEntry entry) async {

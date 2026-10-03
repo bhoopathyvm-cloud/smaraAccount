@@ -31,7 +31,7 @@ void main() {
     final code = registry.issue(clock: () => now, random: _FixedRandom(1));
     expect(code.expiresAt, now.add(JoinCode.joinCodeTtl));
 
-    now = now.add(const Duration(minutes: 2));
+    now = now.add(JoinCode.joinCodeTtl);
     expect(code.validateTyped(code.raw, now: now), JoinCodeValidation.expired);
 
     now = DateTime.utc(2026, 10, 2, 12, 0);

@@ -20,6 +20,7 @@ import '../data/repositories/investment_repository.dart';
 import '../data/repositories/ledger_chain_verifier.dart';
 import '../data/repositories/ledger_repository.dart';
 import '../data/repositories/membership_repository.dart';
+import '../data/repositories/metadata_outbox.dart';
 import '../data/repositories/payee_repository.dart';
 import '../data/repositories/settings_repository.dart';
 import '../data/repositories/statement_import_repository.dart';
@@ -129,14 +130,18 @@ GoRouter buildAppRouter(
     },
     isClaimantOnlyActiveSet: () async {
       if (membership == null) return false;
-      final identity = await identityRepository.currentIdentity();
-      if (identity == null) return false;
+      // Match by stable device id — join hello may carry a different
+      // books-set Signing Identity than the one seeded on the joined set.
+      final deviceId = await settingsRepository.localDeviceId();
+      if (deviceId == null || deviceId.isEmpty) return false;
+      final mine = await membership.findByDeviceId(deviceId);
+      if (mine == null || !mine.isActive) return false;
+      return mine.isClaimantOnly;
+    },
+    isJoinedLinkedSet: () async {
+      if (membership == null) return false;
       final devices = await membership.listActiveDevices();
-      final mine = devices.where(
-        (d) => d.signingIdentityId == identity.identityId,
-      );
-      if (mine.isEmpty) return false;
-      return mine.first.isClaimantOnly;
+      return devices.length >= 2;
     },
   );
 
@@ -324,10 +329,13 @@ GoRouter buildAppRouter(
           final booksSwitcher = BooksSwitcherViewModel(
             session: context.read<ActiveBooksSession>(),
           );
+          final booksSession = context.read<ActiveBooksSession>();
           final linkedDevices = LinkedDevicesViewModel(
             membershipRepository: context.read<MembershipRepository>(),
             settingsRepository: settingsRepository,
             booksSetStore: context.read<BooksSetStore>(),
+            booksSession: booksSession,
+            metadataOutbox: context.read<MetadataOutbox>(),
             claimPersonService: context.read<ClaimPersonService>(),
             claimRepository: context.read<ClaimRepository>(),
             localNetworkPermission: context.read<LocalNetworkPermission>(),
@@ -338,9 +346,9 @@ GoRouter buildAppRouter(
               discovery: context.read<JoinOfferDiscovery>(),
               certificates: context.read<DeviceCertificateStore>(),
               settings: settingsRepository,
-              identity: identityRepository,
+              booksSession: booksSession,
             ),
-            booksGeneration: context.read<ActiveBooksSession>().generation,
+            booksGeneration: booksSession.generation,
             syncNowAction: peerSync == null
                 ? null
                 : () async {
@@ -372,21 +380,15 @@ GoRouter buildAppRouter(
       GoRoute(
         path: AppNavPaths.claims,
         builder: (context, state) {
-          final membership = context.read<MembershipRepository>();
           final claims = context.read<ClaimRepository>();
           final database = context.read<AppDatabase>();
           return FutureBuilder(
             future: () async {
-              final identity = await identityRepository.currentIdentity();
-              final devices = await membership.listActiveDevices();
-              final mine = devices.where(
-                (d) =>
-                    identity != null &&
-                    d.signingIdentityId == identity.identityId,
-              );
-              final deviceId = mine.isNotEmpty
-                  ? mine.first.deviceId
-                  : (devices.isNotEmpty ? devices.first.deviceId : 'local');
+              // Prefer the stable local device id — join hello / peer
+              // membership metadata may disagree with the per-set Signing
+              // Identity seeded on this books set.
+              final deviceId =
+                  await settingsRepository.localDeviceId() ?? 'local';
               final meta = await database
                   .select(database.booksSetMetadata)
                   .get();
@@ -435,7 +437,6 @@ GoRouter buildAppRouter(
               body: const Center(child: Text('Missing claimId')),
             );
           }
-          final membership = context.read<MembershipRepository>();
           final claims = context.read<ClaimRepository>();
           final receipts = context.read<ClaimReceiptStore>();
           final picker = context.read<ClaimReceiptPicker>();
@@ -444,16 +445,7 @@ GoRouter buildAppRouter(
           final database = context.read<AppDatabase>();
           return FutureBuilder(
             future: () async {
-              final identity = await identityRepository.currentIdentity();
-              final devices = await membership.listActiveDevices();
-              final mine = devices.where(
-                (d) =>
-                    identity != null &&
-                    d.signingIdentityId == identity.identityId,
-              );
-              final deviceId = mine.isNotEmpty
-                  ? mine.first.deviceId
-                  : (devices.isNotEmpty ? devices.first.deviceId : 'local');
+              final deviceId = await settings.localDeviceId() ?? 'local';
               final accountGroups = await database
                   .select(database.accountGroups)
                   .get();
@@ -515,15 +507,9 @@ GoRouter buildAppRouter(
           final categories = context.read<CategoryRepository>();
           return FutureBuilder(
             future: () async {
-              final identity = await identityRepository.currentIdentity();
-              final devices = await membership.listActiveDevices();
-              final mine = devices.where(
-                (d) =>
-                    identity != null &&
-                    d.signingIdentityId == identity.identityId,
-              );
-              final device = mine.isNotEmpty ? mine.first : null;
-              final deviceId = device?.deviceId ?? 'local';
+              final deviceId =
+                  await settingsRepository.localDeviceId() ?? 'local';
+              final device = await membership.findByDeviceId(deviceId);
               final name =
                   device?.personDisplayName ?? device?.displayName ?? 'Me';
               final personal = await limits.listForPerson(deviceId);
@@ -595,14 +581,8 @@ GoRouter buildAppRouter(
           final database = context.read<AppDatabase>();
           return FutureBuilder(
             future: () async {
-              final identity = await identityRepository.currentIdentity();
-              final devices = await membership.listActiveDevices();
-              final mine = devices.where(
-                (d) =>
-                    identity != null &&
-                    d.signingIdentityId == identity.identityId,
-              );
-              final deviceId = mine.isNotEmpty ? mine.first.deviceId : 'local';
+              final deviceId =
+                  await settingsRepository.localDeviceId() ?? 'local';
               final accountGroups = await database
                   .select(database.accountGroups)
                   .get();
@@ -621,20 +601,26 @@ GoRouter buildAppRouter(
                 accounts: accounts,
               );
               await vm.load();
+              // Thumbnails are best-effort and must not block the queue —
+              // a slow/missing blob previously left company-sync Settle on
+              // a spinner until the step timed out.
               final thumbs = <String, Uint8List>{};
-              for (final claim in vm.queue) {
-                for (final item in claim.items) {
-                  final receipt = item.receipt;
-                  if (receipt == null) continue;
-                  if (!receipt.contentType.startsWith('image/')) continue;
-                  try {
-                    final bytes = await receipts.readBytes(receipt.id);
-                    thumbs[item.id] = Uint8List.fromList(bytes);
-                  } catch (_) {
-                    // Missing blob is fine; icon fallback in the view.
-                  }
-                }
-              }
+              await Future.wait([
+                for (final claim in vm.queue)
+                  for (final item in claim.items)
+                    if (item.receipt != null &&
+                        item.receipt!.contentType.startsWith('image/'))
+                      () async {
+                        try {
+                          final bytes = await receipts
+                              .readBytes(item.receipt!.id)
+                              .timeout(const Duration(seconds: 2));
+                          thumbs[item.id] = Uint8List.fromList(bytes);
+                        } catch (_) {
+                          // Missing/slow blob: icon fallback in the view.
+                        }
+                      }(),
+              ]);
               return (
                 vm: vm,
                 currency: companyCurrency,

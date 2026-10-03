@@ -1,5 +1,5 @@
-import '../models/join_qr_payload.dart';
 import 'join_code.dart';
+import 'join_completion.dart';
 import 'join_offer_discovery.dart';
 
 /// Outcome of typing a join code on the joining device (task 4.3).
@@ -31,8 +31,9 @@ class JoinCodeLookupSuccess {
   final DiscoveredJoinOffer offer;
   final String normalizedCode;
 
-  /// After both sides confirm the check code, fetch the join payload (4.4).
-  final Future<JoinQrPayload> Function()? completeJoin;
+  /// After both sides confirm the check code, fetch the join payload and any
+  /// host metadata bootstrap (4.4).
+  final Future<JoinCompletion> Function()? completeJoin;
 
   /// Cancel because check codes did not match.
   final Future<void> Function()? cancelJoin;

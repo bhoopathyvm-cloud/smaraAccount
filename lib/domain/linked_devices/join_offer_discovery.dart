@@ -4,15 +4,23 @@ import 'dart:io';
 import 'package:bonsoir/bonsoir.dart';
 
 /// Bonjour service type for join-by-code offers (real-sync design Decision 3).
-/// TXT carries only an offer id — never the code or a hash of it.
+/// TXT carries offer id + booksSetId — never the code or a hash of it.
 const smaraJoinMdnsServiceType = '_smara-join._tcp';
 
 /// What the inviting device advertises while a join code is live.
 class JoinOfferAdvertisement {
-  const JoinOfferAdvertisement({required this.offerId, required this.port});
+  const JoinOfferAdvertisement({
+    required this.offerId,
+    required this.port,
+    required this.booksSetId,
+  });
 
   final String offerId;
   final int port;
+
+  /// Books set the joiner will join — reserved Signing Identity is created
+  /// for this id before hello (linked-devices Decision 4).
+  final String booksSetId;
 }
 
 /// A nearby join offer found while browsing `_smara-join._tcp`.
@@ -21,11 +29,13 @@ class DiscoveredJoinOffer {
     required this.offerId,
     required this.host,
     required this.port,
+    required this.booksSetId,
   });
 
   final String offerId;
   final String host;
   final int port;
+  final String booksSetId;
 }
 
 /// Advertise / browse join offers. Production uses [BonsoirJoinOfferDiscovery];
@@ -44,6 +54,7 @@ class BonsoirJoinOfferDiscovery implements JoinOfferDiscovery {
   JoinOfferAdvertisement? _advertisement;
 
   static const _attrOfferId = 'oid';
+  static const _attrBooksSetId = 'bid';
 
   @override
   Future<void> startAdvertising(JoinOfferAdvertisement advertisement) async {
@@ -55,6 +66,7 @@ class BonsoirJoinOfferDiscovery implements JoinOfferDiscovery {
       port: advertisement.port,
       attributes: {
         _attrOfferId: advertisement.offerId,
+        _attrBooksSetId: advertisement.booksSetId,
         ...BonsoirService.defaultAttributes,
       },
     );
@@ -89,7 +101,9 @@ class BonsoirJoinOfferDiscovery implements JoinOfferDiscovery {
             service.resolve(discovery!.serviceResolver);
           case BonsoirDiscoveryServiceResolvedEvent(:final service):
             final offerId = service.attributes[_attrOfferId];
+            final booksSetId = service.attributes[_attrBooksSetId];
             if (offerId == null || offerId.isEmpty) return;
+            if (booksSetId == null || booksSetId.isEmpty) return;
             if (_advertisement?.offerId == offerId) return;
             final host = _preferredHost(service);
             if (host == null || host.isEmpty) return;
@@ -99,6 +113,7 @@ class BonsoirJoinOfferDiscovery implements JoinOfferDiscovery {
                   offerId: offerId,
                   host: host,
                   port: service.port,
+                  booksSetId: booksSetId,
                 ),
               );
             }
@@ -215,6 +230,7 @@ class FakeJoinOfferDiscovery implements JoinOfferDiscovery {
       offerId: ad.offerId,
       host: advertiseHost,
       port: ad.port,
+      booksSetId: ad.booksSetId,
     );
   }
 

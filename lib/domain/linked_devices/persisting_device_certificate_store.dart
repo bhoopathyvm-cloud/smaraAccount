@@ -15,6 +15,7 @@ class PersistingDeviceCertificateStore implements DeviceCertificateStore {
 
   final SecureKeyStorage _storage;
   final Map<String, DeviceCertificate> _cache = {};
+  final Map<String, DeviceCertificate> _peerCache = {};
 
   // v2: basic_utils keyUsage encoding is rejected by BoringSSL
   // (CANNOT_PARSE_LEAF_CERT); regenerate identities that used v1 material.
@@ -25,6 +26,10 @@ class PersistingDeviceCertificateStore implements DeviceCertificateStore {
   static String _derKey(String deviceId) =>
       'smara.device.tls.v2.derB64:$deviceId';
   static String _fpKey(String deviceId) => 'smara.device.tls.v2.fp:$deviceId';
+  static String _peerPemKey(String fingerprint) =>
+      'smara.device.tls.v2.peerPem:$fingerprint';
+  static String _peerDerKey(String fingerprint) =>
+      'smara.device.tls.v2.peerDerB64:$fingerprint';
 
   @override
   Future<DeviceCertificate> localCertificate({required String deviceId}) async {
@@ -46,6 +51,7 @@ class PersistingDeviceCertificateStore implements DeviceCertificateStore {
         privateKeyPem: existingKey,
       );
       _cache[deviceId] = cert;
+      _peerCache[existingFp] = cert;
       return cert;
     }
 
@@ -55,7 +61,47 @@ class PersistingDeviceCertificateStore implements DeviceCertificateStore {
     await _storage.write(_derKey(deviceId), base64Encode(generated.derBytes));
     await _storage.write(_fpKey(deviceId), generated.fingerprint);
     _cache[deviceId] = generated;
+    _peerCache[generated.fingerprint] = generated;
     return generated;
+  }
+
+  @override
+  Future<void> rememberPeerCertificate(DeviceCertificate certificate) async {
+    final der = certificate.derBytes;
+    if (der.isEmpty && certificate.certificatePem == null) return;
+    final fp = certificate.fingerprint.isNotEmpty
+        ? certificate.fingerprint
+        : TlsSyncTransport.fingerprintOfDer(
+            der.isNotEmpty ? der : _pemToDer(certificate.certificatePem!),
+          );
+    final pem = certificate.certificatePem ?? TlsSyncTransport.derToPem(der);
+    final derBytes = der.isNotEmpty ? der : _pemToDer(pem);
+    await _storage.write(_peerPemKey(fp), pem);
+    await _storage.write(_peerDerKey(fp), base64Encode(derBytes));
+    _peerCache[fp] = DeviceCertificate(
+      derBytes: derBytes,
+      fingerprint: fp,
+      certificatePem: pem,
+    );
+  }
+
+  @override
+  Future<DeviceCertificate?> certificateForFingerprint(
+    String fingerprint,
+  ) async {
+    if (fingerprint.isEmpty) return null;
+    final cached = _peerCache[fingerprint];
+    if (cached != null) return cached;
+    final pem = await _storage.read(_peerPemKey(fingerprint));
+    final derB64 = await _storage.read(_peerDerKey(fingerprint));
+    if (pem == null || derB64 == null) return null;
+    final cert = DeviceCertificate(
+      derBytes: base64Decode(derB64),
+      fingerprint: fingerprint,
+      certificatePem: pem,
+    );
+    _peerCache[fingerprint] = cert;
+    return cert;
   }
 
   /// Creates a self-signed RSA certificate for [deviceId].

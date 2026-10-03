@@ -7,7 +7,6 @@ import 'account_repository.dart';
 import 'identity_continuation_engine.dart';
 import 'ledger_chain_store.dart';
 import 'ledger_chain_verifier.dart';
-import 'repository_date_utils.dart';
 
 /// Device signing-identity lifecycle and Continuation. Split out of
 /// `LedgerRepository` (architecture-deepening design.md D1). Depends on
@@ -80,7 +79,7 @@ class IdentityRepository {
   Future<bool> hasMatchingStoredKey(SigningIdentity identity) async {
     final stored = await _signingKeyService.loadStoredKeyMaterial();
     if (stored == null) return false;
-    return bytesEqual(stored.publicKey, identity.publicKey);
+    return _bytesEqual(stored.publicKey, identity.publicKey);
   }
 
   /// Generates a new this-device-only key pair. Does *not* write a
@@ -102,6 +101,7 @@ class IdentityRepository {
     GeneratedIdentity generated, {
     required String currency,
     bool seedStarterCategories = true,
+    String? identityId,
   }) async {
     late IdentityRow row;
     await _db.transaction(() async {
@@ -120,6 +120,9 @@ class IdentityRepository {
           .into(_db.signingIdentities)
           .insertReturning(
             SigningIdentitiesCompanion.insert(
+              identityId: identityId != null
+                  ? Value(identityId)
+                  : const Value.absent(),
               publicKey: publicKey,
               acknowledgedAt: Value(DateTime.now()),
             ),
@@ -204,5 +207,14 @@ class IdentityRepository {
       continuedAt: row.continuedAt,
       acknowledgedAt: row.acknowledgedAt,
     );
+  }
+
+  static bool _bytesEqual(List<int> a, List<int> b) {
+    if (a.length != b.length) return false;
+    var diff = 0;
+    for (var i = 0; i < a.length; i++) {
+      diff |= a[i] ^ b[i];
+    }
+    return diff == 0;
   }
 }

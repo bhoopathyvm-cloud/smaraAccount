@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:smara_accounting/domain/linked_devices/device_certificate_store.dart';
 import 'package:smara_accounting/domain/linked_devices/local_network_reachability.dart';
+import 'package:smara_accounting/domain/peer_sync/claim_sync_payloads.dart';
 import 'package:smara_accounting/domain/peer_sync/peer_sync_session.dart';
 import 'package:smara_accounting/domain/peer_sync/sync_payloads.dart';
 import 'package:smara_accounting/domain/peer_sync/sync_transport.dart';
@@ -131,5 +132,47 @@ void main() {
     expect(result.refusedReason, contains('same Wi-Fi'));
     expect(result.entriesSent, 0);
     expect(result.entriesReceived, 0);
+  });
+
+  test('Sync now exchanges ClaimBatch claims both ways', () async {
+    final now = DateTime.utc(2026, 5, 2);
+    ledgerA.claims.add(
+      SyncClaim(
+        id: 'claim-a',
+        claimantDeviceId: 'a',
+        status: 'submitted',
+        createdAt: now,
+        updatedAt: now,
+        submittedAt: now,
+        items: const [],
+      ),
+    );
+
+    final sessionA = PeerSyncSession(
+      transport: transportA,
+      ledger: ledgerA,
+      reachability: reachability,
+      localIdentity: SyncPeerIdentity(deviceId: 'a', certificate: certA),
+      pinnedFingerprints: pins,
+    );
+    final sessionB = PeerSyncSession(
+      transport: transportB,
+      ledger: ledgerB,
+      reachability: reachability,
+      localIdentity: SyncPeerIdentity(deviceId: 'b', certificate: certB),
+      pinnedFingerprints: pins,
+    );
+
+    final bDone = Completer<SyncSessionResult>();
+    await sessionB.startListening(onCompleted: bDone.complete);
+
+    final aResult = await sessionA.syncNow(
+      remote: SyncPeerIdentity(deviceId: 'b', certificate: certB),
+    );
+    final bResult = await bDone.future.timeout(const Duration(seconds: 2));
+
+    expect(aResult.connected, isTrue);
+    expect(bResult.connected, isTrue);
+    expect(ledgerB.claims.map((c) => c.id), contains('claim-a'));
   });
 }

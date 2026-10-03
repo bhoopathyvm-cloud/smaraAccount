@@ -1,5 +1,6 @@
 import '../linked_devices/device_certificate_store.dart';
 import '../linked_devices/local_network_reachability.dart';
+import 'claim_sync_payloads.dart';
 import 'sync_payloads.dart';
 import 'sync_transport.dart';
 
@@ -19,6 +20,18 @@ abstract class SyncLedgerView {
   /// Applies a verified peer batch (insert-only). Returns how many rows were
   /// newly inserted (duplicates skipped).
   Future<int> applyEntryBatch(EntryBatch batch, {required String fromDeviceId});
+
+  /// Pending metadata ops to send to peers (categories, accounts, settings…).
+  Future<List<MetadataOperation>> pendingMetadataOperations() async => const [];
+
+  /// Applies peer metadata ops (LWW). Returns how many ops were considered.
+  Future<int> applyPeerMetadataOps(MetadataOps ops) async => 0;
+
+  /// Claims (with items/decisions) to send to a peer.
+  Future<ClaimBatch> pendingClaimBatch() async => const ClaimBatch(claims: []);
+
+  /// Upserts peer claims by LWW on [SyncClaim.updatedAt].
+  Future<int> applyPeerClaimBatch(ClaimBatch batch) async => 0;
 }
 
 /// Outcome of one Sync now / automatic catch-up attempt.
@@ -69,6 +82,9 @@ class PeerSyncSession {
   final Set<String> _pinnedFingerprints;
   final List<DeviceCertificate> _pinnedCertificates;
 
+  /// Optional diagnostic sink (company-sync harness).
+  static void Function(String message)? debugLog;
+
   /// Runs Sync now against [remote]. Refuses when peers are not on the local
   /// network.
   Future<SyncSessionResult> syncNow({
@@ -91,6 +107,9 @@ class PeerSyncSession {
 
     try {
       return await _exchange(connection);
+    } catch (e, st) {
+      debugLog?.call('outbound exchange failed: $e\n$st');
+      rethrow;
     } finally {
       await connection.close();
     }
@@ -112,6 +131,10 @@ class PeerSyncSession {
         try {
           final result = await _exchange(connection);
           onCompleted?.call(result);
+        } catch (e, st) {
+          // Never let inbound exchange failures escape the accept loop —
+          // they abort Flutter integration tests and strand the peer.
+          debugLog?.call('inbound exchange failed: $e\n$st');
         } finally {
           await connection.close();
         }
@@ -157,19 +180,45 @@ class PeerSyncSession {
     }
 
     final batch = EntryBatch(entries: missingForRemote);
+    debugLog?.call(
+      'exchange tips local=${localTips.length} remote=${remoteTips.length} '
+      'sendingEntries=${missingForRemote.length} '
+      'to=${connection.remote.deviceId}',
+    );
     await connection.send(batch.toJson());
 
     final peerBatchMessage = await connection.receive();
     final peerBatch = EntryBatch.fromJson(peerBatchMessage);
+    debugLog?.call(
+      'exchange receivedEntries=${peerBatch.entries.length} '
+      'from=${connection.remote.deviceId}',
+    );
     final received = await _ledger.applyEntryBatch(
       peerBatch,
       fromDeviceId: connection.remote.deviceId,
     );
 
+    // Metadata ops (categories, accounts, books settings) — required by
+    // peer-sync spec; without this a Claimant never receives allowlisted
+    // expense categories after join.
+    final localMeta = await _ledger.pendingMetadataOperations();
+    await connection.send(MetadataOps(operations: localMeta).toJson());
+    final peerMetaMessage = await connection.receive();
+    final peerMeta = MetadataOps.fromJson(peerMetaMessage);
+    await _ledger.applyPeerMetadataOps(peerMeta);
+
+    // Claims live off-ledger until approval; exchange ClaimBatch so an
+    // Approver sees submitted claims after Sync now (expense-claims peer-sync).
+    final localClaims = await _ledger.pendingClaimBatch();
+    await connection.send(localClaims.toJson());
+    final peerClaimsMessage = await connection.receive();
+    final peerClaims = ClaimBatch.fromJson(peerClaimsMessage);
+    final claimsReceived = await _ledger.applyPeerClaimBatch(peerClaims);
+
     return SyncSessionResult(
       connected: true,
-      entriesSent: missingForRemote.length,
-      entriesReceived: received,
+      entriesSent: missingForRemote.length + localClaims.claims.length,
+      entriesReceived: received + claimsReceived,
     );
   }
 }
@@ -233,5 +282,40 @@ class FakeSyncLedgerView implements SyncLedgerView {
       inserted++;
     }
     return inserted;
+  }
+
+  final List<MetadataOperation> metadataOps = [];
+
+  @override
+  Future<List<MetadataOperation>> pendingMetadataOperations() async =>
+      List.of(metadataOps);
+
+  @override
+  Future<int> applyPeerMetadataOps(MetadataOps ops) async {
+    metadataOps.addAll(ops.operations);
+    return ops.operations.length;
+  }
+
+  final List<SyncClaim> claims = [];
+
+  @override
+  Future<ClaimBatch> pendingClaimBatch() async => ClaimBatch(claims: claims);
+
+  @override
+  Future<int> applyPeerClaimBatch(ClaimBatch batch) async {
+    var applied = 0;
+    for (final claim in batch.claims) {
+      final idx = claims.indexWhere((c) => c.id == claim.id);
+      if (idx < 0) {
+        claims.add(claim);
+        applied++;
+        continue;
+      }
+      if (claims[idx].updatedAt.isBefore(claim.updatedAt)) {
+        claims[idx] = claim;
+        applied++;
+      }
+    }
+    return applied;
   }
 }

@@ -6,6 +6,7 @@ import '../../data/repositories/settings_repository.dart';
 import '../../data/repositories/sync_merge_repository.dart';
 import '../linked_devices/device_certificate_store.dart';
 import '../linked_devices/local_network_reachability.dart';
+import '../models/linked_device.dart';
 import 'peer_discovery.dart';
 import 'direct_address_peer_discovery.dart';
 import 'peer_sync_session.dart';
@@ -59,9 +60,14 @@ class PeerSyncService {
 
   bool _listening = false;
   int? _boundPort;
-  String? _listeningDeviceId;
+  String? _listeningPinSet;
 
   bool get isListening => _listening;
+
+  /// Port last bound by [startForeground] / [startListening], if any.
+  /// Used by company-sync to publish a direct-address fallback when mDNS
+  /// between simulators and the host is unreliable.
+  int? get boundPort => _boundPort;
 
   /// Starts accepting inbound sync sessions and advertising on `_smara._tcp`.
   Future<void> startForeground() async {
@@ -84,6 +90,7 @@ class PeerSyncService {
       for (final d in devices) d.deviceCertFingerprint,
       localCert.fingerprint,
     };
+    final pinnedCerts = await _pinnedCertificates(localCert, devices);
     final localIdentity = SyncPeerIdentity(
       deviceId: localDeviceId,
       certificate: localCert,
@@ -95,15 +102,28 @@ class PeerSyncService {
       reachability: _reachability,
       localIdentity: localIdentity,
       pinnedFingerprints: pins,
-      pinnedCertificates: [localCert],
+      pinnedCertificates: pinnedCerts,
     );
 
-    if (_listening && _listeningDeviceId == localDeviceId) {
-      await _advertise(
-        booksSetId: booksSetId,
-        localDeviceId: localDeviceId,
-        port: _boundPort ?? 0,
-      );
+    final pinSet =
+        '${(pins.toList()..sort()).join('|')}|certs:${pinnedCerts.length}';
+    // Keep the bound port stable when membership (pin set) is unchanged so
+    // peers that already cached our direct-address port can still connect.
+    // Re-bind only when pins grow (new Claimant/Approver) so TLS accepts them.
+    if (_listening && _listeningPinSet == pinSet && _boundPort != null) {
+      try {
+        await _advertise(
+          booksSetId: booksSetId,
+          localDeviceId: localDeviceId,
+          port: _boundPort!,
+        );
+      } catch (_) {
+        await _advertiseDirectOnly(
+          booksSetId: booksSetId,
+          localDeviceId: localDeviceId,
+          port: _boundPort!,
+        );
+      }
       return;
     }
 
@@ -113,11 +133,39 @@ class PeerSyncService {
       onBound: (port) => _boundPort = port,
     );
     _listening = true;
-    _listeningDeviceId = localDeviceId;
-    await _advertise(
-      booksSetId: booksSetId,
-      localDeviceId: localDeviceId,
-      port: _boundPort ?? 0,
+    _listeningPinSet = pinSet;
+    try {
+      await _advertise(
+        booksSetId: booksSetId,
+        localDeviceId: localDeviceId,
+        port: _boundPort ?? 0,
+      );
+    } catch (_) {
+      await _advertiseDirectOnly(
+        booksSetId: booksSetId,
+        localDeviceId: localDeviceId,
+        port: _boundPort ?? 0,
+      );
+    }
+  }
+
+  Future<void> _advertiseDirectOnly({
+    required String booksSetId,
+    required String localDeviceId,
+    required int port,
+  }) async {
+    final direct = _direct;
+    if (direct == null) return;
+    final displayName =
+        await _settings.localDeviceDisplayName() ?? 'This device';
+    final hash = await booksSetIdHash(booksSetId);
+    await direct.startAdvertising(
+      PeerAdvertisement(
+        booksSetIdHash: hash,
+        deviceDisplayName: displayName,
+        deviceId: localDeviceId,
+        port: port,
+      ),
     );
   }
 
@@ -130,7 +178,7 @@ class PeerSyncService {
     } catch (_) {}
     _listening = false;
     _boundPort = null;
-    _listeningDeviceId = null;
+    _listeningPinSet = null;
   }
 
   /// Finds linked peers on the LAN and exchanges missing journal entries.
@@ -160,6 +208,7 @@ class PeerSyncService {
       for (final d in devices) d.deviceCertFingerprint,
       localCert.fingerprint,
     };
+    final pinnedCerts = await _pinnedCertificates(localCert, devices);
     final hash = await booksSetIdHash(booksSetId);
 
     final found = <String, DiscoveredPeer>{};
@@ -170,6 +219,23 @@ class PeerSyncService {
     });
     await Future<void>.delayed(browseTimeout);
     await sub.cancel();
+
+    // Permission-gated Bonjour browse yields nothing when local-network
+    // permission is denied; still surface connect-by-address peers.
+    final direct = _direct;
+    if (direct != null) {
+      final directSeen = <DiscoveredPeer>[];
+      final directSub = direct
+          .browse(booksSetIdHash: hash)
+          .listen(directSeen.add);
+      await Future<void>.delayed(Duration.zero);
+      await directSub.cancel();
+      for (final peer in directSeen) {
+        if (peersById.containsKey(peer.deviceId)) {
+          found[peer.deviceId] = peer;
+        }
+      }
+    }
 
     if (found.isEmpty) {
       return [
@@ -193,20 +259,25 @@ class PeerSyncService {
         certificate: localCert,
       ),
       pinnedFingerprints: pins,
-      pinnedCertificates: [localCert],
+      pinnedCertificates: pinnedCerts,
     );
 
     final results = <SyncSessionResult>[];
     for (final peer in found.values) {
       final membership = peersById[peer.deviceId]!;
+      final remoteCert =
+          await _certificates.certificateForFingerprint(
+            membership.deviceCertFingerprint,
+          ) ??
+          DeviceCertificate(
+            derBytes: const [],
+            fingerprint: membership.deviceCertFingerprint,
+          );
       try {
         final result = await session.syncNow(
           remote: SyncPeerIdentity(
             deviceId: peer.deviceId,
-            certificate: DeviceCertificate(
-              derBytes: const [],
-              fingerprint: membership.deviceCertFingerprint,
-            ),
+            certificate: remoteCert,
             host: peer.host,
             port: peer.port,
           ),
@@ -229,6 +300,17 @@ class PeerSyncService {
             entriesSent: 0,
             entriesReceived: 0,
             refusedReason: e.toString(),
+          ),
+        );
+      } catch (e) {
+        // Mid-exchange disconnects ("Sync connection is closed") must not
+        // escape as unhandled async errors during Flutter tests.
+        results.add(
+          SyncSessionResult(
+            connected: false,
+            entriesSent: 0,
+            entriesReceived: 0,
+            refusedReason: 'Sync with ${peer.deviceDisplayName} failed: $e',
           ),
         );
       }
@@ -286,5 +368,23 @@ class PeerSyncService {
         port: port,
       ),
     );
+  }
+
+  /// Local cert plus peer public certs remembered at join. BoringSSL rejects
+  /// inbound client certs that are not in the server trust store even when
+  /// [SecureServerSocket.requireClientCertificate] is false.
+  Future<List<DeviceCertificate>> _pinnedCertificates(
+    DeviceCertificate localCert,
+    List<LinkedDevice> devices,
+  ) async {
+    final out = <DeviceCertificate>[localCert];
+    final seen = <String>{localCert.fingerprint};
+    for (final device in devices) {
+      final fp = device.deviceCertFingerprint;
+      if (!seen.add(fp)) continue;
+      final peer = await _certificates.certificateForFingerprint(fp);
+      if (peer != null) out.add(peer);
+    }
+    return out;
   }
 }

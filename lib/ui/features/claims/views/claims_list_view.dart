@@ -52,6 +52,12 @@ class ClaimsListView extends StatelessWidget {
                 },
                 child: Text(l10n.claimsMyLimits),
               ),
+              IconButton(
+                key: const Key('claims-open-settings'),
+                tooltip: l10n.settingsTitle,
+                onPressed: () => context.push(AppNavPaths.settings),
+                icon: const Icon(Icons.settings_outlined),
+              ),
             ],
           ),
           floatingActionButton: FloatingActionButton(
