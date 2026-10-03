@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../domain/navigation/app_navigation_policy.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/money_formatter.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/claims_list_view_model.dart';
 
 /// Claimant home: own claims, balance copy, advances.
@@ -44,7 +45,7 @@ class ClaimsListView extends StatelessWidget {
             child: const Icon(Icons.add),
           ),
           body: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: scrollPaddingAvoidingSystemInsets(context, base: 16),
             children: [
               Text(
                 viewModel.balanceCopy(l10n),

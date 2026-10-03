@@ -5,6 +5,7 @@ import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/first_account_name_view_model.dart';
 
 /// Names the seeded starter account before the guided first entry
@@ -63,7 +64,7 @@ class _FirstAccountNameViewState extends State<FirstAccountNameView> {
             widget.viewModel.setName(_controller.text);
           }
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

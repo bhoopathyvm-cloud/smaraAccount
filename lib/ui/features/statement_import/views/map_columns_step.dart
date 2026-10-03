@@ -9,6 +9,7 @@ import '../../../core/app_typography.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../../../core/money_formatter.dart';
 import '../../../core/show_managed_dialog.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/statement_import_view_model.dart';
 
 class MapColumnsStep extends StatefulWidget {
@@ -105,7 +106,7 @@ class _MapColumnsStepState extends State<MapColumnsStep> {
     final columnIndexes = List.generate(columnCount, (i) => i);
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSpacing.large),
+      padding: scrollPaddingAvoidingSystemInsets(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

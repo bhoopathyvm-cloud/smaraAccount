@@ -46,19 +46,27 @@ class ContinuationView extends StatelessWidget {
                   ),
                 ],
                 const Spacer(),
-                ElevatedButton(
-                  onPressed: viewModel.isBusy
-                      ? null
-                      : () async {
-                          final ok = await viewModel.continueBooks();
-                          if (ok) onContinued();
-                        },
-                  child: Text(l10n.continueBooksAction),
-                ),
-                const SizedBox(height: AppSpacing.medium),
-                OutlinedButton(
-                  onPressed: viewModel.isBusy ? null : onRestoreFromCopy,
-                  child: Text(l10n.restoreFromCopyAction),
+                SafeArea(
+                  top: false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ElevatedButton(
+                        onPressed: viewModel.isBusy
+                            ? null
+                            : () async {
+                                final ok = await viewModel.continueBooks();
+                                if (ok) onContinued();
+                              },
+                        child: Text(l10n.continueBooksAction),
+                      ),
+                      const SizedBox(height: AppSpacing.medium),
+                      OutlinedButton(
+                        onPressed: viewModel.isBusy ? null : onRestoreFromCopy,
+                        child: Text(l10n.restoreFromCopyAction),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

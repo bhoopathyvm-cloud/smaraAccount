@@ -66,6 +66,9 @@ class RecurringTemplateManagementView extends StatelessWidget {
             );
           }
           return ListView.builder(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.viewPaddingOf(context).bottom,
+            ),
             itemCount: viewModel.templates.length,
             itemBuilder: (context, index) {
               final template = viewModel.templates[index];

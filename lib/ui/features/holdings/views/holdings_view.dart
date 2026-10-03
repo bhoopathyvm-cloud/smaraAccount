@@ -22,6 +22,7 @@ import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
 import '../../../core/money_formatter.dart';
 import '../../../core/status_banner.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/holdings_view_model.dart';
 
 String instrumentKindLabel(AppLocalizations l10n, InstrumentKind kind) =>
@@ -90,7 +91,7 @@ class HoldingsView extends StatelessWidget {
                 ),
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.all(AppSpacing.large),
+                  padding: scrollPaddingAvoidingSystemInsets(context),
                   children: [
                     Text(l10n.holdingsCash, style: AppTypography.sectionLabel),
                     Text(

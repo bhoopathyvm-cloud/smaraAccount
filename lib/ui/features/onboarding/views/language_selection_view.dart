@@ -95,11 +95,14 @@ class _LanguageSelectionViewState extends State<LanguageSelectionView> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.large),
-            child: ElevatedButton(
-              onPressed: _hasSelected ? widget.onFinished : null,
-              child: Text(l10n.actionContinue),
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.large),
+              child: ElevatedButton(
+                onPressed: _hasSelected ? widget.onFinished : null,
+                child: Text(l10n.actionContinue),
+              ),
             ),
           ),
         ],

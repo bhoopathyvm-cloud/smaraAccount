@@ -9,6 +9,7 @@ import '../../../core/app_typography.dart';
 import '../../../core/date_formatter.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/transfer_view_model.dart';
 
 class TransferView extends StatefulWidget {
@@ -62,7 +63,7 @@ class _TransferViewState extends State<TransferView> {
         builder: (context, _) {
           final viewModel = widget.viewModel;
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

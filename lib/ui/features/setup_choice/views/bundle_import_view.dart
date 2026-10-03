@@ -7,6 +7,7 @@ import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/system_inset_padding.dart';
 import '../../../core/destructive_confirmation.dart';
 import '../view_models/bundle_import_view_model.dart';
 import 'books_copy_restored_success_dialog.dart';
@@ -84,7 +85,7 @@ class _BundleImportViewState extends State<BundleImportView> {
         listenable: widget.viewModel,
         builder: (context, _) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

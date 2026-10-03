@@ -13,6 +13,7 @@ import '../../../core/app_typography.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
 import '../../../core/money_formatter.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/record_transaction_view_model.dart';
 
 /// Amount/direction/category/date form. The category picker excludes
@@ -100,7 +101,7 @@ class _RecordTransactionViewState extends State<RecordTransactionView> {
         builder: (context, _) {
           _pruneSplitAmountControllers(widget.viewModel.splitLines);
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
