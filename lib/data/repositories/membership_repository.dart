@@ -9,6 +9,7 @@ import '../../domain/models/join_request.dart';
 import '../../domain/models/linked_device.dart';
 import '../../domain/models/linked_device_role.dart';
 import '../../domain/models/membership_notice.dart';
+import '../../domain/peer_sync/tls_sync_transport.dart';
 import '../database/app_database.dart';
 import 'identity_repository.dart';
 
@@ -41,6 +42,7 @@ class MembershipRepository {
   final DateTime Function() _clock;
   final Uuid _uuid;
   final Duration _soleOwnerClaimDelay;
+  final JoinNonceRegistry _joinNonces = JoinNonceRegistry();
 
   /// Lists all membership rows (including removed/erased).
   Future<List<LinkedDevice>> listDevices() async {
@@ -432,6 +434,7 @@ class MembershipRepository {
     Set<LinkedDeviceRole>? personRoles,
     String? personDisplayName,
     bool isPersonJoin = false,
+    String? booksSetDisplayName,
   }) async {
     if (!await canAddDevices(hostDeviceId)) {
       throw const AppFailure(
@@ -451,6 +454,9 @@ class MembershipRepository {
         personRoles ??
         (isPersonJoin ? {LinkedDeviceRole.claimant} : {roleOffer});
     final primary = MembershipRoleGates.primaryRole(roles);
+    final joinNonce = _uuid.v4();
+    final now = _clock().toUtc();
+    final checkCode = await JoinQrPayload.deriveCheckCode(joinNonce);
     return JoinQrPayload(
       booksSetId: booksSetId,
       hostDeviceId: hostDeviceId,
@@ -460,10 +466,13 @@ class MembershipRepository {
       deviceCertDer: cert.derBytes,
       deviceCertFingerprint: cert.fingerprint,
       roleOffer: isPersonJoin ? primary : roleOffer,
-      joinNonce: _uuid.v4(),
+      joinNonce: joinNonce,
+      expiresAt: now.add(JoinQrPayload.joinQrTtl),
+      checkCode: checkCode,
       personRoles: roles,
       personDisplayName: personDisplayName,
       isPersonJoin: isPersonJoin,
+      booksSetDisplayName: booksSetDisplayName,
     );
   }
 
@@ -476,6 +485,7 @@ class MembershipRepository {
     required String joinerDisplayName,
     required List<int> joinerSigningPublicKey,
     required String joinerDeviceCertFingerprint,
+    List<int> joinerDeviceCertDer = const [],
     String? joinerIdentityId,
     String? peerHint,
     String? owedToAccountId,
@@ -489,11 +499,40 @@ class MembershipRepository {
         debugMessage: 'Join requires the same Wi-Fi (local network).',
       );
     }
+    final now = _clock().toUtc();
+    if (payload.isExpiredAt(now)) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'This join QR has expired. Ask for a new code.',
+      );
+    }
+    if (_joinNonces.hasBeenUsed(payload.joinNonce)) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'This join QR was already used. Ask for a new code.',
+      );
+    }
+    final expectedCode = await JoinQrPayload.deriveCheckCode(payload.joinNonce);
+    if (payload.checkCode != expectedCode) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'Join check code does not match.',
+      );
+    }
     final peerIdentity = await _identity.addLinkedPeerIdentity(
       publicKey: joinerSigningPublicKey,
       identityId: joinerIdentityId,
     );
-    return addDevice(
+    if (joinerDeviceCertDer.isNotEmpty) {
+      await _certs.rememberPeerCertificate(
+        DeviceCertificate(
+          derBytes: joinerDeviceCertDer,
+          fingerprint: joinerDeviceCertFingerprint,
+          certificatePem: TlsSyncTransport.derToPem(joinerDeviceCertDer),
+        ),
+      );
+    }
+    final device = await addDevice(
       actorDeviceId: actorDeviceId,
       deviceId: joinerDeviceId,
       displayName: joinerDisplayName,
@@ -506,6 +545,84 @@ class MembershipRepository {
       personDisplayName: payload.personDisplayName,
       owedToAccountId: owedToAccountId,
     );
+    _joinNonces.markUsed(payload.joinNonce);
+    return device;
+  }
+
+  /// Joiner-side step after scanning a host QR: validates expiry/check code
+  /// and stores the host Signing Identity under the host's id (task 12.3).
+  /// Does not mark the nonce used — only [acceptJoinFromQr] on the host does.
+  Future<void> prepareJoinerFromScannedQr(JoinQrPayload payload) async {
+    final now = _clock().toUtc();
+    if (payload.isExpiredAt(now)) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'This join QR has expired. Ask for a new code.',
+      );
+    }
+    final expectedCode = await JoinQrPayload.deriveCheckCode(payload.joinNonce);
+    if (payload.checkCode != expectedCode) {
+      throw const AppFailure(
+        AppErrorCode.generic,
+        debugMessage: 'Join check code does not match.',
+      );
+    }
+    await _identity.addLinkedPeerIdentity(
+      publicKey: payload.signingPublicKey,
+      identityId: payload.hostIdentityId,
+    );
+    if (payload.deviceCertDer.isNotEmpty) {
+      await _certs.rememberPeerCertificate(
+        DeviceCertificate(
+          derBytes: payload.deviceCertDer,
+          fingerprint: payload.deviceCertFingerprint,
+          certificatePem: TlsSyncTransport.derToPem(payload.deviceCertDer),
+        ),
+      );
+    }
+  }
+
+  /// Seeds host Owner + local member rows on a freshly opened joined books
+  /// set (joiner side). Does not require an existing Owner actor — the set
+  /// is empty until this runs. Idempotent when both rows already exist.
+  Future<void> seedJoinerMembership({
+    required JoinQrPayload payload,
+    required String localDeviceId,
+    required String localDisplayName,
+    required String localSigningIdentityId,
+    required String localDeviceCertFingerprint,
+    Set<LinkedDeviceRole>? localRoles,
+  }) async {
+    final roles =
+        localRoles ??
+        (payload.personRoles.isNotEmpty
+            ? payload.personRoles
+            : {payload.roleOffer});
+    final host = await findByDeviceId(payload.hostDeviceId);
+    if (host == null || !host.isActive) {
+      await _insertMember(
+        deviceId: payload.hostDeviceId,
+        displayName: payload.hostDisplayName,
+        signingIdentityId: payload.hostIdentityId,
+        deviceCertFingerprint: payload.deviceCertFingerprint,
+        roles: {LinkedDeviceRole.owner},
+        canAdd: true,
+        emitNotice: false,
+      );
+    }
+    final local = await findByDeviceId(localDeviceId);
+    if (local == null || !local.isActive) {
+      await _insertMember(
+        deviceId: localDeviceId,
+        displayName: localDisplayName,
+        signingIdentityId: localSigningIdentityId,
+        deviceCertFingerprint: localDeviceCertFingerprint,
+        roles: roles,
+        canAdd: roles.contains(LinkedDeviceRole.owner),
+        emitNotice: false,
+        personDisplayName: payload.personDisplayName,
+      );
+    }
   }
 
   /// Creates a join request after restoring a Books Copy.
@@ -597,6 +714,15 @@ class MembershipRepository {
       publicKey: row.signingPublicKey,
       identityId: null,
     );
+    if (row.deviceCertDer.isNotEmpty) {
+      await _certs.rememberPeerCertificate(
+        DeviceCertificate(
+          derBytes: row.deviceCertDer,
+          fingerprint: row.deviceCertFingerprint,
+          certificatePem: TlsSyncTransport.derToPem(row.deviceCertDer),
+        ),
+      );
+    }
     final linked = await addDevice(
       actorDeviceId: actorDeviceId,
       deviceId: row.requesterDeviceId,

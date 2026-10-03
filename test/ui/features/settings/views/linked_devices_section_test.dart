@@ -11,6 +11,8 @@ import 'package:smara_accounting/data/repositories/ledger_repository.dart';
 import 'package:smara_accounting/data/repositories/membership_repository.dart';
 import 'package:smara_accounting/data/repositories/settings_repository.dart';
 import 'package:smara_accounting/domain/crypto/signing_key_service.dart';
+import 'package:smara_accounting/domain/linked_devices/join_code_lookup.dart';
+import 'package:smara_accounting/domain/linked_devices/join_offer_discovery.dart';
 import 'package:smara_accounting/domain/linked_devices/local_network_permission.dart';
 import 'package:smara_accounting/l10n/l10n.dart';
 import 'package:smara_accounting/ui/features/settings/view_models/linked_devices_view_model.dart';
@@ -160,5 +162,63 @@ void main() {
     await tester.tap(find.text('Approve'));
     await tester.pumpAndSettle();
     expect(await membership.listActiveDevices(), hasLength(2));
+  });
+
+  testWidgets('Enter code instead shows not-found then success + check code', (
+    tester,
+  ) async {
+    permission = FakeLocalNetworkPermission(granted: true);
+    await settings.setLinkedDevicesPermissionExplained(true);
+
+    final lookup = FakeJoinCodeLookup();
+    final viewModel = LinkedDevicesViewModel(
+      membershipRepository: membership,
+      settingsRepository: settings,
+      booksSetStore: booksSetStore,
+      localNetworkPermission: permission,
+      joinCodeLookup: lookup,
+    );
+    addTearDown(viewModel.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(body: LinkedDevicesSection(viewModel: viewModel)),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('enter-code-instead')));
+    await tester.pumpAndSettle();
+    expect(find.text('Enter join code'), findsOneWidget);
+
+    await tester.enterText(
+      find.byKey(const Key('join-code-entry-field')),
+      'k7qf3m9p',
+    );
+    await tester.tap(find.byKey(const Key('join-code-entry-submit')));
+    await tester.pumpAndSettle();
+    expect(find.text('No device with this code on this Wi-Fi'), findsOneWidget);
+
+    lookup.result = JoinCodeLookupResult.success(
+      JoinCodeLookupSuccess(
+        checkCode: '482913',
+        offer: const DiscoveredJoinOffer(
+          offerId: 'o1',
+          host: '127.0.0.1',
+          port: 9,
+          booksSetId: 'books-1',
+        ),
+        normalizedCode: 'K7QF3M9P',
+      ),
+    );
+    await tester.tap(find.byKey(const Key('join-code-entry-submit')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('join-code-check-code')), findsOneWidget);
+    expect(find.text('482913'), findsOneWidget);
+    expect(find.text("They don't match"), findsOneWidget);
+    expect(find.text('Codes match'), findsOneWidget);
   });
 }

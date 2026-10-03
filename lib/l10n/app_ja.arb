@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "この帳簿にはオーナーが1人だけです。別のリンク済みデバイスもオーナーにすることを検討してください。",
   "settingsLinkedDevicesSyncNow": "今すぐ同期",
   "settingsLinkedDevicesSyncNowBusy": "追いついています…",
-  "translateCategoryWithAi": "AIで翻訳"
+  "translateCategoryWithAi": "AIで翻訳",
+  "settingsLinkedDevicesCodesDontMatch": "一致しません",
+  "settingsLinkedDevicesConnectByAddress": "アドレスで接続",
+  "settingsLinkedDevicesConnectByAddressBody": "検出でリンク済み端末が見つからない場合は、LANアドレスとポートを入力してください。",
+  "settingsLinkedDevicesConnectByAddressTitle": "アドレスで接続",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "代わりにコードを入力",
+  "settingsLinkedDevicesEnterCodeSubmit": "端末を探す",
+  "settingsLinkedDevicesEnterCodeTitle": "参加コードを入力",
+  "settingsLinkedDevicesJoinCodeExpired": "このコードの期限が切れました — 新しいものを依頼してください",
+  "settingsLinkedDevicesJoinCodeLabel": "参加コード",
+  "settingsLinkedDevicesJoinCodeNotFound": "このWi-Fiにこのコードの端末はありません",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "残り {minutes}:{seconds}",
+  "settingsLinkedDevicesJoinCodeTryAgain": "再試行",
+  "settingsLinkedDevicesJoinCodeUsed": "このコードは使用済みです。新しいものを依頼してください。",
+  "settingsLinkedDevicesJoinCheckCode": "確認コード — 相手の端末と一致することを確認してください",
+  "settingsLinkedDevicesScanQr": "参加用QRをスキャン",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "確認コードを確認",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "このコードは相手の端末のものと一致しますか？",
+  "settingsLinkedDevicesCodesMatch": "コードが一致します",
+  "settingsLinkedDevicesJoinExpired": "この参加用QRの期限が切れました。新しいコードを依頼してください。",
+  "settingsLinkedDevicesJoinReused": "この参加用QRは使用済みです。新しいコードを依頼してください。",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "ホスト",
+  "settingsLinkedDevicesPort": "ポート",
+  "settingsLinkedDevicesPeer": "端末",
+  "settingsLinkedDevicesSaveAddress": "アドレスを保存",
+  "claimsPersonalLimitsTitle": "申請限度額",
+  "claimsPersonalLimitsTitleFor": "{name} の申請限度額",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "自分の申請限度額",
+  "claimsMyLimits": "自分の限度額",
+  "claimsPersonalLimitsHeading": "個人の限度額",
+  "claimsCompanyLimitsHeading": "会社の限度額",
+  "claimsBalancesHeading": "精算する残高",
+  "claimsPayBalance": "{amount} を支払う",
+  "claimsRecordPayment": "支払いを記録",
+  "claimsAboveLimit": "{limit} の限度を超過",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "個人の限度額は設定されていません。",
+  "claimsClearPersonalLimit": "限度額をクリア"
 }

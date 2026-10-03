@@ -4,6 +4,7 @@ import '../../domain/models/payee.dart';
 import '../../domain/statement_import/category_rule.dart'
     show normalizeDescription;
 import '../database/app_database.dart';
+import 'metadata_outbox.dart';
 
 /// Payees and spending memory (payees-and-spending-memory design.md
 /// Decision 1). No FK/link column on journal_entries - a payee is matched
@@ -11,9 +12,17 @@ import '../database/app_database.dart';
 /// out of `LedgerRepository` (architecture-deepening design.md D1); a leaf
 /// with no dependency on any other repository.
 class PayeeRepository {
-  PayeeRepository({required AppDatabase database}) : _db = database;
+  PayeeRepository({
+    required AppDatabase database,
+    MetadataOutbox? metadataOutbox,
+    Future<String?> Function()? currentIdentityId,
+  }) : _db = database,
+       _outbox = metadataOutbox,
+       _currentIdentityId = currentIdentityId;
 
   final AppDatabase _db;
+  final MetadataOutbox? _outbox;
+  final Future<String?> Function()? _currentIdentityId;
 
   Stream<List<Payee>> watchPayees() {
     final query = _db.select(_db.payees)
@@ -26,17 +35,27 @@ class PayeeRepository {
     String? defaultCategoryId,
     String? defaultFinancialAccountId,
   }) async {
-    final id = await _db
-        .into(_db.payees)
-        .insertReturning(
-          PayeesCompanion.insert(
-            name: name,
-            defaultCategoryId: Value(defaultCategoryId),
-            defaultFinancialAccountId: Value(defaultFinancialAccountId),
-            createdAt: DateTime.now(),
-          ),
+    return _db.transaction(() async {
+      final created = await _db
+          .into(_db.payees)
+          .insertReturning(
+            PayeesCompanion.insert(
+              name: name,
+              defaultCategoryId: Value(defaultCategoryId),
+              defaultFinancialAccountId: Value(defaultFinancialAccountId),
+              createdAt: DateTime.now(),
+            ),
+          );
+      await _emitPayee(entityId: created.id, field: 'name', value: name);
+      if (defaultCategoryId != null) {
+        await _emitPayee(
+          entityId: created.id,
+          field: 'defaultCategoryId',
+          value: defaultCategoryId,
         );
-    return _toDomainPayee(id);
+      }
+      return _toDomainPayee(created);
+    });
   }
 
   /// Links an existing payee whose normalized [name] matches, or creates
@@ -67,14 +86,23 @@ class PayeeRepository {
     return createPayee(name: name, defaultCategoryId: defaultCategoryId);
   }
 
-  Future<void> renamePayee({required String id, required String newName}) {
-    return (_db.update(_db.payees)..where((p) => p.id.equals(id))).write(
-      PayeesCompanion(name: Value(newName)),
-    );
+  Future<void> renamePayee({
+    required String id,
+    required String newName,
+  }) async {
+    await _db.transaction(() async {
+      await (_db.update(_db.payees)..where((p) => p.id.equals(id))).write(
+        PayeesCompanion(name: Value(newName)),
+      );
+      await _emitPayee(entityId: id, field: 'name', value: newName);
+    });
   }
 
   Future<void> deletePayee(String id) async {
-    await (_db.delete(_db.payees)..where((p) => p.id.equals(id))).go();
+    await _db.transaction(() async {
+      await (_db.delete(_db.payees)..where((p) => p.id.equals(id))).go();
+      await _emitPayee(entityId: id, field: 'deleted', value: true);
+    });
   }
 
   /// Updates [payeeId]'s remembered defaults to whatever was just used -
@@ -91,6 +119,25 @@ class PayeeRepository {
         defaultCategoryId: Value(categoryId),
         defaultFinancialAccountId: Value(financialAccountId),
       ),
+    );
+  }
+
+  Future<void> _emitPayee({
+    required String entityId,
+    required String field,
+    required Object? value,
+  }) async {
+    final outbox = _outbox;
+    final identityFn = _currentIdentityId;
+    if (outbox == null || identityFn == null) return;
+    final identityId = await identityFn();
+    if (identityId == null || identityId.isEmpty) return;
+    await outbox.emit(
+      entityType: 'payee',
+      entityId: entityId,
+      field: field,
+      value: value,
+      updatedByIdentityId: identityId,
     );
   }
 

@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "สมุดบัญชีนี้มีเจ้าของเพียงคนเดียว พิจารณาให้อุปกรณ์ที่เชื่อมโยงอื่นเป็นเจ้าของด้วย",
   "settingsLinkedDevicesSyncNow": "ซิงค์ตอนนี้",
   "settingsLinkedDevicesSyncNowBusy": "กำลังตามทัน…",
-  "translateCategoryWithAi": "แปลด้วย AI"
+  "translateCategoryWithAi": "แปลด้วย AI",
+  "settingsLinkedDevicesCodesDontMatch": "ไม่ตรงกัน",
+  "settingsLinkedDevicesConnectByAddress": "เชื่อมต่อด้วยที่อยู่",
+  "settingsLinkedDevicesConnectByAddressBody": "เมื่อค้นหาไม่พบอุปกรณ์ที่เชื่อมโยง ให้ใส่ที่อยู่ LAN และพอร์ต",
+  "settingsLinkedDevicesConnectByAddressTitle": "เชื่อมต่อด้วยที่อยู่",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "ใส่รหัสแทน",
+  "settingsLinkedDevicesEnterCodeSubmit": "ค้นหาอุปกรณ์",
+  "settingsLinkedDevicesEnterCodeTitle": "ใส่รหัสเข้าร่วม",
+  "settingsLinkedDevicesJoinCodeExpired": "รหัสนี้หมดอายุแล้ว — ขอรหัสใหม่",
+  "settingsLinkedDevicesJoinCodeLabel": "รหัสเข้าร่วม",
+  "settingsLinkedDevicesJoinCodeNotFound": "ไม่มีอุปกรณ์ที่ใช้รหัสนี้บน Wi-Fi นี้",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "เหลือ {minutes}:{seconds}",
+  "settingsLinkedDevicesJoinCodeTryAgain": "ลองอีกครั้ง",
+  "settingsLinkedDevicesJoinCodeUsed": "รหัสนี้ถูกใช้แล้ว ขอรหัสใหม่",
+  "settingsLinkedDevicesJoinCheckCode": "รหัสตรวจสอบ — ยืนยันว่าตรงกันบนอุปกรณ์อีกเครื่อง",
+  "settingsLinkedDevicesScanQr": "สแกน QR เข้าร่วม",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "ยืนยันรหัสตรวจสอบ",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "รหัสนี้ตรงกับบนอุปกรณ์อีกเครื่องหรือไม่?",
+  "settingsLinkedDevicesCodesMatch": "รหัสตรงกัน",
+  "settingsLinkedDevicesJoinExpired": "QR เข้าร่วมนี้หมดอายุแล้ว ขอรหัสใหม่",
+  "settingsLinkedDevicesJoinReused": "QR เข้าร่วมนี้ถูกใช้แล้ว ขอรหัสใหม่",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "โฮสต์",
+  "settingsLinkedDevicesPort": "พอร์ต",
+  "settingsLinkedDevicesPeer": "อุปกรณ์",
+  "settingsLinkedDevicesSaveAddress": "บันทึกที่อยู่",
+  "claimsPersonalLimitsTitle": "วงเงินการเบิก",
+  "claimsPersonalLimitsTitleFor": "วงเงินการเบิกของ {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "วงเงินการเบิกของฉัน",
+  "claimsMyLimits": "วงเงินของฉัน",
+  "claimsPersonalLimitsHeading": "วงเงินส่วนบุคคลของคุณ",
+  "claimsCompanyLimitsHeading": "วงเงินบริษัท",
+  "claimsBalancesHeading": "ยอดคงเหลือที่ต้องเคลียร์",
+  "claimsPayBalance": "ชำระ {amount}",
+  "claimsRecordPayment": "บันทึกการชำระเงิน",
+  "claimsAboveLimit": "เกินวงเงิน {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "ยังไม่ได้ตั้งวงเงินส่วนบุคคล",
+  "claimsClearPersonalLimit": "ล้างวงเงิน"
 }

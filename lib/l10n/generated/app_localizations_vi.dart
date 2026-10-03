@@ -1024,6 +1024,93 @@ class AppLocalizationsVi extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'Đang bắt kịp…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Mã kiểm tra — xác nhận khớp trên thiết bị kia';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Quét QR tham gia';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Xác nhận mã kiểm tra';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Mã này có khớp với mã trên thiết bị kia không?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Mã khớp';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Không khớp';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'QR tham gia này đã hết hạn. Hãy yêu cầu mã mới.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'QR tham gia này đã được dùng. Hãy yêu cầu mã mới.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Mã tham gia';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return 'Còn $minutes:$seconds';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'Nhập mã thay thế';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'Nhập mã tham gia';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Tìm thiết bị';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Mã này đã hết hạn — hãy yêu cầu mã mới';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Mã này đã được dùng. Hãy yêu cầu mã mới.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Không có thiết bị nào có mã này trên Wi-Fi này';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Thử lại';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Kết nối bằng địa chỉ';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'Kết nối bằng địa chỉ';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Khi không tìm thấy thiết bị đã liên kết, hãy nhập địa chỉ LAN và cổng.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Máy chủ';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Cổng';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Thiết bị';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Lưu địa chỉ';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Đã thêm thiết bị: $name';
   }
@@ -2201,6 +2288,48 @@ class AppLocalizationsVi extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Gợi ý: tối đa $amount mỗi $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Hạn mức hoàn ứng';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Hạn mức hoàn ứng của $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'Hạn mức hoàn ứng của tôi';
+
+  @override
+  String get claimsMyLimits => 'Hạn mức của tôi';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Hạn mức cá nhân của bạn';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Hạn mức công ty';
+
+  @override
+  String get claimsBalancesHeading => 'Số dư cần tất toán';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Thanh toán $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Ghi nhận thanh toán';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Vượt hạn mức $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Chưa đặt hạn mức cá nhân.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Xóa hạn mức';
 
   @override
   String get claimsNoClaimsYet => 'Chưa có đề nghị nào.';

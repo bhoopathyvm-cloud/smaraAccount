@@ -60,12 +60,16 @@
 	<!-- app-lock: local_auth's Face ID unlock option (household-product-repositioning). -->
 	<key>NSFaceIDUsageDescription</key>
 	<string>Use Face ID to unlock Smara Account.</string>
+	<!-- Linked devices: camera for scanning join QR codes. -->
+	<key>NSCameraUsageDescription</key>
+	<string>Scan a join QR code to link another device on this Wi-Fi. Nothing goes to the internet.</string>
 	<!-- Linked devices: local-network / Bonjour discovery (peer sync stays on LAN). -->
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_smara._tcp</string>
+		<string>_smara-join._tcp</string>
 	</array>
 	<!-- Claim receipts: camera / photo library (shared-accounts task 10.2). -->
 	<key>NSCameraUsageDescription</key>

@@ -46,7 +46,7 @@ The run SHALL play this company story. Company currency EUR; "Receipt required a
 | Mia | Claimant | Hotel 190 EUR; Taxi 35 EUR | Both approved |
 | Kenji | Claimant | Hotel 21 000 JPY; Meals 6 000 JPY; Souvenir 30 EUR | Hotel and Meals approved; Souvenir rejected ("not a business expense") |
 | Sara (advance 100) | Claimant | Meals 55 EUR; Train 60 EUR | Both approved |
-| Tom | Claimant | Taxi 80 EUR without receipt | Rejected (receipt required); resubmitted with a receipt and approved |
+| Tom | Claimant | Taxi 80 EUR with an unreadable receipt | Rejected ("receipt unreadable"); resubmitted with a clear receipt and approved |
 
 With fewer employees, the run SHALL use the people in table order, keeping both iOS and Android represented. After the decisions, the Owner SHALL settle each claim: approved totals are set against advances, and the Owner records payments in either direction until every "Owed to" balance is 0.
 

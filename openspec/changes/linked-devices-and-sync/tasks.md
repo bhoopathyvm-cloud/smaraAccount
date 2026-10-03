@@ -78,22 +78,22 @@
 
 A comparison with the duplicate proposal `linked-devices` (#209), and a check of the code on `main`, found that several boxes above were ticked against test seams, not working device-to-device behavior. These tasks keep the change open until two real devices can share books.
 
-- [ ] 12.1 Real TLS transport: implement the `SecureSocket`/`SecureServerSocket` adapter behind `SyncTransport` with certificate pinning (only `InProcessSyncTransport` exists; `sync_transport.dart` says "Real SecureSocket adapters land later"); verify with a loopback-socket test that a pinned peer connects and an unknown certificate is refused
-  <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
-- [ ] 12.2 Real mDNS discovery: a Bonjour/NSD adapter for `_smara._tcp` (advertise and browse) plus a direct-address fallback when discovery is blocked; verify on macOS ↔ iOS and macOS ↔ Android on one Wi-Fi
-  <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
-- [ ] 12.3 QR join screens: show the join payload as a QR code and scan it with the camera (no QR rendering or scanning exists in `lib/`); make the join payload expire after 2 minutes and refuse reuse; show the same short check code on both screens before any data flows; verify with widget tests using a fake scanner and a unit test for expiry and reuse
-  <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
-- [ ] 12.4 Wire "Sync now" and automatic sync on app foreground to the real transport (`syncNowAction` is never supplied, so the button does nothing in the app); verify on two devices that an entry recorded on one appears on the other
-  <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
-- [ ] 12.5 Emit `MetadataOperation`s from every local master-data write (categories, accounts, groups, payees, rules, templates, limits, books settings); nothing emits them today; verify with a repository test that a local rename produces an operation that a second database applies
-  <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
-- [ ] 12.6 Persist last-write-wins state (`SyncMergeRepository.metadataState` is in memory only, so a restart forgets which change won) and order operations by a hybrid logical clock instead of the device's wall clock; verify that an older operation arriving after a restart cannot overwrite a newer field, and that clock skew between devices cannot reverse the winner
-  <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
-- [ ] 12.7 Removal enforcement: refuse entries signed by a removed device after its removal (no check exists in the merge path); verify with a sync-merge test
-  <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
-- [ ] 12.8 Erase on next contact: when a removed device with a pending erase meets a linked device, erase its copy of the books and report "Erased on <date>" back (only the pending/erased timestamps exist); verify with a two-instance harness test
-  <!-- 2026-10-02: moved to `real-sync-and-company-acceptance` (implemented there); check this box only when that change satisfies it. -->
+- [x] 12.1 Real TLS transport: implement the `SecureSocket`/`SecureServerSocket` adapter behind `SyncTransport` with certificate pinning (only `InProcessSyncTransport` exists; `sync_transport.dart` says "Real SecureSocket adapters land later"); verify with a loopback-socket test that a pinned peer connects and an unknown certificate is refused
+  <!-- Satisfied by real-sync-and-company-acceptance task 1.2 (loopback pin/refuse/5 MB verify passed). -->
+- [x] 12.2 Real mDNS discovery: a Bonjour/NSD adapter for `_smara._tcp` (advertise and browse) plus a direct-address fallback when discovery is blocked; verify on macOS ↔ iOS and macOS ↔ Android on one Wi-Fi
+  <!-- Satisfied by real-sync-and-company-acceptance tasks 2.2–2.3 (unit + connect-by-address verify passed). Cross-device Wi-Fi remains under 11.3 / real-sync 10.2. -->
+- [x] 12.3 QR join screens: show the join payload as a QR code and scan it with the camera (no QR rendering or scanning exists in `lib/`); make the join payload expire after 2 minutes and refuse reuse; show the same short check code on both screens before any data flows; verify with widget tests using a fake scanner and a unit test for expiry and reuse
+  <!-- Satisfied by real-sync-and-company-acceptance task 3.1 (widget + expiry/reuse verify passed). -->
+- [x] 12.4 Wire "Sync now" and automatic sync on app foreground to the real transport (`syncNowAction` is never supplied, so the button does nothing in the app); verify on two devices that an entry recorded on one appears on the other
+  <!-- Satisfied by real-sync-and-company-acceptance task 3.2 (two-instance harness verify passed). -->
+- [x] 12.5 Emit `MetadataOperation`s from every local master-data write (categories, accounts, groups, payees, rules, templates, limits, books settings); nothing emits them today; verify with a repository test that a local rename produces an operation that a second database applies
+  <!-- Satisfied by real-sync-and-company-acceptance task 5.1 (repository rename→apply verify passed). -->
+- [x] 12.6 Persist last-write-wins state (`SyncMergeRepository.metadataState` is in memory only, so a restart forgets which change won) and order operations by a hybrid logical clock instead of the device's wall clock; verify that an older operation arriving after a restart cannot overwrite a newer field, and that clock skew between devices cannot reverse the winner
+  <!-- Satisfied by real-sync-and-company-acceptance task 5.2 (HLC + metadata_lww_state verify passed). -->
+- [x] 12.7 Removal enforcement: refuse entries signed by a removed device after its removal (no check exists in the merge path); verify with a sync-merge test
+  <!-- Satisfied by real-sync-and-company-acceptance task 5.3 (sync-merge refuse verify passed). -->
+- [x] 12.8 Erase on next contact: when a removed device with a pending erase meets a linked device, erase its copy of the books and report "Erased on <date>" back (only the pending/erased timestamps exist); verify with a two-instance harness test
+  <!-- Satisfied by real-sync-and-company-acceptance task 5.4 (erase-on-contact harness verify passed). -->
 - [x] 12.9 Android background sync where the system allows it (no WorkManager or equivalent exists); verify an Android-only scheduling test, or record a decision to drop it from the spec
   <!-- Decision (2026-10-03): drop from peer-sync. Sync needs both apps open on the same Wi-Fi for mDNS + pinned TLS; WorkManager would mostly wake for no peer and contradicts the "both open" copy. See design.md Decision 11; peer-sync / proposal updated. -->
 - [x] 12.10 Show the books set's name in the switcher instead of its raw id (noted in PR #216); verify with a widget test

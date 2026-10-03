@@ -1024,6 +1024,94 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'A atualizar…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'Código de verificação — confirme que coincide no outro dispositivo';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'Digitalizar QR de ligação';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'Confirmar código de verificação';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'Este código coincide com o do outro dispositivo?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'Os códigos coincidem';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'Não coincidem';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'Este QR de ligação expirou. Peça um código novo.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'Este QR de ligação já foi usado. Peça um código novo.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'Código de ligação';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds restantes';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead =>
+      'Introduzir código em vez disso';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle =>
+      'Introduzir código de ligação';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'Encontrar dispositivo';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'Este código expirou — peça um novo';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'Este código já foi usado. Peça um novo.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'Nenhum dispositivo com este código neste Wi-Fi';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'Tentar novamente';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'Ligar por endereço';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => 'Ligar por endereço';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'Quando a descoberta não encontrar um dispositivo ligado, introduza o endereço LAN e a porta.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'Anfitrião';
+
+  @override
+  String get settingsLinkedDevicesPort => 'Porta';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'Dispositivo';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'Guardar endereço';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'Foi adicionado um dispositivo: $name';
   }
@@ -2209,6 +2297,48 @@ class AppLocalizationsPt extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'Sugestão: no máximo $amount por $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'Limites de despesas';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'Limites de despesas de $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'Os meus limites de despesas';
+
+  @override
+  String get claimsMyLimits => 'Os meus limites';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'Os seus limites pessoais';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'Limites da empresa';
+
+  @override
+  String get claimsBalancesHeading => 'Saldos a liquidar';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'Pagar $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'Registar pagamento';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'Acima do limite de $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'Nenhum limite pessoal definido.';
+
+  @override
+  String get claimsClearPersonalLimit => 'Limpar limite';
 
   @override
   String get claimsNoClaimsYet => 'Ainda não há pedidos de reembolso.';

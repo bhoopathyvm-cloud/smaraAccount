@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Te księgi mają tylko jednego Właściciela. Rozważ uczynienie innego połączonego urządzenia również Właścicielem.",
   "settingsLinkedDevicesSyncNow": "Synchronizuj teraz",
   "settingsLinkedDevicesSyncNowBusy": "Doganianie…",
-  "translateCategoryWithAi": "Przetłumacz z AI"
+  "translateCategoryWithAi": "Przetłumacz z AI",
+  "settingsLinkedDevicesCodesDontMatch": "Nie zgadzają się",
+  "settingsLinkedDevicesConnectByAddress": "Połącz przez adres",
+  "settingsLinkedDevicesConnectByAddressBody": "Gdy wykrywanie nie znajdzie powiązanego urządzenia, wpisz jego adres LAN i port.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Połącz przez adres",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Wpisz kod zamiast tego",
+  "settingsLinkedDevicesEnterCodeSubmit": "Znajdź urządzenie",
+  "settingsLinkedDevicesEnterCodeTitle": "Wpisz kod dołączenia",
+  "settingsLinkedDevicesJoinCodeExpired": "Ten kod wygasł — poproś o nowy",
+  "settingsLinkedDevicesJoinCodeLabel": "Kod dołączenia",
+  "settingsLinkedDevicesJoinCodeNotFound": "Brak urządzenia z tym kodem w tej sieci Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "Pozostało {minutes}:{seconds}",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Spróbuj ponownie",
+  "settingsLinkedDevicesJoinCodeUsed": "Ten kod był już użyty. Poproś o nowy.",
+  "settingsLinkedDevicesJoinCheckCode": "Kod kontrolny — potwierdź, że jest taki sam na drugim urządzeniu",
+  "settingsLinkedDevicesScanQr": "Skanuj kod QR dołączenia",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Potwierdź kod kontrolny",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Czy ten kod jest taki sam jak na drugim urządzeniu?",
+  "settingsLinkedDevicesCodesMatch": "Kody się zgadzają",
+  "settingsLinkedDevicesJoinExpired": "Ten kod QR dołączenia wygasł. Poproś o nowy kod.",
+  "settingsLinkedDevicesJoinReused": "Ten kod QR dołączenia był już użyty. Poproś o nowy kod.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Host",
+  "settingsLinkedDevicesPort": "Port",
+  "settingsLinkedDevicesPeer": "Urządzenie",
+  "settingsLinkedDevicesSaveAddress": "Zapisz adres",
+  "claimsPersonalLimitsTitle": "Limity roszczeń",
+  "claimsPersonalLimitsTitleFor": "Limity roszczeń dla {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "Moje limity roszczeń",
+  "claimsMyLimits": "Moje limity",
+  "claimsPersonalLimitsHeading": "Twoje osobiste limity",
+  "claimsCompanyLimitsHeading": "Limity firmowe",
+  "claimsBalancesHeading": "Salda do rozliczenia",
+  "claimsPayBalance": "Zapłać {amount}",
+  "claimsRecordPayment": "Zapisz płatność",
+  "claimsAboveLimit": "Powyżej limitu {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Brak osobistych limitów.",
+  "claimsClearPersonalLimit": "Wyczyść limit"
 }

@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "இந்தக் கணக்குகளுக்கு ஒரே ஒரு உரிமையாளர் மட்டுமே உள்ளார். இணைக்கப்பட்ட மற்றொரு சாதனத்தையும் உரிமையாளராக்கவும்.",
   "settingsLinkedDevicesSyncNow": "இப்போது ஒத்திசை",
   "settingsLinkedDevicesSyncNowBusy": "ஒத்திசைக்கிறது…",
-  "translateCategoryWithAi": "AI மூலம் மொழிபெயர்"
+  "translateCategoryWithAi": "AI மூலம் மொழிபெயர்",
+  "settingsLinkedDevicesCodesDontMatch": "பொருந்தவில்லை",
+  "settingsLinkedDevicesConnectByAddress": "முகவரியால் இணைக்கவும்",
+  "settingsLinkedDevicesConnectByAddressBody": "கண்டறிதல் இணைக்கப்பட்ட சாதனத்தைக் கண்டுபிடிக்க முடியாதபோது, அதன் LAN முகவரி மற்றும் போர்ட்டை உள்ளிடவும்.",
+  "settingsLinkedDevicesConnectByAddressTitle": "முகவரியால் இணைக்கவும்",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "அதற்குப் பதிலாகக் குறியீட்டை உள்ளிடவும்",
+  "settingsLinkedDevicesEnterCodeSubmit": "சாதனத்தைக் கண்டறியவும்",
+  "settingsLinkedDevicesEnterCodeTitle": "இணைப்புக் குறியீட்டை உள்ளிடவும்",
+  "settingsLinkedDevicesJoinCodeExpired": "இந்தக் குறியீடு காலாவதியானது — புதியதைக் கேளுங்கள்",
+  "settingsLinkedDevicesJoinCodeLabel": "இணைப்புக் குறியீடு",
+  "settingsLinkedDevicesJoinCodeNotFound": "இந்த Wi-Fi இல் இந்தக் குறியீடுள்ள சாதனம் இல்லை",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} மீதம்",
+  "settingsLinkedDevicesJoinCodeTryAgain": "மீண்டும் முயலவும்",
+  "settingsLinkedDevicesJoinCodeUsed": "இந்தக் குறியீடு ஏற்கனவே பயன்படுத்தப்பட்டது. புதியதைக் கேளுங்கள்.",
+  "settingsLinkedDevicesJoinCheckCode": "சரிபார்ப்புக் குறியீடு — மற்ற சாதனத்தில் பொருந்துகிறதா என உறுதிப்படுத்தவும்",
+  "settingsLinkedDevicesScanQr": "இணைப்பு QR ஐ ஸ்கேன் செய்யவும்",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "சரிபார்ப்புக் குறியீட்டை உறுதிப்படுத்தவும்",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "இந்தக் குறியீடு மற்ற சாதனத்திலுள்ளதற்கு பொருந்துகிறதா?",
+  "settingsLinkedDevicesCodesMatch": "குறியீடுகள் பொருந்துகின்றன",
+  "settingsLinkedDevicesJoinExpired": "இந்த இணைப்பு QR காலாவதியானது. புதிய குறியீட்டைக் கேளுங்கள்.",
+  "settingsLinkedDevicesJoinReused": "இந்த இணைப்பு QR ஏற்கனவே பயன்படுத்தப்பட்டது. புதிய குறியீட்டைக் கேளுங்கள்.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "ஹோஸ்ட்",
+  "settingsLinkedDevicesPort": "போர்ட்",
+  "settingsLinkedDevicesPeer": "சாதனம்",
+  "settingsLinkedDevicesSaveAddress": "முகவரியைச் சேமிக்கவும்",
+  "claimsPersonalLimitsTitle": "கோரிக்கை வரம்புகள்",
+  "claimsPersonalLimitsTitleFor": "{name} இன் கோரிக்கை வரம்புகள்",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "என் கோரிக்கை வரம்புகள்",
+  "claimsMyLimits": "என் வரம்புகள்",
+  "claimsPersonalLimitsHeading": "உங்கள் தனிப்பட்ட வரம்புகள்",
+  "claimsCompanyLimitsHeading": "நிறுவன வரம்புகள்",
+  "claimsBalancesHeading": "தீர்க்க வேண்டிய இருப்புகள்",
+  "claimsPayBalance": "{amount} செலுத்து",
+  "claimsRecordPayment": "பணம் செலுத்தலைப் பதிவு செய்",
+  "claimsAboveLimit": "{limit} வரம்புக்கு மேல்",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "தனிப்பட்ட வரம்புகள் அமைக்கப்படவில்லை.",
+  "claimsClearPersonalLimit": "வரம்பை அழிக்கவும்"
 }

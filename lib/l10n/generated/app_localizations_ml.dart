@@ -1030,6 +1030,94 @@ class AppLocalizationsMl extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'സമന്വയിപ്പിക്കുന്നു…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'പരിശോധന കോഡ് — മറ്റേ ഉപകരണത്തിൽ പൊരുത്തപ്പെടുന്നുണ്ടെന്ന് ഉറപ്പാക്കുക';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'ചേരൽ QR സ്കാൻ ചെയ്യുക';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'പരിശോധന കോഡ് സ്ഥിരീകരിക്കുക';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'ഈ കോഡ് മറ്റേ ഉപകരണത്തിലേതുമായി പൊരുത്തപ്പെടുന്നുണ്ടോ?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'കോഡുകൾ പൊരുത്തപ്പെടുന്നു';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'പൊരുത്തപ്പെടുന്നില്ല';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'ഈ ചേരൽ QR കാലഹരണപ്പെട്ടു. പുതിയ കോഡ് ചോദിക്കുക.';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'ഈ ചേരൽ QR ഇതിനകം ഉപയോഗിച്ചു. പുതിയ കോഡ് ചോദിക്കുക.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'ചേരൽ കോഡ്';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds ബാക്കി';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'പകരം കോഡ് നൽകുക';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'ചേരൽ കോഡ് നൽകുക';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'ഉപകരണം കണ്ടെത്തുക';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'ഈ കോഡ് കാലഹരണപ്പെട്ടു — പുതിയത് ചോദിക്കുക';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'ഈ കോഡ് ഇതിനകം ഉപയോഗിച്ചു. പുതിയത് ചോദിക്കുക.';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'ഈ Wi-Fi-യിൽ ഈ കോഡുള്ള ഉപകരണമില്ല';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'വീണ്ടും ശ്രമിക്കുക';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress =>
+      'വിലാസം വഴി ബന്ധിപ്പിക്കുക';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'വിലാസം വഴി ബന്ധിപ്പിക്കുക';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'കണ്ടെത്തൽ ലിങ്ക് ചെയ്ത ഉപകരണം കണ്ടെത്താത്തപ്പോൾ, അതിന്റെ LAN വിലാസവും പോർട്ടും നൽകുക.';
+
+  @override
+  String get settingsLinkedDevicesHost => 'ഹോസ്റ്റ്';
+
+  @override
+  String get settingsLinkedDevicesPort => 'പോർട്ട്';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'ഉപകരണം';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'വിലാസം സംരക്ഷിക്കുക';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'ഒരു ഉപകരണം ചേർത്തു: $name';
   }
@@ -2213,6 +2301,48 @@ class AppLocalizationsMl extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'സൂചന: ഒരു $unit-യ്ക്ക് പരമാവധി $amount';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'ക്ലെയിം പരിധികൾ';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name-ന്റെ ക്ലെയിം പരിധികൾ';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'എന്റെ ക്ലെയിം പരിധികൾ';
+
+  @override
+  String get claimsMyLimits => 'എന്റെ പരിധികൾ';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'നിങ്ങളുടെ വ്യക്തിഗത പരിധികൾ';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'കമ്പനി പരിധികൾ';
+
+  @override
+  String get claimsBalancesHeading => 'തീർപ്പാക്കേണ്ട ബാലൻസുകൾ';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount അടയ്ക്കുക';
+  }
+
+  @override
+  String get claimsRecordPayment => 'പേയ്മെന്റ് രേഖപ്പെടുത്തുക';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit പരിധിക്ക് മുകളിൽ';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'വ്യക്തിഗത പരിധികൾ സജ്ജീകരിച്ചിട്ടില്ല.';
+
+  @override
+  String get claimsClearPersonalLimit => 'പരിധി മായ്ക്കുക';
 
   @override
   String get claimsNoClaimsYet => 'ഇതുവരെ ക്ലെയിമുകളൊന്നുമില്ല.';

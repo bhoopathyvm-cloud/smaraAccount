@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Aceste registre au un singur Proprietar. Luați în considerare să faceți și un alt dispozitiv conectat Proprietar.",
   "settingsLinkedDevicesSyncNow": "Sincronizați acum",
   "settingsLinkedDevicesSyncNowBusy": "Se actualizează…",
-  "translateCategoryWithAi": "Traduceți cu AI"
+  "translateCategoryWithAi": "Traduceți cu AI",
+  "settingsLinkedDevicesCodesDontMatch": "Nu se potrivesc",
+  "settingsLinkedDevicesConnectByAddress": "Conectare după adresă",
+  "settingsLinkedDevicesConnectByAddressBody": "Când descoperirea nu găsește un dispozitiv asociat, introduceți adresa LAN și portul.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Conectare după adresă",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Introduceți codul în schimb",
+  "settingsLinkedDevicesEnterCodeSubmit": "Găsiți dispozitivul",
+  "settingsLinkedDevicesEnterCodeTitle": "Introduceți codul de asociere",
+  "settingsLinkedDevicesJoinCodeExpired": "Acest cod a expirat — cereți unul nou",
+  "settingsLinkedDevicesJoinCodeLabel": "Cod de asociere",
+  "settingsLinkedDevicesJoinCodeNotFound": "Niciun dispozitiv cu acest cod pe acest Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} rămase",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Încercați din nou",
+  "settingsLinkedDevicesJoinCodeUsed": "Acest cod a fost deja folosit. Cereți unul nou.",
+  "settingsLinkedDevicesJoinCheckCode": "Cod de verificare — confirmați că se potrivește pe celălalt dispozitiv",
+  "settingsLinkedDevicesScanQr": "Scanați QR-ul de asociere",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Confirmați codul de verificare",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Acest cod se potrivește cu cel de pe celălalt dispozitiv?",
+  "settingsLinkedDevicesCodesMatch": "Codurile se potrivesc",
+  "settingsLinkedDevicesJoinExpired": "Acest QR de asociere a expirat. Cereți un cod nou.",
+  "settingsLinkedDevicesJoinReused": "Acest QR de asociere a fost deja folosit. Cereți un cod nou.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Gazdă",
+  "settingsLinkedDevicesPort": "Port",
+  "settingsLinkedDevicesPeer": "Dispozitiv",
+  "settingsLinkedDevicesSaveAddress": "Salvați adresa",
+  "claimsPersonalLimitsTitle": "Limite de decontare",
+  "claimsPersonalLimitsTitleFor": "Limite de decontare pentru {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "Limitele mele de decontare",
+  "claimsMyLimits": "Limitele mele",
+  "claimsPersonalLimitsHeading": "Limitele dvs. personale",
+  "claimsCompanyLimitsHeading": "Limite ale companiei",
+  "claimsBalancesHeading": "Solduri de decontat",
+  "claimsPayBalance": "Plătește {amount}",
+  "claimsRecordPayment": "Înregistrează plata",
+  "claimsAboveLimit": "Peste limita de {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Nicio limită personală setată.",
+  "claimsClearPersonalLimit": "Ștergeți limita"
 }

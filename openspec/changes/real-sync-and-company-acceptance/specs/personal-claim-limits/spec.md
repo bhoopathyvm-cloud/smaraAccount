@@ -2,6 +2,11 @@
 
 Lets a company give different people different allowances per expense category, shown as hints to the employee and the approver, without ever changing an amount automatically.
 
+When `expense-claims` is archived into `openspec/specs/`, this capability SHOULD
+be folded into that spec as a MODIFIED delta of "Spending-Limit Hints"
+(`real-sync-and-company-acceptance` task 0.2). Until then it stays separate and
+extends the company-wide limit hints already described there.
+
 ## ADDED Requirements
 
 ### Requirement: Owner Sets Limits per Person and Category

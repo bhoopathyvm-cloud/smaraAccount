@@ -584,9 +584,14 @@ period-over-period read on where money went.
   First open of Linked devices explains local-network permission before the
   system prompt: Smara only needs to find your other devices on this Wi-Fi.
   - **Add a device**: show a QR code in person on the same Wi-Fi (public
-    keys and device certificates only — never the private key). Or restore
-    a Books Copy on the new device, then send a join request that an
-    already-linked device approves with one tap.
+    keys and device certificates only — never the private key), with a
+    short **Join code** beside it if the other device cannot scan. On the
+    joining device, **Enter code instead** types that code (dash and case
+    optional); both screens then show the same **Check code** to confirm
+    before anything is exchanged. Or restore a Books Copy on the new
+    device, then send a join request that an already-linked device
+    approves with one tap. If discovery cannot find a peer, **Connect by
+    address** lets you enter a host and port on this Wi-Fi.
   - **Owner / Member**: an Owner adds and removes devices, may erase a
     removed device, and can make others Owners. A Member records and Fixes
     entries and manages categories. If the last Owner is gone, a Member can

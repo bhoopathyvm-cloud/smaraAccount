@@ -7,6 +7,7 @@ import '../../domain/models/quote_provider.dart';
 import '../../domain/models/research_tool.dart';
 import '../../domain/peer_sync/sync_settings_allowlist.dart';
 import '../books_set/books_set_paths.dart';
+import 'metadata_outbox.dart';
 
 /// Plain, non-secret app preferences (currently just the reference
 /// exchange-rate lookup's enable/disable flag and selected provider).
@@ -17,11 +18,18 @@ class SettingsRepository implements AppLockSettingsStore {
   SettingsRepository({
     SharedPreferencesAsync? preferences,
     BooksSetStore? booksSetStore,
+    MetadataOutbox? metadataOutbox,
+    Future<String?> Function()? currentIdentityId,
   }) : _preferences = preferences ?? SharedPreferencesAsync(),
-       _booksSetStore = booksSetStore;
+       _booksSetStore = booksSetStore,
+       _outbox = metadataOutbox,
+       _currentIdentityId = currentIdentityId;
 
   final SharedPreferencesAsync _preferences;
   final BooksSetStore? _booksSetStore;
+  final MetadataOutbox? _outbox;
+  final Future<String?> Function()? _currentIdentityId;
+  bool _suppressBooksSettingEmit = false;
 
   static const _referenceRateLookupEnabledKey = 'referenceRateLookupEnabled';
   static const _referenceRateProviderKey = 'referenceRateProvider';
@@ -82,8 +90,9 @@ class SettingsRepository implements AppLockSettingsStore {
     return await _preferences.getBool(_referenceRateLookupEnabledKey) ?? false;
   }
 
-  Future<void> setReferenceRateLookupEnabled(bool value) {
-    return _preferences.setBool(_referenceRateLookupEnabledKey, value);
+  Future<void> setReferenceRateLookupEnabled(bool value) async {
+    await _preferences.setBool(_referenceRateLookupEnabledKey, value);
+    await _emitBooksSetting(_referenceRateLookupEnabledKey, value);
   }
 
   /// Defaults to the first predefined provider. If the stored value
@@ -98,8 +107,9 @@ class SettingsRepository implements AppLockSettingsStore {
     return ExchangeRateProvider.values.first;
   }
 
-  Future<void> setSelectedProvider(ExchangeRateProvider provider) {
-    return _preferences.setString(_referenceRateProviderKey, provider.name);
+  Future<void> setSelectedProvider(ExchangeRateProvider provider) async {
+    await _preferences.setString(_referenceRateProviderKey, provider.name);
+    await _emitBooksSetting(_referenceRateProviderKey, provider.name);
   }
 
   /// Off by default (app-lock spec: "Lock is off by default" - opens
@@ -161,8 +171,9 @@ class SettingsRepository implements AppLockSettingsStore {
     return await _preferences.getBool(_firstWeekSetupCompletedKey) ?? false;
   }
 
-  Future<void> setFirstWeekSetupCompleted(bool value) {
-    return _preferences.setBool(_firstWeekSetupCompletedKey, value);
+  Future<void> setFirstWeekSetupCompleted(bool value) async {
+    await _preferences.setBool(_firstWeekSetupCompletedKey, value);
+    await _emitBooksSetting(_firstWeekSetupCompletedKey, value);
   }
 
   /// Defaults to enabled so portfolio value works without a scavenger hunt
@@ -172,8 +183,9 @@ class SettingsRepository implements AppLockSettingsStore {
     return await _preferences.getBool(_marketPriceFetchEnabledKey) ?? true;
   }
 
-  Future<void> setMarketPriceFetchEnabled(bool value) {
-    return _preferences.setBool(_marketPriceFetchEnabledKey, value);
+  Future<void> setMarketPriceFetchEnabled(bool value) async {
+    await _preferences.setBool(_marketPriceFetchEnabledKey, value);
+    await _emitBooksSetting(_marketPriceFetchEnabledKey, value);
   }
 
   Future<QuoteProvider> selectedQuoteProvider() async {
@@ -184,8 +196,9 @@ class SettingsRepository implements AppLockSettingsStore {
     return QuoteProvider.values.first;
   }
 
-  Future<void> setSelectedQuoteProvider(QuoteProvider provider) {
-    return _preferences.setString(_quoteProviderKey, provider.name);
+  Future<void> setSelectedQuoteProvider(QuoteProvider provider) async {
+    await _preferences.setString(_quoteProviderKey, provider.name);
+    await _emitBooksSetting(_quoteProviderKey, provider.name);
   }
 
   Future<ResearchTool> selectedResearchTool() async {
@@ -207,8 +220,9 @@ class SettingsRepository implements AppLockSettingsStore {
     return _preferences.getString(_defaultExchangeKey);
   }
 
-  Future<void> setDefaultExchange(Exchange exchange) {
-    return _preferences.setString(_defaultExchangeKey, exchange.code);
+  Future<void> setDefaultExchange(Exchange exchange) async {
+    await _preferences.setString(_defaultExchangeKey, exchange.code);
+    await _emitBooksSetting(_defaultExchangeKey, exchange.code);
   }
 
   /// The Default exchange: the stored code when it is still in the registry,
@@ -250,48 +264,53 @@ class SettingsRepository implements AppLockSettingsStore {
   /// Applies books settings from a Books Copy. Does not touch device
   /// settings. Unknown keys are ignored.
   Future<void> importBooksSettings(Map<String, Object?> settings) async {
-    for (final entry in settings.entries) {
-      if (!_booksSettingsKeys.contains(entry.key)) continue;
-      final value = entry.value;
-      switch (entry.key) {
-        case _referenceRateLookupEnabledKey:
-          if (value is bool) await setReferenceRateLookupEnabled(value);
-        case _referenceRateProviderKey:
-          if (value is String) {
-            for (final provider in ExchangeRateProvider.values) {
-              if (provider.name == value) {
-                await setSelectedProvider(provider);
-                break;
+    _suppressBooksSettingEmit = true;
+    try {
+      for (final entry in settings.entries) {
+        if (!_booksSettingsKeys.contains(entry.key)) continue;
+        final value = entry.value;
+        switch (entry.key) {
+          case _referenceRateLookupEnabledKey:
+            if (value is bool) await setReferenceRateLookupEnabled(value);
+          case _referenceRateProviderKey:
+            if (value is String) {
+              for (final provider in ExchangeRateProvider.values) {
+                if (provider.name == value) {
+                  await setSelectedProvider(provider);
+                  break;
+                }
               }
             }
-          }
-        case _marketPriceFetchEnabledKey:
-          if (value is bool) await setMarketPriceFetchEnabled(value);
-        case _quoteProviderKey:
-          if (value is String) {
-            for (final provider in QuoteProvider.values) {
-              if (provider.name == value) {
-                await setSelectedQuoteProvider(provider);
-                break;
+          case _marketPriceFetchEnabledKey:
+            if (value is bool) await setMarketPriceFetchEnabled(value);
+          case _quoteProviderKey:
+            if (value is String) {
+              for (final provider in QuoteProvider.values) {
+                if (provider.name == value) {
+                  await setSelectedQuoteProvider(provider);
+                  break;
+                }
               }
             }
-          }
-        case _defaultExchangeKey:
-          if (value is String) {
-            Exchange? exchange;
-            for (final candidate in kExchangeRegistry) {
-              if (candidate.code == value) {
-                exchange = candidate;
-                break;
+          case _defaultExchangeKey:
+            if (value is String) {
+              Exchange? exchange;
+              for (final candidate in kExchangeRegistry) {
+                if (candidate.code == value) {
+                  exchange = candidate;
+                  break;
+                }
               }
+              if (exchange != null) await setDefaultExchange(exchange);
+            } else if (value == null) {
+              await _preferences.remove(_defaultExchangeKey);
             }
-            if (exchange != null) await setDefaultExchange(exchange);
-          } else if (value == null) {
-            await _preferences.remove(_defaultExchangeKey);
-          }
-        case _firstWeekSetupCompletedKey:
-          if (value is bool) await setFirstWeekSetupCompleted(value);
+          case _firstWeekSetupCompletedKey:
+            if (value is bool) await setFirstWeekSetupCompleted(value);
+        }
       }
+    } finally {
+      _suppressBooksSettingEmit = false;
     }
   }
 
@@ -433,5 +452,22 @@ class SettingsRepository implements AppLockSettingsStore {
 
   Future<void> setKeyAccessibilityMigrated(bool value) {
     return _preferences.setBool(_keyAccessibilityMigratedKey, value);
+  }
+
+  Future<void> _emitBooksSetting(String field, Object? value) async {
+    if (_suppressBooksSettingEmit) return;
+    if (!SyncSettingsAllowlist.isBooksSetting(field)) return;
+    final outbox = _outbox;
+    final identityFn = _currentIdentityId;
+    if (outbox == null || identityFn == null) return;
+    final identityId = await identityFn();
+    if (identityId == null || identityId.isEmpty) return;
+    await outbox.emit(
+      entityType: 'settings',
+      entityId: 'books',
+      field: field,
+      value: value,
+      updatedByIdentityId: identityId,
+    );
   }
 }

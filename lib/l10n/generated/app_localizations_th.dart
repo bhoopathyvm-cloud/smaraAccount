@@ -1014,6 +1014,92 @@ class AppLocalizationsTh extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'กำลังตามทัน…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'รหัสตรวจสอบ — ยืนยันว่าตรงกันบนอุปกรณ์อีกเครื่อง';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'สแกน QR เข้าร่วม';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle => 'ยืนยันรหัสตรวจสอบ';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'รหัสนี้ตรงกับบนอุปกรณ์อีกเครื่องหรือไม่?';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'รหัสตรงกัน';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'ไม่ตรงกัน';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'QR เข้าร่วมนี้หมดอายุแล้ว ขอรหัสใหม่';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'QR เข้าร่วมนี้ถูกใช้แล้ว ขอรหัสใหม่';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'รหัสเข้าร่วม';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return 'เหลือ $minutes:$seconds';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => 'ใส่รหัสแทน';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'ใส่รหัสเข้าร่วม';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'ค้นหาอุปกรณ์';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'รหัสนี้หมดอายุแล้ว — ขอรหัสใหม่';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'รหัสนี้ถูกใช้แล้ว ขอรหัสใหม่';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'ไม่มีอุปกรณ์ที่ใช้รหัสนี้บน Wi-Fi นี้';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'ลองอีกครั้ง';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'เชื่อมต่อด้วยที่อยู่';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle =>
+      'เชื่อมต่อด้วยที่อยู่';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'เมื่อค้นหาไม่พบอุปกรณ์ที่เชื่อมโยง ให้ใส่ที่อยู่ LAN และพอร์ต';
+
+  @override
+  String get settingsLinkedDevicesHost => 'โฮสต์';
+
+  @override
+  String get settingsLinkedDevicesPort => 'พอร์ต';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'อุปกรณ์';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'บันทึกที่อยู่';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'เพิ่มอุปกรณ์แล้ว: $name';
   }
@@ -2177,6 +2263,48 @@ class AppLocalizationsTh extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'คำใบ้: ไม่เกิน $amount ต่อ $unit';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'วงเงินการเบิก';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return 'วงเงินการเบิกของ $name';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'วงเงินการเบิกของฉัน';
+
+  @override
+  String get claimsMyLimits => 'วงเงินของฉัน';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'วงเงินส่วนบุคคลของคุณ';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'วงเงินบริษัท';
+
+  @override
+  String get claimsBalancesHeading => 'ยอดคงเหลือที่ต้องเคลียร์';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return 'ชำระ $amount';
+  }
+
+  @override
+  String get claimsRecordPayment => 'บันทึกการชำระเงิน';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return 'เกินวงเงิน $limit';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'ยังไม่ได้ตั้งวงเงินส่วนบุคคล';
+
+  @override
+  String get claimsClearPersonalLimit => 'ล้างวงเงิน';
 
   @override
   String get claimsNoClaimsYet => 'ยังไม่มีการเบิกจ่าย';

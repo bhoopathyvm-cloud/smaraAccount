@@ -1001,6 +1001,90 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => '追いついています…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      '確認コード — 相手の端末と一致することを確認してください';
+
+  @override
+  String get settingsLinkedDevicesScanQr => '参加用QRをスキャン';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle => '確認コードを確認';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'このコードは相手の端末のものと一致しますか？';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'コードが一致します';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => '一致しません';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'この参加用QRの期限が切れました。新しいコードを依頼してください。';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'この参加用QRは使用済みです。新しいコードを依頼してください。';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => '参加コード';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '残り $minutes:$seconds';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead => '代わりにコードを入力';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => '参加コードを入力';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => '端末を探す';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'このコードの期限が切れました — 新しいものを依頼してください';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'このコードは使用済みです。新しいものを依頼してください。';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound => 'このWi-Fiにこのコードの端末はありません';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => '再試行';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'アドレスで接続';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => 'アドレスで接続';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      '検出でリンク済み端末が見つからない場合は、LANアドレスとポートを入力してください。';
+
+  @override
+  String get settingsLinkedDevicesHost => 'ホスト';
+
+  @override
+  String get settingsLinkedDevicesPort => 'ポート';
+
+  @override
+  String get settingsLinkedDevicesPeer => '端末';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'アドレスを保存';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'デバイスが追加されました: $name';
   }
@@ -2111,6 +2195,48 @@ class AppLocalizationsJa extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'ヒント: $unit あたり最大 $amount';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => '申請限度額';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name の申請限度額';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => '自分の申請限度額';
+
+  @override
+  String get claimsMyLimits => '自分の限度額';
+
+  @override
+  String get claimsPersonalLimitsHeading => '個人の限度額';
+
+  @override
+  String get claimsCompanyLimitsHeading => '会社の限度額';
+
+  @override
+  String get claimsBalancesHeading => '精算する残高';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount を支払う';
+  }
+
+  @override
+  String get claimsRecordPayment => '支払いを記録';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit の限度を超過';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => '個人の限度額は設定されていません。';
+
+  @override
+  String get claimsClearPersonalLimit => '限度額をクリア';
 
   @override
   String get claimsNoClaimsYet => '申請はまだありません。';

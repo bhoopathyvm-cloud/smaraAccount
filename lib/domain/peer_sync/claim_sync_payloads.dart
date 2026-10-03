@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../crypto/entry_canonical_hash.dart';
 import 'sync_payloads.dart';
 
 /// Sync message kinds for Claims (extends [SyncMessageKind]).
@@ -327,6 +328,9 @@ abstract final class ClaimantSyncFilter {
   /// [allowedAccountIds] (owed-to + allowlisted categories + payment banks
   /// already reflected on owed-to). Unrelated bank register entries are
   /// dropped.
+  ///
+  /// When priors for an identity are omitted, attaches [ScopeChainAnchor]
+  /// proofs so the Claimant can verify continuity within the scope.
   static EntryBatch filterEntryBatch({
     required EntryBatch batch,
     required Set<String> allowedAccountIds,
@@ -345,7 +349,40 @@ abstract final class ClaimantSyncFilter {
         kept.add(entry);
       }
     }
-    return EntryBatch(entries: kept);
+    return EntryBatch(entries: kept, scopeAnchors: buildScopeAnchors(kept));
+  }
+
+  /// Builds scope anchors for the first kept entry per identity when that
+  /// entry's previous hash is not genesis (out-of-scope prior omitted).
+  static List<ScopeChainAnchor> buildScopeAnchors(
+    List<SyncJournalEntry> scopedEntries,
+  ) {
+    final byIdentity = <String, List<SyncJournalEntry>>{};
+    for (final e in scopedEntries) {
+      byIdentity.putIfAbsent(e.signedByIdentityId, () => []).add(e);
+    }
+    final anchors = <ScopeChainAnchor>[];
+    for (final entry in byIdentity.entries) {
+      final chain = entry.value
+        ..sort(
+          (a, b) => a.deviceChainSequence.compareTo(b.deviceChainSequence),
+        );
+      final first = chain.first;
+      final prev = first.previousEntryHash;
+      final isGenesis =
+          prev.length == genesisPreviousEntryHash.length &&
+          prev.every((b) => b == 0);
+      if (!isGenesis) {
+        anchors.add(
+          ScopeChainAnchor(
+            identityId: first.signedByIdentityId,
+            firstScopedSequence: first.deviceChainSequence,
+            previousEntryHash: List<int>.from(prev),
+          ),
+        );
+      }
+    }
+    return anchors;
   }
 
   /// True when [json] looks like a full bank register dump that a Claimant

@@ -102,23 +102,30 @@ void main() {
 
     test('identity tie-break when updatedAt equal', () {
       final lww = const MetadataLww();
+      final at = DateTime.utc(2026, 4, 1);
       final a = MetadataOperation(
         entityType: 'account',
         entityId: 'acc-1',
         field: 'name',
         value: 'FromA',
-        updatedAt: DateTime.utc(2026, 4, 1),
+        updatedAt: at,
         updatedByIdentityId: 'id-a',
+        hlcCounter: 0,
+        hlcDeviceId: '',
       );
       final b = MetadataOperation(
         entityType: 'account',
         entityId: 'acc-1',
         field: 'name',
         value: 'FromB',
-        updatedAt: DateTime.utc(2026, 4, 1),
+        updatedAt: at,
         updatedByIdentityId: 'id-b',
+        hlcCounter: 0,
+        hlcDeviceId: '',
       );
+      // Either input order: lower identity id wins when wall+counter equal.
       expect(lww.merge([b, a]).single.value, 'FromA');
+      expect(lww.merge([a, b]).single.value, 'FromA');
     });
   });
 

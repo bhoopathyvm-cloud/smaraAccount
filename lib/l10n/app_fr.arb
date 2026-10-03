@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Ces livres n''ont qu''un seul Propriétaire. Envisagez de faire aussi d''un autre appareil lié un Propriétaire.",
   "settingsLinkedDevicesSyncNow": "Synchroniser maintenant",
   "settingsLinkedDevicesSyncNowBusy": "Mise à jour…",
-  "translateCategoryWithAi": "Traduire avec l''IA"
+  "translateCategoryWithAi": "Traduire avec l''IA",
+  "settingsLinkedDevicesCodesDontMatch": "Ils ne correspondent pas",
+  "settingsLinkedDevicesConnectByAddress": "Se connecter par adresse",
+  "settingsLinkedDevicesConnectByAddressBody": "Si la découverte ne trouve pas un appareil lié, saisissez son adresse LAN et son port.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Se connecter par adresse",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Saisir un code à la place",
+  "settingsLinkedDevicesEnterCodeSubmit": "Trouver lappareil",
+  "settingsLinkedDevicesEnterCodeTitle": "Saisir le code de jonction",
+  "settingsLinkedDevicesJoinCodeExpired": "Ce code a expiré — demandez-en un nouveau",
+  "settingsLinkedDevicesJoinCodeLabel": "Code de jonction",
+  "settingsLinkedDevicesJoinCodeNotFound": "Aucun appareil avec ce code sur ce Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} restantes",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Réessayer",
+  "settingsLinkedDevicesJoinCodeUsed": "Ce code a déjà été utilisé. Demandez-en un nouveau.",
+  "settingsLinkedDevicesJoinCheckCode": "Code de contrôle — confirmez quil correspond sur lautre appareil",
+  "settingsLinkedDevicesScanQr": "Scanner le QR de jonction",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Confirmer le code de contrôle",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Ce code correspond-il à celui de lautre appareil ?",
+  "settingsLinkedDevicesCodesMatch": "Les codes correspondent",
+  "settingsLinkedDevicesJoinExpired": "Ce QR de jonction a expiré. Demandez un nouveau code.",
+  "settingsLinkedDevicesJoinReused": "Ce QR de jonction a déjà été utilisé. Demandez un nouveau code.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Hôte",
+  "settingsLinkedDevicesPort": "Port",
+  "settingsLinkedDevicesPeer": "Appareil",
+  "settingsLinkedDevicesSaveAddress": "Enregistrer ladresse",
+  "claimsPersonalLimitsTitle": "Plafonds de notes de frais",
+  "claimsPersonalLimitsTitleFor": "Plafonds de notes de frais pour {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "Mes plafonds de notes de frais",
+  "claimsMyLimits": "Mes plafonds",
+  "claimsPersonalLimitsHeading": "Vos plafonds personnels",
+  "claimsCompanyLimitsHeading": "Plafonds de l''entreprise",
+  "claimsBalancesHeading": "Soldes à régler",
+  "claimsPayBalance": "Payer {amount}",
+  "claimsRecordPayment": "Enregistrer un paiement",
+  "claimsAboveLimit": "Au-dessus du plafond de {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Aucun plafond personnel défini.",
+  "claimsClearPersonalLimit": "Effacer le plafond"
 }

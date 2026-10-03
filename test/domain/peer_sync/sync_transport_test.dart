@@ -182,7 +182,7 @@ void main() {
       await transportB.listen(
         local: SyncPeerIdentity(deviceId: 'b', certificate: certB),
         pinnedFingerprints: {certA.fingerprint, certB.fingerprint},
-        onSession: (_) {},
+        onSession: (_) async {},
       );
 
       await expectLater(
@@ -204,7 +204,7 @@ void main() {
       await remoteTransport.listen(
         local: SyncPeerIdentity(deviceId: 'b', certificate: certB),
         pinnedFingerprints: pins,
-        onSession: (_) {},
+        onSession: (_) async {},
       );
       addTearDown(() async {
         await remoteTransport.stopListening();

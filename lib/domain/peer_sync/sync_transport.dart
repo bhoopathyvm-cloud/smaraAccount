@@ -7,10 +7,21 @@ import 'sync_payloads.dart';
 
 /// Peer identity presented when opening a sync session.
 class SyncPeerIdentity {
-  const SyncPeerIdentity({required this.deviceId, required this.certificate});
+  const SyncPeerIdentity({
+    required this.deviceId,
+    required this.certificate,
+    this.host,
+    this.port,
+  });
 
   final String deviceId;
   final DeviceCertificate certificate;
+
+  /// LAN address for [TlsSyncTransport.connect]. Ignored by in-process.
+  final String? host;
+
+  /// LAN port for [TlsSyncTransport.connect]. Ignored by in-process.
+  final int? port;
 }
 
 /// One direction of a pinned sync session (design Decision 2).
@@ -26,22 +37,35 @@ abstract class SyncConnection {
   Future<void> close();
 }
 
-/// TLS sync transport with certificate pinning. Real [SecureSocket] adapters
-/// land later; [InProcessSyncTransport] covers CI without sockets.
+/// TLS sync transport with certificate pinning. [InProcessSyncTransport]
+/// covers CI without sockets; [TlsSyncTransport] uses SecureSocket on the LAN.
 abstract class SyncTransport {
   /// Connects to [remote], presenting [local] and requiring [remote]'s
   /// certificate fingerprint to be in [pinnedFingerprints].
+  ///
+  /// Real transports also require [remote.host] and [remote.port].
+  /// [pinnedCertificates] supplies PEM/DER material so TLS can trust peers
+  /// without a public CA (task 12.1).
   Future<SyncConnection> connect({
     required SyncPeerIdentity local,
     required SyncPeerIdentity remote,
     required Set<String> pinnedFingerprints,
+    List<DeviceCertificate> pinnedCertificates = const [],
   });
 
   /// Accepts inbound sessions from peers whose certs are pinned.
+  ///
+  /// When [bindPort] is null, the implementation picks an ephemeral port.
+  /// [onBound] receives the actual listening port (for mDNS advertising).
+  /// Implementations MUST await [onSession] so the peer's exchange finishes
+  /// before the connector's session completes.
   Future<void> listen({
     required SyncPeerIdentity local,
     required Set<String> pinnedFingerprints,
-    required void Function(SyncConnection connection) onSession,
+    required Future<void> Function(SyncConnection connection) onSession,
+    int? bindPort,
+    void Function(int port)? onBound,
+    List<DeviceCertificate> pinnedCertificates = const [],
   });
 
   Future<void> stopListening();
@@ -65,36 +89,38 @@ class InProcessSyncTransport implements SyncTransport {
 
   final String networkId;
 
-  static final Map<String, _ListeningEndpoint> _listeners = {};
+  /// networkId → deviceId → listening endpoint.
+  static final Map<String, Map<String, _ListeningEndpoint>> _listeners = {};
 
-  _ListeningEndpoint? _localListener;
+  String? _listeningDeviceId;
 
   @override
   Future<SyncConnection> connect({
     required SyncPeerIdentity local,
     required SyncPeerIdentity remote,
     required Set<String> pinnedFingerprints,
+    List<DeviceCertificate> pinnedCertificates = const [],
   }) async {
     final pinning = CertificatePinning(pinnedFingerprints: pinnedFingerprints);
-    final remoteCheck = await pinning.checkCertificate(remote.certificate);
+    final remoteCheck = await _pinCheck(pinning, remote.certificate);
     if (remoteCheck == PinCheckResult.refusedUnknown) {
       throw UnknownCertificateException(remote.certificate.fingerprint);
     }
 
-    final listener = _listeners[networkId];
+    final onNetwork = _listeners[networkId];
+    final listener = onNetwork?[remote.deviceId];
     if (listener == null) {
       throw StateError(
-        'No peer listening on network "$networkId" — devices must be on the '
-        'same local network (no internet relay).',
+        'No peer listening for device "${remote.deviceId}" on network '
+        '"$networkId" — devices must be on the same local network '
+        '(no internet relay).',
       );
     }
 
     final listenerPinning = CertificatePinning(
       pinnedFingerprints: listener.pinnedFingerprints,
     );
-    final localCheck = await listenerPinning.checkCertificate(
-      local.certificate,
-    );
+    final localCheck = await _pinCheck(listenerPinning, local.certificate);
     if (localCheck == PinCheckResult.refusedUnknown) {
       throw UnknownCertificateException(local.certificate.fingerprint);
     }
@@ -104,30 +130,56 @@ class InProcessSyncTransport implements SyncTransport {
     callerSide._peer = listenerSide;
     listenerSide._peer = callerSide;
 
-    listener.onSession(listenerSide);
-    return callerSide;
+    // Run the listener exchange concurrently so tip/batch handshakes can
+    // proceed, but wait until it settles once the caller finishes.
+    final listenerDone = listener.onSession(listenerSide);
+    return callerSide.._listenerDone = listenerDone;
+  }
+
+  /// Fingerprint-only pins (empty DER) are used by Sync now when peer PEM
+  /// material is not stored locally; otherwise hash the DER as usual.
+  static Future<PinCheckResult> _pinCheck(
+    CertificatePinning pinning,
+    DeviceCertificate certificate,
+  ) {
+    if (certificate.derBytes.isEmpty && certificate.fingerprint.isNotEmpty) {
+      return Future.value(pinning.checkFingerprint(certificate.fingerprint));
+    }
+    return pinning.checkCertificate(certificate);
   }
 
   @override
   Future<void> listen({
     required SyncPeerIdentity local,
     required Set<String> pinnedFingerprints,
-    required void Function(SyncConnection connection) onSession,
+    required Future<void> Function(SyncConnection connection) onSession,
+    int? bindPort,
+    void Function(int port)? onBound,
+    List<DeviceCertificate> pinnedCertificates = const [],
   }) async {
-    _localListener = _ListeningEndpoint(
+    await stopListening();
+    _listeningDeviceId = local.deviceId;
+    _listeners.putIfAbsent(
+      networkId,
+      () => {},
+    )[local.deviceId] = _ListeningEndpoint(
       local: local,
       pinnedFingerprints: pinnedFingerprints,
       onSession: onSession,
     );
-    _listeners[networkId] = _localListener!;
+    onBound?.call(bindPort ?? 0);
   }
 
   @override
   Future<void> stopListening() async {
-    if (_listeners[networkId] == _localListener) {
-      _listeners.remove(networkId);
+    final deviceId = _listeningDeviceId;
+    if (deviceId != null) {
+      _listeners[networkId]?.remove(deviceId);
+      if (_listeners[networkId]?.isEmpty ?? false) {
+        _listeners.remove(networkId);
+      }
     }
-    _localListener = null;
+    _listeningDeviceId = null;
   }
 
   /// Test helper: clear all in-process listeners.
@@ -145,7 +197,7 @@ class _ListeningEndpoint {
 
   final SyncPeerIdentity local;
   final Set<String> pinnedFingerprints;
-  final void Function(SyncConnection connection) onSession;
+  final Future<void> Function(SyncConnection connection) onSession;
 }
 
 class _InProcessConnection implements SyncConnection {
@@ -155,6 +207,7 @@ class _InProcessConnection implements SyncConnection {
   final SyncPeerIdentity remote;
 
   _InProcessConnection? _peer;
+  Future<void>? _listenerDone;
   final _pending = <Map<String, dynamic>>[];
   final _waiters = <Completer<Map<String, dynamic>>>[];
   bool _closed = false;
@@ -210,5 +263,9 @@ class _InProcessConnection implements SyncConnection {
       }
     }
     _waiters.clear();
+    final listenerDone = _listenerDone;
+    if (listenerDone != null) {
+      await listenerDone;
+    }
   }
 }

@@ -1019,6 +1019,93 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsLinkedDevicesSyncNowBusy => 'ہم آہنگ ہو رہا ہے…';
 
   @override
+  String get settingsLinkedDevicesJoinCheckCode =>
+      'چیک کوڈ — تصدیق کریں کہ دوسرے آلے پر مماثل ہے';
+
+  @override
+  String get settingsLinkedDevicesScanQr => 'جوائن QR اسکین کریں';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeTitle =>
+      'چیک کوڈ کی تصدیق کریں';
+
+  @override
+  String get settingsLinkedDevicesConfirmCheckCodeBody =>
+      'کیا یہ کوڈ دوسرے آلے والے سے مماثل ہے؟';
+
+  @override
+  String get settingsLinkedDevicesCodesMatch => 'کوڈ مماثل ہیں';
+
+  @override
+  String get settingsLinkedDevicesCodesDontMatch => 'مماثل نہیں';
+
+  @override
+  String get settingsLinkedDevicesJoinExpired =>
+      'یہ جوائن QR ختم ہو گیا۔ نیا کوڈ مانگیں۔';
+
+  @override
+  String get settingsLinkedDevicesJoinReused =>
+      'یہ جوائن QR پہلے استعمال ہو چکا ہے۔ نیا کوڈ مانگیں۔';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeLabel => 'جوائن کوڈ';
+
+  @override
+  String settingsLinkedDevicesJoinCodeTimeLeft(int minutes, String seconds) {
+    return '$minutes:$seconds باقی';
+  }
+
+  @override
+  String get settingsLinkedDevicesEnterCodeInstead =>
+      'اس کی بجائے کوڈ درج کریں';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeTitle => 'جوائن کوڈ درج کریں';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeHint => 'XXXX-XXXX';
+
+  @override
+  String get settingsLinkedDevicesEnterCodeSubmit => 'آلہ تلاش کریں';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeExpired =>
+      'یہ کوڈ ختم ہو گیا — نیا مانگیں';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeUsed =>
+      'یہ کوڈ پہلے استعمال ہو چکا ہے۔ نیا مانگیں۔';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeNotFound =>
+      'اس Wi-Fi پر اس کوڈ والا کوئی آلہ نہیں';
+
+  @override
+  String get settingsLinkedDevicesJoinCodeTryAgain => 'دوبارہ کوشش کریں';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddress => 'پتہ سے منسلک ہوں';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressTitle => 'پتہ سے منسلک ہوں';
+
+  @override
+  String get settingsLinkedDevicesConnectByAddressBody =>
+      'جب دریافت منسلک آلہ نہ ڈھونڈ سکے تو اس کا LAN پتہ اور پورٹ درج کریں۔';
+
+  @override
+  String get settingsLinkedDevicesHost => 'ہوسٹ';
+
+  @override
+  String get settingsLinkedDevicesPort => 'پورٹ';
+
+  @override
+  String get settingsLinkedDevicesPeer => 'آلہ';
+
+  @override
+  String get settingsLinkedDevicesSaveAddress => 'پتہ محفوظ کریں';
+
+  @override
   String membershipNoticeDeviceAdded(String name) {
     return 'ایک آلہ شامل ہوا: $name';
   }
@@ -2192,6 +2279,48 @@ class AppLocalizationsUr extends AppLocalizations {
   String claimsSpendingHint(String amount, String unit) {
     return 'اشارہ: فی $unit زیادہ سے زیادہ $amount';
   }
+
+  @override
+  String get claimsPersonalLimitsTitle => 'دعوے کی حدیں';
+
+  @override
+  String claimsPersonalLimitsTitleFor(String name) {
+    return '$name کی دعوے کی حدیں';
+  }
+
+  @override
+  String get claimsMyLimitsTitle => 'میری دعوے کی حدیں';
+
+  @override
+  String get claimsMyLimits => 'میری حدیں';
+
+  @override
+  String get claimsPersonalLimitsHeading => 'آپ کی ذاتی حدیں';
+
+  @override
+  String get claimsCompanyLimitsHeading => 'کمپنی کی حدیں';
+
+  @override
+  String get claimsBalancesHeading => 'تصفیے کے لیے بیلنس';
+
+  @override
+  String claimsPayBalance(String amount) {
+    return '$amount ادا کریں';
+  }
+
+  @override
+  String get claimsRecordPayment => 'ادائیگی ریکارڈ کریں';
+
+  @override
+  String claimsAboveLimit(String limit) {
+    return '$limit کی حد سے اوپر';
+  }
+
+  @override
+  String get claimsNoPersonalLimits => 'کوئی ذاتی حد مقرر نہیں۔';
+
+  @override
+  String get claimsClearPersonalLimit => 'حد صاف کریں';
 
   @override
   String get claimsNoClaimsYet => 'ابھی کوئی کلیم نہیں۔';

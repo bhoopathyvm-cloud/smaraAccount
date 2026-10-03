@@ -258,6 +258,7 @@ class HomeViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    if (_disposed) return;
     _disposed = true;
     _subscription.cancel();
     _categoryTotalsSubscription.cancel();

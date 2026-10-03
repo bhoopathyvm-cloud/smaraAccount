@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "આ ચોપડાનો માત્ર એક જ માલિક છે. અન્ય લિંક કરેલ ઉપકરણને પણ માલિક બનાવવાનો વિચાર કરો.",
   "settingsLinkedDevicesSyncNow": "હવે સમન્વય કરો",
   "settingsLinkedDevicesSyncNowBusy": "પકડી રહ્યું છે...",
-  "translateCategoryWithAi": "AI સાથે અનુવાદ કરો"
+  "translateCategoryWithAi": "AI સાથે અનુવાદ કરો",
+  "settingsLinkedDevicesCodesDontMatch": "મેળ ખાતા નથી",
+  "settingsLinkedDevicesConnectByAddress": "સરનામા દ્વારા કનેક્ટ કરો",
+  "settingsLinkedDevicesConnectByAddressBody": "जब खोज लिंक किया डिवाइस न ढूँढ पाए, तो उसका LAN पता और पोर्ट दर्ज करें।",
+  "settingsLinkedDevicesConnectByAddressTitle": "पते से कनेक्ट करें",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "તેના બદલે કોડ દાખલ કરો",
+  "settingsLinkedDevicesEnterCodeSubmit": "डिवाइस खोजें",
+  "settingsLinkedDevicesEnterCodeTitle": "जॉइन कोड दर्ज करें",
+  "settingsLinkedDevicesJoinCodeExpired": "यह कोड समाप्त हो गया है — नया माँगें",
+  "settingsLinkedDevicesJoinCodeLabel": "જોડાણ કોડ",
+  "settingsLinkedDevicesJoinCodeNotFound": "इस Wi-Fi पर इस कोड वाला कोई डिवाइस नहीं",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} शेष",
+  "settingsLinkedDevicesJoinCodeTryAgain": "फिर से कोशिश करें",
+  "settingsLinkedDevicesJoinCodeUsed": "यह कोड पहले ही उपयोग हो चुका है। नया माँगें।",
+  "settingsLinkedDevicesJoinCheckCode": "जाँच कोड — पुष्टि करें कि दूसरे डिवाइस पर मेल खाता है",
+  "settingsLinkedDevicesScanQr": "जॉइन QR स्कैन करें",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "जाँच कोड की पुष्टि करें",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "क्या यह कोड दूसरे डिवाइस वाले से मेल खाता है?",
+  "settingsLinkedDevicesCodesMatch": "कोड मेल खाते हैं",
+  "settingsLinkedDevicesJoinExpired": "यह जॉइन QR समाप्त हो गया है। नया कोड माँगें।",
+  "settingsLinkedDevicesJoinReused": "यह जॉइन QR पहले ही उपयोग हो चुका है। नया कोड माँगें।",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "होस्ट",
+  "settingsLinkedDevicesPort": "पोर्ट",
+  "settingsLinkedDevicesPeer": "डिवाइस",
+  "settingsLinkedDevicesSaveAddress": "पता सहेजें",
+  "claimsPersonalLimitsTitle": "દાવાની મર્યાદાઓ",
+  "claimsPersonalLimitsTitleFor": "{name} की दावा सीमाएँ",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "મારી દાવાની મર્યાદાઓ",
+  "claimsMyLimits": "મારી મર્યાદાઓ",
+  "claimsPersonalLimitsHeading": "તમારી વ્યક્તિગત મર્યાદાઓ",
+  "claimsCompanyLimitsHeading": "કંપનીની મર્યાદાઓ",
+  "claimsBalancesHeading": "પતાવટ કરવાના બેલેન્સ",
+  "claimsPayBalance": "{amount} ચૂકવો",
+  "claimsRecordPayment": "ચુકવણી નોંધો",
+  "claimsAboveLimit": "{limit} મર્યાદાથી વધુ",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "कोई व्यक्तिगत सीमा सेट नहीं है।",
+  "claimsClearPersonalLimit": "सीमा साफ़ करें"
 }

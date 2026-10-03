@@ -1259,5 +1259,66 @@
   "settingsLinkedDevicesSuggestSecondOwner": "Questi libri hanno un solo Proprietario. Considera di rendere Proprietario anche un altro dispositivo collegato.",
   "settingsLinkedDevicesSyncNow": "Sincronizza ora",
   "settingsLinkedDevicesSyncNowBusy": "Aggiornamento…",
-  "translateCategoryWithAi": "Traduci con l''IA"
+  "translateCategoryWithAi": "Traduci con l''IA",
+  "settingsLinkedDevicesCodesDontMatch": "Non corrispondono",
+  "settingsLinkedDevicesConnectByAddress": "Connetti tramite indirizzo",
+  "settingsLinkedDevicesConnectByAddressBody": "Quando lindividuazione non trova un dispositivo collegato, inserisci indirizzo LAN e porta.",
+  "settingsLinkedDevicesConnectByAddressTitle": "Connetti tramite indirizzo",
+  "settingsLinkedDevicesEnterCodeHint": "XXXX-XXXX",
+  "settingsLinkedDevicesEnterCodeInstead": "Inserisci invece il codice",
+  "settingsLinkedDevicesEnterCodeSubmit": "Trova dispositivo",
+  "settingsLinkedDevicesEnterCodeTitle": "Inserisci codice di unione",
+  "settingsLinkedDevicesJoinCodeExpired": "Questo codice è scaduto — chiedine uno nuovo",
+  "settingsLinkedDevicesJoinCodeLabel": "Codice di unione",
+  "settingsLinkedDevicesJoinCodeNotFound": "Nessun dispositivo con questo codice su questo Wi-Fi",
+  "settingsLinkedDevicesJoinCodeTimeLeft": "{minutes}:{seconds} rimasti",
+  "settingsLinkedDevicesJoinCodeTryAgain": "Riprova",
+  "settingsLinkedDevicesJoinCodeUsed": "Questo codice è già stato usato. Chiedine uno nuovo.",
+  "settingsLinkedDevicesJoinCheckCode": "Codice di controllo — conferma che corrisponde sullaltro dispositivo",
+  "settingsLinkedDevicesScanQr": "Scansiona QR di unione",
+  "settingsLinkedDevicesConfirmCheckCodeTitle": "Conferma codice di controllo",
+  "settingsLinkedDevicesConfirmCheckCodeBody": "Questo codice corrisponde a quello sullaltro dispositivo?",
+  "settingsLinkedDevicesCodesMatch": "I codici corrispondono",
+  "settingsLinkedDevicesJoinExpired": "Questo QR di unione è scaduto. Chiedi un nuovo codice.",
+  "settingsLinkedDevicesJoinReused": "Questo QR di unione è già stato usato. Chiedi un nuovo codice.",
+  "@settingsLinkedDevicesJoinCodeTimeLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsLinkedDevicesHost": "Host",
+  "settingsLinkedDevicesPort": "Porta",
+  "settingsLinkedDevicesPeer": "Dispositivo",
+  "settingsLinkedDevicesSaveAddress": "Salva indirizzo",
+  "claimsPersonalLimitsTitle": "Limiti delle note spese",
+  "claimsPersonalLimitsTitleFor": "Limiti delle note spese di {name}",
+  "@claimsPersonalLimitsTitleFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsMyLimitsTitle": "I miei limiti delle note spese",
+  "claimsMyLimits": "I miei limiti",
+  "claimsPersonalLimitsHeading": "I tuoi limiti personali",
+  "claimsCompanyLimitsHeading": "Limiti aziendali",
+  "claimsBalancesHeading": "Saldi da saldare",
+  "claimsPayBalance": "Paga {amount}",
+  "claimsRecordPayment": "Registra pagamento",
+  "claimsAboveLimit": "Oltre il limite di {limit}",
+  "@claimsAboveLimit": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "claimsNoPersonalLimits": "Nessun limite personale impostato.",
+  "claimsClearPersonalLimit": "Cancella limite"
 }

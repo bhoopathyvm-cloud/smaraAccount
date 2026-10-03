@@ -1,10 +1,15 @@
 import 'dart:convert';
 
+import 'package:cryptography/cryptography.dart';
+
 import 'linked_device_role.dart';
 
 /// In-person QR payload for "Add a device" / "Add a person". Carries public
 /// material only — never private key bytes (ADR 0004 / linked-devices
 /// design Decision 2; shared-accounts design Decision 6).
+///
+/// Offers expire after [joinQrTtl] and may be accepted at most once
+/// (task 12.3).
 class JoinQrPayload {
   const JoinQrPayload({
     required this.booksSetId,
@@ -16,11 +21,17 @@ class JoinQrPayload {
     required this.deviceCertFingerprint,
     required this.roleOffer,
     required this.joinNonce,
+    required this.expiresAt,
+    required this.checkCode,
     this.protocolVersion = 1,
     this.personRoles = const {},
     this.personDisplayName,
     this.isPersonJoin = false,
+    this.booksSetDisplayName,
   });
+
+  /// How long a freshly built join QR remains acceptable.
+  static const joinQrTtl = Duration(minutes: 2);
 
   final int protocolVersion;
   final String booksSetId;
@@ -43,6 +54,12 @@ class JoinQrPayload {
   final LinkedDeviceRole roleOffer;
   final String joinNonce;
 
+  /// Absolute expiry (UTC). Offers past this instant are refused.
+  final DateTime expiresAt;
+
+  /// Short shared code shown on host and joiner screens before data flows.
+  final String checkCode;
+
   /// Role set offered for "Add a person" (default Claimant).
   final Set<LinkedDeviceRole> personRoles;
 
@@ -52,6 +69,10 @@ class JoinQrPayload {
   /// True when this QR is an "Add a person" offer (vs device).
   final bool isPersonJoin;
 
+  /// Host books-set display name so joiners show the company name, not
+  /// "Books N".
+  final String? booksSetDisplayName;
+
   static const _privateKeyKeys = {
     'privateKey',
     'private_key',
@@ -60,6 +81,20 @@ class JoinQrPayload {
     'secretKey',
     'secret_key',
   };
+
+  /// Six-character uppercase check code derived from [joinNonce].
+  static Future<String> deriveCheckCode(String joinNonce) async {
+    final digest = await Sha256().hash(
+      utf8.encode('smara-join-check:$joinNonce'),
+    );
+    final hex = digest.bytes
+        .map((b) => b.toRadixString(16).padLeft(2, '0'))
+        .join()
+        .toUpperCase();
+    return hex.substring(0, 6);
+  }
+
+  bool isExpiredAt(DateTime now) => !now.toUtc().isBefore(expiresAt.toUtc());
 
   Map<String, Object?> toJson() => {
     'v': protocolVersion,
@@ -72,10 +107,14 @@ class JoinQrPayload {
     'deviceCertFingerprint': deviceCertFingerprint,
     'roleOffer': roleOffer.name,
     'joinNonce': joinNonce,
+    'expiresAt': expiresAt.toUtc().toIso8601String(),
+    'checkCode': checkCode,
     if (personRoles.isNotEmpty)
       'personRoles': personRoles.map((r) => r.name).toList()..sort(),
     if (personDisplayName != null) 'personDisplayName': personDisplayName,
     if (isPersonJoin) 'isPersonJoin': true,
+    if (booksSetDisplayName != null && booksSetDisplayName!.isNotEmpty)
+      'booksSetDisplayName': booksSetDisplayName,
   };
 
   String encode() => jsonEncode(toJson());
@@ -105,6 +144,8 @@ class JoinQrPayload {
     final fingerprint = map['deviceCertFingerprint'];
     final roleOfferRaw = map['roleOffer'];
     final joinNonce = map['joinNonce'];
+    final expiresAtRaw = map['expiresAt'];
+    final checkCode = map['checkCode'];
     final version = map['v'] ?? 1;
 
     if (booksSetId is! String ||
@@ -115,10 +156,17 @@ class JoinQrPayload {
         deviceCertB64 is! String ||
         fingerprint is! String ||
         roleOfferRaw is! String ||
-        joinNonce is! String) {
+        joinNonce is! String ||
+        expiresAtRaw is! String ||
+        checkCode is! String) {
       throw const FormatException(
         'Join QR payload is missing required fields.',
       );
+    }
+
+    final expiresAt = DateTime.tryParse(expiresAtRaw);
+    if (expiresAt == null) {
+      throw const FormatException('Join QR payload has an invalid expiresAt.');
     }
 
     final roleOffer = LinkedDeviceRole.values.where(
@@ -154,9 +202,12 @@ class JoinQrPayload {
       deviceCertFingerprint: fingerprint,
       roleOffer: roleOffer.first,
       joinNonce: joinNonce,
+      expiresAt: expiresAt.toUtc(),
+      checkCode: checkCode,
       personRoles: personRoles,
       personDisplayName: map['personDisplayName'] as String?,
       isPersonJoin: map['isPersonJoin'] == true,
+      booksSetDisplayName: map['booksSetDisplayName'] as String?,
     );
   }
 
@@ -170,4 +221,18 @@ class JoinQrPayload {
       return false;
     }
   }
+}
+
+/// Tracks join nonces that have already been accepted so a QR cannot be reused
+/// (task 12.3). Process-local; a fresh QR always gets a new nonce.
+class JoinNonceRegistry {
+  final Set<String> _used = {};
+
+  bool hasBeenUsed(String joinNonce) => _used.contains(joinNonce);
+
+  void markUsed(String joinNonce) {
+    _used.add(joinNonce);
+  }
+
+  void clear() => _used.clear();
 }
