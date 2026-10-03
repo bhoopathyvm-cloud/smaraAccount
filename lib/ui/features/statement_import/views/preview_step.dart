@@ -216,14 +216,19 @@ class PreviewStep extends StatelessWidget {
             },
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(AppSpacing.large),
-          child: ElevatedButton(
-            onPressed: viewModel.isSubmitting
-                ? null
-                : () => viewModel.confirmImport(),
-            child: Text(
-              viewModel.isSubmitting ? l10n.importingLabel : l10n.confirmImport,
+        SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.large),
+            child: ElevatedButton(
+              onPressed: viewModel.isSubmitting
+                  ? null
+                  : () => viewModel.confirmImport(),
+              child: Text(
+                viewModel.isSubmitting
+                    ? l10n.importingLabel
+                    : l10n.confirmImport,
+              ),
             ),
           ),
         ),

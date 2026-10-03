@@ -12,6 +12,7 @@ import '../../../../domain/models/research_tool.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/system_inset_padding.dart';
 import '../../../../l10n/l10n.dart';
 import '../../setup_choice/views/books_copy_restored_success_dialog.dart';
 import '../view_models/settings_view_model.dart';
@@ -73,7 +74,7 @@ class SettingsView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             children: [
               if (booksSwitcherViewModel != null) ...[
                 BooksSwitcherSection(viewModel: booksSwitcherViewModel!),

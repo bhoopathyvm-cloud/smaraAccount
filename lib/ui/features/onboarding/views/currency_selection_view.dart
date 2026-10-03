@@ -5,6 +5,7 @@ import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/first_identity_setup_view_model.dart';
 
 /// A few common ISO 4217 codes shown as quick picks; any 3-letter code can
@@ -69,7 +70,7 @@ class _CurrencySelectionViewState extends State<CurrencySelectionView> {
         listenable: widget.viewModel,
         builder: (context, _) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

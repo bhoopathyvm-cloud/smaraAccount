@@ -5,6 +5,7 @@ import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_text_field.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/first_week_setup_view_model.dart';
 
 /// A short post-onboarding wizard: optionally add a credit card and/or
@@ -52,7 +53,7 @@ class _FirstWeekSetupViewState extends State<FirstWeekSetupView> {
         listenable: widget.viewModel,
         builder: (context, _) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

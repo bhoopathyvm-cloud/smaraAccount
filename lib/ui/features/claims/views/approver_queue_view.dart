@@ -6,6 +6,7 @@ import '../../../../domain/models/claim_item.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/money_formatter.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/approver_queue_view_model.dart';
 import '../view_models/claims_list_view_model.dart';
 
@@ -40,7 +41,7 @@ class ApproverQueueView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(title: Text(l10n.claimsReviewTitle)),
           body: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: scrollPaddingAvoidingSystemInsets(context, base: 16),
             children: [
               if (viewModel.lastActionError != null)
                 Padding(

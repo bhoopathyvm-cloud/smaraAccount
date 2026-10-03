@@ -61,7 +61,13 @@ class SummaryStep extends StatelessWidget {
               ],
             ),
           ),
-          ElevatedButton(onPressed: onFinished, child: Text(l10n.actionDone)),
+          SafeArea(
+            top: false,
+            child: ElevatedButton(
+              onPressed: onFinished,
+              child: Text(l10n.actionDone),
+            ),
+          ),
         ],
       ),
     );
@@ -196,6 +202,9 @@ class CategoryRuleManagementView extends StatelessWidget {
             );
           }
           return ListView.builder(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.viewPaddingOf(context).bottom,
+            ),
             itemCount: rules.length,
             itemBuilder: (context, index) {
               final rule = rules[index];

@@ -7,6 +7,7 @@ import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/device_history_view_model.dart';
 
 /// Lists Continuation and membership notices in household wording.
@@ -37,7 +38,7 @@ class DeviceHistoryView extends StatelessWidget {
             );
           }
           return ListView.separated(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             itemCount: items.length,
             separatorBuilder: (_, _) =>
                 const SizedBox(height: AppSpacing.medium),

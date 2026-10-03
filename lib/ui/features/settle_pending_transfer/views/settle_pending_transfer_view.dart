@@ -8,6 +8,7 @@ import '../../../core/app_typography.dart';
 import '../../../core/entity_picker_field.dart';
 import '../../../core/money_amount_field.dart';
 import '../../../core/money_formatter.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/settle_pending_transfer_view_model.dart';
 
 class SettlePendingTransferView extends StatefulWidget {
@@ -49,7 +50,7 @@ class _SettlePendingTransferViewState extends State<SettlePendingTransferView> {
         builder: (context, _) {
           final viewModel = widget.viewModel;
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.large),
+            padding: scrollPaddingAvoidingSystemInsets(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

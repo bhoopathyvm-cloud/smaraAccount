@@ -118,6 +118,9 @@ class PayeeManagementView extends StatelessWidget {
             );
           }
           return ListView.builder(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.viewPaddingOf(context).bottom,
+            ),
             itemCount: viewModel.payees.length,
             itemBuilder: (context, index) {
               final payee = viewModel.payees[index];

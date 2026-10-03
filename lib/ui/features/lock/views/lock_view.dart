@@ -5,6 +5,7 @@ import '../../../../l10n/l10n.dart';
 import '../../../core/app_colors.dart';
 import '../../../core/app_spacing.dart';
 import '../../../core/app_typography.dart';
+import '../../../core/system_inset_padding.dart';
 import '../view_models/lock_view_model.dart';
 
 /// Blocks the whole app behind a PIN (and, if enabled, biometrics) until
@@ -49,7 +50,7 @@ class _LockViewState extends State<LockView> {
         builder: (context, _) {
           return Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(AppSpacing.large),
+              padding: scrollPaddingAvoidingSystemInsets(context),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
