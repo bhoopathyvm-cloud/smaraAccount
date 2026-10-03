@@ -202,4 +202,40 @@ void main() {
     expect(find.text('Travel'), findsOneWidget);
     expect(find.text('Books on this device'), findsOneWidget);
   });
+
+  testWidgets('unnamed books set shows localized fallback, never the raw id', (
+    tester,
+  ) async {
+    late BooksSwitcherViewModel switcher;
+    late String unnamedId;
+    late String namedId;
+    await tester.runAsync(() async {
+      // First-open path seeds metadata with no user name (was UUID before).
+      await session.ensureOpen();
+      unnamedId = (await session.activeBooksSetId())!;
+      final named = await session.createSet(displayName: 'Travel');
+      namedId = named.id;
+      // Switch back so both appear; leave the first unnamed.
+      await session.switchTo(unnamedId);
+      switcher = BooksSwitcherViewModel(session: session);
+      await switcher.refresh();
+    });
+    addTearDown(switcher.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: appLocalizationsDelegatesWithMaterialFallback,
+        supportedLocales: supportedAppLocales,
+        home: Scaffold(body: BooksSwitcherSection(viewModel: switcher)),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.text('Travel'), findsOneWidget);
+    expect(find.text('Books 1'), findsOneWidget);
+    expect(find.text(unnamedId), findsNothing);
+    expect(find.text(namedId), findsNothing);
+    // UUID-shaped strings must not appear as titles.
+    expect(switcher.sets.any((s) => s.displayName == s.id), isFalse);
+  });
 }

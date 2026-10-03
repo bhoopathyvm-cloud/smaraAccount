@@ -474,6 +474,15 @@
     }
   },
   "settingsBooksSwitcherRemoveConfirm": "Remove",
+  "settingsBooksSwitcherFallbackName": "Books {number}",
+  "@settingsBooksSwitcherFallbackName": {
+    "description": "Label for a books set that has no user-given name yet. Never show the raw books-set id.",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "settingsLinkedDevices": "Linked devices",
   "settingsLinkedDevicesCatchUp": "Your devices catch up when both have Smara open on the same Wi-Fi.",
   "settingsLinkedDevicesPermissionSentence": "To share your books, Smara needs to find your other devices on this Wi-Fi. Nothing goes to the internet.",

@@ -36,16 +36,17 @@ class BooksSwitcherSection extends StatelessWidget {
                 child: Center(child: CircularProgressIndicator()),
               )
             else ...[
-              for (final set in viewModel.sets)
+              for (final entry in _labeledSets(viewModel.sets, l10n))
                 _BooksSetTile(
-                  set: set,
+                  set: entry.set,
+                  label: entry.label,
                   enabled: !viewModel.isBusy,
-                  onSwitch: set.isActive
+                  onSwitch: entry.set.isActive
                       ? null
-                      : () => viewModel.switchTo(set.id),
-                  onRemove: set.isActive || viewModel.sets.length <= 1
+                      : () => viewModel.switchTo(entry.set.id),
+                  onRemove: entry.set.isActive || viewModel.sets.length <= 1
                       ? null
-                      : () => _confirmRemove(context, set),
+                      : () => _confirmRemove(context, entry.set, entry.label),
                 ),
               const SizedBox(height: AppSpacing.medium),
               OutlinedButton(
@@ -68,12 +69,16 @@ class BooksSwitcherSection extends StatelessWidget {
     );
   }
 
-  Future<void> _confirmRemove(BuildContext context, BooksSetInfo set) async {
+  Future<void> _confirmRemove(
+    BuildContext context,
+    BooksSetInfo set,
+    String label,
+  ) async {
     final l10n = l10nOf(context);
     final confirmed = await confirmDestructiveAction(
       context: context,
       title: l10n.settingsBooksSwitcherRemoveTitle,
-      message: l10n.settingsBooksSwitcherRemoveBody(set.displayName),
+      message: l10n.settingsBooksSwitcherRemoveBody(label),
       confirmLabel: l10n.settingsBooksSwitcherRemoveConfirm,
     );
     if (confirmed && context.mounted) {
@@ -117,15 +122,41 @@ class BooksSwitcherSection extends StatelessWidget {
   }
 }
 
+/// Resolves user-visible labels for [sets]: real names stay as-is; unnamed
+/// sets get localized "Books 1", "Books 2", … and never the raw id.
+@visibleForTesting
+List<({BooksSetInfo set, String label})> labeledBooksSets(
+  List<BooksSetInfo> sets,
+  AppLocalizations l10n,
+) => _labeledSets(sets, l10n);
+
+List<({BooksSetInfo set, String label})> _labeledSets(
+  List<BooksSetInfo> sets,
+  AppLocalizations l10n,
+) {
+  var untitledOrdinal = 0;
+  return [
+    for (final set in sets)
+      (
+        set: set,
+        label: set.hasUserVisibleName
+            ? set.displayName
+            : l10n.settingsBooksSwitcherFallbackName(++untitledOrdinal),
+      ),
+  ];
+}
+
 class _BooksSetTile extends StatelessWidget {
   const _BooksSetTile({
     required this.set,
+    required this.label,
     required this.enabled,
     required this.onSwitch,
     required this.onRemove,
   });
 
   final BooksSetInfo set;
+  final String label;
   final bool enabled;
   final VoidCallback? onSwitch;
   final VoidCallback? onRemove;
@@ -135,7 +166,7 @@ class _BooksSetTile extends StatelessWidget {
     final l10n = l10nOf(context);
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      title: Text(set.displayName, style: AppTypography.body),
+      title: Text(label, style: AppTypography.body),
       subtitle: set.isActive
           ? Text(
               l10n.settingsBooksSwitcherActive,

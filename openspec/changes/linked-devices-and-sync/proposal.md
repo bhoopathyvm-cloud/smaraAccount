@@ -23,9 +23,9 @@ books on one device, which this change also introduces.
   ADR 0004: private keys never leave their device; only public keys and
   signed records travel).
 - **When it syncs.** Whenever both apps are open on the same Wi-Fi, plus
-  a "Sync now" button. Android may sync briefly in the background where
-  the system allows. Screen copy: "Your devices catch up when both have
-  Smara open on the same Wi-Fi."
+  a "Sync now" button. Screen copy: "Your devices catch up when both have
+  Smara open on the same Wi-Fi." No OS background scheduling (WorkManager
+  or equivalent): peer discovery needs both apps listening on the LAN.
 - **Join.**
   - Normal: "Add a device" with a QR code, in person, on the same Wi-Fi.
     Keys are exchanged and the books are sent directly.

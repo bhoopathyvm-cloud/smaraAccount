@@ -1914,6 +1914,12 @@ abstract class AppLocalizations {
   /// **'Remove'**
   String get settingsBooksSwitcherRemoveConfirm;
 
+  /// Label for a books set that has no user-given name yet. Never show the raw books-set id.
+  ///
+  /// In en, this message translates to:
+  /// **'Books {number}'**
+  String settingsBooksSwitcherFallbackName(int number);
+
   /// No description provided for @settingsLinkedDevices.
   ///
   /// In en, this message translates to:

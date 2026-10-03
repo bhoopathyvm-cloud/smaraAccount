@@ -31,7 +31,7 @@ After devices have exchanged device certificates (via QR join or an approved joi
 - **THEN** the sync session is refused and no entries are accepted
 
 ### Requirement: Sync When Both Open Plus Sync Now
-The system SHALL sync whenever both linked apps are open on the same Wi-Fi, and SHALL provide a "Sync now" action. On Android the app MAY sync briefly while backgrounded where the OS allows. Screen copy SHALL tell the user: "Your devices catch up when both have Smara open on the same Wi-Fi."
+The system SHALL sync whenever both linked apps are open on the same Wi-Fi, and SHALL provide a "Sync now" action. Screen copy SHALL tell the user: "Your devices catch up when both have Smara open on the same Wi-Fi."
 
 #### Scenario: Automatic catch-up while both open
 - **WHEN** two linked devices have Smara open on the same Wi-Fi
@@ -40,6 +40,10 @@ The system SHALL sync whenever both linked apps are open on the same Wi-Fi, and 
 #### Scenario: Sync now
 - **WHEN** the user taps "Sync now" while a peer is reachable on the same Wi-Fi
 - **THEN** a sync session runs immediately
+
+#### Scenario: No background catch-up when the app is not open
+- **WHEN** a linked device is backgrounded or killed and no peer session is already in progress
+- **THEN** the system does not schedule OS background work (WorkManager or equivalent) to discover or sync with peers
 
 ### Requirement: Sync Adds Records and Never Edits Them
 Syncing SHALL add the other devices' journal entries and apply metadata operations. Posted journal entries SHALL NEVER be edited or deleted in place to reconcile devices.

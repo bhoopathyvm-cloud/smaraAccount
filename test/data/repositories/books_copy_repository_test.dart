@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -130,6 +131,12 @@ void main() {
         ExchangeRateProvider.openErApi,
       );
 
+      final seedEncoded = await source.secureStorage.read(
+        SigningKeyService.privateKeySeedStorageKey,
+      );
+      expect(seedEncoded, isNotNull);
+      final seedBytes = base64Decode(seedEncoded!);
+
       final savedAt = DateTime.utc(2026, 3, 15, 12);
       final contents = await source.booksCopyRepository.saveBooksCopy(
         passphrase: 'correct horse battery staple',
@@ -137,8 +144,10 @@ void main() {
         now: savedAt,
       );
 
-      expect(contents, isNot(contains('privateKey')));
-      expect(contents, isNot(contains('seed')));
+      // Assert real secret material is absent — not the substrings
+      // 'seed'/'privateKey', which random Base64 ciphertext can contain.
+      expect(contents, isNot(contains(seedEncoded)));
+      expect(contents, isNot(contains(String.fromCharCodes(seedBytes))));
       expect(
         await source.settingsRepository.lastCopySavedAt(),
         equals(savedAt),

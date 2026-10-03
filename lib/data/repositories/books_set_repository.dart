@@ -17,8 +17,15 @@ class BooksSetInfo {
   });
 
   final String id;
+
+  /// User-given name, or empty when the set was never named (never the raw
+  /// books-set id — UI falls back to a localized "Books N" label).
   final String displayName;
   final bool isActive;
+
+  /// True when [displayName] is a real user-visible name (not empty and not
+  /// the raw id left by earlier builds that stored the UUID as the name).
+  bool get hasUserVisibleName => displayName.isNotEmpty && displayName != id;
 }
 
 /// Creates, lists, renames, removes, and switches books sets on this device
@@ -85,15 +92,24 @@ class BooksSetRepository {
   }
 
   /// Lists books sets found under `books/`, reading display names from each
-  /// set's metadata table when present.
+  /// set's metadata table when present. Unnamed sets (missing name, empty
+  /// name, or legacy UUID-as-name) get an empty [BooksSetInfo.displayName]
+  /// so the UI can show a localized fallback instead of the raw id.
   Future<List<BooksSetInfo>> listSets() async {
     final activeId = await _store.activeBooksSetId();
     final ids = await BooksSetPaths.listBooksSetIds(_supportDirectory);
     final result = <BooksSetInfo>[];
     for (final id in ids) {
       final name = await _readDisplayName(id);
+      final userVisible = name != null && name.isNotEmpty && name != id
+          ? name
+          : '';
       result.add(
-        BooksSetInfo(id: id, displayName: name ?? id, isActive: id == activeId),
+        BooksSetInfo(
+          id: id,
+          displayName: userVisible,
+          isActive: id == activeId,
+        ),
       );
     }
     return result;
@@ -181,27 +197,33 @@ class BooksSetRepository {
     // Touch the database so migrations (including schema 19 tables) run
     // before callers insert metadata or entries.
     await db.customSelect('SELECT 1').get();
-    await _ensureMetadataRow(
-      db,
-      booksSetId,
-      displayName: displayName ?? booksSetId,
-    );
+    await _ensureMetadataRow(db, booksSetId, displayName: displayName);
     return db;
   }
 
   Future<void> _ensureMetadataRow(
     AppDatabase db,
     String booksSetId, {
-    required String displayName,
+    String? displayName,
   }) async {
     final existing = await (db.select(
       db.booksSetMetadata,
     )..where((t) => t.id.equals(booksSetId))).getSingleOrNull();
     if (existing != null) {
-      if (existing.displayName != displayName && displayName != booksSetId) {
+      // Apply an explicit non-empty rename.
+      if (displayName != null &&
+          displayName.isNotEmpty &&
+          existing.displayName != displayName) {
         await (db.update(db.booksSetMetadata)
               ..where((t) => t.id.equals(booksSetId)))
             .write(BooksSetMetadataCompanion(displayName: Value(displayName)));
+        return;
+      }
+      // Clear legacy UUID-as-name so listSets never surfaces the raw id.
+      if (existing.displayName == booksSetId) {
+        await (db.update(db.booksSetMetadata)
+              ..where((t) => t.id.equals(booksSetId)))
+            .write(const BooksSetMetadataCompanion(displayName: Value('')));
       }
       return;
     }
@@ -210,7 +232,7 @@ class BooksSetRepository {
         .insert(
           BooksSetMetadataCompanion.insert(
             id: booksSetId,
-            displayName: displayName,
+            displayName: displayName ?? '',
           ),
         );
   }

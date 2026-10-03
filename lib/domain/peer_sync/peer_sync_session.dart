@@ -53,7 +53,6 @@ class PeerSyncSession {
     required LocalNetworkReachability reachability,
     required SyncPeerIdentity localIdentity,
     required Set<String> pinnedFingerprints,
-    this.allowAndroidBackgroundSync = true,
   }) : _transport = transport,
        _ledger = ledger,
        _reachability = reachability,
@@ -65,10 +64,6 @@ class PeerSyncSession {
   final LocalNetworkReachability _reachability;
   final SyncPeerIdentity _localIdentity;
   final Set<String> _pinnedFingerprints;
-
-  /// Android may sync briefly while backgrounded where the OS allows
-  /// (peer-sync spec). Other platforms ignore this flag.
-  final bool allowAndroidBackgroundSync;
 
   /// Runs Sync now against [remote]. Refuses when peers are not on the local
   /// network.
@@ -96,8 +91,7 @@ class PeerSyncSession {
     }
   }
 
-  /// Serves inbound sync sessions while the app is open (and briefly in the
-  /// Android background when [allowAndroidBackgroundSync] is true).
+  /// Serves inbound sync sessions while the app is open.
   Future<void> startListening({
     required void Function(SyncSessionResult result)? onCompleted,
   }) {

@@ -132,16 +132,4 @@ void main() {
     expect(result.entriesSent, 0);
     expect(result.entriesReceived, 0);
   });
-
-  test('Android background sync flag is exposed on the session', () {
-    final session = PeerSyncSession(
-      transport: transportA,
-      ledger: ledgerA,
-      reachability: reachability,
-      localIdentity: SyncPeerIdentity(deviceId: 'a', certificate: certA),
-      pinnedFingerprints: pins,
-      allowAndroidBackgroundSync: true,
-    );
-    expect(session.allowAndroidBackgroundSync, isTrue);
-  });
 }
