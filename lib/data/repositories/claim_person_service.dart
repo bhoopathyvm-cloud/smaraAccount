@@ -107,6 +107,7 @@ class ClaimPersonService {
     required String booksSetId,
     required String personDisplayName,
     Set<LinkedDeviceRole> roles = const {LinkedDeviceRole.claimant},
+    String? booksSetDisplayName,
   }) {
     return _membership.buildJoinQrPayload(
       hostDeviceId: hostDeviceId,
@@ -116,6 +117,7 @@ class ClaimPersonService {
       personRoles: roles,
       personDisplayName: personDisplayName,
       isPersonJoin: true,
+      booksSetDisplayName: booksSetDisplayName,
     );
   }
 
@@ -256,14 +258,19 @@ class ClaimPersonService {
       );
     }
     final owedToId = target.owedToAccountId;
-    final removed = await _membership.removeDevice(
+    await _membership.removeDevice(
+      actorDeviceId: actorDeviceId,
+      targetDeviceId: targetDeviceId,
+    );
+    // Erase-on-next-contact: mark pending so peers learn on the next sync.
+    final erased = await _membership.markErasePending(
       actorDeviceId: actorDeviceId,
       targetDeviceId: targetDeviceId,
     );
     if (owedToId != null && balanceMinor == 0) {
       await _accounts.archiveFinancialAccount(owedToId);
     }
-    return removed;
+    return erased;
   }
 
   Future<void> _emit(

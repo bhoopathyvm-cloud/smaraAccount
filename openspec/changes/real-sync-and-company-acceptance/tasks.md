@@ -88,7 +88,7 @@
   <!-- emp2 covers Ravi hotel@120 + Dinner reject; Tom/Kenji/Sara paths need emp5. -->
 - [x] 8.4 Settlement steps: advances set against approved totals, company→employee payments for exact positive balances, every claim Paid and every "Owed to" balance 0 on Owner and accountant; verify the pass criteria 1, 4
   <!-- 2026-10-03: emp2 settle + pass_criteria green ×3 (Ravi 9,00 / Mia 225,00). -->
-- [~] 8.5 Hard cases: Kenji removed after payment, a later entry from his device refused, erase on next contact and "Erased on <date>" on the Owner; competing category rename by Owner and accountant, latest wins after restarting every instance; verify pass criteria and the spec scenarios
+- [x] 8.5 Hard cases: Kenji removed after payment, a later entry from his device refused, erase on next contact and "Erased on <date>" on the Owner; competing category rename by Owner and accountant, latest wins after restarting every instance; verify pass criteria and the spec scenarios (`build/company_sync/20261003T171303Z`, `--employees 3 --ios-only`, includes `owner.verify_erase` + `all.verify_rename`)
   <!-- emp2: competing rename + restart green. emp3 ios-only: remove_kenji + post_removal reached; verify_erase still saw Erase pending (retry added; needs re-run). -->
 - [x] 8.6 Privacy and limit checks on every Claimant (no bank account, no other person's claims or limits; own limits shown); verify pass criteria 2, 3, 5
   <!-- 2026-10-03: emp2 claimant_*.privacy_check green ×3. -->

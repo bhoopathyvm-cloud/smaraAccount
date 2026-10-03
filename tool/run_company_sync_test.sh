@@ -2,11 +2,17 @@
 # Company sync multi-instance acceptance runner (tasks 7.3–7.5 / 8.x).
 #
 # Usage:
-#   tool/run_company_sync_test.sh [--employees N] [--dry] [--ios-only]
+#   tool/run_company_sync_test.sh [--employees N] [--dry] [--ios-only] [--real-devices]
 #
 # --employees N   Claimant count (default 2; max 5). Full cast is 5.
 # --dry           Two-role dry run (Owner macOS + one iOS Claimant) for 7.2.
 # --ios-only      Skip Android emulators (also used when sudo for vmnet is declined).
+# --real-devices  Map Ravi (claimant_0) to USB iPhone SE and Sara (claimant_3)
+#                 to USB Samsung SM-X230; remaining roles stay on simulators /
+#                 macOS. Uses the Mac's real Wi-Fi (no vmnet/sudo). Launch the
+#                 physical iPhone first and alone. The user must tap "Allow"
+#                 for Local Network on the iPhone once, and any Android
+#                 "Nearby devices" prompt.
 #
 # Artifacts land under build/company_sync/<timestamp>/.
 
@@ -18,18 +24,34 @@ cd "$ROOT"
 EMPLOYEES=2
 DRY=0
 IOS_ONLY=0
+REAL_DEVICES=0
+REAL_IPHONE_UDID="00008030-00022D593C82402E"
+REAL_ANDROID_SERIAL="RZGL42CPNGP"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --employees) EMPLOYEES="${2:?}"; shift 2 ;;
     --dry) DRY=1; shift ;;
     --ios-only) IOS_ONLY=1; shift ;;
+    --real-devices) REAL_DEVICES=1; shift ;;
     -h|--help)
-      sed -n '2,14p' "$0"
+      sed -n '2,20p' "$0"
       exit 0
       ;;
     *) echo "Unknown arg: $1" >&2; exit 64 ;;
   esac
 done
+
+if [[ "$REAL_DEVICES" -eq 1 ]]; then
+  # Real USB devices use the Mac LAN; skip vmnet Android emulators.
+  IOS_ONLY=1
+  echo "=== --real-devices ==="
+  echo "Ravi (claimant_0) → iPhone SE $REAL_IPHONE_UDID (USB)"
+  echo "Sara (claimant_3, when employees>=4) → Samsung $REAL_ANDROID_SERIAL (USB)"
+  echo "Uses Mac Wi-Fi (no vmnet/sudo). Launch physical iPhone first/alone."
+  echo "USER ACTION REQUIRED:"
+  echo "  • On the iPhone, tap Allow for Local Network when prompted (once)."
+  echo "  • On the Samsung, accept any Nearby devices / local-network prompt."
+fi
 
 TS="$(date -u +%Y%m%dT%H%M%SZ)"
 REPORT_DIR="$ROOT/build/company_sync/$TS"
@@ -262,6 +284,10 @@ if [[ "$DRY" -eq 1 ]]; then
 else
   CONDUCTOR_ARGS+=(--employees "$EMPLOYEES")
 fi
+if [[ "$REAL_DEVICES" -eq 1 ]]; then
+  # Listen on all interfaces so USB/Wi-Fi phones can reach the host.
+  CONDUCTOR_ARGS+=(--bind-lan)
+fi
 ( cd "$ROOT/tool/company_sync" && dart run_conductor.dart "${CONDUCTOR_ARGS[@]}" ) \
   >"$REPORT_DIR/conductor/stdout.log" 2>&1 &
 CONDUCTOR_PID=$!
@@ -297,8 +323,22 @@ if [[ -z "${PORT:-}" ]]; then
   echo "Conductor failed to start; see $REPORT_DIR/conductor/stdout.log" >&2
   exit 1
 fi
-CONDUCTOR_URL="http://127.0.0.1:$PORT"
-echo "Conductor at $CONDUCTOR_URL"
+LAN_IP="$(ipconfig getifaddr en0 2>/dev/null || true)"
+if [[ -z "${LAN_IP:-}" ]]; then
+  LAN_IP="$(ipconfig getifaddr en1 2>/dev/null || true)"
+fi
+if [[ "$REAL_DEVICES" -eq 1 ]]; then
+  if [[ -z "${LAN_IP:-}" ]]; then
+    echo "Could not find Mac LAN IP (en0/en1); real devices need Wi-Fi." >&2
+    exit 1
+  fi
+  # Real devices use the Mac's Wi-Fi address; sims/macOS can reach it too.
+  CONDUCTOR_URL="http://$LAN_IP:$PORT"
+  echo "Conductor at $CONDUCTOR_URL (LAN for real devices; no vmnet)"
+else
+  CONDUCTOR_URL="http://127.0.0.1:$PORT"
+  echo "Conductor at $CONDUCTOR_URL"
+fi
 
 DEFINES=(
   --dart-define=COMPANY_SYNC_TEST=true
@@ -359,14 +399,15 @@ flutter build macos --debug \
 if [[ "$DRY" -eq 1 ]]; then
   launch_role owner macos
   wait_role_compiled owner || exit 1
-  launch_role claimant_0 "$SE_UDID"
+  if [[ "$REAL_DEVICES" -eq 1 ]]; then
+    echo "Launching physical iPhone alone first (Xcode single-device limit)..."
+    launch_role claimant_0 "$REAL_IPHONE_UDID"
+  else
+    launch_role claimant_0 "$SE_UDID"
+  fi
   wait_role_compiled claimant_0 || exit 1
 else
-  launch_role owner macos
-  wait_role_compiled owner || exit 1
-  launch_role approver "$IPAD_UDID"
-  wait_role_compiled approver || exit 1
-  # Assign claimants: prefer iOS then Android when available
+  # Assign claimants before launch so --real-devices can place Ravi/Sara.
   CLAIMANTS=()
   CLAIMANTS+=("$SE_UDID")
   CLAIMANTS+=("$IPHONE17_UDID")
@@ -376,11 +417,37 @@ else
       CLAIMANTS+=("$serial")
     done < <(adb devices | awk '/emulator/{print $1}')
   fi
+  if [[ "$REAL_DEVICES" -eq 1 ]]; then
+    CLAIMANTS[0]="$REAL_IPHONE_UDID"
+    # Sara is claimant_3 (Ravi, Mia, Kenji, Sara, Tom).
+    if [[ "$EMPLOYEES" -ge 4 ]]; then
+      CLAIMANTS[3]="$REAL_ANDROID_SERIAL"
+    fi
+  fi
+
+  if [[ "$REAL_DEVICES" -eq 1 ]]; then
+    # Physical iPhone must launch first and alone — Xcode cannot drive two
+    # physical iOS devices at once.
+    echo "Launching physical iPhone (claimant_0 / Ravi) alone first..."
+    launch_role claimant_0 "${CLAIMANTS[0]}"
+    wait_role_compiled claimant_0 || exit 1
+  fi
+
+  launch_role owner macos
+  wait_role_compiled owner || exit 1
+  launch_role approver "$IPAD_UDID"
+  wait_role_compiled approver || exit 1
   for ((i=0; i<EMPLOYEES; i++)); do
+    if [[ "$REAL_DEVICES" -eq 1 && "$i" -eq 0 ]]; then
+      continue # already launched
+    fi
     dev="${CLAIMANTS[$i]:-}"
     if [[ -z "$dev" ]]; then
       echo "No device for claimant_$i" >&2
       exit 1
+    fi
+    if [[ "$REAL_DEVICES" -eq 1 && "$i" -eq 3 ]]; then
+      echo "Launching physical Android (claimant_3 / Sara) on $dev..."
     fi
     launch_role "claimant_$i" "$dev"
     wait_role_compiled "claimant_$i" || exit 1

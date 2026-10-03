@@ -1516,20 +1516,29 @@ class MockIdentityRepository extends _i1.Mock
 class MockLedgerChainVerifier extends _i1.Mock
     implements _i7.LedgerChainVerifier {
   @override
-  _i17.Future<_i7.ChainVerificationResult> verifyChain() =>
+  bool get scopedVerification =>
       (super.noSuchMethod(
-            Invocation.method(#verifyChain, []),
+            Invocation.getter(#scopedVerification),
+            returnValue: false,
+            returnValueForMissingStub: false,
+          )
+          as bool);
+
+  @override
+  _i17.Future<_i7.ChainVerificationResult> verifyChain({bool? scoped}) =>
+      (super.noSuchMethod(
+            Invocation.method(#verifyChain, [], {#scoped: scoped}),
             returnValue: _i17.Future<_i7.ChainVerificationResult>.value(
               _FakeChainVerificationResult_5(
                 this,
-                Invocation.method(#verifyChain, []),
+                Invocation.method(#verifyChain, [], {#scoped: scoped}),
               ),
             ),
             returnValueForMissingStub:
                 _i17.Future<_i7.ChainVerificationResult>.value(
                   _FakeChainVerificationResult_5(
                     this,
-                    Invocation.method(#verifyChain, []),
+                    Invocation.method(#verifyChain, [], {#scoped: scoped}),
                   ),
                 ),
           )

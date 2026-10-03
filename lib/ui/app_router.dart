@@ -120,7 +120,15 @@ GoRouter buildAppRouter(
     hasAnyJournalEntries: ledgerRepository.hasAnyJournalEntries,
     hasMatchingStoredKey: identityRepository.hasMatchingStoredKey,
     verifyChain: () async {
-      await chainVerifier.verifyChain();
+      final scoped = membership == null
+          ? false
+          : await () async {
+              final deviceId = await settingsRepository.localDeviceId();
+              if (deviceId == null || deviceId.isEmpty) return false;
+              final self = await membership.findByDeviceId(deviceId);
+              return self?.isClaimantOnly ?? false;
+            }();
+      await chainVerifier.verifyChain(scoped: scoped);
     },
     needsCurrencyBackfill: accountRepository.needsCurrencyBackfill,
     isFirstWeekSetupCompleted: settingsRepository.isFirstWeekSetupCompleted,

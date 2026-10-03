@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:smara_accounting/data/books_set/active_books_session.dart';
 import 'package:smara_accounting/data/claims/company_sync_claim_receipt_picker.dart';
 import 'package:smara_accounting/data/repositories/account_repository.dart';
 import 'package:smara_accounting/data/repositories/category_repository.dart';
@@ -118,8 +119,16 @@ T readRepo<T>(WidgetTester tester) =>
 Future<String> localDeviceId(WidgetTester tester) async {
   final membership = readRepo<MembershipRepository>(tester);
   final identity = readRepo<IdentityRepository>(tester);
+  // Prefer the stable settings id — after erase-pending, self may no longer
+  // appear in listActiveDevices().
+  final fromSettings = await readRepo<SettingsRepository>(
+    tester,
+  ).localDeviceId();
+  if (fromSettings != null && fromSettings.isNotEmpty) {
+    return fromSettings;
+  }
   final me = await identity.currentIdentity();
-  final devices = await membership.listActiveDevices();
+  final devices = await membership.listDevices();
   final mine = devices.where(
     (d) => me != null && d.signingIdentityId == me.identityId,
   );
@@ -400,8 +409,10 @@ Future<void> wireDirectSyncPeers(
 }) async {
   final sync = readRepo<PeerSyncService>(tester);
   final membership = readRepo<MembershipRepository>(tester);
+  // Include erase-pending peers so Owner↔removed-device contact can finish.
   final known = {
-    for (final d in await membership.listActiveDevices()) d.deviceId,
+    for (final d in await membership.listDevices())
+      if (d.isActive || d.isErasePending) d.deviceId,
   };
   for (final peerRole in peerRoles) {
     final raw = await client.getValue('sync_endpoint_$peerRole');
@@ -438,6 +449,13 @@ Future<void> wireDirectSyncPeers(
 }
 
 Future<void> configureAcmeCompany(WidgetTester tester) async {
+  // Company books should show the company name in the switcher, not "Books 1".
+  final session = readRepo<ActiveBooksSession>(tester);
+  final activeId = await session.activeBooksSetId();
+  if (activeId != null) {
+    await session.renameSet(activeId, 'Acme Travel Co');
+  }
+
   final categories = readRepo<CategoryRepository>(tester);
   final claims = readRepo<ClaimRepository>(tester);
   var existing = await categories.watchCategories().first;

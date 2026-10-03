@@ -27,6 +27,7 @@ class JoinQrPayload {
     this.personRoles = const {},
     this.personDisplayName,
     this.isPersonJoin = false,
+    this.booksSetDisplayName,
   });
 
   /// How long a freshly built join QR remains acceptable.
@@ -68,6 +69,10 @@ class JoinQrPayload {
   /// True when this QR is an "Add a person" offer (vs device).
   final bool isPersonJoin;
 
+  /// Host books-set display name so joiners show the company name, not
+  /// "Books N".
+  final String? booksSetDisplayName;
+
   static const _privateKeyKeys = {
     'privateKey',
     'private_key',
@@ -108,6 +113,8 @@ class JoinQrPayload {
       'personRoles': personRoles.map((r) => r.name).toList()..sort(),
     if (personDisplayName != null) 'personDisplayName': personDisplayName,
     if (isPersonJoin) 'isPersonJoin': true,
+    if (booksSetDisplayName != null && booksSetDisplayName!.isNotEmpty)
+      'booksSetDisplayName': booksSetDisplayName,
   };
 
   String encode() => jsonEncode(toJson());
@@ -200,6 +207,7 @@ class JoinQrPayload {
       personRoles: personRoles,
       personDisplayName: map['personDisplayName'] as String?,
       isPersonJoin: map['isPersonJoin'] == true,
+      booksSetDisplayName: map['booksSetDisplayName'] as String?,
     );
   }
 

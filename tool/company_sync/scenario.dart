@@ -173,21 +173,22 @@ List<CompanySyncStep> acmeTravelScenario({int employees = 2}) {
         id: 'owner.remove_kenji',
         role: 'owner',
         dependsOn: ['owner.settle'],
-        timeout: Duration(minutes: 5),
+        // Headroom above owner.settle (10m): permission wait includes deps.
+        timeout: Duration(minutes: 15),
       ),
     if (n >= 3)
       const CompanySyncStep(
         id: 'claimant_2.post_removal_entry',
         role: 'claimant_2',
         dependsOn: ['owner.remove_kenji'],
-        timeout: Duration(minutes: 5),
+        timeout: Duration(minutes: 15),
       ),
     if (n >= 3)
       const CompanySyncStep(
         id: 'owner.verify_erase',
         role: 'owner',
         dependsOn: ['claimant_2.post_removal_entry'],
-        timeout: Duration(minutes: 5),
+        timeout: Duration(minutes: 15),
       ),
     CompanySyncStep(
       id: 'owner.competing_rename',

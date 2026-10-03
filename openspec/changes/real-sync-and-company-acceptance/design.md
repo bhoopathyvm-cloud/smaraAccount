@@ -52,6 +52,7 @@ See proposal.md, "Why". What exists today:
 6. **Removal and erase are enforced in the merge path.**
    - **Refusing entries:** each removal record carries the removal time. When an entry is signed by a removed device's identity and its timestamp is later than the removal, merge refuses it and raises a notice.
    - **Erasing:** a device that learns, from any linked peer, that it has been removed with a pending erase deletes its copy of the books set. It does this through the existing deletion of a books set, keeping only the minimal state it needs. It then reports the erase time back to the Owner on the next contact, and the Owner's device shows "Erased on <date>".
+   - **Contact after remove:** erase-pending devices stay in the TLS pin set and sync peer list until `erasedAt` arrives, so "next contact" is possible. Membership lifecycle fields (`removedAt`, `erasePendingAt`, `erasedAt`) are synthesized into MetadataOps and applied on peers; after apply, the removed device wipes and acks `erasedAt` in a follow-up metadata round.
 
 7. **Personal limits are signed claim-settings records, scoped to the person.**
    - **Records:** a `personalClaimLimit` record (person, category, amount in the company currency, unit, or cleared) is a claim-settings record, synced like the others. Its sync scope is the Owner, the Approvers, and that one Claimant.
@@ -76,10 +77,18 @@ See proposal.md, "Why". What exists today:
     - **Alternative rejected:** `-vmnet-bridged en0`. It depends on the router, and bridging over Wi-Fi often fails.
 
 11. **Test-only behavior is compiled out of release builds.**
-    - **Fixed rates:** under `bool.fromEnvironment('COMPANY_SYNC_TEST')`, the exchange-rate provider returns fixed rates from the scenario (GBP→EUR 1.17, JPY→EUR 0.0062).
-    - **Conductor client:** it exists only in `integration_test/`.
-    - **Guard:** a unit test asserts that the release configuration has the define off. The "Enter code instead" feature is a product feature, so the test drives it through the GUI.
-    - **Receipt fixtures:** `test_fixtures/receipts/` (2 JPEGs and 1 PDF) is pushed with `xcrun simctl addmedia` and `adb push` into `Download/`.
+   - **Fixed rates:** under `bool.fromEnvironment('COMPANY_SYNC_TEST')`, the exchange-rate provider returns fixed rates from the scenario (GBP→EUR 1.17, JPY→EUR 0.0062).
+   - **Conductor client:** it exists only in `integration_test/`.
+   - **Guard:** a unit test asserts that the release configuration has the define off. The "Enter code instead" feature is a product feature, so the test drives it through the GUI.
+   - **Receipt fixtures:** `test_fixtures/receipts/` (2 JPEGs and 1 PDF) is pushed with `xcrun simctl addmedia` and `adb push` into `Download/`.
+
+12. **Claimant-scoped sync uses scope chain anchors (partial-copy verification).**
+   - **Problem:** a Claimant only receives entries in its visibility scope, so it cannot hold an identity's whole hash chain. Full-member merge that requires `previousEntryHash == localPrior.entryHash` (or genesis) rejects the first in-scope entry with `chain_gap`.
+   - **Outbound:** when the remote peer is Claimant-only, the sender filters the EntryBatch (`ClaimantSyncFilter`) and attaches `ScopeChainAnchor` proofs: for each identity, the first kept entry's signed `previousEntryHash` (the omitted prior's hash) plus `firstScopedSequence`.
+   - **Claimant accept:** verify identity, recomputed entry hash, and signature as usual. Contiguous link checks apply when the local prior is sequence-adjacent. When the prior is omitted (scope gap), accept if a matching scope anchor is present or the local device is Claimant-only — the signature already binds `previousEntryHash`. Within-scope adjacent entries still chain to each other.
+   - **Full members:** ignore scope anchors; strict `chain_gap` unchanged.
+   - **Startup verify:** Claimant-only books call `verifyChain(scoped: true)` so sparse chains re-anchor instead of quarantining the tail.
+   - **Tips:** unknown remote identity defaults to sequence 0 (sequences start at 0) so the first entry is not skipped before filtering.
 
 ## Risks / Trade-offs
 

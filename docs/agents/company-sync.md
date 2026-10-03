@@ -36,6 +36,26 @@ Requires ≥10 GB free RAM. Android AVDs `smara_store_phone` and
 `smara_kiosk_pixel` are started with `-vmnet-shared` (one `sudo` prompt);
 decline falls back to `--ios-only`.
 
+## Real USB devices (Wi-Fi, no vmnet)
+
+```bash
+tool/run_company_sync_test.sh --employees 4 --real-devices
+```
+
+Maps **Ravi** (`claimant_0`) to the USB iPhone SE
+(`00008030-00022D593C82402E`) and **Sara** (`claimant_3`) to the USB
+Samsung SM-X230 (`RZGL42CPNGP`). Owner/Approver and other Claimants stay
+on macOS / simulators. Physical devices cannot write the Mac
+`COMPANY_SYNC_ARTIFACTS` path; the role runner falls back to device temp
+for local logs while still reporting ready/done to the conductor over
+HTTP. The conductor listens on the Mac's LAN address;
+discovery and join use real Wi-Fi (no `-vmnet-shared`, no sudo).
+
+The physical iPhone is launched first and alone (Xcode cannot launch two
+physical iOS devices at once). **You must tap Allow** for Local Network
+on the iPhone the first time, and accept any Android Nearby-devices
+prompt on the Samsung.
+
 ## Artifacts
 
 On every run (and especially on failure), look under

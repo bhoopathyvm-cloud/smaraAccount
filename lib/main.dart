@@ -346,6 +346,8 @@ class SmaraAccountingApp extends StatelessWidget {
                 previous,
               ) {
                 unawaited(previous?.stop());
+                final session = context.read<ActiveBooksSession>();
+                final reachability = context.read<LocalNetworkReachability>();
                 return PeerSyncService(
                   transport: transport,
                   discovery: discovery,
@@ -353,9 +355,9 @@ class SmaraAccountingApp extends StatelessWidget {
                   merge: merge,
                   certificates: certs,
                   settings: settings,
-                  reachability: context.read<LocalNetworkReachability>(),
-                  activeBooksSetId: () =>
-                      context.read<ActiveBooksSession>().activeBooksSetId(),
+                  reachability: reachability,
+                  activeBooksSetId: session.activeBooksSetId,
+                  wipeActiveBooksCopy: merge.wipeLocalLedgerForErase,
                 );
               },
           dispose: (_, service) => service.stop(),

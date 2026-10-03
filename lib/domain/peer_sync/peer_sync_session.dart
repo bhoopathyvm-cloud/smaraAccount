@@ -58,6 +58,31 @@ class SyncSessionResult {
   );
 }
 
+/// Optional Claimant-scoped outbound filter + erase-ack hooks supplied by
+/// [PeerSyncService] from membership.
+class PeerSyncSessionHooks {
+  const PeerSyncSessionHooks({
+    this.filterOutboundEntries,
+    this.filterOutboundClaims,
+    this.filterOutboundMetadata,
+    this.afterPeerMetadataApplied,
+  });
+
+  final Future<EntryBatch> Function(EntryBatch batch, String remoteDeviceId)?
+  filterOutboundEntries;
+  final Future<ClaimBatch> Function(ClaimBatch batch, String remoteDeviceId)?
+  filterOutboundClaims;
+  final Future<List<MetadataOperation>> Function(
+    List<MetadataOperation> ops,
+    String remoteDeviceId,
+  )?
+  filterOutboundMetadata;
+
+  /// Called after peer metadata is applied (erase-on-contact). May return
+  /// extra metadata ops (e.g. erasedAt ack) to exchange in a follow-up round.
+  final Future<List<MetadataOperation>> Function()? afterPeerMetadataApplied;
+}
+
 /// Orchestrates a LAN-only sync session (tasks 5.3). Never uses an internet
 /// relay — [LocalNetworkReachability] gates connect.
 class PeerSyncSession {
@@ -68,12 +93,14 @@ class PeerSyncSession {
     required SyncPeerIdentity localIdentity,
     required Set<String> pinnedFingerprints,
     List<DeviceCertificate> pinnedCertificates = const [],
+    PeerSyncSessionHooks hooks = const PeerSyncSessionHooks(),
   }) : _transport = transport,
        _ledger = ledger,
        _reachability = reachability,
        _localIdentity = localIdentity,
        _pinnedFingerprints = pinnedFingerprints,
-       _pinnedCertificates = pinnedCertificates;
+       _pinnedCertificates = pinnedCertificates,
+       _hooks = hooks;
 
   final SyncTransport _transport;
   final SyncLedgerView _ledger;
@@ -81,6 +108,7 @@ class PeerSyncSession {
   final SyncPeerIdentity _localIdentity;
   final Set<String> _pinnedFingerprints;
   final List<DeviceCertificate> _pinnedCertificates;
+  final PeerSyncSessionHooks _hooks;
 
   /// Optional diagnostic sink (company-sync harness).
   static void Function(String message)? debugLog;
@@ -168,7 +196,8 @@ class PeerSyncSession {
     for (final entry in localTips.entries) {
       final identityId = entry.key;
       final localNext = entry.value;
-      final remoteNext = remoteTips[identityId] ?? 1;
+      // Sequences start at 0; unknown remote identity → send from the start.
+      final remoteNext = remoteTips[identityId] ?? 0;
       if (localNext > remoteNext) {
         missingForRemote.addAll(
           await _ledger.entriesFrom(
@@ -179,10 +208,15 @@ class PeerSyncSession {
       }
     }
 
-    final batch = EntryBatch(entries: missingForRemote);
+    var batch = EntryBatch(entries: missingForRemote);
+    final filterEntries = _hooks.filterOutboundEntries;
+    if (filterEntries != null) {
+      batch = await filterEntries(batch, connection.remote.deviceId);
+    }
     debugLog?.call(
       'exchange tips local=${localTips.length} remote=${remoteTips.length} '
-      'sendingEntries=${missingForRemote.length} '
+      'sendingEntries=${batch.entries.length} '
+      'anchors=${batch.scopeAnchors.length} '
       'to=${connection.remote.deviceId}',
     );
     await connection.send(batch.toJson());
@@ -191,6 +225,7 @@ class PeerSyncSession {
     final peerBatch = EntryBatch.fromJson(peerBatchMessage);
     debugLog?.call(
       'exchange receivedEntries=${peerBatch.entries.length} '
+      'anchors=${peerBatch.scopeAnchors.length} '
       'from=${connection.remote.deviceId}',
     );
     final received = await _ledger.applyEntryBatch(
@@ -201,15 +236,36 @@ class PeerSyncSession {
     // Metadata ops (categories, accounts, books settings) — required by
     // peer-sync spec; without this a Claimant never receives allowlisted
     // expense categories after join.
-    final localMeta = await _ledger.pendingMetadataOperations();
+    var localMeta = await _ledger.pendingMetadataOperations();
+    final filterMeta = _hooks.filterOutboundMetadata;
+    if (filterMeta != null) {
+      localMeta = await filterMeta(localMeta, connection.remote.deviceId);
+    }
     await connection.send(MetadataOps(operations: localMeta).toJson());
     final peerMetaMessage = await connection.receive();
     final peerMeta = MetadataOps.fromJson(peerMetaMessage);
     await _ledger.applyPeerMetadataOps(peerMeta);
 
+    // Erase-on-contact may produce an erasedAt ack; exchange a follow-up
+    // metadata round so the Owner learns before the removed device wipes.
+    final afterMeta = _hooks.afterPeerMetadataApplied;
+    var eraseAck = afterMeta == null
+        ? const <MetadataOperation>[]
+        : await afterMeta();
+    await connection.send(MetadataOps(operations: eraseAck).toJson());
+    final peerEraseMessage = await connection.receive();
+    final peerErase = MetadataOps.fromJson(peerEraseMessage);
+    if (peerErase.operations.isNotEmpty) {
+      await _ledger.applyPeerMetadataOps(peerErase);
+    }
+
     // Claims live off-ledger until approval; exchange ClaimBatch so an
     // Approver sees submitted claims after Sync now (expense-claims peer-sync).
-    final localClaims = await _ledger.pendingClaimBatch();
+    var localClaims = await _ledger.pendingClaimBatch();
+    final filterClaims = _hooks.filterOutboundClaims;
+    if (filterClaims != null) {
+      localClaims = await filterClaims(localClaims, connection.remote.deviceId);
+    }
     await connection.send(localClaims.toJson());
     final peerClaimsMessage = await connection.receive();
     final peerClaims = ClaimBatch.fromJson(peerClaimsMessage);
@@ -217,7 +273,7 @@ class PeerSyncSession {
 
     return SyncSessionResult(
       connected: true,
-      entriesSent: missingForRemote.length + localClaims.claims.length,
+      entriesSent: batch.entries.length + localClaims.claims.length,
       entriesReceived: received + claimsReceived,
     );
   }
@@ -241,7 +297,7 @@ class FakeSyncLedgerView implements SyncLedgerView {
     final result = <String, int>{};
     for (final entry in entriesByIdentity.entries) {
       if (entry.value.isEmpty) {
-        result[entry.key] = 1;
+        result[entry.key] = 0;
       } else {
         result[entry.key] = entry.value.last.deviceChainSequence + 1;
       }

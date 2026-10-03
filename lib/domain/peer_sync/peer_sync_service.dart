@@ -5,11 +5,14 @@ import '../../data/repositories/membership_repository.dart';
 import '../../data/repositories/settings_repository.dart';
 import '../../data/repositories/sync_merge_repository.dart';
 import '../linked_devices/device_certificate_store.dart';
+import '../linked_devices/erase_on_contact.dart';
 import '../linked_devices/local_network_reachability.dart';
 import '../models/linked_device.dart';
+import 'claim_sync_payloads.dart';
 import 'peer_discovery.dart';
 import 'direct_address_peer_discovery.dart';
 import 'peer_sync_session.dart';
+import 'sync_payloads.dart';
 import 'sync_transport.dart';
 
 /// Wires discovery + TLS transport + [PeerSyncSession] for Sync now and
@@ -25,6 +28,7 @@ class PeerSyncService {
     required LocalNetworkReachability reachability,
     required Future<String?> Function() activeBooksSetId,
     DirectAddressPeerDiscovery? directDiscovery,
+    Future<void> Function()? wipeActiveBooksCopy,
     this.browseTimeout = const Duration(seconds: 3),
   }) : _transport = transport,
        _discovery = discovery,
@@ -34,6 +38,7 @@ class PeerSyncService {
        _settings = settings,
        _reachability = reachability,
        _activeBooksSetId = activeBooksSetId,
+       _wipeActiveBooksCopy = wipeActiveBooksCopy,
        _direct = directDiscovery ?? _extractDirect(discovery);
 
   final SyncTransport _transport;
@@ -44,6 +49,7 @@ class PeerSyncService {
   final SettingsRepository _settings;
   final LocalNetworkReachability _reachability;
   final Future<String?> Function() _activeBooksSetId;
+  final Future<void> Function()? _wipeActiveBooksCopy;
   final DirectAddressPeerDiscovery? _direct;
 
   static DirectAddressPeerDiscovery? _extractDirect(PeerDiscovery discovery) {
@@ -69,6 +75,118 @@ class PeerSyncService {
   /// between simulators and the host is unreliable.
   int? get boundPort => _boundPort;
 
+  /// Active members plus erase-pending devices (still need one contact).
+  Future<List<LinkedDevice>> _syncEligibleDevices() async {
+    final all = await _membership.listDevices();
+    return all
+        .where((d) => d.isActive || d.isErasePending)
+        .toList(growable: false);
+  }
+
+  PeerSyncSessionHooks _hooks() {
+    return PeerSyncSessionHooks(
+      filterOutboundEntries: _filterOutboundEntries,
+      filterOutboundClaims: _filterOutboundClaims,
+      filterOutboundMetadata: _filterOutboundMetadata,
+      afterPeerMetadataApplied: _afterPeerMetadataApplied,
+    );
+  }
+
+  Future<EntryBatch> _filterOutboundEntries(
+    EntryBatch batch,
+    String remoteDeviceId,
+  ) async {
+    final remote = await _membership.findByDeviceId(remoteDeviceId);
+    if (remote == null || !remote.isClaimantOnly) return batch;
+    final allowed = await _merge.allowedAccountIdsForClaimant(remoteDeviceId);
+    return ClaimantSyncFilter.filterEntryBatch(
+      batch: batch,
+      allowedAccountIds: allowed,
+    );
+  }
+
+  Future<ClaimBatch> _filterOutboundClaims(
+    ClaimBatch batch,
+    String remoteDeviceId,
+  ) async {
+    final remote = await _membership.findByDeviceId(remoteDeviceId);
+    if (remote == null || !remote.isClaimantOnly) return batch;
+    return ClaimantSyncFilter.filterClaims(
+      batch: batch,
+      claimantDeviceId: remoteDeviceId,
+    );
+  }
+
+  Future<List<MetadataOperation>> _filterOutboundMetadata(
+    List<MetadataOperation> ops,
+    String remoteDeviceId,
+  ) async {
+    final remote = await _membership.findByDeviceId(remoteDeviceId);
+    if (remote == null || !remote.isClaimantOnly) return ops;
+    // Claimant: self membership + allowlist/hints + lifecycle for self.
+    return ops.where((op) {
+      if (op.entityType == 'linked_device') {
+        return op.entityId == remoteDeviceId;
+      }
+      if (op.entityType == 'personal_claim_limit') {
+        return op.entityId == remoteDeviceId ||
+            (op.value is Map &&
+                (op.value as Map)['personDeviceId'] == remoteDeviceId);
+      }
+      if (op.entityType == 'claim_category_allowlist' ||
+          op.entityType == 'account' ||
+          op.entityType == 'category' ||
+          op.entityType == 'settings') {
+        return true;
+      }
+      return true;
+    }).toList();
+  }
+
+  Future<List<MetadataOperation>> _afterPeerMetadataApplied() async {
+    final localDeviceId = await _settings.localDeviceId();
+    if (localDeviceId == null || localDeviceId.isEmpty) {
+      return const [];
+    }
+    // Ensure Claimant-only merge can accept further scoped gaps even when
+    // the batch omits per-entry anchors after the first.
+    _merge.localDeviceIdResolver = () async => localDeviceId;
+
+    final wipe = _wipeActiveBooksCopy;
+    final erasedAt = await EraseOnContact.maybeEraseLocalCopy(
+      membership: _membership,
+      localDeviceId: localDeviceId,
+      wipeLocalBooksCopy: () async {
+        if (wipe != null) {
+          await wipe();
+        } else {
+          // Harness / tests without a books-set wipe: clear ledger tables.
+          await _merge.wipeLocalLedgerForErase();
+        }
+      },
+    );
+    if (erasedAt == null) return const [];
+
+    await EraseOnContact.acknowledgeErased(
+      membership: _membership,
+      targetDeviceId: localDeviceId,
+      erasedAt: erasedAt,
+    );
+
+    final identity = await _merge.pendingMetadataOperations();
+    // Prefer a fresh erasedAt op for self from synthesized lifecycle.
+    return identity
+        .where(
+          (op) =>
+              op.entityType == 'linked_device' &&
+              op.entityId == localDeviceId &&
+              (op.field == 'erasedAt' ||
+                  op.field == 'erasePendingAt' ||
+                  op.field == 'removedAt'),
+        )
+        .toList();
+  }
+
   /// Starts accepting inbound sync sessions and advertising on `_smara._tcp`.
   Future<void> startForeground() async {
     final localDeviceId = await _settings.localDeviceId();
@@ -77,7 +195,7 @@ class PeerSyncService {
     final booksSetId = await _activeBooksSetId();
     if (booksSetId == null || booksSetId.isEmpty) return;
 
-    final devices = await _membership.listActiveDevices();
+    final devices = await _syncEligibleDevices();
     if (devices.length < 2) {
       // Nothing to sync with — still fine to skip listen/advertise.
       return;
@@ -103,6 +221,7 @@ class PeerSyncService {
       localIdentity: localIdentity,
       pinnedFingerprints: pins,
       pinnedCertificates: pinnedCerts,
+      hooks: _hooks(),
     );
 
     final pinSet =
@@ -187,6 +306,7 @@ class PeerSyncService {
     if (localDeviceId == null || localDeviceId.isEmpty) {
       return const [];
     }
+    _merge.localDeviceIdResolver = () async => localDeviceId;
     final booksSetId = await _activeBooksSetId();
     if (booksSetId == null || booksSetId.isEmpty) {
       return const [];
@@ -194,7 +314,7 @@ class PeerSyncService {
 
     await startForeground();
 
-    final devices = await _membership.listActiveDevices();
+    final devices = await _syncEligibleDevices();
     final peersById = {
       for (final d in devices)
         if (d.deviceId != localDeviceId) d.deviceId: d,
@@ -260,6 +380,7 @@ class PeerSyncService {
       ),
       pinnedFingerprints: pins,
       pinnedCertificates: pinnedCerts,
+      hooks: _hooks(),
     );
 
     final results = <SyncSessionResult>[];
@@ -335,8 +456,8 @@ class PeerSyncService {
     if (booksSetId == null || booksSetId.isEmpty) {
       throw StateError('No active books set.');
     }
-    final devices = await _membership.listActiveDevices();
-    final peer = devices.where((d) => d.deviceId == peerDeviceId && d.isActive);
+    final devices = await _syncEligibleDevices();
+    final peer = devices.where((d) => d.deviceId == peerDeviceId);
     if (peer.isEmpty) {
       throw StateError('Unknown linked device: $peerDeviceId');
     }

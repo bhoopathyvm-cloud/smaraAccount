@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import '../../domain/crypto/entry_canonical_hash.dart';
 import '../../domain/crypto/signing_key_service.dart';
 import '../../domain/linked_devices/device_certificate_store.dart';
+import '../../domain/models/account_type.dart';
 import '../../domain/models/claim_item_decision_kind.dart';
 import '../../domain/models/claim_status.dart';
 import '../../domain/models/linked_device_role.dart';
@@ -59,6 +60,7 @@ class SyncMergeRepository implements SyncLedgerView {
     DateTime Function()? clock,
     Uuid? uuid,
     this.localDeviceDisplayName = 'This device',
+    Future<String?> Function()? localDeviceId,
   }) : _db = database,
        _keys = signingKeyService,
        _chain = chain ?? LedgerChainStore(database),
@@ -66,7 +68,8 @@ class SyncMergeRepository implements SyncLedgerView {
        _outbox = metadataOutbox,
        _certificates = certificates,
        _clock = clock ?? DateTime.now,
-       _uuid = uuid ?? const Uuid();
+       _uuid = uuid ?? const Uuid(),
+       localDeviceIdResolver = localDeviceId;
 
   final AppDatabase _db;
   final SigningKeyService _keys;
@@ -77,6 +80,12 @@ class SyncMergeRepository implements SyncLedgerView {
   final DateTime Function() _clock;
   final Uuid _uuid;
   final String localDeviceDisplayName;
+
+  /// Optional resolver for Claimant-only scoped accept (set by PeerSyncService).
+  Future<String?> Function()? localDeviceIdResolver;
+
+  /// Scope anchors from the batch currently being merged (Claimant path).
+  List<ScopeChainAnchor> _activeScopeAnchors = const [];
 
   final _lww = const MetadataLww();
   final _fixResolver = const CompetingFixResolver();
@@ -163,13 +172,14 @@ class SyncMergeRepository implements SyncLedgerView {
       fromDeviceId: fromDeviceId,
       fromDeviceDisplayName: fromDeviceId,
     );
-    if (batch.entries.isNotEmpty) {
+    if (batch.entries.isNotEmpty || batch.scopeAnchors.isNotEmpty) {
       PeerSyncSession.debugLog?.call(
         'applyEntryBatch from=$fromDeviceId '
         'offered=${batch.entries.length} '
         'inserted=${result.insertedCount} '
         'skipped=${result.skippedDuplicateCount} '
         'rejected=${result.rejectedCount} '
+        'anchors=${batch.scopeAnchors.length} '
         'ids=${batch.entries.map((e) => '${e.signedByIdentityId}#${e.deviceChainSequence}').join(',')}',
       );
     }
@@ -179,8 +189,40 @@ class SyncMergeRepository implements SyncLedgerView {
   @override
   Future<List<MetadataOperation>> pendingMetadataOperations() async {
     final outbox = _outbox;
-    if (outbox == null) return const [];
-    return outbox.listAll();
+    final outboxOps = outbox == null
+        ? const <MetadataOperation>[]
+        : await outbox.listAll();
+    final lifecycle = await _membershipLifecycleOps();
+    return [...outboxOps, ...lifecycle];
+  }
+
+  /// Synthesizes removedAt / erasePendingAt / erasedAt so erase-on-contact
+  /// reaches peers even when those fields were written outside the outbox.
+  Future<List<MetadataOperation>> _membershipLifecycleOps() async {
+    final identity = await (_db.select(_db.signingIdentities)..limit(1)).get();
+    final identityId = identity.isEmpty ? 'local' : identity.first.identityId;
+    final devices = await _db.select(_db.linkedDevices).get();
+    final ops = <MetadataOperation>[];
+    for (final d in devices) {
+      void add(String field, DateTime? at) {
+        if (at == null) return;
+        ops.add(
+          MetadataOperation(
+            entityType: 'linked_device',
+            entityId: d.deviceId,
+            field: field,
+            value: at.toUtc().toIso8601String(),
+            updatedAt: at.toUtc(),
+            updatedByIdentityId: identityId,
+          ),
+        );
+      }
+
+      add('removedAt', d.removedAt);
+      add('erasePendingAt', d.erasePendingAt);
+      add('erasedAt', d.erasedAt);
+    }
+    return ops;
   }
 
   @override
@@ -330,57 +372,69 @@ class SyncMergeRepository implements SyncLedgerView {
     var skipped = 0;
     var rejected = 0;
 
-    for (final entry in batch.entries) {
-      final duplicate = await _findDuplicate(
-        identityId: entry.signedByIdentityId,
-        sequence: entry.deviceChainSequence,
-      );
-      if (duplicate != null) {
-        skipped++;
-        continue;
-      }
-
-      final existingById = await (_db.select(
-        _db.journalEntries,
-      )..where((e) => e.id.equals(entry.id))).getSingleOrNull();
-      if (existingById != null) {
-        skipped++;
-        continue;
-      }
-
-      final ok = await _verifyPeerEntry(entry);
-      if (!ok) {
-        rejected++;
-        PeerSyncSession.debugLog?.call(
-          'reject entry id=${entry.id} '
-          'identity=${entry.signedByIdentityId} '
-          'seq=${entry.deviceChainSequence} '
-          'reason=${await _verifyPeerEntryFailureReason(entry)}',
+    // Apply in identity+sequence order so within-scope links resolve.
+    final ordered = [...batch.entries]
+      ..sort((a, b) {
+        final byId = a.signedByIdentityId.compareTo(b.signedByIdentityId);
+        if (byId != 0) return byId;
+        return a.deviceChainSequence.compareTo(b.deviceChainSequence);
+      });
+    _activeScopeAnchors = batch.scopeAnchors;
+    try {
+      for (final entry in ordered) {
+        final duplicate = await _findDuplicate(
+          identityId: entry.signedByIdentityId,
+          sequence: entry.deviceChainSequence,
         );
-        await _recordNotAcceptedNotice(
-          fromDeviceId: fromDeviceId,
-          fromDeviceDisplayName: fromDeviceDisplayName,
-        );
-        if (emitOwnerAlert) {
-          await _recordOwnerAlert(
+        if (duplicate != null) {
+          skipped++;
+          continue;
+        }
+
+        final existingById = await (_db.select(
+          _db.journalEntries,
+        )..where((e) => e.id.equals(entry.id))).getSingleOrNull();
+        if (existingById != null) {
+          skipped++;
+          continue;
+        }
+
+        final ok = await _verifyPeerEntry(entry);
+        if (!ok) {
+          rejected++;
+          PeerSyncSession.debugLog?.call(
+            'reject entry id=${entry.id} '
+            'identity=${entry.signedByIdentityId} '
+            'seq=${entry.deviceChainSequence} '
+            'reason=${await _verifyPeerEntryFailureReason(entry)}',
+          );
+          await _recordNotAcceptedNotice(
             fromDeviceId: fromDeviceId,
             fromDeviceDisplayName: fromDeviceDisplayName,
           );
+          if (emitOwnerAlert) {
+            await _recordOwnerAlert(
+              fromDeviceId: fromDeviceId,
+              fromDeviceDisplayName: fromDeviceDisplayName,
+            );
+          }
+          continue;
         }
-        continue;
-      }
 
-      if (await _isRefusedAfterDeviceRemoval(entry)) {
-        rejected++;
-        await _recordNotAcceptedNotice(
-          fromDeviceId: fromDeviceId,
-          fromDeviceDisplayName: fromDeviceDisplayName,
-        );
-        continue;
-      }
+        if (await _isRefusedAfterDeviceRemoval(entry)) {
+          rejected++;
+          await _recordNotAcceptedNotice(
+            fromDeviceId: fromDeviceId,
+            fromDeviceDisplayName: fromDeviceDisplayName,
+          );
+          continue;
+        }
 
-      await _insertPeerEntry(entry);
-      inserted++;
+        await _insertPeerEntry(entry);
+        inserted++;
+      }
+    } finally {
+      _activeScopeAnchors = const [];
     }
 
     final cancellations = await _resolveCompetingFixes();
@@ -856,6 +910,9 @@ class SyncMergeRepository implements SyncLedgerView {
     var canAdd = existing?.canAdd ?? false;
     var owedToAccountId = existing?.owedToAccountId;
     var personDisplayName = existing?.personDisplayName;
+    var removedAt = existing?.removedAt;
+    var erasePendingAt = existing?.erasePendingAt;
+    var erasedAt = existing?.erasedAt;
 
     switch (op.field) {
       case 'displayName':
@@ -919,6 +976,12 @@ class SyncMergeRepository implements SyncLedgerView {
         owedToAccountId = op.value is String ? op.value as String : null;
       case 'personDisplayName':
         personDisplayName = op.value is String ? op.value as String : null;
+      case 'removedAt':
+        removedAt = _parseLifecycleTimestamp(op.value) ?? removedAt;
+      case 'erasePendingAt':
+        erasePendingAt = _parseLifecycleTimestamp(op.value) ?? erasePendingAt;
+      case 'erasedAt':
+        erasedAt = _parseLifecycleTimestamp(op.value) ?? erasedAt;
       default:
         return;
     }
@@ -962,8 +1025,72 @@ class SyncMergeRepository implements SyncLedgerView {
             canAdd: Value(canAdd),
             owedToAccountId: Value(owedToAccountId),
             personDisplayName: Value(personDisplayName),
+            removedAt: Value(removedAt),
+            erasePendingAt: Value(erasePendingAt),
+            erasedAt: Value(erasedAt),
           ),
         );
+  }
+
+  DateTime? _parseLifecycleTimestamp(Object? value) {
+    if (value is String && value.isNotEmpty) {
+      return DateTime.tryParse(value)?.toUtc();
+    }
+    return null;
+  }
+
+  /// Clears ledger/claims content when this device erases its copy of the
+  /// books set (membership rows kept long enough to ack erasedAt).
+  Future<void> wipeLocalLedgerForErase() async {
+    await _db.transaction(() async {
+      await _db.delete(_db.postings).go();
+      await _db.delete(_db.journalEntries).go();
+      await _db.delete(_db.claimItemDecisions).go();
+      await _db.delete(_db.claimReceipts).go();
+      await _db.delete(_db.claimItems).go();
+      await _db.delete(_db.claims).go();
+      await _db.delete(_db.entryVerificationCache).go();
+    });
+  }
+
+  /// Claimant allow-set: owed-to + allowlisted claim categories + financial
+  /// accounts that already co-post with the owed-to account (payment banks).
+  Future<Set<String>> allowedAccountIdsForClaimant(
+    String claimantDeviceId,
+  ) async {
+    final device = await (_db.select(
+      _db.linkedDevices,
+    )..where((t) => t.deviceId.equals(claimantDeviceId))).getSingleOrNull();
+    final allowed = <String>{};
+    final owedTo = device?.owedToAccountId;
+    if (owedTo != null && owedTo.isNotEmpty) {
+      allowed.add(owedTo);
+      final owedPostings = await (_db.select(
+        _db.postings,
+      )..where((p) => p.accountId.equals(owedTo))).get();
+      final entryIds = owedPostings.map((p) => p.entryId).toSet();
+      for (final entryId in entryIds) {
+        final siblings = await (_db.select(
+          _db.postings,
+        )..where((p) => p.entryId.equals(entryId))).get();
+        for (final s in siblings) {
+          allowed.add(s.accountId);
+        }
+      }
+    }
+    final cats = await _db.select(_db.claimCategoryAllowlist).get();
+    for (final c in cats) {
+      allowed.add(c.categoryId);
+    }
+    // Payment/advance banks: active asset/liability financial accounts.
+    // Entries that also touch a non-allowlisted expense still drop via filter.
+    final accounts = await _db.select(_db.accounts).get();
+    for (final a in accounts) {
+      if (a.type == AccountType.asset || a.type == AccountType.liability) {
+        allowed.add(a.id);
+      }
+    }
+    return allowed;
   }
 
   Future<void> _upsertRecurringTemplateField(MetadataOperation op) async {
@@ -1081,11 +1208,39 @@ class SyncMergeRepository implements SyncLedgerView {
               ..limit(1))
             .getSingleOrNull();
 
-    final expectedPrevious = prior == null
-        ? Uint8List.fromList(genesisPreviousEntryHash)
-        : Uint8List.fromList(prior.entryHash);
-    if (!_bytesEqual(entry.previousEntryHash, expectedPrevious)) {
-      return 'chain_gap priorSeq=${prior?.deviceChainSequence}';
+    final contiguousPrior =
+        prior != null &&
+        prior.deviceChainSequence == entry.deviceChainSequence - 1;
+    if (contiguousPrior) {
+      if (!_bytesEqual(entry.previousEntryHash, prior.entryHash)) {
+        return 'chain_gap priorSeq=${prior.deviceChainSequence}';
+      }
+    } else if (prior == null) {
+      final isGenesis = _bytesEqual(
+        entry.previousEntryHash,
+        genesisPreviousEntryHash,
+      );
+      if (!isGenesis) {
+        // Scope gap: Claimant (or a scoped batch) may omit out-of-scope
+        // priors. Accept when a matching scope anchor is present, or when
+        // this device is Claimant-only (signature still binds previousHash).
+        final anchored = _hasMatchingScopeAnchor(entry);
+        final claimantOnly = await _isLocalClaimantOnly();
+        if (!anchored && !claimantOnly) {
+          return 'chain_gap priorSeq=null';
+        }
+      }
+    } else {
+      // Local prior exists but is not adjacent (sparse Claimant copy).
+      // Any scope anchor for this identity means the sender omitted
+      // out-of-scope priors; later gaps are intentional too.
+      final scopedIdentity = _hasScopeAnchorForIdentity(
+        entry.signedByIdentityId,
+      );
+      final claimantOnly = await _isLocalClaimantOnly();
+      if (!scopedIdentity && !claimantOnly) {
+        return 'chain_gap priorSeq=${prior.deviceChainSequence}';
+      }
     }
 
     final canonical = canonicalEntryBytes(
@@ -1119,6 +1274,40 @@ class SyncMergeRepository implements SyncLedgerView {
       return 'bad_signature keyLen=${identity.publicKey.length}';
     }
     return null;
+  }
+
+  bool _hasMatchingScopeAnchor(SyncJournalEntry entry) {
+    for (final a in _activeScopeAnchors) {
+      if (a.identityId != entry.signedByIdentityId) continue;
+      if (a.firstScopedSequence != entry.deviceChainSequence) continue;
+      if (_bytesEqual(a.previousEntryHash, entry.previousEntryHash)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool _hasScopeAnchorForIdentity(String identityId) {
+    for (final a in _activeScopeAnchors) {
+      if (a.identityId == identityId) return true;
+    }
+    return false;
+  }
+
+  Future<bool> _isLocalClaimantOnly() async {
+    final idFn = localDeviceIdResolver;
+    if (idFn == null) return false;
+    final deviceId = await idFn();
+    if (deviceId == null || deviceId.isEmpty) return false;
+    final row = await (_db.select(
+      _db.linkedDevices,
+    )..where((t) => t.deviceId.equals(deviceId))).getSingleOrNull();
+    if (row == null) return false;
+    final roles = MembershipRoleGates.decodeRoles(
+      row.rolesCsv,
+      legacyRole: row.role,
+    );
+    return MembershipRoleGates.isClaimantOnly(roles);
   }
 
   Future<void> _insertPeerEntry(SyncJournalEntry entry) async {

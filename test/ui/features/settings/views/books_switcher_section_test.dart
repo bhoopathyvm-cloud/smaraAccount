@@ -238,4 +238,30 @@ void main() {
     // UUID-shaped strings must not appear as titles.
     expect(switcher.sets.any((s) => s.displayName == s.id), isFalse);
   });
+
+  testWidgets('company books rename shows company name, not Books N', (
+    tester,
+  ) async {
+    late BooksSwitcherViewModel switcher;
+    await tester.runAsync(() async {
+      await session.ensureOpen();
+      final id = (await session.activeBooksSetId())!;
+      await session.renameSet(id, 'Acme Travel Co');
+      switcher = BooksSwitcherViewModel(session: session);
+      await switcher.refresh();
+    });
+    addTearDown(switcher.dispose);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: appLocalizationsDelegatesWithMaterialFallback,
+        supportedLocales: supportedAppLocales,
+        home: Scaffold(body: BooksSwitcherSection(viewModel: switcher)),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.text('Acme Travel Co'), findsOneWidget);
+    expect(find.text('Books 1'), findsNothing);
+  });
 }

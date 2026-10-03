@@ -55,13 +55,12 @@ void main() {
     );
 
     final client = CompanySyncConductorClient(baseUrl: conductorUrl);
+    final artifactRoot = await CompanySyncArtifacts.resolveWritableRoot(
+      artifactsPath,
+    );
     final artifacts = CompanySyncArtifacts(
       role: role,
-      root: Directory(
-        artifactsPath.isEmpty
-            ? Directory.systemTemp.createTempSync('company_sync_').path
-            : artifactsPath,
-      ),
+      root: artifactRoot,
       binding: binding,
     );
     await artifacts.ensureReady();

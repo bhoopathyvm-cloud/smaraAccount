@@ -128,6 +128,63 @@ void main() {
         ),
         isFalse,
       );
+      // e1 starts at genesis previous hash → no scope anchor needed.
+      expect(scoped.scopeAnchors, isEmpty);
+    },
+  );
+
+  test(
+    'ClaimantSyncFilter attaches scope anchors when first kept entry has a prior',
+    () {
+      final entries = EntryBatch(
+        entries: [
+          SyncJournalEntry(
+            id: 'e0',
+            transactionDate: '2026-03-01',
+            recordedAt: DateTime.utc(2026, 3, 1),
+            description: 'rent',
+            reversesEntryId: null,
+            deviceChainSequence: 0,
+            previousEntryHash: List.filled(32, 0),
+            entryHash: List.filled(32, 9),
+            signedByIdentityId: 'id',
+            signature: List.filled(64, 3),
+            postings: const [
+              SyncPosting(accountId: 'bank', amountMinor: -500, lineNumber: 1),
+              SyncPosting(accountId: 'rent', amountMinor: 500, lineNumber: 2),
+            ],
+          ),
+          SyncJournalEntry(
+            id: 'e1',
+            transactionDate: '2026-03-01',
+            recordedAt: DateTime.utc(2026, 3, 1),
+            description: 'pay ravi',
+            reversesEntryId: null,
+            deviceChainSequence: 1,
+            previousEntryHash: List.filled(32, 9),
+            entryHash: List.filled(32, 1),
+            signedByIdentityId: 'id',
+            signature: List.filled(64, 2),
+            postings: const [
+              SyncPosting(
+                accountId: 'owed-ravi',
+                amountMinor: 100,
+                lineNumber: 1,
+              ),
+              SyncPosting(accountId: 'bank', amountMinor: -100, lineNumber: 2),
+            ],
+          ),
+        ],
+      );
+      final scoped = ClaimantSyncFilter.filterEntryBatch(
+        batch: entries,
+        allowedAccountIds: {'owed-ravi', 'bank', 'travel'},
+      );
+      expect(scoped.entries.map((e) => e.id), ['e1']);
+      expect(scoped.scopeAnchors, isNotEmpty);
+      expect(scoped.scopeAnchors.single.identityId, 'id');
+      expect(scoped.scopeAnchors.single.firstScopedSequence, 1);
+      expect(scoped.scopeAnchors.single.previousEntryHash, List.filled(32, 9));
     },
   );
 }

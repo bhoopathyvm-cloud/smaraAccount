@@ -434,6 +434,7 @@ class MembershipRepository {
     Set<LinkedDeviceRole>? personRoles,
     String? personDisplayName,
     bool isPersonJoin = false,
+    String? booksSetDisplayName,
   }) async {
     if (!await canAddDevices(hostDeviceId)) {
       throw const AppFailure(
@@ -471,6 +472,7 @@ class MembershipRepository {
       personRoles: roles,
       personDisplayName: personDisplayName,
       isPersonJoin: isPersonJoin,
+      booksSetDisplayName: booksSetDisplayName,
     );
   }
 

@@ -235,10 +235,12 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
       }
       final displayName =
           await _settings.localDeviceDisplayName() ?? 'This device';
+      final booksName = await _activeBooksSetDisplayName(booksSetId);
       _activeJoinQr = await _membership.buildJoinQrPayload(
         hostDeviceId: _localDeviceId!,
         hostDisplayName: displayName,
         booksSetId: booksSetId,
+        booksSetDisplayName: booksName,
       );
       final code = _joinCodes.issue();
       await _startJoinHost(code: code, payload: _activeJoinQr!);
@@ -280,12 +282,14 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
       }
       final displayName =
           await _settings.localDeviceDisplayName() ?? 'This device';
+      final booksName = await _activeBooksSetDisplayName(booksSetId);
       _activeJoinQr = await _people.buildAddPersonQr(
         hostDeviceId: _localDeviceId!,
         hostDisplayName: displayName,
         booksSetId: booksSetId,
         personDisplayName: name,
         roles: roles,
+        booksSetDisplayName: booksName,
       );
       final code = _joinCodes.issue();
       await _startJoinHost(code: code, payload: _activeJoinQr!);
@@ -634,6 +638,7 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
 
     await session.openJoinedSet(
       booksSetId: payload.booksSetId,
+      displayName: payload.booksSetDisplayName ?? '',
       seed: (db, keys) async {
         await JoinedBooksSeeder.seed(
           database: db,
@@ -654,6 +659,18 @@ class LinkedDevicesViewModel extends ChangeNotifier with LocalizedErrorMixin {
         );
       },
     );
+  }
+
+  Future<String?> _activeBooksSetDisplayName(String booksSetId) async {
+    final session = _booksSession;
+    if (session == null) return null;
+    final sets = await session.listSets();
+    for (final s in sets) {
+      if (s.id == booksSetId && s.hasUserVisibleName) {
+        return s.displayName;
+      }
+    }
+    return null;
   }
 
   /// Open-claims / owed-balance warning before remove (task 2.4).

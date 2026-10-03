@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:drift/drift.dart';
-import 'package:smara_accounting/data/database/app_database.dart';
 import 'package:smara_accounting/domain/linked_devices/erase_on_contact.dart';
-import 'package:smara_accounting/domain/models/linked_device_role.dart';
+import 'package:smara_accounting/domain/peer_sync/peer_sync_session.dart';
+import 'package:smara_accounting/domain/peer_sync/sync_payloads.dart';
+import 'package:smara_accounting/domain/peer_sync/sync_transport.dart';
 import 'package:test/test.dart';
 
 import '../../harness/dual_device_harness.dart';
@@ -33,21 +36,19 @@ void main() {
       );
       expect(pending.isErasePending, isTrue);
 
-      // Simulate B learning erase-pending for itself (membership sync).
-      await harness.b.db
-          .into(harness.b.db.linkedDevices)
-          .insertOnConflictUpdate(
-            LinkedDevicesCompanion.insert(
-              deviceId: harness.b.deviceId,
-              displayName: harness.b.displayName,
-              signingIdentityId:
-                  (await harness.b.identity.currentIdentity())!.identityId,
-              deviceCertFingerprint: harness.b.certificate.fingerprint,
-              role: LinkedDeviceRole.member,
-              removedAt: Value(pending.removedAt),
-              erasePendingAt: Value(pending.erasePendingAt),
-            ),
-          );
+      // Lifecycle ops synthesized from Owner membership (real sync path).
+      final lifecycle = await harness.a.merge.pendingMetadataOperations();
+      final eraseOps = lifecycle
+          .where(
+            (op) =>
+                op.entityType == 'linked_device' &&
+                op.entityId == harness.b.deviceId &&
+                (op.field == 'removedAt' || op.field == 'erasePendingAt'),
+          )
+          .toList();
+      expect(eraseOps, isNotEmpty);
+
+      await harness.b.merge.applyMetadataOps(MetadataOps(operations: eraseOps));
 
       var wiped = false;
       final erasedAt = await EraseOnContact.maybeEraseLocalCopy(
@@ -55,8 +56,7 @@ void main() {
         localDeviceId: harness.b.deviceId,
         wipeLocalBooksCopy: () async {
           wiped = true;
-          await harness.b.db.delete(harness.b.db.journalEntries).go();
-          await harness.b.db.delete(harness.b.db.postings).go();
+          await harness.b.merge.wipeLocalLedgerForErase();
         },
         clock: () => DateTime.utc(2026, 10, 2, 15),
       );
@@ -72,4 +72,86 @@ void main() {
       expect(erased.erasedAt!.toUtc(), erasedAt.toUtc());
     },
   );
+
+  test('two-instance sync delivers erasePending and erasedAt ack', () async {
+    await harness.a.membership.removeDevice(
+      actorDeviceId: harness.a.deviceId,
+      targetDeviceId: harness.b.deviceId,
+    );
+    await harness.a.membership.markErasePending(
+      actorDeviceId: harness.a.deviceId,
+      targetDeviceId: harness.b.deviceId,
+    );
+
+    var wiped = false;
+    final hooksB = PeerSyncSessionHooks(
+      afterPeerMetadataApplied: () async {
+        final erasedAt = await EraseOnContact.maybeEraseLocalCopy(
+          membership: harness.b.membership,
+          localDeviceId: harness.b.deviceId,
+          wipeLocalBooksCopy: () async {
+            wiped = true;
+            await harness.b.merge.wipeLocalLedgerForErase();
+          },
+          clock: () => DateTime.utc(2026, 10, 3, 12),
+        );
+        if (erasedAt == null) return const [];
+        await harness.b.membership.markErased(
+          targetDeviceId: harness.b.deviceId,
+          at: erasedAt,
+        );
+        return harness.b.merge.pendingMetadataOperations().then(
+          (ops) => ops
+              .where(
+                (op) =>
+                    op.entityType == 'linked_device' &&
+                    op.entityId == harness.b.deviceId &&
+                    op.field == 'erasedAt',
+              )
+              .toList(),
+        );
+      },
+    );
+
+    final pins = harness.pinnedFingerprints;
+    final senderSession = PeerSyncSession(
+      transport: harness.a.transport,
+      ledger: harness.a.merge,
+      reachability: harness.reachability,
+      localIdentity: SyncPeerIdentity(
+        deviceId: harness.a.deviceId,
+        certificate: harness.a.certificate,
+      ),
+      pinnedFingerprints: pins,
+    );
+    final receiverSession = PeerSyncSession(
+      transport: harness.b.transport,
+      ledger: harness.b.merge,
+      reachability: harness.reachability,
+      localIdentity: SyncPeerIdentity(
+        deviceId: harness.b.deviceId,
+        certificate: harness.b.certificate,
+      ),
+      pinnedFingerprints: pins,
+      hooks: hooksB,
+    );
+
+    final done = Completer<SyncSessionResult>();
+    await receiverSession.startListening(onCompleted: done.complete);
+    await senderSession.syncNow(
+      remote: SyncPeerIdentity(
+        deviceId: harness.b.deviceId,
+        certificate: harness.b.certificate,
+      ),
+    );
+    await done.future.timeout(const Duration(seconds: 5));
+    await receiverSession.stopListening();
+
+    expect(wiped, isTrue);
+    final onOwner = await harness.a.membership.findByDeviceId(
+      harness.b.deviceId,
+    );
+    expect(onOwner?.isErased, isTrue);
+    expect(onOwner?.erasedAt?.toUtc(), DateTime.utc(2026, 10, 3, 12));
+  });
 }
